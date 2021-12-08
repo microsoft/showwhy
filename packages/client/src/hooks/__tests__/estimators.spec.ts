@@ -4,6 +4,7 @@
  */
 import { renderHook } from '@testing-library/react-hooks'
 import { RecoilRoot } from 'recoil'
+import { EstimatorsType, EstimatorsGroups } from '../../common/enums'
 import { useEstimators } from '../../state'
 import {
 	ESTIMATORS_SHORT_DESCRIPTION,
@@ -21,7 +22,6 @@ import {
 	useExposureAssignedEstimators,
 	useOutcomeBasedEstimators,
 } from '../estimators'
-import { EstimatorsType, EstimatorsGroups } from '../../common/enums'
 
 jest.mock('../../state')
 

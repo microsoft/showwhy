@@ -6,10 +6,10 @@
 import { renderHook } from '@testing-library/react-hooks'
 import { useLocation } from 'react-router-dom'
 import { RecoilRoot } from 'recoil'
+import { Pages } from '../../common/enums'
 import { stepsList } from '../../data/stepsList'
 import { useSelectedProject } from '../../state'
 import * as steps from '../steps'
-import { Pages } from '../../common/enums'
 
 jest.mock('../../state')
 jest.mock('react-router-dom', () => {

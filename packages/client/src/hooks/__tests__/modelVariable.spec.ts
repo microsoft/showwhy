@@ -5,10 +5,10 @@
 import { renderHook } from '@testing-library/react-hooks'
 import { RecoilRoot } from 'recoil'
 import { v4 } from 'uuid'
-import { useRemoveDefinition, useSaveDefinition } from '../modelVariable'
-import { usePageType } from '../usePageType'
 import { DefinitionType } from '../../common/enums'
 import { useDefineQuestion, useSetDefineQuestion } from '../../state'
+import { useRemoveDefinition, useSaveDefinition } from '../modelVariable'
+import { usePageType } from '../usePageType'
 
 jest.mock('../../state')
 jest.mock('../usePageType')
