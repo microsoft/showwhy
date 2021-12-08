@@ -6,6 +6,7 @@
 import { renderHook } from '@testing-library/react-hooks'
 import { RecoilRoot } from 'recoil'
 import { v4 } from 'uuid'
+import { BeliefDegree, CausalModelLevel } from '../../common/enums'
 import { useCausalFactors, useSetCausalFactors } from '../../state'
 import {
 	useAddOrEditFactor,
@@ -13,8 +14,15 @@ import {
 	useDeleteCausalFactor,
 	useExcludedFactors,
 } from '../causalFactors'
-import { BeliefDegree, CausalModelLevel } from '~enums'
 jest.mock('../../state/causalFactors')
+
+//To get a mocked function that both fulfills the mocked function type and the jest mock type
+const useCausalFactorsListenerMock = useCausalFactors as jest.MockedFunction<
+	typeof useCausalFactors
+>
+
+const useSetCausalFactorsListenerMock =
+	useSetCausalFactors as jest.MockedFunction<typeof useSetCausalFactors>
 
 const causalFactors = [
 	{
@@ -90,9 +98,11 @@ const newItem = {
 }
 
 describe('causalFactorsHooks', () => {
+	useCausalFactorsListenerMock.mockReturnValue(causalFactors)
+	useSetCausalFactorsListenerMock.mockReturnValue(jest.fn())
+
 	it('useExcludedFactors', () => {
 		const expected = [causalFactors[0].variable]
-		useCausalFactors.mockReturnValue(causalFactors)
 		const { result } = renderHook(() => useExcludedFactors(), {
 			wrapper: RecoilRoot,
 		})
@@ -102,8 +112,6 @@ describe('causalFactorsHooks', () => {
 
 	it('useDeleteCausalFactor', () => {
 		const expected = [...causalFactors.slice(1)]
-		useCausalFactors.mockReturnValue(causalFactors)
-		useSetCausalFactors.mockReturnValue(jest.fn())
 		const { result } = renderHook(() => useDeleteCausalFactor(), {
 			wrapper: RecoilRoot,
 		})
@@ -118,8 +126,6 @@ describe('causalFactorsHooks', () => {
 				confounders: [causalFactors[3].variable],
 				outcomeDeterminants: [causalFactors[1].variable],
 			}
-			useCausalFactors.mockReturnValue(causalFactors)
-			useSetCausalFactors.mockReturnValue(jest.fn())
 			const { result } = renderHook(
 				() => useAlternativeModels(CausalModelLevel.Maximum),
 				{
@@ -135,8 +141,6 @@ describe('causalFactorsHooks', () => {
 				confounders: [],
 				outcomeDeterminants: [causalFactors[1].variable],
 			}
-			useCausalFactors.mockReturnValue(causalFactors)
-			useSetCausalFactors.mockReturnValue(jest.fn())
 			const { result } = renderHook(
 				() => useAlternativeModels(CausalModelLevel.Minimum),
 				{
@@ -152,8 +156,6 @@ describe('causalFactorsHooks', () => {
 				confounders: [causalFactors[3].variable],
 				outcomeDeterminants: [causalFactors[1].variable],
 			}
-			useCausalFactors.mockReturnValue(causalFactors)
-			useSetCausalFactors.mockReturnValue(jest.fn())
 			const { result } = renderHook(
 				() => useAlternativeModels(CausalModelLevel.Intermediate),
 				{
@@ -169,8 +171,6 @@ describe('causalFactorsHooks', () => {
 				confounders: [causalFactors[3].variable],
 				outcomeDeterminants: [causalFactors[1].variable],
 			}
-			useCausalFactors.mockReturnValue(causalFactors)
-			useSetCausalFactors.mockReturnValue(jest.fn())
 			const { result } = renderHook(
 				() => useAlternativeModels(CausalModelLevel.Maximum),
 				{
@@ -184,10 +184,11 @@ describe('causalFactorsHooks', () => {
 })
 
 describe('useAddOrEditFactor', () => {
+	useCausalFactorsListenerMock.mockReturnValue(causalFactors)
+	useSetCausalFactorsListenerMock.mockReturnValue(jest.fn())
+
 	it('add factor', () => {
 		const expected = [...causalFactors, newItem]
-		useCausalFactors.mockReturnValue(causalFactors)
-		useSetCausalFactors.mockReturnValue(jest.fn())
 		const { result } = renderHook(() => useAddOrEditFactor(), {
 			wrapper: RecoilRoot,
 		})
@@ -197,8 +198,6 @@ describe('useAddOrEditFactor', () => {
 	})
 
 	it('edit factor', () => {
-		useCausalFactors.mockReturnValue(causalFactors)
-		useSetCausalFactors.mockReturnValue(jest.fn())
 		const { result } = renderHook(() => useAddOrEditFactor(), {
 			wrapper: RecoilRoot,
 		})

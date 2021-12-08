@@ -17,6 +17,7 @@
 		"start:client": "yarn start",
 		"archive": "essex zip --baseDir dist deploy.zip '**/*'",
 		"test": "jest",
+		"test:jest": "yarn test",
 		"test:cov": "jest --coverage"
 	},
 	"dependencies": {
