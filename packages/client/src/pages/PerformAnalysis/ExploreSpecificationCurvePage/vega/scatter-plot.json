@@ -1,0 +1,459 @@
+{
+	"$schema": "https://vega.github.io/schema/vega/v5.10.json",
+	"description": "Vega scatter plot chart template for specification effect.",
+	"data": [
+		{
+			"name": "specifications"
+		},
+		{
+			"name": "inactiveCounts",
+			"source": "specifications",
+			"transform": [
+				{
+					"type": "fold",
+					"fields": ["causalModel", "estimator", "population", "treatment"],
+					"as": ["group", "feature"]
+				},
+				{
+					"type": "filter",
+					"expr": "indexof(inactiveSpecifications,datum.id) >= 0"
+				},
+				{
+					"type": "aggregate",
+					"groupby": ["id"]
+				}
+			]
+		},
+		{
+			"name": "marked",
+			"source": "specifications",
+			"transform": [
+				{
+					"type": "lookup",
+					"from": "inactiveCounts",
+					"key": "id",
+					"fields": ["id"],
+					"values": ["count"],
+					"as": ["inactiveFeatureCount"],
+					"default": 0
+				}
+			]
+		},
+		{
+			"name": "hovered",
+			"source": "marked",
+			"transform": [
+				{
+					"type": "filter",
+					"expr": "datum.id === hoveredId"
+				}
+			]
+		},
+		{
+			"name": "active",
+			"source": "marked",
+			"transform": [
+				{
+					"type": "filter",
+					"expr": "datum.inactiveFeatureCount === 0"
+				}
+			]
+		},
+		{
+			"name": "inactive",
+			"source": "marked",
+			"transform": [
+				{
+					"type": "filter",
+					"expr": "datum.inactiveFeatureCount > 0"
+				}
+			]
+		},
+		{
+			"name": "stats",
+			"source": "active",
+			"transform": [
+				{
+					"type": "aggregate",
+					"fields": ["estimatedEffect", "estimatedEffect"],
+					"ops": ["mean", "median"],
+					"as": ["mean", "median"]
+				}
+			]
+		}
+	],
+	"signals": [
+		{
+			"name": "hoveredId"
+		},
+		{
+			"name": "selectedId"
+		},
+		{
+			"name": "outcome"
+		},
+		{
+			"name": "showMedian"
+		},
+		{
+			"name": "showMean"
+		},
+		{
+			"name": "showConfidenceInterval"
+		},
+		{
+			"name": "refutationColors",
+			"value": []
+		},
+		{
+			"name": "inactiveFeatures",
+			"value": []
+		},
+		{
+			"name": "inactiveSpecifications",
+			"value": []
+		}
+	],
+	"scales": [
+		{
+			"name": "x",
+			"type": "linear",
+			"nice": true,
+			"domain": {
+				"data": "marked",
+				"field": "id"
+			},
+			"range": [
+				0,
+				{
+					"signal": "width - 5"
+				}
+			]
+		},
+		{
+			"name": "y",
+			"type": "linear",
+			"nice": true,
+			"domain": {
+				"fields": [
+					{ "data": "specifications", "field": "c95Lower" },
+					{ "data": "specifications", "field": "c95Upper" },
+					{ "data": "marked", "field": "estimatedEffect" }
+				]
+			},
+			"range": { "signal": "[height-8, 12]" }
+		},
+		{
+			"name": "refutationLegend",
+			"type": "ordinal",
+			"range": {
+				"signal": "refutationColors"
+			}
+		}
+	],
+	"legends": [
+		{
+			"orient": "right",
+			"fill": "refutationLegend",
+			"offset": 5,
+			"zindex": 1,
+			"labelFontSize": 12
+		}
+	],
+	"axes": [
+		{
+			"scale": "x",
+			"domain": false,
+			"ticks": false,
+			"orient": "bottom",
+			"titlePadding": 5,
+			"title": "",
+			"labels": false
+		},
+		{
+			"scale": "y",
+			"grid": false,
+			"domain": false,
+			"orient": "right"
+		}
+	],
+	"title": {
+		"text": {
+			"signal": "'Estimated change in ' + outcome + ' by specification'"
+		}
+	},
+	"marks": [
+		{
+			"name": "selectedColumn",
+			"type": "rect",
+			"encode": {
+				"update": {
+					"xc": { "scale": "x", "signal": "selectedId" },
+					"width": { "value": 10 },
+					"height": { "signal": "height" },
+					"fillOpacity": { "signal": "selectedId ? 0.2 : 0" }
+				}
+			}
+		},
+		{
+			"name": "confidenceIntervalArea",
+			"type": "rect",
+			"from": { "data": "specifications" },
+			"encode": {
+				"enter": {
+					"x": { "scale": "x", "field": "id" },
+					"y": { "scale": "y", "field": "c95Upper" },
+					"y2": { "scale": "y", "field": "c95Lower" }
+				},
+				"update": {
+					"stroke": {
+						"signal": "refutationColors[+datum.refutationResult + 1]"
+					},
+					"strokeOpacity": {
+						"signal": "showConfidenceInterval ? (indexof(inactiveFeatures,datum.key) < 0 && indexof(inactiveSpecifications, datum.id) < 0) ? 1 : 0.1 : 0"
+					}
+				}
+			}
+		},
+		{
+			"name": "hoveredColumn",
+			"type": "rect",
+			"encode": {
+				"update": {
+					"xc": { "scale": "x", "signal": "hoveredId" },
+					"width": { "value": 10 },
+					"height": { "signal": "height" },
+					"fillOpacity": { "signal": "hoveredId ? 0.1 : 0" }
+				}
+			}
+		},
+		{
+			"name": "activeEffectColumns",
+			"type": "rect",
+			"from": {
+				"data": "active"
+			},
+			"encode": {
+				"update": {
+					"xc": {
+						"scale": "x",
+						"field": "id"
+					},
+					"width": {
+						"value": 15
+					},
+					"height": { "signal": "height" },
+					"fillOpacity": { "value": 0.001 }
+				}
+			}
+		},
+		{
+			"name": "activeEffects",
+			"type": "symbol",
+			"from": {
+				"data": "active"
+			},
+			"encode": {
+				"update": {
+					"x": {
+						"scale": "x",
+						"field": "id"
+					},
+					"y": {
+						"scale": "y",
+						"field": "estimatedEffect"
+					},
+					"size": { "value": 25 },
+					"fill": {
+						"signal": "refutationColors[+datum.refutationResult + 1]"
+					}
+				}
+			}
+		},
+		{
+			"name": "inactiveEffects",
+			"type": "symbol",
+			"from": {
+				"data": "inactive"
+			},
+			"encode": {
+				"update": {
+					"x": {
+						"scale": "x",
+						"field": "id"
+					},
+					"y": {
+						"scale": "y",
+						"field": "estimatedEffect"
+					},
+					"size": { "value": 35 }
+				}
+			}
+		},
+		{
+			"name": "hoveredLabel",
+			"type": "text",
+			"from": {
+				"data": "hovered"
+			},
+			"encode": {
+				"update": {
+					"x": {
+						"scale": "x",
+						"field": "id"
+					},
+					"y": {
+						"signal": "datum.c95Upper ? scale('y', datum.c95Upper) - 5 : scale('y', datum.estimatedEffect) -8"
+					},
+					"text": { "signal": "(round(datum.estimatedEffect * 1000) / 1000)" },
+					"align": { "value": "center" }
+				}
+			}
+		},
+		{
+			"name": "zero",
+			"type": "rule",
+			"encode": {
+				"update": {
+					"x": { "value": 0 },
+					"x2": { "signal": "width" },
+					"y": {
+						"scale": "y",
+						"value": 0
+					},
+					"strokeWidth": {
+						"value": 1
+					},
+					"strokeOpacity": {
+						"value": 0.15
+					}
+				}
+			}
+		},
+		{
+			"name": "median",
+			"type": "rule",
+			"from": { "data": "stats" },
+			"encode": {
+				"update": {
+					"x": { "value": 0 },
+					"x2": { "signal": "width" },
+					"y": {
+						"scale": "y",
+						"field": "median"
+					},
+					"strokeWidth": {
+						"value": 1
+					},
+					"strokeOpacity": {
+						"signal": "showMedian ? 1 : 0"
+					}
+				}
+			}
+		},
+		{
+			"name": "mean",
+			"type": "rule",
+			"from": { "data": "stats" },
+			"encode": {
+				"update": {
+					"x": { "value": 0 },
+					"x2": { "signal": "width" },
+					"y": {
+						"scale": "y",
+						"field": "mean"
+					},
+					"strokeWidth": {
+						"value": 1
+					},
+					"strokeOpacity": {
+						"signal": "showMean ? 1 : 0"
+					}
+				}
+			}
+		},
+		{
+			"name": "medianLegend",
+			"type": "group",
+			"encode": {
+				"update": {
+					"x": { "value": 4 },
+					"y": { "value": 8 }
+				}
+			},
+			"marks": [
+				{
+					"name": "medianLegendLine",
+					"type": "rule",
+					"from": { "data": "stats" },
+					"encode": {
+						"update": {
+							"x": { "value": 0 },
+							"x2": { "value": 20 },
+							"strokeWidth": {
+								"value": 1
+							}
+						}
+					}
+				},
+				{
+					"name": "medianLabel",
+					"type": "text",
+					"from": { "data": "stats" },
+					"encode": {
+						"update": {
+							"text": {
+								"signal": "'Median effect (' + (round(datum.median * 1000) / 1000) + ')'"
+							},
+							"x": { "value": 24 },
+							"baseline": { "value": "middle" },
+							"fontSize": { "value": 12 }
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "meanLegend",
+			"type": "group",
+			"encode": {
+				"update": {
+					"x": { "value": 4 },
+					"y": { "value": 24 }
+				}
+			},
+			"marks": [
+				{
+					"name": "meanLegendLine",
+					"type": "rule",
+					"from": { "data": "stats" },
+					"encode": {
+						"update": {
+							"x": { "value": 0 },
+							"x2": { "value": 20 },
+
+							"strokeWidth": {
+								"value": 1
+							}
+						}
+					}
+				},
+				{
+					"name": "meanLabel",
+					"type": "text",
+					"from": { "data": "stats" },
+					"encode": {
+						"update": {
+							"text": {
+								"signal": "'Mean effect (' + (round(datum.mean * 1000) / 1000) + ')'"
+							},
+							"x": { "value": 24 },
+							"baseline": { "value": "middle" },
+							"fontSize": { "value": 12 }
+						}
+					}
+				}
+			]
+		}
+	]
+}

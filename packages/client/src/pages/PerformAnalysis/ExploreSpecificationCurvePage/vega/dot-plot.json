@@ -1,0 +1,464 @@
+{
+	"$schema": "https://vega.github.io/schema/vega/v5.10.json",
+	"description": "Vega dot plot plot chart template for specification decision matrix.",
+	"data": [
+		{
+			"name": "specifications"
+		},
+		{
+			"name": "features",
+			"source": "specifications",
+			"transform": [
+				{
+					"type": "fold",
+					"fields": ["causalModel", "estimator", "population", "treatment"],
+					"as": ["group", "feature"]
+				},
+				{
+					"type": "formula",
+					"expr": "datum.group + ':' + datum.feature",
+					"as": "sort"
+				},
+				{
+					"type": "collect",
+					"sort": {
+						"field": "sort"
+					}
+				}
+			]
+		},
+		{
+			"name": "shap",
+			"values": []
+		},
+		{
+			"name": "hovered",
+			"source": "features",
+			"transform": [
+				{
+					"type": "filter",
+					"expr": "datum.id === hoveredId"
+				}
+			]
+		},
+		{
+			"name": "primary",
+			"source": "features",
+			"transform": [
+				{
+					"type": "filter",
+					"expr": "datum.id == primaryEstimatorId"
+				}
+			]
+		},
+		{
+			"name": "active",
+			"source": "features",
+			"transform": [
+				{
+					"type": "filter",
+					"expr": "indexof(inactiveFeatures, datum.feature) < 0"
+				}
+			]
+		},
+		{
+			"name": "inactive",
+			"source": "features",
+			"transform": [
+				{
+					"type": "filter",
+					"expr": "indexof(inactiveFeatures, datum.feature) >= 0 || indexof(inactiveSpecifications, datum.id) >= 0"
+				}
+			]
+		}
+	],
+	"signals": [
+		{
+			"name": "hoveredId"
+		},
+		{
+			"name": "selectedId"
+		},
+		{
+			"name": "showShap"
+		},
+		{
+			"name": "inactiveFeatures",
+			"value": "[]"
+		},
+		{
+			"name": "shapDomain",
+			"value": "[]"
+		},
+		{
+			"name": "primaryColors"
+		},
+		{
+			"name": "primaryEstimatorId"
+		},
+		{
+			"name": "inactiveSpecifications",
+			"value": "[]"
+		}
+	],
+	"scales": [
+		{
+			"name": "x",
+			"type": "linear",
+			"nice": true,
+			"domain": {
+				"data": "features",
+				"field": "id"
+			},
+			"range": [
+				0,
+				{
+					"signal": "width -5"
+				}
+			]
+		},
+		{
+			"name": "y",
+			"type": "point",
+			"domain": {
+				"data": "features",
+				"field": "feature"
+			},
+			"range": [
+				30,
+				{
+					"signal": "height - 30"
+				}
+			]
+		},
+		{
+			"name": "yAxis",
+			"type": "point",
+			"domain": {
+				"data": "features",
+				"field": "sort"
+			},
+			"range": [
+				30,
+				{
+					"signal": "height - 30"
+				}
+			]
+		},
+		{
+			"name": "color",
+			"type": "ordinal",
+			"range": "category",
+			"domain": {
+				"data": "features",
+				"field": "group"
+			}
+		},
+		{
+			"name": "colorBold",
+			"type": "ordinal",
+			"range": {
+				"signal": "primaryColors"
+			},
+			"domain": {
+				"data": "features",
+				"field": "group"
+			}
+		},
+		{
+			"name": "shapSize",
+			"type": "linear",
+			"domain": {
+				"signal": "shapDomain"
+			},
+			"range": [9, 0, 9]
+		}
+	],
+	"axes": [
+		{
+			"scale": "x",
+			"domain": false,
+			"ticks": false,
+			"orient": "bottom",
+			"titlePadding": 5,
+			"title": "Specification (Primary specification in bold)",
+			"labels": true
+		},
+		{
+			"scale": "yAxis",
+			"domain": false,
+			"orient": "right",
+			"titlePadding": 34,
+			"titleFontSize": 14,
+			"labelLimit": 400,
+			"labelFontSize": 12,
+			"labelFontWeight": {
+				"signal": "indexof(inactiveFeatures,split(datum.value,':')[1]) < 0 ? 'bold' : 'normal'"
+			},
+			"labelOpacity": {
+				"signal": "indexof(inactiveFeatures,split(datum.value,':')[1]) < 0 ? 1.0 : 0.5"
+			},
+			"encode": {
+				"labels": {
+					"interactive": true,
+					"update": {
+						"cursor": {
+							"value": "pointer"
+						},
+						"text": {
+							"signal": "split(datum.value,':')[1]"
+						}
+					}
+				}
+			}
+		},
+		{
+			"scale": "yAxis",
+			"domain": false,
+			"orient": "right",
+			"labelFontSize": 10,
+			"labelOffset": -14,
+			"encode": {
+				"labels": {
+					"update": {
+						"text": {
+							"signal": "replace(replace(split(datum.value,':')[0], 'causalModel', 'causal model'), 'treatment', 'exposure')"
+						}
+					}
+				}
+			}
+		}
+	],
+	"marks": [
+		{
+			"name": "selectedColumn",
+			"type": "rect",
+			"encode": {
+				"update": {
+					"xc": {
+						"scale": "x",
+						"signal": "selectedId"
+					},
+					"width": {
+						"value": 10
+					},
+					"height": {
+						"signal": "height"
+					},
+					"fillOpacity": {
+						"signal": "selectedId ? 0.2 : 0"
+					}
+				}
+			}
+		},
+		{
+			"name": "hoveredColumn",
+			"type": "rect",
+			"encode": {
+				"update": {
+					"xc": {
+						"scale": "x",
+						"signal": "hoveredId"
+					},
+					"width": {
+						"value": 10
+					},
+					"height": {
+						"signal": "height"
+					},
+					"fillOpacity": {
+						"signal": "hoveredId ? 0.1 : 0"
+					}
+				}
+			}
+		},
+		{
+			"name": "activeEffectColumns",
+			"type": "rect",
+			"from": {
+				"data": "active"
+			},
+			"encode": {
+				"update": {
+					"xc": {
+						"scale": "x",
+						"field": "id"
+					},
+					"width": {
+						"value": 15
+					},
+					"height": {
+						"signal": "height"
+					},
+					"fillOpacity": {
+						"value": 0.001
+					}
+				}
+			}
+		},
+		{
+			"name": "shapMarks",
+			"type": "rect",
+			"from": {
+				"data": "shap"
+			},
+			"encode": {
+				"update": {
+					"xc": {
+						"scale": "x",
+						"field": "id"
+					},
+					"y": {
+						"signal": "scale('y',datum.key) - (datum.value < 0 ? -2.5 : (scale('shapSize', datum.value) + 2.5))"
+					},
+					"width": {
+						"value": 1
+					},
+					"height": {
+						"scale": "shapSize",
+						"field": "value"
+					},
+					"fillOpacity": {
+						"signal": "showShap ? (indexof(inactiveFeatures,datum.key) < 0 && indexof(inactiveSpecifications, datum.id) < 0) ? 0.7 : 0.1 : 0"
+					}
+				}
+			}
+		},
+		{
+			"name": "shapArrows",
+			"type": "symbol",
+			"from": { "data": "shap" },
+			"encode": {
+				"update": {
+					"strokeWidth": { "value": 15 },
+					"size": {
+						"value": 25
+					},
+					"strokeOpacity": {
+						"signal": "showShap && datum.value != 0 ? (indexof(inactiveFeatures,datum.key) < 0 && indexof(inactiveSpecifications, datum.id) < 0) ? 0.7 : 0.1 : 0"
+					},
+					"fillOpacity": {
+						"signal": "showShap && datum.value != 0 ? (indexof(inactiveFeatures,datum.key) < 0 && indexof(inactiveSpecifications, datum.id) < 0) ? 0.7 : 0.1 : 0"
+					},
+					"shape": {
+						"signal": "datum.value < 0 ? 'triangle-down' : 'triangle-up'"
+					},
+					"xc": {
+						"scale": "x",
+						"field": "id"
+					},
+					"y": {
+						"signal": "scale('y',datum.key) - (datum.value < 0 ? -scale('shapSize', datum.value) - 4.5 : (scale('shapSize', datum.value) + 4.5))"
+					}
+				}
+			}
+		},
+		{
+			"name": "activeMarks",
+			"type": "symbol",
+			"from": {
+				"data": "active"
+			},
+			"encode": {
+				"update": {
+					"x": {
+						"scale": "x",
+						"field": "id"
+					},
+					"y": {
+						"scale": "y",
+						"field": "feature"
+					},
+					"fill": {
+						"scale": "color",
+						"field": "group"
+					},
+					"fillOpacity": {
+						"value": 0.7
+					},
+					"size": {
+						"value": 25
+					}
+				}
+			}
+		},
+		{
+			"name": "primaryMark",
+			"type": "symbol",
+			"from": {
+				"data": "primary"
+			},
+			"encode": {
+				"update": {
+					"x": {
+						"scale": "x",
+						"field": "id"
+					},
+					"fill": {
+						"scale": "colorBold",
+						"field": "group"
+					},
+					"y": {
+						"scale": "y",
+						"field": "feature"
+					},
+					"size": {
+						"value": 25
+					}
+				}
+			}
+		},
+		{
+			"name": "inactiveMarks",
+			"type": "symbol",
+			"from": {
+				"data": "inactive"
+			},
+			"encode": {
+				"update": {
+					"x": {
+						"scale": "x",
+						"field": "id"
+					},
+					"y": {
+						"scale": "y",
+						"field": "feature"
+					},
+					"size": {
+						"value": 25
+					}
+				}
+			}
+		},
+		{
+			"name": "hoveredLabel",
+			"type": "text",
+			"from": {
+				"data": "hovered"
+			},
+			"encode": {
+				"update": {
+					"x": {
+						"scale": "x",
+						"field": "id"
+					},
+					"y": {
+						"signal": "height"
+					},
+					"dy": {
+						"value": 11.5
+					},
+					"text": {
+						"signal": "datum.id"
+					},
+					"align": {
+						"value": "center"
+					},
+					"fontSize": {
+						"value": 10
+					}
+				}
+			}
+		}
+	]
+}

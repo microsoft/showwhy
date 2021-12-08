@@ -1,0 +1,158 @@
+name: ShowWhy CI
+pool:
+  vmImage: ubuntu-latest
+
+trigger:
+  batch: true
+  branches:
+    include:
+      - main
+  paths:
+    include:
+      - packages/client
+
+pr:
+  branches:
+    include:
+      - main
+      - release/*
+  paths:
+    include:
+      - packages/client
+
+stages:
+  - stage: Compliance
+    dependsOn: []
+    jobs:
+      - job: ComplianceJob
+        pool:
+          vmImage: windows-latest
+        steps:
+          - task: CredScan@3
+            inputs:
+              outputFormat: sarif
+              debugMode: false
+
+          - task: ComponentGovernanceComponentDetection@0
+            inputs:
+              scanType: 'Register'
+              verbosity: 'Verbose'
+              alertWarningLevel: 'High'
+
+          - task: PublishSecurityAnalysisLogs@3
+            inputs:
+              ArtifactName: 'CodeAnalysisLogs'
+              ArtifactType: 'Container'
+
+  - stage: CodeQL
+    dependsOn: []
+    jobs:
+      - job: CodeQLJob
+        pool:
+          vmImage: windows-latest
+        variables:
+          'LGTM.UploadSnapshot': true
+        steps:
+          - checkout: self
+            clean: true
+            persistCredentials: true
+            fetchDepth: 1
+
+          - task: Bash@3
+            inputs:
+              targetType: 'inline'
+              script: echo "ACCESSTOKEN IS $SYSTEM_ACCESSTOKEN"
+            env:
+              'SYSTEM_ACCESSTOKEN': $(system.accesstoken)
+
+          - task: Semmle@1
+            env:
+              'SYSTEM_ACCESSTOKEN': $(system.accesstoken)
+            inputs:
+              sourceCodeDirectory: '$(Build.SourcesDirectory)/packages'
+              language: 'tsandjs'
+              includeNodeModules: false
+              querySuite: 'Recommended'
+              timeout: '1800'
+              ram: '16384'
+              addProjectDirToScanningExclusionList: true
+
+  - stage: Verification
+    dependsOn: []
+    jobs:
+      - job: VerificationJob
+        steps:
+          # Install Tooling
+          - task: NodeTool@0
+            displayName: Install Node
+            inputs:
+              versionSpec: '14.x'
+
+          # Install Dependencies
+          - task: Bash@3
+            displayName: Install Dependencies
+            inputs:
+              targetType: 'inline'
+              script: yarn install
+            env:
+              CI: true
+          # Verify Packages
+          - task: Bash@3
+            displayName: Verify Packages
+            inputs:
+              targetType: 'inline'
+              script: yarn ci
+            env:
+              CI: true
+
+  - stage: DeploymentInteg
+    displayName: Deployment (Integ)
+    dependsOn:
+      - Compliance
+      - Verification
+    condition: and(succeeded(), eq(variables['build.sourceBranch'], 'refs/heads/main'))
+    jobs:
+      - job: DeploymentJob
+        steps:
+          - checkout: self
+            clean: true
+            persistCredentials: true
+            fetchDepth: 1
+
+          - task: Bash@3
+            displayName: Install Dependencies
+            inputs:
+              targetType: 'inline'
+              script: yarn install
+            env:
+              CI: true
+
+          - task: DeleteFiles@1
+            displayName: Delete .env file
+            inputs:
+              SourceFolder: '$(System.DefaultWorkingDirectory)/packages/client'
+              Contents: '.env'
+              RemoveDotFiles: true
+
+          - task: Bash@3
+            displayName: Build Client
+            inputs:
+              targetType: 'inline'
+              script: yarn build:client
+            env:
+              VITE_API_URI: $(VITE_API_URI)
+              VITE_UPLOAD_FILES_API_KEY: $(VITE_UPLOAD_FILES_API_KEY)
+              VITE_DOWNLOAD_FILES_API_KEY: $(VITE_DOWNLOAD_FILES_API_KEY)
+              VITE_CHECK_STATUS_API_KEY: $(VITE_CHECK_STATUS_API_KEY)
+              VITE_CHECK_SIGNIFICANCE_STATUS_API_KEY: $(VITE_CHECK_SIGNIFICANCE_STATUS_API_KEY)
+              VITE_ORCHESTRATORS_API_KEY: $(VITE_ORCHESTRATORS_API_KEY)
+              VITE_EXECUTIONS_NUMBER_API_KEY: $(VITE_EXECUTIONS_NUMBER_API_KEY)
+
+          - task: AzureRmWebAppDeployment@4
+            displayName: Deploy Webapp
+            inputs:
+              ConnectionType: 'AzureRM'
+              appType: 'webApp'
+              ConnectedServiceName: '$(subscription)'
+              WebAppName: 'showwhy-ui'
+              packageForLinux: '$(System.DefaultWorkingDirectory)/packages/client/deploy.zip'

@@ -1,0 +1,123 @@
+name: showwhy function
+pool:
+  vmImage: ubuntu-latest
+
+trigger:
+  batch: true
+  branches:
+    include:
+      - main
+  paths:
+    include:
+      - packages/functions
+
+pr:
+  branches:
+    include:
+      - main
+      - release/*
+  paths:
+    include:
+      - packages/functions
+
+stages:
+  - stage: Compliance
+    dependsOn: []
+    jobs:
+      - job: ComplianceJob
+        pool:
+          vmImage: windows-latest
+        steps:
+          - task: CredScan@3
+            inputs:
+              outputFormat: sarif
+              debugMode: false
+
+          - task: ComponentGovernanceComponentDetection@0
+            inputs:
+              scanType: 'Register'
+              verbosity: 'Verbose'
+              alertWarningLevel: 'High'
+
+          - task: PublishSecurityAnalysisLogs@3
+            inputs:
+              ArtifactName: 'CodeAnalysisLogs'
+              ArtifactType: 'Container'
+
+  - stage: CodeQL
+    dependsOn: []
+    jobs:
+      - job: CodeQLJob
+        pool:
+          vmImage: windows-latest
+        variables:
+          'LGTM.UploadSnapshot': true
+        steps:
+          - checkout: self
+            clean: true
+            persistCredentials: true
+            fetchDepth: 1
+
+          - task: Bash@3
+            inputs:
+              targetType: 'inline'
+              script: echo "ACCESSTOKEN IS $SYSTEM_ACCESSTOKEN"
+            env:
+              'SYSTEM_ACCESSTOKEN': $(system.accesstoken)
+
+          - task: Semmle@1
+            env:
+              'SYSTEM_ACCESSTOKEN': $(system.accesstoken)
+            inputs:
+              sourceCodeDirectory: '$(Build.SourcesDirectory)/packages'
+              language: 'tsandjs'
+              includeNodeModules: false
+              querySuite: 'Recommended'
+              timeout: '1800'
+              ram: '16384'
+              addProjectDirToScanningExclusionList: true
+
+  - stage: DeploymentIntegFn
+    displayName: Deployment Fn (Integ)
+    dependsOn:
+      - Compliance
+    condition: and(succeeded(), eq(variables['build.sourceBranch'], 'refs/heads/main'))
+    jobs:
+      - job: DeploymentJob
+        steps:
+          - checkout: self
+            clean: true
+            persistCredentials: true
+            fetchDepth: 1
+
+          - task: UsePythonVersion@0
+            inputs:
+              versionSpec: '3.9.9'
+              addToPath: true
+              architecture: 'x64'
+
+          - task: AzureCLI@2
+            displayName: Download azure fn core tools
+            inputs:
+              azureSubscription: '$(subscription)'
+              scriptType: 'pscore'
+              scriptLocation: 'inlineScript'
+              inlineScript: |
+                curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
+                sudo mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg
+
+                sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/microsoft-ubuntu-$(lsb_release -cs)-prod $(lsb_release -cs) main" > /etc/apt/sources.list.d/dotnetdev.list'
+                sudo apt-get update
+
+                sudo apt-get install azure-functions-core-tools-3
+
+          - task: AzureCLI@2
+            displayName: Deploy azure fn
+            inputs:
+              azureSubscription: '$(subscription)'
+              scriptType: 'pscore'
+              scriptLocation: 'inlineScript'
+              inlineScript: |
+                cd packages/functions/src
+
+                func azure functionapp publish showwhyfunctions --python --build-native-deps

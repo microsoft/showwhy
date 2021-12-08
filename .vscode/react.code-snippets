@@ -1,0 +1,54 @@
+{
+    "CreateReactComponent": {
+        "prefix": "myrc",
+        "body": [
+            "/*!",
+            " * Copyright (c) Microsoft. All rights reserved.",
+            " * Licensed under the MIT license. See LICENSE file in the project.",
+            " */",
+            "import React, { memo } from 'react'",
+            "import styled from 'styled-components'",
+            "",
+            "export const ${TM_FILENAME_BASE}: React.FC = memo(",
+            "\tfunction ${TM_FILENAME_BASE}() {",
+            "\t\treturn (",
+            "\t\t\t<Container>",
+            "\t\t\t\t<h1>Container</h1>",
+            "\t\t\t</Container>",
+            "\t\t)",
+            "\t},",
+            ")",
+            "",
+            "const Container = styled.div``",
+            ""
+        ],
+        "description": "Create a react typescript component"
+    },
+    "LicenceHeader": {
+        "prefix": "mith",
+        "body": [
+            "/*!",
+            " * Copyright (c) Microsoft. All rights reserved.",
+            " * Licensed under the MIT license. See LICENSE file in the project.",
+            " */",
+            ""
+        ],
+        "description": "Insert the MIT header to the file"
+    },
+    "ReactUseMemo": {
+        "prefix": "umemo",
+        "body": [
+            "const $umemo = useMemo((): any => {",
+            "}, [])",
+        ],
+        "description": "Creates a useMemo const"
+    },
+    "ReactUseCallback": {
+        "prefix": "ucb",
+        "body": [
+            "const $ucb = useCallback(($val: any) => {",
+            "}, [])",
+        ],
+        "description": "Creates a useCallback const"
+    },
+}

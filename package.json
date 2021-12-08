@@ -1,0 +1,47 @@
+{
+	"name": "@showwhy/project",
+	"private": true,
+	"scripts": {
+		"preinstall": "npx only-allow yarn",
+		"postinstall": "husky install",
+		"clean:": "yarn workspaces foreach -pv run clean",
+		"build:": "yarn workspaces foreach -pivt run build",
+		"test:": "yarn workspaces foreach -pvt run test",
+		"start:": "yarn workspaces foreach -piv run start",
+		"deploy:": "yarn workspaces foreach -piv run deploy",
+		"lint:": "essex lint --fix",
+		"git_is_clean": "essex git-is-clean",
+		"prettify:": "essex prettify",
+		"ci": "run-s build: lint: test: git_is_clean",
+		"update_sdks:": "yarn dlx @yarnpkg/sdks vscode"
+	},
+	"prettier": "@essex/prettier-config",
+	"devDependencies": {
+		"@babel/core": "^7.15.5",
+		"@babel/preset-env": "^7.15.6",
+		"@babel/preset-react": "^7.14.5",
+		"@babel/preset-typescript": "^7.15.0",
+		"@essex/eslint-config": "^18.0.1",
+		"@essex/eslint-plugin": "^18.0.1",
+		"@essex/jest-config": "^18.0.1",
+		"@essex/prettier-config": "^18.0.1",
+		"@essex/scripts": "^18.2.0",
+		"@types/eslint": "^7.28.0",
+		"@types/jest": "^27.0.2",
+		"@types/prettier": "^2.3.2",
+		"@typescript-eslint/eslint-plugin": "^4.31.1",
+		"@typescript-eslint/parser": "^4.31.1",
+		"eslint": "^7.32.0",
+		"eslint-import-resolver-node": "^0.3.6",
+		"husky": "^7.0.2",
+		"jest": "^27.2.0",
+		"lint-staged": "^11.2.0",
+		"npm-run-all": "^4.1.5",
+		"prettier": "^2.4.1",
+		"typescript": "^4.4.3"
+	},
+	"workspaces": [
+		"packages/*"
+	],
+	"packageManager": "yarn@3.1.1"
+}
