@@ -1,0 +1,10 @@
+[
+    {
+        "name": "COVID-19",
+        "url": "data/examples/covid-19.json"
+    },
+    {
+        "name": "Smoking Cessation",
+        "url": "data/examples/smoking-cessation.json"
+    }
+]

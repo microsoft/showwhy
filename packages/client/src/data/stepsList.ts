@@ -1,0 +1,271 @@
+/*!
+ * Copyright (c) Microsoft. All rights reserved.
+ * Licensed under the MIT license. See LICENSE file in the project.
+ */
+import { v4 as uuidv4 } from 'uuid'
+import {
+	defineExposure,
+	defineOutcome,
+	definePopulation,
+	describeElements,
+	defineCausalFactors,
+	defineFactorsCausingExposure,
+	defineFactorsCausedByExposure,
+	defineFactorsCausingOutcome,
+	defineFactorsCausedByOutcome,
+	confirmAlternativeModels,
+} from '../locales/en-US/define-question'
+import {
+	estimateCausalEffects,
+	selectCausalEstimators,
+} from '../locales/en-US/perform-analysis'
+import {
+	deriveControl,
+	deriveExposure,
+	deriveOutcome,
+	derivePopulation,
+	loadData,
+	tableColumns,
+} from '../locales/en-US/prepare-data'
+import { evaluateHypothesis, graph } from '../locales/en-US/review-results'
+import {
+	why,
+	who,
+	how,
+	when,
+	whyLinks,
+	whoLinks,
+	whenLinks,
+	howLinks,
+} from '../locales/en-US/understand-process'
+import { PageType, StepStatus, Pages } from '~enums'
+import { Panel } from '~interfaces'
+
+export const stepsList = [
+	{
+		id: uuidv4(),
+		name: 'Understand process',
+		steps: [
+			{
+				id: uuidv4(),
+				title: 'Why use ShowWhy?',
+				guidance: why,
+				resources: whyLinks.map(link => ({ ...link, id: uuidv4() })),
+				status: StepStatus.ToDo,
+				url: `${Pages.UnderstandProcess}/${PageType.Why}`,
+				showStatus: false,
+			},
+			{
+				id: uuidv4(),
+				title: 'Who is ShowWhy for?',
+				guidance: who,
+				resources: whoLinks.map(link => ({ ...link, id: uuidv4() })),
+				status: StepStatus.ToDo,
+				url: `${Pages.UnderstandProcess}/${PageType.Who}`,
+				showStatus: false,
+			},
+			{
+				id: uuidv4(),
+				title: 'When to use ShowWhy?',
+				guidance: when,
+				resources: whenLinks.map(link => ({ ...link, id: uuidv4() })),
+				status: StepStatus.ToDo,
+				url: `${Pages.UnderstandProcess}/${PageType.When}`,
+				showStatus: false,
+			},
+			{
+				id: uuidv4(),
+				title: 'How does ShowWhy work?',
+				guidance: how,
+				resources: howLinks.map(link => ({ ...link, id: uuidv4() })),
+				status: StepStatus.ToDo,
+				url: `${Pages.UnderstandProcess}/${PageType.How}`,
+				showStatus: false,
+			},
+		],
+	},
+	{
+		id: uuidv4(),
+		name: 'Define question',
+		steps: [
+			{
+				id: uuidv4(),
+				title: 'Describe elements',
+				guidance: describeElements,
+				status: StepStatus.ToDo,
+				url: `${Pages.DefineElements}`,
+				showStatus: true,
+			},
+			{
+				id: uuidv4(),
+				title: 'Define population',
+				guidance: definePopulation,
+				status: StepStatus.ToDo,
+				url: `${Pages.Define}/${PageType.Population}`,
+				showStatus: true,
+			},
+			{
+				id: uuidv4(),
+				title: 'Define exposure',
+				guidance: defineExposure,
+				status: StepStatus.ToDo,
+				url: `${Pages.Define}/${PageType.Exposure}`,
+				showStatus: true,
+			},
+			{
+				id: uuidv4(),
+				title: 'Define outcome',
+				guidance: defineOutcome,
+				status: StepStatus.ToDo,
+				url: `${Pages.Define}/${PageType.Outcome}`,
+				showStatus: true,
+			},
+		],
+	},
+	{
+		id: uuidv4(),
+		name: 'Model causal factors',
+		steps: [
+			{
+				id: uuidv4(),
+				title: 'Consider causal factors',
+				guidance: defineCausalFactors,
+				status: StepStatus.ToDo,
+				url: `${Pages.ConsiderCausalFactors}`,
+				showStatus: true,
+			},
+			{
+				id: uuidv4(),
+				title: 'Factors causing exposure',
+				guidance: defineFactorsCausingExposure,
+				status: StepStatus.ToDo,
+				showStatus: true,
+				url: `${Pages.DefineFactors}/${PageType.CauseExposure}`,
+			},
+			{
+				id: uuidv4(),
+				title: 'Factors caused by exposure',
+				guidance: defineFactorsCausedByExposure,
+				status: StepStatus.ToDo,
+				url: `${Pages.DefineFactors}/${PageType.CausedByExposure}`,
+				showStatus: true,
+			},
+			{
+				id: uuidv4(),
+				title: 'Factors causing outcome',
+				guidance: defineFactorsCausingOutcome,
+				status: StepStatus.ToDo,
+				url: `${Pages.DefineFactors}/${PageType.CauseOutcome}`,
+				showStatus: true,
+			},
+			{
+				id: uuidv4(),
+				title: 'Factors caused by outcome',
+				guidance: defineFactorsCausedByOutcome,
+				status: StepStatus.ToDo,
+				url: `${Pages.DefineFactors}/${PageType.CausedByOutcome}`,
+				showStatus: true,
+			},
+			{
+				id: uuidv4(),
+				title: 'Confirm alternative models',
+				guidance: confirmAlternativeModels.replace(/\u200B/g, ''),
+				status: StepStatus.ToDo,
+				url: `${Pages.Confirm}`,
+				showStatus: true,
+			},
+		],
+	},
+	{
+		id: uuidv4(),
+		name: 'Prepare data',
+		steps: [
+			{
+				id: uuidv4(),
+				title: 'Load data tables',
+				guidance: loadData,
+				status: StepStatus.ToDo,
+				url: `${Pages.LoadData}`,
+				showStatus: true,
+			},
+			{
+				id: uuidv4(),
+				title: 'Process table columns',
+				guidance: tableColumns,
+				status: StepStatus.ToDo,
+				url: Pages.ProcessTableColumns,
+				showStatus: true,
+			},
+			{
+				id: uuidv4(),
+				title: 'Population variables',
+				guidance: derivePopulation,
+				status: StepStatus.ToDo,
+				url: `${Pages.Variables}/${PageType.Population}`,
+				showStatus: true,
+			},
+			{
+				id: uuidv4(),
+				title: 'Exposure variables',
+				guidance: deriveExposure,
+				status: StepStatus.ToDo,
+				url: `${Pages.Variables}/${PageType.Exposure}`,
+				showStatus: true,
+			},
+			{
+				id: uuidv4(),
+				title: 'Outcome variables',
+				guidance: deriveOutcome,
+				status: StepStatus.ToDo,
+				url: `${Pages.Variables}/${PageType.Outcome}`,
+				showStatus: true,
+			},
+			{
+				id: uuidv4(),
+				title: 'Control variables',
+				guidance: deriveControl,
+				status: StepStatus.ToDo,
+				url: `${Pages.Variables}/${PageType.Control}`,
+				showStatus: true,
+			},
+		],
+	},
+	{
+		id: uuidv4(),
+		name: 'Perform analysis',
+		steps: [
+			{
+				id: uuidv4(),
+				title: 'Select causal estimators',
+				guidance: selectCausalEstimators,
+				status: StepStatus.ToDo,
+				url: Pages.SelectCausalEstimators,
+				showStatus: true,
+			},
+			{
+				id: uuidv4(),
+				title: 'Estimate causal effects',
+				guidance: estimateCausalEffects,
+				status: StepStatus.ToDo,
+				url: Pages.EstimateCausalEffects,
+				showStatus: true,
+			},
+			{
+				id: uuidv4(),
+				title: 'Explore specification curve',
+				guidance: graph,
+				status: StepStatus.ToDo,
+				url: Pages.SpecificationCurvePage,
+				showStatus: true,
+			},
+			{
+				id: uuidv4(),
+				title: 'Evaluate hypothesis',
+				guidance: evaluateHypothesis,
+				status: StepStatus.ToDo,
+				url: Pages.EvaluateHypothesisPage,
+				showStatus: true,
+			},
+		],
+	},
+] as Panel[]

@@ -1,0 +1,68 @@
+/*!
+ * Copyright (c) Microsoft. All rights reserved.
+ * Licensed under the MIT license. See LICENSE file in the project.
+ */
+import { useCallback, useEffect } from 'react'
+import { EventListenerHandler, View } from 'vega'
+
+export function useAddClickHandler(
+	view: View,
+	onDatumClick?: (datum) => void,
+	onAxisClick?: (datum, axis: string) => void,
+): void {
+	const handleClick = useCallback(
+		(e, item) => {
+			const { datum, mark } = item
+			if (mark.role.includes('axis')) {
+				const axis = item.align === 'left' || item.align === 'right' ? 'y' : 'x'
+				onAxisClick && onAxisClick(datum, axis)
+			} else {
+				onDatumClick && onDatumClick(datum)
+			}
+		},
+		[onDatumClick, onAxisClick],
+	)
+	useEffect(() => {
+		view.addEventListener('click', handleClick)
+		return () => {
+			view.removeEventListener('click', handleClick)
+		}
+	}, [view, handleClick])
+}
+
+export function useAddMouseOverHandler(
+	view: View,
+	onDatumMouseOver?: (datum) => void,
+): void {
+	const handleMouseOver = useCallback(
+		(e, item) => {
+			const { datum } = item
+			onDatumMouseOver && onDatumMouseOver(datum)
+		},
+		[onDatumMouseOver],
+	)
+	useEffect(() => {
+		view.addEventListener('mouseover', handleMouseOver)
+		return () => {
+			view.removeEventListener('mouseover', handleMouseOver)
+		}
+	}, [view, handleMouseOver])
+}
+
+export function useEventListeners(
+	view: View,
+	listeners: { [key: string]: EventListenerHandler },
+): void {
+	useEffect(() => {
+		Object.entries(listeners).forEach(([name, value]) => {
+			view.addEventListener(name, value)
+		})
+		return () => {
+			if (view) {
+				Object.entries(listeners).forEach(([name, value]) => {
+					view.removeEventListener(name, value)
+				})
+			}
+		}
+	}, [view, listeners])
+}

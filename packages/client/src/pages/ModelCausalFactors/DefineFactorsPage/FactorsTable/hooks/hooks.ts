@@ -1,0 +1,74 @@
+/*!
+ * Copyright (c) Microsoft. All rights reserved.
+ * Licensed under the MIT license. See LICENSE file in the project.
+ */
+
+import { useBoolean } from 'ahooks'
+import { useCallback, useMemo, useState } from 'react'
+import { useFlatFactorsList, useSaveFactors } from './factors'
+import { useCheckbox, useComboBox, useTextField } from './inputs'
+import {
+	useOnChangeCauses,
+	useOnChangeDegree,
+	useOnChangeReasoning,
+} from './onChange'
+import { FlatCausalFactor, CausalFactor, Item } from '~interfaces'
+import { useCausalFactors, useSetCausalFactors } from '~state'
+import { GenericObject } from '~types'
+
+export const useFactorsTable = (causeType: string): GenericObject => {
+	const [multiline, { toggle: toggleMultiline }] = useBoolean(false)
+	const [values, setValues] = useState<CausalFactor[] | undefined>([])
+	const setCausalFactors = useSetCausalFactors()
+	const causalFactors = useCausalFactors()
+
+	const save = useCallback(
+		newList => {
+			setCausalFactors(newList)
+			setValues([])
+		},
+		[setValues, setCausalFactors],
+	)
+
+	const flatFactorsList = useFlatFactorsList(causalFactors, causeType, values)
+
+	const saveNewFactors = useSaveFactors(
+		causalFactors,
+		causeType,
+		setValues,
+		save,
+	)
+
+	const onChangeCauses = useOnChangeCauses(flatFactorsList, saveNewFactors)
+
+	const onChangeDegree = useOnChangeDegree(flatFactorsList, saveNewFactors)
+
+	const onChangeReasoning = useOnChangeReasoning(
+		flatFactorsList,
+		toggleMultiline,
+		saveNewFactors,
+		multiline,
+	)
+
+	const checkbox = useCheckbox(onChangeCauses)
+
+	const comboBox = useComboBox(onChangeDegree)
+
+	const textField = useTextField(onChangeReasoning)
+
+	const itemList = useMemo((): Item[] => {
+		return flatFactorsList.map((factor: FlatCausalFactor) => {
+			return {
+				variable: factor.variable,
+				causes: checkbox(factor),
+				degree: comboBox(factor),
+				reasoning: textField(factor),
+			}
+		})
+	}, [flatFactorsList, checkbox, comboBox, textField])
+
+	return {
+		flatFactorsList,
+		itemList,
+	}
+}

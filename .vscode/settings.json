@@ -1,0 +1,16 @@
+{
+	"search.exclude": {
+		"**/.yarn": true,
+		"**/.pnp.*": true
+	},
+	"eslint.nodePath": ".yarn/sdks",
+	"typescript.tsdk": ".yarn/sdks/typescript/lib",
+	"typescript.enablePromptUseWorkspaceTsdk": true,
+	"prettier.prettierPath": ".yarn/sdks/prettier/index.js",
+	"editor.formatOnSave": true,
+	"azureFunctions.deploySubpath": "packages/functions/src",
+	"azureFunctions.scmDoBuildDuringDeployment": true,
+	"azureFunctions.pythonVenv": "packages/functions/src/.venv",
+	"azureFunctions.projectLanguage": "Python",
+	"azureFunctions.projectRuntime": "~3"
+}

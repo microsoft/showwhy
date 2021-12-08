@@ -1,0 +1,15 @@
+.yarn/
+.yarnrc.yml
+yarn.lock
+.pnp.*
+node_modules/
+storybook-static/
+build/
+dist/
+lib/
+coverage/
+public/
+bot_backups/*
+DATA_REVIEW.md
+.cache
+.eslintrc
