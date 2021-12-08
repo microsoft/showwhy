@@ -5,13 +5,22 @@
 import { renderHook } from '@testing-library/react-hooks'
 import { RecoilRoot } from 'recoil'
 import { v4 } from 'uuid'
+import { DefinitionType } from '../../common/enums'
+import { useDefineQuestion, useSetDefineQuestion } from '../../state'
 import { useRemoveDefinition, useSaveDefinition } from '../modelVariable'
 import { usePageType } from '../usePageType'
-import { DefinitionType } from '~enums'
-import { useDefineQuestion, useSetDefineQuestion } from '~state'
 
 jest.mock('../../state')
 jest.mock('../usePageType')
+
+const usePageTypeListenerMock = usePageType as jest.MockedFunction<
+	typeof usePageType
+>
+const useDefineQuestionListenerMock = useDefineQuestion as jest.MockedFunction<
+	typeof useDefineQuestion
+>
+const useSetDefineQuestionListenerMock =
+	useSetDefineQuestion as jest.MockedFunction<typeof useSetDefineQuestion>
 
 const question = {
 	population: {
@@ -45,9 +54,9 @@ describe('modelVariableHooks', () => {
 				definition: [...question[type].definition, newDefinition],
 			},
 		}
-		usePageType.mockReturnValue(type)
-		useDefineQuestion.mockReturnValue(question)
-		useSetDefineQuestion.mockReturnValue(jest.fn())
+		usePageTypeListenerMock.mockReturnValue(type)
+		useDefineQuestionListenerMock.mockReturnValue(question)
+		useSetDefineQuestionListenerMock.mockReturnValue(jest.fn())
 		const { result } = renderHook(() => useSaveDefinition(), {
 			wrapper: RecoilRoot,
 		})
@@ -65,9 +74,9 @@ describe('modelVariableHooks', () => {
 				definition: [],
 			},
 		}
-		usePageType.mockReturnValue(type)
-		useDefineQuestion.mockReturnValue(question)
-		useSetDefineQuestion.mockReturnValue(jest.fn())
+		usePageTypeListenerMock.mockReturnValue(type)
+		useDefineQuestionListenerMock.mockReturnValue(question)
+		useSetDefineQuestionListenerMock.mockReturnValue(jest.fn())
 		const { result } = renderHook(() => useRemoveDefinition(), {
 			wrapper: RecoilRoot,
 		})
