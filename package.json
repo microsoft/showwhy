@@ -1,6 +1,14 @@
 {
 	"name": "@showwhy/project",
 	"private": true,
+	"contributors": [
+		"Nathan Evans <naevans@microsoft.com>",
+		"Dayenne Souza <ddesouza@microsoft.com>",
+		"Ha Trinh <trinhha@microsoft.com>",
+		"Andres Morales <andresmor@microsoft.com>",
+		"Monica Carvajal <mcarvajal@microsoft.com>",
+		"Alonso Guevara <alonsog@microsoft.com>"
+	],
 	"scripts": {
 		"preinstall": "npx only-allow yarn",
 		"postinstall": "husky install",

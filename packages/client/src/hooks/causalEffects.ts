@@ -14,7 +14,14 @@ export const useCausalEffects = (
 ): GenericObject => {
 	const question = useDefineQuestion()
 	const excludedFactors = useExcludedFactors()
-	const excludedMessage = useExcludedMessage(excludedFactors)
+
+	const excludedMessage = useMemo((): string => {
+		return `${excludedFactors.length} potential control${
+			excludedFactors.length > 1 ? 's were' : ' was'
+		}  excluded based on ambiguous causal directions:​ ${excludedFactors.join(
+			', ',
+		)}.`
+	}, [excludedFactors])
 
 	const generalExposure = useMemo((): string => {
 		return question.exposure?.label || ''
@@ -34,14 +41,4 @@ export const useCausalEffects = (
 		excludedFactors,
 		excludedMessage,
 	}
-}
-
-const useExcludedMessage = excludedFactors => {
-	return useMemo((): string => {
-		return `${excludedFactors.length} potential control${
-			excludedFactors.length > 1 ? 's were' : ' was'
-		}  excluded based on ambiguous causal directions:​ ${excludedFactors.join(
-			', ',
-		)}.`
-	}, [excludedFactors])
 }
