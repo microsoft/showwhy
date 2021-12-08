@@ -12,5 +12,6 @@
 	"azureFunctions.scmDoBuildDuringDeployment": true,
 	"azureFunctions.pythonVenv": "packages/functions/src/.venv",
 	"azureFunctions.projectLanguage": "Python",
-	"azureFunctions.projectRuntime": "~3"
+	"azureFunctions.projectRuntime": "~3",
+	"jest.jestCommandLine": "yarn run test:jest"
 }

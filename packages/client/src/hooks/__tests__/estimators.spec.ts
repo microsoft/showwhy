@@ -21,16 +21,20 @@ import {
 	useExposureAssignedEstimators,
 	useOutcomeBasedEstimators,
 } from '../estimators'
-import { EstimatorsType, EstimatorsGroups } from '~enums'
+import { EstimatorsType, EstimatorsGroups } from '../../common/enums'
 
 jest.mock('../../state')
+
+const useEstimatorsListenerMock = useEstimators as jest.MockedFunction<
+	typeof useEstimators
+>
 
 describe('estimatorsHooks', () => {
 	it('useForestDoublyRobustLearner', () => {
 		const expected = ESTIMATORS.find(
 			e => e.type === EstimatorsType.ForestDoublyRobustLearner,
 		)
-		useEstimators.mockReturnValue([expected])
+		useEstimatorsListenerMock.mockReturnValue([expected])
 		const { result } = renderHook(() => useForestDoublyRobustLearner(), {
 			wrapper: RecoilRoot,
 		})
@@ -42,7 +46,7 @@ describe('estimatorsHooks', () => {
 		const expected = ESTIMATORS.find(
 			e => e.type === EstimatorsType.LinearDoublyRobustLearner,
 		)
-		useEstimators.mockReturnValue([expected])
+		useEstimatorsListenerMock.mockReturnValue([expected])
 		const { result } = renderHook(() => useLinearDoublyRobustLearner(), {
 			wrapper: RecoilRoot,
 		})
@@ -54,7 +58,7 @@ describe('estimatorsHooks', () => {
 		const expected = ESTIMATORS.find(
 			e => e.type === EstimatorsType.InversePropensityWeighting,
 		)
-		useEstimators.mockReturnValue([expected])
+		useEstimatorsListenerMock.mockReturnValue([expected])
 		const { result } = renderHook(() => useExposureAssignedEstimators(), {
 			wrapper: RecoilRoot,
 		})
@@ -66,7 +70,7 @@ describe('estimatorsHooks', () => {
 		const expected = ESTIMATORS.find(
 			e => e.type === EstimatorsType.LinearRegression,
 		)
-		useEstimators.mockReturnValue([expected])
+		useEstimatorsListenerMock.mockReturnValue([expected])
 		const { result } = renderHook(() => useOutcomeBasedEstimators(), {
 			wrapper: RecoilRoot,
 		})

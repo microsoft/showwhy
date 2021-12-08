@@ -9,7 +9,7 @@ import { RecoilRoot } from 'recoil'
 import { stepsList } from '../../data/stepsList'
 import { useSelectedProject } from '../../state'
 import * as steps from '../steps'
-import { Pages } from '~enums'
+import { Pages } from '../../common/enums'
 
 jest.mock('../../state')
 jest.mock('react-router-dom', () => {
@@ -21,13 +21,24 @@ jest.mock('react-router-dom', () => {
 	}
 })
 
+const useSelectedProjectListenerMock =
+	useSelectedProject as jest.MockedFunction<typeof useSelectedProject>
+const useLocationListenerMock = useLocation as jest.MockedFunction<
+	typeof useLocation
+>
+
 describe('stepsHooks', () => {
 	it('useCurrentStep', () => {
 		const expected = stepsList
 			.flatMap(x => x.steps.filter(s => s.showStatus))
 			.find(x => x.url === Pages.EstimateCausalEffects)
-		useSelectedProject.mockReturnValue({ steps: stepsList })
-		useLocation.mockReturnValue({ pathname: Pages.EstimateCausalEffects })
+		useSelectedProjectListenerMock.mockReturnValue({ steps: stepsList })
+		useLocationListenerMock.mockReturnValue({
+			pathname: Pages.EstimateCausalEffects,
+			search: '',
+			state: '',
+			hash: '',
+		})
 		const { result } = renderHook(() => steps.useCurrentStep(), {
 			wrapper: RecoilRoot,
 		})
@@ -37,7 +48,7 @@ describe('stepsHooks', () => {
 
 	it('useStepsShowStatus', () => {
 		const expected = stepsList.flatMap(x => x.steps.filter(s => s.showStatus))
-		useSelectedProject.mockReturnValue({ steps: stepsList })
+		useSelectedProjectListenerMock.mockReturnValue({ steps: stepsList })
 		const { result } = renderHook(() => steps.useStepsShowStatus(), {
 			wrapper: RecoilRoot,
 		})
