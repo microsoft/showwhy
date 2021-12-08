@@ -21,7 +21,7 @@ export const when = `<p>ShowWhy is not a tool for causal discovery – detecting
 
 export const how = `<p>ShowWhy follows best practices in real-world evidence development pioneered in the medical domain. By emulating the process of designing and performing a randomized control trial, as described in <a href="https://www.frontiersin.org/articles/10.3389/fphar.2021.700776/full">“Ten Rules for Conducting Retrospective Pharmacoepidemiological Analyses: Example COVID-19 Study”</a>, ShowWhy guides the user through the rigorous process of obtaining the highest quality evidence that can be derived from observational data.​</p>
 <p>Behind the scenes, ShowWhy generates auditable reports of the causal inference process, including Python notebooks using the causal inference libraries DoWhy and EconML. These can be independently reviewed and validated by causal inference experts as needed or used by data scientists to learn causal inference grounded in real data and questions.</p>
-<p>Please note that the current version of ShowWhy only supports causal inference with <i>binary</i> exposures. We plan to provide support for categorical and continuous exposures in future releases.</p>`
+<p>Please note that the current version of ShowWhy only supports causal inference with <i>binary</i> exposures using <a href="https://causalinference.gitlab.io/kdd-tutorial/methods.html">conditioning-based methods</a>. We plan to provide support for categorical and continuous exposures in future releases.</p>`
 
 export const whyLinks = [
 	{
@@ -35,15 +35,15 @@ export const whyLinks = [
 			},
 			{
 				title: 'Video',
-				description: 'The two kinds of natural experiments ',
-				image: '',
-				url: 'https://www.youtube.com/watch?v=xdRyjhGVj_Q',
-			},
-			{
-				title: 'Video',
 				description: 'Confounding variables in observational studies ',
 				image: '',
 				url: 'https://www.youtube.com/watch?v=fjdb4ID7HVg',
+			},
+			{
+				title: 'Slides',
+				description: 'Conditioning-based methods vs natural experiments ',
+				image: '',
+				url: 'https://causalinference.gitlab.io/kdd-tutorial/methods.html',
 			},
 		],
 	},
