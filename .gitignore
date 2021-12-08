@@ -23,7 +23,7 @@ node_modules/
 .DS_Store
 
 # dotenv
-.env*
+.env.*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -122,15 +122,6 @@ celerybeat-schedule
 # SageMath parsed files
 *.sage.py
 
-# Environments
-.env
-.venv
-env/
-venv/
-ENV/
-env.bak/
-venv.bak/
-
 # Spyder project settings
 .spyderproject
 .spyproject
@@ -155,12 +146,5 @@ obj
 appsettings.json
 .python_packages
 
-# Azurite artifacts
-__azurite*
-__queuestorage__
-__blobstorage__
-
-# ShowWhy Data
-sessions/
 # Deploy zip
 deploy.zip
