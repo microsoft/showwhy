@@ -5,7 +5,7 @@
 import { SelectionState } from '@thematic/core'
 import { useThematic } from '@thematic/react'
 import React, { memo, useMemo } from 'react'
-import { RefutationResultString } from 'src/common/enums/RefutationResult'
+import { RefutationResultString } from '~enums'
 import styled from 'styled-components'
 import { VegaHost } from '../VegaHost'
 import template from './scatter-plot.json'

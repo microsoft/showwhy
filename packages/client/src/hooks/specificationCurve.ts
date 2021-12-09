@@ -5,7 +5,7 @@
 
 import { useThematic } from '@thematic/react'
 import { useCallback, useMemo, useState } from 'react'
-import { useLoadSpecificationData } from 'src/pages/PerformAnalysis/ExploreSpecificationCurvePage/hooks'
+import { useLoadSpecificationData } from '../pages/PerformAnalysis/ExploreSpecificationCurvePage/hooks'
 import { DefinitionType, NodeResponseStatus } from '~enums'
 import {
 	useDefaultRun,

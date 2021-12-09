@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import React, { memo } from 'react'
-import { useSupportedFileTypes } from 'src/hooks/supportedFileTypes'
+import { useSupportedFileTypes } from '../../../hooks/supportedFileTypes'
 import styled from 'styled-components'
 import { InfoCallout } from '~components/Callout'
 

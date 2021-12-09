@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import React, { memo } from 'react'
-import { usePageType } from 'src/hooks/usePageType'
+import { usePageType } from '../../../hooks/usePageType'
 import styled from 'styled-components'
 
 export const Header: React.FC = memo(function Header() {

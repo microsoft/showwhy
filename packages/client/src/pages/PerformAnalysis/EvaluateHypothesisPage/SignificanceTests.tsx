@@ -6,7 +6,7 @@ import React, { memo } from 'react'
 import {
 	confidenceIntervalCalloutLine1,
 	confidenceIntervalCalloutLine2,
-} from 'src/locales/en-US/perform-analysis'
+} from '../../../locales/en-US/perform-analysis'
 import { LinkCallout } from '~components/Callout'
 import { ProgressBar } from '~components/ProgressBar'
 import { NodeResponseStatus, Significance } from '~enums'
