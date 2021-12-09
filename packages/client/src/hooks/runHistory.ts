@@ -134,13 +134,12 @@ export function useDefaultRun(): RunHistory | undefined {
 export function useUpdateRunHistory(): (
 	id: string,
 	response: CheckStatus,
-	result?: RowObject[] | null,
 ) => void {
 	const setRunHistory = useSetRunHistory()
 	const getRefutationCount = useRefutationCount()
 
 	return useCallback(
-		(id, response, result) => {
+		(id, response) => {
 			setRunHistory(prev => {
 				const existing = prev.find(p => p.id === id) as RunHistory
 				const refutationCount = getRefutationCount(response.total_results)
@@ -166,41 +165,14 @@ export function useUpdateRunHistory(): (
 					  } as RunStatus)
 				return [
 					...prev.filter(p => p.id !== id),
-					{ ...existing, status, result: result || existing.result },
+					{
+						...existing,
+						status,
+						result: response.partial_results || existing.result,
+					},
 				] as RunHistory[]
 			})
 		},
 		[setRunHistory],
-	)
-}
-
-function useProcessError(): (res: CheckStatus, id: string) => boolean {
-	const updateRunHistory = useUpdateRunHistory()
-
-	return useCallback(
-		(res: CheckStatus, id: string): boolean => {
-			updateRunHistory(id, res)
-			return true
-		},
-		[updateRunHistory],
-	)
-}
-
-export function useGetReady(): (id: string, res: CheckStatus) => Promise<void> {
-	const updateRunHistory = useUpdateRunHistory()
-	const processError = useProcessError()
-
-	return useCallback(
-		async (id: string, res: CheckStatus) => {
-			if (
-				res.runtimeStatus.toLowerCase() === NodeResponseStatus.Error ||
-				res.runtimeStatus.toLowerCase() === NodeResponseStatus.Failed
-			) {
-				processError(res, id)
-				return
-			}
-			updateRunHistory(id, res, res.partial_results)
-		},
-		[processError, updateRunHistory],
 	)
 }

@@ -105,7 +105,7 @@
 		{
 			"name": "x",
 			"type": "linear",
-			"nice": true,
+			"nice": false,
 			"domain": {
 				"data": "features",
 				"field": "id"
@@ -177,7 +177,7 @@
 	"axes": [
 		{
 			"scale": "x",
-			"domain": false,
+			"domain": true,
 			"ticks": false,
 			"orient": "bottom",
 			"titlePadding": 5,

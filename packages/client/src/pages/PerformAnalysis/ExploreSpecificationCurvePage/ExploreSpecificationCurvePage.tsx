@@ -9,7 +9,6 @@ import { SpecificationDescription } from './SpecificationDescription'
 import { VegaSpecificationCurve } from './vega/VegaSpecificationCurve'
 import { EmptyDataPageWarning } from '~components/EmptyDataPageWarning'
 import { ErrorMessage } from '~components/ErrorMessage'
-import { Loading } from '~components/Loading'
 import { RunProgressIndicator } from '~components/RunProgressIndicator'
 import { Pages } from '~enums'
 import { useRefutationOptions, useSpecificationCurve } from '~hooks'
@@ -36,6 +35,10 @@ export const ExploreSpecificationCurvePage: React.FC = memo(
 			vegaWindowDimensions,
 			theme,
 			outcome,
+			isSpecificationOn,
+			refutationNumbers,
+			failedRefutations,
+			onToggleRejectEstimate,
 		} = useSpecificationCurve()
 
 		if (!data.length && !defaultRun) {
@@ -97,9 +100,11 @@ export const ExploreSpecificationCurvePage: React.FC = memo(
 					/>
 					<SpecificationDescription
 						refutationOptions={refutationOptions}
-						onConfigChange={onSpecificationsChange}
-						config={config}
 						specification={selectedSpecification}
+						isSpecificationOn={isSpecificationOn}
+						refutationNumbers={refutationNumbers}
+						failedRefutations={failedRefutations}
+						onToggleRejectEstimate={onToggleRejectEstimate}
 					/>
 				</Main>
 			</ContainerFlexRow>
