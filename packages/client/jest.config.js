@@ -8,6 +8,7 @@ module.exports = {
 	...configure(),
 	testEnvironment: 'jsdom',
 	moduleNameMapper: {
+		'~resources/getEnv': ['<rootDir>/src/resources/__mocks__/getEnv.ts'],
 		'~arquero/(.*)': ['<rootDir>/src/arquero/index.ts'],
 		'~components': ['<rootDir>/src/components/index.ts'],
 		'~components/(.*)*': ['<rootDir>/src/components/$1'],
@@ -22,6 +23,5 @@ module.exports = {
 		'~utils/(.*)': ['<rootDir>/src/common/utils/$1'],
 		'~hooks': ['<rootDir>/src/hooks/index.ts'],
 		'~styles': ['<rootDir>/src/styles/index.ts'],
-		'~resources/getEnv': ['<rootDir>/src/resources/__mocks__/getEnv'],
 	},
 }
