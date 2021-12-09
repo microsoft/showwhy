@@ -7,7 +7,15 @@ import { useBoolean, useId } from '@fluentui/react-hooks'
 import { useCallback, useEffect, useMemo } from 'react'
 import { useHistory } from 'react-router-dom'
 import { StepStatus } from '~enums'
-import { useCurrentStep, useGetStepUrls, useAllSteps } from '~hooks'
+import {
+	useCurrentStep,
+	useGetStepUrls,
+	useAllSteps,
+	useExampleProjects,
+	useLoadProject,
+	useResetProject,
+} from '~hooks'
+import { FileDefinition } from '~interfaces'
 import {
 	useSelectedProject,
 	useSetGuidance,
@@ -29,6 +37,18 @@ export const useLayout = (): GenericObject => {
 	const handleGetStepUrls = useGetStepUrls()
 	const handleSetAllStepStatus = useSetStepStatuses()
 	const defineQuestion = useDefineQuestion()
+	const examples = useExampleProjects()
+	const loadExample = useLoadProject()
+	const resetProject = useResetProject()
+	const exampleProjects = useExampleProjects()
+
+	const onClickProject = useCallback(
+		(example: FileDefinition) => {
+			resetProject()
+			loadExample(example)
+		},
+		[loadExample, resetProject],
+	)
 
 	useEffect(() => {
 		setGuidance(isGuidanceVisible)
@@ -82,5 +102,8 @@ export const useLayout = (): GenericObject => {
 		previousUrl,
 		nextUrl,
 		goToPage,
+		examples,
+		onClickProject,
+		exampleProjects,
 	}
 }
