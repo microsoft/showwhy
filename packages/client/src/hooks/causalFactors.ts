@@ -5,10 +5,11 @@
 
 import { useCallback, useMemo } from 'react'
 import { v4 } from 'uuid'
+// HACK to pass the unit tests
+import { replaceItemAtIndex } from '../common/utils/functions'
 import { BeliefDegree, CausalModelLevel } from '~enums'
 import { AlternativeModels, CausalFactor } from '~interfaces'
 import { useCausalFactors, useSetCausalFactors } from '~state/causalFactors'
-import { replaceItemAtIndex } from '~utils'
 
 export function useExcludedFactors(): string[] {
 	const causalFactors = useCausalFactors()
