@@ -3,8 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import React, { memo } from 'react'
-import { useCurrentStep } from '../../hooks'
 import styled from 'styled-components'
+import { useCurrentStep } from '../../hooks'
 import { Container, ContainerFlexRow, Text, Title } from '~styles'
 
 export const UnderstandProcessPage: React.FC = memo(

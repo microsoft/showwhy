@@ -7,12 +7,11 @@ import { useBoolean } from '@fluentui/react-hooks'
 import { escape } from 'arquero'
 import ColumnTable from 'arquero/dist/types/table/column-table'
 import React, { memo, useState, useCallback, useMemo } from 'react'
-import { DeriveTypes } from '~enums'
-import { Derive } from '~interfaces'
 
-import { usePageType } from '../../../../hooks/usePageType'
 import styled from 'styled-components'
 import { v4 as uuidv4 } from 'uuid'
+import { usePageType } from '../../../../hooks/usePageType'
+import { DeriveTypes } from '~enums'
 import {
 	useCaptureTable,
 	useFilterFunctions,
@@ -21,7 +20,7 @@ import {
 	useSetDeriveTable,
 	useMatchFilter,
 } from '~hooks'
-import { ElementDefinition, FilterObject } from '~interfaces'
+import { Derive, ElementDefinition, FilterObject } from '~interfaces'
 
 import {
 	useModelVariables,

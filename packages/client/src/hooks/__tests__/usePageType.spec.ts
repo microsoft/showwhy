@@ -5,9 +5,7 @@
 import { renderHook } from '@testing-library/react-hooks'
 import { usePageType } from '../usePageType'
 
-var mockRouter = jest.requireActual('react-router-dom')
 jest.mock('react-router-dom', () => ({
-	...mockRouter,
 	useLocation: () => ({
 		pathname: 'localhost:3000/prepare/columns',
 	}),

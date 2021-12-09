@@ -2,7 +2,6 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-console.log('fetch')
 import { v4 } from 'uuid'
 import { localhostUrl } from './utils'
 import { NodeResponseStatus, StatusType } from '~enums'
@@ -16,7 +15,7 @@ import {
 	SignificanceTestResponse,
 } from '~interfaces'
 import { getEnv } from '~resources/getEnv'
-console.log(getEnv)
+
 type Status = CheckStatus | SignificanceTestResponse
 
 const {
@@ -27,7 +26,7 @@ const {
 	ORCHESTRATORS_API_KEY,
 	UPLOAD_FILES_API_KEY,
 	EXECUTIONS_NUMBER_API_KEY,
-} = {} // = getEnv()
+} = getEnv()
 
 export const getSessionId = (reset = false): string => {
 	reset && sessionStorage.removeItem('sessionId')
