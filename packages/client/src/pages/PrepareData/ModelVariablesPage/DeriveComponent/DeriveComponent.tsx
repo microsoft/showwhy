@@ -7,10 +7,10 @@ import { useBoolean } from '@fluentui/react-hooks'
 import { escape } from 'arquero'
 import ColumnTable from 'arquero/dist/types/table/column-table'
 import React, { memo, useState, useCallback, useMemo } from 'react'
-import { DeriveTypes } from 'src/common/enums/DeriveTypes'
-import { Derive } from 'src/common/interfaces/Derive'
+import { DeriveTypes } from '~enums'
+import { Derive } from '~interfaces'
 
-import { usePageType } from 'src/hooks/usePageType'
+import { usePageType } from '../../../../hooks/usePageType'
 import styled from 'styled-components'
 import { v4 as uuidv4 } from 'uuid'
 import {

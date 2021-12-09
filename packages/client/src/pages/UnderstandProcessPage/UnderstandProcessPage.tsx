@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import React, { memo } from 'react'
-import { useCurrentStep } from 'src/hooks'
+import { useCurrentStep } from '../../hooks'
 import styled from 'styled-components'
 import { Container, ContainerFlexRow, Text, Title } from '~styles'
 

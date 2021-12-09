@@ -4,10 +4,5 @@
  */
 // this is required for Jest's transpilation
 module.exports = {
-	presets: [
-		['@babel/preset-env', { targets: { node: 'current' } }],
-		'@babel/preset-typescript',
-		'@babel/preset-react',
-	],
 	babelrcRoots: ['.', './packages/*'],
 }

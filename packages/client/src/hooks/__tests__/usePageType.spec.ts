@@ -5,7 +5,7 @@
 import { renderHook } from '@testing-library/react-hooks'
 import { usePageType } from '../usePageType'
 
-const mockRouter = jest.requireActual('react-router-dom')
+var mockRouter = jest.requireActual('react-router-dom')
 jest.mock('react-router-dom', () => ({
 	...mockRouter,
 	useLocation: () => ({

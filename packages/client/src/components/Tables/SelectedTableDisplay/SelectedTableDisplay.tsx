@@ -6,7 +6,7 @@ import { TextField } from '@fluentui/react'
 import ColumnTable from 'arquero/dist/types/table/column-table'
 import { useState, useCallback, useMemo, memo, useEffect } from 'react'
 
-import { replaceItemAtIndex } from 'src/common/utils'
+import { replaceItemAtIndex } from '~utils'
 import styled from 'styled-components'
 import { ModelTable } from '../ModelTable'
 import { ProjectFile } from '~interfaces'

@@ -9,7 +9,7 @@ import {
 } from '@fluentui/react'
 import React, { memo } from 'react'
 import { If, Then, Else } from 'react-if'
-import { DeriveComponent } from 'src/pages/PrepareData/ModelVariablesPage/DeriveComponent/DeriveComponent'
+import { DeriveComponent } from '../../../pages/PrepareData/ModelVariablesPage/DeriveComponent/DeriveComponent'
 import styled from 'styled-components'
 import { DefinitionList } from './DefinitionList/DefinitionList'
 import { DefinitionSteps } from './DefinitionSteps'

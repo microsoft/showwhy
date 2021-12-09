@@ -22,5 +22,6 @@ module.exports = {
 		'~utils/(.*)': ['<rootDir>/src/common/utils/$1'],
 		'~hooks': ['<rootDir>/src/hooks/index.ts'],
 		'~styles': ['<rootDir>/src/styles/index.ts'],
+		'~resources/getEnv': ['<rootDir>/src/resources/__mocks__/getEnv'],
 	},
 }

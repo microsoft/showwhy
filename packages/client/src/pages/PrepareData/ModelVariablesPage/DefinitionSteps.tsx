@@ -4,7 +4,7 @@
  */
 import { IconButton } from '@fluentui/react'
 import React, { memo, useCallback, useMemo } from 'react'
-import { DeriveTypes } from 'src/common/enums/DeriveTypes'
+import { DeriveTypes } from '~enums'
 import styled from 'styled-components'
 import { useRemoveColumn } from '~hooks'
 import { FilterObject } from '~interfaces'

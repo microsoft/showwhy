@@ -4,6 +4,7 @@
  */
 
 export * from './Definition'
+export * from './Derive'
 export * from './DescribeElements'
 export * from './Estimator'
 export * from './EstimatorValue'
