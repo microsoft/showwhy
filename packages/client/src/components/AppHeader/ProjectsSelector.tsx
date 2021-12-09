@@ -3,38 +3,33 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { IContextualMenuProps } from '@fluentui/react'
-import React, { memo, useCallback, useMemo } from 'react'
+import React, { memo, useMemo } from 'react'
 import { OptionsButton } from './OptionsButton'
-import { useExampleProjects, useLoadProject, useResetProject } from '~hooks'
+import { FileDefinition } from '~interfaces'
 import { Container } from '~styles'
 
-export const ProjectsSelector: React.FC = memo(function ProjectsSelector() {
-	const examples = useExampleProjects()
-	const loadExample = useLoadProject()
-	const resetProject = useResetProject()
+interface ProjectsSelectorProps {
+	onClickProject: (example: FileDefinition) => void
+	exampleProjects: FileDefinition[]
+}
 
-	const onClick = useCallback(
-		example => {
-			resetProject()
-			loadExample(example)
-		},
-		[loadExample, resetProject],
-	)
+export const ProjectsSelector: React.FC<ProjectsSelectorProps> = memo(
+	function ProjectsSelector({ onClickProject, exampleProjects }) {
+		const menuProps: IContextualMenuProps = useMemo(
+			() => ({
+				items: exampleProjects.map(example => ({
+					key: example.url,
+					text: example.name,
+					onClick: () => onClickProject(example),
+				})),
+			}),
+			[onClickProject, exampleProjects],
+		)
 
-	const menuProps: IContextualMenuProps = useMemo(
-		() => ({
-			items: examples.map(example => ({
-				key: example.url,
-				text: example.name,
-				onClick: () => onClick(example),
-			})),
-		}),
-		[onClick, examples],
-	)
-
-	return (
-		<Container>
-			<OptionsButton text="Load" menuProps={menuProps} />
-		</Container>
-	)
-})
+		return (
+			<Container>
+				<OptionsButton text="Load" menuProps={menuProps} />
+			</Container>
+		)
+	},
+)
