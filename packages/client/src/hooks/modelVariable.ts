@@ -4,11 +4,10 @@
  */
 
 import { useCallback } from 'react'
-// HACK to pass the unit tests
-import { replaceItemAtIndex } from '../common/utils/functions'
 import { usePageType } from './usePageType'
 import { ElementDefinition } from '~interfaces'
 import { useDefineQuestion, useSetDefineQuestion } from '~state'
+import { replaceItemAtIndex } from '~utils'
 
 export function useSaveDefinition(): (
 	newDefinition: ElementDefinition,
