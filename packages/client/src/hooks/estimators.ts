@@ -230,9 +230,7 @@ export function useOutcomeBasedEstimators(): Estimator[] {
 			x =>
 				x.type === EstimatorsType.LinearRegression ||
 				x.type === EstimatorsType.LinearDoublyRobustLearner ||
-				x.type === EstimatorsType.LinearDoubleMachineLearning ||
-				x.type === EstimatorsType.ForestDoubleMachineLearning ||
-				x.type === EstimatorsType.ForestDoublyRobustLearner,
+				x.type === EstimatorsType.LinearDoubleMachineLearning,
 		)
 		return estimator
 	}, [estimators])
