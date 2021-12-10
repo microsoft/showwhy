@@ -14,6 +14,7 @@ import {
 	useDeleteCausalFactor,
 	useExcludedFactors,
 } from '../causalFactors'
+
 jest.mock('../../state/causalFactors')
 
 //To get a mocked function that both fulfills the mocked function type and the jest mock type

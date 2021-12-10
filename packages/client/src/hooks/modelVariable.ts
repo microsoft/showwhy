@@ -10,13 +10,11 @@ import { usePageType } from './usePageType'
 import { ElementDefinition } from '~interfaces'
 import { useDefineQuestion, useSetDefineQuestion } from '~state'
 
-export function useSaveDefinition(): (
-	newDefinition: ElementDefinition,
-) => void {
-	const type = usePageType()
-	const defineQuestion = useDefineQuestion()
-	const setDefineQuestion = useSetDefineQuestion()
-
+export function useSaveDefinition(
+	type = usePageType(),
+	defineQuestion = useDefineQuestion(),
+	setDefineQuestion = useSetDefineQuestion(),
+): (newDefinition: ElementDefinition) => void {
 	return useCallback(
 		(newDefinition: ElementDefinition) => {
 			let newDefinitionList = [...defineQuestion[type]?.definition] || []
@@ -45,13 +43,11 @@ export function useSaveDefinition(): (
 		[defineQuestion, type, setDefineQuestion],
 	)
 }
-export function useRemoveDefinition(): (
-	definitionToRemove: ElementDefinition,
-) => void {
-	const type = usePageType()
-	const defineQuestion = useDefineQuestion()
-	const setDefineQuestion = useSetDefineQuestion()
-
+export function useRemoveDefinition(
+	type = usePageType(),
+	defineQuestion = useDefineQuestion(),
+	setDefineQuestion = useSetDefineQuestion(),
+): (definitionToRemove: ElementDefinition) => void {
 	return useCallback(
 		(definitionToRemove: ElementDefinition) => {
 			const newDefinitionList = [...defineQuestion[type].definition].filter(
