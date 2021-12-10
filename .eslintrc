@@ -1,0 +1,19 @@
+
+{
+	"extends": "@essex/eslint-config",
+	"parser": "@typescript-eslint/parser",
+	"rules": {
+		"@typescript-eslint/no-explicit-any": "off",
+		"no-redeclare": "off",
+		"@typescript-eslint/no-redeclare": ["warn"],
+		"@typescript-eslint/explicit-module-boundary-types": [
+			"warn",
+			{ "allowArgumentsExplicitlyTypedAsAny": true },
+		],
+		// disabled for test, consider always injecting hook deps and re-enabling this rule
+		"react-hooks/rules-of-hooks": "off",
+		// TODO: Re-enable
+		"jsx-a11y/click-events-have-key-events": 0,
+		"jsx-a11y/no-static-element-interactions": 0
+	}
+}
