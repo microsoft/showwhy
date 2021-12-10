@@ -51,7 +51,7 @@ export const ResultsGraph: React.FC<ResultsGraphProps> = memo(
 					of {specificationData.length} specifications were included in the
 					final curve. The median effect estimated from these specifications is{' '}
 					<Value>{median}.</Value> This means that the exposure to {exposure}{' '}
-					cause the {outcome} to {hypothesis} by
+					causes the {outcome} to {hypothesis} by
 					<Value>{median}.</Value>
 					This was calculated using
 					<Value>{defineQuestion?.population?.definition?.length}</Value>

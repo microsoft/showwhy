@@ -33,7 +33,9 @@ export function useLoadSpecificationData(): Specification[] {
 					try {
 						const result = await csv(defaultDatasetResult?.url, row2spec)
 						setData(result)
-					} catch (err) {}
+					} catch (err) {
+						setData([])
+					}
 				}
 				f()
 			}

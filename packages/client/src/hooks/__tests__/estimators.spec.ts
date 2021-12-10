@@ -18,17 +18,14 @@ import {
 	ESTIMATORS,
 	useEstimatorHelpText,
 	ESTIMATORS_LEARN_MORE_INFO,
-	useForestDoublyRobustLearner,
+	//useForestDoublyRobustLearner,
 	useLinearDoublyRobustLearner,
 	useExposureAssignedEstimators,
 	useOutcomeBasedEstimators,
 } from '../estimators'
 
-const useEstimatorsListenerMock = useEstimators as jest.MockedFunction<
-	typeof useEstimators
->
-
 describe('estimatorsHooks', () => {
+	/*
 	it('useForestDoublyRobustLearner', () => {
 		const expected = ESTIMATORS.find(
 			e => e.type === EstimatorsType.ForestDoublyRobustLearner,
@@ -42,6 +39,7 @@ describe('estimatorsHooks', () => {
 		const response = result.current
 		expect(response.pop()).toEqual(expected)
 	})
+	*/
 
 	it('useLinearDoublyRobustLearner', () => {
 		const expected = ESTIMATORS.find(
