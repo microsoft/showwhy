@@ -8,8 +8,8 @@ In other words, ShowWhy enables emulation of randomized controlled trials that p
 
 ## Packages
 
-- [client](packages/client/README.md)
-- [functions](packages/functions/README.md)
+- [client](packages/client)
+- [functions](packages/functions)
 
 ## Getting Started
 

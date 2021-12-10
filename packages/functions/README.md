@@ -143,8 +143,8 @@ curl --location --request POST 'http://localhost:7071/api/orchestrators/ExecuteN
                 "label": "Minimum Model",
                 "confounders": [],
                 "outcome_determinants": [
-                    "outcome_determinant_4",
-                    "outcome_determinant_5"
+                    "outcome_determinant_1",
+                    "outcome_determinant_2"
                 ]
             },
             {
@@ -193,7 +193,7 @@ curl --location --request POST 'http://localhost:7071/api/orchestrators/ExecuteN
             }
         ],
         "refuter_specs": {
-            "num_simulations": 20
+            "num_simulations": 10
         },
         "confidence_interval": true,
         "type": "EstimateEffectNode",

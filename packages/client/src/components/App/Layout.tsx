@@ -28,6 +28,8 @@ export const Layout: React.FC = memo(function Layout({ children }) {
 		previousUrl,
 		nextUrl,
 		goToPage,
+		onClickProject,
+		exampleProjects,
 	} = useLayout()
 
 	return (
@@ -36,6 +38,8 @@ export const Layout: React.FC = memo(function Layout({ children }) {
 				onGetStepUrls={handleGetStepUrls}
 				onSetAllStepStatus={handleSetAllStepStatus}
 				defineQuestion={defineQuestion}
+				onClickProject={onClickProject}
+				exampleProjects={exampleProjects}
 			/>
 			<PagesContainer>
 				<StepsContainer>

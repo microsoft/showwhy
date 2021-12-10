@@ -8,7 +8,7 @@ import { ProjectsSelector } from './ProjectsSelector'
 import { SaveProject } from './SaveProject'
 import { Settings } from './Settings'
 import { CausalQuestion } from '~components/CausalQuestion'
-import { DescribeElements } from '~interfaces'
+import { DescribeElements, FileDefinition } from '~interfaces'
 import { Container } from '~styles'
 import { GenericFn } from '~types'
 
@@ -16,12 +16,16 @@ interface AppHeaderProps {
 	onGetStepUrls: GenericFn
 	onSetAllStepStatus: GenericFn
 	defineQuestion: DescribeElements
+	onClickProject: (example: FileDefinition) => void
+	exampleProjects: FileDefinition[]
 }
 
 export const AppHeader: React.FC<AppHeaderProps> = memo(function AppHeader({
 	onGetStepUrls,
 	onSetAllStepStatus,
 	defineQuestion,
+	onClickProject,
+	exampleProjects,
 }) {
 	return (
 		<AppHeaderContainer>
@@ -36,7 +40,10 @@ export const AppHeader: React.FC<AppHeaderProps> = memo(function AppHeader({
 					onGetStepUrls={onGetStepUrls}
 					onSetAllStepStatus={onSetAllStepStatus}
 				/>
-				<ProjectsSelector />
+				<ProjectsSelector
+					onClickProject={onClickProject}
+					exampleProjects={exampleProjects}
+				/>
 				<SaveProject />
 			</UserInformationContainer>
 		</AppHeaderContainer>

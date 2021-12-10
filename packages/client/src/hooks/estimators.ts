@@ -82,13 +82,11 @@ export const ESTIMATORS_SHORT_DESCRIPTION = {
 		'Estimate heterogenous effects of binary or categorical exposures by combining two predictive models: 1) predicting the outcome from the exposure and control variables;\
 		 2) predicting the exposure from control variables.\
 		 Unlike the Double Machine Learning, the first model predicts the outcome from both the exposure and the control variables, as opposed to just the control variables. \
-		 The estimate is accurate whenever one of the two models is correctly specified, but typically has higher variance compared to Double Machine Learning methods. \
-		 The linear version works well with low-dimensional datasets.',
+		 The estimate is accurate whenever one of the two models is correctly specified, but may have higher variance compared to the Double Machine Learning method.',
 	linearDoubleMachineLearning:
 		'Estimate heterogenous effects of exposures by combining two predictive tasks:\
 		 1) predicting the outcome from the control variables; 2) predicting the exposure from control variables. \
-		 Unlike the Doubly Robust Learners, this method can handle both binary, categorical, and continuous exposure types. \
-		 The linear version works well with low-dimensional datasets.',
+		 Unlike the Doubly Robust Learner, this method can handle both binary, categorical, and continuous exposure types.',
 	linearRegression:
 		'Estimate heterogenous effects of exposure by predicting outcome based on exposure and control variables using a simple linear model.\
 		 Assume all relationships from treatment and control to outcome are linear.',
@@ -122,6 +120,7 @@ export const OUTCOME_ESTIMATORS: Estimator[] = [
 		group: EstimatorsGroups.OutcomeEstimator,
 		type: EstimatorsType.LinearRegression,
 	},
+	/*
 	{
 		group: EstimatorsGroups.OutcomeEstimator,
 		type: EstimatorsType.ForestDoubleMachineLearning,
@@ -129,7 +128,7 @@ export const OUTCOME_ESTIMATORS: Estimator[] = [
 	{
 		group: EstimatorsGroups.OutcomeEstimator,
 		type: EstimatorsType.ForestDoublyRobustLearner,
-	},
+	},*/
 ]
 
 export const ESTIMATORS: Estimator[] = [
@@ -235,9 +234,7 @@ export function useOutcomeBasedEstimators(
 			x =>
 				x.type === EstimatorsType.LinearRegression ||
 				x.type === EstimatorsType.LinearDoublyRobustLearner ||
-				x.type === EstimatorsType.LinearDoubleMachineLearning ||
-				x.type === EstimatorsType.ForestDoubleMachineLearning ||
-				x.type === EstimatorsType.ForestDoublyRobustLearner,
+				x.type === EstimatorsType.LinearDoubleMachineLearning,
 		)
 		return estimator
 	}, [estimators])
