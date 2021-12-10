@@ -7,21 +7,7 @@ import { renderHook } from '@testing-library/react-hooks'
 import { RecoilRoot } from 'recoil'
 import { v4 } from 'uuid'
 import { DefinitionType } from '../../common/enums'
-import { useDefineQuestion, useSetDefineQuestion } from '../../state'
 import { useRemoveDefinition, useSaveDefinition } from '../modelVariable'
-import { usePageType } from '../usePageType'
-
-jest.mock('../../state')
-jest.mock('../usePageType')
-
-const usePageTypeListenerMock = usePageType as jest.MockedFunction<
-	typeof usePageType
->
-const useDefineQuestionListenerMock = useDefineQuestion as jest.MockedFunction<
-	typeof useDefineQuestion
->
-const useSetDefineQuestionListenerMock =
-	useSetDefineQuestion as jest.MockedFunction<typeof useSetDefineQuestion>
 
 const question = {
 	population: {
@@ -55,15 +41,16 @@ describe('modelVariableHooks', () => {
 				definition: [...question[type].definition, newDefinition],
 			},
 		}
-		usePageTypeListenerMock.mockReturnValue(type)
-		useDefineQuestionListenerMock.mockReturnValue(question)
-		useSetDefineQuestionListenerMock.mockReturnValue(jest.fn())
-		const { result } = renderHook(() => useSaveDefinition(), {
-			wrapper: RecoilRoot,
-		})
+		const setDefineQuestion = jest.fn()
+		const { result } = renderHook(
+			() => useSaveDefinition(type, question, setDefineQuestion),
+			{
+				wrapper: RecoilRoot,
+			},
+		)
 		const response = result.current
 		response(newDefinition)
-		expect(useSetDefineQuestion()).toHaveBeenCalledWith(expected)
+		expect(setDefineQuestion).toHaveBeenCalledWith(expected)
 	})
 
 	it('useRemoveDefinition', () => {
@@ -75,14 +62,15 @@ describe('modelVariableHooks', () => {
 				definition: [],
 			},
 		}
-		usePageTypeListenerMock.mockReturnValue(type)
-		useDefineQuestionListenerMock.mockReturnValue(question)
-		useSetDefineQuestionListenerMock.mockReturnValue(jest.fn())
-		const { result } = renderHook(() => useRemoveDefinition(), {
-			wrapper: RecoilRoot,
-		})
+		const setDefineQuestion = jest.fn()
+		const { result } = renderHook(
+			() => useRemoveDefinition(type, question, setDefineQuestion),
+			{
+				wrapper: RecoilRoot,
+			},
+		)
 		const response = result.current
 		response(question.population.definition[0])
-		expect(useSetDefineQuestion()).toHaveBeenCalledWith(expected)
+		expect(setDefineQuestion).toHaveBeenCalledWith(expected)
 	})
 })
