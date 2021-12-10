@@ -32,7 +32,7 @@
 		"target": "ESNext",
 		"allowJs": true,
 		"skipLibCheck": true,
-		"esModuleInterop": false,
+		"esModuleInterop": true,
 		"isolatedModules": true,
 		"noEmit": true
 	},

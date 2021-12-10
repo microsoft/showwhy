@@ -4,7 +4,7 @@
  */
 import { useMemo } from 'react'
 import { CausalModelLevel } from '~enums'
-import { useAlternativeModels, useExcludedFactors } from '~hooks'
+import { useAlternativeModels, useExcludedFactors } from './causalFactors'
 import { useDefineQuestion } from '~state'
 import { GenericObject } from '~types'
 
