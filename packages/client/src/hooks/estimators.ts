@@ -191,8 +191,9 @@ export const ESTIMATOR_SHORT_DESCRIPTION = (type: string): string => {
 	}
 }
 
-export function useForestDoublyRobustLearner(): Estimator[] {
-	const estimators = useEstimators()
+export function useForestDoublyRobustLearner(
+	estimators = useEstimators(),
+): Estimator[] {
 	return useMemo((): Estimator[] => {
 		const estimator = estimators.filter(
 			x => x.type === EstimatorsType.ForestDoublyRobustLearner,
@@ -201,8 +202,9 @@ export function useForestDoublyRobustLearner(): Estimator[] {
 	}, [estimators])
 }
 
-export function useLinearDoublyRobustLearner(): Estimator[] {
-	const estimators = useEstimators()
+export function useLinearDoublyRobustLearner(
+	estimators = useEstimators(),
+): Estimator[] {
 	return useMemo((): Estimator[] => {
 		const estimator = estimators.filter(
 			x => x.type === EstimatorsType.LinearDoublyRobustLearner,
@@ -211,8 +213,9 @@ export function useLinearDoublyRobustLearner(): Estimator[] {
 	}, [estimators])
 }
 
-export function useExposureAssignedEstimators(): Estimator[] {
-	const estimators = useEstimators()
+export function useExposureAssignedEstimators(
+	estimators = useEstimators(),
+): Estimator[] {
 	return useMemo((): Estimator[] => {
 		const estimator = estimators.filter(
 			x =>
@@ -224,8 +227,9 @@ export function useExposureAssignedEstimators(): Estimator[] {
 	}, [estimators])
 }
 
-export function useOutcomeBasedEstimators(): Estimator[] {
-	const estimators = useEstimators()
+export function useOutcomeBasedEstimators(
+	estimators = useEstimators(),
+): Estimator[] {
 	return useMemo((): Estimator[] => {
 		const estimator = estimators.filter(
 			x =>
