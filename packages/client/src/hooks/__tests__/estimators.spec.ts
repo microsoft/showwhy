@@ -2,11 +2,9 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { jest } from '@jest/globals'
 import { renderHook } from '@testing-library/react-hooks'
 import { RecoilRoot } from 'recoil'
 import { EstimatorsType, EstimatorsGroups } from '../../common/enums'
-import { useEstimators } from '../../state'
 import {
 	ESTIMATORS_SHORT_DESCRIPTION,
 	useEstimatorShortDescription,
