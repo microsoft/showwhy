@@ -25,9 +25,9 @@ export function useWindowDimensions(): Dimensions {
 	return windowDimensions
 }
 
-export function useVegaWindowDimensions(): Dimensions {
-	const windowSize = useWindowDimensions()
-
+export function useVegaWindowDimensions(
+	windowSize: Dimensions = useWindowDimensions(),
+): Dimensions {
 	return useMemo(() => {
 		let percentage = 3.5
 		if (windowSize.width >= 1800) {

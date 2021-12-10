@@ -4,9 +4,10 @@
  */
 const { configure } = require('@essex/jest-config')
 
-module.exports = {
+const configuration = {
 	...configure(),
 	testEnvironment: 'jsdom',
+	extensionsToTreatAsEsm: ['.ts'],
 	moduleNameMapper: {
 		'~resources/getEnv': ['<rootDir>/src/resources/__mocks__/getEnv.ts'],
 		'~arquero/(.*)': ['<rootDir>/src/arquero/index.ts'],
@@ -24,4 +25,7 @@ module.exports = {
 		'~hooks': ['<rootDir>/src/hooks/index.ts'],
 		'~styles': ['<rootDir>/src/styles/index.ts'],
 	},
+	setupFilesAfterEnv: ['<rootDir>/jest.setup.mjs']
 }
+
+module.exports = configuration
