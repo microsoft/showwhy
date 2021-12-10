@@ -7,17 +7,7 @@ import { renderHook } from '@testing-library/react-hooks'
 import { RecoilRoot } from 'recoil'
 import { v4 } from 'uuid'
 import { CausalModelLevel, DefinitionType } from '../../common/enums'
-import { useDefineQuestion } from '../../state'
 import { useCausalEffects } from '../causalEffects'
-import { useAlternativeModels, useExcludedFactors } from '../causalFactors'
-
-const useDefineQuestionListenerMock = useDefineQuestion as jest.MockedFunction<
-	typeof useDefineQuestion
->
-const useExcludedFactorsListenerMock =
-	useExcludedFactors as jest.MockedFunction<typeof useExcludedFactors>
-const useAlternativeModelsListenerMock =
-	useAlternativeModels as jest.MockedFunction<typeof useAlternativeModels>
 
 const question = {
 	exposure: {
@@ -52,16 +42,17 @@ describe('causalEffectsHooks', () => {
 				'1 potential control was excluded based on ambiguous causal directions: Hurricane 2.',
 		}
 
-		useAlternativeModelsListenerMock.mockReturnValue({
-			confounders: [],
-			outcomeDeterminants: [],
-		})
-		useDefineQuestionListenerMock.mockReturnValue(question)
-		useExcludedFactorsListenerMock.mockReturnValue(['Hurricane 2'])
-
 		const { result } = renderHook(
 			() => {
-				return useCausalEffects(CausalModelLevel.Intermediate)
+				return useCausalEffects(
+					CausalModelLevel.Intermediate,
+					question,
+					['Hurricane 2'],
+					{
+						confounders: [],
+						outcomeDeterminants: [],
+					},
+				)
 			},
 			{
 				wrapper: RecoilRoot,
