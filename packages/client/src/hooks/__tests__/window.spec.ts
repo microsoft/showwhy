@@ -9,16 +9,16 @@ import * as win from '../window'
 
 describe('windowHook', () => {
 	it('useVegaWindowDimensions', () => {
-		const w = {
-			height: 500,
-			width: 500,
-		}
 		const expected = {
 			width: window.innerWidth / 3.5,
 			height: window.innerHeight / 2,
 		}
-		jest.spyOn(win, 'useWindowDimensions').mockReturnValue(w)
-		const { result } = renderHook(() => win.useVegaWindowDimensions())
+		const { result } = renderHook(() =>
+			win.useVegaWindowDimensions({
+				height: 500,
+				width: 500,
+			}),
+		)
 		const response = result.current
 		expect(response).toEqual(expected)
 	})
