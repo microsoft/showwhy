@@ -6,9 +6,7 @@ import { useMemo } from 'react'
 import { useLocation } from 'react-router-dom'
 import { PageType } from '~enums'
 
-export function usePageType(): PageType {
-	const location = useLocation()
-
+export function usePageType(location = useLocation()): PageType {
 	return useMemo((): PageType => {
 		const name = location.pathname.split('/').pop() || ''
 		return name as PageType
