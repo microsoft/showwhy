@@ -3,6 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import { jest } from '@jest/globals'
 import { renderHook } from '@testing-library/react-hooks'
 import * as win from '../window'
 
