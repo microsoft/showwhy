@@ -4,7 +4,7 @@
  */
 import { DefaultButton, Icon, Spinner } from '@fluentui/react'
 import { FC, memo } from 'react'
-import { DropzoneInputProps, DropzoneRootProps } from 'react-dropzone'
+import type { DropzoneInputProps, DropzoneRootProps } from 'react-dropzone'
 import styled from 'styled-components'
 import { DropFilesCount } from '~interfaces'
 
