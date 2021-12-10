@@ -5,7 +5,7 @@
 
 import ColumnTable from 'arquero/dist/types/table/column-table'
 import { useState, useCallback, useEffect } from 'react'
-import { FileRejection, useDropzone } from 'react-dropzone'
+import DropZone, { FileRejection } from 'react-dropzone'
 import { useSupportedFileTypes } from './supportedFileTypes'
 import { DropFilesCount, ProjectFile } from '~interfaces'
 import { GenericObject } from '~types'
@@ -110,7 +110,7 @@ export const useHandleDropzone = (
 
 	const handleDrop = useDrop(onFileLoadComplete, onLoadStart)
 
-	const { getRootProps, getInputProps, isDragActive } = useDropzone({
+	const { getRootProps, getInputProps, isDragActive } = DropZone.useDropzone({
 		onDrop: files => handleDrop(files),
 		onDropAccepted: onDropFilesAccepted,
 		onDropRejected: onDropFilesRejected,
