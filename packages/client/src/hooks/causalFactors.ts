@@ -11,9 +11,9 @@ import { BeliefDegree, CausalModelLevel } from '~enums'
 import { AlternativeModels, CausalFactor } from '~interfaces'
 import { useCausalFactors, useSetCausalFactors } from '~state/causalFactors'
 
-export function useExcludedFactors(): string[] {
-	const causalFactors = useCausalFactors()
-
+export function useExcludedFactors(
+	causalFactors = useCausalFactors(),
+): string[] {
 	return useMemo((): string[] => {
 		return causalFactors
 			.filter((factor: CausalFactor) => {
@@ -49,12 +49,10 @@ const shouldIncludeInDegree = (
 	return false
 }
 
-export function useDeleteCausalFactor(): (
-	newCausalFactor: CausalFactor,
-) => void {
-	const causalFactors = useCausalFactors()
-	const setCausalFactors = useSetCausalFactors()
-
+export function useDeleteCausalFactor(
+	causalFactors = useCausalFactors(),
+	setCausalFactors = useSetCausalFactors(),
+): (newCausalFactor: CausalFactor) => void {
 	return useCallback(
 		(causalFactor: CausalFactor) => {
 			const newList = causalFactors.filter(x => x.id !== causalFactor.id)
@@ -68,10 +66,9 @@ export function useDeleteCausalFactor(): (
 export function useAlternativeModels(
 	causalLevel: CausalModelLevel,
 	shouldUseVariable = true,
+	causalFactors = useCausalFactors(),
+	excludedFactors = useExcludedFactors(),
 ): AlternativeModels {
-	const causalFactors = useCausalFactors()
-	const excludedFactors = useExcludedFactors()
-
 	return useMemo(() => {
 		const confoundersArray: string[] = []
 		const outcomeArray: string[] = []
@@ -105,10 +102,10 @@ export function useAlternativeModels(
 	}, [causalFactors, excludedFactors, causalLevel, shouldIncludeInDegree])
 }
 
-export function useAddOrEditFactor(): (factor, factors?) => void {
-	const causalFactors = useCausalFactors()
-	const setCausalFactors = useSetCausalFactors()
-
+export function useAddOrEditFactor(
+	causalFactors = useCausalFactors(),
+	setCausalFactors = useSetCausalFactors(),
+): (factor, factors?) => void {
 	return useCallback(
 		(factor: CausalFactor, factors = causalFactors) => {
 			const exists = factors.find(f => f.id === factor?.id) || {}
