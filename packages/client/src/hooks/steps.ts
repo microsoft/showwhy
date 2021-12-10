@@ -12,9 +12,10 @@ export function useFindStepsByPathname(pathNames: string[]): Step[] {
 	return steps.flatMap(x => x.steps.filter(a => pathNames.includes(a.url)))
 }
 
-export function useCurrentStep(): Step | undefined {
-	const project = useSelectedProject()
-	const location = useLocation()
+export function useCurrentStep(
+	project = useSelectedProject(),
+	location = useLocation(),
+): Step | undefined {
 	return useMemo(() => {
 		return project.steps
 			.flatMap(x => x.steps.find(a => a.url === location.pathname))
