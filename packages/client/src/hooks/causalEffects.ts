@@ -11,14 +11,14 @@ import { GenericObject } from '~types'
 
 export const useCausalEffects = (
 	causalLevel: CausalModelLevel,
+	question = useDefineQuestion(),
+	excludedFactors = useExcludedFactors(),
+	{ confounders, outcomeDeterminants } = useAlternativeModels(causalLevel),
 ): GenericObject => {
-	const question = useDefineQuestion()
-	const excludedFactors = useExcludedFactors()
-
 	const excludedMessage = useMemo((): string => {
 		return `${excludedFactors.length} potential control${
 			excludedFactors.length > 1 ? 's were' : ' was'
-		}  excluded based on ambiguous causal directions:​ ${excludedFactors.join(
+		} excluded based on ambiguous causal directions: ${excludedFactors.join(
 			', ',
 		)}.`
 	}, [excludedFactors])
@@ -30,8 +30,6 @@ export const useCausalEffects = (
 	const generalOutcome = useMemo((): string => {
 		return question.outcome?.label || ''
 	}, [question])
-
-	const { confounders, outcomeDeterminants } = useAlternativeModels(causalLevel)
 
 	return {
 		confounders,
