@@ -2,6 +2,8 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+
+import { jest } from '@jest/globals'
 import { renderHook } from '@testing-library/react-hooks'
 import { usePageType } from '../usePageType'
 
