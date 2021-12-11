@@ -5,9 +5,8 @@
 import { escape, not, op } from 'arquero'
 import ColumnTable from 'arquero/dist/types/table/column-table'
 import { useCallback, useMemo } from 'react'
-import { DeriveTypes } from 'src/common/enums/DeriveTypes'
-import { Derive } from 'src/common/interfaces/Derive'
-import { ProjectFile, TableColumn } from '~interfaces'
+import { DeriveTypes } from '~enums'
+import { ProjectFile, TableColumn, Derive } from '~interfaces'
 import {
 	useProjectFiles,
 	useSelectedFile,

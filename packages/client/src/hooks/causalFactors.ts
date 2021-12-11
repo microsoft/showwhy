@@ -4,6 +4,7 @@
  */
 
 import { useCallback, useMemo } from 'react'
+import { SetterOrUpdater } from 'recoil'
 import { v4 } from 'uuid'
 // HACK to pass the unit tests
 import { replaceItemAtIndex } from '../common/utils/functions'
@@ -12,8 +13,12 @@ import { AlternativeModels, CausalFactor } from '~interfaces'
 import { useCausalFactors, useSetCausalFactors } from '~state/causalFactors'
 
 export function useExcludedFactors(): string[] {
-	const causalFactors = useCausalFactors()
+	return useExcludedFactorsTestable(useCausalFactors())
+}
 
+export function useExcludedFactorsTestable(
+	causalFactors: CausalFactor[],
+): string[] {
 	return useMemo((): string[] => {
 		return causalFactors
 			.filter((factor: CausalFactor) => {
@@ -52,9 +57,16 @@ const shouldIncludeInDegree = (
 export function useDeleteCausalFactor(): (
 	newCausalFactor: CausalFactor,
 ) => void {
-	const causalFactors = useCausalFactors()
-	const setCausalFactors = useSetCausalFactors()
+	return useDeleteCausalFactorTestable(
+		useCausalFactors(),
+		useSetCausalFactors(),
+	)
+}
 
+export function useDeleteCausalFactorTestable(
+	causalFactors: CausalFactor[],
+	setCausalFactors: SetterOrUpdater<CausalFactor[]>,
+): (newCausalFactor: CausalFactor) => void {
 	return useCallback(
 		(causalFactor: CausalFactor) => {
 			const newList = causalFactors.filter(x => x.id !== causalFactor.id)
@@ -69,9 +81,20 @@ export function useAlternativeModels(
 	causalLevel: CausalModelLevel,
 	shouldUseVariable = true,
 ): AlternativeModels {
-	const causalFactors = useCausalFactors()
-	const excludedFactors = useExcludedFactors()
+	return useAlternativeModelsTestable(
+		causalLevel,
+		shouldUseVariable,
+		useCausalFactors(),
+		useExcludedFactors(),
+	)
+}
 
+export function useAlternativeModelsTestable(
+	causalLevel: CausalModelLevel,
+	shouldUseVariable: boolean,
+	causalFactors: CausalFactor[],
+	excludedFactors: string[],
+): AlternativeModels {
 	return useMemo(() => {
 		const confoundersArray: string[] = []
 		const outcomeArray: string[] = []
@@ -106,9 +129,13 @@ export function useAlternativeModels(
 }
 
 export function useAddOrEditFactor(): (factor, factors?) => void {
-	const causalFactors = useCausalFactors()
-	const setCausalFactors = useSetCausalFactors()
+	return useAddOrEditFactorTestable(useCausalFactors(), useSetCausalFactors())
+}
 
+export function useAddOrEditFactorTestable(
+	causalFactors: CausalFactor[],
+	setCausalFactors: SetterOrUpdater<CausalFactor[]>,
+): (factor, factors?) => void {
 	return useCallback(
 		(factor: CausalFactor, factors = causalFactors) => {
 			const exists = factors.find(f => f.id === factor?.id) || {}

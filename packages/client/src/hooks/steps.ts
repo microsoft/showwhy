@@ -4,7 +4,7 @@
  */
 import { useCallback, useMemo } from 'react'
 import { useLocation } from 'react-router-dom'
-import { Step } from '~interfaces'
+import { Project, Step } from '~interfaces'
 import { useSelectedProject } from '~state'
 
 export function useFindStepsByPathname(pathNames: string[]): Step[] {
@@ -15,11 +15,15 @@ export function useFindStepsByPathname(pathNames: string[]): Step[] {
 export function useCurrentStep(): Step | undefined {
 	const project = useSelectedProject()
 	const location = useLocation()
+	return useCurrentStepTestable(project, location.pathname)
+}
+
+export function useCurrentStepTestable(project: Project, pathname: string) {
 	return useMemo(() => {
 		return project.steps
-			.flatMap(x => x.steps.find(a => a.url === location.pathname))
+			.flatMap(x => x.steps.find(a => a.url === pathname))
 			.find(x => x)
-	}, [project, location])
+	}, [project, pathname])
 }
 
 export function useAllSteps(): Step[] {

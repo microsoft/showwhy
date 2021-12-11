@@ -101,5 +101,5 @@ export function useResetTableColumns(): Resetter {
 	return useCallback(() => {
 		ids.forEach(id => reset(tableColumnsState(id)))
 		setTableState([])
-	}, [ids])
+	}, [ids, reset, setTableState])
 }

@@ -5,7 +5,6 @@
 import { renderHook } from '@testing-library/react-hooks'
 import { RecoilRoot } from 'recoil'
 import { EstimatorsType, EstimatorsGroups } from '../../common/enums'
-import { useEstimators } from '../../state'
 import {
 	ESTIMATORS_SHORT_DESCRIPTION,
 	useEstimatorShortDescription,
@@ -23,22 +22,18 @@ import {
 	useOutcomeBasedEstimators,
 } from '../estimators'
 
-jest.mock('../../state')
-
-const useEstimatorsListenerMock = useEstimators as jest.MockedFunction<
-	typeof useEstimators
->
-
 describe('estimatorsHooks', () => {
 	/*
 	it('useForestDoublyRobustLearner', () => {
 		const expected = ESTIMATORS.find(
 			e => e.type === EstimatorsType.ForestDoublyRobustLearner,
 		)
-		useEstimatorsListenerMock.mockReturnValue([expected])
-		const { result } = renderHook(() => useForestDoublyRobustLearner(), {
-			wrapper: RecoilRoot,
-		})
+		const { result } = renderHook(
+			() => useForestDoublyRobustLearner([expected]),
+			{
+				wrapper: RecoilRoot,
+			},
+		)
 		const response = result.current
 		expect(response.pop()).toEqual(expected)
 	})
@@ -48,10 +43,12 @@ describe('estimatorsHooks', () => {
 		const expected = ESTIMATORS.find(
 			e => e.type === EstimatorsType.LinearDoublyRobustLearner,
 		)
-		useEstimatorsListenerMock.mockReturnValue([expected])
-		const { result } = renderHook(() => useLinearDoublyRobustLearner(), {
-			wrapper: RecoilRoot,
-		})
+		const { result } = renderHook(
+			() => useLinearDoublyRobustLearner([expected]),
+			{
+				wrapper: RecoilRoot,
+			},
+		)
 		const response = result.current
 		expect(response.pop()).toEqual(expected)
 	})
@@ -60,10 +57,12 @@ describe('estimatorsHooks', () => {
 		const expected = ESTIMATORS.find(
 			e => e.type === EstimatorsType.InversePropensityWeighting,
 		)
-		useEstimatorsListenerMock.mockReturnValue([expected])
-		const { result } = renderHook(() => useExposureAssignedEstimators(), {
-			wrapper: RecoilRoot,
-		})
+		const { result } = renderHook(
+			() => useExposureAssignedEstimators([expected]),
+			{
+				wrapper: RecoilRoot,
+			},
+		)
 		const response = result.current
 		expect(response.pop()).toEqual(expected)
 	})
@@ -72,8 +71,7 @@ describe('estimatorsHooks', () => {
 		const expected = ESTIMATORS.find(
 			e => e.type === EstimatorsType.LinearRegression,
 		)
-		useEstimatorsListenerMock.mockReturnValue([expected])
-		const { result } = renderHook(() => useOutcomeBasedEstimators(), {
+		const { result } = renderHook(() => useOutcomeBasedEstimators([expected]), {
 			wrapper: RecoilRoot,
 		})
 		const response = result.current
