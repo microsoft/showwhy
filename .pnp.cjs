@@ -5996,6 +5996,14 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["regenerator-runtime", "npm:0.13.8"]
           ],
           "linkType": "HARD",
+        }],
+        ["npm:7.16.3", {
+          "packageLocation": "./.yarn/cache/@babel-runtime-npm-7.16.3-b53f079b37-ab8ac88709.zip/node_modules/@babel/runtime/",
+          "packageDependencies": [
+            ["@babel/runtime", "npm:7.16.3"],
+            ["regenerator-runtime", "npm:0.13.8"]
+          ],
+          "linkType": "HARD",
         }]
       ]],
       ["@babel/runtime-corejs3", [
@@ -8104,6 +8112,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["d3-shape", "npm:3.0.1"],
             ["file-loader", "virtual:43234044b7438fe2d61705a53806e3cf1b57c36f9d0076f4ea9860d4c0f5b9f7239021252d58389c52e724a7d4da6edf23f1d58bae876b1fdf20bda31e9357ce#npm:6.2.0"],
             ["graphql", "npm:15.5.3"],
+            ["history", "npm:5.1.0"],
             ["jest", "virtual:d6dcacc1897895f642d0da193a5c18531e4b2d230ae4076f59b89dc0863e1381a345d2bc970194d566bbbe45befe857883509560f92198e195f037cd4da13570#npm:27.2.0"],
             ["jsonpath-plus", "npm:6.0.1"],
             ["lineupjs", "npm:3.3.1"],
@@ -14732,6 +14741,14 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["tiny-invariant", "npm:1.1.0"],
             ["tiny-warning", "npm:1.0.3"],
             ["value-equal", "npm:1.0.1"]
+          ],
+          "linkType": "HARD",
+        }],
+        ["npm:5.1.0", {
+          "packageLocation": "./.yarn/cache/history-npm-5.1.0-312a8162fd-c978710a18.zip/node_modules/history/",
+          "packageDependencies": [
+            ["history", "npm:5.1.0"],
+            ["@babel/runtime", "npm:7.16.3"]
           ],
           "linkType": "HARD",
         }]

@@ -7,7 +7,10 @@ import { renderHook } from '@testing-library/react-hooks'
 import { RecoilRoot } from 'recoil'
 import { v4 } from 'uuid'
 import { DefinitionType } from '../../common/enums'
-import { useRemoveDefinition, useSaveDefinition } from '../modelVariable'
+import {
+	useRemoveDefinitionTestable,
+	useSaveDefinitionTestable,
+} from '../modelVariable'
 
 const question = {
 	population: {
@@ -43,7 +46,7 @@ describe('modelVariableHooks', () => {
 		}
 		const setDefineQuestion = jest.fn()
 		const { result } = renderHook(
-			() => useSaveDefinition(type, question, setDefineQuestion),
+			() => useSaveDefinitionTestable(type, question, setDefineQuestion),
 			{
 				wrapper: RecoilRoot,
 			},
@@ -64,7 +67,7 @@ describe('modelVariableHooks', () => {
 		}
 		const setDefineQuestion = jest.fn()
 		const { result } = renderHook(
-			() => useRemoveDefinition(type, question, setDefineQuestion),
+			() => useRemoveDefinitionTestable(type, question, setDefineQuestion),
 			{
 				wrapper: RecoilRoot,
 			},

@@ -10,8 +10,6 @@
 			"warn",
 			{ "allowArgumentsExplicitlyTypedAsAny": true },
 		],
-		// disabled for test, consider always injecting hook deps and re-enabling this rule
-		"react-hooks/rules-of-hooks": "off",
 		// TODO: Re-enable
 		"jsx-a11y/click-events-have-key-events": 0,
 		"jsx-a11y/no-static-element-interactions": 0

@@ -191,7 +191,7 @@ export const ESTIMATOR_SHORT_DESCRIPTION = (type: string): string => {
 }
 
 export function useForestDoublyRobustLearner(
-	estimators = useEstimators(),
+	estimators: Estimator[],
 ): Estimator[] {
 	return useMemo((): Estimator[] => {
 		const estimator = estimators.filter(
@@ -202,7 +202,7 @@ export function useForestDoublyRobustLearner(
 }
 
 export function useLinearDoublyRobustLearner(
-	estimators = useEstimators(),
+	estimators: Estimator[],
 ): Estimator[] {
 	return useMemo((): Estimator[] => {
 		const estimator = estimators.filter(
@@ -213,7 +213,7 @@ export function useLinearDoublyRobustLearner(
 }
 
 export function useExposureAssignedEstimators(
-	estimators = useEstimators(),
+	estimators: Estimator[],
 ): Estimator[] {
 	return useMemo((): Estimator[] => {
 		const estimator = estimators.filter(
@@ -227,7 +227,7 @@ export function useExposureAssignedEstimators(
 }
 
 export function useOutcomeBasedEstimators(
-	estimators = useEstimators(),
+	estimators: Estimator[],
 ): Estimator[] {
 	return useMemo((): Estimator[] => {
 		const estimator = estimators.filter(

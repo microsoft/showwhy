@@ -4,6 +4,7 @@
  */
 
 import { useCallback, useMemo } from 'react'
+import { SetterOrUpdater } from 'recoil'
 import { v4 } from 'uuid'
 // HACK to pass the unit tests
 import { replaceItemAtIndex } from '../common/utils/functions'
@@ -11,8 +12,12 @@ import { BeliefDegree, CausalModelLevel } from '~enums'
 import { AlternativeModels, CausalFactor } from '~interfaces'
 import { useCausalFactors, useSetCausalFactors } from '~state/causalFactors'
 
-export function useExcludedFactors(
-	causalFactors = useCausalFactors(),
+export function useExcludedFactors(): string[] {
+	return useExcludedFactorsTestable(useCausalFactors())
+}
+
+export function useExcludedFactorsTestable(
+	causalFactors: CausalFactor[],
 ): string[] {
 	return useMemo((): string[] => {
 		return causalFactors
@@ -49,9 +54,18 @@ const shouldIncludeInDegree = (
 	return false
 }
 
-export function useDeleteCausalFactor(
-	causalFactors = useCausalFactors(),
-	setCausalFactors = useSetCausalFactors(),
+export function useDeleteCausalFactor(): (
+	newCausalFactor: CausalFactor,
+) => void {
+	return useDeleteCausalFactorTestable(
+		useCausalFactors(),
+		useSetCausalFactors(),
+	)
+}
+
+export function useDeleteCausalFactorTestable(
+	causalFactors: CausalFactor[],
+	setCausalFactors: SetterOrUpdater<CausalFactor[]>,
 ): (newCausalFactor: CausalFactor) => void {
 	return useCallback(
 		(causalFactor: CausalFactor) => {
@@ -66,8 +80,20 @@ export function useDeleteCausalFactor(
 export function useAlternativeModels(
 	causalLevel: CausalModelLevel,
 	shouldUseVariable = true,
-	causalFactors = useCausalFactors(),
-	excludedFactors = useExcludedFactors(),
+): AlternativeModels {
+	return useAlternativeModelsTestable(
+		causalLevel,
+		shouldUseVariable,
+		useCausalFactors(),
+		useExcludedFactors(),
+	)
+}
+
+export function useAlternativeModelsTestable(
+	causalLevel: CausalModelLevel,
+	shouldUseVariable: boolean,
+	causalFactors: CausalFactor[],
+	excludedFactors: string[],
 ): AlternativeModels {
 	return useMemo(() => {
 		const confoundersArray: string[] = []
@@ -102,9 +128,13 @@ export function useAlternativeModels(
 	}, [causalFactors, excludedFactors, causalLevel, shouldIncludeInDegree])
 }
 
-export function useAddOrEditFactor(
-	causalFactors = useCausalFactors(),
-	setCausalFactors = useSetCausalFactors(),
+export function useAddOrEditFactor(): (factor, factors?) => void {
+	return useAddOrEditFactorTestable(useCausalFactors(), useSetCausalFactors())
+}
+
+export function useAddOrEditFactorTestable(
+	causalFactors: CausalFactor[],
+	setCausalFactors: SetterOrUpdater<CausalFactor[]>,
 ): (factor, factors?) => void {
 	return useCallback(
 		(factor: CausalFactor, factors = causalFactors) => {

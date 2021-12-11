@@ -17,14 +17,9 @@ describe('stepsHooks', () => {
 
 		const { result } = renderHook(
 			() =>
-				steps.useCurrentStep(
+				steps.useCurrentStepTestable(
 					{ steps: stepsList },
-					{
-						pathname: Pages.EstimateCausalEffects,
-						search: '',
-						state: '',
-						hash: '',
-					},
+					Pages.EstimateCausalEffects,
 				),
 			{
 				wrapper: RecoilRoot,

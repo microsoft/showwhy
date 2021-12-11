@@ -8,10 +8,10 @@ import { RecoilRoot } from 'recoil'
 import { v4 } from 'uuid'
 import { BeliefDegree, CausalModelLevel } from '../../common/enums'
 import {
-	useAddOrEditFactor,
-	useAlternativeModels,
-	useDeleteCausalFactor,
-	useExcludedFactors,
+	useAddOrEditFactorTestable as useAddOrEditFactor,
+	useAlternativeModelsTestable as useAlternativeModels,
+	useDeleteCausalFactorTestable as useDeleteCausalFactor,
+	useExcludedFactorsTestable as useExcludedFactors,
 } from '../causalFactors'
 
 const causalFactors = [

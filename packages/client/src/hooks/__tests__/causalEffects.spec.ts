@@ -7,7 +7,7 @@ import { renderHook } from '@testing-library/react-hooks'
 import { RecoilRoot } from 'recoil'
 import { v4 } from 'uuid'
 import { CausalModelLevel, DefinitionType } from '../../common/enums'
-import { useCausalEffects } from '../causalEffects'
+import { useCausalEffectsTestable as useCausalEffects } from '../causalEffects'
 
 const question = {
 	exposure: {
@@ -44,15 +44,10 @@ describe('causalEffectsHooks', () => {
 
 		const { result } = renderHook(
 			() => {
-				return useCausalEffects(
-					CausalModelLevel.Intermediate,
-					question,
-					['Hurricane 2'],
-					{
-						confounders: [],
-						outcomeDeterminants: [],
-					},
-				)
+				return useCausalEffects(question, ['Hurricane 2'], {
+					confounders: [],
+					outcomeDeterminants: [],
+				})
 			},
 			{
 				wrapper: RecoilRoot,
