@@ -49,5 +49,19 @@ export const useResetProject = (): (() => void) => {
 		resetModelVariables()
 		resetSpecificationCurveConfig()
 		resetPrimarySpecificationConfig()
-	}, [])
+	}, [
+		resetProjectFiles,
+		resetSelectedFile,
+		resetOriginalTables,
+		resetCausalFactors,
+		resetRefutationTests,
+		resetEstimators,
+		resetDefineQuestion,
+		resetHoverState,
+		resetRunHistory,
+		resetTableColumns,
+		resetModelVariables,
+		resetSpecificationCurveConfig,
+		resetPrimarySpecificationConfig,
+	])
 }
