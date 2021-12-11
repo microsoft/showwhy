@@ -3,17 +3,11 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { renderHook } from '@testing-library/react-hooks'
-import { usePageType } from '../usePageType'
-
-const mockRouter = jest.requireActual('react-router-dom')
-jest.mock('react-router-dom', () => ({
-	...mockRouter,
-	useLocation: () => ({
-		pathname: 'localhost:3000/prepare/columns',
-	}),
-}))
+import { usePageTypeTestable } from '../usePageType'
 
 it('should return the page type', () => {
-	const { result } = renderHook(() => usePageType())
+	const { result } = renderHook(() =>
+		usePageTypeTestable('localhost:3000/prepare/columns'),
+	)
 	expect(result.current).toBe('columns')
 })

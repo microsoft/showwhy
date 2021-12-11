@@ -5,11 +5,11 @@
 import { SelectionState } from '@thematic/core'
 import { useThematic } from '@thematic/react'
 import React, { memo, useMemo } from 'react'
-import { RefutationResultString } from 'src/common/enums/RefutationResult'
 import styled from 'styled-components'
 import { VegaHost } from '../VegaHost'
 import template from './scatter-plot.json'
 import { mergeSpec, parseJsonPathSpec } from './util'
+import { RefutationResultString } from '~enums'
 import { Specification, SpecificationCurveConfig } from '~interfaces'
 
 export interface OutcomeEffectScatterplotProps {
