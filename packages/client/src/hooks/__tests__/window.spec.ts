@@ -14,7 +14,7 @@ describe('windowHook', () => {
 			height: window.innerHeight / 2,
 		}
 		const { result } = renderHook(() =>
-			win.useVegaWindowDimensions({
+			win.useVegaWindowDimensionsTestable({
 				height: 500,
 				width: 500,
 			}),

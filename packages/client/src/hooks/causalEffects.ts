@@ -3,17 +3,27 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { useMemo } from 'react'
-import { CausalModelLevel } from '~enums'
 import { useAlternativeModels, useExcludedFactors } from './causalFactors'
+import { CausalModelLevel } from '~enums'
+import { AlternativeModels, DescribeElements } from '~interfaces'
 import { useDefineQuestion } from '~state'
 import { GenericObject } from '~types'
 
 export const useCausalEffects = (
 	causalLevel: CausalModelLevel,
-	question = useDefineQuestion(),
-	excludedFactors = useExcludedFactors(),
-	{ confounders, outcomeDeterminants } = useAlternativeModels(causalLevel),
 ): GenericObject => {
+	return useCausalEffectsTestable(
+		useDefineQuestion(),
+		useExcludedFactors(),
+		useAlternativeModels(causalLevel),
+	)
+}
+
+export function useCausalEffectsTestable(
+	question: DescribeElements,
+	excludedFactors: string[],
+	{ confounders, outcomeDeterminants }: AlternativeModels,
+): GenericObject {
 	const excludedMessage = useMemo((): string => {
 		return `${excludedFactors.length} potential control${
 			excludedFactors.length > 1 ? 's were' : ' was'
