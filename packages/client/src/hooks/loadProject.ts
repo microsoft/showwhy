@@ -113,6 +113,7 @@ export function useLoadProject() {
 			setAllStepStatus,
 			getStepUrls,
 			setDefaultDatasetResult,
+			setConfidenceInterval,
 		],
 	)
 }
