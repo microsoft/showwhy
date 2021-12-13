@@ -8,12 +8,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { useSendData } from './send'
 import { useCheckRunStatus, useStartProcess } from './start'
 import { useEstimateNode, useIsProcessing } from './variables'
-import {
-	useGetReady,
-	useRefutationOptions,
-	useSetRunAsDefault,
-	useWakeLock,
-} from '~hooks'
+import { useRefutationOptions, useSetRunAsDefault, useWakeLock } from '~hooks'
 import { numberExecutions, terminateRun } from '~resources'
 import {
 	useConfidenceInterval,
@@ -45,12 +40,11 @@ export const useRunEstimate = (): GenericObject => {
 	const setRunHistory = useSetRunHistory()
 	const runHistory = useRunHistory()
 	const setRunAsDefault = useSetRunAsDefault()
-	const getReady = useGetReady()
 	const setNodeResponse = useSetNodeResponse()
 	const nodeResponse = useNodeResponse()
-	const checkRunStatus = useCheckRunStatus(getReady)
+	const checkRunStatus = useCheckRunStatus()
 	const specCount = useSpecCount()
-	const setSpecCount = useSetSpecCountState()
+	const setSpecCount = useSetSpecCount()
 	const isProcessing = useIsProcessing(runHistory)
 	const confidenceInterval = useConfidenceInterval()
 	const refutationOptions = useRefutationOptions()
@@ -85,7 +79,6 @@ export const useRunEstimate = (): GenericObject => {
 	const startProcess = useStartProcess(
 		setRunHistory,
 		setRunAsDefault,
-		getReady,
 		refutationType,
 		specCount,
 	)
@@ -129,14 +122,4 @@ export const useRunEstimate = (): GenericObject => {
 		hasConfidenceInterval,
 		refutationOptions,
 	}
-}
-
-const useSetSpecCountState = () => {
-	const set = useSetSpecCount()
-	return useCallback(
-		(count?: number) => {
-			set(count)
-		},
-		[set],
-	)
 }
