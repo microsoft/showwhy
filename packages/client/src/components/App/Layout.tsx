@@ -97,7 +97,7 @@ const StepsContainer = styled.div`
 
 const ChildrenContainer = styled.div`
 	padding: 0 16px;
-	margin-bottom: 1.5rem;
+	margin-bottom: 1rem;
 `
 
 const ControlsContainer = styled.div`
