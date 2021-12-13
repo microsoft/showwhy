@@ -102,9 +102,15 @@ export function useSpecificationCurve(): GenericObject {
 
 	const refutationKeys = useMemo((): string[] => {
 		if (selectedSpecification) {
-			return Object.keys(selectedSpecification).filter(x =>
+			const keys = Object.keys(selectedSpecification).filter(x =>
 				x.startsWith('refuter'),
 			)
+
+			const refutationRun = keys.filter(
+				ref => !isNaN(selectedSpecification[ref]),
+			)
+
+			return refutationRun
 		}
 		return []
 	}, [selectedSpecification])
@@ -129,7 +135,7 @@ export function useSpecificationCurve(): GenericObject {
 				refutationKeys.length
 			)
 		}
-		return ''
+		return '0/0'
 	}, [refutationKeys, failedRefutations])
 
 	const isSpecificationOn = useMemo(() => {
