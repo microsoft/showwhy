@@ -5,7 +5,7 @@
 
 import { useCallback, useMemo } from 'react'
 import { useHistory } from 'react-router-dom'
-import { useRunSignificanceTests } from 'src/hooks/significanceTests'
+import { useRunSignificanceTests } from '../../../hooks/significanceTests'
 import { useLoadSpecificationData } from '../ExploreSpecificationCurvePage/hooks'
 import { NodeResponseStatus, Pages, RefutationTypes } from '~enums'
 import {

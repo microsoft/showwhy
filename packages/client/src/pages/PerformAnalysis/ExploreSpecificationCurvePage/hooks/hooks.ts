@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { csv } from 'd3-fetch'
-import { isNull } from 'lodash'
+import isNull from 'lodash/isNull'
 import { useEffect, useMemo, useState } from 'react'
 import { useDefaultRun } from '~hooks'
 import { Specification, SpecificationCurveConfig } from '~interfaces'

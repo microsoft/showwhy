@@ -5,18 +5,28 @@
 
 import { useCallback } from 'react'
 // HACK to pass the unit tests
+import { SetterOrUpdater } from 'recoil'
 import { replaceItemAtIndex } from '../common/utils/functions'
 import { usePageType } from './usePageType'
-import { ElementDefinition } from '~interfaces'
+import { PageType } from '~enums'
+import { DescribeElements, ElementDefinition } from '~interfaces'
 import { useDefineQuestion, useSetDefineQuestion } from '~state'
 
 export function useSaveDefinition(): (
 	newDefinition: ElementDefinition,
 ) => void {
-	const type = usePageType()
-	const defineQuestion = useDefineQuestion()
-	const setDefineQuestion = useSetDefineQuestion()
+	return useSaveDefinitionTestable(
+		usePageType(),
+		useDefineQuestion(),
+		useSetDefineQuestion(),
+	)
+}
 
+export function useSaveDefinitionTestable(
+	type: PageType,
+	defineQuestion: DescribeElements,
+	setDefineQuestion: SetterOrUpdater<DescribeElements>,
+): (newDefinition: ElementDefinition) => void {
 	return useCallback(
 		(newDefinition: ElementDefinition) => {
 			let newDefinitionList = [...defineQuestion[type]?.definition] || []
@@ -45,13 +55,22 @@ export function useSaveDefinition(): (
 		[defineQuestion, type, setDefineQuestion],
 	)
 }
+
 export function useRemoveDefinition(): (
 	definitionToRemove: ElementDefinition,
 ) => void {
-	const type = usePageType()
-	const defineQuestion = useDefineQuestion()
-	const setDefineQuestion = useSetDefineQuestion()
+	return useRemoveDefinitionTestable(
+		usePageType(),
+		useDefineQuestion(),
+		useSetDefineQuestion(),
+	)
+}
 
+export function useRemoveDefinitionTestable(
+	type: PageType,
+	defineQuestion: DescribeElements,
+	setDefineQuestion: SetterOrUpdater<DescribeElements>,
+): (definitionToRemove: ElementDefinition) => void {
 	return useCallback(
 		(definitionToRemove: ElementDefinition) => {
 			const newDefinitionList = [...defineQuestion[type].definition].filter(

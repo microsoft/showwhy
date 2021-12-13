@@ -4,8 +4,7 @@
  */
 
 import { useCallback, useMemo } from 'react'
-import { RefutationResult } from 'src/common/enums/RefutationResult'
-import { RefutationTestMethod, RefutationTypes } from '~enums'
+import { RefutationTestMethod, RefutationTypes, RefutationResult } from '~enums'
 import { RefutationOption, Specification } from '~interfaces'
 import { useSetRefutationType } from '~state'
 

@@ -85,9 +85,9 @@ export const useAllModelVariables = (
 export function useResetModelVariables(): Resetter {
 	const reset = useResetRecoilState
 	const setTableState = useSetRecoilState(keys)
-	const ids = [...useRecoilValue(keys)]
+	const ids = useRecoilValue(keys)
 	return useCallback(() => {
 		ids.forEach(id => reset(modelVariablesState(id)))
 		setTableState([])
-	}, [ids])
+	}, [ids, reset, setTableState])
 }
