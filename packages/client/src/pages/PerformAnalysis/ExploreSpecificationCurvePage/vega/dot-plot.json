@@ -110,6 +110,8 @@
 				"data": "features",
 				"field": "id"
 			},
+			"padding": 10,
+			"zero": false,
 			"range": [
 				0,
 				{
@@ -182,7 +184,8 @@
 			"orient": "bottom",
 			"titlePadding": 5,
 			"title": "Specification (Primary specification in bold)",
-			"labels": true
+			"labels": true,
+			"tickMinStep": 1
 		},
 		{
 			"scale": "yAxis",

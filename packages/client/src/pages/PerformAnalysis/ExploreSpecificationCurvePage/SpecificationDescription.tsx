@@ -45,11 +45,13 @@ export const SpecificationDescription: React.FC<SpecificationDescriptionProps> =
 							<Value>{specification.population}</Value>
 							is
 							<Effect>{round(specification.estimatedEffect, 3)}</Effect>
-							{specification?.c95Lower && specification?.c95Upper && (
+							{specification?.c95Lower && specification?.c95Upper ? (
 								<ConfidenceIntervalDetails
 									c95Lower={specification?.c95Lower}
 									c95Upper={specification?.c95Upper}
 								/>
+							) : (
+								'. '
 							)}
 							{refutationNumbers === '0/0' ? (
 								<Text>

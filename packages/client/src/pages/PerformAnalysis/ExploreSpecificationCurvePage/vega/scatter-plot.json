@@ -119,6 +119,8 @@
 			"name": "x",
 			"type": "linear",
 			"nice": false,
+			"zero": false,
+			"padding": 10,
 			"domain": {
 				"data": "marked",
 				"field": "id"
