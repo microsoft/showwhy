@@ -6,11 +6,12 @@ import React, { memo } from 'react'
 import styled from 'styled-components'
 import { useDefinitionList } from './hooks'
 import { GenericTableComponent } from '~components/Tables/GenericTableComponent'
-import { ElementDefinition, CausalFactor } from '~interfaces'
+import { Factor } from '~interfaces'
+import { GenericFn } from '~types'
 
 interface DefinitionListProps {
-	list: CausalFactor[] | ElementDefinition[]
-	onClick: (option: CausalFactor | ElementDefinition) => void
+	list: Factor[]
+	onClick: GenericFn
 	selectedDefinition: string
 	type: string
 	tableId: string

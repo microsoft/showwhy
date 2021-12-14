@@ -3,31 +3,31 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import {
-	Checkbox,
-	DefaultButton,
-	IComboBoxOption,
-	TextField,
-} from '@fluentui/react'
+import { IComboBoxOption } from '@fluentui/react'
 import { useCallback, useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
-import styled from 'styled-components'
-import { VariablePicker } from '~components/VariablePicker'
+import {
+	useCheckbox,
+	useDescriptionBox,
+	useHasLevel,
+	useVariablePicker,
+} from './variables'
 import { DefinitionType, PageType } from '~enums'
-import { CausalFactor, DescribeElements, ElementDefinition } from '~interfaces'
+import { DescribeElements, Factor } from '~interfaces'
+import { GenericFn } from '~types'
 
 interface DefinitionFormProps {
 	pageType: PageType
 	variables?: IComboBoxOption[]
-	onAdd?: (definitionOrFactor: ElementDefinition | CausalFactor) => void
-	onChange?: (definitionOrFactor: ElementDefinition | CausalFactor) => void
+	onAdd?: GenericFn
+	onChange?: GenericFn
 	defineQuestion?: DescribeElements
-	definitionOrFactor?: ElementDefinition | CausalFactor
+	factor?: Factor
 }
 
 export const useFactorsDefinitionForm = ({
 	defineQuestion,
-	definitionOrFactor,
+	factor,
 	pageType,
 	variables,
 	onAdd,
@@ -37,9 +37,10 @@ export const useFactorsDefinitionForm = ({
 	variable
 	description
 } => {
-	const [description, setDescription] = useState<string>()
-	const [variable, setVariable] = useState<string>()
+	const [description, setDescription] = useState<string>('')
+	const [variable, setVariable] = useState<string>('')
 	const [isPrimary, setIsPrimary] = useState<boolean | undefined>(false)
+	const hasLevel = useHasLevel(factor)
 	const location = useLocation()
 
 	const resetFields = useCallback(() => {
@@ -49,82 +50,50 @@ export const useFactorsDefinitionForm = ({
 	}, [setDescription, setIsPrimary])
 
 	const add = useCallback(() => {
-		const newDefinitionOrFactor: any = {
+		const newFactor: any = {
 			variable,
 			description,
 			level: isPrimary ? DefinitionType.Primary : DefinitionType.Secondary,
 		}
-		onAdd && onAdd(newDefinitionOrFactor)
+		onAdd && onAdd(newFactor)
 		resetFields()
-	}, [resetFields, variable, isPrimary, description])
+	}, [resetFields, variable, isPrimary, description, onAdd])
 
 	useEffect(() => {
 		resetFields()
 		defineQuestion && setVariable(defineQuestion[pageType]?.variable)
-	}, [pageType, location])
+	}, [pageType, location, defineQuestion, resetFields])
 
 	useEffect(() => {
 		defineQuestion &&
 			setIsPrimary(!defineQuestion[pageType]?.definition?.length)
-	}, [defineQuestion])
+	}, [defineQuestion, pageType])
 
 	useEffect(() => {
-		if (definitionOrFactor) {
-			setVariable(definitionOrFactor.variable)
-			setDescription(definitionOrFactor.description)
-			if (definitionOrFactor.hasOwnProperty('level')) {
-				setIsPrimary(
-					(definitionOrFactor as ElementDefinition).level ===
-						DefinitionType.Primary,
-				)
-			}
+		if (factor) {
+			setVariable(factor.variable)
+			setDescription(factor.description || '')
+			hasLevel && setIsPrimary(factor.level === DefinitionType.Primary)
 		}
-	}, [definitionOrFactor])
+	}, [factor, hasLevel])
 
 	useEffect(() => {
-		const edited: any = { ...definitionOrFactor, variable, description }
-		if (definitionOrFactor?.hasOwnProperty('level')) {
-			edited.level = isPrimary
+		const edited: Partial<Factor> = { ...factor, variable, description }
+		hasLevel &&
+			(edited.level = isPrimary
 				? DefinitionType.Primary
-				: DefinitionType.Secondary
-		}
+				: DefinitionType.Secondary)
 		onChange && onChange(edited)
-	}, [variable, isPrimary, description])
+	}, [variable, isPrimary, description, factor, hasLevel, onChange])
 
-	const checkbox = (
-		<Checkbox
-			label="Is primary?"
-			checked={isPrimary}
-			onChange={(_, value) => setIsPrimary(value)}
-		/>
-	)
-
-	const variablePicker = (
-		<VariablePicker
-			variable={variable}
-			onChange={setVariable}
-			showLabel={false}
-			variables={variables}
-		/>
-	)
-
-	const descriptionBox = (
-		<DetailsContainer>
-			<Field
-				onChange={(_, value) => setDescription(value)}
-				value={description}
-				placeholder="Enter description"
-				multiline={(description?.length || 0) > 70}
-				resizable={false}
-			/>
-			{!definitionOrFactor ? (
-				<ButtonContainer>
-					<AddButton disabled={!variable?.length} onClick={add}>
-						Add
-					</AddButton>
-				</ButtonContainer>
-			) : null}
-		</DetailsContainer>
+	const checkbox = useCheckbox(!!isPrimary, setIsPrimary)
+	const variablePicker = useVariablePicker(variable, setVariable, variables)
+	const descriptionBox = useDescriptionBox(
+		description,
+		setDescription,
+		variable,
+		add,
+		factor,
 	)
 
 	return {
@@ -133,19 +102,3 @@ export const useFactorsDefinitionForm = ({
 		description: descriptionBox,
 	}
 }
-
-const DetailsContainer = styled.div`
-	display: flex;
-`
-
-const Field = styled(TextField)`
-	width: 100%;
-	margin: 0px 8px;
-`
-
-const AddButton = styled(DefaultButton)``
-
-const ButtonContainer = styled.div`
-	text-align: end;
-	padding-right: 8px;
-`

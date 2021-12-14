@@ -7,7 +7,7 @@ import { useCallback } from 'react'
 import { v4 } from 'uuid'
 import { InputRef, SetModelVariables } from './types'
 import { PageType } from '~enums'
-import { CausalFactor, Definition, ElementDefinition } from '~interfaces'
+import { CausalFactor, Definition, Factor } from '~interfaces'
 import { GenericFn } from '~types'
 import { wait } from '~utils'
 
@@ -62,7 +62,7 @@ export const useOnDuplicate = ({
 	onClick,
 }: OnDuplicateArgs): GenericFn => {
 	return useCallback(
-		async (value: CausalFactor | ElementDefinition) => {
+		async (value: Factor) => {
 			const newVariableName = value?.variable + '_copy'
 			const existing = (modelVariables && modelVariables[type]) || []
 			const actualVariable = existing.find(x => x.name === value.variable)
@@ -75,12 +75,12 @@ export const useOnDuplicate = ({
 				return onDuplicateCausalFactor(value as CausalFactor, newVariableName)
 			}
 			const newDefinition = {
-				level: (value as ElementDefinition)?.level,
+				level: value?.level,
 				variable: newVariableName,
 				description: value?.description,
 				column: newColumn,
 				id: v4(),
-			} as ElementDefinition
+			} as Factor
 			const newVariable = {
 				name: newVariableName,
 				filters: actualVariable?.filters?.map(x => {

@@ -4,7 +4,7 @@
  */
 
 import { useBoolean } from 'ahooks'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useRef, useState, useMemo } from 'react'
 import { useItem } from './item'
 import { useOnDelete } from './onDelete'
 import { useOnDuplicate, useOnDuplicateCausalFactor } from './onDuplicate'
@@ -16,13 +16,13 @@ import {
 	useRemoveDefinition,
 	useSaveDefinition,
 } from '~hooks'
-import { ElementDefinition, CausalFactor, Item } from '~interfaces'
+import { Item, Factor } from '~interfaces'
 import { useModelVariables, useSetModelVariables } from '~state'
 import { GenericObject } from '~types'
 
 export const useDefinitionList = (
-	list: CausalFactor[] | ElementDefinition[],
-	onClick: (option: CausalFactor | ElementDefinition) => void,
+	list: Factor[],
+	onClick: (option: Factor) => void,
 	type: string,
 	tableId: string,
 	onUpdate: (definition: string) => void,
@@ -31,11 +31,8 @@ export const useDefinitionList = (
 		isEditingLabel,
 		{ toggle: toggleIsEditingLabel, setFalse: setFalseEditing },
 	] = useBoolean(false)
-	const [editingDefinition, setEditingDefinition] = useState<
-		CausalFactor | ElementDefinition
-	>()
+	const [editingDefinition, setEditingDefinition] = useState<Factor>()
 	const [newLabel, setNewLabel] = useState<string>()
-	const [itemList, setItemList] = useState<any[]>([])
 	const saveDefinition = useSaveDefinition()
 	const removeDefinition = useRemoveDefinition()
 	const saveCausalFactor = useAddOrEditFactor()
@@ -46,7 +43,7 @@ export const useDefinitionList = (
 	const listEndRef = useRef<HTMLInputElement>(null)
 
 	const editDefinition = useCallback(
-		(val: CausalFactor | ElementDefinition) => {
+		(val: Factor) => {
 			toggleIsEditingLabel()
 			setEditingDefinition(val)
 			setNewLabel(val.variable)
@@ -120,12 +117,9 @@ export const useDefinitionList = (
 		setNewLabel,
 	})
 
-	useEffect(() => {
-		const items: Item[] = list.map((x, index) =>
-			item(x, index, list.length - 1),
-		)
-		setItemList(items)
-	}, [item, list, setItemList])
+	const itemList: Item[] = useMemo(() => {
+		return list.map((x, index) => item(x, index, list.length - 1))
+	}, [list, item])
 
 	return {
 		itemList,
