@@ -41,7 +41,7 @@ export const useOnDuplicateCausalFactor = ({
 				id: v4(),
 			} as CausalFactor
 
-			saveCausalFactor(newCausalFactor, newVariable)
+			saveCausalFactor(newCausalFactor)
 			await wait(300)
 			onClick(newCausalFactor)
 			listEndRef?.current?.scrollIntoView({ behavior: 'smooth' })
