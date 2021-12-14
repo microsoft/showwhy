@@ -7,15 +7,15 @@ import { TextField } from '@fluentui/react'
 import { useCallback } from 'react'
 import styled from 'styled-components'
 import { InputRef } from './types'
-import { CausalFactor, ElementDefinition, Item } from '~interfaces'
+import { Factor, Item } from '~interfaces'
 import { Text } from '~styles'
 import { TypedFn, GenericFn, StringSetter } from '~types'
 
 interface ItemArgs {
 	isEditingLabel: boolean
-	editingDefinition: CausalFactor | ElementDefinition | undefined
+	editingDefinition?: Factor
 	listEndRef: InputRef
-	newLabel: string | undefined
+	newLabel?: string
 	onSave: GenericFn
 	onClick: GenericFn
 	onDelete: GenericFn

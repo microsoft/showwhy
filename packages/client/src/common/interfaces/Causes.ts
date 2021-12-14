@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { BeliefDegree } from '~enums'
+import { BeliefDegree, DefinitionType } from '~enums'
 
 export interface Cause {
 	causes: boolean
@@ -24,4 +24,13 @@ export interface CausalFactor {
 	variable: string
 	causes?: Causes
 	column?: string
+}
+
+export interface Factor {
+	id: string
+	description?: string
+	variable: string
+	causes?: Causes
+	column?: string
+	level?: DefinitionType
 }

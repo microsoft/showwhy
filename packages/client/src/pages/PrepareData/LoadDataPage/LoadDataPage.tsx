@@ -8,11 +8,11 @@ import styled from 'styled-components'
 import { SupportedFileTypes } from './SupportedFileTypes'
 import { useBusinessLogic } from './hooks'
 import { DatasetsList } from '~components/DatasetsList'
+import { DelimiterDropdown } from '~components/DelimiterDropdown'
 import { DialogConfirm } from '~components/DialogConfirm'
 import { DropzoneContainer } from '~components/DropzoneContainer'
 import { MessageContainer } from '~components/MessageContainer'
 import { SelectedTableDisplay } from '~components/Tables/SelectedTableDisplay'
-import { DelimiterDropdown } from '~components/controls'
 import { ContainerFlexRow } from '~styles'
 
 export const LoadDataPage: React.FC = memo(function LoadDataPage() {

@@ -6,7 +6,12 @@
 import { useCallback } from 'react'
 import { SetModelVariables } from './types'
 import { PageType } from '~enums'
-import { CausalFactor, Definition, ElementDefinition } from '~interfaces'
+import {
+	CausalFactor,
+	Definition,
+	ElementDefinition,
+	Factor,
+} from '~interfaces'
 import { GenericFn } from '~types'
 
 interface OnDuplicateArgs {
@@ -25,7 +30,7 @@ export const useOnDelete = ({
 	deleteCausalFactor,
 }: OnDuplicateArgs): GenericFn => {
 	return useCallback(
-		(val: CausalFactor | ElementDefinition) => {
+		(val: Factor) => {
 			if (type === PageType.Control) {
 				return deleteCausalFactor(val as CausalFactor)
 			}

@@ -3,6 +3,4 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-export type GenericObject = {
-	[key: string]: any
-}
+export type GenericObject = Record<string, any>
