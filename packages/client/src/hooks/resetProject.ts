@@ -9,7 +9,6 @@ import {
 	useResetDefineQuestion,
 	useResetEstimators,
 	useResetHoverState,
-	useResetModelVariables,
 	useResetOriginalTables,
 	useResetPrimarySpecificationConfig,
 	useResetProjectFiles,
@@ -17,7 +16,6 @@ import {
 	useResetRunHistory,
 	useResetSelectedFile,
 	useResetSpecificationCurveConfig,
-	useResetTableColumns,
 } from '~state'
 
 export const useResetProject = (): (() => void) => {
@@ -29,8 +27,6 @@ export const useResetProject = (): (() => void) => {
 	const resetProjectFiles = useResetProjectFiles()
 	const resetSelectedFile = useResetSelectedFile()
 	const resetRunHistory = useResetRunHistory()
-	const resetTableColumns = useResetTableColumns()
-	const resetModelVariables = useResetModelVariables()
 	const resetSpecificationCurveConfig = useResetSpecificationCurveConfig()
 	const resetPrimarySpecificationConfig = useResetPrimarySpecificationConfig()
 	const resetHoverState = useResetHoverState()
@@ -45,8 +41,6 @@ export const useResetProject = (): (() => void) => {
 		resetDefineQuestion()
 		resetHoverState()
 		resetRunHistory()
-		resetTableColumns()
-		resetModelVariables()
 		resetSpecificationCurveConfig()
 		resetPrimarySpecificationConfig()
 	}, [
@@ -59,8 +53,6 @@ export const useResetProject = (): (() => void) => {
 		resetDefineQuestion,
 		resetHoverState,
 		resetRunHistory,
-		resetTableColumns,
-		resetModelVariables,
 		resetSpecificationCurveConfig,
 		resetPrimarySpecificationConfig,
 	])

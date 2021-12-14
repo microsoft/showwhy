@@ -29,7 +29,7 @@ export const useTableComponent = (
 	const setter = definitionToEdit ? setEditedDefinition : setEditedFactor
 	const onChange = useOnchange(setter, definitionToEdit || factorToEdit)
 	const { level, description, variable } = useFactorsDefinitionForm({
-		definitionOrFactor: definitionToEdit || factorToEdit,
+		factor: definitionToEdit || factorToEdit,
 		onChange,
 		pageType,
 		variables,
