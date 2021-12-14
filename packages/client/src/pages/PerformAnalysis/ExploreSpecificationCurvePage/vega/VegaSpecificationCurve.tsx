@@ -4,7 +4,6 @@
  */
 import React, { memo, useCallback, useState } from 'react'
 import styled from 'styled-components'
-import { addOrRemoveArrayElement } from '../util'
 import { AnalyticDecisionsDotPlot } from './AnalyticDecisionsDotPlot'
 import { OutcomeEffectScatterplot } from './OutcomeEffectScatterplot'
 import {
@@ -12,6 +11,7 @@ import {
 	Specification,
 	SpecificationCurveConfig,
 } from '~interfaces'
+import { addOrRemoveArrayElement } from '~utils'
 
 export interface VegaSpecificationCurveProps {
 	data: Specification[]

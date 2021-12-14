@@ -100,6 +100,70 @@ export function useSpecificationCurve(): GenericObject {
 		[setConfig, setSignificanceTest],
 	)
 
+	const refutationKeys = useMemo((): string[] => {
+		if (selectedSpecification) {
+			const keys = Object.keys(selectedSpecification).filter(x =>
+				x.startsWith('refuter'),
+			)
+
+			const refutationRun = keys.filter(
+				ref => !isNaN(selectedSpecification[ref]),
+			)
+
+			return refutationRun
+		}
+		return []
+	}, [selectedSpecification])
+
+	const failedRefutations = useMemo((): string[] => {
+		if (selectedSpecification) {
+			return (
+				refutationKeys.filter(
+					actualKey => selectedSpecification[actualKey] === 0,
+				) || []
+			)
+		}
+		return []
+	}, [selectedSpecification, refutationKeys])
+
+	const refutationNumbers = useMemo((): string => {
+		if (selectedSpecification) {
+			return (
+				refutationKeys.length -
+				failedRefutations.length +
+				'/' +
+				refutationKeys.length
+			)
+		}
+		return '0/0'
+	}, [refutationKeys, failedRefutations])
+
+	const isSpecificationOn = useMemo(() => {
+		if (!selectedSpecification || !config.inactiveSpecifications) {
+			return
+		}
+		return !config.inactiveSpecifications.find(
+			x => x === selectedSpecification?.id,
+		)
+	}, [config, selectedSpecification])
+
+	const onToggleRejectEstimate = useCallback(() => {
+		const { inactiveSpecifications = [] } = config
+		if (selectedSpecification) {
+			const newInactive = inactiveSpecifications.filter(
+				s => s !== selectedSpecification?.id,
+			)
+
+			if (isSpecificationOn) {
+				newInactive.push(selectedSpecification.id)
+			}
+			setConfig({
+				...config,
+				inactiveSpecifications: newInactive,
+			})
+		}
+	}, [selectedSpecification, config, setConfig, isSpecificationOn])
+
 	return {
 		data,
 		defaultRun,
@@ -118,5 +182,9 @@ export function useSpecificationCurve(): GenericObject {
 		vegaWindowDimensions,
 		theme,
 		outcome,
+		isSpecificationOn,
+		refutationNumbers,
+		failedRefutations,
+		onToggleRejectEstimate,
 	}
 }

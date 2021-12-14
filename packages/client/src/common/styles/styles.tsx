@@ -29,9 +29,15 @@ export const Value = styled(Bold)`
 	}
 `
 
-export const Paragraph = styled.p<{ color?: string }>`
+export const Paragraph = styled.p<{
+	color?: string
+	noMarginBottom?: boolean
+	noMarginTop?: boolean
+}>`
 	color: ${({ color, theme }) =>
 		color ? theme.application()[color] : 'black'};
+	margin-bottom: ${({ noMarginBottom }) => (noMarginBottom ? 'unset' : '1em')};
+	margin-top: ${({ noMarginTop }) => (noMarginTop ? 'unset' : '1em')};
 `
 
 export const Container = styled.div<{
