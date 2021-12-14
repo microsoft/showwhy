@@ -3,6 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import { AlternativeModelsReq } from './AlternativeModels'
+
 export interface DataObject {
 	id: string
 	value: string
@@ -51,7 +53,7 @@ export interface AdditionalProperties {
 	controls?: string[]
 	causal_graph?: GraphElements
 	estimator_specs?: any
-	model_specs?: Model[]
+	model_specs?: AlternativeModelsReq[]
 	refuter_specs?: any
 }
 
