@@ -10,6 +10,9 @@ export type Entry = ZipEntry
 export interface ZipData {
 	json?: Entry
 	tables?: Entry[]
-	results?: Entry
+	results?: {
+		entry: Entry
+		dataUri: string
+	}
 	name?: string
 }
