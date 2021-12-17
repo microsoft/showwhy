@@ -73,7 +73,8 @@ export const useHandleFiles = () => {
 		await zipReader.close()
 		try {
 			await validateProjectFiles(entries)
-			loadProject(undefined, groupFilesByType(entries, file.name))
+			const files = await groupFilesByType(entries, file.name)
+			loadProject(undefined, files)
 		} catch (e) {
 			throw e
 		}

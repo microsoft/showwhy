@@ -50,10 +50,10 @@ export const getJsonFileContent = async (
 	return json
 }
 
-export const groupFilesByType = (
+export const groupFilesByType = async (
 	entries: zip.Entry[],
 	name = 'Zip Files',
-): ZipData => {
+): Promise<ZipData> => {
 	const filesByType = { name }
 	const resultsRegExp = /result(.+).(c|t)sv/gi
 	const isResult = filename => resultsRegExp.test(filename)
@@ -66,7 +66,12 @@ export const groupFilesByType = (
 	//TODO: It gets the first coincidence, should it be an array instead?
 	const results = entries.find(entry => isResult(entry.filename))
 	if (results) {
-		filesByType['results'] = results
+		const blob = await getBlobFromEntry(results)
+		const url = await blobToDataURL(blob)
+		filesByType['results'] = {
+			entry: results,
+			dataUri: url,
+		}
 	}
 
 	const tables = entries.filter(
@@ -82,9 +87,26 @@ export const groupFilesByType = (
 	return filesByType
 }
 
-export async function getFileFromEntry(entry: zip.Entry): Promise<File> {
+//**blob to dataURL**
+export async function blobToDataURL(blob) {
+	return new Promise((resolve, reject) => {
+		const reader = new FileReader()
+		reader.readAsDataURL(blob)
+		reader.onload = () => {
+			resolve(reader.result as string)
+		}
+		reader.onerror = e => reject(e)
+	})
+}
+
+export async function getBlobFromEntry(entry: zip.Entry): Promise<Blob> {
 	const writer = new zip.BlobWriter()
 	const blob = entry.getData ? await entry.getData(writer) : new Blob()
+	return blob
+}
+
+export async function getFileFromEntry(entry: zip.Entry): Promise<File> {
+	const blob = await getBlobFromEntry(entry)
 	return new File([blob], entry.filename.split('/').pop() || '')
 }
 

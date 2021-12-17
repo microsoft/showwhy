@@ -84,7 +84,7 @@ export function useLoadProject(source = ProjectSource.url) {
 					}))) as Workspace
 			}
 
-			const { tables = [] } = zip as ZipData
+			const { tables = [], results } = zip as ZipData
 			const tableFiles: File[] = await getFilesFromEntries(tables)
 
 			const {
@@ -98,6 +98,10 @@ export function useLoadProject(source = ProjectSource.url) {
 				confidenceInterval,
 				defaultResult,
 			} = workspace
+
+			if (results) {
+				defaultResult.url = results.dataUri
+			}
 
 			// prep everything as needed to ensure partials from the JSON
 			// have required fields
