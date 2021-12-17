@@ -5,11 +5,11 @@
 
 import * as zip from '@zip.js/zip.js'
 import { useMemo, useCallback } from 'react'
-import { useDropzone, FileRejection } from 'react-dropzone'
+import { useDropzone } from 'react-dropzone'
 import { useOnDropRejected } from './dropzone'
 import { useLoadProject } from './loadProject'
 import { FileType, ProjectSource } from '~enums'
-import { getJsonFileContent, groupFilesByType } from '~utils'
+import { getJsonFileContent, groupFilesByType, isZipUrl } from '~utils'
 
 const uploadZipButtonId = 'uploadZip'
 const acceptedFileTypes = [`.${FileType.zip}`]
@@ -38,7 +38,7 @@ export const useUploadZipMenuOption = () => {
 
 const getJsonTables = async jsonFile => {
 	const json = await getJsonFileContent(jsonFile)
-	return json.tables.map(t => t.name)
+	return json.tables
 }
 
 const validateProjectFiles = async entries => {
@@ -51,8 +51,13 @@ const validateProjectFiles = async entries => {
 	const tableEntries = entryNames.filter(
 		e => e.includes(FileType.csv) || e.includes(FileType.tsv),
 	)
-	const requiredTables = jsonTables.every(table => tableEntries.includes(table))
-	if (!requiredTables) {
+	const requiredTables = jsonTables
+		.filter(t => isZipUrl(t.url))
+		.map(t => t.name)
+	const hasRequiredTables = requiredTables.every(table =>
+		tableEntries.includes(table),
+	)
+	if (!hasRequiredTables) {
 		throw new Error('Required table from .json file not found in zip')
 	}
 	return true
