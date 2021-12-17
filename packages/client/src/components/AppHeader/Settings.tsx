@@ -5,7 +5,7 @@
 import { IContextualMenuProps } from '@fluentui/react'
 import React, { memo, useCallback } from 'react'
 import { OptionsButton } from './OptionsButton'
-import { StepStatus, Pages } from '~enums'
+import { StepStatus } from '~enums'
 import { Container } from '~styles'
 import { GenericFn } from '~types'
 

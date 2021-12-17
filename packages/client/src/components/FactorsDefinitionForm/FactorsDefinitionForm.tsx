@@ -9,7 +9,8 @@ import React, { memo } from 'react'
 import styled from 'styled-components'
 import { useFactorsDefinitionForm } from './hooks'
 import { PageType } from '~enums'
-import { CausalFactor, DescribeElements, ElementDefinition } from '~interfaces'
+import { CausalFactor, DescribeElements } from '~interfaces'
+import { GenericFn } from '~types'
 
 interface FactorsDefinitionFormProps {
 	factor?: CausalFactor
@@ -17,8 +18,8 @@ interface FactorsDefinitionFormProps {
 	defineQuestion?: DescribeElements
 	pageType: PageType
 	variables?: IComboBoxOption[]
-	onAdd?: (factor: CausalFactor | ElementDefinition) => void
-	onChange?: (factor: CausalFactor | ElementDefinition) => void
+	onAdd?: GenericFn
+	onChange?: GenericFn
 }
 
 export const FactorsDefinitionForm: React.FC<FactorsDefinitionFormProps> = memo(
@@ -32,7 +33,7 @@ export const FactorsDefinitionForm: React.FC<FactorsDefinitionFormProps> = memo(
 		variables,
 	}) {
 		const { level, description, variable } = useFactorsDefinitionForm({
-			definitionOrFactor: factor,
+			factor,
 			defineQuestion,
 			onChange,
 			onAdd,

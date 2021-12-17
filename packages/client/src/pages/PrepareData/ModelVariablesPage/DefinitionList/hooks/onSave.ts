@@ -7,7 +7,7 @@ import { useCallback } from 'react'
 import { v4 } from 'uuid'
 import { SetEditingDefinition, SetModelVariables } from './types'
 import { DefinitionType, PageType } from '~enums'
-import { CausalFactor, ElementDefinition, Definition } from '~interfaces'
+import { CausalFactor, Definition, Factor } from '~interfaces'
 import { GenericFn, StringSetter } from '~types'
 
 interface OnSaveCausalFactorArgs {
@@ -75,19 +75,18 @@ export const useOnSave = ({
 	setModelVariables,
 }: OnSaveArgs): GenericFn => {
 	return useCallback(
-		(definition?: CausalFactor | ElementDefinition | undefined) => {
+		(definition?: Factor) => {
 			if (type === PageType.Control) {
 				return onSaveCausalFactor(definition as CausalFactor)
 			}
 
 			const newDefinition = {
-				level:
-					(definition as ElementDefinition)?.level ?? DefinitionType.Secondary,
+				level: definition?.level ?? DefinitionType.Secondary,
 				variable: newLabel,
 				description: definition?.description ?? '',
 				column: definition?.column ?? null,
 				id: definition?.id ?? v4(),
-			} as ElementDefinition
+			} as Factor
 
 			const existing = (modelVariables && modelVariables[type]) || []
 			const actualVariables = existing.filter(

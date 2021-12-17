@@ -15,7 +15,6 @@ import {
 	AlternativeModelsReq,
 	ElementDefinition,
 	Estimator,
-	Model,
 	NodeRequest,
 } from '~interfaces'
 import { GenericObject } from '~types'
@@ -104,22 +103,20 @@ export const models = (
 	min: AlternativeModels,
 	interm: AlternativeModels,
 	unadju: AlternativeModels,
-): Model[] => {
-	const modelsList: any[] = []
+): AlternativeModelsReq[] => {
+	const modelsList: AlternativeModelsReq[] = []
 	const maximum = buildModelLevel('Maximum', max)
-
 	if (maximum) {
 		modelsList.push(maximum)
 	}
 
 	const minimum = buildModelLevel('Minimum', min)
-
 	if (minimum) {
 		modelsList.push(minimum)
 	}
 
 	const unadjusted = buildModelLevel('Unadjusted', unadju)
-	modelsList.push(unadjusted)
+	modelsList.push(unadjusted as AlternativeModelsReq)
 
 	return modelsList
 }

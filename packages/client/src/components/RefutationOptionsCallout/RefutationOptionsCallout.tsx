@@ -26,7 +26,7 @@ export const RefutationOptionsCallout: React.FC<RefutationOptionsCalloutProps> =
 			<>
 				{separate && <Text>, </Text>}
 				<LinkCallout title={title} id={`estimator-card-${calloutKey}`}>
-					{text || refutationOptions?.find(x => x.label == title)?.helpText}
+					{text || refutationOptions?.find(x => x.label === title)?.helpText}
 				</LinkCallout>
 			</>
 		)
