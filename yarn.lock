@@ -3569,6 +3569,7 @@ __metadata:
     "@types/styled-components": ^5.1.14
     "@types/uuid": ^8.3.1
     "@uifabric/icons": ^7.6.0
+    "@zip.js/zip.js": ^2.3.19
     add: ^2.0.6
     ahooks: ^2.10.9
     arquero: ^4.8.4
@@ -4867,6 +4868,13 @@ __metadata:
     "@rollup/pluginutils": ^4.1.1
     react-refresh: ^0.10.0
   checksum: 013f064abd1b26a483051b80b424848b687b942f01c9e00c3e9065b093d3b32381ff768df8e0c8c446524cce1a3d59df31b26bd2e9d906805f641e3bad5daebe
+  languageName: node
+  linkType: hard
+
+"@zip.js/zip.js@npm:^2.3.19":
+  version: 2.3.19
+  resolution: "@zip.js/zip.js@npm:2.3.19"
+  checksum: 23e4c4af95ea4a9bd973d37671d2a58a70dbebac960f3ffc4980a7980013451925af10c969bcd6bdf7cfd09fe74db44c0846b2cabc9861629ef261ad848b03f6
   languageName: node
   linkType: hard
 

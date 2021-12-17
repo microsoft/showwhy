@@ -11,4 +11,7 @@ export enum DownloadType {
 export enum FileType {
 	jupyter = 'jupyter',
 	csv = 'csv',
+	tsv = 'tsv',
+	json = 'json',
+	zip = 'zip',
 }

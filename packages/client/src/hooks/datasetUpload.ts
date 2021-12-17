@@ -6,9 +6,10 @@
 import ColumnTable from 'arquero/dist/types/table/column-table'
 import { useState, useCallback, useEffect } from 'react'
 import { useDropzone, FileRejection } from 'react-dropzone'
+import { useOnDropRejected } from './dropzone'
 import { useSupportedFileTypes } from './supportedFileTypes'
 import { DropFilesCount, ProjectFile } from '~interfaces'
-import { GenericObject } from '~types'
+import { GenericFn, GenericObject } from '~types'
 import { createDefaultTable } from '~utils'
 
 export function useDrop(
@@ -57,24 +58,12 @@ export const useHandleDropzone = (
 		completed: 0,
 	})
 
-	const resetCount = useCallback(() => {
-		setFilesCount({
-			total: 0,
-			completed: 0,
-		})
-	}, [setFilesCount])
+	const resetCount = useResetCount(setFilesCount)
 
-	const onFileLoadComplete = useCallback(
-		(file: ProjectFile, table: ColumnTable) => {
-			setFilesCount(prev => {
-				return {
-					...prev,
-					completed: prev.completed + 1,
-				}
-			})
-			onLoad && onLoad(file, table)
-		},
-		[setFilesCount, onLoad],
+	const onFileLoadComplete = useOnFileLoadCompleted(
+		setFilesCount,
+		setLoading,
+		onLoad,
 	)
 
 	useEffect(() => {
@@ -83,31 +72,11 @@ export const useHandleDropzone = (
 		}
 	}, [setLoading, filesCount])
 
-	const onLoadStart = useCallback(() => {
-		setLoading(true)
-		onError && onError(null)
-	}, [setLoading, onError])
+	const onLoadStart = useOnLoadStart(setLoading, onError)
 
-	const onDropFilesAccepted = useCallback(
-		(files: File[]) => {
-			setFilesCount({
-				total: files.length,
-				completed: 0,
-			})
-		},
-		[setFilesCount],
-	)
+	const onDropFilesAccepted = useOnDropDatasetFilesAccepted(setFilesCount)
 
-	const onDropFilesRejected = useCallback(
-		(files: FileRejection[]) => {
-			const errors = files.flatMap(x => x.errors)
-			const messages = [...new Set(errors.flatMap(x => x.message))]
-			onError && onError(messages.join(' / '))
-			resetCount()
-		},
-		[onError, resetCount],
-	)
-
+	const onDropFilesRejected = useOnDropRejected(onError, resetCount)
 	const handleDrop = useDrop(onFileLoadComplete, onLoadStart)
 
 	const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -124,4 +93,48 @@ export const useHandleDropzone = (
 		getInputProps,
 		isDragActive,
 	}
+}
+
+export const useOnLoadStart = (setLoading, onError) => {
+	return useCallback(() => {
+		setLoading(true)
+		onError && onError(null)
+	}, [setLoading, onError])
+}
+
+export const useOnFileLoadCompleted = (setFilesCount, setLoading, onLoad) => {
+	return useCallback(
+		(file: ProjectFile, table: ColumnTable) => {
+			setFilesCount(prev => {
+				return {
+					...prev,
+					completed: prev.completed + 1,
+				}
+			})
+			setLoading(false)
+			onLoad && onLoad(file, table)
+		},
+		[setFilesCount, setLoading, onLoad],
+	)
+}
+
+export const useOnDropDatasetFilesAccepted = (setFilesCount: GenericFn) => {
+	return useCallback(
+		(files: File[]) => {
+			setFilesCount({
+				total: files.length,
+				completed: 0,
+			})
+		},
+		[setFilesCount],
+	)
+}
+
+export const useResetCount = (setFilesCount: GenericFn) => {
+	return useCallback(() => {
+		setFilesCount({
+			total: 0,
+			completed: 0,
+		})
+	}, [setFilesCount])
 }
