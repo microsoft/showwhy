@@ -2,7 +2,8 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { DefaultButton, Icon, Toggle } from '@fluentui/react'
+import { DefaultButton, Toggle } from '@fluentui/react'
+import { MessageBarType } from '@fluentui/react'
 import React, { memo } from 'react'
 import styled from 'styled-components'
 import { SupportedFileTypes } from './SupportedFileTypes'
@@ -29,11 +30,13 @@ export const LoadDataPage: React.FC = memo(function LoadDataPage() {
 		toggleShowConfirm,
 		toggleLoadedCorrectly,
 		handleDelimiterChange,
+		handleDismissError,
 		loading,
-		filesCount,
+		fileCount,
 		getRootProps,
 		getInputProps,
 		isDragActive,
+		acceptedFileTypes,
 	} = useBusinessLogic()
 
 	return (
@@ -44,15 +47,30 @@ export const LoadDataPage: React.FC = memo(function LoadDataPage() {
 				toggle={toggleShowConfirm}
 				title="Are you sure you want to delete this dataset?"
 			/>
+			{errorMessage ? (
+				<MessageContainer
+					type={MessageBarType.error}
+					onDismiss={handleDismissError}
+					styles={{ marginTop: '10px', padding: '4px' }}
+				>
+					{errorMessage}
+				</MessageContainer>
+			) : null}
 			<ContainerFlexRow>
 				<ContainerFileUpload>
-					<SupportedFileTypes />
+					<SupportedFileTypes fileTypesAllowed={acceptedFileTypes} />
 					<DropzoneContainer
 						loading={loading}
-						filesCount={filesCount}
+						filesCount={fileCount}
 						getRootProps={getRootProps}
 						getInputProps={getInputProps}
 						isDragActive={isDragActive}
+						text={
+							!!selectedFile
+								? 'Upload dataset'
+								: `Drag 'n' drop a project .zip or dataset here, or click to select it`
+						}
+						isButton={!!selectedFile}
 					/>
 				</ContainerFileUpload>
 
@@ -62,13 +80,6 @@ export const LoadDataPage: React.FC = memo(function LoadDataPage() {
 					selectedFile={selectedFile}
 				/>
 			</ContainerFlexRow>
-
-			{errorMessage ? (
-				<MessageContainer type="error">
-					<ErrorIcon iconName="error" />
-					{errorMessage}
-				</MessageContainer>
-			) : null}
 
 			<TableContainer>
 				<SelectedTableDisplay
@@ -134,10 +145,6 @@ const ContainerFileUpload = styled.div`
 	align-items: center;
 `
 
-const ErrorIcon = styled(Icon)`
-	margin-right: 8px;
-	vertical-align: bottom;
-`
 const FlexContainer = styled.div`
 	display: flex;
 	width: 18rem;

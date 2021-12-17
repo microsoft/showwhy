@@ -2,6 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import { IContextualMenuItem } from '@fluentui/react'
 import React, { memo } from 'react'
 import styled from 'styled-components'
 import { ProjectsSelector } from './ProjectsSelector'
@@ -18,6 +19,7 @@ interface AppHeaderProps {
 	defineQuestion: DescribeElements
 	onClickProject: (example: FileDefinition) => void
 	exampleProjects: FileDefinition[]
+	uploadZipMenuOption?: IContextualMenuItem
 }
 
 export const AppHeader: React.FC<AppHeaderProps> = memo(function AppHeader({
@@ -26,6 +28,7 @@ export const AppHeader: React.FC<AppHeaderProps> = memo(function AppHeader({
 	defineQuestion,
 	onClickProject,
 	exampleProjects,
+	uploadZipMenuOption,
 }) {
 	return (
 		<AppHeaderContainer>
@@ -43,6 +46,7 @@ export const AppHeader: React.FC<AppHeaderProps> = memo(function AppHeader({
 				<ProjectsSelector
 					onClickProject={onClickProject}
 					exampleProjects={exampleProjects}
+					loadProjectOption={uploadZipMenuOption}
 				/>
 				<SaveProject />
 			</UserInformationContainer>
