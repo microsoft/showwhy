@@ -68,7 +68,7 @@ export const LoadDataPage: React.FC = memo(function LoadDataPage() {
 						text={
 							!!selectedFile
 								? 'Upload dataset'
-								: `Drag 'n' drop a project .zip or dataset here, or click to select it`
+								: 'Drop or upload a .zip or .csv file'
 						}
 						isButton={!!selectedFile}
 					/>
