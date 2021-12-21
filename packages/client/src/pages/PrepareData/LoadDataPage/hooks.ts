@@ -8,7 +8,7 @@ import { useBoolean } from 'ahooks'
 import ColumnTable from 'arquero/dist/types/table/column-table'
 import { useCallback, useEffect, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
-import { useHandleDropzone } from '~hooks'
+import { useGlobalDropzone } from '~hooks'
 import { ProjectFile } from '~interfaces'
 import {
 	useAddProjectFile,
@@ -35,7 +35,10 @@ export const useBusinessLogic = (): GenericObject => {
 	const originalTableState = useSelectOriginalTable(selectedFile?.id as string)
 	const originalTable = originalTableState()?.columns
 
-	const addFile = useAddProjectFile()
+	const handleDismissError = useCallback(() => {
+		setErrorMessage('')
+	}, [setErrorMessage])
+
 	const addOriginalTable = useSetOrUpdateOriginalTable()
 
 	// TODO: this should be tracked as part of the file management
@@ -74,15 +77,16 @@ export const useBusinessLogic = (): GenericObject => {
 		[setSelectedDelimiter, selectedFile, addOriginalTable],
 	)
 
-	const handleLoadFile = useHandleLoadFile(
-		addFile,
-		projectFiles,
-		addOriginalTable,
-		setErrorMessage,
-	)
+	const handleLoadFile = useHandleLoadFile(setErrorMessage)
 
-	const { loading, filesCount, getRootProps, getInputProps, isDragActive } =
-		useHandleDropzone(setErrorMessage, handleLoadFile)
+	const {
+		loading,
+		fileCount,
+		getRootProps,
+		getInputProps,
+		isDragActive,
+		acceptedFileTypes,
+	} = useGlobalDropzone(setErrorMessage, handleLoadFile)
 
 	return {
 		showConfirm,
@@ -98,10 +102,12 @@ export const useBusinessLogic = (): GenericObject => {
 		toggleLoadedCorrectly,
 		handleDelimiterChange,
 		loading,
-		filesCount,
+		fileCount,
 		getRootProps,
 		getInputProps,
 		isDragActive,
+		handleDismissError,
+		acceptedFileTypes,
 	}
 }
 
@@ -157,12 +163,10 @@ const useOnConfirmDelete = (
 	])
 }
 
-const useHandleLoadFile = (
-	addFile,
-	projectFiles,
-	addOriginalTable,
-	setErrorMessage,
-) => {
+const useHandleLoadFile = setErrorMessage => {
+	const projectFiles = useProjectFiles()
+	const addFile = useAddProjectFile()
+	const addOriginalTable = useSetOrUpdateOriginalTable()
 	return useCallback(
 		(file: ProjectFile, table: ColumnTable) => {
 			if (projectFiles.find(s => s.name === file.name)) {

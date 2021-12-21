@@ -37,6 +37,7 @@
 		"@thematic/react": "^1.2.3",
 		"@thematic/vega": "^1.2.2",
 		"@uifabric/icons": "^7.6.0",
+		"@zip.js/zip.js": "^2.3.19",
 		"add": "^2.0.6",
 		"ahooks": "^2.10.9",
 		"arquero": "^4.8.4",

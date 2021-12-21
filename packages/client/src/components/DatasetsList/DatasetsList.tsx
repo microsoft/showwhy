@@ -31,11 +31,7 @@ export const DatasetsList: React.FC<DatasetsListProps> = memo(
 							/>
 						))}
 					</ListContainer>
-				) : (
-					<TitleTableEmptyContainer>
-						<TitleTableEmptyText>Load a dataset to start</TitleTableEmptyText>
-					</TitleTableEmptyContainer>
-				)}
+				) : null}
 			</ContainerFlexRow>
 		)
 	},
@@ -45,16 +41,6 @@ const ListContainer = styled.div`
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
-`
-
-const TitleTableEmptyContainer = styled.div`
-	color: ${({ theme }) => theme.application().midContrast};
-	margin-left: 16px;
-	display: flex;
-`
-const TitleTableEmptyText = styled.span`
-	vertical-align: bottom;
-	margin: auto;
 `
 
 const Title = styled.h3`

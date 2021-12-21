@@ -8099,6 +8099,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/styled-components", "npm:5.1.14"],
             ["@types/uuid", "npm:8.3.1"],
             ["@uifabric/icons", "virtual:43234044b7438fe2d61705a53806e3cf1b57c36f9d0076f4ea9860d4c0f5b9f7239021252d58389c52e724a7d4da6edf23f1d58bae876b1fdf20bda31e9357ce#npm:7.6.0"],
+            ["@zip.js/zip.js", "npm:2.3.19"],
             ["add", "npm:2.0.6"],
             ["ahooks", "virtual:43234044b7438fe2d61705a53806e3cf1b57c36f9d0076f4ea9860d4c0f5b9f7239021252d58389c52e724a7d4da6edf23f1d58bae876b1fdf20bda31e9357ce#npm:2.10.9"],
             ["arquero", "npm:4.8.4"],
@@ -9878,6 +9879,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/plugin-transform-react-jsx-source", "virtual:7c2e86bd71e4578bc49c10815935fa36d076bc9b9165da0a5a92402faacdbb44a3cbc271397c4913bef21a7522896ec0179adcc54cd14f6c35789c0da703f93a#npm:7.14.5"],
             ["@rollup/pluginutils", "npm:4.1.1"],
             ["react-refresh", "npm:0.10.0"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
+      ["@zip.js/zip.js", [
+        ["npm:2.3.19", {
+          "packageLocation": "./.yarn/cache/@zip.js-zip.js-npm-2.3.19-a5e8cdbbb7-23e4c4af95.zip/node_modules/@zip.js/zip.js/",
+          "packageDependencies": [
+            ["@zip.js/zip.js", "npm:2.3.19"]
           ],
           "linkType": "HARD",
         }]
