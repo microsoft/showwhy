@@ -8,18 +8,18 @@ import { MessageContainer } from '~components/MessageContainer'
 import { Container } from '~styles'
 
 interface UploadZipProps {
-	id: string
 	onUpload: (files: File[]) => void
+	inputRef: React.RefObject<HTMLInputElement>
 }
 
 export const UploadZip: React.FC<UploadZipProps> = memo(function UploadZip({
-	id,
+	inputRef,
 	onUpload,
 }) {
 	const [errorMessage, setErrorMessage] = useState('')
 
 	useEffect(() => {
-		const btn = document.getElementById(id)
+		const btn = inputRef?.current
 		btn?.addEventListener(
 			'change',
 			async (e: any) => {
@@ -32,7 +32,7 @@ export const UploadZip: React.FC<UploadZipProps> = memo(function UploadZip({
 			},
 			false,
 		)
-	}, [])
+	}, [inputRef])
 
 	const ErrorMessage = useCallback(() => {
 		return (
@@ -52,10 +52,19 @@ export const UploadZip: React.FC<UploadZipProps> = memo(function UploadZip({
 		)
 	}, [errorMessage, setErrorMessage])
 
+	const InputZip = React.forwardRef(function inputZip(props, ref) {
+		return <input ref={ref} {...props} />
+	})
+
 	return (
 		<Container>
 			{errorMessage && <ErrorMessage />}
-			<input type="file" id={id} accept=".zip" style={{ display: 'none' }} />
+			<InputZip
+				ref={inputRef}
+				type="file"
+				accept=".zip"
+				style={{ display: 'none' }}
+			/>
 		</Container>
 	)
 })

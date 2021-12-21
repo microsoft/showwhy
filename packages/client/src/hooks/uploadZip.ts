@@ -29,9 +29,6 @@ export const useUploadZipMenuOption = () => {
 			key: id,
 			text: 'Open project',
 			iconProps: { iconName: 'Upload' },
-			onClick: () => {
-				document.getElementById(id)?.click()
-			},
 		}
 	}, [useUploadZipButtonId])
 }

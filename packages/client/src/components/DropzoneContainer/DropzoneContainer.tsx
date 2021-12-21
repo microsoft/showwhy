@@ -71,13 +71,15 @@ const DragFilesArea = styled(DefaultButton)<{
 	white-space: nowrap;
 	margin: 8px;
 	color: ${({ theme, isDragging }) =>
-		isDragging ? theme.application().accent : theme.application().foreground};
+		isDragging
+			? theme.application().accent().hex()
+			: theme.application().foreground().hex()};
 	opacity: ${({ isDragging }) => (isDragging ? 0.5 : 1)};
 	border: 1px
 		${({ theme, isButton }) =>
 			!isButton
-				? 'dashed ' + theme.application().accent()
-				: 'solid ' + theme.application().foreground()};
+				? 'dashed ' + theme.application().accent().hex()
+				: 'solid ' + theme.application().foreground().hex()};
 `
 
 const Container = styled.div`

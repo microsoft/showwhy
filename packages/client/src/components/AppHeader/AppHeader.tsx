@@ -29,6 +29,7 @@ export const AppHeader: React.FC<AppHeaderProps> = memo(function AppHeader({
 	onClickProject,
 	exampleProjects,
 	uploadZipMenuOption,
+	onUploadZip,
 }) {
 	return (
 		<AppHeaderContainer>
@@ -47,6 +48,7 @@ export const AppHeader: React.FC<AppHeaderProps> = memo(function AppHeader({
 					onClickProject={onClickProject}
 					exampleProjects={exampleProjects}
 					loadProjectOption={uploadZipMenuOption}
+					onUploadZip={onUploadZip}
 				/>
 				<SaveProject />
 			</UserInformationContainer>

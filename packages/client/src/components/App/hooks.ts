@@ -15,7 +15,6 @@ import {
 	useLoadProject,
 	useResetProject,
 	useUploadZipMenuOption,
-	useUploadZipButtonId,
 	useHandleFiles,
 } from '~hooks'
 import { FileDefinition } from '~interfaces'
@@ -45,7 +44,6 @@ export const useLayout = (): GenericObject => {
 	const resetProject = useResetProject()
 	const exampleProjects = useExampleProjects()
 	const uploadZipMenuOption = useUploadZipMenuOption()
-	const uploadZipButtonId = useUploadZipButtonId()
 	const handleFiles = useHandleFiles()
 
 	const onClickProject = useCallback(
@@ -112,7 +110,6 @@ export const useLayout = (): GenericObject => {
 		onClickProject,
 		exampleProjects,
 		uploadZipMenuOption,
-		uploadZipButtonId,
 		handleFiles,
 	}
 }
