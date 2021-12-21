@@ -24,7 +24,7 @@ export const ProjectsSelector: React.FC<ProjectsSelectorProps> = memo(
 		loadProjectOption,
 		onUploadZip,
 	}) {
-		const buttonRef = createRef()
+		const buttonRef = createRef() as React.RefObject<HTMLInputElement>
 		const handleClick = () => {
 			buttonRef.current?.click()
 		}
