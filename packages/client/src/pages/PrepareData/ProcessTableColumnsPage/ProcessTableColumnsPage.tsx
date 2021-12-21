@@ -120,7 +120,7 @@ const TableOptions = styled.div`
 `
 
 const TitleTableEmptyContainer = styled.div`
-	color: ${({ theme }) => theme.application().midContrast};
+	color: ${({ theme }) => theme.application().midContrast().hex()};
 	margin-left: 16px;
 	display: flex;
 `
