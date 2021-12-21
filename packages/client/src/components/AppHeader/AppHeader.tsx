@@ -20,6 +20,7 @@ interface AppHeaderProps {
 	onClickProject: (example: FileDefinition) => void
 	exampleProjects: FileDefinition[]
 	uploadZipMenuOption?: IContextualMenuItem
+	onUploadZip: GenericFn
 }
 
 export const AppHeader: React.FC<AppHeaderProps> = memo(function AppHeader({

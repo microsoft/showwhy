@@ -52,19 +52,25 @@ export const UploadZip: React.FC<UploadZipProps> = memo(function UploadZip({
 		)
 	}, [errorMessage, setErrorMessage])
 
-	const InputZip = React.forwardRef(function inputZip(props, ref) {
-		return <input ref={ref} {...props} />
+	const InputZip = React.forwardRef<HTMLInputElement>(function inputZip(
+		props,
+		ref,
+	) {
+		return (
+			<input
+				{...props}
+				ref={ref}
+				type="file"
+				accept=".zip"
+				style={{ display: 'none' }}
+			/>
+		)
 	})
 
 	return (
 		<Container>
 			{errorMessage && <ErrorMessage />}
-			<InputZip
-				ref={inputRef}
-				type="file"
-				accept=".zip"
-				style={{ display: 'none' }}
-			/>
+			<InputZip ref={inputRef} />
 		</Container>
 	)
 })
