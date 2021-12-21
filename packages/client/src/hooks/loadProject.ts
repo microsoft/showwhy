@@ -4,7 +4,7 @@
  */
 import { useCallback, useMemo } from 'react'
 import { v4 as uuidv4 } from 'uuid'
-import { StepStatus } from '~enums'
+import { ProjectSource, StepStatus } from '~enums'
 import { useGetStepUrls } from '~hooks'
 import {
 	CausalFactor,
@@ -13,11 +13,13 @@ import {
 	Element,
 	ElementDefinition,
 	FileDefinition,
+	ZipData,
 	FilterObject,
 	ProjectFile,
 	TableColumn,
 	VariableDefinition,
 	Workspace,
+	Entry,
 } from '~interfaces'
 import {
 	useAddProjectFile,
@@ -33,9 +35,16 @@ import {
 	useSetStepStatuses,
 	useSetTableColumns,
 } from '~state'
-import { fetchTable, runPipeline } from '~utils'
+import {
+	fetchTable,
+	getFilesFromEntries,
+	getJsonFileContent,
+	isZipUrl,
+	loadTable,
+	runPipeline,
+} from '~utils'
 
-export function useLoadProject() {
+export function useLoadProject(source = ProjectSource.url) {
 	const id = useMemo(() => uuidv4(), [])
 	const setTableColumns = useSetTableColumns(id)
 	const setModelVariables = useSetModelVariables(id)
@@ -53,13 +62,30 @@ export function useLoadProject() {
 	const setAllStepStatus = useSetStepStatuses()
 
 	return useCallback(
-		async (definition: FileDefinition) => {
-			const workspace = (await fetch(definition.url)
-				.then(res => res.json())
-				.then(wks => ({
-					...wks,
-					name: definition.name,
-				}))) as Workspace
+		async (definition?: FileDefinition, zip: ZipData = {}) => {
+			if (!definition && !zip) {
+				throw new Error('Must provide either a definition or .zip file')
+			}
+
+			let workspace
+
+			if (source === ProjectSource.zip) {
+				const { json, name } = zip as ZipData
+				workspace = {
+					...(await getJsonFileContent(json as Entry)),
+					name,
+				}
+			} else {
+				workspace = (await fetch(definition?.url as string)
+					.then(res => res.json())
+					.then(wks => ({
+						...wks,
+						name: definition?.name,
+					}))) as Workspace
+			}
+
+			const { tables = [], results } = zip as ZipData
+			const tableFiles: File[] = await getFilesFromEntries(tables)
 
 			const {
 				primarySpecification,
@@ -72,6 +98,10 @@ export function useLoadProject() {
 				confidenceInterval,
 				defaultResult,
 			} = workspace
+
+			if (results) {
+				defaultResult.url = results.dataUri
+			}
 
 			// prep everything as needed to ensure partials from the JSON
 			// have required fields
@@ -94,7 +124,7 @@ export function useLoadProject() {
 			setDefaultDatasetResult(defaultDatasetResult)
 			setConfidenceInterval(!!confidenceInterval)
 
-			await processTables(workspace, id, addFile, setOriginalTable)
+			await processTables(workspace, id, addFile, setOriginalTable, tableFiles)
 
 			const completed = getStepUrls(workspace.todoPages, true)
 			setAllStepStatus(completed, StepStatus.Done)
@@ -129,6 +159,7 @@ async function processTables(
 	id: string,
 	addFile,
 	setOriginalTable,
+	tableFiles?: File[],
 ) {
 	const { tables, postLoad } = workspace
 
@@ -136,7 +167,7 @@ async function processTables(
 	// run it and save just the final result
 	// otherwise, only save the primary table
 	if (postLoad) {
-		const result = await runPipeline(tables, postLoad.steps)
+		const result = await runPipeline(tables, postLoad.steps, tableFiles)
 		const file: ProjectFile = {
 			id,
 			content: result.toCSV(),
@@ -149,7 +180,10 @@ async function processTables(
 		// this shouldn't actually happen in practice, but until we can support multiples correctly...
 		const primary = tables.find(table => table.primary)
 		if (primary) {
-			const result = await fetchTable(primary)
+			const fetchMethod = !isZipUrl(primary.url)
+				? fetchTable(primary)
+				: loadTable(primary, tableFiles)
+			const result = await fetchMethod
 			const file: ProjectFile = {
 				id,
 				content: result.toCSV(),

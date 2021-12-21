@@ -4,7 +4,6 @@
  */
 import { Dropdown } from '@fluentui/react'
 import React, { memo } from 'react'
-
 import styled from 'styled-components'
 import { ColumnDetails } from './ColumnDetails'
 import { PrepareTable } from './PrepareTable'
@@ -31,12 +30,18 @@ export const ProcessTableColumnsPage: React.FC = memo(
 
 		return (
 			<Container>
-				<DatasetsList
-					title="Loaded data tables"
-					files={files}
-					selectedFile={selectedFile}
-					onFileSelected={onChangeFile}
-				/>
+				{files.length ? (
+					<DatasetsList
+						title="Loaded data tables"
+						files={files}
+						selectedFile={selectedFile}
+						onFileSelected={onChangeFile}
+					/>
+				) : (
+					<TitleTableEmptyContainer>
+						<TitleTableEmptyText>Load a dataset to start</TitleTableEmptyText>
+					</TitleTableEmptyContainer>
+				)}
 
 				{headers && (
 					<TableDetailsContainer>
@@ -112,4 +117,15 @@ const TableOptions = styled.div`
 	padding-bottom: 8px;
 	margin-bottom: 8px;
 	border-bottom: 1px solid #f2f2f2;
+`
+
+const TitleTableEmptyContainer = styled.div`
+	color: ${({ theme }) => theme.application().midContrast().hex()};
+	margin-left: 16px;
+	display: flex;
+`
+
+const TitleTableEmptyText = styled.span`
+	vertical-align: bottom;
+	margin: auto;
 `
