@@ -3,123 +3,46 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { fromCSV } from 'arquero'
-import { RowObject } from 'arquero/dist/types/table/table'
 import { useCallback, useMemo } from 'react'
-import { DownloadType, NodeResponseStatus } from '~enums'
-import { useRefutationCount, useReturnResult } from '~hooks'
+import { v4 } from 'uuid'
+import { NodeResponseStatus, RefutationTypes } from '~enums'
+import { useRefutationCount } from '~hooks'
 import { CheckStatus, RunHistory, RunStatus } from '~interfaces'
-import { getSessionId } from '~resources'
 import {
 	useResetSpecificationCurveConfig,
 	useRunHistory,
 	useSetRunHistory,
+	useSpecCount,
 } from '~state'
-import { findRunError, returnPercentage } from '~utils'
+import {
+	disableAllRuns,
+	findRunError,
+	isStatusProcessing,
+	matchStatus,
+	returnConfidenceIntervalsStatus,
+	returnEstimatorStatus,
+	returnPercentage,
+	returnRefutersStatus,
+} from '~utils'
 
-export function useSetRunAsDefault(): (runId: string) => void {
+export function useSetRunAsDefault(): (run: RunHistory) => void {
 	const setRunHistory = useSetRunHistory()
 	const resetSpecificationConfig = useResetSpecificationCurveConfig()
+	const runHistory = useRunHistory()
 
 	return useCallback(
-		(runId: string) => {
-			setRunHistory(prev => {
-				const actual = { ...prev.find(x => x.id === runId) } as RunHistory
-				actual.isActive = true
-				const old = prev
-					.filter(x => x.id !== runId)
-					.map(x => {
-						return { ...x, isActive: false }
-					})
-				return [...old, actual]
-			})
+		(run: RunHistory) => {
+			if (!runHistory.length) {
+				return
+			}
+			const runs = disableAllRuns(runHistory).filter(r => r.id !== run.id)
+			const newRun = { ...run, isActive: true }
+			runs.push(newRun)
+			setRunHistory(runs)
 			resetSpecificationConfig()
 		},
-		[setRunHistory, resetSpecificationConfig],
+		[runHistory, setRunHistory, resetSpecificationConfig, disableAllRuns],
 	)
-}
-
-const returnStatus = (
-	response: Partial<CheckStatus>,
-	hasConfidenceInterval: boolean,
-	totalRefuters: number,
-): RunStatus => {
-	const estimators = {
-		status:
-			!!response?.estimated_effect_completed &&
-			response?.estimated_effect_completed === response?.total_results
-				? NodeResponseStatus.Completed
-				: NodeResponseStatus.Running,
-	}
-	const confidenceIntervals = {
-		status:
-			!!response?.confidence_interval_completed &&
-			response?.confidence_interval_completed === response?.total_results
-				? NodeResponseStatus.Completed
-				: estimators.status === NodeResponseStatus.Completed
-				? NodeResponseStatus.Running
-				: NodeResponseStatus.Idle,
-	}
-	const refuters = {
-		status:
-			(!!response?.refute_completed &&
-				response?.refute_completed === response?.total_results) ||
-			0 * totalRefuters
-				? NodeResponseStatus.Completed
-				: (
-						hasConfidenceInterval
-							? confidenceIntervals.status === NodeResponseStatus.Completed
-							: estimators.status === NodeResponseStatus.Completed
-				  )
-				? NodeResponseStatus.Running
-				: NodeResponseStatus.Idle,
-	}
-
-	let percentage = 100
-
-	response.total_results = response?.total_results ?? 1
-	response.estimated_effect_completed =
-		response?.estimated_effect_completed ?? 0
-	response.confidence_interval_completed =
-		response?.confidence_interval_completed ?? 0
-	response.refute_completed = response?.refute_completed ?? 0
-
-	if (estimators.status !== NodeResponseStatus.Completed) {
-		percentage = returnPercentage(
-			response?.estimated_effect_completed,
-			response?.total_results,
-		)
-	} else if (
-		hasConfidenceInterval &&
-		confidenceIntervals.status !== NodeResponseStatus.Completed
-	) {
-		percentage = returnPercentage(
-			response?.confidence_interval_completed,
-			response?.total_results,
-		)
-	} else if (refuters.status !== NodeResponseStatus.Completed) {
-		percentage = returnPercentage(response?.refute_completed, totalRefuters)
-	}
-
-	return response.partial_results
-		? {
-				status: response.runtimeStatus?.toLowerCase() as NodeResponseStatus,
-				error: findRunError(response),
-				estimated_effect_completed: `${response.estimated_effect_completed}/${response.total_results}`,
-				confidence_interval_completed: `${response.confidence_interval_completed}/${response.total_results}`,
-				refute_completed: `${response?.refute_completed}/${totalRefuters}`,
-				percentage,
-				estimators,
-				confidenceIntervals,
-				refuters,
-		  }
-		: ({
-				status: response.runtimeStatus,
-				error: findRunError(response),
-				estimators,
-				confidenceIntervals,
-				refuters,
-		  } as RunStatus)
 }
 
 export function useDefaultRun(): RunHistory | undefined {
@@ -131,48 +54,42 @@ export function useDefaultRun(): RunHistory | undefined {
 	}, [runHistory])
 }
 
-export function useUpdateRunHistory(): (
-	id: string,
-	response: CheckStatus,
-) => void {
-	const setRunHistory = useSetRunHistory()
-	const getRefutationCount = useRefutationCount()
+export function useIsDefaultRunProcessing(): boolean {
+	const defaultRun = useDefaultRun()
+
+	return useMemo(() => {
+		return isStatusProcessing(defaultRun?.status?.status as NodeResponseStatus)
+	}, [defaultRun])
+}
+
+export function useReturnNewRunHistory(): (
+	hasConfidenceInterval: boolean,
+	refutationType: RefutationTypes,
+) => RunHistory {
+	const totalRefuters = useRefutationCount()
+	const specCount = useSpecCount()
+	const runHistory = useRunHistory()
 
 	return useCallback(
-		(id, response) => {
-			setRunHistory(prev => {
-				const existing = prev.find(p => p.id === id) as RunHistory
-				const refutationCount = getRefutationCount(response.total_results)
-				let status = returnStatus(
-					response,
-					existing.hasConfidenceInterval,
-					refutationCount,
-				)
-				const start = existing?.status?.time?.start || 0
-				const time = {
-					start,
-					end: new Date(),
-				}
-				status = !status.percentage
-					? ({
-							...existing.status,
-							...status,
-							time,
-					  } as RunStatus)
-					: ({
-							...status,
-							time,
-					  } as RunStatus)
-				return [
-					...prev.filter(p => p.id !== id),
-					{
-						...existing,
-						status,
-						result: response.partial_results || existing.result,
+		(hasConfidenceInterval: boolean, refutationType: RefutationTypes) => {
+			return {
+				id: v4(),
+				runNumber: runHistory.length + 1,
+				isActive: true,
+				status: {
+					status: NodeResponseStatus.Running,
+					estimated_effect_completed: `0/${specCount}`,
+					confidence_interval_completed: `0/${specCount}`,
+					refute_completed: `0/${totalRefuters(specCount as number)}`,
+					percentage: 0,
+					time: {
+						start: new Date(),
 					},
-				] as RunHistory[]
-			})
+				},
+				hasConfidenceInterval,
+				refutationType,
+			} as RunHistory
 		},
-		[setRunHistory],
+		[specCount, totalRefuters, runHistory],
 	)
 }

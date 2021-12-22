@@ -3,6 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import { useCallback } from 'react'
 import {
 	atom,
 	Resetter,
@@ -25,6 +26,19 @@ export const nodeResponseState = atom<NodeResponse | undefined>({
 
 export function useSetRunHistory(): SetterOrUpdater<RunHistory[]> {
 	return useSetRecoilState(runHistoryState)
+}
+
+export function useUpdateRunHistory(): (runHistory: RunHistory) => void {
+	const setRunHistory = useSetRecoilState(runHistoryState)
+	return useCallback(
+		(runHistory: RunHistory) => {
+			setRunHistory(prev => [
+				...prev.filter(p => p.id !== runHistory.id),
+				runHistory,
+			])
+		},
+		[setRunHistory],
+	)
 }
 
 export function useRunHistory(): RunHistory[] {

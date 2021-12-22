@@ -4,9 +4,8 @@
  */
 
 import { NodeResponseStatus, RefutationTypes } from '~enums'
-import { Graph } from '~interfaces'
 
-export interface RunTime {
+interface RunTime {
 	start: Date
 	end?: Date
 }
@@ -30,14 +29,7 @@ export interface RunHistory {
 	isActive: boolean
 	refutationType: RefutationTypes
 	hasConfidenceInterval: boolean
-	graph?: Graph
 	result?: []
 	status?: RunStatus
-	changes?: []
-	statusUrl?: string
 	sessionId?: string
-}
-
-export interface CurrentRun {
-	isProcessing: boolean
 }
