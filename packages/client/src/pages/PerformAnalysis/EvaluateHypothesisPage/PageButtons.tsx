@@ -28,6 +28,7 @@ export const PageButtons: React.FC<PageButtonsProps> = memo(
 		return (
 			<ContainerFlexRow marginBottom justifyContent="space-between">
 				<ContainerFlexColumn>
+					{console.log(significanceTestsResult)}
 					<ButtonWithMargin
 						disabled={
 							(!!significanceTestsResult &&

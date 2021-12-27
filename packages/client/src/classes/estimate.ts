@@ -3,45 +3,26 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { buildLoadNode } from './prepareDoWhyData'
+import { buildLoadNode } from '../resources'
 import { NodeResponseStatus } from '~enums'
 import { NodeRequest, ProjectFile } from '~interfaces'
 import {
 	checkEstimateStatus,
 	executeNode,
 	returnOrchestratorStatus,
-	terminateRun,
 	uploadFiles,
 } from '~resources'
 import { createFormData, isStatusProcessing, wait } from '~utils'
+import { Orchestrator } from './orchestrator'
 
-export class Run {
-	private fileUrl = ''
-	private fileName = ''
-	private _orchestratorResponse
-	private _onStart: ((...args) => void) | undefined
-	private _onUpdate: ((...args) => void) | undefined
-	private _onComplete: ((...args) => void) | undefined
-	private _onCancel: ((...args) => void) | undefined
-
+export class Estimate extends Orchestrator {
 	constructor(
 		onStart?: (...args) => void,
 		onUpdate?: (...args) => void,
 		onComplete?: (...args) => void,
 		onCancel?: (...args) => void,
 	) {
-		this._onStart = onStart
-		this._onUpdate = onUpdate
-		this._onComplete = onComplete
-		this._onCancel = onCancel
-	}
-
-	get orchestratorResponse(): any {
-		return this._orchestratorResponse
-	}
-
-	setOrchestratorResponse(res: any): void {
-		this._orchestratorResponse = res
+		super(onStart, onUpdate, onComplete, onCancel)
 	}
 
 	async uploadFiles(projectFiles: ProjectFile[]): Promise<void> {
@@ -51,7 +32,7 @@ export class Run {
 		this.fileName = projectFiles[0].name
 	}
 
-	private async getStatus() {
+	protected async getStatus() {
 		let status = await returnOrchestratorStatus(
 			this._orchestratorResponse.statusQueryGetUri,
 		)
@@ -79,11 +60,5 @@ export class Run {
 		this._onStart && this._onStart(this.orchestratorResponse)
 		const status = await this.getStatus()
 		this._onComplete && this._onComplete(status)
-	}
-
-	cancel(): void {
-		this.orchestratorResponse &&
-			terminateRun(this._orchestratorResponse.terminatePostUri)
-		this._onCancel && this._onCancel()
 	}
 }

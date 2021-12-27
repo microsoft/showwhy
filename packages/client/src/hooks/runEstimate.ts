@@ -7,7 +7,7 @@ import { useCallback, useMemo, useState, useEffect } from 'react'
 import { NodeResponseStatus } from '~enums'
 import { useDefaultRun, useEstimateNode, useRefutationLength } from '~hooks'
 import { CheckStatus, NodeRequest, NodeResponse } from '~interfaces'
-import { Run } from '~resources/run'
+import { Estimate } from '~classes'
 import {
 	useConfidenceInterval,
 	useProjectFiles,
@@ -30,7 +30,7 @@ export const useRunEstimate = (): any => {
 	const updateActive = useUpdateActiveRunHistory()
 	const estimateNode = useEstimateNode(projectFiles)
 	const specCount = useSpecCount()
-	const [run, setRun] = useState<Run>()
+	const [run, setRun] = useState<Estimate>()
 	const [isCanceled, setIsCanceled] = useState<boolean>(false)
 
 	const refutationType = useRefutationType()
@@ -46,7 +46,7 @@ export const useRunEstimate = (): any => {
 			defaultRun &&
 			isStatusProcessing(defaultRun?.status?.status as NodeResponseStatus)
 		) {
-			const newRun = new Run(onStart, onUpdate, undefined, onCancel)
+			const newRun = new Estimate(onStart, onUpdate, onComplete)
 			newRun.setOrchestratorResponse(defaultRun.nodeResponse)
 			setRun(newRun)
 		}
@@ -66,6 +66,24 @@ export const useRunEstimate = (): any => {
 			)
 
 			updateActive(updatedStatus, status?.partial_results)
+		},
+		[
+			updateRunHistory,
+			getRefutationCount,
+			hasConfidenceInterval,
+			runHistory,
+			specCount,
+			totalRefutation,
+		],
+	)
+
+	const onComplete = useCallback(
+		(status: CheckStatus) => {
+			//Update end time
+			// const updatedStatus = {
+			// 	start
+			// }
+			// updateActive(updatedStatus, status?.partial_results)
 		},
 		[
 			updateRunHistory,
@@ -100,12 +118,8 @@ export const useRunEstimate = (): any => {
 		],
 	)
 
-	const onCancel = useCallback(() => {
-		setIsCanceled(true)
-	}, [setIsCanceled])
-
 	const runEstimate = useCallback(async () => {
-		const newRun = new Run(onStart, onUpdate, undefined, onCancel)
+		const newRun = new Estimate(onStart, onUpdate, onComplete)
 		setRun(newRun)
 
 		await newRun.uploadFiles(projectFiles)
@@ -113,8 +127,9 @@ export const useRunEstimate = (): any => {
 	}, [updateRunHistory, runHistory, specCount, run])
 
 	const cancelRun = useCallback(() => {
+		setIsCanceled(true)
 		run && run.cancel()
-	}, [run])
+	}, [run, setIsCanceled])
 
 	return { runEstimate, cancelRun, isCanceled }
 }

@@ -168,15 +168,6 @@ async function genericCheckStatus(
 			break
 	}
 	try {
-		// if (status.runtimeStatus === NodeResponseStatus.Failed) {
-		// 	const error = `
-		// 	Error@${status.name} - Status: ${status.runtimeStatus}
-		// 	InstanceId: ${status.instanceId}
-		// 	${!!status.output ? (status.output as string) : ''}
-		// `
-		// 	throw new Error(error)
-		// }
-
 		const statusUrl = `${BASE_URL}/api/${path}?session=${getStorageItem(
 			SESSION_ID_KEY,
 		)}&code=${code}&instance=${instanceId}`

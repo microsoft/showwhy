@@ -4,7 +4,6 @@
  */
 
 import { useCallback, useMemo } from 'react'
-import { useRunSignificanceTests } from '../../../hooks/significanceTests'
 import { useLoadSpecificationData } from '../ExploreSpecificationCurvePage/hooks'
 import { NodeResponseStatus, RefutationTypes } from '~enums'
 import {
@@ -13,6 +12,7 @@ import {
 	useCausalEffects,
 	useRefutationLength,
 	useSpecificationCurve,
+	useRunConfidenceInterval,
 } from '~hooks'
 
 import {
@@ -36,12 +36,13 @@ export const useBusinessLogic = (): GenericObject => {
 	const specificationCurveConfig = useSpecificationCurveConfig()
 	const refutation = useRefutationType()
 	const defaultDataset = useDefaultDatasetResult()
+	const { runConfidenceInterval, cancelRun, isCanceled } =
+		useRunConfidenceInterval()
 	const defaultRun = useDefaultRun()
 	const { failedRefutationIds } = useSpecificationCurve()
 	const refutationLength = useRefutationLength()
-	const runSignificanceTests = useRunSignificanceTests(defaultRun?.id as string)
 	const significanceTestsResult = useSignificanceTests(defaultRun?.id as string)
-
+	console.log('sign', significanceTestsResult)
 	const refutationType = useMemo((): RefutationTypes => {
 		if (defaultRun && defaultRun?.refutationType) {
 			return defaultRun?.refutationType
@@ -78,9 +79,9 @@ export const useBusinessLogic = (): GenericObject => {
 
 	const runSignificance = useCallback(
 		(taskIds: string[]) => {
-			runSignificanceTests(taskIds)
+			runConfidenceInterval(taskIds)
 		},
-		[activeTaskIds, runSignificanceTests],
+		[runConfidenceInterval],
 	)
 
 	const significanceFailed = useMemo((): boolean => {
@@ -104,5 +105,7 @@ export const useBusinessLogic = (): GenericObject => {
 		significanceFailed,
 		activeTaskIds,
 		refutationType,
+		cancelRun,
+		isCanceled,
 	}
 }

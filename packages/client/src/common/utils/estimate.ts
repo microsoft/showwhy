@@ -77,7 +77,7 @@ export const matchStatus = (
 	status: NodeResponseStatus,
 	match: NodeResponseStatus,
 ): boolean => {
-	return status === match
+	return status.toLowerCase() === match
 }
 
 export function disableAllRuns(runHistory: RunHistory[]): RunHistory[] {
