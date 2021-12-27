@@ -3,7 +3,6 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { NodeRequest } from '~interfaces'
 import { terminateRun } from '~resources'
 
 export class Orchestrator {
@@ -34,10 +33,6 @@ export class Orchestrator {
 	setOrchestratorResponse(res: any): void {
 		this._orchestratorResponse = res
 	}
-
-	protected async getStatus() {}
-
-	async execute(...args): Promise<void> {}
 
 	async cancel(): Promise<void> {
 		this.orchestratorResponse &&

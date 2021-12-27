@@ -4,6 +4,7 @@
  */
 
 import { useCallback, useState, useEffect } from 'react'
+import { ConfidenceInterval } from '~classes'
 import { NodeResponseStatus } from '~enums'
 import { useDefaultRun } from '~hooks'
 import {
@@ -11,7 +12,6 @@ import {
 	SignificanceTest,
 	SignificanceTestResponse,
 } from '~interfaces'
-import { ConfidenceInterval } from '~classes'
 import { useSetSignificanceTests, useSignificanceTests } from '~state'
 import {
 	isStatusProcessing,

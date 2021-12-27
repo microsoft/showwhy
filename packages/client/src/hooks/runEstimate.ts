@@ -4,10 +4,10 @@
  */
 
 import { useCallback, useMemo, useState, useEffect } from 'react'
+import { Estimate } from '~classes'
 import { NodeResponseStatus } from '~enums'
 import { useDefaultRun, useEstimateNode, useRefutationLength } from '~hooks'
 import { CheckStatus, NodeRequest, NodeResponse } from '~interfaces'
-import { Estimate } from '~classes'
 import {
 	useConfidenceInterval,
 	useProjectFiles,

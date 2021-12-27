@@ -4,6 +4,7 @@
  */
 
 import { buildLoadNode } from '../resources'
+import { Orchestrator } from './orchestrator'
 import { NodeResponseStatus } from '~enums'
 import { NodeRequest, ProjectFile } from '~interfaces'
 import {
@@ -13,7 +14,6 @@ import {
 	uploadFiles,
 } from '~resources'
 import { createFormData, isStatusProcessing, wait } from '~utils'
-import { Orchestrator } from './orchestrator'
 
 export class Estimate extends Orchestrator {
 	constructor(
@@ -39,7 +39,7 @@ export class Estimate extends Orchestrator {
 
 		let estimateStatus
 		while (isStatusProcessing(status?.runtimeStatus as NodeResponseStatus)) {
-			;[status, estimateStatus] = await Promise.all([
+			[status, estimateStatus] = await Promise.all([
 				returnOrchestratorStatus(this._orchestratorResponse.statusQueryGetUri),
 				checkEstimateStatus(status?.instanceId as string),
 				wait(3000),
