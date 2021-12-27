@@ -3,10 +3,10 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { ProjectFile } from '~interfaces'
 import * as zip from '@zip.js/zip.js'
 import { FileType } from '~enums'
-import { ZipData } from '~interfaces'
+import { ProjectFile, ZipData } from '~interfaces'
+
 import { GenericObject } from '~types'
 
 export function createTextFile(name: string, content: string): File {

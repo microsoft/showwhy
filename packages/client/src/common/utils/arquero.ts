@@ -35,7 +35,7 @@ export async function loadTable(table: DataTableDefinition, tables?: File[]) {
 
 export async function fetchTable(
 	table: DataTableDefinition,
-): Promise<void | ColumnTable> {
+): Promise<ColumnTable> {
 	return fetch(table.url)
 		.then(res => res.text())
 		.then(text => {
@@ -68,7 +68,7 @@ export async function runPipeline(
 	tables: DataTableDefinition[],
 	steps: Step[],
 	tableFiles?: File[],
-): Promise<void> {
+): Promise<any> {
 	const store = new TableStore()
 	const fetched = await fetchTables(tables, tableFiles)
 	tables.forEach((table, index) => {
