@@ -10,7 +10,6 @@ import { useLayout } from './hooks'
 import { StepControls, StepSelector } from '~components/GeneralSteps'
 import { Guidance } from '~components/Guidance'
 import { StepTitle } from '~components/StepTitle'
-
 import { StyledSpinner } from '~styles'
 
 export const Layout: React.FC = memo(function Layout({ children }) {
@@ -30,6 +29,8 @@ export const Layout: React.FC = memo(function Layout({ children }) {
 		goToPage,
 		onClickProject,
 		exampleProjects,
+		uploadZipMenuOption,
+		handleFiles,
 	} = useLayout()
 
 	return (
@@ -40,6 +41,8 @@ export const Layout: React.FC = memo(function Layout({ children }) {
 				defineQuestion={defineQuestion}
 				onClickProject={onClickProject}
 				exampleProjects={exampleProjects}
+				uploadZipMenuOption={uploadZipMenuOption}
+				onUploadZip={handleFiles}
 			/>
 			<PagesContainer>
 				<StepsContainer>

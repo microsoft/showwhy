@@ -4,19 +4,22 @@
  */
 import React, { memo } from 'react'
 import styled from 'styled-components'
-import { useSupportedFileTypes } from '../../../hooks/supportedFileTypes'
 import { InfoCallout } from '~components/Callout'
 
-export const SupportedFileTypes: React.FC = memo(function SupportedFileTypes() {
-	const fileTypesAllowed = useSupportedFileTypes()
+interface SupportedFileTypesProps {
+	fileTypesAllowed: string[]
+}
 
-	return (
-		<InfoCallout alignSelf="center" title="Supported file types">
-			<FileTypes>
-				Only {fileTypesAllowed.join(' and ')} file types are allowed.
-			</FileTypes>
-		</InfoCallout>
-	)
-})
+export const SupportedFileTypes: React.FC<SupportedFileTypesProps> = memo(
+	function SupportedFileTypes({ fileTypesAllowed }) {
+		return (
+			<InfoCallout alignSelf="center" title="Supported file types">
+				<FileTypes>
+					Only {fileTypesAllowed.join(', ')} file types are allowed.
+				</FileTypes>
+			</InfoCallout>
+		)
+	},
+)
 
 const FileTypes = styled.span``

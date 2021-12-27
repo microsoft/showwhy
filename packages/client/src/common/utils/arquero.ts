@@ -6,7 +6,7 @@ import { Step, TableStore, Pipeline } from '@data-wrangling-components/core'
 import { fromCSV, all, op } from 'arquero'
 import ColumnTable from 'arquero/dist/types/table/column-table'
 import { DataTableDefinition } from '~interfaces'
-import { guessDelimiter } from '~utils'
+import { getTextFromFile, guessDelimiter, isZipUrl } from '~utils'
 /**
  * Creates a default data table by parsing csv/tsv content.
  * This adds an incremented rowId column to the front to ensure all tables
@@ -27,6 +27,12 @@ export function createDefaultTable(
 	)
 }
 
+export async function loadTable(table: DataTableDefinition, tables?: File[]) {
+	const file = tables?.find(t => t.name === table.name) as File
+	const text = await getTextFromFile(file)
+	return createDefaultTable(text, guessDelimiter(table.name))
+}
+
 export async function fetchTable(
 	table: DataTableDefinition,
 ): Promise<void | ColumnTable> {
@@ -40,8 +46,16 @@ export async function fetchTable(
 
 export async function fetchTables(
 	tables: DataTableDefinition[],
+	tableFiles: File[] = [],
 ): Promise<(void | ColumnTable)[]> {
-	return Promise.all(tables.map(table => fetchTable(table)))
+	return Promise.all(
+		tables.map(table => {
+			if (isZipUrl(table.url)) {
+				return loadTable(table, tableFiles as File[])
+			}
+			return fetchTable(table)
+		}),
+	)
 }
 
 /**
@@ -53,9 +67,10 @@ export async function fetchTables(
 export async function runPipeline(
 	tables: DataTableDefinition[],
 	steps: Step[],
+	tableFiles?: File[],
 ): Promise<void> {
 	const store = new TableStore()
-	const fetched = await fetchTables(tables)
+	const fetched = await fetchTables(tables, tableFiles)
 	tables.forEach((table, index) => {
 		store.set(table.name, fetched[index])
 	})
