@@ -64,8 +64,12 @@ export function useUpdateActiveRunHistory(): (
 					status: {
 						...existing.status,
 						...newStatus,
+						time: {
+							start: existing?.status?.time?.start,
+							end: newStatus?.time?.end,
+						},
 					},
-					result,
+					result: result || existing.result,
 				}
 				return [
 					...prev.filter(p => p.id !== existing.id),

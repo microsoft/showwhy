@@ -7,7 +7,7 @@ import { useCallback, useMemo, useState, useEffect } from 'react'
 import { Estimate } from '~classes'
 import { NodeResponseStatus } from '~enums'
 import { useDefaultRun, useEstimateNode, useRefutationLength } from '~hooks'
-import { CheckStatus, NodeRequest, NodeResponse } from '~interfaces'
+import { CheckStatus, NodeRequest, NodeResponse, RunStatus } from '~interfaces'
 import {
 	useConfidenceInterval,
 	useProjectFiles,
@@ -77,23 +77,14 @@ export const useRunEstimate = (): any => {
 		],
 	)
 
-	const onComplete = useCallback(
-		(status: CheckStatus) => {
-			//Update end time
-			// const updatedStatus = {
-			// 	start
-			// }
-			// updateActive(updatedStatus, status?.partial_results)
-		},
-		[
-			updateRunHistory,
-			getRefutationCount,
-			hasConfidenceInterval,
-			runHistory,
-			specCount,
-			totalRefutation,
-		],
-	)
+	const onComplete = useCallback(() => {
+		const updatedStatus = {
+			time: {
+				end: new Date(),
+			},
+		} as RunStatus
+		updateActive(updatedStatus)
+	}, [updateRunHistory])
 
 	const onStart = useCallback(
 		(nodeResponse: NodeResponse) => {

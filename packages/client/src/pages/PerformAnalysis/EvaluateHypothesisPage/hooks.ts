@@ -42,7 +42,7 @@ export const useBusinessLogic = (): GenericObject => {
 	const { failedRefutationIds } = useSpecificationCurve()
 	const refutationLength = useRefutationLength()
 	const significanceTestsResult = useSignificanceTests(defaultRun?.id as string)
-	console.log('sign', significanceTestsResult)
+
 	const refutationType = useMemo((): RefutationTypes => {
 		if (defaultRun && defaultRun?.refutationType) {
 			return defaultRun?.refutationType
