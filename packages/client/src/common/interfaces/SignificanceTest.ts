@@ -12,8 +12,6 @@ interface TestResults {
 
 export interface SignificanceTest {
 	runId: string
-	statusUrl?: string
-	sessionId: string
 	status?: NodeResponseStatus
 	total_simulations?: number
 	simulation_completed?: number

@@ -32,7 +32,7 @@ export const useEstimateNode = (
 	const buildEstimateEffectNode = useBuildEstimateEffectNode()
 	return useMemo(() => {
 		if (!projectFiles.length) {
-			return
+			return undefined
 		}
 		return buildEstimateEffectNode(projectFiles[0].name)
 	}, [projectFiles])

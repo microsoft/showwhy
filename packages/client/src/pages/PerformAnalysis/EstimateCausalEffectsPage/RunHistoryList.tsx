@@ -4,36 +4,36 @@
  */
 import { DefaultButton, Icon } from '@fluentui/react'
 import { useThematic } from '@thematic/react'
-import React, { memo, useCallback, useEffect, useMemo, useState } from 'react'
+import React, { memo, useMemo } from 'react'
 import styled from 'styled-components'
 import { ErrorMessage } from '~components/ErrorMessage'
 import { RunProgressIndicator } from '~components/RunProgressIndicator'
+import { NodeResponseStatus } from '~enums'
 import { RunHistory } from '~interfaces'
 import { Title, Text, ContainerFlexColumn } from '~styles'
-import { isOrchestratorProcessing, returnElapsedTime } from '~utils'
+import { isStatusProcessing, matchStatus, returnElapsedTime } from '~utils'
 
 interface RunHistoryListProps {
-	setRunAsDefault: (id: string) => void
+	setRunAsDefault: (run: RunHistory) => void
 	loadingSpecCount: boolean
 	specCount?: number
-	canceled?: boolean
 	cancelRun?: () => void
 	runHistory: RunHistory[]
 	errors?: string
+	isCanceled: boolean
 }
 
 export const RunHistoryList: React.FC<RunHistoryListProps> = memo(
 	function RunHistoryList({
 		specCount = 0,
 		loadingSpecCount,
-		canceled,
 		runHistory,
 		errors,
 		setRunAsDefault,
 		cancelRun,
+		isCanceled,
 	}) {
 		const theme = useThematic()
-		const [isCanceled, setCancel] = useState(!!canceled)
 
 		const runHistorySorted = useMemo((): RunHistory[] => {
 			const history = [...runHistory]
@@ -41,17 +41,6 @@ export const RunHistoryList: React.FC<RunHistoryListProps> = memo(
 				return a?.runNumber - b?.runNumber
 			})
 		}, [runHistory])
-
-		const onCancel = useCallback(() => {
-			if (cancelRun) {
-				cancelRun()
-				setCancel(true)
-			}
-		}, [setCancel, cancelRun])
-
-		useEffect(() => {
-			setCancel(!!canceled)
-		}, [canceled, setCancel])
 
 		return (
 			<TableContainer>
@@ -76,12 +65,16 @@ export const RunHistoryList: React.FC<RunHistoryListProps> = memo(
 								<Tr key={run.runNumber}>
 									<Td>{run.runNumber}</Td>
 									<Td>
-										{isOrchestratorProcessing(run?.status?.status as string) ? (
+										{isStatusProcessing(
+											run?.status?.status as NodeResponseStatus,
+										) ? (
 											<RunProgressIndicator
 												run={run}
 												theme={theme}
 												cancelRun={
-													!isCanceled && run.isActive ? onCancel : undefined
+													!isCanceled && run.isActive && cancelRun
+														? cancelRun
+														: undefined
 												}
 												props={
 													isCanceled && run.isActive
@@ -115,7 +108,7 @@ export const RunHistoryList: React.FC<RunHistoryListProps> = memo(
 									</Td>
 									<Td>
 										<DefaultButton
-											onClick={() => setRunAsDefault(run.id)}
+											onClick={() => setRunAsDefault(run)}
 											disabled={run.isActive || !!run.status?.error}
 											checked={run.isActive}
 										>
@@ -128,8 +121,8 @@ export const RunHistoryList: React.FC<RunHistoryListProps> = memo(
 									</Td>
 								</Tr>
 							))}
-						{!runHistory.find(r =>
-							isOrchestratorProcessing(r?.status?.status as string),
+						{!runHistory.find(run =>
+							isStatusProcessing(run?.status?.status as NodeResponseStatus),
 						) && (
 							<Tr>
 								<Td> {runHistory.length + 1} </Td>

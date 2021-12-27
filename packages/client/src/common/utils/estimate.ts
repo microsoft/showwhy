@@ -3,8 +3,9 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import { v4 } from 'uuid'
 import { NodeResponseStatus } from '~enums'
-import { CheckStatus, RunHistory, RunStatus } from '~interfaces'
+import { CheckStatus, NodeResponse, RunHistory, RunStatus } from '~interfaces'
 import { findRunError, returnPercentage } from '~utils'
 
 /**
@@ -68,7 +69,6 @@ export const isStatusProcessing = (nodeStatus: NodeResponseStatus): boolean => {
 		status === NodeResponseStatus.Processing ||
 		status === NodeResponseStatus.InProgress ||
 		status === NodeResponseStatus.Pending ||
-		status === NodeResponseStatus.Terminating ||
 		status === NodeResponseStatus.Running
 	)
 }
@@ -86,10 +86,12 @@ export function disableAllRuns(runHistory: RunHistory[]): RunHistory[] {
 	})
 }
 
+//TODO: simplify this function
 export const returnStatus = (
 	status: Partial<CheckStatus>,
 	hasConfidenceInterval: boolean,
 	totalRefuters: number,
+	specCount: number,
 ): RunStatus => {
 	const estimators = returnEstimatorStatus(status)
 	const confidenceIntervals = returnConfidenceIntervalsStatus(
@@ -128,59 +130,50 @@ export const returnStatus = (
 		percentage = returnPercentage(status?.refute_completed, totalRefuters)
 	}
 
-	return status.partial_results
-		? {
-				status: status.runtimeStatus?.toLowerCase() as NodeResponseStatus,
-				error: findRunError(status),
-				estimated_effect_completed: `${status.estimated_effect_completed}/${status.total_results}`,
-				confidence_interval_completed: `${status.confidence_interval_completed}/${status.total_results}`,
-				refute_completed: `${status?.refute_completed}/${totalRefuters}`,
-				percentage,
-				estimators,
-				confidenceIntervals,
-				refuters,
-		  }
-		: ({
-				status: status.runtimeStatus,
-				error: findRunError(status),
-				estimators,
-				confidenceIntervals,
-				refuters,
-		  } as RunStatus)
+	return {
+		status: status.runtimeStatus?.toLowerCase() as NodeResponseStatus,
+		error: findRunError(status),
+		estimated_effect_completed: `${status.estimated_effect_completed}/${specCount}`,
+		confidence_interval_completed: `${status.confidence_interval_completed}/${specCount}`,
+		refute_completed: `${status?.refute_completed}/${totalRefuters}`,
+		percentage,
+		estimators,
+		confidenceIntervals,
+		refuters,
+	} as RunStatus
 }
 
-export function returnEstimateStatus(
-	response: CheckStatus,
-	getRefutationCount: (estimatesCount: number) => number,
-	defaultRun: RunHistory,
+export function returnRefutationCount(
+	estimatesCount: number,
+	refutationLength: number,
+): number {
+	return estimatesCount * refutationLength
+}
+
+export function returnInitialRunHistory(
+	specCount,
+	totalRefuters,
+	hasConfidenceInterval,
+	refutationType,
+	runHistoryLength,
+	nodeResponse: NodeResponse,
 ): RunHistory {
-	const refutationCount = getRefutationCount(response.total_results)
-	let status = returnStatus(
-		response,
-		defaultRun?.hasConfidenceInterval as boolean,
-		refutationCount,
-	)
-
-	const start = defaultRun?.status?.time?.start || 0
-	const time = {
-		start,
-		end: new Date(),
-	}
-
-	status = !status.percentage
-		? ({
-				...(defaultRun?.status as RunStatus),
-				...status,
-				time,
-		  } as RunStatus)
-		: ({
-				...status,
-				time,
-		  } as RunStatus)
-
 	return {
-		...defaultRun,
-		status,
-		result: response.partial_results || defaultRun?.result,
+		id: v4(),
+		runNumber: runHistoryLength + 1,
+		isActive: true,
+		status: {
+			status: NodeResponseStatus.Running,
+			estimated_effect_completed: `0/${specCount}`,
+			confidence_interval_completed: `0/${specCount}`,
+			refute_completed: `0/${totalRefuters}`,
+			percentage: 0,
+			time: {
+				start: new Date(),
+			},
+		},
+		nodeResponse,
+		hasConfidenceInterval,
+		refutationType,
 	} as RunHistory
 }

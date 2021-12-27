@@ -35,7 +35,7 @@ import {
 } from '~state'
 import { fetchTable, runPipeline } from '~utils'
 
-export function useLoadProject() {
+export function useLoadProject(): (definition: FileDefinition) => void {
 	const id = useMemo(() => uuidv4(), [])
 	const setTableColumns = useSetTableColumns(id)
 	const setModelVariables = useSetModelVariables(id)

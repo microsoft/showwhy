@@ -9,9 +9,13 @@ import {
 	SignificanceTest,
 	SignificanceTestResponse,
 } from '~interfaces'
-import { checkSignificanceStatus, executeNode, getSessionId } from '~resources'
+import { checkSignificanceStatus, executeNode } from '~resources'
 import { buildSignificanceTestsNode } from '~resources/prepareDoWhyData'
-import { useSetNodeResponse, useSetSignificanceTests } from '~state'
+import {
+	useNodeResponse,
+	useSetNodeResponse,
+	useSetSignificanceTests,
+} from '~state'
 import { GenericFn } from '~types'
 import { returnPercentage } from '~utils'
 
@@ -53,9 +57,10 @@ function useGetReady(
 
 const useCheckRunStatus = (runId: string): GenericFn => {
 	const ready = useGetReady(runId)
+	const nodeResponse = useNodeResponse()
 	return useCallback(async (significance: SignificanceTest, fn: GenericFn) => {
 		const [response] = await Promise.all([
-			checkSignificanceStatus(significance.statusUrl as string),
+			checkSignificanceStatus(nodeResponse?.statusQueryGetUri as string),
 		])
 		ready(response, significance)
 		if (
@@ -78,7 +83,6 @@ export function useSetInitialStatus(runId: string): () => SignificanceTest {
 			total_simulations: 100,
 			simulation_completed: 0,
 			status: NodeResponseStatus.Pending,
-			sessionId: getSessionId(),
 			startTime: new Date(),
 		}
 		updateSignificanceTests(significanceObject)

@@ -6,7 +6,6 @@
 import { useBoolean } from '@fluentui/react-hooks'
 import { useEffect, useState } from 'react'
 import {
-	useCancelOrchestrator,
 	useEstimateNode,
 	useIsDefaultRunProcessing,
 	useRefutationOptions,
@@ -38,14 +37,13 @@ export const useBusinessLogic = (): GenericObject => {
 	const [errors, setErrors] = useState<string>('')
 	const runHistory = useRunHistory()
 	const setRunAsDefault = useSetRunAsDefault()
-	const cancelRun = useCancelOrchestrator()
 	const specCount = useSpecCount()
 	const setSpecCount = useSetSpecCount()
 	const refutationOptions = useRefutationOptions()
-	const runEstimate = useRunEstimate()
-	const totalEstimatorsCount = estimators.length
+	const { runEstimate, cancelRun, isCanceled } = useRunEstimate()
 	const estimateNode = useEstimateNode(projectFiles)
 	const isProcessing = useIsDefaultRunProcessing()
+	const totalEstimatorsCount = estimators.length
 	useWakeLock()
 
 	useEffect(() => {
@@ -85,5 +83,6 @@ export const useBusinessLogic = (): GenericObject => {
 		loadingSpecCount,
 		hasConfidenceInterval,
 		refutationOptions,
+		isCanceled,
 	}
 }

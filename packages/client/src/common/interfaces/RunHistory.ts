@@ -4,6 +4,7 @@
  */
 
 import { NodeResponseStatus, RefutationTypes } from '~enums'
+import { NodeResponse } from '~interfaces'
 
 interface RunTime {
 	start: Date
@@ -32,4 +33,5 @@ export interface RunHistory {
 	result?: []
 	status?: RunStatus
 	sessionId?: string
+	nodeResponse?: NodeResponse
 }

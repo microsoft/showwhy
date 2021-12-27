@@ -4,26 +4,14 @@
  */
 
 import { useCallback, useMemo } from 'react'
-import { v4 } from 'uuid'
-import { NodeResponseStatus, RefutationTypes } from '~enums'
-import { useRefutationCount } from '~hooks'
-import { CheckStatus, RunHistory, RunStatus } from '~interfaces'
+import { NodeResponseStatus } from '~enums'
+import { RunHistory } from '~interfaces'
 import {
 	useResetSpecificationCurveConfig,
 	useRunHistory,
 	useSetRunHistory,
-	useSpecCount,
 } from '~state'
-import {
-	disableAllRuns,
-	findRunError,
-	isStatusProcessing,
-	matchStatus,
-	returnConfidenceIntervalsStatus,
-	returnEstimatorStatus,
-	returnPercentage,
-	returnRefutersStatus,
-} from '~utils'
+import { disableAllRuns, isStatusProcessing } from '~utils'
 
 export function useSetRunAsDefault(): (run: RunHistory) => void {
 	const setRunHistory = useSetRunHistory()
@@ -60,36 +48,4 @@ export function useIsDefaultRunProcessing(): boolean {
 	return useMemo(() => {
 		return isStatusProcessing(defaultRun?.status?.status as NodeResponseStatus)
 	}, [defaultRun])
-}
-
-export function useReturnNewRunHistory(): (
-	hasConfidenceInterval: boolean,
-	refutationType: RefutationTypes,
-) => RunHistory {
-	const totalRefuters = useRefutationCount()
-	const specCount = useSpecCount()
-	const runHistory = useRunHistory()
-
-	return useCallback(
-		(hasConfidenceInterval: boolean, refutationType: RefutationTypes) => {
-			return {
-				id: v4(),
-				runNumber: runHistory.length + 1,
-				isActive: true,
-				status: {
-					status: NodeResponseStatus.Running,
-					estimated_effect_completed: `0/${specCount}`,
-					confidence_interval_completed: `0/${specCount}`,
-					refute_completed: `0/${totalRefuters(specCount as number)}`,
-					percentage: 0,
-					time: {
-						start: new Date(),
-					},
-				},
-				hasConfidenceInterval,
-				refutationType,
-			} as RunHistory
-		},
-		[specCount, totalRefuters, runHistory],
-	)
 }

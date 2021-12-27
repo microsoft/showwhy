@@ -14,8 +14,8 @@ import {
 	TotalExecutionsResponse,
 	SignificanceTestResponse,
 } from '~interfaces'
-import { createAndReturnStorageItem, getStorageItem } from '~resources'
 import { getEnv } from '~resources/getEnv'
+import { createAndReturnStorageItem, getStorageItem } from '~utils'
 
 type Status = CheckStatus | SignificanceTestResponse
 

@@ -118,7 +118,7 @@ const useOverlay = (data, title?: string, outcome?: string) => {
 		}
 		const overlay = parseJsonPathSpec(spec, pathspec)
 		return mergeSpec(spec, overlay)
-	}, [theme, data, title])
+	}, [theme, data, title, outcome, refutationLegend])
 }
 
 const Container = styled.div``

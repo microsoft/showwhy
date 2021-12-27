@@ -3,57 +3,118 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { useCallback } from 'react'
-import {
-	useDefaultRun,
-	useEstimateNode,
-	useRefutationCount,
-	useReturnNewRunHistory,
-} from '~hooks'
-import { CheckStatus, NodeRequest, RunHistory } from '~interfaces'
+import { useCallback, useMemo, useState, useEffect } from 'react'
+import { NodeResponseStatus } from '~enums'
+import { useDefaultRun, useEstimateNode, useRefutationLength } from '~hooks'
+import { CheckStatus, NodeRequest, NodeResponse } from '~interfaces'
 import { Run } from '~resources/run'
 import {
 	useConfidenceInterval,
 	useProjectFiles,
 	useRefutationType,
+	useRunHistory,
+	useSpecCount,
+	useUpdateActiveRunHistory,
 	useUpdateRunHistory,
 } from '~state'
-import { GenericFn } from '~types'
-import { returnEstimateStatus } from '~utils'
+import {
+	isStatusProcessing,
+	returnInitialRunHistory,
+	returnRefutationCount,
+	returnStatus,
+} from '~utils'
 
-export const useRunEstimate = (): GenericFn => {
+export const useRunEstimate = (): any => {
 	const projectFiles = useProjectFiles()
 	const updateRunHistory = useUpdateRunHistory()
+	const updateActive = useUpdateActiveRunHistory()
 	const estimateNode = useEstimateNode(projectFiles)
+	const specCount = useSpecCount()
+	const [run, setRun] = useState<Run>()
+	const [isCanceled, setIsCanceled] = useState<boolean>(false)
 
-	const newRun = useReturnNewRunHistory()
 	const refutationType = useRefutationType()
 	const hasConfidenceInterval = useConfidenceInterval()
-	const getRefutationCount = useRefutationCount()
-	//updateStatus should be able to get directly from here, shouldn't it?
+	const getRefutationCount = useRefutationLength()
+	const runHistory = useRunHistory()
+	const totalRefuters = useRefutationLength()
 	const defaultRun = useDefaultRun()
 
-	const updateStatus = useCallback(
-		(status: CheckStatus, run: RunHistory) => {
-			const updatedStatus = returnEstimateStatus(
+	useEffect(() => {
+		if (
+			!run &&
+			defaultRun &&
+			isStatusProcessing(defaultRun?.status?.status as NodeResponseStatus)
+		) {
+			const newRun = new Run(onStart, onUpdate, undefined, onCancel)
+			newRun.setOrchestratorResponse(defaultRun.nodeResponse)
+			setRun(newRun)
+		}
+	}, [defaultRun, run, setRun])
+
+	const totalRefutation = useMemo((): any => {
+		return returnRefutationCount(specCount as number, totalRefuters)
+	}, [specCount, totalRefuters])
+
+	const onUpdate = useCallback(
+		(status: CheckStatus) => {
+			const updatedStatus = returnStatus(
 				status,
-				getRefutationCount,
-				run,
+				hasConfidenceInterval,
+				totalRefutation,
+				specCount as number,
 			)
-			updateRunHistory(updatedStatus)
+
+			updateActive(updatedStatus, status?.partial_results)
 		},
-		[updateRunHistory, getRefutationCount],
+		[
+			updateRunHistory,
+			getRefutationCount,
+			hasConfidenceInterval,
+			runHistory,
+			specCount,
+			totalRefutation,
+		],
 	)
 
-	return useCallback(async () => {
-		const initialRun = newRun(hasConfidenceInterval, refutationType)
-		//This stores this run as deault
-		updateRunHistory(initialRun)
+	const onStart = useCallback(
+		(nodeResponse: NodeResponse) => {
+			const initialRun = returnInitialRunHistory(
+				specCount as number,
+				totalRefutation,
+				hasConfidenceInterval,
+				refutationType,
+				runHistory.length,
+				nodeResponse,
+			)
+			updateRunHistory(initialRun)
+		},
+		[
+			updateRunHistory,
+			hasConfidenceInterval,
+			refutationType,
+			specCount,
+			totalRefuters,
+			runHistory,
+			totalRefutation,
+		],
+	)
 
-		//If I try to pass the function without the initialRun here, and let the updateStatus callback
-		//get the defaultRun value, it's undefined everytime
-		const run = new Run(status => updateStatus(status, initialRun))
-		await run.uploadFiles(projectFiles)
-		await run.startExecution(estimateNode as NodeRequest)
-	}, [updateRunHistory, updateStatus])
+	const onCancel = useCallback(() => {
+		setIsCanceled(true)
+	}, [setIsCanceled])
+
+	const runEstimate = useCallback(async () => {
+		const newRun = new Run(onStart, onUpdate, undefined, onCancel)
+		setRun(newRun)
+
+		await newRun.uploadFiles(projectFiles)
+		await newRun.execute(estimateNode as NodeRequest)
+	}, [updateRunHistory, runHistory, specCount, run])
+
+	const cancelRun = useCallback(() => {
+		run && run.cancel()
+	}, [run])
+
+	return { runEstimate, cancelRun, isCanceled }
 }

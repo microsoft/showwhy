@@ -55,17 +55,6 @@ export function useRefutationLength(): number {
 	return REFUTATIONS.length
 }
 
-export const useRefutationCount = (): ((estimatesCount: number) => number) => {
-	const refutationLength = useRefutationLength()
-
-	return useCallback(
-		(estimatesCount: number) => {
-			return estimatesCount * refutationLength
-		},
-		[refutationLength],
-	)
-}
-
 export function useFailedRefutationIds(data: Specification[]): number[] {
 	return useMemo((): number[] => {
 		return (

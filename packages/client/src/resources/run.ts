@@ -3,8 +3,9 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import { buildLoadNode } from './prepareDoWhyData'
 import { NodeResponseStatus } from '~enums'
-import { CheckStatus, NodeRequest, ProjectFile } from '~interfaces'
+import { NodeRequest, ProjectFile } from '~interfaces'
 import {
 	checkEstimateStatus,
 	executeNode,
@@ -13,27 +14,37 @@ import {
 	uploadFiles,
 } from '~resources'
 import { createFormData, isStatusProcessing, wait } from '~utils'
-import { buildLoadNode } from './prepareDoWhyData'
 
 export class Run {
 	private fileUrl = ''
 	private fileName = ''
-	public orchestratorResponse
-	private _onUpdate: ((status: CheckStatus) => void) | undefined
-	private _onComplete: ((status: CheckStatus) => void) | undefined
-	private _onCancel: (() => void) | undefined
+	private _orchestratorResponse
+	private _onStart: ((...args) => void) | undefined
+	private _onUpdate: ((...args) => void) | undefined
+	private _onComplete: ((...args) => void) | undefined
+	private _onCancel: ((...args) => void) | undefined
 
 	constructor(
-		onUpdate?: (status: CheckStatus) => void,
-		onComplete?: (status: CheckStatus) => void,
-		onCancel?: () => void,
+		onStart?: (...args) => void,
+		onUpdate?: (...args) => void,
+		onComplete?: (...args) => void,
+		onCancel?: (...args) => void,
 	) {
+		this._onStart = onStart
 		this._onUpdate = onUpdate
 		this._onComplete = onComplete
 		this._onCancel = onCancel
 	}
 
-	async uploadFiles(projectFiles: ProjectFile[]) {
+	get orchestratorResponse(): any {
+		return this._orchestratorResponse
+	}
+
+	setOrchestratorResponse(res: any): void {
+		this._orchestratorResponse = res
+	}
+
+	async uploadFiles(projectFiles: ProjectFile[]): Promise<void> {
 		const filesData = createFormData(projectFiles)
 		const files = await uploadFiles(filesData)
 		this.fileUrl = files.uploaded_files[projectFiles[0].name]
@@ -42,13 +53,13 @@ export class Run {
 
 	private async getStatus() {
 		let status = await returnOrchestratorStatus(
-			this.orchestratorResponse.statusQueryGetUri,
+			this._orchestratorResponse.statusQueryGetUri,
 		)
 
 		let estimateStatus
 		while (isStatusProcessing(status?.runtimeStatus as NodeResponseStatus)) {
 			;[status, estimateStatus] = await Promise.all([
-				returnOrchestratorStatus(this.orchestratorResponse.statusQueryGetUri),
+				returnOrchestratorStatus(this._orchestratorResponse.statusQueryGetUri),
 				checkEstimateStatus(status?.instanceId as string),
 				wait(3000),
 			])
@@ -58,20 +69,21 @@ export class Run {
 		return { ...status, ...estimateStatus }
 	}
 
-	async startExecution(estimateNode: NodeRequest) {
+	async execute(estimateNode: NodeRequest): Promise<void> {
 		const loadNode = buildLoadNode(this.fileUrl, this.fileName)
 		const nodes = {
 			nodes: [...loadNode.nodes, ...estimateNode?.nodes],
 		}
 		if (!nodes) return
-		this.orchestratorResponse = await executeNode(nodes)
+		this._orchestratorResponse = await executeNode(nodes)
+		this._onStart && this._onStart(this.orchestratorResponse)
 		const status = await this.getStatus()
 		this._onComplete && this._onComplete(status)
 	}
 
-	async cancel() {
+	cancel(): void {
 		this.orchestratorResponse &&
-			(await terminateRun(this.orchestratorResponse.terminatePostUri))
+			terminateRun(this._orchestratorResponse.terminatePostUri)
 		this._onCancel && this._onCancel()
 	}
 }

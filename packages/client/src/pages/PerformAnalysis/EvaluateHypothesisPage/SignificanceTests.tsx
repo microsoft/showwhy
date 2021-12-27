@@ -12,7 +12,7 @@ import { ProgressBar } from '~components/ProgressBar'
 import { NodeResponseStatus, Significance } from '~enums'
 import { SignificanceTest } from '~interfaces'
 import { Paragraph, Value } from '~styles'
-import { isOrchestratorProcessing } from '~utils'
+import { isStatusProcessing } from '~utils'
 
 interface SignificanceTestsProps {
 	significanceTestsResult: SignificanceTest
@@ -46,8 +46,8 @@ export const SignificanceTests: React.FC<SignificanceTestsProps> = memo(
 				)}
 
 				{significanceTestsResult &&
-					isOrchestratorProcessing(
-						significanceTestsResult.status as string,
+					isStatusProcessing(
+						significanceTestsResult.status as NodeResponseStatus,
 					) && (
 						<ProgressBar
 							label={`Significance test: Simulations ${significanceTestsResult?.simulation_completed}/${significanceTestsResult?.total_simulations}`}

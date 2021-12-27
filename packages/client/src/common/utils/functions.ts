@@ -97,13 +97,3 @@ export const returnElapsedTime = (startDate: Date, endDate: Date): string => {
 export const returnPercentage = (completed: number, total: number): number => {
 	return Math.min(+((100 * completed) / total).toFixed(2), 100)
 }
-
-export const isOrchestratorProcessing = (nodeStatus: string): boolean => {
-	const status = nodeStatus.toLowerCase()
-	return (
-		status === NodeResponseStatus.Processing ||
-		status === NodeResponseStatus.InProgress ||
-		status === NodeResponseStatus.Pending ||
-		status === NodeResponseStatus.Running
-	)
-}

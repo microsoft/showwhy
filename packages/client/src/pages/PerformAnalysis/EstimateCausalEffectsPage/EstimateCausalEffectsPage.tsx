@@ -28,6 +28,7 @@ export const EstimateCausalEffects: React.FC = memo(
 			loadingSpecCount,
 			hasConfidenceInterval,
 			refutationOptions,
+			isCanceled,
 		} = useBusinessLogic()
 
 		return (
@@ -63,6 +64,7 @@ export const EstimateCausalEffects: React.FC = memo(
 					cancelRun={cancelRun}
 					runHistory={runHistory}
 					errors={errors}
+					isCanceled={isCanceled}
 				/>
 			</Container>
 		)

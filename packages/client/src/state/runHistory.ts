@@ -12,7 +12,12 @@ import {
 	useResetRecoilState,
 	useSetRecoilState,
 } from 'recoil'
-import { NodeResponse, RunHistory } from '~interfaces'
+import {
+	NodeResponse,
+	PartialResults,
+	RunHistory,
+	RunStatus,
+} from '~interfaces'
 
 export const runHistoryState = atom<RunHistory[]>({
 	key: 'run-history-store',
@@ -33,9 +38,40 @@ export function useUpdateRunHistory(): (runHistory: RunHistory) => void {
 	return useCallback(
 		(runHistory: RunHistory) => {
 			setRunHistory(prev => [
-				...prev.filter(p => p.id !== runHistory.id),
+				...prev
+					.filter(p => p.id !== runHistory.id)
+					.map(x => {
+						return { ...x, isActive: false }
+					}),
 				runHistory,
 			])
+		},
+		[setRunHistory],
+	)
+}
+
+export function useUpdateActiveRunHistory(): (
+	newStatus: RunStatus,
+	result?: PartialResults[],
+) => void {
+	const setRunHistory = useSetRecoilState(runHistoryState)
+	return useCallback(
+		(newStatus, result) => {
+			setRunHistory(prev => {
+				const existing = prev.find(p => p.isActive) as RunHistory
+				const newOne = {
+					...existing,
+					status: {
+						...existing.status,
+						...newStatus,
+					},
+					result,
+				}
+				return [
+					...prev.filter(p => p.id !== existing.id),
+					newOne,
+				] as RunHistory[]
+			})
 		},
 		[setRunHistory],
 	)

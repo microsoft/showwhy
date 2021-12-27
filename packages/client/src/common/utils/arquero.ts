@@ -27,7 +27,9 @@ export function createDefaultTable(
 	)
 }
 
-export async function fetchTable(table: DataTableDefinition) {
+export async function fetchTable(
+	table: DataTableDefinition,
+): Promise<void | ColumnTable> {
 	return fetch(table.url)
 		.then(res => res.text())
 		.then(text => {
@@ -36,7 +38,9 @@ export async function fetchTable(table: DataTableDefinition) {
 		})
 }
 
-export async function fetchTables(tables: DataTableDefinition[]) {
+export async function fetchTables(
+	tables: DataTableDefinition[],
+): Promise<(void | ColumnTable)[]> {
 	return Promise.all(tables.map(table => fetchTable(table)))
 }
 
@@ -49,7 +53,7 @@ export async function fetchTables(tables: DataTableDefinition[]) {
 export async function runPipeline(
 	tables: DataTableDefinition[],
 	steps: Step[],
-) {
+): Promise<void> {
 	const store = new TableStore()
 	const fetched = await fetchTables(tables)
 	tables.forEach((table, index) => {

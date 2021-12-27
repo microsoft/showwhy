@@ -13,7 +13,7 @@ export interface NodeData extends AdditionalProperties {
 	result?: string
 }
 
-interface PartialResults {
+export interface PartialResults {
 	id: string
 	task_id: string
 	execution_id: string

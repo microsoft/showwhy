@@ -4,15 +4,12 @@
  */
 
 import { useCallback, useMemo } from 'react'
-import { useHistory } from 'react-router-dom'
 import { useRunSignificanceTests } from '../../../hooks/significanceTests'
 import { useLoadSpecificationData } from '../ExploreSpecificationCurvePage/hooks'
-import { NodeResponseStatus, Pages, RefutationTypes } from '~enums'
+import { NodeResponseStatus, RefutationTypes } from '~enums'
 import {
-	useRunEstimate,
 	useAlternativeModels,
 	useDefaultRun,
-	useSetFullRefutation,
 	useCausalEffects,
 	useRefutationLength,
 	useSpecificationCurve,
@@ -28,7 +25,6 @@ import {
 } from '~state'
 
 import { GenericObject } from '~types'
-import { wait } from '~utils'
 
 export const useBusinessLogic = (): GenericObject => {
 	const defineQuestion = useDefineQuestion()
@@ -38,13 +34,10 @@ export const useBusinessLogic = (): GenericObject => {
 	const alternativeModels = useAlternativeModels(causalModel)
 	const specificationData = useLoadSpecificationData()
 	const specificationCurveConfig = useSpecificationCurveConfig()
-	const setFullRefutation = useSetFullRefutation()
 	const refutation = useRefutationType()
 	const defaultDataset = useDefaultDatasetResult()
 	const defaultRun = useDefaultRun()
-	const { sendData, totalEstimatorsCount } = useRunEstimate()
 	const { failedRefutationIds } = useSpecificationCurve()
-	const history = useHistory()
 	const refutationLength = useRefutationLength()
 	const runSignificanceTests = useRunSignificanceTests(defaultRun?.id as string)
 	const significanceTestsResult = useSignificanceTests(defaultRun?.id as string)
@@ -56,12 +49,12 @@ export const useBusinessLogic = (): GenericObject => {
 		return refutation
 	}, [defaultRun, refutation])
 
-	const runFullRefutation = useCallback(async () => {
-		setFullRefutation()
-		await wait(300)
-		await sendData()
-		history.push(Pages.EstimateCausalEffects)
-	}, [sendData, setFullRefutation, history])
+	// const runFullRefutation = useCallback(async () => {
+	// 	setFullRefutation()
+	// 	await wait(300)
+	// 	await sendData()
+	// 	history.push(Pages.EstimateCausalEffects)
+	// }, [sendData, setFullRefutation, history])
 
 	const activeValues = useMemo((): any => {
 		return specificationData
@@ -109,9 +102,7 @@ export const useBusinessLogic = (): GenericObject => {
 		runSignificance,
 		significanceTestsResult,
 		significanceFailed,
-		runFullRefutation,
 		activeTaskIds,
-		totalEstimatorsCount,
 		refutationType,
 	}
 }
