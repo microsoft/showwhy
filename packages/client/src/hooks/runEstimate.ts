@@ -107,10 +107,8 @@ export const useRunEstimate = (): any => {
 		const estimate = new Estimate(onStart, onUpdate, onComplete)
 
 		setIsCanceled(false)
-		Promise.all([
-			estimate.uploadFiles(projectFiles),
-			estimate.execute(estimateNode as NodeRequest),
-		])
+		await estimate.uploadFiles(projectFiles)
+		await estimate.execute(estimateNode as NodeRequest)
 	}, [setIsCanceled, estimateNode, onComplete, onStart, onUpdate, projectFiles])
 
 	return { runEstimate, cancelRun, isCanceled }
