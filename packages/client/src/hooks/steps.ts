@@ -18,7 +18,10 @@ export function useCurrentStep(): Step | undefined {
 	return useCurrentStepTestable(project, location.pathname)
 }
 
-export function useCurrentStepTestable(project: Project, pathname: string) {
+export function useCurrentStepTestable(
+	project: Project,
+	pathname: string,
+): Step | undefined {
 	return useMemo(() => {
 		return project.steps
 			.flatMap(x => x.steps.find(a => a.url === pathname))
@@ -42,7 +45,7 @@ export function useStepsShowStatus(): Step[] {
  * versus getting all other step ids.
  * @returns
  */
-export function useGetStepUrls() {
+export function useGetStepUrls(): (urls?: string[], exclude?: any) => string[] {
 	const allSteps = useStepsShowStatus().map(x => x.url)
 	return useCallback(
 		(urls: string[] = [], exclude = false) => {

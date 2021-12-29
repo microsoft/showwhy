@@ -4,49 +4,34 @@
  */
 
 import { Orchestrator } from '~classes'
-import { NodeResponseStatus } from '~enums'
-import {
-	buildSignificanceTestsNode,
-	checkSignificanceStatus,
-	executeNode,
-	returnOrchestratorStatus,
-} from '~resources'
-import { isStatusProcessing, wait } from '~utils'
+import { StatusType } from '~enums'
+import { OrchestratorRun } from '~interfaces'
+import { buildSignificanceTestsNode } from '~resources'
 
-export class ConfidenceInterval extends Orchestrator {
+export class ConfidenceInterval implements OrchestratorRun {
+	orchestrator: Orchestrator
+
 	constructor(
 		onStart?: (...args) => void,
 		onUpdate?: (...args) => void,
 		onComplete?: (...args) => void,
 		onCancel?: (...args) => void,
 	) {
-		super(onStart, onUpdate, onComplete, onCancel)
-	}
-
-	protected async getStatus() {
-		let status = await returnOrchestratorStatus(
-			this._orchestratorResponse.statusQueryGetUri,
-		)
-
-		let estimateStatus
-		while (isStatusProcessing(status?.runtimeStatus as NodeResponseStatus)) {
-			[status, estimateStatus] = await Promise.all([
-				returnOrchestratorStatus(this._orchestratorResponse.statusQueryGetUri),
-				checkSignificanceStatus(status?.instanceId as string),
-				wait(3000),
-			])
-			this._onUpdate && this._onUpdate({ ...status, ...estimateStatus })
-		}
-		return { ...status, ...estimateStatus }
+		this.orchestrator = new Orchestrator()
+		this.orchestrator.setOnStart(onStart)
+		this.orchestrator.setOnUpdate(onUpdate)
+		this.orchestrator.setOnComplete(onComplete)
+		this.orchestrator.setOnCancel(onCancel)
 	}
 
 	async execute(taskIds: string[]): Promise<void> {
 		const nodes = buildSignificanceTestsNode(taskIds)
 
 		if (!nodes) return
-		this._orchestratorResponse = await executeNode(nodes)
-		this._onStart && this._onStart(this.orchestratorResponse)
-		const status = await this.getStatus()
-		this._onComplete && this._onComplete(status)
+		await this.orchestrator.execute(nodes, StatusType.Significance)
+	}
+
+	async cancel(): Promise<void> {
+		await this.orchestrator.cancel()
 	}
 }

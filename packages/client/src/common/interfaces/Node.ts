@@ -3,11 +3,10 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { NodeResponseStatus, RefutationTypes } from '~enums'
+import { RefutationTypes } from '~enums'
 import {
 	AdditionalProperties,
 	GraphElements,
-	EstimandIdentificationVariables,
 	DescribeElements,
 	AlternativeModels,
 	Estimator,
@@ -28,16 +27,6 @@ interface Node extends Partial<AdditionalProperties> {
 	causal_graph?: GraphElements
 }
 
-interface Output extends Partial<EstimandIdentificationVariables> {
-	result?: EstimandIdentificationVariables | { [key: string]: any }
-	output_file: string
-	notebook_file: string
-}
-
-interface NodeOutput {
-	[key: string]: Output[]
-}
-
 export interface TotalExecutionsResponse {
 	total_executions: number
 }
@@ -50,17 +39,6 @@ export interface NodeResponse {
 	sendEventPostUri: string
 	statusQueryGetUri: string
 	terminatePostUri: string
-}
-
-export interface StatusResponse {
-	name: string
-	instanceId: string
-	runtimeStatus: NodeResponseStatus
-	input: string
-	customStatus: string
-	output?: NodeOutput | string
-	createdTime: string
-	lastUpdatedTime: string
 }
 
 export interface NodeRequest {

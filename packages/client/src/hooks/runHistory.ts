@@ -29,7 +29,7 @@ export function useSetRunAsDefault(): (run: RunHistory) => void {
 			setRunHistory(runs)
 			resetSpecificationConfig()
 		},
-		[runHistory, setRunHistory, resetSpecificationConfig, disableAllRuns],
+		[runHistory, setRunHistory, resetSpecificationConfig],
 	)
 }
 

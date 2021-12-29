@@ -4,12 +4,12 @@
  */
 
 import { NodeResponseStatus } from '~enums'
-import { NodeResponse } from '~interfaces'
+import { NodeResponse, SignificanceTest } from '~interfaces'
 
 export function returnInitialConfidenceInterval(
 	runId: string,
 	nodeResponse: NodeResponse,
-) {
+): SignificanceTest {
 	return {
 		runId,
 		percentage: 0,

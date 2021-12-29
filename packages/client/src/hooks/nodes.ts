@@ -9,7 +9,9 @@ import { useBuildEstimateEffectNode } from '~resources/hooks'
 import { buildLoadNode } from '~resources/prepareDoWhyData'
 
 //TODO: fix for CI
-export const useGetNodes = (projectFiles: ProjectFile[]) => {
+export const useGetNodes = (
+	projectFiles: ProjectFile[],
+): ((url: string, fileName: string) => NodeRequest | undefined) => {
 	const estimateNode = useEstimateNode(projectFiles)
 
 	return useCallback(
@@ -35,5 +37,5 @@ export const useEstimateNode = (
 			return undefined
 		}
 		return buildEstimateEffectNode(projectFiles[0].name)
-	}, [projectFiles])
+	}, [projectFiles, buildEstimateEffectNode])
 }

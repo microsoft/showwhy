@@ -4,14 +4,21 @@
  */
 
 import { v4 } from 'uuid'
-import { NodeResponseStatus } from '~enums'
-import { CheckStatus, NodeResponse, RunHistory, RunStatus } from '~interfaces'
+import { NodeResponseStatus, RefutationTypes } from '~enums'
+import {
+	EstimateEffectStatusResponse,
+	NodeResponse,
+	RunHistory,
+	RunStatus,
+} from '~interfaces'
 import { findRunError, returnPercentage } from '~utils'
 
 /**
  * It's the first to always run and to get the status depends only of itself
  */
-export const returnEstimatorStatus = (response: Partial<CheckStatus>) => {
+export const returnEstimatorStatus = (
+	response: Partial<EstimateEffectStatusResponse>,
+): Partial<RunStatus> => {
 	return {
 		status:
 			!!response?.estimated_effect_completed &&
@@ -25,9 +32,9 @@ export const returnEstimatorStatus = (response: Partial<CheckStatus>) => {
  * So to get the status, it depends on the status of it
  */
 export const returnConfidenceIntervalsStatus = (
-	response: Partial<CheckStatus>,
+	response: Partial<EstimateEffectStatusResponse>,
 	isEstimatorCompleted: boolean,
-) => {
+): Partial<RunStatus> => {
 	return {
 		status:
 			!!response?.confidence_interval_completed &&
@@ -43,11 +50,11 @@ export const returnConfidenceIntervalsStatus = (
  * So to get the status, it depends on the status of these other 2
  */
 export const returnRefutersStatus = (
-	response: Partial<CheckStatus>,
+	response: Partial<EstimateEffectStatusResponse>,
 	isEstimatorCompleted: boolean,
 	isConfidenceIntervalsCompleted: boolean,
 	hasConfidenceInterval: boolean,
-) => {
+): Partial<RunStatus> => {
 	return {
 		status:
 			!!response?.refute_completed &&
@@ -88,7 +95,7 @@ export function disableAllRuns(runHistory: RunHistory[]): RunHistory[] {
 
 //TODO: simplify this function
 export const returnStatus = (
-	status: Partial<CheckStatus>,
+	status: Partial<EstimateEffectStatusResponse>,
 	hasConfidenceInterval: boolean,
 	totalRefuters: number,
 	specCount: number,
@@ -96,45 +103,67 @@ export const returnStatus = (
 	const estimators = returnEstimatorStatus(status)
 	const confidenceIntervals = returnConfidenceIntervalsStatus(
 		status,
-		matchStatus(estimators.status, NodeResponseStatus.Completed),
+		matchStatus(
+			estimators.status as NodeResponseStatus,
+			NodeResponseStatus.Completed,
+		),
 	)
 	const refuters = returnRefutersStatus(
 		status,
-		matchStatus(estimators.status, NodeResponseStatus.Completed),
-		matchStatus(confidenceIntervals.status, NodeResponseStatus.Completed),
+		matchStatus(
+			estimators.status as NodeResponseStatus,
+			NodeResponseStatus.Completed,
+		),
+		matchStatus(
+			confidenceIntervals.status as NodeResponseStatus,
+			NodeResponseStatus.Completed,
+		),
 		hasConfidenceInterval,
 	)
 
 	let percentage = 100
 
-	status.total_results = status?.total_results ?? 1
+	status.total_results = status?.total_results ?? specCount
 	status.estimated_effect_completed = status?.estimated_effect_completed ?? 0
 	status.confidence_interval_completed =
 		status?.confidence_interval_completed ?? 0
 	status.refute_completed = status?.refute_completed ?? 0
 
-	if (!matchStatus(estimators.status, NodeResponseStatus.Completed)) {
+	if (
+		!matchStatus(
+			estimators.status as NodeResponseStatus,
+			NodeResponseStatus.Completed,
+		)
+	) {
 		percentage = returnPercentage(
 			status?.estimated_effect_completed,
 			status?.total_results,
 		)
 	} else if (
 		hasConfidenceInterval &&
-		!matchStatus(confidenceIntervals.status, NodeResponseStatus.Completed)
+		!matchStatus(
+			confidenceIntervals.status as NodeResponseStatus,
+			NodeResponseStatus.Completed,
+		)
 	) {
 		percentage = returnPercentage(
 			status?.confidence_interval_completed,
 			status?.total_results,
 		)
-	} else if (!matchStatus(refuters.status, NodeResponseStatus.Completed)) {
+	} else if (
+		!matchStatus(
+			refuters.status as NodeResponseStatus,
+			NodeResponseStatus.Completed,
+		)
+	) {
 		percentage = returnPercentage(status?.refute_completed, totalRefuters)
 	}
 
 	return {
 		status: status.runtimeStatus?.toLowerCase() as NodeResponseStatus,
 		error: findRunError(status),
-		estimated_effect_completed: `${status.estimated_effect_completed}/${specCount}`,
-		confidence_interval_completed: `${status.confidence_interval_completed}/${specCount}`,
+		estimated_effect_completed: `${status.estimated_effect_completed}/${status.total_results}`,
+		confidence_interval_completed: `${status.confidence_interval_completed}/${status.total_results}`,
 		refute_completed: `${status?.refute_completed}/${totalRefuters}`,
 		percentage,
 		estimators,
@@ -151,11 +180,11 @@ export function returnRefutationCount(
 }
 
 export function returnInitialRunHistory(
-	specCount,
-	totalRefuters,
-	hasConfidenceInterval,
-	refutationType,
-	runHistoryLength,
+	specCount: number,
+	totalRefuters: number,
+	hasConfidenceInterval: boolean,
+	refutationType: RefutationTypes,
+	runHistoryLength: number,
 	nodeResponse: NodeResponse,
 ): RunHistory {
 	return {

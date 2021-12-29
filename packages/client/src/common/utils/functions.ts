@@ -4,7 +4,7 @@
  */
 
 import { NodeResponseStatus } from '~enums'
-import { CheckStatus } from '~interfaces'
+import { EstimateEffectStatusResponse } from '~interfaces'
 
 export function replaceItemAtIndex<T>(
 	arr: T[],
@@ -40,7 +40,7 @@ export function addOrRemoveArrayElement(
 }
 
 export const findRunError = (
-	response: Partial<CheckStatus>,
+	response: Partial<EstimateEffectStatusResponse>,
 ): string | undefined => {
 	if (response.runtimeStatus?.toLowerCase() === NodeResponseStatus.Failed) {
 		const error =

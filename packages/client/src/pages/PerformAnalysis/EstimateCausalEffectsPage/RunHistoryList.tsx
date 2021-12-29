@@ -11,7 +11,7 @@ import { RunProgressIndicator } from '~components/RunProgressIndicator'
 import { NodeResponseStatus } from '~enums'
 import { RunHistory } from '~interfaces'
 import { Title, Text, ContainerFlexColumn } from '~styles'
-import { isStatusProcessing, matchStatus, returnElapsedTime } from '~utils'
+import { isStatusProcessing, returnElapsedTime } from '~utils'
 
 interface RunHistoryListProps {
 	setRunAsDefault: (run: RunHistory) => void

@@ -30,7 +30,9 @@ export function useVegaWindowDimensions(): Dimensions {
 	return useVegaWindowDimensionsTestable(size)
 }
 
-export function useVegaWindowDimensionsTestable(windowSize: Dimensions) {
+export function useVegaWindowDimensionsTestable(
+	windowSize: Dimensions,
+): Dimensions {
 	return useMemo(() => {
 		let percentage = 3.5
 		if (windowSize.width >= 1800) {

@@ -5,24 +5,27 @@
 
 import { buildLoadNode } from '../resources'
 import { Orchestrator } from './orchestrator'
-import { NodeResponseStatus } from '~enums'
-import { NodeRequest, ProjectFile } from '~interfaces'
-import {
-	checkEstimateStatus,
-	executeNode,
-	returnOrchestratorStatus,
-	uploadFiles,
-} from '~resources'
-import { createFormData, isStatusProcessing, wait } from '~utils'
+import { StatusType } from '~enums'
+import { NodeRequest, ProjectFile, OrchestratorRun } from '~interfaces'
+import { uploadFiles } from '~resources'
+import { createFormData } from '~utils'
 
-export class Estimate extends Orchestrator {
+export class Estimate implements OrchestratorRun {
+	private fileUrl = ''
+	private fileName = ''
+	orchestrator: Orchestrator
+
 	constructor(
 		onStart?: (...args) => void,
 		onUpdate?: (...args) => void,
 		onComplete?: (...args) => void,
 		onCancel?: (...args) => void,
 	) {
-		super(onStart, onUpdate, onComplete, onCancel)
+		this.orchestrator = new Orchestrator()
+		this.orchestrator.setOnStart(onStart)
+		this.orchestrator.setOnUpdate(onUpdate)
+		this.orchestrator.setOnComplete(onComplete)
+		this.orchestrator.setOnCancel(onCancel)
 	}
 
 	async uploadFiles(projectFiles: ProjectFile[]): Promise<void> {
@@ -32,33 +35,16 @@ export class Estimate extends Orchestrator {
 		this.fileName = projectFiles[0].name
 	}
 
-	protected async getStatus() {
-		let status = await returnOrchestratorStatus(
-			this._orchestratorResponse.statusQueryGetUri,
-		)
-
-		let estimateStatus
-		while (isStatusProcessing(status?.runtimeStatus as NodeResponseStatus)) {
-			[status, estimateStatus] = await Promise.all([
-				returnOrchestratorStatus(this._orchestratorResponse.statusQueryGetUri),
-				checkEstimateStatus(status?.instanceId as string),
-				wait(3000),
-			])
-
-			this._onUpdate && this._onUpdate({ ...status, ...estimateStatus })
-		}
-		return { ...status, ...estimateStatus }
-	}
-
 	async execute(estimateNode: NodeRequest): Promise<void> {
 		const loadNode = buildLoadNode(this.fileUrl, this.fileName)
 		const nodes = {
 			nodes: [...loadNode.nodes, ...estimateNode?.nodes],
 		}
-		if (!nodes) return
-		this._orchestratorResponse = await executeNode(nodes)
-		this._onStart && this._onStart(this.orchestratorResponse)
-		const status = await this.getStatus()
-		this._onComplete && this._onComplete(status)
+		if (!nodes) return undefined
+		await this.orchestrator.execute(nodes, StatusType.Estimate)
+	}
+
+	async cancel(): Promise<void> {
+		await this.orchestrator.cancel()
 	}
 }

@@ -136,7 +136,7 @@ export function useSpecificationCurve(): GenericObject {
 			)
 		}
 		return '0/0'
-	}, [refutationKeys, failedRefutations])
+	}, [refutationKeys, failedRefutations, selectedSpecification])
 
 	const isSpecificationOn = useMemo(() => {
 		if (!selectedSpecification || !config.inactiveSpecifications) {

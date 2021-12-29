@@ -284,7 +284,6 @@ const useEstimatorCardList = (
 		defaultEstimator,
 		estimators,
 		selectedEstimatorGroups,
-		selectedEstimatorGroupKey,
 		onDefaultChange,
 		onEstimatorTypeChange,
 		onEstimatorsCheckboxChange,

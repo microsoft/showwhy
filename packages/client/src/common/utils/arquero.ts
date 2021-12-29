@@ -27,7 +27,10 @@ export function createDefaultTable(
 	)
 }
 
-export async function loadTable(table: DataTableDefinition, tables?: File[]) {
+export async function loadTable(
+	table: DataTableDefinition,
+	tables?: File[],
+): Promise<ColumnTable> {
 	const file = tables?.find(t => t.name === table.name) as File
 	const text = await getTextFromFile(file)
 	return createDefaultTable(text, guessDelimiter(table.name))

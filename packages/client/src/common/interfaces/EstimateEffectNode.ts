@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { AdditionalProperties, StatusResponse } from '~interfaces'
+import { AdditionalProperties, OrchestratorStatus } from '~interfaces'
 
 export interface NodeData extends AdditionalProperties {
 	type: string
@@ -43,7 +43,7 @@ export interface PartialResults {
 	time: number
 }
 
-export interface EstimateEffectStatusResponse {
+export interface EstimateEffectStatusResponse extends OrchestratorStatus {
 	total_results: number
 	refuters: string[]
 	estimated_effect_completed: number
@@ -54,7 +54,3 @@ export interface EstimateEffectStatusResponse {
 	confidence_interval_completed: number
 	shap_completed: number
 }
-
-export interface CheckStatus
-	extends EstimateEffectStatusResponse,
-		StatusResponse {}

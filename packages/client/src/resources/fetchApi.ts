@@ -9,15 +9,11 @@ import {
 	UploadFilesResponse,
 	NodeRequest,
 	NodeResponse,
-	StatusResponse,
-	CheckStatus,
 	TotalExecutionsResponse,
-	SignificanceTestResponse,
+	OrchestratorStatus,
 } from '~interfaces'
 import { getEnv } from '~resources/getEnv'
 import { createAndReturnStorageItem, getStorageItem } from '~utils'
-
-type Status = CheckStatus | SignificanceTestResponse
 
 const {
 	BASE_URL,
@@ -78,20 +74,17 @@ export const uploadFiles = async (
 	}).then(response => response?.json())
 }
 
-export const checkEstimateStatus = async (
-	instanceId: string,
-): Promise<Partial<CheckStatus>> => {
-	return genericCheckStatus(instanceId, StatusType.Estimate)
-}
+// export const checkEstimateStatus = async (
+// 	instanceId: string,
+// ): Promise<Partial<OrchestratorStatus>> => {
+// 	return genericCheckStatus(instanceId, StatusType.Estimate)
+// }
 
-export const checkSignificanceStatus = async (
-	instanceId: string,
-): Promise<Partial<SignificanceTestResponse>> => {
-	return genericCheckStatus(
-		instanceId,
-		StatusType.Significance,
-	) as Partial<SignificanceTestResponse>
-}
+// export const checkSignificanceStatus = async (
+// 	instanceId: string,
+// ): Promise<Partial<OrchestratorStatus>> => {
+// 	return genericCheckStatus(instanceId, StatusType.Significance)
+// }
 
 export const downloadFile = async (
 	sessionId: string,
@@ -141,7 +134,7 @@ const fetchHandler = async (url, options, retryCount = 0) => {
 
 export const returnOrchestratorStatus = async (
 	url: string,
-): Promise<StatusResponse> => {
+): Promise<OrchestratorStatus> => {
 	return await fetch(localhostUrl(url))
 		.then(response => response?.json())
 		.catch(() => {
@@ -149,10 +142,10 @@ export const returnOrchestratorStatus = async (
 		})
 }
 
-async function genericCheckStatus(
+export async function genericCheckStatus(
 	instanceId: string,
 	type: StatusType,
-): Promise<Partial<Status>> {
+): Promise<Partial<OrchestratorStatus>> {
 	let code: string
 	let path: string
 
@@ -179,9 +172,10 @@ async function genericCheckStatus(
 			maxRetries: 3,
 		}
 
-		const inferenceStatus: Status = await fetchHandler(statusUrl, options).then(
-			response => response?.json(),
-		)
+		const inferenceStatus: OrchestratorStatus = await fetchHandler(
+			statusUrl,
+			options,
+		).then(response => response?.json())
 		return inferenceStatus
 	} catch (error) {
 		console.log({ error })

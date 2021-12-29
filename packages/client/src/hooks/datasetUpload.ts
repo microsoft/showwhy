@@ -5,7 +5,7 @@
 
 import ColumnTable from 'arquero/dist/types/table/column-table'
 import { useState, useCallback, useEffect } from 'react'
-import { useDropzone, FileRejection } from 'react-dropzone'
+import { useDropzone } from 'react-dropzone'
 import { useOnDropRejected } from './dropzone'
 import { useSupportedFileTypes } from './supportedFileTypes'
 import { DropFilesCount, ProjectFile } from '~interfaces'
@@ -95,7 +95,7 @@ export const useHandleDropzone = (
 	}
 }
 
-export const useOnLoadStart = (setLoading, onError) => {
+export const useOnLoadStart = (setLoading: any, onError: any): (() => void) => {
 	return useCallback(() => {
 		setLoading(true)
 		onError && onError(null)

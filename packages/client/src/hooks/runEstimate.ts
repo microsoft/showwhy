@@ -3,11 +3,15 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { useCallback, useMemo, useState, useEffect } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { Estimate } from '~classes'
-import { NodeResponseStatus } from '~enums'
-import { useDefaultRun, useEstimateNode, useRefutationLength } from '~hooks'
-import { CheckStatus, NodeRequest, NodeResponse, RunStatus } from '~interfaces'
+import { useEstimateNode, useRefutationLength } from '~hooks'
+import {
+	EstimateEffectStatusResponse,
+	NodeRequest,
+	NodeResponse,
+	RunStatus,
+} from '~interfaces'
 import {
 	useConfidenceInterval,
 	useProjectFiles,
@@ -18,7 +22,6 @@ import {
 	useUpdateRunHistory,
 } from '~state'
 import {
-	isStatusProcessing,
 	returnInitialRunHistory,
 	returnRefutationCount,
 	returnStatus,
@@ -30,7 +33,6 @@ export const useRunEstimate = (): any => {
 	const updateActive = useUpdateActiveRunHistory()
 	const estimateNode = useEstimateNode(projectFiles)
 	const specCount = useSpecCount()
-	const [run, setRun] = useState<Estimate>()
 	const [isCanceled, setIsCanceled] = useState<boolean>(false)
 
 	const refutationType = useRefutationType()
@@ -38,26 +40,13 @@ export const useRunEstimate = (): any => {
 	const getRefutationCount = useRefutationLength()
 	const runHistory = useRunHistory()
 	const totalRefuters = useRefutationLength()
-	const defaultRun = useDefaultRun()
-
-	useEffect(() => {
-		if (
-			!run &&
-			defaultRun &&
-			isStatusProcessing(defaultRun?.status?.status as NodeResponseStatus)
-		) {
-			const newRun = new Estimate(onStart, onUpdate, onComplete)
-			newRun.setOrchestratorResponse(defaultRun.nodeResponse)
-			setRun(newRun)
-		}
-	}, [defaultRun, run, setRun])
 
 	const totalRefutation = useMemo((): any => {
 		return returnRefutationCount(specCount as number, totalRefuters)
 	}, [specCount, totalRefuters])
 
 	const onUpdate = useCallback(
-		(status: CheckStatus) => {
+		(status: EstimateEffectStatusResponse) => {
 			const updatedStatus = returnStatus(
 				status,
 				hasConfidenceInterval,
@@ -68,10 +57,9 @@ export const useRunEstimate = (): any => {
 			updateActive(updatedStatus, status?.partial_results)
 		},
 		[
+			updateActive,
 			updateRunHistory,
-			getRefutationCount,
 			hasConfidenceInterval,
-			runHistory,
 			specCount,
 			totalRefutation,
 		],
@@ -84,7 +72,7 @@ export const useRunEstimate = (): any => {
 			},
 		} as RunStatus
 		updateActive(updatedStatus)
-	}, [updateRunHistory])
+	}, [updateActive])
 
 	const onStart = useCallback(
 		(nodeResponse: NodeResponse) => {
@@ -103,24 +91,27 @@ export const useRunEstimate = (): any => {
 			hasConfidenceInterval,
 			refutationType,
 			specCount,
-			totalRefuters,
 			runHistory,
 			totalRefutation,
 		],
 	)
 
-	const runEstimate = useCallback(async () => {
-		const newRun = new Estimate(onStart, onUpdate, onComplete)
-		setRun(newRun)
-
-		await newRun.uploadFiles(projectFiles)
-		await newRun.execute(estimateNode as NodeRequest)
-	}, [updateRunHistory, runHistory, specCount, run])
-
 	const cancelRun = useCallback(() => {
+		const estimate = new Estimate(onStart, onUpdate, onComplete)
+
 		setIsCanceled(true)
-		run && run.cancel()
-	}, [run, setIsCanceled])
+		estimate.cancel()
+	}, [setIsCanceled, onStart, onUpdate, onComplete])
+
+	const runEstimate = useCallback(async () => {
+		const estimate = new Estimate(onStart, onUpdate, onComplete)
+
+		setIsCanceled(false)
+		Promise.all([
+			estimate.uploadFiles(projectFiles),
+			estimate.execute(estimateNode as NodeRequest),
+		])
+	}, [setIsCanceled, estimateNode, onComplete, onStart, onUpdate, projectFiles])
 
 	return { runEstimate, cancelRun, isCanceled }
 }

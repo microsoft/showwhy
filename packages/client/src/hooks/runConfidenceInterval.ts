@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { useCallback, useState, useEffect } from 'react'
+import { useCallback, useState } from 'react'
 import { ConfidenceInterval } from '~classes'
 import { NodeResponseStatus } from '~enums'
 import { useDefaultRun } from '~hooks'
@@ -12,33 +12,17 @@ import {
 	SignificanceTest,
 	SignificanceTestResponse,
 } from '~interfaces'
-import { useSetSignificanceTests, useSignificanceTests } from '~state'
+import { useSetSignificanceTests } from '~state'
 import {
-	isStatusProcessing,
 	matchStatus,
 	returnInitialConfidenceInterval,
 	returnPercentage,
 } from '~utils'
 
 export const useRunConfidenceInterval = (): any => {
-	const [run, setRun] = useState<ConfidenceInterval>()
 	const [isCanceled, setIsCanceled] = useState<boolean>(false)
-
 	const defaultRun = useDefaultRun()
-	const significanceTests = useSignificanceTests(defaultRun?.id)
 	const updateSignificanceTests = useSetSignificanceTests(defaultRun?.id)
-
-	useEffect(() => {
-		if (
-			!run &&
-			significanceTests &&
-			isStatusProcessing(significanceTests?.status as NodeResponseStatus)
-		) {
-			const newRun = new ConfidenceInterval(onStart, onUpdate)
-			newRun.setOrchestratorResponse(significanceTests.nodeResponse)
-			setRun(newRun)
-		}
-	}, [significanceTests, run, setRun])
 
 	const onUpdate = useCallback(
 		(status: SignificanceTestResponse) => {
@@ -76,18 +60,17 @@ export const useRunConfidenceInterval = (): any => {
 
 	const runConfidenceInterval = useCallback(
 		async (activeTasksIds: string[]) => {
-			const newRun = new ConfidenceInterval(onStart, onUpdate)
-			setRun(newRun)
-
-			await newRun.execute(activeTasksIds)
+			const run = new ConfidenceInterval(onStart, onUpdate)
+			await run.execute(activeTasksIds)
 		},
-		[],
+		[onStart, onUpdate],
 	)
 
 	const cancelRun = useCallback(() => {
 		setIsCanceled(true)
-		run && run.cancel()
-	}, [run, setIsCanceled])
+		const run = new ConfidenceInterval(onStart, onUpdate)
+		run.cancel()
+	}, [setIsCanceled, onStart, onUpdate])
 
 	return { runConfidenceInterval, cancelRun, isCanceled }
 }

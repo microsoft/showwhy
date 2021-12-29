@@ -3,26 +3,42 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { terminateRun } from '~resources'
+import { NodeResponseStatus, StatusType } from '~enums'
+import { NodeRequest, StatusResponse } from '~interfaces'
+import {
+	executeNode,
+	genericCheckStatus,
+	returnOrchestratorStatus,
+	terminateRun,
+} from '~resources'
+import { isStatusProcessing, wait } from '~utils'
 
 export class Orchestrator {
-	protected fileUrl = ''
-	protected fileName = ''
-	protected _orchestratorResponse
-	protected _onStart: ((...args) => void) | undefined
-	protected _onUpdate: ((...args) => void) | undefined
-	protected _onComplete: ((...args) => void) | undefined
-	protected _onCancel: ((...args) => void) | undefined
+	public _onCancel: ((...args) => void) | undefined
+	public _onStart: ((...args) => void) | undefined
+	public _onUpdate: ((...args) => void) | undefined
+	public _onComplete: ((...args) => void) | undefined
+	private _orchestratorResponse
+	static instance: Orchestrator
 
-	constructor(
-		onStart?: (...args) => void,
-		onUpdate?: (...args) => void,
-		onComplete?: (...args) => void,
-		onCancel?: (...args) => void,
-	) {
+	constructor() {
+		if (!Orchestrator.instance) {
+			Orchestrator.instance = this
+		} else {
+			return Orchestrator.instance
+		}
+	}
+
+	setOnStart(onStart: ((...args) => void) | undefined): void {
 		this._onStart = onStart
+	}
+	setOnUpdate(onUpdate: ((...args) => void) | undefined): void {
 		this._onUpdate = onUpdate
+	}
+	setOnComplete(onComplete: ((...args) => void) | undefined): void {
 		this._onComplete = onComplete
+	}
+	setOnCancel(onCancel: ((...args) => void) | undefined): void {
 		this._onCancel = onCancel
 	}
 
@@ -32,6 +48,32 @@ export class Orchestrator {
 
 	setOrchestratorResponse(res: any): void {
 		this._orchestratorResponse = res
+	}
+
+	private async getStatus(type: StatusType): Promise<StatusResponse> {
+		let status = await returnOrchestratorStatus(
+			this.orchestratorResponse.statusQueryGetUri,
+		)
+
+		let estimateStatus
+		while (isStatusProcessing(status?.runtimeStatus as NodeResponseStatus)) {
+			;[status, estimateStatus] = await Promise.all([
+				returnOrchestratorStatus(this.orchestratorResponse.statusQueryGetUri),
+				genericCheckStatus(status?.instanceId, type),
+				wait(3000),
+			])
+
+			this._onUpdate && this._onUpdate({ ...status, ...estimateStatus })
+		}
+		return { ...status, ...estimateStatus } as StatusResponse
+	}
+
+	async execute(nodes: NodeRequest, type: StatusType): Promise<void> {
+		const response = await executeNode(nodes)
+		this.setOrchestratorResponse(response)
+		this._onStart && this._onStart(response)
+		const status = await this.getStatus(type)
+		this._onComplete && this._onComplete(status)
 	}
 
 	async cancel(): Promise<void> {
