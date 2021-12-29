@@ -5,7 +5,12 @@
 
 import { useCallback, useMemo, useState } from 'react'
 import { Estimate } from '~classes'
-import { useEstimateNode, useRefutationLength } from '~hooks'
+import {
+	useEstimateNode,
+	useRefutationLength,
+	useUpdateActiveRunHistory,
+	useUpdateAndDisableRunHistory,
+} from '~hooks'
 import {
 	EstimateEffectStatusResponse,
 	NodeRequest,
@@ -18,8 +23,6 @@ import {
 	useRefutationType,
 	useRunHistory,
 	useSpecCount,
-	useUpdateActiveRunHistory,
-	useUpdateRunHistory,
 } from '~state'
 import {
 	returnInitialRunHistory,
@@ -29,7 +32,7 @@ import {
 
 export const useRunEstimate = (): any => {
 	const projectFiles = useProjectFiles()
-	const updateRunHistory = useUpdateRunHistory()
+	const updateRunHistory = useUpdateAndDisableRunHistory()
 	const updateActive = useUpdateActiveRunHistory()
 	const estimateNode = useEstimateNode(projectFiles)
 	const specCount = useSpecCount()
@@ -37,7 +40,6 @@ export const useRunEstimate = (): any => {
 
 	const refutationType = useRefutationType()
 	const hasConfidenceInterval = useConfidenceInterval()
-	const getRefutationCount = useRefutationLength()
 	const runHistory = useRunHistory()
 	const totalRefuters = useRefutationLength()
 

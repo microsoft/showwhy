@@ -5,7 +5,7 @@
 
 import { useCallback, useMemo } from 'react'
 import { NodeResponseStatus } from '~enums'
-import { RunHistory } from '~interfaces'
+import { PartialResults, RunHistory, RunStatus } from '~interfaces'
 import {
 	useResetSpecificationCurveConfig,
 	useRunHistory,
@@ -48,4 +48,54 @@ export function useIsDefaultRunProcessing(): boolean {
 	return useMemo(() => {
 		return isStatusProcessing(defaultRun?.status?.status as NodeResponseStatus)
 	}, [defaultRun])
+}
+
+export function useUpdateActiveRunHistory(): (
+	newStatus: RunStatus,
+	result?: PartialResults[],
+) => void {
+	const setRunHistory = useSetRunHistory()
+	return useCallback(
+		(newStatus, result) => {
+			setRunHistory(prev => {
+				const existing = prev.find(p => p.isActive) as RunHistory
+				const newOne = {
+					...existing,
+					status: {
+						...existing.status,
+						...newStatus,
+						time: {
+							start: existing?.status?.time?.start,
+							end: newStatus?.time?.end,
+						},
+					},
+					result: result || existing.result,
+				}
+				return [
+					...prev.filter(p => p.id !== existing.id),
+					newOne,
+				] as RunHistory[]
+			})
+		},
+		[setRunHistory],
+	)
+}
+
+export function useUpdateAndDisableRunHistory(): (
+	runHistory: RunHistory,
+) => void {
+	const setRunHistory = useSetRunHistory()
+	return useCallback(
+		(runHistory: RunHistory) => {
+			setRunHistory(prev => [
+				...prev
+					.filter(p => p.id !== runHistory.id)
+					.map(x => {
+						return { ...x, isActive: false }
+					}),
+				runHistory,
+			])
+		},
+		[setRunHistory],
+	)
 }
