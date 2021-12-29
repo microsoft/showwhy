@@ -3,23 +3,20 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { useCallback, useMemo, useState } from 'react'
-import { Estimate } from '~classes'
+import { useCallback, useMemo } from 'react'
+import { getEstimatorOrchestrator } from '~classes'
 import {
-	useEstimateNode,
 	useRefutationLength,
 	useUpdateActiveRunHistory,
 	useUpdateAndDisableRunHistory,
 } from '~hooks'
 import {
 	EstimateEffectStatusResponse,
-	NodeRequest,
 	NodeResponse,
 	RunStatus,
 } from '~interfaces'
 import {
 	useConfidenceInterval,
-	useProjectFiles,
 	useRefutationType,
 	useRunHistory,
 	useSpecCount,
@@ -31,12 +28,9 @@ import {
 } from '~utils'
 
 export const useRunEstimate = (): any => {
-	const projectFiles = useProjectFiles()
 	const updateRunHistory = useUpdateAndDisableRunHistory()
 	const updateActive = useUpdateActiveRunHistory()
-	const estimateNode = useEstimateNode(projectFiles)
 	const specCount = useSpecCount()
-	const [isCanceled, setIsCanceled] = useState<boolean>(false)
 
 	const refutationType = useRefutationType()
 	const hasConfidenceInterval = useConfidenceInterval()
@@ -98,20 +92,9 @@ export const useRunEstimate = (): any => {
 		],
 	)
 
-	const cancelRun = useCallback(() => {
-		const estimate = new Estimate(onStart, onUpdate, onComplete)
+	const run = useCallback((): any => {
+		return getEstimatorOrchestrator(onStart, onUpdate, onComplete)
+	}, [onStart, onUpdate, onComplete])
 
-		setIsCanceled(true)
-		estimate.cancel()
-	}, [setIsCanceled, onStart, onUpdate, onComplete])
-
-	const runEstimate = useCallback(async () => {
-		const estimate = new Estimate(onStart, onUpdate, onComplete)
-
-		setIsCanceled(false)
-		await estimate.uploadFiles(projectFiles)
-		await estimate.execute(estimateNode as NodeRequest)
-	}, [setIsCanceled, estimateNode, onComplete, onStart, onUpdate, projectFiles])
-
-	return { runEstimate, cancelRun, isCanceled }
+	return run
 }

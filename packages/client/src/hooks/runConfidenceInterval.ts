@@ -4,7 +4,7 @@
  */
 
 import { useCallback, useState } from 'react'
-import { ConfidenceInterval } from '~classes'
+import { getConfidenceOrchestrator } from '~classes'
 import { NodeResponseStatus } from '~enums'
 import { useDefaultRun } from '~hooks'
 import {
@@ -20,7 +20,6 @@ import {
 } from '~utils'
 
 export const useRunConfidenceInterval = (): any => {
-	const [isCanceled, setIsCanceled] = useState<boolean>(false)
 	const defaultRun = useDefaultRun()
 	const updateSignificanceTests = useSetSignificanceTests(defaultRun?.id)
 
@@ -52,25 +51,14 @@ export const useRunConfidenceInterval = (): any => {
 				defaultRun?.id as string,
 				nodeResponse,
 			)
-			setIsCanceled(false)
 			updateSignificanceTests(initialRun)
 		},
-		[updateSignificanceTests, defaultRun, setIsCanceled],
+		[updateSignificanceTests, defaultRun],
 	)
 
-	const runConfidenceInterval = useCallback(
-		async (activeTasksIds: string[]) => {
-			const run = new ConfidenceInterval(onStart, onUpdate)
-			await run.execute(activeTasksIds)
-		},
-		[onStart, onUpdate],
-	)
+	const run = useCallback((): any => {
+		return getConfidenceOrchestrator(onStart, onUpdate)
+	}, [onStart, onUpdate])
 
-	const cancelRun = useCallback(() => {
-		setIsCanceled(true)
-		const run = new ConfidenceInterval(onStart, onUpdate)
-		run.cancel()
-	}, [setIsCanceled, onStart, onUpdate])
-
-	return { runConfidenceInterval, cancelRun, isCanceled }
+	return run
 }

@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { NodeResponseStatus, StatusType } from '~enums'
+import { NodeResponseStatus, OrchestratorType } from '~enums'
 import { NodeRequest, StatusResponse } from '~interfaces'
 import {
 	executeNode,
@@ -19,26 +19,16 @@ export class Orchestrator {
 	public _onUpdate: ((...args) => void) | undefined
 	public _onComplete: ((...args) => void) | undefined
 	private _orchestratorResponse
-	static instance: Orchestrator
 
-	constructor() {
-		if (!Orchestrator.instance) {
-			Orchestrator.instance = this
-		} else {
-			return Orchestrator.instance
-		}
-	}
-
-	setOnStart(onStart: ((...args) => void) | undefined): void {
+	constructor(
+		onStart?: ((...args) => void) | undefined,
+		onUpdate?: ((...args) => void) | undefined,
+		onComplete?: ((...args) => void) | undefined,
+		onCancel?: ((...args) => void) | undefined,
+	) {
 		this._onStart = onStart
-	}
-	setOnUpdate(onUpdate: ((...args) => void) | undefined): void {
 		this._onUpdate = onUpdate
-	}
-	setOnComplete(onComplete: ((...args) => void) | undefined): void {
 		this._onComplete = onComplete
-	}
-	setOnCancel(onCancel: ((...args) => void) | undefined): void {
 		this._onCancel = onCancel
 	}
 
@@ -50,14 +40,14 @@ export class Orchestrator {
 		this._orchestratorResponse = res
 	}
 
-	private async getStatus(type: StatusType): Promise<StatusResponse> {
+	private async getStatus(type: OrchestratorType): Promise<StatusResponse> {
 		let status = await returnOrchestratorStatus(
 			this.orchestratorResponse.statusQueryGetUri,
 		)
 
 		let estimateStatus
 		while (isStatusProcessing(status?.runtimeStatus as NodeResponseStatus)) {
-			[status, estimateStatus] = await Promise.all([
+			;[status, estimateStatus] = await Promise.all([
 				returnOrchestratorStatus(this.orchestratorResponse.statusQueryGetUri),
 				genericCheckStatus(status?.instanceId, type),
 				wait(3000),
@@ -68,7 +58,7 @@ export class Orchestrator {
 		return { ...status, ...estimateStatus } as StatusResponse
 	}
 
-	async execute(nodes: NodeRequest, type: StatusType): Promise<void> {
+	async execute(nodes: NodeRequest, type: OrchestratorType): Promise<void> {
 		const response = await executeNode(nodes)
 		this.setOrchestratorResponse(response)
 		this._onStart && this._onStart(response)

@@ -3,9 +3,10 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { useCallback, useMemo } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { useLoadSpecificationData } from '../ExploreSpecificationCurvePage/hooks'
-import { NodeResponseStatus, RefutationTypes } from '~enums'
+import { getConfidenceOrchestrator } from '~classes'
+import { NodeResponseStatus, OrchestratorType, RefutationTypes } from '~enums'
 import {
 	useAlternativeModels,
 	useDefaultRun,
@@ -15,6 +16,7 @@ import {
 	useRunConfidenceInterval,
 } from '~hooks'
 
+import { buildSignificanceTestsNode } from '~resources'
 import {
 	useDefaultDatasetResult,
 	useDefineQuestion,
@@ -36,10 +38,10 @@ export const useBusinessLogic = (): GenericObject => {
 	const specificationCurveConfig = useSpecificationCurveConfig()
 	const refutation = useRefutationType()
 	const defaultDataset = useDefaultDatasetResult()
-	const { runConfidenceInterval, cancelRun, isCanceled } =
-		useRunConfidenceInterval()
+	const run = useRunConfidenceInterval()
 	const defaultRun = useDefaultRun()
 	const { failedRefutationIds } = useSpecificationCurve()
+	const [isCanceled, setIsCanceled] = useState<boolean>(false)
 	const refutationLength = useRefutationLength()
 	const significanceTestsResult = useSignificanceTests(defaultRun?.id as string)
 
@@ -77,11 +79,18 @@ export const useBusinessLogic = (): GenericObject => {
 			.map(x => x.taskId)
 	}, [specificationData, specificationCurveConfig, failedRefutationIds])
 
+	const cancelRun = useCallback(() => {
+		setIsCanceled(true)
+		run().cancel()
+	}, [run, setIsCanceled])
+
 	const runSignificance = useCallback(
 		(taskIds: string[]) => {
-			runConfidenceInterval(taskIds)
+			const nodes = buildSignificanceTestsNode(taskIds)
+			debugger
+			run().execute(nodes, OrchestratorType.ConfidenceInterval)
 		},
-		[runConfidenceInterval],
+		[run],
 	)
 
 	const significanceFailed = useMemo((): boolean => {
@@ -100,12 +109,12 @@ export const useBusinessLogic = (): GenericObject => {
 		refutationLength,
 		defineQuestion,
 		activeValues,
-		runSignificance,
 		significanceTestsResult,
 		significanceFailed,
 		activeTaskIds,
 		refutationType,
-		cancelRun,
 		isCanceled,
+		runSignificance,
+		cancelRun,
 	}
 }

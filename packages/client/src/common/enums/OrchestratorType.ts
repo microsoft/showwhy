@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-export enum StatusType {
-	Significance = 'Significance',
-	Estimate = 'Estimate',
+export enum OrchestratorType {
+	Estimator = 'estimator',
+	ConfidenceInterval = 'confidenceInterval',
 }

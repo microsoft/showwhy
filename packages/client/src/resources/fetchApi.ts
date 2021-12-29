@@ -4,7 +4,7 @@
  */
 import { v4 } from 'uuid'
 import { localhostUrl } from './utils'
-import { NodeResponseStatus, StatusType } from '~enums'
+import { NodeResponseStatus, OrchestratorType } from '~enums'
 import {
 	UploadFilesResponse,
 	NodeRequest,
@@ -74,18 +74,6 @@ export const uploadFiles = async (
 	}).then(response => response?.json())
 }
 
-// export const checkEstimateStatus = async (
-// 	instanceId: string,
-// ): Promise<Partial<OrchestratorStatus>> => {
-// 	return genericCheckStatus(instanceId, StatusType.Estimate)
-// }
-
-// export const checkSignificanceStatus = async (
-// 	instanceId: string,
-// ): Promise<Partial<OrchestratorStatus>> => {
-// 	return genericCheckStatus(instanceId, StatusType.Significance)
-// }
-
 export const downloadFile = async (
 	sessionId: string,
 	fileName: string,
@@ -144,17 +132,17 @@ export const returnOrchestratorStatus = async (
 
 export async function genericCheckStatus(
 	instanceId: string,
-	type: StatusType,
+	type: OrchestratorType,
 ): Promise<Partial<OrchestratorStatus>> {
 	let code: string
 	let path: string
 
 	switch (type) {
-		case StatusType.Significance:
+		case OrchestratorType.ConfidenceInterval:
 			code = VITE_CHECK_SIGNIFICANCE_STATUS_API_KEY
 			path = 'checksignificanceteststatus'
 			break
-		case StatusType.Estimate:
+		case OrchestratorType.Estimator:
 		default:
 			code = CHECK_STATUS_API_KEY
 			path = 'checkinferencestatus'

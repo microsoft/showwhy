@@ -3,6 +3,5 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-export * from './estimate'
-export * from './confidenceInterval'
 export * from './orchestrator'
+export * from './orchestratorFactory'

@@ -4,7 +4,8 @@
  */
 
 import { useBoolean } from '@fluentui/react-hooks'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
+import { OrchestratorType } from '~enums'
 import {
 	useEstimateNode,
 	useIsDefaultRunProcessing,
@@ -13,7 +14,8 @@ import {
 	useSetRunAsDefault,
 	useWakeLock,
 } from '~hooks'
-import { numberExecutions } from '~resources'
+import { NodeRequest, ProjectFile } from '~interfaces'
+import { buildLoadNode, numberExecutions, uploadFiles } from '~resources'
 import {
 	useConfidenceInterval,
 	useDefineQuestion,
@@ -24,6 +26,7 @@ import {
 	useSpecCount,
 } from '~state'
 import { GenericObject } from '~types'
+import { createFormData } from '~utils'
 
 export const useBusinessLogic = (): GenericObject => {
 	const definitions = useDefineQuestion()
@@ -34,13 +37,14 @@ export const useBusinessLogic = (): GenericObject => {
 		loadingSpecCount,
 		{ setTrue: trueLoadingSpecCount, setFalse: falseLoadingSpecCount },
 	] = useBoolean(false)
+	const [isCanceled, setIsCanceled] = useState<boolean>(false)
 	const [errors, setErrors] = useState<string>('')
 	const runHistory = useRunHistory()
 	const setRunAsDefault = useSetRunAsDefault()
 	const specCount = useSpecCount()
 	const setSpecCount = useSetSpecCount()
 	const refutationOptions = useRefutationOptions()
-	const { runEstimate, cancelRun, isCanceled } = useRunEstimate()
+	const run = useRunEstimate()
 	const estimateNode = useEstimateNode(projectFiles)
 	const isProcessing = useIsDefaultRunProcessing()
 	const totalEstimatorsCount = estimators.length
@@ -68,6 +72,32 @@ export const useBusinessLogic = (): GenericObject => {
 		falseLoadingSpecCount,
 		trueLoadingSpecCount,
 	])
+
+	const uploadProjectFiles = useCallback(
+		async (projectFiles: ProjectFile[]) => {
+			const filesData = createFormData(projectFiles)
+			return await uploadFiles(filesData)
+		},
+		[],
+	)
+
+	const runEstimate = useCallback(async () => {
+		setIsCanceled(false)
+		const files = await uploadProjectFiles(projectFiles)
+		const loadNode = buildLoadNode(
+			files.uploaded_files[projectFiles[0].name],
+			projectFiles[0].name,
+		)
+		const nodes = {
+			nodes: [...loadNode.nodes, ...(estimateNode as NodeRequest).nodes],
+		}
+		await run().execute(nodes, OrchestratorType.Estimator)
+	}, [run, estimateNode, projectFiles, specCount])
+
+	const cancelRun = useCallback(() => {
+		setIsCanceled(true)
+		run().cancel()
+	}, [setIsCanceled, run])
 
 	return {
 		isProcessing,
