@@ -3,62 +3,39 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { useCallback, useMemo } from 'react'
+import { useCallback } from 'react'
 import { getEstimatorOrchestrator } from '~classes'
 import {
 	useRefutationLength,
 	useUpdateActiveRunHistory,
-	useUpdateAndDisableRunHistory,
+	useUpdateNodeResponseActiveRunHistory,
 } from '~hooks'
 import {
 	EstimateEffectStatusResponse,
 	NodeResponse,
 	RunStatus,
 } from '~interfaces'
-import {
-	useConfidenceInterval,
-	useRefutationType,
-	useRunHistory,
-	useSpecCount,
-} from '~state'
-import {
-	returnInitialRunHistory,
-	returnRefutationCount,
-	returnStatus,
-} from '~utils'
+import { useConfidenceInterval } from '~state'
+import { returnStatus } from '~utils'
 
 export const useRunEstimate = (): any => {
-	const updateRunHistory = useUpdateAndDisableRunHistory()
 	const updateActive = useUpdateActiveRunHistory()
-	const specCount = useSpecCount()
+	const updateNodeResponse = useUpdateNodeResponseActiveRunHistory()
 
-	const refutationType = useRefutationType()
 	const hasConfidenceInterval = useConfidenceInterval()
-	const runHistory = useRunHistory()
-	const totalRefuters = useRefutationLength()
-
-	const totalRefutation = useMemo((): any => {
-		return returnRefutationCount(specCount as number, totalRefuters)
-	}, [specCount, totalRefuters])
+	const refutersLength = useRefutationLength()
 
 	const onUpdate = useCallback(
 		(status: EstimateEffectStatusResponse) => {
 			const updatedStatus = returnStatus(
 				status,
 				hasConfidenceInterval,
-				totalRefutation,
-				specCount as number,
+				refutersLength,
 			)
 
 			updateActive(updatedStatus, status?.partial_results)
 		},
-		[
-			updateActive,
-			updateRunHistory,
-			hasConfidenceInterval,
-			specCount,
-			totalRefutation,
-		],
+		[updateActive, hasConfidenceInterval, refutersLength],
 	)
 
 	const onComplete = useCallback(() => {
@@ -72,29 +49,14 @@ export const useRunEstimate = (): any => {
 
 	const onStart = useCallback(
 		(nodeResponse: NodeResponse) => {
-			const initialRun = returnInitialRunHistory(
-				specCount as number,
-				totalRefutation,
-				hasConfidenceInterval,
-				refutationType,
-				runHistory.length,
-				nodeResponse,
-			)
-			updateRunHistory(initialRun)
+			updateNodeResponse(nodeResponse)
 		},
-		[
-			updateRunHistory,
-			hasConfidenceInterval,
-			refutationType,
-			specCount,
-			runHistory,
-			totalRefutation,
-		],
+		[updateNodeResponse],
 	)
 
 	const run = useCallback((): any => {
 		return getEstimatorOrchestrator(onStart, onUpdate, onComplete)
-	}, [onStart, onUpdate, onComplete])
+	}, [onUpdate, onComplete])
 
 	return run
 }

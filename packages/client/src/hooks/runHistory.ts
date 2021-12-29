@@ -5,7 +5,12 @@
 
 import { useCallback, useMemo } from 'react'
 import { NodeResponseStatus } from '~enums'
-import { PartialResults, RunHistory, RunStatus } from '~interfaces'
+import {
+	NodeResponse,
+	PartialResults,
+	RunHistory,
+	RunStatus,
+} from '~interfaces'
 import {
 	useResetSpecificationCurveConfig,
 	useRunHistory,
@@ -50,8 +55,30 @@ export function useIsDefaultRunProcessing(): boolean {
 	}, [defaultRun])
 }
 
+export function useUpdateNodeResponseActiveRunHistory(): (
+	nodeResponse?: NodeResponse,
+) => void {
+	const setRunHistory = useSetRunHistory()
+	return useCallback(
+		nodeResponse => {
+			setRunHistory(prev => {
+				const existing = prev.find(p => p.isActive) as RunHistory
+				const newOne = {
+					...existing,
+					nodeResponse: nodeResponse || existing.nodeResponse,
+				}
+				return [
+					...prev.filter(p => p.id !== existing.id),
+					newOne,
+				] as RunHistory[]
+			})
+		},
+		[setRunHistory],
+	)
+}
+
 export function useUpdateActiveRunHistory(): (
-	newStatus: RunStatus,
+	newStatus?: RunStatus,
 	result?: PartialResults[],
 ) => void {
 	const setRunHistory = useSetRunHistory()

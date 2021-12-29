@@ -12,6 +12,7 @@ import {
 	useRefutationOptions,
 	useRunEstimate,
 	useSetRunAsDefault,
+	useUpdateAndDisableRunHistory,
 	useWakeLock,
 } from '~hooks'
 import { NodeRequest, ProjectFile } from '~interfaces'
@@ -21,15 +22,21 @@ import {
 	useDefineQuestion,
 	useEstimators,
 	useProjectFiles,
+	useRefutationType,
 	useRunHistory,
 	useSetSpecCount,
 	useSpecCount,
 } from '~state'
 import { GenericObject } from '~types'
-import { createFormData } from '~utils'
+import {
+	createFormData,
+	returnInitialRunHistory,
+	returnRefutationCount,
+} from '~utils'
 
 export const useBusinessLogic = (): GenericObject => {
 	const definitions = useDefineQuestion()
+	const updateRunHistory = useUpdateAndDisableRunHistory()
 	const projectFiles = useProjectFiles()
 	const estimators = useEstimators()
 	const hasConfidenceInterval = useConfidenceInterval()
@@ -44,6 +51,7 @@ export const useBusinessLogic = (): GenericObject => {
 	const specCount = useSpecCount()
 	const setSpecCount = useSetSpecCount()
 	const refutationOptions = useRefutationOptions()
+	const refutationType = useRefutationType()
 	const run = useRunEstimate()
 	const estimateNode = useEstimateNode(projectFiles)
 	const isProcessing = useIsDefaultRunProcessing()
@@ -81,8 +89,30 @@ export const useBusinessLogic = (): GenericObject => {
 		[],
 	)
 
+	const saveNewRunHistory = useCallback(() => {
+		const totalRefutation = returnRefutationCount(
+			specCount as number,
+			refutationOptions.length,
+		)
+		const initialRun = returnInitialRunHistory(
+			specCount as number,
+			totalRefutation,
+			hasConfidenceInterval,
+			refutationType,
+			runHistory.length,
+		)
+		updateRunHistory(initialRun)
+	}, [
+		updateRunHistory,
+		specCount,
+		hasConfidenceInterval,
+		refutationType,
+		runHistory.length,
+	])
+
 	const runEstimate = useCallback(async () => {
 		setIsCanceled(false)
+		saveNewRunHistory()
 		const files = await uploadProjectFiles(projectFiles)
 		const loadNode = buildLoadNode(
 			files.uploaded_files[projectFiles[0].name],
@@ -92,7 +122,7 @@ export const useBusinessLogic = (): GenericObject => {
 			nodes: [...loadNode.nodes, ...(estimateNode as NodeRequest).nodes],
 		}
 		await run().execute(nodes, OrchestratorType.Estimator)
-	}, [run, estimateNode, projectFiles, specCount])
+	}, [run, estimateNode, projectFiles, specCount, setIsCanceled])
 
 	const cancelRun = useCallback(() => {
 		setIsCanceled(true)

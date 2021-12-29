@@ -97,8 +97,7 @@ export function disableAllRuns(runHistory: RunHistory[]): RunHistory[] {
 export const returnStatus = (
 	status: Partial<EstimateEffectStatusResponse>,
 	hasConfidenceInterval: boolean,
-	totalRefuters: number,
-	specCount: number,
+	refutersLength: number,
 ): RunStatus => {
 	const estimators = returnEstimatorStatus(status)
 	const confidenceIntervals = returnConfidenceIntervalsStatus(
@@ -122,8 +121,10 @@ export const returnStatus = (
 	)
 
 	let percentage = 100
+	const totalResults = status?.total_results ?? 0
+	const totalRefuters = returnRefutationCount(totalResults, refutersLength)
 
-	status.total_results = status?.total_results ?? specCount
+	status.total_results = totalResults
 	status.estimated_effect_completed = status?.estimated_effect_completed ?? 0
 	status.confidence_interval_completed =
 		status?.confidence_interval_completed ?? 0
@@ -159,17 +160,21 @@ export const returnStatus = (
 		percentage = returnPercentage(status?.refute_completed, totalRefuters)
 	}
 
-	return {
+	const st = {
 		status: status.runtimeStatus?.toLowerCase() as NodeResponseStatus,
 		error: findRunError(status),
-		estimated_effect_completed: `${status.estimated_effect_completed}/${status.total_results}`,
-		confidence_interval_completed: `${status.confidence_interval_completed}/${status.total_results}`,
-		refute_completed: `${status?.refute_completed}/${totalRefuters}`,
 		percentage,
 		estimators,
 		confidenceIntervals,
 		refuters,
 	} as RunStatus
+
+	if (totalResults) {
+		st.estimated_effect_completed = `${status.estimated_effect_completed}/${status.total_results}`
+		st.confidence_interval_completed = `${status.confidence_interval_completed}/${status.total_results}`
+		st.refute_completed = `${status?.refute_completed}/${totalRefuters}`
+	}
+	return st
 }
 
 export function returnRefutationCount(
@@ -185,7 +190,6 @@ export function returnInitialRunHistory(
 	hasConfidenceInterval: boolean,
 	refutationType: RefutationTypes,
 	runHistoryLength: number,
-	nodeResponse: NodeResponse,
 ): RunHistory {
 	return {
 		id: v4(),
@@ -201,7 +205,6 @@ export function returnInitialRunHistory(
 				start: new Date(),
 			},
 		},
-		nodeResponse,
 		hasConfidenceInterval,
 		refutationType,
 	} as RunHistory

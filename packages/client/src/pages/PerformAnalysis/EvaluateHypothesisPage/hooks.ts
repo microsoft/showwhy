@@ -5,7 +5,6 @@
 
 import { useCallback, useMemo, useState } from 'react'
 import { useLoadSpecificationData } from '../ExploreSpecificationCurvePage/hooks'
-import { getConfidenceOrchestrator } from '~classes'
 import { NodeResponseStatus, OrchestratorType, RefutationTypes } from '~enums'
 import {
 	useAlternativeModels,
@@ -87,7 +86,6 @@ export const useBusinessLogic = (): GenericObject => {
 	const runSignificance = useCallback(
 		(taskIds: string[]) => {
 			const nodes = buildSignificanceTestsNode(taskIds)
-			debugger
 			run().execute(nodes, OrchestratorType.ConfidenceInterval)
 		},
 		[run],
