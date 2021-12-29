@@ -57,7 +57,7 @@ export class Orchestrator {
 
 		let estimateStatus
 		while (isStatusProcessing(status?.runtimeStatus as NodeResponseStatus)) {
-			;[status, estimateStatus] = await Promise.all([
+			[status, estimateStatus] = await Promise.all([
 				returnOrchestratorStatus(this.orchestratorResponse.statusQueryGetUri),
 				genericCheckStatus(status?.instanceId, type),
 				wait(3000),
