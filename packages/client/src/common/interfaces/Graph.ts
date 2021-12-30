@@ -5,12 +5,6 @@
 
 import { AlternativeModelsReq } from './AlternativeModels'
 
-export interface DataObject {
-	id: string
-	value: string
-	name: string
-}
-
 export interface Data {
 	data: {
 		id: string
@@ -26,7 +20,7 @@ export interface Data {
 	}
 }
 
-export interface EdgeObject {
+interface EdgeObject {
 	source: string
 	target: string
 }
@@ -41,27 +35,10 @@ export interface GraphElements {
 	}
 }
 
-export interface Model {
-	type: string
-	label: string
-	require_propensity_score: boolean
-	method_name: string
-	method_params?: any
-}
-
 export interface AdditionalProperties {
 	controls?: string[]
 	causal_graph?: GraphElements
 	estimator_specs?: any
 	model_specs?: AlternativeModelsReq[]
 	refuter_specs?: any
-}
-
-export interface Graph {
-	graph?: GraphElements
-	additional_properties?: AdditionalProperties
-}
-
-export interface SpecCount {
-	spec_count: number
 }

@@ -93,7 +93,7 @@ export function useDuplicateColumn(
 	)
 }
 
-export function useRemoveColumn(tableId: string) {
+export function useRemoveColumn(tableId: string): (columnName: string) => void {
 	const projectFiles = useProjectFiles()
 	const saveFile = useSaveFile(projectFiles, tableId)
 	const originalTables = useSelectOriginalTable(tableId)
@@ -174,11 +174,11 @@ export function useSetDeriveTable(
 
 const TABLE_SAMPLE = 100
 
-export function useDefaultTableSample() {
+export function useDefaultTableSample(): number {
 	return TABLE_SAMPLE
 }
 
-export function useRestoreColumn(selectedFileId: string): (value) => void {
+export function useRestoreColumn(selectedFileId: string): (value: any) => void {
 	const tableColumns = useTableColumns(selectedFileId)
 	const setTableColumns = useSetTableColumns(selectedFileId)
 

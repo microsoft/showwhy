@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { DefaultButton, Icon, Spinner } from '@fluentui/react'
-import { FC, memo, useCallback } from 'react'
+import { FC, memo } from 'react'
 import type { DropzoneInputProps, DropzoneRootProps } from 'react-dropzone'
 import styled from 'styled-components'
 import { DropFilesCount } from '~interfaces'

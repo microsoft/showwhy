@@ -51,7 +51,7 @@ export const useEstimatorHook = (): GenericObject => {
 		): void => {
 			toggleConfidenceInterval()
 		},
-		[toggleConfidenceInterval, setConfidenceInterval],
+		[toggleConfidenceInterval],
 	)
 
 	const onEstimatorsCheckboxChange = useCallback(
@@ -284,7 +284,6 @@ const useEstimatorCardList = (
 		defaultEstimator,
 		estimators,
 		selectedEstimatorGroups,
-		selectedEstimatorGroupKey,
 		onDefaultChange,
 		onEstimatorTypeChange,
 		onEstimatorsCheckboxChange,

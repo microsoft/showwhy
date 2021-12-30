@@ -4,7 +4,7 @@
  */
 
 import { NodeResponseStatus } from '~enums'
-import { CheckStatus } from '~interfaces'
+import { EstimateEffectStatusResponse } from '~interfaces'
 
 export function replaceItemAtIndex<T>(
 	arr: T[],
@@ -40,7 +40,7 @@ export function addOrRemoveArrayElement(
 }
 
 export const findRunError = (
-	response: Partial<CheckStatus>,
+	response: Partial<EstimateEffectStatusResponse>,
 ): string | undefined => {
 	if (response.runtimeStatus?.toLowerCase() === NodeResponseStatus.Failed) {
 		const error =
@@ -94,16 +94,6 @@ export const returnElapsedTime = (startDate: Date, endDate: Date): string => {
 	return `${minutes}min ${seconds}s`
 }
 
-export const returnPercentage = (completed: number, total: number): number => {
-	return Math.min(+((100 * completed) / total).toFixed(2), 100)
-}
-
-export const isOrchestratorProcessing = (nodeStatus: string): boolean => {
-	const status = nodeStatus.toLowerCase()
-	return (
-		status === NodeResponseStatus.Processing ||
-		status === NodeResponseStatus.InProgress ||
-		status === NodeResponseStatus.Pending ||
-		status === NodeResponseStatus.Running
-	)
+export const returnPercentage = (completed = 0, total = 0): number => {
+	return Math.min(+((100 * completed) / total || 0).toFixed(2), 100)
 }

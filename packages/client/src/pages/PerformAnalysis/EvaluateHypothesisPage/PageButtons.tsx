@@ -6,7 +6,6 @@ import { DefaultButton } from '@fluentui/react'
 import React, { memo } from 'react'
 import styled from 'styled-components'
 import { ErrorMessage } from '~components/ErrorMessage'
-import { RefutationTypes } from '~enums'
 import { RunHistory, SignificanceTest } from '~interfaces'
 import { ContainerFlexColumn, ContainerFlexRow } from '~styles'
 

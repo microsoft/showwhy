@@ -7,7 +7,10 @@ import { useCallback } from 'react'
 import { FileRejection } from 'react-dropzone'
 import { GenericFn } from '~types'
 
-export const useOnDropRejected = (onError?, cb?: GenericFn) => {
+export const useOnDropRejected = (
+	onError?: (text: string) => void,
+	cb?: GenericFn,
+): ((files: FileRejection[]) => void) => {
 	return useCallback(
 		(files: FileRejection[]) => {
 			const errors = files.flatMap(x => x.errors)

@@ -6,7 +6,7 @@
 import { renderHook } from '@testing-library/react-hooks'
 import { RecoilRoot } from 'recoil'
 import { v4 } from 'uuid'
-import { CausalModelLevel, DefinitionType } from '../../common/enums'
+import { DefinitionType } from '../../common/enums'
 import { useCausalEffectsTestable as useCausalEffects } from '../causalEffects'
 
 const question = {

@@ -2,15 +2,26 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+
 import * as zip from '@zip.js/zip.js'
 import { FileType } from '~enums'
-import { ZipData } from '~interfaces'
+import { ProjectFile, ZipData } from '~interfaces'
+
 import { GenericObject } from '~types'
 
 export function createTextFile(name: string, content: string): File {
 	const type = { type: `text/${name.split('.')[1]}` }
 	const blob = new Blob([content], type)
 	return new File([blob], name, type)
+}
+
+export function createFormData(files: ProjectFile[]): FormData {
+	const formData = new FormData()
+	files.forEach((f, i) => {
+		const file = createTextFile(f.name, f.content)
+		formData.append(`file${i}`, file)
+	})
+	return formData
 }
 
 export function extension(filename = ''): string {

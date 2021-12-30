@@ -6,3 +6,6 @@
 export * from './functions'
 export * from './arquero'
 export * from './files'
+export * from './estimate'
+export * from './confidenceInterval'
+export * from './sessionStorage'

@@ -2,7 +2,6 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import type { Location } from 'history'
 import { useMemo } from 'react'
 import { useLocation } from 'react-router-dom'
 import { PageType } from '~enums'

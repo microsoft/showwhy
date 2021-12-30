@@ -95,7 +95,7 @@ export const AnalyticDecisionsDotPlot: React.FC<AnalyticDecisionsDotPlotProps> =
 
 			const overlay = parseJsonPathSpec(rawSpec, pathspec)
 			return mergeSpec(rawSpec, overlay)
-		}, [theme, data, primarySpecificationConfig, shap])
+		}, [theme, data, primarySpecificationConfig, shap, shapColor])
 
 		const signals = useMemo(
 			() => ({

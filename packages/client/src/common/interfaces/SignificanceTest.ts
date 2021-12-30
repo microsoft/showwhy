@@ -4,6 +4,7 @@
  */
 
 import { NodeResponseStatus, Significance } from '~enums'
+import { NodeResponse } from '~interfaces'
 
 interface TestResults {
 	p_value: string
@@ -12,14 +13,13 @@ interface TestResults {
 
 export interface SignificanceTest {
 	runId: string
-	statusUrl?: string
-	sessionId: string
 	status?: NodeResponseStatus
 	total_simulations?: number
 	simulation_completed?: number
 	test_results?: TestResults
 	startTime?: Date
 	percentage?: number
+	nodeResponse?: NodeResponse
 }
 export interface SignificanceTestResponse {
 	runtimeStatus: NodeResponseStatus
