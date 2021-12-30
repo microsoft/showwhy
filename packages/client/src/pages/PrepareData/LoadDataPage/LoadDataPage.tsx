@@ -2,8 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { DefaultButton, Toggle } from '@fluentui/react'
-import { MessageBarType } from '@fluentui/react'
+import { DefaultButton, Toggle, MessageBarType } from '@fluentui/react'
 import React, { memo } from 'react'
 import styled from 'styled-components'
 import { SupportedFileTypes } from './SupportedFileTypes'

@@ -3,6 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import { useCallback } from 'react'
 import {
 	atom,
 	Resetter,
@@ -11,7 +12,12 @@ import {
 	useResetRecoilState,
 	useSetRecoilState,
 } from 'recoil'
-import { NodeResponse, RunHistory } from '~interfaces'
+import {
+	NodeResponse,
+	PartialResults,
+	RunHistory,
+	RunStatus,
+} from '~interfaces'
 
 export const runHistoryState = atom<RunHistory[]>({
 	key: 'run-history-store',

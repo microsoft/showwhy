@@ -17,7 +17,8 @@
 			"~types": ["src/common/types/index.ts"],
 			"~utils/*": ["src/common/utils/*"],
 			"~hooks": ["./src/hooks/index.ts"],
-			"~styles": ["./src/common/styles/index.ts"]
+			"~styles": ["./src/common/styles/index.ts"],
+			"~classes": ["./src/classes/index.ts"]
 		},
 		"lib": ["ESNext", "DOM", "DOM.Iterable", "ES2020.BigInt"],
 		"outDir": "lib",

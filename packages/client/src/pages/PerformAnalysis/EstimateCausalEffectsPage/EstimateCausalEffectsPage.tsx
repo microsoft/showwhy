@@ -8,9 +8,9 @@ import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { RunHistoryList } from './RunHistoryList'
 import { SpecificationsList } from './SpecificationsList'
+import { useBusinessLogic } from './hooks'
 import { Pages } from '~enums'
-import { useRunEstimate as useBusinessLogic } from '~hooks'
-import { ContainerFlexRow, ContainerTextCenter } from '~styles'
+import { ContainerFlexRow, ContainerTextCenter, Container } from '~styles'
 
 export const EstimateCausalEffects: React.FC = memo(
 	function EstimateCausalEffects() {
@@ -21,14 +21,14 @@ export const EstimateCausalEffects: React.FC = memo(
 			estimators,
 			definitions,
 			runHistory,
+			errors,
 			cancelRun,
-			canceled,
-			sendData,
+			runEstimate,
 			setRunAsDefault,
 			loadingSpecCount,
-			errors,
 			hasConfidenceInterval,
 			refutationOptions,
+			isCanceled,
 		} = useBusinessLogic()
 
 		return (
@@ -42,7 +42,7 @@ export const EstimateCausalEffects: React.FC = memo(
 				<ContainerFlexRow justifyContent="center">
 					<Button
 						disabled={isProcessing || !totalEstimatorsCount || !specCount}
-						onClick={sendData}
+						onClick={runEstimate}
 					>
 						{isProcessing ? 'Loading...' : 'Run now'}
 					</Button>
@@ -62,16 +62,14 @@ export const EstimateCausalEffects: React.FC = memo(
 					specCount={specCount}
 					setRunAsDefault={setRunAsDefault}
 					cancelRun={cancelRun}
-					canceled={canceled}
 					runHistory={runHistory}
 					errors={errors}
+					isCanceled={isCanceled}
 				/>
 			</Container>
 		)
 	},
 )
-
-const Container = styled.article``
 
 const Button = styled(PrimaryButton)`
 	margin: 8px;
@@ -83,6 +81,6 @@ const SpecificationLink = styled(Link)<{ disabled: boolean }>`
 	text-decoration: ${({ disabled }) => (disabled ? 'none' : 'underline')};
 	color: ${({ theme, disabled }) =>
 		disabled
-			? theme.application().lowContrast()
-			: theme.application().accent()};
+			? theme.application().lowContrast().hex()
+			: theme.application().accent().hex()};
 `

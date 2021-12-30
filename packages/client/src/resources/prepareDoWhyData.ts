@@ -3,24 +3,10 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { v4 as uuidv4 } from 'uuid'
 import { buildNodes } from './builders'
-import { getNodeProperties } from './utils'
 import { NodeTypes } from '~enums'
-import {
-	AdditionalProperties,
-	Data,
-	Edge,
-	FilterObject,
-	Graph,
-	ProjectFile,
-	UploadFileResponse,
-	VariableDefinition,
-	NodeRequest,
-	NodeResponse,
-} from '~interfaces'
-import { executeNode, uploadFile } from '~resources'
-import { createTextFile } from '~utils/files'
+import { Data, Edge, NodeRequest, NodeResponse } from '~interfaces'
+import { executeNode } from '~resources'
 
 const dataObject = (value: string): Data => {
 	return {
@@ -37,51 +23,6 @@ const edgeObject = (value: string, generalExposure: string): Edge => {
 			source: value,
 			target: generalExposure,
 		},
-	}
-}
-
-const convertFilter = (filter: FilterObject) => {
-	if (filter.filter) {
-		switch (filter.filter) {
-			case 'in range':
-				return {
-					[filter.filter]: [
-						{ var: filter.column },
-						filter.lower,
-						filter.upper,
-						filter.inclusive ? 'both' : 'neither',
-					],
-				}
-			default:
-				return { [filter.filter]: [{ var: filter.column }, filter.value] }
-		}
-	}
-	return { no_op: [] }
-}
-
-export const filterObjects = (
-	fileName: string,
-	variableDefinitions: VariableDefinition[],
-): { filters: any[]; references: any } => {
-	const filterNodes: any[] = []
-	const additionalProperties = {}
-
-	for (const definition of variableDefinitions) {
-		const refName = uuidv4()
-		filterNodes.push({
-			dataframe: fileName,
-			result: definition.name,
-			ref: refName,
-		})
-		additionalProperties[refName] = {
-			and: definition.filters.map(filter => {
-				return convertFilter(filter)
-			}),
-		}
-	}
-	return {
-		filters: filterNodes,
-		references: additionalProperties,
 	}
 }
 
@@ -149,47 +90,6 @@ export const prepareData = (
 	return executeNode(nodeReq)
 }
 
-export const sendFileUpload = async (
-	files: ProjectFile[],
-): Promise<UploadFileResponse> => {
-	const formData = new FormData()
-	files.forEach((f, i) => {
-		const file = createTextFile(f.name, f.content)
-		formData.append(`file${i}`, file)
-	})
-	return uploadFile(formData)
-}
-
-const buildGraph = (filePath: string, dataframeName: string) => {
-	return {
-		elements: {
-			nodes: [
-				{
-					data: {
-						...getNodeProperties(NodeTypes.LoadDataset),
-						url: filePath,
-						dataframe_name: dataframeName,
-					},
-				},
-				{
-					data: {
-						...getNodeProperties(NodeTypes.EstimateEffects),
-						ref: 'additional_properties',
-					},
-				},
-			],
-			edges: [
-				{
-					data: {
-						source: 'Load Dataset',
-						target: 'Estimate Effects',
-					},
-				},
-			],
-		},
-	}
-}
-
 export const buildSignificanceTestsNode = (taskIds: string[]): NodeRequest => {
 	const nodeReq = buildNodes([
 		{
@@ -210,17 +110,4 @@ export const buildLoadNode = (url: string, fileName: string): NodeRequest => {
 		},
 	])
 	return nodeReq
-}
-
-export const getGraph = (
-	filePath: string,
-	fileName: string,
-	additionalProperties: AdditionalProperties,
-): Graph => {
-	const [dataframeName] = fileName.split('.')
-	const graph = {
-		graph: buildGraph(filePath, dataframeName),
-		additional_properties: additionalProperties,
-	}
-	return graph
 }

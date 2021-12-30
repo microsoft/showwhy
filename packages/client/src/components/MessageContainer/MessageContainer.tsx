@@ -15,21 +15,18 @@ interface MessageContainerProps {
 
 export const MessageContainer: React.FC<MessageContainerProps> = memo(
 	function MessageContainer({ children, type, onDismiss, styles = {} }) {
-		const iconProps = useCallback(
-			(type: MessageBarType) => {
-				switch (type) {
-					case MessageBarType.error:
-						return { iconName: 'Error' }
-					case MessageBarType.info:
-						return { iconName: 'Info' }
-					case MessageBarType.success:
-						return { iconName: 'Completed' }
-					case MessageBarType.warning:
-						return { iconName: 'Warning' }
-				}
-			},
-			[type],
-		)
+		const iconProps = useCallback((type: MessageBarType) => {
+			switch (type) {
+				case MessageBarType.error:
+					return { iconName: 'Error' }
+				case MessageBarType.info:
+					return { iconName: 'Info' }
+				case MessageBarType.success:
+					return { iconName: 'Completed' }
+				case MessageBarType.warning:
+					return { iconName: 'Warning' }
+			}
+		}, [])
 		return (
 			<Message
 				messageBarType={type}

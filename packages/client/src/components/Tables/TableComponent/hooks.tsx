@@ -21,7 +21,11 @@ export const useTableComponent = (
 	onSave,
 	onEdit,
 	onCancel,
-) => {
+): {
+	items: any
+	headersData: any[]
+	customColumnsWidth: { fieldName: string; width: string }[]
+} => {
 	const [editedDefinition, setEditedDefinition] = useState<
 		ElementDefinition | undefined
 	>()

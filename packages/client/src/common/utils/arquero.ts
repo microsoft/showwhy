@@ -27,13 +27,18 @@ export function createDefaultTable(
 	)
 }
 
-export async function loadTable(table: DataTableDefinition, tables?: File[]) {
+export async function loadTable(
+	table: DataTableDefinition,
+	tables?: File[],
+): Promise<ColumnTable> {
 	const file = tables?.find(t => t.name === table.name) as File
 	const text = await getTextFromFile(file)
 	return createDefaultTable(text, guessDelimiter(table.name))
 }
 
-export async function fetchTable(table: DataTableDefinition) {
+export async function fetchTable(
+	table: DataTableDefinition,
+): Promise<ColumnTable> {
 	return fetch(table.url)
 		.then(res => res.text())
 		.then(text => {
@@ -45,7 +50,7 @@ export async function fetchTable(table: DataTableDefinition) {
 export async function fetchTables(
 	tables: DataTableDefinition[],
 	tableFiles: File[] = [],
-) {
+): Promise<(void | ColumnTable)[]> {
 	return Promise.all(
 		tables.map(table => {
 			if (isZipUrl(table.url)) {
@@ -66,7 +71,7 @@ export async function runPipeline(
 	tables: DataTableDefinition[],
 	steps: Step[],
 	tableFiles?: File[],
-) {
+): Promise<any> {
 	const store = new TableStore()
 	const fetched = await fetchTables(tables, tableFiles)
 	tables.forEach((table, index) => {

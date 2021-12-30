@@ -4,19 +4,16 @@
  */
 import { v4 } from 'uuid'
 import { localhostUrl } from './utils'
-import { NodeResponseStatus, StatusType } from '~enums'
+import { NodeResponseStatus, OrchestratorType } from '~enums'
 import {
-	UploadFileResponse,
+	UploadFilesResponse,
 	NodeRequest,
 	NodeResponse,
-	StatusResponse,
-	CheckStatus,
 	TotalExecutionsResponse,
-	SignificanceTestResponse,
+	OrchestratorStatus,
 } from '~interfaces'
 import { getEnv } from '~resources/getEnv'
-
-type Status = CheckStatus | SignificanceTestResponse
+import { createAndReturnStorageItem, getStorageItem } from '~utils'
 
 const {
 	BASE_URL,
@@ -28,15 +25,7 @@ const {
 	EXECUTIONS_NUMBER_API_KEY,
 } = getEnv()
 
-export const getSessionId = (reset = false): string => {
-	reset && sessionStorage.removeItem('sessionId')
-	let sessionId = sessionStorage.getItem('sessionId')
-	if (!sessionId) {
-		sessionId = v4()
-		sessionStorage.setItem('sessionId', sessionId)
-	}
-	return sessionId
-}
+const SESSION_ID_KEY = 'sessionId'
 
 export const executeNode = async (data: NodeRequest): Promise<NodeResponse> => {
 	const url = `${BASE_URL}/api/orchestrators/ExecuteNodeOrchestrator?code=${ORCHESTRATORS_API_KEY}`
@@ -46,7 +35,7 @@ export const executeNode = async (data: NodeRequest): Promise<NodeResponse> => {
 			'Content-Type': 'application/json',
 		},
 		body: JSON.stringify({
-			session_id: getSessionId(),
+			session_id: getStorageItem(SESSION_ID_KEY),
 			...data,
 		}),
 	})
@@ -72,31 +61,17 @@ export const numberExecutions = async (
 	return fetchHandler(url, options).then(response => response?.json())
 }
 
-export const uploadFile = async (
+export const uploadFiles = async (
 	formData: FormData,
-): Promise<UploadFileResponse> => {
-	const url = `${BASE_URL}/api/UploadFile?session_id=${getSessionId(
-		true,
+): Promise<UploadFilesResponse> => {
+	const url = `${BASE_URL}/api/UploadFile?session_id=${createAndReturnStorageItem(
+		SESSION_ID_KEY,
+		v4(),
 	)}&code=${UPLOAD_FILES_API_KEY}`
 	return fetch(url, {
 		method: 'POST',
 		body: formData,
 	}).then(response => response?.json())
-}
-
-export const checkStatus = async (
-	statusUrl: string,
-): Promise<Partial<CheckStatus>> => {
-	return genericCheckStatus(statusUrl, StatusType.Estimate)
-}
-
-export const checkSignificanceStatus = async (
-	statusUrl: string,
-): Promise<Partial<SignificanceTestResponse>> => {
-	return genericCheckStatus(
-		statusUrl,
-		StatusType.Significance,
-	) as Partial<SignificanceTestResponse>
 }
 
 export const downloadFile = async (
@@ -145,41 +120,38 @@ const fetchHandler = async (url, options, retryCount = 0) => {
 	}
 }
 
-async function genericCheckStatus(
-	statusUrl: string,
-	type: StatusType,
-): Promise<Partial<Status>> {
-	let code
-	let path
+export const returnOrchestratorStatus = async (
+	url: string,
+): Promise<OrchestratorStatus> => {
+	return await fetch(localhostUrl(url))
+		.then(response => response?.json())
+		.catch(() => {
+			return { runtimeStatus: NodeResponseStatus.Failed }
+		})
+}
+
+export async function genericCheckStatus(
+	instanceId: string,
+	type: OrchestratorType,
+): Promise<Partial<OrchestratorStatus>> {
+	let code: string
+	let path: string
 
 	switch (type) {
-		case StatusType.Significance:
+		case OrchestratorType.ConfidenceInterval:
 			code = VITE_CHECK_SIGNIFICANCE_STATUS_API_KEY
 			path = 'checksignificanceteststatus'
 			break
-		case StatusType.Estimate:
+		case OrchestratorType.Estimator:
 		default:
 			code = CHECK_STATUS_API_KEY
 			path = 'checkinferencestatus'
 			break
 	}
 	try {
-		const status: StatusResponse = await (
-			await fetch(localhostUrl(statusUrl))
-		).json()
-
-		if (status.runtimeStatus === NodeResponseStatus.Failed) {
-			const error = `
-			Error@${status.name} - Status: ${status.runtimeStatus}
-			InstanceId: ${status.instanceId}
-			${!!status.output ? (status.output as string) : ''}
-		`
-			throw new Error(error)
-		}
-
-		const url = `${BASE_URL}/api/${path}?session=${getSessionId()}&code=${code}&instance=${
-			status.instanceId
-		}`
+		const statusUrl = `${BASE_URL}/api/${path}?session=${getStorageItem(
+			SESSION_ID_KEY,
+		)}&code=${code}&instance=${instanceId}`
 
 		const options = {
 			headers: {
@@ -188,13 +160,11 @@ async function genericCheckStatus(
 			maxRetries: 3,
 		}
 
-		const inferenceStatus: Status = await fetchHandler(url, options).then(
-			response => response?.json(),
-		)
-		return {
-			...status,
-			...inferenceStatus,
-		}
+		const inferenceStatus: OrchestratorStatus = await fetchHandler(
+			statusUrl,
+			options,
+		).then(response => response?.json())
+		return inferenceStatus
 	} catch (error) {
 		console.log({ error })
 		return { runtimeStatus: NodeResponseStatus.Failed }

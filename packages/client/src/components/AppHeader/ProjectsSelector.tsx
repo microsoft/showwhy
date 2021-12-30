@@ -41,7 +41,7 @@ export const ProjectsSelector: React.FC<ProjectsSelectorProps> = memo(
 				}
 			}
 			return { items }
-		}, [onClickProject, exampleProjects, loadProjectOption])
+		}, [onClickProject, handleClick, exampleProjects, loadProjectOption])
 
 		return (
 			<Container>

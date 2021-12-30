@@ -60,7 +60,7 @@ export function useSpecificationCurve(): GenericObject {
 
 	const isShapDisabled = useMemo((): boolean => {
 		if (!defaultRun) return false
-		return defaultRun?.status?.status != NodeResponseStatus.Completed
+		return defaultRun?.status?.status !== NodeResponseStatus.Completed
 	}, [defaultRun])
 
 	const isConfidenceIntervalDisabled = useMemo((): boolean => {
@@ -136,7 +136,7 @@ export function useSpecificationCurve(): GenericObject {
 			)
 		}
 		return '0/0'
-	}, [refutationKeys, failedRefutations])
+	}, [refutationKeys, failedRefutations, selectedSpecification])
 
 	const isSpecificationOn = useMemo(() => {
 		if (!selectedSpecification || !config.inactiveSpecifications) {

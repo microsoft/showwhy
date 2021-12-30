@@ -30,6 +30,8 @@ export const EvaluateHypothesisPage: React.FC = memo(
 			activeTaskIds,
 			significanceFailed,
 			runSignificance,
+			cancelRun,
+			isCanceled,
 			refutationType,
 		} = useBusinessLogic()
 
@@ -91,7 +93,10 @@ export const EvaluateHypothesisPage: React.FC = memo(
 						significanceFailed={significanceFailed}
 						runSignificance={runSignificance}
 					/>
+
 					<SignificanceTests
+						cancelRun={cancelRun}
+						isCanceled={isCanceled}
 						significanceTestsResult={significanceTestsResult}
 					/>
 				</Container>

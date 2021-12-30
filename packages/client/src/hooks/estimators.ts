@@ -6,7 +6,6 @@
 import { useMemo } from 'react'
 import { EstimatorsGroups, EstimatorsType } from '~enums'
 import { Estimator } from '~interfaces'
-import { useEstimators } from '~state'
 
 export const ESTIMATORS_LEARN_MORE_INFO = {
 	exposure:

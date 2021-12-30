@@ -6,7 +6,6 @@
 import {
 	addOrRemoveArrayElement,
 	addS,
-	isOrchestratorProcessing,
 	replaceItemAtIndex,
 	returnElapsedTime,
 	returnPercentage,
@@ -63,34 +62,6 @@ describe('Utils Functions', () => {
 		const total = 100
 		const expected = 10
 		const result = returnPercentage(completed, total)
-		expect(result).toEqual(expected)
-	})
-
-	it('isOrchestratorProcessing => Running', () => {
-		const status = 'Running'
-		const expected = true
-		const result = isOrchestratorProcessing(status)
-		expect(result).toEqual(expected)
-	})
-
-	it('isOrchestratorProcessing => Processing', () => {
-		const status = 'Processing'
-		const expected = true
-		const result = isOrchestratorProcessing(status)
-		expect(result).toEqual(expected)
-	})
-
-	it('isOrchestratorProcessing => InProgress', () => {
-		const status = 'In_progress'
-		const expected = true
-		const result = isOrchestratorProcessing(status)
-		expect(result).toEqual(expected)
-	})
-
-	it('isOrchestratorProcessing => Pending', () => {
-		const status = 'Pending'
-		const expected = true
-		const result = isOrchestratorProcessing(status)
 		expect(result).toEqual(expected)
 	})
 })

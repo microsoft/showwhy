@@ -7,7 +7,6 @@ import { RefutationTypes } from '~enums'
 import {
 	AdditionalProperties,
 	GraphElements,
-	EstimandIdentificationVariables,
 	DescribeElements,
 	AlternativeModels,
 	Estimator,
@@ -40,27 +39,6 @@ export interface NodeResponse {
 	sendEventPostUri: string
 	statusQueryGetUri: string
 	terminatePostUri: string
-}
-
-interface Output extends Partial<EstimandIdentificationVariables> {
-	result?: EstimandIdentificationVariables | { [key: string]: any }
-	output_file: string
-	notebook_file: string
-}
-
-export interface NodeOutput {
-	[key: string]: Output[]
-}
-
-export interface StatusResponse {
-	name: string
-	instanceId: string
-	runtimeStatus: string
-	input: string
-	customStatus: string
-	output?: NodeOutput | string
-	createdTime: string
-	lastUpdatedTime: string
 }
 
 export interface NodeRequest {
