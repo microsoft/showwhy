@@ -6,6 +6,9 @@
 export const getStorageItem = (key: string): string | null => {
 	return sessionStorage.getItem(key)
 }
+export const setStorageItem = (key: string, value: string): void => {
+	sessionStorage.setItem(key, value)
+}
 
 export const createAndReturnStorageItem = (
 	key: string,

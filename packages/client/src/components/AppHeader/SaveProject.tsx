@@ -16,7 +16,7 @@ export const SaveProject: React.FC = memo(function SaveProject() {
 
 	const onDownload = useCallback(
 		(type: FileType) => {
-			downloadResult(defaultRun?.sessionId || '', type)
+			downloadResult(type)
 		},
 		[defaultRun, downloadResult],
 	)
