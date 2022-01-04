@@ -16,7 +16,12 @@ import {
 	useRunHistory,
 	useSetRunHistory,
 } from '~state'
-import { disableAllRuns, isStatusProcessing } from '~utils'
+import {
+	disableAllRuns,
+	isStatusProcessing,
+	setStorageItem,
+	SESSION_ID_KEY,
+} from '~utils'
 
 export function useSetRunAsDefault(): (run: RunHistory) => void {
 	const setRunHistory = useSetRunHistory()
@@ -33,6 +38,7 @@ export function useSetRunAsDefault(): (run: RunHistory) => void {
 			runs.push(newRun)
 			setRunHistory(runs)
 			resetSpecificationConfig()
+			setStorageItem(SESSION_ID_KEY, newRun.sessionId as string)
 		},
 		[runHistory, setRunHistory, resetSpecificationConfig],
 	)

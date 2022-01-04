@@ -7,11 +7,15 @@ import { v4 } from 'uuid'
 import { NodeResponseStatus, RefutationTypes } from '~enums'
 import {
 	EstimateEffectStatusResponse,
-	NodeResponse,
 	RunHistory,
 	RunStatus,
 } from '~interfaces'
-import { findRunError, returnPercentage } from '~utils'
+import {
+	createAndReturnStorageItem,
+	findRunError,
+	returnPercentage,
+	SESSION_ID_KEY,
+} from '~utils'
 
 /**
  * It's the first to always run and to get the status depends only of itself
@@ -205,6 +209,7 @@ export function returnInitialRunHistory(
 				start: new Date(),
 			},
 		},
+		sessionId: createAndReturnStorageItem(SESSION_ID_KEY, v4()),
 		hasConfidenceInterval,
 		refutationType,
 	} as RunHistory

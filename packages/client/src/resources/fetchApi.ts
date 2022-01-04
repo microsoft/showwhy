@@ -2,7 +2,6 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { v4 } from 'uuid'
 import { localhostUrl } from './utils'
 import { NodeResponseStatus, OrchestratorType } from '~enums'
 import {
@@ -13,7 +12,7 @@ import {
 	OrchestratorStatus,
 } from '~interfaces'
 import { getEnv } from '~resources/getEnv'
-import { createAndReturnStorageItem, getStorageItem } from '~utils'
+import { getStorageItem, SESSION_ID_KEY } from '~utils'
 
 const {
 	BASE_URL,
@@ -24,8 +23,6 @@ const {
 	UPLOAD_FILES_API_KEY,
 	EXECUTIONS_NUMBER_API_KEY,
 } = getEnv()
-
-const SESSION_ID_KEY = 'sessionId'
 
 export const executeNode = async (data: NodeRequest): Promise<NodeResponse> => {
 	const url = `${BASE_URL}/api/orchestrators/ExecuteNodeOrchestrator?code=${ORCHESTRATORS_API_KEY}`
@@ -64,9 +61,8 @@ export const numberExecutions = async (
 export const uploadFiles = async (
 	formData: FormData,
 ): Promise<UploadFilesResponse> => {
-	const url = `${BASE_URL}/api/UploadFile?session_id=${createAndReturnStorageItem(
+	const url = `${BASE_URL}/api/UploadFile?session_id=${getStorageItem(
 		SESSION_ID_KEY,
-		v4(),
 	)}&code=${UPLOAD_FILES_API_KEY}`
 	return fetch(url, {
 		method: 'POST',
