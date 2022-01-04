@@ -71,11 +71,12 @@ export const uploadFiles = async (
 }
 
 export const downloadFile = async (
-	sessionId: string,
 	fileName: string,
 ): Promise<{ blob: Blob; url: string } | undefined> => {
 	const fileUrl: { signed_url: string } = await fetch(
-		`${BASE_URL}/api/getdownloadurl?session_id=${sessionId}&code=${DOWNLOAD_FILES_API_KEY}&file_name=${fileName}`,
+		`${BASE_URL}/api/getdownloadurl?session_id=${getStorageItem(
+			SESSION_ID_KEY,
+		)}&code=${DOWNLOAD_FILES_API_KEY}&file_name=${fileName}`,
 	).then(response => response.json())
 	try {
 		const blob = await fetch(fileUrl.signed_url).then(response =>
