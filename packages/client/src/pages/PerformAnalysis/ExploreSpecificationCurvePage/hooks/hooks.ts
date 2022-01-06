@@ -32,7 +32,7 @@ export function useLoadSpecificationData(): Specification[] {
 				const f = async () => {
 					try {
 						const result = await csv(defaultDatasetResult?.url, row2spec)
-						setData(result)
+						setData(result.map((x, index) => ({ ...x, id: index + 1 })))
 					} catch (err) {
 						setData([])
 					}
