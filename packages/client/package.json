@@ -21,7 +21,7 @@
 		"test:cov": "jest --coverage"
 	},
 	"dependencies": {
-		"@data-wrangling-components/core": "0.0.2",
+		"@data-wrangling-components/core": "0.3.0",
 		"@essex-js-toolkit/boolean-expression-component": "^0.1.1",
 		"@essex-js-toolkit/hooks": "^3.0.2",
 		"@essex-js-toolkit/thematic-lineup": "^1.1.7",
@@ -94,6 +94,7 @@
 		"babel-jest": "^27.4.6",
 		"babel-plugin-transform-import-meta": "^2.1.0",
 		"jest": "^27.4.7",
+		"regenerator-runtime": "^0.13.9",
 		"typescript": "^4.5.4",
 		"vite": "^2.7.10"
 	}
