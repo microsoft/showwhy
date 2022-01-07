@@ -1,0 +1,78 @@
+version: '3.7'
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    cpus: 1
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: showwhy
+      MONGO_INITDB_ROOT_PASSWORD: showwhy
+    ports:
+      - '27017:27017'
+  azurite:
+    container_name: azurite
+    cpus: 1
+    image: mcr.microsoft.com/azure-storage/azurite
+    mem_limit: 2G
+    restart: always
+    ports:
+      - '10000:10000'
+      - '10001:10001'
+      - '10002:10002'
+    expose:
+      - '10000'
+      - '10001'
+      - '10002'
+    volumes:
+      - vol_azurite:/data
+  functions:
+    container_name: showwhyfunctions
+    cpus: 4
+    build: ../packages/functions/src
+    ports:
+      - '7071:80'
+    expose:
+      - '80'
+    environment:
+      # Well-know azurite connection string (https://docs.microsoft.com/en-us/azure/storage/common/storage-use-azurite?tabs=visual-studio#http-connection-strings)
+      - AzureWebJobsStorage=AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;DefaultEndpointsProtocol=http;BlobEndpoint=http://azurite:10000/devstoreaccount1;QueueEndpoint=http://azurite:10001/devstoreaccount1;TableEndpoint=http://azurite:10002/devstoreaccount1;
+      - LOCAL_EXECUTION=True
+      - WEBSITE_HOSTNAME=localhost:7071
+      - MONGO_CONNECTION=mongodb://showwhy:showwhy@mongodb/
+      - ESTIMATE_EFFECT_BATCH_SIZE=20
+      - CONFIDENCE_INTERVAL_BATCH_SIZE=20
+      - REFUTER_BATCH_SIZE=10
+      - SIGNIFICANCE_BATCH_SIZE=10
+    volumes:
+      - vol_functions:/home
+    depends_on:
+      - mongodb
+      - azurite
+  reverseproxy:
+    container_name: reverseproxy
+    cpus: 1
+    image: nginx:alpine
+    mem_limit: 1G
+    restart: always
+    links:
+      - functions
+      - azurite
+    ports:
+      - '81:81'
+    volumes:
+      - vol_reverseproxy:/etc/nginx/conf.d
+      - ../nginx.conf:/etc/nginx/nginx.conf
+  client:
+    cpus: 1
+    build:
+      context: .
+      dockerfile: ../client.dockerfile
+    ports:
+      - 3000:80
+
+volumes:
+  vol_cosmos: null
+  vol_azurite: null
+  vol_functions: null
+  vol_reverseproxy: null
