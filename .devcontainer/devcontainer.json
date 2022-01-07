@@ -25,6 +25,5 @@
 	"features": {
 		"git": "latest",
 		"docker-in-docker": "latest"
-	},
-	"dockerComposeFile": ["./docker-compose.yml"]
+	}
 }
