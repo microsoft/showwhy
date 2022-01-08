@@ -9,7 +9,6 @@
 		"esbenp.prettier-vscode"
 	],
 	"workspaceFolder": "/ws",
-	"service": "workspace",
 
 	// Set *default* container specific settings.json values on container create.
 	//"settings": {},
@@ -26,5 +25,6 @@
 		"git": "latest",
 		"docker-in-docker": "latest"
 	},
-	"dockerComposeFile": ["./docker-compose.yml"]
+	"dockerComposeFile": ["./docker-compose.yml"],
+	"service": "development"
 }
