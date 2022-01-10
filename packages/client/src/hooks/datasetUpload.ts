@@ -3,9 +3,14 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import { useDropzone } from '@data-wrangling-components/react'
+import {
+	BaseFile,
+	FileCollection,
+	FileType,
+} from '@data-wrangling-components/utilities'
 import ColumnTable from 'arquero/dist/types/table/column-table'
 import { useState, useCallback, useEffect } from 'react'
-import { useDropzone } from 'react-dropzone'
 import { useOnDropRejected } from './dropzone'
 import { useSupportedFileTypes } from './supportedFileTypes'
 import { DropFilesCount, ProjectFile } from '~interfaces'
@@ -15,11 +20,12 @@ import { createDefaultTable } from '~utils'
 export function useDrop(
 	onFileLoad: (file: ProjectFile, table: ColumnTable) => void,
 	onLoadStart?: () => void,
-): (files: File[], delimiter?: string) => void {
+): (files: BaseFile[], delimiter?: string) => void {
 	return useCallback(
-		(files: File[], delimiter?: string) => {
+		(files: BaseFile[], delimiter?: string) => {
+			console.log('useDrop', files, delimiter)
 			onLoadStart && onLoadStart()
-			files.forEach((file: File) => {
+			files.forEach((file: BaseFile) => {
 				const name = file.name
 				const reader = new FileReader()
 				reader.onabort = () => console.log('file reading was aborted')
@@ -73,17 +79,17 @@ export const useHandleDropzone = (
 	}, [setLoading, filesCount])
 
 	const onLoadStart = useOnLoadStart(setLoading, onError)
-
 	const onDropFilesAccepted = useOnDropDatasetFilesAccepted(setFilesCount)
-
 	const onDropFilesRejected = useOnDropRejected(onError, resetCount)
 	const handleDrop = useDrop(onFileLoadComplete, onLoadStart)
 
 	const { getRootProps, getInputProps, isDragActive } = useDropzone({
-		onDrop: files => handleDrop(files),
-		onDropAccepted: onDropFilesAccepted,
+		onDrop: (fileCollection: FileCollection) =>
+			handleDrop(fileCollection.list(FileType.table)),
+		onDropAccepted: (fileCollection: FileCollection) =>
+			onDropFilesAccepted(fileCollection.list(FileType.table)),
 		onDropRejected: onDropFilesRejected,
-		accept: fileTypesAllowed.toString(),
+		acceptedFileTypes: fileTypesAllowed,
 	})
 
 	return {
@@ -118,13 +124,15 @@ export const useOnFileLoadCompleted = (setFilesCount, setLoading, onLoad) => {
 	)
 }
 
-export const useOnDropDatasetFilesAccepted = (setFilesCount: GenericFn) => {
+export const useOnDropDatasetFilesAccepted = (setFilesCount?: GenericFn) => {
 	return useCallback(
-		(files: File[]) => {
-			setFilesCount({
-				total: files.length,
-				completed: 0,
-			})
+		(files: BaseFile[]) => {
+			console.log('useOnDropDatasetFilesAccepted', files)
+			setFilesCount &&
+				setFilesCount({
+					total: files.length,
+					completed: 0,
+				})
 		},
 		[setFilesCount],
 	)

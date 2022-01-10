@@ -3,15 +3,13 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { Entry as ZipEntry } from '@zip.js/zip.js'
-
-export type Entry = ZipEntry
+import { BaseFile } from '@data-wrangling-components/utilities'
 
 export interface ZipData {
-	json?: Entry
-	tables?: Entry[]
+	json?: BaseFile
+	tables?: BaseFile[]
 	results?: {
-		entry: Entry
+		entry: BaseFile
 		dataUri: string
 	}
 	name?: string
