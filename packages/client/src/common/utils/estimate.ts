@@ -4,18 +4,15 @@
  */
 
 import { v4 } from 'uuid'
+import { SESSION_ID_KEY } from './consts'
+import { findRunError, returnPercentage } from './functions'
+import { createAndReturnStorageItem } from './sessionStorage'
 import { NodeResponseStatus, RefutationTypes } from '~enums'
 import {
 	EstimateEffectStatusResponse,
 	RunHistory,
 	RunStatus,
 } from '~interfaces'
-import {
-	createAndReturnStorageItem,
-	findRunError,
-	returnPercentage,
-	SESSION_ID_KEY,
-} from '~utils'
 
 /**
  * It's the first to always run and to get the status depends only of itself

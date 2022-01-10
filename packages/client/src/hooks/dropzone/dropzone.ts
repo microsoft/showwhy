@@ -3,8 +3,12 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import {
+	FileCollection,
+	FileType,
+	isZipFile,
+} from '@data-wrangling-components/utilities'
 import { useMemo, useCallback, useState } from 'react'
-import { useDropzone } from 'react-dropzone'
 import {
 	useAcceptedFileTypes,
 	useDrop,
@@ -17,30 +21,38 @@ import {
 	useSupportedFileTypes,
 } from '~hooks'
 import { DropFilesCount } from '~interfaces'
-import { isZipFile } from '~utils'
+import { GenericFn } from '~types'
 
-const useOnDrop = (onFileLoadCompleted, onLoadStart?) => {
+export const useHandleOnDrop = (
+	onFileLoadCompleted: GenericFn,
+	onLoadStart?: GenericFn,
+) => {
 	const onDrop = useDrop(onFileLoadCompleted, onLoadStart)
 	return useCallback(
-		(files: File[]) => {
-			if (!files.length) return
-			if (!isZipFile(files[0].name)) {
-				onDrop(files)
+		(fileCollection: FileCollection) => {
+			if (!fileCollection.list().length) return
+			const isZip = isZipFile(fileCollection.name)
+			const hasJson = !!fileCollection.list(FileType.json).length
+			if (!isZip && !hasJson) {
+				onDrop(fileCollection.list(FileType.table))
 			}
 		},
-		[onDrop, onLoadStart, onFileLoadCompleted],
+		[onDrop],
 	)
 }
 
-const useOnDropAccepted = (setFileCount, onError?) => {
+export const useOnDropAccepted = (
+	onError?: GenericFn,
+	setFileCount?: GenericFn,
+) => {
 	const onDropZipFilesAccepted = useOnDropZipFilesAccepted(onError)
 	const onDropDatasetFilesAccepted = useOnDropDatasetFilesAccepted(setFileCount)
 	return useCallback(
-		(files: File[]) => {
-			if (files.length === 1 && isZipFile(files[0].name)) {
-				onDropZipFilesAccepted(files)
+		(fileCollection: FileCollection) => {
+			if (isZipFile(fileCollection.name)) {
+				onDropZipFilesAccepted(fileCollection)
 			} else {
-				onDropDatasetFilesAccepted(files)
+				onDropDatasetFilesAccepted(fileCollection.list(FileType.table))
 			}
 		},
 		[onDropZipFilesAccepted, onDropDatasetFilesAccepted, setFileCount, onError],
@@ -56,7 +68,7 @@ const useAccepted = (): string[] => {
 	)
 }
 
-export const useGlobalDropzone = (onError?, onLoad?, dropzoneProps = {}) => {
+export const useGlobalDropzone = (onError?: GenericFn, onLoad?: GenericFn) => {
 	const [loading, setLoading] = useState<boolean>(false)
 	const [fileCount, setFileCount] = useState<DropFilesCount>({
 		total: 0,
@@ -69,24 +81,17 @@ export const useGlobalDropzone = (onError?, onLoad?, dropzoneProps = {}) => {
 		setLoading,
 		onLoad,
 	)
-	const accepted = useAccepted()
-	const onDrop = useOnDrop(onFileLoadCompleted, onLoadStart)
-	const onDropAccepted = useOnDropAccepted(setFileCount, onError)
+	const acceptedFileTypes = useAccepted()
+	const onDrop = useHandleOnDrop(onFileLoadCompleted, onLoadStart)
+	const onDropAccepted = useOnDropAccepted(onError, setFileCount)
 	const onDropRejected = useOnDropRejected(onError, resetCount)
-	const { getRootProps, getInputProps, isDragActive } = useDropzone({
+
+	return {
 		onDrop,
 		onDropAccepted,
 		onDropRejected,
-		accept: accepted.toString(),
-		...dropzoneProps,
-	})
-
-	return {
-		getRootProps,
-		getInputProps,
-		isDragActive,
 		fileCount,
 		loading,
-		acceptedFileTypes: accepted,
+		acceptedFileTypes,
 	}
 }

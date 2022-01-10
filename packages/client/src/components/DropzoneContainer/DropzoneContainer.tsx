@@ -2,95 +2,85 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { DefaultButton, Icon, Spinner } from '@fluentui/react'
-import { FC, memo } from 'react'
-import type { DropzoneInputProps, DropzoneRootProps } from 'react-dropzone'
+import { Dropzone, DropzoneOptions } from '@data-wrangling-components/react'
+import { Icon, Spinner } from '@fluentui/react'
+import { FC, memo, useMemo } from 'react'
 import styled from 'styled-components'
 import { DropFilesCount } from '~interfaces'
+import { GenericFn } from '~types'
 
 export interface DropzoneContainerProps {
 	loading: boolean
-	isDragActive: boolean
-	isButton: boolean
 	filesCount: DropFilesCount
 	text?: string
-	getRootProps: <T extends DropzoneRootProps>(props?: T | undefined) => T
-	getInputProps: <T extends DropzoneInputProps>(props?: T | undefined) => T
+	hasSelectedFiles?: boolean
+	onDrop?: GenericFn
+	onDropAccepted?: GenericFn
+	onDropRejected?: GenericFn
+	acceptedFileTypes: string[]
+	dropzoneOptions?: DropzoneOptions
 }
 
 export const DropzoneContainer: FC<DropzoneContainerProps> = memo(
 	function DropzoneContainer({
-		children,
 		loading,
 		filesCount,
-		isDragActive,
-		isButton,
+		hasSelectedFiles,
 		text,
-		getRootProps,
-		getInputProps,
+		onDrop,
+		onDropAccepted,
+		onDropRejected,
+		acceptedFileTypes,
+		dropzoneOptions = {},
 	}) {
-		const containerProps = { ...getRootProps(), isDragging: isDragActive }
-
 		const contentText = text
 			? text
-			: isButton
+			: hasSelectedFiles
 			? 'Upload files'
 			: 'Drop some files here, or click to select files'
+
+		const styles = useMemo(
+			() => ({
+				container: {
+					margin: '0',
+					padding: '0 0.5rem',
+				},
+			}),
+			[],
+		)
+
 		return (
-			<DragFilesArea isButton={isButton} disabled={loading} {...containerProps}>
-				<input {...getInputProps()} />
+			<Dropzone
+				placeholder={text}
+				onDrop={onDrop}
+				onDropAccepted={onDropAccepted}
+				onDropRejected={onDropRejected}
+				acceptedFileTypes={acceptedFileTypes}
+				styles={styles}
+				dropzoneOptions={dropzoneOptions}
+			>
 				{loading ? (
 					<>
 						<Spinner />
-						<LoadingText>
+						<Text>
 							Loading ({filesCount.completed}/{filesCount.total})
-						</LoadingText>
+						</Text>
 					</>
 				) : (
-					<>
-						<Icon iconName="Upload" />
+					<Text>
+						<FluentIcon iconName="Upload" />
 						{contentText}
-					</>
+					</Text>
 				)}
-				<Container>
-					<ChildContainer>{children}</ChildContainer>
-				</Container>
-			</DragFilesArea>
+			</Dropzone>
 		)
 	},
 )
 
-const LoadingText = styled.span`
+const Text = styled.span`
 	margin-left: 4px;
+	font-size: 13px;
 `
-const DragFilesArea = styled(DefaultButton)<{
-	isDragging: boolean
-	isButton: boolean
-}>`
-	display: flex;
-	white-space: nowrap;
-	margin: 8px;
-	color: ${({ theme, isDragging }) =>
-		isDragging
-			? theme.application().accent().hex()
-			: theme.application().foreground().hex()};
-	opacity: ${({ isDragging }) => (isDragging ? 0.5 : 1)};
-	border: 1px
-		${({ theme, isButton }) =>
-			!isButton
-				? 'dashed ' + theme.application().accent().hex()
-				: 'solid ' + theme.application().foreground().hex()};
-`
-
-const Container = styled.div`
-	position: relative;
-	height: 100%;
-`
-const ChildContainer = styled.div`
-	text-align: center;
-	display: flex;
-	justify-content: space-around;
-	font-weight: bold;
-	margin: auto;
-	height: 100%;
+const FluentIcon = styled(Icon)`
+	color: ${({ theme }) => theme.application().accent().hex()};
 `
