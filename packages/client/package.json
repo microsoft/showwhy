@@ -22,7 +22,7 @@
 	},
 	"dependencies": {
 		"@data-wrangling-components/core": "0.4.3",
-		"@data-wrangling-components/react": "0.7.1",
+		"@data-wrangling-components/react": "0.7.3",
 		"@data-wrangling-components/utilities": "0.2.1",
 		"@essex-js-toolkit/boolean-expression-component": "^0.1.1",
 		"@essex-js-toolkit/hooks": "^3.0.2",
