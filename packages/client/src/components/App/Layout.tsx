@@ -30,7 +30,6 @@ export const Layout: React.FC = memo(function Layout({ children }) {
 		onClickProject,
 		exampleProjects,
 		uploadZipMenuOption,
-		handleFiles,
 	} = useLayout()
 
 	return (
@@ -42,7 +41,6 @@ export const Layout: React.FC = memo(function Layout({ children }) {
 				onClickProject={onClickProject}
 				exampleProjects={exampleProjects}
 				uploadZipMenuOption={uploadZipMenuOption}
-				onUploadZip={handleFiles}
 			/>
 			<PagesContainer>
 				<StepsContainer>

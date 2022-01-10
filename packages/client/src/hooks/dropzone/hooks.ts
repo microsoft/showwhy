@@ -4,18 +4,15 @@
  */
 
 import { useCallback } from 'react'
-import { FileRejection } from 'react-dropzone'
 import { GenericFn } from '~types'
 
 export const useOnDropRejected = (
 	onError?: (text: string) => void,
 	cb?: GenericFn,
-): ((files: FileRejection[]) => void) => {
+): ((message: string) => void) => {
 	return useCallback(
-		(files: FileRejection[]) => {
-			const errors = files.flatMap(x => x.errors)
-			const messages = [...new Set(errors.flatMap(x => x.message))]
-			onError && onError(messages.join(' / '))
+		(message: string) => {
+			onError && onError(message)
 			cb && cb()
 		},
 		[onError, cb],

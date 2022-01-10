@@ -3,13 +3,16 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import * as zip from '@zip.js/zip.js'
+import {
+	FileCollection,
+	FileType,
+	BaseFile,
+} from '@data-wrangling-components/utilities'
 import { useMemo, useCallback } from 'react'
-import { useDropzone } from 'react-dropzone'
-import { useOnDropRejected } from './dropzone'
 import { useLoadProject } from './loadProject'
-import { FileType, ProjectSource } from '~enums'
-import { getJsonFileContent, groupFilesByType, isZipUrl } from '~utils'
+import { ProjectSource } from '~enums'
+import { GenericFn } from '~types'
+import { groupFilesByType, isZipUrl } from '~utils'
 
 const uploadZipButtonId = 'uploadZip'
 const acceptedFileTypes = [`.${FileType.zip}`]
@@ -22,35 +25,21 @@ export const useUploadZipButtonId = (): string => {
 	return uploadZipButtonId
 }
 
-export const useUploadZipMenuOption = () => {
-	const id = useUploadZipButtonId()
-	return useMemo(() => {
-		return {
-			key: id,
-			text: 'Open project',
-			iconProps: { iconName: 'Upload' },
-		}
-	}, [useUploadZipButtonId])
-}
-
-const getJsonTables = async jsonFile => {
-	const json = await getJsonFileContent(jsonFile)
-	return json.tables
-}
-
-const validateProjectFiles = async entries => {
-	const jsonFile = entries.find(entry => entry.filename.includes(FileType.json))
+const validateProjectFiles = async (fileCollection: FileCollection) => {
+	if (!fileCollection) {
+		throw new Error('No file collection provided')
+	}
+	const [jsonFile]: BaseFile[] = fileCollection.list(FileType.json)
 	if (!jsonFile) {
 		throw new Error('No JSON file found in zip')
 	}
-	const jsonTables = await getJsonTables(jsonFile)
-	const entryNames = entries.map(e => e.filename.split('/').pop())
-	const tableEntries = entryNames.filter(
-		e => e.includes(FileType.csv) || e.includes(FileType.tsv),
-	)
+	const jsonTables = (await jsonFile.getJson()).tables
+	const tableEntries = fileCollection.list(FileType.table).map(e => e.name)
+
 	const requiredTables = jsonTables
 		.filter(t => isZipUrl(t.url))
 		.map(t => t.name)
+
 	const hasRequiredTables = requiredTables.every(table =>
 		tableEntries.includes(table),
 	)
@@ -62,15 +51,12 @@ const validateProjectFiles = async entries => {
 
 export const useHandleFiles = () => {
 	const loadProject = useLoadProject(ProjectSource.zip)
-	return async function handleFiles(files: File[] = []) {
-		const [file] = files
-		const reader = new zip.BlobReader(file)
-		const zipReader = new zip.ZipReader(reader)
-		const entries = await zipReader.getEntries()
-		await zipReader.close()
+	return async function handleFiles(fileCollection: FileCollection) {
+		if (!fileCollection) return
 		try {
-			await validateProjectFiles(entries)
-			const files = await groupFilesByType(entries, file.name)
+			/* eslint-disable @essex/adjacent-await */
+			await validateProjectFiles(fileCollection)
+			const files = await groupFilesByType(fileCollection)
 			loadProject(undefined, files)
 		} catch (e) {
 			throw e
@@ -78,12 +64,12 @@ export const useHandleFiles = () => {
 	}
 }
 
-export const useOnDropZipFilesAccepted = onError => {
+export const useOnDropZipFilesAccepted = (onError?: GenericFn) => {
 	const handleDrop = useHandleFiles()
 	return useCallback(
-		async (files: File[]) => {
+		async (fileCollection: FileCollection) => {
 			try {
-				await handleDrop(files)
+				await handleDrop(fileCollection)
 			} catch (e) {
 				onError && onError((e as Error).message)
 			}
@@ -92,16 +78,39 @@ export const useOnDropZipFilesAccepted = onError => {
 	)
 }
 
-export const useHandleDropzoneForZip = (onError?, dropzoneProps = {}) => {
-	const onDropFilesAccepted = useOnDropZipFilesAccepted(onError)
-	const onDropFilesRejected = useOnDropRejected(onError)
+export const useHandleUploadZip = () => {
+	const handleFiles = useHandleFiles()
+	return useCallback(() => {
+		let input: HTMLInputElement | null = document.createElement('input')
+		input.type = 'file'
+		input.multiple = true
+		input.accept = acceptedFileTypes.toString()
+		input.onchange = async (e: any) => {
+			if (e?.target?.files?.length) {
+				const { files } = e.target
+				const fileCollection = new FileCollection()
+				try {
+					await fileCollection.init([files[0]])
+					handleFiles && handleFiles(fileCollection)
+				} catch (e) {
+					console.error(e)
+				}
+			}
+		}
+		input.click()
+		input = null
+	}, [handleFiles])
+}
 
-	const { getRootProps, getInputProps, isDragActive } = useDropzone({
-		onDropAccepted: onDropFilesAccepted,
-		onDropRejected: onDropFilesRejected,
-		accept: acceptedFileTypes.toString(),
-		...dropzoneProps,
-	})
-
-	return { getRootProps, getInputProps, isDragActive, acceptedFileTypes }
+export const useUploadZipMenuOption = () => {
+	const id = useUploadZipButtonId()
+	const handleClick = useHandleUploadZip()
+	return useMemo(() => {
+		return {
+			key: id,
+			text: 'Open project',
+			iconProps: { iconName: 'Upload' },
+			onClick: handleClick,
+		}
+	}, [id, handleClick])
 }

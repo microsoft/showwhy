@@ -32,10 +32,10 @@ export const LoadDataPage: React.FC = memo(function LoadDataPage() {
 		handleDismissError,
 		loading,
 		fileCount,
-		getRootProps,
-		getInputProps,
-		isDragActive,
 		acceptedFileTypes,
+		onDrop,
+		onDropAccepted,
+		onDropRejected,
 	} = useBusinessLogic()
 
 	return (
@@ -61,15 +61,16 @@ export const LoadDataPage: React.FC = memo(function LoadDataPage() {
 					<DropzoneContainer
 						loading={loading}
 						filesCount={fileCount}
-						getRootProps={getRootProps}
-						getInputProps={getInputProps}
-						isDragActive={isDragActive}
 						text={
 							!!selectedFile
 								? 'Upload dataset'
 								: 'Drop or upload a .zip or .csv file'
 						}
-						isButton={!!selectedFile}
+						hasSelectedFiles={!!selectedFile}
+						onDrop={onDrop}
+						onDropRejected={onDropRejected}
+						onDropAccepted={onDropAccepted}
+						acceptedFileTypes={acceptedFileTypes}
 					/>
 				</ContainerFileUpload>
 
@@ -142,6 +143,8 @@ const DataLoadIndicator = styled.div`
 const ContainerFileUpload = styled.div`
 	display: flex;
 	align-items: center;
+	margin-top: 0.5rem;
+	height: 30px;
 `
 
 const FlexContainer = styled.div`
