@@ -1555,9 +1555,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@data-wrangling-components/react@npm:0.7.1":
-  version: 0.7.1
-  resolution: "@data-wrangling-components/react@npm:0.7.1"
+"@data-wrangling-components/react@npm:0.7.3":
+  version: 0.7.3
+  resolution: "@data-wrangling-components/react@npm:0.7.3"
   dependencies:
     core-js: ^3.12.1
     d3-format: ^3.1.0
@@ -1569,6 +1569,7 @@ __metadata:
     react-if: ^4.1.1
   peerDependencies:
     "@data-wrangling-components/core": "*"
+    "@data-wrangling-components/utilities": "*"
     "@essex-js-toolkit/themed-components": ^1.3.0
     "@fluentui/font-icons-mdl2": ^8.1.6
     "@fluentui/react": ^8.24.0
@@ -1584,7 +1585,7 @@ __metadata:
     react: ^17.0.2
     react-dom: ^17.0.2
     styled-components: ^5.3.0
-  checksum: 5f7ddfddf5d3d8d4a99678239ff406dd40d5f43c5ce18a760e30b7aada5fba04428868924a6ad90d9dc309aa30a02a66323306da4dc3de75bb413bed8016d04f
+  checksum: 99f6fd115678bfd919c20f9f73d7445f8e5b678120b207cdd9a6f9f1eb366fd178e0c2d0938317d09aaea97b2d319e269c0510e9cb092bf0722a2042f09ed8a1
   languageName: node
   linkType: hard
 
@@ -2716,7 +2717,7 @@ __metadata:
     "@babel/preset-react": ^7.14.5
     "@babel/preset-typescript": ^7.15.0
     "@data-wrangling-components/core": 0.4.3
-    "@data-wrangling-components/react": 0.7.1
+    "@data-wrangling-components/react": 0.7.3
     "@data-wrangling-components/utilities": 0.2.1
     "@essex-js-toolkit/boolean-expression-component": ^0.1.1
     "@essex-js-toolkit/hooks": ^3.0.2
