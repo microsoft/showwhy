@@ -3,12 +3,13 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import { guessDelimiter } from '@data-wrangling-components/utilities'
 import { IDropdownOption } from '@fluentui/react'
 import { useBoolean } from 'ahooks'
 import ColumnTable from 'arquero/dist/types/table/column-table'
 import { useCallback, useEffect, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
-import { useGlobalDropzone } from '~hooks'
+import { useGlobalDropzone, useOnDropAccepted } from '~hooks'
 import { ProjectFile } from '~interfaces'
 import {
 	useAddProjectFile,
@@ -20,7 +21,7 @@ import {
 	useSetSelectedFile,
 } from '~state'
 import { GenericObject } from '~types'
-import { createDefaultTable, guessDelimiter, replaceItemAtIndex } from '~utils'
+import { createDefaultTable, replaceItemAtIndex } from '~utils'
 
 export const useBusinessLogic = (): GenericObject => {
 	const setSelectedFile = useSetSelectedFile()
@@ -40,6 +41,7 @@ export const useBusinessLogic = (): GenericObject => {
 	}, [setErrorMessage])
 
 	const addOriginalTable = useSetOrUpdateOriginalTable()
+	const handleOnDropAccepted = useOnDropAccepted(setErrorMessage)
 
 	// TODO: this should be tracked as part of the file management
 	useEffect(() => {
@@ -80,11 +82,11 @@ export const useBusinessLogic = (): GenericObject => {
 	const handleLoadFile = useHandleLoadFile(setErrorMessage)
 
 	const {
+		onDrop,
+		onDropAccepted,
+		onDropRejected,
 		loading,
 		fileCount,
-		getRootProps,
-		getInputProps,
-		isDragActive,
 		acceptedFileTypes,
 	} = useGlobalDropzone(setErrorMessage, handleLoadFile)
 
@@ -103,11 +105,12 @@ export const useBusinessLogic = (): GenericObject => {
 		handleDelimiterChange,
 		loading,
 		fileCount,
-		getRootProps,
-		getInputProps,
-		isDragActive,
 		handleDismissError,
 		acceptedFileTypes,
+		handleOnDropAccepted,
+		onDrop,
+		onDropAccepted,
+		onDropRejected,
 	}
 }
 
