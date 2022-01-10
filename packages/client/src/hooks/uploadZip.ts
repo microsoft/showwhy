@@ -3,11 +3,13 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import { useHandleOnUploadClick } from '@data-wrangling-components/react'
 import {
 	FileCollection,
 	FileType,
 	BaseFile,
 } from '@data-wrangling-components/utilities'
+import { IContextualMenuItem } from '@fluentui/react'
 import { useMemo, useCallback } from 'react'
 import { useLoadProject } from './loadProject'
 import { ProjectSource } from '~enums'
@@ -49,7 +51,9 @@ const validateProjectFiles = async (fileCollection: FileCollection) => {
 	return true
 }
 
-export const useHandleFiles = () => {
+export const useHandleFiles = (): ((
+	fileCollection: FileCollection,
+) => Promise<void>) => {
 	const loadProject = useLoadProject(ProjectSource.zip)
 	return async function handleFiles(fileCollection: FileCollection) {
 		if (!fileCollection) return
@@ -64,7 +68,9 @@ export const useHandleFiles = () => {
 	}
 }
 
-export const useOnDropZipFilesAccepted = (onError?: GenericFn) => {
+export const useOnDropZipFilesAccepted = (
+	onError?: GenericFn,
+): ((fileCollection: FileCollection) => Promise<void>) => {
 	const handleDrop = useHandleFiles()
 	return useCallback(
 		async (fileCollection: FileCollection) => {
@@ -78,33 +84,10 @@ export const useOnDropZipFilesAccepted = (onError?: GenericFn) => {
 	)
 }
 
-export const useHandleUploadZip = () => {
-	const handleFiles = useHandleFiles()
-	return useCallback(() => {
-		let input: HTMLInputElement | null = document.createElement('input')
-		input.type = 'file'
-		input.multiple = true
-		input.accept = acceptedFileTypes.toString()
-		input.onchange = async (e: any) => {
-			if (e?.target?.files?.length) {
-				const { files } = e.target
-				const fileCollection = new FileCollection()
-				try {
-					await fileCollection.init([files[0]])
-					handleFiles && handleFiles(fileCollection)
-				} catch (e) {
-					console.error(e)
-				}
-			}
-		}
-		input.click()
-		input = null
-	}, [handleFiles])
-}
-
-export const useUploadZipMenuOption = () => {
+export const useUploadZipMenuOption = (): IContextualMenuItem => {
 	const id = useUploadZipButtonId()
-	const handleClick = useHandleUploadZip()
+	const handleFiles = useHandleFiles()
+	const handleClick = useHandleOnUploadClick(acceptedFileTypes, handleFiles)
 	return useMemo(() => {
 		return {
 			key: id,
