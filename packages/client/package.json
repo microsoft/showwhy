@@ -73,6 +73,8 @@
 		"@essex/scripts": "^19.0.2",
 		"@essex/vite-config": "^18.0.2",
 		"@jest/globals": "^27.4.6",
+		"@swc/core": "^1.2.128",
+		"@swc/jest": "^0.2.16",
 		"@testing-library/react": "^12.1.2",
 		"@testing-library/react-hooks": "^7.0.2",
 		"@types/babel__core": "^7.1.18",

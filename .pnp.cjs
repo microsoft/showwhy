@@ -3002,6 +3002,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fluentui/react-hooks", "virtual:43234044b7438fe2d61705a53806e3cf1b57c36f9d0076f4ea9860d4c0f5b9f7239021252d58389c52e724a7d4da6edf23f1d58bae876b1fdf20bda31e9357ce#npm:8.3.9"],
             ["@fluentui/utilities", "virtual:43234044b7438fe2d61705a53806e3cf1b57c36f9d0076f4ea9860d4c0f5b9f7239021252d58389c52e724a7d4da6edf23f1d58bae876b1fdf20bda31e9357ce#npm:8.3.9"],
             ["@jest/globals", "npm:27.4.6"],
+            ["@swc/core", "npm:1.2.128"],
+            ["@swc/jest", "virtual:0350acc79c17706ef584176cbdfbd57c0748f4116140b23ba79ff01e81d29538b37eb1a44a35e29bb26c02ef4306b61c232e0fd8b1c6bf405ff4711d3521ea61#npm:0.2.16"],
             ["@testing-library/react", "virtual:43234044b7438fe2d61705a53806e3cf1b57c36f9d0076f4ea9860d4c0f5b9f7239021252d58389c52e724a7d4da6edf23f1d58bae876b1fdf20bda31e9357ce#npm:12.1.2"],
             ["@testing-library/react-hooks", "virtual:43234044b7438fe2d61705a53806e3cf1b57c36f9d0076f4ea9860d4c0f5b9f7239021252d58389c52e724a7d4da6edf23f1d58bae876b1fdf20bda31e9357ce#npm:7.0.2"],
             ["@thematic/color", "virtual:43234044b7438fe2d61705a53806e3cf1b57c36f9d0076f4ea9860d4c0f5b9f7239021252d58389c52e724a7d4da6edf23f1d58bae876b1fdf20bda31e9357ce#npm:1.3.0"],
