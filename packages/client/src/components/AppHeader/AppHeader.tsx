@@ -20,7 +20,6 @@ interface AppHeaderProps {
 	onClickProject: (example: FileDefinition) => void
 	exampleProjects: FileDefinition[]
 	uploadZipMenuOption?: IContextualMenuItem
-	onUploadZip: GenericFn
 }
 
 export const AppHeader: React.FC<AppHeaderProps> = memo(function AppHeader({
@@ -30,7 +29,6 @@ export const AppHeader: React.FC<AppHeaderProps> = memo(function AppHeader({
 	onClickProject,
 	exampleProjects,
 	uploadZipMenuOption,
-	onUploadZip,
 }) {
 	return (
 		<AppHeaderContainer>
@@ -49,7 +47,6 @@ export const AppHeader: React.FC<AppHeaderProps> = memo(function AppHeader({
 					onClickProject={onClickProject}
 					exampleProjects={exampleProjects}
 					loadProjectOption={uploadZipMenuOption}
-					onUploadZip={onUploadZip}
 				/>
 				<SaveProject />
 			</UserInformationContainer>
