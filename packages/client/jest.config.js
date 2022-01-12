@@ -6,6 +6,9 @@ const { configure } = require('@essex/jest-config')
 
 const configuration = {
 	...configure(),
+	transform: {
+		'^.+\\.(t|j)sx?$': '@swc/jest',
+	},
 	testEnvironment: 'jsdom',
 	extensionsToTreatAsEsm: ['.ts'],
 	moduleNameMapper: {
@@ -27,5 +30,4 @@ const configuration = {
 	},
 	setupFilesAfterEnv: ['<rootDir>/jest.setup.mjs'],
 }
-
 module.exports = configuration

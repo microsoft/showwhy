@@ -1,0 +1,16 @@
+{
+	"sourceMaps": true,
+	"env": {
+		"coreJs": "3",
+		"targets": {
+			"node": 14
+		},
+		"mode": "usage"
+	},
+	"jsc": {
+		"parser": {
+			"syntax": "typescript",
+			"jsx": true
+		}
+	}
+}
