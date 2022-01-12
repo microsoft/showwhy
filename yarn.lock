@@ -601,9 +601,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@data-wrangling-components/core@npm:0.4.3":
-  version: 0.4.3
-  resolution: "@data-wrangling-components/core@npm:0.4.3"
+"@data-wrangling-components/core@npm:1.0.0":
+  version: 1.0.0
+  resolution: "@data-wrangling-components/core@npm:1.0.0"
   dependencies:
     core-js: ^3.12.1
     lodash: ^4.17.21
@@ -613,13 +613,13 @@ __metadata:
   peerDependenciesMeta:
     "@types/node":
       optional: true
-  checksum: 0cf393bdf794389a2a84e782fa9c0bad6a9d1e78b54691157e5477a9917b263f2a57233b866082d0ceb291c0a769eb57b7c30d1b92237a3a144d3d07183d562a
+  checksum: 5492e01d59c8d60e194fb6e34c0b335248611b78624bc7cb9b649c1fb3bc2648d821e6ec62ea4f52bfa81d26ffb14e989aa5b8ec4c234bfb7c819606067c47e2
   languageName: node
   linkType: hard
 
-"@data-wrangling-components/react@npm:0.8.0":
-  version: 0.8.0
-  resolution: "@data-wrangling-components/react@npm:0.8.0"
+"@data-wrangling-components/react@npm:1.0.0":
+  version: 1.0.0
+  resolution: "@data-wrangling-components/react@npm:1.0.0"
   dependencies:
     core-js: ^3.12.1
     d3-format: ^3.1.0
@@ -647,19 +647,19 @@ __metadata:
     react: ^17.0.2
     react-dom: ^17.0.2
     styled-components: ^5.3.0
-  checksum: 2cd5c4d23386b239f69cb6a916380a795385d8cbb7f9fae2f703218e5ea5d29fa6ca570d069aae1ebbd6b7eb062657d9fd84fffc63467a406748efc478fa6033
+  checksum: e097eda855fa1c5e7cdb10da5adedba78f6bfa3da076f341804e4ee9070686d0d0fe005d005c54b22abffb06c44e2acbb317b0a532415d5c75103d1eee8e1eea
   languageName: node
   linkType: hard
 
-"@data-wrangling-components/utilities@npm:0.2.1":
-  version: 0.2.1
-  resolution: "@data-wrangling-components/utilities@npm:0.2.1"
+"@data-wrangling-components/utilities@npm:1.0.0":
+  version: 1.0.0
+  resolution: "@data-wrangling-components/utilities@npm:1.0.0"
   dependencies:
     "@zip.js/zip.js": ^2.3.19
     core-js: ^3.12.1
   peerDependencies:
     arquero: ^4.8.7
-  checksum: 6072d525a6c376cca2a5a7571a930ed56f8e3a800da1b27ab5b780ae67760dda3d71562568293f7f5d05a022e292157a2e9fd4137e7b6a59e962e8bce14ae00e
+  checksum: 75aaf61e60077f235a9fb961efd9d759868988a0dde134d39f88cb9c136a656358bf0f4c23712548e9df512f7f493d4be3265f50985f112590a413b81b04343b
   languageName: node
   linkType: hard
 
@@ -1632,9 +1632,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/client@workspace:packages/client"
   dependencies:
-    "@data-wrangling-components/core": 0.4.3
-    "@data-wrangling-components/react": 0.8.0
-    "@data-wrangling-components/utilities": 0.2.1
+    "@data-wrangling-components/core": 1.0.0
+    "@data-wrangling-components/react": 1.0.0
+    "@data-wrangling-components/utilities": 1.0.0
     "@essex-js-toolkit/boolean-expression-component": ^0.1.1
     "@essex-js-toolkit/hooks": ^3.0.2
     "@essex-js-toolkit/thematic-lineup": ^1.1.7
@@ -1727,8 +1727,8 @@ __metadata:
     "@essex/scripts": ^19.0.2
     "@types/eslint": ^7.29.0
     "@types/prettier": ^2.4.2
-    "@typescript-eslint/eslint-plugin": ^5.9.0
-    "@typescript-eslint/parser": ^5.9.0
+    "@typescript-eslint/eslint-plugin": ^5.9.1
+    "@typescript-eslint/parser": ^5.9.1
     eslint: ^7.32.0
     eslint-import-resolver-node: ^0.3.6
     husky: ^7.0.4
@@ -2609,7 +2609,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/eslint-plugin@npm:^5.9.0":
+"@typescript-eslint/eslint-plugin@npm:^5.9.0, @typescript-eslint/eslint-plugin@npm:^5.9.1":
   version: 5.9.1
   resolution: "@typescript-eslint/eslint-plugin@npm:5.9.1"
   dependencies:
@@ -2648,7 +2648,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/parser@npm:^5.9.0":
+"@typescript-eslint/parser@npm:^5.9.0, @typescript-eslint/parser@npm:^5.9.1":
   version: 5.9.1
   resolution: "@typescript-eslint/parser@npm:5.9.1"
   dependencies:
