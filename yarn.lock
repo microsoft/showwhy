@@ -148,7 +148,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/core@npm:^7.1.0, @babel/core@npm:^7.12.3, @babel/core@npm:^7.14.3, @babel/core@npm:^7.14.8, @babel/core@npm:^7.16.0, @babel/core@npm:^7.7.2, @babel/core@npm:^7.8.0":
+"@babel/core@npm:^7.1.0, @babel/core@npm:^7.12.3, @babel/core@npm:^7.14.3, @babel/core@npm:^7.14.8, @babel/core@npm:^7.16.7, @babel/core@npm:^7.7.2, @babel/core@npm:^7.8.0":
   version: 7.16.7
   resolution: "@babel/core@npm:7.16.7"
   dependencies:
@@ -577,7 +577,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/types@npm:^7.0.0, @babel/types@npm:^7.16.0, @babel/types@npm:^7.16.7, @babel/types@npm:^7.16.8, @babel/types@npm:^7.3.0, @babel/types@npm:^7.3.3, @babel/types@npm:^7.7.0, @babel/types@npm:^7.8.3":
+"@babel/types@npm:^7.0.0, @babel/types@npm:^7.16.7, @babel/types@npm:^7.16.8, @babel/types@npm:^7.3.0, @babel/types@npm:^7.3.3, @babel/types@npm:^7.7.0, @babel/types@npm:^7.8.3":
   version: 7.16.8
   resolution: "@babel/types@npm:7.16.8"
   dependencies:
@@ -850,28 +850,28 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@essex/eslint-config@npm:19.0.1, @essex/eslint-config@npm:^19.0.1":
-  version: 19.0.1
-  resolution: "@essex/eslint-config@npm:19.0.1"
+"@essex/eslint-config@npm:19.0.2, @essex/eslint-config@npm:^19.0.2":
+  version: 19.0.2
+  resolution: "@essex/eslint-config@npm:19.0.2"
   peerDependencies:
-    "@essex/eslint-plugin": ">=19.0.1"
+    "@essex/eslint-plugin": ">=19.0.2"
     "@typescript-eslint/eslint-plugin": ">= 4.4.1"
     "@typescript-eslint/parser": ">= 4.4.1"
     eslint-import-resolver-node: ">= 0.3.4"
-  checksum: 16ce076a8f76304060d338b49e526bb968f46c5e050c2d15a2015a986a6773decd7c8adeec0717d0f631c35ff2f4d01c518e6f8ef1e3cd1432a9e1a58851c1fa
+  checksum: 5d0365df5f3482550ba76e86fd2d6b64a1d0684a30e77679b42e157f2bc0c695cb6e7fc59bf33a9d0ce52502096b0089b3accee9bcfd694e2ed1928af9db6aa3
   languageName: node
   linkType: hard
 
-"@essex/eslint-plugin@npm:19.0.1, @essex/eslint-plugin@npm:^19.0.1":
-  version: 19.0.1
-  resolution: "@essex/eslint-plugin@npm:19.0.1"
+"@essex/eslint-plugin@npm:19.0.2, @essex/eslint-plugin@npm:^19.0.2":
+  version: 19.0.2
+  resolution: "@essex/eslint-plugin@npm:19.0.2"
   dependencies:
-    "@babel/core": ^7.16.0
-    "@babel/types": ^7.16.0
+    "@babel/core": ^7.16.7
+    "@babel/types": ^7.16.8
     "@swc/cli": ^0.1.55
-    "@swc/core": ^1.2.126
-    "@typescript-eslint/eslint-plugin": ^5.9.0
-    "@typescript-eslint/parser": ^5.9.0
+    "@swc/core": ^1.2.128
+    "@typescript-eslint/eslint-plugin": ^5.9.1
+    "@typescript-eslint/parser": ^5.9.1
     babel-eslint: ^10.1.0
     confusing-browser-globals: ^1.0.11
     eslint: ^8.6.0
@@ -888,16 +888,16 @@ __metadata:
     "@typescript-eslint/eslint-plugin": ">= 4.4.1"
     "@typescript-eslint/parser": ">= 4.4.1"
     eslint-import-resolver-node: ">= 0.3.4"
-  checksum: af6b411cd149850f1e79b7aa965647e0540429c2651d497e4e4a548876efca57edf9b0ea7694ee3efdd8f6ff31e3be90a0d0c5bfd62e7083e0d31c469de61c87
+  checksum: 75a03f329a7fe03ff42d0a1ae588bfaa672b5c7663c26f227437077a2ccf0ff307380466a43f044775b476ef410cc0bf5f6d06068c45e4240067c197b67ddfc5
   languageName: node
   linkType: hard
 
-"@essex/jest-config@npm:^19.0.1":
-  version: 19.0.1
-  resolution: "@essex/jest-config@npm:19.0.1"
+"@essex/jest-config@npm:^19.0.2":
+  version: 19.0.2
+  resolution: "@essex/jest-config@npm:19.0.2"
   dependencies:
-    "@swc/core": ^1.2.126
-    "@swc/jest": ^0.2.15
+    "@swc/core": ^1.2.128
+    "@swc/jest": ^0.2.16
     "@types/jest": ^27.4.0
     identity-obj-proxy: ^3.0.0
   peerDependencies:
@@ -905,7 +905,7 @@ __metadata:
   peerDependenciesMeta:
     jest:
       optional: true
-  checksum: 6fbf93eb36c01b79dae3d93767d074d026c7ac4e04942abb84150c03e96ecc652937db32593250bcba0fc59a0de0fcdc36aea5c1785153c7fb6fe0d0172f7f22
+  checksum: c8c8b23d3c90245c986fb5ddb3b1e3d72d984bd3b0ad3321151b0e36199723a38526886145cb275b3a9272b96fbf4d3c91fac9170d6c82879fb027f0328eac63
   languageName: node
   linkType: hard
 
@@ -916,17 +916,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@essex/scripts@npm:^19.0.2":
-  version: 19.0.2
-  resolution: "@essex/scripts@npm:19.0.2"
+"@essex/scripts@npm:^19.0.3":
+  version: 19.0.3
+  resolution: "@essex/scripts@npm:19.0.3"
   dependencies:
     "@azure/storage-blob": ^12.8.0
-    "@essex/eslint-config": 19.0.1
-    "@essex/eslint-plugin": 19.0.1
-    "@essex/shellrunner": 19.0.1
-    "@swc/core": ^1.2.126
-    "@typescript-eslint/eslint-plugin": ^5.9.0
-    "@typescript-eslint/parser": ^5.9.0
+    "@essex/eslint-config": 19.0.2
+    "@essex/eslint-plugin": 19.0.2
+    "@essex/shellrunner": 19.0.2
+    "@swc/core": ^1.2.128
+    "@typescript-eslint/eslint-plugin": ^5.9.1
+    "@typescript-eslint/parser": ^5.9.1
     archiver: ^5.3.0
     chalk: ^4.1.2
     commander: ^8.3.0
@@ -944,8 +944,8 @@ __metadata:
     typedoc: ^0.22.10
     typescript: ^4.5.4
   peerDependencies:
-    "@essex/eslint-config": ">=19.0.1"
-    "@essex/jest-config": ">=19.0.1"
+    "@essex/eslint-config": ">=19.0.2"
+    "@essex/jest-config": ">=19.0.2"
     "@essex/prettier-config": ">=18.0.2"
     "@typescript-eslint/eslint-plugin": ">= 4.4.1"
     "@typescript-eslint/parser": ">= 4.4.1"
@@ -978,17 +978,17 @@ __metadata:
   bin:
     essex: ./lib/index.js
     essex-scripts: ./lib/index.js
-  checksum: 6d57d4d465264cf91b09e1d05efb5381d8fb960406d4d356fb98649e1925ab7bd8569e15222643a1bd7af740ac95838ef5633ed9dba07270130ae802ef651c00
+  checksum: 4b954bf43142ee64f2715debb88d18005efb108f2f6adfade006591a1a79db2fded94d13b4ec51daf493c3061e9b7b28f7135123f85b3b24c8351199c875f121
   languageName: node
   linkType: hard
 
-"@essex/shellrunner@npm:19.0.1":
-  version: 19.0.1
-  resolution: "@essex/shellrunner@npm:19.0.1"
+"@essex/shellrunner@npm:19.0.2":
+  version: 19.0.2
+  resolution: "@essex/shellrunner@npm:19.0.2"
   dependencies:
     cross-spawn: ^7.0.3
     debug: ^4.3.3
-  checksum: 2c162523d6e89f0a9b56235c3cd11a470b914814487d29157c021e85e5a7889a9cdc1c636d6ecc41a92a2f709edd4ce5832b25b21702ed3cf8da0e0d76a8a0f5
+  checksum: 60ff9fce294440cc06fb5a9875c9573df2acaf53e759728438bc086502767327e88d0d144945f6c724e65291a548c6758c132ac50ac1838e8ef9e73da0bea6f0
   languageName: node
   linkType: hard
 
@@ -1179,7 +1179,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fluentui/react@npm:^8.49.0":
+"@fluentui/react@npm:^8.49.4":
   version: 8.49.4
   resolution: "@fluentui/react@npm:8.49.4"
   dependencies:
@@ -1639,16 +1639,14 @@ __metadata:
     "@essex-js-toolkit/hooks": ^3.0.2
     "@essex-js-toolkit/thematic-lineup": ^1.1.7
     "@essex-js-toolkit/themed-components": ^1.3.2
-    "@essex/jest-config": ^19.0.1
-    "@essex/scripts": ^19.0.2
+    "@essex/jest-config": ^19.0.2
+    "@essex/scripts": ^19.0.3
     "@essex/vite-config": ^18.0.2
     "@fluentui/font-icons-mdl2": ^8.1.20
-    "@fluentui/react": ^8.49.0
+    "@fluentui/react": ^8.49.4
     "@fluentui/react-hooks": ^8.3.9
     "@fluentui/utilities": ^8.3.9
     "@jest/globals": ^27.4.6
-    "@swc/core": ^1.2.128
-    "@swc/jest": ^0.2.16
     "@testing-library/react": ^12.1.2
     "@testing-library/react-hooks": ^7.0.2
     "@thematic/color": ^1.3.0
@@ -1722,11 +1720,11 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/project@workspace:."
   dependencies:
-    "@essex/eslint-config": ^19.0.1
-    "@essex/eslint-plugin": ^19.0.1
-    "@essex/jest-config": ^19.0.1
+    "@essex/eslint-config": ^19.0.2
+    "@essex/eslint-plugin": ^19.0.2
+    "@essex/jest-config": ^19.0.2
     "@essex/prettier-config": ^18.0.2
-    "@essex/scripts": ^19.0.2
+    "@essex/scripts": ^19.0.3
     "@types/eslint": ^7.29.0
     "@types/prettier": ^2.4.2
     "@typescript-eslint/eslint-plugin": ^5.9.1
@@ -1871,7 +1869,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@swc/core@npm:^1.2.126, @swc/core@npm:^1.2.128":
+"@swc/core@npm:^1.2.128":
   version: 1.2.128
   resolution: "@swc/core@npm:1.2.128"
   dependencies:
@@ -1920,7 +1918,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@swc/jest@npm:^0.2.15, @swc/jest@npm:^0.2.16":
+"@swc/jest@npm:^0.2.16":
   version: 0.2.16
   resolution: "@swc/jest@npm:0.2.16"
   dependencies:
@@ -2611,7 +2609,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/eslint-plugin@npm:^5.9.0, @typescript-eslint/eslint-plugin@npm:^5.9.1":
+"@typescript-eslint/eslint-plugin@npm:^5.9.1":
   version: 5.9.1
   resolution: "@typescript-eslint/eslint-plugin@npm:5.9.1"
   dependencies:
@@ -2650,7 +2648,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/parser@npm:^5.9.0, @typescript-eslint/parser@npm:^5.9.1":
+"@typescript-eslint/parser@npm:^5.9.1":
   version: 5.9.1
   resolution: "@typescript-eslint/parser@npm:5.9.1"
   dependencies:
