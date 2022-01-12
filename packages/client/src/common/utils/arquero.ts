@@ -3,10 +3,15 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { Step, TableStore, Pipeline } from '@data-wrangling-components/core'
+import {
+	BaseFile,
+	guessDelimiter,
+	getTextFromFile,
+} from '@data-wrangling-components/utilities'
 import { fromCSV, all, op } from 'arquero'
 import ColumnTable from 'arquero/dist/types/table/column-table'
 import { DataTableDefinition } from '~interfaces'
-import { getTextFromFile, guessDelimiter, isZipUrl } from '~utils'
+import { isZipUrl } from '~utils'
 /**
  * Creates a default data table by parsing csv/tsv content.
  * This adds an incremented rowId column to the front to ensure all tables
@@ -32,7 +37,7 @@ export async function loadTable(
 	tables?: File[],
 ): Promise<ColumnTable> {
 	const file = tables?.find(t => t.name === table.name) as File
-	const text = await getTextFromFile(file)
+	const text = await getTextFromFile(file as BaseFile)
 	return createDefaultTable(text, guessDelimiter(table.name))
 }
 
@@ -50,7 +55,7 @@ export async function fetchTable(
 export async function fetchTables(
 	tables: DataTableDefinition[],
 	tableFiles: File[] = [],
-): Promise<(void | ColumnTable)[]> {
+): Promise<ColumnTable[]> {
 	return Promise.all(
 		tables.map(table => {
 			if (isZipUrl(table.url)) {

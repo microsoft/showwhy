@@ -19,7 +19,6 @@ import {
 	TableColumn,
 	VariableDefinition,
 	Workspace,
-	Entry,
 } from '~interfaces'
 import {
 	useAddProjectFile,
@@ -35,14 +34,7 @@ import {
 	useSetStepStatuses,
 	useSetTableColumns,
 } from '~state'
-import {
-	fetchTable,
-	getFilesFromEntries,
-	getJsonFileContent,
-	isZipUrl,
-	loadTable,
-	runPipeline,
-} from '~utils'
+import { fetchTable, isZipUrl, loadTable, runPipeline } from '~utils'
 
 export function useLoadProject(source = ProjectSource.url) {
 	const id = useMemo(() => uuidv4(), [])
@@ -72,7 +64,7 @@ export function useLoadProject(source = ProjectSource.url) {
 			if (source === ProjectSource.zip) {
 				const { json, name } = zip as ZipData
 				workspace = {
-					...(await getJsonFileContent(json as Entry)),
+					...json,
 					name,
 				}
 			} else {
@@ -85,7 +77,6 @@ export function useLoadProject(source = ProjectSource.url) {
 			}
 
 			const { tables = [], results } = zip as ZipData
-			const tableFiles: File[] = await getFilesFromEntries(tables)
 
 			const {
 				primarySpecification,
@@ -124,7 +115,13 @@ export function useLoadProject(source = ProjectSource.url) {
 			setDefaultDatasetResult(defaultDatasetResult)
 			setConfidenceInterval(!!confidenceInterval)
 
-			await processTables(workspace, id, addFile, setOriginalTable, tableFiles)
+			await processTables(
+				workspace,
+				id,
+				addFile,
+				setOriginalTable,
+				tables as File[],
+			)
 
 			const completed = getStepUrls(workspace.todoPages, true)
 			setAllStepStatus(completed, StepStatus.Done)
