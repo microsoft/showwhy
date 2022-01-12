@@ -29,7 +29,7 @@
 		"@essex-js-toolkit/thematic-lineup": "^1.1.7",
 		"@essex-js-toolkit/themed-components": "^1.3.2",
 		"@fluentui/font-icons-mdl2": "^8.1.20",
-		"@fluentui/react": "^8.49.0",
+		"@fluentui/react": "^8.49.4",
 		"@fluentui/react-hooks": "^8.3.9",
 		"@fluentui/utilities": "^8.3.9",
 		"@thematic/color": "^1.3.0",
@@ -69,12 +69,10 @@
 		"vega": "^5.21.0"
 	},
 	"devDependencies": {
-		"@essex/jest-config": "^19.0.1",
-		"@essex/scripts": "^19.0.2",
+		"@essex/jest-config": "^19.0.2",
+		"@essex/scripts": "^19.0.3",
 		"@essex/vite-config": "^18.0.2",
 		"@jest/globals": "^27.4.6",
-		"@swc/core": "^1.2.128",
-		"@swc/jest": "^0.2.16",
 		"@testing-library/react": "^12.1.2",
 		"@testing-library/react-hooks": "^7.0.2",
 		"@types/babel__core": "^7.1.18",
