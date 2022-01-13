@@ -601,11 +601,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@data-wrangling-components/core@npm:1.0.0":
-  version: 1.0.0
-  resolution: "@data-wrangling-components/core@npm:1.0.0"
+"@data-wrangling-components/core@npm:1.0.2":
+  version: 1.0.2
+  resolution: "@data-wrangling-components/core@npm:1.0.2"
   dependencies:
-    core-js: ^3.12.1
+    core-js: ^3.20.2
     lodash: ^4.17.21
   peerDependencies:
     "@types/node": "*"
@@ -613,15 +613,15 @@ __metadata:
   peerDependenciesMeta:
     "@types/node":
       optional: true
-  checksum: 5492e01d59c8d60e194fb6e34c0b335248611b78624bc7cb9b649c1fb3bc2648d821e6ec62ea4f52bfa81d26ffb14e989aa5b8ec4c234bfb7c819606067c47e2
+  checksum: 54a9d188c108c02c4e92a17b0ffdeb2b5037724e13e4d43bc48ee34ed4443b4d00a7424e47301a999199180540c0509f021776ea5faf8af73c685d97b6ed55c7
   languageName: node
   linkType: hard
 
-"@data-wrangling-components/react@npm:1.0.0":
-  version: 1.0.0
-  resolution: "@data-wrangling-components/react@npm:1.0.0"
+"@data-wrangling-components/react@npm:1.1.1":
+  version: 1.1.1
+  resolution: "@data-wrangling-components/react@npm:1.1.1"
   dependencies:
-    core-js: ^3.12.1
+    core-js: ^3.20.2
     d3-format: ^3.1.0
     d3-scale: ^4.0.2
     d3-selection: ^3.0.0
@@ -647,19 +647,19 @@ __metadata:
     react: ^17.0.2
     react-dom: ^17.0.2
     styled-components: ^5.3.0
-  checksum: e097eda855fa1c5e7cdb10da5adedba78f6bfa3da076f341804e4ee9070686d0d0fe005d005c54b22abffb06c44e2acbb317b0a532415d5c75103d1eee8e1eea
+  checksum: 5bba55e89d01e6fb0249c5f594f5216662fa3024025ebebad1c40fe2a00b860247ddbd11382e29ba2f5d272b981334291a158455497ec89b9f0902200b05725c
   languageName: node
   linkType: hard
 
-"@data-wrangling-components/utilities@npm:1.0.0":
-  version: 1.0.0
-  resolution: "@data-wrangling-components/utilities@npm:1.0.0"
+"@data-wrangling-components/utilities@npm:1.1.2":
+  version: 1.1.2
+  resolution: "@data-wrangling-components/utilities@npm:1.1.2"
   dependencies:
     "@zip.js/zip.js": ^2.3.19
-    core-js: ^3.12.1
+    core-js: ^3.20.2
   peerDependencies:
     arquero: ^4.8.7
-  checksum: 75aaf61e60077f235a9fb961efd9d759868988a0dde134d39f88cb9c136a656358bf0f4c23712548e9df512f7f493d4be3265f50985f112590a413b81b04343b
+  checksum: 0a87c222744be6415957c0c002a39f52c277e6b7d42d8ac2c68868c98e4314bb3cc6942a22f6d7540a4bf7fbbd7927a57b667652c6f45b4f8f6f6a1fa59c9e99
   languageName: node
   linkType: hard
 
@@ -916,9 +916,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@essex/scripts@npm:^19.0.3":
-  version: 19.0.3
-  resolution: "@essex/scripts@npm:19.0.3"
+"@essex/scripts@npm:^19.0.5":
+  version: 19.0.5
+  resolution: "@essex/scripts@npm:19.0.5"
   dependencies:
     "@azure/storage-blob": ^12.8.0
     "@essex/eslint-config": 19.0.2
@@ -978,7 +978,7 @@ __metadata:
   bin:
     essex: ./lib/index.js
     essex-scripts: ./lib/index.js
-  checksum: 4b954bf43142ee64f2715debb88d18005efb108f2f6adfade006591a1a79db2fded94d13b4ec51daf493c3061e9b7b28f7135123f85b3b24c8351199c875f121
+  checksum: d564ed499e4ac089e144048c58615934eaec49f370d2e1db0b8ad55ddb062eac6a6a0ae6cb0337ff19ab0214b611eeddb1f7c8a020e6050cad28834c5ca39047
   languageName: node
   linkType: hard
 
@@ -1632,15 +1632,15 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/client@workspace:packages/client"
   dependencies:
-    "@data-wrangling-components/core": 1.0.0
-    "@data-wrangling-components/react": 1.0.0
-    "@data-wrangling-components/utilities": 1.0.0
+    "@data-wrangling-components/core": 1.0.2
+    "@data-wrangling-components/react": 1.1.1
+    "@data-wrangling-components/utilities": 1.1.2
     "@essex-js-toolkit/boolean-expression-component": ^0.1.1
     "@essex-js-toolkit/hooks": ^3.0.2
     "@essex-js-toolkit/thematic-lineup": ^1.1.7
     "@essex-js-toolkit/themed-components": ^1.3.2
     "@essex/jest-config": ^19.0.2
-    "@essex/scripts": ^19.0.3
+    "@essex/scripts": ^19.0.5
     "@essex/vite-config": ^18.0.2
     "@fluentui/font-icons-mdl2": ^8.1.20
     "@fluentui/react": ^8.49.4
@@ -1724,7 +1724,7 @@ __metadata:
     "@essex/eslint-plugin": ^19.0.2
     "@essex/jest-config": ^19.0.2
     "@essex/prettier-config": ^18.0.2
-    "@essex/scripts": ^19.0.3
+    "@essex/scripts": ^19.0.5
     "@types/eslint": ^7.29.0
     "@types/prettier": ^2.4.2
     "@typescript-eslint/eslint-plugin": ^5.9.1
@@ -3884,7 +3884,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"core-js@npm:^3.12.1, core-js@npm:^3.14.0, core-js@npm:^3.17.3":
+"core-js@npm:^3.12.1, core-js@npm:^3.14.0, core-js@npm:^3.17.3, core-js@npm:^3.20.2":
   version: 3.20.2
   resolution: "core-js@npm:3.20.2"
   checksum: dc055a5a79f2e3c2e060b4fb8a3e228fa0de16464bff3c6605646183139eebaa68c390ec6d9c3acc5677f333df510b977ee3f1d5992e6c36b1f200e35f5ed8ca
