@@ -21,9 +21,9 @@
 		"test:cov": "jest --coverage"
 	},
 	"dependencies": {
-		"@data-wrangling-components/core": "1.0.0",
-		"@data-wrangling-components/react": "1.0.0",
-		"@data-wrangling-components/utilities": "1.0.0",
+		"@data-wrangling-components/core": "1.0.2",
+		"@data-wrangling-components/react": "1.1.1",
+		"@data-wrangling-components/utilities": "1.1.2",
 		"@essex-js-toolkit/boolean-expression-component": "^0.1.1",
 		"@essex-js-toolkit/hooks": "^3.0.2",
 		"@essex-js-toolkit/thematic-lineup": "^1.1.7",
@@ -70,7 +70,7 @@
 	},
 	"devDependencies": {
 		"@essex/jest-config": "^19.0.2",
-		"@essex/scripts": "^19.0.3",
+		"@essex/scripts": "^19.0.5",
 		"@essex/vite-config": "^18.0.2",
 		"@jest/globals": "^27.4.6",
 		"@testing-library/react": "^12.1.2",
