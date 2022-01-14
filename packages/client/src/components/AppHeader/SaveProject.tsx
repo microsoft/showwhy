@@ -6,13 +6,19 @@ import { IContextualMenuProps } from '@fluentui/react'
 import React, { memo, useCallback, useMemo } from 'react'
 import { OptionsButton } from './OptionsButton'
 import { FileType, NodeResponseStatus } from '~enums'
-
-import { useDefaultRun, useDownloadResult } from '~hooks'
+import {
+	useDefaultRun,
+	useDownloadResult,
+	useIsCollectionEmpty,
+	useSaveProject,
+} from '~hooks'
 import { Container } from '~styles'
 
 export const SaveProject: React.FC = memo(function SaveProject() {
 	const downloadResult = useDownloadResult()
 	const defaultRun = useDefaultRun()
+	const isCollectionEmpty = useIsCollectionEmpty()
+	const saveProject = useSaveProject()
 
 	const onDownload = useCallback(
 		(type: FileType) => {
@@ -27,7 +33,8 @@ export const SaveProject: React.FC = memo(function SaveProject() {
 				{
 					key: 'project',
 					text: 'Project',
-					disabled: true,
+					disabled: isCollectionEmpty,
+					onClick: saveProject,
 				},
 				{
 					key: 'data',
@@ -57,7 +64,7 @@ export const SaveProject: React.FC = memo(function SaveProject() {
 				},
 			],
 		}
-	}, [defaultRun, onDownload])
+	}, [defaultRun, onDownload, saveProject, isCollectionEmpty])
 
 	return (
 		<Container>

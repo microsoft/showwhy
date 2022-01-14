@@ -49,13 +49,15 @@ export const useOnDropAccepted = (
 	const onDropDatasetFilesAccepted = useOnDropDatasetFilesAccepted(setFileCount)
 	return useCallback(
 		(fileCollection: FileCollection) => {
-			if (isZipFile(fileCollection.name)) {
+			const isZip = isZipFile(fileCollection.name)
+			const hasJson = !!fileCollection.list(FileType.json).length
+			if (isZip || hasJson) {
 				onDropZipFilesAccepted(fileCollection)
 			} else {
 				onDropDatasetFilesAccepted(fileCollection.list(FileType.table))
 			}
 		},
-		[onDropZipFilesAccepted, onDropDatasetFilesAccepted, setFileCount, onError],
+		[onDropZipFilesAccepted, onDropDatasetFilesAccepted],
 	)
 }
 

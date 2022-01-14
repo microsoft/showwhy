@@ -8,10 +8,12 @@ import {
 	BaseFile,
 	FileCollection,
 	FileType,
+	FileWithPath,
 } from '@data-wrangling-components/utilities'
 import ColumnTable from 'arquero/dist/types/table/column-table'
 import { useState, useCallback, useEffect } from 'react'
 import { useOnDropRejected } from './dropzone'
+import { useAddFilesToCollection } from './fileCollection'
 import { useSupportedFileTypes } from './supportedFileTypes'
 import { DropFilesCount, ProjectFile } from '~interfaces'
 import { GenericFn, GenericObject } from '~types'
@@ -23,7 +25,6 @@ export function useDrop(
 ): (files: BaseFile[], delimiter?: string) => void {
 	return useCallback(
 		(files: BaseFile[], delimiter?: string) => {
-			console.log('useDrop', files, delimiter)
 			onLoadStart && onLoadStart()
 			files.forEach((file: BaseFile) => {
 				const name = file.name
@@ -125,16 +126,17 @@ export const useOnFileLoadCompleted = (setFilesCount, setLoading, onLoad) => {
 }
 
 export const useOnDropDatasetFilesAccepted = (setFilesCount?: GenericFn) => {
+	const addFilesToCollection = useAddFilesToCollection()
 	return useCallback(
-		(files: BaseFile[]) => {
-			console.log('useOnDropDatasetFilesAccepted', files)
+		async (files: BaseFile[]) => {
+			await addFilesToCollection(files as FileWithPath[])
 			setFilesCount &&
 				setFilesCount({
 					total: files.length,
 					completed: 0,
 				})
 		},
-		[setFilesCount],
+		[setFilesCount, addFilesToCollection],
 	)
 }
 
