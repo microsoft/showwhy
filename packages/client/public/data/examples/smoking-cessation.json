@@ -485,7 +485,7 @@
                 "input": "output-table-1",
                 "output": "output-table-2",
                 "args": {
-                    "as": "smoke_intensity_change_pct",
+                    "to": "smoke_intensity_change_pct",
                     "column1": "smoke_intensity_change",
                     "operator": "/",
                     "column2": "smoke_intensity_1971"
@@ -497,7 +497,7 @@
                 "input": "output-table-2",
                 "output": "output-table-3",
                 "args": {
-                    "as": "smoke_reduction_25pct",
+                    "to": "smoke_reduction_25pct",
                     "column": "smoke_intensity_change_pct",
                     "operator": "<=",
                     "type": "value",
@@ -510,7 +510,7 @@
                 "input": "output-table-3",
                 "output": "output-table-4",
                 "args": {
-                    "as": "smoke_reduction_50pct",
+                    "to": "smoke_reduction_50pct",
                     "column": "smoke_intensity_change_pct",
                     "operator": "<=",
                     "type": "value",
@@ -523,7 +523,7 @@
                 "input": "output-table-4",
                 "output": "output-table-5",
                 "args": {
-                    "as": "smoke_reduction_75pct",
+                    "to": "smoke_reduction_75pct",
                     "column": "smoke_intensity_change_pct",
                     "operator": "<=",
                     "type": "value",
@@ -536,7 +536,7 @@
                 "input": "output-table-5",
                 "output": "output-table-6",
                 "args": {
-                    "as": "quit_smoking",
+                    "to": "quit_smoking",
                     "column": "smoke_intensity_change_pct",
                     "operator": "=",
                     "type": "value",
@@ -549,7 +549,7 @@
                 "input": "output-table-6",
                 "output": "smoking_cessation",
                 "args": {
-                    "as": "subject_inclusion",
+                    "to": "subject_inclusion",
                     "column": "weight_change",
                     "operator": "is not empty"
                 }
