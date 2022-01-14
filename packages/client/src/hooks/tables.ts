@@ -178,13 +178,15 @@ export function useDefaultTableSample(): number {
 	return TABLE_SAMPLE
 }
 
-export function useRestoreColumn(selectedFileId: string): (value: any) => void {
+export function useRestoreColumn(
+	selectedFileId: string,
+): (value: string) => void {
 	const tableColumns = useTableColumns(selectedFileId)
 	const setTableColumns = useSetTableColumns(selectedFileId)
 
 	return useCallback(
 		value => {
-			const columnName: string = value.text
+			const columnName: string = value
 			const column = {
 				...tableColumns?.find(a => a.name === columnName),
 				name: columnName,
