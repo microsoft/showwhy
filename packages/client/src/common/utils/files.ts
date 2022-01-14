@@ -7,11 +7,14 @@ import {
 	FileCollection,
 	FileType,
 	BaseFile,
+	FileWithPath,
+	createBaseFile,
 } from '@data-wrangling-components/utilities'
-import { ProjectFile, ZipData } from '~interfaces'
+import { fetchTable } from './arquero'
+import { DataTableDefinition, ProjectFile, ZipData } from '~interfaces'
 
 export function createTextFile(name: string, content: string): File {
-	const type = { type: `text/${name.split('.')[1]}` }
+	const type = { type: `text/${name.split('.').pop()}` }
 	const blob = new Blob([content], type)
 	return new File([blob], name, type)
 }
@@ -29,10 +32,14 @@ export function isZipUrl(url: string): boolean {
 	return url.toLowerCase().startsWith(FileType.zip)
 }
 
+export function isUrl(url: string): boolean {
+	return /^https?:\/\//.test(url.toLowerCase())
+}
+
 export const groupFilesByType = async (
 	fileCollection: FileCollection,
 ): Promise<ZipData> => {
-	const filesByType = {
+	const filesByType: ZipData = {
 		name: fileCollection.name || 'FileCollection',
 	}
 	const resultsRegExp = /result(.+).(c|t)sv/gi
@@ -40,16 +47,38 @@ export const groupFilesByType = async (
 	const tableFiles: BaseFile[] = fileCollection.list(FileType.table)
 
 	const [jsonFile] = fileCollection.list(FileType.json)
+	let defaultResult
 	if (jsonFile) {
-		filesByType[FileType.json] = await jsonFile.getJson()
+		const json = await jsonFile.toJson()
+		filesByType[FileType.json] = json
+		defaultResult = json.defaultResult
 	}
 
-	//TODO: It gets the first coincidence, should it be an array instead?
-	const result = tableFiles.find(file => isResult(file.name))
-	if (result) {
+	if (defaultResult) {
+		let file
+		let { url } = defaultResult
+		if (isZipUrl(url)) {
+			file = tableFiles.find(f => url.includes(f.name))
+			const options = {
+				name: file.name,
+				type: 'text/csv',
+			}
+			file = createBaseFile(file, options)
+			url = await file.toDataURL()
+		}
+
 		filesByType['results'] = {
-			entry: result,
-			dataUri: await result.getDataURL(),
+			file,
+			dataUri: url,
+		}
+	} else {
+		//TODO: It gets the first coincidence, should it be an array instead?
+		const file = tableFiles.find(file => isResult(file.name))
+		if (file) {
+			filesByType['results'] = {
+				file,
+				dataUri: await file.toDataURL(),
+			}
 		}
 	}
 
@@ -57,6 +86,18 @@ export const groupFilesByType = async (
 	if (tables.length > 0) {
 		filesByType['tables'] = tables
 	}
-
 	return filesByType
+}
+
+export async function fetchRemoteTables(
+	tables: DataTableDefinition[],
+): Promise<FileWithPath[]> {
+	tables = tables.filter(table => isUrl(table.url))
+	const tableFiles: FileWithPath[] = []
+	for await (const table of tables) {
+		const fetched = await fetchTable(table)
+		const file = new File([fetched.toCSV()], table.name, { type: 'text/csv' })
+		tableFiles.push(new FileWithPath(file, table.name, ''))
+	}
+	return tableFiles
 }

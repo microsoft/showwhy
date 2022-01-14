@@ -2,6 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import { BaseFile } from '@data-wrangling-components/utilities'
 import { useCallback, useMemo } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import { ProjectSource, StepStatus } from '~enums'
@@ -19,22 +20,32 @@ import {
 	TableColumn,
 	VariableDefinition,
 	Workspace,
+	DataTableDefinition,
 } from '~interfaces'
 import {
 	useAddProjectFile,
+	useFileCollection,
 	useSetCausalFactors,
 	useSetConfidenceInterval,
 	useSetDefaultDatasetResult,
 	useSetDefineQuestion,
 	useSetEstimators,
+	useSetFileCollection,
 	useSetModelVariables,
 	useSetOrUpdateOriginalTable,
 	useSetPrimarySpecificationConfig,
+	useSetPrimaryTable,
 	useSetRefutationType,
 	useSetStepStatuses,
 	useSetTableColumns,
 } from '~state'
-import { fetchTable, isZipUrl, loadTable, runPipeline } from '~utils'
+import {
+	fetchRemoteTables,
+	fetchTable,
+	isZipUrl,
+	loadTable,
+	runPipeline,
+} from '~utils'
 
 export function useLoadProject(source = ProjectSource.url) {
 	const id = useMemo(() => uuidv4(), [])
@@ -49,9 +60,10 @@ export function useLoadProject(source = ProjectSource.url) {
 	const setOriginalTable = useSetOrUpdateOriginalTable()
 	const setConfidenceInterval = useSetConfidenceInterval()
 	const setDefaultDatasetResult = useSetDefaultDatasetResult()
-
+	const setPrimaryTable = useSetPrimaryTable()
 	const getStepUrls = useGetStepUrls()
 	const setAllStepStatus = useSetStepStatuses()
+	const updateCollection = useUpdateCollection()
 
 	return useCallback(
 		async (definition?: FileDefinition, zip: ZipData = {}) => {
@@ -90,8 +102,8 @@ export function useLoadProject(source = ProjectSource.url) {
 				defaultResult,
 			} = workspace
 
-			if (results) {
-				defaultResult.url = results.dataUri
+			if (results && defaultResult) {
+				defaultResult.url = results?.dataUri
 			}
 
 			// prep everything as needed to ensure partials from the JSON
@@ -120,11 +132,13 @@ export function useLoadProject(source = ProjectSource.url) {
 				id,
 				addFile,
 				setOriginalTable,
+				setPrimaryTable,
 				tables as File[],
 			)
 
 			const completed = getStepUrls(workspace.todoPages, true)
 			setAllStepStatus(completed, StepStatus.Done)
+			updateCollection(workspace, tables)
 		},
 		[
 			id,
@@ -141,6 +155,9 @@ export function useLoadProject(source = ProjectSource.url) {
 			getStepUrls,
 			setDefaultDatasetResult,
 			setConfidenceInterval,
+			setPrimaryTable,
+			source,
+			updateCollection,
 		],
 	)
 }
@@ -156,6 +173,7 @@ async function processTables(
 	id: string,
 	addFile,
 	setOriginalTable,
+	setPrimaryTable,
 	tableFiles?: File[],
 ) {
 	const { tables, postLoad } = workspace
@@ -163,6 +181,11 @@ async function processTables(
 	// if we have a post-load,
 	// run it and save just the final result
 	// otherwise, only save the primary table
+
+	const primary = tables.find(table => table.primary)
+	if (primary) {
+		setPrimaryTable({ name: primary.name, id })
+	}
 	if (postLoad) {
 		const result = await runPipeline(tables, postLoad.steps, tableFiles)
 		const file: ProjectFile = {
@@ -175,12 +198,10 @@ async function processTables(
 	} else {
 		// this effectively uses a "first one wins" for the primary table
 		// this shouldn't actually happen in practice, but until we can support multiples correctly...
-		const primary = tables.find(table => table.primary)
 		if (primary) {
-			const fetchMethod = !isZipUrl(primary.url)
+			const result = await (!isZipUrl(primary.url)
 				? fetchTable(primary)
-				: loadTable(primary, tableFiles)
-			const result = await fetchMethod
+				: loadTable(primary, tableFiles))
 			const file: ProjectFile = {
 				id,
 				content: result.toCSV(),
@@ -275,5 +296,33 @@ function prepTableColumns(columns?: Partial<TableColumn>[]): TableColumn[] {
 				id: uuidv4(),
 				...column,
 			} as TableColumn),
+	)
+}
+
+const useUpdateCollection = (): ((
+	workspace: Workspace,
+	tableFiles: BaseFile[],
+) => Promise<void>) => {
+	const setCollection = useSetFileCollection()
+	const fileCollection = useFileCollection().copy()
+	return useCallback(
+		async (workspace: Workspace, tableFiles = []) => {
+			const { name, tables = [], defaultResult } = workspace
+			const fetched = await fetchRemoteTables(tables)
+			await fileCollection.add([...fetched, ...tableFiles])
+			if (defaultResult) {
+				const resultTable: DataTableDefinition = {
+					...(defaultResult || {}),
+					name: 'results.csv',
+				}
+				const fetched = await fetchRemoteTables([resultTable])
+				if (fetched.length) {
+					await fileCollection.add(fetched)
+				}
+			}
+			fileCollection.name = name || 'File Collection'
+			setCollection(fileCollection)
+		},
+		[fileCollection, setCollection],
 	)
 }
