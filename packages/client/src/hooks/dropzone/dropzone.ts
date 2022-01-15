@@ -23,10 +23,10 @@ import {
 import { DropFilesCount } from '~interfaces'
 import { GenericFn } from '~types'
 
-export const useHandleOnDrop = (
+export function useHandleOnDrop(
 	onFileLoadCompleted: GenericFn,
 	onLoadStart?: GenericFn,
-) => {
+) {
 	const onDrop = useDrop(onFileLoadCompleted, onLoadStart)
 	return useCallback(
 		(fileCollection: FileCollection) => {
@@ -41,10 +41,10 @@ export const useHandleOnDrop = (
 	)
 }
 
-export const useOnDropAccepted = (
+export function useOnDropAccepted(
 	onError?: GenericFn,
 	setFileCount?: GenericFn,
-) => {
+) {
 	const onDropZipFilesAccepted = useOnDropZipFilesAccepted(onError)
 	const onDropDatasetFilesAccepted = useOnDropDatasetFilesAccepted(setFileCount)
 	return useCallback(
@@ -59,7 +59,7 @@ export const useOnDropAccepted = (
 	)
 }
 
-const useAccepted = (): string[] => {
+function useAccepted(): string[] {
 	const acceptedZip = useAcceptedFileTypes()
 	const acceptedFiles = useSupportedFileTypes()
 	return useMemo(
@@ -68,7 +68,7 @@ const useAccepted = (): string[] => {
 	)
 }
 
-export const useGlobalDropzone = (onError?: GenericFn, onLoad?: GenericFn) => {
+export function useGlobalDropzone(onError?: GenericFn, onLoad?: GenericFn) {
 	const [loading, setLoading] = useState<boolean>(false)
 	const [fileCount, setFileCount] = useState<DropFilesCount>({
 		total: 0,

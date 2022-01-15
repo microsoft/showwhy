@@ -38,10 +38,10 @@ export function useExcludedFactorsTestable(
 	}, [causalFactors])
 }
 
-const shouldIncludeInDegree = (
+function shouldIncludeInDegree(
 	degree: BeliefDegree,
 	causalLevel: CausalModelLevel,
-) => {
+): boolean {
 	if (
 		causalLevel === CausalModelLevel.Maximum ||
 		(causalLevel === CausalModelLevel.Intermediate &&

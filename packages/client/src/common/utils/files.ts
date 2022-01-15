@@ -41,7 +41,7 @@ export const groupFilesByType = async (
 
 	const [jsonFile] = fileCollection.list(FileType.json)
 	if (jsonFile) {
-		filesByType[FileType.json] = await jsonFile.getJson()
+		filesByType[FileType.json] = await jsonFile.toJson()
 	}
 
 	//TODO: It gets the first coincidence, should it be an array instead?
@@ -49,7 +49,7 @@ export const groupFilesByType = async (
 	if (result) {
 		filesByType['results'] = {
 			entry: result,
-			dataUri: await result.getDataURL(),
+			dataUri: await result.toDataURL(),
 		}
 	}
 
