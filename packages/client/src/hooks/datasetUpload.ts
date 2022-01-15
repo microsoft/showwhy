@@ -53,10 +53,10 @@ export function useDrop(
 	)
 }
 
-export const useHandleDropzone = (
+export function useHandleDropzone(
 	onError?: (message: string | null) => void,
 	onLoad?: (file: ProjectFile, table: ColumnTable) => void,
-): GenericObject => {
+): GenericObject {
 	const [loading, setLoading] = useState<boolean>(false)
 	const fileTypesAllowed = useSupportedFileTypes()
 	const [filesCount, setFilesCount] = useState<DropFilesCount>({
@@ -101,14 +101,14 @@ export const useHandleDropzone = (
 	}
 }
 
-export const useOnLoadStart = (setLoading: any, onError: any): (() => void) => {
+export function useOnLoadStart(setLoading: any, onError: any): () => void {
 	return useCallback(() => {
 		setLoading(true)
 		onError && onError(null)
 	}, [setLoading, onError])
 }
 
-export const useOnFileLoadCompleted = (setFilesCount, setLoading, onLoad) => {
+export function useOnFileLoadCompleted(setFilesCount, setLoading, onLoad) {
 	return useCallback(
 		(file: ProjectFile, table: ColumnTable) => {
 			setFilesCount(prev => {
@@ -124,7 +124,7 @@ export const useOnFileLoadCompleted = (setFilesCount, setLoading, onLoad) => {
 	)
 }
 
-export const useOnDropDatasetFilesAccepted = (setFilesCount?: GenericFn) => {
+export function useOnDropDatasetFilesAccepted(setFilesCount?: GenericFn) {
 	return useCallback(
 		(files: BaseFile[]) => {
 			console.log('useOnDropDatasetFilesAccepted', files)

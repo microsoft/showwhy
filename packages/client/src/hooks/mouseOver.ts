@@ -7,9 +7,9 @@ import { useCallback } from 'react'
 import { DecisionFeature, Specification } from '~interfaces'
 import { useSetHoverState } from '~state'
 
-export const useOnMouseOver = (): ((
+export function useOnMouseOver(): (
 	item: Specification | DecisionFeature | undefined,
-) => void) => {
+) => void {
 	const setHovered = useSetHoverState()
 	return useCallback(
 		(item: Specification | DecisionFeature | undefined) => {
