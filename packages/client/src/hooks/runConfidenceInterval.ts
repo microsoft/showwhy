@@ -19,7 +19,7 @@ import {
 	returnPercentage,
 } from '~utils'
 
-export const useRunConfidenceInterval = (): any => {
+export function useRunConfidenceInterval(): any {
 	const defaultRun = useDefaultRun()
 	const updateSignificanceTests = useSetSignificanceTests(defaultRun?.id)
 

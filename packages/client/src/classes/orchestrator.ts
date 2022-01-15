@@ -4,7 +4,7 @@
  */
 
 import { NodeResponseStatus, OrchestratorType } from '~enums'
-import { NodeRequest, StatusResponse } from '~interfaces'
+import { NodeRequest, NodeResponse, StatusResponse } from '~interfaces'
 import {
 	executeNode,
 	genericCheckStatus,
@@ -13,18 +13,29 @@ import {
 } from '~resources'
 import { isStatusProcessing, wait } from '~utils'
 
-export class Orchestrator {
-	public _onCancel: ((...args) => void) | undefined
-	public _onStart: ((...args) => void) | undefined
-	public _onUpdate: ((...args) => void) | undefined
-	public _onComplete: ((...args) => void) | undefined
-	private _orchestratorResponse
+export type OrchestratorHandler = (...args: unknown[]) => void
+export type OrchestratorOnStartHandler = (nodeResponse: NodeResponse) => void
+export type OrchestatorOnUpdateHandler<UpdateStatus> = (
+	status: UpdateStatus,
+) => void
+
+export type OrchestratorResponse = {
+	statusQueryGetUri: string
+	terminatePostUri: string
+}
+
+export class Orchestrator<UpdateStatus> {
+	public _onCancel: OrchestratorHandler | undefined
+	public _onStart: OrchestratorOnStartHandler | undefined
+	public _onUpdate: OrchestatorOnUpdateHandler<UpdateStatus> | undefined
+	public _onComplete: OrchestratorHandler | undefined
+	private _orchestratorResponse: OrchestratorResponse | undefined
 
 	constructor(
-		onStart?: ((...args) => void) | undefined,
-		onUpdate?: ((...args) => void) | undefined,
-		onComplete?: ((...args) => void) | undefined,
-		onCancel?: ((...args) => void) | undefined,
+		onStart?: OrchestratorOnStartHandler | undefined,
+		onUpdate?: OrchestatorOnUpdateHandler<UpdateStatus> | undefined,
+		onComplete?: OrchestratorHandler | undefined,
+		onCancel?: OrchestratorHandler | undefined,
 	) {
 		this._onStart = onStart
 		this._onUpdate = onUpdate
@@ -32,15 +43,18 @@ export class Orchestrator {
 		this._onCancel = onCancel
 	}
 
-	get orchestratorResponse(): any {
+	get orchestratorResponse(): OrchestratorResponse | undefined {
 		return this._orchestratorResponse
 	}
 
-	setOrchestratorResponse(res: any): void {
+	setOrchestratorResponse(res: OrchestratorResponse): void {
 		this._orchestratorResponse = res
 	}
 
 	private async getStatus(type: OrchestratorType): Promise<StatusResponse> {
+		if (this.orchestratorResponse == null) {
+			throw new Error('response not available')
+		}
 		let status = await returnOrchestratorStatus(
 			this.orchestratorResponse.statusQueryGetUri,
 		)
@@ -67,8 +81,9 @@ export class Orchestrator {
 	}
 
 	async cancel(): Promise<void> {
-		this.orchestratorResponse &&
-			(await terminateRun(this._orchestratorResponse.terminatePostUri))
+		if (this.orchestratorResponse != null) {
+			await terminateRun(this.orchestratorResponse.terminatePostUri)
+		}
 		this._onCancel && this._onCancel()
 	}
 }

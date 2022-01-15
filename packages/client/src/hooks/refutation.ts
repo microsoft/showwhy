@@ -65,7 +65,7 @@ export function useFailedRefutationIds(data: Specification[]): number[] {
 	}, [data])
 }
 
-export const useSetQuickRefutation = (): (() => void) => {
+export function useSetQuickRefutation(): () => void {
 	const setRefutations = useSetRefutationType()
 
 	return useCallback(() => {
@@ -73,7 +73,7 @@ export const useSetQuickRefutation = (): (() => void) => {
 	}, [setRefutations])
 }
 
-export const useSetFullRefutation = (): (() => void) => {
+export function useSetFullRefutation(): () => void {
 	const setRefutations = useSetRefutationType()
 
 	return useCallback(() => {
