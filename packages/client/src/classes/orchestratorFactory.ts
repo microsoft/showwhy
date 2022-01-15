@@ -3,13 +3,13 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { Orchestrator } from '~classes'
-import { OrchestratorType } from '~enums'
 import {
 	OrchestatorOnUpdateHandler,
 	OrchestratorHandler,
 	OrchestratorOnStartHandler,
 } from './orchestrator'
+import { Orchestrator } from '~classes'
+import { OrchestratorType } from '~enums'
 
 const orchestrators: Partial<Record<OrchestratorType, Orchestrator<unknown>>> =
 	{}
