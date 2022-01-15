@@ -35,7 +35,7 @@ const validateProjectFiles = async (fileCollection: FileCollection) => {
 	if (!jsonFile) {
 		throw new Error('No JSON file found in zip')
 	}
-	const jsonTables = (await jsonFile.getJson()).tables
+	const jsonTables = (await jsonFile.toJson()).tables
 	const tableEntries = fileCollection.list(FileType.table).map(e => e.name)
 
 	const requiredTables = jsonTables
