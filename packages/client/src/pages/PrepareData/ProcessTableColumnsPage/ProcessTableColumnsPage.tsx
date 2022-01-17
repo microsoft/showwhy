@@ -53,6 +53,7 @@ export const ProcessTableColumnsPage: React.FC = memo(
 								table={selectedTable.columns}
 								name={selectedFile?.alias ?? selectedFile?.name}
 								commands={tableCommands}
+								visibleColumns={columns.map(col => col.name)}
 								showRowCount
 								showColumnCount
 							/>
@@ -61,7 +62,8 @@ export const ProcessTableColumnsPage: React.FC = memo(
 									table={selectedTable.columns}
 									onColumnClick={onSelectColumn}
 									selectedColumn={selectedColumn}
-									visibleColumns={columns.map(x => x.name)}
+									visibleColumns={columns.map(col => col.name)}
+									columns={columns}
 									isColumnClickable
 									isSortable
 									isHeadersFixed

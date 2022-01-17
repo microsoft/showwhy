@@ -56,7 +56,7 @@ export const useBusinessLogic = (): GenericObject => {
 		return originalTables.find(x => x.tableId === selectedFile?.id)
 	}, [originalTables, selectedFile])
 
-	const columns = useMemo(() => {
+	const columns = useMemo((): IColumn[] => {
 		if (!selectedTable) return []
 		return selectedTable.columns
 			?.select(not(removedColumns))
