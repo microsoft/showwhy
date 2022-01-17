@@ -3,18 +3,24 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import {
+	OrchestatorOnUpdateHandler,
+	OrchestratorHandler,
+	OrchestratorOnStartHandler,
+} from './orchestrator'
 import { Orchestrator } from '~classes'
 import { OrchestratorType } from '~enums'
 
-const orchestrators = {}
+const orchestrators: Partial<Record<OrchestratorType, Orchestrator<unknown>>> =
+	{}
 
-function getOrchestrator(
+function getOrchestrator<UpdateStatus>(
 	type: OrchestratorType,
-	onStart?: ((...args) => void) | undefined,
-	onUpdate?: ((...args) => void) | undefined,
-	onComplete?: ((...args) => void) | undefined,
-	onCancel?: ((...args) => void) | undefined,
-): Orchestrator {
+	onStart?: OrchestratorOnStartHandler | undefined,
+	onUpdate?: OrchestatorOnUpdateHandler<UpdateStatus> | undefined,
+	onComplete?: OrchestratorHandler | undefined,
+	onCancel?: OrchestratorHandler | undefined,
+) {
 	const existing = orchestrators[type]
 
 	if (!existing) {
@@ -25,7 +31,7 @@ function getOrchestrator(
 			onCancel,
 		)
 
-		orchestrators[type] = newOrchestrator
+		orchestrators[type] = newOrchestrator as Orchestrator<unknown>
 
 		return newOrchestrator
 	}
@@ -33,12 +39,12 @@ function getOrchestrator(
 	return existing
 }
 
-export function getEstimatorOrchestrator(
-	onStart?: ((...args) => void) | undefined,
-	onUpdate?: ((...args) => void) | undefined,
-	onComplete?: ((...args) => void) | undefined,
-	onCancel?: ((...args) => void) | undefined,
-): Orchestrator {
+export function getEstimatorOrchestrator<UpdateStatus>(
+	onStart?: OrchestratorOnStartHandler | undefined,
+	onUpdate?: OrchestatorOnUpdateHandler<UpdateStatus> | undefined,
+	onComplete?: OrchestratorHandler | undefined,
+	onCancel?: OrchestratorHandler | undefined,
+) {
 	return getOrchestrator(
 		OrchestratorType.Estimator,
 		onStart,
@@ -48,12 +54,12 @@ export function getEstimatorOrchestrator(
 	)
 }
 
-export function getConfidenceOrchestrator(
-	onStart?: ((...args) => void) | undefined,
-	onUpdate?: ((...args) => void) | undefined,
-	onComplete?: ((...args) => void) | undefined,
-	onCancel?: ((...args) => void) | undefined,
-): Orchestrator {
+export function getConfidenceOrchestrator<UpdateStatus>(
+	onStart?: OrchestratorOnStartHandler | undefined,
+	onUpdate?: OrchestatorOnUpdateHandler<UpdateStatus> | undefined,
+	onComplete?: OrchestratorHandler | undefined,
+	onCancel?: OrchestratorHandler | undefined,
+) {
 	return getOrchestrator(
 		OrchestratorType.ConfidenceInterval,
 		onStart,

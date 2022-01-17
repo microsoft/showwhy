@@ -4,7 +4,7 @@
  */
 
 import { useCallback } from 'react'
-import { getEstimatorOrchestrator } from '~classes'
+import { getEstimatorOrchestrator, Orchestrator } from '~classes'
 import {
 	useRefutationLength,
 	useUpdateActiveRunHistory,
@@ -18,7 +18,7 @@ import {
 import { useConfidenceInterval } from '~state'
 import { returnStatus } from '~utils'
 
-export const useRunEstimate = (): any => {
+export function useRunEstimate(): () => Orchestrator<EstimateEffectStatusResponse> {
 	const updateActive = useUpdateActiveRunHistory()
 	const updateNodeResponse = useUpdateNodeResponseActiveRunHistory()
 
@@ -54,7 +54,7 @@ export const useRunEstimate = (): any => {
 		[updateNodeResponse],
 	)
 
-	const run = useCallback((): any => {
+	const run = useCallback((): Orchestrator<EstimateEffectStatusResponse> => {
 		return getEstimatorOrchestrator(onStart, onUpdate, onComplete)
 	}, [onUpdate, onComplete])
 
