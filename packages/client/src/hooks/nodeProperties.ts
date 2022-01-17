@@ -14,7 +14,7 @@ import {
 	useRefutationType,
 } from '~state'
 
-export const useNodeProperties = (): NodeProperties => {
+export function useNodeProperties(): NodeProperties {
 	const definitions = useDefineQuestion()
 	const estimators = useEstimators()
 	const refutationType = useRefutationType()

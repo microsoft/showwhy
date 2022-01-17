@@ -9,9 +9,7 @@ import { AlternativeModels, DescribeElements } from '~interfaces'
 import { useDefineQuestion } from '~state'
 import { GenericObject } from '~types'
 
-export const useCausalEffects = (
-	causalLevel: CausalModelLevel,
-): GenericObject => {
+export function useCausalEffects(causalLevel: CausalModelLevel): GenericObject {
 	return useCausalEffectsTestable(
 		useDefineQuestion(),
 		useExcludedFactors(),

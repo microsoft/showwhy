@@ -96,6 +96,6 @@
 		"jest": "^27.4.7",
 		"regenerator-runtime": "^0.13.9",
 		"typescript": "^4.5.4",
-		"vite": "^2.7.10"
+		"vite": "^2.7.12"
 	}
 }
