@@ -3,6 +3,10 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import {
+	ArqueroDetailsList,
+	ArqueroTableHeader,
+} from '@data-wrangling-components/react'
+import {
 	ContextualMenu,
 	DefaultButton,
 	IContextualMenuProps,
@@ -16,9 +20,9 @@ import { DefinitionSteps } from './DefinitionSteps'
 import { Header } from './Header'
 import { useBusinessLogic } from './hooks'
 import { EmptyDataPageWarning } from '~components/EmptyDataPageWarning'
-import { ModelTable } from '~components/Tables/ModelTable'
 import { PageType, Pages } from '~enums'
 import { ContainerFlexRow } from '~styles'
+import ColumnTable from 'arquero/dist/types/table/column-table'
 
 export const ModelVariablesPage: React.FC = memo(function ModelVariablesPage() {
 	const {
@@ -66,14 +70,30 @@ export const ModelVariablesPage: React.FC = memo(function ModelVariablesPage() {
 						/>
 					</Then>
 					<Else>
+						{console.log('column names', subjectIdentifierData.columnNames)}
 						<Container>
 							<Header />
 							<NormalContainer>
-								<ModelTable
-									sortable={true}
-									columnsData={subjectIdentifierData.columns}
-									columnNames={subjectIdentifierData.columnNames}
+								<ArqueroTableHeader
+									table={subjectIdentifierData.columns}
+									showRowCount
+									showColumnCount
 								/>
+								<DetailsListContainer>
+									<ArqueroDetailsList
+										table={subjectIdentifierData.columns}
+										visibleColumns={
+											subjectIdentifierData.columnNames
+												? [...subjectIdentifierData.columnNames]
+												: []
+										}
+										includeAllColumns={false}
+										isSortable
+										isHeadersFixed
+										isStriped
+										showColumnBorders
+									/>
+								</DetailsListContainer>
 								<ContainerFlexRow>
 									<DefinitionListContainer>
 										<TitleContainer>
@@ -168,6 +188,12 @@ const TitleContainer = styled.div`
 	display: flex;
 	justify-content: space-between;
 	width: 100%;
+`
+
+const DetailsListContainer = styled.div`
+	overflow-y: scroll;
+	overflow-x: scroll;
+	height: 40vh;
 `
 
 function _getMenu(props: IContextualMenuProps): JSX.Element {

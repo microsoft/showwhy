@@ -89,6 +89,7 @@ export const SelectedTableDisplay: React.FC<SelectedTableDisplayProps> = memo(
 								isSortable
 								isHeadersFixed
 								isStriped
+								showColumnBorders
 							/>
 						</DatasetContainer>
 					</SelectedFile>

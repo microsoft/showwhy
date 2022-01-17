@@ -18,7 +18,7 @@ export const SaveProject: React.FC = memo(function SaveProject() {
 		(type: FileType) => {
 			downloadResult(type)
 		},
-		[defaultRun, downloadResult],
+		[downloadResult],
 	)
 
 	const saveProps = useMemo((): IContextualMenuProps => {

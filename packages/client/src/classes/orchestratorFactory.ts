@@ -14,7 +14,7 @@ function getOrchestrator(
 	onUpdate?: ((...args) => void) | undefined,
 	onComplete?: ((...args) => void) | undefined,
 	onCancel?: ((...args) => void) | undefined,
-) {
+): Orchestrator {
 	const existing = orchestrators[type]
 
 	if (!existing) {
@@ -38,7 +38,7 @@ export function getEstimatorOrchestrator(
 	onUpdate?: ((...args) => void) | undefined,
 	onComplete?: ((...args) => void) | undefined,
 	onCancel?: ((...args) => void) | undefined,
-) {
+): Orchestrator {
 	return getOrchestrator(
 		OrchestratorType.Estimator,
 		onStart,
@@ -53,7 +53,7 @@ export function getConfidenceOrchestrator(
 	onUpdate?: ((...args) => void) | undefined,
 	onComplete?: ((...args) => void) | undefined,
 	onCancel?: ((...args) => void) | undefined,
-) {
+): Orchestrator {
 	return getOrchestrator(
 		OrchestratorType.ConfidenceInterval,
 		onStart,

@@ -59,7 +59,6 @@ export const ProcessTableColumnsPage: React.FC = memo(
 							<DetailsListContainer>
 								<ArqueroDetailsList
 									table={selectedTable.columns}
-									columns={columns}
 									onColumnClick={onSelectColumn}
 									selectedColumn={selectedColumn}
 									visibleColumns={columns.map(x => x.name)}
