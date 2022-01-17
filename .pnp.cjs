@@ -3028,7 +3028,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/styled-components", "npm:5.1.20"],
             ["@types/uuid", "npm:8.3.4"],
             ["@uifabric/icons", "virtual:43234044b7438fe2d61705a53806e3cf1b57c36f9d0076f4ea9860d4c0f5b9f7239021252d58389c52e724a7d4da6edf23f1d58bae876b1fdf20bda31e9357ce#npm:7.6.2"],
-            ["@zip.js/zip.js", "npm:2.3.23"],
             ["add", "npm:2.0.6"],
             ["ahooks", "virtual:43234044b7438fe2d61705a53806e3cf1b57c36f9d0076f4ea9860d4c0f5b9f7239021252d58389c52e724a7d4da6edf23f1d58bae876b1fdf20bda31e9357ce#npm:2.10.14"],
             ["arquero", "npm:4.8.7"],

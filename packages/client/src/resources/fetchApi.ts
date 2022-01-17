@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { localhostUrl } from './utils'
+import { localhostUrl, replaceAzureUrl } from './utils'
 import { NodeResponseStatus, OrchestratorType } from '~enums'
 import {
 	UploadFilesResponse,
@@ -78,16 +78,15 @@ export const downloadFile = async (
 			SESSION_ID_KEY,
 		)}&code=${DOWNLOAD_FILES_API_KEY}&file_name=${fileName}`,
 	).then(response => response.json())
+	const url = replaceAzureUrl(fileUrl.signed_url)
 	try {
-		const blob = await fetch(fileUrl.signed_url).then(response =>
-			response.blob(),
-		)
+		const blob = await fetch(url).then(response => response.blob())
 		return {
 			blob,
-			url: fileUrl.signed_url,
+			url,
 		}
 	} catch (error) {
-		window.open(fileUrl.signed_url)
+		window.open(url)
 	}
 }
 

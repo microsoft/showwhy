@@ -1673,7 +1673,6 @@ __metadata:
     "@types/styled-components": ^5.1.19
     "@types/uuid": ^8.3.4
     "@uifabric/icons": ^7.6.2
-    "@zip.js/zip.js": ^2.3.23
     add: ^2.0.6
     ahooks: ^2.10.14
     arquero: ^4.8.7
@@ -2836,7 +2835,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@zip.js/zip.js@npm:^2.3.19, @zip.js/zip.js@npm:^2.3.23":
+"@zip.js/zip.js@npm:^2.3.19":
   version: 2.3.23
   resolution: "@zip.js/zip.js@npm:2.3.23"
   checksum: 07659e3aeabd50811f250eca32ff5dbfa92926e64a8980ce765fc99f9413afd7fd17a0a67cc35121156be4ddefe3a141646d67dbb9d5f2ee64723043804107dc
