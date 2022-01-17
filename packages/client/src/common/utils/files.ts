@@ -36,6 +36,10 @@ export function isUrl(url: string): boolean {
 	return /^https?:\/\//.test(url.toLowerCase())
 }
 
+export function isDataUrl(url: string): boolean {
+	return /^data:/.test(url.toLowerCase())
+}
+
 export const groupFilesByType = async (
 	fileCollection: FileCollection,
 ): Promise<ZipData> => {

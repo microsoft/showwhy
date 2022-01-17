@@ -10,8 +10,8 @@ import {
 	FileWithPath,
 } from '@data-wrangling-components/utilities'
 import { useCallback, useMemo } from 'react'
-import { PageType } from '~enums'
-import { useGetStepUrlsByStatus } from '~hooks'
+import { NodeResponseStatus, PageType } from '~enums'
+import { useGetCSVResult, useGetStepUrlsByStatus } from '~hooks'
 import { Workspace } from '~interfaces'
 import {
 	useCausalFactors,
@@ -27,8 +27,9 @@ import {
 	usePrimaryTable,
 	useDefaultDatasetResult,
 	useOriginalTables,
+	useRunHistory,
 } from '~state'
-import { isUrl } from '~utils'
+import { isDataUrl } from '~utils'
 
 export const useSaveProject = () => {
 	const fileCollection = useFileCollection()
@@ -119,13 +120,42 @@ const useTables = fileCollection => {
 	)
 }
 
+const useCSVResult = (): Promise<FileWithPath | undefined> => {
+	const getCSVResult = useGetCSVResult()
+	const runHistory = useRunHistory()
+	return useMemo(async () => {
+		const completed = runHistory.find(
+			run =>
+				run.isActive && run.status?.status === NodeResponseStatus.Completed,
+		)
+		if (completed) {
+			const options = {
+				name: 'results.csv',
+				type: 'text/csv',
+			}
+			const csvResult = await getCSVResult()
+			if (csvResult) {
+				return createFileWithPath(csvResult, options)
+			}
+		}
+		return undefined
+	}, [getCSVResult, runHistory])
+}
+
 const useResults = () => {
 	const defaultDatasetResult = useDefaultDatasetResult()
+	const csvResult = useCSVResult()
 	return useMemo(async () => {
-		if (defaultDatasetResult?.url) {
+		const file = await csvResult
+		if (file) {
+			return {
+				file,
+				url: `zip://${file.name}`,
+			}
+		} else if (defaultDatasetResult?.url) {
 			let { url } = defaultDatasetResult
 			let file
-			if (!isUrl(defaultDatasetResult.url)) {
+			if (isDataUrl(defaultDatasetResult.url)) {
 				const f = await fetchFile(defaultDatasetResult.url)
 				const options = {
 					name: 'results.csv',
@@ -139,7 +169,7 @@ const useResults = () => {
 				url,
 			}
 		}
-	}, [defaultDatasetResult])
+	}, [defaultDatasetResult, csvResult])
 }
 
 const useDownload = fileCollection => {
@@ -175,6 +205,6 @@ const useDownload = fileCollection => {
 			await copy.add(files)
 			await copy.toZip()
 		},
-		[fileCollection, results, getTables],
+		[fileCollection, results, getTables, getPrimary],
 	)
 }

@@ -31,3 +31,11 @@ export function useDownloadResult(): (fileType: FileType) => void {
 		[getResult],
 	)
 }
+
+export function useGetCSVResult(): () => Promise<Blob | undefined> {
+	return useCallback(async () => {
+		const result = await downloadFile(DownloadType.csv)
+		if (!result) return
+		return result.blob
+	}, [])
+}
