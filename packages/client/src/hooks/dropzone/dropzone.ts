@@ -74,7 +74,7 @@ export function useGlobalDropzone(
 ): {
 	onDrop: (f: FileCollection) => void
 	onDropAccepted: (f: FileCollection) => void
-	onDropRejected: (f: FileCollection) => void
+	onDropRejected: (msg: string) => void
 	fileCount: DropFilesCount
 	loading: boolean
 	acceptedFileTypes: string[]
