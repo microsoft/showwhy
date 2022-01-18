@@ -24,7 +24,7 @@ const {
 	EXECUTIONS_NUMBER_API_KEY,
 } = getEnv()
 
-export const executeNode = async (data: NodeRequest): Promise<NodeResponse> => {
+export async function executeNode(data: NodeRequest): Promise<NodeResponse> {
 	const url = `${BASE_URL}/api/orchestrators/ExecuteNodeOrchestrator?code=${ORCHESTRATORS_API_KEY}`
 	return fetch(url, {
 		method: 'POST',
@@ -42,9 +42,9 @@ export const executeNode = async (data: NodeRequest): Promise<NodeResponse> => {
 		})
 }
 
-export const numberExecutions = async (
+export async function numberExecutions(
 	data: NodeRequest,
-): Promise<TotalExecutionsResponse> => {
+): Promise<TotalExecutionsResponse> {
 	const url = `${BASE_URL}/api/getnumberofexecutions?code=${EXECUTIONS_NUMBER_API_KEY}`
 	const [node_data] = data.nodes
 	const options = {
@@ -58,9 +58,9 @@ export const numberExecutions = async (
 	return fetchHandler(url, options).then(response => response?.json())
 }
 
-export const uploadFiles = async (
+export async function uploadFiles(
 	formData: FormData,
-): Promise<UploadFilesResponse> => {
+): Promise<UploadFilesResponse> {
 	const url = `${BASE_URL}/api/UploadFile?session_id=${getStorageItem(
 		SESSION_ID_KEY,
 	)}&code=${UPLOAD_FILES_API_KEY}`
@@ -70,9 +70,9 @@ export const uploadFiles = async (
 	}).then(response => response?.json())
 }
 
-export const downloadFile = async (
+export async function downloadFile(
 	fileName: string,
-): Promise<{ blob: Blob; url: string } | undefined> => {
+): Promise<{ blob: Blob; url: string } | undefined> {
 	const fileUrl: { signed_url: string } = await fetch(
 		`${BASE_URL}/api/getdownloadurl?session_id=${getStorageItem(
 			SESSION_ID_KEY,
@@ -90,10 +90,10 @@ export const downloadFile = async (
 	}
 }
 
-export const terminateRun = async (
+export async function terminateRun(
 	url: string,
 	reason = 'User canceled the run',
-): Promise<void> => {
+): Promise<void> {
 	if (!url) return
 	url = url.replace('http://functions/', 'http://localhost:81/')
 	await fetch(`${url.replace('{text}', reason)}`, {
@@ -101,7 +101,11 @@ export const terminateRun = async (
 	})
 }
 
-const fetchHandler = async (url, options, retryCount = 0) => {
+async function fetchHandler(
+	url: string,
+	options: RequestInit & { maxRetries?: number },
+	retryCount = 0,
+) {
 	const { maxRetries = 0, ...fetchOptions } = options
 	try {
 		return await fetch(url, fetchOptions)
@@ -116,9 +120,9 @@ const fetchHandler = async (url, options, retryCount = 0) => {
 	}
 }
 
-export const returnOrchestratorStatus = async (
+export async function returnOrchestratorStatus(
 	url: string,
-): Promise<OrchestratorStatus> => {
+): Promise<OrchestratorStatus> {
 	return await fetch(localhostUrl(url))
 		.then(response => response?.json())
 		.catch(() => {

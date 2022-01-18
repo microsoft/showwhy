@@ -8,7 +8,7 @@ import { NodeTypes } from '~enums'
 import { Data, Edge, NodeRequest, NodeResponse } from '~interfaces'
 import { executeNode } from '~resources'
 
-const dataObject = (value: string): Data => {
+function dataObject(value: string): Data {
 	return {
 		data: {
 			id: value,
@@ -17,7 +17,7 @@ const dataObject = (value: string): Data => {
 		},
 	}
 }
-const edgeObject = (value: string, generalExposure: string): Edge => {
+function edgeObject(value: string, generalExposure: string): Edge {
 	return {
 		data: {
 			source: value,
@@ -26,12 +26,12 @@ const edgeObject = (value: string, generalExposure: string): Edge => {
 	}
 }
 
-export const prepareData = (
+export function prepareData(
 	confounders: string[] | null,
 	outcomeDeterminants: string[] | null,
 	generalExposure: string,
 	generalOutcome: string,
-): Promise<NodeResponse> => {
+): Promise<NodeResponse> {
 	const edges: Edge[] = []
 	let nodes: Data[] = []
 	let variablesNames: string[] = []

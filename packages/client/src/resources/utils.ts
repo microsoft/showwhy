@@ -13,9 +13,7 @@ import {
 import { NodeData } from '~interfaces'
 import { getEnv } from '~resources/getEnv'
 
-export const getSimulationNumByRefuterType = (
-	type: RefutationTypes,
-): number => {
+export function getSimulationNumByRefuterType(type: RefutationTypes): number {
 	switch (type) {
 		case RefutationTypes.FullRefutation:
 			return 100
@@ -25,9 +23,7 @@ export const getSimulationNumByRefuterType = (
 	}
 }
 
-export const getModelTypeByEstimatorGroup = (
-	group: EstimatorsGroups,
-): string => {
+export function getModelTypeByEstimatorGroup(group: EstimatorsGroups): string {
 	switch (group) {
 		case EstimatorsGroups.ExposureEstimator:
 			return 'Treatment Assignment Model'
@@ -36,7 +32,7 @@ export const getModelTypeByEstimatorGroup = (
 	}
 }
 
-export const getModelNameByEstimatorType = (type: EstimatorsType): string => {
+export function getModelNameByEstimatorType(type: EstimatorsType): string {
 	switch (type) {
 		case EstimatorsType.ForestDoubleMachineLearning:
 			return 'econml.dml.CausalForestDML'
@@ -57,7 +53,7 @@ export const getModelNameByEstimatorType = (type: EstimatorsType): string => {
 	}
 }
 
-export const getNodeProperties = (type: NodeTypes): NodeData => {
+export function getNodeProperties(type: NodeTypes): NodeData {
 	switch (type) {
 		case NodeTypes.EstimateEffects:
 			return {
@@ -101,7 +97,7 @@ export const getNodeProperties = (type: NodeTypes): NodeData => {
 	}
 }
 
-export const localhostUrl = (url: string): string => {
+export function localhostUrl(url: string): string {
 	return url.replace('http://functions/', 'http://localhost:81/')
 }
 
