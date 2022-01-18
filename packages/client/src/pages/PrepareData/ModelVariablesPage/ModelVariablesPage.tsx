@@ -22,7 +22,6 @@ import { useBusinessLogic } from './hooks'
 import { EmptyDataPageWarning } from '~components/EmptyDataPageWarning'
 import { PageType, Pages } from '~enums'
 import { ContainerFlexRow } from '~styles'
-import ColumnTable from 'arquero/dist/types/table/column-table'
 
 export const ModelVariablesPage: React.FC = memo(function ModelVariablesPage() {
 	const {
@@ -70,7 +69,6 @@ export const ModelVariablesPage: React.FC = memo(function ModelVariablesPage() {
 						/>
 					</Then>
 					<Else>
-						{console.log('column names', subjectIdentifierData.columnNames)}
 						<Container>
 							<Header />
 							<NormalContainer>
@@ -82,12 +80,8 @@ export const ModelVariablesPage: React.FC = memo(function ModelVariablesPage() {
 								<DetailsListContainer>
 									<ArqueroDetailsList
 										table={subjectIdentifierData.columns}
-										visibleColumns={
-											subjectIdentifierData.columnNames
-												? [...subjectIdentifierData.columnNames]
-												: []
-										}
-										includeAllColumns={false}
+										columns={subjectIdentifierData.columnNames}
+										features={{ smartHeaders: true }}
 										isSortable
 										isHeadersFixed
 										isStriped
