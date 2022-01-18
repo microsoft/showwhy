@@ -212,7 +212,8 @@ export const DeriveComponent: React.FC<DeriveProps> = memo(
 				type,
 				selectedDefinition,
 				setModelVariables,
-				onSave,
+				onCreateNewDefinition,
+				onUpdate,
 			],
 		)
 

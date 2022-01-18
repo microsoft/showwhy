@@ -97,7 +97,7 @@ export const useAllTableColumns = (
 export function useResetTableColumns(): Resetter {
 	const reset = useResetRecoilState
 	const setTableState = useSetRecoilState(keys)
-	const ids = [...useRecoilValue(keys)]
+	const ids = useRecoilValue(keys)
 	return useCallback(() => {
 		ids.forEach(id => reset(tableColumnsState(id)))
 		setTableState([])

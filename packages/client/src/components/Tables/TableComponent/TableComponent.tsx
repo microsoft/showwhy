@@ -13,6 +13,7 @@ import {
 	FlatCausalFactor,
 	CausalFactor,
 	HeaderData,
+	Factor,
 } from '~interfaces'
 
 export interface TableProps {
@@ -42,7 +43,7 @@ export const TableComponent: React.FC<TableProps> = memo(
 		onSave,
 	}) {
 		const { items, customColumnsWidth, headersData } = useTableComponent(
-			columns,
+			columns as Factor[],
 			headers,
 			definitionToEdit,
 			factorToEdit,
