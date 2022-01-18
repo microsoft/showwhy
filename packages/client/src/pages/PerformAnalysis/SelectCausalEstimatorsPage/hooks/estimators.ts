@@ -24,7 +24,7 @@ enum BatchUpdateAction {
 	Add = 'add',
 }
 
-export const useEstimatorHook = (): GenericObject => {
+export function useEstimatorHook(): GenericObject {
 	const estimators = useEstimators()
 	const setEstimators = useSetEstimators()
 	const estimatorsList = useEstimatorsList()
@@ -131,7 +131,7 @@ export const useEstimatorHook = (): GenericObject => {
 	}
 }
 
-const useBatchUpdate = setEstimators => {
+function useBatchUpdate(setEstimators) {
 	return useCallback(
 		(estimators: Estimator[], action: BatchUpdateAction) => {
 			switch (action) {
@@ -159,11 +159,11 @@ const useBatchUpdate = setEstimators => {
 	)
 }
 
-const useVerifyEstimatorGroups = (
+function useVerifyEstimatorGroups(
 	estimatorsList,
 	estimators,
 	setSelectedEstimatorGroups,
-) => {
+) {
 	return useCallback(() => {
 		estimatorGroups.forEach(item => {
 			const group: EstimatorsGroups = item.key as EstimatorsGroups
@@ -180,13 +180,13 @@ const useVerifyEstimatorGroups = (
 	}, [estimators, estimatorsList, setSelectedEstimatorGroups])
 }
 
-const useOnEstimatorTypeChange = (
+function useOnEstimatorTypeChange(
 	estimatorsList,
 	selectedEstimatorGroups,
 	setSelectedEstimatorGroupKey,
 	batchUpdateSelectedEstimators,
 	setSelectedEstimatorGroups,
-) => {
+) {
 	return useCallback(
 		(group: EstimatorsGroups) => {
 			setSelectedEstimatorGroupKey(group)
@@ -211,10 +211,10 @@ const useOnEstimatorTypeChange = (
 	)
 }
 
-const useOnDefaultChange = (
+function useOnDefaultChange(
 	setDefaultEstimator,
 	setPrimarySpecificationConfig,
-) => {
+) {
 	return useCallback(
 		(type: EstimatorsType) => {
 			setDefaultEstimator(type)
@@ -227,7 +227,7 @@ const useOnDefaultChange = (
 	)
 }
 
-const useEstimatorCardList = (
+function useEstimatorCardList(
 	estimatorsList,
 	defaultEstimator,
 	estimators,
@@ -239,7 +239,7 @@ const useEstimatorCardList = (
 	estimatorShortDescription,
 	confidenceInterval,
 	onConfidenceIntervalsChange,
-) => {
+) {
 	return useMemo(() => {
 		const list = estimatorGroups.map(type => {
 			const { key } = type

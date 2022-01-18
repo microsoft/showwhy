@@ -19,7 +19,7 @@ import {
 } from '~state'
 import { GenericObject } from '~types'
 
-export const useBusinessLogic = (): GenericObject => {
+export function useBusinessLogic(): GenericObject {
 	const selectedFile = useSelectedFile()
 	const setSelectedFile = useSetSelectedFile()
 	const originalTables = useOriginalTables()

@@ -7,16 +7,17 @@ import { useCallback } from 'react'
 import { OnChange, OnRelevanceChangeArgs } from './interfaces'
 import { ColumnRelation, ColumnRelevance } from '~enums'
 import { TableColumn } from '~interfaces'
-import { GenericFn } from '~types'
 
-export const useOnRelevanceChange = ({
+export function useOnRelevanceChange({
 	setTableColumns,
 	tableColumns,
 	setRelevance,
 	relevance,
 	columnName,
 	onRemoveColumn,
-}: OnRelevanceChangeArgs): GenericFn => {
+}: OnRelevanceChangeArgs): (
+	changedRelevance: ColumnRelevance | undefined,
+) => void {
 	return useCallback(
 		(changedRelevance: ColumnRelevance | undefined) => {
 			if (relevance === changedRelevance) {
@@ -57,11 +58,11 @@ export const useOnRelevanceChange = ({
 	)
 }
 
-export const useOnDefinitionChange = ({
+export function useOnDefinitionChange({
 	setTableColumns,
 	tableColumns,
 	columnName,
-}: OnChange): GenericFn => {
+}: OnChange): (changedRelation: ColumnRelation[]) => void {
 	return useCallback(
 		(changedRelation: ColumnRelation[]) => {
 			const column = {
@@ -87,13 +88,13 @@ export const useOnDefinitionChange = ({
 	)
 }
 
-export const useToggleInvalidValue = ({
+export function useToggleInvalidValue({
 	setTableColumns,
 	tableColumns,
 	columnName,
-}: OnChange): GenericFn => {
+}: OnChange): (value: string | null) => void {
 	return useCallback(
-		value => {
+		(value: string | null) => {
 			const actualColumn = tableColumns?.find(a => a.name === columnName) || {}
 
 			const invalidV =
@@ -106,8 +107,8 @@ export const useToggleInvalidValue = ({
 
 			const newValues = [...invalidV.filter(x => x !== value)]
 			if (
-				!invalidV?.includes(value) ||
-				(value === null && invalidV?.includes('null'))
+				(value != null && !invalidV?.includes(value)) ||
+				(value == null && invalidV?.includes('null'))
 			) {
 				if (value === null) {
 					newValues.push('null')

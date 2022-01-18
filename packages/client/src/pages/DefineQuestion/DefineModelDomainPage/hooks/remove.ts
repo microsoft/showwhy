@@ -6,22 +6,22 @@
 import { useCallback } from 'react'
 import { SetDefinitions } from './types'
 import { ElementDefinition } from '~interfaces'
-import { GenericFn } from '~types'
 
-export const useRemoveDefinition = (
+export function useRemoveDefinition(
 	setDefinitions: SetDefinitions,
-	saveDefinitions: GenericFn,
+	saveDefinitions: (definitions: ElementDefinition[]) => void,
 	definitions?: ElementDefinition[],
-): GenericFn => {
+): (definition: ElementDefinition) => void {
 	return useCallback(
 		(definition: ElementDefinition) => {
 			setDefinitions(() => {
-				const newDefinitions = definitions?.filter(def =>
-					definition.id
-						? def.id !== definition.id
-						: def.variable !== definition.variable &&
-						  def.level !== definition.level,
-				)
+				const newDefinitions =
+					definitions?.filter(def =>
+						definition.id
+							? def.id !== definition.id
+							: def.variable !== definition.variable &&
+							  def.level !== definition.level,
+					) || []
 				saveDefinitions(newDefinitions)
 				return newDefinitions
 			})

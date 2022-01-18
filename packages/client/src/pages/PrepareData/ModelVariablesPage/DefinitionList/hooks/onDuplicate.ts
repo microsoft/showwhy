@@ -28,11 +28,11 @@ interface OnDuplicateArgs {
 	onClick: GenericFn
 }
 
-export const useOnDuplicateCausalFactor = ({
+export function useOnDuplicateCausalFactor({
 	saveCausalFactor,
 	listEndRef,
 	onClick,
-}: OnDuplicateCausalFactorArgs): GenericFn => {
+}: OnDuplicateCausalFactorArgs): GenericFn {
 	return useCallback(
 		async (val: CausalFactor, newVariable: string) => {
 			const newCausalFactor = {
@@ -51,7 +51,7 @@ export const useOnDuplicateCausalFactor = ({
 	)
 }
 
-export const useOnDuplicate = ({
+export function useOnDuplicate({
 	saveDefinition,
 	duplicateColumn,
 	modelVariables,
@@ -60,7 +60,7 @@ export const useOnDuplicate = ({
 	onDuplicateCausalFactor,
 	listEndRef,
 	onClick,
-}: OnDuplicateArgs): GenericFn => {
+}: OnDuplicateArgs): (value: Factor) => Promise<void> {
 	return useCallback(
 		async (value: Factor) => {
 			const newVariableName = value?.variable + '_copy'

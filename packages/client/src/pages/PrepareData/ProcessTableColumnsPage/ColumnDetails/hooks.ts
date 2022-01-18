@@ -21,12 +21,12 @@ import { ColumnRelevance } from '~enums'
 import { useSetTableColumns, useTableColumns } from '~state'
 import { GenericObject } from '~types'
 
-export const useColumnDetails = ({
+export function useColumnDetails({
 	columnName,
 	values,
 	fileId,
 	onRemoveColumn,
-}: ColumnDetailsProps): GenericObject => {
+}: ColumnDetailsProps): GenericObject {
 	const tableColumns = useTableColumns(fileId)
 	const setTableColumns = useSetTableColumns(fileId)
 	const [relevance, setRelevance] = useState<ColumnRelevance | undefined>()
