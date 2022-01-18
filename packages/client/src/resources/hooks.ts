@@ -15,9 +15,9 @@ import { NodeTypes } from '~enums'
 import { useNodeProperties } from '~hooks'
 import { AdditionalProperties, NodeRequest } from '~interfaces'
 
-export const useGetNodeProperties = (): ((
+export function useGetNodeProperties(): (
 	fileName: string,
-) => AdditionalProperties) => {
+) => AdditionalProperties {
 	const {
 		definitions,
 		estimators,
