@@ -36,7 +36,9 @@ import {
 } from '~state'
 import { fetchTable, isZipUrl, loadTable, runPipeline } from '~utils'
 
-export function useLoadProject(source = ProjectSource.url) {
+export function useLoadProject(
+	source = ProjectSource.url,
+): () => Promise<void> {
 	const id = useMemo(() => uuidv4(), [])
 	const setTableColumns = useSetTableColumns(id)
 	const setModelVariables = useSetModelVariables(id)
@@ -128,6 +130,7 @@ export function useLoadProject(source = ProjectSource.url) {
 		},
 		[
 			id,
+			source,
 			setOriginalTable,
 			addFile,
 			setPrimarySpecificationConfig,

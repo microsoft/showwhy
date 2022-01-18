@@ -148,3 +148,6 @@ appsettings.json
 
 # Deploy zip
 deploy.zip
+
+# SWC tmp output
+.swc/

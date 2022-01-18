@@ -24,21 +24,20 @@ import {
 import { Estimator } from '~interfaces'
 
 describe('estimatorsHooks', () => {
-	/*
-	it('useForestDoublyRobustLearner', () => {
-		const expected = ESTIMATORS.find(
-			e => e.type === EstimatorsType.ForestDoublyRobustLearner,
-		)
-		const { result } = renderHook(
-			() => useForestDoublyRobustLearner([expected]),
-			{
-				wrapper: RecoilRoot,
-			},
-		)
-		const response = result.current
-		expect(response.pop()).toEqual(expected)
-	})
-	*/
+	/* eslint-disable-next-line jest/no-commented-out-tests */
+	// it('useForestDoublyRobustLearner', () => {
+	// 	const expected = ESTIMATORS.find(
+	// 		e => e.type === EstimatorsType.ForestDoublyRobustLearner,
+	// 	)
+	// 	const { result } = renderHook(
+	// 		() => useForestDoublyRobustLearner([expected]),
+	// 		{
+	// 			wrapper: RecoilRoot,
+	// 		},
+	// 	)
+	// 	const response = result.current
+	// 	expect(response.pop()).toEqual(expected)
+	// })
 
 	it('useLinearDoublyRobustLearner', () => {
 		const expected = ESTIMATORS.find(
