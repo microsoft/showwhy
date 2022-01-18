@@ -12,11 +12,11 @@ export const ArqueroDetailsTable: React.FC<ArqueroDetailsListProps> = memo(
 	function ArqueroDetailsTable(props) {
 		return (
 			<ArqueroDetailsList
-				{...props}
 				isSortable
 				isHeadersFixed
 				isStriped
 				showColumnBorders
+				{...props}
 			/>
 		)
 	},

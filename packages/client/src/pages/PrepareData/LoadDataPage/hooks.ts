@@ -35,9 +35,6 @@ export const useBusinessLogic = (): GenericObject => {
 	const [showConfirm, { toggle: toggleShowConfirm }] = useBoolean(false)
 	const originalTableState = useSelectOriginalTable(selectedFile?.id as string)
 	const originalTable = originalTableState()?.table
-	{
-		console.log(originalTableState())
-	}
 
 	const handleDismissError = useCallback(() => {
 		setErrorMessage('')
