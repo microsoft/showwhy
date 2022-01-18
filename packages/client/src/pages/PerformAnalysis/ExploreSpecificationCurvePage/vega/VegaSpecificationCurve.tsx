@@ -61,7 +61,7 @@ export const VegaSpecificationCurve: React.FC<VegaSpecificationCurveProps> =
 					const { inactiveFeatures = [], inactiveSpecifications = [] } = config
 					// HACK: do in vega
 					const [column, value] = datum.value.split(':')
-					const inactiveObjects = data.filter(d => d[column] === value)
+					const inactiveObjects = data.filter((d: any) => d[column] === value)
 					const inactiveIds = inactiveObjects.map(x => x.id)
 					const missing = inactiveFeatures.indexOf(value) < 0
 

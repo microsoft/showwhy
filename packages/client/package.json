@@ -9,8 +9,10 @@
 	},
 	"scripts": {
 		"clean": "essex clean build",
-		"build": "tsc -b . && vite build",
-		"build-dev": "tsc -b . && vite build --mode dev",
+		"typecheck": "tsc -b .",
+		"bundle": "vite build",
+		"build": "yarn typecheck && yarn bundle",
+		"build-dev": "yarn typecheck && yarn bundle --mode dev",
 		"build:client-dev": "yarn build-dev && yarn archive",
 		"build:client": "yarn build && yarn archive",
 		"start": "vite",

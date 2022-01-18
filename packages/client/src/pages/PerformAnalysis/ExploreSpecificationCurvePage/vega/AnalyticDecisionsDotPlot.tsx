@@ -133,7 +133,7 @@ export const AnalyticDecisionsDotPlot: React.FC<AnalyticDecisionsDotPlotProps> =
 
 const Container = styled.div``
 
-function useTransformShap(data) {
+function useTransformShap(data: any[]) {
 	const shapColumns = useSpecificationSHAPColumns()
 	// TODO: fold this in vega
 	return useMemo(() => {

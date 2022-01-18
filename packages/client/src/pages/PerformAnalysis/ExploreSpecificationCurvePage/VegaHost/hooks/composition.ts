@@ -14,7 +14,7 @@ import { Spec } from 'vega'
  * @param srcValue
  * @returns
  */
-function customizer(objValue, srcValue) {
+function customizer(objValue: unknown, srcValue: unknown) {
 	if (isArray(objValue)) {
 		return objValue.concat(srcValue)
 	}

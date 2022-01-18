@@ -29,7 +29,7 @@
 		"strict": true,
 		"declaration": true,
 		"incremental": true,
-		"noImplicitAny": false,
+		"noImplicitAny": true,
 		"target": "ESNext",
 		"allowJs": true,
 		"skipLibCheck": true,

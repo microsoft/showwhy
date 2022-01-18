@@ -7,14 +7,20 @@ import { useMemo } from 'react'
 import { RefutationTypes } from '~enums'
 import { useSetFullRefutation, useSetQuickRefutation } from '~hooks'
 import { useRefutationType } from '~state'
-import { GenericObject } from '~types'
 
-export const useRefutations = (): GenericObject => {
+export interface Refutation {
+	key: RefutationTypes
+	title: string
+	description: string
+	isSelected: boolean
+	onChange: () => void
+}
+export function useRefutations(): Refutation[] {
 	const refutation = useRefutationType()
 	const setQuickRefutation = useSetQuickRefutation()
 	const setFullRefutation = useSetFullRefutation()
 
-	const refutationOptions = useMemo(() => {
+	return useMemo(() => {
 		return [
 			{
 				key: RefutationTypes.QuickRefutation,
@@ -34,8 +40,4 @@ export const useRefutations = (): GenericObject => {
 			},
 		]
 	}, [refutation, setQuickRefutation, setFullRefutation])
-
-	return {
-		refutationOptions,
-	}
 }

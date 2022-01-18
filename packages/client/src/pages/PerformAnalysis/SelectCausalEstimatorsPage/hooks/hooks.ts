@@ -3,13 +3,21 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import { useMemo } from 'react'
 import { useEstimatorHook } from './estimators'
-import { useRefutations } from './refutations'
-import { GenericObject } from '~types'
+import { Refutation, useRefutations } from './refutations'
 
-export const useBusinessLogic = (): GenericObject => {
-	return {
-		...useEstimatorHook(),
-		...useRefutations(),
-	}
+export function useBusinessLogic(): {
+	refutations: Refutation[]
+} {
+	const refutations = useRefutations()
+	const estimatorHook = useEstimatorHook()
+
+	return useMemo(
+		() => ({
+			...estimatorHook,
+			refutations,
+		}),
+		[estimatorHook, refutations],
+	)
 }
