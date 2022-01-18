@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { useCallback, useState } from 'react'
+import { useCallback } from 'react'
 import { getConfidenceOrchestrator } from '~classes'
 import { NodeResponseStatus } from '~enums'
 import { useDefaultRun } from '~hooks'
