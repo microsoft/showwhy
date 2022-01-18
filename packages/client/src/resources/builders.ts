@@ -35,12 +35,12 @@ export const buildNodes = (nodes: Node[]): NodeRequest => {
 	} as NodeRequest
 }
 
-export const buildSpecs = (
+export function buildSpecs(
 	dataframeName: string,
 	population: ElementDefinition[],
 	exposure: ElementDefinition[],
 	outcome: ElementDefinition[],
-) => {
+) {
 	const populationSpecs = population.map(p => {
 		const pop: {
 			type: string
@@ -76,10 +76,10 @@ export const buildSpecs = (
 	}
 }
 
-export const buildModelLevel = (
+export function buildModelLevel(
 	modelName: string,
 	model: AlternativeModels,
-): AlternativeModelsReq | undefined => {
+): AlternativeModelsReq | undefined {
 	const modelConfounders = [...model.confounders]
 	const modelOutcome = [...model.outcomeDeterminants]
 	if (
@@ -98,12 +98,12 @@ export const buildModelLevel = (
 	}
 }
 
-export const models = (
+export function models(
 	max: AlternativeModels,
 	min: AlternativeModels,
 	interm: AlternativeModels,
 	unadju: AlternativeModels,
-): AlternativeModelsReq[] => {
+): AlternativeModelsReq[] {
 	const modelsList: AlternativeModelsReq[] = []
 	const maximum = buildModelLevel('Maximum', max)
 	if (maximum) {
@@ -121,7 +121,7 @@ export const models = (
 	return modelsList
 }
 
-export const buildEstimators = (estimators: Estimator[]) => {
+export function buildEstimators(estimators: Estimator[]) {
 	return estimators.map(estimator => ({
 		type: getModelTypeByEstimatorGroup(estimator.group),
 		label: estimator.type ?? EstimatorsType.InversePropensityWeighting,
@@ -131,9 +131,9 @@ export const buildEstimators = (estimators: Estimator[]) => {
 	}))
 }
 
-export const buildRefutationSpecs = (
-	refutationType: RefutationTypes,
-): { num_simulations: number } => {
+export function buildRefutationSpecs(refutationType: RefutationTypes): {
+	num_simulations: number
+} {
 	return {
 		num_simulations: getSimulationNumByRefuterType(refutationType),
 	}

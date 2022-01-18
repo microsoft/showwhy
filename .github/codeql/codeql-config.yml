@@ -1,0 +1,6 @@
+name: 'ShowWhy CodeQL Configuration'
+paths:
+  - packages/
+paths-ignore:
+  - '**/*.spec.ts'
+  - '.pnp.*'

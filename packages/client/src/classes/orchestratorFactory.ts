@@ -44,7 +44,7 @@ export function getEstimatorOrchestrator<UpdateStatus>(
 	onUpdate?: OrchestatorOnUpdateHandler<UpdateStatus> | undefined,
 	onComplete?: OrchestratorHandler | undefined,
 	onCancel?: OrchestratorHandler | undefined,
-) {
+): Orchestrator<UpdateStatus> {
 	return getOrchestrator(
 		OrchestratorType.Estimator,
 		onStart,
@@ -59,7 +59,7 @@ export function getConfidenceOrchestrator<UpdateStatus>(
 	onUpdate?: OrchestatorOnUpdateHandler<UpdateStatus> | undefined,
 	onComplete?: OrchestratorHandler | undefined,
 	onCancel?: OrchestratorHandler | undefined,
-) {
+): Orchestrator<UpdateStatus> {
 	return getOrchestrator(
 		OrchestratorType.ConfidenceInterval,
 		onStart,

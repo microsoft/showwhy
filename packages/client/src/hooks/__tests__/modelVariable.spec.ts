@@ -6,11 +6,12 @@ import { jest } from '@jest/globals'
 import { renderHook } from '@testing-library/react-hooks'
 import { RecoilRoot } from 'recoil'
 import { v4 } from 'uuid'
-import { DefinitionType } from '../../common/enums'
+import { DefinitionType, PageType } from '../../common/enums'
 import {
 	useRemoveDefinitionTestable,
 	useSaveDefinitionTestable,
 } from '../modelVariable'
+import { DescribeElements, ElementDefinition } from '~interfaces'
 
 const question = {
 	population: {
@@ -25,18 +26,18 @@ const question = {
 			},
 		],
 	},
-}
+} as any as DescribeElements
 
 const newDefinition = {
 	id: v4(),
 	level: 'Secondary',
 	variable: '>= 1979',
 	description: '',
-}
+} as any as ElementDefinition
 
 describe('modelVariableHooks', () => {
 	it('useSaveDefinition', () => {
-		const type = 'population'
+		const type = PageType.Population
 		const expected = {
 			...question,
 			[type]: {
@@ -57,7 +58,7 @@ describe('modelVariableHooks', () => {
 	})
 
 	it('useRemoveDefinition', () => {
-		const type = 'population'
+		const type = PageType.Population
 		const expected = {
 			...question,
 			[type]: {

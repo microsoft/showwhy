@@ -37,6 +37,5 @@
 		"isolatedModules": true,
 		"noEmit": true
 	},
-	"include": ["./src/"],
-	"exclude": ["**/__tests__/**"]
+	"include": ["./src/"]
 }

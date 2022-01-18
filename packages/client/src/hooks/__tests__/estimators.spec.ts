@@ -21,6 +21,7 @@ import {
 	useExposureAssignedEstimators,
 	useOutcomeBasedEstimators,
 } from '../estimators'
+import { Estimator } from '~interfaces'
 
 describe('estimatorsHooks', () => {
 	/*
@@ -42,7 +43,7 @@ describe('estimatorsHooks', () => {
 	it('useLinearDoublyRobustLearner', () => {
 		const expected = ESTIMATORS.find(
 			e => e.type === EstimatorsType.LinearDoublyRobustLearner,
-		)
+		) as Estimator
 		const { result } = renderHook(
 			() => useLinearDoublyRobustLearner([expected]),
 			{
@@ -56,7 +57,7 @@ describe('estimatorsHooks', () => {
 	it('useExposureAssignedEstimators', () => {
 		const expected = ESTIMATORS.find(
 			e => e.type === EstimatorsType.InversePropensityWeighting,
-		)
+		) as Estimator
 		const { result } = renderHook(
 			() => useExposureAssignedEstimators([expected]),
 			{
@@ -70,7 +71,7 @@ describe('estimatorsHooks', () => {
 	it('useOutcomeBasedEstimators', () => {
 		const expected = ESTIMATORS.find(
 			e => e.type === EstimatorsType.LinearRegression,
-		)
+		) as Estimator
 		const { result } = renderHook(() => useOutcomeBasedEstimators([expected]), {
 			wrapper: RecoilRoot,
 		})
