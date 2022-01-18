@@ -21,12 +21,14 @@ export const useFactorsDefinitionForm = ({
 	pageType,
 	variables,
 	onAdd,
+	onChange,
 }: {
 	pageType: PageType
 	variables?: IComboBoxOption[]
 	onAdd?: (factor: Omit<Factor, 'id'>) => void
 	defineQuestion?: DescribeElements
 	factor?: Factor
+	onChange?: (f: Partial<Factor>) => void
 }): {
 	level
 	variable
