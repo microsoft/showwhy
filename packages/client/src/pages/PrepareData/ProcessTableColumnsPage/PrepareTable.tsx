@@ -49,7 +49,7 @@ export const PrepareTable: React.FC<PrepareTableProps> = memo(
 	},
 )
 
-const useItems = (data, headers) => {
+function useItems(data, headers) {
 	return useMemo(() => {
 		return data.map((row, i) => {
 			const obj = {}
@@ -61,7 +61,7 @@ const useItems = (data, headers) => {
 	}, [headers, data])
 }
 
-const useHeaders = (headers, columnIsDone) => {
+function useHeaders(headers, columnIsDone) {
 	return useMemo(() => {
 		return (
 			headers?.map(column => ({
