@@ -55,20 +55,3 @@ export function useSetProjectFiles(): SetterOrUpdater<ProjectFile[]> {
 export function useResetProjectFiles(): Resetter {
 	return useResetRecoilState(filesState)
 }
-
-const selectedFileState = atom<ProjectFile | undefined>({
-	key: 'selected-file',
-	default: undefined,
-})
-
-export function useSelectedFile(): ProjectFile | undefined {
-	return useRecoilValue(selectedFileState)
-}
-
-export function useSetSelectedFile(): SetterOrUpdater<ProjectFile | undefined> {
-	return useSetRecoilState(selectedFileState)
-}
-
-export function useResetSelectedFile(): Resetter {
-	return useResetRecoilState(selectedFileState)
-}
