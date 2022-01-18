@@ -11,7 +11,7 @@ import {
 	useRemoveDefinitionTestable,
 	useSaveDefinitionTestable,
 } from '../modelVariable'
-import { DescribeElements, ElementDefinition } from '~interfaces'
+import { DescribeElements, ElementDefinition, Factor } from '~interfaces'
 
 const question = {
 	population: {
@@ -28,12 +28,12 @@ const question = {
 	},
 } as any as DescribeElements
 
-const newDefinition = {
+const newDefinition: Factor = {
 	id: v4(),
-	level: 'Secondary',
+	level: DefinitionType.Secondary,
 	variable: '>= 1979',
 	description: '',
-} as any as ElementDefinition
+}
 
 describe('modelVariableHooks', () => {
 	it('useSaveDefinition', () => {
