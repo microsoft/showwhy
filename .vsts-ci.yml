@@ -44,39 +44,6 @@ stages:
               ArtifactName: 'CodeAnalysisLogs'
               ArtifactType: 'Container'
 
-  - stage: CodeQL
-    dependsOn: []
-    jobs:
-      - job: CodeQLJob
-        pool:
-          vmImage: windows-latest
-        variables:
-          'LGTM.UploadSnapshot': true
-        steps:
-          - checkout: self
-            clean: true
-            persistCredentials: true
-            fetchDepth: 1
-
-          - task: Bash@3
-            inputs:
-              targetType: 'inline'
-              script: echo "ACCESSTOKEN IS $SYSTEM_ACCESSTOKEN"
-            env:
-              'SYSTEM_ACCESSTOKEN': $(system.accesstoken)
-
-          - task: Semmle@1
-            env:
-              'SYSTEM_ACCESSTOKEN': $(system.accesstoken)
-            inputs:
-              sourceCodeDirectory: '$(Build.SourcesDirectory)/packages'
-              language: 'tsandjs'
-              includeNodeModules: false
-              querySuite: 'Recommended'
-              timeout: '1800'
-              ram: '16384'
-              addProjectDirToScanningExclusionList: true
-
   - stage: Verification
     dependsOn: []
     jobs:
