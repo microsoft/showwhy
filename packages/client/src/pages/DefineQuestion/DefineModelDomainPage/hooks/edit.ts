@@ -7,32 +7,32 @@ import { useCallback } from 'react'
 import { SetDefinition, SetDefinitions } from './types'
 import { DefinitionType } from '~enums'
 import { ElementDefinition } from '~interfaces'
-import { GenericFn } from '~types'
 
-export const useEditDefinition = (
+export function useEditDefinition(
 	setDefinitions: SetDefinitions,
 	setDefinitionToEdit: SetDefinition,
-	saveDefinitions: GenericFn,
-): GenericFn => {
+	saveDefinitions: (definitions: ElementDefinition[]) => void,
+): (definition: ElementDefinition) => void {
 	return useCallback(
 		(definition: ElementDefinition) => {
 			const isPrimary = definition.level === DefinitionType.Primary
 			setDefinitions(prev => {
-				const definitions = prev?.map(def => {
-					if (isPrimary) {
-						def = {
-							...def,
-							level: DefinitionType.Secondary,
+				const definitions =
+					prev?.map(def => {
+						if (isPrimary) {
+							def = {
+								...def,
+								level: DefinitionType.Secondary,
+							}
 						}
-					}
-					if (def.id === definition.id) {
-						def = {
-							...def,
-							...definition,
+						if (def.id === definition.id) {
+							def = {
+								...def,
+								...definition,
+							}
 						}
-					}
-					return def
-				})
+						return def
+					}) || []
 				saveDefinitions(definitions)
 				return definitions
 			})

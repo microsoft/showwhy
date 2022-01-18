@@ -8,13 +8,12 @@ import { v4 } from 'uuid'
 import { SetDefinitions } from './types'
 import { DefinitionType } from '~enums'
 import { ElementDefinition } from '~interfaces'
-import { GenericFn } from '~types'
 
-export const useAddDefinition = (
+export function useAddDefinition(
 	setDefinitions: SetDefinitions,
-	saveDefinitions: GenericFn,
+	saveDefinitions: (definitions: ElementDefinition[]) => void,
 	definitions?: ElementDefinition[],
-): GenericFn => {
+): (definition: ElementDefinition) => void {
 	return useCallback(
 		(definition: ElementDefinition) => {
 			if (!definition.variable?.length) {

@@ -16,7 +16,7 @@ import { FlatCausalFactor, CausalFactor, Item } from '~interfaces'
 import { useCausalFactors, useSetCausalFactors } from '~state'
 import { GenericObject } from '~types'
 
-export const useFactorsTable = (causeType: string): GenericObject => {
+export function useFactorsTable(causeType: string): GenericObject {
 	const [multiline, { toggle: toggleMultiline }] = useBoolean(false)
 	const [values, setValues] = useState<CausalFactor[] | undefined>([])
 	const setCausalFactors = useSetCausalFactors()

@@ -22,13 +22,13 @@ interface OnDuplicateArgs {
 	deleteCausalFactor: GenericFn
 }
 
-export const useOnDelete = ({
+export function useOnDelete({
 	modelVariables,
 	type,
 	setModelVariables,
 	removeDefinition,
 	deleteCausalFactor,
-}: OnDuplicateArgs): GenericFn => {
+}: OnDuplicateArgs): GenericFn {
 	return useCallback(
 		(val: Factor) => {
 			if (type === PageType.Control) {

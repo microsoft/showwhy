@@ -25,7 +25,7 @@ interface ItemArgs {
 	setNewLabel: StringSetter
 }
 
-export const useItem = ({
+export function useItem({
 	isEditingLabel,
 	editingDefinition,
 	listEndRef,
@@ -37,7 +37,7 @@ export const useItem = ({
 	onDuplicate,
 	editDefinition,
 	setNewLabel,
-}: ItemArgs): TypedFn<Item> => {
+}: ItemArgs): TypedFn<Item> {
 	return useCallback(
 		(x, index, len) => {
 			return {

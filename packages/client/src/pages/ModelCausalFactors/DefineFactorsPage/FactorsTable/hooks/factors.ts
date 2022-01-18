@@ -9,11 +9,11 @@ import { CausalFactor, Cause, Causes, FlatCausalFactor } from '~interfaces'
 import { GenericFn } from '~types'
 import { replaceItemAtIndex } from '~utils'
 
-export const useFlatFactorsList = (
+export function useFlatFactorsList(
 	causalFactors: CausalFactor[],
 	causeType: string,
 	values?: CausalFactor[],
-): FlatCausalFactor[] => {
+): FlatCausalFactor[] {
 	return useMemo((): FlatCausalFactor[] => {
 		return causalFactors.map((factor: CausalFactor) => {
 			const equal =

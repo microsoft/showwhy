@@ -5,17 +5,16 @@
 
 import { useCallback } from 'react'
 import { DescribeElements, ElementDefinition } from '~interfaces'
-import { GenericFn } from '~types'
 import { wait } from '~utils'
 
-export const useSaveDefinitions = (
+export function useSaveDefinitions(
 	type: string,
 	defineQuestion: DescribeElements,
-	setDefineQuestion: GenericFn,
-): GenericFn => {
+	setDefineQuestion: (question: DescribeElements) => void,
+): (definitions: ElementDefinition[]) => Promise<void> {
 	return useCallback(
 		async (definitions: ElementDefinition[]) => {
-			const question = {
+			const question: DescribeElements = {
 				...defineQuestion,
 				[type]: {
 					...defineQuestion[type],

@@ -9,7 +9,7 @@ import { useSetFullRefutation, useSetQuickRefutation } from '~hooks'
 import { useRefutationType } from '~state'
 import { GenericObject } from '~types'
 
-export const useRefutations = (): GenericObject => {
+export function useRefutations(): GenericObject {
 	const refutation = useRefutationType()
 	const setQuickRefutation = useSetQuickRefutation()
 	const setFullRefutation = useSetFullRefutation()

@@ -34,7 +34,7 @@ import {
 	returnRefutationCount,
 } from '~utils'
 
-export const useBusinessLogic = (): GenericObject => {
+export function useBusinessLogic(): GenericObject {
 	const definitions = useDefineQuestion()
 	const updateRunHistory = useUpdateAndDisableRunHistory()
 	const projectFiles = useProjectFiles()
