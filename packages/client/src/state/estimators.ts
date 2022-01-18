@@ -54,27 +54,3 @@ export function useSetOrUpdateEstimator(): (estimator: Estimator) => void {
 export function useResetEstimators(): Resetter {
 	return useResetRecoilState(estimatorState)
 }
-
-export const confidenceIntervalState = atom<boolean>({
-	key: 'confidence-interval',
-	default: false,
-})
-
-export function useConfidenceInterval(): boolean {
-	return useRecoilValue(confidenceIntervalState)
-}
-
-export function useSetConfidenceInterval(): SetterOrUpdater<boolean> {
-	return useSetRecoilState(confidenceIntervalState)
-}
-
-export function useToggleConfidenceInterval(): () => void {
-	const set = useSetRecoilState(confidenceIntervalState)
-	return useCallback(() => {
-		set(prev => !prev)
-	}, [set])
-}
-
-export function useResetConfidenceInterval(): Resetter {
-	return useResetRecoilState(confidenceIntervalState)
-}

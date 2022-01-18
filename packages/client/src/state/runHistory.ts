@@ -2,8 +2,6 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-
-import { useCallback } from 'react'
 import {
 	atom,
 	Resetter,
@@ -12,21 +10,11 @@ import {
 	useResetRecoilState,
 	useSetRecoilState,
 } from 'recoil'
-import {
-	NodeResponse,
-	PartialResults,
-	RunHistory,
-	RunStatus,
-} from '~interfaces'
+import { RunHistory } from '~interfaces'
 
 export const runHistoryState = atom<RunHistory[]>({
 	key: 'run-history-store',
 	default: [],
-})
-
-export const nodeResponseState = atom<NodeResponse | undefined>({
-	key: 'node-response-store',
-	default: undefined,
 })
 
 export function useSetRunHistory(): SetterOrUpdater<RunHistory[]> {
@@ -39,14 +27,4 @@ export function useRunHistory(): RunHistory[] {
 
 export function useResetRunHistory(): Resetter {
 	return useResetRecoilState(runHistoryState)
-}
-
-export function useSetNodeResponse(): SetterOrUpdater<
-	NodeResponse | undefined
-> {
-	return useSetRecoilState(nodeResponseState)
-}
-
-export function useNodeResponse(): NodeResponse | undefined {
-	return useRecoilValue(nodeResponseState)
 }
