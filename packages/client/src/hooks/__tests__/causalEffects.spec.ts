@@ -8,6 +8,7 @@ import { RecoilRoot } from 'recoil'
 import { v4 } from 'uuid'
 import { DefinitionType } from '../../common/enums'
 import { useCausalEffectsTestable as useCausalEffects } from '../causalEffects'
+import { DescribeElements } from '~interfaces'
 
 const question = {
 	exposure: {
@@ -28,7 +29,7 @@ const question = {
 			},
 		],
 	},
-}
+} as any as DescribeElements
 
 describe('causalEffectsHooks', () => {
 	it('returns useCausalEffects', () => {
