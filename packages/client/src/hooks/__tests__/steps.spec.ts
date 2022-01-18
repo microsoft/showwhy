@@ -8,6 +8,7 @@ import { RecoilRoot } from 'recoil'
 import { Pages } from '../../common/enums'
 import { stepsList } from '../../data/stepsList'
 import * as steps from '../steps'
+import { Project } from '~interfaces'
 
 describe('stepsHooks', () => {
 	it('useCurrentStep', () => {
@@ -18,7 +19,7 @@ describe('stepsHooks', () => {
 		const { result } = renderHook(
 			() =>
 				steps.useCurrentStepTestable(
-					{ steps: stepsList },
+					{ steps: stepsList } as any as Project,
 					Pages.EstimateCausalEffects,
 				),
 			{
