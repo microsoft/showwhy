@@ -651,15 +651,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@data-wrangling-components/utilities@npm:1.2.0":
-  version: 1.2.0
-  resolution: "@data-wrangling-components/utilities@npm:1.2.0"
+"@data-wrangling-components/utilities@npm:1.2.1":
+  version: 1.2.1
+  resolution: "@data-wrangling-components/utilities@npm:1.2.1"
   dependencies:
     "@zip.js/zip.js": ^2.3.19
     core-js: ^3.20.2
   peerDependencies:
     arquero: ^4.8.7
-  checksum: 64b780a9c8623db206735c6675652d816023003f3278cb9b14de073e43f53f55a01504ec746a6c550f813fcd82aba134f0a278bd5202afc1548ed6257ca6da32
+  checksum: c79c82c7e7948b2e57cd9ef112601daacf2678df5b26ff20f857e96040123f90187594d7d4122e635c226231b4870595cef96cac0ceea8be89f9bf9bcab3906e
   languageName: node
   linkType: hard
 
@@ -1634,7 +1634,7 @@ __metadata:
   dependencies:
     "@data-wrangling-components/core": 1.0.2
     "@data-wrangling-components/react": 1.1.2
-    "@data-wrangling-components/utilities": 1.2.0
+    "@data-wrangling-components/utilities": 1.2.1
     "@essex-js-toolkit/boolean-expression-component": ^0.1.1
     "@essex-js-toolkit/hooks": ^3.0.2
     "@essex-js-toolkit/thematic-lineup": ^1.1.7

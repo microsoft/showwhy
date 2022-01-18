@@ -1305,7 +1305,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [
             ["@data-wrangling-components/react", "virtual:43234044b7438fe2d61705a53806e3cf1b57c36f9d0076f4ea9860d4c0f5b9f7239021252d58389c52e724a7d4da6edf23f1d58bae876b1fdf20bda31e9357ce#npm:1.1.2"],
             ["@data-wrangling-components/core", "virtual:43234044b7438fe2d61705a53806e3cf1b57c36f9d0076f4ea9860d4c0f5b9f7239021252d58389c52e724a7d4da6edf23f1d58bae876b1fdf20bda31e9357ce#npm:1.0.2"],
-            ["@data-wrangling-components/utilities", "virtual:43234044b7438fe2d61705a53806e3cf1b57c36f9d0076f4ea9860d4c0f5b9f7239021252d58389c52e724a7d4da6edf23f1d58bae876b1fdf20bda31e9357ce#npm:1.2.0"],
+            ["@data-wrangling-components/utilities", "virtual:43234044b7438fe2d61705a53806e3cf1b57c36f9d0076f4ea9860d4c0f5b9f7239021252d58389c52e724a7d4da6edf23f1d58bae876b1fdf20bda31e9357ce#npm:1.2.1"],
             ["@essex-js-toolkit/themed-components", "virtual:43234044b7438fe2d61705a53806e3cf1b57c36f9d0076f4ea9860d4c0f5b9f7239021252d58389c52e724a7d4da6edf23f1d58bae876b1fdf20bda31e9357ce#npm:1.3.2"],
             ["@fluentui/font-icons-mdl2", "virtual:43234044b7438fe2d61705a53806e3cf1b57c36f9d0076f4ea9860d4c0f5b9f7239021252d58389c52e724a7d4da6edf23f1d58bae876b1fdf20bda31e9357ce#npm:8.1.20"],
             ["@fluentui/react", "virtual:43234044b7438fe2d61705a53806e3cf1b57c36f9d0076f4ea9860d4c0f5b9f7239021252d58389c52e724a7d4da6edf23f1d58bae876b1fdf20bda31e9357ce#npm:8.49.6"],
@@ -1387,17 +1387,17 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]
       ]],
       ["@data-wrangling-components/utilities", [
-        ["npm:1.2.0", {
-          "packageLocation": "./.yarn/cache/@data-wrangling-components-utilities-npm-1.2.0-96354c89ab-64b780a9c8.zip/node_modules/@data-wrangling-components/utilities/",
+        ["npm:1.2.1", {
+          "packageLocation": "./.yarn/cache/@data-wrangling-components-utilities-npm-1.2.1-0ec8fbed11-c79c82c7e7.zip/node_modules/@data-wrangling-components/utilities/",
           "packageDependencies": [
-            ["@data-wrangling-components/utilities", "npm:1.2.0"]
+            ["@data-wrangling-components/utilities", "npm:1.2.1"]
           ],
           "linkType": "SOFT",
         }],
-        ["virtual:43234044b7438fe2d61705a53806e3cf1b57c36f9d0076f4ea9860d4c0f5b9f7239021252d58389c52e724a7d4da6edf23f1d58bae876b1fdf20bda31e9357ce#npm:1.2.0", {
-          "packageLocation": "./.yarn/__virtual__/@data-wrangling-components-utilities-virtual-75dbbc2711/0/cache/@data-wrangling-components-utilities-npm-1.2.0-96354c89ab-64b780a9c8.zip/node_modules/@data-wrangling-components/utilities/",
+        ["virtual:43234044b7438fe2d61705a53806e3cf1b57c36f9d0076f4ea9860d4c0f5b9f7239021252d58389c52e724a7d4da6edf23f1d58bae876b1fdf20bda31e9357ce#npm:1.2.1", {
+          "packageLocation": "./.yarn/__virtual__/@data-wrangling-components-utilities-virtual-60f27eb8f6/0/cache/@data-wrangling-components-utilities-npm-1.2.1-0ec8fbed11-c79c82c7e7.zip/node_modules/@data-wrangling-components/utilities/",
           "packageDependencies": [
-            ["@data-wrangling-components/utilities", "virtual:43234044b7438fe2d61705a53806e3cf1b57c36f9d0076f4ea9860d4c0f5b9f7239021252d58389c52e724a7d4da6edf23f1d58bae876b1fdf20bda31e9357ce#npm:1.2.0"],
+            ["@data-wrangling-components/utilities", "virtual:43234044b7438fe2d61705a53806e3cf1b57c36f9d0076f4ea9860d4c0f5b9f7239021252d58389c52e724a7d4da6edf23f1d58bae876b1fdf20bda31e9357ce#npm:1.2.1"],
             ["@types/arquero", null],
             ["@zip.js/zip.js", "npm:2.3.23"],
             ["arquero", "npm:4.8.8"],
@@ -2989,7 +2989,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@showwhy/client", "workspace:packages/client"],
             ["@data-wrangling-components/core", "virtual:43234044b7438fe2d61705a53806e3cf1b57c36f9d0076f4ea9860d4c0f5b9f7239021252d58389c52e724a7d4da6edf23f1d58bae876b1fdf20bda31e9357ce#npm:1.0.2"],
             ["@data-wrangling-components/react", "virtual:43234044b7438fe2d61705a53806e3cf1b57c36f9d0076f4ea9860d4c0f5b9f7239021252d58389c52e724a7d4da6edf23f1d58bae876b1fdf20bda31e9357ce#npm:1.1.2"],
-            ["@data-wrangling-components/utilities", "virtual:43234044b7438fe2d61705a53806e3cf1b57c36f9d0076f4ea9860d4c0f5b9f7239021252d58389c52e724a7d4da6edf23f1d58bae876b1fdf20bda31e9357ce#npm:1.2.0"],
+            ["@data-wrangling-components/utilities", "virtual:43234044b7438fe2d61705a53806e3cf1b57c36f9d0076f4ea9860d4c0f5b9f7239021252d58389c52e724a7d4da6edf23f1d58bae876b1fdf20bda31e9357ce#npm:1.2.1"],
             ["@essex-js-toolkit/boolean-expression-component", "virtual:43234044b7438fe2d61705a53806e3cf1b57c36f9d0076f4ea9860d4c0f5b9f7239021252d58389c52e724a7d4da6edf23f1d58bae876b1fdf20bda31e9357ce#npm:0.1.1"],
             ["@essex-js-toolkit/hooks", "virtual:43234044b7438fe2d61705a53806e3cf1b57c36f9d0076f4ea9860d4c0f5b9f7239021252d58389c52e724a7d4da6edf23f1d58bae876b1fdf20bda31e9357ce#npm:3.0.2"],
             ["@essex-js-toolkit/thematic-lineup", "virtual:43234044b7438fe2d61705a53806e3cf1b57c36f9d0076f4ea9860d4c0f5b9f7239021252d58389c52e724a7d4da6edf23f1d58bae876b1fdf20bda31e9357ce#npm:1.1.7"],
