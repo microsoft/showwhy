@@ -58,7 +58,7 @@ export const useBusinessLogic = (): GenericObject => {
 
 	const columns = useMemo((): IColumn[] => {
 		if (!selectedTable) return []
-		return selectedTable.columns
+		return selectedTable.table
 			?.select(not(removedColumns))
 			.columnNames()
 			.map(column => {
@@ -77,7 +77,7 @@ export const useBusinessLogic = (): GenericObject => {
 
 	const selectFirstColumn = useCallback(() => {
 		setSelectedColumn(
-			selectedTable?.columns?.select(not(removedColumns)).columnNames()[0],
+			selectedTable?.table?.select(not(removedColumns)).columnNames()[0],
 		)
 	}, [removedColumns, setSelectedColumn, selectedTable])
 
@@ -96,7 +96,7 @@ export const useBusinessLogic = (): GenericObject => {
 		(projectFile: ProjectFile) => {
 			setSelectedFile(projectFile)
 			setSelectedColumn(
-				selectedTable?.columns?.select(not(removedColumns)).columnNames()[0],
+				selectedTable?.table?.select(not(removedColumns)).columnNames()[0],
 			)
 		},
 		[setSelectedFile, selectedTable, removedColumns],

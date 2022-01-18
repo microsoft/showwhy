@@ -17,9 +17,8 @@ export interface TableColumn {
 	tableName?: string
 }
 
-//TODO: naming columns is confusing
 export interface BasicTable {
-	columns: ColumnTable
+	table: ColumnTable
 	tableId: string
 	tableName?: string
 }

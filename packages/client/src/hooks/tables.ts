@@ -23,7 +23,7 @@ export function useTableWithColumnsDropped(): ColumnTable | undefined {
 
 	return useMemo(() => {
 		const columns = selectedFile?.steps?.find(f => f.key === 'columns')?.value
-		let table = originalTable().columns
+		let table = originalTable().table
 		columns?.map(v => (table = table?.select(not(v))))
 		return table
 	}, [originalTable, selectedFile])
@@ -41,7 +41,7 @@ function useSaveFile(
 			const newCSV = capturedTable.toCSV()
 			const project = { ...newProjectFile }
 			project.content = newCSV
-			setOriginalTable({ tableId, columns: capturedTable })
+			setOriginalTable({ tableId, table: capturedTable })
 			setProjectFiles([...projectFiles.filter(x => x.id !== tableId), project])
 		},
 		[projectFiles, tableId, setOriginalTable, setProjectFiles],
@@ -58,7 +58,7 @@ export function useCaptureTable(
 	return useCallback(
 		(filteredTable: ColumnTable, columnName: string) => {
 			const values = filteredTable.indices()
-			const originalTable = originalTables().columns
+			const originalTable = originalTables().table
 			const capturedTable = originalTable.derive({
 				[columnName]: escape(d => (values.includes(d.rowId) ? '1' : '0')),
 			}) as ColumnTable
@@ -80,7 +80,7 @@ export function useDuplicateColumn(
 
 	return useCallback(
 		(columnName: string, columnToDuplicate: string) => {
-			const originalTable = originalTables().columns
+			const originalTable = originalTables().table
 			const capturedTable = originalTable.derive({
 				[columnName]: escape(d => d[columnToDuplicate]),
 			}) as ColumnTable
@@ -102,7 +102,7 @@ export function useRemoveColumn(tableId: string): (columnName: string) => void {
 		(columnName: string) => {
 			const originalTable = originalTables()
 			if (originalTable) {
-				originalTable.columns = originalTable.columns.transform(table =>
+				originalTable.table = originalTable.table.transform(table =>
 					table.select(not(columnName)),
 				)
 				const newProjectFile = projectFiles.find(
@@ -114,7 +114,7 @@ export function useRemoveColumn(tableId: string): (columnName: string) => void {
 				// )
 
 				// if (causalFactorsWithThisColumn.length === 0) {
-				saveFile(newProjectFile, originalTable.columns)
+				saveFile(newProjectFile, originalTable.table)
 				// }
 			}
 		},
@@ -131,8 +131,8 @@ export function useSetDeriveTable(
 	const saveFile = useSaveFile(projectFiles, fileId)
 	return useCallback(
 		(derive: Derive) => {
-			const table = originalTables()
-			const column = table.columns.select(derive.column)
+			const originalTable = originalTables()
+			const column = originalTable.table.select(derive.column)
 			const columnUnique = column.dedupe()
 			const ordered = columnUnique.orderby(derive.column)
 			const ranked = ordered.derive({ rank: op.percent_rank() })
@@ -154,7 +154,7 @@ export function useSetDeriveTable(
 					.objects()
 			}
 
-			let capturedTable = table?.columns
+			let capturedTable = originalTable?.table
 			capturedTable = capturedTable.derive({
 				[derive?.columnName]: escape(d =>
 					rank.map(x => x[derive?.column]).includes(d[derive?.column])

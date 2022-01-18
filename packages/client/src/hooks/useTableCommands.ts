@@ -28,7 +28,7 @@ export function useTableCommands(
 	const vccmd = useMemo(() => {
 		if (!table) return undefined
 		return visibleColumnsCommand(
-			table?.columns,
+			table?.table,
 			visibleColumns?.map(x => x.name),
 			handleColumnCheckChange,
 		)

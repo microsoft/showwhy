@@ -34,7 +34,7 @@ export const useBusinessLogic = (): GenericObject => {
 	>()
 	const [showConfirm, { toggle: toggleShowConfirm }] = useBoolean(false)
 	const originalTableState = useSelectOriginalTable(selectedFile?.id as string)
-	const originalTable = originalTableState()?.columns
+	const originalTable = originalTableState()?.table
 
 	const handleDismissError = useCallback(() => {
 		setErrorMessage('')
@@ -72,7 +72,7 @@ export const useBusinessLogic = (): GenericObject => {
 			const delimiter = `${option?.key}`
 			if (selectedFile && selectedFile.id) {
 				const table = createDefaultTable(selectedFile.content, delimiter)
-				addOriginalTable({ tableId: selectedFile.id, columns: table })
+				addOriginalTable({ tableId: selectedFile.id, table })
 			}
 			setSelectedDelimiter(delimiter)
 		},
@@ -179,7 +179,7 @@ const useHandleLoadFile = setErrorMessage => {
 				file.id = fileId
 				file.loadedCorrectly = true
 				addFile(file)
-				addOriginalTable({ tableId: fileId, columns: table })
+				addOriginalTable({ tableId: fileId, table })
 			}
 		},
 		[addFile, projectFiles, addOriginalTable, setErrorMessage],

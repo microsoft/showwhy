@@ -54,9 +54,7 @@ export const ModelVariablesPage: React.FC = memo(function ModelVariablesPage() {
 			</Then>
 			<Else>
 				<If
-					condition={
-						!subjectIdentifier.length || !subjectIdentifierData.columns
-					}
+					condition={!subjectIdentifier.length || !subjectIdentifierData.table}
 				>
 					<Then>
 						<Header />
@@ -71,13 +69,13 @@ export const ModelVariablesPage: React.FC = memo(function ModelVariablesPage() {
 							<Header />
 							<NormalContainer>
 								<ArqueroTableHeader
-									table={subjectIdentifierData.columns}
+									table={subjectIdentifierData.table}
 									showRowCount
 									showColumnCount
 								/>
 								<DetailsListContainer>
 									<ArqueroDetailsTable
-										table={subjectIdentifierData.columns}
+										table={subjectIdentifierData.table}
 										columns={subjectIdentifierData.columnNames}
 										features={{ smartHeaders: true }}
 									/>
@@ -116,7 +114,7 @@ export const ModelVariablesPage: React.FC = memo(function ModelVariablesPage() {
 													onUpdate={onUpdateTargetVariable}
 													fileId={tableIdentifier?.tableId}
 													selectedDefinition={selected}
-													originalTable={tableIdentifier?.columns}
+													originalTable={tableIdentifier?.table}
 												/>
 											) : (
 												<>
