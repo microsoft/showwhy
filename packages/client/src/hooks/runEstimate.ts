@@ -56,7 +56,7 @@ export function useRunEstimate(): () => Orchestrator<EstimateEffectStatusRespons
 
 	const run = useCallback((): Orchestrator<EstimateEffectStatusResponse> => {
 		return getEstimatorOrchestrator(onStart, onUpdate, onComplete)
-	}, [onUpdate, onComplete])
+	}, [onUpdate, onComplete, onStart])
 
 	return run
 }

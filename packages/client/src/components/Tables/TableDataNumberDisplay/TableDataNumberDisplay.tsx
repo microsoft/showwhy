@@ -35,7 +35,7 @@ export const TableDataNumberDisplay: React.FC<TableDataNumberDisplayProps> =
 					{originalNumRows} rows
 				</Text>
 			)
-		}, [numRows, originalNumRows, title])
+		}, [originalNumRows, title, numberOfRows])
 
 		const columns = useMemo(() => {
 			return (

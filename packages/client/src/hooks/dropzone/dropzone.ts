@@ -26,7 +26,7 @@ import { GenericFn } from '~types'
 export function useHandleOnDrop(
 	onFileLoadCompleted: GenericFn,
 	onLoadStart?: GenericFn,
-) {
+): (files: FileCollection) => void {
 	const onDrop = useDrop(onFileLoadCompleted, onLoadStart)
 	return useCallback(
 		(fileCollection: FileCollection) => {
@@ -44,7 +44,7 @@ export function useHandleOnDrop(
 export function useOnDropAccepted(
 	onError?: GenericFn,
 	setFileCount?: GenericFn,
-) {
+): (files: FileCollection) => void {
 	const onDropZipFilesAccepted = useOnDropZipFilesAccepted(onError)
 	const onDropDatasetFilesAccepted = useOnDropDatasetFilesAccepted(setFileCount)
 	return useCallback(
@@ -55,7 +55,7 @@ export function useOnDropAccepted(
 				onDropDatasetFilesAccepted(fileCollection.list(FileType.table))
 			}
 		},
-		[onDropZipFilesAccepted, onDropDatasetFilesAccepted, setFileCount, onError],
+		[onDropZipFilesAccepted, onDropDatasetFilesAccepted],
 	)
 }
 
@@ -68,7 +68,17 @@ function useAccepted(): string[] {
 	)
 }
 
-export function useGlobalDropzone(onError?: GenericFn, onLoad?: GenericFn) {
+export function useGlobalDropzone(
+	onError?: GenericFn,
+	onLoad?: GenericFn,
+): {
+	onDrop: (f: FileCollection) => void
+	onDropAccepted: (f: FileCollection) => void
+	onDropRejected: (msg: string) => void
+	fileCount: DropFilesCount
+	loading: boolean
+	acceptedFileTypes: string[]
+} {
 	const [loading, setLoading] = useState<boolean>(false)
 	const [fileCount, setFileCount] = useState<DropFilesCount>({
 		total: 0,

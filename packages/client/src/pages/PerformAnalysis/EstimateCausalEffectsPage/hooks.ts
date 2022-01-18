@@ -108,6 +108,7 @@ export const useBusinessLogic = (): GenericObject => {
 		hasConfidenceInterval,
 		refutationType,
 		runHistory.length,
+		refutationOptions.length,
 	])
 
 	const runEstimate = useCallback(async () => {
@@ -122,7 +123,14 @@ export const useBusinessLogic = (): GenericObject => {
 			nodes: [...loadNode.nodes, ...(estimateNode as NodeRequest).nodes],
 		}
 		await run().execute(nodes, OrchestratorType.Estimator)
-	}, [run, estimateNode, projectFiles, specCount, setIsCanceled])
+	}, [
+		run,
+		estimateNode,
+		projectFiles,
+		setIsCanceled,
+		saveNewRunHistory,
+		uploadProjectFiles,
+	])
 
 	const cancelRun = useCallback(() => {
 		setIsCanceled(true)

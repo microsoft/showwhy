@@ -3,29 +3,35 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { Checkbox } from '@fluentui/react'
+import { Checkbox, IComboBoxOption } from '@fluentui/react'
 import { useCallback, useMemo, useState } from 'react'
 import { useFactorsDefinitionForm } from '~components/FactorsDefinitionForm'
-import { CausalFactor, ElementDefinition } from '~interfaces'
+import { PageType } from '~enums'
+import {
+	CausalFactor,
+	ElementDefinition,
+	Factor,
+	HeaderData,
+} from '~interfaces'
 
 const actionsHeader = { fieldName: 'actions', value: 'Actions' }
 
-export const useTableComponent = (
-	columns,
-	headers,
-	definitionToEdit,
-	factorToEdit,
-	pageType,
-	variables,
-	onDelete,
-	onSave,
-	onEdit,
-	onCancel,
+export function useTableComponent(
+	columns: Factor[],
+	headers: HeaderData[],
+	definitionToEdit: ElementDefinition | undefined,
+	factorToEdit: Factor | undefined,
+	pageType: PageType,
+	variables: IComboBoxOption[] | undefined,
+	onDelete: undefined | ((def: Factor) => void),
+	onSave: undefined | ((def: Factor) => void),
+	onEdit: undefined | ((def: Factor) => void),
+	onCancel: undefined | ((def: Factor) => void),
 ): {
 	items: any
 	headersData: any[]
 	customColumnsWidth: { fieldName: string; width: string }[]
-} => {
+} {
 	const [editedDefinition, setEditedDefinition] = useState<
 		ElementDefinition | undefined
 	>()
@@ -33,7 +39,7 @@ export const useTableComponent = (
 	const setter = definitionToEdit ? setEditedDefinition : setEditedFactor
 	const onChange = useOnchange(setter, definitionToEdit || factorToEdit)
 	const { level, description, variable } = useFactorsDefinitionForm({
-		factor: definitionToEdit || factorToEdit,
+		factor: (definitionToEdit || factorToEdit) as Factor,
 		onChange,
 		pageType,
 		variables,
@@ -49,7 +55,7 @@ export const useTableComponent = (
 
 	const items = useMemo(() => {
 		return columns.map(item => {
-			const copy = { ...item }
+			const copy = { ...item, id: undefined }
 			delete copy.id
 			const props = Object.keys(copy)
 			let obj: any = {}
@@ -62,7 +68,11 @@ export const useTableComponent = (
 						onCancel: onCancel || null,
 						onSave:
 							onSave && definitionToEdit && editedDefinition
-								? () => onSave({ ...definitionToEdit, ...editedDefinition })
+								? () =>
+										onSave({
+											...definitionToEdit,
+											...editedDefinition,
+										} as CausalFactor)
 								: null,
 						disableSave: !editedDefinition?.variable,
 					},
@@ -96,7 +106,20 @@ export const useTableComponent = (
 			}
 			return obj
 		})
-	}, [columns, definitionToEdit, factorToEdit, editedDefinition, editedFactor])
+	}, [
+		columns,
+		definitionToEdit,
+		factorToEdit,
+		editedDefinition,
+		editedFactor,
+		description,
+		level,
+		onCancel,
+		onDelete,
+		onEdit,
+		onSave,
+		variable,
+	])
 
 	return {
 		items,
@@ -105,7 +128,7 @@ export const useTableComponent = (
 	}
 }
 
-const useOnchange = (set, valueToEdit) => {
+function useOnchange(set, valueToEdit) {
 	return useCallback(
 		(value: ElementDefinition | CausalFactor) => {
 			set({
@@ -117,7 +140,7 @@ const useOnchange = (set, valueToEdit) => {
 	)
 }
 
-const useHeadersData = (headers, onDelete, onEdit, onCancel, onSave) => {
+function useHeadersData(headers, onDelete, onEdit, onCancel, onSave) {
 	return useMemo(() => {
 		return [
 			...headers,
@@ -126,7 +149,7 @@ const useHeadersData = (headers, onDelete, onEdit, onCancel, onSave) => {
 	}, [headers, onDelete, onEdit, onCancel, onSave])
 }
 
-const useCustomColumnsWidth = headersData => {
+function useCustomColumnsWidth(headersData) {
 	return useMemo(() => {
 		const props = headersData.map(h => h.fieldName)
 		const hasLevel = props.includes('level')

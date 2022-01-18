@@ -9,7 +9,12 @@ import {
 	getNodeProperties,
 	getSimulationNumByRefuterType,
 } from './utils'
-import { EstimatorsType, NodeTypes, RefutationTypes } from '~enums'
+import {
+	DefinitionType,
+	EstimatorsType,
+	NodeTypes,
+	RefutationTypes,
+} from '~enums'
 import {
 	AlternativeModels,
 	AlternativeModelsReq,
@@ -23,7 +28,7 @@ interface Node extends GenericObject {
 	type: NodeTypes
 }
 
-export const buildNodes = (nodes: Node[]): NodeRequest => {
+export function buildNodes(nodes: Node[]): NodeRequest {
 	return {
 		nodes: nodes.map(node => {
 			const { type, ...properties } = node
@@ -35,19 +40,29 @@ export const buildNodes = (nodes: Node[]): NodeRequest => {
 	} as NodeRequest
 }
 
+export interface Spec {
+	type: DefinitionType
+	label?: string
+	variable?: string
+}
+export interface PopulationSpec {
+	type: DefinitionType
+	label: string
+	dataframe: string
+	population_id?: string
+}
 export function buildSpecs(
 	dataframeName: string,
 	population: ElementDefinition[],
 	exposure: ElementDefinition[],
 	outcome: ElementDefinition[],
-) {
+): {
+	population_specs: PopulationSpec[]
+	treatment_specs: Spec[]
+	outcome_specs: Spec[]
+} {
 	const populationSpecs = population.map(p => {
-		const pop: {
-			type: string
-			label: string
-			dataframe: string
-			population_id?: string
-		} = {
+		const pop = {
 			type: p.level,
 			label: p.variable || '',
 			dataframe: dataframeName,
@@ -121,7 +136,14 @@ export function models(
 	return modelsList
 }
 
-export function buildEstimators(estimators: Estimator[]) {
+export interface BuiltEstimator {
+	type: string
+	label: EstimatorsType
+	require_propensity_score: boolean
+	method_name: string
+}
+
+export function buildEstimators(estimators: Estimator[]): BuiltEstimator[] {
 	return estimators.map(estimator => ({
 		type: getModelTypeByEstimatorGroup(estimator.group),
 		label: estimator.type ?? EstimatorsType.InversePropensityWeighting,

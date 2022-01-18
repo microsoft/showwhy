@@ -18,10 +18,12 @@ export const SaveProject: React.FC = memo(function SaveProject() {
 		(type: FileType) => {
 			downloadResult(type)
 		},
-		[defaultRun, downloadResult],
+		[downloadResult],
 	)
 
 	const saveProps = useMemo((): IContextualMenuProps => {
+		const disabled =
+			!defaultRun || defaultRun?.status?.status !== NodeResponseStatus.Completed
 		return {
 			items: [
 				{
@@ -42,17 +44,13 @@ export const SaveProject: React.FC = memo(function SaveProject() {
 				{
 					key: 'jupyter',
 					text: 'Jupyter Notebook',
-					disabled:
-						!defaultRun ||
-						defaultRun?.status?.status !== NodeResponseStatus.Completed,
+					disabled,
 					onClick: () => onDownload(FileType.jupyter),
 				},
 				{
 					key: 'csv',
 					text: 'Result CSV',
-					disabled:
-						!defaultRun ||
-						defaultRun?.status?.status !== NodeResponseStatus.Completed,
+					disabled,
 					onClick: () => onDownload(FileType.csv),
 				},
 			],
