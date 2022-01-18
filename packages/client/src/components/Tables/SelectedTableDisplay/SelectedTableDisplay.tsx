@@ -2,15 +2,13 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import {
-	ArqueroDetailsList,
-	ArqueroTableHeader,
-} from '@data-wrangling-components/react'
+import { ArqueroTableHeader } from '@data-wrangling-components/react'
 import { TextField } from '@fluentui/react'
 import ColumnTable from 'arquero/dist/types/table/column-table'
 import { useState, useCallback, memo, useEffect } from 'react'
 
 import styled from 'styled-components'
+import { ArqueroDetailsTable } from '../ArqueroDetailsTable'
 import { ProjectFile } from '~interfaces'
 import { GenericFn } from '~types'
 import { replaceItemAtIndex } from '~utils'
@@ -84,13 +82,7 @@ export const SelectedTableDisplay: React.FC<SelectedTableDisplayProps> = memo(
 							showColumnCount
 						/>
 						<DatasetContainer>
-							<ArqueroDetailsList
-								table={originalTable}
-								isSortable
-								isHeadersFixed
-								isStriped
-								showColumnBorders
-							/>
+							<ArqueroDetailsTable table={originalTable} />
 						</DatasetContainer>
 					</SelectedFile>
 				) : (

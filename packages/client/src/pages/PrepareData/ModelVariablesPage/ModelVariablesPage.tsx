@@ -2,10 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import {
-	ArqueroDetailsList,
-	ArqueroTableHeader,
-} from '@data-wrangling-components/react'
+import { ArqueroTableHeader } from '@data-wrangling-components/react'
 import {
 	ContextualMenu,
 	DefaultButton,
@@ -20,6 +17,7 @@ import { DefinitionSteps } from './DefinitionSteps'
 import { Header } from './Header'
 import { useBusinessLogic } from './hooks'
 import { EmptyDataPageWarning } from '~components/EmptyDataPageWarning'
+import { ArqueroDetailsTable } from '~components/Tables/ArqueroDetailsTable'
 import { PageType, Pages } from '~enums'
 import { ContainerFlexRow } from '~styles'
 
@@ -78,14 +76,10 @@ export const ModelVariablesPage: React.FC = memo(function ModelVariablesPage() {
 									showColumnCount
 								/>
 								<DetailsListContainer>
-									<ArqueroDetailsList
+									<ArqueroDetailsTable
 										table={subjectIdentifierData.columns}
 										columns={subjectIdentifierData.columnNames}
 										features={{ smartHeaders: true }}
-										isSortable
-										isHeadersFixed
-										isStriped
-										showColumnBorders
 									/>
 								</DetailsListContainer>
 								<ContainerFlexRow>

@@ -2,15 +2,13 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import {
-	ArqueroDetailsList,
-	ArqueroTableHeader,
-} from '@data-wrangling-components/react'
+import { ArqueroTableHeader } from '@data-wrangling-components/react'
 import React, { memo } from 'react'
 import styled from 'styled-components'
 import { ColumnRelevanceSelector } from './ColumnRelevanceSelector'
 import { useBusinessLogic } from './hooks'
 import { DatasetsList } from '~components/DatasetsList'
+import { ArqueroDetailsTable } from '~components/Tables/ArqueroDetailsTable'
 import { Container } from '~styles'
 
 export const ProcessTableColumnsPage: React.FC = memo(
@@ -58,17 +56,13 @@ export const ProcessTableColumnsPage: React.FC = memo(
 								showColumnCount
 							/>
 							<DetailsListContainer>
-								<ArqueroDetailsList
+								<ArqueroDetailsTable
 									table={selectedTable.columns}
 									onColumnClick={onSelectColumn}
 									selectedColumn={selectedColumn}
 									visibleColumns={columns.map(col => col.name)}
 									columns={columns}
 									isColumnClickable
-									isSortable
-									isHeadersFixed
-									isStriped
-									showColumnBorders
 									features={{ smartHeaders: true }}
 								/>
 							</DetailsListContainer>
