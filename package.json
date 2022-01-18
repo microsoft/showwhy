@@ -18,7 +18,7 @@
 		"test:": "yarn workspaces foreach -pvt run test",
 		"start:": "yarn workspaces foreach -piv run start",
 		"deploy:": "yarn workspaces foreach -piv run deploy",
-		"lint:": "essex lint --fix --strict",
+		"lint:": "essex lint --fix",
 		"git_is_clean": "essex git-is-clean",
 		"prettify:": "essex prettify",
 		"ci": "run-s build: lint: test: git_is_clean",
