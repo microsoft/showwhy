@@ -7,7 +7,6 @@ import { Checkbox, ComboBox, IComboBoxOption, TextField } from '@fluentui/react'
 import { useCallback } from 'react'
 import { BeliefDegree } from '~enums'
 import { FlatCausalFactor } from '~interfaces'
-import { GenericFn } from '~types'
 
 const beliefOptions: IComboBoxOption[] = [
 	{ key: BeliefDegree.Strong, text: 'Strong' },
@@ -15,9 +14,9 @@ const beliefOptions: IComboBoxOption[] = [
 	{ key: BeliefDegree.Weak, text: 'Weak' },
 ]
 
-export const useCheckbox = (
-	onChangeCauses: GenericFn,
-): ((factor: FlatCausalFactor) => JSX.Element) => {
+export function useCheckbox(
+	onChangeCauses: (factorId: string, checked: boolean) => void,
+): (factor: FlatCausalFactor) => JSX.Element {
 	return useCallback(
 		(factor: FlatCausalFactor) => {
 			return (
@@ -34,9 +33,9 @@ export const useCheckbox = (
 	)
 }
 
-export const useComboBox = (
-	onChangeDegree: GenericFn,
-): ((factor: FlatCausalFactor) => JSX.Element) => {
+export function useComboBox(
+	onChangeDegree: (factorId: string, value: IComboBoxOption) => void,
+): (factor: FlatCausalFactor) => JSX.Element {
 	return useCallback(
 		(factor: FlatCausalFactor) => {
 			return (
@@ -51,9 +50,9 @@ export const useComboBox = (
 	)
 }
 
-export const useTextField = (
-	onChangeReasoning: GenericFn,
-): ((factor: FlatCausalFactor) => JSX.Element) => {
+export function useTextField(
+	onChangeReasoning: (factorId: string, value: string) => void,
+): (factor: FlatCausalFactor) => JSX.Element {
 	return useCallback(
 		(factor: FlatCausalFactor) => {
 			return (

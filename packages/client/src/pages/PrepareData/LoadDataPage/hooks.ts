@@ -23,7 +23,7 @@ import {
 import { GenericObject } from '~types'
 import { createDefaultTable, replaceItemAtIndex } from '~utils'
 
-export const useBusinessLogic = (): GenericObject => {
+export function useBusinessLogic(): GenericObject {
 	const setSelectedFile = useSetSelectedFile()
 	const selectedFile = useSelectedFile()
 	const projectFiles = useProjectFiles()
@@ -114,12 +114,12 @@ export const useBusinessLogic = (): GenericObject => {
 	}
 }
 
-const useToggleLoadedCorrectly = (
+function useToggleLoadedCorrectly(
 	selectedFile,
 	projectFiles,
 	setProjectFiles,
 	setSelectedFile,
-) => {
+) {
 	return useCallback(() => {
 		const stateNow = selectedFile?.loadedCorrectly || false
 		const file = {
@@ -133,7 +133,7 @@ const useToggleLoadedCorrectly = (
 	}, [selectedFile, projectFiles, setProjectFiles, setSelectedFile])
 }
 
-const useDefaultSelectedFile = (current, files, setSelectedFile) => {
+function useDefaultSelectedFile(current, files, setSelectedFile) {
 	useEffect(() => {
 		if (!current) {
 			const [file] = files
@@ -145,13 +145,13 @@ const useDefaultSelectedFile = (current, files, setSelectedFile) => {
 	}, [files, current, setSelectedFile])
 }
 
-const useOnConfirmDelete = (
+function useOnConfirmDelete(
 	projectFiles,
 	selectedFile,
 	setProjectFiles,
 	toggleShowConfirm,
 	setSelectedFile,
-) => {
+) {
 	return useCallback(() => {
 		const filteredFiles = projectFiles.filter(p => p.id !== selectedFile?.id)
 		setProjectFiles(filteredFiles)
@@ -166,7 +166,7 @@ const useOnConfirmDelete = (
 	])
 }
 
-const useHandleLoadFile = setErrorMessage => {
+function useHandleLoadFile(setErrorMessage) {
 	const projectFiles = useProjectFiles()
 	const addFile = useAddProjectFile()
 	const addOriginalTable = useSetOrUpdateOriginalTable()

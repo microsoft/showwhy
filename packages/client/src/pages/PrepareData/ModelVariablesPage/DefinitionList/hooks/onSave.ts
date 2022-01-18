@@ -31,13 +31,13 @@ interface OnSaveArgs {
 	setModelVariables: SetModelVariables
 }
 
-export const useOnSaveCausalFactor = ({
+export function useOnSaveCausalFactor({
 	setNewLabel,
 	newLabel,
 	setEditingDefinition,
 	toggleIsEditingLabel,
 	saveCausalFactor,
-}: OnSaveCausalFactorArgs): GenericFn => {
+}: OnSaveCausalFactorArgs): (definition?: CausalFactor) => void {
 	return useCallback(
 		(definition?: CausalFactor) => {
 			const newCausalFactor = {
@@ -62,7 +62,7 @@ export const useOnSaveCausalFactor = ({
 	)
 }
 
-export const useOnSave = ({
+export function useOnSave({
 	type,
 	setNewLabel,
 	newLabel,
@@ -73,7 +73,7 @@ export const useOnSave = ({
 	onUpdate,
 	onSaveCausalFactor,
 	setModelVariables,
-}: OnSaveArgs): GenericFn => {
+}: OnSaveArgs): (definition?: Factor) => void {
 	return useCallback(
 		(definition?: Factor) => {
 			if (type === PageType.Control) {
