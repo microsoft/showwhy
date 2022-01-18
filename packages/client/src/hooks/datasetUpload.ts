@@ -19,7 +19,7 @@ import {
 import { useOnDropRejected } from './dropzone'
 import { useSupportedFileTypes } from './supportedFileTypes'
 import { DropFilesCount, ProjectFile } from '~interfaces'
-import { GenericFn, GenericObject } from '~types'
+import { GenericObject } from '~types'
 import { createDefaultTable } from '~utils'
 
 export function useDrop(
@@ -134,7 +134,7 @@ export function useOnFileLoadCompleted(
 }
 
 export function useOnDropDatasetFilesAccepted(
-	setFilesCount?: GenericFn,
+	setFilesCount?: (count: DropFilesCount) => void,
 ): (files: BaseFile[]) => void {
 	return useCallback(
 		(files: BaseFile[]) => {
@@ -149,7 +149,9 @@ export function useOnDropDatasetFilesAccepted(
 	)
 }
 
-export function useResetCount(setFilesCount: GenericFn): () => void {
+export function useResetCount(
+	setFilesCount: (count: DropFilesCount) => void,
+): () => void {
 	return useCallback(() => {
 		setFilesCount({
 			total: 0,

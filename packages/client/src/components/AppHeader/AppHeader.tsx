@@ -11,11 +11,11 @@ import { Settings } from './Settings'
 import { CausalQuestion } from '~components/CausalQuestion'
 import { DescribeElements, FileDefinition } from '~interfaces'
 import { Container } from '~styles'
-import { GenericFn } from '~types'
+import { StepStatus } from '~enums'
 
 interface AppHeaderProps {
-	onGetStepUrls: GenericFn
-	onSetAllStepStatus: GenericFn
+	onGetStepUrls: (urls?: string[], exclude?: any) => string[]
+	onSetAllStepStatus: (urls: string[], status: StepStatus) => void
 	defineQuestion: DescribeElements
 	onClickProject: (example: FileDefinition) => void
 	exampleProjects: FileDefinition[]
