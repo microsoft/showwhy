@@ -171,7 +171,7 @@ async function processTables(
 			name: workspace.name,
 		}
 		addFile(file)
-		setOriginalTable({ tableId: id, columns: result })
+		setOriginalTable({ tableId: id, table: result })
 	} else {
 		// this effectively uses a "first one wins" for the primary table
 		// this shouldn't actually happen in practice, but until we can support multiples correctly...
@@ -187,7 +187,7 @@ async function processTables(
 				name: primary.name,
 			}
 			addFile(file)
-			setOriginalTable({ tableId: id, columns: result })
+			setOriginalTable({ tableId: id, table: result })
 		}
 	}
 }
