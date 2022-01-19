@@ -13,7 +13,7 @@ import { ElementDefinition, Item } from '~interfaces'
 import { useDefineQuestion, useSetDefineQuestion } from '~state'
 import { GenericObject } from '~types'
 
-export const useBusinessLogic = (): GenericObject => {
+export function useBusinessLogic(): GenericObject {
 	const defineQuestion = useDefineQuestion()
 	const pageType = usePageType()
 	const variables = useVariableOptions()
@@ -86,7 +86,7 @@ export const useBusinessLogic = (): GenericObject => {
 	}
 }
 
-const useItemList = (definitions): Item[] => {
+function useItemList(definitions): Item[] {
 	return useMemo(() => {
 		return definitions?.map(x => {
 			const newObj = { ...x }

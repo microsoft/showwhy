@@ -7,12 +7,11 @@ import { IComboBoxOption } from '@fluentui/react'
 import { useCallback } from 'react'
 import { BeliefDegree } from '~enums'
 import { Cause, FlatCausalFactor } from '~interfaces'
-import { GenericFn } from '~types'
 
-export const useOnChangeCauses = (
+export function useOnChangeCauses(
 	flatFactorsList: FlatCausalFactor[],
-	saveNewFactors: GenericFn,
-): GenericFn => {
+	saveNewFactors: (id: string, value: Cause) => void,
+): (id: string, checked: boolean) => void {
 	return useCallback(
 		(id: string, checked: boolean) => {
 			const newValue = flatFactorsList.find(x => x.id === id) as Cause
@@ -28,10 +27,10 @@ export const useOnChangeCauses = (
 	)
 }
 
-export const useOnChangeDegree = (
+export function useOnChangeDegree(
 	flatFactorsList: FlatCausalFactor[],
-	saveNewFactors: GenericFn,
-): GenericFn => {
+	saveNewFactors: (id: string, value: Cause) => void,
+): (id: string, selected: IComboBoxOption) => void {
 	return useCallback(
 		(id: string, selected: IComboBoxOption) => {
 			const newValue = flatFactorsList.find(x => x.id === id) as Cause
@@ -43,12 +42,12 @@ export const useOnChangeDegree = (
 	)
 }
 
-export const useOnChangeReasoning = (
+export function useOnChangeReasoning(
 	flatFactorsList: FlatCausalFactor[],
-	toggleMultiline: GenericFn,
-	saveNewFactors: GenericFn,
+	toggleMultiline: () => void,
+	saveNewFactors: (id: string, value: Cause) => void,
 	multiline: boolean,
-): GenericFn => {
+): (id: string, newText: string) => void {
 	return useCallback(
 		(id: string, newText: string): void => {
 			const newValue = flatFactorsList.find(x => x.id === id) as Cause

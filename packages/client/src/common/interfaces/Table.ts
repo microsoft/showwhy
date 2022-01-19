@@ -18,7 +18,7 @@ export interface TableColumn {
 }
 
 export interface BasicTable {
-	columns: ColumnTable
+	table: ColumnTable
 	tableId: string
 	tableName?: string
 }

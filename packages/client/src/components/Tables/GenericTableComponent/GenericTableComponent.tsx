@@ -58,7 +58,7 @@ export const GenericTableComponent: React.FC<GenericTableComponentProps> = memo(
 				return keys.length
 			}
 			return 0
-		}, [items])
+		}, [items, tableTitle])
 
 		const sortItems = useCallback(
 			(column: string, asc?: boolean) => {
@@ -67,7 +67,7 @@ export const GenericTableComponent: React.FC<GenericTableComponentProps> = memo(
 				sorted.sort(sortBy)
 				setSortedItems(sorted.slice(0, tableSample))
 			},
-			[items, setSortedItems],
+			[items, setSortedItems, tableSample],
 		)
 
 		const onSort = useCallback(
@@ -93,7 +93,7 @@ export const GenericTableComponent: React.FC<GenericTableComponentProps> = memo(
 
 		useEffect(() => {
 			if (items?.length) setSortedItems([...items].slice(0, tableSample))
-		}, [items, setSortedItems])
+		}, [items, setSortedItems, tableSample])
 
 		if (!items?.length) return null
 

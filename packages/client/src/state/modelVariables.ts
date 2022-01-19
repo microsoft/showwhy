@@ -72,10 +72,10 @@ export const allModelVariables = selectorFamily({
 		},
 })
 
-export const useAllModelVariables = (
+export function useAllModelVariables(
 	projectFiles: ProjectFile[],
 	type: string,
-): VariableDefinition[][] => {
+): VariableDefinition[][] {
 	const obj = projectFiles.map(x => {
 		return { id: x.id || '', type }
 	})

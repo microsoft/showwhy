@@ -2,6 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import { ArqueroTableHeader } from '@data-wrangling-components/react'
 import {
 	ContextualMenu,
 	DefaultButton,
@@ -16,7 +17,7 @@ import { DefinitionSteps } from './DefinitionSteps'
 import { Header } from './Header'
 import { useBusinessLogic } from './hooks'
 import { EmptyDataPageWarning } from '~components/EmptyDataPageWarning'
-import { ModelTable } from '~components/Tables/ModelTable'
+import { ArqueroDetailsTable } from '~components/Tables/ArqueroDetailsTable'
 import { PageType, Pages } from '~enums'
 import { ContainerFlexRow } from '~styles'
 
@@ -53,9 +54,7 @@ export const ModelVariablesPage: React.FC = memo(function ModelVariablesPage() {
 			</Then>
 			<Else>
 				<If
-					condition={
-						!subjectIdentifier.length || !subjectIdentifierData.columns
-					}
+					condition={!subjectIdentifier.length || !subjectIdentifierData.table}
 				>
 					<Then>
 						<Header />
@@ -69,11 +68,18 @@ export const ModelVariablesPage: React.FC = memo(function ModelVariablesPage() {
 						<Container>
 							<Header />
 							<NormalContainer>
-								<ModelTable
-									sortable={true}
-									columnsData={subjectIdentifierData.columns}
-									columnNames={subjectIdentifierData.columnNames}
+								<ArqueroTableHeader
+									table={subjectIdentifierData.table}
+									showRowCount
+									showColumnCount
 								/>
+								<DetailsListContainer>
+									<ArqueroDetailsTable
+										table={subjectIdentifierData.table}
+										columns={subjectIdentifierData.columnNames}
+										features={{ smartHeaders: true }}
+									/>
+								</DetailsListContainer>
 								<ContainerFlexRow>
 									<DefinitionListContainer>
 										<TitleContainer>
@@ -108,7 +114,7 @@ export const ModelVariablesPage: React.FC = memo(function ModelVariablesPage() {
 													onUpdate={onUpdateTargetVariable}
 													fileId={tableIdentifier?.tableId}
 													selectedDefinition={selected}
-													originalTable={tableIdentifier?.columns}
+													originalTable={tableIdentifier?.table}
 												/>
 											) : (
 												<>
@@ -168,6 +174,10 @@ const TitleContainer = styled.div`
 	display: flex;
 	justify-content: space-between;
 	width: 100%;
+`
+
+const DetailsListContainer = styled.div`
+	height: 40vh;
 `
 
 function _getMenu(props: IContextualMenuProps): JSX.Element {

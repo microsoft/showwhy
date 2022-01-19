@@ -6,23 +6,22 @@
 import { IContextualMenuItem } from '@fluentui/react'
 import { useMemo } from 'react'
 import {
-	ColumnAsTargetArgs,
 	SelectedArgs,
 	SubjectIdentifierArgs,
 	SubjectIdentifierDataArgs,
 } from './interfaces'
 import { FactorsOrDefinitions } from './types'
 import { ColumnRelation, ColumnRelevance, PageType } from '~enums'
-import { DefinitionTable, BasicTable } from '~interfaces'
+import { DefinitionTable, BasicTable, CausalFactor } from '~interfaces'
 
-export const useDefinitionOptions = ({
+export function useDefinitionOptions({
 	defineQuestionData,
 	type,
 	causalFactors,
 }: Omit<
 	SelectedArgs,
 	'definitionOptions' | 'selectedDefinition'
->): FactorsOrDefinitions => {
+>): FactorsOrDefinitions {
 	return useMemo((): FactorsOrDefinitions => {
 		if (type === PageType.Control) {
 			return causalFactors
@@ -31,13 +30,13 @@ export const useDefinitionOptions = ({
 	}, [defineQuestionData, causalFactors, type])
 }
 
-export const useSelected = ({
+export function useSelected({
 	defineQuestionData,
 	definitionOptions,
 	selectedDefinition,
 	type,
 	causalFactors,
-}: SelectedArgs): string => {
+}: SelectedArgs): string {
 	return useMemo((): string => {
 		let options = defineQuestionData?.definition?.flatMap(x => x.variable) || []
 		if (type === PageType.Control) {
@@ -56,7 +55,7 @@ export const useSelected = ({
 	])
 }
 
-export const useRelationType = (type: string): ColumnRelation => {
+export function useRelationType(type: string): ColumnRelation {
 	return useMemo((): ColumnRelation => {
 		switch (type) {
 			case PageType.Outcome:
@@ -72,11 +71,11 @@ export const useRelationType = (type: string): ColumnRelation => {
 	}, [type])
 }
 
-export const useSubjectIdentifier = ({
+export function useSubjectIdentifier({
 	allTableColumns,
 	relationType,
 	modelVariables,
-}: SubjectIdentifierArgs): string[] => {
+}: SubjectIdentifierArgs): string[] {
 	return useMemo(() => {
 		const projectTableColumns = allTableColumns.flatMap(x => x)
 		const columns =
@@ -103,30 +102,30 @@ export const useSubjectIdentifier = ({
 	}, [allTableColumns, relationType, modelVariables])
 }
 
-export const useSubjectIdentifierData = ({
+export function useSubjectIdentifierData({
 	allOriginalTables,
 	subjectIdentifier,
 	setTableIdentifier,
-}: SubjectIdentifierDataArgs): DefinitionTable => {
+}: SubjectIdentifierDataArgs): DefinitionTable {
 	return useMemo((): DefinitionTable => {
 		const mainTable = allOriginalTables
 			.map(originalTable => {
-				const table = { ...originalTable }
+				const basicTable = { ...originalTable }
 				const columns = subjectIdentifier.filter(x =>
-					table?.columns.columnNames().includes(x),
+					basicTable?.table.columnNames().includes(x),
 				)
 
 				if (!columns.length) return null
-				table.columns = table.columns.select(columns)
+				basicTable.table = basicTable.table.select(columns)
 
-				return table as BasicTable
+				return basicTable as BasicTable
 			})
 			.find(x => x)
 
-		const columnNames = mainTable?.columns?.columnNames()
+		const columnNames = mainTable?.table?.columnNames()
 		const data = {
 			columnNames,
-			columns: mainTable?.columns,
+			table: mainTable?.table,
 			tableId: mainTable?.tableId,
 		} as DefinitionTable
 		setTableIdentifier(data)
@@ -134,12 +133,17 @@ export const useSubjectIdentifierData = ({
 	}, [allOriginalTables, subjectIdentifier, setTableIdentifier])
 }
 
-export const useColumnsAsTarget = ({
+export function useColumnsAsTarget({
 	subjectIdentifierData,
 	causalFactors,
 	type,
 	onUpdateTargetVariable,
-}: ColumnAsTargetArgs): IContextualMenuItem[] => {
+}: {
+	subjectIdentifierData: DefinitionTable
+	causalFactors: CausalFactor[]
+	type: string
+	onUpdateTargetVariable: (_evt: unknown, value: any) => void
+}): IContextualMenuItem[] {
 	return useMemo(() => {
 		const selectedColumns =
 			type === PageType.Control ? causalFactors.map(x => x.column) : []

@@ -63,9 +63,9 @@ export function useGetNodeProperties(): (
 	)
 }
 
-export const useBuildEstimateEffectNode = (): ((
+export function useBuildEstimateEffectNode(): (
 	fileName: string,
-) => NodeRequest) => {
+) => NodeRequest {
 	const getNodeProperties = useGetNodeProperties()
 	return useCallback(
 		(fileName: string) => {

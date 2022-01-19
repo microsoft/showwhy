@@ -27,7 +27,7 @@ import {
 
 import { GenericObject } from '~types'
 
-export const useBusinessLogic = (): GenericObject => {
+export function useBusinessLogic(): GenericObject {
 	const defineQuestion = useDefineQuestion()
 	const primarySpecificationConfig = usePrimarySpecificationConfig()
 	const causalModel = primarySpecificationConfig.causalModel

@@ -23,7 +23,7 @@ import {
 import { GenericObject } from '~types'
 import { createDefaultTable, replaceItemAtIndex } from '~utils'
 
-export const useBusinessLogic = (): GenericObject => {
+export function useBusinessLogic(): GenericObject {
 	const setSelectedFile = useSetSelectedFile()
 	const selectedFile = useSelectedFile()
 	const projectFiles = useProjectFiles()
@@ -34,7 +34,7 @@ export const useBusinessLogic = (): GenericObject => {
 	>()
 	const [showConfirm, { toggle: toggleShowConfirm }] = useBoolean(false)
 	const originalTableState = useSelectOriginalTable(selectedFile?.id as string)
-	const originalTable = originalTableState()?.columns
+	const originalTable = originalTableState()?.table
 
 	const handleDismissError = useCallback(() => {
 		setErrorMessage('')
@@ -72,7 +72,7 @@ export const useBusinessLogic = (): GenericObject => {
 			const delimiter = `${option?.key}`
 			if (selectedFile && selectedFile.id) {
 				const table = createDefaultTable(selectedFile.content, delimiter)
-				addOriginalTable({ tableId: selectedFile.id, columns: table })
+				addOriginalTable({ tableId: selectedFile.id, table })
 			}
 			setSelectedDelimiter(delimiter)
 		},
@@ -114,12 +114,12 @@ export const useBusinessLogic = (): GenericObject => {
 	}
 }
 
-const useToggleLoadedCorrectly = (
+function useToggleLoadedCorrectly(
 	selectedFile,
 	projectFiles,
 	setProjectFiles,
 	setSelectedFile,
-) => {
+) {
 	return useCallback(() => {
 		const stateNow = selectedFile?.loadedCorrectly || false
 		const file = {
@@ -133,7 +133,7 @@ const useToggleLoadedCorrectly = (
 	}, [selectedFile, projectFiles, setProjectFiles, setSelectedFile])
 }
 
-const useDefaultSelectedFile = (current, files, setSelectedFile) => {
+function useDefaultSelectedFile(current, files, setSelectedFile) {
 	useEffect(() => {
 		if (!current) {
 			const [file] = files
@@ -145,13 +145,13 @@ const useDefaultSelectedFile = (current, files, setSelectedFile) => {
 	}, [files, current, setSelectedFile])
 }
 
-const useOnConfirmDelete = (
+function useOnConfirmDelete(
 	projectFiles,
 	selectedFile,
 	setProjectFiles,
 	toggleShowConfirm,
 	setSelectedFile,
-) => {
+) {
 	return useCallback(() => {
 		const filteredFiles = projectFiles.filter(p => p.id !== selectedFile?.id)
 		setProjectFiles(filteredFiles)
@@ -166,7 +166,7 @@ const useOnConfirmDelete = (
 	])
 }
 
-const useHandleLoadFile = setErrorMessage => {
+function useHandleLoadFile(setErrorMessage) {
 	const projectFiles = useProjectFiles()
 	const addFile = useAddProjectFile()
 	const addOriginalTable = useSetOrUpdateOriginalTable()
@@ -179,7 +179,7 @@ const useHandleLoadFile = setErrorMessage => {
 				file.id = fileId
 				file.loadedCorrectly = true
 				addFile(file)
-				addOriginalTable({ tableId: fileId, columns: table })
+				addOriginalTable({ tableId: fileId, table })
 			}
 		},
 		[addFile, projectFiles, addOriginalTable, setErrorMessage],

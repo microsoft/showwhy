@@ -2,7 +2,6 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-
 import { useDropzone } from '@data-wrangling-components/react'
 import {
 	BaseFile,
@@ -11,12 +10,18 @@ import {
 	FileWithPath,
 } from '@data-wrangling-components/utilities'
 import ColumnTable from 'arquero/dist/types/table/column-table'
-import { useState, useCallback, useEffect } from 'react'
+import {
+	useState,
+	useCallback,
+	useEffect,
+	SetStateAction,
+	Dispatch,
+} from 'react'
 import { useOnDropRejected } from './dropzone'
 import { useAddFilesToCollection } from './fileCollection'
 import { useSupportedFileTypes } from './supportedFileTypes'
 import { DropFilesCount, ProjectFile } from '~interfaces'
-import { GenericFn, GenericObject } from '~types'
+import { GenericObject } from '~types'
 import { createDefaultTable } from '~utils'
 
 export function useDrop(
@@ -109,7 +114,11 @@ export function useOnLoadStart(setLoading: any, onError: any): () => void {
 	}, [setLoading, onError])
 }
 
-export function useOnFileLoadCompleted(setFilesCount, setLoading, onLoad) {
+export function useOnFileLoadCompleted(
+	setFilesCount: (prev: any) => any,
+	setLoading: Dispatch<SetStateAction<boolean>>,
+	onLoad?: (file: ProjectFile, table: ColumnTable) => void,
+): (file: ProjectFile, table: ColumnTable) => void {
 	return useCallback(
 		(file: ProjectFile, table: ColumnTable) => {
 			setFilesCount(prev => {
@@ -125,7 +134,9 @@ export function useOnFileLoadCompleted(setFilesCount, setLoading, onLoad) {
 	)
 }
 
-export const useOnDropDatasetFilesAccepted = (setFilesCount?: GenericFn) => {
+export function useOnDropDatasetFilesAccepted(
+	setFilesCount?: (count: DropFilesCount) => void,
+): (files: BaseFile[]) => void {
 	const addFilesToCollection = useAddFilesToCollection()
 	return useCallback(
 		async (files: BaseFile[]) => {
@@ -140,7 +151,9 @@ export const useOnDropDatasetFilesAccepted = (setFilesCount?: GenericFn) => {
 	)
 }
 
-export const useResetCount = (setFilesCount: GenericFn) => {
+export function useResetCount(
+	setFilesCount: (count: DropFilesCount) => void,
+): () => void {
 	return useCallback(() => {
 		setFilesCount({
 			total: 0,

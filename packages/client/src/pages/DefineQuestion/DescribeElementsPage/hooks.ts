@@ -7,7 +7,7 @@ import { useCallback } from 'react'
 import { useDefineQuestion, useSetDefineQuestion } from '~state'
 import { GenericObject } from '~types'
 
-export const useBusinessLogic = (): GenericObject => {
+export function useBusinessLogic(): GenericObject {
 	const defineQuestion = useDefineQuestion()
 	const setDefineQuestion = useSetDefineQuestion()
 

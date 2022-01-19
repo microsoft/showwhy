@@ -59,9 +59,9 @@ const defaultEstimatorRanking = estimatorRanking.reduce((acc, curr) => {
 	return acc
 }, {} as { [key: string]: number })
 
-export const getEstimatorByRanking = (
+export function getEstimatorByRanking(
 	estimators: EstimatorsType[],
-): EstimatorsType => {
+): EstimatorsType {
 	const ranking = estimators.map(
 		estimator => defaultEstimatorRanking[estimator],
 	)
