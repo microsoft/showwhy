@@ -4,11 +4,10 @@
  */
 
 import { useCallback } from 'react'
-import { GenericFn } from '~types'
 
 export function useOnDropRejected(
 	onError?: (text: string) => void,
-	cb?: GenericFn,
+	cb?: () => void,
 ): (message: string) => void {
 	return useCallback(
 		(message: string) => {
