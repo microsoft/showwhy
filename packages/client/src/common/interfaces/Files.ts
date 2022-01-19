@@ -3,13 +3,13 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { BaseFile } from '@data-wrangling-components/utilities'
+import { BaseFile, Json } from '@data-wrangling-components/utilities'
 
 export interface ZipData {
-	json?: BaseFile
+	json?: Json
 	tables?: BaseFile[]
 	results?: {
-		entry: BaseFile
+		file?: BaseFile
 		dataUri: string
 	}
 	name?: string
