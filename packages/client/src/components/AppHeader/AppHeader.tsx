@@ -9,9 +9,9 @@ import { ProjectsSelector } from './ProjectsSelector'
 import { SaveProject } from './SaveProject'
 import { Settings } from './Settings'
 import { CausalQuestion } from '~components/CausalQuestion'
+import { StepStatus } from '~enums'
 import { DescribeElements, FileDefinition } from '~interfaces'
 import { Container } from '~styles'
-import { StepStatus } from '~enums'
 
 interface AppHeaderProps {
 	onGetStepUrls: (urls?: string[], exclude?: any) => string[]

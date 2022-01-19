@@ -5,7 +5,6 @@
 
 import { RowObject } from 'arquero/dist/types/table/table'
 import { TableColumn } from '~interfaces'
-import { GenericFn } from '~types'
 
 export interface ColumnDetailsProps {
 	columnName: string
@@ -23,6 +22,6 @@ export interface MissingArgs {
 	values?: RowObject[]
 	columnName: string
 	invalidValues: string[]
-	toggleInvalidValue: GenericFn
+	toggleInvalidValue: (value: string | null) => void
 	tableColumns?: TableColumn[]
 }

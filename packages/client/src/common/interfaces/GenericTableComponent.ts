@@ -4,10 +4,10 @@
  */
 
 import { ActionButtonsProps } from './ActionButtons'
-import { GenericFn, GenericObject } from '~types'
+import { GenericObject } from '~types'
 
 export interface Item extends GenericObject {
-	onClick?: GenericFn
+	onClick?: () => void
 	ref?: any
 	colsSpan?: number
 	actions?: ActionButtonsProps
@@ -35,5 +35,5 @@ export interface TableHeader {
 export interface TableFooter {
 	data: any
 	props?: TableProps
-	onClick?: GenericFn
+	onClick?: () => void
 }
