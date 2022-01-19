@@ -6,7 +6,6 @@
 import { IColumn } from '@fluentui/react'
 import { not } from 'arquero'
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { OnChange, OnRelevanceChangeArgs } from './interfaces'
 import { ColumnRelevance, ColumnRelation } from '~enums'
 import { useRestoreColumn, useTableCommands } from '~hooks'
 import { ProjectFile, TableColumn } from '~interfaces'
