@@ -47,7 +47,12 @@ import {
 	runPipeline,
 } from '~utils'
 
-export function useLoadProject(source = ProjectSource.url) {
+export function useLoadProject(
+	source = ProjectSource.url,
+): (
+	definition?: FileDefinition | undefined,
+	zip?: ZipData | undefined,
+) => Promise<void> {
 	const id = useMemo(() => uuidv4(), [])
 	const setTableColumns = useSetTableColumns(id)
 	const setModelVariables = useSetModelVariables(id)
@@ -142,6 +147,7 @@ export function useLoadProject(source = ProjectSource.url) {
 		},
 		[
 			id,
+			source,
 			setOriginalTable,
 			addFile,
 			setPrimarySpecificationConfig,
@@ -194,7 +200,7 @@ async function processTables(
 			name: workspace.name,
 		}
 		addFile(file)
-		setOriginalTable({ tableId: id, columns: result })
+		setOriginalTable({ tableId: id, table: result })
 	} else {
 		// this effectively uses a "first one wins" for the primary table
 		// this shouldn't actually happen in practice, but until we can support multiples correctly...
@@ -208,7 +214,7 @@ async function processTables(
 				name: primary.name,
 			}
 			addFile(file)
-			setOriginalTable({ tableId: id, columns: result })
+			setOriginalTable({ tableId: id, table: result })
 		}
 	}
 }

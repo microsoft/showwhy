@@ -9,14 +9,13 @@ import { ActionButtons } from '~components/ActionButtons'
 import { LinkCallout } from '~components/Callout'
 import { CardComponent } from '~components/CardComponent'
 import { Estimator } from '~interfaces'
-import { GenericFn } from '~types'
 
 interface ExtendedEstimator extends Estimator {
 	description: string
 	isChecked: boolean
 	isDefault?: boolean
-	onChange?: GenericFn
-	onDefaultChange?: GenericFn
+	onChange?: (ev: unknown, checked: boolean | undefined) => void
+	onDefaultChange?: () => void
 }
 
 interface EstimatorCardProps {
@@ -24,7 +23,7 @@ interface EstimatorCardProps {
 	title: string
 	description?: string
 	isCardChecked: boolean
-	onCardClick: GenericFn
+	onCardClick: () => void
 }
 
 export const EstimatorCard: React.FC<EstimatorCardProps> = memo(

@@ -125,7 +125,7 @@ export function useAlternativeModelsTestable(
 				}
 			})
 		return { confounders: confoundersArray, outcomeDeterminants: outcomeArray }
-	}, [causalFactors, excludedFactors, causalLevel, shouldIncludeInDegree])
+	}, [causalFactors, excludedFactors, causalLevel, shouldUseVariable])
 }
 
 export function useAddOrEditFactor(): (factor, factors?) => void {

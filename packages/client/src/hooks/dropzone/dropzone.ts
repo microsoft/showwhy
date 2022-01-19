@@ -8,6 +8,7 @@ import {
 	FileType,
 	isZipFile,
 } from '@data-wrangling-components/utilities'
+import ColumnTable from 'arquero/dist/types/table/column-table'
 import { useMemo, useCallback, useState } from 'react'
 import {
 	useAcceptedFileTypes,
@@ -20,13 +21,12 @@ import {
 	useResetCount,
 	useSupportedFileTypes,
 } from '~hooks'
-import { DropFilesCount } from '~interfaces'
-import { GenericFn } from '~types'
+import { DropFilesCount, ProjectFile } from '~interfaces'
 
 export function useHandleOnDrop(
-	onFileLoadCompleted: GenericFn,
-	onLoadStart?: GenericFn,
-) {
+	onFileLoadCompleted: (file: ProjectFile, table: ColumnTable) => void,
+	onLoadStart?: () => void,
+): (files: FileCollection) => void {
 	const onDrop = useDrop(onFileLoadCompleted, onLoadStart)
 	return useCallback(
 		(fileCollection: FileCollection) => {
@@ -42,9 +42,9 @@ export function useHandleOnDrop(
 }
 
 export function useOnDropAccepted(
-	onError?: GenericFn,
-	setFileCount?: GenericFn,
-) {
+	onError?: (msg: string) => void,
+	setFileCount?: (fileCount: DropFilesCount) => void,
+): (files: FileCollection) => void {
 	const onDropZipFilesAccepted = useOnDropZipFilesAccepted(onError)
 	const onDropDatasetFilesAccepted = useOnDropDatasetFilesAccepted(setFileCount)
 	return useCallback(
@@ -70,7 +70,17 @@ function useAccepted(): string[] {
 	)
 }
 
-export function useGlobalDropzone(onError?: GenericFn, onLoad?: GenericFn) {
+export function useGlobalDropzone(
+	onError?: (msg: string) => void,
+	onLoad?: (file: ProjectFile, table: ColumnTable) => void,
+): {
+	onDrop: (f: FileCollection) => void
+	onDropAccepted: (f: FileCollection) => void
+	onDropRejected: (msg: string) => void
+	fileCount: DropFilesCount
+	loading: boolean
+	acceptedFileTypes: string[]
+} {
 	const [loading, setLoading] = useState<boolean>(false)
 	const [fileCount, setFileCount] = useState<DropFilesCount>({
 		total: 0,

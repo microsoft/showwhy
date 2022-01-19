@@ -6,14 +6,13 @@
 import { useCallback, useMemo } from 'react'
 import { SetFactors } from './types'
 import { CausalFactor, Cause, Causes, FlatCausalFactor } from '~interfaces'
-import { GenericFn } from '~types'
 import { replaceItemAtIndex } from '~utils'
 
-export const useFlatFactorsList = (
+export function useFlatFactorsList(
 	causalFactors: CausalFactor[],
 	causeType: string,
 	values?: CausalFactor[],
-): FlatCausalFactor[] => {
+): FlatCausalFactor[] {
 	return useMemo((): FlatCausalFactor[] => {
 		return causalFactors.map((factor: CausalFactor) => {
 			const equal =
@@ -32,12 +31,12 @@ export const useFlatFactorsList = (
 	}, [causalFactors, values, causeType])
 }
 
-export const useSaveFactors = (
+export function useSaveFactors(
 	causalFactors: CausalFactor[],
 	causeType: string,
 	setValues: SetFactors,
-	save: GenericFn,
-): GenericFn => {
+	save: (factors: CausalFactor[]) => void,
+): (id: string, value: any) => void {
 	return useCallback(
 		(id: string, newValue) => {
 			setValues(prev => [...(prev || []).filter(x => x.id !== id), newValue])

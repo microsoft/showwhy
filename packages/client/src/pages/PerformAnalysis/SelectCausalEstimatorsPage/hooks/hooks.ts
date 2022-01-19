@@ -7,7 +7,7 @@ import { useEstimatorHook } from './estimators'
 import { useRefutations } from './refutations'
 import { GenericObject } from '~types'
 
-export const useBusinessLogic = (): GenericObject => {
+export function useBusinessLogic(): GenericObject {
 	return {
 		...useEstimatorHook(),
 		...useRefutations(),

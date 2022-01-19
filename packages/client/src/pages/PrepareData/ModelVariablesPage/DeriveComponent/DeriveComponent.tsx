@@ -11,7 +11,7 @@ import React, { memo, useState, useCallback, useMemo } from 'react'
 import styled from 'styled-components'
 import { v4 as uuidv4 } from 'uuid'
 import { usePageType } from '../../../../hooks/usePageType'
-import { DeriveTypes } from '~enums'
+import { DefinitionType, DeriveTypes } from '~enums'
 import {
 	useCaptureTable,
 	useFilterFunctions,
@@ -20,7 +20,7 @@ import {
 	useSetDeriveTable,
 	useMatchFilter,
 } from '~hooks'
-import { Derive, ElementDefinition, FilterObject } from '~interfaces'
+import { Derive, Factor, FilterObject } from '~interfaces'
 
 import {
 	useModelVariables,
@@ -154,13 +154,13 @@ export const DeriveComponent: React.FC<DeriveProps> = memo(
 					[type]: [...existing, newObj],
 				}
 
-				const newDefinition = {
-					level: 'Secondary',
-					variable: actualFilterValue?.columnName,
+				const newDefinition: Factor = {
+					level: DefinitionType.Secondary,
+					variable: actualFilterValue?.columnName || '',
 					description: '',
-					column: actualFilterValue?.columnName,
+					column: actualFilterValue?.columnName || '',
 					id: uuidv4(),
-				} as ElementDefinition
+				}
 				saveDefinition(newDefinition)
 				setModelVariables(definitionObj)
 				onSave(actualFilterValue?.columnName as string)
@@ -212,7 +212,8 @@ export const DeriveComponent: React.FC<DeriveProps> = memo(
 				type,
 				selectedDefinition,
 				setModelVariables,
-				onSave,
+				onCreateNewDefinition,
+				onUpdate,
 			],
 		)
 

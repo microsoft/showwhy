@@ -2,22 +2,22 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import { ArqueroTableHeader } from '@data-wrangling-components/react'
 import { TextField } from '@fluentui/react'
 import ColumnTable from 'arquero/dist/types/table/column-table'
-import { useState, useCallback, useMemo, memo, useEffect } from 'react'
+import { useState, useCallback, memo, useEffect } from 'react'
 
 import styled from 'styled-components'
-import { ModelTable } from '../ModelTable'
+import { ArqueroDetailsTable } from '../ArqueroDetailsTable'
 import { ProjectFile } from '~interfaces'
-import { GenericFn } from '~types'
 import { replaceItemAtIndex } from '~utils'
 
 interface SelectedTableDisplayProps {
 	selectedFile?: ProjectFile
 	originalTable: ColumnTable
 	projectFiles: ProjectFile[]
-	onSetSelectedFile: GenericFn
-	onSetProjectFiles: GenericFn
+	onSetSelectedFile: (file: ProjectFile) => void
+	onSetProjectFiles: (files: ProjectFile[]) => void
 }
 
 export const SelectedTableDisplay: React.FC<SelectedTableDisplayProps> = memo(
@@ -53,18 +53,6 @@ export const SelectedTableDisplay: React.FC<SelectedTableDisplayProps> = memo(
 			setFileAlias(selectedFile?.alias || '')
 		}, [setFileAlias, selectedFile])
 
-		const table: JSX.Element = useMemo(() => {
-			return (
-				originalTable && (
-					<ModelTable
-						sortable={true}
-						columnsData={originalTable}
-						columnNames={originalTable?.columnNames()}
-					/>
-				)
-			)
-		}, [originalTable])
-
 		useEffect(() => {
 			if (fileAlias && selectedFile?.alias !== fileAlias) {
 				save()
@@ -86,7 +74,15 @@ export const SelectedTableDisplay: React.FC<SelectedTableDisplayProps> = memo(
 								/>
 							</TableTitle>
 						</TableDetails>
-						<DatasetContainer>{table}</DatasetContainer>
+						<ArqueroTableHeader
+							table={originalTable}
+							name={selectedFile?.alias ?? selectedFile?.name}
+							showRowCount
+							showColumnCount
+						/>
+						<DatasetContainer>
+							<ArqueroDetailsTable table={originalTable} />
+						</DatasetContainer>
 					</SelectedFile>
 				) : (
 					<NotSelectedContainer>
@@ -118,7 +114,9 @@ const NotSelectedText = styled.h3`
 const Container = styled.div`
 	width: 100%;
 `
-const DatasetContainer = styled.div``
+const DatasetContainer = styled.div`
+	height: 50vh;
+`
 
 const TableDetails = styled.div`
 	margin-bottom: 8px;

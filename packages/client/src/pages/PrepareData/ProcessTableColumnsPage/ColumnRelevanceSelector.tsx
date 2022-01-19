@@ -27,8 +27,12 @@ interface ColumnRelevanceSelectorProps {
 	relevance: ColumnRelevance | undefined
 	relation: ColumnRelation[]
 	isSubjectIdentifierAvailable: boolean
-	onRelevanceChange: (relevance: ColumnRelevance) => void
-	onDefinitionChange: (changedRelation: ColumnRelation[]) => void
+	selectedColumn: string
+	onRelevanceChange: (relevance: ColumnRelevance, column: string) => void
+	onDefinitionChange: (
+		changedRelation: ColumnRelation[],
+		column: string,
+	) => void
 }
 
 export const ColumnRelevanceSelector: React.FC<ColumnRelevanceSelectorProps> =
@@ -36,6 +40,7 @@ export const ColumnRelevanceSelector: React.FC<ColumnRelevanceSelectorProps> =
 		relevance,
 		relation,
 		isSubjectIdentifierAvailable,
+		selectedColumn,
 		onRelevanceChange,
 		onDefinitionChange,
 	}) {
@@ -49,7 +54,9 @@ export const ColumnRelevanceSelector: React.FC<ColumnRelevanceSelectorProps> =
 								relevance={relevance}
 								relevanceOption={r}
 								key={r.value}
-								onDefinitionChange={onDefinitionChange}
+								onDefinitionChange={(changedRelation: ColumnRelation[]) =>
+									onDefinitionChange(changedRelation, selectedColumn)
+								}
 							/>
 						)
 					}
@@ -57,7 +64,7 @@ export const ColumnRelevanceSelector: React.FC<ColumnRelevanceSelectorProps> =
 						<RelevanceButton
 							toggle
 							checked={relevance === r.value}
-							onClick={() => onRelevanceChange(r.value)}
+							onClick={() => onRelevanceChange(r.value, selectedColumn)}
 							key={r.value}
 							title={
 								r.value === ColumnRelevance.SubjectIdentifier &&
@@ -79,9 +86,7 @@ export const ColumnRelevanceSelector: React.FC<ColumnRelevanceSelectorProps> =
 		)
 	})
 
-const RelevanceOptionsContainer = styled.div`
-	padding: 0px 16px;
-`
+const RelevanceOptionsContainer = styled.div``
 const RelevanceButton = styled(DefaultButton)`
 	width: 100%;
 	margin-bottom: 8px;

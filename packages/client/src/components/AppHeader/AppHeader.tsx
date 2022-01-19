@@ -9,13 +9,13 @@ import { ProjectsSelector } from './ProjectsSelector'
 import { SaveProject } from './SaveProject'
 import { Settings } from './Settings'
 import { CausalQuestion } from '~components/CausalQuestion'
+import { StepStatus } from '~enums'
 import { DescribeElements, FileDefinition } from '~interfaces'
 import { Container } from '~styles'
-import { GenericFn } from '~types'
 
 interface AppHeaderProps {
-	onGetStepUrls: GenericFn
-	onSetAllStepStatus: GenericFn
+	onGetStepUrls: (urls?: string[], exclude?: any) => string[]
+	onSetAllStepStatus: (urls: string[], status: StepStatus) => void
 	defineQuestion: DescribeElements
 	onClickProject: (example: FileDefinition) => void
 	exampleProjects: FileDefinition[]

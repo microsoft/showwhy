@@ -84,9 +84,9 @@ export const allTableColumnsState = selectorFamily({
 		},
 })
 
-export const useAllTableColumns = (
+export function useAllTableColumns(
 	files: ProjectFile[],
-): Partial<TableColumn[][]> => {
+): Partial<TableColumn[][]> {
 	const obj = files.map(x => {
 		return { id: x.id || '', name: x.alias || x.name }
 	}) as RecoilTableColumn[]
@@ -97,7 +97,7 @@ export const useAllTableColumns = (
 export function useResetTableColumns(): Resetter {
 	const reset = useResetRecoilState
 	const setTableState = useSetRecoilState(keys)
-	const ids = [...useRecoilValue(keys)]
+	const ids = useRecoilValue(keys)
 	return useCallback(() => {
 		ids.forEach(id => reset(tableColumnsState(id)))
 		setTableState([])

@@ -27,7 +27,7 @@ import {
 } from '~state'
 import { GenericObject } from '~types'
 
-export const useLayout = (): GenericObject => {
+export function useLayout(): GenericObject {
 	const project = useSelectedProject()
 	const step = useCurrentStep()
 	const setStepStatus = useSetStepStatus(step?.url)

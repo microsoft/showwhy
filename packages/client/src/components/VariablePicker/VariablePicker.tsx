@@ -7,7 +7,7 @@ import React, { memo, useMemo } from 'react'
 import styled from 'styled-components'
 
 interface VariablePickerProps {
-	onChange: (value: string | undefined) => void
+	onChange: (value: string) => void
 	variable?: string
 	showLabel?: boolean
 	variables?: IComboBoxOption[]
@@ -36,7 +36,7 @@ export const VariablePicker: React.FC<VariablePickerProps> = memo(
 					selectedKey={variable}
 					label={showLabel ? 'Select a variable or create a new one' : ''}
 					onChange={(_, option, index, value) =>
-						onChange(option?.text || value)
+						onChange(option?.text ?? value ?? '')
 					}
 					options={variablesList}
 					autoComplete={variablesList?.length ? 'on' : 'off'}
