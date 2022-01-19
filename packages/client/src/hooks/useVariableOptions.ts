@@ -16,7 +16,7 @@ export function useVariableOptions(): IComboBoxOption[] | undefined {
 	const originalTableState = useSelectOriginalTable(
 		projectFiles ? (projectFiles[0]?.id as string) : '',
 	)
-	const originalTable = originalTableState()?.columns
+	const originalTable = originalTableState()?.table
 	const columns = useTableColumns(
 		projectFiles ? projectFiles[0]?.id : undefined,
 	)

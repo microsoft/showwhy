@@ -110,22 +110,22 @@ export function useSubjectIdentifierData({
 	return useMemo((): DefinitionTable => {
 		const mainTable = allOriginalTables
 			.map(originalTable => {
-				const table = { ...originalTable }
+				const basicTable = { ...originalTable }
 				const columns = subjectIdentifier.filter(x =>
-					table?.columns.columnNames().includes(x),
+					basicTable?.table.columnNames().includes(x),
 				)
 
 				if (!columns.length) return null
-				table.columns = table.columns.select(columns)
+				basicTable.table = basicTable.table.select(columns)
 
-				return table as BasicTable
+				return basicTable as BasicTable
 			})
 			.find(x => x)
 
-		const columnNames = mainTable?.columns?.columnNames()
+		const columnNames = mainTable?.table?.columnNames()
 		const data = {
 			columnNames,
-			columns: mainTable?.columns,
+			table: mainTable?.table,
 			tableId: mainTable?.tableId,
 		} as DefinitionTable
 		setTableIdentifier(data)
