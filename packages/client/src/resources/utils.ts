@@ -11,6 +11,7 @@ import {
 	RefutationTypes,
 } from '~enums'
 import { NodeData } from '~interfaces'
+import { getEnv } from '~resources/getEnv'
 
 export function getSimulationNumByRefuterType(type: RefutationTypes): number {
 	switch (type) {
@@ -98,4 +99,10 @@ export function getNodeProperties(type: NodeTypes): NodeData {
 
 export function localhostUrl(url: string): string {
 	return url.replace('http://functions/', 'http://localhost:81/')
+}
+
+export const replaceAzureUrl = (url: string): string => {
+	const { BASE_URL } = getEnv()
+	const regExp = new RegExp(/^https?:\/\/azurite:10000/)
+	return url.replace(regExp, BASE_URL)
 }
