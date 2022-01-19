@@ -5,7 +5,7 @@
 
 import { useEffect } from 'react'
 
-export const useWakeLock = (): void => {
+export function useWakeLock(): void {
 	return useEffect(() => {
 		/**
 		 * WakeLock won't work on Firefox nor Safari

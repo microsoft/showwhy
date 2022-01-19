@@ -77,7 +77,7 @@ export function useDescriptionBox(
 	}, [description, setDescription, variable, add, factor])
 }
 
-export const useHasLevel = (factor?: Factor): boolean => {
+export function useHasLevel(factor?: Factor): boolean {
 	return useMemo(() => !!factor?.hasOwnProperty('level'), [factor])
 }
 

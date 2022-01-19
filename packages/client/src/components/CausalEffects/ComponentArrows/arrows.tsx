@@ -30,7 +30,7 @@ export const arrows = [
 	},
 ]
 
-export const useGetArrows = (size: Size): (() => JSX.Element[]) => {
+export function useGetArrows(size: Size): () => JSX.Element[] {
 	const thematic = useThematic()
 	return useCallback(() => {
 		return arrows.map(arrow => {
