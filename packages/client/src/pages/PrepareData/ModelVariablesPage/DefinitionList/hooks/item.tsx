@@ -9,7 +9,7 @@ import styled from 'styled-components'
 import { InputRef } from './types'
 import { Factor, Item } from '~interfaces'
 import { Text } from '~styles'
-import { StringSetter } from '~types'
+import { Setter } from '~types'
 
 export function useItem({
 	isEditingLabel,
@@ -34,7 +34,7 @@ export function useItem({
 	cancelField: () => void
 	onDuplicate: (f: Factor) => void
 	editDefinition: (f: Factor) => void
-	setNewLabel: StringSetter
+	setNewLabel: Setter<string | undefined>
 }): (x: Factor, index: number, len: number) => Item {
 	return useCallback(
 		(x: Factor, index: number, len: number) => {

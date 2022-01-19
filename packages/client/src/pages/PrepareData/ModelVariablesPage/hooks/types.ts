@@ -8,4 +8,4 @@ import { Setter } from '~types'
 
 export type FactorsOrDefinitions = CausalFactor[] | ElementDefinition[]
 
-export type SetTableIdentifier = Setter<BasicTable>
+export type SetTableIdentifier = Setter<BasicTable | undefined>

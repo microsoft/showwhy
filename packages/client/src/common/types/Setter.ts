@@ -5,6 +5,6 @@
 
 import React from 'react'
 
-export type Setter<T> = React.Dispatch<React.SetStateAction<T | undefined>>
+export type Setter<T> = React.Dispatch<React.SetStateAction<T>>
 
 export type StringSetter = Setter<string>

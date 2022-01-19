@@ -8,6 +8,6 @@ import { Setter } from '~types'
 
 export type InputRef = React.RefObject<HTMLInputElement>
 
-export type SetModelVariables = Setter<Definition>
+export type SetModelVariables = Setter<Definition | undefined>
 
-export type SetEditingDefinition = Setter<Factor>
+export type SetEditingDefinition = Setter<Factor | undefined>

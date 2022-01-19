@@ -159,9 +159,9 @@ export function useOnRelevanceChange({
 	relevance,
 	onRemoveColumn,
 }: {
-	setTableColumns: Setter<TableColumn[]>
+	setTableColumns: Setter<TableColumn[] | undefined>
 	tableColumns?: TableColumn[]
-	setRelevance: Setter<ColumnRelevance>
+	setRelevance: Setter<ColumnRelevance | undefined>
 	relevance?: ColumnRelevance
 	onRemoveColumn: (columnName?: string) => void
 }): (
@@ -205,7 +205,7 @@ export function useOnDefinitionChange({
 	setTableColumns,
 	tableColumns,
 }: {
-	setTableColumns: Setter<TableColumn[]>
+	setTableColumns: Setter<TableColumn[] | undefined>
 	tableColumns?: TableColumn[]
 }): (changedRelation: ColumnRelation[], columnName?: string) => void {
 	return useCallback(

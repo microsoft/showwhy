@@ -6,6 +6,6 @@
 import { ElementDefinition } from '~interfaces'
 import { Setter } from '~types'
 
-export type SetDefinitions = Setter<ElementDefinition[]>
+export type SetDefinitions = Setter<ElementDefinition[] | undefined>
 
-export type SetDefinition = Setter<ElementDefinition>
+export type SetDefinition = Setter<ElementDefinition | undefined>

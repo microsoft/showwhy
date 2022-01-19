@@ -7,8 +7,8 @@ import { EventListenerHandler, View } from 'vega'
 
 export function useAddClickHandler(
 	view: View,
-	onDatumClick?: (datum) => void,
-	onAxisClick?: (datum, axis: string) => void,
+	onDatumClick?: (datum: any) => void,
+	onAxisClick?: (datum: any, axis: string) => void,
 ): void {
 	const handleClick = useCallback(
 		(e, item) => {
@@ -32,7 +32,7 @@ export function useAddClickHandler(
 
 export function useAddMouseOverHandler(
 	view: View,
-	onDatumMouseOver?: (datum) => void,
+	onDatumMouseOver?: (datum: any) => void,
 ): void {
 	const handleMouseOver = useCallback(
 		(e, item) => {

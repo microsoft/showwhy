@@ -8,7 +8,7 @@ import { v4 } from 'uuid'
 import { SetEditingDefinition, SetModelVariables } from './types'
 import { DefinitionType, PageType } from '~enums'
 import { CausalFactor, Definition, Factor } from '~interfaces'
-import { StringSetter } from '~types'
+import { Setter } from '~types'
 
 export function useOnSaveCausalFactor({
 	setNewLabel,
@@ -17,7 +17,7 @@ export function useOnSaveCausalFactor({
 	toggleIsEditingLabel,
 	saveCausalFactor,
 }: {
-	setNewLabel: StringSetter
+	setNewLabel: Setter<string | undefined>
 	newLabel?: string
 	setEditingDefinition: SetEditingDefinition
 	toggleIsEditingLabel: () => void
@@ -60,7 +60,7 @@ export function useOnSave({
 	setModelVariables,
 }: {
 	type: string
-	setNewLabel: StringSetter
+	setNewLabel: Setter<string | undefined>
 	newLabel?: string
 	modelVariables?: Definition
 	setEditingDefinition: SetEditingDefinition

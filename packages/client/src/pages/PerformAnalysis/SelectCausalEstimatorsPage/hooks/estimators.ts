@@ -7,7 +7,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { getEstimatorByRanking, estimatorGroups } from './constants'
 import { EstimatorsGroups, EstimatorsType } from '~enums'
 import { useEstimatorShortDescription, useEstimatorsList } from '~hooks'
-import { Estimator } from '~interfaces'
+import { Estimator, PrimarySpecificationConfig } from '~interfaces'
 import {
 	useSetEstimators,
 	useSetPrimarySpecificationConfig,
@@ -17,7 +17,8 @@ import {
 	useToggleConfidenceInterval,
 	useConfidenceInterval,
 } from '~state'
-import { GenericObject } from '~types'
+import { GenericObject, Setter } from '~types'
+import { SetterOrUpdater } from 'recoil'
 
 enum BatchUpdateAction {
 	Delete = 'delete',
@@ -44,15 +45,9 @@ export function useEstimatorHook(): GenericObject {
 		EstimatorsType | undefined
 	>(primarySpecificationConfig.type)
 
-	const onConfidenceIntervalsChange = useCallback(
-		(
-			ev?: React.FormEvent<HTMLElement | HTMLInputElement>,
-			checked?: boolean,
-		): void => {
-			toggleConfidenceInterval()
-		},
-		[toggleConfidenceInterval],
-	)
+	const onConfidenceIntervalsChange = useCallback((): void => {
+		toggleConfidenceInterval()
+	}, [toggleConfidenceInterval])
 
 	const onEstimatorsCheckboxChange = useCallback(
 		(estimator: Estimator) => {
@@ -131,7 +126,7 @@ export function useEstimatorHook(): GenericObject {
 	}
 }
 
-function useBatchUpdate(setEstimators) {
+function useBatchUpdate(setEstimators: SetterOrUpdater<Estimator[]>) {
 	return useCallback(
 		(estimators: Estimator[], action: BatchUpdateAction) => {
 			switch (action) {
@@ -160,9 +155,9 @@ function useBatchUpdate(setEstimators) {
 }
 
 function useVerifyEstimatorGroups(
-	estimatorsList,
-	estimators,
-	setSelectedEstimatorGroups,
+	estimatorsList: Estimator[],
+	estimators: Estimator[],
+	setSelectedEstimatorGroups: Setter<EstimatorsGroups[]>,
 ) {
 	return useCallback(() => {
 		estimatorGroups.forEach(item => {
@@ -181,11 +176,14 @@ function useVerifyEstimatorGroups(
 }
 
 function useOnEstimatorTypeChange(
-	estimatorsList,
-	selectedEstimatorGroups,
-	setSelectedEstimatorGroupKey,
-	batchUpdateSelectedEstimators,
-	setSelectedEstimatorGroups,
+	estimatorsList: Estimator[],
+	selectedEstimatorGroups: EstimatorsGroups[],
+	setSelectedEstimatorGroupKey: Setter<EstimatorsGroups>,
+	batchUpdateSelectedEstimators: (
+		estimators: Estimator[],
+		action: BatchUpdateAction,
+	) => void,
+	setSelectedEstimatorGroups: Setter<EstimatorsGroups[]>,
 ) {
 	return useCallback(
 		(group: EstimatorsGroups) => {
@@ -212,8 +210,8 @@ function useOnEstimatorTypeChange(
 }
 
 function useOnDefaultChange(
-	setDefaultEstimator,
-	setPrimarySpecificationConfig,
+	setDefaultEstimator: Setter<EstimatorsType | undefined>,
+	setPrimarySpecificationConfig: SetterOrUpdater<PrimarySpecificationConfig>,
 ) {
 	return useCallback(
 		(type: EstimatorsType) => {
