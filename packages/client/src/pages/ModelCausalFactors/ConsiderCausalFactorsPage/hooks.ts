@@ -15,7 +15,7 @@ interface PathData {
 	page: string | undefined
 }
 
-export const useBusinessLogic = (): GenericObject => {
+export function useBusinessLogic(): GenericObject {
 	const causalFactors = useCausalFactors()
 	const setCausalFactors = useSetCausalFactors()
 	const pageType = usePageType()

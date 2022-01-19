@@ -8,31 +8,17 @@ import { v4 } from 'uuid'
 import { InputRef, SetModelVariables } from './types'
 import { PageType } from '~enums'
 import { CausalFactor, Definition, Factor } from '~interfaces'
-import { GenericFn } from '~types'
 import { wait } from '~utils'
 
-interface OnDuplicateCausalFactorArgs {
-	saveCausalFactor: GenericFn
-	listEndRef: InputRef
-	onClick: GenericFn
-}
-
-interface OnDuplicateArgs {
-	saveDefinition: GenericFn
-	duplicateColumn: GenericFn
-	modelVariables?: Definition
-	type: string
-	setModelVariables: SetModelVariables
-	onDuplicateCausalFactor: GenericFn
-	listEndRef: InputRef
-	onClick: GenericFn
-}
-
-export const useOnDuplicateCausalFactor = ({
+export function useOnDuplicateCausalFactor({
 	saveCausalFactor,
 	listEndRef,
 	onClick,
-}: OnDuplicateCausalFactorArgs): GenericFn => {
+}: {
+	saveCausalFactor: (factor: CausalFactor) => void
+	listEndRef: InputRef
+	onClick: (factor: CausalFactor) => void
+}): (val: CausalFactor, newVariable: string) => Promise<void> {
 	return useCallback(
 		async (val: CausalFactor, newVariable: string) => {
 			const newCausalFactor = {
@@ -42,7 +28,10 @@ export const useOnDuplicateCausalFactor = ({
 			} as CausalFactor
 
 			saveCausalFactor(newCausalFactor)
+
+			// wtf
 			await wait(300)
+
 			onClick(newCausalFactor)
 			listEndRef?.current?.scrollIntoView({ behavior: 'smooth' })
 		},
@@ -51,7 +40,7 @@ export const useOnDuplicateCausalFactor = ({
 	)
 }
 
-export const useOnDuplicate = ({
+export function useOnDuplicate({
 	saveDefinition,
 	duplicateColumn,
 	modelVariables,
@@ -60,7 +49,16 @@ export const useOnDuplicate = ({
 	onDuplicateCausalFactor,
 	listEndRef,
 	onClick,
-}: OnDuplicateArgs): GenericFn => {
+}: {
+	saveDefinition: (factor: Factor) => void
+	duplicateColumn: (newCol: string, col: string) => void
+	modelVariables?: Definition
+	type: string
+	setModelVariables: SetModelVariables
+	onDuplicateCausalFactor: (factor: CausalFactor, newName: string) => void
+	listEndRef: InputRef
+	onClick: (factor: Factor) => void
+}): (value: Factor) => Promise<void> {
 	return useCallback(
 		async (value: Factor) => {
 			const newVariableName = value?.variable + '_copy'

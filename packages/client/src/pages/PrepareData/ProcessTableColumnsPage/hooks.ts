@@ -18,9 +18,9 @@ import {
 	useSetTableColumns,
 	useTableColumns,
 } from '~state'
-import { GenericObject } from '~types'
+import { GenericObject, Setter } from '~types'
 
-export const useBusinessLogic = (): GenericObject => {
+export function useBusinessLogic(): GenericObject {
 	const selectedFile = useSelectedFile()
 	const setSelectedFile = useSetSelectedFile()
 	const originalTables = useOriginalTables()
@@ -152,16 +152,22 @@ export const useBusinessLogic = (): GenericObject => {
 	}
 }
 
-export const useOnRelevanceChange = ({
+export function useOnRelevanceChange({
 	setTableColumns,
 	tableColumns,
 	setRelevance,
 	relevance,
 	onRemoveColumn,
-}: OnRelevanceChangeArgs): ((
+}: {
+	setTableColumns: Setter<TableColumn[]>
+	tableColumns?: TableColumn[]
+	setRelevance: Setter<ColumnRelevance>
+	relevance?: ColumnRelevance
+	onRemoveColumn: (columnName?: string) => void
+}): (
 	changedRelevance: ColumnRelevance | undefined,
 	columnName?: string,
-) => void) => {
+) => void {
 	return useCallback(
 		(changedRelevance: ColumnRelevance | undefined, columnName?: string) => {
 			if (relevance === changedRelevance) {
@@ -195,14 +201,13 @@ export const useOnRelevanceChange = ({
 	)
 }
 
-//TODO: naming if confusing
-export const useOnDefinitionChange = ({
+export function useOnDefinitionChange({
 	setTableColumns,
 	tableColumns,
-}: OnChange): ((
-	changedRelation: ColumnRelation[],
-	columnName?: string,
-) => void) => {
+}: {
+	setTableColumns: Setter<TableColumn[]>
+	tableColumns?: TableColumn[]
+}): (changedRelation: ColumnRelation[], columnName?: string) => void {
 	return useCallback(
 		(changedRelation: ColumnRelation[], columnName?: string) => {
 			const column = {

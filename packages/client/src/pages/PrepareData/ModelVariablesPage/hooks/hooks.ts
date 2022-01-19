@@ -33,7 +33,7 @@ import {
 } from '~state'
 import { GenericObject } from '~types'
 
-export const useBusinessLogic = (): GenericObject => {
+export function useBusinessLogic(): GenericObject {
 	const pageType = usePageType()
 	const projectFiles = useProjectFiles()
 
@@ -151,7 +151,7 @@ export const useBusinessLogic = (): GenericObject => {
 	}
 }
 
-const useTargetOnCausalFactor = (selected, causalFactors, saveCausalFactor) => {
+function useTargetOnCausalFactor(selected, causalFactors, saveCausalFactor) {
 	return useCallback(
 		(val: any) => {
 			const selectedCausal = {
@@ -168,15 +168,15 @@ const useTargetOnCausalFactor = (selected, causalFactors, saveCausalFactor) => {
 	)
 }
 
-const useSetTargetVariable = (
+function useSetTargetVariable(
 	selected,
 	saveDefinition,
 	type,
 	defineQuestionData,
 	setTargetOnCausalFactor,
-) => {
+) {
 	return useCallback(
-		(evt, value: any) => {
+		(_evt: unknown, value: any) => {
 			if (type === PageType.Control) {
 				return setTargetOnCausalFactor(value)
 			}

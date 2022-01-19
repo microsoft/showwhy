@@ -14,29 +14,26 @@ import {
 } from './variables'
 import { DefinitionType, PageType } from '~enums'
 import { DescribeElements, Factor } from '~interfaces'
-import { GenericFn } from '~types'
 
-interface DefinitionFormProps {
-	pageType: PageType
-	variables?: IComboBoxOption[]
-	onAdd?: GenericFn
-	onChange?: GenericFn
-	defineQuestion?: DescribeElements
-	factor?: Factor
-}
-
-export const useFactorsDefinitionForm = ({
+export function useFactorsDefinitionForm({
 	defineQuestion,
 	factor,
 	pageType,
 	variables,
 	onAdd,
 	onChange,
-}: DefinitionFormProps): {
+}: {
+	pageType: PageType
+	variables?: IComboBoxOption[]
+	onAdd?: (factor: Omit<Factor, 'id'>) => void
+	defineQuestion?: DescribeElements
+	factor?: Factor
+	onChange?: (f: Partial<Factor>) => void
+}): {
 	level
 	variable
 	description
-} => {
+} {
 	const [description, setDescription] = useState<string>('')
 	const [variable, setVariable] = useState<string>('')
 	const [isPrimary, setIsPrimary] = useState<boolean | undefined>(false)
@@ -50,7 +47,7 @@ export const useFactorsDefinitionForm = ({
 	}, [setDescription, setIsPrimary])
 
 	const add = useCallback(() => {
-		const newFactor: any = {
+		const newFactor = {
 			variable,
 			description,
 			level: isPrimary ? DefinitionType.Primary : DefinitionType.Secondary,

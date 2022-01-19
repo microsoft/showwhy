@@ -10,15 +10,14 @@ import { useState, useCallback, memo, useEffect } from 'react'
 import styled from 'styled-components'
 import { ArqueroDetailsTable } from '../ArqueroDetailsTable'
 import { ProjectFile } from '~interfaces'
-import { GenericFn } from '~types'
 import { replaceItemAtIndex } from '~utils'
 
 interface SelectedTableDisplayProps {
 	selectedFile?: ProjectFile
 	originalTable: ColumnTable
 	projectFiles: ProjectFile[]
-	onSetSelectedFile: GenericFn
-	onSetProjectFiles: GenericFn
+	onSetSelectedFile: (file: ProjectFile) => void
+	onSetProjectFiles: (files: ProjectFile[]) => void
 }
 
 export const SelectedTableDisplay: React.FC<SelectedTableDisplayProps> = memo(

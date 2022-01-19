@@ -2,21 +2,28 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { Dropzone, DropzoneOptions } from '@data-wrangling-components/react'
+import {
+	Dropzone,
+	DropzoneOptions,
+	FileRejection,
+} from '@data-wrangling-components/react'
+import { FileCollection } from '@data-wrangling-components/utilities'
 import { Icon, Spinner } from '@fluentui/react'
 import { FC, memo, useMemo } from 'react'
 import styled from 'styled-components'
 import { DropFilesCount } from '~interfaces'
-import { GenericFn } from '~types'
 
 export interface DropzoneContainerProps {
 	loading: boolean
 	filesCount: DropFilesCount
 	text?: string
 	hasSelectedFiles?: boolean
-	onDrop?: GenericFn
-	onDropAccepted?: GenericFn
-	onDropRejected?: GenericFn
+	onDrop?: (collection: FileCollection) => void
+	onDropAccepted?: (collection: FileCollection) => void
+	onDropRejected?: (
+		message: string,
+		files?: FileRejection[] | undefined,
+	) => void
 	acceptedFileTypes: string[]
 	dropzoneOptions?: DropzoneOptions
 }

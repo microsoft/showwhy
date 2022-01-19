@@ -20,13 +20,13 @@ import { Item, Factor } from '~interfaces'
 import { useModelVariables, useSetModelVariables } from '~state'
 import { GenericObject } from '~types'
 
-export const useDefinitionList = (
+export function useDefinitionList(
 	list: Factor[],
 	onClick: (option: Factor) => void,
 	type: string,
 	tableId: string,
 	onUpdate: (definition: string) => void,
-): GenericObject => {
+): GenericObject {
 	const [
 		isEditingLabel,
 		{ toggle: toggleIsEditingLabel, setFalse: setFalseEditing },

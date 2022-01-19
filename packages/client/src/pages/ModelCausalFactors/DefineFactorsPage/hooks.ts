@@ -9,7 +9,7 @@ import { useHistory } from 'react-router-dom'
 import { usePageType } from '~hooks'
 import { GenericObject } from '~types'
 
-export const useBusinessLogic = (): GenericObject => {
+export function useBusinessLogic(): GenericObject {
 	const pageType = usePageType()
 	const history = useHistory()
 
