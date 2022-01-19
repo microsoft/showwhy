@@ -10,10 +10,8 @@ import {
 	CausalFactor,
 	VariableDefinition,
 	Element,
-	DefinitionTable,
 	TableColumn,
 } from '~interfaces'
-import { GenericFn } from '~types'
 
 export interface SelectedArgs {
 	defineQuestionData: Element
@@ -33,11 +31,4 @@ export interface SubjectIdentifierDataArgs {
 	allOriginalTables: BasicTable[]
 	subjectIdentifier: string[]
 	setTableIdentifier: SetTableIdentifier
-}
-
-export interface ColumnAsTargetArgs {
-	subjectIdentifierData: DefinitionTable
-	causalFactors: CausalFactor[]
-	type: string
-	onUpdateTargetVariable: GenericFn
 }

@@ -130,7 +130,7 @@ export function useTableComponent(
 
 function useOnchange(set, valueToEdit) {
 	return useCallback(
-		(value: ElementDefinition | CausalFactor) => {
+		(value: Partial<Factor>) => {
 			set({
 				...value,
 				id: valueToEdit?.id || '',

@@ -9,29 +9,29 @@ import { HistogramData, MissingArgs } from './interfaces'
 import { ColumnRelation, ColumnRelevance } from '~enums'
 import { TableColumn } from '~interfaces'
 
-export const useRelation = (
+export function useRelation(
 	columnName: string,
 	tableColumns?: TableColumn[],
-): ColumnRelation[] => {
+): ColumnRelation[] {
 	return useMemo(
 		() => tableColumns?.find(x => x.name === columnName)?.relation || [],
 		[tableColumns, columnName],
 	)
 }
 
-export const useInvalidValues = (
+export function useInvalidValues(
 	columnName: string,
 	tableColumns?: TableColumn[],
-): string[] => {
+): string[] {
 	return useMemo(
 		() => tableColumns?.find(a => a.name === columnName)?.invalidValues || [],
 		[tableColumns, columnName],
 	)
 }
 
-export const useIsSubjectIdentifierAvailable = (
+export function useIsSubjectIdentifierAvailable(
 	tableColumns?: TableColumn[],
-): boolean => {
+): boolean {
 	return useMemo(
 		() =>
 			!tableColumns?.filter(
@@ -41,10 +41,10 @@ export const useIsSubjectIdentifierAvailable = (
 	)
 }
 
-export const useHistogramData = (
+export function useHistogramData(
 	columnName: string,
 	values?: RowObject[],
-): HistogramData[] => {
+): HistogramData[] {
 	return useMemo(() => {
 		const count =
 			values?.reduce(function (obj, name) {
@@ -66,13 +66,13 @@ export const useHistogramData = (
 	}, [values, columnName])
 }
 
-export const useMissing = ({
+export function useMissing({
 	values,
 	columnName,
 	invalidValues,
 	toggleInvalidValue,
 	tableColumns,
-}: MissingArgs): { percentage: string; missing: number } => {
+}: MissingArgs): { percentage: string; missing: number } {
 	return useMemo(() => {
 		if (!tableColumns?.find(a => a.name === columnName)) {
 			toggleInvalidValue(null)

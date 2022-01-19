@@ -4,12 +4,7 @@
  */
 
 import { RowObject } from 'arquero/dist/types/table/table'
-import { ColumnRelevance } from '~enums'
 import { TableColumn } from '~interfaces'
-import { GenericFn, Setter } from '~types'
-
-type SetTableColumns = Setter<TableColumn[]>
-type SetRelevance = Setter<ColumnRelevance>
 
 export interface ColumnDetailsProps {
 	columnName: string
@@ -27,18 +22,6 @@ export interface MissingArgs {
 	values?: RowObject[]
 	columnName: string
 	invalidValues: string[]
-	toggleInvalidValue: GenericFn
+	toggleInvalidValue: (value: string | null) => void
 	tableColumns?: TableColumn[]
-}
-
-export interface OnChange {
-	setTableColumns: SetTableColumns
-	tableColumns?: TableColumn[]
-	columnName: string
-}
-
-export interface OnRelevanceChangeArgs extends OnChange {
-	setRelevance: SetRelevance
-	relevance?: ColumnRelevance
-	onRemoveColumn: GenericFn
 }

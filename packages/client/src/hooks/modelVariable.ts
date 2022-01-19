@@ -9,12 +9,10 @@ import { SetterOrUpdater } from 'recoil'
 import { replaceItemAtIndex } from '../common/utils/functions'
 import { usePageType } from './usePageType'
 import { PageType } from '~enums'
-import { DescribeElements, ElementDefinition } from '~interfaces'
+import { DescribeElements, ElementDefinition, Factor } from '~interfaces'
 import { useDefineQuestion, useSetDefineQuestion } from '~state'
 
-export function useSaveDefinition(): (
-	newDefinition: ElementDefinition,
-) => void {
+export function useSaveDefinition(): (newDefinition: Factor) => void {
 	return useSaveDefinitionTestable(
 		usePageType(),
 		useDefineQuestion(),
@@ -26,9 +24,9 @@ export function useSaveDefinitionTestable(
 	type: PageType,
 	defineQuestion: DescribeElements,
 	setDefineQuestion: SetterOrUpdater<DescribeElements>,
-): (newDefinition: ElementDefinition) => void {
+): (newDefinition: Factor) => void {
 	return useCallback(
-		(newDefinition: ElementDefinition) => {
+		(newDefinition: Factor) => {
 			let newDefinitionList = [...defineQuestion[type]?.definition] || []
 
 			const index = defineQuestion[type]?.definition?.findIndex(

@@ -12,15 +12,6 @@ import {
 	ElementDefinition,
 	Factor,
 } from '~interfaces'
-import { GenericFn } from '~types'
-
-interface OnDuplicateArgs {
-	modelVariables?: Definition
-	type: string
-	setModelVariables: SetModelVariables
-	removeDefinition: GenericFn
-	deleteCausalFactor: GenericFn
-}
 
 export function useOnDelete({
 	modelVariables,
@@ -28,7 +19,13 @@ export function useOnDelete({
 	setModelVariables,
 	removeDefinition,
 	deleteCausalFactor,
-}: OnDuplicateArgs): GenericFn {
+}: {
+	modelVariables?: Definition
+	type: string
+	setModelVariables: SetModelVariables
+	removeDefinition: (def: ElementDefinition) => void
+	deleteCausalFactor: (factor: CausalFactor) => void
+}): (val: Factor) => void {
 	return useCallback(
 		(val: Factor) => {
 			if (type === PageType.Control) {

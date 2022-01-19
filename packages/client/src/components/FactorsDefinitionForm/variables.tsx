@@ -16,28 +16,26 @@ import styled from 'styled-components'
 import { VariablePicker } from '~components/VariablePicker'
 import { Factor } from '~interfaces'
 
-import { GenericFn } from '~types'
-
-export const useCheckbox = (
+export function useCheckbox(
 	isPrimary: boolean,
-	setIsPrimary: GenericFn,
-): JSX.Element => {
+	setIsPrimary: (value: boolean) => void,
+): JSX.Element {
 	return useMemo(() => {
 		return (
 			<Checkbox
 				label="Is primary?"
 				checked={isPrimary}
-				onChange={(_, value) => setIsPrimary(value)}
+				onChange={(_, value) => setIsPrimary(value ?? false)}
 			/>
 		)
 	}, [isPrimary, setIsPrimary])
 }
 
-export const useVariablePicker = (
+export function useVariablePicker(
 	variable: string,
-	setVariable: GenericFn,
+	setVariable: (v: string) => void,
 	variables?: IComboBoxOption[],
-): JSX.Element => {
+): JSX.Element {
 	return useMemo(() => {
 		return (
 			<VariablePicker
@@ -50,18 +48,18 @@ export const useVariablePicker = (
 	}, [variable, variables, setVariable])
 }
 
-export const useDescriptionBox = (
+export function useDescriptionBox(
 	description: string,
-	setDescription: GenericFn,
+	setDescription: (value: string) => void,
 	variable: string,
-	add: GenericFn,
+	add: () => void,
 	factor?: Factor,
-): JSX.Element => {
+): JSX.Element {
 	return useMemo(() => {
 		return (
 			<DetailsContainer>
 				<Field
-					onChange={(_, value) => setDescription(value)}
+					onChange={(_, value) => setDescription(value ?? '')}
 					value={description}
 					placeholder="Enter description"
 					multiline={(description?.length || 0) > 70}
@@ -79,7 +77,7 @@ export const useDescriptionBox = (
 	}, [description, setDescription, variable, add, factor])
 }
 
-export const useHasLevel = (factor?: Factor): boolean => {
+export function useHasLevel(factor?: Factor): boolean {
 	return useMemo(() => !!factor?.hasOwnProperty('level'), [factor])
 }
 
