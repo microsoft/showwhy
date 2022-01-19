@@ -10,14 +10,16 @@ import {
 import { useCallback, useMemo } from 'react'
 import { useFileCollection, useSetFileCollection } from '~state'
 
-export const useIsCollectionEmpty = () => {
+export const useIsCollectionEmpty = (): boolean => {
 	const fileCollection = useFileCollection().copy()
 	return useMemo(() => {
 		return !fileCollection.list().length
 	}, [fileCollection])
 }
 
-export const useAddFilesToCollection = () => {
+export const useAddFilesToCollection = (): ((
+	files: FileWithPath[],
+) => Promise<void>) => {
 	const setFileCollection = useSetFileCollection()
 	const fileCollection = useFileCollection().copy()
 	return useCallback(
@@ -29,7 +31,9 @@ export const useAddFilesToCollection = () => {
 	)
 }
 
-export const useUpdateFileCollection = () => {
+export const useUpdateFileCollection = (): ((
+	fileCollection: FileCollection,
+) => Promise<void>) => {
 	const setFileCollection = useSetFileCollection()
 	const fc = useFileCollection().copy()
 	return useCallback(

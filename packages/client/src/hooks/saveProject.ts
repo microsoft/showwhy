@@ -31,7 +31,7 @@ import {
 } from '~state'
 import { isDataUrl } from '~utils'
 
-export const useSaveProject = () => {
+export const useSaveProject = (): (() => Promise<void>) => {
 	const fileCollection = useFileCollection()
 	const confidenceInterval = useConfidenceInterval()
 	const primarySpecification = usePrimarySpecificationConfig()
@@ -89,13 +89,15 @@ const usePrimary = (): (() => FileWithPath | undefined) => {
 	const primaryTable = usePrimaryTable()
 	const originalTables = useOriginalTables()
 	return useCallback(() => {
-		const table = originalTables.find(file => file.tableId === primaryTable.id)
-		if (table) {
+		const ogTables = originalTables.find(
+			file => file.tableId === primaryTable.id,
+		)
+		if (ogTables) {
 			const options = {
 				name: `subject_${primaryTable.name}`,
 				type: 'text/csv',
 			}
-			return createFileWithPath(new Blob([table.columns.toCSV()]), options)
+			return createFileWithPath(new Blob([ogTables.table.toCSV()]), options)
 		}
 	}, [primaryTable, originalTables])
 }
@@ -202,6 +204,7 @@ const useDownload = fileCollection => {
 				files.push(result.file)
 			}
 			const copy = fileCollection.copy()
+			/* eslint-disable @essex/adjacent-await */
 			await copy.add(files)
 			await copy.toZip()
 		},
