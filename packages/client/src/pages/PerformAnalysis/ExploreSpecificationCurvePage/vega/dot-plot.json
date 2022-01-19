@@ -193,7 +193,7 @@
 			"orient": "right",
 			"titlePadding": 34,
 			"titleFontSize": 14,
-			"labelLimit": 400,
+			"labelLimit": 200,
 			"labelFontSize": 12,
 			"labelFontWeight": {
 				"signal": "indexof(inactiveFeatures,split(datum.value,':')[1]) < 0 ? 'bold' : 'normal'"
@@ -211,6 +211,9 @@
 						"text": {
 							"signal": "split(datum.value,':')[1]"
 						}
+					},
+					"enter": {
+						"tooltip": { "signal": "split(datum.value,':')[1]" }
 					}
 				}
 			}

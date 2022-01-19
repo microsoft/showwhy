@@ -167,10 +167,19 @@
 			"scale": "x",
 			"domain": false,
 			"ticks": false,
-			"orient": "bottom",
-			"titlePadding": 5,
+			"orient": "top",
 			"title": "",
-			"labels": false
+			"titleFontSize": 13,
+			"labels": false,
+			"encode": {
+				"title": {
+					"update": {
+						"text": {
+							"signal": "'Estimated change in ' + outcome + ' by specification'"
+						}
+					}
+				}
+			}
 		},
 		{
 			"scale": "y",
@@ -179,11 +188,6 @@
 			"orient": "right"
 		}
 	],
-	"title": {
-		"text": {
-			"signal": "'Estimated change in ' + outcome + ' by specification'"
-		}
-	},
 	"marks": [
 		{
 			"name": "selectedColumn",
