@@ -9,21 +9,7 @@ import styled from 'styled-components'
 import { InputRef } from './types'
 import { Factor, Item } from '~interfaces'
 import { Text } from '~styles'
-import { TypedFn, GenericFn, StringSetter } from '~types'
-
-interface ItemArgs {
-	isEditingLabel: boolean
-	editingDefinition?: Factor
-	listEndRef: InputRef
-	newLabel?: string
-	onSave: GenericFn
-	onClick: GenericFn
-	onDelete: GenericFn
-	cancelField: GenericFn
-	onDuplicate: GenericFn
-	editDefinition: GenericFn
-	setNewLabel: StringSetter
-}
+import { StringSetter } from '~types'
 
 export function useItem({
 	isEditingLabel,
@@ -37,9 +23,21 @@ export function useItem({
 	onDuplicate,
 	editDefinition,
 	setNewLabel,
-}: ItemArgs): TypedFn<Item> {
+}: {
+	isEditingLabel: boolean
+	editingDefinition?: Factor
+	listEndRef: InputRef
+	newLabel?: string
+	onSave: (f: Factor) => void
+	onClick: (f: Factor) => void
+	onDelete: (f: Factor) => void
+	cancelField: () => void
+	onDuplicate: (f: Factor) => void
+	editDefinition: (f: Factor) => void
+	setNewLabel: StringSetter
+}): (x: Factor, index: number, len: number) => Item {
 	return useCallback(
-		(x, index, len) => {
+		(x: Factor, index: number, len: number) => {
 			return {
 				label:
 					isEditingLabel && editingDefinition === x ? (

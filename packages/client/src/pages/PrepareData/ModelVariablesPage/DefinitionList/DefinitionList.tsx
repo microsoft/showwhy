@@ -2,16 +2,15 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import React, { memo } from 'react'
+import { memo } from 'react'
 import styled from 'styled-components'
 import { useDefinitionList } from './hooks'
 import { GenericTableComponent } from '~components/Tables/GenericTableComponent'
 import { Factor } from '~interfaces'
-import { GenericFn } from '~types'
 
 interface DefinitionListProps {
 	list: Factor[]
-	onClick: GenericFn
+	onClick: (option: Factor) => void
 	selectedDefinition: string
 	type: string
 	tableId: string

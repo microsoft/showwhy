@@ -7,11 +7,10 @@ import React, { memo, useCallback } from 'react'
 import { OptionsButton } from './OptionsButton'
 import { StepStatus } from '~enums'
 import { Container } from '~styles'
-import { GenericFn } from '~types'
 
 interface SettingsProps {
-	onGetStepUrls: GenericFn
-	onSetAllStepStatus: GenericFn
+	onGetStepUrls: (urls?: string[], exclude?: any) => string[]
+	onSetAllStepStatus: (urls: string[], status: StepStatus) => void
 }
 
 export const Settings: React.FC<SettingsProps> = memo(function Settings({

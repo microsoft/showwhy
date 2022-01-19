@@ -13,21 +13,22 @@ import { IContextualMenuItem } from '@fluentui/react'
 import { useMemo, useCallback } from 'react'
 import { useLoadProject } from './loadProject'
 import { ProjectSource } from '~enums'
-import { GenericFn } from '~types'
 import { groupFilesByType, isZipUrl } from '~utils'
 
 const uploadZipButtonId = 'uploadZip'
 const acceptedFileTypes = [`.${FileType.zip}`]
 
-export const useAcceptedFileTypes = (): string[] => {
+export function useAcceptedFileTypes(): string[] {
 	return acceptedFileTypes
 }
 
-export const useUploadZipButtonId = (): string => {
+export function useUploadZipButtonId(): string {
 	return uploadZipButtonId
 }
 
-const validateProjectFiles = async (fileCollection: FileCollection) => {
+async function validateProjectFiles(
+	fileCollection: FileCollection,
+): Promise<boolean> {
 	if (!fileCollection) {
 		throw new Error('No file collection provided')
 	}
@@ -51,9 +52,9 @@ const validateProjectFiles = async (fileCollection: FileCollection) => {
 	return true
 }
 
-export const useHandleFiles = (): ((
+export function useHandleFiles(): (
 	fileCollection: FileCollection,
-) => Promise<void>) => {
+) => Promise<void> {
 	const loadProject = useLoadProject(ProjectSource.zip)
 	return async function handleFiles(fileCollection: FileCollection) {
 		if (!fileCollection) return
@@ -68,9 +69,9 @@ export const useHandleFiles = (): ((
 	}
 }
 
-export const useOnDropZipFilesAccepted = (
-	onError?: GenericFn,
-): ((fileCollection: FileCollection) => Promise<void>) => {
+export function useOnDropZipFilesAccepted(
+	onError?: (msg: string) => void,
+): (fileCollection: FileCollection) => Promise<void> {
 	const handleDrop = useHandleFiles()
 	return useCallback(
 		async (fileCollection: FileCollection) => {
@@ -84,7 +85,7 @@ export const useOnDropZipFilesAccepted = (
 	)
 }
 
-export const useUploadZipMenuOption = (): IContextualMenuItem => {
+export function useUploadZipMenuOption(): IContextualMenuItem {
 	const id = useUploadZipButtonId()
 	const handleFiles = useHandleFiles()
 	const handleClick = useHandleOnUploadClick(acceptedFileTypes, handleFiles)

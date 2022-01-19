@@ -5,12 +5,10 @@
 
 import { IComboBoxOption } from '@fluentui/react'
 import React, { memo } from 'react'
-
 import styled from 'styled-components'
 import { useFactorsDefinitionForm } from './hooks'
 import { PageType } from '~enums'
-import { CausalFactor, DescribeElements } from '~interfaces'
-import { GenericFn } from '~types'
+import { CausalFactor, DescribeElements, Factor } from '~interfaces'
 
 interface FactorsDefinitionFormProps {
 	factor?: CausalFactor
@@ -18,8 +16,8 @@ interface FactorsDefinitionFormProps {
 	defineQuestion?: DescribeElements
 	pageType: PageType
 	variables?: IComboBoxOption[]
-	onAdd?: GenericFn
-	onChange?: GenericFn
+	onAdd?: (factor: Omit<Factor, 'id'>) => void
+	onChange?: (f: Partial<Factor>) => void
 }
 
 export const FactorsDefinitionForm: React.FC<FactorsDefinitionFormProps> = memo(

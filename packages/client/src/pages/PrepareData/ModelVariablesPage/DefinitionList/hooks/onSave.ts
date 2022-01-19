@@ -8,28 +8,7 @@ import { v4 } from 'uuid'
 import { SetEditingDefinition, SetModelVariables } from './types'
 import { DefinitionType, PageType } from '~enums'
 import { CausalFactor, Definition, Factor } from '~interfaces'
-import { GenericFn, StringSetter } from '~types'
-
-interface OnSaveCausalFactorArgs {
-	setNewLabel: StringSetter
-	newLabel?: string
-	setEditingDefinition: SetEditingDefinition
-	toggleIsEditingLabel: GenericFn
-	saveCausalFactor: GenericFn
-}
-
-interface OnSaveArgs {
-	type: string
-	setNewLabel: StringSetter
-	newLabel?: string
-	modelVariables?: Definition
-	setEditingDefinition: SetEditingDefinition
-	toggleIsEditingLabel: GenericFn
-	saveDefinition: GenericFn
-	onUpdate: GenericFn
-	onSaveCausalFactor: GenericFn
-	setModelVariables: SetModelVariables
-}
+import { StringSetter } from '~types'
 
 export function useOnSaveCausalFactor({
 	setNewLabel,
@@ -37,7 +16,13 @@ export function useOnSaveCausalFactor({
 	setEditingDefinition,
 	toggleIsEditingLabel,
 	saveCausalFactor,
-}: OnSaveCausalFactorArgs): (definition?: CausalFactor) => void {
+}: {
+	setNewLabel: StringSetter
+	newLabel?: string
+	setEditingDefinition: SetEditingDefinition
+	toggleIsEditingLabel: () => void
+	saveCausalFactor: (factor: CausalFactor) => void
+}): (definition?: CausalFactor) => void {
 	return useCallback(
 		(definition?: CausalFactor) => {
 			const newCausalFactor = {
@@ -73,7 +58,18 @@ export function useOnSave({
 	onUpdate,
 	onSaveCausalFactor,
 	setModelVariables,
-}: OnSaveArgs): (definition?: Factor) => void {
+}: {
+	type: string
+	setNewLabel: StringSetter
+	newLabel?: string
+	modelVariables?: Definition
+	setEditingDefinition: SetEditingDefinition
+	toggleIsEditingLabel: () => void
+	saveDefinition: (def: Factor) => void
+	onUpdate: (label: string) => void
+	onSaveCausalFactor: (factor: CausalFactor) => void
+	setModelVariables: SetModelVariables
+}): (definition?: Factor) => void {
 	return useCallback(
 		(definition?: Factor) => {
 			if (type === PageType.Control) {
@@ -82,11 +78,11 @@ export function useOnSave({
 
 			const newDefinition = {
 				level: definition?.level ?? DefinitionType.Secondary,
-				variable: newLabel,
+				variable: newLabel ?? '',
 				description: definition?.description ?? '',
-				column: definition?.column ?? null,
+				column: definition?.column ?? '',
 				id: definition?.id ?? v4(),
-			} as Factor
+			}
 
 			const existing = (modelVariables && modelVariables[type]) || []
 			const actualVariables = existing.filter(

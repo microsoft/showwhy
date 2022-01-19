@@ -176,7 +176,7 @@ function useSetTargetVariable(
 	setTargetOnCausalFactor,
 ) {
 	return useCallback(
-		(evt, value: any) => {
+		(_evt: unknown, value: any) => {
 			if (type === PageType.Control) {
 				return setTargetOnCausalFactor(value)
 			}

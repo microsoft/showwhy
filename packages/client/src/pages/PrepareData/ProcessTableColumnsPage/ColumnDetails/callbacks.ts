@@ -2,11 +2,10 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-
 import { useCallback } from 'react'
-import { OnChange, OnRelevanceChangeArgs } from './interfaces'
 import { ColumnRelation, ColumnRelevance } from '~enums'
 import { TableColumn } from '~interfaces'
+import { Setter } from '~types'
 
 export function useOnRelevanceChange({
 	setTableColumns,
@@ -15,9 +14,14 @@ export function useOnRelevanceChange({
 	relevance,
 	columnName,
 	onRemoveColumn,
-}: OnRelevanceChangeArgs): (
-	changedRelevance: ColumnRelevance | undefined,
-) => void {
+}: {
+	setTableColumns: Setter<TableColumn[]>
+	tableColumns?: TableColumn[]
+	columnName: string
+	setRelevance: Setter<ColumnRelevance>
+	relevance?: ColumnRelevance
+	onRemoveColumn: (columnName: string) => void
+}): (changedRelevance: ColumnRelevance | undefined) => void {
 	return useCallback(
 		(changedRelevance: ColumnRelevance | undefined) => {
 			if (relevance === changedRelevance) {
@@ -62,7 +66,11 @@ export function useOnDefinitionChange({
 	setTableColumns,
 	tableColumns,
 	columnName,
-}: OnChange): (changedRelation: ColumnRelation[]) => void {
+}: {
+	setTableColumns: Setter<TableColumn[]>
+	tableColumns?: TableColumn[]
+	columnName: string
+}): (changedRelation: ColumnRelation[]) => void {
 	return useCallback(
 		(changedRelation: ColumnRelation[]) => {
 			const column = {
@@ -92,7 +100,11 @@ export function useToggleInvalidValue({
 	setTableColumns,
 	tableColumns,
 	columnName,
-}: OnChange): (value: string | null) => void {
+}: {
+	setTableColumns: Setter<TableColumn[]>
+	tableColumns?: TableColumn[]
+	columnName: string
+}): (value: string | null) => void {
 	return useCallback(
 		(value: string | null) => {
 			const actualColumn = tableColumns?.find(a => a.name === columnName) || {}
