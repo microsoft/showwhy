@@ -81,8 +81,9 @@ export function useBusinessLogic(): GenericObject {
 	}, [removedColumns, setSelectedColumn, selectedTable])
 
 	useEffect(() => {
+		if (selectedColumn) return
 		selectFirstColumn()
-	}, [selectFirstColumn])
+	}, [selectFirstColumn, selectedColumn])
 
 	useEffect(() => {
 		const newRelevance = tableColumns?.find(
