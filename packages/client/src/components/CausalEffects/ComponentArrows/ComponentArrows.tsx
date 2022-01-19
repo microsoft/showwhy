@@ -29,7 +29,7 @@ export const ComponentArrows: React.FC<ComponentArrowsProps> = memo(
 			<Container size={size}>
 				<ControlsContainer>
 					<ControlsTitle size={size}>Controls</ControlsTitle>
-					<ControlsBoxContainer size={size}>
+					<DottedContainer size={size}>
 						<BoxCausalModel
 							size={size}
 							id={box1.id}
@@ -42,22 +42,26 @@ export const ComponentArrows: React.FC<ComponentArrowsProps> = memo(
 							list={outcomeDeterminants}
 							title="Outcome determinants"
 						/>
+					</DottedContainer>
+				</ControlsContainer>
+
+				<ControlsContainer>
+					<ControlsBoxContainer size={size}>
+						<BoxCausalModel
+							size={size}
+							id={box3.id}
+							title="Exposure"
+							list={[exposure]}
+						/>
+						<BoxCausalModel
+							size={size}
+							id={box4.id}
+							title="Outcome"
+							list={[outcome]}
+						/>
 					</ControlsBoxContainer>
 				</ControlsContainer>
-				<BoxCausalModel
-					size={size}
-					id={box3.id}
-					title="Exposure"
-					list={[exposure]}
-					width={50}
-				/>
-				<BoxCausalModel
-					size={size}
-					id={box4.id}
-					title="Outcome"
-					list={[outcome]}
-					width={50}
-				/>
+
 				{getArrows()}
 			</Container>
 		)
@@ -72,10 +76,10 @@ const ControlsTitle = styled.h2<{ size: Size }>`
 const Container = styled.div<{ size: Size }>`
 	background: white;
 	display: grid;
-	grid-template-rows: 3fr 1fr;
+	grid-template-rows: 2fr 1fr;
 	grid-template-columns: 1fr 1fr;
 	grid-column-gap: ${({ size }) => (size === Size.Small ? '1em' : '5em')};
-	grid-row-gap: ${({ size }) => (size === Size.Small ? '2em' : '5em')};
+	grid-row-gap: ${({ size }) => (size === Size.Small ? '0em' : '2em')};
 `
 
 const ControlsContainer = styled.div`
@@ -87,6 +91,9 @@ const ControlsBoxContainer = styled.div<{ size: Size }>`
 	display: grid;
 	grid-template-columns: 1fr 1fr;
 	grid-column-gap: ${({ size }) => (size === Size.Small ? '3em' : '8em')};
-	border: 1px dotted black;
 	padding: 16px;
+`
+
+const DottedContainer = styled(ControlsBoxContainer)`
+	border: 1px dotted black;
 `
