@@ -121,4 +121,6 @@ const useOverlay = (data, title?: string, outcome?: string) => {
 	}, [theme, data, title, outcome, refutationLegend])
 }
 
-const Container = styled.div``
+const Container = styled.div`
+	margin-top: -15px;
+`
