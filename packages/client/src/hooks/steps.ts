@@ -4,8 +4,9 @@
  */
 import { useCallback, useMemo } from 'react'
 import { useLocation } from 'react-router-dom'
+import { StepStatus } from '~enums'
 import { Project, Step } from '~interfaces'
-import { useSelectedProject } from '~state'
+import { useSelectedProject, useStepStatus } from '~state'
 
 export function useFindStepsByPathname(pathNames: string[]): Step[] {
 	const steps = useSelectedProject().steps
@@ -53,6 +54,29 @@ export function useGetStepUrls(): (urls?: string[], exclude?: any) => string[] {
 				return allSteps.filter(step => !urls.includes(step))
 			}
 			return allSteps
+		},
+		[allSteps],
+	)
+}
+
+export function useGetStepUrlsByStatus(): (options?: {
+	status?: StepStatus
+	exclude?: boolean
+}) => string[] {
+	const stepStatus = useStepStatus
+	const allSteps = useStepsShowStatus().map(step => {
+		return {
+			url: step.url,
+			status: stepStatus(step.url),
+		}
+	})
+	return useCallback(
+		(options?: { status?: StepStatus; exclude?: boolean }) => {
+			const { status = StepStatus.Done, exclude = false } = options || {}
+			if (exclude) {
+				return allSteps.filter(x => x.status !== status).map(x => x.url)
+			}
+			return allSteps.filter(x => x.status === status).map(x => x.url)
 		},
 		[allSteps],
 	)
