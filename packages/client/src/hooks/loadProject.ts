@@ -162,7 +162,6 @@ export function useLoadProject(
 			setDefaultDatasetResult,
 			setConfidenceInterval,
 			setPrimaryTable,
-			source,
 			updateCollection,
 		],
 	)
