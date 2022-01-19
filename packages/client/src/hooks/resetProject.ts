@@ -18,7 +18,7 @@ import {
 	useResetSpecificationCurveConfig,
 } from '~state'
 
-export const useResetProject = (): (() => void) => {
+export function useResetProject(): () => void {
 	const resetCausalFactors = useResetCausalFactors()
 	const resetRefutationTests = useResetRefutationType()
 	const resetEstimators = useResetEstimators()

@@ -15,7 +15,7 @@ import {
 import { DefinitionType, PageType } from '~enums'
 import { DescribeElements, Factor } from '~interfaces'
 
-export const useFactorsDefinitionForm = ({
+export function useFactorsDefinitionForm({
 	defineQuestion,
 	factor,
 	pageType,
@@ -33,7 +33,7 @@ export const useFactorsDefinitionForm = ({
 	level
 	variable
 	description
-} => {
+} {
 	const [description, setDescription] = useState<string>('')
 	const [variable, setVariable] = useState<string>('')
 	const [isPrimary, setIsPrimary] = useState<boolean | undefined>(false)
