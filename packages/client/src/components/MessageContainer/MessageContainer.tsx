@@ -5,11 +5,10 @@
 import { MessageBar, MessageBarType, IStyle } from '@fluentui/react'
 import React, { memo, useCallback } from 'react'
 import styled from 'styled-components'
-import { GenericFn } from '~types'
 
 interface MessageContainerProps {
 	type: MessageBarType
-	onDismiss?: GenericFn
+	onDismiss?: () => void
 	styles?: IStyle
 }
 

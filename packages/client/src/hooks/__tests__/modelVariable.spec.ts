@@ -11,7 +11,7 @@ import {
 	useRemoveDefinitionTestable,
 	useSaveDefinitionTestable,
 } from '../modelVariable'
-import { DescribeElements, ElementDefinition, Factor } from '~interfaces'
+import { DescribeElements, Factor } from '~interfaces'
 
 const question = {
 	population: {

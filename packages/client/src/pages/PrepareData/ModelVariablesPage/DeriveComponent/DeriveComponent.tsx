@@ -20,7 +20,7 @@ import {
 	useSetDeriveTable,
 	useMatchFilter,
 } from '~hooks'
-import { Derive, ElementDefinition, Factor, FilterObject } from '~interfaces'
+import { Derive, Factor, FilterObject } from '~interfaces'
 
 import {
 	useModelVariables,
