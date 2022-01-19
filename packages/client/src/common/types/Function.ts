@@ -6,9 +6,3 @@
 export type GenericFn = (...args) => void
 
 export type TypedFn<T> = (...args) => T
-
-export type DebounceFn = {
-	run: GenericFn
-	flush: GenericFn
-	cancel: GenericFn
-}
