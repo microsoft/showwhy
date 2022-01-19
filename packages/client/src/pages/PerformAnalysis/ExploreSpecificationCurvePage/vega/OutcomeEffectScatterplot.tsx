@@ -73,10 +73,10 @@ export const OutcomeEffectScatterplot: React.FC<OutcomeEffectScatterplotProps> =
 		)
 	})
 
-const useOverlay = (data, title?: string, outcome?: string) => {
+function useOverlay(data: Specification[], title?: string, outcome?: string) {
 	const theme = useThematic()
 	const refutationLegend = Object.keys(RefutationResultString).map(
-		key => RefutationResultString[key],
+		key => (RefutationResultString as any)[key],
 	)
 
 	return useMemo(() => {

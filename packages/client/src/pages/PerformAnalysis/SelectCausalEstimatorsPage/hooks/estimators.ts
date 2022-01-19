@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { getEstimatorByRanking, estimatorGroups } from './constants'
 import { EstimatorsGroups, EstimatorsType } from '~enums'
 import { useEstimatorShortDescription, useEstimatorsList } from '~hooks'
@@ -228,17 +228,20 @@ function useOnDefaultChange(
 }
 
 function useEstimatorCardList(
-	estimatorsList,
-	defaultEstimator,
-	estimators,
-	selectedEstimatorGroups,
-	selectedEstimatorGroupKey,
-	onDefaultChange,
-	onEstimatorTypeChange,
-	onEstimatorsCheckboxChange,
-	estimatorShortDescription,
-	confidenceInterval,
-	onConfidenceIntervalsChange,
+	estimatorsList: Estimator[],
+	defaultEstimator: EstimatorsType | undefined,
+	estimators: Estimator[],
+	selectedEstimatorGroups: EstimatorsGroups[],
+	selectedEstimatorGroupKey: EstimatorsGroups,
+	onDefaultChange: (type: EstimatorsType) => void,
+	onEstimatorTypeChange: (group: EstimatorsGroups) => void,
+	onEstimatorsCheckboxChange: (estimator: Estimator) => void,
+	estimatorShortDescription: (type: string) => string,
+	confidenceInterval: boolean,
+	onConfidenceIntervalsChange: (
+		ev: React.FormEvent<any> | undefined,
+		value?: boolean | undefined,
+	) => void,
 ) {
 	return useMemo(() => {
 		const list = estimatorGroups.map(type => {
@@ -247,7 +250,10 @@ function useEstimatorCardList(
 				key,
 				title: `${key} models`,
 				description: estimatorShortDescription(key),
-				onCardClick: () => onEstimatorTypeChange(key as EstimatorsGroups),
+				onCardClick: (
+					_ev: React.FormEvent<any> | undefined,
+					_value: boolean | undefined,
+				) => onEstimatorTypeChange(key as EstimatorsGroups),
 				isCardChecked: selectedEstimatorGroups.includes(
 					key as EstimatorsGroups,
 				),
