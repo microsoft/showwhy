@@ -95,8 +95,6 @@ const TableDetailsContainer = styled.div`
 const TableContainer = styled.div``
 
 const DetailsListContainer = styled.div`
-	overflow-y: scroll;
-	overflow-x: scroll;
 	height: 50vh;
 `
 

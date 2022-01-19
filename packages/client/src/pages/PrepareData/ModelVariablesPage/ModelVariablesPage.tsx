@@ -177,8 +177,6 @@ const TitleContainer = styled.div`
 `
 
 const DetailsListContainer = styled.div`
-	overflow-y: scroll;
-	overflow-x: scroll;
 	height: 40vh;
 `
 

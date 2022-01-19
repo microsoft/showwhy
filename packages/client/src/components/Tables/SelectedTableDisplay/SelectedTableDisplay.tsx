@@ -116,8 +116,6 @@ const Container = styled.div`
 	width: 100%;
 `
 const DatasetContainer = styled.div`
-	overflow-y: scroll;
-	overflow-x: scroll;
 	height: 50vh;
 `
 
