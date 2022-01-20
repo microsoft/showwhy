@@ -6,7 +6,7 @@ import { useMemo } from 'react'
 import { useAlternativeModels, useExcludedFactors } from './causalFactors'
 import { CausalModelLevel } from '~enums'
 import { AlternativeModels, DescribeElements } from '~interfaces'
-import { useDefineQuestion } from '~state'
+import { useDefineQuestion } from '~state/defineQuestion'
 import { GenericObject } from '~types'
 
 export function useCausalEffects(causalLevel: CausalModelLevel): GenericObject {

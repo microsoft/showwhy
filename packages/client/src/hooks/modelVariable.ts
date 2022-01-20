@@ -4,13 +4,13 @@
  */
 
 import { useCallback } from 'react'
-// HACK to pass the unit tests
 import { SetterOrUpdater } from 'recoil'
 import { replaceItemAtIndex } from '../common/utils/functions'
 import { usePageType } from './usePageType'
 import { PageType } from '~enums'
 import { DescribeElements, ElementDefinition, Factor } from '~interfaces'
-import { useDefineQuestion, useSetDefineQuestion } from '~state'
+// HACK to pass the unit tests
+import { useDefineQuestion, useSetDefineQuestion } from '~state/defineQuestion'
 
 export function useSaveDefinition(): (newDefinition: Factor) => void {
 	return useSaveDefinitionTestable(
