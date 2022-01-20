@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { FactorsOrDefinitions, SetTableIdentifier } from './types'
+import { FactorsOrDefinitions } from './types'
 import { ColumnRelation } from '~enums'
 import {
 	BasicTable,
@@ -12,6 +12,7 @@ import {
 	Element,
 	TableColumn,
 } from '~interfaces'
+import { Setter } from '~types'
 
 export interface SelectedArgs {
 	defineQuestionData: Element
@@ -30,5 +31,5 @@ export interface SubjectIdentifierArgs {
 export interface SubjectIdentifierDataArgs {
 	allOriginalTables: BasicTable[]
 	subjectIdentifier: string[]
-	setTableIdentifier: SetTableIdentifier
+	setTableIdentifier: Setter<BasicTable | undefined>
 }

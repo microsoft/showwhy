@@ -3,9 +3,6 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { BasicTable, CausalFactor, ElementDefinition } from '~interfaces'
-import { Setter } from '~types'
+import { CausalFactor, ElementDefinition } from '~interfaces'
 
 export type FactorsOrDefinitions = CausalFactor[] | ElementDefinition[]
-
-export type SetTableIdentifier = Setter<BasicTable>
