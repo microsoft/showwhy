@@ -4,13 +4,13 @@
  */
 
 import { ActionButtonsProps } from './ActionButtons'
-import { GenericObject } from '~types'
 
-export interface Item extends GenericObject {
+export interface Item {
 	onClick?: () => void
 	ref?: any
 	colsSpan?: number
 	actions?: ActionButtonsProps
+	[key: string]: any
 }
 
 export interface TableProps {
