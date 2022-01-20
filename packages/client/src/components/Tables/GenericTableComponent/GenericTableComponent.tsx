@@ -23,7 +23,7 @@ interface GenericTableComponentProps {
 	onColumnClick?: (column: string) => void
 	items: Item[]
 	selectedColumn?: string
-	isCompactMode?: boolean
+	isCompactMode?: boolean | undefined
 	footer?: TableFooter
 }
 
@@ -241,7 +241,10 @@ const Container = styled.section`
 	max-height: 95vh;
 	margin: 1rem 0 0;
 `
-const THead = styled.thead<{ isSticky?: boolean; isCompactMode?: boolean }>`
+const THead = styled.thead<{
+	isSticky?: boolean | undefined
+	isCompactMode?: boolean | undefined
+}>`
 	${({ isSticky }) =>
 		!isSticky
 			? ''
@@ -259,7 +262,10 @@ const THead = styled.thead<{ isSticky?: boolean; isCompactMode?: boolean }>`
 `
 const TBody = styled.tbody``
 const TFooter = styled.tfoot``
-const Row = styled.tr<{ isSelected?: boolean; isClickable?: boolean }>`
+const Row = styled.tr<{
+	isSelected?: boolean | undefined
+	isClickable?: boolean | undefined
+}>`
 	width: 100%;
 	:nth-child(odd) {
 		background-color: ${({ theme }) => theme.application().faint};
@@ -270,9 +276,9 @@ const Row = styled.tr<{ isSelected?: boolean; isClickable?: boolean }>`
 		isSelected ? theme.application().accent : ''};
 `
 const Cell = styled.td<{
-	isCompactMode?: boolean
-	isClickable?: boolean
-	isSelected?: boolean
+	isCompactMode?: boolean | undefined
+	isClickable?: boolean | undefined
+	isSelected?: boolean | undefined
 }>`
 	flex: 1;
 	border-right: 2px solid white;
@@ -287,9 +293,9 @@ const Cell = styled.td<{
 	font-weight: ${({ isSelected }) => (isSelected ? 'bolder' : 'normal')};
 `
 const HeaderCell = styled.th<{
-	isCompactMode?: boolean
-	isClickable?: boolean
-	isSelected?: boolean
+	isCompactMode?: boolean | undefined
+	isClickable?: boolean | undefined
+	isSelected?: boolean | undefined
 }>`
 	flex: 1;
 	white-space: nowrap;

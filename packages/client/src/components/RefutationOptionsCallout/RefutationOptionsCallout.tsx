@@ -12,7 +12,7 @@ interface RefutationOptionsCalloutProps {
 	calloutKey: number
 	refutationOptions?: RefutationOption[]
 	text?: string
-	separate?: boolean
+	separate?: boolean | undefined
 }
 export const RefutationOptionsCallout: React.FC<RefutationOptionsCalloutProps> =
 	memo(function RefutationOptionsCallout({

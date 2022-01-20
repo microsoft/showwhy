@@ -3,6 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import { Dimensions } from '@essex-js-toolkit/hooks'
+import { Theme } from '@thematic/core'
 import { useThematic } from '@thematic/react'
 import { useCallback, useMemo, useState } from 'react'
 import { useLoadSpecificationData } from '../pages/PerformAnalysis/ExploreSpecificationCurvePage/hooks'
@@ -14,7 +16,13 @@ import {
 	useFailedRefutationIds,
 	useVegaWindowDimensions,
 } from '~hooks'
-import { Specification, SpecificationCurveConfig } from '~interfaces'
+import {
+	DecisionFeature,
+	DescribeElements,
+	RunHistory,
+	Specification,
+	SpecificationCurveConfig,
+} from '~interfaces'
 import {
 	useHoverState,
 	useRunHistory,
@@ -23,27 +31,105 @@ import {
 	useSpecificationCurveConfig,
 	useDefineQuestion,
 } from '~state'
-import { GenericObject } from '~types'
 
-export function useSpecificationCurve(): GenericObject {
+export function useSpecificationCurve(): {
+	activeProcessing: RunHistory | null
+	config: SpecificationCurveConfig
+	data: Specification[]
+	defaultRun: RunHistory | undefined
+	failedRefutationIds: number[]
+	failedRefutations: string[]
+	handleConfidenceIntervalTicksChange: (checked: boolean) => void
+	handleShapTicksChange: (checked: boolean) => void
+	hovered: number | undefined
+	isConfidenceIntervalDisabled: boolean
+	isShapDisabled: boolean
+	isSpecificationOn: boolean
+	onMouseOver: (item: Specification | DecisionFeature | undefined) => void
+	onSpecificationsChange: (config: SpecificationCurveConfig) => void
+	onToggleRejectEstimate: () => void
+	outcome: string | undefined
+	refutationNumbers: string
+	selectedSpecification: Specification | undefined
+	setSelectedSpecification: (s: Specification | undefined) => void
+	theme: Theme
+	vegaWindowDimensions: Dimensions
+} {
 	const data = useLoadSpecificationData()
 	const config = useSpecificationCurveConfig()
 	const runHistory = useRunHistory()
 	const hovered = useHoverState()
 	const defaultRun = useDefaultRun()
 	const onMouseOver = useOnMouseOver()
-	const setConfig = useSetSpecificationCurveConfig()
-	const setSignificanceTest = useSetSignificanceTests(defaultRun?.id as string)
 	const failedRefutationIds = useFailedRefutationIds(data)
 	const vegaWindowDimensions = useVegaWindowDimensions()
 	const theme = useThematic()
 	const defineQuestion = useDefineQuestion()
-	const outcome = defineQuestion.outcome?.definition.find(
-		d => d.level === DefinitionType.Primary,
-	)?.variable
+	const outcome = useOutcome(defineQuestion)
 	useWakeLock()
+	const activeProcessing = useActiveProcessing(runHistory)
+	const [selectedSpecification, setSelectedSpecification] = useState<
+		Specification | undefined
+	>()
+	const isShapDisabled = useIsShapDisabled()
+	const isConfidenceIntervalDisabled = useIsConfidenceIntervalDisabled(data)
+	const handleShapTicksChange = useHandleShapTicksChange(isShapDisabled)
+	const handleConfidenceIntervalTicksChange =
+		useHandleConfidenceIntervalTicksChange(isConfidenceIntervalDisabled)
+	const onSpecificationsChange = useOnSpecificationsChange()
+	const refutationKeys = useRefutationKeys(selectedSpecification)
+	const failedRefutations = useFailedRefutations(
+		selectedSpecification,
+		refutationKeys,
+	)
+	const refutationNumbers = useRefutationNumbers(
+		selectedSpecification,
+		refutationKeys,
+		failedRefutations,
+	)
+	const isSpecificationOn = useIsSpecificationOn(selectedSpecification)
+	const onToggleRejectEstimate = useOnToggleRejectEstimateHandler(
+		selectedSpecification,
+		isSpecificationOn,
+	)
 
-	const activeProcessing = useMemo(() => {
+	return {
+		activeProcessing,
+		config,
+		data,
+		defaultRun,
+		failedRefutationIds,
+		failedRefutations,
+		handleConfidenceIntervalTicksChange,
+		handleShapTicksChange,
+		hovered,
+		isConfidenceIntervalDisabled,
+		isShapDisabled,
+		isSpecificationOn,
+		onMouseOver,
+		onSpecificationsChange,
+		onToggleRejectEstimate,
+		outcome,
+		refutationNumbers,
+		selectedSpecification,
+		setSelectedSpecification,
+		theme,
+		vegaWindowDimensions,
+	}
+}
+
+function useOutcome(defineQuestion: DescribeElements) {
+	return useMemo(
+		() =>
+			defineQuestion.outcome?.definition.find(
+				d => d.level === DefinitionType.Primary,
+			)?.variable,
+		[defineQuestion],
+	)
+}
+
+function useActiveProcessing(runHistory: RunHistory[]): RunHistory | null {
+	return useMemo(() => {
 		return (
 			runHistory.find(
 				x =>
@@ -53,22 +139,30 @@ export function useSpecificationCurve(): GenericObject {
 			) || null
 		)
 	}, [runHistory])
+}
 
-	const [selectedSpecification, setSelectedSpecification] = useState<
-		Specification | undefined
-	>()
-
-	const isShapDisabled = useMemo((): boolean => {
+function useIsShapDisabled(): boolean {
+	const defaultRun = useDefaultRun()
+	return useMemo((): boolean => {
 		if (!defaultRun) return false
 		return defaultRun?.status?.status !== NodeResponseStatus.Completed
 	}, [defaultRun])
+}
 
-	const isConfidenceIntervalDisabled = useMemo((): boolean => {
+function useIsConfidenceIntervalDisabled(data: Specification[]): boolean {
+	const defaultRun = useDefaultRun()
+	return useMemo((): boolean => {
 		if (!defaultRun && data) return false
 		return !defaultRun?.hasConfidenceInterval
 	}, [defaultRun, data])
+}
 
-	const handleShapTicksChange = useCallback(
+function useHandleShapTicksChange(
+	isShapDisabled: boolean,
+): (checked: boolean) => void {
+	const config = useSpecificationCurveConfig()
+	const setConfig = useSetSpecificationCurveConfig()
+	return useCallback(
 		checked => {
 			setConfig({
 				...config,
@@ -77,8 +171,14 @@ export function useSpecificationCurve(): GenericObject {
 		},
 		[config, setConfig, isShapDisabled],
 	)
+}
 
-	const handleConfidenceIntervalTicksChange = useCallback(
+function useHandleConfidenceIntervalTicksChange(
+	isConfidenceIntervalDisabled: boolean,
+): (checked: boolean) => void {
+	const config = useSpecificationCurveConfig()
+	const setConfig = useSetSpecificationCurveConfig()
+	return useCallback(
 		checked => {
 			setConfig({
 				...config,
@@ -87,20 +187,30 @@ export function useSpecificationCurve(): GenericObject {
 		},
 		[config, setConfig, isConfidenceIntervalDisabled],
 	)
+}
 
-	/**
-	 * When a specification selection change, we reset the significance test because it changes
-	 * based on active specifications
-	 */
-	const onSpecificationsChange = useCallback(
+/**
+ * When a specification selection change, we reset the significance test because it changes
+ * based on active specifications
+ */
+function useOnSpecificationsChange() {
+	const setConfig = useSetSpecificationCurveConfig()
+	const defaultRun = useDefaultRun()
+
+	const setSignificanceTest = useSetSignificanceTests(defaultRun?.id as string)
+	return useCallback(
 		(config: SpecificationCurveConfig) => {
 			setConfig(config)
 			setSignificanceTest(undefined)
 		},
 		[setConfig, setSignificanceTest],
 	)
+}
 
-	const refutationKeys = useMemo((): string[] => {
+function useRefutationKeys(
+	selectedSpecification: Specification | undefined,
+): string[] {
+	return useMemo(() => {
 		if (selectedSpecification) {
 			const keys = Object.keys(selectedSpecification).filter(x =>
 				x.startsWith('refuter'),
@@ -114,8 +224,13 @@ export function useSpecificationCurve(): GenericObject {
 		}
 		return []
 	}, [selectedSpecification])
+}
 
-	const failedRefutations = useMemo((): string[] => {
+function useFailedRefutations(
+	selectedSpecification: Specification | undefined,
+	refutationKeys: string[],
+): string[] {
+	return useMemo(() => {
 		if (selectedSpecification) {
 			return (
 				refutationKeys.filter(
@@ -125,8 +240,14 @@ export function useSpecificationCurve(): GenericObject {
 		}
 		return []
 	}, [selectedSpecification, refutationKeys])
+}
 
-	const refutationNumbers = useMemo((): string => {
+function useRefutationNumbers(
+	selectedSpecification: Specification | undefined,
+	refutationKeys: string[],
+	failedRefutations: string[],
+): string {
+	return useMemo(() => {
 		if (selectedSpecification) {
 			return (
 				refutationKeys.length -
@@ -137,17 +258,30 @@ export function useSpecificationCurve(): GenericObject {
 		}
 		return '0/0'
 	}, [refutationKeys, failedRefutations, selectedSpecification])
+}
 
-	const isSpecificationOn = useMemo(() => {
+function useIsSpecificationOn(
+	selectedSpecification: Specification | undefined,
+): boolean {
+	const config = useSpecificationCurveConfig()
+	return useMemo(() => {
 		if (!selectedSpecification || !config.inactiveSpecifications) {
-			return
+			return false
 		}
 		return !config.inactiveSpecifications.find(
 			x => x === selectedSpecification?.id,
 		)
 	}, [config, selectedSpecification])
+}
 
-	const onToggleRejectEstimate = useCallback(() => {
+function useOnToggleRejectEstimateHandler(
+	selectedSpecification: Specification | undefined,
+	isSpecificationOn: boolean,
+) {
+	const config = useSpecificationCurveConfig()
+	const setConfig = useSetSpecificationCurveConfig()
+
+	return useCallback(() => {
 		const { inactiveSpecifications = [] } = config
 		if (selectedSpecification) {
 			const newInactive = inactiveSpecifications.filter(
@@ -163,28 +297,4 @@ export function useSpecificationCurve(): GenericObject {
 			})
 		}
 	}, [selectedSpecification, config, setConfig, isSpecificationOn])
-
-	return {
-		data,
-		defaultRun,
-		activeProcessing,
-		selectedSpecification,
-		setSelectedSpecification,
-		config,
-		onSpecificationsChange,
-		onMouseOver,
-		hovered,
-		handleShapTicksChange,
-		handleConfidenceIntervalTicksChange,
-		isShapDisabled,
-		isConfidenceIntervalDisabled,
-		failedRefutationIds,
-		vegaWindowDimensions,
-		theme,
-		outcome,
-		isSpecificationOn,
-		refutationNumbers,
-		failedRefutations,
-		onToggleRejectEstimate,
-	}
 }

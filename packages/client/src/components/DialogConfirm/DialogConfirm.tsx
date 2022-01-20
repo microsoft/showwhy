@@ -10,7 +10,7 @@ import { memo } from 'react'
 interface DialogConfirmProps {
 	toggle: () => void
 	onConfirm: () => void
-	show: boolean
+	show: boolean | undefined
 	title: string
 }
 

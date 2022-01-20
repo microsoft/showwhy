@@ -68,7 +68,7 @@ const PreviousButton = styled(DefaultButton)`
 	width: 100%;
 `
 
-const MarkDoneButton = styled(DefaultButton)<{ done: boolean }>`
+const MarkDoneButton = styled(DefaultButton)<{ done: boolean | undefined }>`
 	margin: 0px 8px;
 	width: 50%;
 
