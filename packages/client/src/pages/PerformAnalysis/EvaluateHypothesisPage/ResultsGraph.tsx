@@ -22,7 +22,7 @@ interface ResultsGraphProps {
 	specificationCurveConfig: SpecificationCurveConfig
 	vegaWindowDimensions: Dimensions
 	onMouseOver: (item: Specification | DecisionFeature | undefined) => void
-	hovered: number
+	hovered: number | undefined
 	failedRefutationIds: number[]
 	refutationType: RefutationTypes
 }

@@ -12,7 +12,7 @@ import { CausalFactor, DescribeElements, Factor } from '~interfaces'
 
 interface FactorsDefinitionFormProps {
 	factor?: CausalFactor
-	showLevel?: boolean
+	showLevel?: boolean | undefined
 	defineQuestion?: DescribeElements
 	pageType: PageType
 	variables?: IComboBoxOption[]
@@ -49,7 +49,7 @@ export const FactorsDefinitionForm: React.FC<FactorsDefinitionFormProps> = memo(
 	},
 )
 
-const Container = styled.form<{ showLevel: boolean }>`
+const Container = styled.form<{ showLevel: boolean | undefined }>`
 	display: grid;
 	grid-template-columns: ${({ showLevel }) =>
 		showLevel ? '15% 25% 60%' : '30% 70%'};

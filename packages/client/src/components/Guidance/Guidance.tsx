@@ -8,7 +8,7 @@ import { StepTitle } from '~components/StepTitle'
 import { Step } from '~interfaces'
 
 interface GuidanceProps {
-	isVisible: boolean
+	isVisible: boolean | undefined
 	step?: Step
 }
 

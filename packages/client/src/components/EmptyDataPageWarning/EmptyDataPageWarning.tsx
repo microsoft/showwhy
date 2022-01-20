@@ -11,7 +11,7 @@ interface EmptyDataPageWarningProps {
 	text: string
 	linkText: string
 	page: Pages
-	marginTop?: boolean
+	marginTop?: boolean | undefined
 }
 export const EmptyDataPageWarning: React.FC<EmptyDataPageWarningProps> = memo(
 	function EmptyDataPageWarning({ text, linkText, page, marginTop = false }) {

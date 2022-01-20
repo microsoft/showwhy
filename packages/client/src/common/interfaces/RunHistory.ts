@@ -31,7 +31,7 @@ export interface RunHistory {
 	refutationType: RefutationTypes
 	hasConfidenceInterval: boolean
 	result?: []
-	status?: RunStatus
+	status: RunStatus
 	sessionId?: string
 	nodeResponse?: NodeResponse
 }
