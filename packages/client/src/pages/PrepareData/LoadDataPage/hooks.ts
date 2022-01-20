@@ -90,6 +90,19 @@ export function useBusinessLogic(): GenericObject {
 		acceptedFileTypes,
 	} = useGlobalDropzone(setErrorMessage, handleLoadFile)
 
+	const onRenameTable = useCallback(
+		(alias: string) => {
+			const file = {
+				...selectedFile,
+				alias: alias,
+			} as ProjectFile
+			const index = projectFiles.findIndex(f => f.id === file.id)
+			const files = replaceItemAtIndex(projectFiles, index, file)
+			setSelectedFile(file)
+			setProjectFiles(files)
+		},
+		[selectedFile, projectFiles, setSelectedFile, setProjectFiles],
+	)
 	return {
 		showConfirm,
 		errorMessage,
@@ -97,12 +110,12 @@ export function useBusinessLogic(): GenericObject {
 		projectFiles,
 		originalTable,
 		selectedDelimiter,
-		setProjectFiles,
 		onConfirmDelete,
 		setSelectedFile,
 		toggleShowConfirm,
 		toggleLoadedCorrectly,
 		handleDelimiterChange,
+		onRenameTable,
 		loading,
 		fileCount,
 		handleDismissError,

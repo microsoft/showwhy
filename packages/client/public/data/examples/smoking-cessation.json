@@ -143,7 +143,7 @@
         },
         {
             "description": "Measures the participant's body weights in kilograms, recorded at the baseline visit in 1971",
-            "variable": "Body Weight in 1971",
+            "variable": "Body Weight in 1971 (kg)",
             "column": "weight_1971",
             "causes": {
                 "causeOutcome": {
@@ -200,13 +200,13 @@
             ]
         },
         "outcome": {
-            "label": "Body Weight Change",
+            "label": "Body Weight Change (kg)",
             "description": "Change in the participant's body weight between the baseline visit in 1971 and the follow-up visit in 1982",
             "dataset": "NHEFS dataset",
             "definition": [
                 {
                     "level": "Primary",
-                    "variable": "Body Weight Change",
+                    "variable": "Body Weight Change (kg)",
                     "description": "Change in participant's body weight between 1971 and 1982, measured in kilograms",
                     "column": "weight_change"
                 }
