@@ -3,79 +3,75 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { useBoolean, useId } from '@fluentui/react-hooks'
+import { useBoolean } from '@fluentui/react-hooks'
 import { useCallback, useEffect, useMemo } from 'react'
 import { useHistory } from 'react-router-dom'
 import { StepStatus } from '~enums'
 import {
 	useCurrentStep,
-	useGetStepUrls,
 	useAllSteps,
-	useExampleProjects,
 	useLoadProject,
 	useResetProject,
-	useUploadZipMenuOption,
 } from '~hooks'
-import { FileDefinition } from '~interfaces'
-import {
-	useSelectedProject,
-	useSetGuidance,
-	useSetStepStatus,
-	useStepStatus,
-	useSetStepStatuses,
-	useDefineQuestion,
-} from '~state'
-import { GenericObject } from '~types'
+import { FileDefinition, Step } from '~interfaces'
+import { useSetGuidance, useSetStepStatus, useStepStatus } from '~state'
 
-export function useLayout(): GenericObject {
-	const project = useSelectedProject()
-	const step = useCurrentStep()
-	const setStepStatus = useSetStepStatus(step?.url)
-	const stepStatus = useStepStatus(step?.url)
+export function useGuidance(): [boolean, () => void] {
+	/* TODO: this is synchronizing state between an in-memory hook and recoil. This should just use recoil*/
 	const [isGuidanceVisible, { toggle: toggleGuidance }] = useBoolean(true)
 	const setGuidance = useSetGuidance()
-	const tooltipId = useId('tooltip')
-	const handleGetStepUrls = useGetStepUrls()
-	const handleSetAllStepStatus = useSetStepStatuses()
-	const defineQuestion = useDefineQuestion()
-	const examples = useExampleProjects()
+	useEffect(() => {
+		setGuidance(isGuidanceVisible)
+	}, [isGuidanceVisible, setGuidance])
+	return [isGuidanceVisible, toggleGuidance]
+}
+
+export function useOnClickProject(): (example: FileDefinition) => void {
 	const loadExample = useLoadProject()
 	const resetProject = useResetProject()
-	const exampleProjects = useExampleProjects()
-	const uploadZipMenuOption = useUploadZipMenuOption()
 
-	const onClickProject = useCallback(
+	return useCallback(
 		(example: FileDefinition) => {
 			resetProject()
 			loadExample(example)
 		},
 		[loadExample, resetProject],
 	)
+}
 
-	useEffect(() => {
-		setGuidance(isGuidanceVisible)
-	}, [isGuidanceVisible, setGuidance])
-
+export function useGoToPageHandler(): (url: string) => void {
 	const history = useHistory()
-	const allSteps = useAllSteps()
-	const currentStepIndex: number = useMemo((): any => {
-		return allSteps.findIndex(s => s.url === step?.url) || 0
-	}, [allSteps, step])
-
-	const toggleStatus = useCallback(() => {
-		setStepStatus(
-			stepStatus === StepStatus.Done ? StepStatus.ToDo : StepStatus.Done,
-		)
-	}, [setStepStatus, stepStatus])
-
-	const goToPage = useCallback(
+	return useCallback(
 		(url: string) => {
 			history.push(url)
 		},
 		[history],
 	)
+}
 
-	const previousUrl: string = useMemo(() => {
+export function useProcessStepInfo(): {
+	step: Step | undefined
+	stepStatus: StepStatus | undefined
+	toggleStepStatus: () => void
+	previousStepUrl: string
+	nextStepUrl: string
+} {
+	const step = useCurrentStep()
+	const setStepStatus = useSetStepStatus(step?.url)
+	const stepStatus = useStepStatus(step?.url)
+
+	const allSteps = useAllSteps()
+	const currentStepIndex: number = useMemo((): any => {
+		return allSteps.findIndex(s => s.url === step?.url) || 0
+	}, [allSteps, step])
+
+	const toggleStepStatus = useCallback(() => {
+		setStepStatus(
+			stepStatus === StepStatus.Done ? StepStatus.ToDo : StepStatus.Done,
+		)
+	}, [setStepStatus, stepStatus])
+
+	const previousStepUrl: string = useMemo(() => {
 		const idx = currentStepIndex - 1
 		if (idx >= 0) {
 			return allSteps[idx].url
@@ -83,7 +79,7 @@ export function useLayout(): GenericObject {
 		return ''
 	}, [currentStepIndex, allSteps])
 
-	const nextUrl: string = useMemo(() => {
+	const nextStepUrl: string = useMemo(() => {
 		if (currentStepIndex < allSteps.length - 1) {
 			return allSteps[currentStepIndex + 1].url
 		}
@@ -91,22 +87,10 @@ export function useLayout(): GenericObject {
 	}, [currentStepIndex, allSteps])
 
 	return {
-		handleGetStepUrls,
-		handleSetAllStepStatus,
-		defineQuestion,
-		tooltipId,
-		isGuidanceVisible,
-		toggleGuidance,
-		project,
 		step,
 		stepStatus,
-		toggleStatus,
-		previousUrl,
-		nextUrl,
-		goToPage,
-		examples,
-		onClickProject,
-		exampleProjects,
-		uploadZipMenuOption,
+		toggleStepStatus,
+		previousStepUrl,
+		nextStepUrl,
 	}
 }
