@@ -21,7 +21,6 @@ import { useOnDropRejected } from './dropzone'
 import { useAddFilesToCollection } from './fileCollection'
 import { useSupportedFileTypes } from './supportedFileTypes'
 import { DropFilesCount, ProjectFile } from '~interfaces'
-import { GenericObject } from '~types'
 import { createDefaultTable } from '~utils'
 
 export function useDrop(
@@ -62,7 +61,13 @@ export function useDrop(
 export function useHandleDropzone(
 	onError?: (message: string | null) => void,
 	onLoad?: (file: ProjectFile, table: ColumnTable) => void,
-): GenericObject {
+): {
+	loading: boolean
+	filesCount: DropFilesCount
+	isDragActive: boolean
+	getRootProps: (props: any) => any
+	getInputProps: (props: any) => any
+} {
 	const [loading, setLoading] = useState<boolean>(false)
 	const fileTypesAllowed = useSupportedFileTypes()
 	const [filesCount, setFilesCount] = useState<DropFilesCount>({
