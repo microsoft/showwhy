@@ -11,7 +11,7 @@ import { useStepStatus } from '~state'
 
 interface StepItemProps {
 	stepDetail: Step
-	subStep?: boolean
+	subStep?: boolean | undefined
 }
 export const StepItem: React.FC<StepItemProps> = memo(function StepItem({
 	stepDetail,
@@ -44,7 +44,7 @@ export const StepItem: React.FC<StepItemProps> = memo(function StepItem({
 	)
 })
 
-const CollapsibleContainer = styled.div<{ subStep: boolean }>`
+const CollapsibleContainer = styled.div<{ subStep: boolean | undefined }>`
 	display: flex;
 	flex-direction: column;
 	padding-left: ${props => (props.subStep ? '8px' : '0px')};

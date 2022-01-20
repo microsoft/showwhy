@@ -9,7 +9,7 @@ import styled from 'styled-components'
 interface SelectableCardProps {
 	onClick: () => void
 	title?: string
-	isChecked?: boolean
+	isChecked?: boolean | undefined
 	icon?: string
 }
 

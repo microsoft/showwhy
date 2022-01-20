@@ -7,14 +7,14 @@ import { Spinner } from '@fluentui/react'
 import styled from 'styled-components'
 
 export const Title = styled.h3<{
-	noMarginBottom?: boolean
-	noMarginTop?: boolean
+	noMarginBottom?: boolean | undefined
+	noMarginTop?: boolean | undefined
 }>`
 	margin-bottom: ${({ noMarginBottom }) => (noMarginBottom ? 'unset' : '1em')};
 	margin-top: ${({ noMarginTop }) => (noMarginTop ? 'unset' : '1em')};
 `
 
-export const Text = styled.span<{ marginTop?: boolean }>`
+export const Text = styled.span<{ marginTop?: boolean | undefined }>`
 	margin-top: ${({ marginTop }) => (marginTop ? '1em' : 'unset')};
 `
 
@@ -31,8 +31,8 @@ export const Value = styled(Bold)`
 
 export const Paragraph = styled.p<{
 	color?: string
-	noMarginBottom?: boolean
-	noMarginTop?: boolean
+	noMarginBottom?: boolean | undefined
+	noMarginTop?: boolean | undefined
 }>`
 	color: ${({ color, theme }) =>
 		color ? theme.application()[color] : 'black'};
@@ -41,8 +41,8 @@ export const Paragraph = styled.p<{
 `
 
 export const Container = styled.div<{
-	marginTop?: boolean
-	marginBottom?: boolean
+	marginTop?: boolean | undefined
+	marginBottom?: boolean | undefined
 }>`
 	margin-top: ${({ marginTop }) => (marginTop ? '1em' : 'unset')};
 	margin-bottom: ${({ marginBottom }) => (marginBottom ? '1em' : 'unset')};
