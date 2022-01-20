@@ -6,9 +6,9 @@ import {
 	ArqueroDetailsList,
 	ArqueroDetailsListProps,
 } from '@data-wrangling-components/react'
-import React, { memo } from 'react'
+import { FC, memo } from 'react'
 
-export const ArqueroDetailsTable: React.FC<ArqueroDetailsListProps> = memo(
+export const ArqueroDetailsTable: FC<ArqueroDetailsListProps> = memo(
 	function ArqueroDetailsTable(props) {
 		return (
 			<ArqueroDetailsList

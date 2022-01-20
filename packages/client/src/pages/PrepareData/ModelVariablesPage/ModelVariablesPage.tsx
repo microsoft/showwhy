@@ -8,7 +8,7 @@ import {
 	DefaultButton,
 	IContextualMenuProps,
 } from '@fluentui/react'
-import React, { memo } from 'react'
+import React, { Factory, memo } from 'react'
 import { If, Then, Else } from 'react-if'
 import styled from 'styled-components'
 import { DeriveComponent } from '../../../pages/PrepareData/ModelVariablesPage/DeriveComponent/DeriveComponent'
@@ -20,6 +20,7 @@ import { EmptyDataPageWarning } from '~components/EmptyDataPageWarning'
 import { ArqueroDetailsTable } from '~components/Tables/ArqueroDetailsTable'
 import { PageType, Pages } from '~enums'
 import { ContainerFlexRow } from '~styles'
+import { Factor } from '~interfaces'
 
 export const ModelVariablesPage: React.FC = memo(function ModelVariablesPage() {
 	const {
@@ -76,7 +77,7 @@ export const ModelVariablesPage: React.FC = memo(function ModelVariablesPage() {
 								<DetailsListContainer>
 									<ArqueroDetailsTable
 										table={subjectIdentifierData.table}
-										columns={subjectIdentifierData.columnNames}
+										columns={subjectIdentifierData.columnNames as any}
 										features={{ smartHeaders: true }}
 									/>
 								</DetailsListContainer>
@@ -89,7 +90,7 @@ export const ModelVariablesPage: React.FC = memo(function ModelVariablesPage() {
 											onUpdate={onSave}
 											tableId={tableIdentifier?.tableId!}
 											onClick={onSelectDefinition}
-											list={definitionOptions}
+											list={definitionOptions as any as Factor[]}
 											selectedDefinition={selected}
 											type={pageType}
 										/>
@@ -125,7 +126,7 @@ export const ModelVariablesPage: React.FC = memo(function ModelVariablesPage() {
 														allowDisabledFocus
 													/>
 													{pageType !== PageType.Control && (
-														<StepsButton onClick={onToggleDeriveVisible}>
+														<StepsButton onClick={onToggleDeriveVisible as any}>
 															Derive new column before capturing
 														</StepsButton>
 													)}
