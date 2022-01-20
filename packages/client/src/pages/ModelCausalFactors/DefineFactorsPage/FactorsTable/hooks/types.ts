@@ -6,4 +6,4 @@
 import { CausalFactor } from '~interfaces'
 import { Setter } from '~types'
 
-export type SetFactors = Setter<CausalFactor[]>
+export type SetFactors = Setter<CausalFactor[] | undefined>
