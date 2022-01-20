@@ -18,9 +18,9 @@ export function useBusinessLogic(): GenericObject {
 	const pageType = usePageType()
 	const variables = useVariableOptions()
 	const setDefineQuestion = useSetDefineQuestion()
-	const [definitions, setDefinitions] = useState<
-		ElementDefinition[] | undefined
-	>(defineQuestion[pageType]?.definition || [])
+	const [definitions, setDefinitions] = useState<ElementDefinition[]>(
+		defineQuestion[pageType]?.definition || [],
+	)
 	const [definitionToEdit, setDefinitionToEdit] = useState<ElementDefinition>()
 
 	const [labelInterest, setLabelInterest] = useState<string | undefined>(
