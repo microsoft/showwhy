@@ -5,14 +5,11 @@
 
 import { IContextualMenuItem } from '@fluentui/react'
 import { useMemo } from 'react'
-import {
-	SelectedArgs,
-	SubjectIdentifierArgs,
-	SubjectIdentifierDataArgs,
-} from './interfaces'
+import { SelectedArgs, SubjectIdentifierArgs } from './interfaces'
 import { FactorsOrDefinitions } from './types'
 import { ColumnRelation, ColumnRelevance, PageType } from '~enums'
 import { DefinitionTable, BasicTable, CausalFactor } from '~interfaces'
+import { Setter } from '~types'
 
 export function useDefinitionOptions({
 	defineQuestionData,
@@ -106,7 +103,11 @@ export function useSubjectIdentifierData({
 	allOriginalTables,
 	subjectIdentifier,
 	setTableIdentifier,
-}: SubjectIdentifierDataArgs): DefinitionTable {
+}: {
+	allOriginalTables: BasicTable[]
+	subjectIdentifier: string[]
+	setTableIdentifier: Setter<BasicTable>
+}): DefinitionTable {
 	return useMemo((): DefinitionTable => {
 		const mainTable = allOriginalTables
 			.map(originalTable => {

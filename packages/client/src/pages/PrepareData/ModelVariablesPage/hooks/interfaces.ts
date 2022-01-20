@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { FactorsOrDefinitions, SetTableIdentifier } from './types'
+import { FactorsOrDefinitions } from './types'
 import { ColumnRelation } from '~enums'
 import {
 	BasicTable,
@@ -25,10 +25,4 @@ export interface SubjectIdentifierArgs {
 	allTableColumns: Partial<TableColumn[][]>
 	relationType: ColumnRelation
 	modelVariables: VariableDefinition[][]
-}
-
-export interface SubjectIdentifierDataArgs {
-	allOriginalTables: BasicTable[]
-	subjectIdentifier: string[]
-	setTableIdentifier: SetTableIdentifier
 }

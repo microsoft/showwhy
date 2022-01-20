@@ -4,6 +4,7 @@
  */
 
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import { SetterOrUpdater } from 'recoil'
 import { getEstimatorByRanking, estimatorGroups } from './constants'
 import { EstimatorsGroups, EstimatorsType } from '~enums'
 import { useEstimatorShortDescription, useEstimatorsList } from '~hooks'
@@ -18,7 +19,6 @@ import {
 	useConfidenceInterval,
 } from '~state'
 import { Setter } from '~types'
-import { SetterOrUpdater } from 'recoil'
 
 enum BatchUpdateAction {
 	Delete = 'delete',

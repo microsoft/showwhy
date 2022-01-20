@@ -47,9 +47,9 @@ export function useBusinessLogic() {
 	const defineQuestion = useDefineQuestion()
 	const defineQuestionData = defineQuestion[pageType] as Element
 	const [editingClause, setEditingClause] = useState<FilterObject>()
-	const [tableIdentifier, setTableIdentifier] = useState<
-		BasicTable | undefined
-	>(allOriginalTables[0])
+	const [tableIdentifier, setTableIdentifier] = useState<BasicTable>(
+		allOriginalTables[0],
+	)
 	const [selectedDefinition, setSelectedDefinition] = useState<string>('')
 
 	const relationType = useRelationType(pageType)
