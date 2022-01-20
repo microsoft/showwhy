@@ -3,21 +3,18 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { ArqueroTableHeader } from '@data-wrangling-components/react'
-import { TextField } from '@fluentui/react'
 import ColumnTable from 'arquero/dist/types/table/column-table'
-import { useState, useCallback, memo, useEffect } from 'react'
+import { memo } from 'react'
 
 import styled from 'styled-components'
 import { ArqueroDetailsTable } from '../ArqueroDetailsTable'
 import { ProjectFile } from '~interfaces'
-import { replaceItemAtIndex } from '~utils'
 
 interface SelectedTableDisplayProps {
 	selectedFile?: ProjectFile
 	originalTable: ColumnTable
 	projectFiles: ProjectFile[]
-	onSetSelectedFile: (file: ProjectFile) => void
-	onSetProjectFiles: (files: ProjectFile[]) => void
+	onRenameTable: (name: string) => void
 }
 
 export const SelectedTableDisplay: React.FC<SelectedTableDisplayProps> = memo(
@@ -25,60 +22,18 @@ export const SelectedTableDisplay: React.FC<SelectedTableDisplayProps> = memo(
 		selectedFile,
 		originalTable,
 		projectFiles,
-		onSetSelectedFile,
-		onSetProjectFiles,
+		onRenameTable,
 	}) {
-		const [fileAlias, setFileAlias] = useState<string>(
-			selectedFile?.alias || '',
-		)
-
-		const save = useCallback(() => {
-			const file = {
-				...selectedFile,
-				alias: fileAlias,
-			} as ProjectFile
-			const index = projectFiles.findIndex(f => f.id === file.id)
-			const files = replaceItemAtIndex(projectFiles, index, file)
-			onSetSelectedFile(file)
-			onSetProjectFiles(files)
-		}, [
-			fileAlias,
-			selectedFile,
-			projectFiles,
-			onSetSelectedFile,
-			onSetProjectFiles,
-		])
-
-		useEffect(() => {
-			setFileAlias(selectedFile?.alias || '')
-		}, [setFileAlias, selectedFile])
-
-		useEffect(() => {
-			if (fileAlias && selectedFile?.alias !== fileAlias) {
-				save()
-			}
-		}, [fileAlias, selectedFile, save])
-
 		return (
 			<Container>
 				{selectedFile && originalTable ? (
 					<SelectedFile>
-						<TableDetails>
-							<TableTitle>
-								<TextField
-									label="Name:"
-									placeholder="Enter short name"
-									underlined
-									value={fileAlias}
-									onChange={(e, value) => setFileAlias(value as string)}
-								/>
-							</TableTitle>
-						</TableDetails>
 						<ArqueroTableHeader
 							table={originalTable}
 							name={selectedFile?.alias ?? selectedFile?.name}
 							showRowCount
 							showColumnCount
+							onRenameTable={onRenameTable}
 						/>
 						<DatasetContainer>
 							<ArqueroDetailsTable table={originalTable} />
@@ -118,17 +73,6 @@ const DatasetContainer = styled.div`
 	height: 50vh;
 `
 
-const TableDetails = styled.div`
-	margin-bottom: 8px;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-`
-
-const TableTitle = styled.span`
-	font-weight: bold;
-	margin-right: 16px;
-`
 const SelectedFile = styled.div`
 	background-color: white;
 	padding: 8px;

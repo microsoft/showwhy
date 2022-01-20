@@ -23,7 +23,6 @@ export const LoadDataPage: React.FC = memo(function LoadDataPage() {
 		selectedDelimiter,
 		projectFiles,
 		originalTable,
-		setProjectFiles,
 		onConfirmDelete,
 		setSelectedFile,
 		toggleShowConfirm,
@@ -36,6 +35,7 @@ export const LoadDataPage: React.FC = memo(function LoadDataPage() {
 		onDrop,
 		onDropAccepted,
 		onDropRejected,
+		onRenameTable,
 	} = useBusinessLogic()
 
 	return (
@@ -84,10 +84,9 @@ export const LoadDataPage: React.FC = memo(function LoadDataPage() {
 			<TableContainer>
 				<SelectedTableDisplay
 					selectedFile={selectedFile}
-					onSetSelectedFile={setSelectedFile}
 					projectFiles={projectFiles}
-					onSetProjectFiles={setProjectFiles}
 					originalTable={originalTable}
+					onRenameTable={onRenameTable}
 				/>
 			</TableContainer>
 
