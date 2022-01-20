@@ -617,9 +617,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@data-wrangling-components/react@npm:^1.4.0":
-  version: 1.4.0
-  resolution: "@data-wrangling-components/react@npm:1.4.0"
+"@data-wrangling-components/react@npm:^1.4.2":
+  version: 1.4.2
+  resolution: "@data-wrangling-components/react@npm:1.4.2"
   dependencies:
     core-js: ^3.20.2
     d3-format: ^3.1.0
@@ -647,19 +647,19 @@ __metadata:
     react: ^17.0.2
     react-dom: ^17.0.2
     styled-components: ^5.3.0
-  checksum: 0a076bc4c8db074205e22b11937c04e9d57dd2204f2f1c1f57a0906b5893631c824ae7467fcb726bcff839e4ee2a4c38c99ab174d6cd3bd31f40c4c1d3b843b6
+  checksum: 0387092a4e8764696559b2839c57e675a12e68626e0282e2b5b1c97d92fd76b48c694d8b27aa17fb70dc56fff685c8cc707dee8d426262d5f6a397cd18ca811e
   languageName: node
   linkType: hard
 
-"@data-wrangling-components/utilities@npm:^1.2.1":
-  version: 1.2.1
-  resolution: "@data-wrangling-components/utilities@npm:1.2.1"
+"@data-wrangling-components/utilities@npm:^1.3.0":
+  version: 1.3.0
+  resolution: "@data-wrangling-components/utilities@npm:1.3.0"
   dependencies:
     "@zip.js/zip.js": ^2.3.19
     core-js: ^3.20.2
   peerDependencies:
     arquero: ^4.8.7
-  checksum: c79c82c7e7948b2e57cd9ef112601daacf2678df5b26ff20f857e96040123f90187594d7d4122e635c226231b4870595cef96cac0ceea8be89f9bf9bcab3906e
+  checksum: f8bb3b7625bf982767406062e31460a7a41ab95338b8420ab54216f5803f9b4f90ffe08fada67a52f1161f267baa1821aadf8cb71b9d2ea431b2b7b776dc9003
   languageName: node
   linkType: hard
 
@@ -1633,8 +1633,8 @@ __metadata:
   resolution: "@showwhy/client@workspace:packages/client"
   dependencies:
     "@data-wrangling-components/core": ^1.2.0
-    "@data-wrangling-components/react": ^1.4.0
-    "@data-wrangling-components/utilities": ^1.2.1
+    "@data-wrangling-components/react": ^1.4.2
+    "@data-wrangling-components/utilities": ^1.3.0
     "@essex-js-toolkit/boolean-expression-component": ^0.1.1
     "@essex-js-toolkit/hooks": ^3.0.2
     "@essex-js-toolkit/thematic-lineup": ^1.1.7

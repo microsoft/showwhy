@@ -38,11 +38,10 @@ export const useUpdateFileCollection = (): ((
 	const fc = useFileCollection().copy()
 	return useCallback(
 		async (fileCollection: FileCollection) => {
-			const files = [...(fileCollection.list() as FileWithPath[])]
 			if (!fc.name) {
 				fc.name = fileCollection.name
 			}
-			await fc.add(files)
+			await fc.add([...(fileCollection.list() as FileWithPath[])])
 			setFileCollection(fc)
 		},
 		[fc, setFileCollection],
