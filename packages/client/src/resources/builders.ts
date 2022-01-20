@@ -22,10 +22,10 @@ import {
 	Estimator,
 	NodeRequest,
 } from '~interfaces'
-import { GenericObject } from '~types'
 
-interface Node extends GenericObject {
+interface Node {
 	type: NodeTypes
+	[key: string]: any
 }
 
 export function buildNodes(nodes: Node[]): NodeRequest {
