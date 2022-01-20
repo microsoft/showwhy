@@ -144,7 +144,7 @@
         {
             "description": "Measures the participant's body weights in kilograms, recorded at the baseline visit in 1971",
             "variable": "Body Weight in 1971 (kg)",
-            "column": "weight_1971_kg",
+            "column": "weight_1971",
             "causes": {
                 "causeOutcome": {
                     "causes": true,
@@ -343,7 +343,7 @@
             ]
         },
         {
-            "name": "weight_1971_kg",
+            "name": "weight_1971",
             "isDone": true,
             "relevance": "CausallyRelevantToQuestion",
             "relation": [
@@ -351,7 +351,7 @@
             ]
         },
         {
-            "name": "weight_change_kg",
+            "name": "weight_change",
             "isDone": true,
             "relevance": "CausallyRelevantToQuestion",
             "relation": [
@@ -469,8 +469,8 @@
                         "age": "age",
                         "race": "race",
                         "education": "education",
-                        "wt71": "weight_1971_kg",
-                        "wt82_71": "weight_change_kg",
+                        "wt71": "weight_1971",
+                        "wt82_71": "weight_change",
                         "smokeintensity": "smoke_intensity_1971",
                         "smkintensity82_71": "smoke_intensity_change",
                         "active": "active",
@@ -550,7 +550,7 @@
                 "output": "smoking_cessation",
                 "args": {
                     "to": "subject_inclusion",
-                    "column": "weight_change_kg",
+                    "column": "weight_change",
                     "operator": "is not empty"
                 }
             }
