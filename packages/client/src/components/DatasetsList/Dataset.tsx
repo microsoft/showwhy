@@ -8,7 +8,7 @@ import { ProjectFile } from '~interfaces'
 
 interface DatasetProps {
 	file: ProjectFile
-	selectedFile: ProjectFile
+	selectedFile: ProjectFile | undefined
 	onFileSelected: (file: ProjectFile) => void
 }
 

@@ -8,14 +8,13 @@ import { useHistory } from 'react-router-dom'
 import { useAddOrEditFactor, usePageType, useVariableOptions } from '~hooks'
 import { CausalFactor, FlatCausalFactor } from '~interfaces'
 import { useCausalFactors, useSetCausalFactors } from '~state'
-import { GenericObject } from '~types'
 
 interface PathData {
 	path: string | undefined
 	page: string | undefined
 }
 
-export function useBusinessLogic(): GenericObject {
+export function useBusinessLogic() {
 	const causalFactors = useCausalFactors()
 	const setCausalFactors = useSetCausalFactors()
 	const pageType = usePageType()
@@ -41,7 +40,7 @@ export function useBusinessLogic(): GenericObject {
 	)
 
 	const addFactor = useCallback(
-		(newFactor: CausalFactor) => {
+		(newFactor: Omit<CausalFactor, 'id'>) => {
 			addOrEditFactor(newFactor)
 			isEditing && setIsEditing(false)
 			setFactor(undefined)

@@ -17,9 +17,9 @@ import {
 	useSetTableColumns,
 	useTableColumns,
 } from '~state'
-import { GenericObject, Setter } from '~types'
+import { Setter } from '~types'
 
-export function useBusinessLogic(): GenericObject {
+export function useBusinessLogic() {
 	const selectedFile = useSelectedFile()
 	const setSelectedFile = useSetSelectedFile()
 	const originalTables = useOriginalTables()

@@ -10,9 +10,8 @@ import {
 	usePrimarySpecificationConfig,
 	useSetPrimarySpecificationConfig,
 } from '~state'
-import { GenericObject } from '~types'
 
-export function useBusinessLogic(): GenericObject {
+export function useBusinessLogic() {
 	const updateXarrow = useXarrow()
 	const setPrimarySpecificationConfig = useSetPrimarySpecificationConfig()
 	const primarySpecificationConfig = usePrimarySpecificationConfig()

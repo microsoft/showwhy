@@ -10,6 +10,6 @@ export interface FilterObject {
 	lower?: number
 	upper?: number
 	tableId?: string
-	inclusive?: boolean
+	inclusive?: boolean | undefined
 	columnName?: string
 }

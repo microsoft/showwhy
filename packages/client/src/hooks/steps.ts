@@ -61,7 +61,7 @@ export function useGetStepUrls(): (urls?: string[], exclude?: any) => string[] {
 
 export function useGetStepUrlsByStatus(): (options?: {
 	status?: StepStatus
-	exclude?: boolean
+	exclude?: boolean | undefined
 }) => string[] {
 	const stepStatus = useStepStatus
 	const allSteps = useStepsShowStatus().map(step => {
@@ -71,7 +71,7 @@ export function useGetStepUrlsByStatus(): (options?: {
 		}
 	})
 	return useCallback(
-		(options?: { status?: StepStatus; exclude?: boolean }) => {
+		(options?: { status?: StepStatus; exclude?: boolean | undefined }) => {
 			const { status = StepStatus.Done, exclude = false } = options || {}
 			if (exclude) {
 				return allSteps.filter(x => x.status !== status).map(x => x.url)

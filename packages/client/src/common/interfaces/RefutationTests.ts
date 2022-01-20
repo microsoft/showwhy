@@ -8,7 +8,7 @@ import { RefutationTestMethod } from '~enums'
 export interface RefutationOption {
 	method_name: RefutationTestMethod
 	label: string
-	checked?: boolean
+	checked?: boolean | undefined
 	helpText?: string
 	description?: string
 	median_change?: string

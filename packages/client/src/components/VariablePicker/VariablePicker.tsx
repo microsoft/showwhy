@@ -9,7 +9,7 @@ import styled from 'styled-components'
 interface VariablePickerProps {
 	onChange: (value: string) => void
 	variable?: string
-	showLabel?: boolean
+	showLabel?: boolean | undefined
 	variables?: IComboBoxOption[]
 }
 

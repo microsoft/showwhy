@@ -80,7 +80,7 @@ export const EvaluateHypothesisPage: React.FC = memo(
 						specificationCurveConfig={config}
 						vegaWindowDimensions={vegaWindowDimensions}
 						onMouseOver={onMouseOver}
-						hovered={hovered}
+						hovered={hovered!}
 						failedRefutationIds={failedRefutationIds}
 						activeValues={activeValues}
 					/>
@@ -88,8 +88,8 @@ export const EvaluateHypothesisPage: React.FC = memo(
 				<Container marginTop>
 					<PageButtons
 						activeTaskIds={activeTaskIds}
-						defaultRun={defaultRun}
-						significanceTestsResult={significanceTestsResult}
+						defaultRun={defaultRun!}
+						significanceTestsResult={significanceTestsResult!}
 						significanceFailed={significanceFailed}
 						runSignificance={runSignificance}
 					/>
@@ -97,7 +97,7 @@ export const EvaluateHypothesisPage: React.FC = memo(
 					<SignificanceTests
 						cancelRun={cancelRun}
 						isCanceled={isCanceled}
-						significanceTestsResult={significanceTestsResult}
+						significanceTestsResult={significanceTestsResult!}
 					/>
 				</Container>
 			</ContainerFlexColumn>

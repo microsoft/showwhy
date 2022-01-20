@@ -4,20 +4,20 @@
  */
 
 import { ActionButtonsProps } from './ActionButtons'
-import { GenericObject } from '~types'
 
-export interface Item extends GenericObject {
+export interface Item {
 	onClick?: () => void
 	ref?: any
 	colsSpan?: number
 	actions?: ActionButtonsProps
+	[key: string]: any
 }
 
 export interface TableProps {
 	styles?: React.CSSProperties
-	isSticky?: boolean
-	isVisible?: boolean
-	isSortable?: boolean
+	isSticky?: boolean | undefined
+	isVisible?: boolean | undefined
+	isSortable?: boolean | undefined
 	customColumnsWidth?: { fieldName: string; width: string }[]
 }
 

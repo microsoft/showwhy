@@ -9,7 +9,7 @@ interface CardProps {
 	title?: string
 	actionButtons?: React.ReactNode
 	styles?: React.CSSProperties
-	isSticky?: boolean
+	isSticky?: boolean | undefined
 }
 
 export const CardComponent: React.FC<CardProps> = memo(function CardComponent({

@@ -27,14 +27,13 @@ import {
 	useSetSpecCount,
 	useSpecCount,
 } from '~state'
-import { GenericObject } from '~types'
 import {
 	createFormData,
 	returnInitialRunHistory,
 	returnRefutationCount,
 } from '~utils'
 
-export function useBusinessLogic(): GenericObject {
+export function useBusinessLogic() {
 	const definitions = useDefineQuestion()
 	const updateRunHistory = useUpdateAndDisableRunHistory()
 	const projectFiles = useProjectFiles()

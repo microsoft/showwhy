@@ -7,9 +7,8 @@ import { useAlternativeModels, useExcludedFactors } from './causalFactors'
 import { CausalModelLevel } from '~enums'
 import { AlternativeModels, DescribeElements } from '~interfaces'
 import { useDefineQuestion } from '~state'
-import { GenericObject } from '~types'
 
-export function useCausalEffects(causalLevel: CausalModelLevel): GenericObject {
+export function useCausalEffects(causalLevel: CausalModelLevel) {
 	return useCausalEffectsTestable(
 		useDefineQuestion(),
 		useExcludedFactors(),
@@ -21,7 +20,7 @@ export function useCausalEffectsTestable(
 	question: DescribeElements,
 	excludedFactors: string[],
 	{ confounders, outcomeDeterminants }: AlternativeModels,
-): GenericObject {
+) {
 	const excludedMessage = useMemo((): string => {
 		return `${excludedFactors.length} potential control${
 			excludedFactors.length > 1 ? 's were' : ' was'

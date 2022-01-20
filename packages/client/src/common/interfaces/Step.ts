@@ -31,7 +31,7 @@ export interface Step {
 	guidance: string
 	status: StepStatus
 	url: string
-	showStatus?: boolean
+	showStatus?: boolean | undefined
 	resources?: StepResource[]
 	subStepName?: string
 }

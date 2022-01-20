@@ -13,7 +13,7 @@ import { Estimator } from '~interfaces'
 interface ExtendedEstimator extends Estimator {
 	description: string
 	isChecked: boolean
-	isDefault?: boolean
+	isDefault?: boolean | undefined
 	onChange?: (ev: unknown, checked: boolean | undefined) => void
 	onDefaultChange?: () => void
 }
@@ -22,8 +22,11 @@ interface EstimatorCardProps {
 	list: ExtendedEstimator[]
 	title: string
 	description?: string
-	isCardChecked: boolean
-	onCardClick: () => void
+	isCardChecked?: boolean | undefined
+	onCardClick: (
+		evt: React.FormEvent<any>,
+		checked?: boolean | undefined,
+	) => void
 }
 
 export const EstimatorCard: React.FC<EstimatorCardProps> = memo(

@@ -35,7 +35,7 @@ export interface Workspace {
 	postLoad?: {
 		steps: Step[]
 	}
-	confidenceInterval?: boolean
+	confidenceInterval?: boolean | undefined
 }
 
 export interface FileDefinition {
@@ -59,7 +59,7 @@ export interface Metadata {
 }
 
 export interface DataTableDefinition extends FileDefinition {
-	primary?: boolean
+	primary?: boolean | undefined
 	metadata?: Metadata
 	/**
 	 * Optional explicit delimiter to parse data table with.

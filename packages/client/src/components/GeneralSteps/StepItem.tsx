@@ -11,7 +11,7 @@ import { useStepStatus } from '~state'
 
 interface StepItemProps {
 	stepDetail: Step
-	subStep?: boolean
+	subStep?: boolean | undefined
 }
 export const StepItem: React.FC<StepItemProps> = memo(function StepItem({
 	stepDetail,

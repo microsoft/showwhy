@@ -17,7 +17,7 @@ export interface DropzoneContainerProps {
 	loading: boolean
 	filesCount: DropFilesCount
 	text?: string
-	hasSelectedFiles?: boolean
+	hasSelectedFiles?: boolean | undefined
 	onDrop?: (collection: FileCollection) => void
 	onDropAccepted?: (collection: FileCollection) => void
 	onDropRejected?: (

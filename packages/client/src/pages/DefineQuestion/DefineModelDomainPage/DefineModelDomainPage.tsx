@@ -47,7 +47,7 @@ export const DefineModelDomainPage: React.FC = memo(
 					<TableContainer>
 						<TableComponent
 							headers={tableHeadersList}
-							columns={itemList}
+							columns={itemList as any[]}
 							definitionToEdit={definitionToEdit}
 							onDelete={removeDefinition}
 							onEdit={setDefinitionToEdit}

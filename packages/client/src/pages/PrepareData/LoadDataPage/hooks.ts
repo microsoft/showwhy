@@ -20,10 +20,9 @@ import {
 	useSetProjectFiles,
 	useSetSelectedFile,
 } from '~state'
-import { GenericObject } from '~types'
 import { createDefaultTable, replaceItemAtIndex } from '~utils'
 
-export function useBusinessLogic(): GenericObject {
+export function useBusinessLogic() {
 	const setSelectedFile = useSetSelectedFile()
 	const selectedFile = useSelectedFile()
 	const projectFiles = useProjectFiles()

@@ -31,9 +31,8 @@ import {
 	useOriginalTables,
 	useProjectFiles,
 } from '~state'
-import { GenericObject } from '~types'
 
-export function useBusinessLogic(): GenericObject {
+export function useBusinessLogic() {
 	const pageType = usePageType()
 	const projectFiles = useProjectFiles()
 

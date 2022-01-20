@@ -25,9 +25,8 @@ import {
 	useSetStepStatuses,
 	useDefineQuestion,
 } from '~state'
-import { GenericObject } from '~types'
 
-export function useLayout(): GenericObject {
+export function useLayout() {
 	const project = useSelectedProject()
 	const step = useCurrentStep()
 	const setStepStatus = useSetStepStatus(step?.url)

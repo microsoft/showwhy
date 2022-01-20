@@ -7,9 +7,8 @@ import { useMemo } from 'react'
 import { RefutationTypes } from '~enums'
 import { useSetFullRefutation, useSetQuickRefutation } from '~hooks'
 import { useRefutationType } from '~state'
-import { GenericObject } from '~types'
 
-export function useRefutations(): GenericObject {
+export function useRefutations() {
 	const refutation = useRefutationType()
 	const setQuickRefutation = useSetQuickRefutation()
 	const setFullRefutation = useSetFullRefutation()

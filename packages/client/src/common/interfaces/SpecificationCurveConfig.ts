@@ -46,10 +46,10 @@ export interface Specification {
 }
 
 export interface SpecificationCurveConfig {
-	medianLine?: boolean
-	meanLine?: boolean
-	shapTicks?: boolean
-	confidenceIntervalTicks?: boolean
+	medianLine?: boolean | undefined
+	meanLine?: boolean | undefined
+	shapTicks?: boolean | undefined
+	confidenceIntervalTicks?: boolean | undefined
 	/**
 	 * This is the list of decision features that have been excluded by the user
 	 */

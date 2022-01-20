@@ -17,7 +17,7 @@ import {
 	useToggleConfidenceInterval,
 	useConfidenceInterval,
 } from '~state'
-import { GenericObject, Setter } from '~types'
+import { Setter } from '~types'
 import { SetterOrUpdater } from 'recoil'
 
 enum BatchUpdateAction {
@@ -25,7 +25,7 @@ enum BatchUpdateAction {
 	Add = 'add',
 }
 
-export function useEstimatorHook(): GenericObject {
+export function useEstimatorHook() {
 	const estimators = useEstimators()
 	const setEstimators = useSetEstimators()
 	const estimatorsList = useEstimatorsList()

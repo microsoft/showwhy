@@ -16,7 +16,7 @@ import { addS } from '~utils'
 export interface SpecificationDescriptionProps {
 	specification?: Specification
 	refutationOptions: RefutationOption[]
-	isSpecificationOn: boolean
+	isSpecificationOn: boolean | undefined
 	refutationNumbers: string
 	failedRefutations: string[]
 	onToggleRejectEstimate: () => void

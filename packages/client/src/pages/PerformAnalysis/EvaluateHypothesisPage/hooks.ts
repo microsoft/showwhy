@@ -25,9 +25,7 @@ import {
 	useSpecificationCurveConfig,
 } from '~state'
 
-import { GenericObject } from '~types'
-
-export function useBusinessLogic(): GenericObject {
+export function useBusinessLogic() {
 	const defineQuestion = useDefineQuestion()
 	const primarySpecificationConfig = usePrimarySpecificationConfig()
 	const causalModel = primarySpecificationConfig.causalModel

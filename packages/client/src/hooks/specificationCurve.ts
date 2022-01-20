@@ -23,9 +23,8 @@ import {
 	useSpecificationCurveConfig,
 	useDefineQuestion,
 } from '~state'
-import { GenericObject } from '~types'
 
-export function useSpecificationCurve(): GenericObject {
+export function useSpecificationCurve() {
 	const data = useLoadSpecificationData()
 	const config = useSpecificationCurveConfig()
 	const runHistory = useRunHistory()

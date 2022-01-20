@@ -15,5 +15,5 @@ export interface ActionButtonsProps {
 		title?: string
 	}
 	infoButton?: { id: string; text: string }
-	disableSave?: boolean
+	disableSave?: boolean | undefined
 }

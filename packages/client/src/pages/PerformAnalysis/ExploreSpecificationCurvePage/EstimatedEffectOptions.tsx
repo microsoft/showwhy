@@ -7,12 +7,12 @@ import React, { memo } from 'react'
 import styled from 'styled-components'
 
 interface EstimatedEffectOptionsProps {
-	checked: boolean
+	checked: boolean | undefined
 	onChange: (checked: boolean | undefined) => void
 	label: string
 	title: string
 	disabledTitle?: string
-	disabled?: boolean
+	disabled?: boolean | undefined
 }
 
 export const EstimatedEffectOptions: React.FC<EstimatedEffectOptionsProps> =

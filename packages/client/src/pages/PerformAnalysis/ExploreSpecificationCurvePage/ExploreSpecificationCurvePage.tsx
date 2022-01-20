@@ -60,8 +60,8 @@ export const ExploreSpecificationCurvePage: React.FC = memo(
 							<Title>
 								Specification curve analysis of causal effect estimates
 							</Title>
-							{!activeProcessing && defaultRun && defaultRun.status.error && (
-								<ErrorMessage>{defaultRun.status.error}</ErrorMessage>
+							{!activeProcessing && defaultRun && defaultRun.status?.error && (
+								<ErrorMessage>{defaultRun.status?.error}</ErrorMessage>
 							)}
 							{activeProcessing && (
 								<RunProgressIndicator theme={theme} run={activeProcessing} />

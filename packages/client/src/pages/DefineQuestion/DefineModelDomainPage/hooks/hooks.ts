@@ -2,7 +2,6 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-
 import { useEffect, useMemo, useState } from 'react'
 import { useAddDefinition } from './add'
 import { useEditDefinition } from './edit'
@@ -11,25 +10,24 @@ import { useSaveDefinitions } from './save'
 import { usePageType, useVariableOptions } from '~hooks'
 import { ElementDefinition, Item } from '~interfaces'
 import { useDefineQuestion, useSetDefineQuestion } from '~state'
-import { GenericObject } from '~types'
 
-export function useBusinessLogic(): GenericObject {
+export function useBusinessLogic() {
 	const defineQuestion = useDefineQuestion()
 	const pageType = usePageType()
 	const variables = useVariableOptions()
 	const setDefineQuestion = useSetDefineQuestion()
 	const [definitions, setDefinitions] = useState<
 		ElementDefinition[] | undefined
-	>(defineQuestion[pageType]?.definition || [])
+	>((defineQuestion as any)[pageType]?.definition || [])
 	const [definitionToEdit, setDefinitionToEdit] = useState<ElementDefinition>()
 
 	const [labelInterest, setLabelInterest] = useState<string | undefined>(
-		defineQuestion[pageType]?.label || '',
+		(defineQuestion as any)[pageType]?.label || '',
 	)
 
 	const [descriptionInterest, setDescriptionInterest] = useState<
 		string | undefined
-	>(defineQuestion[pageType]?.description)
+	>((defineQuestion as any)[pageType]?.description)
 
 	const saveDefinitions = useSaveDefinitions(
 		pageType,
@@ -58,9 +56,9 @@ export function useBusinessLogic(): GenericObject {
 	const itemList = useItemList(definitions)
 
 	useEffect(() => {
-		setLabelInterest(defineQuestion[pageType]?.label || '')
-		setDescriptionInterest(defineQuestion[pageType]?.description || '')
-		setDefinitions(defineQuestion[pageType]?.definition || [])
+		setLabelInterest((defineQuestion as any)[pageType]?.label || '')
+		setDescriptionInterest((defineQuestion as any)[pageType]?.description || '')
+		setDefinitions((defineQuestion as any)[pageType]?.definition || [])
 		setDefinitionToEdit(undefined)
 	}, [
 		defineQuestion,
@@ -86,12 +84,14 @@ export function useBusinessLogic(): GenericObject {
 	}
 }
 
-function useItemList(definitions): Item[] {
+function useItemList(definitions: ElementDefinition[] | undefined): Item[] {
 	return useMemo(() => {
-		return definitions?.map(x => {
-			const newObj = { ...x }
-			delete newObj.column
-			return newObj
-		})
+		return (
+			definitions?.map<Item>(x => {
+				const newObj = { ...x }
+				delete newObj.column
+				return newObj as Item
+			}) || []
+		)
 	}, [definitions])
 }

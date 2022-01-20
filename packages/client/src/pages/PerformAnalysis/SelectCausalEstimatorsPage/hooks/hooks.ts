@@ -5,9 +5,8 @@
 
 import { useEstimatorHook } from './estimators'
 import { useRefutations } from './refutations'
-import { GenericObject } from '~types'
 
-export function useBusinessLogic(): GenericObject {
+export function useBusinessLogic() {
 	return {
 		...useEstimatorHook(),
 		...useRefutations(),

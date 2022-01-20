@@ -7,9 +7,8 @@ import { upperFirst } from 'lodash'
 import { useCallback, useMemo } from 'react'
 import { useHistory } from 'react-router-dom'
 import { usePageType } from '~hooks'
-import { GenericObject } from '~types'
 
-export function useBusinessLogic(): GenericObject {
+export function useBusinessLogic() {
 	const pageType = usePageType()
 	const history = useHistory()
 

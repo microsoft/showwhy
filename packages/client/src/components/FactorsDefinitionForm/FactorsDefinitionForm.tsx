@@ -12,7 +12,7 @@ import { CausalFactor, DescribeElements, Factor } from '~interfaces'
 
 interface FactorsDefinitionFormProps {
 	factor?: CausalFactor
-	showLevel?: boolean
+	showLevel?: boolean | undefined
 	defineQuestion?: DescribeElements
 	pageType: PageType
 	variables?: IComboBoxOption[]

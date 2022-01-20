@@ -87,7 +87,7 @@ export const ModelVariablesPage: React.FC = memo(function ModelVariablesPage() {
 										</TitleContainer>
 										<DefinitionList
 											onUpdate={onSave}
-											tableId={tableIdentifier?.tableId}
+											tableId={tableIdentifier?.tableId!}
 											onClick={onSelectDefinition}
 											list={definitionOptions}
 											selectedDefinition={selected}
@@ -112,7 +112,7 @@ export const ModelVariablesPage: React.FC = memo(function ModelVariablesPage() {
 													onClose={onToggleDeriveVisible}
 													onSave={onSave}
 													onUpdate={onUpdateTargetVariable}
-													fileId={tableIdentifier?.tableId}
+													fileId={tableIdentifier?.tableId!}
 													selectedDefinition={selected}
 													originalTable={tableIdentifier?.table}
 												/>

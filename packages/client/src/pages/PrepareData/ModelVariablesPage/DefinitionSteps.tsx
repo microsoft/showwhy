@@ -11,7 +11,7 @@ import { FilterObject } from '~interfaces'
 import { useModelVariables, useSetModelVariables } from '~state'
 
 interface DefinitionStepsProps {
-	fileId: string
+	fileId: string | undefined
 	selectedDefinition: string
 	type: string
 	onEdit: (filter: FilterObject) => void
@@ -20,7 +20,7 @@ export const DefinitionSteps: React.FC<DefinitionStepsProps> = memo(
 	function DefinitionSteps({ fileId, selectedDefinition, type, onEdit }) {
 		const modelVariables = useModelVariables(fileId)
 		const setModelVariables = useSetModelVariables(fileId)
-		const removeColumn = useRemoveColumn(fileId)
+		const removeColumn = useRemoveColumn(fileId!)
 
 		const filterValues = useMemo((): FilterObject[] => {
 			let newValues = [] as FilterObject[]

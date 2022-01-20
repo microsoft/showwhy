@@ -17,7 +17,7 @@ export interface ProjectFile {
 	content: string
 	alias?: string
 	id?: string
-	loadedCorrectly?: boolean
+	loadedCorrectly?: boolean | undefined
 	fileId?: string
 	steps?: FileStep[]
 }
