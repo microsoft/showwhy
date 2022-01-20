@@ -143,8 +143,8 @@
         },
         {
             "description": "Measures the participant's body weights in kilograms, recorded at the baseline visit in 1971",
-            "variable": "Body Weight in 1971",
-            "column": "weight_1971",
+            "variable": "Body Weight in 1971 (kg)",
+            "column": "weight_1971_kg",
             "causes": {
                 "causeOutcome": {
                     "causes": true,
@@ -200,13 +200,13 @@
             ]
         },
         "outcome": {
-            "label": "Body Weight Change",
+            "label": "Body Weight Change (kg)",
             "description": "Change in the participant's body weight between the baseline visit in 1971 and the follow-up visit in 1982",
             "dataset": "NHEFS dataset",
             "definition": [
                 {
                     "level": "Primary",
-                    "variable": "Body Weight Change",
+                    "variable": "Body Weight Change (kg)",
                     "description": "Change in participant's body weight between 1971 and 1982, measured in kilograms",
                     "column": "weight_change"
                 }
@@ -343,7 +343,7 @@
             ]
         },
         {
-            "name": "weight_1971",
+            "name": "weight_1971_kg",
             "isDone": true,
             "relevance": "CausallyRelevantToQuestion",
             "relation": [
@@ -351,7 +351,7 @@
             ]
         },
         {
-            "name": "weight_change",
+            "name": "weight_change_kg",
             "isDone": true,
             "relevance": "CausallyRelevantToQuestion",
             "relation": [
@@ -469,8 +469,8 @@
                         "age": "age",
                         "race": "race",
                         "education": "education",
-                        "wt71": "weight_1971",
-                        "wt82_71": "weight_change",
+                        "wt71": "weight_1971_kg",
+                        "wt82_71": "weight_change_kg",
                         "smokeintensity": "smoke_intensity_1971",
                         "smkintensity82_71": "smoke_intensity_change",
                         "active": "active",
@@ -550,7 +550,7 @@
                 "output": "smoking_cessation",
                 "args": {
                     "to": "subject_inclusion",
-                    "column": "weight_change",
+                    "column": "weight_change_kg",
                     "operator": "is not empty"
                 }
             }
