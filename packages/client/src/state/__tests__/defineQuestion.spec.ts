@@ -6,9 +6,8 @@
 import { renderHook } from '@testing-library/react-hooks'
 import { useEffect } from 'react'
 import { RecoilRoot } from 'recoil'
-import { useDefineQuestion } from '../'
 import { DescribeElements } from '../../common/interfaces'
-import { useSetDefineQuestion } from '../defineQuestion'
+import { useSetDefineQuestion, useDefineQuestion } from '../defineQuestion'
 
 describe('useDefineQuestion', () => {
 	it('should return empty object as default value', () => {
