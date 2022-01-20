@@ -6,7 +6,9 @@ import { useCallback, useMemo } from 'react'
 import { useLocation } from 'react-router-dom'
 import { StepStatus } from '~enums'
 import { Project, Step } from '~interfaces'
-import { useSelectedProject, useStepStatus } from '~state'
+// HACK to pass unit tests
+import { useSelectedProject } from '~state/project'
+import { useStepStatus } from '~state/stepStatus'
 
 export function useFindStepsByPathname(pathNames: string[]): Step[] {
 	const steps = useSelectedProject().steps
