@@ -8,4 +8,4 @@ import { Setter } from '~types'
 
 export type SetDefinitions = Setter<ElementDefinition[]>
 
-export type SetDefinition = Setter<ElementDefinition>
+export type SetDefinition = Setter<ElementDefinition | undefined>
