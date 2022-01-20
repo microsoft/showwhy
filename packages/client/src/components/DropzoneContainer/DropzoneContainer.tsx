@@ -14,10 +14,10 @@ import styled from 'styled-components'
 import { DropFilesCount } from '~interfaces'
 
 export interface DropzoneContainerProps {
-	loading: boolean
+	loading: boolean | undefined
 	filesCount: DropFilesCount
 	text?: string
-	hasSelectedFiles?: boolean
+	hasSelectedFiles?: boolean | undefined
 	onDrop?: (collection: FileCollection) => void
 	onDropAccepted?: (collection: FileCollection) => void
 	onDropRejected?: (
