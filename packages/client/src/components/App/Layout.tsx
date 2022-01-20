@@ -3,34 +3,44 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { IconButton, TooltipHost } from '@fluentui/react'
-import React, { memo, Suspense } from 'react'
+import { useId } from '@fluentui/react-hooks'
+import { memo, Suspense } from 'react'
 import styled from 'styled-components'
 import { AppHeader } from '../AppHeader'
-import { useLayout } from './hooks'
+import {
+	useProcessStepInfo,
+	useGuidance,
+	useOnClickProject,
+	useGoToPageHandler,
+} from './hooks'
 import { StepControls, StepSelector } from '~components/GeneralSteps'
 import { Guidance } from '~components/Guidance'
 import { StepTitle } from '~components/StepTitle'
+import {
+	useExampleProjects,
+	useGetStepUrls,
+	useUploadZipMenuOption,
+} from '~hooks'
+import {
+	useDefineQuestion,
+	useSelectedProject,
+	useSetStepStatuses,
+} from '~state'
 import { StyledSpinner } from '~styles'
 
 export const Layout: React.FC = memo(function Layout({ children }) {
-	const {
-		handleGetStepUrls,
-		handleSetAllStepStatus,
-		defineQuestion,
-		tooltipId,
-		isGuidanceVisible,
-		toggleGuidance,
-		project,
-		step,
-		stepStatus,
-		toggleStatus,
-		previousUrl,
-		nextUrl,
-		goToPage,
-		onClickProject,
-		exampleProjects,
-		uploadZipMenuOption,
-	} = useLayout()
+	const handleGetStepUrls = useGetStepUrls()
+	const handleSetAllStepStatus = useSetStepStatuses()
+	const defineQuestion = useDefineQuestion()
+	const exampleProjects = useExampleProjects()
+	const uploadZipMenuOption = useUploadZipMenuOption()
+	const tooltipId = useId('tooltip')
+	const project = useSelectedProject()
+	const [isGuidanceVisible, toggleGuidance] = useGuidance()
+	const onClickProject = useOnClickProject()
+	const goToPage = useGoToPageHandler()
+	const { step, stepStatus, toggleStepStatus, previousStepUrl, nextStepUrl } =
+		useProcessStepInfo()
 
 	return (
 		<Container>
@@ -73,9 +83,9 @@ export const Layout: React.FC = memo(function Layout({ children }) {
 							step={step}
 							stepStatus={stepStatus}
 							goToPage={goToPage}
-							nextUrl={nextUrl}
-							previousUrl={previousUrl}
-							toggleStatus={toggleStatus}
+							nextUrl={nextStepUrl}
+							previousUrl={previousStepUrl}
+							toggleStatus={toggleStepStatus}
 						/>
 					</ControlsContainer>
 				</Content>
