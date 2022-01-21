@@ -3,15 +3,39 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import { IChoiceGroupOption } from '@fluentui/react'
 import { useCallback } from 'react'
+import { Hypothesis } from '~enums'
+import { DescribeElements } from '~interfaces'
 import { useDefineQuestion, useSetDefineQuestion } from '~state'
-import { GenericObject } from '~types'
 
-export function useBusinessLogic(): GenericObject {
+export function useBusinessLogic(): {
+	defineQuestion: DescribeElements
+	onInputChange: (
+		value: string | undefined,
+		type: string,
+		field: string,
+	) => void
+	setHypothesis: (e: any, option: IChoiceGroupOption | undefined) => void
+} {
+	const defineQuestion = useDefineQuestion()
+	const onInputChange = useOnInputChange()
+	const setHypothesis = useSetHypothesis()
+	return {
+		defineQuestion,
+		onInputChange,
+		setHypothesis,
+	}
+}
+
+function useOnInputChange(): (
+	value: string | undefined,
+	type: string,
+	field: string,
+) => void {
 	const defineQuestion = useDefineQuestion()
 	const setDefineQuestion = useSetDefineQuestion()
-
-	const onInputChange = useCallback(
+	return useCallback(
 		(value, type, field) => {
 			const newValues = {
 				...defineQuestion[type],
@@ -24,19 +48,22 @@ export function useBusinessLogic(): GenericObject {
 		},
 		[defineQuestion, setDefineQuestion],
 	)
+}
 
-	const setHypothesis = useCallback(
+function useSetHypothesis(): (
+	e: any,
+	option: IChoiceGroupOption | undefined,
+) => void {
+	const defineQuestion = useDefineQuestion()
+	const setDefineQuestion = useSetDefineQuestion()
+	return useCallback(
 		(e, option) => {
-			const newQuestion = { ...defineQuestion }
-			newQuestion.hypothesis = option.key
-			setDefineQuestion(newQuestion)
+			if (option) {
+				const newQuestion: DescribeElements = { ...defineQuestion }
+				newQuestion.hypothesis = option.key as Hypothesis
+				setDefineQuestion(newQuestion)
+			}
 		},
 		[defineQuestion, setDefineQuestion],
 	)
-
-	return {
-		defineQuestion,
-		onInputChange,
-		setHypothesis,
-	}
 }
