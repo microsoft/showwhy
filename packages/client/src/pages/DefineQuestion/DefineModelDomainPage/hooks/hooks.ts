@@ -3,17 +3,31 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import { IComboBoxOption } from '@fluentui/react'
 import { useEffect, useMemo, useState } from 'react'
 import { useAddDefinition } from './add'
 import { useEditDefinition } from './edit'
 import { useRemoveDefinition } from './remove'
 import { useSaveDefinitions } from './save'
+import { PageType } from '~enums'
 import { usePageType, useVariableOptions } from '~hooks'
-import { ElementDefinition, Item } from '~interfaces'
+import { DescribeElements, ElementDefinition, Item } from '~interfaces'
 import { useDefineQuestion, useSetDefineQuestion } from '~state'
-import { GenericObject } from '~types'
+import { Setter } from '~types'
 
-export function useBusinessLogic(): GenericObject {
+export function useBusinessLogic(): {
+	labelInterest: string
+	descriptionInterest: string
+	itemList: Item[]
+	definitionToEdit: ElementDefinition | undefined
+	pageType: PageType
+	defineQuestion: DescribeElements
+	variables: IComboBoxOption[]
+	addDefinition: (def: ElementDefinition) => void
+	removeDefinition: (def: ElementDefinition) => void
+	editDefinition: (def: ElementDefinition) => void
+	setDefinitionToEdit: Setter<ElementDefinition | undefined>
+} {
 	const defineQuestion = useDefineQuestion()
 	const pageType = usePageType()
 	const variables = useVariableOptions()
@@ -23,13 +37,15 @@ export function useBusinessLogic(): GenericObject {
 	)
 	const [definitionToEdit, setDefinitionToEdit] = useState<ElementDefinition>()
 
-	const [labelInterest, setLabelInterest] = useState<string | undefined>(
-		defineQuestion[pageType]?.label || '',
+	const labelInterest = useMemo<string>(
+		() => defineQuestion[pageType]?.label || '',
+		[defineQuestion, pageType],
 	)
 
-	const [descriptionInterest, setDescriptionInterest] = useState<
-		string | undefined
-	>(defineQuestion[pageType]?.description)
+	const descriptionInterest = useMemo<string>(
+		() => defineQuestion[pageType]?.description || '',
+		[defineQuestion, pageType],
+	)
 
 	const saveDefinitions = useSaveDefinitions(
 		pageType,
@@ -58,18 +74,9 @@ export function useBusinessLogic(): GenericObject {
 	const itemList = useItemList(definitions)
 
 	useEffect(() => {
-		setLabelInterest(defineQuestion[pageType]?.label || '')
-		setDescriptionInterest(defineQuestion[pageType]?.description || '')
 		setDefinitions(defineQuestion[pageType]?.definition || [])
 		setDefinitionToEdit(undefined)
-	}, [
-		defineQuestion,
-		pageType,
-		setDefinitionToEdit,
-		setDefinitions,
-		setLabelInterest,
-		setDescriptionInterest,
-	])
+	}, [defineQuestion, pageType, setDefinitionToEdit, setDefinitions])
 
 	return {
 		labelInterest,

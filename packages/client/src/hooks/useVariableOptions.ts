@@ -11,7 +11,7 @@ import {
 	useTableColumns,
 } from '~state'
 
-export function useVariableOptions(): IComboBoxOption[] | undefined {
+export function useVariableOptions(): IComboBoxOption[] {
 	const projectFiles = useProjectFiles()
 	const originalTableState = useSelectOriginalTable(
 		projectFiles ? (projectFiles[0]?.id as string) : '',

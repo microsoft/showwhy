@@ -14,11 +14,12 @@ import {
 	CausalFactor,
 	HeaderData,
 	Factor,
+	Item,
 } from '~interfaces'
 
 export interface TableProps {
 	headers: HeaderData[]
-	columns: FlatCausalFactor[] | ElementDefinition[]
+	columns: FlatCausalFactor[] | ElementDefinition[] | Item[]
 	definitionToEdit?: ElementDefinition
 	factorToEdit?: CausalFactor
 	pageType: PageType
