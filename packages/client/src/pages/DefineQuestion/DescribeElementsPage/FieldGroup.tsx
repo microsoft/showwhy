@@ -12,7 +12,7 @@ import { Container, ContainerFlexRow } from '~styles'
 interface FieldGroupProps {
 	type: string
 	question?: Element
-	onChange: (value, type, field) => void
+	onChange: (value: string | undefined, type: string, field: string) => void
 }
 
 export const FieldGroup: React.FC<FieldGroupProps> = memo(function FieldGroup({
