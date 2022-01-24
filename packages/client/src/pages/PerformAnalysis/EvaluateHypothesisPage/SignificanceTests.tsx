@@ -15,7 +15,7 @@ import { Paragraph, Value } from '~styles'
 import { isStatusProcessing } from '~utils'
 
 interface SignificanceTestsProps {
-	significanceTestsResult: SignificanceTest
+	significanceTestsResult: SignificanceTest | undefined
 	cancelRun: () => void
 	isCanceled: boolean
 }

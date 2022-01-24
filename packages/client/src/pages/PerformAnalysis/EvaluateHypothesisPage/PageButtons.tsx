@@ -11,8 +11,8 @@ import { ContainerFlexColumn, ContainerFlexRow } from '~styles'
 
 interface PageButtonsProps {
 	activeTaskIds: string[]
-	defaultRun: RunHistory
-	significanceTestsResult: SignificanceTest
+	defaultRun: RunHistory | undefined
+	significanceTestsResult: SignificanceTest | undefined
 	significanceFailed: boolean
 	runSignificance: (taskIds: string[]) => void
 }

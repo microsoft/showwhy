@@ -7,11 +7,31 @@ import { upperFirst } from 'lodash'
 import { useCallback, useMemo } from 'react'
 import { useHistory } from 'react-router-dom'
 import { usePageType } from '~hooks'
-import { GenericObject } from '~types'
 
-export function useBusinessLogic(): GenericObject {
+export function useBusinessLogic(): {
+	pageName: string
+	causeType: string
+	tableHeader: Array<{ fieldName: string; value: string }>
+	goToConsiderCausalFactors: () => void
+} {
+	const { pageName, causeType, question } = usePageComponents()
+	const tableHeader = useTableHeader(question)
+	const goToConsiderCausalFactors = useGoToConsiderCausalFactors()
+
+	return {
+		pageName,
+		causeType,
+		tableHeader,
+		goToConsiderCausalFactors,
+	}
+}
+
+function usePageComponents(): {
+	pageName: string
+	causeType: string
+	question: string
+} {
 	const pageType = usePageType()
-	const history = useHistory()
 
 	const pageName: string = useMemo(() => {
 		const pop = pageType.split('-')
@@ -26,8 +46,13 @@ export function useBusinessLogic(): GenericObject {
 	const question = useMemo((): string => {
 		return upperFirst(pageName) + '?'
 	}, [pageName])
+	return { pageName, causeType, question }
+}
 
-	const tableHeader = useMemo(() => {
+function useTableHeader(
+	question: string,
+): Array<{ fieldName: string; value: string }> {
+	return useMemo(() => {
 		return [
 			{ fieldName: 'variable', value: 'Factor' },
 			{ fieldName: 'causes', value: question },
@@ -35,16 +60,13 @@ export function useBusinessLogic(): GenericObject {
 			{ fieldName: 'reasoning', value: 'Reasoning' },
 		]
 	}, [question])
+}
 
-	const goToConsiderCausalFactors = useCallback(() => {
+function useGoToConsiderCausalFactors(): () => void {
+	const pageType = usePageType()
+	const history = useHistory()
+	return useCallback(() => {
 		history.push('/define/causalFactors')
 		history.location.state = pageType
 	}, [history, pageType])
-
-	return {
-		pageName,
-		causeType,
-		tableHeader,
-		goToConsiderCausalFactors,
-	}
 }

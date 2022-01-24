@@ -3,14 +3,18 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { guessDelimiter } from '@data-wrangling-components/utilities'
+import {
+	FileCollection,
+	guessDelimiter,
+} from '@data-wrangling-components/utilities'
 import { IDropdownOption } from '@fluentui/react'
 import { useBoolean } from 'ahooks'
 import ColumnTable from 'arquero/dist/types/table/column-table'
 import { useCallback, useEffect, useState } from 'react'
+import { SetterOrUpdater } from 'recoil'
 import { v4 as uuidv4 } from 'uuid'
 import { useGlobalDropzone, useOnDropAccepted } from '~hooks'
-import { ProjectFile } from '~interfaces'
+import { DropFilesCount, ProjectFile } from '~interfaces'
 import {
 	useAddProjectFile,
 	useProjectFiles,
@@ -20,10 +24,30 @@ import {
 	useSetProjectFiles,
 	useSetSelectedFile,
 } from '~state'
-import { GenericObject } from '~types'
 import { createDefaultTable, replaceItemAtIndex } from '~utils'
 
-export function useBusinessLogic(): GenericObject {
+export function useBusinessLogic(): {
+	showConfirm: boolean
+	errorMessage: string | undefined | null
+	selectedFile: ProjectFile | undefined
+	projectFiles: ProjectFile[]
+	originalTable: ColumnTable
+	selectedDelimiter: string | undefined
+	loading: boolean
+	fileCount: DropFilesCount
+	acceptedFileTypes: string[]
+	setSelectedFile: SetterOrUpdater<ProjectFile | undefined>
+	toggleShowConfirm: () => void
+	toggleLoadedCorrectly: () => void
+	handleDismissError: () => void
+	handleDelimiterChange: (e, option: IDropdownOption | undefined) => void
+	handleOnDropAccepted: (f: FileCollection) => void
+	onConfirmDelete: () => void
+	onRenameTable: (alias: string) => void
+	onDrop: (f: FileCollection) => void
+	onDropAccepted: (f: FileCollection) => void
+	onDropRejected: (msg: string) => void
+} {
 	const setSelectedFile = useSetSelectedFile()
 	const selectedFile = useSelectedFile()
 	const projectFiles = useProjectFiles()

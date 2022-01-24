@@ -11,7 +11,7 @@ import { ContainerFlexRow } from '~styles'
 export interface DatasetsListProps {
 	onFileSelected: (projectFile: ProjectFile) => void
 	files: ProjectFile[]
-	selectedFile: ProjectFile
+	selectedFile: ProjectFile | undefined
 	title?: string
 }
 
