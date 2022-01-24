@@ -15,6 +15,14 @@ import {
 	useRunConfidenceInterval,
 } from '~hooks'
 
+import {
+	AlternativeModels,
+	DefaultDatasetResult,
+	DescribeElements,
+	RunHistory,
+	SignificanceTest,
+	Specification,
+} from '~interfaces'
 import { buildSignificanceTestsNode } from '~resources'
 import {
 	useDefaultDatasetResult,
@@ -24,14 +32,6 @@ import {
 	useSignificanceTests,
 	useSpecificationCurveConfig,
 } from '~state'
-import {
-	AlternativeModels,
-	DefaultDatasetResult,
-	DescribeElements,
-	RunHistory,
-	SignificanceTest,
-	Specification,
-} from '~interfaces'
 
 export function useBusinessLogic(): {
 	alternativeModels: AlternativeModels
