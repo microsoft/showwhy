@@ -19,6 +19,7 @@ import { useBusinessLogic } from './hooks'
 import { EmptyDataPageWarning } from '~components/EmptyDataPageWarning'
 import { ArqueroDetailsTable } from '~components/Tables/ArqueroDetailsTable'
 import { PageType, Pages } from '~enums'
+import { Factor } from '~interfaces'
 import { ContainerFlexRow } from '~styles'
 
 export const ModelVariablesPage: React.FC = memo(function ModelVariablesPage() {
@@ -76,64 +77,70 @@ export const ModelVariablesPage: React.FC = memo(function ModelVariablesPage() {
 								<DetailsListContainer>
 									<ArqueroDetailsTable
 										table={subjectIdentifierData.table}
-										columns={subjectIdentifierData.columnNames}
+										columns={subjectIdentifierData.columnNames.map(n => ({
+											name: n,
+											key: n,
+											minWidth: 200,
+										}))}
 										features={{ smartHeaders: true }}
 									/>
 								</DetailsListContainer>
-								<ContainerFlexRow>
-									<DefinitionListContainer>
-										<TitleContainer>
-											<DefinitionTitle>Definitions</DefinitionTitle>
-										</TitleContainer>
-										<DefinitionList
-											onUpdate={onSave}
-											tableId={tableIdentifier?.tableId}
-											onClick={onSelectDefinition}
-											list={definitionOptions}
-											selectedDefinition={selected}
-											type={pageType}
-										/>
-									</DefinitionListContainer>
-									<StepsContainer>
-										<TitleContainer>
-											<DefinitionTitle>Definition steps</DefinitionTitle>
-										</TitleContainer>
-										<DefinitionSteps
-											onEdit={onEditClause}
-											fileId={tableIdentifier?.tableId}
-											type={pageType}
-											selectedDefinition={selected}
-										/>
-										<NormalContainer>
-											{isDeriveVisible ? (
-												<DeriveComponent
-													onReset={onResetClause}
-													editing={editingClause}
-													onClose={onToggleDeriveVisible}
-													onSave={onSave}
-													onUpdate={onUpdateTargetVariable}
-													fileId={tableIdentifier?.tableId}
-													selectedDefinition={selected}
-													originalTable={tableIdentifier?.table}
-												/>
-											) : (
-												<>
-													<DefinitionButton
-														text="Capture existing column as variable definition"
-														menuProps={columnsMenuProps}
-														menuAs={_getMenu}
-														allowDisabledFocus
+								{!tableIdentifier ? null : (
+									<ContainerFlexRow>
+										<DefinitionListContainer>
+											<TitleContainer>
+												<DefinitionTitle>Definitions</DefinitionTitle>
+											</TitleContainer>
+											<DefinitionList
+												onUpdate={onSave}
+												tableId={tableIdentifier.tableId}
+												onClick={onSelectDefinition}
+												list={definitionOptions as Factor[]}
+												selectedDefinition={selected}
+												type={pageType}
+											/>
+										</DefinitionListContainer>
+										<StepsContainer>
+											<TitleContainer>
+												<DefinitionTitle>Definition steps</DefinitionTitle>
+											</TitleContainer>
+											<DefinitionSteps
+												onEdit={onEditClause}
+												fileId={tableIdentifier.tableId}
+												type={pageType}
+												selectedDefinition={selected}
+											/>
+											<NormalContainer>
+												{isDeriveVisible ? (
+													<DeriveComponent
+														onReset={onResetClause}
+														editing={editingClause}
+														onClose={onToggleDeriveVisible}
+														onSave={onSave}
+														onUpdate={onUpdateTargetVariable}
+														fileId={tableIdentifier.tableId}
+														selectedDefinition={selected}
+														originalTable={tableIdentifier.table}
 													/>
-													{pageType !== PageType.Control && (
-														<StepsButton onClick={onToggleDeriveVisible}>
-															Derive new column before capturing
-														</StepsButton>
-													)}
-												</>
-											)}
-										</NormalContainer>
-									</StepsContainer>
-								</ContainerFlexRow>
+												) : (
+													<>
+														<DefinitionButton
+															text="Capture existing column as variable definition"
+															menuProps={columnsMenuProps}
+															menuAs={_getMenu}
+															allowDisabledFocus
+														/>
+														{pageType !== PageType.Control && (
+															<StepsButton onClick={onToggleDeriveVisible}>
+																Derive new column before capturing
+															</StepsButton>
+														)}
+													</>
+												)}
+											</NormalContainer>
+										</StepsContainer>
+									</ContainerFlexRow>
+								)}
 							</NormalContainer>
 						</Container>
 					</Else>
