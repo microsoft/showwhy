@@ -7,9 +7,16 @@ import { useMemo } from 'react'
 import { RefutationTypes } from '~enums'
 import { useSetFullRefutation, useSetQuickRefutation } from '~hooks'
 import { useRefutationType } from '~state'
-import { GenericObject } from '~types'
 
-export function useRefutations(): GenericObject {
+export function useRefutations(): {
+	refutationOptions: Array<{
+		key: RefutationTypes
+		title: string
+		description: string
+		isSelected: boolean
+		onChange: () => void
+	}>
+} {
 	const refutation = useRefutationType()
 	const setQuickRefutation = useSetQuickRefutation()
 	const setFullRefutation = useSetFullRefutation()
@@ -22,7 +29,7 @@ export function useRefutations(): GenericObject {
 				description:
 					'Run refutation with 10 simulations. Could be used for a quick check of estimated effects before the final analysis​.',
 				isSelected: refutation === RefutationTypes.QuickRefutation,
-				onChange: () => setQuickRefutation(),
+				onChange: setQuickRefutation,
 			},
 			{
 				key: RefutationTypes.FullRefutation,
@@ -30,7 +37,7 @@ export function useRefutations(): GenericObject {
 				description:
 					'Run refutation with 100 simulations. May take a while to run, but should be selected for final analysis.​',
 				isSelected: refutation === RefutationTypes.FullRefutation,
-				onChange: () => setFullRefutation(),
+				onChange: setFullRefutation,
 			},
 		]
 	}, [refutation, setQuickRefutation, setFullRefutation])
