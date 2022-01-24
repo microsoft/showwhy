@@ -17,14 +17,15 @@ import {
 	useToggleConfidenceInterval,
 	useConfidenceInterval,
 } from '~state'
-import { GenericObject } from '~types'
 
 enum BatchUpdateAction {
 	Delete = 'delete',
 	Add = 'add',
 }
 
-export function useEstimatorHook(): GenericObject {
+export function useEstimatorHook(): {
+	estimatorCardList: ReturnType<typeof useEstimatorCardList>
+} {
 	const estimators = useEstimators()
 	const setEstimators = useSetEstimators()
 	const estimatorsList = useEstimatorsList()

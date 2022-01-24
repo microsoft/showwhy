@@ -18,7 +18,6 @@ import {
 } from '~hooks'
 import { Item, Factor } from '~interfaces'
 import { useModelVariables, useSetModelVariables } from '~state'
-import { GenericObject } from '~types'
 
 export function useDefinitionList(
 	list: Factor[],
@@ -26,7 +25,7 @@ export function useDefinitionList(
 	type: string,
 	tableId: string,
 	onUpdate: (definition: string) => void,
-): GenericObject {
+): { itemList: Item[] } {
 	const [
 		isEditingLabel,
 		{ toggle: toggleIsEditingLabel, setFalse: setFalseEditing },

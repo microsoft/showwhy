@@ -15,6 +15,14 @@ import {
 	useRunConfidenceInterval,
 } from '~hooks'
 
+import {
+	AlternativeModels,
+	DefaultDatasetResult,
+	DescribeElements,
+	RunHistory,
+	SignificanceTest,
+	Specification,
+} from '~interfaces'
 import { buildSignificanceTestsNode } from '~resources'
 import {
 	useDefaultDatasetResult,
@@ -25,9 +33,23 @@ import {
 	useSpecificationCurveConfig,
 } from '~state'
 
-import { GenericObject } from '~types'
-
-export function useBusinessLogic(): GenericObject {
+export function useBusinessLogic(): {
+	alternativeModels: AlternativeModels
+	defaultRun: RunHistory | undefined
+	causalEffects: ReturnType<typeof useCausalEffects>
+	specificationData: Specification[]
+	defaultDataset: DefaultDatasetResult | null
+	refutationLength: number
+	defineQuestion: DescribeElements
+	activeValues: number[]
+	significanceTestsResult: SignificanceTest | undefined
+	significanceFailed: boolean
+	activeTaskIds: string[]
+	refutationType: RefutationTypes
+	isCanceled: boolean
+	runSignificance: (taskIds: string[]) => void
+	cancelRun: () => void
+} {
 	const defineQuestion = useDefineQuestion()
 	const primarySpecificationConfig = usePrimarySpecificationConfig()
 	const causalModel = primarySpecificationConfig.causalModel
@@ -58,7 +80,7 @@ export function useBusinessLogic(): GenericObject {
 	// 	history.push(Pages.EstimateCausalEffects)
 	// }, [sendData, setFullRefutation, history])
 
-	const activeValues = useMemo((): any => {
+	const activeValues = useMemo<number[]>(() => {
 		return specificationData
 			.filter(
 				x =>
