@@ -15,7 +15,14 @@ import {
 	useUpdateAndDisableRunHistory,
 	useWakeLock,
 } from '~hooks'
-import { NodeRequest, ProjectFile } from '~interfaces'
+import {
+	DescribeElements,
+	Estimator,
+	NodeRequest,
+	ProjectFile,
+	RefutationOption,
+	RunHistory,
+} from '~interfaces'
 import { buildLoadNode, numberExecutions, uploadFiles } from '~resources'
 import {
 	useConfidenceInterval,
@@ -27,14 +34,28 @@ import {
 	useSetSpecCount,
 	useSpecCount,
 } from '~state'
-import { GenericObject } from '~types'
 import {
 	createFormData,
 	returnInitialRunHistory,
 	returnRefutationCount,
 } from '~utils'
 
-export function useBusinessLogic(): GenericObject {
+export function useBusinessLogic(): {
+	isProcessing: boolean
+	totalEstimatorsCount: number
+	specCount: number | undefined
+	estimators: Estimator[]
+	definitions: DescribeElements
+	runHistory: RunHistory[]
+	errors: string | undefined
+	cancelRun: () => void
+	runEstimate: () => Promise<void>
+	setRunAsDefault: (run: RunHistory) => void
+	loadingSpecCount: boolean
+	hasConfidenceInterval: boolean
+	refutationOptions: RefutationOption[]
+	isCanceled: boolean
+} {
 	const definitions = useDefineQuestion()
 	const updateRunHistory = useUpdateAndDisableRunHistory()
 	const projectFiles = useProjectFiles()
