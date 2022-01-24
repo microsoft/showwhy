@@ -6,6 +6,7 @@
 import { IContextualMenuProps } from '@fluentui/react'
 import { useBoolean } from 'ahooks'
 import { useCallback, useState } from 'react'
+import { FactorsOrDefinitions } from './types'
 import {
 	useColumnsAsTarget,
 	useDefinitionOptions,
@@ -33,7 +34,6 @@ import {
 	useOriginalTables,
 	useProjectFiles,
 } from '~state'
-import { FactorsOrDefinitions } from './types'
 
 export function useBusinessLogic(): {
 	pageType: PageType

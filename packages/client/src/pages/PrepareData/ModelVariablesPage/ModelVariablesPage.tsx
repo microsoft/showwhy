@@ -7,7 +7,6 @@ import {
 	ContextualMenu,
 	DefaultButton,
 	IContextualMenuProps,
-	IColumn,
 } from '@fluentui/react'
 import React, { memo } from 'react'
 import { If, Then, Else } from 'react-if'
@@ -20,8 +19,8 @@ import { useBusinessLogic } from './hooks'
 import { EmptyDataPageWarning } from '~components/EmptyDataPageWarning'
 import { ArqueroDetailsTable } from '~components/Tables/ArqueroDetailsTable'
 import { PageType, Pages } from '~enums'
-import { ContainerFlexRow } from '~styles'
 import { Factor } from '~interfaces'
+import { ContainerFlexRow } from '~styles'
 
 export const ModelVariablesPage: React.FC = memo(function ModelVariablesPage() {
 	const {
