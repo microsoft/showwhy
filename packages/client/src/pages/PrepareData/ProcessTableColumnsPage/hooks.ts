@@ -8,7 +8,7 @@ import { not } from 'arquero'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { ColumnRelevance, ColumnRelation } from '~enums'
 import { useRestoreColumn, useTableCommands } from '~hooks'
-import { ProjectFile, TableColumn } from '~interfaces'
+import { BasicTable, ProjectFile, TableColumn } from '~interfaces'
 import {
 	useOriginalTables,
 	useProjectFiles,
@@ -17,9 +17,24 @@ import {
 	useSetTableColumns,
 	useTableColumns,
 } from '~state'
-import { GenericObject, Setter } from '~types'
+import { Setter } from '~types'
 
-export function useBusinessLogic(): GenericObject {
+export function useBusinessLogic(): {
+	files: ProjectFile[]
+	columns: IColumn[]
+	selectedFile: ProjectFile | undefined
+	selectedTable: BasicTable | undefined
+	selectedColumn: string | undefined
+	onSelectColumn: (evt: any, column?: IColumn) => void
+	tableCommands: ReturnType<typeof useTableCommands>
+	relation: ColumnRelation[]
+	relevance: ColumnRelevance | undefined
+	isSubjectIdentifierAvailable: boolean
+	onRelevanceChange: ReturnType<typeof useOnRelevanceChange>
+	onDefinitionChange: ReturnType<typeof useOnDefinitionChange>
+	restoreColumn: (value: string) => void
+	onChangeFile: (file: ProjectFile) => void
+} {
 	const selectedFile = useSelectedFile()
 	const setSelectedFile = useSetSelectedFile()
 	const originalTables = useOriginalTables()

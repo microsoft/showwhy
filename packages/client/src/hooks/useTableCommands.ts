@@ -13,7 +13,7 @@ export function useTableCommands(
 	visibleColumns: IColumn[] | undefined,
 	restoreColumn: (column: string) => void,
 	removeColumn: (column: string) => void,
-): (ICommandBarItemProps | undefined)[] {
+): ICommandBarItemProps[] {
 	const handleColumnCheckChange = useCallback(
 		(column: string, checked: boolean) => {
 			if (checked) {
@@ -35,6 +35,6 @@ export function useTableCommands(
 	}, [table, visibleColumns, handleColumnCheckChange])
 
 	return useMemo(() => {
-		return [vccmd]
+		return vccmd ? [vccmd] : []
 	}, [vccmd])
 }
