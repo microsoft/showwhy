@@ -14,9 +14,11 @@ import {
 } from './onChange'
 import { FlatCausalFactor, CausalFactor, Item } from '~interfaces'
 import { useCausalFactors, useSetCausalFactors } from '~state'
-import { GenericObject } from '~types'
 
-export function useFactorsTable(causeType: string): GenericObject {
+export function useFactorsTable(causeType: string): {
+	flatFactorsList: FlatCausalFactor[]
+	itemList: Item[]
+} {
 	const [multiline, { toggle: toggleMultiline }] = useBoolean(false)
 	const [values, setValues] = useState<CausalFactor[] | undefined>([])
 	const setCausalFactors = useSetCausalFactors()
@@ -31,7 +33,6 @@ export function useFactorsTable(causeType: string): GenericObject {
 	)
 
 	const flatFactorsList = useFlatFactorsList(causalFactors, causeType, values)
-
 	const saveNewFactors = useSaveFactors(
 		causalFactors,
 		causeType,
@@ -40,9 +41,7 @@ export function useFactorsTable(causeType: string): GenericObject {
 	)
 
 	const onChangeCauses = useOnChangeCauses(flatFactorsList, saveNewFactors)
-
 	const onChangeDegree = useOnChangeDegree(flatFactorsList, saveNewFactors)
-
 	const onChangeReasoning = useOnChangeReasoning(
 		flatFactorsList,
 		toggleMultiline,
@@ -51,9 +50,7 @@ export function useFactorsTable(causeType: string): GenericObject {
 	)
 
 	const checkbox = useCheckbox(onChangeCauses)
-
 	const comboBox = useComboBox(onChangeDegree)
-
 	const textField = useTextField(onChangeReasoning)
 
 	const itemList = useMemo((): Item[] => {
