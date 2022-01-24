@@ -32,7 +32,7 @@ import {
 export interface DeriveProps {
 	selectedDefinition: string
 	fileId: string
-	originalTable: ColumnTable
+	originalTable: ColumnTable | undefined
 	editing: FilterObject | undefined
 	onClose: () => void
 	onReset: () => void
