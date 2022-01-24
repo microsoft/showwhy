@@ -6,6 +6,7 @@
 import { IContextualMenuProps } from '@fluentui/react'
 import { useBoolean } from 'ahooks'
 import { useCallback, useState } from 'react'
+import { FactorsOrDefinitions } from './types'
 import {
 	useColumnsAsTarget,
 	useDefinitionOptions,
@@ -22,6 +23,8 @@ import {
 	FilterObject,
 	Element,
 	CausalFactor,
+	VariableDefinition,
+	DefinitionTable,
 } from '~interfaces'
 import {
 	useAllModelVariables,
@@ -31,9 +34,26 @@ import {
 	useOriginalTables,
 	useProjectFiles,
 } from '~state'
-import { GenericObject } from '~types'
 
-export function useBusinessLogic(): GenericObject {
+export function useBusinessLogic(): {
+	pageType: PageType
+	selected: string
+	columnsMenuProps: IContextualMenuProps
+	defineQuestionData: Element
+	modelVariables: VariableDefinition[][]
+	subjectIdentifier: string[]
+	subjectIdentifierData: DefinitionTable
+	tableIdentifier: BasicTable | undefined
+	definitionOptions: FactorsOrDefinitions
+	isDeriveVisible: boolean
+	editingClause: FilterObject | undefined
+	onResetClause: () => void
+	onSave: (definition: string) => void
+	onToggleDeriveVisible: () => void
+	onEditClause: (filter: FilterObject) => void
+	onUpdateTargetVariable: ReturnType<typeof useSetTargetVariable>
+	onSelectDefinition: (option: any) => void
+} {
 	const pageType = usePageType()
 	const projectFiles = useProjectFiles()
 
