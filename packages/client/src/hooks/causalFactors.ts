@@ -7,7 +7,6 @@ import { useCallback, useMemo } from 'react'
 import { SetterOrUpdater } from 'recoil'
 import { v4 } from 'uuid'
 // HACK to pass the unit tests
-import { replaceItemAtIndex } from '../common/utils/functions'
 import { useCausalFactors, useSetCausalFactors } from '~state/causalFactors'
 import {
 	AlternativeModels,
@@ -15,6 +14,7 @@ import {
 	BeliefDegree,
 	CausalModelLevel,
 } from '~types'
+import { replaceItemAtIndex } from '~utils/functions'
 
 export function useExcludedFactors(): string[] {
 	return useExcludedFactorsTestable(useCausalFactors())
