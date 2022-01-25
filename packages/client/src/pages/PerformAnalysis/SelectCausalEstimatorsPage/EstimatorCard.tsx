@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { Checkbox, FontIcon, Stack } from '@fluentui/react'
-import React, { memo } from 'react'
+import { memo } from 'react'
 import styled from 'styled-components'
 import { ActionButtons } from '~components/ActionButtons'
 import { LinkCallout } from '~components/Callout'

@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import React, { memo, useCallback } from 'react'
+import { memo, useCallback } from 'react'
 import { NavLink } from 'react-router-dom'
 import styled from 'styled-components'
 import { StepStatusDetail } from '.'

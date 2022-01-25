@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { IContextualMenuItem } from '@fluentui/react'
-import React, { memo } from 'react'
+import { memo } from 'react'
 import styled from 'styled-components'
 import { ProjectsSelector } from './ProjectsSelector'
 import { SaveProject } from './SaveProject'

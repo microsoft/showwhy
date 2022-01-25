@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { Dimensions } from '@essex-js-toolkit/hooks'
-import React, { memo } from 'react'
+import { memo } from 'react'
 import { OutcomeEffectScatterplot } from '../ExploreSpecificationCurvePage/vega'
 import { RefutationTypes } from '~enums'
 import {

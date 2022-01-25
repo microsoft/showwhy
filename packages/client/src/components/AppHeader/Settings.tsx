@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { IContextualMenuProps } from '@fluentui/react'
-import React, { memo, useCallback } from 'react'
+import { memo, useCallback } from 'react'
 import { OptionsButton } from './OptionsButton'
 import { StepStatus } from '~enums'
 import { Container } from '~styles'

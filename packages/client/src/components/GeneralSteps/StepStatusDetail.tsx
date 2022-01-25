@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { Spinner, SpinnerSize } from '@fluentui/react'
-import React, { memo, useCallback } from 'react'
+import { memo, useCallback } from 'react'
 import styled from 'styled-components'
 import { StepStatus } from '~enums'
 

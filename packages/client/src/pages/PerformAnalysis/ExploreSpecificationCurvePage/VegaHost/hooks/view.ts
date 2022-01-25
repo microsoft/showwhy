@@ -4,7 +4,7 @@
  */
 import { useThematic } from '@thematic/react'
 import { vega as decorator } from '@thematic/vega'
-import React, { useEffect, useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 import { parse, Spec, View } from 'vega'
 
 export function useCreateView(spec: Spec, width: number, height: number): View {

@@ -6,7 +6,7 @@ import {
 	CollapsiblePanel,
 	CollapsiblePanelContainer,
 } from '@essex-js-toolkit/themed-components'
-import React, { memo, useCallback, useEffect, useMemo, useState } from 'react'
+import { memo, useCallback, useEffect, useMemo, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import styled from 'styled-components'
 import { StepItem } from './StepItem'

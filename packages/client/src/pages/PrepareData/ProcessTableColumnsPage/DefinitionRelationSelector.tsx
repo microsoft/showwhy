@@ -7,7 +7,7 @@ import {
 	DefaultButton,
 	IContextualMenuProps,
 } from '@fluentui/react'
-import React, { memo, useCallback } from 'react'
+import { memo, useCallback } from 'react'
 import styled from 'styled-components'
 import { ColumnRelation, ColumnRelevance } from '~enums'
 

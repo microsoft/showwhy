@@ -5,7 +5,7 @@
 import { SelectionState } from '@thematic/core'
 import { useThematic } from '@thematic/react'
 import { max, min } from 'lodash'
-import React, { memo, useMemo } from 'react'
+import { memo, useMemo } from 'react'
 import styled from 'styled-components'
 import { VegaHost } from '../VegaHost'
 import { useSpecificationSHAPColumns } from '../hooks'
@@ -133,7 +133,7 @@ export const AnalyticDecisionsDotPlot: React.FC<AnalyticDecisionsDotPlotProps> =
 
 const Container = styled.div``
 
-function useTransformShap(data) {
+function useTransformShap(data: Specification[]) {
 	const shapColumns = useSpecificationSHAPColumns()
 	// TODO: fold this in vega
 	return useMemo(() => {
@@ -145,8 +145,8 @@ function useTransformShap(data) {
 		shapColumns.forEach(column => {
 			const nonSHAP = column.replace('SHAP', '')
 			data.forEach(row => {
-				const key = row[nonSHAP]
-				const value = row[column]
+				const key = (row as any)[nonSHAP]
+				const value = (row as any)[column]
 				output.push({
 					id: row.id,
 					key,
