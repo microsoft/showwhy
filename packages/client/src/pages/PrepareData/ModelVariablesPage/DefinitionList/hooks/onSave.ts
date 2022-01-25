@@ -6,8 +6,8 @@
 import { useCallback } from 'react'
 import { v4 } from 'uuid'
 import { SetEditingDefinition, SetModelVariables } from './types'
-import { PageType } from '~enums'
 import {
+	PageType,
 	CausalFactor,
 	Definition,
 	StringSetter,

@@ -4,14 +4,14 @@
  */
 import { memo } from 'react'
 import styled from 'styled-components'
-import { Size } from '~enums'
+import { CausalEffectSize } from '~interfaces'
 import { Text } from '~styles'
 
 interface BoxProps {
 	id: string
 	title?: string
 	list?: string[]
-	size: Size
+	size: CausalEffectSize
 	width?: number
 }
 
@@ -46,9 +46,10 @@ const Title = styled.h4`
 	margin: unset;
 `
 
-const Box = styled.div<{ size: Size; width: number }>`
+const Box = styled.div<{ size: CausalEffectSize; width: number }>`
 	justify-self: center;
-	font-size: ${({ size }) => (size === Size.Small ? '12px' : '14px')};
+	font-size: ${({ size }) =>
+		size === CausalEffectSize.Small ? '12px' : '14px'};
 	border: 1px ${({ theme }) => theme.application().border} solid;
 	position: relative;
 	border-radius: 5px;

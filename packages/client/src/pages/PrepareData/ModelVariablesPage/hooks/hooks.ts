@@ -15,9 +15,9 @@ import {
 	useSubjectIdentifier,
 	useSubjectIdentifierData,
 } from './variables'
-import { PageType } from '~enums'
 import { useAddOrEditFactor, usePageType, useSaveDefinition } from '~hooks'
 import {
+	PageType,
 	DataTable,
 	ElementDefinition,
 	FilterObject,

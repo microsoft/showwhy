@@ -7,11 +7,11 @@ import { memo } from 'react'
 
 import styled from 'styled-components'
 import { ComponentArrows } from './ComponentArrows'
-import { Size } from '~enums'
+import { CausalEffectSize } from '~interfaces'
 import { Container, Paragraph } from '~styles'
 
 export interface CausalEffectsProps {
-	size?: Size
+	size?: CausalEffectSize
 	confounders: string[]
 	outcomeDeterminants: string[]
 	generalExposure: string
@@ -22,7 +22,7 @@ export interface CausalEffectsProps {
 
 export const CausalEffects: React.FC<CausalEffectsProps> = memo(
 	function CausalEffects({
-		size = Size.Medium,
+		size = CausalEffectSize.Medium,
 		confounders,
 		outcomeDeterminants,
 		generalExposure,

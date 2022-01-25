@@ -5,8 +5,7 @@
 
 import { IChoiceGroupOption } from '@fluentui/react'
 import { useCallback } from 'react'
-import { Hypothesis } from '~enums'
-import { Experiment } from '~interfaces'
+import { Hypothesis, Experiment } from '~interfaces'
 import { useDefineQuestion, useSetDefineQuestion } from '~state'
 
 export function useBusinessLogic(): {

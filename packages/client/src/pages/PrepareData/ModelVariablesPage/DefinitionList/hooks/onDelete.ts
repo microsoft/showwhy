@@ -5,8 +5,12 @@
 
 import { useCallback } from 'react'
 import { SetModelVariables } from './types'
-import { PageType } from '~enums'
-import { CausalFactor, Definition, ElementDefinition } from '~interfaces'
+import {
+	PageType,
+	CausalFactor,
+	Definition,
+	ElementDefinition,
+} from '~interfaces'
 
 export function useOnDelete({
 	modelVariables,

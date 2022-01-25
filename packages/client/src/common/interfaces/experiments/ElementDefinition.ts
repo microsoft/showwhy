@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { CausalityLevel } from '../interfaces'
+import { CausalityLevel } from '../causality'
 
 export interface ElementDefinition {
 	id: string

@@ -6,12 +6,11 @@ import { jest } from '@jest/globals'
 import { renderHook } from '@testing-library/react-hooks'
 import { RecoilRoot } from 'recoil'
 import { v4 } from 'uuid'
-import { PageType } from '../../common/enums'
 import {
 	useRemoveDefinitionTestable,
 	useSaveDefinitionTestable,
 } from '../modelVariable'
-import { Experiment, CausalFactor, CausalityLevel } from '~interfaces'
+import { Experiment, CausalFactor, CausalityLevel, PageType } from '~interfaces'
 
 const question = {
 	population: {

@@ -9,7 +9,7 @@ import { memo } from 'react'
 import styled from 'styled-components'
 import { FieldGroup } from './FieldGroup'
 import { useBusinessLogic } from './hooks'
-import { Hypothesis } from '~enums'
+import { Hypothesis } from '~interfaces'
 import { Container } from '~styles'
 
 const hypothesisOptions: IChoiceGroupOption[] = [

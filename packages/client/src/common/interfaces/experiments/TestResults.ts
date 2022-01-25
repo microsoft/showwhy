@@ -3,7 +3,9 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-export enum Size {
-	Small = 'Small',
-	Medium = 'Medium',
+import { Significance } from './Significance'
+
+export interface TestResults {
+	p_value: string
+	significance: Significance
 }

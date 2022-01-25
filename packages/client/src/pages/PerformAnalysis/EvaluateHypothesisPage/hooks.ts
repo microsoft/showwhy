@@ -6,7 +6,6 @@
 import { useCallback, useMemo, useState } from 'react'
 import { RefutationType } from 'src/common/interfaces/refutation'
 import { useLoadSpecificationData } from '../ExploreSpecificationCurvePage/hooks'
-import { OrchestratorType } from '~enums'
 import {
 	useAlternativeModels,
 	useDefaultRun,
@@ -15,8 +14,8 @@ import {
 	useSpecificationCurve,
 	useRunConfidenceInterval,
 } from '~hooks'
-
 import {
+	OrchestratorType,
 	AlternativeModels,
 	DefaultDatasetResult,
 	Experiment,
@@ -25,6 +24,7 @@ import {
 	SignificanceTest,
 	Specification,
 } from '~interfaces'
+
 import { buildSignificanceTestsNode } from '~resources'
 import {
 	useDefaultDatasetResult,

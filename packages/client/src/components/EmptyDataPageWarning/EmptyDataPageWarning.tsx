@@ -4,7 +4,7 @@
  */
 import { memo } from 'react'
 import { Link } from 'react-router-dom'
-import { Pages } from '~enums'
+import { Pages } from '~interfaces'
 import { ContainerTextCenter, Text } from '~styles'
 
 interface EmptyDataPageWarningProps {

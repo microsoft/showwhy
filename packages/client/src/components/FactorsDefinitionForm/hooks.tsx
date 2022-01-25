@@ -12,8 +12,7 @@ import {
 	useHasLevel,
 	useVariablePicker,
 } from './variables'
-import { PageType } from '~enums'
-import { Experiment, CausalFactor, CausalityLevel } from '~interfaces'
+import { PageType, Experiment, CausalFactor, CausalityLevel } from '~interfaces'
 
 export function useFactorsDefinitionForm({
 	defineQuestion,

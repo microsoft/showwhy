@@ -3,8 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { OrchestratorType } from '~enums'
 import {
+	OrchestratorType,
 	NodeRequest,
 	NodeResponse,
 	StatusResponse,
@@ -66,7 +66,7 @@ export class Orchestrator<UpdateStatus> {
 
 		let estimateStatus
 		while (isStatusProcessing(status?.runtimeStatus as NodeResponseStatus)) {
-			[status, estimateStatus] = await Promise.all([
+			;[status, estimateStatus] = await Promise.all([
 				returnOrchestratorStatus(this.orchestratorResponse.statusQueryGetUri),
 				genericCheckStatus(status?.instanceId, type),
 				wait(3000),

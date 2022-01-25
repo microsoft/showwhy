@@ -3,8 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { localhostUrl, replaceAzureUrl } from './utils'
-import { OrchestratorType } from '~enums'
 import {
+	OrchestratorType,
 	UploadFilesResponse,
 	NodeRequest,
 	NodeResponse,

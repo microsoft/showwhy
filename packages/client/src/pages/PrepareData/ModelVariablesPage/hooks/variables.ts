@@ -11,8 +11,8 @@ import {
 	SubjectIdentifierDataArgs,
 } from './interfaces'
 import { FactorsOrDefinitions } from './types'
-import { PageType } from '~enums'
 import {
+	PageType,
 	DataTable,
 	CausalFactor,
 	ColumnRelation,
