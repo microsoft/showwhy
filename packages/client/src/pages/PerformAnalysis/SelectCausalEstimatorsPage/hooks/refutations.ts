@@ -4,8 +4,8 @@
  */
 
 import { useMemo } from 'react'
-import { RefutationType } from '~interfaces'
 import { useSetFullRefutation, useSetQuickRefutation } from '~hooks'
+import { RefutationType } from '~interfaces'
 import { useRefutationType } from '~state'
 
 export function useRefutations(): {

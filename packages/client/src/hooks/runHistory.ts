@@ -4,8 +4,8 @@
  */
 
 import { useCallback, useMemo } from 'react'
-import { NodeResponseStatus } from '~interfaces'
 import {
+	NodeResponseStatus,
 	NodeResponse,
 	PartialResults,
 	RunHistory,

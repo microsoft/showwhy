@@ -6,9 +6,14 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { SetterOrUpdater } from 'recoil'
 import { getEstimatorByRanking, estimatorGroups } from './constants'
-import { EstimatorGroup, EstimatorType } from '~enums'
 import { useEstimatorShortDescription, useEstimatorsList } from '~hooks'
-import { Estimator, PrimarySpecificationConfig, Setter } from '~interfaces'
+import {
+	EstimatorGroup,
+	EstimatorType,
+	Estimator,
+	PrimarySpecificationConfig,
+	Setter,
+} from '~interfaces'
 import {
 	useSetEstimators,
 	useSetPrimarySpecificationConfig,

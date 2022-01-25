@@ -5,9 +5,9 @@
 import { BaseFile } from '@data-wrangling-components/utilities'
 import { useCallback, useMemo } from 'react'
 import { v4 as uuidv4 } from 'uuid'
-import { ProjectSource } from '~enums'
 import { useGetStepUrls } from '~hooks'
 import {
+	ProjectSource,
 	CausalFactor,
 	Definition,
 	Experiment,

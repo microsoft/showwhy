@@ -9,7 +9,7 @@ import {
 	getNodeProperties,
 	getSimulationNumByRefuterType,
 } from './utils'
-import { DefinitionType, EstimatorType } from '~enums'
+import { DefinitionType } from '~enums'
 import {
 	AlternativeModels,
 	AlternativeModelsRequest,
@@ -18,6 +18,7 @@ import {
 	GraphNodeType,
 	NodeRequest,
 	RefutationType,
+	EstimatorType,
 } from '~interfaces'
 
 interface Node {

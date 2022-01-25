@@ -12,7 +12,7 @@ import {
 import { IContextualMenuItem } from '@fluentui/react'
 import { useMemo, useCallback } from 'react'
 import { useLoadProject } from './loadProject'
-import { ProjectSource } from '~enums'
+import { ProjectSource } from '~interfaces'
 import { groupFilesByType, isZipUrl } from '~utils'
 
 const uploadZipButtonId = 'uploadZip'

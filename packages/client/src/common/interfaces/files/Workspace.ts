@@ -3,8 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { Step } from '@data-wrangling-components/core'
-import { DataTableFileDefinition } from './DataTableDefinition'
 import { RefutationType } from '../refutation'
+import { DataTableFileDefinition } from './DataTableDefinition'
 import {
 	CausalFactor,
 	Definition,

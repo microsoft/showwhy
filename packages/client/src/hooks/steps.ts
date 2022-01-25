@@ -4,8 +4,7 @@
  */
 import { useCallback, useMemo } from 'react'
 import { useLocation } from 'react-router-dom'
-import { StepStatus } from '~interfaces'
-import { Workflow, Step } from '~interfaces'
+import { StepStatus, Workflow, Step } from '~interfaces'
 // HACK to pass unit tests
 import { useSelectedProject } from '~state/project'
 import { useStepStatus } from '~state/stepStatus'

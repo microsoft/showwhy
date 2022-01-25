@@ -11,8 +11,13 @@ import {
 	SubjectIdentifierDataArgs,
 } from './interfaces'
 import { FactorsOrDefinitions } from './types'
-import { ColumnRelation, ColumnRelevance, PageType } from '~enums'
-import { DataTable, CausalFactor } from '~interfaces'
+import { PageType } from '~enums'
+import {
+	DataTable,
+	CausalFactor,
+	ColumnRelation,
+	ColumnRelevance,
+} from '~interfaces'
 
 export function useDefinitionOptions({
 	defineQuestionData,
@@ -164,11 +169,5 @@ export function useColumnsAsTarget({
 					onClick: onUpdateTargetVariable,
 				} as IContextualMenuItem
 			})
-	}, [
-		subjectIdentifierData,
-		causalFactors,
-		type,
-		onUpdateTargetVariable,
-		selectedColumns,
-	])
+	}, [subjectIdentifierData, onUpdateTargetVariable, selectedColumns])
 }

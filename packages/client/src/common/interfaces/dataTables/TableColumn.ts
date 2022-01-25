@@ -2,7 +2,8 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { ColumnRelation, ColumnRelevance } from '../enums'
+import { ColumnRelation } from './ColumnRelation'
+import { ColumnRelevance } from './ColumnRelevance'
 
 export interface TableColumn {
 	name: string

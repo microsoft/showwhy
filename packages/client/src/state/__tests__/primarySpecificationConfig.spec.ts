@@ -4,12 +4,12 @@
  */
 import { renderHook } from '@testing-library/react-hooks'
 import { RecoilRoot, snapshot_UNSTABLE } from 'recoil'
-import { CausalModelLevel, EstimatorType } from '../../common/enums'
+import { CausalModelLevel } from '../../common/enums'
 import {
 	usePrimarySpecificationConfig,
 	primarySpecificationConfigState,
 } from '../primarySpecificationConfig'
-import { PrimarySpecificationConfig } from '~interfaces'
+import { PrimarySpecificationConfig, EstimatorType } from '~interfaces'
 
 describe('primarySpecificationConfig', () => {
 	describe('usePrimarySpecificationConfig', () => {

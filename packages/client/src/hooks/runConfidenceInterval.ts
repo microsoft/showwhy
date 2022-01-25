@@ -5,9 +5,9 @@
 
 import { useCallback } from 'react'
 import { getConfidenceOrchestrator } from '~classes'
-import { NodeResponseStatus } from '~interfaces'
 import { useDefaultRun } from '~hooks'
 import {
+	NodeResponseStatus,
 	NodeResponse,
 	SignificanceTest,
 	SignificanceTestResponse,
