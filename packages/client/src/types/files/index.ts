@@ -4,7 +4,9 @@
  */
 export * from './DataTableDefinition'
 export * from './DataTableMetadata'
+export * from './DefaultDatasetResult'
 export * from './DownloadType'
+export * from './DropFilesCount'
 export * from './FileDefinition'
 export * from './FileStep'
 export * from './FileType'
