@@ -5,6 +5,7 @@
 
 import { useBoolean } from '@fluentui/react-hooks'
 import { useCallback, useEffect, useState } from 'react'
+import { OrchestratorType } from '~classes'
 import {
 	useEstimateNode,
 	useIsDefaultRunProcessing,
@@ -26,7 +27,6 @@ import {
 	useSpecCount,
 } from '~state'
 import {
-	OrchestratorType,
 	Experiment,
 	Estimator,
 	NodeRequest,

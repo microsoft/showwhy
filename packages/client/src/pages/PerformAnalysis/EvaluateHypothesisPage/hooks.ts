@@ -5,6 +5,7 @@
 
 import { useCallback, useMemo, useState } from 'react'
 import { useLoadSpecificationData } from '../ExploreSpecificationCurvePage/hooks'
+import { OrchestratorType } from '~classes'
 import {
 	useAlternativeModels,
 	useDefaultRun,
@@ -24,7 +25,6 @@ import {
 	useSpecificationCurveConfig,
 } from '~state'
 import {
-	OrchestratorType,
 	AlternativeModels,
 	DefaultDatasetResult,
 	Experiment,
