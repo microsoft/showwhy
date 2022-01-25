@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 // eslint-disable @typescript-eslint/no-explicit-any
-import React, { memo, useRef, useEffect } from 'react'
+import { memo, useRef, useEffect } from 'react'
 import styled from 'styled-components'
 import * as vega from 'vega'
 import {
@@ -110,17 +110,11 @@ export const VegaHost: React.FC<VegaHostProps> = memo(function VegaHost({
 
 // anytime we use API elements that should trigger a re-render, we want to trigger an async run
 // this batches them up add the end of the render
-function useRenderTriggers(
-	view: View,
-	signals,
-	signalListeners,
-	data,
-	dataListeners,
-	eventListeners,
-) {
+function useRenderTriggers(view: View, ...deps: unknown[]) {
 	useEffect(() => {
 		view.runAsync()
-	}, [view, signals, signalListeners, data, dataListeners, eventListeners])
+		/* eslint-disable-next-line react-hooks/exhaustive-deps */
+	}, [view, ...deps])
 }
 
 const Container = styled.div``

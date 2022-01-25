@@ -4,7 +4,7 @@
  */
 import { FontIcon, IconButton } from '@fluentui/react'
 import { useBoolean } from 'ahooks'
-import React, { memo, useCallback, useEffect, useMemo, useState } from 'react'
+import { memo, useCallback, useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
 import { ActionButtons } from '~components/ActionButtons'
 import { useDefaultTableSample } from '~hooks'

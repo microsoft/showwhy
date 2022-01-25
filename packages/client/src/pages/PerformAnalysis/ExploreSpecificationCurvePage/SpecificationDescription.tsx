@@ -4,7 +4,7 @@
  */
 import { DefaultButton } from '@fluentui/react'
 import { round } from 'lodash'
-import React, { memo } from 'react'
+import { memo } from 'react'
 import styled from 'styled-components'
 import { ConfidenceIntervalDetails } from './ConfidenceIntervalDetails'
 import { RefutationOptionsCallout } from '~components/RefutationOptionsCallout'

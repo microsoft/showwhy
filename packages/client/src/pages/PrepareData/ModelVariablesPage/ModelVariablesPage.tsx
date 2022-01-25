@@ -8,7 +8,7 @@ import {
 	DefaultButton,
 	IContextualMenuProps,
 } from '@fluentui/react'
-import React, { memo } from 'react'
+import { memo } from 'react'
 import { If, Then, Else } from 'react-if'
 import styled from 'styled-components'
 import { DeriveComponent } from '../../../pages/PrepareData/ModelVariablesPage/DeriveComponent/DeriveComponent'

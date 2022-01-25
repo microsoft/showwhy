@@ -4,7 +4,7 @@
  */
 
 import { IComboBoxOption } from '@fluentui/react'
-import React, { memo } from 'react'
+import { memo } from 'react'
 import styled from 'styled-components'
 import { useFactorsDefinitionForm } from './hooks'
 import { PageType } from '~enums'

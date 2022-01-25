@@ -4,7 +4,7 @@
  */
 import { Callout, IconButton } from '@fluentui/react'
 import { useBoolean } from '@fluentui/react-hooks'
-import React, { memo } from 'react'
+import { memo } from 'react'
 import styled from 'styled-components'
 
 interface InfoCalloutProps {

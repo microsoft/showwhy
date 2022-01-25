@@ -10,11 +10,10 @@ import { RunHistory } from '~interfaces'
 describe('runHistoryState', () => {
 	describe('useRunHistory', () => {
 		it('should return the default value', () => {
-			const expected = []
 			const { result } = renderHook(() => useRunHistory(), {
 				wrapper: RecoilRoot,
 			})
-			expect(result.current).toEqual(expected)
+			expect(result.current).toEqual([])
 		})
 	})
 

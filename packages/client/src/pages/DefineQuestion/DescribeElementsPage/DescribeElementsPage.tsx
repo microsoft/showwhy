@@ -4,7 +4,7 @@
  */
 
 import { ChoiceGroup, IChoiceGroupOption } from '@fluentui/react'
-import React, { memo } from 'react'
+import { memo } from 'react'
 
 import styled from 'styled-components'
 import { FieldGroup } from './FieldGroup'
