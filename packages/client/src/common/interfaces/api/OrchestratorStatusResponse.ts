@@ -5,7 +5,7 @@
 
 import { StatusResponse } from './StatusResponse'
 
-export interface OrchestratorStatus extends StatusResponse {
+export interface OrchestratorStatusResponse extends StatusResponse {
 	name: string
 	instanceId: string
 	input: string
