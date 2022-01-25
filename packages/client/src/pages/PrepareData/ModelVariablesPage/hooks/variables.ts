@@ -17,7 +17,7 @@ import {
 	CausalFactor,
 	ColumnRelation,
 	ColumnRelevance,
-} from '~interfaces'
+} from '~types'
 
 export function useDefinitionOptions({
 	defineQuestionData,

@@ -4,8 +4,8 @@
  */
 import { memo } from 'react'
 import { Link } from 'react-router-dom'
-import { Pages } from '~interfaces'
 import { ContainerTextCenter, Text } from '~styles'
+import { Pages } from '~types'
 
 interface EmptyDataPageWarningProps {
 	text: string

@@ -5,8 +5,8 @@
 import { IContextualMenuProps } from '@fluentui/react'
 import { memo, useCallback } from 'react'
 import { OptionsButton } from './OptionsButton'
-import { StepStatus } from '~interfaces'
 import { Container } from '~styles'
+import { StepStatus } from '~types'
 
 interface SettingsProps {
 	onGetStepUrls: (urls?: string[], exclude?: any) => string[]

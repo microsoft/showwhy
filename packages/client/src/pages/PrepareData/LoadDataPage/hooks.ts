@@ -14,7 +14,6 @@ import { useCallback, useEffect, useState } from 'react'
 import { SetterOrUpdater } from 'recoil'
 import { v4 as uuidv4 } from 'uuid'
 import { useGlobalDropzone, useOnDropAccepted } from '~hooks'
-import { DropFilesCount, ProjectFile } from '~interfaces'
 import {
 	useAddProjectFile,
 	useProjectFiles,
@@ -24,6 +23,7 @@ import {
 	useSetProjectFiles,
 	useSetSelectedFile,
 } from '~state'
+import { DropFilesCount, ProjectFile } from '~types'
 import { createDefaultTable, replaceItemAtIndex } from '~utils'
 
 export function useBusinessLogic(): {

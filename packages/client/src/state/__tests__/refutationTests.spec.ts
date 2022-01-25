@@ -5,7 +5,7 @@
 import { renderHook } from '@testing-library/react-hooks'
 import { RecoilRoot, snapshot_UNSTABLE } from 'recoil'
 import { RefutationTypeState, useRefutationType } from '../refutationTests'
-import { RefutationType } from '~interfaces'
+import { RefutationType } from '~types'
 
 describe('refutationTypeState', () => {
 	describe('useRefutationType', () => {

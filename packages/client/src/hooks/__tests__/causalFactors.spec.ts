@@ -12,7 +12,7 @@ import {
 	useDeleteCausalFactorTestable as useDeleteCausalFactor,
 	useExcludedFactorsTestable as useExcludedFactors,
 } from '../causalFactors'
-import { BeliefDegree, CausalModelLevel } from '~interfaces'
+import { BeliefDegree, CausalModelLevel } from '~types'
 
 const causalFactors = [
 	{

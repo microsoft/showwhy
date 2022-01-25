@@ -11,13 +11,13 @@ import { VegaHost } from '../VegaHost'
 import { useSpecificationSHAPColumns } from '../hooks'
 import template from './dot-plot.json'
 import { mergeSpec, parseJsonPathSpec } from './util'
+import { usePrimarySpecificationConfig } from '~state'
 import {
 	CausalityLevel,
 	DecisionFeature,
 	Specification,
 	SpecificationCurveConfig,
-} from '~interfaces'
-import { usePrimarySpecificationConfig } from '~state'
+} from '~types'
 
 export interface AnalyticDecisionsDotPlotProps {
 	data: Specification[]

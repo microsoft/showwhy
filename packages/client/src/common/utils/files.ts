@@ -11,7 +11,7 @@ import {
 	createBaseFile,
 } from '@data-wrangling-components/utilities'
 import { fetchTable } from './arquero'
-import { DataTableFileDefinition, ProjectFile, ZipData } from '~interfaces'
+import { DataTableFileDefinition, ProjectFile, ZipData } from '~types'
 
 export function createTextFile(name: string, content: string): File {
 	const type = { type: `text/${name.split('.').pop()}` }

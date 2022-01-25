@@ -3,8 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { memo } from 'react'
-import { RefutationType } from '~interfaces'
 import { Text, Value } from '~styles'
+import { RefutationType } from '~types'
 
 interface AnalysisSpecificationsProps {
 	specificationLength: number

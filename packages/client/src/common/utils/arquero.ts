@@ -10,7 +10,7 @@ import {
 } from '@data-wrangling-components/utilities'
 import { fromCSV, all, op } from 'arquero'
 import ColumnTable from 'arquero/dist/types/table/column-table'
-import { DataTableFileDefinition } from '~interfaces'
+import { DataTableFileDefinition } from '~types'
 import { isZipUrl } from '~utils'
 /**
  * Creates a default data table by parsing csv/tsv content.

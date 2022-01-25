@@ -12,7 +12,7 @@ import {
 	models,
 } from './builders'
 import { useNodeProperties } from '~hooks'
-import { GraphNodeData, GraphNodeType, NodeRequest } from '~interfaces'
+import { GraphNodeData, GraphNodeType, NodeRequest } from '~types'
 
 export function useGetNodeProperties(): (
 	fileName: string,

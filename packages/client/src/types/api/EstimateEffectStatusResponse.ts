@@ -4,7 +4,7 @@
  */
 
 import { PartialResults } from '../PartialResults'
-import { OrchestratorStatusResponse } from '~interfaces'
+import { OrchestratorStatusResponse } from '~types'
 
 export interface EstimateEffectStatusResponse
 	extends OrchestratorStatusResponse {

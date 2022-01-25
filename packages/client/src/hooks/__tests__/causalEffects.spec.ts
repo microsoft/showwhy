@@ -7,7 +7,7 @@ import { renderHook } from '@testing-library/react-hooks'
 import { RecoilRoot } from 'recoil'
 import { v4 } from 'uuid'
 import { useCausalEffectsTestable as useCausalEffects } from '../causalEffects'
-import { Experiment, CausalityLevel } from '~interfaces'
+import { Experiment, CausalityLevel } from '~types'
 
 const question = {
 	exposure: {

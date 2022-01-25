@@ -9,8 +9,8 @@ import styled from 'styled-components'
 import { useBusinessLogic } from './hooks'
 import { FactorsDefinitionForm } from '~components/FactorsDefinitionForm'
 import { TableComponent } from '~components/Tables/TableComponent'
-import { HeaderData } from '~interfaces'
 import { Container } from '~styles'
+import { HeaderData } from '~types'
 
 const tableHeaders: HeaderData[] = [
 	{ fieldName: 'variable', value: 'Factor' },

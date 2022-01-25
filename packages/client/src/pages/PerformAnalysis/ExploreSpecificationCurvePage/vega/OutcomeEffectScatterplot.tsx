@@ -13,7 +13,7 @@ import {
 	RefutationResultString,
 	Specification,
 	SpecificationCurveConfig,
-} from '~interfaces'
+} from '~types'
 
 export interface OutcomeEffectScatterplotProps {
 	data: Specification[]

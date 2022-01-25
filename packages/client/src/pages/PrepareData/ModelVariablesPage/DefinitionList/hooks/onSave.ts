@@ -12,7 +12,7 @@ import {
 	Definition,
 	StringSetter,
 	CausalityLevel,
-} from '~interfaces'
+} from '~types'
 
 export function useOnSaveCausalFactor({
 	setNewLabel,

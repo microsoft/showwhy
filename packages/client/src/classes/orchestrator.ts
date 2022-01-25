@@ -4,18 +4,18 @@
  */
 
 import {
-	OrchestratorType,
-	NodeRequest,
-	NodeResponse,
-	StatusResponse,
-	NodeResponseStatus,
-} from '~interfaces'
-import {
 	executeNode,
 	genericCheckStatus,
 	returnOrchestratorStatus,
 	terminateRun,
 } from '~resources'
+import {
+	OrchestratorType,
+	NodeRequest,
+	NodeResponse,
+	StatusResponse,
+	NodeResponseStatus,
+} from '~types'
 import { isStatusProcessing, wait } from '~utils'
 
 export type OrchestratorHandler = (...args: unknown[]) => void

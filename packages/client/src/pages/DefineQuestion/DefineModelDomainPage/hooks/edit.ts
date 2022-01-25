@@ -5,7 +5,7 @@
 
 import { useCallback } from 'react'
 import { SetDefinition, SetDefinitions } from './types'
-import { CausalityLevel, ElementDefinition } from '~interfaces'
+import { CausalityLevel, ElementDefinition } from '~types'
 
 export function useEditDefinition(
 	setDefinitions: SetDefinitions,

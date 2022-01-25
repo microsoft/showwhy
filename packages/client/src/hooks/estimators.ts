@@ -4,7 +4,7 @@
  */
 
 import { useMemo } from 'react'
-import { EstimatorGroup, EstimatorType, Estimator } from '~interfaces'
+import { EstimatorGroup, EstimatorType, Estimator } from '~types'
 
 export const ESTIMATORS_LEARN_MORE_INFO = {
 	exposure: `Exposure-assignment estimators: With these estimators, the goal is to create comparable groups after controlling for differences in confounders between groups. For each sample in the dataset, we first compute a propensity score, which defines the propensity of treatment given the confounder values. 

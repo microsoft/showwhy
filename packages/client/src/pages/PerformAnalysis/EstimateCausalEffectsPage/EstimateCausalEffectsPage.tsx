@@ -9,8 +9,8 @@ import styled from 'styled-components'
 import { RunHistoryList } from './RunHistoryList'
 import { SpecificationsList } from './SpecificationsList'
 import { useBusinessLogic } from './hooks'
-import { Pages } from '~interfaces'
 import { ContainerFlexRow, ContainerTextCenter, Container } from '~styles'
+import { Pages } from '~types'
 
 export const EstimateCausalEffects: React.FC = memo(
 	function EstimateCausalEffects() {

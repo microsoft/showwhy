@@ -12,7 +12,7 @@ import {
 	TableColumn,
 	Setter,
 	ColumnRelation,
-} from '~interfaces'
+} from '~types'
 
 export interface SelectedArgs {
 	defineQuestionData: Element

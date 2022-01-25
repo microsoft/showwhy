@@ -10,7 +10,7 @@ import {
 	Cause,
 	ExposureAndOutcomeCauses,
 	FlatCausalFactor,
-} from '~interfaces'
+} from '~types'
 import { replaceItemAtIndex } from '~utils'
 
 export function useFlatFactorsList(

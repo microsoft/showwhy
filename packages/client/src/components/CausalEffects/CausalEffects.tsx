@@ -7,8 +7,8 @@ import { memo } from 'react'
 
 import styled from 'styled-components'
 import { ComponentArrows } from './ComponentArrows'
-import { CausalEffectSize } from '~interfaces'
 import { Container, Paragraph } from '~styles'
+import { CausalEffectSize } from '~types'
 
 export interface CausalEffectsProps {
 	size?: CausalEffectSize

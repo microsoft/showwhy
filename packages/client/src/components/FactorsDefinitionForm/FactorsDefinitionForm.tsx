@@ -7,7 +7,7 @@ import { IComboBoxOption } from '@fluentui/react'
 import { memo } from 'react'
 import styled from 'styled-components'
 import { useFactorsDefinitionForm } from './hooks'
-import { PageType, CausalFactor, Experiment } from '~interfaces'
+import { PageType, CausalFactor, Experiment } from '~types'
 
 interface FactorsDefinitionFormProps {
 	factor?: CausalFactor

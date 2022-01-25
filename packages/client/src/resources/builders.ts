@@ -19,7 +19,7 @@ import {
 	NodeRequest,
 	RefutationType,
 	EstimatorType,
-} from '~interfaces'
+} from '~types'
 
 interface Node {
 	type: GraphNodeType

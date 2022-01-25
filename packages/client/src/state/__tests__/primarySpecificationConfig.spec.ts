@@ -12,7 +12,7 @@ import {
 	PrimarySpecificationConfig,
 	EstimatorType,
 	CausalModelLevel,
-} from '~interfaces'
+} from '~types'
 
 describe('primarySpecificationConfig', () => {
 	describe('usePrimarySpecificationConfig', () => {

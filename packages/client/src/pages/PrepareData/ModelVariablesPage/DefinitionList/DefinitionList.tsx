@@ -6,7 +6,7 @@ import { memo } from 'react'
 import styled from 'styled-components'
 import { useDefinitionList } from './hooks'
 import { GenericTableComponent } from '~components/Tables/GenericTableComponent'
-import { CausalFactor } from '~interfaces'
+import { CausalFactor } from '~types'
 
 interface DefinitionListProps {
 	list: CausalFactor[]

@@ -6,8 +6,8 @@ import { memo, useCallback } from 'react'
 import { NavLink } from 'react-router-dom'
 import styled from 'styled-components'
 import { StepStatusDetail } from '.'
-import { Step } from '~interfaces'
 import { useStepStatus } from '~state'
+import { Step } from '~types'
 
 interface StepItemProps {
 	stepDetail: Step

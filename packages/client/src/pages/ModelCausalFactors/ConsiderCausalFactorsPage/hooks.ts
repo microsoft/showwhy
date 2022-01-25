@@ -7,8 +7,8 @@ import { IComboBoxOption } from '@fluentui/react'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useAddOrEditFactor, usePageType, useVariableOptions } from '~hooks'
-import { PageType, CausalFactor, FlatCausalFactor } from '~interfaces'
 import { useCausalFactors, useSetCausalFactors } from '~state'
+import { PageType, CausalFactor, FlatCausalFactor } from '~types'
 
 interface PathData {
 	path: string | undefined

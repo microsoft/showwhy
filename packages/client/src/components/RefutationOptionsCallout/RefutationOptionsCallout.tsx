@@ -4,8 +4,8 @@
  */
 import { memo } from 'react'
 import { LinkCallout } from '~components/Callout'
-import { RefutationOption } from '~interfaces'
 import { Text } from '~styles'
+import { RefutationOption } from '~types'
 
 interface RefutationOptionsCalloutProps {
 	title: string

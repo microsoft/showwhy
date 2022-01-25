@@ -5,7 +5,7 @@
 import { renderHook } from '@testing-library/react-hooks'
 import { RecoilRoot, snapshot_UNSTABLE } from 'recoil'
 import { runHistoryState, useRunHistory } from '../runHistory'
-import { RunHistory } from '~interfaces'
+import { RunHistory } from '~types'
 
 describe('runHistoryState', () => {
 	describe('useRunHistory', () => {

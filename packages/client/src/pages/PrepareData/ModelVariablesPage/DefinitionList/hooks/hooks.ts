@@ -16,8 +16,8 @@ import {
 	useRemoveDefinition,
 	useSaveDefinition,
 } from '~hooks'
-import { Item, CausalFactor } from '~interfaces'
 import { useModelVariables, useSetModelVariables } from '~state'
+import { Item, CausalFactor } from '~types'
 
 export function useDefinitionList(
 	list: CausalFactor[],

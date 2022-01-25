@@ -4,7 +4,7 @@
  */
 import { lazy, memo } from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
-import { Pages } from '~interfaces'
+import { Pages } from '~types'
 
 const UnderstandProcessPage = lazy(
 	() =>

@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { isStatusProcessing } from '../estimate'
-import { NodeResponseStatus } from '~interfaces'
+import { NodeResponseStatus } from '~types'
 
 describe('estimate utils functions', () => {
 	it('isStatusProcessing => Running', () => {

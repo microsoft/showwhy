@@ -8,8 +8,8 @@ import { memo, useMemo } from 'react'
 import styled from 'styled-components'
 import { ErrorMessage } from '~components/ErrorMessage'
 import { RunProgressIndicator } from '~components/RunProgressIndicator'
-import { RunHistory, NodeResponseStatus } from '~interfaces'
 import { Title, Text, ContainerFlexColumn } from '~styles'
+import { RunHistory, NodeResponseStatus } from '~types'
 import { isStatusProcessing, returnElapsedTime } from '~utils'
 
 interface RunHistoryListProps {

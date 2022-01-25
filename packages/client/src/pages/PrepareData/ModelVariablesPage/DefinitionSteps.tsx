@@ -6,8 +6,8 @@ import { IconButton } from '@fluentui/react'
 import { memo, useCallback, useMemo } from 'react'
 import styled from 'styled-components'
 import { useRemoveColumn } from '~hooks'
-import { FilterObject, TableDerivationType } from '~interfaces'
 import { useModelVariables, useSetModelVariables } from '~state'
+import { FilterObject, TableDerivationType } from '~types'
 
 interface DefinitionStepsProps {
 	fileId: string

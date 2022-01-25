@@ -5,8 +5,8 @@
 
 import { useMemo } from 'react'
 import { useSetFullRefutation, useSetQuickRefutation } from '~hooks'
-import { RefutationType } from '~interfaces'
 import { useRefutationType } from '~state'
+import { RefutationType } from '~types'
 
 export function useRefutations(): {
 	refutationOptions: Array<{

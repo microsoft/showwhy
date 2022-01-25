@@ -8,7 +8,7 @@ import { memo, useCallback, useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
 import { ActionButtons } from '~components/ActionButtons'
 import { useDefaultTableSample } from '~hooks'
-import { Item, TableFooter, HeaderData, TableProps } from '~interfaces'
+import { Item, TableFooter, HeaderData, TableProps } from '~types'
 import { sortGroupByKey } from '~utils'
 
 interface GenericHeader {

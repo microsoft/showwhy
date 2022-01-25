@@ -6,12 +6,7 @@
 import { Checkbox, IComboBoxOption } from '@fluentui/react'
 import { useCallback, useMemo, useState } from 'react'
 import { useFactorsDefinitionForm } from '~components/FactorsDefinitionForm'
-import {
-	PageType,
-	CausalFactor,
-	ElementDefinition,
-	HeaderData,
-} from '~interfaces'
+import { PageType, CausalFactor, ElementDefinition, HeaderData } from '~types'
 
 const actionsHeader = { fieldName: 'actions', value: 'Actions' }
 

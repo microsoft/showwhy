@@ -4,7 +4,7 @@
  */
 
 import { TestResults } from './TestResults'
-import { NodeResponse, NodeResponseStatus } from '~interfaces'
+import { NodeResponse, NodeResponseStatus } from '~types'
 
 export interface SignificanceTest {
 	runId: string

@@ -4,7 +4,7 @@
  */
 
 import { TestResults } from '../experiments'
-import { NodeResponseStatus } from '~interfaces'
+import { NodeResponseStatus } from '~types'
 
 export interface SignificanceTestResponse {
 	runtimeStatus: NodeResponseStatus

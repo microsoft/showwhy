@@ -15,7 +15,7 @@ import {
 	PrimarySpecificationConfig,
 	EstimatorType,
 	CausalModelLevel,
-} from '~interfaces'
+} from '~types'
 
 export const primarySpecificationConfigState = atom<PrimarySpecificationConfig>(
 	{

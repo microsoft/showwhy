@@ -20,19 +20,18 @@ import {
 	useMatchFilter,
 } from '~hooks'
 import {
-	CausalityLevel,
-	TableDerivation,
-	CausalFactor,
-	FilterObject,
-	TableDerivationType,
-} from '~interfaces'
-
-import {
 	useModelVariables,
 	useProjectFiles,
 	useSetModelVariables,
 	useAllTableColumns,
 } from '~state'
+import {
+	CausalityLevel,
+	TableDerivation,
+	CausalFactor,
+	FilterObject,
+	TableDerivationType,
+} from '~types'
 
 export interface DeriveProps {
 	selectedDefinition: string

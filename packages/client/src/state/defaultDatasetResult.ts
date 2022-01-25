@@ -10,7 +10,7 @@ import {
 	useResetRecoilState,
 	useSetRecoilState,
 } from 'recoil'
-import { DefaultDatasetResult } from '~interfaces'
+import { DefaultDatasetResult } from '~types'
 
 export const defaultDatasetResultState = atom<DefaultDatasetResult | null>({
 	key: 'default-dataset-result',

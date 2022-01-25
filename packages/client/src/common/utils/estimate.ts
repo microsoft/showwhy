@@ -13,7 +13,7 @@ import {
 	RunStatus,
 	NodeResponseStatus,
 	RefutationType,
-} from '~interfaces'
+} from '~types'
 
 /**
  * It's the first to always run and to get the status depends only of itself

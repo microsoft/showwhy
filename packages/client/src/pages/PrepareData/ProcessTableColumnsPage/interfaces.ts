@@ -4,7 +4,7 @@
  */
 
 import { IColumn } from '@fluentui/react'
-import { ColumnRelevance, TableColumn, Setter } from '~interfaces'
+import { ColumnRelevance, TableColumn, Setter } from '~types'
 
 export interface OnChange {
 	setTableColumns: Setter<TableColumn[]>

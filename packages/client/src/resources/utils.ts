@@ -3,14 +3,14 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import { getEnv } from '~resources/getEnv'
 import {
 	GraphNodeData,
 	GraphNodeType,
 	RefutationType,
 	EstimatorGroup,
 	EstimatorType,
-} from '~interfaces'
-import { getEnv } from '~resources/getEnv'
+} from '~types'
 
 export enum NodeIds {
 	IdentifyEstimand = 'Identify Estimand',

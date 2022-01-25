@@ -6,8 +6,8 @@ import { memo } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { RefutationOptionsCallout } from '~components/RefutationOptionsCallout'
-import { Experiment, Estimator, RefutationOption } from '~interfaces'
 import { Bold, Container, Text, Title } from '~styles'
+import { Experiment, Estimator, RefutationOption } from '~types'
 import { addS } from '~utils'
 
 interface SpecificationsListProp {

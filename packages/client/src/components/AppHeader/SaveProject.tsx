@@ -11,8 +11,8 @@ import {
 	useIsCollectionEmpty,
 	useSaveProject,
 } from '~hooks'
-import { FileType, NodeResponseStatus } from '~interfaces'
 import { Container } from '~styles'
+import { FileType, NodeResponseStatus } from '~types'
 
 export const SaveProject: React.FC = memo(function SaveProject() {
 	const downloadResult = useDownloadResult()

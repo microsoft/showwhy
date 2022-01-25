@@ -6,13 +6,13 @@
 import { useCallback } from 'react'
 import { getConfidenceOrchestrator } from '~classes'
 import { useDefaultRun } from '~hooks'
+import { useSetSignificanceTests } from '~state'
 import {
 	NodeResponseStatus,
 	NodeResponse,
 	SignificanceTest,
 	SignificanceTestResponse,
-} from '~interfaces'
-import { useSetSignificanceTests } from '~state'
+} from '~types'
 import {
 	matchStatus,
 	returnInitialConfidenceInterval,
