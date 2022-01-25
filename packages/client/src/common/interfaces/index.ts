@@ -2,8 +2,9 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+export * from './AdditionalProperties'
 export * from './AlternativeModels'
-export * from './AlternativeModelsReq'
+export * from './AlternativeModelsRequest'
 export * from './BasicTable'
 export * from './CaptureTable'
 export * from './CausalFactor'
@@ -33,6 +34,8 @@ export * from './FilterObject'
 export * from './FlatCausalFactor'
 export * from './GenericTableComponent'
 export * from './Graph'
+export * from './GraphEdge'
+export * from './GraphNode'
 export * from './Metadata'
 export * from './Node'
 export * from './NodeData'
