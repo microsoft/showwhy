@@ -3,8 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { NodeResponseStatus } from '~enums'
 import { TestResults } from './TestResults'
+import { NodeResponseStatus } from '~enums'
 
 export interface SignificanceTestResponse {
 	runtimeStatus: NodeResponseStatus
