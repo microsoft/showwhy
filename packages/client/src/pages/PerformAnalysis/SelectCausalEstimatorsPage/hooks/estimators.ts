@@ -7,7 +7,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import { getEstimatorByRanking, estimatorGroups } from './constants'
 import { EstimatorsGroups, EstimatorsType } from '~enums'
 import { useEstimatorShortDescription, useEstimatorsList } from '~hooks'
-import { Estimator } from '~interfaces'
+import { Estimator, PrimarySpecificationConfig } from '~interfaces'
 import {
 	useSetEstimators,
 	useSetPrimarySpecificationConfig,
@@ -17,6 +17,8 @@ import {
 	useToggleConfidenceInterval,
 	useConfidenceInterval,
 } from '~state'
+import { SetterOrUpdater } from 'recoil'
+import { Setter } from '~types'
 
 enum BatchUpdateAction {
 	Delete = 'delete',
@@ -36,24 +38,12 @@ export function useEstimatorHook(): {
 	const toggleConfidenceInterval = useToggleConfidenceInterval()
 	const confidenceInterval = useConfidenceInterval()
 
-	const [selectedEstimatorGroupKey, setSelectedEstimatorGroupKey] =
-		useState<EstimatorsGroups>(estimatorGroups[0].key as EstimatorsGroups)
 	const [selectedEstimatorGroups, setSelectedEstimatorGroups] = useState<
 		EstimatorsGroups[]
 	>([])
 	const [defaultEstimator, setDefaultEstimator] = useState<
 		EstimatorsType | undefined
 	>(primarySpecificationConfig.type)
-
-	const onConfidenceIntervalsChange = useCallback(
-		(
-			ev?: React.FormEvent<HTMLElement | HTMLInputElement>,
-			checked?: boolean,
-		): void => {
-			toggleConfidenceInterval()
-		},
-		[toggleConfidenceInterval],
-	)
 
 	const onEstimatorsCheckboxChange = useCallback(
 		(estimator: Estimator) => {
@@ -75,7 +65,6 @@ export function useEstimatorHook(): {
 	const onEstimatorTypeChange = useOnEstimatorTypeChange(
 		estimatorsList,
 		selectedEstimatorGroups,
-		setSelectedEstimatorGroupKey,
 		batchUpdateSelectedEstimators,
 		setSelectedEstimatorGroups,
 	)
@@ -106,13 +95,12 @@ export function useEstimatorHook(): {
 		defaultEstimator,
 		estimators,
 		selectedEstimatorGroups,
-		selectedEstimatorGroupKey,
 		onDefaultChange,
 		onEstimatorTypeChange,
 		onEstimatorsCheckboxChange,
 		estimatorShortDescription,
 		confidenceInterval,
-		onConfidenceIntervalsChange,
+		toggleConfidenceInterval,
 	)
 
 	useEffect(() => {
@@ -132,7 +120,9 @@ export function useEstimatorHook(): {
 	}
 }
 
-function useBatchUpdate(setEstimators) {
+function useBatchUpdate(
+	setEstimators: SetterOrUpdater<Estimator[]>,
+): (estimators: Estimator[], action: BatchUpdateAction) => void {
 	return useCallback(
 		(estimators: Estimator[], action: BatchUpdateAction) => {
 			switch (action) {
@@ -161,9 +151,9 @@ function useBatchUpdate(setEstimators) {
 }
 
 function useVerifyEstimatorGroups(
-	estimatorsList,
-	estimators,
-	setSelectedEstimatorGroups,
+	estimatorsList: Estimator[],
+	estimators: Estimator[],
+	setSelectedEstimatorGroups: Setter<EstimatorsGroups[]>,
 ) {
 	return useCallback(() => {
 		estimatorGroups.forEach(item => {
@@ -182,15 +172,16 @@ function useVerifyEstimatorGroups(
 }
 
 function useOnEstimatorTypeChange(
-	estimatorsList,
-	selectedEstimatorGroups,
-	setSelectedEstimatorGroupKey,
-	batchUpdateSelectedEstimators,
-	setSelectedEstimatorGroups,
+	estimatorsList: Estimator[],
+	selectedEstimatorGroups: EstimatorsGroups[],
+	batchUpdateSelectedEstimators: (
+		estimators: Estimator[],
+		action: BatchUpdateAction,
+	) => void,
+	setSelectedEstimatorGroups: Setter<EstimatorsGroups[]>,
 ) {
 	return useCallback(
 		(group: EstimatorsGroups) => {
-			setSelectedEstimatorGroupKey(group)
 			const action: BatchUpdateAction = selectedEstimatorGroups.includes(group)
 				? BatchUpdateAction.Delete
 				: BatchUpdateAction.Add
@@ -205,7 +196,6 @@ function useOnEstimatorTypeChange(
 		[
 			estimatorsList,
 			selectedEstimatorGroups,
-			setSelectedEstimatorGroupKey,
 			batchUpdateSelectedEstimators,
 			setSelectedEstimatorGroups,
 		],
@@ -213,8 +203,8 @@ function useOnEstimatorTypeChange(
 }
 
 function useOnDefaultChange(
-	setDefaultEstimator,
-	setPrimarySpecificationConfig,
+	setDefaultEstimator: Setter<EstimatorsType | undefined>,
+	setPrimarySpecificationConfig: SetterOrUpdater<PrimarySpecificationConfig>,
 ) {
 	return useCallback(
 		(type: EstimatorsType) => {
@@ -229,17 +219,16 @@ function useOnDefaultChange(
 }
 
 function useEstimatorCardList(
-	estimatorsList,
-	defaultEstimator,
-	estimators,
-	selectedEstimatorGroups,
-	selectedEstimatorGroupKey,
-	onDefaultChange,
-	onEstimatorTypeChange,
-	onEstimatorsCheckboxChange,
-	estimatorShortDescription,
-	confidenceInterval,
-	onConfidenceIntervalsChange,
+	estimatorsList: Estimator[],
+	defaultEstimator: EstimatorsType | undefined,
+	estimators: Estimator[],
+	selectedEstimatorGroups: EstimatorsGroups[],
+	onDefaultChange: (type: EstimatorsType) => void,
+	onEstimatorTypeChange: (group: EstimatorsGroups) => void,
+	onEstimatorsCheckboxChange: (estimator: Estimator) => void,
+	estimatorShortDescription: (type: string) => string,
+	confidenceInterval: boolean,
+	onConfidenceIntervalsChange: () => void,
 ) {
 	return useMemo(() => {
 		const list = estimatorGroups.map(type => {
