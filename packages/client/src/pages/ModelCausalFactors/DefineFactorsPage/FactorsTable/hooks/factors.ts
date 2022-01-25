@@ -5,7 +5,12 @@
 
 import { useCallback, useMemo } from 'react'
 import { SetFactors } from './types'
-import { CausalFactor, Cause, Causes, FlatCausalFactor } from '~interfaces'
+import {
+	CausalFactor,
+	Cause,
+	ExposureAndOutcomeCauses,
+	FlatCausalFactor,
+} from '~interfaces'
 import { replaceItemAtIndex } from '~utils'
 
 export function useFlatFactorsList(
@@ -42,7 +47,7 @@ export function useSaveFactors(
 			setValues(prev => [...(prev || []).filter(x => x.id !== id), newValue])
 			const index = causalFactors.findIndex(v => v.id === id)
 			const oldFactor = causalFactors.find(x => x.id === id)
-			const oldCauses = oldFactor?.causes as Causes
+			const oldCauses = oldFactor?.causes as ExposureAndOutcomeCauses
 			const causes = {
 				...oldCauses,
 				[causeType]: {
@@ -50,7 +55,7 @@ export function useSaveFactors(
 					degree: newValue.degree || null,
 					reasoning: newValue.reasoning,
 				} as Cause,
-			} as Causes
+			} as ExposureAndOutcomeCauses
 
 			const factorObject = {
 				...oldFactor,

@@ -3,14 +3,14 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { Causes } from './Causes'
+import { ExposureAndOutcomeCauses } from './Causes'
 import { DefinitionType } from '~enums'
 
 export interface CausalFactor {
 	id: string
 	description?: string
 	variable: string
-	causes?: Causes
+	causes?: ExposureAndOutcomeCauses
 	column?: string
 	level?: DefinitionType
 }

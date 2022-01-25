@@ -8,8 +8,8 @@ import { SetterOrUpdater } from 'recoil'
 import { v4 } from 'uuid'
 // HACK to pass the unit tests
 import { replaceItemAtIndex } from '../common/utils/functions'
-import { BeliefDegree, CausalModelLevel } from '~enums'
-import { AlternativeModels, CausalFactor } from '~interfaces'
+import { CausalModelLevel } from '~enums'
+import { AlternativeModels, CausalFactor, BeliefDegree } from '~interfaces'
 import { useCausalFactors, useSetCausalFactors } from '~state/causalFactors'
 
 export function useExcludedFactors(): string[] {
