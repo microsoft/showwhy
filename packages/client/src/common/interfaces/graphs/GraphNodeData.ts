@@ -3,9 +3,9 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import { AlternativeModelsRequest } from '../api'
 import { GraphNodeType } from '~enums'
 import { Graph } from '~interfaces'
-import { AlternativeModelsRequest } from '../api'
 
 export interface GraphNodeData {
 	id: string
