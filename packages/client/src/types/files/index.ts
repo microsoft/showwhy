@@ -3,6 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 export * from './DataTableDefinition'
+export * from './DataTableMetadata'
 export * from './DownloadType'
 export * from './FileDefinition'
 export * from './FileStep'
