@@ -6,8 +6,13 @@
 import { useCallback } from 'react'
 import { v4 } from 'uuid'
 import { SetEditingDefinition, SetModelVariables } from './types'
-import { DefinitionType, PageType } from '~enums'
-import { CausalFactor, Definition, StringSetter } from '~interfaces'
+import { PageType } from '~enums'
+import {
+	CausalFactor,
+	Definition,
+	StringSetter,
+	CausalityLevel,
+} from '~interfaces'
 
 export function useOnSaveCausalFactor({
 	setNewLabel,
@@ -76,7 +81,7 @@ export function useOnSave({
 			}
 
 			const newDefinition = {
-				level: definition?.level ?? DefinitionType.Secondary,
+				level: definition?.level ?? CausalityLevel.Secondary,
 				variable: newLabel ?? '',
 				description: definition?.description ?? '',
 				column: definition?.column ?? '',

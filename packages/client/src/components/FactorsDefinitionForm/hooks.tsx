@@ -12,8 +12,8 @@ import {
 	useHasLevel,
 	useVariablePicker,
 } from './variables'
-import { DefinitionType, PageType } from '~enums'
-import { Experiment, CausalFactor } from '~interfaces'
+import { PageType } from '~enums'
+import { Experiment, CausalFactor, CausalityLevel } from '~interfaces'
 
 export function useFactorsDefinitionForm({
 	defineQuestion,
@@ -50,7 +50,7 @@ export function useFactorsDefinitionForm({
 		const newFactor = {
 			variable,
 			description,
-			level: isPrimary ? DefinitionType.Primary : DefinitionType.Secondary,
+			level: isPrimary ? CausalityLevel.Primary : CausalityLevel.Secondary,
 		}
 		onAdd && onAdd(newFactor)
 		resetFields()
@@ -70,7 +70,7 @@ export function useFactorsDefinitionForm({
 		if (factor) {
 			setVariable(factor.variable)
 			setDescription(factor.description || '')
-			hasLevel && setIsPrimary(factor.level === DefinitionType.Primary)
+			hasLevel && setIsPrimary(factor.level === CausalityLevel.Primary)
 		}
 	}, [factor, hasLevel])
 
@@ -78,8 +78,8 @@ export function useFactorsDefinitionForm({
 		const edited: Partial<CausalFactor> = { ...factor, variable, description }
 		hasLevel &&
 			(edited.level = isPrimary
-				? DefinitionType.Primary
-				: DefinitionType.Secondary)
+				? CausalityLevel.Primary
+				: CausalityLevel.Secondary)
 		onChange && onChange(edited)
 	}, [variable, isPrimary, description, factor, hasLevel, onChange])
 

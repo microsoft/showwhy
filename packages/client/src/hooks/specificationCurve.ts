@@ -8,7 +8,6 @@ import { Theme } from '@thematic/core'
 import { useThematic } from '@thematic/react'
 import { useCallback, useMemo, useState } from 'react'
 import { useLoadSpecificationData } from '../pages/PerformAnalysis/ExploreSpecificationCurvePage/hooks'
-import { DefinitionType } from '~enums'
 import {
 	useDefaultRun,
 	useOnMouseOver,
@@ -17,6 +16,7 @@ import {
 	useVegaWindowDimensions,
 } from '~hooks'
 import {
+	CausalityLevel,
 	DecisionFeature,
 	Experiment,
 	RunHistory,
@@ -123,7 +123,7 @@ function useOutcome(defineQuestion: Experiment) {
 	return useMemo(
 		() =>
 			defineQuestion.outcome?.definition.find(
-				d => d.level === DefinitionType.Primary,
+				d => d.level === CausalityLevel.Primary,
 			)?.variable,
 		[defineQuestion],
 	)

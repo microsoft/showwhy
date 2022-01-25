@@ -9,8 +9,8 @@ import {
 	getNodeProperties,
 	getSimulationNumByRefuterType,
 } from './utils'
-import { DefinitionType } from '~enums'
 import {
+	CausalityLevel,
 	AlternativeModels,
 	AlternativeModelsRequest,
 	ElementDefinition,
@@ -39,12 +39,12 @@ export function buildNodes(nodes: Node[]): NodeRequest {
 }
 
 export interface Spec {
-	type: DefinitionType
+	type: CausalityLevel
 	label?: string
 	variable?: string
 }
 export interface PopulationSpec {
-	type: DefinitionType
+	type: CausalityLevel
 	label: string
 	dataframe: string
 	population_id?: string
