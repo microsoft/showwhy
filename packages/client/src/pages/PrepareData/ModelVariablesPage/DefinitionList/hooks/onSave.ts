@@ -7,7 +7,7 @@ import { useCallback } from 'react'
 import { v4 } from 'uuid'
 import { SetEditingDefinition, SetModelVariables } from './types'
 import { DefinitionType, PageType } from '~enums'
-import { CausalFactor, Definition, Factor, StringSetter } from '~interfaces'
+import { CausalFactor, Definition, StringSetter } from '~interfaces'
 
 export function useOnSaveCausalFactor({
 	setNewLabel,
@@ -64,13 +64,13 @@ export function useOnSave({
 	modelVariables?: Definition
 	setEditingDefinition: SetEditingDefinition
 	toggleIsEditingLabel: () => void
-	saveDefinition: (def: Factor) => void
+	saveDefinition: (def: CausalFactor) => void
 	onUpdate: (label: string) => void
 	onSaveCausalFactor: (factor: CausalFactor) => void
 	setModelVariables: SetModelVariables
-}): (definition?: Factor) => void {
+}): (definition?: CausalFactor) => void {
 	return useCallback(
-		(definition?: Factor) => {
+		(definition?: CausalFactor) => {
 			if (type === PageType.Control) {
 				return onSaveCausalFactor(definition as CausalFactor)
 			}

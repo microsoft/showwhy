@@ -3,10 +3,10 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { Definition, Factor, Setter } from '~interfaces'
+import { Definition, CausalFactor, Setter } from '~interfaces'
 
 export type InputRef = React.RefObject<HTMLInputElement>
 
 export type SetModelVariables = Setter<Definition | undefined>
 
-export type SetEditingDefinition = Setter<Factor | undefined>
+export type SetEditingDefinition = Setter<CausalFactor | undefined>

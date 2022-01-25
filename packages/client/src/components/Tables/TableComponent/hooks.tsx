@@ -7,26 +7,21 @@ import { Checkbox, IComboBoxOption } from '@fluentui/react'
 import { useCallback, useMemo, useState } from 'react'
 import { useFactorsDefinitionForm } from '~components/FactorsDefinitionForm'
 import { PageType } from '~enums'
-import {
-	CausalFactor,
-	ElementDefinition,
-	Factor,
-	HeaderData,
-} from '~interfaces'
+import { CausalFactor, ElementDefinition, HeaderData } from '~interfaces'
 
 const actionsHeader = { fieldName: 'actions', value: 'Actions' }
 
 export function useTableComponent(
-	columns: Factor[],
+	columns: CausalFactor[],
 	headers: HeaderData[],
 	definitionToEdit: ElementDefinition | undefined,
-	factorToEdit: Factor | undefined,
+	factorToEdit: CausalFactor | undefined,
 	pageType: PageType,
 	variables: IComboBoxOption[] | undefined,
-	onDelete: undefined | ((def: Factor) => void),
-	onSave: undefined | ((def: Factor) => void),
-	onEdit: undefined | ((def: Factor) => void),
-	onCancel: undefined | ((def: Factor) => void),
+	onDelete: undefined | ((def: CausalFactor) => void),
+	onSave: undefined | ((def: CausalFactor) => void),
+	onEdit: undefined | ((def: CausalFactor) => void),
+	onCancel: undefined | ((def: CausalFactor) => void),
 ): {
 	items: any
 	headersData: any[]
@@ -39,7 +34,7 @@ export function useTableComponent(
 	const setter = definitionToEdit ? setEditedDefinition : setEditedFactor
 	const onChange = useOnchange(setter, definitionToEdit || factorToEdit)
 	const { level, description, variable } = useFactorsDefinitionForm({
-		factor: (definitionToEdit || factorToEdit) as Factor,
+		factor: (definitionToEdit || factorToEdit) as CausalFactor,
 		onChange,
 		pageType,
 		variables,
@@ -130,7 +125,7 @@ export function useTableComponent(
 
 function useOnchange(set, valueToEdit) {
 	return useCallback(
-		(value: Partial<Factor>) => {
+		(value: Partial<CausalFactor>) => {
 			set({
 				...value,
 				id: valueToEdit?.id || '',

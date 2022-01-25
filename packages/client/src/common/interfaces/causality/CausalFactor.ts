@@ -4,6 +4,7 @@
  */
 
 import { Causes } from './Causes'
+import { DefinitionType } from '~enums'
 
 export interface CausalFactor {
 	id: string
@@ -11,4 +12,5 @@ export interface CausalFactor {
 	variable: string
 	causes?: Causes
 	column?: string
+	level?: DefinitionType
 }

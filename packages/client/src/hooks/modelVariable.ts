@@ -8,11 +8,11 @@ import { SetterOrUpdater } from 'recoil'
 import { replaceItemAtIndex } from '../common/utils/functions'
 import { usePageType } from './usePageType'
 import { PageType } from '~enums'
-import { DescribeElements, ElementDefinition, Factor } from '~interfaces'
+import { DescribeElements, ElementDefinition, CausalFactor } from '~interfaces'
 // HACK to pass the unit tests
 import { useDefineQuestion, useSetDefineQuestion } from '~state/defineQuestion'
 
-export function useSaveDefinition(): (newDefinition: Factor) => void {
+export function useSaveDefinition(): (newDefinition: CausalFactor) => void {
 	return useSaveDefinitionTestable(
 		usePageType(),
 		useDefineQuestion(),
@@ -24,9 +24,9 @@ export function useSaveDefinitionTestable(
 	type: PageType,
 	defineQuestion: DescribeElements,
 	setDefineQuestion: SetterOrUpdater<DescribeElements>,
-): (newDefinition: Factor) => void {
+): (newDefinition: CausalFactor) => void {
 	return useCallback(
-		(newDefinition: Factor) => {
+		(newDefinition: CausalFactor) => {
 			let newDefinitionList = [...defineQuestion[type]?.definition] || []
 
 			const index = defineQuestion[type]?.definition?.findIndex(

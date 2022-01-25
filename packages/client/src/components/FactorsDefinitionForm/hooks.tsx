@@ -13,7 +13,7 @@ import {
 	useVariablePicker,
 } from './variables'
 import { DefinitionType, PageType } from '~enums'
-import { DescribeElements, Factor } from '~interfaces'
+import { DescribeElements, CausalFactor } from '~interfaces'
 
 export function useFactorsDefinitionForm({
 	defineQuestion,
@@ -25,10 +25,10 @@ export function useFactorsDefinitionForm({
 }: {
 	pageType: PageType
 	variables?: IComboBoxOption[]
-	onAdd?: (factor: Omit<Factor, 'id'>) => void
+	onAdd?: (factor: Omit<CausalFactor, 'id'>) => void
 	defineQuestion?: DescribeElements
-	factor?: Factor
-	onChange?: (f: Partial<Factor>) => void
+	factor?: CausalFactor
+	onChange?: (f: Partial<CausalFactor>) => void
 }): {
 	level
 	variable
@@ -75,7 +75,7 @@ export function useFactorsDefinitionForm({
 	}, [factor, hasLevel])
 
 	useEffect(() => {
-		const edited: Partial<Factor> = { ...factor, variable, description }
+		const edited: Partial<CausalFactor> = { ...factor, variable, description }
 		hasLevel &&
 			(edited.level = isPrimary
 				? DefinitionType.Primary
