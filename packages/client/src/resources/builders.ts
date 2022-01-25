@@ -17,7 +17,7 @@ import {
 } from '~enums'
 import {
 	AlternativeModels,
-	AlternativeModelsReq,
+	AlternativeModelsRequest,
 	ElementDefinition,
 	Estimator,
 	NodeRequest,
@@ -94,7 +94,7 @@ export function buildSpecs(
 export function buildModelLevel(
 	modelName: string,
 	model: AlternativeModels,
-): AlternativeModelsReq | undefined {
+): AlternativeModelsRequest | undefined {
 	const modelConfounders = [...model.confounders]
 	const modelOutcome = [...model.outcomeDeterminants]
 	if (
@@ -118,8 +118,8 @@ export function models(
 	min: AlternativeModels,
 	interm: AlternativeModels,
 	unadju: AlternativeModels,
-): AlternativeModelsReq[] {
-	const modelsList: AlternativeModelsReq[] = []
+): AlternativeModelsRequest[] {
+	const modelsList: AlternativeModelsRequest[] = []
 	const maximum = buildModelLevel('Maximum', max)
 	if (maximum) {
 		modelsList.push(maximum)
@@ -131,7 +131,7 @@ export function models(
 	}
 
 	const unadjusted = buildModelLevel('Unadjusted', unadju)
-	modelsList.push(unadjusted as AlternativeModelsReq)
+	modelsList.push(unadjusted as AlternativeModelsRequest)
 
 	return modelsList
 }

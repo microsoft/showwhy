@@ -5,10 +5,10 @@
 
 import { buildNodes } from './builders'
 import { NodeTypes } from '~enums'
-import { Data, Edge, NodeRequest, NodeResponse } from '~interfaces'
+import { GraphNode, GraphEdge, NodeRequest, NodeResponse } from '~interfaces'
 import { executeNode } from '~resources'
 
-function dataObject(value: string): Data {
+function dataObject(value: string): GraphNode {
 	return {
 		data: {
 			id: value,
@@ -17,7 +17,7 @@ function dataObject(value: string): Data {
 		},
 	}
 }
-function edgeObject(value: string, generalExposure: string): Edge {
+function edgeObject(value: string, generalExposure: string): GraphEdge {
 	return {
 		data: {
 			source: value,
@@ -32,13 +32,13 @@ export function prepareData(
 	generalExposure: string,
 	generalOutcome: string,
 ): Promise<NodeResponse> {
-	const edges: Edge[] = []
-	let nodes: Data[] = []
+	const edges: GraphEdge[] = []
+	let nodes: GraphNode[] = []
 	let variablesNames: string[] = []
 
 	if (confounders) {
 		variablesNames = variablesNames.concat(confounders?.map(x => x))
-		const confoundersData: Data[] = confounders.map((x: string) =>
+		const confoundersData: GraphNode[] = confounders.map((x: string) =>
 			dataObject(x),
 		)
 		confoundersData.forEach(a => {
@@ -49,7 +49,7 @@ export function prepareData(
 	}
 	if (outcomeDeterminants) {
 		variablesNames = variablesNames.concat(outcomeDeterminants?.map(x => x))
-		const outcomeData: Data[] = outcomeDeterminants.map((x: string) =>
+		const outcomeData: GraphNode[] = outcomeDeterminants.map((x: string) =>
 			dataObject(x),
 		)
 		outcomeData.forEach(a => {

@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { AdditionalProperties, GraphElements } from '~interfaces'
+import { AdditionalProperties, Graph } from '~interfaces'
 
 export interface Node extends Partial<AdditionalProperties> {
 	id: string
@@ -17,5 +17,5 @@ export interface Node extends Partial<AdditionalProperties> {
 	outcome?: string
 	dataframe?: string
 	controls?: string[]
-	causal_graph?: GraphElements
+	causal_graph?: Graph
 }
