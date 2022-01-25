@@ -7,9 +7,8 @@ import { TextField } from '@fluentui/react'
 import { useCallback } from 'react'
 import styled from 'styled-components'
 import { InputRef } from './types'
-import { Factor, Item } from '~interfaces'
+import { Factor, Item, StringSetter } from '~interfaces'
 import { Text } from '~styles'
-import { StringSetter } from '~types'
 
 export function useItem({
 	isEditingLabel,

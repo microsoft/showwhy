@@ -8,7 +8,7 @@ import { not } from 'arquero'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { ColumnRelevance, ColumnRelation } from '~enums'
 import { useRestoreColumn, useTableCommands } from '~hooks'
-import { BasicTable, ProjectFile, TableColumn } from '~interfaces'
+import { BasicTable, ProjectFile, TableColumn, Setter } from '~interfaces'
 import {
 	useOriginalTables,
 	useProjectFiles,
@@ -17,7 +17,6 @@ import {
 	useSetTableColumns,
 	useTableColumns,
 } from '~state'
-import { Setter } from '~types'
 
 export function useBusinessLogic(): {
 	files: ProjectFile[]

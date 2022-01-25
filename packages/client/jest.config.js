@@ -21,7 +21,6 @@ const configuration = {
 		'~interfaces': ['<rootDir>/src/common/interfaces/index.ts'],
 		'~utils/(.*)': ['<rootDir>/src/common/utils/$1'],
 		'~utils': ['<rootDir>/src/common/utils/index.ts'],
-		'~types': ['<rootDir>/src/common/types/index.ts'],
 		'~hooks': ['<rootDir>/src/hooks/index.ts'],
 		'~styles': ['<rootDir>/src/styles/index.ts'],
 	},

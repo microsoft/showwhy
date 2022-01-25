@@ -3,8 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { Definition, Factor } from '~interfaces'
-import { Setter } from '~types'
+import { Definition, Factor, Setter } from '~interfaces'
 
 export type InputRef = React.RefObject<HTMLInputElement>
 
