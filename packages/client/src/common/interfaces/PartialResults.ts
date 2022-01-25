@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { NodeData } from './NodeData'
+import { GraphNodeData } from './graphs/GraphNodeData'
 
 export interface PartialResults {
 	id: string
@@ -12,7 +12,7 @@ export interface PartialResults {
 	state: string
 	error?: string
 	traceback?: string
-	node_data?: NodeData
+	node_data?: GraphNodeData
 	refuter_bootstrap: number
 	refuter_add_unobserved_common_cause: number
 	refuter_random_common_cause: number

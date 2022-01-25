@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-export enum NodeTypes {
+export enum GraphNodeType {
 	IdentifyEstimand = 'IdentifyEstimandNode',
 	CreateCausalGraph = 'CausalGraphNode',
 	LoadDataset = 'LoadNode',

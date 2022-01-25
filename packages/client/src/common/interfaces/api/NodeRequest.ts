@@ -3,9 +3,9 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { Node } from '../Node'
+import { GraphNodeData } from '../graphs/GraphNodeData'
 
 export interface NodeRequest {
 	session_id?: string
-	nodes: Node[]
+	nodes: GraphNodeData[]
 }

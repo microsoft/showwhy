@@ -7,10 +7,10 @@ import {
 	EstimatorGroup,
 	EstimatorType,
 	NodeIds,
-	NodeTypes,
+	GraphNodeType,
 	RefutationType,
 } from '~enums'
-import { NodeData } from '~interfaces'
+import { GraphNodeData } from '~interfaces'
 import { getEnv } from '~resources/getEnv'
 
 export function getSimulationNumByRefuterType(type: RefutationType): number {
@@ -53,42 +53,42 @@ export function getModelNameByEstimatorType(type: EstimatorType): string {
 	}
 }
 
-export function getNodeProperties(type: NodeTypes): NodeData {
+export function getNodeProperties(type: GraphNodeType): GraphNodeData {
 	switch (type) {
-		case NodeTypes.EstimateEffects:
+		case GraphNodeType.EstimateEffects:
 			return {
-				type: NodeTypes.EstimateEffects,
+				type: GraphNodeType.EstimateEffects,
 				result: 'estimate_results',
 				id: NodeIds.EstimateEffects,
 				value: NodeIds.EstimateEffects,
 				name: NodeIds.EstimateEffects,
 			}
-		case NodeTypes.IdentifyEstimand:
+		case GraphNodeType.IdentifyEstimand:
 			return {
-				type: NodeTypes.IdentifyEstimand,
+				type: GraphNodeType.IdentifyEstimand,
 				result: 'primary_estimand',
 				id: NodeIds.IdentifyEstimand,
 				value: NodeIds.IdentifyEstimand,
 				name: NodeIds.IdentifyEstimand,
 			}
-		case NodeTypes.CreateCausalGraph:
+		case GraphNodeType.CreateCausalGraph:
 			return {
-				type: NodeTypes.CreateCausalGraph,
+				type: GraphNodeType.CreateCausalGraph,
 				result: 'primary_maximum_model',
 				id: NodeIds.CreateCausalGraph,
 				value: NodeIds.CreateCausalGraph,
 				name: NodeIds.CreateCausalGraph,
 			}
-		case NodeTypes.LoadDataset:
+		case GraphNodeType.LoadDataset:
 			return {
-				type: NodeTypes.LoadDataset,
+				type: GraphNodeType.LoadDataset,
 				id: NodeIds.LoadDataset,
 				value: NodeIds.LoadDataset,
 				name: NodeIds.LoadDataset,
 			}
-		case NodeTypes.SignificanceTest:
+		case GraphNodeType.SignificanceTest:
 			return {
-				type: NodeTypes.SignificanceTest,
+				type: GraphNodeType.SignificanceTest,
 				result: 'significance_test',
 				id: NodeIds.SignificanceTest,
 				value: NodeIds.SignificanceTest,

@@ -4,7 +4,7 @@
  */
 
 import { buildNodes } from './builders'
-import { NodeTypes } from '~enums'
+import { GraphNodeType } from '~enums'
 import { GraphNode, GraphEdge, NodeRequest, NodeResponse } from '~interfaces'
 import { executeNode } from '~resources'
 
@@ -74,7 +74,7 @@ export function prepareData(
 
 	const nodeReq = buildNodes([
 		{
-			type: NodeTypes.CreateCausalGraph,
+			type: GraphNodeType.CreateCausalGraph,
 			treatment: `${generalExposure}`,
 			outcome: `${generalOutcome}`,
 			dataframe: 'None',
@@ -82,7 +82,7 @@ export function prepareData(
 			causal_graph: obj.causalGraph,
 		},
 		{
-			type: NodeTypes.IdentifyEstimand,
+			type: GraphNodeType.IdentifyEstimand,
 			causal_model: 'primary_maximum_model',
 		},
 	])
@@ -93,7 +93,7 @@ export function prepareData(
 export const buildSignificanceTestsNode = (taskIds: string[]): NodeRequest => {
 	const nodeReq = buildNodes([
 		{
-			type: NodeTypes.SignificanceTest,
+			type: GraphNodeType.SignificanceTest,
 			spec_ids: taskIds,
 		},
 	])
@@ -104,7 +104,7 @@ export const buildLoadNode = (url: string, fileName: string): NodeRequest => {
 	const [dataframeName] = fileName.split('.')
 	const nodeReq = buildNodes([
 		{
-			type: NodeTypes.LoadDataset,
+			type: GraphNodeType.LoadDataset,
 			result: dataframeName,
 			url,
 		},

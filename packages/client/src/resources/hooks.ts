@@ -11,13 +11,13 @@ import {
 	buildSpecs,
 	models,
 } from './builders'
-import { NodeTypes } from '~enums'
+import { GraphNodeType } from '~enums'
 import { useNodeProperties } from '~hooks'
-import { AdditionalProperties, NodeRequest } from '~interfaces'
+import { GraphNodeData, NodeRequest } from '~interfaces'
 
 export function useGetNodeProperties(): (
 	fileName: string,
-) => AdditionalProperties {
+) => Partial<GraphNodeData> {
 	const {
 		definitions,
 		estimators,
@@ -71,7 +71,7 @@ export function useBuildEstimateEffectNode(): (
 		(fileName: string) => {
 			const nodeReq = buildNodes([
 				{
-					type: NodeTypes.EstimateEffects,
+					type: GraphNodeType.EstimateEffects,
 					...getNodeProperties(fileName),
 				},
 			])

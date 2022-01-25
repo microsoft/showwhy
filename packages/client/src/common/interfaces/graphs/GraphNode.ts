@@ -3,17 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import { GraphNodeData } from './GraphNodeData'
+
 export interface GraphNode {
-	data: {
-		id: string
-		value: string
-		name: string
-		type?: string
-		causal_model?: string
-		result?: string
-		treatment?: string
-		outcome?: string
-		ref?: string
-		dataframe?: string
-	}
+	data: GraphNodeData
 }

@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { GraphEdgeData } from './GraphEdgeData'
-export interface GraphEdge {
-	data: GraphEdgeData
+export interface GraphEdgeData {
+	source: string
+	target: string
 }
