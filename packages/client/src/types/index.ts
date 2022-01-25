@@ -17,6 +17,3 @@ export * from './runs'
 export * from './tableView'
 export * from './visualization'
 export * from './workflow'
-
-export * from './DecisionFeature'
-export * from './PrimarySpecificationConfig'
