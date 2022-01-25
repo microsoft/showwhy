@@ -71,7 +71,7 @@ export const SpecificationDescription: React.FC<SpecificationDescriptionProps> =
 											<RefutationOptionsCallout
 												key={index}
 												calloutKey={index}
-												title={RefutationTestMethodString[refutation]}
+												title={(RefutationTestMethodString as any)[refutation]}
 												refutationOptions={refutationOptions}
 												separate={index > 0}
 											/>
