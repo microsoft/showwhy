@@ -7,15 +7,14 @@ import { memo } from 'react'
 import styled from 'styled-components'
 import { useTableComponent } from './hooks'
 import { GenericTableComponent } from '~components/Tables/GenericTableComponent'
-import { PageType } from '~enums'
 import {
+	PageType,
 	ElementDefinition,
 	FlatCausalFactor,
 	CausalFactor,
 	HeaderData,
-	Factor,
 	Item,
-} from '~interfaces'
+} from '~types'
 
 export interface TableProps {
 	headers: HeaderData[]
@@ -44,7 +43,7 @@ export const TableComponent: React.FC<TableProps> = memo(
 		onSave,
 	}) {
 		const { items, customColumnsWidth, headersData } = useTableComponent(
-			columns as Factor[],
+			columns as CausalFactor[],
 			headers,
 			definitionToEdit,
 			factorToEdit,

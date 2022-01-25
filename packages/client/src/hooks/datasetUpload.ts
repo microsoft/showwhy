@@ -20,7 +20,7 @@ import {
 import { useOnDropRejected } from './dropzone'
 import { useAddFilesToCollection } from './fileCollection'
 import { useSupportedFileTypes } from './supportedFileTypes'
-import { DropFilesCount, ProjectFile } from '~interfaces'
+import { DropFilesCount, ProjectFile } from '~types'
 import { createDefaultTable } from '~utils'
 
 export function useDrop(

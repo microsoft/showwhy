@@ -6,8 +6,7 @@
 import { useCallback } from 'react'
 import { v4 } from 'uuid'
 import { InputRef, SetModelVariables } from './types'
-import { PageType } from '~enums'
-import { CausalFactor, Definition, Factor } from '~interfaces'
+import { PageType, CausalFactor, Definition } from '~types'
 import { wait } from '~utils'
 
 export function useOnDuplicateCausalFactor({
@@ -50,17 +49,17 @@ export function useOnDuplicate({
 	listEndRef,
 	onClick,
 }: {
-	saveDefinition: (factor: Factor) => void
+	saveDefinition: (factor: CausalFactor) => void
 	duplicateColumn: (newCol: string, col: string) => void
 	modelVariables?: Definition
 	type: string
 	setModelVariables: SetModelVariables
 	onDuplicateCausalFactor: (factor: CausalFactor, newName: string) => void
 	listEndRef: InputRef
-	onClick: (factor: Factor) => void
-}): (value: Factor) => Promise<void> {
+	onClick: (factor: CausalFactor) => void
+}): (value: CausalFactor) => Promise<void> {
 	return useCallback(
-		async (value: Factor) => {
+		async (value: CausalFactor) => {
 			const newVariableName = value?.variable + '_copy'
 			const existing = (modelVariables && modelVariables[type]) || []
 			const actualVariable = existing.find(x => x.name === value.variable)
@@ -72,13 +71,13 @@ export function useOnDuplicate({
 			if (type === PageType.Control) {
 				return onDuplicateCausalFactor(value as CausalFactor, newVariableName)
 			}
-			const newDefinition = {
+			const newDefinition: CausalFactor = {
 				level: value?.level,
 				variable: newVariableName,
 				description: value?.description,
 				column: newColumn,
 				id: v4(),
-			} as Factor
+			}
 			const newVariable = {
 				name: newVariableName,
 				filters: actualVariable?.filters?.map(x => {

@@ -10,9 +10,9 @@ import { VegaSpecificationCurve } from './vega/VegaSpecificationCurve'
 import { EmptyDataPageWarning } from '~components/EmptyDataPageWarning'
 import { ErrorMessage } from '~components/ErrorMessage'
 import { RunProgressIndicator } from '~components/RunProgressIndicator'
-import { Pages } from '~enums'
 import { useRefutationOptions, useSpecificationCurve } from '~hooks'
 import { Title, ContainerFlexColumn, ContainerFlexRow } from '~styles'
+import { Pages } from '~types'
 
 export const ExploreSpecificationCurvePage: React.FC = memo(
 	function SpecificationCurve() {

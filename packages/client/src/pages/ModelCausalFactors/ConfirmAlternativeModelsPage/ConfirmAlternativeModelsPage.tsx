@@ -9,8 +9,8 @@ import { memo } from 'react'
 import styled from 'styled-components'
 import { useBusinessLogic } from './hooks'
 import { CausalEffects } from '~components/CausalEffects'
-import { CausalModelLevel } from '~enums'
 import { Container } from '~styles'
+import { CausalModelLevel } from '~types'
 
 const causalModelOptions: IChoiceGroupOption[] = [
 	{

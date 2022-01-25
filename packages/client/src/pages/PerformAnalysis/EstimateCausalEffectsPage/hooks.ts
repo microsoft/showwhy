@@ -5,7 +5,7 @@
 
 import { useBoolean } from '@fluentui/react-hooks'
 import { useCallback, useEffect, useState } from 'react'
-import { OrchestratorType } from '~enums'
+import { OrchestratorType } from '~classes'
 import {
 	useEstimateNode,
 	useIsDefaultRunProcessing,
@@ -15,14 +15,6 @@ import {
 	useUpdateAndDisableRunHistory,
 	useWakeLock,
 } from '~hooks'
-import {
-	DescribeElements,
-	Estimator,
-	NodeRequest,
-	ProjectFile,
-	RefutationOption,
-	RunHistory,
-} from '~interfaces'
 import { buildLoadNode, numberExecutions, uploadFiles } from '~resources'
 import {
 	useConfidenceInterval,
@@ -35,6 +27,14 @@ import {
 	useSpecCount,
 } from '~state'
 import {
+	Experiment,
+	Estimator,
+	NodeRequest,
+	ProjectFile,
+	RefutationOption,
+	RunHistory,
+} from '~types'
+import {
 	createFormData,
 	returnInitialRunHistory,
 	returnRefutationCount,
@@ -45,7 +45,7 @@ export function useBusinessLogic(): {
 	totalEstimatorsCount: number
 	specCount: number | undefined
 	estimators: Estimator[]
-	definitions: DescribeElements
+	definitions: Experiment
 	runHistory: RunHistory[]
 	errors: string | undefined
 	cancelRun: () => void

@@ -6,9 +6,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { SetterOrUpdater } from 'recoil'
 import { getEstimatorByRanking, estimatorGroups } from './constants'
-import { EstimatorsGroups, EstimatorsType } from '~enums'
 import { useEstimatorShortDescription, useEstimatorsList } from '~hooks'
-import { Estimator, PrimarySpecificationConfig } from '~interfaces'
 import {
 	useSetEstimators,
 	useSetPrimarySpecificationConfig,
@@ -18,7 +16,13 @@ import {
 	useToggleConfidenceInterval,
 	useConfidenceInterval,
 } from '~state'
-import { Setter } from '~types'
+import {
+	EstimatorGroup,
+	EstimatorType,
+	Estimator,
+	PrimarySpecificationConfig,
+	Setter,
+} from '~types'
 
 enum BatchUpdateAction {
 	Delete = 'delete',
@@ -39,10 +43,10 @@ export function useEstimatorHook(): {
 	const confidenceInterval = useConfidenceInterval()
 
 	const [selectedEstimatorGroups, setSelectedEstimatorGroups] = useState<
-		EstimatorsGroups[]
+		EstimatorGroup[]
 	>([])
 	const [defaultEstimator, setDefaultEstimator] = useState<
-		EstimatorsType | undefined
+		EstimatorType | undefined
 	>(primarySpecificationConfig.type)
 
 	const onEstimatorsCheckboxChange = useCallback(
@@ -153,11 +157,11 @@ function useBatchUpdate(
 function useVerifyEstimatorGroups(
 	estimatorsList: Estimator[],
 	estimators: Estimator[],
-	setSelectedEstimatorGroups: Setter<EstimatorsGroups[]>,
+	setSelectedEstimatorGroups: Setter<EstimatorGroup[]>,
 ) {
 	return useCallback(() => {
 		estimatorGroups.forEach(item => {
-			const group: EstimatorsGroups = item.key as EstimatorsGroups
+			const group: EstimatorGroup = item.key as EstimatorGroup
 			const groupEstimators = estimatorsList
 				.filter(e => e.group === group)
 				.map(e => e.type)
@@ -173,15 +177,15 @@ function useVerifyEstimatorGroups(
 
 function useOnEstimatorTypeChange(
 	estimatorsList: Estimator[],
-	selectedEstimatorGroups: EstimatorsGroups[],
+	selectedEstimatorGroups: EstimatorGroup[],
 	batchUpdateSelectedEstimators: (
 		estimators: Estimator[],
 		action: BatchUpdateAction,
 	) => void,
-	setSelectedEstimatorGroups: Setter<EstimatorsGroups[]>,
+	setSelectedEstimatorGroups: Setter<EstimatorGroup[]>,
 ) {
 	return useCallback(
-		(group: EstimatorsGroups) => {
+		(group: EstimatorGroup) => {
 			const action: BatchUpdateAction = selectedEstimatorGroups.includes(group)
 				? BatchUpdateAction.Delete
 				: BatchUpdateAction.Add
@@ -203,11 +207,11 @@ function useOnEstimatorTypeChange(
 }
 
 function useOnDefaultChange(
-	setDefaultEstimator: Setter<EstimatorsType | undefined>,
+	setDefaultEstimator: Setter<EstimatorType | undefined>,
 	setPrimarySpecificationConfig: SetterOrUpdater<PrimarySpecificationConfig>,
 ) {
 	return useCallback(
-		(type: EstimatorsType) => {
+		(type: EstimatorType) => {
 			setDefaultEstimator(type)
 			setPrimarySpecificationConfig(prev => ({
 				...prev,
@@ -220,11 +224,11 @@ function useOnDefaultChange(
 
 function useEstimatorCardList(
 	estimatorsList: Estimator[],
-	defaultEstimator: EstimatorsType | undefined,
+	defaultEstimator: EstimatorType | undefined,
 	estimators: Estimator[],
-	selectedEstimatorGroups: EstimatorsGroups[],
-	onDefaultChange: (type: EstimatorsType) => void,
-	onEstimatorTypeChange: (group: EstimatorsGroups) => void,
+	selectedEstimatorGroups: EstimatorGroup[],
+	onDefaultChange: (type: EstimatorType) => void,
+	onEstimatorTypeChange: (group: EstimatorGroup) => void,
 	onEstimatorsCheckboxChange: (estimator: Estimator) => void,
 	estimatorShortDescription: (type: string) => string,
 	confidenceInterval: boolean,
@@ -237,10 +241,8 @@ function useEstimatorCardList(
 				key,
 				title: `${key} models`,
 				description: estimatorShortDescription(key),
-				onCardClick: () => onEstimatorTypeChange(key as EstimatorsGroups),
-				isCardChecked: selectedEstimatorGroups.includes(
-					key as EstimatorsGroups,
-				),
+				onCardClick: () => onEstimatorTypeChange(key as EstimatorGroup),
+				isCardChecked: selectedEstimatorGroups.includes(key as EstimatorGroup),
 				list: estimatorsList
 					.filter(e => e.group === key)
 					.map(e => {

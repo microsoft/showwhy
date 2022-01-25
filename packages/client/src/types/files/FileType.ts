@@ -1,0 +1,12 @@
+/*!
+ * Copyright (c) Microsoft. All rights reserved.
+ * Licensed under the MIT license. See LICENSE file in the project.
+ */
+
+export enum FileType {
+	jupyter = 'jupyter',
+	csv = 'csv',
+	tsv = 'tsv',
+	json = 'json',
+	zip = 'zip',
+}

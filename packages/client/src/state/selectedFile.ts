@@ -10,7 +10,7 @@ import {
 	useResetRecoilState,
 	useSetRecoilState,
 } from 'recoil'
-import { ProjectFile } from '~interfaces'
+import { ProjectFile } from '~types'
 
 const selectedFileState = atom<ProjectFile | undefined>({
 	key: 'selected-file',

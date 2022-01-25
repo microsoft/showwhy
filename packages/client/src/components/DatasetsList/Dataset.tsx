@@ -4,7 +4,7 @@
  */
 import { memo } from 'react'
 import { SelectableCard } from '~components/CardComponent'
-import { ProjectFile } from '~interfaces'
+import { ProjectFile } from '~types'
 
 interface DatasetProps {
 	file: ProjectFile

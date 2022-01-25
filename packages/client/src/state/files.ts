@@ -12,7 +12,7 @@ import {
 	useResetRecoilState,
 	useSetRecoilState,
 } from 'recoil'
-import { ProjectFile } from '~interfaces'
+import { ProjectFile } from '~types'
 
 const filesState = atom<ProjectFile[]>({
 	key: 'files',

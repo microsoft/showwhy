@@ -15,7 +15,7 @@ import {
 	useResetRecoilState,
 	useSetRecoilState,
 } from 'recoil'
-import { ProjectFile, TableColumn } from '~interfaces'
+import { ProjectFile, TableColumn } from '~types'
 
 export const tableColumnsState = atomFamily<
 	TableColumn[] | undefined,

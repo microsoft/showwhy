@@ -4,9 +4,8 @@
  */
 import { useMemo } from 'react'
 import { useAlternativeModels, useExcludedFactors } from './causalFactors'
-import { CausalModelLevel } from '~enums'
-import { AlternativeModels, DescribeElements } from '~interfaces'
 import { useDefineQuestion } from '~state/defineQuestion'
+import { AlternativeModels, Experiment, CausalModelLevel } from '~types'
 
 export function useCausalEffects(
 	causalLevel: CausalModelLevel,
@@ -19,7 +18,7 @@ export function useCausalEffects(
 }
 
 export function useCausalEffectsTestable(
-	question: DescribeElements,
+	question: Experiment,
 	excludedFactors: string[],
 	{ confounders, outcomeDeterminants }: AlternativeModels,
 ): {

@@ -11,13 +11,13 @@ import { VegaHost } from '../VegaHost'
 import { useSpecificationSHAPColumns } from '../hooks'
 import template from './dot-plot.json'
 import { mergeSpec, parseJsonPathSpec } from './util'
-import { DefinitionType } from '~enums'
+import { usePrimarySpecificationConfig } from '~state'
 import {
+	CausalityLevel,
 	DecisionFeature,
 	Specification,
 	SpecificationCurveConfig,
-} from '~interfaces'
-import { usePrimarySpecificationConfig } from '~state'
+} from '~types'
 
 export interface AnalyticDecisionsDotPlotProps {
 	data: Specification[]
@@ -65,9 +65,9 @@ export const AnalyticDecisionsDotPlot: React.FC<AnalyticDecisionsDotPlotProps> =
 			const rawSpec = JSON.parse(templateString)
 			const primarySpecificationId = data.find(
 				d =>
-					d.populationType === DefinitionType.Primary &&
-					d.treatmentType === DefinitionType.Primary &&
-					d.outcomeType === DefinitionType.Primary &&
+					d.populationType === CausalityLevel.Primary &&
+					d.treatmentType === CausalityLevel.Primary &&
+					d.outcomeType === CausalityLevel.Primary &&
 					d.causalModel
 						.toLowerCase()
 						.includes(primarySpecificationConfig.causalModel.toLowerCase()) &&

@@ -3,92 +3,99 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import {
-	EstimatorsGroups,
-	EstimatorsType,
-	NodeIds,
-	NodeTypes,
-	RefutationTypes,
-} from '~enums'
-import { NodeData } from '~interfaces'
 import { getEnv } from '~resources/getEnv'
+import {
+	GraphNodeData,
+	GraphNodeType,
+	RefutationType,
+	EstimatorGroup,
+	EstimatorType,
+} from '~types'
 
-export function getSimulationNumByRefuterType(type: RefutationTypes): number {
+export enum NodeIds {
+	IdentifyEstimand = 'Identify Estimand',
+	CreateCausalGraph = 'Create Causal Graph',
+	LoadDataset = 'Load Dataset',
+	EstimateEffects = 'Estimate Effects',
+	SignificanceTest = 'Significance Test',
+}
+
+export function getSimulationNumByRefuterType(type: RefutationType): number {
 	switch (type) {
-		case RefutationTypes.FullRefutation:
+		case RefutationType.FullRefutation:
 			return 100
-		case RefutationTypes.QuickRefutation:
+		case RefutationType.QuickRefutation:
 		default:
 			return 10
 	}
 }
 
-export function getModelTypeByEstimatorGroup(group: EstimatorsGroups): string {
+export function getModelTypeByEstimatorGroup(group: EstimatorGroup): string {
 	switch (group) {
-		case EstimatorsGroups.ExposureEstimator:
+		case EstimatorGroup.Exposure:
 			return 'Treatment Assignment Model'
-		case EstimatorsGroups.OutcomeEstimator:
+		case EstimatorGroup.Outcome:
 			return 'Outcome Model'
 	}
 }
 
-export function getModelNameByEstimatorType(type: EstimatorsType): string {
+export function getModelNameByEstimatorType(type: EstimatorType): string {
 	switch (type) {
-		case EstimatorsType.ForestDoubleMachineLearning:
+		case EstimatorType.ForestDoubleMachineLearning:
 			return 'econml.dml.CausalForestDML'
-		case EstimatorsType.LinearDoubleMachineLearning:
+		case EstimatorType.LinearDoubleMachineLearning:
 			return 'econml.dml.LinearDML'
-		case EstimatorsType.ForestDoublyRobustLearner:
+		case EstimatorType.ForestDoublyRobustLearner:
 			return 'econml.dr.ForestDRLearner'
-		case EstimatorsType.LinearDoublyRobustLearner:
+		case EstimatorType.LinearDoublyRobustLearner:
 			return 'econml.dr.LinearDRLearner'
-		case EstimatorsType.LinearRegression:
+		case EstimatorType.LinearRegression:
 			return 'linear_regression'
-		case EstimatorsType.PropensityScoreMatching:
+		case EstimatorType.PropensityScoreMatching:
 			return 'propensity_score_matching'
-		case EstimatorsType.PropensityScoreStratification:
+		case EstimatorType.PropensityScoreStratification:
 			return 'propensity_score_stratification'
-		case EstimatorsType.InversePropensityWeighting:
+		case EstimatorType.InversePropensityWeighting:
 			return 'propensity_score_weighting'
 	}
 }
 
-export function getNodeProperties(type: NodeTypes): NodeData {
+export function getNodeProperties(type: GraphNodeType): GraphNodeData {
 	switch (type) {
-		case NodeTypes.EstimateEffects:
+		case GraphNodeType.EstimateEffects:
 			return {
-				type: NodeTypes.EstimateEffects,
+				type: GraphNodeType.EstimateEffects,
 				result: 'estimate_results',
 				id: NodeIds.EstimateEffects,
 				value: NodeIds.EstimateEffects,
 				name: NodeIds.EstimateEffects,
 			}
-		case NodeTypes.IdentifyEstimand:
+		case GraphNodeType.IdentifyEstimand:
 			return {
-				type: NodeTypes.IdentifyEstimand,
+				type: GraphNodeType.IdentifyEstimand,
 				result: 'primary_estimand',
 				id: NodeIds.IdentifyEstimand,
 				value: NodeIds.IdentifyEstimand,
 				name: NodeIds.IdentifyEstimand,
 			}
-		case NodeTypes.CreateCausalGraph:
+		case GraphNodeType.CreateCausalGraph:
 			return {
-				type: NodeTypes.CreateCausalGraph,
+				type: GraphNodeType.CreateCausalGraph,
 				result: 'primary_maximum_model',
 				id: NodeIds.CreateCausalGraph,
 				value: NodeIds.CreateCausalGraph,
 				name: NodeIds.CreateCausalGraph,
 			}
-		case NodeTypes.LoadDataset:
+		case GraphNodeType.LoadDataset:
 			return {
-				type: NodeTypes.LoadDataset,
+				type: GraphNodeType.LoadDataset,
 				id: NodeIds.LoadDataset,
 				value: NodeIds.LoadDataset,
 				name: NodeIds.LoadDataset,
 			}
-		case NodeTypes.SignificanceTest:
+		case GraphNodeType.SignificanceTest:
 			return {
-				type: NodeTypes.SignificanceTest,
+				type: GraphNodeType.SignificanceTest,
 				result: 'significance_test',
 				id: NodeIds.SignificanceTest,
 				value: NodeIds.SignificanceTest,

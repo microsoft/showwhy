@@ -5,8 +5,7 @@
 
 import ColumnTable from 'arquero/dist/types/table/column-table'
 import { useCallback } from 'react'
-import { DeriveTypes } from '~enums'
-import { FilterType, FilterObject } from '~interfaces'
+import { FilterType, FilterObject, TableDerivationType } from '~types'
 
 export const FILTER_FUNCTIONS: FilterType[] = [
 	{
@@ -60,12 +59,12 @@ export const FILTER_FUNCTIONS: FilterType[] = [
 		placeholder: 'Value',
 	},
 	{
-		key: DeriveTypes.PercentageTopRanking,
+		key: TableDerivationType.PercentageTopRanking,
 		text: 'in top percent by value',
 		placeholder: 'Value',
 	},
 	{
-		key: DeriveTypes.PercentageBottomRanking,
+		key: TableDerivationType.PercentageBottomRanking,
 		text: 'in bottom percent by value',
 		placeholder: 'Value',
 	},

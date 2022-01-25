@@ -10,21 +10,19 @@ import {
 	getSimulationNumByRefuterType,
 } from './utils'
 import {
-	DefinitionType,
-	EstimatorsType,
-	NodeTypes,
-	RefutationTypes,
-} from '~enums'
-import {
+	CausalityLevel,
 	AlternativeModels,
-	AlternativeModelsReq,
+	AlternativeModelsRequest,
 	ElementDefinition,
 	Estimator,
+	GraphNodeType,
 	NodeRequest,
-} from '~interfaces'
+	RefutationType,
+	EstimatorType,
+} from '~types'
 
 interface Node {
-	type: NodeTypes
+	type: GraphNodeType
 	[key: string]: any
 }
 
@@ -41,12 +39,12 @@ export function buildNodes(nodes: Node[]): NodeRequest {
 }
 
 export interface Spec {
-	type: DefinitionType
+	type: CausalityLevel
 	label?: string
 	variable?: string
 }
 export interface PopulationSpec {
-	type: DefinitionType
+	type: CausalityLevel
 	label: string
 	dataframe: string
 	population_id?: string
@@ -94,7 +92,7 @@ export function buildSpecs(
 export function buildModelLevel(
 	modelName: string,
 	model: AlternativeModels,
-): AlternativeModelsReq | undefined {
+): AlternativeModelsRequest | undefined {
 	const modelConfounders = [...model.confounders]
 	const modelOutcome = [...model.outcomeDeterminants]
 	if (
@@ -118,8 +116,8 @@ export function models(
 	min: AlternativeModels,
 	interm: AlternativeModels,
 	unadju: AlternativeModels,
-): AlternativeModelsReq[] {
-	const modelsList: AlternativeModelsReq[] = []
+): AlternativeModelsRequest[] {
+	const modelsList: AlternativeModelsRequest[] = []
 	const maximum = buildModelLevel('Maximum', max)
 	if (maximum) {
 		modelsList.push(maximum)
@@ -131,14 +129,14 @@ export function models(
 	}
 
 	const unadjusted = buildModelLevel('Unadjusted', unadju)
-	modelsList.push(unadjusted as AlternativeModelsReq)
+	modelsList.push(unadjusted as AlternativeModelsRequest)
 
 	return modelsList
 }
 
 export interface BuiltEstimator {
 	type: string
-	label: EstimatorsType
+	label: EstimatorType
 	require_propensity_score: boolean
 	method_name: string
 }
@@ -146,14 +144,13 @@ export interface BuiltEstimator {
 export function buildEstimators(estimators: Estimator[]): BuiltEstimator[] {
 	return estimators.map(estimator => ({
 		type: getModelTypeByEstimatorGroup(estimator.group),
-		label: estimator.type ?? EstimatorsType.InversePropensityWeighting,
-		require_propensity_score:
-			estimator.type !== EstimatorsType.LinearRegression,
+		label: estimator.type ?? EstimatorType.InversePropensityWeighting,
+		require_propensity_score: estimator.type !== EstimatorType.LinearRegression,
 		method_name: `backdoor.${getModelNameByEstimatorType(estimator.type)}`,
 	}))
 }
 
-export function buildRefutationSpecs(refutationType: RefutationTypes): {
+export function buildRefutationSpecs(refutationType: RefutationType): {
 	num_simulations: number
 } {
 	return {

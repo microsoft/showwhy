@@ -11,18 +11,18 @@ import {
 	useResetRecoilState,
 	useSetRecoilState,
 } from 'recoil'
-import { RefutationTypes } from '~enums'
+import { RefutationType } from '~types'
 
-export const RefutationTypeState = atom<RefutationTypes>({
+export const RefutationTypeState = atom<RefutationType>({
 	key: 'refutation-tests',
-	default: RefutationTypes.QuickRefutation,
+	default: RefutationType.QuickRefutation,
 })
 
-export function useRefutationType(): RefutationTypes {
+export function useRefutationType(): RefutationType {
 	return useRecoilValue(RefutationTypeState)
 }
 
-export function useSetRefutationType(): SetterOrUpdater<RefutationTypes> {
+export function useSetRefutationType(): SetterOrUpdater<RefutationType> {
 	return useSetRecoilState(RefutationTypeState)
 }
 

@@ -5,23 +5,7 @@
 import { BaseFile } from '@data-wrangling-components/utilities'
 import { useCallback, useMemo } from 'react'
 import { v4 as uuidv4 } from 'uuid'
-import { ProjectSource, StepStatus } from '~enums'
 import { useGetStepUrls } from '~hooks'
-import {
-	CausalFactor,
-	Definition,
-	DescribeElements,
-	Element,
-	ElementDefinition,
-	FileDefinition,
-	ZipData,
-	FilterObject,
-	ProjectFile,
-	TableColumn,
-	VariableDefinition,
-	Workspace,
-	DataTableDefinition,
-} from '~interfaces'
 import {
 	useAddProjectFile,
 	useFileCollection,
@@ -39,6 +23,23 @@ import {
 	useSetStepStatuses,
 	useSetTableColumns,
 } from '~state'
+import {
+	ProjectSource,
+	CausalFactor,
+	Definition,
+	Experiment,
+	Element,
+	ElementDefinition,
+	FileDefinition,
+	ZipData,
+	FilterObject,
+	ProjectFile,
+	TableColumn,
+	VariableDefinition,
+	Workspace,
+	DataTableFileDefinition,
+	StepStatus,
+} from '~types'
 import {
 	fetchRemoteTables,
 	fetchTable,
@@ -228,9 +229,7 @@ function prepCausalFactors(factors?: Partial<CausalFactor>[]): CausalFactor[] {
 	)
 }
 
-function prepDefineQuestion(
-	define?: Partial<DescribeElements>,
-): DescribeElements {
+function prepDefineQuestion(define?: Partial<Experiment>): Experiment {
 	const prepped = { ...define }
 	if (prepped.exposure) {
 		prepped.exposure = prepElement(prepped.exposure)
@@ -242,7 +241,7 @@ function prepDefineQuestion(
 		prepped.outcome = prepElement(prepped.outcome)
 	}
 
-	return prepped as DescribeElements
+	return prepped as Experiment
 }
 
 function prepModelVariables(model?: Partial<Definition>): Definition {
@@ -316,7 +315,7 @@ const useUpdateCollection = (): ((
 			const fetched = await fetchRemoteTables(tables)
 			await fileCollection.add([...fetched, ...tableFiles])
 			if (defaultResult) {
-				const resultTable: DataTableDefinition = {
+				const resultTable: DataTableFileDefinition = {
 					...(defaultResult || {}),
 					name: 'results.csv',
 				}

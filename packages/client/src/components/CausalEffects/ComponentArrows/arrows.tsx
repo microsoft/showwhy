@@ -8,7 +8,7 @@ import { useCallback } from 'react'
 import Xarrow from 'react-xarrows'
 import styled from 'styled-components'
 import { box1, box2, box3, box4 } from './constants'
-import { Size } from '~enums'
+import { CausalEffectSize } from '~types'
 
 export const arrows = [
 	{
@@ -30,7 +30,7 @@ export const arrows = [
 	},
 ]
 
-export function useGetArrows(size: Size): () => JSX.Element[] {
+export function useGetArrows(size: CausalEffectSize): () => JSX.Element[] {
 	const thematic = useThematic()
 	return useCallback(() => {
 		return arrows.map(arrow => {
@@ -47,17 +47,18 @@ export function useGetArrows(size: Size): () => JSX.Element[] {
 							</ArrowLabel>
 						),
 					}}
-					headSize={size === Size.Small ? 6 : 9}
-					strokeWidth={size === Size.Small ? 1 : 2}
+					headSize={size === CausalEffectSize.Small ? 6 : 9}
+					strokeWidth={size === CausalEffectSize.Small ? 1 : 2}
 				/>
 			)
 		})
 	}, [size, thematic])
 }
 
-const ArrowLabel = styled.span<{ size: Size; color?: string }>`
+const ArrowLabel = styled.span<{ size: CausalEffectSize; color?: string }>`
 	font-weight: bold;
-	font-size: ${({ size }) => (size === Size.Small ? '12px' : '14px')};
+	font-size: ${({ size }) =>
+		size === CausalEffectSize.Small ? '12px' : '14px'};
 	padding: 0 ${({ color }) => (!!color ? '4px' : '')};
 	color: ${({ color }) => color};
 	background-color: white;

@@ -5,7 +5,7 @@
 import { memo } from 'react'
 import styled from 'styled-components'
 import { StepTitle } from '~components/StepTitle'
-import { Step } from '~interfaces'
+import { Step } from '~types'
 
 interface GuidanceProps {
 	isVisible: boolean | undefined

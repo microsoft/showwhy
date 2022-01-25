@@ -4,9 +4,9 @@
  */
 
 import { useCallback, useMemo } from 'react'
-import { NodeRequest, ProjectFile } from '~interfaces'
 import { useBuildEstimateEffectNode } from '~resources/hooks'
 import { buildLoadNode } from '~resources/prepareDoWhyData'
+import { NodeRequest, ProjectFile } from '~types'
 
 //TODO: fix for CI
 export function useGetNodes(

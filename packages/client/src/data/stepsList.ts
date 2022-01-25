@@ -38,8 +38,7 @@ import {
 	whenLinks,
 	howLinks,
 } from '../locales/en-US/understand-process'
-import { PageType, StepStatus, Pages } from '~enums'
-import { Panel } from '~interfaces'
+import { PageType, Pages, StepList, StepStatus } from '~types'
 
 export const stepsList = [
 	{
@@ -268,4 +267,4 @@ export const stepsList = [
 			},
 		],
 	},
-] as Panel[]
+] as StepList[]

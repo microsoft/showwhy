@@ -10,7 +10,7 @@ import {
 	DecisionFeature,
 	Specification,
 	SpecificationCurveConfig,
-} from '~interfaces'
+} from '~types'
 import { addOrRemoveArrayElement } from '~utils'
 
 export interface VegaSpecificationCurveProps {

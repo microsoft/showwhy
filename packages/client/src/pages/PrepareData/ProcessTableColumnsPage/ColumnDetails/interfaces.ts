@@ -4,7 +4,7 @@
  */
 
 import { RowObject } from 'arquero/dist/types/table/table'
-import { TableColumn } from '~interfaces'
+import { TableColumn } from '~types'
 
 export interface ColumnDetailsProps {
 	columnName: string

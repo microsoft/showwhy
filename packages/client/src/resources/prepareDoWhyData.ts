@@ -4,11 +4,16 @@
  */
 
 import { buildNodes } from './builders'
-import { NodeTypes } from '~enums'
-import { Data, Edge, NodeRequest, NodeResponse } from '~interfaces'
 import { executeNode } from '~resources'
+import {
+	GraphNode,
+	GraphEdge,
+	NodeRequest,
+	NodeResponse,
+	GraphNodeType,
+} from '~types'
 
-function dataObject(value: string): Data {
+function dataObject(value: string): GraphNode {
 	return {
 		data: {
 			id: value,
@@ -17,7 +22,7 @@ function dataObject(value: string): Data {
 		},
 	}
 }
-function edgeObject(value: string, generalExposure: string): Edge {
+function edgeObject(value: string, generalExposure: string): GraphEdge {
 	return {
 		data: {
 			source: value,
@@ -32,13 +37,13 @@ export function prepareData(
 	generalExposure: string,
 	generalOutcome: string,
 ): Promise<NodeResponse> {
-	const edges: Edge[] = []
-	let nodes: Data[] = []
+	const edges: GraphEdge[] = []
+	let nodes: GraphNode[] = []
 	let variablesNames: string[] = []
 
 	if (confounders) {
 		variablesNames = variablesNames.concat(confounders?.map(x => x))
-		const confoundersData: Data[] = confounders.map((x: string) =>
+		const confoundersData: GraphNode[] = confounders.map((x: string) =>
 			dataObject(x),
 		)
 		confoundersData.forEach(a => {
@@ -49,7 +54,7 @@ export function prepareData(
 	}
 	if (outcomeDeterminants) {
 		variablesNames = variablesNames.concat(outcomeDeterminants?.map(x => x))
-		const outcomeData: Data[] = outcomeDeterminants.map((x: string) =>
+		const outcomeData: GraphNode[] = outcomeDeterminants.map((x: string) =>
 			dataObject(x),
 		)
 		outcomeData.forEach(a => {
@@ -74,7 +79,7 @@ export function prepareData(
 
 	const nodeReq = buildNodes([
 		{
-			type: NodeTypes.CreateCausalGraph,
+			type: GraphNodeType.CreateCausalGraph,
 			treatment: `${generalExposure}`,
 			outcome: `${generalOutcome}`,
 			dataframe: 'None',
@@ -82,7 +87,7 @@ export function prepareData(
 			causal_graph: obj.causalGraph,
 		},
 		{
-			type: NodeTypes.IdentifyEstimand,
+			type: GraphNodeType.IdentifyEstimand,
 			causal_model: 'primary_maximum_model',
 		},
 	])
@@ -93,7 +98,7 @@ export function prepareData(
 export const buildSignificanceTestsNode = (taskIds: string[]): NodeRequest => {
 	const nodeReq = buildNodes([
 		{
-			type: NodeTypes.SignificanceTest,
+			type: GraphNodeType.SignificanceTest,
 			spec_ids: taskIds,
 		},
 	])
@@ -104,7 +109,7 @@ export const buildLoadNode = (url: string, fileName: string): NodeRequest => {
 	const [dataframeName] = fileName.split('.')
 	const nodeReq = buildNodes([
 		{
-			type: NodeTypes.LoadDataset,
+			type: GraphNodeType.LoadDataset,
 			result: dataframeName,
 			url,
 		},

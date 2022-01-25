@@ -11,18 +11,18 @@ import {
 	useResetRecoilState,
 	useSetRecoilState,
 } from 'recoil'
-import { DescribeElements } from '~interfaces'
+import { Experiment } from '~types'
 
-const defineQuestionState = atom<DescribeElements>({
+const defineQuestionState = atom<Experiment>({
 	key: 'describe-elements',
-	default: {} as DescribeElements,
+	default: {} as Experiment,
 })
 
-export function useDefineQuestion(): DescribeElements {
+export function useDefineQuestion(): Experiment {
 	return useRecoilValue(defineQuestionState)
 }
 
-export function useSetDefineQuestion(): SetterOrUpdater<DescribeElements> {
+export function useSetDefineQuestion(): SetterOrUpdater<Experiment> {
 	return useSetRecoilState(defineQuestionState)
 }
 

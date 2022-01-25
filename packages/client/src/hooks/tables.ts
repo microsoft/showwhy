@@ -5,8 +5,6 @@
 import { escape, not, op } from 'arquero'
 import ColumnTable from 'arquero/dist/types/table/column-table'
 import { useCallback, useMemo } from 'react'
-import { DeriveTypes } from '~enums'
-import { ProjectFile, TableColumn, Derive } from '~interfaces'
 import {
 	useProjectFiles,
 	useSelectedFile,
@@ -16,6 +14,12 @@ import {
 	useSetTableColumns,
 	useTableColumns,
 } from '~state'
+import {
+	ProjectFile,
+	TableColumn,
+	TableDerivation,
+	TableDerivationType,
+} from '~types'
 
 export function useTableWithColumnsDropped(): ColumnTable | undefined {
 	const selectedFile = useSelectedFile()
@@ -124,13 +128,13 @@ export function useRemoveColumn(tableId: string): (columnName: string) => void {
 
 export function useSetDeriveTable(
 	fileId: string,
-): (derive: Derive) => ColumnTable {
+): (derive: TableDerivation) => ColumnTable {
 	const projectFiles = useProjectFiles()
 
 	const originalTables = useSelectOriginalTable(fileId)
 	const saveFile = useSaveFile(projectFiles, fileId)
 	return useCallback(
-		(derive: Derive) => {
+		(derive: TableDerivation) => {
 			const originalTable = originalTables()
 			const column = originalTable.table.select(derive.column)
 			const columnUnique = column.dedupe()
@@ -144,7 +148,7 @@ export function useSetDeriveTable(
 				)
 				.objects()
 
-			if (derive.type === DeriveTypes.PercentageBottomRanking) {
+			if (derive.type === TableDerivationType.PercentageBottomRanking) {
 				rank = ranked
 					.filter(
 						escape(d => {

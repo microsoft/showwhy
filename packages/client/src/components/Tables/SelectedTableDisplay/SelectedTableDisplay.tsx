@@ -8,7 +8,7 @@ import { memo } from 'react'
 
 import styled from 'styled-components'
 import { ArqueroDetailsTable } from '../ArqueroDetailsTable'
-import { ProjectFile } from '~interfaces'
+import { ProjectFile } from '~types'
 
 interface SelectedTableDisplayProps {
 	selectedFile?: ProjectFile

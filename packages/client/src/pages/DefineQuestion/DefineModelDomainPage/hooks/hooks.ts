@@ -9,11 +9,9 @@ import { useAddDefinition } from './add'
 import { useEditDefinition } from './edit'
 import { useRemoveDefinition } from './remove'
 import { useSaveDefinitions } from './save'
-import { PageType } from '~enums'
 import { usePageType, useVariableOptions } from '~hooks'
-import { DescribeElements, ElementDefinition, Item } from '~interfaces'
 import { useDefineQuestion, useSetDefineQuestion } from '~state'
-import { Setter } from '~types'
+import { PageType, Experiment, ElementDefinition, Item, Setter } from '~types'
 
 export function useBusinessLogic(): {
 	labelInterest: string
@@ -21,7 +19,7 @@ export function useBusinessLogic(): {
 	itemList: Item[]
 	definitionToEdit: ElementDefinition | undefined
 	pageType: PageType
-	defineQuestion: DescribeElements
+	defineQuestion: Experiment
 	variables: IComboBoxOption[]
 	addDefinition: (def: ElementDefinition) => void
 	removeDefinition: (def: ElementDefinition) => void
