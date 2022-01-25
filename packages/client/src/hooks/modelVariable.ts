@@ -8,7 +8,7 @@ import { SetterOrUpdater } from 'recoil'
 import { replaceItemAtIndex } from '../common/utils/functions'
 import { usePageType } from './usePageType'
 import { PageType } from '~enums'
-import { DescribeElements, ElementDefinition, CausalFactor } from '~interfaces'
+import { Experiment, ElementDefinition, CausalFactor } from '~interfaces'
 // HACK to pass the unit tests
 import { useDefineQuestion, useSetDefineQuestion } from '~state/defineQuestion'
 
@@ -22,8 +22,8 @@ export function useSaveDefinition(): (newDefinition: CausalFactor) => void {
 
 export function useSaveDefinitionTestable(
 	type: PageType,
-	defineQuestion: DescribeElements,
-	setDefineQuestion: SetterOrUpdater<DescribeElements>,
+	defineQuestion: Experiment,
+	setDefineQuestion: SetterOrUpdater<Experiment>,
 ): (newDefinition: CausalFactor) => void {
 	return useCallback(
 		(newDefinition: CausalFactor) => {
@@ -66,8 +66,8 @@ export function useRemoveDefinition(): (
 
 export function useRemoveDefinitionTestable(
 	type: PageType,
-	defineQuestion: DescribeElements,
-	setDefineQuestion: SetterOrUpdater<DescribeElements>,
+	defineQuestion: Experiment,
+	setDefineQuestion: SetterOrUpdater<Experiment>,
 ): (definitionToRemove: ElementDefinition) => void {
 	return useCallback(
 		(definitionToRemove: ElementDefinition) => {

@@ -11,7 +11,7 @@ import {
 	useRemoveDefinitionTestable,
 	useSaveDefinitionTestable,
 } from '../modelVariable'
-import { DescribeElements, CausalFactor } from '~interfaces'
+import { Experiment, CausalFactor } from '~interfaces'
 
 const question = {
 	population: {
@@ -26,7 +26,7 @@ const question = {
 			},
 		],
 	},
-} as any as DescribeElements
+} as any as Experiment
 
 const newDefinition: CausalFactor = {
 	id: v4(),

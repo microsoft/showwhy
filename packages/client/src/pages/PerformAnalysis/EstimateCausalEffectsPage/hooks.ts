@@ -16,7 +16,7 @@ import {
 	useWakeLock,
 } from '~hooks'
 import {
-	DescribeElements,
+	Experiment,
 	Estimator,
 	NodeRequest,
 	ProjectFile,
@@ -45,7 +45,7 @@ export function useBusinessLogic(): {
 	totalEstimatorsCount: number
 	specCount: number | undefined
 	estimators: Estimator[]
-	definitions: DescribeElements
+	definitions: Experiment
 	runHistory: RunHistory[]
 	errors: string | undefined
 	cancelRun: () => void

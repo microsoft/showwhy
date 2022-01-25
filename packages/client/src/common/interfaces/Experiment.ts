@@ -6,7 +6,7 @@
 import { Hypothesis } from '../enums'
 import { Element } from './Element'
 
-export interface DescribeElements {
+export interface Experiment {
 	population: Element
 	exposure: Element
 	outcome: Element
