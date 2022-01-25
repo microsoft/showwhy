@@ -3,8 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { DefinitionType } from '~enums'
 import { Causes } from './Causes'
+import { DefinitionType } from '~enums'
 
 export interface Factor {
 	id: string

@@ -3,6 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { Step } from '@data-wrangling-components/core'
+import { DataTableDefinition } from './DataTableDefinition'
 import { RefutationType } from '~enums'
 import {
 	CausalFactor,
@@ -13,7 +14,6 @@ import {
 	TableColumn,
 	DefaultDatasetResult,
 } from '~interfaces'
-import { DataTableDefinition } from './DataTableDefinition'
 
 /**
  * This contains a collection of step data and file definitions for a saveable

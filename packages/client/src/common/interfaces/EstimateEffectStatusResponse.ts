@@ -3,8 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { OrchestratorStatus } from '~interfaces'
 import { PartialResults } from './PartialResults'
+import { OrchestratorStatus } from '~interfaces'
 
 export interface EstimateEffectStatusResponse extends OrchestratorStatus {
 	total_results: number
