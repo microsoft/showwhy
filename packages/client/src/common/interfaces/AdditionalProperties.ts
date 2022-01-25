@@ -4,7 +4,7 @@
  */
 
 import { AlternativeModelsRequest } from './AlternativeModelsRequest'
-import { Graph } from './Graph'
+import { Graph } from './graphs'
 
 export interface AdditionalProperties {
 	controls?: string[]
