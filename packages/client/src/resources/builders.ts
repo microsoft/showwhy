@@ -12,7 +12,7 @@ import {
 import {
 	DefinitionType,
 	EstimatorType,
-	NodeTypes,
+	GraphNodeType,
 	RefutationType,
 } from '~enums'
 import {
@@ -24,7 +24,7 @@ import {
 } from '~interfaces'
 
 interface Node {
-	type: NodeTypes
+	type: GraphNodeType
 	[key: string]: any
 }
 

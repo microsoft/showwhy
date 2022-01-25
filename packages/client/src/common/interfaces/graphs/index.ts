@@ -4,4 +4,7 @@
  */
 export * from './Graph'
 export * from './GraphEdge'
+export * from './GraphEdgeData'
 export * from './GraphNode'
+export * from './GraphNodeData'
+export * from './GraphNodeType'
