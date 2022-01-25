@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import React, { memo } from 'react'
+import { memo } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { RefutationOptionsCallout } from '~components/RefutationOptionsCallout'

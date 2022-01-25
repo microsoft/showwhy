@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import React, { memo } from 'react'
+import { memo } from 'react'
 import styled from 'styled-components'
 import { useFactorsTable } from './hooks'
 import { GenericTableComponent } from '~components/Tables/GenericTableComponent'

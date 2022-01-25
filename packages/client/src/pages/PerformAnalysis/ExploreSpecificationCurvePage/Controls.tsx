@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { Checkbox, Label } from '@fluentui/react'
-import React, { memo, useCallback, useMemo } from 'react'
+import { memo, useCallback, useMemo } from 'react'
 import styled from 'styled-components'
 import { useUniqueFeatures } from './hooks'
 import { Specification, SpecificationCurveConfig } from '~interfaces'

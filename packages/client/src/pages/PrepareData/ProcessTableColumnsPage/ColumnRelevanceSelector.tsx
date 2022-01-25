@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { DefaultButton } from '@fluentui/react'
-import React, { memo } from 'react'
+import { memo } from 'react'
 import styled from 'styled-components'
 import { DefinitionRelationSelector } from './DefinitionRelationSelector'
 import { ColumnRelation, ColumnRelevance } from '~enums'

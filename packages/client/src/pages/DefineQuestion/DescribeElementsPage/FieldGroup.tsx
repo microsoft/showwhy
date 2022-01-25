@@ -4,7 +4,7 @@
  */
 import { TextField } from '@fluentui/react'
 import { upperFirst } from 'lodash'
-import React, { memo } from 'react'
+import { memo } from 'react'
 import styled from 'styled-components'
 import { Element } from '~interfaces'
 import { Container, ContainerFlexRow } from '~styles'
