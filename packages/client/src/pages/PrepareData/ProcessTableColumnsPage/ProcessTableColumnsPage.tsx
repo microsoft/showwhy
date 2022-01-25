@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { ArqueroTableHeader } from '@data-wrangling-components/react'
-import React, { memo } from 'react'
+import { memo } from 'react'
 import styled from 'styled-components'
 import { ColumnRelevanceSelector } from './ColumnRelevanceSelector'
 import { useBusinessLogic } from './hooks'

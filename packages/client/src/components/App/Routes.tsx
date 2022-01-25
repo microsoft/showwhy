@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import React, { lazy, memo } from 'react'
+import { lazy, memo } from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
 import { Pages } from '~enums'
 

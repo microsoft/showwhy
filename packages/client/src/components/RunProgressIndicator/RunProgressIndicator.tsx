@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { Theme } from '@thematic/core'
-import React, { memo, useMemo } from 'react'
+import { memo, useMemo } from 'react'
 import Xarrow from 'react-xarrows'
 import styled from 'styled-components'
 import { ProgressBar } from '~components/ProgressBar'

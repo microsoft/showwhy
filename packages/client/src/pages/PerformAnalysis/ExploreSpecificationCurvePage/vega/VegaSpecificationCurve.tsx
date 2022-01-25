@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import React, { memo, useCallback, useState } from 'react'
+import { memo, useCallback, useState } from 'react'
 import styled from 'styled-components'
 import { AnalyticDecisionsDotPlot } from './AnalyticDecisionsDotPlot'
 import { OutcomeEffectScatterplot } from './OutcomeEffectScatterplot'
@@ -61,7 +61,7 @@ export const VegaSpecificationCurve: React.FC<VegaSpecificationCurveProps> =
 					const { inactiveFeatures = [], inactiveSpecifications = [] } = config
 					// HACK: do in vega
 					const [column, value] = datum.value.split(':')
-					const inactiveObjects = data.filter(d => d[column] === value)
+					const inactiveObjects = data.filter((d: any) => d[column] === value)
 					const inactiveIds = inactiveObjects.map(x => x.id)
 					const missing = inactiveFeatures.indexOf(value) < 0
 

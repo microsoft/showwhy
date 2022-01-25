@@ -4,7 +4,7 @@
  */
 import { DefaultButton, Icon } from '@fluentui/react'
 import { useThematic } from '@thematic/react'
-import React, { memo, useMemo } from 'react'
+import { memo, useMemo } from 'react'
 import styled from 'styled-components'
 import { ErrorMessage } from '~components/ErrorMessage'
 import { RunProgressIndicator } from '~components/RunProgressIndicator'

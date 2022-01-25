@@ -4,7 +4,7 @@
  */
 import { SelectionState } from '@thematic/core'
 import { useThematic } from '@thematic/react'
-import React, { memo, useMemo } from 'react'
+import { memo, useMemo } from 'react'
 import styled from 'styled-components'
 import { VegaHost } from '../VegaHost'
 import template from './scatter-plot.json'
@@ -73,10 +73,10 @@ export const OutcomeEffectScatterplot: React.FC<OutcomeEffectScatterplotProps> =
 		)
 	})
 
-const useOverlay = (data, title?: string, outcome?: string) => {
+function useOverlay(data: Specification[], title?: string, outcome?: string) {
 	const theme = useThematic()
 	const refutationLegend = Object.keys(RefutationResultString).map(
-		key => RefutationResultString[key],
+		key => (RefutationResultString as any)[key],
 	)
 
 	return useMemo(() => {

@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { IconButton } from '@fluentui/react'
-import React, { memo } from 'react'
+import { memo } from 'react'
 import styled from 'styled-components'
 import { InfoCallout } from '~components/Callout'
 import { ActionButtonsProps } from '~interfaces'

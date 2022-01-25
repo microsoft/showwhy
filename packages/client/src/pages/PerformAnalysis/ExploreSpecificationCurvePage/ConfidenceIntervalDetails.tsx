@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { round } from 'lodash'
-import React, { memo } from 'react'
+import { memo } from 'react'
 import { Text } from '~styles'
 
 interface ConfidenceIntervalDetailsProps {
