@@ -4,6 +4,7 @@
  */
 
 import { useCallback, useEffect, useMemo, useState } from 'react'
+import { SetterOrUpdater } from 'recoil'
 import { getEstimatorByRanking, estimatorGroups } from './constants'
 import { EstimatorsGroups, EstimatorsType } from '~enums'
 import { useEstimatorShortDescription, useEstimatorsList } from '~hooks'
@@ -17,7 +18,6 @@ import {
 	useToggleConfidenceInterval,
 	useConfidenceInterval,
 } from '~state'
-import { SetterOrUpdater } from 'recoil'
 import { Setter } from '~types'
 
 enum BatchUpdateAction {
