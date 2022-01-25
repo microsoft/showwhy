@@ -4,51 +4,51 @@
  */
 
 import {
-	EstimatorsGroups,
-	EstimatorsType,
+	EstimatorGroup,
+	EstimatorType,
 	NodeIds,
 	NodeTypes,
-	RefutationTypes,
+	RefutationType,
 } from '~enums'
 import { NodeData } from '~interfaces'
 import { getEnv } from '~resources/getEnv'
 
-export function getSimulationNumByRefuterType(type: RefutationTypes): number {
+export function getSimulationNumByRefuterType(type: RefutationType): number {
 	switch (type) {
-		case RefutationTypes.FullRefutation:
+		case RefutationType.FullRefutation:
 			return 100
-		case RefutationTypes.QuickRefutation:
+		case RefutationType.QuickRefutation:
 		default:
 			return 10
 	}
 }
 
-export function getModelTypeByEstimatorGroup(group: EstimatorsGroups): string {
+export function getModelTypeByEstimatorGroup(group: EstimatorGroup): string {
 	switch (group) {
-		case EstimatorsGroups.ExposureEstimator:
+		case EstimatorGroup.Exposure:
 			return 'Treatment Assignment Model'
-		case EstimatorsGroups.OutcomeEstimator:
+		case EstimatorGroup.Outcome:
 			return 'Outcome Model'
 	}
 }
 
-export function getModelNameByEstimatorType(type: EstimatorsType): string {
+export function getModelNameByEstimatorType(type: EstimatorType): string {
 	switch (type) {
-		case EstimatorsType.ForestDoubleMachineLearning:
+		case EstimatorType.ForestDoubleMachineLearning:
 			return 'econml.dml.CausalForestDML'
-		case EstimatorsType.LinearDoubleMachineLearning:
+		case EstimatorType.LinearDoubleMachineLearning:
 			return 'econml.dml.LinearDML'
-		case EstimatorsType.ForestDoublyRobustLearner:
+		case EstimatorType.ForestDoublyRobustLearner:
 			return 'econml.dr.ForestDRLearner'
-		case EstimatorsType.LinearDoublyRobustLearner:
+		case EstimatorType.LinearDoublyRobustLearner:
 			return 'econml.dr.LinearDRLearner'
-		case EstimatorsType.LinearRegression:
+		case EstimatorType.LinearRegression:
 			return 'linear_regression'
-		case EstimatorsType.PropensityScoreMatching:
+		case EstimatorType.PropensityScoreMatching:
 			return 'propensity_score_matching'
-		case EstimatorsType.PropensityScoreStratification:
+		case EstimatorType.PropensityScoreStratification:
 			return 'propensity_score_stratification'
-		case EstimatorsType.InversePropensityWeighting:
+		case EstimatorType.InversePropensityWeighting:
 			return 'propensity_score_weighting'
 	}
 }

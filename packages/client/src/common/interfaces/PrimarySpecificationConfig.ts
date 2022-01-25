@@ -3,9 +3,9 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { CausalModelLevel, EstimatorsType } from '~enums'
+import { CausalModelLevel, EstimatorType } from '~enums'
 
 export interface PrimarySpecificationConfig {
 	causalModel: CausalModelLevel
-	type: EstimatorsType
+	type: EstimatorType
 }

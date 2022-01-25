@@ -4,7 +4,7 @@
  */
 import { renderHook } from '@testing-library/react-hooks'
 import { RecoilRoot, snapshot_UNSTABLE } from 'recoil'
-import { CausalModelLevel, EstimatorsType } from '../../common/enums'
+import { CausalModelLevel, EstimatorType } from '../../common/enums'
 import {
 	usePrimarySpecificationConfig,
 	primarySpecificationConfigState,
@@ -16,7 +16,7 @@ describe('primarySpecificationConfig', () => {
 		it('should return the default value', () => {
 			const expected = {
 				causalModel: CausalModelLevel.Maximum,
-				type: EstimatorsType.PropensityScoreStratification,
+				type: EstimatorType.PropensityScoreStratification,
 			}
 			const { result } = renderHook(() => usePrimarySpecificationConfig(), {
 				wrapper: RecoilRoot,
@@ -29,7 +29,7 @@ describe('primarySpecificationConfig', () => {
 		it('should change the config state', () => {
 			const expected = {
 				causalModel: CausalModelLevel.Maximum,
-				type: EstimatorsType.LinearRegression,
+				type: EstimatorType.LinearRegression,
 			} as PrimarySpecificationConfig
 
 			const snapshot = snapshot_UNSTABLE(({ set }) =>

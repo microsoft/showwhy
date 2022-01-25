@@ -7,10 +7,3 @@ export interface AlternativeModels {
 	confounders: string[]
 	outcomeDeterminants: string[]
 }
-
-export interface AlternativeModelsReq {
-	confounders: string[]
-	outcome_determinants: string[]
-	label: string
-	type: string
-}

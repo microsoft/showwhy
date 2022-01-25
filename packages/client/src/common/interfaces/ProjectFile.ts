@@ -4,13 +4,6 @@
  */
 
 import { FileStep } from './FileStep'
-import { StepList } from './Step'
-
-export interface Project {
-	key: string
-	name: string
-	steps: StepList[]
-}
 
 export interface ProjectFile {
 	name: string

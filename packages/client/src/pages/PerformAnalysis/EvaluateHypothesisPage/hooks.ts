@@ -5,7 +5,7 @@
 
 import { useCallback, useMemo, useState } from 'react'
 import { useLoadSpecificationData } from '../ExploreSpecificationCurvePage/hooks'
-import { NodeResponseStatus, OrchestratorType, RefutationTypes } from '~enums'
+import { NodeResponseStatus, OrchestratorType, RefutationType } from '~enums'
 import {
 	useAlternativeModels,
 	useDefaultRun,
@@ -45,7 +45,7 @@ export function useBusinessLogic(): {
 	significanceTestsResult: SignificanceTest | undefined
 	significanceFailed: boolean
 	activeTaskIds: string[]
-	refutationType: RefutationTypes
+	refutationType: RefutationType
 	isCanceled: boolean
 	runSignificance: (taskIds: string[]) => void
 	cancelRun: () => void
@@ -66,7 +66,7 @@ export function useBusinessLogic(): {
 	const refutationLength = useRefutationLength()
 	const significanceTestsResult = useSignificanceTests(defaultRun?.id as string)
 
-	const refutationType = useMemo((): RefutationTypes => {
+	const refutationType = useMemo((): RefutationType => {
 		if (defaultRun && defaultRun?.refutationType) {
 			return defaultRun?.refutationType
 		}

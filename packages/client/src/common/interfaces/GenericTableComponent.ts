@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { ActionButtonsProps } from './ActionButtons'
+import { ActionButtonsProps } from '~components/ActionButtons'
 
 export interface Item {
 	onClick?: () => void

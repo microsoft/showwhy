@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { RefutationTypes } from '~enums'
+import { RefutationType } from '~enums'
 import {
 	AdditionalProperties,
 	GraphElements,
@@ -50,7 +50,7 @@ export interface NodeProperties {
 	fileName?: string
 	definitions: DescribeElements
 	estimators: Estimator[]
-	refutationType: RefutationTypes
+	refutationType: RefutationType
 	confidenceInterval: boolean
 	maximumLevel: AlternativeModels
 	minimumModel: AlternativeModels

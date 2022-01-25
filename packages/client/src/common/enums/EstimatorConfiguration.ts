@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-export enum EstimatorConfigurationsNames {
+export enum EstimatorConfiguration {
 	trimmingLevel = 'trimming_level',
 	weightingMethods = 'weighting_scheme',
 	minPropensity = 'min_propensity',

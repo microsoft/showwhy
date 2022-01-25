@@ -5,7 +5,7 @@
 import { Dimensions } from '@essex-js-toolkit/hooks'
 import { memo } from 'react'
 import { OutcomeEffectScatterplot } from '../ExploreSpecificationCurvePage/vega'
-import { RefutationTypes } from '~enums'
+import { RefutationType } from '~enums'
 import {
 	DecisionFeature,
 	DescribeElements,
@@ -24,7 +24,7 @@ interface ResultsGraphProps {
 	onMouseOver: (item: Specification | DecisionFeature | undefined) => void
 	hovered: number | undefined
 	failedRefutationIds: number[]
-	refutationType: RefutationTypes
+	refutationType: RefutationType
 }
 
 export const ResultsGraph: React.FC<ResultsGraphProps> = memo(
@@ -58,7 +58,7 @@ export const ResultsGraph: React.FC<ResultsGraphProps> = memo(
 					population and
 					<Value>{defineQuestion?.exposure?.definition?.length}</Value>
 					exposure definitions.
-					{refutationType === RefutationTypes.QuickRefutation && (
+					{refutationType === RefutationType.QuickRefutation && (
 						<Text>
 							{' '}
 							Consider running the analysis with the

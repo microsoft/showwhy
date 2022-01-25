@@ -2,16 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-
-import { AdditionalProperties, OrchestratorStatus } from '~interfaces'
-
-export interface NodeData extends AdditionalProperties {
-	type: string
-	id: string
-	value: string
-	name: string
-	result?: string
-}
+import { NodeData } from './NodeData'
 
 export interface PartialResults {
 	id: string
@@ -41,16 +32,4 @@ export interface PartialResults {
 	}
 	estimated_effect: number
 	time: number
-}
-
-export interface EstimateEffectStatusResponse extends OrchestratorStatus {
-	total_results: number
-	refuters: string[]
-	estimated_effect_completed: number
-	completed: number
-	failed: number
-	partial_results: PartialResults[]
-	refute_completed: number
-	confidence_interval_completed: number
-	shap_completed: number
 }

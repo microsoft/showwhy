@@ -3,32 +3,14 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { NodeResponseStatus, RefutationTypes } from '~enums'
+import { RefutationType } from '~enums'
 import { NodeResponse } from '~interfaces'
-
-interface RunTime {
-	start: Date
-	end?: Date
-}
-
-export interface RunStatus {
-	percentage: number
-	estimated_effect_completed: string
-	refute_completed: string
-	confidence_interval_completed: string
-	status: NodeResponseStatus
-	time?: RunTime
-	error?: string
-	estimators?: { status: string }
-	refuters?: { status: string }
-	confidenceIntervals?: { status: string }
-}
-
+import { RunStatus } from './RunStatus'
 export interface RunHistory {
 	runNumber: number
 	id: string
 	isActive: boolean
-	refutationType: RefutationTypes
+	refutationType: RefutationType
 	hasConfidenceInterval: boolean
 	result?: []
 	status: RunStatus

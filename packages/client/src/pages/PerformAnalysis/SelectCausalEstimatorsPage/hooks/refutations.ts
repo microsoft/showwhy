@@ -4,13 +4,13 @@
  */
 
 import { useMemo } from 'react'
-import { RefutationTypes } from '~enums'
+import { RefutationType } from '~enums'
 import { useSetFullRefutation, useSetQuickRefutation } from '~hooks'
 import { useRefutationType } from '~state'
 
 export function useRefutations(): {
 	refutationOptions: Array<{
-		key: RefutationTypes
+		key: RefutationType
 		title: string
 		description: string
 		isSelected: boolean
@@ -24,19 +24,19 @@ export function useRefutations(): {
 	const refutationOptions = useMemo(() => {
 		return [
 			{
-				key: RefutationTypes.QuickRefutation,
+				key: RefutationType.QuickRefutation,
 				title: 'Quick refutation',
 				description:
 					'Run refutation with 10 simulations. Could be used for a quick check of estimated effects before the final analysis​.',
-				isSelected: refutation === RefutationTypes.QuickRefutation,
+				isSelected: refutation === RefutationType.QuickRefutation,
 				onChange: setQuickRefutation,
 			},
 			{
-				key: RefutationTypes.FullRefutation,
+				key: RefutationType.FullRefutation,
 				title: 'Full refutation',
 				description:
 					'Run refutation with 100 simulations. May take a while to run, but should be selected for final analysis.​',
-				isSelected: refutation === RefutationTypes.FullRefutation,
+				isSelected: refutation === RefutationType.FullRefutation,
 				onChange: setFullRefutation,
 			},
 		]
