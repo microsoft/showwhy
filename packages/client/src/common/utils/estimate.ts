@@ -7,11 +7,12 @@ import { v4 } from 'uuid'
 import { SESSION_ID_KEY } from './consts'
 import { findRunError, returnPercentage } from './functions'
 import { createAndReturnStorageItem } from './sessionStorage'
-import { NodeResponseStatus, RefutationType } from '~enums'
 import {
 	EstimateEffectStatusResponse,
 	RunHistory,
 	RunStatus,
+	NodeResponseStatus,
+	RefutationType,
 } from '~interfaces'
 
 /**

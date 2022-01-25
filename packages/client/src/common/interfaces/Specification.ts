@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { RefutationResult } from '../enums/RefutationResult'
+import { RefutationResult } from './refutation'
 
 export interface Specification {
 	id: number

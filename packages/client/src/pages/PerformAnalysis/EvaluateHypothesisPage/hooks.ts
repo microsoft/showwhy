@@ -5,7 +5,7 @@
 
 import { useCallback, useMemo, useState } from 'react'
 import { useLoadSpecificationData } from '../ExploreSpecificationCurvePage/hooks'
-import { NodeResponseStatus, OrchestratorType, RefutationType } from '~enums'
+import { OrchestratorType } from '~enums'
 import {
 	useAlternativeModels,
 	useDefaultRun,
@@ -19,6 +19,7 @@ import {
 	AlternativeModels,
 	DefaultDatasetResult,
 	Experiment,
+	NodeResponseStatus,
 	RunHistory,
 	SignificanceTest,
 	Specification,
@@ -32,6 +33,7 @@ import {
 	useSignificanceTests,
 	useSpecificationCurveConfig,
 } from '~state'
+import { RefutationType } from 'src/common/interfaces/refutation'
 
 export function useBusinessLogic(): {
 	alternativeModels: AlternativeModels

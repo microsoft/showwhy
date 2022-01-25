@@ -3,8 +3,13 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { NodeResponseStatus, OrchestratorType } from '~enums'
-import { NodeRequest, NodeResponse, StatusResponse } from '~interfaces'
+import { OrchestratorType } from '~enums'
+import {
+	NodeRequest,
+	NodeResponse,
+	StatusResponse,
+	NodeResponseStatus,
+} from '~interfaces'
 import {
 	executeNode,
 	genericCheckStatus,

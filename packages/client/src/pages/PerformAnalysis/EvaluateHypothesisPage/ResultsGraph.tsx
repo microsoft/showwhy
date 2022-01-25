@@ -5,7 +5,7 @@
 import { Dimensions } from '@essex-js-toolkit/hooks'
 import { memo } from 'react'
 import { OutcomeEffectScatterplot } from '../ExploreSpecificationCurvePage/vega'
-import { RefutationType } from '~enums'
+import { RefutationType } from '~interfaces'
 import {
 	DecisionFeature,
 	Experiment,

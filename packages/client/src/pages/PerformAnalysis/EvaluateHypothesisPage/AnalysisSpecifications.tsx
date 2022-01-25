@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { memo } from 'react'
-import { RefutationType } from '~enums'
+import { RefutationType } from '~interfaces'
 import { Text, Value } from '~styles'
 
 interface AnalysisSpecificationsProps {

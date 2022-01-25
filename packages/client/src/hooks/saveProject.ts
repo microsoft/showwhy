@@ -10,9 +10,9 @@ import {
 	FileWithPath,
 } from '@data-wrangling-components/utilities'
 import { useCallback, useMemo } from 'react'
-import { NodeResponseStatus, PageType } from '~enums'
+import { PageType } from '~enums'
 import { useGetCSVResult, useGetStepUrlsByStatus } from '~hooks'
-import { Workspace } from '~interfaces'
+import { Workspace, NodeResponseStatus } from '~interfaces'
 import {
 	useCausalFactors,
 	useConfidenceInterval,

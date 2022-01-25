@@ -4,7 +4,7 @@
  */
 
 import { useCallback, useMemo } from 'react'
-import { NodeResponseStatus } from '~enums'
+import { NodeResponseStatus } from '~interfaces'
 import {
 	NodeResponse,
 	PartialResults,

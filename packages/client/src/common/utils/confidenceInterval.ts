@@ -2,9 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-
-import { NodeResponseStatus } from '~enums'
-import { NodeResponse, SignificanceTest } from '~interfaces'
+import { NodeResponse, SignificanceTest, NodeResponseStatus } from '~interfaces'
 
 export function returnInitialConfidenceInterval(
 	runId: string,
