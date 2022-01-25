@@ -5,7 +5,7 @@
 import { useCallback, useMemo } from 'react'
 import { useLocation } from 'react-router-dom'
 import { StepStatus } from '~interfaces'
-import { Project, Step } from '~interfaces'
+import { Workflow, Step } from '~interfaces'
 // HACK to pass unit tests
 import { useSelectedProject } from '~state/project'
 import { useStepStatus } from '~state/stepStatus'
@@ -22,7 +22,7 @@ export function useCurrentStep(): Step | undefined {
 }
 
 export function useCurrentStepTestable(
-	project: Project,
+	project: Workflow,
 	pathname: string,
 ): Step | undefined {
 	return useMemo(() => {

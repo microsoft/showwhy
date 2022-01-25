@@ -5,7 +5,7 @@
 
 import { StepList } from './StepList'
 
-export interface Project {
+export interface Workflow {
 	key: string
 	name: string
 	steps: StepList[]
