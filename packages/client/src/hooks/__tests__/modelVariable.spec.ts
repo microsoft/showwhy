@@ -6,12 +6,12 @@ import { jest } from '@jest/globals'
 import { renderHook } from '@testing-library/react-hooks'
 import { RecoilRoot } from 'recoil'
 import { v4 } from 'uuid'
-import { DefinitionType, PageType } from '../../common/enums'
+import { PageType } from '../../common/enums'
 import {
 	useRemoveDefinitionTestable,
 	useSaveDefinitionTestable,
 } from '../modelVariable'
-import { Experiment, CausalFactor } from '~interfaces'
+import { Experiment, CausalFactor, CausalityLevel } from '~interfaces'
 
 const question = {
 	population: {
@@ -20,7 +20,7 @@ const question = {
 		definition: [
 			{
 				id: v4(),
-				level: DefinitionType.Primary,
+				level: CausalityLevel.Primary,
 				variable: 'Hurricane',
 				description: '',
 			},
@@ -30,7 +30,7 @@ const question = {
 
 const newDefinition: CausalFactor = {
 	id: v4(),
-	level: DefinitionType.Secondary,
+	level: CausalityLevel.Secondary,
 	variable: '>= 1979',
 	description: '',
 }

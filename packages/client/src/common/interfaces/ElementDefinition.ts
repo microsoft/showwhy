@@ -3,12 +3,12 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { DefinitionType } from '../enums'
+import { CausalityLevel } from '../interfaces'
 
 export interface ElementDefinition {
 	id: string
 	description: string
-	level: DefinitionType
+	level: CausalityLevel
 	variable?: string
 	column?: string
 }

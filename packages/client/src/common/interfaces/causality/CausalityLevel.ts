@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-export enum DefinitionType {
+export enum CausalityLevel {
 	Primary = 'Primary',
 	Secondary = 'Secondary',
 }

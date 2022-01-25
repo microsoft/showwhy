@@ -6,14 +6,13 @@ import { jest } from '@jest/globals'
 import { renderHook } from '@testing-library/react-hooks'
 import { RecoilRoot } from 'recoil'
 import { v4 } from 'uuid'
-import { CausalModelLevel } from '../../common/enums'
 import {
 	useAddOrEditFactorTestable as useAddOrEditFactor,
 	useAlternativeModelsTestable as useAlternativeModels,
 	useDeleteCausalFactorTestable as useDeleteCausalFactor,
 	useExcludedFactorsTestable as useExcludedFactors,
 } from '../causalFactors'
-import { BeliefDegree } from '~interfaces'
+import { BeliefDegree, CausalModelLevel } from '~interfaces'
 
 const causalFactors = [
 	{

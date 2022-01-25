@@ -11,8 +11,11 @@ import {
 	useResetRecoilState,
 	useSetRecoilState,
 } from 'recoil'
-import { CausalModelLevel } from '~enums'
-import { PrimarySpecificationConfig, EstimatorType } from '~interfaces'
+import {
+	PrimarySpecificationConfig,
+	EstimatorType,
+	CausalModelLevel,
+} from '~interfaces'
 
 export const primarySpecificationConfigState = atom<PrimarySpecificationConfig>(
 	{

@@ -11,7 +11,6 @@ import { memo, useState, useCallback, useMemo } from 'react'
 import styled from 'styled-components'
 import { v4 as uuidv4 } from 'uuid'
 import { usePageType } from '../../../../hooks/usePageType'
-import { DefinitionType } from '~enums'
 import {
 	useCaptureTable,
 	useFilterFunctions,
@@ -21,6 +20,7 @@ import {
 	useMatchFilter,
 } from '~hooks'
 import {
+	CausalityLevel,
 	TableDerivation,
 	CausalFactor,
 	FilterObject,
@@ -160,7 +160,7 @@ export const DeriveComponent: React.FC<DeriveProps> = memo(
 				}
 
 				const newDefinition: CausalFactor = {
-					level: DefinitionType.Secondary,
+					level: CausalityLevel.Secondary,
 					variable: actualFilterValue?.columnName || '',
 					description: '',
 					column: actualFilterValue?.columnName || '',

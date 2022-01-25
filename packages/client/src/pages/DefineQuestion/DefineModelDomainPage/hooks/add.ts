@@ -6,8 +6,7 @@
 import { useCallback } from 'react'
 import { v4 } from 'uuid'
 import { SetDefinitions } from './types'
-import { DefinitionType } from '~enums'
-import { ElementDefinition } from '~interfaces'
+import { CausalityLevel, ElementDefinition } from '~interfaces'
 
 export function useAddDefinition(
 	setDefinitions: SetDefinitions,
@@ -19,7 +18,7 @@ export function useAddDefinition(
 			if (!definition.variable?.length) {
 				return
 			}
-			const isPrimary = definition.level === DefinitionType.Primary
+			const isPrimary = definition.level === CausalityLevel.Primary
 			const newDefinition = {
 				...definition,
 				id: v4(),
@@ -27,7 +26,7 @@ export function useAddDefinition(
 			let newDefinitions = definitions ? [...definitions] : []
 			if (isPrimary) {
 				newDefinitions = newDefinitions.map(x => {
-					return { ...x, level: DefinitionType.Secondary }
+					return { ...x, level: CausalityLevel.Secondary }
 				})
 			}
 			newDefinitions.push(newDefinition)
