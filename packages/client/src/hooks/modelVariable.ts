@@ -5,10 +5,10 @@
 
 import { useCallback } from 'react'
 import { SetterOrUpdater } from 'recoil'
-import { replaceItemAtIndex } from '../common/utils/functions'
 import { usePageType } from './usePageType'
 import { useDefineQuestion, useSetDefineQuestion } from '~state/defineQuestion'
 import { PageType, Experiment, ElementDefinition, CausalFactor } from '~types'
+import { replaceItemAtIndex } from '~utils/functions'
 // HACK to pass the unit tests
 
 export function useSaveDefinition(): (newDefinition: CausalFactor) => void {

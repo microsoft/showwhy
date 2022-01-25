@@ -12,10 +12,10 @@
 			"~state": ["./src/state/index.ts"],
 			"~state/*": ["./src/state/*"],
 			"~types": ["./src/types/index.ts"],
-			"~utils": ["src/common/utils/index.ts"],
-			"~utils/*": ["src/common/utils/*"],
+			"~utils": ["src/utils/index.ts"],
+			"~utils/*": ["src/utils/*"],
 			"~hooks": ["./src/hooks/index.ts"],
-			"~styles": ["./src/common/styles/index.ts"],
+			"~styles": ["./src/styles/index.ts"],
 			"~classes": ["./src/classes/index.ts"]
 		},
 		"lib": ["ESNext", "DOM", "DOM.Iterable", "ES2020.BigInt"],
@@ -35,5 +35,5 @@
 		"isolatedModules": true,
 		"noEmit": true
 	},
-	"include": ["./src/", "src/common/enums/RefutationTestMethodString/.ts"]
+	"include": ["./src/"]
 }
