@@ -3,7 +3,6 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { NodeIds } from '~enums'
 import {
 	GraphNodeData,
 	GraphNodeType,
@@ -12,6 +11,14 @@ import {
 	EstimatorType,
 } from '~interfaces'
 import { getEnv } from '~resources/getEnv'
+
+export enum NodeIds {
+	IdentifyEstimand = 'Identify Estimand',
+	CreateCausalGraph = 'Create Causal Graph',
+	LoadDataset = 'Load Dataset',
+	EstimateEffects = 'Estimate Effects',
+	SignificanceTest = 'Significance Test',
+}
 
 export function getSimulationNumByRefuterType(type: RefutationType): number {
 	switch (type) {

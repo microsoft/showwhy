@@ -9,7 +9,7 @@ import {
 	OrchestratorOnStartHandler,
 } from './orchestrator'
 import { Orchestrator } from '~classes'
-import { OrchestratorType } from '~enums'
+import { OrchestratorType } from '~interfaces'
 
 const orchestrators: Partial<Record<OrchestratorType, Orchestrator<unknown>>> =
 	{}

@@ -11,7 +11,6 @@
 			"~resources/*": ["./src/resources/*"],
 			"~state": ["./src/state/index.ts"],
 			"~state/*": ["./src/state/*"],
-			"~enums": ["./src/common/enums/index.ts"],
 			"~interfaces": ["./src/common/interfaces/index.ts"],
 			"~utils": ["src/common/utils/index.ts"],
 			"~utils/*": ["src/common/utils/*"],

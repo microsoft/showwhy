@@ -4,7 +4,7 @@
  */
 import { useMemo } from 'react'
 import { useLocation } from 'react-router-dom'
-import { PageType } from '~enums'
+import { PageType } from '~interfaces'
 
 export function usePageType(): PageType {
 	const location = useLocation()

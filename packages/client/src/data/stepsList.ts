@@ -38,8 +38,7 @@ import {
 	whenLinks,
 	howLinks,
 } from '../locales/en-US/understand-process'
-import { PageType, Pages } from '~enums'
-import { StepList, StepStatus } from '~interfaces'
+import { PageType, Pages, StepList, StepStatus } from '~interfaces'
 
 export const stepsList = [
 	{

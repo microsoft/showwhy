@@ -7,8 +7,8 @@ import { memo } from 'react'
 import styled from 'styled-components'
 import { useTableComponent } from './hooks'
 import { GenericTableComponent } from '~components/Tables/GenericTableComponent'
-import { PageType } from '~enums'
 import {
+	PageType,
 	ElementDefinition,
 	FlatCausalFactor,
 	CausalFactor,

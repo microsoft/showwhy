@@ -12,9 +12,8 @@ import { useBusinessLogic } from './hooks'
 import { CausalEffects } from '~components/CausalEffects'
 import { CausalQuestion } from '~components/CausalQuestion'
 import { EmptyDataPageWarning } from '~components/EmptyDataPageWarning'
-import { Pages, Size } from '~enums'
 import { useSpecificationCurve } from '~hooks'
-import { NodeResponseStatus } from '~interfaces'
+import { Pages, CausalEffectSize, NodeResponseStatus } from '~interfaces'
 import { Container, ContainerFlexColumn } from '~styles'
 
 export const EvaluateHypothesisPage: React.FC = memo(
@@ -66,7 +65,7 @@ export const EvaluateHypothesisPage: React.FC = memo(
 				</Container>
 				<Container>
 					<CausalDetails alternativeModels={alternativeModels} />
-					<CausalEffects size={Size.Small} {...causalEffects} />
+					<CausalEffects size={CausalEffectSize.Small} {...causalEffects} />
 				</Container>
 				<Container marginTop>
 					<AnalysisSpecifications

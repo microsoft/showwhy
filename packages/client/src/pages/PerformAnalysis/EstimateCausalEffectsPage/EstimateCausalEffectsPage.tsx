@@ -9,7 +9,7 @@ import styled from 'styled-components'
 import { RunHistoryList } from './RunHistoryList'
 import { SpecificationsList } from './SpecificationsList'
 import { useBusinessLogic } from './hooks'
-import { Pages } from '~enums'
+import { Pages } from '~interfaces'
 import { ContainerFlexRow, ContainerTextCenter, Container } from '~styles'
 
 export const EstimateCausalEffects: React.FC = memo(
