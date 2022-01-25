@@ -11,8 +11,8 @@ import {
 	VariableDefinition,
 	Element,
 	TableColumn,
+	Setter,
 } from '~interfaces'
-import { Setter } from '~types'
 
 export interface SelectedArgs {
 	defineQuestionData: Element

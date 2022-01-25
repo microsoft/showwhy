@@ -7,8 +7,7 @@ import { useCallback } from 'react'
 import { v4 } from 'uuid'
 import { SetEditingDefinition, SetModelVariables } from './types'
 import { DefinitionType, PageType } from '~enums'
-import { CausalFactor, Definition, Factor } from '~interfaces'
-import { StringSetter } from '~types'
+import { CausalFactor, Definition, Factor, StringSetter } from '~interfaces'
 
 export function useOnSaveCausalFactor({
 	setNewLabel,

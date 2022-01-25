@@ -11,9 +11,8 @@ import { useRemoveDefinition } from './remove'
 import { useSaveDefinitions } from './save'
 import { PageType } from '~enums'
 import { usePageType, useVariableOptions } from '~hooks'
-import { DescribeElements, ElementDefinition, Item } from '~interfaces'
+import { DescribeElements, ElementDefinition, Item, Setter } from '~interfaces'
 import { useDefineQuestion, useSetDefineQuestion } from '~state'
-import { Setter } from '~types'
 
 export function useBusinessLogic(): {
 	labelInterest: string
