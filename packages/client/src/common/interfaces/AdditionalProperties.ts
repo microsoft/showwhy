@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { AlternativeModelsRequest } from './AlternativeModelsRequest'
+import { AlternativeModelsRequest } from './api/AlternativeModelsRequest'
 import { Graph } from './graphs'
 
 export interface AdditionalProperties {

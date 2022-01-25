@@ -9,7 +9,7 @@ import {
 	NodeRequest,
 	NodeResponse,
 	TotalExecutionsResponse,
-	OrchestratorStatus,
+	OrchestratorStatusResponse,
 } from '~interfaces'
 import { getEnv } from '~resources/getEnv'
 import { getStorageItem, SESSION_ID_KEY } from '~utils'
@@ -122,7 +122,7 @@ async function fetchHandler(
 
 export async function returnOrchestratorStatus(
 	url: string,
-): Promise<OrchestratorStatus> {
+): Promise<OrchestratorStatusResponse> {
 	return await fetch(localhostUrl(url))
 		.then(response => response?.json())
 		.catch(() => {
@@ -133,7 +133,7 @@ export async function returnOrchestratorStatus(
 export async function genericCheckStatus(
 	instanceId: string,
 	type: OrchestratorType,
-): Promise<Partial<OrchestratorStatus>> {
+): Promise<Partial<OrchestratorStatusResponse>> {
 	let code: string
 	let path: string
 
@@ -160,7 +160,7 @@ export async function genericCheckStatus(
 			maxRetries: 3,
 		}
 
-		const inferenceStatus: OrchestratorStatus = await fetchHandler(
+		const inferenceStatus: OrchestratorStatusResponse = await fetchHandler(
 			statusUrl,
 			options,
 		).then(response => response?.json())
