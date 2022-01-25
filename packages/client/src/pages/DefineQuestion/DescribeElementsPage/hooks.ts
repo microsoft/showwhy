@@ -6,11 +6,11 @@
 import { IChoiceGroupOption } from '@fluentui/react'
 import { useCallback } from 'react'
 import { Hypothesis } from '~enums'
-import { DescribeElements } from '~interfaces'
+import { Experiment } from '~interfaces'
 import { useDefineQuestion, useSetDefineQuestion } from '~state'
 
 export function useBusinessLogic(): {
-	defineQuestion: DescribeElements
+	defineQuestion: Experiment
 	onInputChange: (
 		value: string | undefined,
 		type: string,
@@ -59,7 +59,7 @@ function useSetHypothesis(): (
 	return useCallback(
 		(e, option) => {
 			if (option) {
-				const newQuestion: DescribeElements = { ...defineQuestion }
+				const newQuestion: Experiment = { ...defineQuestion }
 				newQuestion.hypothesis = option.key as Hypothesis
 				setDefineQuestion(newQuestion)
 			}

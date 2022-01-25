@@ -8,12 +8,12 @@ import { memo } from 'react'
 import styled from 'styled-components'
 import { useFactorsDefinitionForm } from './hooks'
 import { PageType } from '~enums'
-import { CausalFactor, DescribeElements } from '~interfaces'
+import { CausalFactor, Experiment } from '~interfaces'
 
 interface FactorsDefinitionFormProps {
 	factor?: CausalFactor
 	showLevel?: boolean | undefined
-	defineQuestion?: DescribeElements
+	defineQuestion?: Experiment
 	pageType: PageType
 	variables?: IComboBoxOption[]
 	onAdd?: (factor: Omit<CausalFactor, 'id'>) => void

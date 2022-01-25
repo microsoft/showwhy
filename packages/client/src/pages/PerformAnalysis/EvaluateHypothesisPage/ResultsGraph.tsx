@@ -8,7 +8,7 @@ import { OutcomeEffectScatterplot } from '../ExploreSpecificationCurvePage/vega'
 import { RefutationType } from '~enums'
 import {
 	DecisionFeature,
-	DescribeElements,
+	Experiment,
 	Specification,
 	SpecificationCurveConfig,
 } from '~interfaces'
@@ -18,7 +18,7 @@ import { calculateMedian } from '~utils'
 interface ResultsGraphProps {
 	specificationData: Specification[]
 	activeValues: number[]
-	defineQuestion: DescribeElements
+	defineQuestion: Experiment
 	specificationCurveConfig: SpecificationCurveConfig
 	vegaWindowDimensions: Dimensions
 	onMouseOver: (item: Specification | DecisionFeature | undefined) => void

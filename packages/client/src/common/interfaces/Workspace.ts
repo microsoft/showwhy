@@ -8,7 +8,7 @@ import { RefutationType } from '~enums'
 import {
 	CausalFactor,
 	Definition,
-	DescribeElements,
+	Experiment,
 	Estimator,
 	PrimarySpecificationConfig,
 	TableColumn,
@@ -25,7 +25,7 @@ export interface Workspace {
 	tables: DataTableDefinition[]
 	primarySpecification?: PrimarySpecificationConfig
 	causalFactors?: CausalFactor[]
-	defineQuestion?: DescribeElements
+	defineQuestion?: Experiment
 	estimators?: Estimator[]
 	refutations?: RefutationType
 	tableColumns?: TableColumn[]

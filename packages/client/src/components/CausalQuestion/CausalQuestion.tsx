@@ -3,11 +3,11 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { memo } from 'react'
-import { DescribeElements } from '~interfaces'
+import { Experiment } from '~interfaces'
 import { Title } from '~styles'
 
 interface CausalQuestionProps {
-	defineQuestion: DescribeElements
+	defineQuestion: Experiment
 }
 
 export const CausalQuestion: React.FC<CausalQuestionProps> = memo(

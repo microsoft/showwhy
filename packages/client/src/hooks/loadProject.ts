@@ -10,7 +10,7 @@ import { useGetStepUrls } from '~hooks'
 import {
 	CausalFactor,
 	Definition,
-	DescribeElements,
+	Experiment,
 	Element,
 	ElementDefinition,
 	FileDefinition,
@@ -228,9 +228,7 @@ function prepCausalFactors(factors?: Partial<CausalFactor>[]): CausalFactor[] {
 	)
 }
 
-function prepDefineQuestion(
-	define?: Partial<DescribeElements>,
-): DescribeElements {
+function prepDefineQuestion(define?: Partial<Experiment>): Experiment {
 	const prepped = { ...define }
 	if (prepped.exposure) {
 		prepped.exposure = prepElement(prepped.exposure)
@@ -242,7 +240,7 @@ function prepDefineQuestion(
 		prepped.outcome = prepElement(prepped.outcome)
 	}
 
-	return prepped as DescribeElements
+	return prepped as Experiment
 }
 
 function prepModelVariables(model?: Partial<Definition>): Definition {

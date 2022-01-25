@@ -18,7 +18,7 @@ import {
 import {
 	AlternativeModels,
 	DefaultDatasetResult,
-	DescribeElements,
+	Experiment,
 	RunHistory,
 	SignificanceTest,
 	Specification,
@@ -40,7 +40,7 @@ export function useBusinessLogic(): {
 	specificationData: Specification[]
 	defaultDataset: DefaultDatasetResult | null
 	refutationLength: number
-	defineQuestion: DescribeElements
+	defineQuestion: Experiment
 	activeValues: number[]
 	significanceTestsResult: SignificanceTest | undefined
 	significanceFailed: boolean

@@ -18,7 +18,7 @@ import {
 } from '~hooks'
 import {
 	DecisionFeature,
-	DescribeElements,
+	Experiment,
 	RunHistory,
 	Specification,
 	SpecificationCurveConfig,
@@ -118,7 +118,7 @@ export function useSpecificationCurve(): {
 	}
 }
 
-function useOutcome(defineQuestion: DescribeElements) {
+function useOutcome(defineQuestion: Experiment) {
 	return useMemo(
 		() =>
 			defineQuestion.outcome?.definition.find(

@@ -13,7 +13,7 @@ import {
 	useVariablePicker,
 } from './variables'
 import { DefinitionType, PageType } from '~enums'
-import { DescribeElements, CausalFactor } from '~interfaces'
+import { Experiment, CausalFactor } from '~interfaces'
 
 export function useFactorsDefinitionForm({
 	defineQuestion,
@@ -26,7 +26,7 @@ export function useFactorsDefinitionForm({
 	pageType: PageType
 	variables?: IComboBoxOption[]
 	onAdd?: (factor: Omit<CausalFactor, 'id'>) => void
-	defineQuestion?: DescribeElements
+	defineQuestion?: Experiment
 	factor?: CausalFactor
 	onChange?: (f: Partial<CausalFactor>) => void
 }): {

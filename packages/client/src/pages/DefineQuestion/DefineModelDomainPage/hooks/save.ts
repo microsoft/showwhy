@@ -4,17 +4,17 @@
  */
 
 import { useCallback } from 'react'
-import { DescribeElements, ElementDefinition } from '~interfaces'
+import { Experiment, ElementDefinition } from '~interfaces'
 import { wait } from '~utils'
 
 export function useSaveDefinitions(
 	type: string,
-	defineQuestion: DescribeElements,
-	setDefineQuestion: (question: DescribeElements) => void,
+	defineQuestion: Experiment,
+	setDefineQuestion: (question: Experiment) => void,
 ): (definitions: ElementDefinition[]) => Promise<void> {
 	return useCallback(
 		async (definitions: ElementDefinition[]) => {
-			const question: DescribeElements = {
+			const question: Experiment = {
 				...defineQuestion,
 				[type]: {
 					...defineQuestion[type],

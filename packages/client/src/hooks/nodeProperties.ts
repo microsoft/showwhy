@@ -6,7 +6,7 @@
 import { useMemo } from 'react'
 import { CausalModelLevel, RefutationType } from '~enums'
 import { useAlternativeModels } from '~hooks'
-import { AlternativeModels, DescribeElements, Estimator } from '~interfaces'
+import { AlternativeModels, Experiment, Estimator } from '~interfaces'
 import {
 	useConfidenceInterval,
 	useDefineQuestion,
@@ -16,7 +16,7 @@ import {
 
 export function useNodeProperties(): {
 	fileName?: string
-	definitions: DescribeElements
+	definitions: Experiment
 	estimators: Estimator[]
 	refutationType: RefutationType
 	confidenceInterval: boolean
