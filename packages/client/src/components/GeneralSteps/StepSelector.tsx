@@ -11,10 +11,10 @@ import { useLocation } from 'react-router-dom'
 import styled from 'styled-components'
 import { StepItem } from './StepItem'
 import { StepTitle } from '~components/StepTitle'
-import { Project, StepList } from '~interfaces'
+import { Workflow, StepList } from '~interfaces'
 
 interface StepSelectorProps {
-	project: Project
+	project: Workflow
 }
 
 export const StepSelector: React.FC<StepSelectorProps> = memo(
