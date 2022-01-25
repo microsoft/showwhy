@@ -4,7 +4,7 @@
  */
 
 import { AlternativeModelsRequest } from '../api'
-import { Graph, GraphNodeType } from '~interfaces'
+import { Graph, GraphNodeType } from '~types'
 
 export interface GraphNodeData {
 	id: string

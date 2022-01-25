@@ -6,18 +6,18 @@
 import { useMemo } from 'react'
 import { useAlternativeModels } from '~hooks'
 import {
-	AlternativeModels,
-	Experiment,
-	Estimator,
-	RefutationType,
-	CausalModelLevel,
-} from '~interfaces'
-import {
 	useConfidenceInterval,
 	useDefineQuestion,
 	useEstimators,
 	useRefutationType,
 } from '~state'
+import {
+	AlternativeModels,
+	Experiment,
+	Estimator,
+	RefutationType,
+	CausalModelLevel,
+} from '~types'
 
 export function useNodeProperties(): {
 	fileName?: string

@@ -3,6 +3,6 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { CausalFactor, Setter } from '~interfaces'
+import { CausalFactor, Setter } from '~types'
 
 export type SetFactors = Setter<CausalFactor[] | undefined>

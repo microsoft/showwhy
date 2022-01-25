@@ -11,7 +11,7 @@ import {
 	useResetRecoilState,
 	useSetRecoilState,
 } from 'recoil'
-import { Experiment } from '~interfaces'
+import { Experiment } from '~types'
 
 const defineQuestionState = atom<Experiment>({
 	key: 'describe-elements',

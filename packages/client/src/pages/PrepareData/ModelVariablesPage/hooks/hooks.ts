@@ -17,15 +17,6 @@ import {
 } from './variables'
 import { useAddOrEditFactor, usePageType, useSaveDefinition } from '~hooks'
 import {
-	PageType,
-	DataTable,
-	ElementDefinition,
-	FilterObject,
-	Element,
-	CausalFactor,
-	VariableDefinition,
-} from '~interfaces'
-import {
 	useAllModelVariables,
 	useAllTableColumns,
 	useCausalFactors,
@@ -33,6 +24,15 @@ import {
 	useOriginalTables,
 	useProjectFiles,
 } from '~state'
+import {
+	PageType,
+	DataTable,
+	ElementDefinition,
+	FilterObject,
+	Element,
+	CausalFactor,
+	VariableDefinition,
+} from '~types'
 
 export function useBusinessLogic(): {
 	pageType: PageType

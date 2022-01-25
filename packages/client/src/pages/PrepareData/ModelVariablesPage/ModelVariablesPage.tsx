@@ -18,8 +18,8 @@ import { Header } from './Header'
 import { useBusinessLogic } from './hooks'
 import { EmptyDataPageWarning } from '~components/EmptyDataPageWarning'
 import { ArqueroDetailsTable } from '~components/Tables/ArqueroDetailsTable'
-import { PageType, Pages, CausalFactor } from '~interfaces'
 import { ContainerFlexRow } from '~styles'
+import { PageType, Pages, CausalFactor } from '~types'
 
 export const ModelVariablesPage: React.FC = memo(function ModelVariablesPage() {
 	const {

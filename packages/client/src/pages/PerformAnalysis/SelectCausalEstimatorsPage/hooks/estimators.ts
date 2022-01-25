@@ -8,13 +8,6 @@ import { SetterOrUpdater } from 'recoil'
 import { getEstimatorByRanking, estimatorGroups } from './constants'
 import { useEstimatorShortDescription, useEstimatorsList } from '~hooks'
 import {
-	EstimatorGroup,
-	EstimatorType,
-	Estimator,
-	PrimarySpecificationConfig,
-	Setter,
-} from '~interfaces'
-import {
 	useSetEstimators,
 	useSetPrimarySpecificationConfig,
 	usePrimarySpecificationConfig,
@@ -23,6 +16,13 @@ import {
 	useToggleConfidenceInterval,
 	useConfidenceInterval,
 } from '~state'
+import {
+	EstimatorGroup,
+	EstimatorType,
+	Estimator,
+	PrimarySpecificationConfig,
+	Setter,
+} from '~types'
 
 enum BatchUpdateAction {
 	Delete = 'delete',

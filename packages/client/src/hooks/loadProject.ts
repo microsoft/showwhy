@@ -7,23 +7,6 @@ import { useCallback, useMemo } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import { useGetStepUrls } from '~hooks'
 import {
-	ProjectSource,
-	CausalFactor,
-	Definition,
-	Experiment,
-	Element,
-	ElementDefinition,
-	FileDefinition,
-	ZipData,
-	FilterObject,
-	ProjectFile,
-	TableColumn,
-	VariableDefinition,
-	Workspace,
-	DataTableFileDefinition,
-	StepStatus,
-} from '~interfaces'
-import {
 	useAddProjectFile,
 	useFileCollection,
 	useSetCausalFactors,
@@ -40,6 +23,23 @@ import {
 	useSetStepStatuses,
 	useSetTableColumns,
 } from '~state'
+import {
+	ProjectSource,
+	CausalFactor,
+	Definition,
+	Experiment,
+	Element,
+	ElementDefinition,
+	FileDefinition,
+	ZipData,
+	FilterObject,
+	ProjectFile,
+	TableColumn,
+	VariableDefinition,
+	Workspace,
+	DataTableFileDefinition,
+	StepStatus,
+} from '~types'
 import {
 	fetchRemoteTables,
 	fetchTable,

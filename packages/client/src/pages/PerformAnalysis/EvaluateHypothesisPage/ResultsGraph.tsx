@@ -5,14 +5,14 @@
 import { Dimensions } from '@essex-js-toolkit/hooks'
 import { memo } from 'react'
 import { OutcomeEffectScatterplot } from '../ExploreSpecificationCurvePage/vega'
+import { Paragraph, Value, Container, Bold, Text } from '~styles'
 import {
 	RefutationType,
 	DecisionFeature,
 	Experiment,
 	Specification,
 	SpecificationCurveConfig,
-} from '~interfaces'
-import { Paragraph, Value, Container, Bold, Text } from '~styles'
+} from '~types'
 import { calculateMedian } from '~utils'
 
 interface ResultsGraphProps {

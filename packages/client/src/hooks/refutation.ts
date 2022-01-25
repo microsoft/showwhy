@@ -4,14 +4,14 @@
  */
 
 import { useCallback, useMemo } from 'react'
+import { useSetRefutationType } from '~state'
 import {
 	RefutationOption,
 	Specification,
 	RefutationTestMethod,
 	RefutationType,
 	RefutationResult,
-} from '~interfaces'
-import { useSetRefutationType } from '~state'
+} from '~types'
 
 export const REFUTATIONS: RefutationOption[] = [
 	{

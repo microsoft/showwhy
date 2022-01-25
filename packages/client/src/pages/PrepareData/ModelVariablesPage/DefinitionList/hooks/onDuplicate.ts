@@ -6,7 +6,7 @@
 import { useCallback } from 'react'
 import { v4 } from 'uuid'
 import { InputRef, SetModelVariables } from './types'
-import { PageType, CausalFactor, Definition } from '~interfaces'
+import { PageType, CausalFactor, Definition } from '~types'
 import { wait } from '~utils'
 
 export function useOnDuplicateCausalFactor({

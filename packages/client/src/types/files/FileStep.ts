@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { StepStatus } from '~interfaces'
+import { StepStatus } from '~types'
 
 export interface FileStep {
 	name: string

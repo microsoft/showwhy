@@ -6,8 +6,8 @@ import { DefaultButton } from '@fluentui/react'
 import { memo } from 'react'
 import styled from 'styled-components'
 import { ErrorMessage } from '~components/ErrorMessage'
-import { RunHistory, SignificanceTest } from '~interfaces'
 import { ContainerFlexColumn, ContainerFlexRow } from '~styles'
+import { RunHistory, SignificanceTest } from '~types'
 
 interface PageButtonsProps {
 	activeTaskIds: string[]

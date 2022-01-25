@@ -3,8 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { memo } from 'react'
-import { Experiment } from '~interfaces'
 import { Title } from '~styles'
+import { Experiment } from '~types'
 
 interface CausalQuestionProps {
 	defineQuestion: Experiment

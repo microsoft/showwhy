@@ -4,8 +4,8 @@
  */
 
 import { useCallback } from 'react'
-import { DownloadType, FileType } from '~interfaces'
 import { downloadFile } from '~resources'
+import { DownloadType, FileType } from '~types'
 
 export function useReturnResult(): (
 	fileName: string,

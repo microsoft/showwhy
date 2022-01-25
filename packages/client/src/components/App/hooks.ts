@@ -12,8 +12,8 @@ import {
 	useLoadProject,
 	useResetProject,
 } from '~hooks'
-import { FileDefinition, Step, StepStatus } from '~interfaces'
 import { useSetGuidance, useSetStepStatus, useStepStatus } from '~state'
+import { FileDefinition, Step, StepStatus } from '~types'
 
 export function useGuidance(): [boolean, () => void] {
 	/* TODO: this is synchronizing state between an in-memory hook and recoil. This should just use recoil*/

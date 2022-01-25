@@ -10,14 +10,8 @@ import { useEditDefinition } from './edit'
 import { useRemoveDefinition } from './remove'
 import { useSaveDefinitions } from './save'
 import { usePageType, useVariableOptions } from '~hooks'
-import {
-	PageType,
-	Experiment,
-	ElementDefinition,
-	Item,
-	Setter,
-} from '~interfaces'
 import { useDefineQuestion, useSetDefineQuestion } from '~state'
+import { PageType, Experiment, ElementDefinition, Item, Setter } from '~types'
 
 export function useBusinessLogic(): {
 	labelInterest: string

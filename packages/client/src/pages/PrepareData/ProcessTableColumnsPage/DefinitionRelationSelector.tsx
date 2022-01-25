@@ -9,7 +9,7 @@ import {
 } from '@fluentui/react'
 import { memo, useCallback } from 'react'
 import styled from 'styled-components'
-import { ColumnRelation, ColumnRelevance } from '~interfaces'
+import { ColumnRelation, ColumnRelevance } from '~types'
 
 interface DefinitionRelationSelectorProps {
 	relation: ColumnRelation[]

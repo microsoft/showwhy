@@ -5,8 +5,8 @@
 import { IContextualMenuProps, IContextualMenuItem } from '@fluentui/react'
 import { memo, useMemo } from 'react'
 import { OptionsButton } from './OptionsButton'
-import { FileDefinition } from '~interfaces'
 import { Container } from '~styles'
+import { FileDefinition } from '~types'
 
 interface ProjectsSelectorProps {
 	onClickProject: (example: FileDefinition) => void

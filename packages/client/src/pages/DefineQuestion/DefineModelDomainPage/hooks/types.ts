@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { ElementDefinition, Setter } from '~interfaces'
+import { ElementDefinition, Setter } from '~types'
 
 export type SetDefinitions = Setter<ElementDefinition[]>
 

@@ -20,7 +20,7 @@ import {
 	useExposureAssignedEstimators,
 	useOutcomeBasedEstimators,
 } from '../estimators'
-import { EstimatorType, EstimatorGroup, Estimator } from '~interfaces'
+import { EstimatorType, EstimatorGroup, Estimator } from '~types'
 
 describe('estimatorsHooks', () => {
 	/* eslint-disable-next-line jest/no-commented-out-tests */

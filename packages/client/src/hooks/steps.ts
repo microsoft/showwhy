@@ -4,10 +4,10 @@
  */
 import { useCallback, useMemo } from 'react'
 import { useLocation } from 'react-router-dom'
-import { StepStatus, Workflow, Step } from '~interfaces'
 // HACK to pass unit tests
 import { useSelectedProject } from '~state/project'
 import { useStepStatus } from '~state/stepStatus'
+import { StepStatus, Workflow, Step } from '~types'
 
 export function useFindStepsByPathname(pathNames: string[]): Step[] {
 	const steps = useSelectedProject().steps

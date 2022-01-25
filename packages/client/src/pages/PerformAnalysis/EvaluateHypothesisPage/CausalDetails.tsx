@@ -3,8 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { memo } from 'react'
-import { AlternativeModels } from '~interfaces'
 import { Text, Value } from '~styles'
+import { AlternativeModels } from '~types'
 
 interface CausalDetailsProps {
 	alternativeModels: AlternativeModels

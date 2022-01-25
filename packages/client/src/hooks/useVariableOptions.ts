@@ -4,12 +4,12 @@
  */
 import { IComboBoxOption } from '@fluentui/react'
 import { useMemo } from 'react'
-import { ColumnRelevance } from '~interfaces'
 import {
 	useProjectFiles,
 	useSelectOriginalTable,
 	useTableColumns,
 } from '~state'
+import { ColumnRelevance } from '~types'
 
 export function useVariableOptions(): IComboBoxOption[] {
 	const projectFiles = useProjectFiles()

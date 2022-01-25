@@ -7,8 +7,8 @@ import styled from 'styled-components'
 import { useBusinessLogic } from './hooks'
 import { FactorsDefinitionForm } from '~components/FactorsDefinitionForm'
 import { TableComponent } from '~components/Tables/TableComponent'
-import { ElementDefinition, HeaderData } from '~interfaces'
 import { Container } from '~styles'
+import { ElementDefinition, HeaderData } from '~types'
 
 const tableHeadersList: HeaderData[] = [
 	{ fieldName: 'level', value: 'Level' },

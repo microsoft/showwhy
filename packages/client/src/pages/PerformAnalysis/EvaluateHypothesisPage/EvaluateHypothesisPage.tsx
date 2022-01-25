@@ -13,8 +13,8 @@ import { CausalEffects } from '~components/CausalEffects'
 import { CausalQuestion } from '~components/CausalQuestion'
 import { EmptyDataPageWarning } from '~components/EmptyDataPageWarning'
 import { useSpecificationCurve } from '~hooks'
-import { Pages, CausalEffectSize, NodeResponseStatus } from '~interfaces'
 import { Container, ContainerFlexColumn } from '~styles'
+import { Pages, CausalEffectSize, NodeResponseStatus } from '~types'
 
 export const EvaluateHypothesisPage: React.FC = memo(
 	function EvaluateHypothesisPage() {

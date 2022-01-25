@@ -9,7 +9,7 @@ import {
 	useSetRecoilState,
 } from 'recoil'
 import { stepsList } from '../data/stepsList'
-import { Workflow } from '~interfaces'
+import { Workflow } from '~types'
 
 export const selectedProject = atom<Workflow>({
 	key: 'hovered-node',

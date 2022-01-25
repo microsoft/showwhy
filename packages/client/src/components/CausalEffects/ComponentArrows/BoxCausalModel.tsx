@@ -4,8 +4,8 @@
  */
 import { memo } from 'react'
 import styled from 'styled-components'
-import { CausalEffectSize } from '~interfaces'
 import { Text } from '~styles'
+import { CausalEffectSize } from '~types'
 
 interface BoxProps {
 	id: string

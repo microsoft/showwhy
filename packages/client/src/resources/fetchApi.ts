@@ -3,6 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { localhostUrl, replaceAzureUrl } from './utils'
+import { getEnv } from '~resources/getEnv'
 import {
 	OrchestratorType,
 	UploadFilesResponse,
@@ -11,8 +12,7 @@ import {
 	TotalExecutionsResponse,
 	OrchestratorStatusResponse,
 	NodeResponseStatus,
-} from '~interfaces'
-import { getEnv } from '~resources/getEnv'
+} from '~types'
 import { getStorageItem, SESSION_ID_KEY } from '~utils'
 
 const {

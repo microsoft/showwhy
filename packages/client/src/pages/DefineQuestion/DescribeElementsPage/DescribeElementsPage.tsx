@@ -9,8 +9,8 @@ import { memo } from 'react'
 import styled from 'styled-components'
 import { FieldGroup } from './FieldGroup'
 import { useBusinessLogic } from './hooks'
-import { Hypothesis } from '~interfaces'
 import { Container } from '~styles'
+import { Hypothesis } from '~types'
 
 const hypothesisOptions: IChoiceGroupOption[] = [
 	{ key: Hypothesis.Change, text: Hypothesis.Change },

@@ -13,7 +13,7 @@ import {
 	PrimarySpecificationConfig,
 	TableColumn,
 	DefaultDatasetResult,
-} from '~interfaces'
+} from '~types'
 
 /**
  * This contains a collection of step data and file definitions for a saveable

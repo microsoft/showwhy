@@ -14,7 +14,7 @@ import {
 	CausalFactor,
 	HeaderData,
 	Item,
-} from '~interfaces'
+} from '~types'
 
 export interface TableProps {
 	headers: HeaderData[]

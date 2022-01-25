@@ -7,7 +7,7 @@ import styled from 'styled-components'
 import { BoxCausalModel } from './BoxCausalModel'
 import { useGetArrows } from './arrows'
 import { box1, box2, box3, box4 } from './constants'
-import { CausalEffectSize } from '~interfaces'
+import { CausalEffectSize } from '~types'
 
 interface ComponentArrowsProps {
 	confounders: string[]

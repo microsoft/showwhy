@@ -16,15 +16,6 @@ import {
 	useVegaWindowDimensions,
 } from '~hooks'
 import {
-	CausalityLevel,
-	DecisionFeature,
-	Experiment,
-	RunHistory,
-	Specification,
-	SpecificationCurveConfig,
-	NodeResponseStatus,
-} from '~interfaces'
-import {
 	useHoverState,
 	useRunHistory,
 	useSetSpecificationCurveConfig,
@@ -32,6 +23,15 @@ import {
 	useSpecificationCurveConfig,
 	useDefineQuestion,
 } from '~state'
+import {
+	CausalityLevel,
+	DecisionFeature,
+	Experiment,
+	RunHistory,
+	Specification,
+	SpecificationCurveConfig,
+	NodeResponseStatus,
+} from '~types'
 
 export function useSpecificationCurve(): {
 	activeProcessing: RunHistory | null

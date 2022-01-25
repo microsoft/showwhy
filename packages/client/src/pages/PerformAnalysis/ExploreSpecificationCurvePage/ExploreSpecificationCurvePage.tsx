@@ -11,8 +11,8 @@ import { EmptyDataPageWarning } from '~components/EmptyDataPageWarning'
 import { ErrorMessage } from '~components/ErrorMessage'
 import { RunProgressIndicator } from '~components/RunProgressIndicator'
 import { useRefutationOptions, useSpecificationCurve } from '~hooks'
-import { Pages } from '~interfaces'
 import { Title, ContainerFlexColumn, ContainerFlexRow } from '~styles'
+import { Pages } from '~types'
 
 export const ExploreSpecificationCurvePage: React.FC = memo(
 	function SpecificationCurve() {

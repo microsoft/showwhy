@@ -7,8 +7,8 @@ import { memo, useMemo } from 'react'
 import Xarrow from 'react-xarrows'
 import styled from 'styled-components'
 import { ProgressBar } from '~components/ProgressBar'
-import { NodeResponseStatus, RunHistory } from '~interfaces'
 import { Container } from '~styles'
+import { NodeResponseStatus, RunHistory } from '~types'
 
 interface RunProgressIndicatorProps {
 	run: RunHistory

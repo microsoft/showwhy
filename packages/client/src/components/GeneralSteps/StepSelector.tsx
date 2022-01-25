@@ -11,7 +11,7 @@ import { useLocation } from 'react-router-dom'
 import styled from 'styled-components'
 import { StepItem } from './StepItem'
 import { StepTitle } from '~components/StepTitle'
-import { Workflow, StepList } from '~interfaces'
+import { Workflow, StepList } from '~types'
 
 interface StepSelectorProps {
 	project: Workflow

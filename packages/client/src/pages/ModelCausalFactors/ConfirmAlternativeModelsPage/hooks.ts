@@ -5,11 +5,11 @@
 import { useXarrow } from 'react-xarrows'
 import { SetterOrUpdater } from 'recoil'
 import { useCausalEffects } from '~hooks'
-import { PrimarySpecificationConfig } from '~interfaces'
 import {
 	usePrimarySpecificationConfig,
 	useSetPrimarySpecificationConfig,
 } from '~state'
+import { PrimarySpecificationConfig } from '~types'
 
 export function useBusinessLogic(): {
 	causalEffects: ReturnType<typeof useCausalEffects>

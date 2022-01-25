@@ -5,17 +5,17 @@
 
 import { useCallback, useMemo } from 'react'
 import {
+	useResetSpecificationCurveConfig,
+	useRunHistory,
+	useSetRunHistory,
+} from '~state'
+import {
 	NodeResponseStatus,
 	NodeResponse,
 	PartialResults,
 	RunHistory,
 	RunStatus,
-} from '~interfaces'
-import {
-	useResetSpecificationCurveConfig,
-	useRunHistory,
-	useSetRunHistory,
-} from '~state'
+} from '~types'
 import {
 	disableAllRuns,
 	isStatusProcessing,

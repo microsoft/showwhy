@@ -4,8 +4,8 @@
  */
 
 import { useCallback } from 'react'
-import { DecisionFeature, Specification } from '~interfaces'
 import { useSetHoverState } from '~state'
+import { DecisionFeature, Specification } from '~types'
 
 export function useOnMouseOver(): (
 	item: Specification | DecisionFeature | undefined,

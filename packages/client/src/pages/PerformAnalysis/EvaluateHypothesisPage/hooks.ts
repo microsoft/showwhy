@@ -4,7 +4,6 @@
  */
 
 import { useCallback, useMemo, useState } from 'react'
-import { RefutationType } from 'src/common/interfaces/refutation'
 import { useLoadSpecificationData } from '../ExploreSpecificationCurvePage/hooks'
 import {
 	useAlternativeModels,
@@ -14,16 +13,6 @@ import {
 	useSpecificationCurve,
 	useRunConfidenceInterval,
 } from '~hooks'
-import {
-	OrchestratorType,
-	AlternativeModels,
-	DefaultDatasetResult,
-	Experiment,
-	NodeResponseStatus,
-	RunHistory,
-	SignificanceTest,
-	Specification,
-} from '~interfaces'
 
 import { buildSignificanceTestsNode } from '~resources'
 import {
@@ -34,6 +23,17 @@ import {
 	useSignificanceTests,
 	useSpecificationCurveConfig,
 } from '~state'
+import {
+	OrchestratorType,
+	AlternativeModels,
+	DefaultDatasetResult,
+	Experiment,
+	NodeResponseStatus,
+	RunHistory,
+	SignificanceTest,
+	Specification,
+	RefutationType,
+} from '~types'
 
 export function useBusinessLogic(): {
 	alternativeModels: AlternativeModels

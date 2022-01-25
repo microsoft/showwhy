@@ -14,15 +14,6 @@ import {
 	useUpdateAndDisableRunHistory,
 	useWakeLock,
 } from '~hooks'
-import {
-	OrchestratorType,
-	Experiment,
-	Estimator,
-	NodeRequest,
-	ProjectFile,
-	RefutationOption,
-	RunHistory,
-} from '~interfaces'
 import { buildLoadNode, numberExecutions, uploadFiles } from '~resources'
 import {
 	useConfidenceInterval,
@@ -34,6 +25,15 @@ import {
 	useSetSpecCount,
 	useSpecCount,
 } from '~state'
+import {
+	OrchestratorType,
+	Experiment,
+	Estimator,
+	NodeRequest,
+	ProjectFile,
+	RefutationOption,
+	RunHistory,
+} from '~types'
 import {
 	createFormData,
 	returnInitialRunHistory,

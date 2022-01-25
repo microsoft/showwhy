@@ -6,12 +6,6 @@ import { escape, not, op } from 'arquero'
 import ColumnTable from 'arquero/dist/types/table/column-table'
 import { useCallback, useMemo } from 'react'
 import {
-	ProjectFile,
-	TableColumn,
-	TableDerivation,
-	TableDerivationType,
-} from '~interfaces'
-import {
 	useProjectFiles,
 	useSelectedFile,
 	useSelectOriginalTable,
@@ -20,6 +14,12 @@ import {
 	useSetTableColumns,
 	useTableColumns,
 } from '~state'
+import {
+	ProjectFile,
+	TableColumn,
+	TableDerivation,
+	TableDerivationType,
+} from '~types'
 
 export function useTableWithColumnsDropped(): ColumnTable | undefined {
 	const selectedFile = useSelectedFile()

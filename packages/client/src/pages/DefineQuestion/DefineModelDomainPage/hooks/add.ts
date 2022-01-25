@@ -6,7 +6,7 @@
 import { useCallback } from 'react'
 import { v4 } from 'uuid'
 import { SetDefinitions } from './types'
-import { CausalityLevel, ElementDefinition } from '~interfaces'
+import { CausalityLevel, ElementDefinition } from '~types'
 
 export function useAddDefinition(
 	setDefinitions: SetDefinitions,
