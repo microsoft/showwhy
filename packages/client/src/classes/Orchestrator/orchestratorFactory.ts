@@ -7,9 +7,9 @@ import {
 	OrchestatorOnUpdateHandler,
 	OrchestratorHandler,
 	OrchestratorOnStartHandler,
-} from './orchestrator'
+} from './Orchestrator'
+import { OrchestratorType } from './OrchestratorType'
 import { Orchestrator } from '~classes'
-import { OrchestratorType } from '~types'
 
 const orchestrators: Partial<Record<OrchestratorType, Orchestrator<unknown>>> =
 	{}

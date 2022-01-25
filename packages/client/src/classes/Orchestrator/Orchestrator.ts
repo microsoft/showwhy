@@ -3,6 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import { OrchestratorType } from './OrchestratorType'
 import {
 	executeNode,
 	genericCheckStatus,
@@ -10,7 +11,6 @@ import {
 	terminateRun,
 } from '~resources'
 import {
-	OrchestratorType,
 	NodeRequest,
 	NodeResponse,
 	StatusResponse,

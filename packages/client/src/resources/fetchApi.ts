@@ -3,9 +3,9 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { localhostUrl, replaceAzureUrl } from './utils'
+import { OrchestratorType } from '~classes'
 import { getEnv } from '~resources/getEnv'
 import {
-	OrchestratorType,
 	UploadFilesResponse,
 	NodeRequest,
 	NodeResponse,
