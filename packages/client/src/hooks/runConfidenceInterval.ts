@@ -5,7 +5,7 @@
 
 import { useCallback } from 'react'
 import { getConfidenceOrchestrator } from '~classes'
-import { NodeResponseStatus } from '~enums'
+import { NodeResponseStatus } from '~interfaces'
 import { useDefaultRun } from '~hooks'
 import {
 	NodeResponse,

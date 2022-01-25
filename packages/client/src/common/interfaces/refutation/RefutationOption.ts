@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { RefutationTestMethod } from '~enums'
+import { RefutationTestMethod } from '~interfaces'
 
 export interface RefutationOption {
 	method_name: RefutationTestMethod

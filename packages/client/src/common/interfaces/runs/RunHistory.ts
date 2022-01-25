@@ -4,8 +4,9 @@
  */
 
 import { RunStatus } from './RunStatus'
-import { RefutationType } from '~enums'
-import { NodeResponse } from '~interfaces'
+import { RefutationType } from '../refutation'
+import { NodeResponse } from '../api'
+
 export interface RunHistory {
 	runNumber: number
 	id: string

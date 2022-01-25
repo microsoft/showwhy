@@ -8,8 +8,11 @@ import { memo } from 'react'
 import styled from 'styled-components'
 import { ConfidenceIntervalDetails } from './ConfidenceIntervalDetails'
 import { RefutationOptionsCallout } from '~components/RefutationOptionsCallout'
-import { RefutationTestMethodString } from '~enums'
-import { RefutationOption, Specification } from '~interfaces'
+import {
+	RefutationOption,
+	Specification,
+	RefutationTestMethodString,
+} from '~interfaces'
 import { Paragraph, Text } from '~styles'
 import { addS } from '~utils'
 

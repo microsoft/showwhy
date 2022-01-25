@@ -3,8 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { EstimatorGroup, EstimatorType, NodeIds, RefutationType } from '~enums'
-import { GraphNodeData, GraphNodeType } from '~interfaces'
+import { EstimatorGroup, EstimatorType, NodeIds } from '~enums'
+import { GraphNodeData, GraphNodeType, RefutationType } from '~interfaces'
 import { getEnv } from '~resources/getEnv'
 
 export function getSimulationNumByRefuterType(type: RefutationType): number {

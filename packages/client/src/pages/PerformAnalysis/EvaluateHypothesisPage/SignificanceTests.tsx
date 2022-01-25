@@ -9,8 +9,8 @@ import {
 } from '../../../locales/en-US/perform-analysis'
 import { LinkCallout } from '~components/Callout'
 import { ProgressBar } from '~components/ProgressBar'
-import { NodeResponseStatus, Significance } from '~enums'
-import { SignificanceTest } from '~interfaces'
+import { Significance } from '~enums'
+import { NodeResponseStatus, SignificanceTest } from '~interfaces'
 import { Paragraph, Value } from '~styles'
 import { isStatusProcessing } from '~utils'
 

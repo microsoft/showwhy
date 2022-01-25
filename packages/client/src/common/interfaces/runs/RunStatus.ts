@@ -3,8 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import { NodeResponseStatus } from '../api'
 import { RunTime } from './RunTime'
-import { NodeResponseStatus } from '~enums'
 
 export interface RunStatus {
 	percentage: number

@@ -4,7 +4,7 @@
  */
 
 import { useCallback } from 'react'
-import { DownloadType, FileType } from '~enums'
+import { DownloadType, FileType } from '~interfaces'
 import { downloadFile } from '~resources'
 
 export function useReturnResult(): (

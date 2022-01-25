@@ -4,7 +4,7 @@
  */
 import { Step } from '@data-wrangling-components/core'
 import { DataTableFileDefinition } from './DataTableDefinition'
-import { RefutationType } from '~enums'
+import { RefutationType } from '../refutation'
 import {
 	CausalFactor,
 	Definition,

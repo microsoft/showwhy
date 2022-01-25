@@ -2,9 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-
-import { NodeResponseStatus } from '~enums'
-import { EstimateEffectStatusResponse } from '~interfaces'
+import { EstimateEffectStatusResponse, NodeResponseStatus } from '~interfaces'
 
 export function replaceItemAtIndex<T>(
 	arr: T[],

@@ -4,7 +4,7 @@
  */
 
 import { TestResults } from '../TestResults'
-import { NodeResponseStatus } from '~enums'
+import { NodeResponseStatus } from '~interfaces'
 
 export interface SignificanceTestResponse {
 	runtimeStatus: NodeResponseStatus

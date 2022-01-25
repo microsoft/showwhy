@@ -11,7 +11,7 @@ import {
 	useResetRecoilState,
 	useSetRecoilState,
 } from 'recoil'
-import { RefutationType } from '~enums'
+import { RefutationType } from '~interfaces'
 
 export const RefutationTypeState = atom<RefutationType>({
 	key: 'refutation-tests',

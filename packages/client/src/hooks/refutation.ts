@@ -4,8 +4,13 @@
  */
 
 import { useCallback, useMemo } from 'react'
-import { RefutationTestMethod, RefutationType, RefutationResult } from '~enums'
-import { RefutationOption, Specification } from '~interfaces'
+import {
+	RefutationOption,
+	Specification,
+	RefutationTestMethod,
+	RefutationType,
+	RefutationResult,
+} from '~interfaces'
 import { useSetRefutationType } from '~state'
 
 export const REFUTATIONS: RefutationOption[] = [

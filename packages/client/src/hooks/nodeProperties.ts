@@ -4,9 +4,14 @@
  */
 
 import { useMemo } from 'react'
-import { CausalModelLevel, RefutationType } from '~enums'
+import { CausalModelLevel } from '~enums'
 import { useAlternativeModels } from '~hooks'
-import { AlternativeModels, Experiment, Estimator } from '~interfaces'
+import {
+	AlternativeModels,
+	Experiment,
+	Estimator,
+	RefutationType,
+} from '~interfaces'
 import {
 	useConfidenceInterval,
 	useDefineQuestion,

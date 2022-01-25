@@ -3,13 +3,14 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { localhostUrl, replaceAzureUrl } from './utils'
-import { NodeResponseStatus, OrchestratorType } from '~enums'
+import { OrchestratorType } from '~enums'
 import {
 	UploadFilesResponse,
 	NodeRequest,
 	NodeResponse,
 	TotalExecutionsResponse,
 	OrchestratorStatusResponse,
+	NodeResponseStatus,
 } from '~interfaces'
 import { getEnv } from '~resources/getEnv'
 import { getStorageItem, SESSION_ID_KEY } from '~utils'

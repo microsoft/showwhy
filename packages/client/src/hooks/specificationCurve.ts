@@ -8,7 +8,7 @@ import { Theme } from '@thematic/core'
 import { useThematic } from '@thematic/react'
 import { useCallback, useMemo, useState } from 'react'
 import { useLoadSpecificationData } from '../pages/PerformAnalysis/ExploreSpecificationCurvePage/hooks'
-import { DefinitionType, NodeResponseStatus } from '~enums'
+import { DefinitionType } from '~enums'
 import {
 	useDefaultRun,
 	useOnMouseOver,
@@ -22,6 +22,7 @@ import {
 	RunHistory,
 	Specification,
 	SpecificationCurveConfig,
+	NodeResponseStatus,
 } from '~interfaces'
 import {
 	useHoverState,
