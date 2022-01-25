@@ -7,7 +7,7 @@ import { TextField } from '@fluentui/react'
 import { useCallback } from 'react'
 import styled from 'styled-components'
 import { InputRef } from './types'
-import { Factor, Item, StringSetter } from '~interfaces'
+import { CausalFactor, Item, StringSetter } from '~interfaces'
 import { Text } from '~styles'
 
 export function useItem({
@@ -24,19 +24,19 @@ export function useItem({
 	setNewLabel,
 }: {
 	isEditingLabel: boolean
-	editingDefinition?: Factor
+	editingDefinition?: CausalFactor
 	listEndRef: InputRef
 	newLabel?: string
-	onSave: (f: Factor) => void
-	onClick: (f: Factor) => void
-	onDelete: (f: Factor) => void
+	onSave: (f: CausalFactor) => void
+	onClick: (f: CausalFactor) => void
+	onDelete: (f: CausalFactor) => void
 	cancelField: () => void
-	onDuplicate: (f: Factor) => void
-	editDefinition: (f: Factor) => void
+	onDuplicate: (f: CausalFactor) => void
+	editDefinition: (f: CausalFactor) => void
 	setNewLabel: StringSetter
-}): (x: Factor, index: number, len: number) => Item {
+}): (x: CausalFactor, index: number, len: number) => Item {
 	return useCallback(
-		(x: Factor, index: number, len: number) => {
+		(x: CausalFactor, index: number, len: number) => {
 			return {
 				label:
 					isEditingLabel && editingDefinition === x ? (

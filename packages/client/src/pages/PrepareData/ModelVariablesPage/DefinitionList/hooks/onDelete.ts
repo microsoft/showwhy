@@ -6,12 +6,7 @@
 import { useCallback } from 'react'
 import { SetModelVariables } from './types'
 import { PageType } from '~enums'
-import {
-	CausalFactor,
-	Definition,
-	ElementDefinition,
-	Factor,
-} from '~interfaces'
+import { CausalFactor, Definition, ElementDefinition } from '~interfaces'
 
 export function useOnDelete({
 	modelVariables,
@@ -25,9 +20,9 @@ export function useOnDelete({
 	setModelVariables: SetModelVariables
 	removeDefinition: (def: ElementDefinition) => void
 	deleteCausalFactor: (factor: CausalFactor) => void
-}): (val: Factor) => void {
+}): (val: CausalFactor) => void {
 	return useCallback(
-		(val: Factor) => {
+		(val: CausalFactor) => {
 			if (type === PageType.Control) {
 				return deleteCausalFactor(val as CausalFactor)
 			}

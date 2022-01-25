@@ -20,7 +20,7 @@ import {
 	useSetDeriveTable,
 	useMatchFilter,
 } from '~hooks'
-import { Derive, Factor, FilterObject } from '~interfaces'
+import { Derive, CausalFactor, FilterObject } from '~interfaces'
 
 import {
 	useModelVariables,
@@ -154,7 +154,7 @@ export const DeriveComponent: React.FC<DeriveProps> = memo(
 					[type]: [...existing, newObj],
 				}
 
-				const newDefinition: Factor = {
+				const newDefinition: CausalFactor = {
 					level: DefinitionType.Secondary,
 					variable: actualFilterValue?.columnName || '',
 					description: '',

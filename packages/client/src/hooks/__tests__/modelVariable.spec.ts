@@ -11,7 +11,7 @@ import {
 	useRemoveDefinitionTestable,
 	useSaveDefinitionTestable,
 } from '../modelVariable'
-import { DescribeElements, Factor } from '~interfaces'
+import { DescribeElements, CausalFactor } from '~interfaces'
 
 const question = {
 	population: {
@@ -28,7 +28,7 @@ const question = {
 	},
 } as any as DescribeElements
 
-const newDefinition: Factor = {
+const newDefinition: CausalFactor = {
 	id: v4(),
 	level: DefinitionType.Secondary,
 	variable: '>= 1979',
