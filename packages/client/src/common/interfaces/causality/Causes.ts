@@ -5,7 +5,7 @@
 
 import { Cause } from './Cause'
 
-export interface Causes {
+export interface ExposureAndOutcomeCauses {
 	causeExposure?: Cause
 	causedByExposure?: Cause
 	causeOutcome?: Cause
