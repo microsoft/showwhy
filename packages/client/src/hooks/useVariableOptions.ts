@@ -4,7 +4,7 @@
  */
 import { IComboBoxOption } from '@fluentui/react'
 import { useMemo } from 'react'
-import { ColumnRelevance } from '~enums'
+import { ColumnRelevance } from '~interfaces'
 import {
 	useProjectFiles,
 	useSelectOriginalTable,

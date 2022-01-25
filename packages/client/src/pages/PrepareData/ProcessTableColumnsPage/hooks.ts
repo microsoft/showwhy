@@ -6,9 +6,15 @@
 import { IColumn } from '@fluentui/react'
 import { not } from 'arquero'
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { ColumnRelevance, ColumnRelation } from '~enums'
 import { useRestoreColumn, useTableCommands } from '~hooks'
-import { DataTable, ProjectFile, TableColumn, Setter } from '~interfaces'
+import {
+	ColumnRelevance,
+	ColumnRelation,
+	DataTable,
+	ProjectFile,
+	TableColumn,
+	Setter,
+} from '~interfaces'
 import {
 	useOriginalTables,
 	useProjectFiles,

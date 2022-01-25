@@ -14,8 +14,8 @@ import { CausalQuestion } from '~components/CausalQuestion'
 import { EmptyDataPageWarning } from '~components/EmptyDataPageWarning'
 import { Pages, Size } from '~enums'
 import { useSpecificationCurve } from '~hooks'
-import { Container, ContainerFlexColumn } from '~styles'
 import { NodeResponseStatus } from '~interfaces'
+import { Container, ContainerFlexColumn } from '~styles'
 
 export const EvaluateHypothesisPage: React.FC = memo(
 	function EvaluateHypothesisPage() {

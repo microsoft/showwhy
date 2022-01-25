@@ -2,8 +2,8 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { NodeResponseStatus } from '~interfaces'
 import { isStatusProcessing } from '../estimate'
+import { NodeResponseStatus } from '~interfaces'
 
 describe('estimate utils functions', () => {
 	it('isStatusProcessing => Running', () => {

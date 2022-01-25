@@ -11,7 +11,7 @@ import { memo, useState, useCallback, useMemo } from 'react'
 import styled from 'styled-components'
 import { v4 as uuidv4 } from 'uuid'
 import { usePageType } from '../../../../hooks/usePageType'
-import { DefinitionType, DeriveTypes } from '~enums'
+import { DefinitionType } from '~enums'
 import {
 	useCaptureTable,
 	useFilterFunctions,
@@ -20,7 +20,12 @@ import {
 	useSetDeriveTable,
 	useMatchFilter,
 } from '~hooks'
-import { Derive, CausalFactor, FilterObject } from '~interfaces'
+import {
+	TableDerivation,
+	CausalFactor,
+	FilterObject,
+	TableDerivationType,
+} from '~interfaces'
 
 import {
 	useModelVariables,
@@ -239,7 +244,7 @@ export const DeriveComponent: React.FC<DeriveProps> = memo(
 				columnName: actualFilterValue?.columnName?.toString(),
 				threshold: actualFilterValue?.value,
 				type: actualFilterValue?.filter,
-			} as Derive
+			} as TableDerivation
 			setDeriveTable(derive)
 			save(actualFilterValue)
 			resetDerive()
@@ -256,8 +261,10 @@ export const DeriveComponent: React.FC<DeriveProps> = memo(
 			}
 
 			if (
-				actualFilterValue?.filter === DeriveTypes.PercentageTopRanking ||
-				actualFilterValue?.filter === DeriveTypes.PercentageBottomRanking
+				actualFilterValue?.filter ===
+					TableDerivationType.PercentageTopRanking ||
+				actualFilterValue?.filter ===
+					TableDerivationType.PercentageBottomRanking
 			) {
 				return rankData()
 			}

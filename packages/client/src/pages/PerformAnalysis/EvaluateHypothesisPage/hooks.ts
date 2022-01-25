@@ -4,6 +4,7 @@
  */
 
 import { useCallback, useMemo, useState } from 'react'
+import { RefutationType } from 'src/common/interfaces/refutation'
 import { useLoadSpecificationData } from '../ExploreSpecificationCurvePage/hooks'
 import { OrchestratorType } from '~enums'
 import {
@@ -33,7 +34,6 @@ import {
 	useSignificanceTests,
 	useSpecificationCurveConfig,
 } from '~state'
-import { RefutationType } from 'src/common/interfaces/refutation'
 
 export function useBusinessLogic(): {
 	alternativeModels: AlternativeModels

@@ -4,7 +4,6 @@
  */
 
 import { FactorsOrDefinitions } from './types'
-import { ColumnRelation } from '~enums'
 import {
 	DataTable,
 	CausalFactor,
@@ -12,6 +11,7 @@ import {
 	Element,
 	TableColumn,
 	Setter,
+	ColumnRelation,
 } from '~interfaces'
 
 export interface SelectedArgs {

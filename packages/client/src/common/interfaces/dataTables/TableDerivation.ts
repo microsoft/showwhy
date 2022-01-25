@@ -3,12 +3,12 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { DeriveTypes } from '../enums/DeriveTypes'
+import { TableDerivationType } from './TableDerivationType'
 
-export interface Derive {
+export interface TableDerivation {
 	id: string
 	column: string
 	columnName: string
 	threshold: number
-	type: DeriveTypes
+	type: TableDerivationType
 }

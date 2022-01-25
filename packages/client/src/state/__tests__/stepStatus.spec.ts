@@ -4,8 +4,8 @@
  */
 import { renderHook } from '@testing-library/react-hooks'
 import { RecoilRoot, snapshot_UNSTABLE } from 'recoil'
-import { StepStatus } from '~interfaces'
 import { stepStatusState, useStepStatus } from '../stepStatus'
+import { StepStatus } from '~interfaces'
 
 describe('stepStatusState', () => {
 	describe('useStepStatus', () => {

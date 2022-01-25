@@ -3,8 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { FileDefinition } from './FileDefinition'
 import { Metadata } from '../Metadata'
+import { FileDefinition } from './FileDefinition'
 
 export interface DataTableFileDefinition extends FileDefinition {
 	primary?: boolean

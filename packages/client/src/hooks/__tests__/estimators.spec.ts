@@ -4,7 +4,6 @@
  */
 import { renderHook } from '@testing-library/react-hooks'
 import { RecoilRoot } from 'recoil'
-import { EstimatorType, EstimatorGroup } from '../../common/enums'
 import {
 	ESTIMATORS_SHORT_DESCRIPTION,
 	useEstimatorShortDescription,
@@ -21,7 +20,7 @@ import {
 	useExposureAssignedEstimators,
 	useOutcomeBasedEstimators,
 } from '../estimators'
-import { Estimator } from '~interfaces'
+import { EstimatorType, EstimatorGroup, Estimator } from '~interfaces'
 
 describe('estimatorsHooks', () => {
 	/* eslint-disable-next-line jest/no-commented-out-tests */
