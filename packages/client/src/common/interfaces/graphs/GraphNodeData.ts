@@ -4,8 +4,7 @@
  */
 
 import { AlternativeModelsRequest } from '../api'
-import { GraphNodeType } from '~enums'
-import { Graph } from '~interfaces'
+import { Graph, GraphNodeType } from '~interfaces'
 
 export interface GraphNodeData {
 	id: string

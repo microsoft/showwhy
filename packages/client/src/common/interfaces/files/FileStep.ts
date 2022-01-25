@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { StepStatus } from '~enums'
+import { StepStatus } from '~interfaces'
 
 export interface FileStep {
 	name: string

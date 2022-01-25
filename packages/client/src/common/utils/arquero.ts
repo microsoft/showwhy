@@ -10,7 +10,7 @@ import {
 } from '@data-wrangling-components/utilities'
 import { fromCSV, all, op } from 'arquero'
 import ColumnTable from 'arquero/dist/types/table/column-table'
-import { DataTableDefinition } from '~interfaces'
+import { DataTableFileDefinition } from '~interfaces'
 import { isZipUrl } from '~utils'
 /**
  * Creates a default data table by parsing csv/tsv content.
@@ -33,7 +33,7 @@ export function createDefaultTable(
 }
 
 export async function loadTable(
-	table: DataTableDefinition,
+	table: DataTableFileDefinition,
 	tables?: File[],
 ): Promise<ColumnTable> {
 	const file = tables?.find(t => t.name === table.name) as File
@@ -42,7 +42,7 @@ export async function loadTable(
 }
 
 export async function fetchTable(
-	table: DataTableDefinition,
+	table: DataTableFileDefinition,
 ): Promise<ColumnTable> {
 	return fetch(table.url)
 		.then(res => res.text())
@@ -53,7 +53,7 @@ export async function fetchTable(
 }
 
 export async function fetchTables(
-	tables: DataTableDefinition[],
+	tables: DataTableFileDefinition[],
 	tableFiles: File[] = [],
 ): Promise<ColumnTable[]> {
 	return Promise.all(
@@ -73,7 +73,7 @@ export async function fetchTables(
  * @param spec
  */
 export async function runPipeline(
-	tables: DataTableDefinition[],
+	tables: DataTableFileDefinition[],
 	steps: Step[],
 	tableFiles?: File[],
 ): Promise<any> {

@@ -4,7 +4,7 @@
  */
 import { useCallback, useMemo } from 'react'
 import { useLocation } from 'react-router-dom'
-import { StepStatus } from '~enums'
+import { StepStatus } from '~interfaces'
 import { Project, Step } from '~interfaces'
 // HACK to pass unit tests
 import { useSelectedProject } from '~state/project'

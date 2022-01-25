@@ -4,9 +4,9 @@
  */
 
 import { FileDefinition } from './FileDefinition'
-import { Metadata } from './Metadata'
+import { Metadata } from '../Metadata'
 
-export interface DataTableDefinition extends FileDefinition {
+export interface DataTableFileDefinition extends FileDefinition {
 	primary?: boolean
 	metadata?: Metadata
 	/**

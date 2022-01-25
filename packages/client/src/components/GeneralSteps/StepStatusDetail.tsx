@@ -5,7 +5,7 @@
 import { Spinner, SpinnerSize } from '@fluentui/react'
 import { memo, useCallback } from 'react'
 import styled from 'styled-components'
-import { StepStatus } from '~enums'
+import { StepStatus } from '~interfaces'
 
 interface StepStatusDetailProps {
 	status: StepStatus | undefined

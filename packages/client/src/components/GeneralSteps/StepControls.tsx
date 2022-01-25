@@ -6,8 +6,7 @@ import { DefaultButton, Icon, PrimaryButton } from '@fluentui/react'
 import { memo } from 'react'
 
 import styled from 'styled-components'
-import { StepStatus } from '~enums'
-import { Step } from '~interfaces'
+import { Step, StepStatus } from '~interfaces'
 
 interface StepControlsProps {
 	step?: Step

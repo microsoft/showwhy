@@ -6,7 +6,7 @@
 import { FactorsOrDefinitions } from './types'
 import { ColumnRelation } from '~enums'
 import {
-	BasicTable,
+	DataTable,
 	CausalFactor,
 	VariableDefinition,
 	Element,
@@ -29,7 +29,7 @@ export interface SubjectIdentifierArgs {
 }
 
 export interface SubjectIdentifierDataArgs {
-	allOriginalTables: BasicTable[]
+	allOriginalTables: DataTable[]
 	subjectIdentifier: string[]
-	setTableIdentifier: Setter<BasicTable | undefined>
+	setTableIdentifier: Setter<DataTable | undefined>
 }

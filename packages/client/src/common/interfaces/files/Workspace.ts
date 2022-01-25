@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { Step } from '@data-wrangling-components/core'
-import { DataTableDefinition } from './DataTableDefinition'
+import { DataTableFileDefinition } from './DataTableDefinition'
 import { RefutationType } from '~enums'
 import {
 	CausalFactor,
@@ -22,7 +22,7 @@ import {
  */
 export interface Workspace {
 	name: string
-	tables: DataTableDefinition[]
+	tables: DataTableFileDefinition[]
 	primarySpecification?: PrimarySpecificationConfig
 	causalFactors?: CausalFactor[]
 	defineQuestion?: Experiment

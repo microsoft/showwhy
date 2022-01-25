@@ -9,7 +9,7 @@ import { ProjectsSelector } from './ProjectsSelector'
 import { SaveProject } from './SaveProject'
 import { Settings } from './Settings'
 import { CausalQuestion } from '~components/CausalQuestion'
-import { StepStatus } from '~enums'
+import { StepStatus } from '~interfaces'
 import { Experiment, FileDefinition } from '~interfaces'
 import { Container } from '~styles'
 

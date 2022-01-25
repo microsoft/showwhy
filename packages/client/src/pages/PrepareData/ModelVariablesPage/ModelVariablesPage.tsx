@@ -77,11 +77,13 @@ export const ModelVariablesPage: React.FC = memo(function ModelVariablesPage() {
 								<DetailsListContainer>
 									<ArqueroDetailsTable
 										table={subjectIdentifierData.table}
-										columns={subjectIdentifierData.columnNames.map(n => ({
-											name: n,
-											key: n,
-											minWidth: 200,
-										}))}
+										columns={(subjectIdentifierData.columnNames || []).map(
+											n => ({
+												name: n,
+												key: n,
+												minWidth: 200,
+											}),
+										)}
 										features={{ smartHeaders: true }}
 									/>
 								</DetailsListContainer>
