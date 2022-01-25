@@ -3,13 +3,13 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { memo } from 'react'
-import { RefutationTypes } from '~enums'
+import { RefutationType } from '~enums'
 import { Text, Value } from '~styles'
 
 interface AnalysisSpecificationsProps {
 	specificationLength: number
 	refutationLength: number
-	refutationType: RefutationTypes
+	refutationType: RefutationType
 }
 export const AnalysisSpecifications: React.FC<AnalysisSpecificationsProps> =
 	memo(function AnalysisSpecifications({
@@ -24,7 +24,7 @@ export const AnalysisSpecifications: React.FC<AnalysisSpecificationsProps> =
 				against<Value>{refutationLength}</Value>
 				refutation tests, using the
 				<Value>
-					{refutationType === RefutationTypes.QuickRefutation
+					{refutationType === RefutationType.QuickRefutation
 						? ' Quick '
 						: ' Full '}
 					Refutation

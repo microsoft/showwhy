@@ -37,5 +37,5 @@
 		"isolatedModules": true,
 		"noEmit": true
 	},
-	"include": ["./src/"]
+	"include": ["./src/", "src/common/enums/RefutationTestMethodString/.ts"]
 }

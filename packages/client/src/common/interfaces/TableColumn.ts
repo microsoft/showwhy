@@ -2,8 +2,6 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-
-import ColumnTable from 'arquero/dist/types/table/column-table'
 import { ColumnRelation, ColumnRelevance } from '../enums'
 
 export interface TableColumn {
@@ -15,14 +13,4 @@ export interface TableColumn {
 	relation?: ColumnRelation[]
 	invalidValues?: string[]
 	tableName?: string
-}
-
-export interface BasicTable {
-	table: ColumnTable
-	tableId: string
-	tableName?: string
-}
-
-export interface DefinitionTable extends BasicTable {
-	columnNames: string[]
 }

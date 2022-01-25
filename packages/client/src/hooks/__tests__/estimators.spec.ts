@@ -4,7 +4,7 @@
  */
 import { renderHook } from '@testing-library/react-hooks'
 import { RecoilRoot } from 'recoil'
-import { EstimatorsType, EstimatorsGroups } from '../../common/enums'
+import { EstimatorType, EstimatorGroup } from '../../common/enums'
 import {
 	ESTIMATORS_SHORT_DESCRIPTION,
 	useEstimatorShortDescription,
@@ -41,7 +41,7 @@ describe('estimatorsHooks', () => {
 
 	it('useLinearDoublyRobustLearner', () => {
 		const expected = ESTIMATORS.find(
-			e => e.type === EstimatorsType.LinearDoublyRobustLearner,
+			e => e.type === EstimatorType.LinearDoublyRobustLearner,
 		) as Estimator
 		const { result } = renderHook(
 			() => useLinearDoublyRobustLearner([expected]),
@@ -55,7 +55,7 @@ describe('estimatorsHooks', () => {
 
 	it('useExposureAssignedEstimators', () => {
 		const expected = ESTIMATORS.find(
-			e => e.type === EstimatorsType.InversePropensityWeighting,
+			e => e.type === EstimatorType.InversePropensityWeighting,
 		) as Estimator
 		const { result } = renderHook(
 			() => useExposureAssignedEstimators([expected]),
@@ -69,7 +69,7 @@ describe('estimatorsHooks', () => {
 
 	it('useOutcomeBasedEstimators', () => {
 		const expected = ESTIMATORS.find(
-			e => e.type === EstimatorsType.LinearRegression,
+			e => e.type === EstimatorType.LinearRegression,
 		) as Estimator
 		const { result } = renderHook(() => useOutcomeBasedEstimators([expected]), {
 			wrapper: RecoilRoot,
@@ -102,14 +102,14 @@ describe('estimatorsHooks', () => {
 	it('useEstimatorHelpText', () => {
 		const expected = ESTIMATORS_LEARN_MORE_INFO.exposure
 		const { result } = renderHook(() => useEstimatorHelpText())
-		const response = result.current(EstimatorsGroups.ExposureEstimator)
+		const response = result.current(EstimatorGroup.Exposure)
 		expect(response).toEqual(expected)
 	})
 
 	it('useEstimatorShortDescription', () => {
 		const expected = ESTIMATORS_SHORT_DESCRIPTION.exposure
 		const { result } = renderHook(() => useEstimatorShortDescription())
-		const response = result.current(EstimatorsGroups.ExposureEstimator)
+		const response = result.current(EstimatorGroup.Exposure)
 		expect(response).toEqual(expected)
 	})
 })

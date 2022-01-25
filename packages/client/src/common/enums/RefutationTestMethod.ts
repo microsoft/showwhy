@@ -10,11 +10,3 @@ export enum RefutationTestMethod {
 	RandomCommonCause = 'random_common_cause',
 	BootstrapRefuter = 'bootstrap_refuter',
 }
-
-export enum RefutationTestMethodString {
-	refuterPlaceboTreatment = 'Replace exposure with placebo',
-	refuterDataSubset = 'Remove random subset of data',
-	refuterAddUnobservedCommonCause = 'Add an unobserved common cause',
-	refuterRandomCommonCause = 'Add a random common cause',
-	refuterBootstrap = 'Bootstrap sample dataset',
-}

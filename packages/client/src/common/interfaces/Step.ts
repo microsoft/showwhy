@@ -4,26 +4,7 @@
  */
 
 import { StepStatus } from '~enums'
-
-export interface StepList {
-	id: string
-	name: string
-	steps: Step[]
-	subSteps?: StepList[]
-}
-
-interface StepLink {
-	title: string
-	description: string
-	image: string
-	url: string
-}
-
-interface StepResource {
-	id: string
-	title: string
-	links: StepLink[]
-}
+import { StepResource } from './StepResource'
 
 export interface Step {
 	id: string
@@ -34,10 +15,4 @@ export interface Step {
 	showStatus?: boolean
 	resources?: StepResource[]
 	subStepName?: string
-}
-
-export interface Panel {
-	id: string
-	name: string
-	steps: Step[]
 }

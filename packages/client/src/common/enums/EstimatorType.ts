@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-export enum EstimatorsType {
+export enum EstimatorType {
 	LinearDoubleMachineLearning = 'Linear Double Machine Learning',
 	ForestDoubleMachineLearning = 'Forest Double Machine Learning',
 	ForestDoublyRobustLearner = 'Forest Doubly Robust Learner',

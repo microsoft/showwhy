@@ -3,9 +3,9 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { EstimatorsGroups, EstimatorsType } from '../enums'
+import { EstimatorGroup, EstimatorType } from '../enums'
 
 export interface Estimator {
-	group: EstimatorsGroups
-	type: EstimatorsType
+	group: EstimatorGroup
+	type: EstimatorType
 }

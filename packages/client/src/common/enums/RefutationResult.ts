@@ -9,10 +9,3 @@ export enum RefutationResult {
 	FailedNonCritical = 1,
 	PassedAll = 2,
 }
-
-export enum RefutationResultString {
-	NotCompleted = 'Refutation in progress',
-	FailedCritical = 'Failed refutation',
-	//FailedNonCritical = 'Review required',
-	PassedAll = 'Passed refutation',
-}

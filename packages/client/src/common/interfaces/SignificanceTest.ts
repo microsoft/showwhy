@@ -3,13 +3,9 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { NodeResponseStatus, Significance } from '~enums'
+import { NodeResponseStatus } from '~enums'
 import { NodeResponse } from '~interfaces'
-
-interface TestResults {
-	p_value: string
-	significance: Significance
-}
+import { TestResults } from './TestResults'
 
 export interface SignificanceTest {
 	runId: string
@@ -20,10 +16,4 @@ export interface SignificanceTest {
 	startTime?: Date
 	percentage?: number
 	nodeResponse?: NodeResponse
-}
-export interface SignificanceTestResponse {
-	runtimeStatus: NodeResponseStatus
-	total_simulations: number
-	simulation_completed: number
-	test_results?: TestResults
 }

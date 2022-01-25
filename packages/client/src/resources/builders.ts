@@ -11,9 +11,9 @@ import {
 } from './utils'
 import {
 	DefinitionType,
-	EstimatorsType,
+	EstimatorType,
 	NodeTypes,
-	RefutationTypes,
+	RefutationType,
 } from '~enums'
 import {
 	AlternativeModels,
@@ -138,7 +138,7 @@ export function models(
 
 export interface BuiltEstimator {
 	type: string
-	label: EstimatorsType
+	label: EstimatorType
 	require_propensity_score: boolean
 	method_name: string
 }
@@ -146,14 +146,13 @@ export interface BuiltEstimator {
 export function buildEstimators(estimators: Estimator[]): BuiltEstimator[] {
 	return estimators.map(estimator => ({
 		type: getModelTypeByEstimatorGroup(estimator.group),
-		label: estimator.type ?? EstimatorsType.InversePropensityWeighting,
-		require_propensity_score:
-			estimator.type !== EstimatorsType.LinearRegression,
+		label: estimator.type ?? EstimatorType.InversePropensityWeighting,
+		require_propensity_score: estimator.type !== EstimatorType.LinearRegression,
 		method_name: `backdoor.${getModelNameByEstimatorType(estimator.type)}`,
 	}))
 }
 
-export function buildRefutationSpecs(refutationType: RefutationTypes): {
+export function buildRefutationSpecs(refutationType: RefutationType): {
 	num_simulations: number
 } {
 	return {

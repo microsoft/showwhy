@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { AlternativeModelsReq } from './AlternativeModels'
+import { AlternativeModelsReq } from './AlternativeModelsReq'
 
 export interface Data {
 	data: {

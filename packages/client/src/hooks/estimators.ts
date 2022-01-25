@@ -4,7 +4,7 @@
  */
 
 import { useMemo } from 'react'
-import { EstimatorsGroups, EstimatorsType } from '~enums'
+import { EstimatorGroup, EstimatorType } from '~enums'
 import { Estimator } from '~interfaces'
 
 export const ESTIMATORS_LEARN_MORE_INFO = {
@@ -73,31 +73,31 @@ export const ESTIMATORS_SHORT_DESCRIPTION = {
 
 export const EXPOSURE_ESTIMATORS: Estimator[] = [
 	{
-		group: EstimatorsGroups.ExposureEstimator,
-		type: EstimatorsType.PropensityScoreStratification,
+		group: EstimatorGroup.Exposure,
+		type: EstimatorType.PropensityScoreStratification,
 	},
 	{
-		group: EstimatorsGroups.ExposureEstimator,
-		type: EstimatorsType.InversePropensityWeighting,
+		group: EstimatorGroup.Exposure,
+		type: EstimatorType.InversePropensityWeighting,
 	},
 	{
-		group: EstimatorsGroups.ExposureEstimator,
-		type: EstimatorsType.PropensityScoreMatching,
+		group: EstimatorGroup.Exposure,
+		type: EstimatorType.PropensityScoreMatching,
 	},
 ]
 
 export const OUTCOME_ESTIMATORS: Estimator[] = [
 	{
-		group: EstimatorsGroups.OutcomeEstimator,
-		type: EstimatorsType.LinearDoubleMachineLearning,
+		group: EstimatorGroup.Outcome,
+		type: EstimatorType.LinearDoubleMachineLearning,
 	},
 	{
-		group: EstimatorsGroups.OutcomeEstimator,
-		type: EstimatorsType.LinearDoublyRobustLearner,
+		group: EstimatorGroup.Outcome,
+		type: EstimatorType.LinearDoublyRobustLearner,
 	},
 	{
-		group: EstimatorsGroups.OutcomeEstimator,
-		type: EstimatorsType.LinearRegression,
+		group: EstimatorGroup.Outcome,
+		type: EstimatorType.LinearRegression,
 	},
 	/*
 	{
@@ -117,25 +117,25 @@ export const ESTIMATORS: Estimator[] = [
 
 export const ESTIMATOR_HELP_TEXT = (type: string): string => {
 	switch (type) {
-		case EstimatorsType.LinearDoublyRobustLearner:
+		case EstimatorType.LinearDoublyRobustLearner:
 			return ESTIMATORS_LEARN_MORE_INFO.linearDoublyRobustLearner
-		case EstimatorsType.ForestDoublyRobustLearner:
+		case EstimatorType.ForestDoublyRobustLearner:
 			return ESTIMATORS_LEARN_MORE_INFO.forestDoublyRobustLearner
-		case EstimatorsType.LinearDoubleMachineLearning:
+		case EstimatorType.LinearDoubleMachineLearning:
 			return ESTIMATORS_LEARN_MORE_INFO.linearDoubleMachineLearning
-		case EstimatorsType.ForestDoubleMachineLearning:
+		case EstimatorType.ForestDoubleMachineLearning:
 			return ESTIMATORS_LEARN_MORE_INFO.forestDoubleMachineLearning
-		case EstimatorsType.LinearRegression:
+		case EstimatorType.LinearRegression:
 			return ESTIMATORS_LEARN_MORE_INFO.linearRegression
-		case EstimatorsType.InversePropensityWeighting:
+		case EstimatorType.InversePropensityWeighting:
 			return ESTIMATORS_LEARN_MORE_INFO.inversePropensityWeighting
-		case EstimatorsType.PropensityScoreMatching:
+		case EstimatorType.PropensityScoreMatching:
 			return ESTIMATORS_LEARN_MORE_INFO.propensityScoreMatching
-		case EstimatorsType.PropensityScoreStratification:
+		case EstimatorType.PropensityScoreStratification:
 			return ESTIMATORS_LEARN_MORE_INFO.propensityScoreStratification
-		case EstimatorsGroups.ExposureEstimator:
+		case EstimatorGroup.Exposure:
 			return ESTIMATORS_LEARN_MORE_INFO.exposure
-		case EstimatorsGroups.OutcomeEstimator:
+		case EstimatorGroup.Outcome:
 			return ESTIMATORS_LEARN_MORE_INFO.outcome
 		default:
 			return ``
@@ -144,25 +144,25 @@ export const ESTIMATOR_HELP_TEXT = (type: string): string => {
 
 export const ESTIMATOR_SHORT_DESCRIPTION = (type: string): string => {
 	switch (type) {
-		case EstimatorsType.LinearDoublyRobustLearner:
+		case EstimatorType.LinearDoublyRobustLearner:
 			return ESTIMATORS_SHORT_DESCRIPTION.linearDoublyRobustLearner
-		case EstimatorsType.ForestDoublyRobustLearner:
+		case EstimatorType.ForestDoublyRobustLearner:
 			return ESTIMATORS_SHORT_DESCRIPTION.forestDoublyRobustLearner
-		case EstimatorsType.LinearDoubleMachineLearning:
+		case EstimatorType.LinearDoubleMachineLearning:
 			return ESTIMATORS_SHORT_DESCRIPTION.linearDoubleMachineLearning
-		case EstimatorsType.ForestDoubleMachineLearning:
+		case EstimatorType.ForestDoubleMachineLearning:
 			return ESTIMATORS_SHORT_DESCRIPTION.forestDoubleMachineLearning
-		case EstimatorsType.LinearRegression:
+		case EstimatorType.LinearRegression:
 			return ESTIMATORS_SHORT_DESCRIPTION.linearRegression
-		case EstimatorsType.InversePropensityWeighting:
+		case EstimatorType.InversePropensityWeighting:
 			return ESTIMATORS_SHORT_DESCRIPTION.inversePropensityWeighting
-		case EstimatorsType.PropensityScoreMatching:
+		case EstimatorType.PropensityScoreMatching:
 			return ESTIMATORS_SHORT_DESCRIPTION.propensityScoreMatching
-		case EstimatorsType.PropensityScoreStratification:
+		case EstimatorType.PropensityScoreStratification:
 			return ESTIMATORS_SHORT_DESCRIPTION.propensityScoreStratification
-		case EstimatorsGroups.ExposureEstimator:
+		case EstimatorGroup.Exposure:
 			return ESTIMATORS_SHORT_DESCRIPTION.exposure
-		case EstimatorsGroups.OutcomeEstimator:
+		case EstimatorGroup.Outcome:
 			return ESTIMATORS_SHORT_DESCRIPTION.outcome
 		default:
 			return ``
@@ -174,7 +174,7 @@ export function useForestDoublyRobustLearner(
 ): Estimator[] {
 	return useMemo((): Estimator[] => {
 		const estimator = estimators.filter(
-			x => x.type === EstimatorsType.ForestDoublyRobustLearner,
+			x => x.type === EstimatorType.ForestDoublyRobustLearner,
 		)
 		return estimator
 	}, [estimators])
@@ -185,7 +185,7 @@ export function useLinearDoublyRobustLearner(
 ): Estimator[] {
 	return useMemo((): Estimator[] => {
 		const estimator = estimators.filter(
-			x => x.type === EstimatorsType.LinearDoublyRobustLearner,
+			x => x.type === EstimatorType.LinearDoublyRobustLearner,
 		)
 		return estimator
 	}, [estimators])
@@ -197,9 +197,9 @@ export function useExposureAssignedEstimators(
 	return useMemo((): Estimator[] => {
 		const estimator = estimators.filter(
 			x =>
-				x.type === EstimatorsType.InversePropensityWeighting ||
-				x.type === EstimatorsType.PropensityScoreMatching ||
-				x.type === EstimatorsType.PropensityScoreStratification,
+				x.type === EstimatorType.InversePropensityWeighting ||
+				x.type === EstimatorType.PropensityScoreMatching ||
+				x.type === EstimatorType.PropensityScoreStratification,
 		)
 		return estimator
 	}, [estimators])
@@ -211,9 +211,9 @@ export function useOutcomeBasedEstimators(
 	return useMemo((): Estimator[] => {
 		const estimator = estimators.filter(
 			x =>
-				x.type === EstimatorsType.LinearRegression ||
-				x.type === EstimatorsType.LinearDoublyRobustLearner ||
-				x.type === EstimatorsType.LinearDoubleMachineLearning,
+				x.type === EstimatorType.LinearRegression ||
+				x.type === EstimatorType.LinearDoublyRobustLearner ||
+				x.type === EstimatorType.LinearDoubleMachineLearning,
 		)
 		return estimator
 	}, [estimators])

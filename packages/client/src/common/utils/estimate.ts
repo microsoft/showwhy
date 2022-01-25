@@ -7,7 +7,7 @@ import { v4 } from 'uuid'
 import { SESSION_ID_KEY } from './consts'
 import { findRunError, returnPercentage } from './functions'
 import { createAndReturnStorageItem } from './sessionStorage'
-import { NodeResponseStatus, RefutationTypes } from '~enums'
+import { NodeResponseStatus, RefutationType } from '~enums'
 import {
 	EstimateEffectStatusResponse,
 	RunHistory,
@@ -189,7 +189,7 @@ export function returnInitialRunHistory(
 	specCount: number,
 	totalRefuters: number,
 	hasConfidenceInterval: boolean,
-	refutationType: RefutationTypes,
+	refutationType: RefutationType,
 	runHistoryLength: number,
 ): RunHistory {
 	return {
