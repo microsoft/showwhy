@@ -6,14 +6,13 @@
 import { useBoolean } from '@fluentui/react-hooks'
 import { useCallback, useEffect, useMemo } from 'react'
 import { useHistory } from 'react-router-dom'
-import { StepStatus } from '~enums'
 import {
 	useCurrentStep,
 	useAllSteps,
 	useLoadProject,
 	useResetProject,
 } from '~hooks'
-import { FileDefinition, Step } from '~interfaces'
+import { FileDefinition, Step, StepStatus } from '~interfaces'
 import { useSetGuidance, useSetStepStatus, useStepStatus } from '~state'
 
 export function useGuidance(): [boolean, () => void] {

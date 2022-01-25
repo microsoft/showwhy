@@ -4,8 +4,13 @@
  */
 
 import { buildNodes } from './builders'
-import { GraphNodeType } from '~enums'
-import { GraphNode, GraphEdge, NodeRequest, NodeResponse } from '~interfaces'
+import {
+	GraphNode,
+	GraphEdge,
+	NodeRequest,
+	NodeResponse,
+	GraphNodeType,
+} from '~interfaces'
 import { executeNode } from '~resources'
 
 function dataObject(value: string): GraphNode {

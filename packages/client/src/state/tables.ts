@@ -12,14 +12,14 @@ import {
 	useResetRecoilState,
 	useSetRecoilState,
 } from 'recoil'
-import { BasicTable } from '~interfaces'
+import { DataTable } from '~interfaces'
 
 interface PrimaryTable {
 	name: string
 	id?: string
 }
 
-const originalTablesState = atom<BasicTable[]>({
+const originalTablesState = atom<DataTable[]>({
 	key: 'original-tables-store',
 	default: [],
 	dangerouslyAllowMutability: true,
@@ -33,18 +33,18 @@ const primaryTableState = atom<PrimaryTable>({
 	},
 })
 
-export function useSetOriginalTables(): SetterOrUpdater<BasicTable[]> {
+export function useSetOriginalTables(): SetterOrUpdater<DataTable[]> {
 	return useSetRecoilState(originalTablesState)
 }
 
-export function useOriginalTables(): BasicTable[] {
+export function useOriginalTables(): DataTable[] {
 	return useRecoilValue(originalTablesState)
 }
 
-export function useSetOrUpdateOriginalTable(): (table: BasicTable) => void {
+export function useSetOrUpdateOriginalTable(): (table: DataTable) => void {
 	const setOriginalTable = useSetRecoilState(originalTablesState)
 	return useCallback(
-		(table: BasicTable) => {
+		(table: DataTable) => {
 			setOriginalTable(prev => {
 				return [...prev?.filter(i => i.tableId !== table.tableId), table]
 			})
@@ -53,11 +53,11 @@ export function useSetOrUpdateOriginalTable(): (table: BasicTable) => void {
 	)
 }
 
-export function useSelectOriginalTable(id: string): () => BasicTable {
+export function useSelectOriginalTable(id: string): () => DataTable {
 	const tables = useRecoilValue(originalTablesState)
 
 	return useCallback(() => {
-		return tables?.find(t => t.tableId === id) as BasicTable
+		return tables?.find(t => t.tableId === id) as DataTable
 	}, [tables, id])
 }
 

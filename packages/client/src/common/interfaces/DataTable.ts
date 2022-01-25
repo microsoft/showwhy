@@ -5,8 +5,9 @@
 
 import ColumnTable from 'arquero/dist/types/table/column-table'
 
-export interface BasicTable {
+export interface DataTable {
 	table: ColumnTable
 	tableId: string
 	tableName?: string
+	columnNames?: string[]
 }

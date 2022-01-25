@@ -5,7 +5,7 @@
 import { BaseFile } from '@data-wrangling-components/utilities'
 import { useCallback, useMemo } from 'react'
 import { v4 as uuidv4 } from 'uuid'
-import { ProjectSource, StepStatus } from '~enums'
+import { ProjectSource } from '~enums'
 import { useGetStepUrls } from '~hooks'
 import {
 	CausalFactor,
@@ -20,7 +20,8 @@ import {
 	TableColumn,
 	VariableDefinition,
 	Workspace,
-	DataTableDefinition,
+	DataTableFileDefinition,
+	StepStatus,
 } from '~interfaces'
 import {
 	useAddProjectFile,
@@ -314,7 +315,7 @@ const useUpdateCollection = (): ((
 			const fetched = await fetchRemoteTables(tables)
 			await fileCollection.add([...fetched, ...tableFiles])
 			if (defaultResult) {
-				const resultTable: DataTableDefinition = {
+				const resultTable: DataTableFileDefinition = {
 					...(defaultResult || {}),
 					name: 'results.csv',
 				}

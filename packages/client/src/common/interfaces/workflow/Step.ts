@@ -4,7 +4,7 @@
  */
 
 import { StepResource } from './StepResource'
-import { StepStatus } from '~enums'
+import { StepStatus } from './StepStatus'
 
 export interface Step {
 	id: string

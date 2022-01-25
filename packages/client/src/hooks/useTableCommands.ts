@@ -6,10 +6,10 @@
 import { visibleColumnsCommand } from '@data-wrangling-components/react'
 import { IColumn, ICommandBarItemProps } from '@fluentui/react'
 import { useCallback, useMemo } from 'react'
-import { BasicTable } from '~interfaces'
+import { DataTable } from '~interfaces'
 
 export function useTableCommands(
-	table: BasicTable | undefined,
+	table: DataTable | undefined,
 	visibleColumns: IColumn[] | undefined,
 	restoreColumn: (column: string) => void,
 	removeColumn: (column: string) => void,

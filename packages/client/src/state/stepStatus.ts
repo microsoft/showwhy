@@ -10,7 +10,7 @@ import {
 	useRecoilValue,
 	useSetRecoilState,
 } from 'recoil'
-import { StepStatus } from '~enums'
+import { StepStatus } from '~interfaces'
 
 export const stepStatusState = atomFamily<
 	StepStatus | undefined,

@@ -11,7 +11,7 @@ import {
 	createBaseFile,
 } from '@data-wrangling-components/utilities'
 import { fetchTable } from './arquero'
-import { DataTableDefinition, ProjectFile, ZipData } from '~interfaces'
+import { DataTableFileDefinition, ProjectFile, ZipData } from '~interfaces'
 
 export function createTextFile(name: string, content: string): File {
 	const type = { type: `text/${name.split('.').pop()}` }
@@ -94,7 +94,7 @@ export const groupFilesByType = async (
 }
 
 export async function fetchRemoteTables(
-	tables: DataTableDefinition[],
+	tables: DataTableFileDefinition[],
 ): Promise<FileWithPath[]> {
 	tables = tables.filter(table => isUrl(table.url))
 	const tableFiles: FileWithPath[] = []

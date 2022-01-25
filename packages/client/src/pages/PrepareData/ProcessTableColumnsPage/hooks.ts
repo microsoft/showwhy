@@ -8,7 +8,7 @@ import { not } from 'arquero'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { ColumnRelevance, ColumnRelation } from '~enums'
 import { useRestoreColumn, useTableCommands } from '~hooks'
-import { BasicTable, ProjectFile, TableColumn, Setter } from '~interfaces'
+import { DataTable, ProjectFile, TableColumn, Setter } from '~interfaces'
 import {
 	useOriginalTables,
 	useProjectFiles,
@@ -22,7 +22,7 @@ export function useBusinessLogic(): {
 	files: ProjectFile[]
 	columns: IColumn[]
 	selectedFile: ProjectFile | undefined
-	selectedTable: BasicTable | undefined
+	selectedTable: DataTable | undefined
 	selectedColumn: string | undefined
 	onSelectColumn: (evt: any, column?: IColumn) => void
 	tableCommands: ReturnType<typeof useTableCommands>

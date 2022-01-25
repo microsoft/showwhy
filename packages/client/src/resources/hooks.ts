@@ -11,9 +11,8 @@ import {
 	buildSpecs,
 	models,
 } from './builders'
-import { GraphNodeType } from '~enums'
 import { useNodeProperties } from '~hooks'
-import { GraphNodeData, NodeRequest } from '~interfaces'
+import { GraphNodeData, GraphNodeType, NodeRequest } from '~interfaces'
 
 export function useGetNodeProperties(): (
 	fileName: string,
