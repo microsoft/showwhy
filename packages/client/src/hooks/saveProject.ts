@@ -10,9 +10,7 @@ import {
 	FileWithPath,
 } from '@data-wrangling-components/utilities'
 import { useCallback, useMemo } from 'react'
-import { NodeResponseStatus, PageType } from '~enums'
 import { useGetCSVResult, useGetStepUrlsByStatus } from '~hooks'
-import { Workspace } from '~interfaces'
 import {
 	useCausalFactors,
 	useConfidenceInterval,
@@ -29,6 +27,7 @@ import {
 	useOriginalTables,
 	useRunHistory,
 } from '~state'
+import { PageType, Workspace, NodeResponseStatus } from '~types'
 import { isDataUrl } from '~utils'
 
 export const useSaveProject = (): (() => Promise<void>) => {

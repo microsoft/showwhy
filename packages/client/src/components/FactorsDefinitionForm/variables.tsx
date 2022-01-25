@@ -14,7 +14,7 @@ import {
 import { useMemo } from 'react'
 import styled from 'styled-components'
 import { VariablePicker } from '~components/VariablePicker'
-import { Factor } from '~interfaces'
+import { CausalFactor } from '~types'
 
 export function useCheckbox(
 	isPrimary: boolean,
@@ -53,7 +53,7 @@ export function useDescriptionBox(
 	setDescription: (value: string) => void,
 	variable: string,
 	add: () => void,
-	factor?: Factor,
+	factor?: CausalFactor,
 ): JSX.Element {
 	return useMemo(() => {
 		return (
@@ -77,7 +77,7 @@ export function useDescriptionBox(
 	}, [description, setDescription, variable, add, factor])
 }
 
-export function useHasLevel(factor?: Factor): boolean {
+export function useHasLevel(factor?: CausalFactor): boolean {
 	return useMemo(() => !!factor?.hasOwnProperty('level'), [factor])
 }
 

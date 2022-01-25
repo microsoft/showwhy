@@ -11,15 +11,18 @@ import {
 	useResetRecoilState,
 	useSetRecoilState,
 } from 'recoil'
-import { CausalModelLevel, EstimatorsType } from '~enums'
-import { PrimarySpecificationConfig } from '~interfaces'
+import {
+	PrimarySpecificationConfig,
+	EstimatorType,
+	CausalModelLevel,
+} from '~types'
 
 export const primarySpecificationConfigState = atom<PrimarySpecificationConfig>(
 	{
 		key: 'primary-specification-config-state',
 		default: {
 			causalModel: CausalModelLevel.Maximum,
-			type: EstimatorsType.PropensityScoreStratification,
+			type: EstimatorType.PropensityScoreStratification,
 		},
 	},
 )

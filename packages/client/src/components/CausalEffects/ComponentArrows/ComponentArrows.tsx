@@ -7,14 +7,14 @@ import styled from 'styled-components'
 import { BoxCausalModel } from './BoxCausalModel'
 import { useGetArrows } from './arrows'
 import { box1, box2, box3, box4 } from './constants'
-import { Size } from '~enums'
+import { CausalEffectSize } from '~types'
 
 interface ComponentArrowsProps {
 	confounders: string[]
 	outcomeDeterminants: string[]
 	exposure: string
 	outcome: string
-	size: Size
+	size: CausalEffectSize
 }
 export const ComponentArrows: React.FC<ComponentArrowsProps> = memo(
 	function ComponentArrows({
@@ -68,18 +68,21 @@ export const ComponentArrows: React.FC<ComponentArrowsProps> = memo(
 	},
 )
 
-const ControlsTitle = styled.h2<{ size: Size }>`
+const ControlsTitle = styled.h2<{ size: CausalEffectSize }>`
 	margin: unset;
-	font-size: ${({ size }) => (size === Size.Small ? '15px' : '24px')};
+	font-size: ${({ size }) =>
+		size === CausalEffectSize.Small ? '15px' : '24px'};
 `
 
-const Container = styled.div<{ size: Size }>`
+const Container = styled.div<{ size: CausalEffectSize }>`
 	background: white;
 	display: grid;
 	grid-template-rows: 2fr 1fr;
 	grid-template-columns: 1fr 1fr;
-	grid-column-gap: ${({ size }) => (size === Size.Small ? '1em' : '5em')};
-	grid-row-gap: ${({ size }) => (size === Size.Small ? '0em' : '2em')};
+	grid-column-gap: ${({ size }) =>
+		size === CausalEffectSize.Small ? '1em' : '5em'};
+	grid-row-gap: ${({ size }) =>
+		size === CausalEffectSize.Small ? '0em' : '2em'};
 `
 
 const ControlsContainer = styled.div`
@@ -87,10 +90,11 @@ const ControlsContainer = styled.div`
 	text-align: center;
 `
 
-const ControlsBoxContainer = styled.div<{ size: Size }>`
+const ControlsBoxContainer = styled.div<{ size: CausalEffectSize }>`
 	display: grid;
 	grid-template-columns: 1fr 1fr;
-	grid-column-gap: ${({ size }) => (size === Size.Small ? '3em' : '8em')};
+	grid-column-gap: ${({ size }) =>
+		size === CausalEffectSize.Small ? '3em' : '8em'};
 	padding: 16px;
 `
 

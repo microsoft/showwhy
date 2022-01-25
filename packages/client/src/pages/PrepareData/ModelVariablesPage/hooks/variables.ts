@@ -11,8 +11,13 @@ import {
 	SubjectIdentifierDataArgs,
 } from './interfaces'
 import { FactorsOrDefinitions } from './types'
-import { ColumnRelation, ColumnRelevance, PageType } from '~enums'
-import { DefinitionTable, BasicTable, CausalFactor } from '~interfaces'
+import {
+	PageType,
+	DataTable,
+	CausalFactor,
+	ColumnRelation,
+	ColumnRelevance,
+} from '~types'
 
 export function useDefinitionOptions({
 	defineQuestionData,
@@ -106,8 +111,8 @@ export function useSubjectIdentifierData({
 	allOriginalTables,
 	subjectIdentifier,
 	setTableIdentifier,
-}: SubjectIdentifierDataArgs): DefinitionTable {
-	return useMemo((): DefinitionTable => {
+}: SubjectIdentifierDataArgs): DataTable {
+	return useMemo((): DataTable => {
 		const mainTable = allOriginalTables
 			.map(originalTable => {
 				const basicTable = { ...originalTable }
@@ -118,7 +123,7 @@ export function useSubjectIdentifierData({
 				if (!columns.length) return null
 				basicTable.table = basicTable.table.select(columns)
 
-				return basicTable as BasicTable
+				return basicTable as DataTable
 			})
 			.find(x => x)
 
@@ -127,7 +132,7 @@ export function useSubjectIdentifierData({
 			columnNames,
 			table: mainTable?.table,
 			tableId: mainTable?.tableId,
-		} as DefinitionTable
+		} as DataTable
 		setTableIdentifier(data)
 		return data
 	}, [allOriginalTables, subjectIdentifier, setTableIdentifier])
@@ -139,27 +144,30 @@ export function useColumnsAsTarget({
 	type,
 	onUpdateTargetVariable,
 }: {
-	subjectIdentifierData: DefinitionTable
+	subjectIdentifierData: DataTable
 	causalFactors: CausalFactor[]
 	type: string
 	onUpdateTargetVariable: (_evt: unknown, value: any) => void
 }): IContextualMenuItem[] {
-	return useMemo(() => {
-		const selectedColumns =
-			type === PageType.Control ? causalFactors.map(x => x.column) : []
+	const selectedColumns = useMemo<string[]>(() => {
+		return type === PageType.Control
+			? causalFactors.map(x => x.column as string).filter(f => !!f)
+			: []
+	}, [type, causalFactors])
 
-		return (
-			subjectIdentifierData?.columnNames &&
-			subjectIdentifierData?.columnNames
-				.filter(x => !selectedColumns.includes(x))
-				.map(opt => {
-					return {
-						key: opt,
-						text: opt,
-						canCheck: true,
-						onClick: onUpdateTargetVariable,
-					}
-				})
-		)
-	}, [subjectIdentifierData, causalFactors, type, onUpdateTargetVariable])
+	return useMemo<IContextualMenuItem[]>(() => {
+		if (!subjectIdentifierData?.columnNames) {
+			return []
+		}
+		return subjectIdentifierData.columnNames
+			.filter(x => !selectedColumns.includes(x))
+			.map(opt => {
+				return {
+					key: opt,
+					text: opt,
+					canCheck: true,
+					onClick: onUpdateTargetVariable,
+				} as IContextualMenuItem
+			})
+	}, [subjectIdentifierData, onUpdateTargetVariable, selectedColumns])
 }

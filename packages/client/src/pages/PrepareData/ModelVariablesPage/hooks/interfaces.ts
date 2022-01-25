@@ -4,15 +4,15 @@
  */
 
 import { FactorsOrDefinitions } from './types'
-import { ColumnRelation } from '~enums'
 import {
-	BasicTable,
+	DataTable,
 	CausalFactor,
 	VariableDefinition,
 	Element,
 	TableColumn,
-} from '~interfaces'
-import { Setter } from '~types'
+	Setter,
+	ColumnRelation,
+} from '~types'
 
 export interface SelectedArgs {
 	defineQuestionData: Element
@@ -29,7 +29,7 @@ export interface SubjectIdentifierArgs {
 }
 
 export interface SubjectIdentifierDataArgs {
-	allOriginalTables: BasicTable[]
+	allOriginalTables: DataTable[]
 	subjectIdentifier: string[]
-	setTableIdentifier: Setter<BasicTable | undefined>
+	setTableIdentifier: Setter<DataTable | undefined>
 }

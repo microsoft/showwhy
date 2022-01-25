@@ -15,7 +15,7 @@ import {
 	useResetRecoilState,
 	useSetRecoilState,
 } from 'recoil'
-import { Definition, ProjectFile, VariableDefinition } from '~interfaces'
+import { Definition, ProjectFile, VariableDefinition } from '~types'
 
 const modelVariablesState = atomFamily<
 	Definition | undefined,

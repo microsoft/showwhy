@@ -6,8 +6,8 @@
 import { renderHook } from '@testing-library/react-hooks'
 import { useEffect } from 'react'
 import { RecoilRoot } from 'recoil'
-import { CausalFactor } from '../../common/interfaces'
 import { useSetCausalFactors, useCausalFactors } from '../causalFactors'
+import { CausalFactor } from '~types'
 
 describe('useCausalFactors', () => {
 	it('should return empty array as default value', () => {

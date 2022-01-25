@@ -4,11 +4,10 @@
  */
 import { useCallback, useMemo } from 'react'
 import { useLocation } from 'react-router-dom'
-import { StepStatus } from '~enums'
-import { Project, Step } from '~interfaces'
 // HACK to pass unit tests
 import { useSelectedProject } from '~state/project'
 import { useStepStatus } from '~state/stepStatus'
+import { StepStatus, Workflow, Step } from '~types'
 
 export function useFindStepsByPathname(pathNames: string[]): Step[] {
 	const steps = useSelectedProject().steps
@@ -22,7 +21,7 @@ export function useCurrentStep(): Step | undefined {
 }
 
 export function useCurrentStepTestable(
-	project: Project,
+	project: Workflow,
 	pathname: string,
 ): Step | undefined {
 	return useMemo(() => {

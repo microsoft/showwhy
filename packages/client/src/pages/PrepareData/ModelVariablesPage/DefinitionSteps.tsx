@@ -5,10 +5,9 @@
 import { IconButton } from '@fluentui/react'
 import { memo, useCallback, useMemo } from 'react'
 import styled from 'styled-components'
-import { DeriveTypes } from '~enums'
 import { useRemoveColumn } from '~hooks'
-import { FilterObject } from '~interfaces'
 import { useModelVariables, useSetModelVariables } from '~state'
+import { FilterObject, TableDerivationType } from '~types'
 
 interface DefinitionStepsProps {
 	fileId: string
@@ -33,9 +32,11 @@ export const DefinitionSteps: React.FC<DefinitionStepsProps> = memo(
 		}, [modelVariables, type, selectedDefinition])
 
 		const returnFilterType = useCallback((filter): string => {
-			if (filter.filter === DeriveTypes.PercentageTopRanking) {
+			if (filter.filter === TableDerivationType.PercentageTopRanking) {
 				return ' in top ' + filter?.value + '%'
-			} else if (filter.filter === DeriveTypes.PercentageBottomRanking) {
+			} else if (
+				filter.filter === TableDerivationType.PercentageBottomRanking
+			) {
 				return ' in bottom ' + filter?.value + '%'
 			}
 			return ' ' + filter?.filter + ' ' + filter?.value

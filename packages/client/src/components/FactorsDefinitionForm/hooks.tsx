@@ -12,8 +12,7 @@ import {
 	useHasLevel,
 	useVariablePicker,
 } from './variables'
-import { DefinitionType, PageType } from '~enums'
-import { DescribeElements, Factor } from '~interfaces'
+import { PageType, Experiment, CausalFactor, CausalityLevel } from '~types'
 
 export function useFactorsDefinitionForm({
 	defineQuestion,
@@ -25,10 +24,10 @@ export function useFactorsDefinitionForm({
 }: {
 	pageType: PageType
 	variables?: IComboBoxOption[]
-	onAdd?: (factor: Omit<Factor, 'id'>) => void
-	defineQuestion?: DescribeElements
-	factor?: Factor
-	onChange?: (f: Partial<Factor>) => void
+	onAdd?: (factor: Omit<CausalFactor, 'id'>) => void
+	defineQuestion?: Experiment
+	factor?: CausalFactor
+	onChange?: (f: Partial<CausalFactor>) => void
 }): {
 	level
 	variable
@@ -50,7 +49,7 @@ export function useFactorsDefinitionForm({
 		const newFactor = {
 			variable,
 			description,
-			level: isPrimary ? DefinitionType.Primary : DefinitionType.Secondary,
+			level: isPrimary ? CausalityLevel.Primary : CausalityLevel.Secondary,
 		}
 		onAdd && onAdd(newFactor)
 		resetFields()
@@ -70,16 +69,16 @@ export function useFactorsDefinitionForm({
 		if (factor) {
 			setVariable(factor.variable)
 			setDescription(factor.description || '')
-			hasLevel && setIsPrimary(factor.level === DefinitionType.Primary)
+			hasLevel && setIsPrimary(factor.level === CausalityLevel.Primary)
 		}
 	}, [factor, hasLevel])
 
 	useEffect(() => {
-		const edited: Partial<Factor> = { ...factor, variable, description }
+		const edited: Partial<CausalFactor> = { ...factor, variable, description }
 		hasLevel &&
 			(edited.level = isPrimary
-				? DefinitionType.Primary
-				: DefinitionType.Secondary)
+				? CausalityLevel.Primary
+				: CausalityLevel.Secondary)
 		onChange && onChange(edited)
 	}, [variable, isPrimary, description, factor, hasLevel, onChange])
 

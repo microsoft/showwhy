@@ -6,8 +6,8 @@ import { TextField } from '@fluentui/react'
 import { upperFirst } from 'lodash'
 import { memo } from 'react'
 import styled from 'styled-components'
-import { Element } from '~interfaces'
 import { Container, ContainerFlexRow } from '~styles'
+import { Element } from '~types'
 
 interface FieldGroupProps {
 	type: string

@@ -9,17 +9,17 @@ import {
 	useSetRecoilState,
 } from 'recoil'
 import { stepsList } from '../data/stepsList'
-import { Project } from '~interfaces'
+import { Workflow } from '~types'
 
-export const selectedProject = atom<Project>({
+export const selectedProject = atom<Workflow>({
 	key: 'hovered-node',
 	default: { name: 'Project name goes here', key: '', steps: stepsList },
 })
 
-export function useSelectedProject(): Project {
+export function useSelectedProject(): Workflow {
 	return useRecoilValue(selectedProject)
 }
 
-export function useSetSelectedProject(): SetterOrUpdater<Project> {
+export function useSetSelectedProject(): SetterOrUpdater<Workflow> {
 	return useSetRecoilState(selectedProject)
 }

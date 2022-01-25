@@ -5,8 +5,7 @@
 
 import { useCallback } from 'react'
 import { SetDefinition, SetDefinitions } from './types'
-import { DefinitionType } from '~enums'
-import { ElementDefinition } from '~interfaces'
+import { CausalityLevel, ElementDefinition } from '~types'
 
 export function useEditDefinition(
 	setDefinitions: SetDefinitions,
@@ -15,14 +14,14 @@ export function useEditDefinition(
 ): (definition: ElementDefinition) => void {
 	return useCallback(
 		(definition: ElementDefinition) => {
-			const isPrimary = definition.level === DefinitionType.Primary
+			const isPrimary = definition.level === CausalityLevel.Primary
 			setDefinitions(prev => {
 				const definitions =
 					prev?.map(def => {
 						if (isPrimary) {
 							def = {
 								...def,
-								level: DefinitionType.Secondary,
+								level: CausalityLevel.Secondary,
 							}
 						}
 						if (def.id === definition.id) {

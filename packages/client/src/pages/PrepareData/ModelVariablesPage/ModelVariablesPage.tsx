@@ -18,9 +18,8 @@ import { Header } from './Header'
 import { useBusinessLogic } from './hooks'
 import { EmptyDataPageWarning } from '~components/EmptyDataPageWarning'
 import { ArqueroDetailsTable } from '~components/Tables/ArqueroDetailsTable'
-import { PageType, Pages } from '~enums'
-import { Factor } from '~interfaces'
 import { ContainerFlexRow } from '~styles'
+import { PageType, Pages, CausalFactor } from '~types'
 
 export const ModelVariablesPage: React.FC = memo(function ModelVariablesPage() {
 	const {
@@ -77,11 +76,13 @@ export const ModelVariablesPage: React.FC = memo(function ModelVariablesPage() {
 								<DetailsListContainer>
 									<ArqueroDetailsTable
 										table={subjectIdentifierData.table}
-										columns={subjectIdentifierData.columnNames.map(n => ({
-											name: n,
-											key: n,
-											minWidth: 200,
-										}))}
+										columns={(subjectIdentifierData.columnNames || []).map(
+											n => ({
+												name: n,
+												key: n,
+												minWidth: 200,
+											}),
+										)}
 										features={{ smartHeaders: true }}
 									/>
 								</DetailsListContainer>
@@ -95,7 +96,7 @@ export const ModelVariablesPage: React.FC = memo(function ModelVariablesPage() {
 												onUpdate={onSave}
 												tableId={tableIdentifier.tableId}
 												onClick={onSelectDefinition}
-												list={definitionOptions as Factor[]}
+												list={definitionOptions as CausalFactor[]}
 												selectedDefinition={selected}
 												type={pageType}
 											/>

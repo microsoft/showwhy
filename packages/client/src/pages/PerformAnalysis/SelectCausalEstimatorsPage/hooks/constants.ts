@@ -5,51 +5,51 @@
 
 import { IChoiceGroupOption } from '@fluentui/react'
 
-import { EstimatorsGroups, EstimatorsType } from '~enums'
+import { EstimatorGroup, EstimatorType } from '~types'
 
 export const estimatorGroups: IChoiceGroupOption[] = [
 	{
-		key: EstimatorsGroups.ExposureEstimator,
-		text: EstimatorsGroups.ExposureEstimator,
+		key: EstimatorGroup.Exposure,
+		text: EstimatorGroup.Exposure,
 	},
 	{
-		key: EstimatorsGroups.OutcomeEstimator,
-		text: EstimatorsGroups.OutcomeEstimator,
+		key: EstimatorGroup.Outcome,
+		text: EstimatorGroup.Outcome,
 	},
 ]
 
 // Lower value, higher rank
 const estimatorRanking = [
 	{
-		key: EstimatorsType.LinearDoubleMachineLearning,
+		key: EstimatorType.LinearDoubleMachineLearning,
 		value: 1,
 	},
 	{
-		key: EstimatorsType.ForestDoubleMachineLearning,
+		key: EstimatorType.ForestDoubleMachineLearning,
 		value: 2,
 	},
 	{
-		key: EstimatorsType.LinearDoublyRobustLearner,
+		key: EstimatorType.LinearDoublyRobustLearner,
 		value: 3,
 	},
 	{
-		key: EstimatorsType.ForestDoublyRobustLearner,
+		key: EstimatorType.ForestDoublyRobustLearner,
 		value: 4,
 	},
 	{
-		key: EstimatorsType.PropensityScoreStratification,
+		key: EstimatorType.PropensityScoreStratification,
 		value: 5,
 	},
 	{
-		key: EstimatorsType.InversePropensityWeighting,
+		key: EstimatorType.InversePropensityWeighting,
 		value: 6,
 	},
 	{
-		key: EstimatorsType.PropensityScoreMatching,
+		key: EstimatorType.PropensityScoreMatching,
 		value: 7,
 	},
 	{
-		key: EstimatorsType.LinearRegression,
+		key: EstimatorType.LinearRegression,
 		value: 8,
 	},
 ]
@@ -60,8 +60,8 @@ const defaultEstimatorRanking = estimatorRanking.reduce((acc, curr) => {
 }, {} as { [key: string]: number })
 
 export function getEstimatorByRanking(
-	estimators: EstimatorsType[],
-): EstimatorsType {
+	estimators: EstimatorType[],
+): EstimatorType {
 	const ranking = estimators.map(
 		estimator => defaultEstimatorRanking[estimator],
 	)

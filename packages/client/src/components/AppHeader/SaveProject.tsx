@@ -5,7 +5,6 @@
 import { IContextualMenuProps } from '@fluentui/react'
 import { memo, useCallback, useMemo } from 'react'
 import { OptionsButton } from './OptionsButton'
-import { FileType, NodeResponseStatus } from '~enums'
 import {
 	useDefaultRun,
 	useDownloadResult,
@@ -13,6 +12,7 @@ import {
 	useSaveProject,
 } from '~hooks'
 import { Container } from '~styles'
+import { FileType, NodeResponseStatus } from '~types'
 
 export const SaveProject: React.FC = memo(function SaveProject() {
 	const downloadResult = useDownloadResult()

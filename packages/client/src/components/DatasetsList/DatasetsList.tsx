@@ -5,8 +5,8 @@
 import { memo } from 'react'
 import styled from 'styled-components'
 import { Dataset } from './Dataset'
-import { ProjectFile } from '~interfaces'
 import { ContainerFlexRow } from '~styles'
+import { ProjectFile } from '~types'
 
 export interface DatasetsListProps {
 	onFileSelected: (projectFile: ProjectFile) => void

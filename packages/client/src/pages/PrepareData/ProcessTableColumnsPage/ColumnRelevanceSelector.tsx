@@ -6,7 +6,7 @@ import { DefaultButton } from '@fluentui/react'
 import { memo } from 'react'
 import styled from 'styled-components'
 import { DefinitionRelationSelector } from './DefinitionRelationSelector'
-import { ColumnRelation, ColumnRelevance } from '~enums'
+import { ColumnRelation, ColumnRelevance } from '~types'
 
 const RelevanceTypes = [
 	{

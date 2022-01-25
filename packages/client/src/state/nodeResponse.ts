@@ -9,7 +9,7 @@ import {
 	useRecoilValue,
 	useSetRecoilState,
 } from 'recoil'
-import { NodeResponse } from '~interfaces'
+import { NodeResponse } from '~types'
 
 export const nodeResponseState = atom<NodeResponse | undefined>({
 	key: 'node-response-store',

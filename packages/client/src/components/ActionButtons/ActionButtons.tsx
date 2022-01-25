@@ -6,8 +6,22 @@ import { IconButton } from '@fluentui/react'
 import { memo } from 'react'
 import styled from 'styled-components'
 import { InfoCallout } from '~components/Callout'
-import { ActionButtonsProps } from '~interfaces'
 import { Text } from '~styles'
+
+export interface ActionButtonsProps {
+	onCancel?: () => void
+	onSave?: () => void
+	onEdit?: () => void
+	onDelete?: () => void
+	onDuplicate?: () => void
+	onFavorite?: () => void
+	favoriteProps?: {
+		isFavorite: boolean
+		title?: string
+	}
+	infoButton?: { id: string; text: string }
+	disableSave?: boolean
+}
 
 export const ActionButtons: React.FC<ActionButtonsProps> = memo(
 	function ActionButtons({

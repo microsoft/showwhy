@@ -5,7 +5,7 @@
 
 import { useCallback, useMemo, useState } from 'react'
 import { useLoadSpecificationData } from '../ExploreSpecificationCurvePage/hooks'
-import { NodeResponseStatus, OrchestratorType, RefutationTypes } from '~enums'
+import { OrchestratorType } from '~classes'
 import {
 	useAlternativeModels,
 	useDefaultRun,
@@ -15,14 +15,6 @@ import {
 	useRunConfidenceInterval,
 } from '~hooks'
 
-import {
-	AlternativeModels,
-	DefaultDatasetResult,
-	DescribeElements,
-	RunHistory,
-	SignificanceTest,
-	Specification,
-} from '~interfaces'
 import { buildSignificanceTestsNode } from '~resources'
 import {
 	useDefaultDatasetResult,
@@ -32,6 +24,16 @@ import {
 	useSignificanceTests,
 	useSpecificationCurveConfig,
 } from '~state'
+import {
+	AlternativeModels,
+	DefaultDatasetResult,
+	Experiment,
+	NodeResponseStatus,
+	RunHistory,
+	SignificanceTest,
+	Specification,
+	RefutationType,
+} from '~types'
 
 export function useBusinessLogic(): {
 	alternativeModels: AlternativeModels
@@ -40,12 +42,12 @@ export function useBusinessLogic(): {
 	specificationData: Specification[]
 	defaultDataset: DefaultDatasetResult | null
 	refutationLength: number
-	defineQuestion: DescribeElements
+	defineQuestion: Experiment
 	activeValues: number[]
 	significanceTestsResult: SignificanceTest | undefined
 	significanceFailed: boolean
 	activeTaskIds: string[]
-	refutationType: RefutationTypes
+	refutationType: RefutationType
 	isCanceled: boolean
 	runSignificance: (taskIds: string[]) => void
 	cancelRun: () => void
@@ -66,7 +68,7 @@ export function useBusinessLogic(): {
 	const refutationLength = useRefutationLength()
 	const significanceTestsResult = useSignificanceTests(defaultRun?.id as string)
 
-	const refutationType = useMemo((): RefutationTypes => {
+	const refutationType = useMemo((): RefutationType => {
 		if (defaultRun && defaultRun?.refutationType) {
 			return defaultRun?.refutationType
 		}

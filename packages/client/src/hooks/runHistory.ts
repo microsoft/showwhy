@@ -4,18 +4,18 @@
  */
 
 import { useCallback, useMemo } from 'react'
-import { NodeResponseStatus } from '~enums'
-import {
-	NodeResponse,
-	PartialResults,
-	RunHistory,
-	RunStatus,
-} from '~interfaces'
 import {
 	useResetSpecificationCurveConfig,
 	useRunHistory,
 	useSetRunHistory,
 } from '~state'
+import {
+	NodeResponseStatus,
+	NodeResponse,
+	PartialResults,
+	RunHistory,
+	RunStatus,
+} from '~types'
 import {
 	disableAllRuns,
 	isStatusProcessing,

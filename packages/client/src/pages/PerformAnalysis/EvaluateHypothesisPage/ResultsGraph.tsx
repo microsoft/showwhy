@@ -5,26 +5,26 @@
 import { Dimensions } from '@essex-js-toolkit/hooks'
 import { memo } from 'react'
 import { OutcomeEffectScatterplot } from '../ExploreSpecificationCurvePage/vega'
-import { RefutationTypes } from '~enums'
+import { Paragraph, Value, Container, Bold, Text } from '~styles'
 import {
+	RefutationType,
 	DecisionFeature,
-	DescribeElements,
+	Experiment,
 	Specification,
 	SpecificationCurveConfig,
-} from '~interfaces'
-import { Paragraph, Value, Container, Bold, Text } from '~styles'
+} from '~types'
 import { calculateMedian } from '~utils'
 
 interface ResultsGraphProps {
 	specificationData: Specification[]
 	activeValues: number[]
-	defineQuestion: DescribeElements
+	defineQuestion: Experiment
 	specificationCurveConfig: SpecificationCurveConfig
 	vegaWindowDimensions: Dimensions
 	onMouseOver: (item: Specification | DecisionFeature | undefined) => void
 	hovered: number | undefined
 	failedRefutationIds: number[]
-	refutationType: RefutationTypes
+	refutationType: RefutationType
 }
 
 export const ResultsGraph: React.FC<ResultsGraphProps> = memo(
@@ -58,7 +58,7 @@ export const ResultsGraph: React.FC<ResultsGraphProps> = memo(
 					population and
 					<Value>{defineQuestion?.exposure?.definition?.length}</Value>
 					exposure definitions.
-					{refutationType === RefutationTypes.QuickRefutation && (
+					{refutationType === RefutationType.QuickRefutation && (
 						<Text>
 							{' '}
 							Consider running the analysis with the

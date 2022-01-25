@@ -5,7 +5,7 @@
 
 import { useCallback } from 'react'
 import { SetDefinitions } from './types'
-import { ElementDefinition } from '~interfaces'
+import { ElementDefinition } from '~types'
 
 export function useRemoveDefinition(
 	setDefinitions: SetDefinitions,

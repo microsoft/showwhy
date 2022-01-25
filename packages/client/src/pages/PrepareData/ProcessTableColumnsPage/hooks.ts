@@ -6,9 +6,7 @@
 import { IColumn } from '@fluentui/react'
 import { not } from 'arquero'
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { ColumnRelevance, ColumnRelation } from '~enums'
 import { useRestoreColumn, useTableCommands } from '~hooks'
-import { BasicTable, ProjectFile, TableColumn } from '~interfaces'
 import {
 	useOriginalTables,
 	useProjectFiles,
@@ -17,13 +15,20 @@ import {
 	useSetTableColumns,
 	useTableColumns,
 } from '~state'
-import { Setter } from '~types'
+import {
+	ColumnRelevance,
+	ColumnRelation,
+	DataTable,
+	ProjectFile,
+	TableColumn,
+	Setter,
+} from '~types'
 
 export function useBusinessLogic(): {
 	files: ProjectFile[]
 	columns: IColumn[]
 	selectedFile: ProjectFile | undefined
-	selectedTable: BasicTable | undefined
+	selectedTable: DataTable | undefined
 	selectedColumn: string | undefined
 	onSelectColumn: (evt: any, column?: IColumn) => void
 	tableCommands: ReturnType<typeof useTableCommands>

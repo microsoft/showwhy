@@ -16,12 +16,12 @@ import {
 	useRemoveDefinition,
 	useSaveDefinition,
 } from '~hooks'
-import { Item, Factor } from '~interfaces'
 import { useModelVariables, useSetModelVariables } from '~state'
+import { Item, CausalFactor } from '~types'
 
 export function useDefinitionList(
-	list: Factor[],
-	onClick: (option: Factor) => void,
+	list: CausalFactor[],
+	onClick: (option: CausalFactor) => void,
 	type: string,
 	tableId: string,
 	onUpdate: (definition: string) => void,
@@ -30,7 +30,7 @@ export function useDefinitionList(
 		isEditingLabel,
 		{ toggle: toggleIsEditingLabel, setFalse: setFalseEditing },
 	] = useBoolean(false)
-	const [editingDefinition, setEditingDefinition] = useState<Factor>()
+	const [editingDefinition, setEditingDefinition] = useState<CausalFactor>()
 	const [newLabel, setNewLabel] = useState<string>()
 	const saveDefinition = useSaveDefinition()
 	const removeDefinition = useRemoveDefinition()
@@ -42,7 +42,7 @@ export function useDefinitionList(
 	const listEndRef = useRef<HTMLInputElement>(null)
 
 	const editDefinition = useCallback(
-		(val: Factor) => {
+		(val: CausalFactor) => {
 			toggleIsEditingLabel()
 			setEditingDefinition(val)
 			setNewLabel(val.variable)

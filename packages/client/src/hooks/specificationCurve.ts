@@ -8,7 +8,6 @@ import { Theme } from '@thematic/core'
 import { useThematic } from '@thematic/react'
 import { useCallback, useMemo, useState } from 'react'
 import { useLoadSpecificationData } from '../pages/PerformAnalysis/ExploreSpecificationCurvePage/hooks'
-import { DefinitionType, NodeResponseStatus } from '~enums'
 import {
 	useDefaultRun,
 	useOnMouseOver,
@@ -17,13 +16,6 @@ import {
 	useVegaWindowDimensions,
 } from '~hooks'
 import {
-	DecisionFeature,
-	DescribeElements,
-	RunHistory,
-	Specification,
-	SpecificationCurveConfig,
-} from '~interfaces'
-import {
 	useHoverState,
 	useRunHistory,
 	useSetSpecificationCurveConfig,
@@ -31,6 +23,15 @@ import {
 	useSpecificationCurveConfig,
 	useDefineQuestion,
 } from '~state'
+import {
+	CausalityLevel,
+	DecisionFeature,
+	Experiment,
+	RunHistory,
+	Specification,
+	SpecificationCurveConfig,
+	NodeResponseStatus,
+} from '~types'
 
 export function useSpecificationCurve(): {
 	activeProcessing: RunHistory | null
@@ -118,11 +119,11 @@ export function useSpecificationCurve(): {
 	}
 }
 
-function useOutcome(defineQuestion: DescribeElements) {
+function useOutcome(defineQuestion: Experiment) {
 	return useMemo(
 		() =>
 			defineQuestion.outcome?.definition.find(
-				d => d.level === DefinitionType.Primary,
+				d => d.level === CausalityLevel.Primary,
 			)?.variable,
 		[defineQuestion],
 	)

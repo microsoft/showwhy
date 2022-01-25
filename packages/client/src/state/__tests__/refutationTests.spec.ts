@@ -4,13 +4,13 @@
  */
 import { renderHook } from '@testing-library/react-hooks'
 import { RecoilRoot, snapshot_UNSTABLE } from 'recoil'
-import { RefutationTypes } from '../../common/enums'
 import { RefutationTypeState, useRefutationType } from '../refutationTests'
+import { RefutationType } from '~types'
 
 describe('refutationTypeState', () => {
 	describe('useRefutationType', () => {
 		it('should return the default value', () => {
-			const expected = RefutationTypes.QuickRefutation
+			const expected = RefutationType.QuickRefutation
 			const { result } = renderHook(() => useRefutationType(), {
 				wrapper: RecoilRoot,
 			})
@@ -20,7 +20,7 @@ describe('refutationTypeState', () => {
 
 	describe('useSetRefutationTests', () => {
 		it('should change the refutationType state', () => {
-			const expected = RefutationTypes.FullRefutation
+			const expected = RefutationType.FullRefutation
 			const snapshot = snapshot_UNSTABLE(({ set }) =>
 				set(RefutationTypeState, expected),
 			)

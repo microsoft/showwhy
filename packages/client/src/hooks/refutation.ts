@@ -4,9 +4,14 @@
  */
 
 import { useCallback, useMemo } from 'react'
-import { RefutationTestMethod, RefutationTypes, RefutationResult } from '~enums'
-import { RefutationOption, Specification } from '~interfaces'
 import { useSetRefutationType } from '~state'
+import {
+	RefutationOption,
+	Specification,
+	RefutationTestMethod,
+	RefutationType,
+	RefutationResult,
+} from '~types'
 
 export const REFUTATIONS: RefutationOption[] = [
 	{
@@ -69,7 +74,7 @@ export function useSetQuickRefutation(): () => void {
 	const setRefutations = useSetRefutationType()
 
 	return useCallback(() => {
-		setRefutations(RefutationTypes.QuickRefutation)
+		setRefutations(RefutationType.QuickRefutation)
 	}, [setRefutations])
 }
 
@@ -77,6 +82,6 @@ export function useSetFullRefutation(): () => void {
 	const setRefutations = useSetRefutationType()
 
 	return useCallback(() => {
-		setRefutations(RefutationTypes.FullRefutation)
+		setRefutations(RefutationType.FullRefutation)
 	}, [setRefutations])
 }

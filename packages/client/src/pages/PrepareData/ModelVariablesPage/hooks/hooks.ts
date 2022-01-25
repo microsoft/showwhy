@@ -15,17 +15,7 @@ import {
 	useSubjectIdentifier,
 	useSubjectIdentifierData,
 } from './variables'
-import { PageType } from '~enums'
 import { useAddOrEditFactor, usePageType, useSaveDefinition } from '~hooks'
-import {
-	BasicTable,
-	ElementDefinition,
-	FilterObject,
-	Element,
-	CausalFactor,
-	VariableDefinition,
-	DefinitionTable,
-} from '~interfaces'
 import {
 	useAllModelVariables,
 	useAllTableColumns,
@@ -34,6 +24,15 @@ import {
 	useOriginalTables,
 	useProjectFiles,
 } from '~state'
+import {
+	PageType,
+	DataTable,
+	ElementDefinition,
+	FilterObject,
+	Element,
+	CausalFactor,
+	VariableDefinition,
+} from '~types'
 
 export function useBusinessLogic(): {
 	pageType: PageType
@@ -42,8 +41,8 @@ export function useBusinessLogic(): {
 	defineQuestionData: Element
 	modelVariables: VariableDefinition[][]
 	subjectIdentifier: string[]
-	subjectIdentifierData: DefinitionTable
-	tableIdentifier: BasicTable | undefined
+	subjectIdentifierData: DataTable
+	tableIdentifier: DataTable | undefined
 	definitionOptions: FactorsOrDefinitions
 	isDeriveVisible: boolean
 	editingClause: FilterObject | undefined
@@ -68,9 +67,9 @@ export function useBusinessLogic(): {
 	const defineQuestion = useDefineQuestion()
 	const defineQuestionData = defineQuestion[pageType] as Element
 	const [editingClause, setEditingClause] = useState<FilterObject>()
-	const [tableIdentifier, setTableIdentifier] = useState<
-		BasicTable | undefined
-	>(allOriginalTables[0])
+	const [tableIdentifier, setTableIdentifier] = useState<DataTable | undefined>(
+		allOriginalTables[0],
+	)
 	const [selectedDefinition, setSelectedDefinition] = useState<string>('')
 
 	const relationType = useRelationType(pageType)

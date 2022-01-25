@@ -6,15 +6,14 @@
 import { useBoolean } from '@fluentui/react-hooks'
 import { useCallback, useEffect, useMemo } from 'react'
 import { useHistory } from 'react-router-dom'
-import { StepStatus } from '~enums'
 import {
 	useCurrentStep,
 	useAllSteps,
 	useLoadProject,
 	useResetProject,
 } from '~hooks'
-import { FileDefinition, Step } from '~interfaces'
 import { useSetGuidance, useSetStepStatus, useStepStatus } from '~state'
+import { FileDefinition, Step, StepStatus } from '~types'
 
 export function useGuidance(): [boolean, () => void] {
 	/* TODO: this is synchronizing state between an in-memory hook and recoil. This should just use recoil*/
