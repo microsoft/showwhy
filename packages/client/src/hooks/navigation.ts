@@ -5,12 +5,12 @@
 import { useCallback } from 'react'
 import { useHistory } from 'react-router-dom'
 
-export function useGoToPageHandler(): (url: string) => void {
+export function useGoToPage(url: string, state?: unknown): () => void {
 	const history = useHistory()
-	return useCallback(
-		(url: string) => {
-			history.push(url)
-		},
-		[history],
-	)
+	return useCallback(() => {
+		history.push(url)
+		if (state) {
+			history.location.state = state
+		}
+	}, [history, url])
 }

@@ -5,14 +5,15 @@
 import { useCallback, useMemo } from 'react'
 import { useCurrentStep, useAllSteps } from '~hooks'
 import { useSetStepStatus, useStepStatus } from '~state'
-import { Step, StepStatus } from '~types'
+import { Handler0, Step, StepStatus } from '~types'
 
+export type ToggleStepStatusHandler = Handler0
 export interface ProcessStepInfo {
 	step: Step | undefined
 	stepStatus: StepStatus | undefined
 	previousStepUrl: string
 	nextStepUrl: string
-	onToggleStepStatus: () => void
+	onToggleStepStatus: ToggleStepStatusHandler
 }
 
 export function useProcessStepInfo(): ProcessStepInfo {

@@ -10,24 +10,28 @@ import { SaveProject } from './SaveProject'
 import { Settings } from './Settings'
 import { CausalQuestion } from '~components/CausalQuestion'
 import { Container } from '~styles'
-import { StepStatus, Experiment, FileDefinition } from '~types'
+import { StepStatus, Experiment, FileDefinition, Handler1 } from '~types'
+
+type GetStepUrlsHandler = (urls?: string[], exclude?: any) => string[]
+type SetAllStepStatusHandler = (urls: string[], status: StepStatus) => void
+type ClickProjectHandler = Handler1<FileDefinition>
 
 interface AppHeaderProps {
-	onGetStepUrls: (urls?: string[], exclude?: any) => string[]
-	onSetAllStepStatus: (urls: string[], status: StepStatus) => void
 	defineQuestion: Experiment
-	onClickProject: (example: FileDefinition) => void
 	exampleProjects: FileDefinition[]
 	uploadZipMenuOption?: IContextualMenuItem
+	onGetStepUrls: GetStepUrlsHandler
+	onSetAllStepStatus: SetAllStepStatusHandler
+	onClickProject: ClickProjectHandler
 }
 
 export const AppHeader: React.FC<AppHeaderProps> = memo(function AppHeader({
-	onGetStepUrls,
-	onSetAllStepStatus,
 	defineQuestion,
-	onClickProject,
 	exampleProjects,
 	uploadZipMenuOption,
+	onGetStepUrls,
+	onClickProject,
+	onSetAllStepStatus,
 }) {
 	return (
 		<AppHeaderContainer>

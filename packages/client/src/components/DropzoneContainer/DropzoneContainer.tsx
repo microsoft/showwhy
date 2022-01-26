@@ -40,21 +40,7 @@ export const DropzoneContainer: FC<DropzoneContainerProps> = memo(
 		acceptedFileTypes,
 		dropzoneOptions = {},
 	}) {
-		const contentText = text
-			? text
-			: hasSelectedFiles
-			? 'Upload files'
-			: 'Drop some files here, or click to select files'
-
-		const styles = useMemo(
-			() => ({
-				container: {
-					margin: '0',
-					padding: '0 0.5rem',
-				},
-			}),
-			[],
-		)
+		const contentText = useContentText(text, hasSelectedFiles)
 
 		return (
 			<Dropzone
@@ -91,3 +77,25 @@ const Text = styled.span`
 const FluentIcon = styled(Icon)`
 	color: ${({ theme }) => theme.application().accent().hex()};
 `
+
+const styles = {
+	container: {
+		margin: '0',
+		padding: '0 0.5rem',
+	},
+}
+
+function useContentText(
+	text: string | undefined,
+	hasSelectedFiles: boolean | undefined,
+): string {
+	return useMemo(
+		() =>
+			text
+				? text
+				: hasSelectedFiles
+				? 'Upload files'
+				: 'Drop some files here, or click to select files',
+		[text, hasSelectedFiles],
+	)
+}
