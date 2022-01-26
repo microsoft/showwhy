@@ -80,6 +80,7 @@ export const ModelVariablesPage: React.FC = memo(function ModelVariablesPage() {
 											n => ({
 												name: n,
 												key: n,
+												fieldName: n,
 												minWidth: 200,
 											}),
 										)}
