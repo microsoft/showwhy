@@ -188,11 +188,11 @@ function useTargetOnCausalFactor(selected, causalFactors, saveCausalFactor) {
 }
 
 function useSetTargetVariable(
-	selected,
-	saveDefinition,
-	type,
-	defineQuestionData,
-	setTargetOnCausalFactor,
+	selected: string,
+	saveDefinition: (definition: CausalFactor) => void,
+	type: PageType,
+	defineQuestionData: Element,
+	setTargetOnCausalFactor: (val: any) => void,
 ) {
 	return useCallback(
 		(_evt: unknown, value: any) => {
@@ -201,7 +201,7 @@ function useSetTargetVariable(
 			}
 			const newDefinition = {
 				...defineQuestionData?.definition.find(x => x.variable === selected),
-			} as ElementDefinition
+			} as CausalFactor
 
 			if (newDefinition) {
 				newDefinition.column = value.text
