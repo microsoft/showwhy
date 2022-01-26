@@ -2,11 +2,13 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { IconButton } from '@fluentui/react'
-import { memo } from 'react'
+import { IconButton, IIconProps } from '@fluentui/react'
+import { memo, useMemo } from 'react'
 import styled from 'styled-components'
 import { InfoCallout } from '~components/Callout'
 import { Text } from '~styles'
+
+const DEFAULT_FAVORITE_PROPS = Object.freeze({ isFavorite: false, title: '' })
 
 export interface ActionButtonsProps {
 	onCancel?: () => void
@@ -31,65 +33,67 @@ export const ActionButtons: React.FC<ActionButtonsProps> = memo(
 		onDelete,
 		onDuplicate,
 		onFavorite,
-		favoriteProps,
+		favoriteProps = DEFAULT_FAVORITE_PROPS,
 		infoButton,
 		disableSave = false,
 	}) {
+		const favoriteIconProps = useMemo<IIconProps>(
+			() => ({
+				iconName: `FavoriteStar${favoriteProps.isFavorite ? 'Fill' : ''}`,
+			}),
+			[favoriteProps.isFavorite],
+		)
 		return (
 			<Container>
-				{!!onSave && (
+				{onSave && (
 					<IconButton
 						onClick={onSave}
-						iconProps={{ iconName: 'Save' }}
+						iconProps={iconProps.save}
 						title="Save"
 						ariaLabel="Save Emoji"
 						disabled={disableSave}
 					/>
 				)}
-				{!!onCancel && (
+				{onCancel && (
 					<IconButton
-						iconProps={{ iconName: 'Cancel' }}
+						iconProps={iconProps.cancel}
 						title="Cancel"
 						ariaLabel="Cancel Emoji"
 						onClick={onCancel}
 					/>
 				)}
-				{!!onEdit && (
+				{onEdit && (
 					<IconButton
-						iconProps={{ iconName: 'Edit' }}
+						iconProps={iconProps.edit}
 						title="Edit"
 						ariaLabel="Edit Emoji"
 						onClick={onEdit}
 					/>
 				)}
-				{!!onDuplicate && (
+				{onDuplicate && (
 					<IconButton
-						iconProps={{ iconName: 'DuplicateRow' }}
+						iconProps={iconProps.duplicate}
 						title="Duplicate"
 						ariaLabel="DuplicateRow Emoji"
 						onClick={onDuplicate}
 					/>
 				)}
-				{!!infoButton && (
+				{infoButton && (
 					<InfoCallout id={infoButton.id}>
 						<Text>{infoButton.text}</Text>
 					</InfoCallout>
 				)}
-				{!!onFavorite && (
+				{onFavorite && (
 					<IconButton
-						iconProps={{
-							iconName: `FavoriteStar${
-								favoriteProps?.isFavorite ? 'Fill' : ''
-							}`,
-						}}
+						iconProps={favoriteIconProps}
 						title={favoriteProps?.title || 'Favorite'}
 						ariaLabel="FavoriteStar Emoji"
 						onClick={onFavorite}
 					/>
 				)}
-				{!!onDelete && (
+				{onDelete && (
 					<IconButton
-						iconProps={{ iconName: 'Delete' }}
+						iconProps={iconProps.delete}
 						title="Delete"
 						ariaLabel="Delete Emoji"
 						onClick={onDelete}
@@ -104,3 +108,11 @@ const Container = styled.div`
 	display: flex;
 	justify-content: center;
 `
+
+const iconProps = {
+	save: { iconName: 'Save' },
+	cancel: { iconName: 'Cancel' },
+	edit: { iconName: 'Edit' },
+	duplicate: { iconName: 'DuplicateRow' },
+	delete: { iconName: 'Delete' },
+}
