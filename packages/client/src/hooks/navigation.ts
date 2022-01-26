@@ -12,5 +12,5 @@ export function useGoToPage(url: string, state?: unknown): () => void {
 		if (state) {
 			history.location.state = state
 		}
-	}, [history, url])
+	}, [history, url, state])
 }
