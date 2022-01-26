@@ -4,9 +4,11 @@
  */
 import { useCallback } from 'react'
 import { useLoadProject, useResetProject } from '~hooks'
-import { FileDefinition } from '~types'
+import { FileDefinition, Handler1 } from '~types'
 
-export function useOnClickProject(): (example: FileDefinition) => void {
+type OnClickHandler = Handler1<FileDefinition>
+
+export function useOnClickProject(): OnClickHandler {
 	const loadExample = useLoadProject()
 	const resetProject = useResetProject()
 

@@ -14,7 +14,6 @@ import { StepTitle } from '~components/StepTitle'
 import {
 	useExampleProjects,
 	useGetStepUrls,
-	useGoToPageHandler,
 	useUploadZipMenuOption,
 } from '~hooks'
 import {
@@ -34,7 +33,6 @@ export const Layout: React.FC = memo(function Layout({ children }) {
 	const project = useSelectedProject()
 	const [isGuidanceVisible, toggleGuidance] = useGuidance()
 	const onClickProject = useOnClickProject()
-	const goToPage = useGoToPageHandler()
 	const { step, stepStatus, onToggleStepStatus, previousStepUrl, nextStepUrl } =
 		useProcessStepInfo()
 
@@ -76,7 +74,6 @@ export const Layout: React.FC = memo(function Layout({ children }) {
 						<StepControls
 							step={step}
 							stepStatus={stepStatus}
-							goToPage={goToPage}
 							nextUrl={nextStepUrl}
 							previousUrl={previousStepUrl}
 							toggleStatus={onToggleStepStatus}

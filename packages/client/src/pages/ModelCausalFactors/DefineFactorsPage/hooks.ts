@@ -4,9 +4,9 @@
  */
 
 import { upperFirst } from 'lodash'
-import { useCallback, useMemo } from 'react'
-import { useHistory } from 'react-router-dom'
-import { usePageType } from '~hooks'
+import { useMemo } from 'react'
+import { useGoToPage, usePageType } from '~hooks'
+import { Pages } from '~types'
 
 export function useBusinessLogic(): {
 	pageName: string
@@ -64,9 +64,5 @@ function useTableHeader(
 
 function useGoToConsiderCausalFactors(): () => void {
 	const pageType = usePageType()
-	const history = useHistory()
-	return useCallback(() => {
-		history.push('/define/causalFactors')
-		history.location.state = pageType
-	}, [history, pageType])
+	return useGoToPage(Pages.ConsiderCausalFactors, pageType)
 }

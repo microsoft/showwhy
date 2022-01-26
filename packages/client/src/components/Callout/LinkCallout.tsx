@@ -15,19 +15,18 @@ interface LinkCalloutProps {
 
 export const LinkCallout: React.FC<LinkCalloutProps> = memo(
 	function LinkCallout({ title, children, id = 'callout-link', detailsTitle }) {
-		const [isCalloutVisible, { toggle: toggleIsCalloutVisible }] =
-			useBoolean(false)
+		const [isVisible, { toggle: handleToggleVisible }] = useBoolean(false)
 
 		return (
 			<>
-				<Text id={id} onClick={toggleIsCalloutVisible}>
+				<Text id={id} onClick={handleToggleVisible}>
 					{title}
 				</Text>
-				{isCalloutVisible && (
+				{isVisible && (
 					<CalloutInfo
 						role="alertdialog"
 						gapSpace={0}
-						onDismiss={toggleIsCalloutVisible}
+						onDismiss={handleToggleVisible}
 						setInitialFocus
 						target={`#${id}`}
 					>

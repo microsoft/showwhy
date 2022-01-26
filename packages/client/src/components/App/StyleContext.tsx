@@ -4,7 +4,6 @@
  */
 import { ThematicFluentProvider } from '@thematic/fluent'
 import { ApplicationStyles, useThematic } from '@thematic/react'
-
 import { memo } from 'react'
 import { createGlobalStyle, ThemeProvider } from 'styled-components'
 
