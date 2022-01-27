@@ -11,7 +11,6 @@ import {
 	Element,
 	TableColumn,
 	Setter,
-	ColumnRelation,
 } from '~types'
 
 export interface SelectedArgs {
@@ -24,7 +23,6 @@ export interface SelectedArgs {
 
 export interface SubjectIdentifierArgs {
 	allTableColumns: Partial<TableColumn[][]>
-	relationType: ColumnRelation
 	modelVariables: VariableDefinition[][]
 }
 

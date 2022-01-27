@@ -11,13 +11,7 @@ import {
 	SubjectIdentifierDataArgs,
 } from './interfaces'
 import { FactorsOrDefinitions } from './types'
-import {
-	PageType,
-	DataTable,
-	CausalFactor,
-	ColumnRelation,
-	ColumnRelevance,
-} from '~types'
+import { PageType, DataTable, CausalFactor, ColumnRelevance } from '~types'
 
 export function useDefinitionOptions({
 	defineQuestionData,
@@ -60,25 +54,8 @@ export function useSelected({
 	])
 }
 
-export function useRelationType(type: string): ColumnRelation {
-	return useMemo((): ColumnRelation => {
-		switch (type) {
-			case PageType.Outcome:
-				return ColumnRelation.OutcomeDefinition
-			case PageType.Exposure:
-				return ColumnRelation.ExposureDefinition
-			case PageType.Control:
-				return ColumnRelation.ControlDefinition
-			case PageType.Population:
-			default:
-				return ColumnRelation.PopulationDefinition
-		}
-	}, [type])
-}
-
 export function useSubjectIdentifier({
 	allTableColumns,
-	relationType,
 	modelVariables,
 }: SubjectIdentifierArgs): string[] {
 	return useMemo(() => {
@@ -97,14 +74,12 @@ export function useSubjectIdentifier({
 				?.filter(
 					c =>
 						c?.relevance === ColumnRelevance.SubjectIdentifier ||
-						columns.includes(c?.name as string) ||
-						(c?.relevance === ColumnRelevance.CausallyRelevantToQuestion &&
-							c?.relation?.includes(relationType)),
+						columns.includes(c?.name as string),
 				)
 				.map(x => x?.name || '')
 				.concat(columns) || []
 		)
-	}, [allTableColumns, relationType, modelVariables])
+	}, [allTableColumns, modelVariables])
 }
 
 export function useSubjectIdentifierData({

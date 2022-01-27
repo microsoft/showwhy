@@ -5,7 +5,6 @@
 import { ArqueroTableHeader } from '@data-wrangling-components/react'
 import { memo } from 'react'
 import styled from 'styled-components'
-import { ColumnRelevanceSelector } from './ColumnRelevanceSelector'
 import { useBusinessLogic } from './hooks'
 import { DatasetsList } from '~components/DatasetsList'
 import { ArqueroDetailsTable } from '~components/Tables/ArqueroDetailsTable'
@@ -22,11 +21,6 @@ export const ProcessTableColumnsPage: React.FC = memo(
 			tableCommands,
 			selectedColumn,
 			onSelectColumn,
-			relation,
-			isSubjectIdentifierAvailable,
-			onRelevanceChange,
-			relevance,
-			onDefinitionChange,
 		} = useBusinessLogic()
 
 		return (
@@ -67,20 +61,6 @@ export const ProcessTableColumnsPage: React.FC = memo(
 								/>
 							</DetailsListContainer>
 						</TableContainer>
-
-						{selectedColumn && (
-							<RelevanceContainer>
-								<SectionTitle>Relevance</SectionTitle>
-								<ColumnRelevanceSelector
-									isSubjectIdentifierAvailable={isSubjectIdentifierAvailable}
-									relevance={relevance}
-									relation={relation}
-									onRelevanceChange={onRelevanceChange}
-									onDefinitionChange={onDefinitionChange}
-									selectedColumn={selectedColumn}
-								/>
-							</RelevanceContainer>
-						)}
 					</TableDetailsContainer>
 				)}
 			</Container>
@@ -95,7 +75,7 @@ const TableDetailsContainer = styled.div`
 const TableContainer = styled.div``
 
 const DetailsListContainer = styled.div`
-	height: 50vh;
+	height: 70vh;
 `
 
 const TitleTableEmptyContainer = styled.div`
@@ -108,9 +88,3 @@ const TitleTableEmptyText = styled.span`
 	vertical-align: bottom;
 	margin: auto;
 `
-
-const RelevanceContainer = styled.div`
-	width: 100%;
-`
-
-const SectionTitle = styled.h2``

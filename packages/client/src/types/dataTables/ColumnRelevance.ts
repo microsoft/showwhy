@@ -5,6 +5,5 @@
 
 export enum ColumnRelevance {
 	SubjectIdentifier = 'SubjectIdentifier',
-	CausallyRelevantToQuestion = 'CausallyRelevantToQuestion',
-	NotCausallyRelevant = 'NotCausallyRelevant',
+	NotRelevant = 'NotRelevant',
 }

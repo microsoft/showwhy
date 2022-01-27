@@ -10,7 +10,6 @@ import { FactorsOrDefinitions } from './types'
 import {
 	useColumnsAsTarget,
 	useDefinitionOptions,
-	useRelationType,
 	useSelected,
 	useSubjectIdentifier,
 	useSubjectIdentifierData,
@@ -27,7 +26,6 @@ import {
 import {
 	PageType,
 	DataTable,
-	ElementDefinition,
 	FilterObject,
 	Element,
 	CausalFactor,
@@ -72,8 +70,6 @@ export function useBusinessLogic(): {
 	)
 	const [selectedDefinition, setSelectedDefinition] = useState<string>('')
 
-	const relationType = useRelationType(pageType)
-
 	const definitionOptions = useDefinitionOptions({
 		defineQuestionData,
 		type: pageType,
@@ -90,7 +86,6 @@ export function useBusinessLogic(): {
 
 	const subjectIdentifier = useSubjectIdentifier({
 		allTableColumns,
-		relationType,
 		modelVariables,
 	})
 

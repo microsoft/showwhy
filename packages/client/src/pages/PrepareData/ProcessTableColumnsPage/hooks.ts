@@ -17,7 +17,6 @@ import {
 } from '~state'
 import {
 	ColumnRelevance,
-	ColumnRelation,
 	DataTable,
 	ProjectFile,
 	TableColumn,
@@ -32,11 +31,6 @@ export function useBusinessLogic(): {
 	selectedColumn: string | undefined
 	onSelectColumn: (evt: any, column?: IColumn) => void
 	tableCommands: ReturnType<typeof useTableCommands>
-	relation: ColumnRelation[]
-	relevance: ColumnRelevance | undefined
-	isSubjectIdentifierAvailable: boolean
-	onRelevanceChange: ReturnType<typeof useOnRelevanceChange>
-	onDefinitionChange: ReturnType<typeof useOnDefinitionChange>
 	restoreColumn: (value: string) => void
 	onChangeFile: (file: ProjectFile) => void
 } {
@@ -50,14 +44,6 @@ export function useBusinessLogic(): {
 	const restoreColumn = useRestoreColumn(selectedFile?.id as string)
 	const files = useProjectFiles()
 
-	const isSubjectIdentifierAvailable = useMemo(
-		() =>
-			!tableColumns?.filter(
-				x => x.relevance === ColumnRelevance.SubjectIdentifier,
-			)?.length,
-		[tableColumns],
-	)
-
 	const columnIsDone = useCallback(
 		(column: string) => tableColumns?.find(x => x.name === column)?.isDone,
 		[tableColumns],
@@ -66,7 +52,7 @@ export function useBusinessLogic(): {
 	const removedColumns = useMemo((): string[] => {
 		return (
 			tableColumns
-				?.filter(x => x.relevance === ColumnRelevance.NotCausallyRelevant)
+				?.filter(x => x.relevance === ColumnRelevance.NotRelevant)
 				.map(x => x.name) || []
 		)
 	}, [tableColumns])
@@ -129,16 +115,11 @@ export function useBusinessLogic(): {
 		[setSelectedColumn],
 	)
 
-	const relation = useMemo(
-		() => tableColumns?.find(x => x.name === selectedColumn)?.relation || [],
-		[tableColumns, selectedColumn],
-	)
-
 	const tableCommands = useTableCommands(
 		selectedTable,
 		columns,
 		restoreColumn,
-		column => onRelevanceChange(ColumnRelevance.NotCausallyRelevant, column),
+		column => onRelevanceChange(ColumnRelevance.NotRelevant, column),
 	)
 
 	const onRelevanceChange = useOnRelevanceChange({
@@ -147,11 +128,6 @@ export function useBusinessLogic(): {
 		setRelevance,
 		relevance,
 		onRemoveColumn: onSelectColumn,
-	})
-
-	const onDefinitionChange = useOnDefinitionChange({
-		setTableColumns,
-		tableColumns,
 	})
 
 	return {
@@ -164,11 +140,6 @@ export function useBusinessLogic(): {
 		selectedColumn,
 		onSelectColumn,
 		tableCommands,
-		relation,
-		isSubjectIdentifierAvailable,
-		onRelevanceChange,
-		onDefinitionChange,
-		relevance,
 	}
 }
 
@@ -199,7 +170,6 @@ export function useOnRelevanceChange({
 				...tableColumns?.find(a => a.name === columnName),
 				name: columnName,
 				relevance: changedRelevance,
-				relation: undefined,
 			} as TableColumn
 
 			if (changedRelevance === ColumnRelevance.SubjectIdentifier) {
@@ -213,42 +183,10 @@ export function useOnRelevanceChange({
 			]
 			newArray.push(column)
 			setTableColumns(newArray)
-			if (changedRelevance === ColumnRelevance.NotCausallyRelevant) {
+			if (changedRelevance === ColumnRelevance.NotRelevant) {
 				onRemoveColumn(undefined)
 			}
 		},
 		[setTableColumns, tableColumns, setRelevance, relevance, onRemoveColumn],
-	)
-}
-
-export function useOnDefinitionChange({
-	setTableColumns,
-	tableColumns,
-}: {
-	setTableColumns: Setter<TableColumn[] | undefined>
-	tableColumns?: TableColumn[]
-}): (changedRelation: ColumnRelation[], columnName?: string) => void {
-	return useCallback(
-		(changedRelation: ColumnRelation[], columnName?: string) => {
-			const column = {
-				...tableColumns?.find(a => a.name === columnName),
-				name: columnName,
-				relation: changedRelation,
-				isDone: true,
-				relevance: ColumnRelevance.CausallyRelevantToQuestion,
-			} as TableColumn
-
-			if (!changedRelation.length) {
-				column.isDone = false
-				column.relevance = undefined
-			}
-
-			const newArray = [
-				...(tableColumns?.filter(a => a.name !== columnName) || []),
-			]
-			newArray.push(column)
-			setTableColumns(newArray)
-		},
-		[setTableColumns, tableColumns],
 	)
 }
