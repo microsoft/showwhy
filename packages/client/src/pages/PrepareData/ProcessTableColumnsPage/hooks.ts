@@ -3,7 +3,13 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { IColumn } from '@fluentui/react'
+import { createDefaultCommandBar } from '@data-wrangling-components/react'
+import {
+	IColumn,
+	ICommandBarItemProps,
+	IDetailsColumnProps,
+	IRenderFunction,
+} from '@fluentui/react'
 import { not } from 'arquero'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useRestoreColumn, useTableCommands } from '~hooks'
@@ -33,6 +39,7 @@ export function useBusinessLogic(): {
 	tableCommands: ReturnType<typeof useTableCommands>
 	restoreColumn: (value: string) => void
 	onChangeFile: (file: ProjectFile) => void
+	commandBar: IRenderFunction<IDetailsColumnProps>
 } {
 	const selectedFile = useSelectedFile()
 	const setSelectedFile = useSetSelectedFile()
@@ -46,6 +53,14 @@ export function useBusinessLogic(): {
 
 	const columnIsDone = useCallback(
 		(column: string) => tableColumns?.find(x => x.name === column)?.isDone,
+		[tableColumns],
+	)
+
+	const subjectIdentifier = useMemo(
+		(): TableColumn | undefined =>
+			tableColumns?.find(
+				x => x.relevance === ColumnRelevance.SubjectIdentifier,
+			),
 		[tableColumns],
 	)
 
@@ -79,17 +94,6 @@ export function useBusinessLogic(): {
 	useEffect(() => {
 		setSelectedFile(files[0])
 	}, [files, setSelectedFile])
-
-	const selectFirstColumn = useCallback(() => {
-		setSelectedColumn(
-			selectedTable?.table?.select(not(removedColumns)).columnNames()[0],
-		)
-	}, [removedColumns, setSelectedColumn, selectedTable])
-
-	useEffect(() => {
-		if (selectedColumn) return
-		selectFirstColumn()
-	}, [selectFirstColumn, selectedColumn])
 
 	useEffect(() => {
 		const newRelevance = tableColumns?.find(
@@ -130,6 +134,35 @@ export function useBusinessLogic(): {
 		onRemoveColumn: onSelectColumn,
 	})
 
+	const commandBar = useCallback(
+		(props?: IDetailsColumnProps) => {
+			const columnName = props?.column.name
+			const items: ICommandBarItemProps[] = [
+				{
+					key: 'newItem',
+					text: 'Set as subject identifier',
+					iconOnly: true,
+					iconProps: { iconName: 'Permissions' },
+					toggle: true,
+					disabled: subjectIdentifier && subjectIdentifier?.name !== columnName,
+					checked: subjectIdentifier?.name === columnName,
+					onClick: () =>
+						onRelevanceChange(ColumnRelevance.SubjectIdentifier, columnName),
+				},
+				{
+					key: 'deleteItem',
+					text: 'Delete this column',
+					iconOnly: true,
+					iconProps: { iconName: 'Delete' },
+					onClick: () =>
+						onRelevanceChange(ColumnRelevance.NotRelevant, columnName),
+				},
+			]
+			return createDefaultCommandBar(items)
+		},
+		[onRelevanceChange, subjectIdentifier],
+	)
+
 	return {
 		files,
 		columns,
@@ -140,6 +173,7 @@ export function useBusinessLogic(): {
 		selectedColumn,
 		onSelectColumn,
 		tableCommands,
+		commandBar,
 	}
 }
 

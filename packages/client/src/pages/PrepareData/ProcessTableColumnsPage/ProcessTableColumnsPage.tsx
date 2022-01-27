@@ -21,6 +21,7 @@ export const ProcessTableColumnsPage: React.FC = memo(
 			tableCommands,
 			selectedColumn,
 			onSelectColumn,
+			commandBar,
 		} = useBusinessLogic()
 
 		return (
@@ -57,7 +58,7 @@ export const ProcessTableColumnsPage: React.FC = memo(
 									visibleColumns={columns.map(col => col.name)}
 									columns={columns}
 									isColumnClickable
-									features={{ smartHeaders: true }}
+									features={{ smartHeaders: true, commandBar: [commandBar] }}
 								/>
 							</DetailsListContainer>
 						</TableContainer>
@@ -76,6 +77,14 @@ const TableContainer = styled.div``
 
 const DetailsListContainer = styled.div`
 	height: 70vh;
+	//TODO: bring this to dwc
+	.ms-CommandBar {
+		padding: unset;
+	}
+
+	.ms-OverflowSet {
+		justify-content: center;
+	}
 `
 
 const TitleTableEmptyContainer = styled.div`
