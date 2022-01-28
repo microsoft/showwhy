@@ -3,9 +3,15 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { IContextualMenuProps } from '@fluentui/react'
+import {
+	ICommandBarItemProps,
+	IContextualMenuProps,
+	IDetailsColumnProps,
+	IDropdownOption,
+	IRenderFunction,
+} from '@fluentui/react'
 import { useBoolean } from 'ahooks'
-import { useCallback, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { FactorsOrDefinitions } from './types'
 import {
 	useColumnsAsTarget,
@@ -31,10 +37,11 @@ import {
 	CausalFactor,
 	VariableDefinition,
 } from '~types'
+import { createDefaultCommandBar } from '@data-wrangling-components/react'
 
 export function useBusinessLogic(): {
 	pageType: PageType
-	selected: string
+	definitionSelected: string
 	columnsMenuProps: IContextualMenuProps
 	defineQuestionData: Element
 	modelVariables: VariableDefinition[][]
@@ -50,6 +57,8 @@ export function useBusinessLogic(): {
 	onEditClause: (filter: FilterObject) => void
 	onUpdateTargetVariable: ReturnType<typeof useSetTargetVariable>
 	onSelectDefinition: (option: any) => void
+	definitionDropdown: IDropdownOption[]
+	commandBar: IRenderFunction<IDetailsColumnProps>
 } {
 	const pageType = usePageType()
 	const projectFiles = useProjectFiles()
@@ -76,7 +85,7 @@ export function useBusinessLogic(): {
 		causalFactors,
 	})
 
-	const selected = useSelected({
+	const definitionSelected = useSelected({
 		defineQuestionData,
 		definitionOptions,
 		selectedDefinition,
@@ -101,7 +110,7 @@ export function useBusinessLogic(): {
 	)
 
 	const setTargetOnCausalFactor = useTargetOnCausalFactor(
-		selected,
+		definitionSelected,
 		causalFactors,
 		saveCausalFactor,
 	)
@@ -112,7 +121,7 @@ export function useBusinessLogic(): {
 	)
 
 	const onUpdateTargetVariable = useSetTargetVariable(
-		selected,
+		definitionSelected,
 		saveDefinition,
 		pageType,
 		defineQuestionData,
@@ -144,9 +153,47 @@ export function useBusinessLogic(): {
 		shouldFocusOnMount: true,
 	}
 
+	const definitionDropdown = useMemo((): IDropdownOption[] => {
+		return definitionOptions.map(x => {
+			return {
+				key: x.variable,
+				text: x.variable,
+			} as IDropdownOption
+		})
+	}, [definitionOptions])
+
+	const commandBar = useCallback((props?: IDetailsColumnProps) => {
+		const items: ICommandBarItemProps[] = [
+			{
+				key: 'assignItem',
+				text: 'Assign',
+				iconOnly: true,
+				checked: props?.columnIndex === 1,
+				iconProps: {
+					iconName: 'CheckMark',
+				},
+			},
+			{
+				key: 'newItem',
+				text: 'Hide column',
+				disabled: props?.columnIndex == 1,
+				iconOnly: true,
+				iconProps: { iconName: 'Hide3' },
+				toggle: true,
+			},
+			{
+				key: 'duplicateItem',
+				text: 'Duplicate',
+				iconOnly: true,
+				iconProps: { iconName: 'DuplicateRow' },
+			},
+		]
+		return createDefaultCommandBar(items)
+	}, [])
+
 	return {
 		pageType,
-		selected,
+		definitionSelected,
 		columnsMenuProps,
 		defineQuestionData,
 		modelVariables,
@@ -162,6 +209,8 @@ export function useBusinessLogic(): {
 		onEditClause,
 		onUpdateTargetVariable,
 		onSelectDefinition,
+		definitionDropdown,
+		commandBar,
 	}
 }
 

@@ -15,6 +15,7 @@ export const Header: React.FC = memo(function Header() {
 					<CapitalizedText>{type}</CapitalizedText> variables
 				</PageTitle>
 				<Subtitle>
+					{/* TODO: change this? */}
 					Derive variables for each of your definitions in the table below
 				</Subtitle>
 			</TitleContainer>

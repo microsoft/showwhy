@@ -3,15 +3,9 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { ArqueroTableHeader } from '@data-wrangling-components/react'
-import {
-	ContextualMenu,
-	DefaultButton,
-	IContextualMenuProps,
-} from '@fluentui/react'
 import { memo } from 'react'
 import { If, Then, Else } from 'react-if'
 import styled from 'styled-components'
-import { DeriveComponent } from '../../../pages/PrepareData/ModelVariablesPage/DeriveComponent/DeriveComponent'
 import { DefinitionList } from './DefinitionList/DefinitionList'
 import { DefinitionSteps } from './DefinitionSteps'
 import { Header } from './Header'
@@ -19,30 +13,28 @@ import { useBusinessLogic } from './hooks'
 import { EmptyDataPageWarning } from '~components/EmptyDataPageWarning'
 import { ArqueroDetailsTable } from '~components/Tables/ArqueroDetailsTable'
 import { ContainerFlexRow } from '~styles'
-import { PageType, Pages, CausalFactor } from '~types'
+import { Pages, CausalFactor } from '~types'
+import { Dropdown, IconButton } from '@fluentui/react'
+import { FileExtensions } from '@data-wrangling-components/utilities'
 
 export const ModelVariablesPage: React.FC = memo(function ModelVariablesPage() {
 	const {
 		pageType,
-		selected,
-		columnsMenuProps,
+		definitionSelected,
 		defineQuestionData,
 		modelVariables,
-		subjectIdentifier,
 		subjectIdentifierData,
 		tableIdentifier,
 		definitionOptions,
-		isDeriveVisible,
-		editingClause,
-		onResetClause,
+		definitionDropdown,
 		onSave,
-		onToggleDeriveVisible,
 		onEditClause,
-		onUpdateTargetVariable,
 		onSelectDefinition,
+		commandBar,
 	} = useBusinessLogic()
 
 	return (
+		//What if no visible columns?
 		<If condition={!defineQuestionData && modelVariables.length === 0}>
 			<Then>
 				<Header />
@@ -53,100 +45,114 @@ export const ModelVariablesPage: React.FC = memo(function ModelVariablesPage() {
 				/>
 			</Then>
 			<Else>
-				<If
-					condition={!subjectIdentifier.length || !subjectIdentifierData.table}
-				>
-					<Then>
+				<Then>
+					<Container>
 						<Header />
-						<EmptyDataPageWarning
-							text="Please specify data columns to continue: "
-							linkText="Prepare Data"
-							page={Pages.ProcessTableColumns}
-						/>
-					</Then>
-					<Else>
-						<Container>
-							<Header />
-							<NormalContainer>
-								<ArqueroTableHeader
-									table={subjectIdentifierData.table}
-									showRowCount
-									showColumnCount
-								/>
-								<DetailsListContainer>
-									<ArqueroDetailsTable
-										table={subjectIdentifierData.table}
-										columns={(subjectIdentifierData.columnNames || []).map(
-											n => ({
-												name: n,
-												key: n,
-												fieldName: n,
-												minWidth: 200,
-											}),
-										)}
-										features={{ smartHeaders: true }}
-									/>
-								</DetailsListContainer>
-								{!tableIdentifier ? null : (
-									<ContainerFlexRow>
-										<DefinitionListContainer>
-											<TitleContainer>
-												<DefinitionTitle>Definitions</DefinitionTitle>
-											</TitleContainer>
-											<DefinitionList
-												onUpdate={onSave}
-												tableId={tableIdentifier.tableId}
-												onClick={onSelectDefinition}
-												list={definitionOptions as CausalFactor[]}
-												selectedDefinition={selected}
-												type={pageType}
-											/>
-										</DefinitionListContainer>
-										<StepsContainer>
-											<TitleContainer>
-												<DefinitionTitle>Definition steps</DefinitionTitle>
-											</TitleContainer>
-											<DefinitionSteps
-												onEdit={onEditClause}
-												fileId={tableIdentifier.tableId}
-												type={pageType}
-												selectedDefinition={selected}
-											/>
-											<NormalContainer>
-												{isDeriveVisible ? (
-													<DeriveComponent
-														onReset={onResetClause}
-														editing={editingClause}
-														onClose={onToggleDeriveVisible}
-														onSave={onSave}
-														onUpdate={onUpdateTargetVariable}
-														fileId={tableIdentifier.tableId}
-														selectedDefinition={selected}
-														originalTable={tableIdentifier.table}
-													/>
-												) : (
-													<>
-														<DefinitionButton
-															text="Capture existing column as variable definition"
-															menuProps={columnsMenuProps}
-															menuAs={_getMenu}
-															allowDisabledFocus
-														/>
-														{pageType !== PageType.Control && (
-															<StepsButton onClick={onToggleDeriveVisible}>
-																Derive new column before capturing
-															</StepsButton>
-														)}
-													</>
-												)}
-											</NormalContainer>
-										</StepsContainer>
-									</ContainerFlexRow>
-								)}
-							</NormalContainer>
-						</Container>
-					</Else>
-				</If>
+						<NormalContainer>
+							{/* List of definitions for the user to choose */}
+							{/* list of definitions: definitionOptions */}
+							{/* selectedDefinition={definitionSelected} */}
+							{/* See step definitions (need to have new config) */}
+							{/* with options: */}
+							{/* see table */}
+							<Dropdown options={definitionDropdown} />
+							{console.log(subjectIdentifierData)}
+							<span>Definition steps</span>
+							<List>
+								<CommandCard>
+									<CommandCardTitle>new column name</CommandCardTitle>
+									<CommandCardDetails>transform</CommandCardDetails>
+									<CommandCardDetails>column binding</CommandCardDetails>
+									<CommandCardDetails>=</CommandCardDetails>
+									<CommandCardDetails>value</CommandCardDetails>
+									<Buttons>
+										<IconButton
+											iconProps={{ iconName: 'Edit' }}
+											title="Edit"
+											ariaLabel="Edit Emoji"
+										/>
+										<IconButton
+											iconProps={{ iconName: 'Delete' }}
+											title="Delete"
+											ariaLabel="Delete Emoji"
+										/>
+									</Buttons>
+								</CommandCard>
+								<CommandCard>
+									<CommandCardTitle>new column name</CommandCardTitle>
+									<CommandCardDetails>transform</CommandCardDetails>
+									<CommandCardDetails>column binding</CommandCardDetails>
+									<CommandCardDetails>=</CommandCardDetails>
+									<CommandCardDetails>value</CommandCardDetails>
+									<Buttons>
+										<IconButton
+											iconProps={{ iconName: 'Edit' }}
+											title="Edit"
+											ariaLabel="Edit Emoji"
+										/>
+										<IconButton
+											iconProps={{ iconName: 'Delete' }}
+											title="Delete"
+											ariaLabel="Delete Emoji"
+										/>
+									</Buttons>
+								</CommandCard>
+							</List>
+							{/* user will derive columns and then we'll show  (arquero select)*/}
+							{subjectIdentifierData.table && (
+								<>
+									<ArqueroTableHeader table={subjectIdentifierData.table} />
+									<DetailsListContainer>
+										<ArqueroDetailsTable
+											table={subjectIdentifierData.table}
+											columns={(subjectIdentifierData.columnNames || []).map(
+												n => ({
+													name: n,
+													key: n,
+													fieldName: n,
+													minWidth: 170,
+												}),
+											)}
+											features={{
+												smartHeaders: true,
+												commandBar: [commandBar],
+											}}
+										/>
+									</DetailsListContainer>
+								</>
+							)}
+
+							{/* {!tableIdentifier ? null : (
+								<ContainerFlexRow>
+									<DefinitionListContainer>
+										<TitleContainer>
+											<DefinitionTitle>Definitions</DefinitionTitle>
+										</TitleContainer>
+										<DefinitionList
+											onUpdate={onSave}
+											tableId={tableIdentifier.tableId}
+											onClick={onSelectDefinition}
+											list={definitionOptions as CausalFactor[]}
+											selectedDefinition={selected}
+											type={pageType}
+										/>
+									</DefinitionListContainer>
+									<StepsContainer>
+										<TitleContainer>
+											<DefinitionTitle>Definition steps</DefinitionTitle>
+										</TitleContainer>
+										<DefinitionSteps
+											onEdit={onEditClause}
+											fileId={tableIdentifier.tableId}
+											type={pageType}
+											selectedDefinition={selected}
+										/>
+									</StepsContainer>
+								</ContainerFlexRow>
+							)} */}
+						</NormalContainer>
+					</Container>
+				</Then>
 			</Else>
 		</If>
 	)
@@ -163,15 +169,6 @@ const StepsContainer = styled.div`
 	width: 55%;
 `
 
-const DefinitionButton = styled(DefaultButton)`
-	width: 100%;
-	margin-top: 8px;
-`
-
-const StepsButton = styled(DefaultButton)`
-	width: 100%;
-	margin-top: 8px;
-`
 const DefinitionTitle = styled.h4`
 	margin: unset;
 `
@@ -186,9 +183,32 @@ const TitleContainer = styled.div`
 `
 
 const DetailsListContainer = styled.div`
-	height: 40vh;
+	height: 60vh;
 `
 
-function _getMenu(props: IContextualMenuProps): JSX.Element {
-	return <ContextualMenu {...props} />
-}
+const CommandCard = styled.div`
+	text-align: center;
+	padding: 2px 6px 6px 6px;
+	/* background-color: rgb(241, 241, 241); */
+	margin: 8px 8px 8px 0px;
+	display: flex;
+	flex-direction: column;
+	box-shadow: 0px 4px 4px rgb(0 0 0 / 25%);
+	border: 1px solid #c5c5c5;
+`
+
+const CommandCardTitle = styled.h3`
+	text-align: center;
+	margin: unset;
+	color: ${({ theme }) => theme.application().accent().hex()};
+`
+const CommandCardDetails = styled.span``
+
+const List = styled.div`
+	display: flex;
+`
+
+const Buttons = styled.div`
+	display: flex;
+	justify-content: space-evenly;
+`
