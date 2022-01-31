@@ -206,3 +206,22 @@ export function useRestoreColumn(
 		[tableColumns, setTableColumns],
 	)
 }
+
+//TODO: Rename and remove old functions
+export function useDeriveTable1(
+	tableId: string,
+): (capturedTable: ColumnTable) => void {
+	const projectFiles = useProjectFiles()
+	const saveFile = useSaveFile(projectFiles, tableId)
+	const originalTables = useSelectOriginalTable(tableId)
+
+	return useCallback(
+		(capturedTable: ColumnTable) => {
+			const newProjectFile = projectFiles.find(
+				x => x.id === tableId,
+			) as ProjectFile
+			saveFile(newProjectFile, capturedTable)
+		},
+		[originalTables, projectFiles, tableId, saveFile],
+	)
+}

@@ -17,6 +17,7 @@ import {
 } from 'recoil'
 import { Definition, ProjectFile, VariableDefinition } from '~types'
 
+//TODO: delete this file
 const modelVariablesState = atomFamily<
 	Definition | undefined,
 	string | undefined

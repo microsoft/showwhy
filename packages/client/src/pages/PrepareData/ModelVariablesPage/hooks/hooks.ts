@@ -176,7 +176,7 @@ export function useBusinessLogic(): {
 			{
 				key: 'newItem',
 				text: 'Hide column',
-				disabled: props?.columnIndex == 1,
+				disabled: props?.columnIndex !== 1,
 				iconOnly: true,
 				iconProps: { iconName: 'Hide3' },
 				toggle: true,
