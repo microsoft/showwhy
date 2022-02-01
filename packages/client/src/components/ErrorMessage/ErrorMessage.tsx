@@ -15,7 +15,7 @@ export const ErrorMessage: React.FC<ErrorMessageProps> = memo(
 	function ErrorMessage({
 		message = 'Undefined error, please try again.',
 		children,
-		styles = {},
+		styles,
 	}) {
 		return (
 			<Container style={styles}>

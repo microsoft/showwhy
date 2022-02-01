@@ -3,9 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { DefaultButton, PrimaryButton } from '@fluentui/react'
-
 import { Dialog, DialogType, DialogFooter } from '@fluentui/react/lib/Dialog'
-import { memo } from 'react'
+import { memo, useMemo } from 'react'
 
 interface DialogConfirmProps {
 	toggle: () => void
@@ -16,9 +15,13 @@ interface DialogConfirmProps {
 
 export const DialogConfirm: React.FC<DialogConfirmProps> = memo(
 	function DialogConfirm({ toggle, onConfirm, show, title }) {
+		const dialogContentProps = useMemo(
+			() => ({ type: DialogType.normal, title }),
+			[title],
+		)
 		return (
 			<Dialog
-				dialogContentProps={{ type: DialogType.normal, title }}
+				dialogContentProps={dialogContentProps}
 				hidden={!show}
 				onDismiss={toggle}
 			>

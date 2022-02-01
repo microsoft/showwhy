@@ -9,9 +9,9 @@ import { Container } from '~styles'
 import { FileDefinition } from '~types'
 
 interface ProjectsSelectorProps {
-	onClickProject: (example: FileDefinition) => void
 	exampleProjects: FileDefinition[]
 	loadProjectOption?: IContextualMenuItem
+	onClickProject: (example: FileDefinition) => void
 }
 
 export const ProjectsSelector: React.FC<ProjectsSelectorProps> = memo(
@@ -20,18 +20,11 @@ export const ProjectsSelector: React.FC<ProjectsSelectorProps> = memo(
 		exampleProjects,
 		loadProjectOption,
 	}) {
-		const menuProps: IContextualMenuProps = useMemo(() => {
-			const items: IContextualMenuItem[] = exampleProjects.map(example => ({
-				key: example.url,
-				text: example.name,
-				onClick: () => onClickProject(example),
-			}))
-			if (loadProjectOption) {
-				items.push(loadProjectOption)
-			}
-			return { items }
-		}, [onClickProject, exampleProjects, loadProjectOption])
-
+		const menuProps = useMenuProps(
+			exampleProjects,
+			loadProjectOption,
+			onClickProject,
+		)
 		return (
 			<Container>
 				<OptionsButton text="Load" menuProps={menuProps} />
@@ -39,3 +32,21 @@ export const ProjectsSelector: React.FC<ProjectsSelectorProps> = memo(
 		)
 	},
 )
+
+function useMenuProps(
+	exampleProjects: FileDefinition[],
+	loadProjectOption: IContextualMenuItem | undefined,
+	onClickProject: (example: FileDefinition) => void,
+): IContextualMenuProps {
+	return useMemo<IContextualMenuProps>(() => {
+		const items: IContextualMenuItem[] = exampleProjects.map(example => ({
+			key: example.url,
+			text: example.name,
+			onClick: () => onClickProject(example),
+		}))
+		if (loadProjectOption) {
+			items.push(loadProjectOption)
+		}
+		return { items }
+	}, [onClickProject, exampleProjects, loadProjectOption])
+}

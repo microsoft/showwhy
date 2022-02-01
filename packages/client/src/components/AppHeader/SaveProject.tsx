@@ -15,6 +15,16 @@ import { Container } from '~styles'
 import { FileType, NodeResponseStatus } from '~types'
 
 export const SaveProject: React.FC = memo(function SaveProject() {
+	const saveProps = useSaveProps()
+
+	return (
+		<Container>
+			<OptionsButton text="Save" menuProps={saveProps} />
+		</Container>
+	)
+})
+
+function useSaveProps(): IContextualMenuProps {
 	const downloadResult = useDownloadResult()
 	const defaultRun = useDefaultRun()
 	const isCollectionEmpty = useIsCollectionEmpty()
@@ -27,7 +37,7 @@ export const SaveProject: React.FC = memo(function SaveProject() {
 		[downloadResult],
 	)
 
-	const saveProps = useMemo((): IContextualMenuProps => {
+	return useMemo<IContextualMenuProps>(() => {
 		const disabled =
 			!defaultRun || defaultRun?.status?.status !== NodeResponseStatus.Completed
 		return {
@@ -63,10 +73,4 @@ export const SaveProject: React.FC = memo(function SaveProject() {
 			],
 		}
 	}, [defaultRun, onDownload, saveProject, isCollectionEmpty])
-
-	return (
-		<Container>
-			<OptionsButton text="Save" menuProps={saveProps} />
-		</Container>
-	)
-})
+}

@@ -20,22 +20,21 @@ export const InfoCallout: React.FC<InfoCalloutProps> = memo(
 		alignSelf = 'baseline',
 		id = 'callout-button',
 	}) {
-		const [isCalloutVisible, { toggle: toggleIsCalloutVisible }] =
-			useBoolean(false)
+		const [isVisible, { toggle: handleToggleVisible }] = useBoolean(false)
 
 		return (
 			<>
 				<Icon
 					alignSelf={alignSelf}
 					id={id}
-					onClick={toggleIsCalloutVisible}
-					iconProps={{ iconName: 'Info' }}
+					onClick={handleToggleVisible}
+					iconProps={iconProps}
 				/>
-				{isCalloutVisible && (
+				{isVisible && (
 					<CalloutInfo
 						role="alertdialog"
 						gapSpace={0}
-						onDismiss={toggleIsCalloutVisible}
+						onDismiss={handleToggleVisible}
 						setInitialFocus
 						target={`#${id}`}
 					>
@@ -63,3 +62,5 @@ const CalloutInfo = styled(Callout)`
 		padding: 20px 24px;
 	}
 `
+
+const iconProps = { iconName: 'Info' }
