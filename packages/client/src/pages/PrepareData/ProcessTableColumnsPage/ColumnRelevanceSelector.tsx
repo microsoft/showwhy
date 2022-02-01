@@ -23,7 +23,7 @@ const RelevanceTypes = [
 	},
 ]
 
-interface ColumnRelevanceSelectorProps {
+export const ColumnRelevanceSelector: React.FC<{
 	relevance: ColumnRelevance | undefined
 	relation: ColumnRelation[]
 	isSubjectIdentifierAvailable: boolean
@@ -33,58 +33,55 @@ interface ColumnRelevanceSelectorProps {
 		changedRelation: ColumnRelation[],
 		column: string,
 	) => void
-}
-
-export const ColumnRelevanceSelector: React.FC<ColumnRelevanceSelectorProps> =
-	memo(function ColumnRelevanceSelector({
-		relevance,
-		relation,
-		isSubjectIdentifierAvailable,
-		selectedColumn,
-		onRelevanceChange,
-		onDefinitionChange,
-	}) {
-		return (
-			<RelevanceOptionsContainer>
-				{RelevanceTypes.map(r => {
-					if (r.value === ColumnRelevance.CausallyRelevantToQuestion) {
-						return (
-							<DefinitionRelationSelector
-								relation={relation}
-								relevance={relevance}
-								relevanceOption={r}
-								key={r.value}
-								onDefinitionChange={(changedRelation: ColumnRelation[]) =>
-									onDefinitionChange(changedRelation, selectedColumn)
-								}
-							/>
-						)
-					}
+}> = memo(function ColumnRelevanceSelector({
+	relevance,
+	relation,
+	isSubjectIdentifierAvailable,
+	selectedColumn,
+	onRelevanceChange,
+	onDefinitionChange,
+}) {
+	return (
+		<RelevanceOptionsContainer>
+			{RelevanceTypes.map(r => {
+				if (r.value === ColumnRelevance.CausallyRelevantToQuestion) {
 					return (
-						<RelevanceButton
-							toggle
-							checked={relevance === r.value}
-							onClick={() => onRelevanceChange(r.value, selectedColumn)}
+						<DefinitionRelationSelector
+							relation={relation}
+							relevance={relevance}
+							relevanceOption={r}
 							key={r.value}
-							title={
-								r.value === ColumnRelevance.SubjectIdentifier &&
-								!isSubjectIdentifierAvailable
-									? 'Subject identifier already set for this table'
-									: `Set relevance as ${ColumnRelevance[r.value]}`
+							onDefinitionChange={(changedRelation: ColumnRelation[]) =>
+								onDefinitionChange(changedRelation, selectedColumn)
 							}
-							disabled={
-								r.value === ColumnRelevance.SubjectIdentifier &&
-								!isSubjectIdentifierAvailable &&
-								relevance !== r.value
-							}
-						>
-							{r.name}
-						</RelevanceButton>
+						/>
 					)
-				})}
-			</RelevanceOptionsContainer>
-		)
-	})
+				}
+				return (
+					<RelevanceButton
+						toggle
+						checked={relevance === r.value}
+						onClick={() => onRelevanceChange(r.value, selectedColumn)}
+						key={r.value}
+						title={
+							r.value === ColumnRelevance.SubjectIdentifier &&
+							!isSubjectIdentifierAvailable
+								? 'Subject identifier already set for this table'
+								: `Set relevance as ${ColumnRelevance[r.value]}`
+						}
+						disabled={
+							r.value === ColumnRelevance.SubjectIdentifier &&
+							!isSubjectIdentifierAvailable &&
+							relevance !== r.value
+						}
+					>
+						{r.name}
+					</RelevanceButton>
+				)
+			})}
+		</RelevanceOptionsContainer>
+	)
+})
 
 const RelevanceOptionsContainer = styled.div``
 const RelevanceButton = styled(DefaultButton)`

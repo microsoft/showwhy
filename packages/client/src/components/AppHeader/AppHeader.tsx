@@ -16,16 +16,14 @@ type GetStepUrlsHandler = (urls?: string[], exclude?: any) => string[]
 type SetAllStepStatusHandler = (urls: string[], status: StepStatus) => void
 type ClickProjectHandler = Handler1<FileDefinition>
 
-interface AppHeaderProps {
+export const AppHeader: React.FC<{
 	defineQuestion: Experiment
 	exampleProjects: FileDefinition[]
 	uploadZipMenuOption?: IContextualMenuItem
 	onGetStepUrls: GetStepUrlsHandler
 	onSetAllStepStatus: SetAllStepStatusHandler
 	onClickProject: ClickProjectHandler
-}
-
-export const AppHeader: React.FC<AppHeaderProps> = memo(function AppHeader({
+}> = memo(function AppHeader({
 	defineQuestion,
 	exampleProjects,
 	uploadZipMenuOption,

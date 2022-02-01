@@ -7,45 +7,41 @@ import { useBoolean } from '@fluentui/react-hooks'
 import { memo } from 'react'
 import styled from 'styled-components'
 
-interface InfoCalloutProps {
+export const InfoCallout: React.FC<{
 	title?: string
 	id?: string
 	alignSelf?: string
-}
+}> = memo(function InfoCallout({
+	title,
+	children,
+	alignSelf = 'baseline',
+	id = 'callout-button',
+}) {
+	const [isVisible, { toggle: handleToggleVisible }] = useBoolean(false)
 
-export const InfoCallout: React.FC<InfoCalloutProps> = memo(
-	function InfoCallout({
-		title,
-		children,
-		alignSelf = 'baseline',
-		id = 'callout-button',
-	}) {
-		const [isVisible, { toggle: handleToggleVisible }] = useBoolean(false)
-
-		return (
-			<>
-				<Icon
-					alignSelf={alignSelf}
-					id={id}
-					onClick={handleToggleVisible}
-					iconProps={iconProps}
-				/>
-				{isVisible && (
-					<CalloutInfo
-						role="alertdialog"
-						gapSpace={0}
-						onDismiss={handleToggleVisible}
-						setInitialFocus
-						target={`#${id}`}
-					>
-						{title && <CalloutTitle>{title}</CalloutTitle>}
-						{children}
-					</CalloutInfo>
-				)}
-			</>
-		)
-	},
-)
+	return (
+		<>
+			<Icon
+				alignSelf={alignSelf}
+				id={id}
+				onClick={handleToggleVisible}
+				iconProps={iconProps}
+			/>
+			{isVisible && (
+				<CalloutInfo
+					role="alertdialog"
+					gapSpace={0}
+					onDismiss={handleToggleVisible}
+					setInitialFocus
+					target={`#${id}`}
+				>
+					{title && <CalloutTitle>{title}</CalloutTitle>}
+					{children}
+				</CalloutInfo>
+			)}
+		</>
+	)
+})
 
 const Icon = styled(IconButton)<{ alignSelf: string }>`
 	align-self: ${({ alignSelf }) => alignSelf};

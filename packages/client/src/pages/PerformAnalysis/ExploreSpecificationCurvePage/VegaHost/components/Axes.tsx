@@ -5,10 +5,8 @@
 import { memo } from 'react'
 import { Spec } from 'vega'
 
-export interface AxesProps {
+export const Axes: React.FC<{
 	spec: Spec
-}
-
-export const Axes: React.FC<AxesProps> = memo(function Axes() {
+}> = memo(function Axes() {
 	return null
 })

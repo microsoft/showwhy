@@ -10,48 +10,44 @@ import styled from 'styled-components'
 import { ArqueroDetailsTable } from '../ArqueroDetailsTable'
 import { ProjectFile } from '~types'
 
-interface SelectedTableDisplayProps {
+export const SelectedTableDisplay: React.FC<{
 	selectedFile?: ProjectFile
 	originalTable: ColumnTable
 	projectFiles: ProjectFile[]
 	onRenameTable: (name: string) => void
-}
-
-export const SelectedTableDisplay: React.FC<SelectedTableDisplayProps> = memo(
-	function SelectedTableDisplay({
-		selectedFile,
-		originalTable,
-		projectFiles,
-		onRenameTable,
-	}) {
-		return (
-			<Container>
-				{selectedFile && originalTable ? (
-					<SelectedFile>
-						<ArqueroTableHeader
-							table={originalTable}
-							name={selectedFile?.alias ?? selectedFile?.name}
-							showRowCount
-							showColumnCount
-							onRenameTable={onRenameTable}
-						/>
-						<DatasetContainer>
-							<ArqueroDetailsTable table={originalTable} />
-						</DatasetContainer>
-					</SelectedFile>
-				) : (
-					<NotSelectedContainer>
-						<NotSelectedText>
-							{projectFiles.length
-								? 'Click on a dataset to view its content here'
-								: null}
-						</NotSelectedText>
-					</NotSelectedContainer>
-				)}
-			</Container>
-		)
-	},
-)
+}> = memo(function SelectedTableDisplay({
+	selectedFile,
+	originalTable,
+	projectFiles,
+	onRenameTable,
+}) {
+	return (
+		<Container>
+			{selectedFile && originalTable ? (
+				<SelectedFile>
+					<ArqueroTableHeader
+						table={originalTable}
+						name={selectedFile?.alias ?? selectedFile?.name}
+						showRowCount
+						showColumnCount
+						onRenameTable={onRenameTable}
+					/>
+					<DatasetContainer>
+						<ArqueroDetailsTable table={originalTable} />
+					</DatasetContainer>
+				</SelectedFile>
+			) : (
+				<NotSelectedContainer>
+					<NotSelectedText>
+						{projectFiles.length
+							? 'Click on a dataset to view its content here'
+							: null}
+					</NotSelectedText>
+				</NotSelectedContainer>
+			)}
+		</Container>
+	)
+})
 
 const NotSelectedContainer = styled.div`
 	height: 400px;

@@ -6,21 +6,17 @@ import { memo } from 'react'
 import { Title } from '~styles'
 import { Experiment } from '~types'
 
-interface CausalQuestionProps {
+export const CausalQuestion: React.FC<{
 	defineQuestion: Experiment
-}
+}> = memo(function CausalQuestion({ defineQuestion }) {
+	const exposure = defineQuestion.exposure?.label || '<exposure>'
+	const population = defineQuestion.population?.label || '<population>'
+	const outcome = defineQuestion.outcome?.label || '<outcome>'
+	const hypothesis = defineQuestion.hypothesis || '<hypothesis>'
 
-export const CausalQuestion: React.FC<CausalQuestionProps> = memo(
-	function CausalQuestion({ defineQuestion }) {
-		const exposure = defineQuestion.exposure?.label || '<exposure>'
-		const population = defineQuestion.population?.label || '<population>'
-		const outcome = defineQuestion.outcome?.label || '<outcome>'
-		const hypothesis = defineQuestion.hypothesis || '<hypothesis>'
-
-		return (
-			<Title>
-				For {population}, does {exposure} cause {outcome} to {hypothesis}?
-			</Title>
-		)
-	},
-)
+	return (
+		<Title>
+			For {population}, does {exposure} cause {outcome} to {hypothesis}?
+		</Title>
+	)
+})

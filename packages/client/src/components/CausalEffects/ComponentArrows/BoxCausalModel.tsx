@@ -7,15 +7,13 @@ import styled from 'styled-components'
 import { Text } from '~styles'
 import { CausalEffectSize } from '~types'
 
-interface BoxProps {
+export const BoxCausalModel: React.FC<{
 	id: string
 	title?: string
 	list?: string[]
 	size: CausalEffectSize
 	width?: number
-}
-
-export const BoxCausalModel: React.FC<BoxProps> = memo(function BoxCausalModel({
+}> = memo(function BoxCausalModel({
 	id,
 	children,
 	title,

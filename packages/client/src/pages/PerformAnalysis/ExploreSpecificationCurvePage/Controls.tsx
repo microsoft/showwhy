@@ -9,17 +9,11 @@ import { useUniqueFeatures } from './hooks'
 import { Specification, SpecificationCurveConfig } from '~types'
 import { addOrRemoveArrayElement } from '~utils'
 
-export interface ControlsProps {
+export const Controls: React.FC<{
 	data: Specification[]
 	config: SpecificationCurveConfig
 	onChange: (config: SpecificationCurveConfig) => void
-}
-
-export const Controls: React.FC<ControlsProps> = memo(function Controls({
-	data,
-	config,
-	onChange,
-}) {
+}> = memo(function Controls({ data, config, onChange }) {
 	const handleOptionChange = useCallback(
 		(ev, checked) => {
 			const key = ev.target.name

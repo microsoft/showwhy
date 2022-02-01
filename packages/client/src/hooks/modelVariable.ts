@@ -26,9 +26,10 @@ export function useSaveDefinitionTestable(
 ): (newDefinition: CausalFactor) => void {
 	return useCallback(
 		(newDefinition: CausalFactor) => {
-			let newDefinitionList = [...defineQuestion[type]?.definition] || []
+			let newDefinitionList =
+				[...(defineQuestion as any)[type]?.definition] || []
 
-			const index = defineQuestion[type]?.definition?.findIndex(
+			const index = (defineQuestion as any)[type]?.definition?.findIndex(
 				(x: ElementDefinition) => x.id === newDefinition?.id,
 			)
 			if (index > -1) {
@@ -43,7 +44,7 @@ export function useSaveDefinitionTestable(
 			const newList = {
 				...defineQuestion,
 				[type]: {
-					...defineQuestion[type],
+					...(defineQuestion as any)[type],
 					definition: newDefinitionList,
 				},
 			}
@@ -70,13 +71,13 @@ export function useRemoveDefinitionTestable(
 ): (definitionToRemove: ElementDefinition) => void {
 	return useCallback(
 		(definitionToRemove: ElementDefinition) => {
-			const newDefinitionList = [...defineQuestion[type].definition].filter(
-				x => x.id !== definitionToRemove.id,
-			)
+			const newDefinitionList = [
+				...(defineQuestion as any)[type].definition,
+			].filter(x => x.id !== definitionToRemove.id)
 			const newList = {
 				...defineQuestion,
 				[type]: {
-					...defineQuestion[type],
+					...(defineQuestion as any)[type],
 					definition: newDefinitionList,
 				},
 			}

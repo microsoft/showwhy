@@ -5,21 +5,17 @@
 import { memo } from 'react'
 import styled from 'styled-components'
 
-interface TitleWithDescriptionProps {
+export const TitleWithDescription: React.FC<{
 	title: string
 	description?: string
-}
-
-export const TitleWithDescription: React.FC<TitleWithDescriptionProps> = memo(
-	function TitleWithDescription({ title, description }) {
-		return (
-			<Container>
-				<Title>{title}</Title>
-				<Description>{description}</Description>
-			</Container>
-		)
-	},
-)
+}> = memo(function TitleWithDescription({ title, description }) {
+	return (
+		<Container>
+			<Title>{title}</Title>
+			<Description>{description}</Description>
+		</Container>
+	)
+})
 
 const Container = styled.div`
 	display: flex;

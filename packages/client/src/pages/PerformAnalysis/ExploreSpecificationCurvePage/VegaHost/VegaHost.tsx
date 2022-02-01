@@ -29,7 +29,7 @@ import {
 } from './hooks'
 import { LogLevel } from './types'
 
-export interface VegaHostProps {
+export const VegaHost: React.FC<{
 	spec: vega.Spec
 	width: number
 	height: number
@@ -53,9 +53,7 @@ export interface VegaHostProps {
 	data?: { [key: string]: any[] }
 	dataListeners?: { [key: string]: DataListenerHandler }
 	eventListeners?: { [key: string]: EventListenerHandler }
-}
-
-export const VegaHost: React.FC<VegaHostProps> = memo(function VegaHost({
+}> = memo(function VegaHost({
 	spec,
 	width,
 	height,
