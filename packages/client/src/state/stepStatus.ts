@@ -12,21 +12,18 @@ import {
 } from 'recoil'
 import { StepStatus, Maybe } from '~types'
 
-export const stepStatusState = atomFamily<
-	StepStatus | undefined,
-	Maybe<string>
->({
+export const stepStatusState = atomFamily<Maybe<StepStatus>, Maybe<string>>({
 	key: 'step-status-store',
 	default: undefined,
 })
 
 export function useSetStepStatus(
 	key: Maybe<string>,
-): SetterOrUpdater<StepStatus | undefined> {
+): SetterOrUpdater<Maybe<StepStatus>> {
 	return useSetRecoilState(stepStatusState(key))
 }
 
-export function useStepStatus(key: Maybe<string>): StepStatus | undefined {
+export function useStepStatus(key: Maybe<string>): Maybe<StepStatus> {
 	return useRecoilValue(stepStatusState(key))
 }
 

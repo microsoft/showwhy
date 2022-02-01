@@ -26,10 +26,10 @@ export function useTableComponent(
 	factorToEdit: Maybe<ElementDefinition>,
 	pageType: PageType,
 	variables: Maybe<IComboBoxOption[]>,
-	onDelete?: undefined | Handler1<ElementDefinition>,
-	onSave?: undefined | Handler1<ElementDefinition>,
-	onEdit?: undefined | Handler1<ElementDefinition>,
-	onCancel?: undefined | Handler0,
+	onDelete?: Maybe<Handler1<ElementDefinition>>,
+	onSave?: Maybe<Handler1<ElementDefinition>>,
+	onEdit?: Maybe<Handler1<ElementDefinition>>,
+	onCancel?: Maybe<Handler0>,
 ): {
 	items: any
 	headersData: any[]

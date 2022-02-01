@@ -125,7 +125,7 @@ export function useBusinessLogic(): {
 
 	const onSelectColumn = useCallback(
 		(evt: any, column?: IColumn) => {
-			setSelectedColumn(column?.name || undefined)
+			setSelectedColumn(column?.name)
 		},
 		[setSelectedColumn],
 	)
@@ -180,7 +180,7 @@ export function useOnRelevanceChange({
 	relevance,
 	onRemoveColumn,
 }: {
-	setTableColumns: Setter<TableColumn[] | undefined>
+	setTableColumns: Setter<Maybe<TableColumn[]>>
 	tableColumns?: TableColumn[]
 	setRelevance: Setter<Maybe<ColumnRelevance>>
 	relevance?: ColumnRelevance
@@ -223,7 +223,7 @@ export function useOnDefinitionChange({
 	setTableColumns,
 	tableColumns,
 }: {
-	setTableColumns: Setter<TableColumn[] | undefined>
+	setTableColumns: Setter<Maybe<TableColumn[]>>
 	tableColumns?: TableColumn[]
 }): (changedRelation: ColumnRelation[], columnName?: string) => void {
 	return useCallback(

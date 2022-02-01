@@ -18,7 +18,7 @@ import {
 import { ProjectFile, TableColumn, Maybe } from '~types'
 
 export const tableColumnsState = atomFamily<
-	TableColumn[] | undefined,
+	Maybe<TableColumn[]>,
 	Maybe<string>
 >({
 	key: 'table-columns',
@@ -38,8 +38,8 @@ export const useSetTableColumnSelector = selectorFamily({
 			get(tableColumnsState(key)),
 	set:
 		(key: Maybe<string>) =>
-		({ set }, newValue: TableColumn[] | undefined | DefaultValue) => {
-			set<TableColumn[] | undefined>(tableColumnsState(key), newValue)
+		({ set }, newValue: Maybe<TableColumn[] | DefaultValue>) => {
+			set<Maybe<TableColumn[]>>(tableColumnsState(key), newValue)
 			set(keys, prev => {
 				if (key && !prev.includes(key)) {
 					return [...prev, key]
@@ -51,11 +51,11 @@ export const useSetTableColumnSelector = selectorFamily({
 
 export function useSetTableColumns(
 	key: Maybe<string>,
-): SetterOrUpdater<TableColumn[] | undefined> {
+): SetterOrUpdater<Maybe<TableColumn[]>> {
 	return useSetRecoilState(useSetTableColumnSelector(key))
 }
 
-export function useTableColumns(key: Maybe<string>): TableColumn[] | undefined {
+export function useTableColumns(key: Maybe<string>): Maybe<TableColumn[]> {
 	return useRecoilValue(useSetTableColumnSelector(key))
 }
 
