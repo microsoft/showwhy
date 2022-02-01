@@ -8,26 +8,27 @@ import { useCallback, useMemo, useState } from 'react'
 import { useFactorsDefinitionForm } from '~components/FactorsDefinitionForm'
 import {
 	PageType,
-	CausalFactor,
-	ElementDefinition,
 	HeaderData,
 	Setter,
 	CausalityLevel,
+	ElementDefinition,
+	Handler0,
+	Handler1,
 } from '~types'
 
 const actionsHeader: HeaderData = { fieldName: 'actions', value: 'Actions' }
 
 export function useTableComponent(
-	columns: CausalFactor[],
+	columns: ElementDefinition[],
 	headers: HeaderData[],
 	definitionToEdit: ElementDefinition | undefined,
-	factorToEdit: CausalFactor | undefined,
+	factorToEdit: ElementDefinition | undefined,
 	pageType: PageType,
 	variables: IComboBoxOption[] | undefined,
-	onDelete: undefined | ((def: CausalFactor) => void),
-	onSave: undefined | ((def: CausalFactor) => void),
-	onEdit: undefined | ((def: CausalFactor) => void),
-	onCancel: undefined | ((def: CausalFactor) => void),
+	onDelete?: undefined | Handler1<ElementDefinition>,
+	onSave?: undefined | Handler1<ElementDefinition>,
+	onEdit?: undefined | Handler1<ElementDefinition>,
+	onCancel?: undefined | Handler0,
 ): {
 	items: any
 	headersData: any[]
@@ -36,11 +37,13 @@ export function useTableComponent(
 	const [editedDefinition, setEditedDefinition] = useState<
 		ElementDefinition | undefined
 	>()
-	const [editedFactor, setEditedFactor] = useState<CausalFactor | undefined>()
+	const [editedFactor, setEditedFactor] = useState<
+		ElementDefinition | undefined
+	>()
 	const setter = definitionToEdit ? setEditedDefinition : setEditedFactor
 	const onChange = useOnChange(setter, definitionToEdit || factorToEdit)
 	const { level, description, variable } = useFactorsDefinitionForm({
-		factor: (definitionToEdit || factorToEdit) as CausalFactor,
+		factor: (definitionToEdit || factorToEdit) as ElementDefinition,
 		onChange,
 		pageType,
 		variables,
@@ -70,7 +73,7 @@ export function useTableComponent(
 										onSave({
 											...definitionToEdit,
 											...editedDefinition,
-										} as CausalFactor)
+										} as ElementDefinition)
 								: null,
 						disableSave: !editedDefinition?.variable,
 					},
@@ -127,11 +130,11 @@ export function useTableComponent(
 }
 
 function useOnChange(
-	set: Setter<CausalFactor | undefined>,
+	set: Setter<ElementDefinition | undefined>,
 	valueToEdit: { id: string } | undefined,
 ) {
 	return useCallback(
-		(value: Partial<CausalFactor>) => {
+		(value: Partial<ElementDefinition>) => {
 			set({
 				...value,
 				description: value.description ?? '',
