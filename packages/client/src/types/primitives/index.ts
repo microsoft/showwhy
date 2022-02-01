@@ -4,3 +4,4 @@
  */
 export * from './Setter'
 export * from './StringSetter'
+export * from './OptionalId'

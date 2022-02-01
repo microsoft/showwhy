@@ -13,6 +13,7 @@ import {
 	CausalFactor,
 	BeliefDegree,
 	CausalModelLevel,
+	OptionalId,
 } from '~types'
 import { replaceItemAtIndex } from '~utils/functions'
 
@@ -132,16 +133,18 @@ export function useAlternativeModelsTestable(
 	}, [causalFactors, excludedFactors, causalLevel, shouldUseVariable])
 }
 
-export function useAddOrEditFactor(): (factor: CausalFactor) => void {
+export function useAddOrEditFactor(): (
+	factor: OptionalId<CausalFactor>,
+) => void {
 	return useAddOrEditFactorTestable(useCausalFactors(), useSetCausalFactors())
 }
 
 export function useAddOrEditFactorTestable(
 	causalFactors: CausalFactor[],
 	setCausalFactors: SetterOrUpdater<CausalFactor[]>,
-): (factor: CausalFactor) => void {
+): (factor: OptionalId<CausalFactor>) => void {
 	return useCallback(
-		(factor: CausalFactor, factors = causalFactors) => {
+		(factor: OptionalId<CausalFactor>, factors = causalFactors) => {
 			const exists = factors.find(f => f.id === factor?.id) || {}
 
 			const existsIndex = factors.findIndex(f => f.id === factor?.id)
