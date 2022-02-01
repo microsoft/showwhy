@@ -3,10 +3,10 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { Definition, CausalFactor, Setter } from '~types'
+import { Definition, CausalFactor, Setter, Maybe } from '~types'
 
 export type InputRef = React.RefObject<HTMLInputElement>
 
-export type SetModelVariables = Setter<Definition | undefined>
+export type SetModelVariables = Setter<Maybe<Definition>>
 
-export type SetEditingDefinition = Setter<CausalFactor | undefined>
+export type SetEditingDefinition = Setter<Maybe<CausalFactor>>
