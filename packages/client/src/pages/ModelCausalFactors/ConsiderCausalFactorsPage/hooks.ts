@@ -8,19 +8,25 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useAddOrEditFactor, usePageType, useVariableOptions } from '~hooks'
 import { useCausalFactors, useSetCausalFactors } from '~state'
-import { PageType, CausalFactor, FlatCausalFactor, OptionalId } from '~types'
+import {
+	PageType,
+	CausalFactor,
+	FlatCausalFactor,
+	OptionalId,
+	Maybe,
+} from '~types'
 import { noop } from '~utils'
 
 interface PathData {
-	path: string | undefined
-	page: string | undefined
+	path: Maybe<string>
+	page: Maybe<string>
 }
 
 export function useBusinessLogic(): {
 	factor: CausalFactor | undefined
 	isEditing: boolean
 	flatFactorsList: FlatCausalFactor[]
-	page: string | undefined
+	page: Maybe<string>
 	pageType: PageType
 	variables: IComboBoxOption[]
 	addFactor: (factor: OptionalId<CausalFactor>) => void
@@ -126,7 +132,7 @@ function useFactorsNavigation(): [() => void, PathData] {
 	return [factorsPathData?.path ? goToFactorsPage : noop, factorsPathData]
 }
 
-function useFactorsPathData(historyState: string | undefined): PathData {
+function useFactorsPathData(historyState: Maybe<string>): PathData {
 	return useMemo((): PathData => {
 		return {
 			path: historyState,

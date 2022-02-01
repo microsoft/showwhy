@@ -9,24 +9,24 @@ import {
 	useRecoilValue,
 	useSetRecoilState,
 } from 'recoil'
-import { SignificanceTest } from '~types'
+import { SignificanceTest, Maybe } from '~types'
 
 export const significanceTestsState = atomFamily<
-	SignificanceTest | undefined,
-	string | undefined
+	Maybe<SignificanceTest>,
+	Maybe<string>
 >({
 	key: 'significance-tests-store',
 	default: undefined,
 })
 
 export function useSetSignificanceTests(
-	key: string | undefined,
-): SetterOrUpdater<SignificanceTest | undefined> {
+	key: Maybe<string>,
+): SetterOrUpdater<Maybe<SignificanceTest>> {
 	return useSetRecoilState(significanceTestsState(key))
 }
 
 export function useSignificanceTests(
-	key: string | undefined,
-): SignificanceTest | undefined {
+	key: Maybe<string>,
+): Maybe<SignificanceTest> {
 	return useRecoilValue(significanceTestsState(key))
 }

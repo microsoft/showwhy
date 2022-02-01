@@ -22,6 +22,7 @@ import {
 	ProjectFile,
 	TableColumn,
 	Setter,
+	Maybe,
 } from '~types'
 
 export function useBusinessLogic(): {
@@ -29,7 +30,7 @@ export function useBusinessLogic(): {
 	columns: IColumn[]
 	selectedFile: ProjectFile | undefined
 	selectedTable: DataTable | undefined
-	selectedColumn: string | undefined
+	selectedColumn: Maybe<string>
 	onSelectColumn: (evt: any, column?: IColumn) => void
 	tableCommands: ReturnType<typeof useTableCommands>
 	relation: ColumnRelation[]
