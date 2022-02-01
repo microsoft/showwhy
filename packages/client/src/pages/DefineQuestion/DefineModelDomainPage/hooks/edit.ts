@@ -4,12 +4,11 @@
  */
 
 import { useCallback } from 'react'
-import { SetDefinition, SetDefinitions } from './types'
-import { CausalityLevel, ElementDefinition } from '~types'
+import { CausalityLevel, ElementDefinition, Setter, Maybe } from '~types'
 
 export function useEditDefinition(
-	setDefinitions: SetDefinitions,
-	setDefinitionToEdit: SetDefinition,
+	setDefinitions: Setter<ElementDefinition[]>,
+	setDefinitionToEdit: Setter<Maybe<ElementDefinition>>,
 	saveDefinitions: (definitions: ElementDefinition[]) => void,
 ): (definition: ElementDefinition) => void {
 	return useCallback(
