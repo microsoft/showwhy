@@ -22,6 +22,7 @@ import {
 	useSetStepStatuses,
 } from '~state'
 import { StyledSpinner } from '~styles'
+import { Maybe } from '~types'
 
 export const Layout: React.FC = memo(function Layout({ children }) {
 	const handleGetStepUrls = useGetStepUrls()
@@ -110,7 +111,7 @@ const ControlsContainer = styled.div`
 `
 
 const GuidanceContainer = styled.div<{
-	isVisible: boolean | undefined
+	isVisible: Maybe<boolean>
 }>`
 	width: ${({ isVisible }) => (isVisible ? 23 : 0)}%;
 	transition: 0.5s;

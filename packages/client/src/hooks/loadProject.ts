@@ -41,6 +41,7 @@ import {
 	StepStatus,
 	Handler1,
 	DataTable,
+	Maybe,
 } from '~types'
 import {
 	fetchRemoteTables,
@@ -52,10 +53,7 @@ import {
 
 export function useLoadProject(
 	source = ProjectSource.url,
-): (
-	definition?: FileDefinition | undefined,
-	zip?: ZipData | undefined,
-) => Promise<void> {
+): (definition?: Maybe<FileDefinition>, zip?: Maybe<ZipData>) => Promise<void> {
 	const id = useMemo(() => uuidv4(), [])
 	const setTableColumns = useSetTableColumns(id)
 	const setModelVariables = useSetModelVariables(id)

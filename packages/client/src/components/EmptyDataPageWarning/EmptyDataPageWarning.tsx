@@ -5,13 +5,13 @@
 import { memo } from 'react'
 import { Link } from 'react-router-dom'
 import { ContainerTextCenter, Text } from '~styles'
-import { Pages } from '~types'
+import { Pages, Maybe } from '~types'
 
 export const EmptyDataPageWarning: React.FC<{
 	text: string
 	linkText: string
 	page: Pages
-	marginTop?: boolean | undefined
+	marginTop?: Maybe<boolean>
 }> = memo(function EmptyDataPageWarning({
 	text,
 	linkText,

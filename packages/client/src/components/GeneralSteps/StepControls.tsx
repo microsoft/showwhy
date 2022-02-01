@@ -7,7 +7,7 @@ import { memo } from 'react'
 
 import styled from 'styled-components'
 import { useGoToPage } from '~hooks'
-import { Step, StepStatus } from '~types'
+import { Step, StepStatus, Maybe } from '~types'
 
 export const StepControls: React.FC<{
 	step?: Step
@@ -61,7 +61,7 @@ const PreviousButton = styled(DefaultButton)`
 	width: 100%;
 `
 
-const MarkDoneButton = styled(DefaultButton)<{ done: boolean | undefined }>`
+const MarkDoneButton = styled(DefaultButton)<{ done: Maybe<boolean> }>`
 	margin: 0px 8px;
 	width: 50%;
 

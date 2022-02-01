@@ -4,6 +4,7 @@
  */
 import { memo } from 'react'
 import styled from 'styled-components'
+import { Maybe } from '~types'
 
 export const CardComponent: React.FC<{
 	title?: string
@@ -32,7 +33,7 @@ export const CardComponent: React.FC<{
 	)
 })
 
-const Card = styled.div<{ isSticky: boolean | undefined }>`
+const Card = styled.div<{ isSticky: Maybe<boolean> }>`
 	padding: 8px;
 	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 	border-radius: 4px;

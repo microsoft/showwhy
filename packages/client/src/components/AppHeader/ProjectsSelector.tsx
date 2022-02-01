@@ -6,7 +6,7 @@ import { IContextualMenuProps, IContextualMenuItem } from '@fluentui/react'
 import { memo, useMemo } from 'react'
 import { OptionsButton } from './OptionsButton'
 import { Container } from '~styles'
-import { FileDefinition } from '~types'
+import { FileDefinition, Maybe } from '~types'
 
 export const ProjectsSelector: React.FC<{
 	exampleProjects: FileDefinition[]
@@ -31,7 +31,7 @@ export const ProjectsSelector: React.FC<{
 
 function useMenuProps(
 	exampleProjects: FileDefinition[],
-	loadProjectOption: IContextualMenuItem | undefined,
+	loadProjectOption: Maybe<IContextualMenuItem>,
 	onClickProject: (example: FileDefinition) => void,
 ): IContextualMenuProps {
 	return useMemo<IContextualMenuProps>(() => {

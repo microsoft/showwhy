@@ -5,11 +5,12 @@
 import { ComboBox, IComboBoxOption } from '@fluentui/react'
 import { memo, useMemo } from 'react'
 import styled from 'styled-components'
+import { Maybe } from '~types'
 
 export const VariablePicker: React.FC<{
 	onChange: (value: string) => void
 	variable?: string
-	showLabel?: boolean | undefined
+	showLabel?: Maybe<boolean>
 	variables?: IComboBoxOption[]
 }> = memo(function VariablePicker({
 	onChange,
