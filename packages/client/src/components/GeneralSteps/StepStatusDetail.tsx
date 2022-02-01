@@ -5,10 +5,10 @@
 import { Spinner, SpinnerSize } from '@fluentui/react'
 import { memo, useCallback } from 'react'
 import styled from 'styled-components'
-import { StepStatus } from '~types'
+import { StepStatus, Maybe } from '~types'
 
 export const StepStatusDetail: React.FC<{
-	status: StepStatus | undefined
+	status: Maybe<StepStatus>
 }> = memo(function StepStatusDetail({ status }) {
 	const getStepStatus = useCallback(() => {
 		switch (status) {

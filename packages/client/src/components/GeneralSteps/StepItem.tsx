@@ -7,11 +7,11 @@ import { NavLink } from 'react-router-dom'
 import styled from 'styled-components'
 import { StepStatusDetail } from '.'
 import { useStepStatus } from '~state'
-import { Step } from '~types'
+import { Step, Maybe } from '~types'
 
 export const StepItem: React.FC<{
 	stepDetail: Step
-	subStep?: boolean | undefined
+	subStep?: Maybe<boolean>
 }> = memo(function StepItem({ stepDetail, subStep = false }) {
 	const stepStatus = useStepStatus(stepDetail.url)
 
@@ -40,7 +40,7 @@ export const StepItem: React.FC<{
 	)
 })
 
-const CollapsibleContainer = styled.div<{ subStep: boolean | undefined }>`
+const CollapsibleContainer = styled.div<{ subStep: Maybe<boolean> }>`
 	display: flex;
 	flex-direction: column;
 	padding-left: ${props => (props.subStep ? '8px' : '0px')};

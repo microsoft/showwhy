@@ -14,6 +14,7 @@ import {
 	ElementDefinition,
 	Handler0,
 	Handler1,
+	Maybe,
 } from '~types'
 
 const actionsHeader: HeaderData = { fieldName: 'actions', value: 'Actions' }
@@ -21,10 +22,10 @@ const actionsHeader: HeaderData = { fieldName: 'actions', value: 'Actions' }
 export function useTableComponent(
 	columns: ElementDefinition[],
 	headers: HeaderData[],
-	definitionToEdit: ElementDefinition | undefined,
-	factorToEdit: ElementDefinition | undefined,
+	definitionToEdit: Maybe<ElementDefinition>,
+	factorToEdit: Maybe<ElementDefinition>,
 	pageType: PageType,
-	variables: IComboBoxOption[] | undefined,
+	variables: Maybe<IComboBoxOption[]>,
 	onDelete?: undefined | Handler1<ElementDefinition>,
 	onSave?: undefined | Handler1<ElementDefinition>,
 	onEdit?: undefined | Handler1<ElementDefinition>,
@@ -34,12 +35,9 @@ export function useTableComponent(
 	headersData: any[]
 	customColumnsWidth: { fieldName: string; width: string }[]
 } {
-	const [editedDefinition, setEditedDefinition] = useState<
-		ElementDefinition | undefined
-	>()
-	const [editedFactor, setEditedFactor] = useState<
-		ElementDefinition | undefined
-	>()
+	const [editedDefinition, setEditedDefinition] =
+		useState<Maybe<ElementDefinition>>()
+	const [editedFactor, setEditedFactor] = useState<Maybe<ElementDefinition>>()
 	const setter = definitionToEdit ? setEditedDefinition : setEditedFactor
 	const onChange = useOnChange(setter, definitionToEdit || factorToEdit)
 	const { level, description, variable } = useFactorsDefinitionForm({
@@ -130,8 +128,8 @@ export function useTableComponent(
 }
 
 function useOnChange(
-	set: Setter<ElementDefinition | undefined>,
-	valueToEdit: { id: string } | undefined,
+	set: Setter<Maybe<ElementDefinition>>,
+	valueToEdit: Maybe<{ id: string }>,
 ) {
 	return useCallback(
 		(value: Partial<ElementDefinition>) => {

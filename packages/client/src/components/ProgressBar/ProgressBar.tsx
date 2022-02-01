@@ -42,9 +42,7 @@ export const ProgressBar: React.FC<{
 								}`}
 						</Text>
 					}
-					percentComplete={
-						(percentComplete || percentage || 0) / 100 || undefined
-					}
+					percentComplete={(percentComplete || percentage || 0) / 100}
 				/>
 				{onCancel ? <ActionButtons onCancel={onCancel} /> : null}
 			</ProgressIndicatorWrapper>

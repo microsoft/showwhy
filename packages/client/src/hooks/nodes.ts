@@ -6,16 +6,16 @@
 import { useCallback, useMemo } from 'react'
 import { useBuildEstimateEffectNode } from '~resources/hooks'
 import { buildLoadNode } from '~resources/prepareDoWhyData'
-import { NodeRequest, ProjectFile } from '~types'
+import { NodeRequest, ProjectFile, Maybe } from '~types'
 
 //TODO: fix for CI
 export function useGetNodes(
 	projectFiles: ProjectFile[],
-): (url: string, fileName: string) => NodeRequest | undefined {
+): (url: string, fileName: string) => Maybe<NodeRequest> {
 	const estimateNode = useEstimateNode(projectFiles)
 
 	return useCallback(
-		(url: string, fileName: string): NodeRequest | undefined => {
+		(url: string, fileName: string): Maybe<NodeRequest> => {
 			if (projectFiles.length && estimateNode) {
 				const loadNode = buildLoadNode(url, fileName)
 				return {
@@ -30,7 +30,7 @@ export function useGetNodes(
 
 export function useEstimateNode(
 	projectFiles: ProjectFile[],
-): NodeRequest | undefined {
+): Maybe<NodeRequest> {
 	const buildEstimateEffectNode = useBuildEstimateEffectNode()
 	return useMemo(() => {
 		if (!projectFiles.length) {

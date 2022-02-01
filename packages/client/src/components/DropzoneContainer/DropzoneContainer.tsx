@@ -11,19 +11,16 @@ import { FileCollection } from '@data-wrangling-components/utilities'
 import { Icon, Spinner } from '@fluentui/react'
 import { FC, memo, useMemo } from 'react'
 import styled from 'styled-components'
-import { DropFilesCount } from '~types'
+import { DropFilesCount, Maybe } from '~types'
 
 export const DropzoneContainer: FC<{
-	loading: boolean | undefined
+	loading: Maybe<boolean>
 	filesCount: DropFilesCount
 	text?: string
-	hasSelectedFiles?: boolean | undefined
+	hasSelectedFiles?: Maybe<boolean>
 	onDrop?: (collection: FileCollection) => void
 	onDropAccepted?: (collection: FileCollection) => void
-	onDropRejected?: (
-		message: string,
-		files?: FileRejection[] | undefined,
-	) => void
+	onDropRejected?: (message: string, files?: Maybe<FileRejection[]>) => void
 	acceptedFileTypes: string[]
 	dropzoneOptions?: DropzoneOptions
 }> = memo(function DropzoneContainer({
@@ -82,8 +79,8 @@ const styles = {
 }
 
 function useContentText(
-	text: string | undefined,
-	hasSelectedFiles: boolean | undefined,
+	text: Maybe<string>,
+	hasSelectedFiles: Maybe<boolean>,
 ): string {
 	return useMemo(
 		() =>

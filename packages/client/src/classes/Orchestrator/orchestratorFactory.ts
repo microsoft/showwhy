@@ -10,16 +10,17 @@ import {
 } from './Orchestrator'
 import { OrchestratorType } from './OrchestratorType'
 import { Orchestrator } from '~classes'
+import { Maybe } from '~types'
 
 const orchestrators: Partial<Record<OrchestratorType, Orchestrator<unknown>>> =
 	{}
 
 function getOrchestrator<UpdateStatus>(
 	type: OrchestratorType,
-	onStart?: OrchestratorOnStartHandler | undefined,
-	onUpdate?: OrchestatorOnUpdateHandler<UpdateStatus> | undefined,
-	onComplete?: OrchestratorHandler | undefined,
-	onCancel?: OrchestratorHandler | undefined,
+	onStart?: Maybe<OrchestratorOnStartHandler>,
+	onUpdate?: Maybe<OrchestatorOnUpdateHandler<UpdateStatus>>,
+	onComplete?: Maybe<OrchestratorHandler>,
+	onCancel?: Maybe<OrchestratorHandler>,
 ) {
 	const existing = orchestrators[type]
 
@@ -40,10 +41,10 @@ function getOrchestrator<UpdateStatus>(
 }
 
 export function getEstimatorOrchestrator<UpdateStatus>(
-	onStart?: OrchestratorOnStartHandler | undefined,
-	onUpdate?: OrchestatorOnUpdateHandler<UpdateStatus> | undefined,
-	onComplete?: OrchestratorHandler | undefined,
-	onCancel?: OrchestratorHandler | undefined,
+	onStart?: Maybe<OrchestratorOnStartHandler>,
+	onUpdate?: Maybe<OrchestatorOnUpdateHandler<UpdateStatus>>,
+	onComplete?: Maybe<OrchestratorHandler>,
+	onCancel?: Maybe<OrchestratorHandler>,
 ): Orchestrator<UpdateStatus> {
 	return getOrchestrator(
 		OrchestratorType.Estimator,
@@ -55,10 +56,10 @@ export function getEstimatorOrchestrator<UpdateStatus>(
 }
 
 export function getConfidenceOrchestrator<UpdateStatus>(
-	onStart?: OrchestratorOnStartHandler | undefined,
-	onUpdate?: OrchestatorOnUpdateHandler<UpdateStatus> | undefined,
-	onComplete?: OrchestratorHandler | undefined,
-	onCancel?: OrchestratorHandler | undefined,
+	onStart?: Maybe<OrchestratorOnStartHandler>,
+	onUpdate?: Maybe<OrchestatorOnUpdateHandler<UpdateStatus>>,
+	onComplete?: Maybe<OrchestratorHandler>,
+	onCancel?: Maybe<OrchestratorHandler>,
 ): Orchestrator<UpdateStatus> {
 	return getOrchestrator(
 		OrchestratorType.ConfidenceInterval,

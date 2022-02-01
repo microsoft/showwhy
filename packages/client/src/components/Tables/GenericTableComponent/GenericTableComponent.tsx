@@ -8,7 +8,7 @@ import { memo, useCallback, useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
 import { ActionButtons } from '~components/ActionButtons'
 import { useDefaultTableSample } from '~hooks'
-import { Item, TableFooter, HeaderData, TableProps } from '~types'
+import { Item, TableFooter, HeaderData, TableProps, Maybe } from '~types'
 import { sortGroupByKey } from '~utils'
 
 interface GenericHeader {
@@ -23,7 +23,7 @@ export const GenericTableComponent: React.FC<{
 	onColumnClick?: (column: string) => void
 	items: Item[]
 	selectedColumn?: string
-	isCompactMode?: boolean | undefined
+	isCompactMode?: Maybe<boolean>
 	footer?: TableFooter
 }> = memo(function GenericTableComponent({
 	items,
@@ -236,8 +236,8 @@ const Container = styled.section`
 	margin: 1rem 0 0;
 `
 const THead = styled.thead<{
-	isSticky?: boolean | undefined
-	isCompactMode?: boolean | undefined
+	isSticky?: Maybe<boolean>
+	isCompactMode?: Maybe<boolean>
 }>`
 	${({ isSticky }) =>
 		!isSticky
@@ -257,8 +257,8 @@ const THead = styled.thead<{
 const TBody = styled.tbody``
 const TFooter = styled.tfoot``
 const Row = styled.tr<{
-	isSelected?: boolean | undefined
-	isClickable?: boolean | undefined
+	isSelected?: Maybe<boolean>
+	isClickable?: Maybe<boolean>
 }>`
 	width: 100%;
 	:nth-child(odd) {
@@ -270,9 +270,9 @@ const Row = styled.tr<{
 		isSelected ? theme.application().accent : ''};
 `
 const Cell = styled.td<{
-	isCompactMode?: boolean | undefined
-	isClickable?: boolean | undefined
-	isSelected?: boolean | undefined
+	isCompactMode?: Maybe<boolean>
+	isClickable?: Maybe<boolean>
+	isSelected?: Maybe<boolean>
 }>`
 	flex: 1;
 	border-right: 2px solid white;
@@ -287,9 +287,9 @@ const Cell = styled.td<{
 	font-weight: ${({ isSelected }) => (isSelected ? 'bolder' : 'normal')};
 `
 const HeaderCell = styled.th<{
-	isCompactMode?: boolean | undefined
-	isClickable?: boolean | undefined
-	isSelected?: boolean | undefined
+	isCompactMode?: Maybe<boolean>
+	isClickable?: Maybe<boolean>
+	isSelected?: Maybe<boolean>
 }>`
 	flex: 1;
 	white-space: nowrap;
