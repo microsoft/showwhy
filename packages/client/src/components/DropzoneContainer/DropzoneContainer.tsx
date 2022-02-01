@@ -13,7 +13,7 @@ import { FC, memo, useMemo } from 'react'
 import styled from 'styled-components'
 import { DropFilesCount } from '~types'
 
-export interface DropzoneContainerProps {
+export const DropzoneContainer: FC<{
 	loading: boolean | undefined
 	filesCount: DropFilesCount
 	text?: string
@@ -26,49 +26,45 @@ export interface DropzoneContainerProps {
 	) => void
 	acceptedFileTypes: string[]
 	dropzoneOptions?: DropzoneOptions
-}
+}> = memo(function DropzoneContainer({
+	loading,
+	filesCount,
+	hasSelectedFiles,
+	text,
+	onDrop,
+	onDropAccepted,
+	onDropRejected,
+	acceptedFileTypes,
+	dropzoneOptions = {},
+}) {
+	const contentText = useContentText(text, hasSelectedFiles)
 
-export const DropzoneContainer: FC<DropzoneContainerProps> = memo(
-	function DropzoneContainer({
-		loading,
-		filesCount,
-		hasSelectedFiles,
-		text,
-		onDrop,
-		onDropAccepted,
-		onDropRejected,
-		acceptedFileTypes,
-		dropzoneOptions = {},
-	}) {
-		const contentText = useContentText(text, hasSelectedFiles)
-
-		return (
-			<Dropzone
-				placeholder={text}
-				onDrop={onDrop}
-				onDropAccepted={onDropAccepted}
-				onDropRejected={onDropRejected}
-				acceptedFileTypes={acceptedFileTypes}
-				styles={styles}
-				dropzoneOptions={dropzoneOptions}
-			>
-				{loading ? (
-					<>
-						<Spinner />
-						<Text>
-							Loading ({filesCount.completed}/{filesCount.total})
-						</Text>
-					</>
-				) : (
+	return (
+		<Dropzone
+			placeholder={text}
+			onDrop={onDrop}
+			onDropAccepted={onDropAccepted}
+			onDropRejected={onDropRejected}
+			acceptedFileTypes={acceptedFileTypes}
+			styles={styles}
+			dropzoneOptions={dropzoneOptions}
+		>
+			{loading ? (
+				<>
+					<Spinner />
 					<Text>
-						<FluentIcon iconName="Upload" />
-						{contentText}
+						Loading ({filesCount.completed}/{filesCount.total})
 					</Text>
-				)}
-			</Dropzone>
-		)
-	},
-)
+				</>
+			) : (
+				<Text>
+					<FluentIcon iconName="Upload" />
+					{contentText}
+				</Text>
+			)}
+		</Dropzone>
+	)
+})
 
 const Text = styled.span`
 	margin-left: 4px;

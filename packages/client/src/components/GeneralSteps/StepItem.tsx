@@ -9,14 +9,10 @@ import { StepStatusDetail } from '.'
 import { useStepStatus } from '~state'
 import { Step } from '~types'
 
-interface StepItemProps {
+export const StepItem: React.FC<{
 	stepDetail: Step
 	subStep?: boolean | undefined
-}
-export const StepItem: React.FC<StepItemProps> = memo(function StepItem({
-	stepDetail,
-	subStep = false,
-}) {
+}> = memo(function StepItem({ stepDetail, subStep = false }) {
 	const stepStatus = useStepStatus(stepDetail.url)
 
 	const getStepStatus = useCallback(

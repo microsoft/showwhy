@@ -11,15 +11,10 @@ import { StepStatus } from '~types'
 type GetStepUrlsHandler = (urls?: string[], exclude?: any) => string[]
 type SetAllStepStatusHandler = (urls: string[], status: StepStatus) => void
 
-interface SettingsProps {
+export const Settings: React.FC<{
 	onGetStepUrls: GetStepUrlsHandler
 	onSetAllStepStatus: SetAllStepStatusHandler
-}
-
-export const Settings: React.FC<SettingsProps> = memo(function Settings({
-	onGetStepUrls,
-	onSetAllStepStatus,
-}) {
+}> = memo(function Settings({ onGetStepUrls, onSetAllStepStatus }) {
 	const menuProps = useMenuProps(onGetStepUrls, onSetAllStepStatus)
 
 	return (

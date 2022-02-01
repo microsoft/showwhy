@@ -5,13 +5,9 @@
 import { memo } from 'react'
 import styled from 'styled-components'
 
-interface StepTitleProps {
+export const StepTitle: React.FC<{
 	title: string
-}
-
-export const StepTitle: React.FC<StepTitleProps> = memo(function StepTitle({
-	title,
-}) {
+}> = memo(function StepTitle({ title }) {
 	return (
 		<Workflow>
 			<WorkflowTitle>{title}</WorkflowTitle>

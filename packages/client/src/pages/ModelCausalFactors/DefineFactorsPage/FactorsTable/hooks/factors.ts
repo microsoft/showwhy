@@ -22,7 +22,7 @@ export function useFlatFactorsList(
 		return causalFactors.map((factor: CausalFactor) => {
 			const equal =
 				values?.find(existing => existing.id === factor.id) ||
-				(factor.causes && factor.causes[causeType])
+				(factor.causes && (factor.causes as any)[causeType])
 
 			return {
 				variable: factor.variable,

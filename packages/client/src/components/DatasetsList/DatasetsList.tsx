@@ -8,34 +8,35 @@ import { Dataset } from './Dataset'
 import { ContainerFlexRow } from '~styles'
 import { ProjectFile } from '~types'
 
-export interface DatasetsListProps {
+export const DatasetsList: React.FC<{
 	onFileSelected: (projectFile: ProjectFile) => void
 	files: ProjectFile[]
 	selectedFile: ProjectFile | undefined
 	title?: string
-}
-
-export const DatasetsList: React.FC<DatasetsListProps> = memo(
-	function DatasetsList({ onFileSelected, title, files, selectedFile }) {
-		return (
-			<ContainerFlexRow>
-				<Title>{title}</Title>
-				{files.length ? (
-					<ListContainer>
-						{files.map(file => (
-							<Dataset
-								key={file.name}
-								file={file}
-								onFileSelected={onFileSelected}
-								selectedFile={selectedFile}
-							/>
-						))}
-					</ListContainer>
-				) : null}
-			</ContainerFlexRow>
-		)
-	},
-)
+}> = memo(function DatasetsList({
+	onFileSelected,
+	title,
+	files,
+	selectedFile,
+}) {
+	return (
+		<ContainerFlexRow>
+			<Title>{title}</Title>
+			{files.length ? (
+				<ListContainer>
+					{files.map(file => (
+						<Dataset
+							key={file.name}
+							file={file}
+							onFileSelected={onFileSelected}
+							selectedFile={selectedFile}
+						/>
+					))}
+				</ListContainer>
+			) : null}
+		</ContainerFlexRow>
+	)
+})
 
 const ListContainer = styled.div`
 	display: flex;

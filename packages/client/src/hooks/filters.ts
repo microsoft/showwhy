@@ -90,47 +90,45 @@ export function useMatchFilter(): (
 			const upper = filterObject.upper as number
 			const lower = filterObject.lower as number
 
+			const val = (d as any)[column]
+
 			switch (filterObject.filter) {
 				case '==':
 					return (
-						d[column]?.toString().toLowerCase() ===
-						value?.toString().toLowerCase()
+						val?.toString().toLowerCase() === value?.toString().toLowerCase()
 					)
 				case '!=':
-					return (
-						d[column].toString().toLowerCase() !==
-						value.toString().toLowerCase()
-					)
+					return val.toString().toLowerCase() !== value.toString().toLowerCase()
 				case '>':
-					return +d[column] > +value
+					return +val > +value
 				case '>=':
-					return +d[column] >= +value
+					return +val >= +value
 				case '<':
-					return +d[column] < +value
+					return +val < +value
 				case '<=':
-					return +d[column] <= +value
+					return +val <= +value
 				case 'containing':
 					return value
 						.toLowerCase()
 						.replace(' ', '')
 						.split(',')
-						.includes(d[column].toString().toLowerCase())
+						.includes(val.toString().toLowerCase())
 				case 'not containing':
 					return !value
 						.toLowerCase()
 						.replace(' ', '')
 						.split(',')
-						.includes(d[column].toString().toLowerCase())
+						.includes(val.toString().toLowerCase())
 				case 'not in range':
 					if (actualFilterValue?.inclusive) {
-						return +d[column] >= upper && +d[column] <= lower
+						return +val >= upper && +val <= lower
 					}
-					return +d[column] > upper && +d[column] < lower
+					return +val > upper && +val < lower
 				case 'in range':
 					if (actualFilterValue?.inclusive) {
-						return +d[column] <= upper && +d[column] >= lower
+						return +val <= upper && +val >= lower
 					}
-					return +d[column] < upper && +d[column] > lower
+					return +val < upper && +val > lower
 			}
 			return false
 		},

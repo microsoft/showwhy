@@ -8,34 +8,25 @@ import { useDefinitionList } from './hooks'
 import { GenericTableComponent } from '~components/Tables/GenericTableComponent'
 import { CausalFactor } from '~types'
 
-interface DefinitionListProps {
+export const DefinitionList: React.FC<{
 	list: CausalFactor[]
 	onClick: (option: CausalFactor) => void
 	selectedDefinition: string
 	type: string
 	tableId: string
 	onUpdate: (definition: string) => void
-}
-export const DefinitionList: React.FC<DefinitionListProps> = memo(
-	function DefinitionList({ list, onClick, type, tableId, onUpdate }) {
-		const { itemList } = useDefinitionList(
-			list,
-			onClick,
-			type,
-			tableId,
-			onUpdate,
-		)
+}> = memo(function DefinitionList({ list, onClick, type, tableId, onUpdate }) {
+	const { itemList } = useDefinitionList(list, onClick, type, tableId, onUpdate)
 
-		return (
-			<Container>
-				<GenericTableComponent
-					items={itemList}
-					props={{ styles: { width: '45%' } }}
-				/>
-			</Container>
-		)
-	},
-)
+	return (
+		<Container>
+			<GenericTableComponent
+				items={itemList}
+				props={{ styles: { width: '45%' } }}
+			/>
+		</Container>
+	)
+})
 
 const Container = styled.div`
 	display: flex;

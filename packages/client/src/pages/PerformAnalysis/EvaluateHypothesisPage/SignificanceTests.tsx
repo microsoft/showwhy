@@ -13,58 +13,54 @@ import { Paragraph, Value } from '~styles'
 import { Significance, NodeResponseStatus, SignificanceTest } from '~types'
 import { isStatusProcessing } from '~utils'
 
-interface SignificanceTestsProps {
+export const SignificanceTests: React.FC<{
 	significanceTestsResult: SignificanceTest | undefined
 	cancelRun: () => void
 	isCanceled: boolean
-}
+}> = memo(function SignificanceTests({
+	significanceTestsResult,
+	cancelRun,
+	isCanceled,
+}) {
+	return (
+		<>
+			{significanceTestsResult?.status?.toLowerCase() ===
+				NodeResponseStatus.Completed && (
+				<Paragraph color="accent">
+					Results of the significance test show that there is
+					<Value>
+						<LinkCallout
+							title={`${
+								significanceTestsResult?.test_results?.significance ===
+								Significance.NotSignificant
+									? 'no '
+									: 'a '
+							} statistically significant difference`}
+							detailsTitle="Statistical Significance Test"
+						>
+							<Paragraph>{confidenceIntervalCalloutLine1}</Paragraph>
+							<Paragraph>{confidenceIntervalCalloutLine2}</Paragraph>
+						</LinkCallout>
+					</Value>
+					between the observed median effect and that of the null distribution (
+					{significanceTestsResult?.test_results?.p_value}).
+				</Paragraph>
+			)}
 
-export const SignificanceTests: React.FC<SignificanceTestsProps> = memo(
-	function SignificanceTests({
-		significanceTestsResult,
-		cancelRun,
-		isCanceled,
-	}) {
-		return (
-			<>
-				{significanceTestsResult?.status?.toLowerCase() ===
-					NodeResponseStatus.Completed && (
-					<Paragraph color="accent">
-						Results of the significance test show that there is
-						<Value>
-							<LinkCallout
-								title={`${
-									significanceTestsResult?.test_results?.significance ===
-									Significance.NotSignificant
-										? 'no '
-										: 'a '
-								} statistically significant difference`}
-								detailsTitle="Statistical Significance Test"
-							>
-								<Paragraph>{confidenceIntervalCalloutLine1}</Paragraph>
-								<Paragraph>{confidenceIntervalCalloutLine2}</Paragraph>
-							</LinkCallout>
-						</Value>
-						between the observed median effect and that of the null distribution
-						({significanceTestsResult?.test_results?.p_value}).
-					</Paragraph>
+			{significanceTestsResult &&
+				isStatusProcessing(
+					significanceTestsResult.status as NodeResponseStatus,
+				) && (
+					<ProgressBar
+						description={
+							isCanceled ? 'This could take a few seconds.' : undefined
+						}
+						label={`Significance test: Simulations ${significanceTestsResult?.simulation_completed}/${significanceTestsResult?.total_simulations}`}
+						percentage={significanceTestsResult?.percentage as number}
+						startTime={significanceTestsResult?.startTime as Date}
+						onCancel={() => (!isCanceled ? cancelRun() : undefined)}
+					/>
 				)}
-
-				{significanceTestsResult &&
-					isStatusProcessing(
-						significanceTestsResult.status as NodeResponseStatus,
-					) && (
-						<ProgressBar
-							description={
-								isCanceled ? 'This could take a few seconds.' : undefined
-							}
-							label={`Significance test: Simulations ${significanceTestsResult?.simulation_completed}/${significanceTestsResult?.total_simulations}`}
-							percentage={significanceTestsResult?.percentage as number}
-							startTime={significanceTestsResult?.startTime as Date}
-							onCancel={() => (!isCanceled ? cancelRun() : undefined)}
-						/>
-					)}
-			</>
-		)
-	},
-)
+		</>
+	)
+})

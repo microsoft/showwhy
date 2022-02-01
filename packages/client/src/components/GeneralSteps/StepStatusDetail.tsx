@@ -7,28 +7,24 @@ import { memo, useCallback } from 'react'
 import styled from 'styled-components'
 import { StepStatus } from '~types'
 
-interface StepStatusDetailProps {
+export const StepStatusDetail: React.FC<{
 	status: StepStatus | undefined
-}
+}> = memo(function StepStatusDetail({ status }) {
+	const getStepStatus = useCallback(() => {
+		switch (status) {
+			case StepStatus.Done:
+				return <Status color="success">Done</Status>
+			case StepStatus.Error:
+				return <Status color="error">Error</Status>
+			case StepStatus.Loading:
+				return <Spinner size={SpinnerSize.xSmall} />
+			default:
+				return <Status color="warning">To do</Status>
+		}
+	}, [status])
 
-export const StepStatusDetail: React.FC<StepStatusDetailProps> = memo(
-	function StepStatusDetail({ status }) {
-		const getStepStatus = useCallback(() => {
-			switch (status) {
-				case StepStatus.Done:
-					return <Status color="success">Done</Status>
-				case StepStatus.Error:
-					return <Status color="error">Error</Status>
-				case StepStatus.Loading:
-					return <Spinner size={SpinnerSize.xSmall} />
-				default:
-					return <Status color="warning">To do</Status>
-			}
-		}, [status])
-
-		return <>{getStepStatus()}</>
-	},
-)
+	return <>{getStepStatus()}</>
+})
 
 const Status = styled.span<{ color: string }>`
 	color: ${({ theme, color }) => theme.application()[color]};

@@ -6,17 +6,11 @@ import { memo, useCallback } from 'react'
 import { SelectableCard } from '~components/CardComponent'
 import { Handler1, ProjectFile } from '~types'
 
-interface DatasetProps {
+export const Dataset: React.FC<{
 	file: ProjectFile
 	selectedFile: ProjectFile | undefined
 	onFileSelected: (file: ProjectFile) => void
-}
-
-export const Dataset: React.FC<DatasetProps> = memo(function Dataset({
-	file,
-	selectedFile,
-	onFileSelected,
-}) {
+}> = memo(function Dataset({ file, selectedFile, onFileSelected }) {
 	const handleOnClick = useOnClickHandler(file, onFileSelected)
 	return (
 		<SelectableCard

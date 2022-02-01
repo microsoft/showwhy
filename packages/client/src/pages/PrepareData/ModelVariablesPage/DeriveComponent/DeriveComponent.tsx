@@ -35,7 +35,7 @@ import {
 	VariableDefinition,
 } from '~types'
 
-export interface DeriveProps {
+export const DeriveComponent: React.FC<{
 	selectedDefinition: string
 	fileId: string
 	originalTable: ColumnTable | undefined
@@ -43,300 +43,293 @@ export interface DeriveProps {
 	onClose: () => void
 	onReset: () => void
 	onSave: (definition: string) => void
-	onUpdate: (evt, columnDetail) => void
-}
+	onUpdate: (evt: unknown, columnDetail: { text: string | undefined }) => void
+}> = memo(function DeriveComponent({
+	originalTable,
+	selectedDefinition,
+	fileId,
+	onClose,
+	editing,
+	onReset,
+	onSave,
+	onUpdate,
+}) {
+	const saveDefinition = useSaveDefinition()
+	const projectFiles = useProjectFiles()
+	const allTableColumns = useAllTableColumns(projectFiles)
+	const modelVariables = useModelVariables(fileId)
+	const removeColumn = useRemoveColumn(fileId)
+	const setModelVariables = useSetModelVariables(fileId)
+	const matchFilter = useMatchFilter()
+	const type = usePageType()
+	const [isNewDefinition, { toggle: toggleIsNewDefinition }] = useBoolean(
+		modelVariables && modelVariables[type] ? false : true,
+	)
 
-export const DeriveComponent: React.FC<DeriveProps> = memo(
-	function DeriveComponent({
-		originalTable,
-		selectedDefinition,
-		fileId,
-		onClose,
-		editing,
-		onReset,
-		onSave,
-		onUpdate,
-	}) {
-		const saveDefinition = useSaveDefinition()
-		const projectFiles = useProjectFiles()
-		const allTableColumns = useAllTableColumns(projectFiles)
-		const modelVariables = useModelVariables(fileId)
-		const removeColumn = useRemoveColumn(fileId)
-		const setModelVariables = useSetModelVariables(fileId)
-		const matchFilter = useMatchFilter()
-		const type = usePageType()
-		const [isNewDefinition, { toggle: toggleIsNewDefinition }] = useBoolean(
-			modelVariables && modelVariables[type] ? false : true,
-		)
-
-		// TODO: most of these should just be pure functions called in a useCallback or useMemo
-		const columnExists = useCallback(
-			(name: string): boolean => {
-				const existing = (modelVariables && modelVariables[type]) || []
-				return (
-					existing
-						?.flatMap(x => x.filters)
-						?.some(f => f?.columnName === name) || false
-				)
-			},
-			[modelVariables, type],
-		)
-
-		const definitionExists = useCallback(
-			(name: string): boolean => {
-				const existing = (modelVariables && modelVariables[type]) || []
-				return existing?.some(x => x.name === name) ?? false
-			},
-			[modelVariables, type],
-		)
-
-		const nameExists = useCallback(
-			(name: string): boolean => {
-				return definitionExists(name) || columnExists(name)
-			},
-			[definitionExists, columnExists],
-		)
-
-		const columnName = useMemo((): string => {
-			let num = 0
-			if (!nameExists(selectedDefinition)) {
-				return selectedDefinition
-			}
-
-			while (nameExists(`${selectedDefinition}_${num}`)) {
-				num++
-			}
-
-			return selectedDefinition + '_' + num
-		}, [selectedDefinition, nameExists])
-
-		const [actualFilterValue, setActualFilterValue] =
-			useState<FilterObject | null>(editing ?? { id: uuidv4(), columnName })
-
-		const filterFunctions = useFilterFunctions()
-		const setDeriveTable = useSetDeriveTable(fileId)
-		const captureTable = useCaptureTable(fileId)
-
-		const columns = useMemo((): { key: string; text: string }[] => {
+	// TODO: most of these should just be pure functions called in a useCallback or useMemo
+	const columnExists = useCallback(
+		(name: string): boolean => {
+			const existing = (modelVariables && modelVariables[type]) || []
 			return (
-				allTableColumns
-					.flatMap(x => x)
-					// .filter(x => x?.tableId === actualFilterValue?.tableId)
-					.map(x => {
-						return {
-							key: x?.name as string,
-							text: x?.name as string,
-						}
-					})
+				existing?.flatMap(x => x.filters)?.some(f => f?.columnName === name) ||
+				false
 			)
-		}, [allTableColumns])
+		},
+		[modelVariables, type],
+	)
 
-		const filterArquero = useCallback(
-			filterValue => {
-				let tableFiltered = originalTable
-				if (filterValue) {
-					tableFiltered = originalTable?.filter(
-						escape((arqueroRow: ColumnTable) => {
-							return matchFilter(arqueroRow, filterValue, actualFilterValue)
-						}),
-					) as ColumnTable
-				}
-				captureTable(
-					tableFiltered as ColumnTable,
-					actualFilterValue?.columnName as string,
-				)
-			},
-			[matchFilter, originalTable, actualFilterValue, captureTable],
-		)
+	const definitionExists = useCallback(
+		(name: string): boolean => {
+			const existing = (modelVariables && modelVariables[type]) || []
+			return existing?.some(x => x.name === name) ?? false
+		},
+		[modelVariables, type],
+	)
 
-		const onCreateNewDefinition = useCallback(
-			(filterValue: any, existing) => {
-				const newObj = {
-					name: actualFilterValue?.columnName,
-					filters: [filterValue],
-				}
+	const nameExists = useCallback(
+		(name: string): boolean => {
+			return definitionExists(name) || columnExists(name)
+		},
+		[definitionExists, columnExists],
+	)
 
-				const definitionObj = {
-					...modelVariables,
-					[type]: [...existing, newObj],
-				}
-
-				const newDefinition: CausalFactor = {
-					level: CausalityLevel.Secondary,
-					variable: actualFilterValue?.columnName || '',
-					description: '',
-					column: actualFilterValue?.columnName || '',
-					id: uuidv4(),
-				}
-				saveDefinition(newDefinition)
-				setModelVariables(definitionObj)
-				onSave(actualFilterValue?.columnName as string)
-			},
-			[
-				actualFilterValue,
-				modelVariables,
-				type,
-				saveDefinition,
-				setModelVariables,
-				onSave,
-			],
-		)
-
-		const save = useCallback(
-			filterValue => {
-				const existingVariables = (modelVariables && modelVariables[type]) || []
-				if (isNewDefinition) {
-					return onCreateNewDefinition(filterValue, existingVariables)
-				}
-
-				const existingDefinition = {
-					...(existingVariables.find(x => x.name === selectedDefinition) || {
-						name: selectedDefinition,
-					}),
-				} as VariableDefinition
-
-				existingDefinition.filters = [
-					...(existingDefinition?.filters?.filter(
-						x => x.id !== filterValue.id,
-					) || []),
-					filterValue,
-				]
-				const definitionObj = {
-					...modelVariables,
-					[type]: [
-						...existingVariables.filter(x => x.name !== selectedDefinition),
-						existingDefinition,
-					],
-				} as Definition
-
-				onUpdate(null, { text: actualFilterValue?.columnName })
-				setModelVariables(definitionObj)
-			},
-			[
-				actualFilterValue,
-				modelVariables,
-				isNewDefinition,
-				type,
-				selectedDefinition,
-				setModelVariables,
-				onCreateNewDefinition,
-				onUpdate,
-			],
-		)
-
-		const resetDerive = useCallback(() => {
-			setActualFilterValue(null)
-			onClose()
-			onReset()
-		}, [setActualFilterValue, onClose, onReset])
-
-		const filterData = useCallback(() => {
-			if (actualFilterValue && !actualFilterValue?.id) {
-				actualFilterValue.id = uuidv4()
-			}
-			save(actualFilterValue)
-			filterArquero(actualFilterValue)
-			resetDerive()
-		}, [actualFilterValue, filterArquero, save, resetDerive])
-
-		const rankData = useCallback(() => {
-			const derive = {
-				id: uuidv4(),
-				column: actualFilterValue?.column,
-				columnName: actualFilterValue?.columnName?.toString(),
-				threshold: actualFilterValue?.value,
-				type: actualFilterValue?.filter,
-			} as TableDerivation
-			setDeriveTable(derive)
-			save(actualFilterValue)
-			resetDerive()
-		}, [setDeriveTable, actualFilterValue, resetDerive, save])
-
-		const deriveData = useCallback(() => {
-			if (editing) {
-				const oldColumnName =
-					modelVariables &&
-					modelVariables[type]
-						?.flatMap(x => x.filters)
-						.find(x => x.id === actualFilterValue?.id)
-				if (oldColumnName?.columnName != null) {
-					removeColumn(oldColumnName.columnName as string)
-				}
-			}
-
-			if (
-				actualFilterValue?.filter ===
-					TableDerivationType.PercentageTopRanking ||
-				actualFilterValue?.filter ===
-					TableDerivationType.PercentageBottomRanking
-			) {
-				return rankData()
-			}
-			return filterData()
-		}, [
-			filterData,
-			rankData,
-			editing,
-			modelVariables,
-			actualFilterValue,
-			removeColumn,
-			type,
-		])
-
-		const addFilterValues = (event, option) => {
-			const field = event.target.title
-			const val = option?.key || option.text || option
-			const obj = {
-				...actualFilterValue,
-				[field]: val,
-			} as FilterObject
-
-			setActualFilterValue(obj)
+	const columnName = useMemo((): string => {
+		let num = 0
+		if (!nameExists(selectedDefinition)) {
+			return selectedDefinition
 		}
 
-		const toggleValue = (field, value) => {
-			const obj = {
-				...actualFilterValue,
-				[field]: value,
-			} as FilterObject
-
-			setActualFilterValue(obj)
+		while (nameExists(`${selectedDefinition}_${num}`)) {
+			num++
 		}
 
-		const toggleNewDefinition = useCallback(() => {
-			if (
-				!isNewDefinition &&
-				nameExists(actualFilterValue?.columnName as string)
-			) {
-				setActualFilterValue(
-					prev =>
-						({
-							...prev,
-							columnName: prev?.columnName + '_new',
-						} as FilterObject),
-				)
-			}
-			toggleIsNewDefinition()
-		}, [
-			toggleIsNewDefinition,
-			setActualFilterValue,
-			actualFilterValue,
-			isNewDefinition,
-			nameExists,
-		])
+		return selectedDefinition + '_' + num
+	}, [selectedDefinition, nameExists])
 
+	const [actualFilterValue, setActualFilterValue] =
+		useState<FilterObject | null>(editing ?? { id: uuidv4(), columnName })
+
+	const filterFunctions = useFilterFunctions()
+	const setDeriveTable = useSetDeriveTable(fileId)
+	const captureTable = useCaptureTable(fileId)
+
+	const columns = useMemo((): { key: string; text: string }[] => {
 		return (
-			<Container>
-				<FilterOptionsContainer>
-					<TextField
-						title="columnName"
-						type="text"
-						label="New column name"
-						value={actualFilterValue?.columnName || ''}
-						onChange={addFilterValues}
-					/>
-					<Div style={{ display: 'flex' }}>
-						{/* <DropdownFilter
+			allTableColumns
+				.flatMap(x => x)
+				// .filter(x => x?.tableId === actualFilterValue?.tableId)
+				.map(x => {
+					return {
+						key: x?.name as string,
+						text: x?.name as string,
+					}
+				})
+		)
+	}, [allTableColumns])
+
+	const filterArquero = useCallback(
+		filterValue => {
+			let tableFiltered = originalTable
+			if (filterValue) {
+				tableFiltered = originalTable?.filter(
+					escape((arqueroRow: ColumnTable) => {
+						return matchFilter(arqueroRow, filterValue, actualFilterValue)
+					}),
+				) as ColumnTable
+			}
+			captureTable(
+				tableFiltered as ColumnTable,
+				actualFilterValue?.columnName as string,
+			)
+		},
+		[matchFilter, originalTable, actualFilterValue, captureTable],
+	)
+
+	const onCreateNewDefinition = useCallback(
+		(filterValue: any, existing) => {
+			const newObj = {
+				name: actualFilterValue?.columnName,
+				filters: [filterValue],
+			}
+
+			const definitionObj = {
+				...modelVariables,
+				[type]: [...existing, newObj],
+			}
+
+			const newDefinition: CausalFactor = {
+				level: CausalityLevel.Secondary,
+				variable: actualFilterValue?.columnName || '',
+				description: '',
+				column: actualFilterValue?.columnName || '',
+				id: uuidv4(),
+			}
+			saveDefinition(newDefinition)
+			setModelVariables(definitionObj)
+			onSave(actualFilterValue?.columnName as string)
+		},
+		[
+			actualFilterValue,
+			modelVariables,
+			type,
+			saveDefinition,
+			setModelVariables,
+			onSave,
+		],
+	)
+
+	const save = useCallback(
+		filterValue => {
+			const existingVariables = (modelVariables && modelVariables[type]) || []
+			if (isNewDefinition) {
+				return onCreateNewDefinition(filterValue, existingVariables)
+			}
+
+			const existingDefinition = {
+				...(existingVariables.find(x => x.name === selectedDefinition) || {
+					name: selectedDefinition,
+				}),
+			} as VariableDefinition
+
+			existingDefinition.filters = [
+				...(existingDefinition?.filters?.filter(x => x.id !== filterValue.id) ||
+					[]),
+				filterValue,
+			]
+			const definitionObj = {
+				...modelVariables,
+				[type]: [
+					...existingVariables.filter(x => x.name !== selectedDefinition),
+					existingDefinition,
+				],
+			} as Definition
+
+			onUpdate(null, { text: actualFilterValue?.columnName })
+			setModelVariables(definitionObj)
+		},
+		[
+			actualFilterValue,
+			modelVariables,
+			isNewDefinition,
+			type,
+			selectedDefinition,
+			setModelVariables,
+			onCreateNewDefinition,
+			onUpdate,
+		],
+	)
+
+	const resetDerive = useCallback(() => {
+		setActualFilterValue(null)
+		onClose()
+		onReset()
+	}, [setActualFilterValue, onClose, onReset])
+
+	const filterData = useCallback(() => {
+		if (actualFilterValue && !actualFilterValue?.id) {
+			actualFilterValue.id = uuidv4()
+		}
+		save(actualFilterValue)
+		filterArquero(actualFilterValue)
+		resetDerive()
+	}, [actualFilterValue, filterArquero, save, resetDerive])
+
+	const rankData = useCallback(() => {
+		const derive = {
+			id: uuidv4(),
+			column: actualFilterValue?.column,
+			columnName: actualFilterValue?.columnName?.toString(),
+			threshold: actualFilterValue?.value,
+			type: actualFilterValue?.filter,
+		} as TableDerivation
+		setDeriveTable(derive)
+		save(actualFilterValue)
+		resetDerive()
+	}, [setDeriveTable, actualFilterValue, resetDerive, save])
+
+	const deriveData = useCallback(() => {
+		if (editing) {
+			const oldColumnName =
+				modelVariables &&
+				modelVariables[type]
+					?.flatMap(x => x.filters)
+					.find(x => x.id === actualFilterValue?.id)
+			if (oldColumnName?.columnName != null) {
+				removeColumn(oldColumnName.columnName as string)
+			}
+		}
+
+		if (
+			actualFilterValue?.filter === TableDerivationType.PercentageTopRanking ||
+			actualFilterValue?.filter === TableDerivationType.PercentageBottomRanking
+		) {
+			return rankData()
+		}
+		return filterData()
+	}, [
+		filterData,
+		rankData,
+		editing,
+		modelVariables,
+		actualFilterValue,
+		removeColumn,
+		type,
+	])
+
+	const addFilterValues = (event, option) => {
+		const field = event.target.title
+		const val = option?.key || option.text || option
+		const obj = {
+			...actualFilterValue,
+			[field]: val,
+		} as FilterObject
+
+		setActualFilterValue(obj)
+	}
+
+	const toggleValue = (field: string, value: boolean | undefined) => {
+		const obj = {
+			...actualFilterValue,
+			[field]: value,
+		} as FilterObject
+
+		setActualFilterValue(obj)
+	}
+
+	const toggleNewDefinition = useCallback(() => {
+		if (
+			!isNewDefinition &&
+			nameExists(actualFilterValue?.columnName as string)
+		) {
+			setActualFilterValue(
+				prev =>
+					({
+						...prev,
+						columnName: prev?.columnName + '_new',
+					} as FilterObject),
+			)
+		}
+		toggleIsNewDefinition()
+	}, [
+		toggleIsNewDefinition,
+		setActualFilterValue,
+		actualFilterValue,
+		isNewDefinition,
+		nameExists,
+	])
+
+	return (
+		<Container>
+			<FilterOptionsContainer>
+				<TextField
+					title="columnName"
+					type="text"
+					label="New column name"
+					value={actualFilterValue?.columnName || ''}
+					onChange={addFilterValues}
+				/>
+				<Div style={{ display: 'flex' }}>
+					{/* <DropdownFilter
 							style={{ marginRight: '12px' }}
 							label="Table"
 							placeholder="Select the table"
@@ -345,94 +338,93 @@ export const DeriveComponent: React.FC<DeriveProps> = memo(
 							onChange={addFilterValues}
 							selectedKey={actualFilterValue?.tableId}
 						/> */}
-						<DropdownFilter
-							style={{ marginRight: '12px' }}
-							label="Column"
-							placeholder="Select the column"
-							options={columns}
-							title="column"
+					<DropdownFilter
+						style={{ marginRight: '12px' }}
+						label="Column"
+						placeholder="Select the column"
+						options={columns}
+						title="column"
+						onChange={addFilterValues}
+						selectedKey={actualFilterValue?.column}
+					/>
+					<DropdownFilter
+						label="Function"
+						placeholder="Select the function"
+						options={filterFunctions}
+						title="filter"
+						onChange={addFilterValues}
+						selectedKey={actualFilterValue?.filter}
+					/>
+				</Div>
+				{actualFilterValue?.filter?.endsWith('in range') ? (
+					<DivRange>
+						<ToggleButton
+							checked={actualFilterValue.inclusive}
+							onClick={() =>
+								toggleValue('inclusive', !actualFilterValue?.inclusive)
+							}
+							title="inclusive"
+						>
+							Inclusive
+						</ToggleButton>
+						<RangeField
+							defaultValue={actualFilterValue?.lower?.toString()}
+							title="lower"
+							placeholder="lower"
 							onChange={addFilterValues}
-							selectedKey={actualFilterValue?.column}
 						/>
-						<DropdownFilter
-							label="Function"
-							placeholder="Select the function"
-							options={filterFunctions}
-							title="filter"
+						<RangeField
+							defaultValue={actualFilterValue?.upper?.toString()}
+							title="upper"
+							placeholder="upper"
 							onChange={addFilterValues}
-							selectedKey={actualFilterValue?.filter}
+						/>
+						<CheckboxDefinition
+							disabled={!!editing}
+							defaultChecked={isNewDefinition}
+							label="Set as new definition"
+							onChange={toggleNewDefinition}
+						/>
+					</DivRange>
+				) : (
+					<Div>
+						<ValueField
+							title="value"
+							label="Value"
+							type="text"
+							placeholder={
+								filterFunctions.find(x => x.key === actualFilterValue?.filter)
+									?.placeholder || 'Type the value'
+							}
+							value={(actualFilterValue?.value as string) || ''}
+							onChange={addFilterValues}
+						/>
+						<CheckboxDefinition
+							disabled={!!editing}
+							checked={isNewDefinition}
+							label="Set as new definition"
+							onChange={toggleNewDefinition}
 						/>
 					</Div>
-					{actualFilterValue?.filter?.endsWith('in range') ? (
-						<DivRange>
-							<ToggleButton
-								checked={actualFilterValue.inclusive}
-								onClick={() =>
-									toggleValue('inclusive', !actualFilterValue?.inclusive)
-								}
-								title="inclusive"
-							>
-								Inclusive
-							</ToggleButton>
-							<RangeField
-								defaultValue={actualFilterValue?.lower?.toString()}
-								title="lower"
-								placeholder="lower"
-								onChange={addFilterValues}
-							/>
-							<RangeField
-								defaultValue={actualFilterValue?.upper?.toString()}
-								title="upper"
-								placeholder="upper"
-								onChange={addFilterValues}
-							/>
-							<CheckboxDefinition
-								disabled={!!editing}
-								defaultChecked={isNewDefinition}
-								label="Set as new definition"
-								onChange={toggleNewDefinition}
-							/>
-						</DivRange>
-					) : (
-						<Div>
-							<ValueField
-								title="value"
-								label="Value"
-								type="text"
-								placeholder={
-									filterFunctions.find(x => x.key === actualFilterValue?.filter)
-										?.placeholder || 'Type the value'
-								}
-								value={(actualFilterValue?.value as string) || ''}
-								onChange={addFilterValues}
-							/>
-							<CheckboxDefinition
-								disabled={!!editing}
-								checked={isNewDefinition}
-								label="Set as new definition"
-								onChange={toggleNewDefinition}
-							/>
-						</Div>
-					)}
-					<DivCenter>
-						<CancelButton onClick={resetDerive}>Cancel</CancelButton>
+				)}
+				<DivCenter>
+					<CancelButton onClick={resetDerive}>Cancel</CancelButton>
 
-						<ApplyButton
-							disabled={
-								!actualFilterValue?.value?.toString().length &&
-								!actualFilterValue?.lower?.toString().length &&
-								!actualFilterValue?.upper?.toString().length
-							}
-							onClick={deriveData}
-						>
-							Apply
-						</ApplyButton>
-					</DivCenter>
-				</FilterOptionsContainer>
-			</Container>
-		)
-	},
-)
+					<ApplyButton
+						disabled={
+							!actualFilterValue?.value?.toString().length &&
+							!actualFilterValue?.lower?.toString().length &&
+							!actualFilterValue?.upper?.toString().length
+						}
+						onClick={deriveData}
+					>
+						Apply
+					</ApplyButton>
+				</DivCenter>
+			</FilterOptionsContainer>
+		</Container>
+	)
+})
 
 const ValueField = styled(TextField)`
 	width: 47.5%;

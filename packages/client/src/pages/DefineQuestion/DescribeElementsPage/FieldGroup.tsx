@@ -9,17 +9,11 @@ import styled from 'styled-components'
 import { Container, ContainerFlexRow } from '~styles'
 import { Element } from '~types'
 
-interface FieldGroupProps {
+export const FieldGroup: React.FC<{
 	type: string
 	question?: Element
 	onChange: (value: string | undefined, type: string, field: string) => void
-}
-
-export const FieldGroup: React.FC<FieldGroupProps> = memo(function FieldGroup({
-	type,
-	question,
-	onChange,
-}) {
+}> = memo(function FieldGroup({ type, question, onChange }) {
 	return (
 		<Container>
 			<FieldTitle>{upperFirst(type)}</FieldTitle>

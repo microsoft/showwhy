@@ -6,16 +6,12 @@ import { CommandButton, IContextualMenuProps } from '@fluentui/react'
 import { memo } from 'react'
 import styled from 'styled-components'
 
-interface OptionsButtonProps {
+export const OptionsButton: React.FC<{
 	menuProps: IContextualMenuProps
 	text: string
-}
-
-export const OptionsButton: React.FC<OptionsButtonProps> = memo(
-	function OptionsButton({ menuProps, text }) {
-		return <Options primary text={text} menuProps={menuProps} />
-	},
-)
+}> = memo(function OptionsButton({ menuProps, text }) {
+	return <Options primary text={text} menuProps={menuProps} />
+})
 
 const Options = styled(CommandButton)`
 	color: white;

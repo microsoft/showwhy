@@ -58,8 +58,8 @@ export function useFactorsDefinitionForm({
 		function resetFormOnExperimentChange() {
 			resetFields()
 			if (experiment) {
-				setVariable(experiment[pageType]?.variable)
-				setIsPrimary(!experiment[pageType]?.definition?.length)
+				setVariable((experiment as any)[pageType]?.variable ?? '')
+				setIsPrimary(!(experiment as any)[pageType]?.definition?.length)
 			}
 		},
 		[pageType, location, experiment, resetFields],

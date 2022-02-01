@@ -9,64 +9,61 @@ import { useGetArrows } from './arrows'
 import { box1, box2, box3, box4 } from './constants'
 import { CausalEffectSize } from '~types'
 
-interface ComponentArrowsProps {
+export const ComponentArrows: React.FC<{
 	confounders: string[]
 	outcomeDeterminants: string[]
 	exposure: string
 	outcome: string
 	size: CausalEffectSize
-}
-export const ComponentArrows: React.FC<ComponentArrowsProps> = memo(
-	function ComponentArrows({
-		confounders,
-		outcomeDeterminants,
-		exposure,
-		outcome,
-		size,
-	}) {
-		const getArrows = useGetArrows(size)
-		return (
-			<Container size={size}>
-				<ControlsContainer>
-					<ControlsTitle size={size}>Controls</ControlsTitle>
-					<DottedContainer size={size}>
-						<BoxCausalModel
-							size={size}
-							id={box1.id}
-							list={confounders}
-							title="Confounders"
-						/>
-						<BoxCausalModel
-							size={size}
-							id={box2.id}
-							list={outcomeDeterminants}
-							title="Outcome determinants"
-						/>
-					</DottedContainer>
-				</ControlsContainer>
+}> = memo(function ComponentArrows({
+	confounders,
+	outcomeDeterminants,
+	exposure,
+	outcome,
+	size,
+}) {
+	const getArrows = useGetArrows(size)
+	return (
+		<Container size={size}>
+			<ControlsContainer>
+				<ControlsTitle size={size}>Controls</ControlsTitle>
+				<DottedContainer size={size}>
+					<BoxCausalModel
+						size={size}
+						id={box1.id}
+						list={confounders}
+						title="Confounders"
+					/>
+					<BoxCausalModel
+						size={size}
+						id={box2.id}
+						list={outcomeDeterminants}
+						title="Outcome determinants"
+					/>
+				</DottedContainer>
+			</ControlsContainer>
 
-				<ControlsContainer>
-					<ControlsBoxContainer size={size}>
-						<BoxCausalModel
-							size={size}
-							id={box3.id}
-							title="Exposure"
-							list={[exposure]}
-						/>
-						<BoxCausalModel
-							size={size}
-							id={box4.id}
-							title="Outcome"
-							list={[outcome]}
-						/>
-					</ControlsBoxContainer>
-				</ControlsContainer>
+			<ControlsContainer>
+				<ControlsBoxContainer size={size}>
+					<BoxCausalModel
+						size={size}
+						id={box3.id}
+						title="Exposure"
+						list={[exposure]}
+					/>
+					<BoxCausalModel
+						size={size}
+						id={box4.id}
+						title="Outcome"
+						list={[outcome]}
+					/>
+				</ControlsBoxContainer>
+			</ControlsContainer>
 
-				{getArrows()}
-			</Container>
-		)
-	},
-)
+			{getArrows()}
+		</Container>
+	)
+})
 
 const ControlsTitle = styled.h2<{ size: CausalEffectSize }>`
 	margin: unset;
