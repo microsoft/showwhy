@@ -14,6 +14,8 @@ import {
 	CausalFactor,
 	HeaderData,
 	Item,
+	Handler1,
+	Handler0,
 } from '~types'
 
 export const TableComponent: React.FC<{
@@ -23,10 +25,10 @@ export const TableComponent: React.FC<{
 	factorToEdit?: CausalFactor
 	pageType: PageType
 	variables?: IComboBoxOption[]
-	onDelete?: (e) => void
-	onEdit?: (e) => void
-	onCancel?: () => void
-	onSave?: (e?) => void
+	onDelete?: Handler1<ElementDefinition>
+	onEdit?: Handler1<ElementDefinition>
+	onCancel?: Handler0
+	onSave?: Handler1<ElementDefinition>
 }> = memo(function TableComponent({
 	headers,
 	columns,
