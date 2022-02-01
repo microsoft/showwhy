@@ -6,9 +6,16 @@
 import { Checkbox, IComboBoxOption } from '@fluentui/react'
 import { useCallback, useMemo, useState } from 'react'
 import { useFactorsDefinitionForm } from '~components/FactorsDefinitionForm'
-import { PageType, CausalFactor, ElementDefinition, HeaderData } from '~types'
+import {
+	PageType,
+	CausalFactor,
+	ElementDefinition,
+	HeaderData,
+	Setter,
+	CausalityLevel,
+} from '~types'
 
-const actionsHeader = { fieldName: 'actions', value: 'Actions' }
+const actionsHeader: HeaderData = { fieldName: 'actions', value: 'Actions' }
 
 export function useTableComponent(
 	columns: CausalFactor[],
@@ -31,7 +38,7 @@ export function useTableComponent(
 	>()
 	const [editedFactor, setEditedFactor] = useState<CausalFactor | undefined>()
 	const setter = definitionToEdit ? setEditedDefinition : setEditedFactor
-	const onChange = useOnchange(setter, definitionToEdit || factorToEdit)
+	const onChange = useOnChange(setter, definitionToEdit || factorToEdit)
 	const { level, description, variable } = useFactorsDefinitionForm({
 		factor: (definitionToEdit || factorToEdit) as CausalFactor,
 		onChange,
@@ -40,10 +47,7 @@ export function useTableComponent(
 	})
 	const headersData = useHeadersData(
 		headers,
-		onDelete,
-		onEdit,
-		onCancel,
-		onSave,
+		Boolean(onDelete || onEdit || onCancel || onSave),
 	)
 	const customColumnsWidth = useCustomColumnsWidth(headersData)
 
@@ -122,11 +126,17 @@ export function useTableComponent(
 	}
 }
 
-function useOnchange(set, valueToEdit) {
+function useOnChange(
+	set: Setter<CausalFactor | undefined>,
+	valueToEdit: { id: string } | undefined,
+) {
 	return useCallback(
 		(value: Partial<CausalFactor>) => {
 			set({
 				...value,
+				description: value.description ?? '',
+				variable: value?.variable ?? '',
+				level: value?.level ?? CausalityLevel.Primary,
 				id: valueToEdit?.id || '',
 			})
 		},
@@ -134,16 +144,16 @@ function useOnchange(set, valueToEdit) {
 	)
 }
 
-function useHeadersData(headers, onDelete, onEdit, onCancel, onSave) {
+function useHeadersData(
+	headers: HeaderData[],
+	hasHandlers: boolean,
+): HeaderData[] {
 	return useMemo(() => {
-		return [
-			...headers,
-			(onDelete || onEdit || onCancel || onSave) && actionsHeader,
-		]
-	}, [headers, onDelete, onEdit, onCancel, onSave])
+		return hasHandlers ? [...headers, actionsHeader] : headers
+	}, [headers, hasHandlers])
 }
 
-function useCustomColumnsWidth(headersData) {
+function useCustomColumnsWidth(headersData: HeaderData[]) {
 	return useMemo(() => {
 		const props = headersData.map(h => h.fieldName)
 		const hasLevel = props.includes('level')
