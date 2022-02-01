@@ -91,7 +91,7 @@ export function useOnDuplicate({
 			const definitionObj = {
 				...modelVariables,
 				[type]: [...existing, newVariable],
-			}
+			} as Definition
 
 			setModelVariables(definitionObj)
 			saveDefinition(newDefinition)
