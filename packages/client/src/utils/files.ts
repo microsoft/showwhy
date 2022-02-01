@@ -11,7 +11,7 @@ import {
 	createBaseFile,
 } from '@data-wrangling-components/utilities'
 import { fetchTable } from './arquero'
-import { DataTableFileDefinition, ProjectFile, ZipData } from '~types'
+import { DataTableFileDefinition, ProjectFile, ZipData, Maybe } from '~types'
 
 export function createTextFile(name: string, content: string): File {
 	const type = { type: `text/${name.split('.').pop()}` }
@@ -59,7 +59,7 @@ export async function groupFilesByType(
 	}
 
 	if (defaultResult) {
-		let file: BaseFile | undefined
+		let file: Maybe<BaseFile>
 		let { url } = defaultResult
 		if (isZipUrl(url)) {
 			file = tableFiles.find(f => url.includes(f.name))

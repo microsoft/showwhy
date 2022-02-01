@@ -10,6 +10,7 @@ import {
 	DecisionFeature,
 	Specification,
 	SpecificationCurveConfig,
+	Maybe,
 } from '~types'
 import { addOrRemoveArrayElement } from '~utils'
 
@@ -19,9 +20,9 @@ export const VegaSpecificationCurve: React.FC<{
 	width: number
 	height: number
 	onConfigChange: any
-	onSpecificationSelect: (datum: Specification | undefined) => void
-	onMouseOver: (item: Specification | DecisionFeature | undefined) => void
-	hovered: number | undefined
+	onSpecificationSelect: (datum: Maybe<Specification>) => void
+	onMouseOver: (item: Maybe<Specification | DecisionFeature>) => void
+	hovered: Maybe<number>
 	failedRefutationIds: number[]
 	outcome?: string
 }> = memo(function VegaSpecificationCurve({
@@ -38,9 +39,9 @@ export const VegaSpecificationCurve: React.FC<{
 }) {
 	// TODO: these two charts should be combinable into a single vega spec
 	// this will also greatly simplify the hover coordination
-	const [selected, setSelected] = useState<number | undefined>()
+	const [selected, setSelected] = useState<Maybe<number>>()
 	const handleDatumClick = useCallback(
-		(item: Specification | DecisionFeature | undefined) => {
+		(item: Maybe<Specification | DecisionFeature>) => {
 			if (item && item.id === selected) {
 				setSelected(undefined)
 				onSpecificationSelect(undefined)

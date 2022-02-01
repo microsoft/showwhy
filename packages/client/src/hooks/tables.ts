@@ -19,9 +19,10 @@ import {
 	TableColumn,
 	TableDerivation,
 	TableDerivationType,
+	Maybe,
 } from '~types'
 
-export function useTableWithColumnsDropped(): ColumnTable | undefined {
+export function useTableWithColumnsDropped(): Maybe<ColumnTable> {
 	const selectedFile = useSelectedFile()
 	const originalTable = useSelectOriginalTable(selectedFile?.fileId as string)
 

@@ -32,6 +32,7 @@ import {
 	Element,
 	CausalFactor,
 	VariableDefinition,
+	Maybe,
 } from '~types'
 
 export function useBusinessLogic(): {
@@ -42,10 +43,10 @@ export function useBusinessLogic(): {
 	modelVariables: VariableDefinition[][]
 	subjectIdentifier: string[]
 	subjectIdentifierData: DataTable
-	tableIdentifier: DataTable | undefined
+	tableIdentifier: Maybe<DataTable>
 	definitionOptions: FactorsOrDefinitions
 	isDeriveVisible: boolean
-	editingClause: FilterObject | undefined
+	editingClause: Maybe<FilterObject>
 	onResetClause: () => void
 	onSave: (definition: string) => void
 	onToggleDeriveVisible: () => void
@@ -67,7 +68,7 @@ export function useBusinessLogic(): {
 	const defineQuestion = useDefineQuestion()
 	const defineQuestionData = (defineQuestion as any)[pageType] as Element
 	const [editingClause, setEditingClause] = useState<FilterObject>()
-	const [tableIdentifier, setTableIdentifier] = useState<DataTable | undefined>(
+	const [tableIdentifier, setTableIdentifier] = useState<Maybe<DataTable>>(
 		allOriginalTables[0],
 	)
 	const [selectedDefinition, setSelectedDefinition] = useState<string>('')

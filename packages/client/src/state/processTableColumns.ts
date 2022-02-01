@@ -15,11 +15,11 @@ import {
 	useResetRecoilState,
 	useSetRecoilState,
 } from 'recoil'
-import { ProjectFile, TableColumn } from '~types'
+import { ProjectFile, TableColumn, Maybe } from '~types'
 
 export const tableColumnsState = atomFamily<
-	TableColumn[] | undefined,
-	string | undefined
+	Maybe<TableColumn[]>,
+	Maybe<string>
 >({
 	key: 'table-columns',
 	default: [],
@@ -33,13 +33,13 @@ const keys = atom<string[]>({
 export const useSetTableColumnSelector = selectorFamily({
 	key: 'table-columns-access',
 	get:
-		(key: string | undefined) =>
+		(key: Maybe<string>) =>
 		({ get }) =>
 			get(tableColumnsState(key)),
 	set:
-		(key: string | undefined) =>
-		({ set }, newValue: TableColumn[] | undefined | DefaultValue) => {
-			set<TableColumn[] | undefined>(tableColumnsState(key), newValue)
+		(key: Maybe<string>) =>
+		({ set }, newValue: Maybe<TableColumn[] | DefaultValue>) => {
+			set<Maybe<TableColumn[]>>(tableColumnsState(key), newValue)
 			set(keys, prev => {
 				if (key && !prev.includes(key)) {
 					return [...prev, key]
@@ -50,14 +50,12 @@ export const useSetTableColumnSelector = selectorFamily({
 })
 
 export function useSetTableColumns(
-	key: string | undefined,
-): SetterOrUpdater<TableColumn[] | undefined> {
+	key: Maybe<string>,
+): SetterOrUpdater<Maybe<TableColumn[]>> {
 	return useSetRecoilState(useSetTableColumnSelector(key))
 }
 
-export function useTableColumns(
-	key: string | undefined,
-): TableColumn[] | undefined {
+export function useTableColumns(key: Maybe<string>): Maybe<TableColumn[]> {
 	return useRecoilValue(useSetTableColumnSelector(key))
 }
 

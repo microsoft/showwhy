@@ -4,7 +4,7 @@
  */
 
 import { IColumn } from '@fluentui/react'
-import { ColumnRelevance, TableColumn, Setter } from '~types'
+import { ColumnRelevance, TableColumn, Setter, Maybe } from '~types'
 
 export interface OnChange {
 	setTableColumns: Setter<TableColumn[]>
@@ -14,5 +14,5 @@ export interface OnChange {
 export interface OnRelevanceChangeArgs extends OnChange {
 	setRelevance: Setter<ColumnRelevance>
 	relevance?: ColumnRelevance
-	onRemoveColumn: (evt: any, column?: IColumn | undefined) => void
+	onRemoveColumn: (evt: any, column?: Maybe<IColumn>) => void
 }

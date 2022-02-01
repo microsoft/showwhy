@@ -5,12 +5,12 @@
 import { DefaultButton, Icon } from '@fluentui/react'
 import { memo, useCallback } from 'react'
 import styled from 'styled-components'
-import { Handler0 } from '~types'
+import { Handler0, Maybe } from '~types'
 
 export const SelectableCard: React.FC<{
 	onClick: () => void
 	title?: string
-	isChecked?: boolean | undefined
+	isChecked?: Maybe<boolean>
 	icon?: string
 }> = memo(function CardComponent({ title, onClick, isChecked, icon }) {
 	const handleOnClick = useOnClickHandler(isChecked, onClick)
@@ -38,6 +38,6 @@ const ButtonIcon = styled(Icon)`
 	margin-right: 8px;
 `
 
-function useOnClickHandler(isChecked: boolean | undefined, onClick: Handler0) {
+function useOnClickHandler(isChecked: Maybe<boolean>, onClick: Handler0) {
 	return useCallback(() => !isChecked && onClick(), [isChecked, onClick])
 }

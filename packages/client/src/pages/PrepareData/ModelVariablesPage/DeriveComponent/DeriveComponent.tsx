@@ -33,17 +33,18 @@ import {
 	TableDerivationType,
 	Definition,
 	VariableDefinition,
+	Maybe,
 } from '~types'
 
 export const DeriveComponent: React.FC<{
 	selectedDefinition: string
 	fileId: string
-	originalTable: ColumnTable | undefined
-	editing: FilterObject | undefined
+	originalTable: Maybe<ColumnTable>
+	editing: Maybe<FilterObject>
 	onClose: () => void
 	onReset: () => void
 	onSave: (definition: string) => void
-	onUpdate: (evt: unknown, columnDetail: { text: string | undefined }) => void
+	onUpdate: (evt: unknown, columnDetail: { text: Maybe<string> }) => void
 }> = memo(function DeriveComponent({
 	originalTable,
 	selectedDefinition,
@@ -287,7 +288,7 @@ export const DeriveComponent: React.FC<{
 		setActualFilterValue(obj)
 	}
 
-	const toggleValue = (field: string, value: boolean | undefined) => {
+	const toggleValue = (field: string, value: Maybe<boolean>) => {
 		const obj = {
 			...actualFilterValue,
 			[field]: value,

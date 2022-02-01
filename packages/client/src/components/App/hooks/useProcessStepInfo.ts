@@ -5,12 +5,12 @@
 import { useCallback, useMemo } from 'react'
 import { useCurrentStep, useAllSteps } from '~hooks'
 import { useSetStepStatus, useStepStatus } from '~state'
-import { Handler0, Step, StepStatus } from '~types'
+import { Handler0, Step, StepStatus, Maybe } from '~types'
 
 export type ToggleStepStatusHandler = Handler0
 export interface ProcessStepInfo {
-	step: Step | undefined
-	stepStatus: StepStatus | undefined
+	step: Maybe<Step>
+	stepStatus: Maybe<StepStatus>
 	previousStepUrl: string
 	nextStepUrl: string
 	onToggleStepStatus: ToggleStepStatusHandler
@@ -36,7 +36,7 @@ export function useProcessStepInfo(): ProcessStepInfo {
 
 function useCurrentStepIndex(
 	allSteps: Step[],
-	currentStep: Step | undefined,
+	currentStep: Maybe<Step>,
 ): number {
 	return useMemo(() => {
 		return allSteps.findIndex(s => s.url === currentStep?.url) || 0
@@ -44,8 +44,8 @@ function useCurrentStepIndex(
 }
 
 function useToggleStepStatus(
-	step: Step | undefined,
-	stepStatus: StepStatus | undefined,
+	step: Maybe<Step>,
+	stepStatus: Maybe<StepStatus>,
 ): () => void {
 	const setStepStatus = useSetStepStatus(step?.url)
 	return useCallback(() => {

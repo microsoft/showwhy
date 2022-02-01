@@ -8,25 +8,31 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useAddOrEditFactor, usePageType, useVariableOptions } from '~hooks'
 import { useCausalFactors, useSetCausalFactors } from '~state'
-import { PageType, CausalFactor, FlatCausalFactor, OptionalId } from '~types'
+import {
+	PageType,
+	CausalFactor,
+	FlatCausalFactor,
+	OptionalId,
+	Maybe,
+} from '~types'
 import { noop } from '~utils'
 
 interface PathData {
-	path: string | undefined
-	page: string | undefined
+	path: Maybe<string>
+	page: Maybe<string>
 }
 
 export function useBusinessLogic(): {
-	factor: CausalFactor | undefined
+	factor: Maybe<CausalFactor>
 	isEditing: boolean
 	flatFactorsList: FlatCausalFactor[]
-	page: string | undefined
+	page: Maybe<string>
 	pageType: PageType
 	variables: IComboBoxOption[]
 	addFactor: (factor: OptionalId<CausalFactor>) => void
 	editFactor: (factor: CausalFactor) => void
 	deleteFactor: (factor: CausalFactor) => void
-	setFactor: (factor: CausalFactor | undefined) => void
+	setFactor: (factor: Maybe<CausalFactor>) => void
 	setIsEditing: (value: boolean) => void
 	goToFactorsPage: () => void
 } {
@@ -85,7 +91,7 @@ function useEditFactor(
 function useAddFactor(
 	isEditing: boolean,
 	setIsEditing: (value: boolean) => void,
-	setFactor: (factor: CausalFactor | undefined) => void,
+	setFactor: (factor: Maybe<CausalFactor>) => void,
 ): (factor: OptionalId<CausalFactor>) => void {
 	const addOrEditFactor = useAddOrEditFactor()
 	return useCallback(
@@ -126,7 +132,7 @@ function useFactorsNavigation(): [() => void, PathData] {
 	return [factorsPathData?.path ? goToFactorsPage : noop, factorsPathData]
 }
 
-function useFactorsPathData(historyState: string | undefined): PathData {
+function useFactorsPathData(historyState: Maybe<string>): PathData {
 	return useMemo((): PathData => {
 		return {
 			path: historyState,

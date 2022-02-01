@@ -7,12 +7,12 @@ import { upperFirst } from 'lodash'
 import { memo } from 'react'
 import styled from 'styled-components'
 import { Container, ContainerFlexRow } from '~styles'
-import { Element } from '~types'
+import { Element, Maybe } from '~types'
 
 export const FieldGroup: React.FC<{
 	type: string
 	question?: Element
-	onChange: (value: string | undefined, type: string, field: string) => void
+	onChange: (value: Maybe<string>, type: string, field: string) => void
 }> = memo(function FieldGroup({ type, question, onChange }) {
 	return (
 		<Container>

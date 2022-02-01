@@ -5,9 +5,10 @@
 
 import { useInterval } from '@essex-js-toolkit/hooks'
 import { useState, useMemo } from 'react'
+import { Maybe } from '~types'
 import { returnElapsedTime } from '~utils'
 
-export function useTimeElapsed(startTime: Date | undefined): string {
+export function useTimeElapsed(startTime: Maybe<Date>): string {
 	const [date, setDate] = useState(new Date())
 	useInterval(() => setDate(new Date()), 1000)
 

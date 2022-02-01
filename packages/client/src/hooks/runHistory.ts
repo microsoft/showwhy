@@ -15,6 +15,7 @@ import {
 	PartialResults,
 	RunHistory,
 	RunStatus,
+	Maybe,
 } from '~types'
 import {
 	disableAllRuns,
@@ -44,7 +45,7 @@ export function useSetRunAsDefault(): (run: RunHistory) => void {
 	)
 }
 
-export function useDefaultRun(): RunHistory | undefined {
+export function useDefaultRun(): Maybe<RunHistory> {
 	const runHistory = useRunHistory()
 
 	return useMemo(() => {

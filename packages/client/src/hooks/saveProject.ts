@@ -28,7 +28,7 @@ import {
 	useOriginalTables,
 	useRunHistory,
 } from '~state'
-import { PageType, Workspace, NodeResponseStatus } from '~types'
+import { PageType, Workspace, NodeResponseStatus, Maybe } from '~types'
 import { isDataUrl } from '~utils'
 
 export function useSaveProject(): () => Promise<void> {
@@ -85,7 +85,7 @@ export function useSaveProject(): () => Promise<void> {
 	])
 }
 
-function usePrimary(): () => FileWithPath | undefined {
+function usePrimary(): () => Maybe<FileWithPath> {
 	const primaryTable = usePrimaryTable()
 	const originalTables = useOriginalTables()
 	return useCallback(() => {
@@ -122,7 +122,7 @@ function useTables(fileCollection: FileCollection) {
 	)
 }
 
-function useCSVResult(): Promise<FileWithPath | undefined> {
+function useCSVResult(): Promise<Maybe<FileWithPath>> {
 	const getCSVResult = useGetCSVResult()
 	const runHistory = useRunHistory()
 	return useMemo(async () => {
@@ -180,7 +180,7 @@ function useDownload(fileCollection: FileCollection) {
 	const getTables = useTables(fileCollection)
 	return useCallback(
 		async (workspace: Partial<Workspace>) => {
-			const primary: FileWithPath | undefined = getPrimary()
+			const primary = getPrimary()
 			const tables = getTables(primary)
 			const result = await results
 			workspace.tables = tables

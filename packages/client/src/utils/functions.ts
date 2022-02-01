@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { EstimateEffectStatusResponse, NodeResponseStatus } from '~types'
+import { EstimateEffectStatusResponse, NodeResponseStatus, Maybe } from '~types'
 
 export function replaceItemAtIndex<T>(
 	arr: T[],
@@ -41,7 +41,7 @@ export function addOrRemoveArrayElement(
 
 export const findRunError = (
 	response: Partial<EstimateEffectStatusResponse>,
-): string | undefined => {
+): Maybe<string> => {
 	if (response.runtimeStatus?.toLowerCase() === NodeResponseStatus.Failed) {
 		const error =
 			response.partial_results &&
