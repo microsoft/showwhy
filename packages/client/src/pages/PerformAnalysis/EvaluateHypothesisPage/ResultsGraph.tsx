@@ -22,7 +22,7 @@ export const ResultsGraph: React.FC<{
 	defineQuestion: Experiment
 	specificationCurveConfig: SpecificationCurveConfig
 	vegaWindowDimensions: Dimensions
-	onMouseOver: (item: Specification | DecisionFeature | undefined) => void
+	onMouseOver: (item: Maybe<Specification | DecisionFeature>) => void
 	hovered: Maybe<number>
 	failedRefutationIds: number[]
 	refutationType: RefutationType

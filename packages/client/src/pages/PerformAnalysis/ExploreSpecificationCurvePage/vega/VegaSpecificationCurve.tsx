@@ -20,8 +20,8 @@ export const VegaSpecificationCurve: React.FC<{
 	width: number
 	height: number
 	onConfigChange: any
-	onSpecificationSelect: (datum: Specification | undefined) => void
-	onMouseOver: (item: Specification | DecisionFeature | undefined) => void
+	onSpecificationSelect: (datum: Maybe<Specification>) => void
+	onMouseOver: (item: Maybe<Specification | DecisionFeature>) => void
 	hovered: Maybe<number>
 	failedRefutationIds: number[]
 	outcome?: string
@@ -41,7 +41,7 @@ export const VegaSpecificationCurve: React.FC<{
 	// this will also greatly simplify the hover coordination
 	const [selected, setSelected] = useState<Maybe<number>>()
 	const handleDatumClick = useCallback(
-		(item: Specification | DecisionFeature | undefined) => {
+		(item: Maybe<Specification | DecisionFeature>) => {
 			if (item && item.id === selected) {
 				setSelected(undefined)
 				onSpecificationSelect(undefined)
