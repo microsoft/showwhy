@@ -8,7 +8,7 @@ import { CausalityLevel } from '../causality'
 export interface ElementDefinition {
 	id: string
 	description: string
-	level: CausalityLevel
-	variable?: string
+	variable: string
 	column?: string
+	level: CausalityLevel
 }
