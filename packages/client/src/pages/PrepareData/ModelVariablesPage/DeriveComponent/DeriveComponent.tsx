@@ -294,7 +294,7 @@ export const DeriveComponent: React.FC<DeriveProps> = memo(
 			setActualFilterValue(obj)
 		}
 
-		const toggleValue = (field, value) => {
+		const toggleValue = (field: string, value: boolean | undefined) => {
 			const obj = {
 				...actualFilterValue,
 				[field]: value,
