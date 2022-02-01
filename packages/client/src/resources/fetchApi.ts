@@ -106,7 +106,7 @@ async function fetchHandler(
 	url: string,
 	options: RequestInit & { maxRetries?: number },
 	retryCount = 0,
-) {
+): Promise<Response> {
 	const { maxRetries = 0, ...fetchOptions } = options
 	try {
 		return await fetch(url, fetchOptions)
