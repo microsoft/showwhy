@@ -5,16 +5,17 @@
 
 import { Spinner } from '@fluentui/react'
 import styled from 'styled-components'
+import { Maybe } from '~types'
 
 export const Title = styled.h3<{
-	noMarginBottom?: boolean | undefined
-	noMarginTop?: boolean | undefined
+	noMarginBottom?: Maybe<boolean>
+	noMarginTop?: Maybe<boolean>
 }>`
 	margin-bottom: ${({ noMarginBottom }) => (noMarginBottom ? 'unset' : '1em')};
 	margin-top: ${({ noMarginTop }) => (noMarginTop ? 'unset' : '1em')};
 `
 
-export const Text = styled.span<{ marginTop?: boolean | undefined }>`
+export const Text = styled.span<{ marginTop?: Maybe<boolean> }>`
 	margin-top: ${({ marginTop }) => (marginTop ? '1em' : 'unset')};
 `
 
@@ -31,8 +32,8 @@ export const Value = styled(Bold)`
 
 export const Paragraph = styled.p<{
 	color?: string
-	noMarginBottom?: boolean | undefined
-	noMarginTop?: boolean | undefined
+	noMarginBottom?: Maybe<boolean>
+	noMarginTop?: Maybe<boolean>
 }>`
 	color: ${({ color, theme }) =>
 		color ? theme.application()[color] : 'black'};
@@ -41,8 +42,8 @@ export const Paragraph = styled.p<{
 `
 
 export const Container = styled.div<{
-	marginTop?: boolean | undefined
-	marginBottom?: boolean | undefined
+	marginTop?: Maybe<boolean>
+	marginBottom?: Maybe<boolean>
 }>`
 	margin-top: ${({ marginTop }) => (marginTop ? '1em' : 'unset')};
 	margin-bottom: ${({ marginBottom }) => (marginBottom ? '1em' : 'unset')};

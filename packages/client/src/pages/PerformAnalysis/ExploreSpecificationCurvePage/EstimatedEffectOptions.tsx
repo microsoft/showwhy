@@ -5,14 +5,15 @@
 import { Toggle } from '@fluentui/react'
 import { memo } from 'react'
 import styled from 'styled-components'
+import { Maybe } from '~types'
 
 export const EstimatedEffectOptions: React.FC<{
-	checked: boolean | undefined
+	checked: Maybe<boolean>
 	onChange: (checked: boolean) => void
 	label: string
 	title: string
 	disabledTitle?: string
-	disabled?: boolean | undefined
+	disabled?: Maybe<boolean>
 }> = memo(function EstimatedEffectOptions({
 	checked,
 	onChange,

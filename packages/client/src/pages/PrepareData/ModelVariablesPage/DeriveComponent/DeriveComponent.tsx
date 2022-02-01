@@ -288,7 +288,7 @@ export const DeriveComponent: React.FC<{
 		setActualFilterValue(obj)
 	}
 
-	const toggleValue = (field: string, value: boolean | undefined) => {
+	const toggleValue = (field: string, value: Maybe<boolean>) => {
 		const obj = {
 			...actualFilterValue,
 			[field]: value,
