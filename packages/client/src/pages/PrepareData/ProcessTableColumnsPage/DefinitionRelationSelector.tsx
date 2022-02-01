@@ -10,7 +10,7 @@ import {
 } from '@fluentui/react'
 import { memo, useCallback } from 'react'
 import styled from 'styled-components'
-import { ColumnRelation, ColumnRelevance } from '~types'
+import { ColumnRelation, ColumnRelevance, Maybe } from '~types'
 
 type DefinitionChangeHandler = (changedRelation: ColumnRelation[]) => void
 type ToggleSelectHandler = (
@@ -25,7 +25,7 @@ interface RelevanceOption {
 
 export const DefinitionRelationSelector: React.FC<{
 	relation: ColumnRelation[]
-	relevance: ColumnRelevance | undefined
+	relevance: Maybe<ColumnRelevance>
 	relevanceOption: RelevanceOption
 	onDefinitionChange: DefinitionChangeHandler
 }> = memo(function DefinitionRelationSelector({

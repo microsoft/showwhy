@@ -6,7 +6,7 @@ import { DefaultButton } from '@fluentui/react'
 import { memo } from 'react'
 import styled from 'styled-components'
 import { DefinitionRelationSelector } from './DefinitionRelationSelector'
-import { ColumnRelation, ColumnRelevance } from '~types'
+import { ColumnRelation, ColumnRelevance, Maybe } from '~types'
 
 const RelevanceTypes = [
 	{
@@ -24,7 +24,7 @@ const RelevanceTypes = [
 ]
 
 export const ColumnRelevanceSelector: React.FC<{
-	relevance: ColumnRelevance | undefined
+	relevance: Maybe<ColumnRelevance>
 	relation: ColumnRelation[]
 	isSubjectIdentifierAvailable: boolean
 	selectedColumn: string

@@ -12,6 +12,7 @@ import {
 	TableColumn,
 	Setter,
 	ColumnRelation,
+	Maybe,
 } from '~types'
 
 export interface SelectedArgs {
@@ -31,5 +32,5 @@ export interface SubjectIdentifierArgs {
 export interface SubjectIdentifierDataArgs {
 	allOriginalTables: DataTable[]
 	subjectIdentifier: string[]
-	setTableIdentifier: Setter<DataTable | undefined>
+	setTableIdentifier: Setter<Maybe<DataTable>>
 }
