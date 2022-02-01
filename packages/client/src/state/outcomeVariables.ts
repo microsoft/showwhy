@@ -35,12 +35,11 @@ export function useSetOrUpdateOutcomeVariables(): (
 	return useCallback(
 		(variableDefinition: VariableDefinition1) => {
 			setOutcomeVariables(prev => {
-				//TODO: but what if the name changes??
-				const exists = prev.find(i => i.name === variableDefinition.name)
+				const exists = prev.find(i => i.id === variableDefinition.id)
 				return !exists
 					? [...prev, variableDefinition]
 					: [
-							...prev.filter(i => i.name !== variableDefinition.name),
+							...prev.filter(i => i.id !== variableDefinition.id),
 							variableDefinition,
 					  ]
 			})

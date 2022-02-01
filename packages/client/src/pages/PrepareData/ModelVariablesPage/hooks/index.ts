@@ -4,4 +4,3 @@
  */
 
 export * from './hooks'
-export * from './newhooksFile'

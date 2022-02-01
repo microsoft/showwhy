@@ -7,6 +7,7 @@ import { useCallback } from 'react'
 import { SetModelVariables } from './types'
 import { PageType, CausalFactor, Definition, ElementDefinition } from '~types'
 
+//TODO: could be causal factor or element definition?
 export function useOnDelete({
 	modelVariables,
 	type,
@@ -23,7 +24,7 @@ export function useOnDelete({
 	return useCallback(
 		(val: CausalFactor) => {
 			if (type === PageType.Control) {
-				return deleteCausalFactor(val as CausalFactor)
+				return deleteCausalFactor(val)
 			}
 			const existing = (modelVariables && modelVariables[type]) || []
 			const actualVariables = existing.filter(x => x.name !== val.variable)

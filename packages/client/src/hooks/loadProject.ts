@@ -3,6 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { BaseFile } from '@data-wrangling-components/utilities'
+import { all, op } from 'arquero'
 import { useCallback, useMemo } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import { useGetStepUrls } from '~hooks'
@@ -193,7 +194,14 @@ async function processTables(
 		setPrimaryTable({ name: primary.name, id })
 	}
 	if (postLoad) {
-		const result = await runPipeline(tables, postLoad.steps, tableFiles)
+		//TODO: add this to pipeline? how?
+		let result = await runPipeline(tables, postLoad.steps, tableFiles)
+		result = result.derive(
+			{
+				index: op.row_number(),
+			},
+			{ before: all() },
+		)
 		const file: ProjectFile = {
 			id,
 			content: result.toCSV(),

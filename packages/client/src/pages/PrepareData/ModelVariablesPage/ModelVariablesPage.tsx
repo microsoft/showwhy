@@ -2,35 +2,48 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import { Step } from '@data-wrangling-components/core'
 import {
 	ArqueroTableHeader,
 	ColumnTransformModal,
 } from '@data-wrangling-components/react'
+import { Dropdown, IconButton, TextField } from '@fluentui/react'
 import { memo } from 'react'
 import { If, Then, Else } from 'react-if'
 import styled from 'styled-components'
-import { DefinitionList } from './DefinitionList/DefinitionList'
-import { DefinitionSteps } from './DefinitionSteps'
+import { EmptySteps } from './EmptySteps'
 import { Header } from './Header'
-import { tableTransform, useBusinessLogic1, useTable } from './hooks'
+import { StepComponent } from './StepComponent'
+import { ModelVariableCommands } from './ModelVariableCommands'
+import { RenameCallout } from './RenameCallout'
+import {
+	useTableTransform,
+	useCommandBar,
+	useTable,
+	useDefinitions,
+	useDefinitionDropdown,
+	useBusinessLogic,
+} from './hooks'
 import { EmptyDataPageWarning } from '~components/EmptyDataPageWarning'
 import { ArqueroDetailsTable } from '~components/Tables/ArqueroDetailsTable'
-import { ContainerFlexRow } from '~styles'
-import { Pages, CausalFactor, VariableDefinition1 } from '~types'
-import { Dropdown, IconButton } from '@fluentui/react'
-import { FileExtensions } from '@data-wrangling-components/utilities'
-import { StepComponent } from './StepComponent'
-import { Step } from '@data-wrangling-components/core'
-import { EmptySteps } from './EmptySteps'
+import { Pages } from '~types'
 
 export const ModelVariablesPage: React.FC = memo(function ModelVariablesPage() {
+	const { pageType, defineQuestionData, causalFactors, definitionOptions } =
+		useBusinessLogic()
+
 	const {
-		commandBar,
-		defineQuestionData,
-		definitionDropdown,
-		selectedDefinition,
-		selectDefinition,
-	} = useBusinessLogic1()
+		selectedDefinitionId,
+		setSelectedDefinitionId,
+		isEditingDefinition,
+		toggleEditDefinition,
+		onChange,
+		definitionName,
+		onSave,
+	} = useDefinitions(defineQuestionData)
+
+	const definitionDropdown = useDefinitionDropdown(definitionOptions)
+
 	const {
 		commands,
 		isModalOpen,
@@ -38,10 +51,17 @@ export const ModelVariablesPage: React.FC = memo(function ModelVariablesPage() {
 		originalTable,
 		handleTransformRequested,
 		variables,
-	} = tableTransform()
-	const table = useTable(selectedDefinition, variables, originalTable)
+	} = useTableTransform(selectedDefinitionId)
+	const table = useTable(selectedDefinitionId, variables, originalTable)
 
-	//original table with removed columns
+	const commandBar = useCommandBar(
+		definitionOptions,
+		selectedDefinitionId,
+		causalFactors,
+		pageType,
+		defineQuestionData,
+	)
+
 	return (
 		//What if no visible columns?
 		//What if no define question?
@@ -59,36 +79,49 @@ export const ModelVariablesPage: React.FC = memo(function ModelVariablesPage() {
 					<Container>
 						<Header />
 						<NormalContainer>
-							{/* List of definitions for the user to choose */}
-							{/* list of definitions: definitionOptions */}
-							{/* selectedDefinition={definitionSelected} */}
-							{/* See step definitions (need to have new config) */}
-							{/* with options: */}
-							{/* see table */}
-							{/* TODO: this dropdown is ugly */}
-							<Dropdown
-								selectedKey={selectedDefinition}
-								options={definitionDropdown}
-								onChange={(_, value) => selectDefinition(value?.key as string)}
-							/>
+							<VariablesContainer>
+								<NameContainer>
+									{isEditingDefinition && (
+										<RenameCallout
+											onSend={onSave}
+											editedName={definitionName}
+											onChange={onChange}
+											targetId="dropdownDefinition"
+										/>
+									)}
+									<Dropdown
+										id="dropdownDefinition"
+										selectedKey={selectedDefinitionId}
+										options={definitionDropdown}
+										onChange={(_, value) =>
+											setSelectedDefinitionId(value?.key as string)
+										}
+									/>
+								</NameContainer>
+
+								<ModelVariableCommands
+									selectedDefinition={selectedDefinitionId}
+									editDefinition={toggleEditDefinition}
+								/>
+							</VariablesContainer>
 							{originalTable && (
 								<ColumnTransformModal
 									table={originalTable}
 									isOpen={isModalOpen}
 									onDismiss={hideModal}
 									onTransformRequested={step =>
-										handleTransformRequested(step, selectedDefinition)
+										handleTransformRequested(step, selectedDefinitionId)
 									}
 								/>
 							)}
 
 							<StepsTitle>Definition steps</StepsTitle>
 							<List>
-								{!variables.find(x => x.name === selectedDefinition) && (
+								{!variables.find(x => x.id === selectedDefinitionId) && (
 									<EmptySteps />
 								)}
 								{variables
-									.find(x => x.name === selectedDefinition)
+									.find(x => x.id === selectedDefinitionId)
 									?.steps.map((step: Step, index: number) => {
 										return <StepComponent key={index} step={step} />
 									})}
@@ -195,53 +228,24 @@ const Container = styled.div`
 	height: 100%;
 `
 
-const DefinitionListContainer = styled.div`
-	width: 45%;
-`
 const StepsTitle = styled.h4`
 	margin-bottom: unset;
 `
 
-const DefinitionTitle = styled.h4`
-	margin: unset;
-`
-
 const NormalContainer = styled.div``
-
-const TitleContainer = styled.div`
-	margin: 8px 0px;
-	display: flex;
-	justify-content: space-between;
-	width: 100%;
-`
 
 const DetailsListContainer = styled.div`
 	height: 60vh;
 `
 
-const CommandCard = styled.div`
-	text-align: center;
-	padding: 2px 6px 6px 6px;
-	/* background-color: rgb(241, 241, 241); */
-	margin: 8px 8px 8px 0px;
-	display: flex;
-	flex-direction: column;
-	box-shadow: 0px 4px 4px rgb(0 0 0 / 25%);
-	border: 1px solid #c5c5c5;
-`
-
-const CommandCardTitle = styled.h3`
-	text-align: center;
-	margin: unset;
-	color: ${({ theme }) => theme.application().accent().hex()};
-`
-const CommandCardDetails = styled.span``
-
 const List = styled.div`
 	display: flex;
 `
 
-const Buttons = styled.div`
+const VariablesContainer = styled.div`
 	display: flex;
-	justify-content: space-evenly;
+`
+
+const NameContainer = styled.div`
+	flex: 1;
 `

@@ -3,14 +3,9 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { CausalityLevel } from './CausalityLevel'
+import { ElementDefinition } from '../experiments'
 import { ExposureAndOutcomeCauses } from './Causes'
 
-export interface CausalFactor {
-	id: string
-	description?: string
-	variable: string
+export interface CausalFactor extends ElementDefinition {
 	causes?: ExposureAndOutcomeCauses
-	column?: string
-	level?: CausalityLevel
 }

@@ -26,7 +26,7 @@ export function createDefaultTable(
 ): ColumnTable {
 	return fromCSV(content, { delimiter }).derive(
 		{
-			rowId: op.row_number(),
+			index: op.row_number(),
 		},
 		{ before: all() },
 	)

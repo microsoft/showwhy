@@ -10,24 +10,7 @@ import {
 	SubjectIdentifierArgs,
 	SubjectIdentifierDataArgs,
 } from './interfaces'
-import { FactorsOrDefinitions } from './types'
 import { PageType, DataTable, CausalFactor, ColumnRelevance } from '~types'
-
-export function useDefinitionOptions({
-	defineQuestionData,
-	type,
-	causalFactors,
-}: Omit<
-	SelectedArgs,
-	'definitionOptions' | 'selectedDefinition'
->): FactorsOrDefinitions {
-	return useMemo((): FactorsOrDefinitions => {
-		if (type === PageType.Control) {
-			return causalFactors
-		}
-		return defineQuestionData?.definition || []
-	}, [defineQuestionData, causalFactors, type])
-}
 
 export function useSelected({
 	defineQuestionData,

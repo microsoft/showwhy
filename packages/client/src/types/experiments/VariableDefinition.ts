@@ -12,6 +12,6 @@ export interface VariableDefinition {
 }
 
 export interface VariableDefinition1 {
-	name: string
+	id: string
 	steps: Step[]
 }

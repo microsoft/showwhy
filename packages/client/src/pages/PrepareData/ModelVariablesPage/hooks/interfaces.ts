@@ -17,7 +17,7 @@ export interface SelectedArgs {
 	defineQuestionData: Element
 	definitionOptions: FactorsOrDefinitions
 	selectedDefinition: string
-	type: string
+	pageType: string
 	causalFactors: CausalFactor[]
 }
 
