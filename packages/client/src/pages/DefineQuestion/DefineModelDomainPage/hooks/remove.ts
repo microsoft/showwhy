@@ -4,11 +4,10 @@
  */
 
 import { useCallback } from 'react'
-import { SetDefinitions } from './types'
-import { ElementDefinition } from '~types'
+import { ElementDefinition, Setter } from '~types'
 
 export function useRemoveDefinition(
-	setDefinitions: SetDefinitions,
+	setDefinitions: Setter<ElementDefinition[]>,
 	saveDefinitions: (definitions: ElementDefinition[]) => void,
 	definitions?: ElementDefinition[],
 ): (definition: ElementDefinition) => void {
