@@ -276,8 +276,8 @@ export const DeriveComponent: React.FC<{
 		type,
 	])
 
-	const addFilterValues = (event, option) => {
-		const field = event.target.title
+	const addFilterValues = (event?: any, option?: any) => {
+		const field = event?.target.title
 		const val = option?.key || option.text || option
 		const obj = {
 			...actualFilterValue,
