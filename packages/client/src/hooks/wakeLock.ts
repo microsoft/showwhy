@@ -5,6 +5,16 @@
 
 import { useEffect } from 'react'
 
+interface Lock {
+	release(): Promise<void>
+}
+
+interface WakeLock {
+	request(name: string): Promise<Lock>
+}
+
+const globalWakeLock: WakeLock = (navigator as any)['wakeLock']
+
 export function useWakeLock(): void {
 	return useEffect(() => {
 		/**
@@ -13,10 +23,10 @@ export function useWakeLock(): void {
 		 */
 		if (!('wakeLock' in navigator)) return
 
-		let wakeLock
+		let wakeLock: Lock | null = null
 		const requestWakeLock = async () => {
 			try {
-				wakeLock = await navigator['wakeLock'].request('screen')
+				wakeLock = await globalWakeLock?.request('screen')
 				/**
 				 * Release event listener, gets executed when the page/tab is changed or minimized
 				 */
