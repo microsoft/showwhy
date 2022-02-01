@@ -132,14 +132,14 @@ export function useAlternativeModelsTestable(
 	}, [causalFactors, excludedFactors, causalLevel, shouldUseVariable])
 }
 
-export function useAddOrEditFactor(): (factor, factors?) => void {
+export function useAddOrEditFactor(): (factor: CausalFactor) => void {
 	return useAddOrEditFactorTestable(useCausalFactors(), useSetCausalFactors())
 }
 
 export function useAddOrEditFactorTestable(
 	causalFactors: CausalFactor[],
 	setCausalFactors: SetterOrUpdater<CausalFactor[]>,
-): (factor, factors?) => void {
+): (factor: CausalFactor) => void {
 	return useCallback(
 		(factor: CausalFactor, factors = causalFactors) => {
 			const exists = factors.find(f => f.id === factor?.id) || {}

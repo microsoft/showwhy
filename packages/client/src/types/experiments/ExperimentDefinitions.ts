@@ -10,4 +10,5 @@ export interface Definition {
 	exposure?: VariableDefinition[]
 	outcome?: VariableDefinition[]
 	control?: VariableDefinition[]
+	[key: string]: VariableDefinition[] | undefined
 }

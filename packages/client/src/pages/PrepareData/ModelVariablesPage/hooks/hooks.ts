@@ -65,7 +65,7 @@ export function useBusinessLogic(): {
 	const [isDeriveVisible, { toggle: onToggleDeriveVisible }] = useBoolean(false)
 
 	const defineQuestion = useDefineQuestion()
-	const defineQuestionData = defineQuestion[pageType] as Element
+	const defineQuestionData = (defineQuestion as any)[pageType] as Element
 	const [editingClause, setEditingClause] = useState<FilterObject>()
 	const [tableIdentifier, setTableIdentifier] = useState<DataTable | undefined>(
 		allOriginalTables[0],
@@ -170,9 +170,13 @@ export function useBusinessLogic(): {
 	}
 }
 
-function useTargetOnCausalFactor(selected, causalFactors, saveCausalFactor) {
+function useTargetOnCausalFactor(
+	selected: string,
+	causalFactors: CausalFactor[],
+	saveCausalFactor: (factor: CausalFactor) => void,
+): (val: { text: string }) => void {
 	return useCallback(
-		(val: any) => {
+		(val: { text: string }) => {
 			const selectedCausal = {
 				...causalFactors.find(x => x.variable === selected),
 			} as CausalFactor
@@ -188,11 +192,11 @@ function useTargetOnCausalFactor(selected, causalFactors, saveCausalFactor) {
 }
 
 function useSetTargetVariable(
-	selected,
-	saveDefinition,
-	type,
-	defineQuestionData,
-	setTargetOnCausalFactor,
+	selected: string,
+	saveDefinition: (def: CausalFactor) => void,
+	type: PageType,
+	defineQuestionData: Element,
+	setTargetOnCausalFactor: (val: { text: string }) => void,
 ) {
 	return useCallback(
 		(_evt: unknown, value: any) => {
@@ -207,7 +211,7 @@ function useSetTargetVariable(
 				newDefinition.column = value.text
 			}
 
-			saveDefinition(newDefinition)
+			saveDefinition(newDefinition as CausalFactor)
 		},
 		[
 			selected,
