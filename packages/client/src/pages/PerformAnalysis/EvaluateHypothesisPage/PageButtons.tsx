@@ -7,12 +7,12 @@ import { memo } from 'react'
 import styled from 'styled-components'
 import { ErrorMessage } from '~components/ErrorMessage'
 import { ContainerFlexColumn, ContainerFlexRow } from '~styles'
-import { RunHistory, SignificanceTest } from '~types'
+import { RunHistory, SignificanceTest, Maybe } from '~types'
 
 export const PageButtons: React.FC<{
 	activeTaskIds: string[]
-	defaultRun: RunHistory | undefined
-	significanceTestsResult: SignificanceTest | undefined
+	defaultRun: Maybe<RunHistory>
+	significanceTestsResult: Maybe<SignificanceTest>
 	significanceFailed: boolean
 	runSignificance: (taskIds: string[]) => void
 }> = memo(function PageButtons({
