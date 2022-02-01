@@ -7,7 +7,7 @@ import { IComboBoxOption } from '@fluentui/react'
 import { memo } from 'react'
 import styled from 'styled-components'
 import { useFactorsDefinitionForm } from './hooks'
-import { PageType, CausalFactor, Experiment } from '~types'
+import { PageType, CausalFactor, Experiment, OptionalId } from '~types'
 
 interface FactorsDefinitionFormProps {
 	factor?: CausalFactor
@@ -15,7 +15,7 @@ interface FactorsDefinitionFormProps {
 	defineQuestion?: Experiment
 	pageType: PageType
 	variables?: IComboBoxOption[]
-	onAdd?: (factor: Omit<CausalFactor, 'id'>) => void
+	onAdd?: (factor: OptionalId<CausalFactor>) => void
 	onChange?: (f: Partial<CausalFactor>) => void
 }
 

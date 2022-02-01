@@ -7,7 +7,7 @@ import { memo, useCallback, useMemo } from 'react'
 import styled from 'styled-components'
 import { useRemoveColumn } from '~hooks'
 import { useModelVariables, useSetModelVariables } from '~state'
-import { FilterObject, TableDerivationType } from '~types'
+import { FilterObject, TableDerivationType, Definition } from '~types'
 
 interface DefinitionStepsProps {
 	fileId: string
@@ -25,8 +25,8 @@ export const DefinitionSteps: React.FC<DefinitionStepsProps> = memo(
 			let newValues = [] as FilterObject[]
 			if (modelVariables && modelVariables[type]) {
 				newValues =
-					modelVariables[type].find(v => v.name === selectedDefinition)
-						?.filters || []
+					modelVariables[type]?.find(v => v.name === selectedDefinition)
+						?.filters ?? []
 			}
 			return newValues
 		}, [modelVariables, type, selectedDefinition])
@@ -48,7 +48,8 @@ export const DefinitionSteps: React.FC<DefinitionStepsProps> = memo(
 				const definition = {
 					...existing.find(x => x.name === selectedDefinition),
 				}
-				definition.filters = definition.filters.filter(x => x.id !== filter.id)
+				definition.filters =
+					definition.filters?.filter(x => x.id !== filter.id) ?? []
 				const modelVariable = {
 					...modelVariables,
 					[type]: [
@@ -57,7 +58,7 @@ export const DefinitionSteps: React.FC<DefinitionStepsProps> = memo(
 					],
 				}
 
-				setModelVariables(modelVariable)
+				setModelVariables(modelVariable as Definition)
 				removeColumn(filter.columnName as string)
 			},
 			[
