@@ -4,11 +4,12 @@
  */
 
 import { VariableDefinition } from './VariableDefinition'
+import { Maybe } from '../primitives'
 
 export interface Definition {
 	population?: VariableDefinition[]
 	exposure?: VariableDefinition[]
 	outcome?: VariableDefinition[]
 	control?: VariableDefinition[]
-	[key: string]: VariableDefinition[] | undefined
+	[key: string]: Maybe<VariableDefinition[]>
 }

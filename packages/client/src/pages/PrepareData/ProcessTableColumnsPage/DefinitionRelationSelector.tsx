@@ -14,8 +14,8 @@ import { ColumnRelation, ColumnRelevance, Maybe } from '~types'
 
 type DefinitionChangeHandler = (changedRelation: ColumnRelation[]) => void
 type ToggleSelectHandler = (
-	evt?: { preventDefault: () => void } | undefined,
-	value?: undefined | IContextualMenuItem,
+	evt?: Maybe<{ preventDefault: () => void }>,
+	value?: Maybe<IContextualMenuItem>,
 ) => void
 
 interface RelevanceOption {
@@ -60,8 +60,8 @@ function useToggleSelect(
 ): ToggleSelectHandler {
 	return useCallback(
 		(
-			evt?: { preventDefault: () => void } | undefined,
-			value?: undefined | IContextualMenuItem,
+			evt?: Maybe<{ preventDefault: () => void }>,
+			value?: Maybe<IContextualMenuItem>,
 		) => {
 			evt?.preventDefault()
 			if (value) {

@@ -17,7 +17,7 @@ import {
 } from 'recoil'
 import { Definition, ProjectFile, VariableDefinition, Maybe } from '~types'
 
-const modelVariablesState = atomFamily<Definition | undefined, Maybe<string>>({
+const modelVariablesState = atomFamily<Maybe<Definition>, Maybe<string>>({
 	key: 'model-variables',
 	default: {},
 })
@@ -35,8 +35,8 @@ export const useSetModelVariableSelector = selectorFamily({
 			get(modelVariablesState(key)),
 	set:
 		(key: Maybe<string>) =>
-		({ set }, newValue: Definition | undefined | DefaultValue) => {
-			set<Definition | undefined>(modelVariablesState(key), newValue)
+		({ set }, newValue: Maybe<Definition | DefaultValue>) => {
+			set<Maybe<Definition>>(modelVariablesState(key), newValue)
 			set(keys, prev => {
 				if (key && !prev.includes(key)) {
 					return [...prev, key]
@@ -48,11 +48,11 @@ export const useSetModelVariableSelector = selectorFamily({
 
 export function useSetModelVariables(
 	key: Maybe<string>,
-): SetterOrUpdater<Definition | undefined> {
+): SetterOrUpdater<Maybe<Definition>> {
 	return useSetRecoilState(useSetModelVariableSelector(key))
 }
 
-export function useModelVariables(key: Maybe<string>): Definition | undefined {
+export function useModelVariables(key: Maybe<string>): Maybe<Definition> {
 	return useRecoilValue(useSetModelVariableSelector(key))
 }
 
