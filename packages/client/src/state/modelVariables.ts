@@ -79,7 +79,7 @@ export function useAllModelVariables(
 	const obj = projectFiles.map(x => {
 		return { id: x.id || '', type }
 	})
-	return useRecoilValue(allModelVariables(obj))
+	return useRecoilValue(allModelVariables(obj)) as VariableDefinition[][]
 }
 
 export function useResetModelVariables(): Resetter {

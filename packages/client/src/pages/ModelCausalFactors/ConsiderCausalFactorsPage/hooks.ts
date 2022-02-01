@@ -8,7 +8,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useAddOrEditFactor, usePageType, useVariableOptions } from '~hooks'
 import { useCausalFactors, useSetCausalFactors } from '~state'
-import { PageType, CausalFactor, FlatCausalFactor } from '~types'
+import { PageType, CausalFactor, FlatCausalFactor, OptionalId } from '~types'
 import { noop } from '~utils'
 
 interface PathData {
@@ -23,7 +23,7 @@ export function useBusinessLogic(): {
 	page: string | undefined
 	pageType: PageType
 	variables: IComboBoxOption[]
-	addFactor: (factor: Omit<CausalFactor, 'id'>) => void
+	addFactor: (factor: OptionalId<CausalFactor>) => void
 	editFactor: (factor: CausalFactor) => void
 	deleteFactor: (factor: CausalFactor) => void
 	setFactor: (factor: CausalFactor | undefined) => void
@@ -86,10 +86,10 @@ function useAddFactor(
 	isEditing: boolean,
 	setIsEditing: (value: boolean) => void,
 	setFactor: (factor: CausalFactor | undefined) => void,
-): (factor: Omit<CausalFactor, 'id'>) => void {
+): (factor: OptionalId<CausalFactor>) => void {
 	const addOrEditFactor = useAddOrEditFactor()
 	return useCallback(
-		(newFactor: Omit<CausalFactor, 'id'>) => {
+		(newFactor: OptionalId<CausalFactor>) => {
 			addOrEditFactor(newFactor)
 			isEditing && setIsEditing(false)
 			setFactor(undefined)

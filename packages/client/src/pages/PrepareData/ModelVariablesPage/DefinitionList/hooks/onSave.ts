@@ -102,7 +102,7 @@ export function useOnSave({
 			const definitionObj = {
 				...modelVariables,
 				[type]: [...existing, ...newVariables],
-			}
+			} as Definition
 
 			setModelVariables(definitionObj)
 			saveDefinition(newDefinition)

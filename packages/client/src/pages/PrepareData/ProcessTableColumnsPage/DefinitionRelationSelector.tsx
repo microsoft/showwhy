@@ -6,16 +6,27 @@ import {
 	ContextualMenu,
 	DefaultButton,
 	IContextualMenuProps,
+	IContextualMenuItem,
 } from '@fluentui/react'
 import { memo, useCallback } from 'react'
 import styled from 'styled-components'
 import { ColumnRelation, ColumnRelevance } from '~types'
 
+type DefinitionChangeHandler = (changedRelation: ColumnRelation[]) => void
+type ToggleSelectHandler = (
+	evt?: { preventDefault: () => void } | undefined,
+	value?: undefined | IContextualMenuItem,
+) => void
+
+interface RelevanceOption {
+	name: string
+	value: ColumnRelevance
+}
 interface DefinitionRelationSelectorProps {
 	relation: ColumnRelation[]
 	relevance: ColumnRelevance | undefined
-	relevanceOption: { name: string; value: ColumnRelevance }
-	onDefinitionChange: (changedRelation: ColumnRelation[]) => void
+	relevanceOption: RelevanceOption
+	onDefinitionChange: DefinitionChangeHandler
 }
 
 export const DefinitionRelationSelector: React.FC<DefinitionRelationSelectorProps> =
@@ -26,9 +37,7 @@ export const DefinitionRelationSelector: React.FC<DefinitionRelationSelectorProp
 		onDefinitionChange,
 	}) {
 		const buttonTitle = useButton(relation, relevanceOption)
-
 		const onToggleSelect = useToggleSelect(relation, onDefinitionChange)
-
 		const DefinitionTypes = useDefinitionTypes(relation, onToggleSelect)
 
 		const menuProps: IContextualMenuProps = {
@@ -47,24 +56,35 @@ export const DefinitionRelationSelector: React.FC<DefinitionRelationSelectorProp
 		)
 	})
 
-const useToggleSelect = (relation, onDefinitionChange) => {
+function useToggleSelect(
+	relation: ColumnRelation[],
+	onDefinitionChange: DefinitionChangeHandler,
+): ToggleSelectHandler {
 	return useCallback(
-		(evt, value) => {
-			evt.preventDefault()
-			const newValue = [
-				...relation.filter(relevanceOption => relevanceOption !== value.key),
-			] as ColumnRelation[]
+		(
+			evt?: { preventDefault: () => void } | undefined,
+			value?: undefined | IContextualMenuItem,
+		) => {
+			evt?.preventDefault()
+			if (value) {
+				const newValue = [
+					...relation.filter(relevanceOption => relevanceOption !== value.key),
+				] as ColumnRelation[]
 
-			if (!relation.includes(value.key)) {
-				newValue.push(value.key)
+				if (!relation.includes(value.key as ColumnRelation)) {
+					newValue.push(value.key as ColumnRelation)
+				}
+				onDefinitionChange(newValue)
 			}
-			onDefinitionChange(newValue)
 		},
 		[relation, onDefinitionChange],
 	)
 }
 
-const useButton = (relation, relevanceOption) => {
+function useButton(
+	relation: ColumnRelation[],
+	relevanceOption: RelevanceOption,
+) {
 	return useCallback(() => {
 		return relation.length
 			? `Causally relevant to: ${Options.filter(o => relation.includes(o.key))
@@ -74,7 +94,10 @@ const useButton = (relation, relevanceOption) => {
 	}, [relation, relevanceOption.name])
 }
 
-const useDefinitionTypes = (relation, onToggleSelect) => {
+function useDefinitionTypes(
+	relation: ColumnRelation[],
+	onToggleSelect: ToggleSelectHandler,
+) {
 	return Options.map(opt => {
 		return {
 			key: opt.key.toString(),

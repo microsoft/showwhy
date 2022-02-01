@@ -31,6 +31,8 @@ import {
 	CausalFactor,
 	FilterObject,
 	TableDerivationType,
+	Definition,
+	VariableDefinition,
 } from '~types'
 
 export interface DeriveProps {
@@ -72,8 +74,9 @@ export const DeriveComponent: React.FC<DeriveProps> = memo(
 			(name: string): boolean => {
 				const existing = (modelVariables && modelVariables[type]) || []
 				return (
-					!!existing &&
-					existing.flatMap(x => x.filters)?.find(f => f?.columnName === name)
+					existing
+						?.flatMap(x => x.filters)
+						?.some(f => f?.columnName === name) || false
 				)
 			},
 			[modelVariables, type],
@@ -82,7 +85,7 @@ export const DeriveComponent: React.FC<DeriveProps> = memo(
 		const definitionExists = useCallback(
 			(name: string): boolean => {
 				const existing = (modelVariables && modelVariables[type]) || []
-				return !!existing && existing.find(x => x.name === name)
+				return existing?.some(x => x.name === name) ?? false
 			},
 			[modelVariables, type],
 		)
@@ -190,7 +193,7 @@ export const DeriveComponent: React.FC<DeriveProps> = memo(
 					...(existingVariables.find(x => x.name === selectedDefinition) || {
 						name: selectedDefinition,
 					}),
-				}
+				} as VariableDefinition
 
 				existingDefinition.filters = [
 					...(existingDefinition?.filters?.filter(
@@ -204,7 +207,7 @@ export const DeriveComponent: React.FC<DeriveProps> = memo(
 						...existingVariables.filter(x => x.name !== selectedDefinition),
 						existingDefinition,
 					],
-				}
+				} as Definition
 
 				onUpdate(null, { text: actualFilterValue?.columnName })
 				setModelVariables(definitionObj)
@@ -256,7 +259,9 @@ export const DeriveComponent: React.FC<DeriveProps> = memo(
 					modelVariables[type]
 						?.flatMap(x => x.filters)
 						.find(x => x.id === actualFilterValue?.id)
-				removeColumn(oldColumnName.columnName)
+				if (oldColumnName?.columnName != null) {
+					removeColumn(oldColumnName.columnName as string)
+				}
 			}
 
 			if (
