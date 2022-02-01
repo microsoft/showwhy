@@ -12,13 +12,19 @@ import {
 	useDeleteCausalFactorTestable as useDeleteCausalFactor,
 	useExcludedFactorsTestable as useExcludedFactors,
 } from '../causalFactors'
-import { BeliefDegree, CausalModelLevel } from '~types'
+import {
+	BeliefDegree,
+	CausalModelLevel,
+	CausalFactor,
+	CausalityLevel,
+} from '~types'
 
-const causalFactors = [
+const causalFactors: CausalFactor[] = [
 	{
 		id: v4(),
 		description: '',
 		variable: 'Population',
+		level: CausalityLevel.Primary,
 		causes: {
 			causeOutcome: {
 				causes: true,
@@ -35,6 +41,7 @@ const causalFactors = [
 	{
 		id: v4(),
 		description: '',
+		level: CausalityLevel.Primary,
 		variable: 'Min_Pressure',
 		causes: {
 			causeOutcome: {
@@ -47,6 +54,8 @@ const causalFactors = [
 	{
 		id: v4(),
 		description: '',
+
+		level: CausalityLevel.Primary,
 		variable: 'Max_Pressure',
 		causes: {
 			causeOutcome: {
@@ -60,6 +69,7 @@ const causalFactors = [
 		id: v4(),
 		description: '',
 		variable: 'Pressure',
+		level: CausalityLevel.Primary,
 		causes: {
 			causeExposure: {
 				causes: true,
@@ -74,10 +84,12 @@ const causalFactors = [
 		},
 	},
 ]
-const newItem = {
+const newItem: CausalFactor = {
 	id: v4(),
 	description: '',
 	variable: 'Category',
+
+	level: CausalityLevel.Primary,
 	causes: {
 		causeOutcome: {
 			causes: true,
