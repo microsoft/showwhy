@@ -33,18 +33,19 @@ import {
 	SignificanceTest,
 	Specification,
 	RefutationType,
+	Maybe,
 } from '~types'
 
 export function useBusinessLogic(): {
 	alternativeModels: AlternativeModels
-	defaultRun: RunHistory | undefined
+	defaultRun: Maybe<RunHistory>
 	causalEffects: ReturnType<typeof useCausalEffects>
 	specificationData: Specification[]
 	defaultDataset: DefaultDatasetResult | null
 	refutationLength: number
 	defineQuestion: Experiment
 	activeValues: number[]
-	significanceTestsResult: SignificanceTest | undefined
+	significanceTestsResult: Maybe<SignificanceTest>
 	significanceFailed: boolean
 	activeTaskIds: string[]
 	refutationType: RefutationType
