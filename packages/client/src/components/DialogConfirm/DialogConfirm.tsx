@@ -4,8 +4,8 @@
  */
 import { DefaultButton, PrimaryButton } from '@fluentui/react'
 import { Dialog, DialogType, DialogFooter } from '@fluentui/react/lib/Dialog'
-import { Maybe } from '~types'
 import { memo, useMemo } from 'react'
+import { Maybe } from '~types'
 
 export const DialogConfirm: React.FC<{
 	toggle: () => void
