@@ -218,7 +218,7 @@ function useRefutationKeys(
 			)
 
 			const refutationRun = keys.filter(
-				ref => !isNaN(selectedSpecification[ref]),
+				ref => !isNaN((selectedSpecification as any)[ref]),
 			)
 
 			return refutationRun
@@ -235,7 +235,7 @@ function useFailedRefutations(
 		if (selectedSpecification) {
 			return (
 				refutationKeys.filter(
-					actualKey => selectedSpecification[actualKey] === 0,
+					actualKey => (selectedSpecification as any)[actualKey] === 0,
 				) || []
 			)
 		}
