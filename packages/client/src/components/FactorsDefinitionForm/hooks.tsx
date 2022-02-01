@@ -12,7 +12,13 @@ import {
 	useHasLevel,
 	useVariablePicker,
 } from './variables'
-import { PageType, Experiment, CausalFactor, CausalityLevel } from '~types'
+import {
+	PageType,
+	Experiment,
+	CausalFactor,
+	CausalityLevel,
+	OptionalId,
+} from '~types'
 
 export function useFactorsDefinitionForm({
 	defineQuestion,
@@ -24,7 +30,7 @@ export function useFactorsDefinitionForm({
 }: {
 	pageType: PageType
 	variables?: IComboBoxOption[]
-	onAdd?: (factor: Omit<CausalFactor, 'id'>) => void
+	onAdd?: (factor: OptionalId<CausalFactor>) => void
 	defineQuestion?: Experiment
 	factor?: CausalFactor
 	onChange?: (f: Partial<CausalFactor>) => void
