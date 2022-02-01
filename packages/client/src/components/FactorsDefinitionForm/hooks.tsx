@@ -19,10 +19,11 @@ import {
 	CausalityLevel,
 	Handler0,
 	Setter,
+	OptionalId,
 } from '~types'
 import { noop } from '~utils'
 
-type OnAddHandler = (factor: Omit<CausalFactor, 'id'>) => void
+type OnAddHandler = (factor: OptionalId<CausalFactor>) => void
 type OnChangeHandler = (f: Partial<CausalFactor>) => void
 
 export function useFactorsDefinitionForm({

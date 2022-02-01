@@ -6,9 +6,10 @@ import { FontIcon } from '@fluentui/react'
 import { memo } from 'react'
 import styled from 'styled-components'
 import { CardComponent } from '~components/CardComponent'
+import { RefutationChoice } from '~types'
 
 interface RefutationTestsProps {
-	options
+	options: RefutationChoice[]
 }
 
 export const RefutationTests: React.FC<RefutationTestsProps> = memo(
