@@ -29,12 +29,12 @@ export function useBusinessLogic(): {
 	files: ProjectFile[]
 	columns: IColumn[]
 	selectedFile: Maybe<ProjectFile>
-	selectedTable: DataTable | undefined
+	selectedTable: Maybe<DataTable>
 	selectedColumn: Maybe<string>
 	onSelectColumn: (evt: any, column?: IColumn) => void
 	tableCommands: ReturnType<typeof useTableCommands>
 	relation: ColumnRelation[]
-	relevance: ColumnRelevance | undefined
+	relevance: Maybe<ColumnRelevance>
 	isSubjectIdentifierAvailable: boolean
 	onRelevanceChange: ReturnType<typeof useOnRelevanceChange>
 	onDefinitionChange: ReturnType<typeof useOnDefinitionChange>
@@ -45,7 +45,7 @@ export function useBusinessLogic(): {
 	const setSelectedFile = useSetSelectedFile()
 	const originalTables = useOriginalTables()
 	const [selectedColumn, setSelectedColumn] = useState<string>()
-	const [relevance, setRelevance] = useState<ColumnRelevance | undefined>()
+	const [relevance, setRelevance] = useState<Maybe<ColumnRelevance>>()
 	const tableColumns = useTableColumns(selectedFile?.id)
 	const setTableColumns = useSetTableColumns(selectedFile?.id)
 	const restoreColumn = useRestoreColumn(selectedFile?.id as string)
@@ -182,15 +182,12 @@ export function useOnRelevanceChange({
 }: {
 	setTableColumns: Setter<TableColumn[] | undefined>
 	tableColumns?: TableColumn[]
-	setRelevance: Setter<ColumnRelevance | undefined>
+	setRelevance: Setter<Maybe<ColumnRelevance>>
 	relevance?: ColumnRelevance
 	onRemoveColumn: (columnName?: string) => void
-}): (
-	changedRelevance: ColumnRelevance | undefined,
-	columnName?: string,
-) => void {
+}): (changedRelevance: Maybe<ColumnRelevance>, columnName?: string) => void {
 	return useCallback(
-		(changedRelevance: ColumnRelevance | undefined, columnName?: string) => {
+		(changedRelevance: Maybe<ColumnRelevance>, columnName?: string) => {
 			if (relevance === changedRelevance) {
 				changedRelevance = undefined
 			}

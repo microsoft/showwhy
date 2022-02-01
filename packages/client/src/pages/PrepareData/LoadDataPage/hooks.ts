@@ -40,10 +40,7 @@ export function useBusinessLogic(): {
 	toggleShowConfirm: () => void
 	toggleLoadedCorrectly: () => void
 	handleDismissError: () => void
-	handleDelimiterChange: (
-		e: unknown,
-		option: IDropdownOption | undefined,
-	) => void
+	handleDelimiterChange: (e: unknown, option: Maybe<IDropdownOption>) => void
 	handleOnDropAccepted: (f: FileCollection) => void
 	onConfirmDelete: () => void
 	onRenameTable: (alias: string) => void
@@ -93,7 +90,7 @@ export function useBusinessLogic(): {
 	)
 
 	const handleDelimiterChange = useCallback(
-		(e, option: IDropdownOption | undefined): void => {
+		(e, option: Maybe<IDropdownOption>): void => {
 			const delimiter = `${option?.key}`
 			if (selectedFile && selectedFile.id) {
 				const table = createDefaultTable(selectedFile.content, delimiter)

@@ -39,8 +39,8 @@ import {
 export const DeriveComponent: React.FC<{
 	selectedDefinition: string
 	fileId: string
-	originalTable: ColumnTable | undefined
-	editing: FilterObject | undefined
+	originalTable: Maybe<ColumnTable>
+	editing: Maybe<FilterObject>
 	onClose: () => void
 	onReset: () => void
 	onSave: (definition: string) => void
