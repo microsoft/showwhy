@@ -9,6 +9,7 @@ import { useHistory } from 'react-router-dom'
 import { useAddOrEditFactor, usePageType, useVariableOptions } from '~hooks'
 import { useCausalFactors, useSetCausalFactors } from '~state'
 import { PageType, CausalFactor, FlatCausalFactor, OptionalId } from '~types'
+import { noop } from '~utils'
 
 interface PathData {
 	path: string | undefined
@@ -122,14 +123,7 @@ function useFactorsNavigation(): [() => void, PathData] {
 		setHistoryState(undefined)
 	}, [factorsPathData, setHistoryState, history])
 
-	return [
-		factorsPathData?.path
-			? goToFactorsPage
-			: () => {
-					/*nothing*/
-			  },
-		factorsPathData,
-	]
+	return [factorsPathData?.path ? goToFactorsPage : noop, factorsPathData]
 }
 
 function useFactorsPathData(historyState: string | undefined): PathData {

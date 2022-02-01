@@ -6,12 +6,12 @@ import { DefaultButton, Icon, PrimaryButton } from '@fluentui/react'
 import { memo } from 'react'
 
 import styled from 'styled-components'
+import { useGoToPage } from '~hooks'
 import { Step, StepStatus } from '~types'
 
 interface StepControlsProps {
 	step?: Step
 	stepStatus?: StepStatus
-	goToPage: (url: string) => void
 	toggleStatus: () => void
 	previousUrl: string
 	nextUrl: string
@@ -21,11 +21,12 @@ export const StepControls: React.FC<StepControlsProps> = memo(
 	function StepControls({
 		step,
 		stepStatus,
-		goToPage,
 		toggleStatus,
 		previousUrl,
 		nextUrl,
 	}) {
+		const handleNavigatePrev = useGoToPage(previousUrl)
+		const handleNavigateNext = useGoToPage(nextUrl)
 		return (
 			<Container>
 				<MarkDoneButton
@@ -36,13 +37,10 @@ export const StepControls: React.FC<StepControlsProps> = memo(
 					<Icon iconName="CheckMark"></Icon>Mark as
 					{stepStatus === StepStatus.Done ? ' to do' : ' done'}
 				</MarkDoneButton>
-				<PreviousButton
-					onClick={() => goToPage(previousUrl)}
-					disabled={!previousUrl}
-				>
+				<PreviousButton onClick={handleNavigatePrev} disabled={!previousUrl}>
 					Previous step
 				</PreviousButton>
-				<NextButton onClick={() => goToPage(nextUrl)} disabled={!nextUrl}>
+				<NextButton onClick={handleNavigateNext} disabled={!nextUrl}>
 					Next step
 				</NextButton>
 			</Container>

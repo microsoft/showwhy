@@ -3,8 +3,9 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { DefaultButton, Icon } from '@fluentui/react'
-import { memo } from 'react'
+import { memo, useCallback } from 'react'
 import styled from 'styled-components'
+import { Handler0 } from '~types'
 
 interface SelectableCardProps {
 	onClick: () => void
@@ -15,8 +16,9 @@ interface SelectableCardProps {
 
 export const SelectableCard: React.FC<SelectableCardProps> = memo(
 	function CardComponent({ title, onClick, isChecked, icon }) {
+		const handleOnClick = useOnClickHandler(isChecked, onClick)
 		return (
-			<Card checked={isChecked} onClick={() => !isChecked && onClick()}>
+			<Card checked={isChecked} onClick={handleOnClick}>
 				{icon && <ButtonIcon iconName={icon}></ButtonIcon>}
 				{title || null}
 			</Card>
@@ -39,3 +41,7 @@ const Card = styled(DefaultButton)`
 const ButtonIcon = styled(Icon)`
 	margin-right: 8px;
 `
+
+function useOnClickHandler(isChecked: boolean | undefined, onClick: Handler0) {
+	return useCallback(() => !isChecked && onClick(), [isChecked, onClick])
+}

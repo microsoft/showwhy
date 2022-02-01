@@ -31,7 +31,7 @@ export const FactorsDefinitionForm: React.FC<FactorsDefinitionFormProps> = memo(
 	}) {
 		const { level, description, variable } = useFactorsDefinitionForm({
 			factor,
-			defineQuestion,
+			experiment: defineQuestion,
 			onChange,
 			onAdd,
 			pageType,
