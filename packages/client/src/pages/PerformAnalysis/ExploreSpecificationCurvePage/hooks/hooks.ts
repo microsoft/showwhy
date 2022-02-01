@@ -135,10 +135,11 @@ export function useUniqueFeatures(data: Specification[]): string[] {
 		}>()
 		data.forEach(row => {
 			columns.forEach(col => {
+				const val = (row as any)[col]
 				unique.add({
 					column: col,
-					value: `${row[col]}`,
-					sort: `${col} - ${row[col]}`,
+					value: `${val}`,
+					sort: `${col} - ${val}`,
 				})
 			})
 		})

@@ -17,7 +17,7 @@ export function useSaveDefinitions(
 			const question: Experiment = {
 				...defineQuestion,
 				[type]: {
-					...defineQuestion[type],
+					...(defineQuestion as any)[type],
 					definition: definitions,
 				},
 			}

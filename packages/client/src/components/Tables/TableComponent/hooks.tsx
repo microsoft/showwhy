@@ -87,10 +87,10 @@ export function useTableComponent(
 			} else {
 				props.forEach(prop => {
 					obj[prop] =
-						typeof item[prop] === 'boolean' ? (
-							<Checkbox checked={item[prop]} />
+						typeof (item as any)[prop] === 'boolean' ? (
+							<Checkbox checked={(item as any)[prop]} />
 						) : (
-							item[prop]
+							(item as any)[prop]
 						)
 				})
 				obj.actions = {

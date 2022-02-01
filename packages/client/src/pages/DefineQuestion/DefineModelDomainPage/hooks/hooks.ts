@@ -31,17 +31,17 @@ export function useBusinessLogic(): {
 	const variables = useVariableOptions()
 	const setDefineQuestion = useSetDefineQuestion()
 	const [definitions, setDefinitions] = useState<ElementDefinition[]>(
-		defineQuestion[pageType]?.definition || [],
+		(defineQuestion as any)[pageType]?.definition || [],
 	)
 	const [definitionToEdit, setDefinitionToEdit] = useState<ElementDefinition>()
 
 	const labelInterest = useMemo<string>(
-		() => defineQuestion[pageType]?.label || '',
+		() => (defineQuestion as any)[pageType]?.label || '',
 		[defineQuestion, pageType],
 	)
 
 	const descriptionInterest = useMemo<string>(
-		() => defineQuestion[pageType]?.description || '',
+		() => (defineQuestion as any)[pageType]?.description || '',
 		[defineQuestion, pageType],
 	)
 
@@ -72,7 +72,7 @@ export function useBusinessLogic(): {
 	const itemList = useItemList(definitions)
 
 	useEffect(() => {
-		setDefinitions(defineQuestion[pageType]?.definition || [])
+		setDefinitions((defineQuestion as any)[pageType]?.definition || [])
 		setDefinitionToEdit(undefined)
 	}, [defineQuestion, pageType, setDefinitionToEdit, setDefinitions])
 
@@ -91,7 +91,7 @@ export function useBusinessLogic(): {
 	}
 }
 
-function useItemList(definitions): Item[] {
+function useItemList(definitions: ElementDefinition[]): Item[] {
 	return useMemo(() => {
 		return definitions?.map(x => {
 			const newObj = { ...x }
