@@ -11,17 +11,18 @@ import {
 	useResetRecoilState,
 	useSetRecoilState,
 } from 'recoil'
+import { Maybe } from '~types'
 
-export const specCountState = atom<number | undefined>({
+export const specCountState = atom<Maybe<number>>({
 	key: 'spec-count-state',
 	default: undefined,
 })
 
-export function useSpecCount(): number | undefined {
+export function useSpecCount(): Maybe<number> {
 	return useRecoilValue(specCountState)
 }
 
-export function useSetSpecCount(): SetterOrUpdater<number | undefined> {
+export function useSetSpecCount(): SetterOrUpdater<Maybe<number>> {
 	return useSetRecoilState(specCountState)
 }
 

@@ -44,7 +44,7 @@ import {
 export function useBusinessLogic(): {
 	isProcessing: boolean
 	totalEstimatorsCount: number
-	specCount: number | undefined
+	specCount: Maybe<number>
 	estimators: Estimator[]
 	definitions: Experiment
 	runHistory: RunHistory[]
