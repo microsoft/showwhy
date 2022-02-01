@@ -8,31 +8,25 @@ import styled from 'styled-components'
 import { CardComponent } from '~components/CardComponent'
 import { RefutationChoice } from '~types'
 
-interface RefutationTestsProps {
+export const RefutationTests: React.FC<{
 	options: RefutationChoice[]
-}
-
-export const RefutationTests: React.FC<RefutationTestsProps> = memo(
-	function RefutationTests({ options }) {
-		return (
-			<Container>
-				{options.map(option => (
-					<CardComponent key={option.key}>
-						<RefutationOption onClick={option.onChange}>
-							<Title>
-								<Icon
-									iconName={`RadioBtn${option.isSelected ? 'On' : 'Off'}`}
-								/>
-								{option.title}
-							</Title>
-							<P>{option.description}</P>
-						</RefutationOption>
-					</CardComponent>
-				))}
-			</Container>
-		)
-	},
-)
+}> = memo(function RefutationTests({ options }) {
+	return (
+		<Container>
+			{options.map(option => (
+				<CardComponent key={option.key}>
+					<RefutationOption onClick={option.onChange}>
+						<Title>
+							<Icon iconName={`RadioBtn${option.isSelected ? 'On' : 'Off'}`} />
+							{option.title}
+						</Title>
+						<P>{option.description}</P>
+					</RefutationOption>
+				</CardComponent>
+			))}
+		</Container>
+	)
+})
 
 const Title = styled.h3`
 	font-size: 1.1rem;

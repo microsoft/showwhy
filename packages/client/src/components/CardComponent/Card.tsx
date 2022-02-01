@@ -5,14 +5,12 @@
 import { memo } from 'react'
 import styled from 'styled-components'
 
-interface CardProps {
+export const CardComponent: React.FC<{
 	title?: string
 	actionButtons?: React.ReactNode
 	styles?: React.CSSProperties
 	isSticky?: boolean
-}
-
-export const CardComponent: React.FC<CardProps> = memo(function CardComponent({
+}> = memo(function CardComponent({
 	title,
 	actionButtons,
 	children,

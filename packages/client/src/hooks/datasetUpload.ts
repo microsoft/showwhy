@@ -120,17 +120,17 @@ export function useOnLoadStart(setLoading: any, onError: any): () => void {
 }
 
 export function useOnFileLoadCompleted(
-	setFilesCount: (prev: any) => any,
+	setFilesCount: (dispatch: (prev: DropFilesCount) => DropFilesCount) => void,
 	setLoading: Dispatch<SetStateAction<boolean>>,
 	onLoad?: (file: ProjectFile, table: ColumnTable) => void,
 ): (file: ProjectFile, table: ColumnTable) => void {
 	return useCallback(
 		(file: ProjectFile, table: ColumnTable) => {
-			setFilesCount(prev => {
+			setFilesCount((prev: DropFilesCount) => {
 				return {
 					...prev,
 					completed: prev.completed + 1,
-				}
+				} as DropFilesCount
 			})
 			setLoading(false)
 			onLoad && onLoad(file, table)

@@ -7,24 +7,20 @@ import { memo, useCallback } from 'react'
 import styled from 'styled-components'
 import { Handler0 } from '~types'
 
-interface SelectableCardProps {
+export const SelectableCard: React.FC<{
 	onClick: () => void
 	title?: string
 	isChecked?: boolean | undefined
 	icon?: string
-}
-
-export const SelectableCard: React.FC<SelectableCardProps> = memo(
-	function CardComponent({ title, onClick, isChecked, icon }) {
-		const handleOnClick = useOnClickHandler(isChecked, onClick)
-		return (
-			<Card checked={isChecked} onClick={handleOnClick}>
-				{icon && <ButtonIcon iconName={icon}></ButtonIcon>}
-				{title || null}
-			</Card>
-		)
-	},
-)
+}> = memo(function CardComponent({ title, onClick, isChecked, icon }) {
+	const handleOnClick = useOnClickHandler(isChecked, onClick)
+	return (
+		<Card checked={isChecked} onClick={handleOnClick}>
+			{icon && <ButtonIcon iconName={icon}></ButtonIcon>}
+			{title || null}
+		</Card>
+	)
+})
 
 const Card = styled(DefaultButton)`
 	margin: 8px;

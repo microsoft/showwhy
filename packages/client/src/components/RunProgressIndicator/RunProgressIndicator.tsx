@@ -10,7 +10,12 @@ import { ProgressBar } from '~components/ProgressBar'
 import { Container } from '~styles'
 import { NodeResponseStatus, RunHistory } from '~types'
 
-interface RunProgressIndicatorProps {
+interface LabelProps {
+	id: string
+	status: string
+}
+
+export const RunProgressIndicator: React.FC<{
 	run: RunHistory
 	props?: {
 		label?: string
@@ -19,90 +24,81 @@ interface RunProgressIndicatorProps {
 	}
 	cancelRun?: () => void
 	theme: Theme
-}
+}> = memo(function RunProgressIndicator({ run, props, cancelRun, theme }) {
+	const estimatorLabel: LabelProps = useMemo(() => {
+		return {
+			id: 'estimators',
+			status: run.status?.estimators?.status || '',
+		}
+	}, [run])
 
-interface LabelProps {
-	id: string
-	status: string
-}
+	const confidenceIntervalLabel: LabelProps = useMemo(() => {
+		return {
+			id: 'confidenceInterval',
+			status: run.status?.confidenceIntervals?.status || '',
+		}
+	}, [run])
 
-export const RunProgressIndicator: React.FC<RunProgressIndicatorProps> = memo(
-	function RunProgressIndicator({ run, props, cancelRun, theme }) {
-		const estimatorLabel: LabelProps = useMemo(() => {
-			return {
-				id: 'estimators',
-				status: run.status?.estimators?.status || '',
-			}
-		}, [run])
+	const refutersLabel: LabelProps = useMemo(() => {
+		return {
+			id: 'refuters',
+			status: run.status?.refuters?.status || '',
+		}
+	}, [run])
 
-		const confidenceIntervalLabel: LabelProps = useMemo(() => {
-			return {
-				id: 'confidenceInterval',
-				status: run.status?.confidenceIntervals?.status || '',
-			}
-		}, [run])
-
-		const refutersLabel: LabelProps = useMemo(() => {
-			return {
-				id: 'refuters',
-				status: run.status?.refuters?.status || '',
-			}
-		}, [run])
-
-		return (
-			<ContainerProgress>
-				<ProgressIndicatorLabelWrapper>
-					<ProgressIndicatorLabel {...estimatorLabel}>
-						Estimators {run.status?.estimated_effect_completed}
-					</ProgressIndicatorLabel>
-					<Container>
-						<Xarrow
-							start={estimatorLabel.id}
-							end={
-								run.hasConfidenceInterval
-									? confidenceIntervalLabel.id
-									: refutersLabel.id
-							}
-							path="straight"
-							color={theme.application().border().hex()}
-							headSize={7}
-							strokeWidth={1}
-						/>
-					</Container>
-					{run.hasConfidenceInterval && (
-						<>
-							<ProgressIndicatorLabel {...confidenceIntervalLabel}>
-								Confidence Intervals {run.status?.confidence_interval_completed}
-							</ProgressIndicatorLabel>
-							<Container>
-								<Xarrow
-									start={confidenceIntervalLabel.id}
-									end={refutersLabel.id}
-									path="straight"
-									color={theme.application().border().hex()}
-									headSize={7}
-									strokeWidth={1}
-								/>
-							</Container>
-						</>
-					)}
-					<ProgressIndicatorLabel {...refutersLabel}>
-						Refuters {run.status?.refute_completed}
-					</ProgressIndicatorLabel>
-				</ProgressIndicatorLabelWrapper>
-				<ProgressIndicatorWrapper>
-					<ProgressBar
-						description={props?.description}
-						percentage={run.status?.percentage as number}
-						percentComplete={props?.percentComplete || run.status?.percentage}
-						startTime={run.status?.time?.start as Date}
-						onCancel={cancelRun ? cancelRun : undefined}
+	return (
+		<ContainerProgress>
+			<ProgressIndicatorLabelWrapper>
+				<ProgressIndicatorLabel {...estimatorLabel}>
+					Estimators {run.status?.estimated_effect_completed}
+				</ProgressIndicatorLabel>
+				<Container>
+					<Xarrow
+						start={estimatorLabel.id}
+						end={
+							run.hasConfidenceInterval
+								? confidenceIntervalLabel.id
+								: refutersLabel.id
+						}
+						path="straight"
+						color={theme.application().border().hex()}
+						headSize={7}
+						strokeWidth={1}
 					/>
-				</ProgressIndicatorWrapper>
-			</ContainerProgress>
-		)
-	},
-)
+				</Container>
+				{run.hasConfidenceInterval && (
+					<>
+						<ProgressIndicatorLabel {...confidenceIntervalLabel}>
+							Confidence Intervals {run.status?.confidence_interval_completed}
+						</ProgressIndicatorLabel>
+						<Container>
+							<Xarrow
+								start={confidenceIntervalLabel.id}
+								end={refutersLabel.id}
+								path="straight"
+								color={theme.application().border().hex()}
+								headSize={7}
+								strokeWidth={1}
+							/>
+						</Container>
+					</>
+				)}
+				<ProgressIndicatorLabel {...refutersLabel}>
+					Refuters {run.status?.refute_completed}
+				</ProgressIndicatorLabel>
+			</ProgressIndicatorLabelWrapper>
+			<ProgressIndicatorWrapper>
+				<ProgressBar
+					description={props?.description}
+					percentage={run.status?.percentage as number}
+					percentComplete={props?.percentComplete || run.status?.percentage}
+					startTime={run.status?.time?.start as Date}
+					onCancel={cancelRun ? cancelRun : undefined}
+				/>
+			</ProgressIndicatorWrapper>
+		</ContainerProgress>
+	)
+})
 
 const ContainerProgress = styled.div`
 	width: 100%;

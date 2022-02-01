@@ -15,7 +15,9 @@ import {
 	SpecificationCurveConfig,
 } from '~types'
 
-export interface OutcomeEffectScatterplotProps {
+const templateString = JSON.stringify(template)
+
+export const OutcomeEffectScatterplot: React.FC<{
 	data: Specification[]
 	config: SpecificationCurveConfig
 	width: number
@@ -28,53 +30,48 @@ export interface OutcomeEffectScatterplotProps {
 	title?: string
 	outcome?: string
 	failedRefutationIds: number[]
-}
+}> = memo(function OutcomeEffectScatterplot({
+	data,
+	config,
+	width,
+	height,
+	onMouseOver,
+	onMouseClick,
+	hovered,
+	selected,
+	title,
+	failedRefutationIds,
+	outcome,
+}) {
+	const spec = useOverlay(data, title, outcome)
 
-const templateString = JSON.stringify(template)
+	const signals = useMemo(
+		() => ({
+			hoveredId: hovered,
+			selectedId: selected,
+			showMedian: config.medianLine,
+			showMean: config.meanLine,
+			showConfidenceInterval: config.confidenceIntervalTicks,
+			inactiveFeatures: config.inactiveFeatures,
+			inactiveSpecifications:
+				config.inactiveSpecifications?.concat(failedRefutationIds),
+		}),
+		[hovered, selected, config, failedRefutationIds],
+	)
 
-export const OutcomeEffectScatterplot: React.FC<OutcomeEffectScatterplotProps> =
-	memo(function OutcomeEffectScatterplot({
-		data,
-		config,
-		width,
-		height,
-		onMouseOver,
-		onMouseClick,
-		hovered,
-		selected,
-		title,
-		failedRefutationIds,
-		outcome,
-	}) {
-		const spec = useOverlay(data, title, outcome)
-
-		const signals = useMemo(
-			() => ({
-				hoveredId: hovered,
-				selectedId: selected,
-				showMedian: config.medianLine,
-				showMean: config.meanLine,
-				showConfidenceInterval: config.confidenceIntervalTicks,
-				inactiveFeatures: config.inactiveFeatures,
-				inactiveSpecifications:
-					config.inactiveSpecifications?.concat(failedRefutationIds),
-			}),
-			[hovered, selected, config, failedRefutationIds],
-		)
-
-		return (
-			<Container>
-				<VegaHost
-					spec={spec}
-					width={width}
-					height={height}
-					onDatumMouseOver={onMouseOver}
-					onDatumClick={onMouseClick}
-					signals={signals}
-				></VegaHost>
-			</Container>
-		)
-	})
+	return (
+		<Container>
+			<VegaHost
+				spec={spec}
+				width={width}
+				height={height}
+				onDatumMouseOver={onMouseOver}
+				onDatumClick={onMouseClick}
+				signals={signals}
+			></VegaHost>
+		</Container>
+	)
+})
 
 function useOverlay(data: Specification[], title?: string, outcome?: string) {
 	const theme = useThematic()

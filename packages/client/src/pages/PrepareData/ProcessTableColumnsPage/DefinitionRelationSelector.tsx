@@ -22,39 +22,37 @@ interface RelevanceOption {
 	name: string
 	value: ColumnRelevance
 }
-interface DefinitionRelationSelectorProps {
+
+export const DefinitionRelationSelector: React.FC<{
 	relation: ColumnRelation[]
 	relevance: ColumnRelevance | undefined
 	relevanceOption: RelevanceOption
 	onDefinitionChange: DefinitionChangeHandler
-}
+}> = memo(function DefinitionRelationSelector({
+	relation,
+	relevance,
+	relevanceOption,
+	onDefinitionChange,
+}) {
+	const buttonTitle = useButton(relation, relevanceOption)
+	const onToggleSelect = useToggleSelect(relation, onDefinitionChange)
+	const DefinitionTypes = useDefinitionTypes(relation, onToggleSelect)
 
-export const DefinitionRelationSelector: React.FC<DefinitionRelationSelectorProps> =
-	memo(function DefinitionRelationSelector({
-		relation,
-		relevance,
-		relevanceOption,
-		onDefinitionChange,
-	}) {
-		const buttonTitle = useButton(relation, relevanceOption)
-		const onToggleSelect = useToggleSelect(relation, onDefinitionChange)
-		const DefinitionTypes = useDefinitionTypes(relation, onToggleSelect)
+	const menuProps: IContextualMenuProps = {
+		items: DefinitionTypes,
+		shouldFocusOnMount: true,
+	}
 
-		const menuProps: IContextualMenuProps = {
-			items: DefinitionTypes,
-			shouldFocusOnMount: true,
-		}
-
-		return (
-			<DefinitionButton
-				text={buttonTitle()}
-				checked={relevance === relevanceOption.value}
-				menuProps={menuProps}
-				menuAs={_getMenu}
-				allowDisabledFocus
-			/>
-		)
-	})
+	return (
+		<DefinitionButton
+			text={buttonTitle()}
+			checked={relevance === relevanceOption.value}
+			menuProps={menuProps}
+			menuAs={_getMenu}
+			allowDisabledFocus
+		/>
+	)
+})
 
 function useToggleSelect(
 	relation: ColumnRelation[],

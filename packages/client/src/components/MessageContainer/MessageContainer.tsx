@@ -6,40 +6,41 @@ import { MessageBar, MessageBarType, IStyle } from '@fluentui/react'
 import { memo, useCallback } from 'react'
 import styled from 'styled-components'
 
-interface MessageContainerProps {
+export const MessageContainer: React.FC<{
 	type: MessageBarType
 	onDismiss?: () => void
 	styles?: IStyle
-}
-
-export const MessageContainer: React.FC<MessageContainerProps> = memo(
-	function MessageContainer({ children, type, onDismiss, styles = {} }) {
-		const iconProps = useCallback((type: MessageBarType) => {
-			switch (type) {
-				case MessageBarType.error:
-					return { iconName: 'Error' }
-				case MessageBarType.info:
-					return { iconName: 'Info' }
-				case MessageBarType.success:
-					return { iconName: 'Completed' }
-				case MessageBarType.warning:
-					return { iconName: 'Warning' }
-			}
-		}, [])
-		return (
-			<Message
-				messageBarType={type}
-				onDismiss={onDismiss}
-				dismissButtonAriaLabel="Close"
-				type={MessageBarType[type]}
-				messageBarIconProps={iconProps(type)}
-				styles={{ root: styles }}
-			>
-				{children}
-			</Message>
-		)
-	},
-)
+}> = memo(function MessageContainer({
+	children,
+	type,
+	onDismiss,
+	styles = {},
+}) {
+	const iconProps = useCallback((type: MessageBarType) => {
+		switch (type) {
+			case MessageBarType.error:
+				return { iconName: 'Error' }
+			case MessageBarType.info:
+				return { iconName: 'Info' }
+			case MessageBarType.success:
+				return { iconName: 'Completed' }
+			case MessageBarType.warning:
+				return { iconName: 'Warning' }
+		}
+	}, [])
+	return (
+		<Message
+			messageBarType={type}
+			onDismiss={onDismiss}
+			dismissButtonAriaLabel="Close"
+			type={MessageBarType[type]}
+			messageBarIconProps={iconProps(type)}
+			styles={{ root: styles }}
+		>
+			{children}
+		</Message>
+	)
+})
 
 const Message = styled(MessageBar)<{ type: string }>`
 	background-color: white;

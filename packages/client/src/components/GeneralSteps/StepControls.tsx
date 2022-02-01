@@ -9,44 +9,40 @@ import styled from 'styled-components'
 import { useGoToPage } from '~hooks'
 import { Step, StepStatus } from '~types'
 
-interface StepControlsProps {
+export const StepControls: React.FC<{
 	step?: Step
 	stepStatus?: StepStatus
 	toggleStatus: () => void
 	previousUrl: string
 	nextUrl: string
-}
-
-export const StepControls: React.FC<StepControlsProps> = memo(
-	function StepControls({
-		step,
-		stepStatus,
-		toggleStatus,
-		previousUrl,
-		nextUrl,
-	}) {
-		const handleNavigatePrev = useGoToPage(previousUrl)
-		const handleNavigateNext = useGoToPage(nextUrl)
-		return (
-			<Container>
-				<MarkDoneButton
-					done={stepStatus === StepStatus.Done}
-					disabled={!step?.showStatus}
-					onClick={toggleStatus}
-				>
-					<Icon iconName="CheckMark"></Icon>Mark as
-					{stepStatus === StepStatus.Done ? ' to do' : ' done'}
-				</MarkDoneButton>
-				<PreviousButton onClick={handleNavigatePrev} disabled={!previousUrl}>
-					Previous step
-				</PreviousButton>
-				<NextButton onClick={handleNavigateNext} disabled={!nextUrl}>
-					Next step
-				</NextButton>
-			</Container>
-		)
-	},
-)
+}> = memo(function StepControls({
+	step,
+	stepStatus,
+	toggleStatus,
+	previousUrl,
+	nextUrl,
+}) {
+	const handleNavigatePrev = useGoToPage(previousUrl)
+	const handleNavigateNext = useGoToPage(nextUrl)
+	return (
+		<Container>
+			<MarkDoneButton
+				done={stepStatus === StepStatus.Done}
+				disabled={!step?.showStatus}
+				onClick={toggleStatus}
+			>
+				<Icon iconName="CheckMark"></Icon>Mark as
+				{stepStatus === StepStatus.Done ? ' to do' : ' done'}
+			</MarkDoneButton>
+			<PreviousButton onClick={handleNavigatePrev} disabled={!previousUrl}>
+				Previous step
+			</PreviousButton>
+			<NextButton onClick={handleNavigateNext} disabled={!nextUrl}>
+				Next step
+			</NextButton>
+		</Container>
+	)
+})
 
 const Container = styled.div`
 	display: flex;
