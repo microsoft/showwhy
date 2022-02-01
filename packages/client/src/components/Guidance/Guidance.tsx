@@ -7,15 +7,10 @@ import styled from 'styled-components'
 import { StepTitle } from '~components/StepTitle'
 import { Step } from '~types'
 
-interface GuidanceProps {
+export const Guidance: React.FC<{
 	isVisible: boolean | undefined
 	step?: Step
-}
-
-export const Guidance: React.FC<GuidanceProps> = memo(function Instructions({
-	isVisible,
-	step,
-}) {
+}> = memo(function Instructions({ isVisible, step }) {
 	return isVisible ? (
 		<>
 			<TitleContainer>

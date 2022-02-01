@@ -6,17 +6,11 @@ import { Dropdown } from '@fluentui/react'
 import { memo, useCallback, useMemo } from 'react'
 import styled from 'styled-components'
 
-interface DatasetsProps {
+export const Datasets: React.FC<{
 	datasets: string[]
 	dataset: string
 	onChange: (dataset: string) => void
-}
-
-export const Datasets: React.FC<DatasetsProps> = memo(function Datasets({
-	datasets,
-	dataset,
-	onChange,
-}) {
+}> = memo(function Datasets({ datasets, dataset, onChange }) {
 	const options = useMemo(
 		() =>
 			datasets.map(d => ({

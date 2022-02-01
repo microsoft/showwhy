@@ -9,52 +9,48 @@ import { ActionButtons } from '~components/ActionButtons'
 import { useTimeElapsed } from '~hooks'
 import { Text } from '~styles'
 
-interface ProgressBarProps {
+export const ProgressBar: React.FC<{
 	percentage: number
 	startTime: Date
 	percentComplete?: number
 	description?: string
 	label?: string
 	onCancel?: () => void
-}
+}> = memo(function ProgressBar({
+	percentage,
+	startTime,
+	percentComplete,
+	description,
+	label,
+	onCancel,
+}) {
+	const timeElapsed = useTimeElapsed(startTime)
 
-export const ProgressBar: React.FC<ProgressBarProps> = memo(
-	function ProgressBar({
-		percentage,
-		startTime,
-		percentComplete,
-		description,
-		label,
-		onCancel,
-	}) {
-		const timeElapsed = useTimeElapsed(startTime)
-
-		return (
-			<>
-				{label && <ProgressIndicatorLabel>{label}</ProgressIndicatorLabel>}
-				<ProgressIndicatorWrapper>
-					<ProgressIndicator
-						styles={{ root: { width: '100%' } }}
-						description={
-							<Text>
-								{description ||
-									`${percentage}%${
-										startTime && percentage !== 100
-											? ', taking ' + timeElapsed
-											: ', finishing...'
-									}`}
-							</Text>
-						}
-						percentComplete={
-							(percentComplete || percentage || 0) / 100 || undefined
-						}
-					/>
-					{onCancel ? <ActionButtons onCancel={onCancel} /> : null}
-				</ProgressIndicatorWrapper>
-			</>
-		)
-	},
-)
+	return (
+		<>
+			{label && <ProgressIndicatorLabel>{label}</ProgressIndicatorLabel>}
+			<ProgressIndicatorWrapper>
+				<ProgressIndicator
+					styles={{ root: { width: '100%' } }}
+					description={
+						<Text>
+							{description ||
+								`${percentage}%${
+									startTime && percentage !== 100
+										? ', taking ' + timeElapsed
+										: ', finishing...'
+								}`}
+						</Text>
+					}
+					percentComplete={
+						(percentComplete || percentage || 0) / 100 || undefined
+					}
+				/>
+				{onCancel ? <ActionButtons onCancel={onCancel} /> : null}
+			</ProgressIndicatorWrapper>
+		</>
+	)
+})
 
 const ProgressIndicatorWrapper = styled.div`
 	display: flex;

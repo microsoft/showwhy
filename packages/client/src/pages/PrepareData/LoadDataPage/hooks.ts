@@ -23,7 +23,7 @@ import {
 	useSetProjectFiles,
 	useSetSelectedFile,
 } from '~state'
-import { DropFilesCount, ProjectFile } from '~types'
+import { DropFilesCount, ProjectFile, Handler1 } from '~types'
 import { createDefaultTable, replaceItemAtIndex } from '~utils'
 
 export function useBusinessLogic(): {
@@ -40,7 +40,10 @@ export function useBusinessLogic(): {
 	toggleShowConfirm: () => void
 	toggleLoadedCorrectly: () => void
 	handleDismissError: () => void
-	handleDelimiterChange: (e, option: IDropdownOption | undefined) => void
+	handleDelimiterChange: (
+		e: unknown,
+		option: IDropdownOption | undefined,
+	) => void
 	handleOnDropAccepted: (f: FileCollection) => void
 	onConfirmDelete: () => void
 	onRenameTable: (alias: string) => void
@@ -152,10 +155,10 @@ export function useBusinessLogic(): {
 }
 
 function useToggleLoadedCorrectly(
-	selectedFile,
-	projectFiles,
-	setProjectFiles,
-	setSelectedFile,
+	selectedFile: ProjectFile | undefined,
+	projectFiles: ProjectFile[],
+	setProjectFiles: SetterOrUpdater<ProjectFile[]>,
+	setSelectedFile: SetterOrUpdater<ProjectFile | undefined>,
 ) {
 	return useCallback(() => {
 		const stateNow = selectedFile?.loadedCorrectly || false
@@ -170,7 +173,11 @@ function useToggleLoadedCorrectly(
 	}, [selectedFile, projectFiles, setProjectFiles, setSelectedFile])
 }
 
-function useDefaultSelectedFile(current, files, setSelectedFile) {
+function useDefaultSelectedFile(
+	current: ProjectFile | undefined,
+	files: ProjectFile[],
+	setSelectedFile: SetterOrUpdater<ProjectFile | undefined>,
+) {
 	useEffect(() => {
 		if (!current) {
 			const [file] = files
@@ -183,11 +190,11 @@ function useDefaultSelectedFile(current, files, setSelectedFile) {
 }
 
 function useOnConfirmDelete(
-	projectFiles,
-	selectedFile,
-	setProjectFiles,
-	toggleShowConfirm,
-	setSelectedFile,
+	projectFiles: ProjectFile[],
+	selectedFile: ProjectFile | undefined,
+	setProjectFiles: SetterOrUpdater<ProjectFile[]>,
+	toggleShowConfirm: (value?: boolean) => void,
+	setSelectedFile: SetterOrUpdater<ProjectFile | undefined>,
 ) {
 	return useCallback(() => {
 		const filteredFiles = projectFiles.filter(p => p.id !== selectedFile?.id)
@@ -203,7 +210,7 @@ function useOnConfirmDelete(
 	])
 }
 
-function useHandleLoadFile(setErrorMessage) {
+function useHandleLoadFile(setErrorMessage: Handler1<string>) {
 	const projectFiles = useProjectFiles()
 	const addFile = useAddProjectFile()
 	const addOriginalTable = useSetOrUpdateOriginalTable()

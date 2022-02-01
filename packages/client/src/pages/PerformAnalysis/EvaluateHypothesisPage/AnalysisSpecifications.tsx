@@ -6,30 +6,28 @@ import { memo } from 'react'
 import { Text, Value } from '~styles'
 import { RefutationType } from '~types'
 
-interface AnalysisSpecificationsProps {
+export const AnalysisSpecifications: React.FC<{
 	specificationLength: number
 	refutationLength: number
 	refutationType: RefutationType
-}
-export const AnalysisSpecifications: React.FC<AnalysisSpecificationsProps> =
-	memo(function AnalysisSpecifications({
-		specificationLength,
-		refutationLength,
-		refutationType,
-	}) {
-		return (
-			<Text>
-				<Value>{specificationLength}</Value>
-				alternative specifications were estimated, each of them was validated
-				against<Value>{refutationLength}</Value>
-				refutation tests, using the
-				<Value>
-					{refutationType === RefutationType.QuickRefutation
-						? ' Quick '
-						: ' Full '}
-					Refutation
-				</Value>
-				mode.
-			</Text>
-		)
-	})
+}> = memo(function AnalysisSpecifications({
+	specificationLength,
+	refutationLength,
+	refutationType,
+}) {
+	return (
+		<Text>
+			<Value>{specificationLength}</Value>
+			alternative specifications were estimated, each of them was validated
+			against<Value>{refutationLength}</Value>
+			refutation tests, using the
+			<Value>
+				{refutationType === RefutationType.QuickRefutation
+					? ' Quick '
+					: ' Full '}
+				Refutation
+			</Value>
+			mode.
+		</Text>
+	)
+})

@@ -8,30 +8,26 @@ import { OptionsButton } from './OptionsButton'
 import { Container } from '~styles'
 import { FileDefinition } from '~types'
 
-interface ProjectsSelectorProps {
+export const ProjectsSelector: React.FC<{
 	exampleProjects: FileDefinition[]
 	loadProjectOption?: IContextualMenuItem
 	onClickProject: (example: FileDefinition) => void
-}
-
-export const ProjectsSelector: React.FC<ProjectsSelectorProps> = memo(
-	function ProjectsSelector({
-		onClickProject,
+}> = memo(function ProjectsSelector({
+	onClickProject,
+	exampleProjects,
+	loadProjectOption,
+}) {
+	const menuProps = useMenuProps(
 		exampleProjects,
 		loadProjectOption,
-	}) {
-		const menuProps = useMenuProps(
-			exampleProjects,
-			loadProjectOption,
-			onClickProject,
-		)
-		return (
-			<Container>
-				<OptionsButton text="Load" menuProps={menuProps} />
-			</Container>
-		)
-	},
-)
+		onClickProject,
+	)
+	return (
+		<Container>
+			<OptionsButton text="Load" menuProps={menuProps} />
+		</Container>
+	)
+})
 
 function useMenuProps(
 	exampleProjects: FileDefinition[],

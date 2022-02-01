@@ -39,6 +39,8 @@ import {
 	Workspace,
 	DataTableFileDefinition,
 	StepStatus,
+	Handler1,
+	DataTable,
 } from '~types'
 import {
 	fetchRemoteTables,
@@ -77,7 +79,7 @@ export function useLoadProject(
 				throw new Error('Must provide either a definition or .zip file')
 			}
 
-			let workspace
+			let workspace: any
 
 			if (source === ProjectSource.zip) {
 				const { json, name } = zip as ZipData
@@ -177,9 +179,9 @@ export function useLoadProject(
 async function processTables(
 	workspace: Workspace,
 	id: string,
-	addFile,
-	setOriginalTable,
-	setPrimaryTable,
+	addFile: Handler1<ProjectFile>,
+	setOriginalTable: Handler1<DataTable>,
+	setPrimaryTable: Handler1<{ name: string; id: string }>,
 	tableFiles?: File[],
 ) {
 	const { tables, postLoad } = workspace

@@ -16,7 +16,7 @@ import {
 	Item,
 } from '~types'
 
-export interface TableProps {
+export const TableComponent: React.FC<{
 	headers: HeaderData[]
 	columns: FlatCausalFactor[] | ElementDefinition[] | Item[]
 	definitionToEdit?: ElementDefinition
@@ -27,50 +27,46 @@ export interface TableProps {
 	onEdit?: (e) => void
 	onCancel?: () => void
 	onSave?: (e?) => void
-}
-
-export const TableComponent: React.FC<TableProps> = memo(
-	function TableComponent({
+}> = memo(function TableComponent({
+	headers,
+	columns,
+	definitionToEdit,
+	factorToEdit,
+	pageType,
+	variables,
+	onDelete,
+	onEdit,
+	onCancel,
+	onSave,
+}) {
+	const { items, customColumnsWidth, headersData } = useTableComponent(
+		columns as CausalFactor[],
 		headers,
-		columns,
 		definitionToEdit,
 		factorToEdit,
 		pageType,
 		variables,
 		onDelete,
+		onSave,
 		onEdit,
 		onCancel,
-		onSave,
-	}) {
-		const { items, customColumnsWidth, headersData } = useTableComponent(
-			columns as CausalFactor[],
-			headers,
-			definitionToEdit,
-			factorToEdit,
-			pageType,
-			variables,
-			onDelete,
-			onSave,
-			onEdit,
-			onCancel,
-		)
-		return (
-			<Container>
-				{items.length ? (
-					<GenericTableComponent
-						items={items}
-						headers={{
-							data: headersData,
-						}}
-						props={{ customColumnsWidth }}
-					/>
-				) : (
-					<EmptyP>Add a new factor to start</EmptyP>
-				)}
-			</Container>
-		)
-	},
-)
+	)
+	return (
+		<Container>
+			{items.length ? (
+				<GenericTableComponent
+					items={items}
+					headers={{
+						data: headersData,
+					}}
+					props={{ customColumnsWidth }}
+				/>
+			) : (
+				<EmptyP>Add a new factor to start</EmptyP>
+			)}
+		</Container>
+	)
+})
 
 const EmptyP = styled.p`
 	text-align: center;

@@ -9,42 +9,38 @@ import { ErrorMessage } from '~components/ErrorMessage'
 import { ContainerFlexColumn, ContainerFlexRow } from '~styles'
 import { RunHistory, SignificanceTest } from '~types'
 
-interface PageButtonsProps {
+export const PageButtons: React.FC<{
 	activeTaskIds: string[]
 	defaultRun: RunHistory | undefined
 	significanceTestsResult: SignificanceTest | undefined
 	significanceFailed: boolean
 	runSignificance: (taskIds: string[]) => void
-}
-
-export const PageButtons: React.FC<PageButtonsProps> = memo(
-	function PageButtons({
-		activeTaskIds,
-		defaultRun,
-		significanceTestsResult,
-		significanceFailed,
-		runSignificance,
-	}) {
-		return (
-			<ContainerFlexRow marginBottom justifyContent="space-between">
-				<ContainerFlexColumn>
-					<ButtonWithMargin
-						disabled={
-							(!!significanceTestsResult &&
-								significanceTestsResult &&
-								!significanceFailed) ||
-							!defaultRun
-						}
-						onClick={() => runSignificance(activeTaskIds)}
-					>
-						Run significance test
-					</ButtonWithMargin>
-					{significanceFailed && <ErrorMessage></ErrorMessage>}
-				</ContainerFlexColumn>
-			</ContainerFlexRow>
-		)
-	},
-)
+}> = memo(function PageButtons({
+	activeTaskIds,
+	defaultRun,
+	significanceTestsResult,
+	significanceFailed,
+	runSignificance,
+}) {
+	return (
+		<ContainerFlexRow marginBottom justifyContent="space-between">
+			<ContainerFlexColumn>
+				<ButtonWithMargin
+					disabled={
+						(!!significanceTestsResult &&
+							significanceTestsResult &&
+							!significanceFailed) ||
+						!defaultRun
+					}
+					onClick={() => runSignificance(activeTaskIds)}
+				>
+					Run significance test
+				</ButtonWithMargin>
+				{significanceFailed && <ErrorMessage></ErrorMessage>}
+			</ContainerFlexColumn>
+		</ContainerFlexRow>
+	)
+})
 
 const ButtonWithMargin = styled(DefaultButton)`
 	margin-bottom: 4px;

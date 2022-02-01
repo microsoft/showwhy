@@ -37,12 +37,12 @@ function useOnInputChange(): (
 	return useCallback(
 		(value, type, field) => {
 			const newValues = {
-				...defineQuestion[type],
+				...(defineQuestion as any)[type],
 				[field]: value,
 			} as Element
 
 			const newElements = { ...defineQuestion }
-			newElements[type] = newValues
+			;(newElements as any)[type] = newValues
 			setDefineQuestion(newElements)
 		},
 		[defineQuestion, setDefineQuestion],

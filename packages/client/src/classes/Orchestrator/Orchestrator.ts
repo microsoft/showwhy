@@ -15,6 +15,7 @@ import {
 	NodeResponse,
 	StatusResponse,
 	NodeResponseStatus,
+	OrchestratorStatusResponse,
 } from '~types'
 import { isStatusProcessing, wait } from '~utils'
 
@@ -64,7 +65,7 @@ export class Orchestrator<UpdateStatus> {
 			this.orchestratorResponse.statusQueryGetUri,
 		)
 
-		let estimateStatus
+		let estimateStatus: Partial<OrchestratorStatusResponse> | null = null
 		while (isStatusProcessing(status?.runtimeStatus as NodeResponseStatus)) {
 			[status, estimateStatus] = await Promise.all([
 				returnOrchestratorStatus(this.orchestratorResponse.statusQueryGetUri),
@@ -72,7 +73,7 @@ export class Orchestrator<UpdateStatus> {
 				wait(3000),
 			])
 
-			this._onUpdate && this._onUpdate({ ...status, ...estimateStatus })
+			this._onUpdate && this._onUpdate({ ...status, ...estimateStatus } as any)
 		}
 		return { ...status, ...estimateStatus } as StatusResponse
 	}
