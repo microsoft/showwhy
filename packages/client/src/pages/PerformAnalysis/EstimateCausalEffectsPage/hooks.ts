@@ -33,6 +33,7 @@ import {
 	ProjectFile,
 	RefutationOption,
 	RunHistory,
+	Maybe,
 } from '~types'
 import {
 	createFormData,
@@ -47,7 +48,7 @@ export function useBusinessLogic(): {
 	estimators: Estimator[]
 	definitions: Experiment
 	runHistory: RunHistory[]
-	errors: string | undefined
+	errors: Maybe<string>
 	cancelRun: () => void
 	runEstimate: () => Promise<void>
 	setRunAsDefault: (run: RunHistory) => void

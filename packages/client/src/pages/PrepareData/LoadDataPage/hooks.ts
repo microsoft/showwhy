@@ -23,16 +23,16 @@ import {
 	useSetProjectFiles,
 	useSetSelectedFile,
 } from '~state'
-import { DropFilesCount, ProjectFile, Handler1 } from '~types'
+import { DropFilesCount, ProjectFile, Handler1, Maybe } from '~types'
 import { createDefaultTable, replaceItemAtIndex } from '~utils'
 
 export function useBusinessLogic(): {
 	showConfirm: boolean
-	errorMessage: string | undefined | null
+	errorMessage: Maybe<string> | null
 	selectedFile: ProjectFile | undefined
 	projectFiles: ProjectFile[]
 	originalTable: ColumnTable
-	selectedDelimiter: string | undefined
+	selectedDelimiter: Maybe<string>
 	loading: boolean
 	fileCount: DropFilesCount
 	acceptedFileTypes: string[]
@@ -56,9 +56,7 @@ export function useBusinessLogic(): {
 	const projectFiles = useProjectFiles()
 	const setProjectFiles = useSetProjectFiles()
 	const [errorMessage, setErrorMessage] = useState<string | null>()
-	const [selectedDelimiter, setSelectedDelimiter] = useState<
-		string | undefined
-	>()
+	const [selectedDelimiter, setSelectedDelimiter] = useState<Maybe<string>>()
 	const [showConfirm, { toggle: toggleShowConfirm }] = useBoolean(false)
 	const originalTableState = useSelectOriginalTable(selectedFile?.id as string)
 	const originalTable = originalTableState()?.table

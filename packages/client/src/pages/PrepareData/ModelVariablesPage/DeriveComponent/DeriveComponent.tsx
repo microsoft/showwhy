@@ -33,6 +33,7 @@ import {
 	TableDerivationType,
 	Definition,
 	VariableDefinition,
+	Maybe,
 } from '~types'
 
 export const DeriveComponent: React.FC<{
@@ -43,7 +44,7 @@ export const DeriveComponent: React.FC<{
 	onClose: () => void
 	onReset: () => void
 	onSave: (definition: string) => void
-	onUpdate: (evt: unknown, columnDetail: { text: string | undefined }) => void
+	onUpdate: (evt: unknown, columnDetail: { text: Maybe<string> }) => void
 }> = memo(function DeriveComponent({
 	originalTable,
 	selectedDefinition,
