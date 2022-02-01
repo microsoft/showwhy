@@ -8,13 +8,13 @@ import styled from 'styled-components'
 import { ActionButtons } from '~components/ActionButtons'
 import { LinkCallout } from '~components/Callout'
 import { CardComponent } from '~components/CardComponent'
-import { Estimator } from '~types'
+import { Estimator, Maybe } from '~types'
 
 interface ExtendedEstimator extends Estimator {
 	description: string
 	isChecked: boolean
 	isDefault?: boolean
-	onChange?: (ev: unknown, checked: boolean | undefined) => void
+	onChange?: (ev: unknown, checked: Maybe<boolean>) => void
 	onDefaultChange?: () => void
 }
 

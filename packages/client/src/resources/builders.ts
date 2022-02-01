@@ -19,6 +19,7 @@ import {
 	NodeRequest,
 	RefutationType,
 	EstimatorType,
+	Maybe,
 } from '~types'
 
 interface Node {
@@ -92,7 +93,7 @@ export function buildSpecs(
 export function buildModelLevel(
 	modelName: string,
 	model: AlternativeModels,
-): AlternativeModelsRequest | undefined {
+): Maybe<AlternativeModelsRequest> {
 	const modelConfounders = [...model.confounders]
 	const modelOutcome = [...model.outcomeDeterminants]
 	if (

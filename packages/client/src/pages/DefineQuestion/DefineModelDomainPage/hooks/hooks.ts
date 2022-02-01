@@ -11,20 +11,27 @@ import { useRemoveDefinition } from './remove'
 import { useSaveDefinitions } from './save'
 import { usePageType, useVariableOptions } from '~hooks'
 import { useDefineQuestion, useSetDefineQuestion } from '~state'
-import { PageType, Experiment, ElementDefinition, Item, Setter } from '~types'
+import {
+	PageType,
+	Experiment,
+	ElementDefinition,
+	Item,
+	Setter,
+	Maybe,
+} from '~types'
 
 export function useBusinessLogic(): {
 	labelInterest: string
 	descriptionInterest: string
 	itemList: Item[]
-	definitionToEdit: ElementDefinition | undefined
+	definitionToEdit: Maybe<ElementDefinition>
 	pageType: PageType
 	defineQuestion: Experiment
 	variables: IComboBoxOption[]
 	addDefinition: (def: ElementDefinition) => void
 	removeDefinition: (def: ElementDefinition) => void
 	editDefinition: (def: ElementDefinition) => void
-	setDefinitionToEdit: Setter<ElementDefinition | undefined>
+	setDefinitionToEdit: Setter<Maybe<ElementDefinition>>
 } {
 	const defineQuestion = useDefineQuestion()
 	const pageType = usePageType()

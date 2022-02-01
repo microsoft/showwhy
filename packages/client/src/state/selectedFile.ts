@@ -10,18 +10,18 @@ import {
 	useResetRecoilState,
 	useSetRecoilState,
 } from 'recoil'
-import { ProjectFile } from '~types'
+import { ProjectFile, Maybe } from '~types'
 
-const selectedFileState = atom<ProjectFile | undefined>({
+const selectedFileState = atom<Maybe<ProjectFile>>({
 	key: 'selected-file',
 	default: undefined,
 })
 
-export function useSelectedFile(): ProjectFile | undefined {
+export function useSelectedFile(): Maybe<ProjectFile> {
 	return useRecoilValue(selectedFileState)
 }
 
-export function useSetSelectedFile(): SetterOrUpdater<ProjectFile | undefined> {
+export function useSetSelectedFile(): SetterOrUpdater<Maybe<ProjectFile>> {
 	return useSetRecoilState(selectedFileState)
 }
 

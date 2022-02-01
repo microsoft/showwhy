@@ -4,12 +4,12 @@
  */
 
 import { RowObject } from 'arquero/dist/types/table/table'
-import { TableColumn } from '~types'
+import { TableColumn, Maybe } from '~types'
 
 export interface ColumnDetailsProps {
 	columnName: string
 	fileId: string
-	values: RowObject[] | undefined
+	values: Maybe<RowObject[]>
 	onRemoveColumn: (column: string) => void
 }
 

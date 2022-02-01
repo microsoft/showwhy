@@ -10,12 +10,12 @@ import {
 } from '@fluentui/react'
 import { memo, useCallback } from 'react'
 import styled from 'styled-components'
-import { ColumnRelation, ColumnRelevance } from '~types'
+import { ColumnRelation, ColumnRelevance, Maybe } from '~types'
 
 type DefinitionChangeHandler = (changedRelation: ColumnRelation[]) => void
 type ToggleSelectHandler = (
-	evt?: { preventDefault: () => void } | undefined,
-	value?: undefined | IContextualMenuItem,
+	evt?: Maybe<{ preventDefault: () => void }>,
+	value?: Maybe<IContextualMenuItem>,
 ) => void
 
 interface RelevanceOption {
@@ -25,7 +25,7 @@ interface RelevanceOption {
 
 export const DefinitionRelationSelector: React.FC<{
 	relation: ColumnRelation[]
-	relevance: ColumnRelevance | undefined
+	relevance: Maybe<ColumnRelevance>
 	relevanceOption: RelevanceOption
 	onDefinitionChange: DefinitionChangeHandler
 }> = memo(function DefinitionRelationSelector({
@@ -60,8 +60,8 @@ function useToggleSelect(
 ): ToggleSelectHandler {
 	return useCallback(
 		(
-			evt?: { preventDefault: () => void } | undefined,
-			value?: undefined | IContextualMenuItem,
+			evt?: Maybe<{ preventDefault: () => void }>,
+			value?: Maybe<IContextualMenuItem>,
 		) => {
 			evt?.preventDefault()
 			if (value) {

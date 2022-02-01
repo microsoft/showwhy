@@ -16,6 +16,7 @@ import {
 	StatusResponse,
 	NodeResponseStatus,
 	OrchestratorStatusResponse,
+	Maybe,
 } from '~types'
 import { isStatusProcessing, wait } from '~utils'
 
@@ -31,17 +32,17 @@ export type OrchestratorResponse = {
 }
 
 export class Orchestrator<UpdateStatus> {
-	public _onCancel: OrchestratorHandler | undefined
-	public _onStart: OrchestratorOnStartHandler | undefined
-	public _onUpdate: OrchestatorOnUpdateHandler<UpdateStatus> | undefined
-	public _onComplete: OrchestratorHandler | undefined
-	private _orchestratorResponse: OrchestratorResponse | undefined
+	public _onCancel: Maybe<OrchestratorHandler>
+	public _onStart: Maybe<OrchestratorOnStartHandler>
+	public _onUpdate: Maybe<OrchestatorOnUpdateHandler<UpdateStatus>>
+	public _onComplete: Maybe<OrchestratorHandler>
+	private _orchestratorResponse: Maybe<OrchestratorResponse>
 
 	constructor(
-		onStart?: OrchestratorOnStartHandler | undefined,
-		onUpdate?: OrchestatorOnUpdateHandler<UpdateStatus> | undefined,
-		onComplete?: OrchestratorHandler | undefined,
-		onCancel?: OrchestratorHandler | undefined,
+		onStart?: Maybe<OrchestratorOnStartHandler>,
+		onUpdate?: Maybe<OrchestatorOnUpdateHandler<UpdateStatus>>,
+		onComplete?: Maybe<OrchestratorHandler>,
+		onCancel?: Maybe<OrchestratorHandler>,
 	) {
 		this._onStart = onStart
 		this._onUpdate = onUpdate
@@ -49,7 +50,7 @@ export class Orchestrator<UpdateStatus> {
 		this._onCancel = onCancel
 	}
 
-	get orchestratorResponse(): OrchestratorResponse | undefined {
+	get orchestratorResponse(): Maybe<OrchestratorResponse> {
 		return this._orchestratorResponse
 	}
 

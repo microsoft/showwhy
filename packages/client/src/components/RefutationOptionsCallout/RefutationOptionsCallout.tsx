@@ -5,14 +5,14 @@
 import { memo } from 'react'
 import { LinkCallout } from '~components/Callout'
 import { Text } from '~styles'
-import { RefutationOption } from '~types'
+import { RefutationOption, Maybe } from '~types'
 
 export const RefutationOptionsCallout: React.FC<{
 	title: string
 	calloutKey: number
 	refutationOptions?: RefutationOption[]
 	text?: string
-	separate?: boolean | undefined
+	separate?: Maybe<boolean>
 }> = memo(function RefutationOptionsCallout({
 	title,
 	refutationOptions,

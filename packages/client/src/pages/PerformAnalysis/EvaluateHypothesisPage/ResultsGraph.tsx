@@ -12,6 +12,7 @@ import {
 	Experiment,
 	Specification,
 	SpecificationCurveConfig,
+	Maybe,
 } from '~types'
 import { calculateMedian } from '~utils'
 
@@ -21,8 +22,8 @@ export const ResultsGraph: React.FC<{
 	defineQuestion: Experiment
 	specificationCurveConfig: SpecificationCurveConfig
 	vegaWindowDimensions: Dimensions
-	onMouseOver: (item: Specification | DecisionFeature | undefined) => void
-	hovered: number | undefined
+	onMouseOver: (item: Maybe<Specification | DecisionFeature>) => void
+	hovered: Maybe<number>
 	failedRefutationIds: number[]
 	refutationType: RefutationType
 }> = memo(function ResultsGraph({

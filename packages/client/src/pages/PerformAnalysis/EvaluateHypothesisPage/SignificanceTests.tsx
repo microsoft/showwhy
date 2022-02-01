@@ -10,11 +10,16 @@ import {
 import { LinkCallout } from '~components/Callout'
 import { ProgressBar } from '~components/ProgressBar'
 import { Paragraph, Value } from '~styles'
-import { Significance, NodeResponseStatus, SignificanceTest } from '~types'
+import {
+	Significance,
+	NodeResponseStatus,
+	SignificanceTest,
+	Maybe,
+} from '~types'
 import { isStatusProcessing } from '~utils'
 
 export const SignificanceTests: React.FC<{
-	significanceTestsResult: SignificanceTest | undefined
+	significanceTestsResult: Maybe<SignificanceTest>
 	cancelRun: () => void
 	isCanceled: boolean
 }> = memo(function SignificanceTests({

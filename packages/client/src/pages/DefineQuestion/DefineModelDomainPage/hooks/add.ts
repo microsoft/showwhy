@@ -5,11 +5,10 @@
 
 import { useCallback } from 'react'
 import { v4 } from 'uuid'
-import { SetDefinitions } from './types'
-import { CausalityLevel, ElementDefinition } from '~types'
+import { CausalityLevel, ElementDefinition, Setter } from '~types'
 
 export function useAddDefinition(
-	setDefinitions: SetDefinitions,
+	setDefinitions: Setter<ElementDefinition[]>,
 	saveDefinitions: (definitions: ElementDefinition[]) => void,
 	definitions?: ElementDefinition[],
 ): (definition: ElementDefinition) => void {

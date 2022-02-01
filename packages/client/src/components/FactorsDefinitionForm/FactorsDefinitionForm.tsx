@@ -7,11 +7,11 @@ import { IComboBoxOption } from '@fluentui/react'
 import { memo } from 'react'
 import styled from 'styled-components'
 import { useFactorsDefinitionForm } from './hooks'
-import { PageType, CausalFactor, Experiment, OptionalId } from '~types'
+import { PageType, CausalFactor, Experiment, OptionalId, Maybe } from '~types'
 
 export const FactorsDefinitionForm: React.FC<{
 	factor?: CausalFactor
-	showLevel?: boolean | undefined
+	showLevel?: Maybe<boolean>
 	defineQuestion?: Experiment
 	pageType: PageType
 	variables?: IComboBoxOption[]
@@ -44,7 +44,7 @@ export const FactorsDefinitionForm: React.FC<{
 	)
 })
 
-const Container = styled.form<{ showLevel: boolean | undefined }>`
+const Container = styled.form<{ showLevel: Maybe<boolean> }>`
 	display: grid;
 	grid-template-columns: ${({ showLevel }) =>
 		showLevel ? '15% 25% 60%' : '30% 70%'};

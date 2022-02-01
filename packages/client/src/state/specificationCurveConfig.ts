@@ -11,7 +11,7 @@ import {
 	useResetRecoilState,
 	useSetRecoilState,
 } from 'recoil'
-import { SpecificationCurveConfig } from '~types'
+import { SpecificationCurveConfig, Maybe } from '~types'
 
 export const defaultConfig = {
 	medianLine: true,
@@ -39,16 +39,16 @@ export function useResetSpecificationCurveConfig(): Resetter {
 	return useResetRecoilState(specificationCurveConfig)
 }
 
-export const hoverState = atom<number | undefined>({
+export const hoverState = atom<Maybe<number>>({
 	key: 'specification-curve-hover-state',
 	default: undefined,
 })
 
-export function useHoverState(): number | undefined {
+export function useHoverState(): Maybe<number> {
 	return useRecoilValue(hoverState)
 }
 
-export function useSetHoverState(): SetterOrUpdater<number | undefined> {
+export function useSetHoverState(): SetterOrUpdater<Maybe<number>> {
 	return useSetRecoilState(hoverState)
 }
 

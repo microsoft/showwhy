@@ -15,12 +15,9 @@ import {
 	useResetRecoilState,
 	useSetRecoilState,
 } from 'recoil'
-import { Definition, ProjectFile, VariableDefinition } from '~types'
+import { Definition, ProjectFile, VariableDefinition, Maybe } from '~types'
 
-const modelVariablesState = atomFamily<
-	Definition | undefined,
-	string | undefined
->({
+const modelVariablesState = atomFamily<Maybe<Definition>, Maybe<string>>({
 	key: 'model-variables',
 	default: {},
 })
@@ -33,13 +30,13 @@ const keys = atom<string[]>({
 export const useSetModelVariableSelector = selectorFamily({
 	key: 'model-variable-access',
 	get:
-		(key: string | undefined) =>
+		(key: Maybe<string>) =>
 		({ get }) =>
 			get(modelVariablesState(key)),
 	set:
-		(key: string | undefined) =>
-		({ set }, newValue: Definition | undefined | DefaultValue) => {
-			set<Definition | undefined>(modelVariablesState(key), newValue)
+		(key: Maybe<string>) =>
+		({ set }, newValue: Maybe<Definition | DefaultValue>) => {
+			set<Maybe<Definition>>(modelVariablesState(key), newValue)
 			set(keys, prev => {
 				if (key && !prev.includes(key)) {
 					return [...prev, key]
@@ -50,14 +47,12 @@ export const useSetModelVariableSelector = selectorFamily({
 })
 
 export function useSetModelVariables(
-	key: string | undefined,
-): SetterOrUpdater<Definition | undefined> {
+	key: Maybe<string>,
+): SetterOrUpdater<Maybe<Definition>> {
 	return useSetRecoilState(useSetModelVariableSelector(key))
 }
 
-export function useModelVariables(
-	key: string | undefined,
-): Definition | undefined {
+export function useModelVariables(key: Maybe<string>): Maybe<Definition> {
 	return useRecoilValue(useSetModelVariableSelector(key))
 }
 
