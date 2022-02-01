@@ -22,6 +22,7 @@ import {
 	Estimator,
 	PrimarySpecificationConfig,
 	Setter,
+	Maybe,
 } from '~types'
 
 enum BatchUpdateAction {
@@ -46,7 +47,7 @@ export function useEstimatorHook(): {
 		EstimatorGroup[]
 	>([])
 	const [defaultEstimator, setDefaultEstimator] = useState<
-		EstimatorType | undefined
+		Maybe<EstimatorType>
 	>(primarySpecificationConfig.type)
 
 	const onEstimatorsCheckboxChange = useCallback(
@@ -207,7 +208,7 @@ function useOnEstimatorTypeChange(
 }
 
 function useOnDefaultChange(
-	setDefaultEstimator: Setter<EstimatorType | undefined>,
+	setDefaultEstimator: Setter<Maybe<EstimatorType>>,
 	setPrimarySpecificationConfig: SetterOrUpdater<PrimarySpecificationConfig>,
 ) {
 	return useCallback(
@@ -224,7 +225,7 @@ function useOnDefaultChange(
 
 function useEstimatorCardList(
 	estimatorsList: Estimator[],
-	defaultEstimator: EstimatorType | undefined,
+	defaultEstimator: Maybe<EstimatorType>,
 	estimators: Estimator[],
 	selectedEstimatorGroups: EstimatorGroup[],
 	onDefaultChange: (type: EstimatorType) => void,

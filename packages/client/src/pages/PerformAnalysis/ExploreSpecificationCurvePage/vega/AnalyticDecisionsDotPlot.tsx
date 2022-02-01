@@ -29,7 +29,7 @@ export const AnalyticDecisionsDotPlot: React.FC<{
 	height: number
 	onMouseClick?: (datum?: Specification) => void
 	onMouseOver?: (datum?: DecisionFeature) => void
-	onAxisClick?: (axis: string, datum: any | undefined) => void
+	onAxisClick?: (axis: string, datum: any) => void
 	hovered?: number
 	selected?: number
 }> = memo(function AnalyticDecisionsDotPlot({
