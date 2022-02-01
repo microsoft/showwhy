@@ -28,7 +28,7 @@ import {
 export function useBusinessLogic(): {
 	files: ProjectFile[]
 	columns: IColumn[]
-	selectedFile: ProjectFile | undefined
+	selectedFile: Maybe<ProjectFile>
 	selectedTable: DataTable | undefined
 	selectedColumn: Maybe<string>
 	onSelectColumn: (evt: any, column?: IColumn) => void

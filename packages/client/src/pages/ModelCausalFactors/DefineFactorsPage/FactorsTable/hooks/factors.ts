@@ -4,12 +4,12 @@
  */
 
 import { useCallback, useMemo } from 'react'
-import { SetFactors } from './types'
 import {
 	CausalFactor,
 	Cause,
 	ExposureAndOutcomeCauses,
 	FlatCausalFactor,
+	Setter,
 } from '~types'
 import { replaceItemAtIndex } from '~utils'
 
@@ -39,7 +39,7 @@ export function useFlatFactorsList(
 export function useSaveFactors(
 	causalFactors: CausalFactor[],
 	causeType: string,
-	setValues: SetFactors,
+	setValues: Setter<CausalFactor[]>,
 	save: (factors: CausalFactor[]) => void,
 ): (id: string, value: any) => void {
 	return useCallback(

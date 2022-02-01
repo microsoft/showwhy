@@ -23,7 +23,7 @@ interface PathData {
 }
 
 export function useBusinessLogic(): {
-	factor: CausalFactor | undefined
+	factor: Maybe<CausalFactor>
 	isEditing: boolean
 	flatFactorsList: FlatCausalFactor[]
 	page: Maybe<string>
@@ -32,7 +32,7 @@ export function useBusinessLogic(): {
 	addFactor: (factor: OptionalId<CausalFactor>) => void
 	editFactor: (factor: CausalFactor) => void
 	deleteFactor: (factor: CausalFactor) => void
-	setFactor: (factor: CausalFactor | undefined) => void
+	setFactor: (factor: Maybe<CausalFactor>) => void
 	setIsEditing: (value: boolean) => void
 	goToFactorsPage: () => void
 } {
@@ -91,7 +91,7 @@ function useEditFactor(
 function useAddFactor(
 	isEditing: boolean,
 	setIsEditing: (value: boolean) => void,
-	setFactor: (factor: CausalFactor | undefined) => void,
+	setFactor: (factor: Maybe<CausalFactor>) => void,
 ): (factor: OptionalId<CausalFactor>) => void {
 	const addOrEditFactor = useAddOrEditFactor()
 	return useCallback(

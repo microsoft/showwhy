@@ -20,7 +20,7 @@ export function useFactorsTable(causeType: string): {
 	itemList: Item[]
 } {
 	const [multiline, { toggle: toggleMultiline }] = useBoolean(false)
-	const [values, setValues] = useState<CausalFactor[] | undefined>([])
+	const [values, setValues] = useState<CausalFactor[]>([])
 	const setCausalFactors = useSetCausalFactors()
 	const causalFactors = useCausalFactors()
 
