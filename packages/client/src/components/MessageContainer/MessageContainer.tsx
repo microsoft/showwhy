@@ -5,10 +5,11 @@
 import { MessageBar, MessageBarType, IStyle } from '@fluentui/react'
 import { memo, useCallback } from 'react'
 import styled from 'styled-components'
+import { Handler } from '~types'
 
 export const MessageContainer: React.FC<{
 	type: MessageBarType
-	onDismiss?: () => void
+	onDismiss?: Handler
 	styles?: IStyle
 }> = memo(function MessageContainer({
 	children,

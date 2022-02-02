@@ -4,8 +4,9 @@
  */
 import { useCallback } from 'react'
 import { useHistory } from 'react-router-dom'
+import { Handler } from '~types'
 
-export function useGoToPage(url: string, state?: unknown): () => void {
+export function useGoToPage(url: string, state?: unknown): Handler {
 	const history = useHistory()
 	return useCallback(() => {
 		history.push(url)

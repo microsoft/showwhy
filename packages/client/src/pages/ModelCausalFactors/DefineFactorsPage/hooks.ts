@@ -6,13 +6,13 @@
 import { upperFirst } from 'lodash'
 import { useMemo } from 'react'
 import { useGoToPage, usePageType } from '~hooks'
-import { Pages } from '~types'
+import { Pages, Handler } from '~types'
 
 export function useBusinessLogic(): {
 	pageName: string
 	causeType: string
 	tableHeader: Array<{ fieldName: string; value: string }>
-	goToConsiderCausalFactors: () => void
+	goToConsiderCausalFactors: Handler
 } {
 	const { pageName, causeType, question } = usePageComponents()
 	const tableHeader = useTableHeader(question)
@@ -62,7 +62,7 @@ function useTableHeader(
 	}, [question])
 }
 
-function useGoToConsiderCausalFactors(): () => void {
+function useGoToConsiderCausalFactors(): Handler {
 	const pageType = usePageType()
 	return useGoToPage(Pages.ConsiderCausalFactors, pageType)
 }

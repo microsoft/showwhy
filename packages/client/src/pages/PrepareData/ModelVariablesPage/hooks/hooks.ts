@@ -33,6 +33,7 @@ import {
 	CausalFactor,
 	VariableDefinition,
 	Maybe,
+	Handler,
 } from '~types'
 
 export function useBusinessLogic(): {
@@ -47,9 +48,9 @@ export function useBusinessLogic(): {
 	definitionOptions: FactorsOrDefinitions
 	isDeriveVisible: boolean
 	editingClause: Maybe<FilterObject>
-	onResetClause: () => void
+	onResetClause: Handler
 	onSave: (definition: string) => void
-	onToggleDeriveVisible: () => void
+	onToggleDeriveVisible: Handler
 	onEditClause: (filter: FilterObject) => void
 	onUpdateTargetVariable: ReturnType<typeof useSetTargetVariable>
 	onSelectDefinition: (option: any) => void

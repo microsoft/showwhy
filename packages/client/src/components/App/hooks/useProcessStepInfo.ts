@@ -5,9 +5,9 @@
 import { useCallback, useMemo } from 'react'
 import { useCurrentStep, useAllSteps } from '~hooks'
 import { useSetStepStatus, useStepStatus } from '~state'
-import { Handler0, Step, StepStatus, Maybe } from '~types'
+import { Handler, Step, StepStatus, Maybe } from '~types'
 
-export type ToggleStepStatusHandler = Handler0
+export type ToggleStepStatusHandler = Handler
 export interface ProcessStepInfo {
 	step: Maybe<Step>
 	stepStatus: Maybe<StepStatus>
@@ -46,7 +46,7 @@ function useCurrentStepIndex(
 function useToggleStepStatus(
 	step: Maybe<Step>,
 	stepStatus: Maybe<StepStatus>,
-): () => void {
+): Handler {
 	const setStepStatus = useSetStepStatus(step?.url)
 	return useCallback(() => {
 		setStepStatus(

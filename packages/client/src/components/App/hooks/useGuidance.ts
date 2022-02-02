@@ -5,9 +5,9 @@
 import { useBoolean } from '@fluentui/react-hooks'
 import { useEffect } from 'react'
 import { useSetGuidance } from '~state'
-import { Handler0 } from '~types'
+import { Handler } from '~types'
 
-export function useGuidance(): [boolean, Handler0] {
+export function useGuidance(): [boolean, Handler] {
 	/* TODO: this is synchronizing state between an in-memory hook and recoil. This should just use recoil*/
 	const [isGuidanceVisible, { toggle: toggleGuidance }] = useBoolean(true)
 	const setGuidance = useSetGuidance()

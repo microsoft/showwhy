@@ -4,10 +4,11 @@
  */
 
 import { useCallback } from 'react'
+import { Handler } from '~types'
 
 export function useOnDropRejected(
 	onError?: (text: string) => void,
-	cb?: () => void,
+	cb?: Handler,
 ): (message: string) => void {
 	return useCallback(
 		(message: string) => {
