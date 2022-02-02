@@ -8,7 +8,14 @@ import { memo, useCallback, useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
 import { ActionButtons } from '~components/ActionButtons'
 import { useDefaultTableSample } from '~hooks'
-import { Item, TableFooter, HeaderData, TableProps, Maybe } from '~types'
+import {
+	Item,
+	TableFooter,
+	HeaderData,
+	TableProps,
+	Maybe,
+	Handler,
+} from '~types'
 import { sortGroupByKey } from '~utils'
 
 interface GenericHeader {
@@ -81,7 +88,7 @@ export const GenericTableComponent: React.FC<{
 	)
 
 	const onSelectedRow = useCallback(
-		(id: string, row: any, onClick: () => void) => {
+		(id: string, row: any, onClick: Handler) => {
 			setSelectedRow(id)
 			onClick()
 		},

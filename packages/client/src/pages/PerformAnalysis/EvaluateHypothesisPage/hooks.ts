@@ -34,6 +34,7 @@ import {
 	Specification,
 	RefutationType,
 	Maybe,
+	Handler,
 } from '~types'
 
 export function useBusinessLogic(): {
@@ -51,7 +52,7 @@ export function useBusinessLogic(): {
 	refutationType: RefutationType
 	isCanceled: boolean
 	runSignificance: (taskIds: string[]) => void
-	cancelRun: () => void
+	cancelRun: Handler
 } {
 	const defineQuestion = useDefineQuestion()
 	const primarySpecificationConfig = usePrimarySpecificationConfig()

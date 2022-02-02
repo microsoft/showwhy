@@ -8,6 +8,7 @@ import styled from 'styled-components'
 import { ActionButtons } from '~components/ActionButtons'
 import { useTimeElapsed } from '~hooks'
 import { Text } from '~styles'
+import { Handler } from '~types'
 
 export const ProgressBar: React.FC<{
 	percentage: number
@@ -15,7 +16,7 @@ export const ProgressBar: React.FC<{
 	percentComplete?: number
 	description?: string
 	label?: string
-	onCancel?: () => void
+	onCancel?: Handler
 }> = memo(function ProgressBar({
 	percentage,
 	startTime,

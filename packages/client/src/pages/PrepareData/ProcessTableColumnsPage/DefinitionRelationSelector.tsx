@@ -10,11 +10,11 @@ import {
 } from '@fluentui/react'
 import { memo, useCallback } from 'react'
 import styled from 'styled-components'
-import { ColumnRelation, ColumnRelevance, Maybe } from '~types'
+import { ColumnRelation, ColumnRelevance, Maybe, Handler } from '~types'
 
 type DefinitionChangeHandler = (changedRelation: ColumnRelation[]) => void
 type ToggleSelectHandler = (
-	evt?: Maybe<{ preventDefault: () => void }>,
+	evt?: Maybe<{ preventDefault: Handler }>,
 	value?: Maybe<IContextualMenuItem>,
 ) => void
 
@@ -60,7 +60,7 @@ function useToggleSelect(
 ): ToggleSelectHandler {
 	return useCallback(
 		(
-			evt?: Maybe<{ preventDefault: () => void }>,
+			evt?: Maybe<{ preventDefault: Handler }>,
 			value?: Maybe<IContextualMenuItem>,
 		) => {
 			evt?.preventDefault()

@@ -11,6 +11,7 @@ import {
 	useResetRecoilState,
 	useSetRecoilState,
 } from 'recoil'
+import { Handler } from '~types'
 
 export const confidenceIntervalState = atom<boolean>({
 	key: 'confidence-interval',
@@ -25,7 +26,7 @@ export function useSetConfidenceInterval(): SetterOrUpdater<boolean> {
 	return useSetRecoilState(confidenceIntervalState)
 }
 
-export function useToggleConfidenceInterval(): () => void {
+export function useToggleConfidenceInterval(): Handler {
 	const set = useSetRecoilState(confidenceIntervalState)
 	return useCallback(() => {
 		set(prev => !prev)

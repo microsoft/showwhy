@@ -8,7 +8,7 @@ import { useCallback } from 'react'
 import Xarrow from 'react-xarrows'
 import styled from 'styled-components'
 import { box1, box2, box3, box4 } from './constants'
-import { CausalEffectSize } from '~types'
+import { CausalEffectSize, Handler } from '~types'
 
 export const arrows = [
 	{
@@ -30,7 +30,7 @@ export const arrows = [
 	},
 ]
 
-export function useGetArrows(size: CausalEffectSize): () => JSX.Element[] {
+export function useGetArrows(size: CausalEffectSize): Handler<JSX.Element[]> {
 	const thematic = useThematic()
 	return useCallback(() => {
 		return arrows.map(arrow => {

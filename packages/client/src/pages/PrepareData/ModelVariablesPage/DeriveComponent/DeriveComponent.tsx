@@ -34,6 +34,7 @@ import {
 	Definition,
 	VariableDefinition,
 	Maybe,
+	Handler,
 } from '~types'
 
 export const DeriveComponent: React.FC<{
@@ -41,8 +42,8 @@ export const DeriveComponent: React.FC<{
 	fileId: string
 	originalTable: Maybe<ColumnTable>
 	editing: Maybe<FilterObject>
-	onClose: () => void
-	onReset: () => void
+	onClose: Handler
+	onReset: Handler
 	onSave: (definition: string) => void
 	onUpdate: (evt: unknown, columnDetail: { text: Maybe<string> }) => void
 }> = memo(function DeriveComponent({

@@ -12,7 +12,7 @@ import {
 	Setter,
 	CausalityLevel,
 	ElementDefinition,
-	Handler0,
+	Handler,
 	Handler1,
 	Maybe,
 } from '~types'
@@ -29,7 +29,7 @@ export function useTableComponent(
 	onDelete?: Maybe<Handler1<ElementDefinition>>,
 	onSave?: Maybe<Handler1<ElementDefinition>>,
 	onEdit?: Maybe<Handler1<ElementDefinition>>,
-	onCancel?: Maybe<Handler0>,
+	onCancel?: Maybe<Handler>,
 ): {
 	items: any
 	headersData: any[]

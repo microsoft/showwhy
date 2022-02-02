@@ -7,12 +7,12 @@ import { memo } from 'react'
 
 import styled from 'styled-components'
 import { useGoToPage } from '~hooks'
-import { Step, StepStatus, Maybe } from '~types'
+import { Step, StepStatus, Maybe, Handler } from '~types'
 
 export const StepControls: React.FC<{
 	step?: Step
 	stepStatus?: StepStatus
-	toggleStatus: () => void
+	toggleStatus: Handler
 	previousUrl: string
 	nextUrl: string
 }> = memo(function StepControls({

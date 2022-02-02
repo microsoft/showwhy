@@ -10,8 +10,10 @@ import {
 	PageType,
 	CausalFactor,
 	Definition,
-	StringSetter,
+	Setter,
+	Maybe,
 	CausalityLevel,
+	Handler,
 } from '~types'
 
 export function useOnSaveCausalFactor({
@@ -21,10 +23,10 @@ export function useOnSaveCausalFactor({
 	toggleIsEditingLabel,
 	saveCausalFactor,
 }: {
-	setNewLabel: StringSetter
+	setNewLabel: Setter<Maybe<string>>
 	newLabel?: string
 	setEditingDefinition: SetEditingDefinition
-	toggleIsEditingLabel: () => void
+	toggleIsEditingLabel: Handler
 	saveCausalFactor: (factor: CausalFactor) => void
 }): (definition?: CausalFactor) => void {
 	return useCallback(
@@ -64,11 +66,11 @@ export function useOnSave({
 	setModelVariables,
 }: {
 	type: string
-	setNewLabel: StringSetter
+	setNewLabel: Setter<Maybe<string>>
 	newLabel?: string
 	modelVariables?: Definition
 	setEditingDefinition: SetEditingDefinition
-	toggleIsEditingLabel: () => void
+	toggleIsEditingLabel: Handler
 	saveDefinition: (def: CausalFactor) => void
 	onUpdate: (label: string) => void
 	onSaveCausalFactor: (factor: CausalFactor) => void

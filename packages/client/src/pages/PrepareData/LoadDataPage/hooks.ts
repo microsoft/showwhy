@@ -23,7 +23,7 @@ import {
 	useSetProjectFiles,
 	useSetSelectedFile,
 } from '~state'
-import { DropFilesCount, ProjectFile, Handler1, Maybe } from '~types'
+import { DropFilesCount, ProjectFile, Handler1, Maybe, Handler } from '~types'
 import { createDefaultTable, replaceItemAtIndex } from '~utils'
 
 export function useBusinessLogic(): {
@@ -37,12 +37,12 @@ export function useBusinessLogic(): {
 	fileCount: DropFilesCount
 	acceptedFileTypes: string[]
 	setSelectedFile: SetterOrUpdater<Maybe<ProjectFile>>
-	toggleShowConfirm: () => void
-	toggleLoadedCorrectly: () => void
-	handleDismissError: () => void
+	toggleShowConfirm: Handler
+	toggleLoadedCorrectly: Handler
+	handleDismissError: Handler
 	handleDelimiterChange: (e: unknown, option: Maybe<IDropdownOption>) => void
 	handleOnDropAccepted: (f: FileCollection) => void
-	onConfirmDelete: () => void
+	onConfirmDelete: Handler
 	onRenameTable: (alias: string) => void
 	onDrop: (f: FileCollection) => void
 	onDropAccepted: (f: FileCollection) => void

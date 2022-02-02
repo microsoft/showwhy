@@ -32,6 +32,7 @@ import {
 	SpecificationCurveConfig,
 	NodeResponseStatus,
 	Maybe,
+	Handler,
 } from '~types'
 
 export function useSpecificationCurve(): {
@@ -49,7 +50,7 @@ export function useSpecificationCurve(): {
 	isSpecificationOn: boolean
 	onMouseOver: (item: Maybe<Specification | DecisionFeature>) => void
 	onSpecificationsChange: (config: SpecificationCurveConfig) => void
-	onToggleRejectEstimate: () => void
+	onToggleRejectEstimate: Handler
 	outcome: Maybe<string>
 	refutationNumbers: string
 	selectedSpecification: Maybe<Specification>

@@ -15,12 +15,13 @@ import {
 	NodeResponseStatus,
 	SignificanceTest,
 	Maybe,
+	Handler,
 } from '~types'
 import { isStatusProcessing } from '~utils'
 
 export const SignificanceTests: React.FC<{
 	significanceTestsResult: Maybe<SignificanceTest>
-	cancelRun: () => void
+	cancelRun: Handler
 	isCanceled: boolean
 }> = memo(function SignificanceTests({
 	significanceTestsResult,

@@ -15,7 +15,7 @@ import {
 	HeaderData,
 	Item,
 	Handler1,
-	Handler0,
+	Handler,
 } from '~types'
 
 export const TableComponent: React.FC<{
@@ -27,7 +27,7 @@ export const TableComponent: React.FC<{
 	variables?: IComboBoxOption[]
 	onDelete?: Handler1<ElementDefinition>
 	onEdit?: Handler1<ElementDefinition>
-	onCancel?: Handler0
+	onCancel?: Handler
 	onSave?: Handler1<ElementDefinition>
 }> = memo(function TableComponent({
 	headers,

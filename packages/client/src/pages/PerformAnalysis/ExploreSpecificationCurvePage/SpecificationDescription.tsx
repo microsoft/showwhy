@@ -13,6 +13,7 @@ import {
 	RefutationOption,
 	Specification,
 	RefutationTestMethodString,
+	Handler,
 } from '~types'
 import { addS } from '~utils'
 
@@ -22,7 +23,7 @@ export const SpecificationDescription: React.FC<{
 	isSpecificationOn: boolean
 	refutationNumbers: string
 	failedRefutations: string[]
-	onToggleRejectEstimate: () => void
+	onToggleRejectEstimate: Handler
 }> = memo(function SpecificationDescription({
 	specification,
 	refutationOptions,
