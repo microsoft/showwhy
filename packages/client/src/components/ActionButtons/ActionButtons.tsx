@@ -7,17 +7,17 @@ import { memo, useMemo } from 'react'
 import styled from 'styled-components'
 import { InfoCallout } from '~components/Callout'
 import { Text } from '~styles'
-import { Handler0 } from '~types'
+import { Handler } from '~types'
 
 const DEFAULT_FAVORITE_PROPS = Object.freeze({ isFavorite: false, title: '' })
 
 export interface ActionButtonsProps {
-	onCancel?: Handler0
-	onSave?: Handler0
-	onEdit?: Handler0
-	onDelete?: Handler0
-	onDuplicate?: Handler0
-	onFavorite?: Handler0
+	onCancel?: Handler
+	onSave?: Handler
+	onEdit?: Handler
+	onDelete?: Handler
+	onDuplicate?: Handler
+	onFavorite?: Handler
 	favoriteProps?: {
 		isFavorite: boolean
 		title?: string

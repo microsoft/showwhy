@@ -17,7 +17,7 @@ import {
 	Experiment,
 	CausalFactor,
 	CausalityLevel,
-	Handler0,
+	Handler,
 	Setter,
 	OptionalId,
 } from '~types'
@@ -109,7 +109,7 @@ function useResetFields(
 	setDescription: Setter<string>,
 	setVariable: Setter<string>,
 	setIsPrimary: Setter<boolean>,
-): Handler0 {
+): Handler {
 	return useCallback(() => {
 		setDescription('')
 		setVariable('')
@@ -122,8 +122,8 @@ function useAdd(
 	description: string,
 	isPrimary: boolean,
 	onAdd: OnAddHandler,
-	resetFields: Handler0,
-): Handler0 {
+	resetFields: Handler,
+): Handler {
 	return useCallback(() => {
 		const newFactor = {
 			variable,
