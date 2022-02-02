@@ -14,6 +14,7 @@ import {
 	FlatCausalFactor,
 	OptionalId,
 	Maybe,
+	Handler,
 } from '~types'
 import { noop } from '~utils'
 
@@ -34,7 +35,7 @@ export function useBusinessLogic(): {
 	deleteFactor: (factor: CausalFactor) => void
 	setFactor: (factor: Maybe<CausalFactor>) => void
 	setIsEditing: (value: boolean) => void
-	goToFactorsPage: () => void
+	goToFactorsPage: Handler
 } {
 	const causalFactors = useCausalFactors()
 	const pageType = usePageType()
@@ -116,7 +117,7 @@ function useFlatFactorsList(causalFactors: CausalFactor[]): FlatCausalFactor[] {
 	}, [causalFactors])
 }
 
-function useFactorsNavigation(): [() => void, PathData] {
+function useFactorsNavigation(): [Handler, PathData] {
 	const history = useHistory()
 	const [historyState, setHistoryState] = useState<string>()
 	const factorsPathData = useFactorsPathData(historyState)

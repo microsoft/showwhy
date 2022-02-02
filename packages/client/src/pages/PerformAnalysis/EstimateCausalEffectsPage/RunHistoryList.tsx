@@ -9,14 +9,14 @@ import styled from 'styled-components'
 import { ErrorMessage } from '~components/ErrorMessage'
 import { RunProgressIndicator } from '~components/RunProgressIndicator'
 import { Title, Text, ContainerFlexColumn } from '~styles'
-import { RunHistory, NodeResponseStatus } from '~types'
+import { RunHistory, NodeResponseStatus, Handler } from '~types'
 import { isStatusProcessing, returnElapsedTime } from '~utils'
 
 export const RunHistoryList: React.FC<{
 	setRunAsDefault: (run: RunHistory) => void
 	loadingSpecCount: boolean
 	specCount?: number
-	cancelRun?: () => void
+	cancelRun?: Handler
 	runHistory: RunHistory[]
 	errors?: string
 	isCanceled: boolean

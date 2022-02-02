@@ -11,6 +11,7 @@ import {
 	RefutationTestMethod,
 	RefutationType,
 	RefutationResult,
+	Handler,
 } from '~types'
 
 export const REFUTATIONS: RefutationOption[] = [
@@ -70,7 +71,7 @@ export function useFailedRefutationIds(data: Specification[]): number[] {
 	}, [data])
 }
 
-export function useSetQuickRefutation(): () => void {
+export function useSetQuickRefutation(): Handler {
 	const setRefutations = useSetRefutationType()
 
 	return useCallback(() => {
@@ -78,7 +79,7 @@ export function useSetQuickRefutation(): () => void {
 	}, [setRefutations])
 }
 
-export function useSetFullRefutation(): () => void {
+export function useSetFullRefutation(): Handler {
 	const setRefutations = useSetRefutationType()
 
 	return useCallback(() => {

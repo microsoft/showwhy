@@ -21,11 +21,11 @@ import {
 	useResetCount,
 	useSupportedFileTypes,
 } from '~hooks'
-import { DropFilesCount, ProjectFile } from '~types'
+import { DropFilesCount, ProjectFile, Handler } from '~types'
 
 export function useHandleOnDrop(
 	onFileLoadCompleted: (file: ProjectFile, table: ColumnTable) => void,
-	onLoadStart?: () => void,
+	onLoadStart?: Handler,
 ): (files: FileCollection) => void {
 	const onDrop = useDrop(onFileLoadCompleted, onLoadStart)
 	return useCallback(

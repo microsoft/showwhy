@@ -23,6 +23,7 @@ import {
 	PrimarySpecificationConfig,
 	Setter,
 	Maybe,
+	Handler,
 } from '~types'
 
 enum BatchUpdateAction {
@@ -233,7 +234,7 @@ function useEstimatorCardList(
 	onEstimatorsCheckboxChange: (estimator: Estimator) => void,
 	estimatorShortDescription: (type: string) => string,
 	confidenceInterval: boolean,
-	onConfidenceIntervalsChange: () => void,
+	onConfidenceIntervalsChange: Handler,
 ) {
 	return useMemo(() => {
 		const list = estimatorGroups.map(type => {

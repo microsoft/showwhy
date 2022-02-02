@@ -8,7 +8,7 @@ import Xarrow from 'react-xarrows'
 import styled from 'styled-components'
 import { ProgressBar } from '~components/ProgressBar'
 import { Container } from '~styles'
-import { NodeResponseStatus, RunHistory } from '~types'
+import { NodeResponseStatus, RunHistory, Handler } from '~types'
 
 interface LabelProps {
 	id: string
@@ -22,7 +22,7 @@ export const RunProgressIndicator: React.FC<{
 		description?: string
 		percentComplete?: number
 	}
-	cancelRun?: () => void
+	cancelRun?: Handler
 	theme: Theme
 }> = memo(function RunProgressIndicator({ run, props, cancelRun, theme }) {
 	const estimatorLabel: LabelProps = useMemo(() => {

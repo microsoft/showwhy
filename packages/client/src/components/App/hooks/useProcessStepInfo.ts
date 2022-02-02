@@ -46,7 +46,7 @@ function useCurrentStepIndex(
 function useToggleStepStatus(
 	step: Maybe<Step>,
 	stepStatus: Maybe<StepStatus>,
-): () => void {
+): Handler {
 	const setStepStatus = useSetStepStatus(step?.url)
 	return useCallback(() => {
 		setStepStatus(

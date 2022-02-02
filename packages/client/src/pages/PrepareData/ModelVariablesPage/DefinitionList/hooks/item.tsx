@@ -8,7 +8,7 @@ import { useCallback } from 'react'
 import styled from 'styled-components'
 import { InputRef } from './types'
 import { Text } from '~styles'
-import { CausalFactor, Item, Setter, Maybe } from '~types'
+import { CausalFactor, Item, Setter, Maybe, Handler } from '~types'
 
 export function useItem({
 	isEditingLabel,
@@ -30,7 +30,7 @@ export function useItem({
 	onSave: (f: CausalFactor) => void
 	onClick: (f: CausalFactor) => void
 	onDelete: (f: CausalFactor) => void
-	cancelField: () => void
+	cancelField: Handler
 	onDuplicate: (f: CausalFactor) => void
 	editDefinition: (f: CausalFactor) => void
 	setNewLabel: Setter<Maybe<string>>
