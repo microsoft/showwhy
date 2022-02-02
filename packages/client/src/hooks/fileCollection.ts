@@ -9,6 +9,7 @@ import {
 } from '@data-wrangling-components/utilities'
 import { useCallback, useMemo } from 'react'
 import { useFileCollection, useSetFileCollection } from '~state'
+import { AsyncHandler1 } from '~types'
 
 export const useIsCollectionEmpty = (): boolean => {
 	const fileCollection = useFileCollection().copy()
@@ -17,9 +18,7 @@ export const useIsCollectionEmpty = (): boolean => {
 	}, [fileCollection])
 }
 
-export const useAddFilesToCollection = (): ((
-	files: FileWithPath[],
-) => Promise<void>) => {
+export function useAddFilesToCollection(): AsyncHandler1<FileWithPath[]> {
 	const setFileCollection = useSetFileCollection()
 	const fileCollection = useFileCollection().copy()
 	return useCallback(
@@ -31,9 +30,7 @@ export const useAddFilesToCollection = (): ((
 	)
 }
 
-export const useUpdateFileCollection = (): ((
-	fileCollection: FileCollection,
-) => Promise<void>) => {
+export function useUpdateFileCollection(): AsyncHandler1<FileCollection> {
 	const setFileCollection = useSetFileCollection()
 	const fc = useFileCollection().copy()
 	return useCallback(

@@ -34,6 +34,7 @@ import {
 	RefutationOption,
 	RunHistory,
 	Maybe,
+	AsyncHandler,
 } from '~types'
 import {
 	createFormData,
@@ -50,7 +51,7 @@ export function useBusinessLogic(): {
 	runHistory: RunHistory[]
 	errors: Maybe<string>
 	cancelRun: () => void
-	runEstimate: () => Promise<void>
+	runEstimate: AsyncHandler
 	setRunAsDefault: (run: RunHistory) => void
 	loadingSpecCount: boolean
 	hasConfidenceInterval: boolean

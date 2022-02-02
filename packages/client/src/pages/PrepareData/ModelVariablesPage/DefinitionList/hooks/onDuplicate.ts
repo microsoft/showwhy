@@ -6,7 +6,7 @@
 import { useCallback } from 'react'
 import { v4 } from 'uuid'
 import { InputRef, SetModelVariables } from './types'
-import { PageType, CausalFactor, Definition } from '~types'
+import { PageType, CausalFactor, Definition, AsyncHandler1 } from '~types'
 import { wait } from '~utils'
 
 export function useOnDuplicateCausalFactor({
@@ -57,7 +57,7 @@ export function useOnDuplicate({
 	onDuplicateCausalFactor: (factor: CausalFactor, newName: string) => void
 	listEndRef: InputRef
 	onClick: (factor: CausalFactor) => void
-}): (value: CausalFactor) => Promise<void> {
+}): AsyncHandler1<CausalFactor> {
 	return useCallback(
 		async (value: CausalFactor) => {
 			const newVariableName = value?.variable + '_copy'

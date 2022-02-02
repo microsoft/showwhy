@@ -5,11 +5,18 @@
 
 import { useCallback } from 'react'
 import { downloadFile } from '~resources'
-import { DownloadType, FileType, Maybe } from '~types'
+import {
+	DownloadType,
+	FileType,
+	Maybe,
+	AsyncHandler,
+	AsyncHandler1,
+} from '~types'
 
-export function useReturnResult(): (
-	fileName: string,
-) => Promise<Maybe<{ blob: Blob; url: string }>> {
+export function useReturnResult(): AsyncHandler1<
+	string,
+	Maybe<{ blob: Blob; url: string }>
+> {
 	return useCallback(fileName => downloadFile(fileName), [])
 }
 
@@ -32,7 +39,7 @@ export function useDownloadResult(): (fileType: FileType) => void {
 	)
 }
 
-export function useGetCSVResult(): () => Promise<Maybe<Blob>> {
+export function useGetCSVResult(): AsyncHandler<Maybe<Blob>> {
 	return useCallback(async () => {
 		const result = await downloadFile(DownloadType.csv)
 		if (!result) return

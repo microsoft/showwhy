@@ -28,10 +28,16 @@ import {
 	useOriginalTables,
 	useRunHistory,
 } from '~state'
-import { PageType, Workspace, NodeResponseStatus, Maybe } from '~types'
+import {
+	PageType,
+	Workspace,
+	NodeResponseStatus,
+	Maybe,
+	AsyncHandler,
+} from '~types'
 import { isDataUrl } from '~utils'
 
-export function useSaveProject(): () => Promise<void> {
+export function useSaveProject(): AsyncHandler {
 	const fileCollection = useFileCollection()
 	const confidenceInterval = useConfidenceInterval()
 	const primarySpecification = usePrimarySpecificationConfig()

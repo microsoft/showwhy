@@ -4,14 +4,14 @@
  */
 
 import { useCallback } from 'react'
-import { Experiment, ElementDefinition } from '~types'
+import { Experiment, ElementDefinition, AsyncHandler1 } from '~types'
 import { wait } from '~utils'
 
 export function useSaveDefinitions(
 	type: string,
 	defineQuestion: Experiment,
 	setDefineQuestion: (question: Experiment) => void,
-): (definitions: ElementDefinition[]) => Promise<void> {
+): AsyncHandler1<ElementDefinition[]> {
 	return useCallback(
 		async (definitions: ElementDefinition[]) => {
 			const question: Experiment = {

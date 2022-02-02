@@ -12,7 +12,7 @@ import {
 import { IContextualMenuItem } from '@fluentui/react'
 import { useMemo, useCallback } from 'react'
 import { useLoadProject } from './loadProject'
-import { ProjectSource, FileDefinition } from '~types'
+import { ProjectSource, FileDefinition, AsyncHandler1 } from '~types'
 import { groupFilesByType, isZipUrl } from '~utils'
 
 const uploadZipButtonId = 'uploadZip'
@@ -52,9 +52,7 @@ async function validateProjectFiles(
 	return true
 }
 
-export function useHandleFiles(): (
-	fileCollection: FileCollection,
-) => Promise<void> {
+export function useHandleFiles(): AsyncHandler1<FileCollection> {
 	const loadProject = useLoadProject(ProjectSource.zip)
 	return async function handleFiles(fileCollection: FileCollection) {
 		if (!fileCollection) return
@@ -71,7 +69,7 @@ export function useHandleFiles(): (
 
 export function useOnDropZipFilesAccepted(
 	onError?: (msg: string) => void,
-): (fileCollection: FileCollection) => Promise<void> {
+): AsyncHandler1<FileCollection> {
 	const handleDrop = useHandleFiles()
 	return useCallback(
 		async (fileCollection: FileCollection) => {
