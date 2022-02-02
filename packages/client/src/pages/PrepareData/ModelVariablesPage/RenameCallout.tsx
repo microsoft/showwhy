@@ -20,7 +20,10 @@ interface RenameCalloutProps extends ICalloutProps {
 }
 
 /**
- * Renders the callout with a field to rename the table (and autofocus to the input)
+ * Renders the callout attatched to the targetId, with a TextField autofocused
+ * @param {string} name - The original string to be edited.
+ * @param {string} targetId - The id of the component for the callout to be attatched
+ * @param {function} onSend - The callback receiving the new name or the old one if the action was cancelled
  */
 export const RenameCallout: React.FC<RenameCalloutProps> = memo(
 	function RenameCallout({

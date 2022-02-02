@@ -7,15 +7,21 @@ import {
 	ArqueroTableHeader,
 	ColumnTransformModal,
 } from '@data-wrangling-components/react'
-import { Dropdown, IconButton, TextField } from '@fluentui/react'
+import {
+	ActionButton,
+	Dropdown,
+	IconButton,
+	Separator,
+	TextField,
+} from '@fluentui/react'
 import { memo } from 'react'
 import { If, Then, Else } from 'react-if'
 import styled from 'styled-components'
 import { EmptySteps } from './EmptySteps'
 import { Header } from './Header'
-import { StepComponent } from './StepComponent'
 import { ModelVariableCommands } from './ModelVariableCommands'
 import { RenameCallout } from './RenameCallout'
+import { StepComponent } from './StepComponent'
 import {
 	useTableTransform,
 	useCommandBar,
@@ -40,6 +46,8 @@ export const ModelVariablesPage: React.FC = memo(function ModelVariablesPage() {
 		onChange,
 		definitionName,
 		onSave,
+		toggleAddDefinition,
+		isAddingDefinition,
 	} = useDefinitions(defineQuestionData)
 
 	const definitionDropdown = useDefinitionDropdown(definitionOptions)
@@ -81,12 +89,16 @@ export const ModelVariablesPage: React.FC = memo(function ModelVariablesPage() {
 						<NormalContainer>
 							<VariablesContainer>
 								<NameContainer>
-									{isEditingDefinition && (
+									{(isEditingDefinition || isAddingDefinition) && (
 										<RenameCallout
 											onSend={onSave}
 											editedName={definitionName}
 											onChange={onChange}
-											targetId="dropdownDefinition"
+											targetId={
+												isEditingDefinition
+													? 'dropdownDefinition'
+													: 'newDefinition'
+											}
 										/>
 									)}
 									<Dropdown
@@ -98,12 +110,19 @@ export const ModelVariablesPage: React.FC = memo(function ModelVariablesPage() {
 										}
 									/>
 								</NameContainer>
-
+								<IconButton
+									id="newDefinition"
+									title="Create new definition"
+									iconProps={{ iconName: 'Add' }}
+									onClick={toggleAddDefinition}
+								></IconButton>
+								<Separator vertical></Separator>
 								<ModelVariableCommands
 									selectedDefinition={selectedDefinitionId}
 									editDefinition={toggleEditDefinition}
 								/>
 							</VariablesContainer>
+
 							{originalTable && (
 								<ColumnTransformModal
 									table={originalTable}

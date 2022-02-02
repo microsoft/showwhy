@@ -39,6 +39,7 @@ import {
 } from '~state'
 import {
 	CausalFactor,
+	CausalityLevel,
 	ColumnRelevance,
 	Element,
 	ElementDefinition,
@@ -46,6 +47,7 @@ import {
 	PageType,
 	VariableDefinition1,
 } from '~types'
+import { v4 } from 'uuid'
 
 export function useBusinessLogic(): {
 	pageType: PageType
@@ -99,13 +101,16 @@ export function useDefinitions(defineQuestionData: Element): {
 	selectedDefinitionId: string
 	setSelectedDefinitionId: (definitionId: string) => void
 	isEditingDefinition: boolean
+	isAddingDefinition: boolean
 	toggleEditDefinition: () => void
+	toggleAddDefinition: () => void
 	onChange: (_: unknown, value?: string) => void
 	definitionName: string
 	onSave: (name?: string) => void
 } {
 	const [selectedDefinitionId, setSelectedDefinitionId] = useState<string>('')
 	const [isEditingDefinition, setIsEditingDefinition] = useState<boolean>(false)
+	const [isAddingDefinition, setIsAddingDefinition] = useState<boolean>(false)
 	const [definitionName, setDefinitionName] = useState<string>('')
 	const saveDefinition = useSaveDefinition()
 	const definition = useSelectedDefinition(
@@ -124,6 +129,11 @@ export function useDefinitions(defineQuestionData: Element): {
 		setDefinitionName(definition?.variable || '')
 	}, [setIsEditingDefinition, definition, setDefinitionName])
 
+	const toggleAddDefinition = useCallback(() => {
+		setIsAddingDefinition(prev => !prev)
+		setDefinitionName('New definition')
+	}, [setDefinitionName, setDefinitionName])
+
 	const onChange = useCallback(
 		(_, value?: string) => {
 			setDefinitionName(value || '')
@@ -133,25 +143,41 @@ export function useDefinitions(defineQuestionData: Element): {
 
 	const onSave = useCallback(
 		(name?: string) => {
-			if (name) {
-				const newDefinition = {
-					...definition,
-					variable: name,
-				} as ElementDefinition
-				saveDefinition(newDefinition)
-			}
+			const newId = v4()
+			const props = isAddingDefinition
+				? { id: newId, description: '', level: CausalityLevel.Secondary }
+				: definition
+			const newDefinition = {
+				...props,
+				variable: name,
+			} as ElementDefinition
+			saveDefinition(newDefinition)
 
-			setIsEditingDefinition(prev => !prev)
+			setIsEditingDefinition(false)
+			setIsAddingDefinition(false)
+			console.log(newId)
+			setTimeout(() => {
+				setSelectedDefinitionId(newId)
+			}, 300)
 		},
-		[saveDefinition, setIsEditingDefinition, definition],
+		[
+			saveDefinition,
+			setIsEditingDefinition,
+			setIsAddingDefinition,
+			isAddingDefinition,
+			definition,
+			setSelectedDefinitionId,
+		],
 	)
 
 	return {
 		selectedDefinitionId,
 		setSelectedDefinitionId,
 		isEditingDefinition,
+		isAddingDefinition,
 		toggleEditDefinition,
 		onChange,
+		toggleAddDefinition,
 		onSave,
 		definitionName,
 	}

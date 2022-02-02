@@ -2,9 +2,9 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import { IconButton } from '@fluentui/react'
 import { FC, memo } from 'react'
 import styled from 'styled-components'
-import { IconButton } from '@fluentui/react'
 
 interface ModelVariableCommandsProps {
 	selectedDefinition: string
