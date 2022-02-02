@@ -17,6 +17,7 @@ import * as aq from 'arquero'
 import { not } from 'arquero'
 import ColumnTable from 'arquero/dist/types/table/column-table'
 import { useCallback, useEffect, useMemo, useState } from 'react'
+import { v4 } from 'uuid'
 import { SelectedArgs } from './interfaces'
 import { FactorsOrDefinitions } from './types'
 import {
@@ -51,7 +52,6 @@ import {
 	PageType,
 	VariableDefinition1,
 } from '~types'
-import { v4 } from 'uuid'
 
 export function useBusinessLogic(): {
 	pageType: PageType
@@ -151,6 +151,7 @@ export function useDefinitions(
 			}
 		}
 	}, [
+		definition,
 		selectedDefinitionId,
 		setSelectedDefinitionId,
 		defineQuestionData,
@@ -166,12 +167,12 @@ export function useDefinitions(
 	const toggleAddDefinition = useCallback(() => {
 		setIsAddingDefinition(prev => !prev)
 		setDefinitionName('New definition')
-	}, [setDefinitionName, setDefinitionName])
+	}, [setDefinitionName, setIsAddingDefinition])
 
 	const toggleDuplicateDefinition = useCallback(() => {
 		setIsDuplicatingDefinition(prev => !prev)
 		setDefinitionName(`${definition?.variable} new`)
-	}, [setDefinitionName, setDefinitionName, definition])
+	}, [setDefinitionName, setIsDuplicatingDefinition, definition])
 
 	const onChange = useCallback(
 		(_, value?: string) => {
@@ -186,7 +187,7 @@ export function useDefinitions(
 		} else {
 			definition && removeDefinition(definition)
 		}
-	}, [definition, deleteCausalFactor, page, deleteCausalFactor])
+	}, [definition, deleteCausalFactor, page, removeDefinition])
 
 	const onSave = useCallback(
 		(name?: string) => {

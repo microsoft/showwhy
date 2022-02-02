@@ -7,13 +7,7 @@ import {
 	ArqueroTableHeader,
 	ColumnTransformModal,
 } from '@data-wrangling-components/react'
-import {
-	ActionButton,
-	Dropdown,
-	IconButton,
-	Separator,
-	TextField,
-} from '@fluentui/react'
+import { Dropdown, IconButton, Separator } from '@fluentui/react'
 import { memo } from 'react'
 import { If, Then, Else } from 'react-if'
 import styled from 'styled-components'
