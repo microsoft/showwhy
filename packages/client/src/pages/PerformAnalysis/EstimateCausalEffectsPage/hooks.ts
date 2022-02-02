@@ -35,6 +35,7 @@ import {
 	RunHistory,
 	Maybe,
 	AsyncHandler,
+	Handler,
 } from '~types'
 import {
 	createFormData,
@@ -50,7 +51,7 @@ export function useBusinessLogic(): {
 	definitions: Experiment
 	runHistory: RunHistory[]
 	errors: Maybe<string>
-	cancelRun: () => void
+	cancelRun: Handler
 	runEstimate: AsyncHandler
 	setRunAsDefault: (run: RunHistory) => void
 	loadingSpecCount: boolean

@@ -5,11 +5,11 @@
 import { DefaultButton, PrimaryButton } from '@fluentui/react'
 import { Dialog, DialogType, DialogFooter } from '@fluentui/react/lib/Dialog'
 import { memo, useMemo } from 'react'
-import { Maybe } from '~types'
+import { Maybe, Handler } from '~types'
 
 export const DialogConfirm: React.FC<{
-	toggle: () => void
-	onConfirm: () => void
+	toggle: Handler
+	onConfirm: Handler
 	show: Maybe<boolean>
 	title: string
 }> = memo(function DialogConfirm({ toggle, onConfirm, show, title }) {

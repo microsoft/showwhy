@@ -8,7 +8,7 @@ import styled from 'styled-components'
 import { Handler, Maybe } from '~types'
 
 export const SelectableCard: React.FC<{
-	onClick: () => void
+	onClick: Handler
 	title?: string
 	isChecked?: Maybe<boolean>
 	icon?: string

@@ -9,11 +9,11 @@ import {
 	usePrimarySpecificationConfig,
 	useSetPrimarySpecificationConfig,
 } from '~state'
-import { PrimarySpecificationConfig } from '~types'
+import { PrimarySpecificationConfig, Handler } from '~types'
 
 export function useBusinessLogic(): {
 	causalEffects: ReturnType<typeof useCausalEffects>
-	onXarrowChange: () => void
+	onXarrowChange: Handler
 	setPrimarySpecificationConfig: SetterOrUpdater<PrimarySpecificationConfig>
 	primarySpecificationConfig: PrimarySpecificationConfig
 } {

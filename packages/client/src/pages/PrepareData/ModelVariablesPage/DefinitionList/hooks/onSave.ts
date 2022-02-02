@@ -13,6 +13,7 @@ import {
 	Setter,
 	Maybe,
 	CausalityLevel,
+	Handler,
 } from '~types'
 
 export function useOnSaveCausalFactor({
@@ -25,7 +26,7 @@ export function useOnSaveCausalFactor({
 	setNewLabel: Setter<Maybe<string>>
 	newLabel?: string
 	setEditingDefinition: SetEditingDefinition
-	toggleIsEditingLabel: () => void
+	toggleIsEditingLabel: Handler
 	saveCausalFactor: (factor: CausalFactor) => void
 }): (definition?: CausalFactor) => void {
 	return useCallback(
@@ -69,7 +70,7 @@ export function useOnSave({
 	newLabel?: string
 	modelVariables?: Definition
 	setEditingDefinition: SetEditingDefinition
-	toggleIsEditingLabel: () => void
+	toggleIsEditingLabel: Handler
 	saveDefinition: (def: CausalFactor) => void
 	onUpdate: (label: string) => void
 	onSaveCausalFactor: (factor: CausalFactor) => void
