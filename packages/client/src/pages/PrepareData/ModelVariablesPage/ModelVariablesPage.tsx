@@ -42,12 +42,15 @@ export const ModelVariablesPage: React.FC = memo(function ModelVariablesPage() {
 		selectedDefinitionId,
 		setSelectedDefinitionId,
 		isEditingDefinition,
+		isDuplicatingDefinition,
 		toggleEditDefinition,
 		onChange,
 		definitionName,
 		onSave,
 		toggleAddDefinition,
 		isAddingDefinition,
+		onDelete,
+		toggleDuplicateDefinition,
 	} = useDefinitions(defineQuestionData)
 
 	const definitionDropdown = useDefinitionDropdown(definitionOptions)
@@ -89,7 +92,9 @@ export const ModelVariablesPage: React.FC = memo(function ModelVariablesPage() {
 						<NormalContainer>
 							<VariablesContainer>
 								<NameContainer>
-									{(isEditingDefinition || isAddingDefinition) && (
+									{(isEditingDefinition ||
+										isAddingDefinition ||
+										isDuplicatingDefinition) && (
 										<RenameCallout
 											onSend={onSave}
 											editedName={definitionName}
@@ -97,6 +102,8 @@ export const ModelVariablesPage: React.FC = memo(function ModelVariablesPage() {
 											targetId={
 												isEditingDefinition
 													? 'dropdownDefinition'
+													: isDuplicatingDefinition
+													? 'duplicateDefinition'
 													: 'newDefinition'
 											}
 										/>
@@ -119,7 +126,9 @@ export const ModelVariablesPage: React.FC = memo(function ModelVariablesPage() {
 								<Separator vertical></Separator>
 								<ModelVariableCommands
 									selectedDefinition={selectedDefinitionId}
-									editDefinition={toggleEditDefinition}
+									onEdit={toggleEditDefinition}
+									onDelete={onDelete}
+									onDuplicate={toggleDuplicateDefinition}
 								/>
 							</VariablesContainer>
 

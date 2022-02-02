@@ -23,6 +23,7 @@ import {
 	useAddOrEditFactor,
 	useDeriveTable1,
 	usePageType,
+	useRemoveDefinition,
 	useSaveDefinition,
 } from '~hooks'
 import {
@@ -102,17 +103,23 @@ export function useDefinitions(defineQuestionData: Element): {
 	setSelectedDefinitionId: (definitionId: string) => void
 	isEditingDefinition: boolean
 	isAddingDefinition: boolean
+	isDuplicatingDefinition: boolean
 	toggleEditDefinition: () => void
 	toggleAddDefinition: () => void
+	toggleDuplicateDefinition: () => void
 	onChange: (_: unknown, value?: string) => void
 	definitionName: string
 	onSave: (name?: string) => void
+	onDelete: () => void
 } {
 	const [selectedDefinitionId, setSelectedDefinitionId] = useState<string>('')
 	const [isEditingDefinition, setIsEditingDefinition] = useState<boolean>(false)
 	const [isAddingDefinition, setIsAddingDefinition] = useState<boolean>(false)
+	const [isDuplicatingDefinition, setIsDuplicatingDefinition] =
+		useState<boolean>(false)
 	const [definitionName, setDefinitionName] = useState<string>('')
 	const saveDefinition = useSaveDefinition()
+	const removeDefinition = useRemoveDefinition()
 	const definition = useSelectedDefinition(
 		selectedDefinitionId,
 		defineQuestionData,
@@ -120,7 +127,7 @@ export function useDefinitions(defineQuestionData: Element): {
 
 	useEffect(() => {
 		if (!definition && defineQuestionData) {
-			setSelectedDefinitionId(defineQuestionData.definition[0].id)
+			setSelectedDefinitionId(defineQuestionData.definition[0]?.id || '')
 		}
 	}, [selectedDefinitionId, setSelectedDefinitionId, defineQuestionData])
 
@@ -134,6 +141,11 @@ export function useDefinitions(defineQuestionData: Element): {
 		setDefinitionName('New definition')
 	}, [setDefinitionName, setDefinitionName])
 
+	const toggleDuplicateDefinition = useCallback(() => {
+		setIsDuplicatingDefinition(prev => !prev)
+		setDefinitionName(`${definition?.variable} new`)
+	}, [setDefinitionName, setDefinitionName, definition])
+
 	const onChange = useCallback(
 		(_, value?: string) => {
 			setDefinitionName(value || '')
@@ -141,11 +153,17 @@ export function useDefinitions(defineQuestionData: Element): {
 		[setDefinitionName],
 	)
 
+	const onDelete = useCallback(() => {
+		definition && removeDefinition(definition)
+	}, [definition])
+
 	const onSave = useCallback(
 		(name?: string) => {
 			const newId = v4()
 			const props = isAddingDefinition
 				? { id: newId, description: '', level: CausalityLevel.Secondary }
+				: isDuplicatingDefinition
+				? { ...definition, id: newId, level: CausalityLevel.Secondary }
 				: definition
 			const newDefinition = {
 				...props,
@@ -155,7 +173,8 @@ export function useDefinitions(defineQuestionData: Element): {
 
 			setIsEditingDefinition(false)
 			setIsAddingDefinition(false)
-			console.log(newId)
+			setIsDuplicatingDefinition(false)
+
 			setTimeout(() => {
 				setSelectedDefinitionId(newId)
 			}, 300)
@@ -167,6 +186,8 @@ export function useDefinitions(defineQuestionData: Element): {
 			isAddingDefinition,
 			definition,
 			setSelectedDefinitionId,
+			isDuplicatingDefinition,
+			setIsDuplicatingDefinition,
 		],
 	)
 
@@ -175,11 +196,14 @@ export function useDefinitions(defineQuestionData: Element): {
 		setSelectedDefinitionId,
 		isEditingDefinition,
 		isAddingDefinition,
+		isDuplicatingDefinition,
 		toggleEditDefinition,
 		onChange,
 		toggleAddDefinition,
 		onSave,
 		definitionName,
+		onDelete,
+		toggleDuplicateDefinition,
 	}
 }
 
