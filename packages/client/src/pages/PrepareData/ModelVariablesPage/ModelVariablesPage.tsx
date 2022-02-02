@@ -51,7 +51,7 @@ export const ModelVariablesPage: React.FC = memo(function ModelVariablesPage() {
 		isAddingDefinition,
 		onDelete,
 		toggleDuplicateDefinition,
-	} = useDefinitions(defineQuestionData)
+	} = useDefinitions(defineQuestionData, causalFactors)
 
 	const definitionDropdown = useDefinitionDropdown(definitionOptions)
 
@@ -76,7 +76,7 @@ export const ModelVariablesPage: React.FC = memo(function ModelVariablesPage() {
 	return (
 		//What if no visible columns?
 		//What if no define question?
-		<If condition={!defineQuestionData}>
+		<If condition={!defineQuestionData && !definitionDropdown.length}>
 			<Then>
 				<Header />
 				<EmptyDataPageWarning
@@ -154,47 +154,6 @@ export const ModelVariablesPage: React.FC = memo(function ModelVariablesPage() {
 										return <StepComponent key={index} step={step} />
 									})}
 							</List>
-							{/* <List>
-								<CommandCard>
-									<CommandCardTitle>new column name</CommandCardTitle>
-									<CommandCardDetails>transform</CommandCardDetails>
-									<CommandCardDetails>column binding</CommandCardDetails>
-									<CommandCardDetails>=</CommandCardDetails>
-									<CommandCardDetails>value</CommandCardDetails>
-									<Buttons>
-										<IconButton
-											iconProps={{ iconName: 'Edit' }}
-											title="Edit"
-											ariaLabel="Edit Emoji"
-										/>
-										<IconButton
-											iconProps={{ iconName: 'Delete' }}
-											title="Delete"
-											ariaLabel="Delete Emoji"
-										/>
-									</Buttons>
-								</CommandCard>
-								<CommandCard>
-									<CommandCardTitle>new column name</CommandCardTitle>
-									<CommandCardDetails>transform</CommandCardDetails>
-									<CommandCardDetails>column binding</CommandCardDetails>
-									<CommandCardDetails>=</CommandCardDetails>
-									<CommandCardDetails>value</CommandCardDetails>
-									<Buttons>
-										<IconButton
-											iconProps={{ iconName: 'Edit' }}
-											title="Edit"
-											ariaLabel="Edit Emoji"
-										/>
-										<IconButton
-											iconProps={{ iconName: 'Delete' }}
-											title="Delete"
-											ariaLabel="Delete Emoji"
-										/>
-									</Buttons>
-								</CommandCard>
-							</List> */}
-							{/* user will derive columns and then we'll show  (arquero select)*/}
 							{table && (
 								<>
 									<ArqueroTableHeader table={table} commands={commands} />
@@ -215,35 +174,6 @@ export const ModelVariablesPage: React.FC = memo(function ModelVariablesPage() {
 									</DetailsListContainer>
 								</>
 							)}
-
-							{/* {!tableIdentifier ? null : (
-								<ContainerFlexRow>
-									<DefinitionListContainer>
-										<TitleContainer>
-											<DefinitionTitle>Definitions</DefinitionTitle>
-										</TitleContainer>
-										<DefinitionList
-											onUpdate={onSave}
-											tableId={tableIdentifier.tableId}
-											onClick={onSelectDefinition}
-											list={definitionOptions as CausalFactor[]}
-											selectedDefinition={selected}
-											type={pageType}
-										/>
-									</DefinitionListContainer>
-									<StepsContainer>
-										<TitleContainer>
-											<DefinitionTitle>Definition steps</DefinitionTitle>
-										</TitleContainer>
-										<DefinitionSteps
-											onEdit={onEditClause}
-											fileId={tableIdentifier.tableId}
-											type={pageType}
-											selectedDefinition={selected}
-										/>
-									</StepsContainer>
-								</ContainerFlexRow>
-							)} */}
 						</NormalContainer>
 					</Container>
 				</Then>

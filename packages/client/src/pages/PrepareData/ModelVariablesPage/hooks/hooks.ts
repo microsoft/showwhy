@@ -21,6 +21,7 @@ import { SelectedArgs } from './interfaces'
 import { FactorsOrDefinitions } from './types'
 import {
 	useAddOrEditFactor,
+	useDeleteCausalFactor,
 	useDeriveTable1,
 	usePageType,
 	useRemoveDefinition,
@@ -37,6 +38,8 @@ import {
 	useSetOrUpdatePopulationVariables,
 	useOutcomeVariables,
 	useSetOrUpdateOutcomeVariables,
+	useSetOrUpdateControlVariables,
+	useControlVariables,
 } from '~state'
 import {
 	CausalFactor,
@@ -79,10 +82,16 @@ export function useBusinessLogic(): {
 function useSelectedDefinition(
 	definitionId: string,
 	defineQuestionData: Element,
+	causalFactors: CausalFactor[],
+	pageType: PageType,
 ): ElementDefinition | undefined {
 	return useMemo(() => {
-		return defineQuestionData?.definition.find(x => x.id === definitionId)
-	}, [defineQuestionData, definitionId])
+		if (pageType === PageType.Control) {
+			return causalFactors?.find(x => x.id === definitionId)
+		} else {
+			return defineQuestionData?.definition.find(x => x.id === definitionId)
+		}
+	}, [defineQuestionData, definitionId, pageType, causalFactors])
 }
 
 export function useDefinitionDropdown(
@@ -98,7 +107,10 @@ export function useDefinitionDropdown(
 	}, [definitionOptions])
 }
 
-export function useDefinitions(defineQuestionData: Element): {
+export function useDefinitions(
+	defineQuestionData: Element,
+	causalFactors: CausalFactor[],
+): {
 	selectedDefinitionId: string
 	setSelectedDefinitionId: (definitionId: string) => void
 	isEditingDefinition: boolean
@@ -119,17 +131,32 @@ export function useDefinitions(defineQuestionData: Element): {
 		useState<boolean>(false)
 	const [definitionName, setDefinitionName] = useState<string>('')
 	const saveDefinition = useSaveDefinition()
+	const saveCausalFactor = useAddOrEditFactor()
+	const page = usePageType()
 	const removeDefinition = useRemoveDefinition()
+	const deleteCausalFactor = useDeleteCausalFactor()
 	const definition = useSelectedDefinition(
 		selectedDefinitionId,
 		defineQuestionData,
+		causalFactors,
+		page,
 	)
 
 	useEffect(() => {
-		if (!definition && defineQuestionData) {
-			setSelectedDefinitionId(defineQuestionData.definition[0]?.id || '')
+		if (!definition && (defineQuestionData || causalFactors)) {
+			if (page === PageType.Control) {
+				setSelectedDefinitionId(causalFactors[0]?.id || '')
+			} else {
+				setSelectedDefinitionId(defineQuestionData.definition[0]?.id || '')
+			}
 		}
-	}, [selectedDefinitionId, setSelectedDefinitionId, defineQuestionData])
+	}, [
+		selectedDefinitionId,
+		setSelectedDefinitionId,
+		defineQuestionData,
+		causalFactors,
+		page,
+	])
 
 	const toggleEditDefinition = useCallback(() => {
 		setIsEditingDefinition(prev => !prev)
@@ -154,29 +181,49 @@ export function useDefinitions(defineQuestionData: Element): {
 	)
 
 	const onDelete = useCallback(() => {
-		definition && removeDefinition(definition)
-	}, [definition])
+		if (page === PageType.Control) {
+			definition && deleteCausalFactor(definition)
+		} else {
+			definition && removeDefinition(definition)
+		}
+	}, [definition, deleteCausalFactor, page, deleteCausalFactor])
 
 	const onSave = useCallback(
 		(name?: string) => {
 			const newId = v4()
-			const props = isAddingDefinition
-				? { id: newId, description: '', level: CausalityLevel.Secondary }
-				: isDuplicatingDefinition
-				? { ...definition, id: newId, level: CausalityLevel.Secondary }
-				: definition
-			const newDefinition = {
-				...props,
-				variable: name,
-			} as ElementDefinition
-			saveDefinition(newDefinition)
+			if (page === PageType.Control) {
+				const props = isAddingDefinition
+					? { id: newId, description: '' }
+					: isDuplicatingDefinition
+					? { ...definition, id: newId }
+					: definition
+
+				const newCausalFactor = {
+					...props,
+					variable: name,
+				} as CausalFactor
+				saveCausalFactor(newCausalFactor)
+			} else {
+				const props = isAddingDefinition
+					? { id: newId, description: '', level: CausalityLevel.Secondary }
+					: isDuplicatingDefinition
+					? { ...definition, id: newId, level: CausalityLevel.Secondary }
+					: definition
+				const newDefinition = {
+					...props,
+					variable: name,
+				} as ElementDefinition
+				saveDefinition(newDefinition)
+			}
 
 			setIsEditingDefinition(false)
 			setIsAddingDefinition(false)
 			setIsDuplicatingDefinition(false)
 
 			setTimeout(() => {
-				setSelectedDefinitionId(newId)
+				if (isAddingDefinition || isDuplicatingDefinition) {
+					setSelectedDefinitionId(newId)
+				}
 			}, 300)
 		},
 		[
@@ -188,6 +235,8 @@ export function useDefinitions(defineQuestionData: Element): {
 			setSelectedDefinitionId,
 			isDuplicatingDefinition,
 			setIsDuplicatingDefinition,
+			saveCausalFactor,
+			page,
 		],
 	)
 
@@ -456,9 +505,11 @@ function useVariables(
 	const population = usePopulationVariables()
 	const exposure = useExposureVariables()
 	const outcome = useOutcomeVariables()
+	const control = useControlVariables()
 	const setPopulation = useSetOrUpdatePopulationVariables()
 	const setExposure = useSetOrUpdateExposureVariables()
 	const setOutcome = useSetOrUpdateOutcomeVariables()
+	const setControl = useSetOrUpdateControlVariables()
 
 	return useMemo(() => {
 		switch (pageType) {
@@ -468,6 +519,8 @@ function useVariables(
 				return [exposure, setExposure]
 			case PageType.Outcome:
 				return [outcome, setOutcome]
+			case PageType.Control:
+				return [control, setControl]
 			default:
 				return [[], () => undefined]
 		}
@@ -476,9 +529,11 @@ function useVariables(
 		population,
 		exposure,
 		outcome,
+		control,
 		setPopulation,
 		setExposure,
 		setOutcome,
+		setControl,
 	])
 }
 
