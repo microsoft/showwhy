@@ -4,11 +4,12 @@
  */
 import { FC, memo } from 'react'
 import styled from 'styled-components'
+import { Text } from '~styles'
 
-export const EmptySteps: FC = memo(function EmptySteps() {
+export const EmptyVariableSteps: FC = memo(function EmptySteps() {
 	return (
 		<Container>
-			<span>Derive a new column in the table below to start</span>
+			<Text>Derive a new column in the table below to start</Text>
 		</Container>
 	)
 })

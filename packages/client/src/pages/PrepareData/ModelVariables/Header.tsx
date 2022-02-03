@@ -4,15 +4,19 @@
  */
 import { memo } from 'react'
 import styled from 'styled-components'
-import { usePageType } from '../../../hooks/usePageType'
+import { PageType } from '~types'
 
-export const Header: React.FC = memo(function Header() {
-	const type = usePageType()
+interface HeaderProps {
+	pageType: PageType
+}
+export const Header: React.FC<HeaderProps> = memo(function Header({
+	pageType,
+}) {
 	return (
 		<Container>
 			<TitleContainer>
 				<PageTitle>
-					<CapitalizedText>{type}</CapitalizedText> variables
+					<CapitalizedText>{pageType}</CapitalizedText> variables
 				</PageTitle>
 				<Subtitle>
 					{/* TODO: change this? */}

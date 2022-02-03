@@ -4,14 +4,8 @@
  */
 
 import { Step } from '@data-wrangling-components/core'
-import { FilterObject } from '../filters'
 
 export interface VariableDefinition {
-	name: string
-	filters: FilterObject[]
-}
-
-export interface VariableDefinition1 {
 	id: string
 	steps: Step[]
 }

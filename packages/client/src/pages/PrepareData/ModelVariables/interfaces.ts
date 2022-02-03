@@ -3,7 +3,6 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { FactorsOrDefinitions } from './types'
 import {
 	DataTable,
 	CausalFactor,
@@ -11,6 +10,7 @@ import {
 	Element,
 	TableColumn,
 	Setter,
+	FactorsOrDefinitions,
 } from '~types'
 
 export interface SelectedArgs {
