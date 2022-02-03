@@ -12,10 +12,10 @@ import {
 	IDropdownOption,
 	IRenderFunction,
 } from '@fluentui/react'
-import { useBoolean } from 'ahooks'
+import { useBoolean } from '@fluentui/react-hooks'
 import * as aq from 'arquero'
 import ColumnTable from 'arquero/dist/types/table/column-table'
-import { useCallback, useMemo } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { useDeriveTable1, usePageType } from '~hooks'
 import {
 	usePopulationVariables,
@@ -30,9 +30,14 @@ import {
 	useTableColumns,
 } from '~state'
 import {
+	CausalFactor,
 	ColumnRelevance,
+	ElementDefinition,
 	FactorsOrDefinitions,
 	PageType,
+	RenameCalloutArgs,
+	RenameCalloutType,
+	TransformTable,
 	VariableDefinition,
 } from '~types'
 
@@ -195,17 +200,7 @@ function useDeriveColumnCommand(
 	return cmd
 }
 
-export function useTableTransform(selectedDefinition: string): {
-	commands: ICommandBarItemProps[]
-	isModalOpen: boolean
-	hideModal: () => void
-	originalTable?: ColumnTable
-	handleTransformRequested: (
-		step: any,
-		selectedDefinition: string,
-	) => Promise<void>
-	variables: VariableDefinition[]
-} {
+export function useTableTransform(selectedDefinition: string): TransformTable {
 	const pageType = usePageType()
 	const [variables, setVariable] = useVariables(pageType)
 	const originalTables = useOriginalTables()
@@ -253,5 +248,37 @@ export function useTableTransform(selectedDefinition: string): {
 		originalTable,
 		handleTransformRequested,
 		variables,
+	}
+}
+
+export function useRenameCallout(
+	definition?: ElementDefinition | CausalFactor,
+): RenameCalloutArgs {
+	const [calloutOpen, setCalloutOpen] = useState<
+		RenameCalloutType | undefined
+	>()
+	const [definitionName, setDefinitionName] = useState<string>('')
+
+	const toggleCallout = useCallback(
+		(type?: RenameCalloutType) => {
+			setCalloutOpen(type)
+			let name = definition?.variable ?? ''
+			switch (type) {
+				case RenameCalloutType.New:
+					name = 'New definition'
+					break
+				case RenameCalloutType.Duplicate:
+					name += ' new'
+					break
+			}
+			setDefinitionName(name)
+		},
+		[setCalloutOpen, setDefinitionName, definition],
+	)
+
+	return {
+		calloutOpen,
+		toggleCallout,
+		definitionName,
 	}
 }

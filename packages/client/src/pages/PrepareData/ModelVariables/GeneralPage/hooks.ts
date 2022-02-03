@@ -10,9 +10,12 @@ import { useDefineQuestion } from '~state'
 import {
 	CausalFactor,
 	CausalityLevel,
+	DefinitionActions,
+	DefinitionArgs,
 	Element,
 	ElementDefinition,
 	PageType,
+	RenameCalloutType,
 } from '~types'
 
 export function useBusinessLogic(): {
@@ -35,130 +38,29 @@ export function useBusinessLogic(): {
 	}
 }
 
-export function useSelectedDefinition(
-	definitionId: string,
-	defineQuestionData: Element,
-): ElementDefinition | undefined {
-	return useMemo(() => {
-		return defineQuestionData?.definition.find(x => x.id === definitionId)
-	}, [definitionId, defineQuestionData])
-}
+export function useDefinitions(defineQuestionData: Element): DefinitionArgs {
+	const [selectedId, setSelectedId] = useState<string>('')
 
-export function useDefinitions(defineQuestionData: Element): {
-	selectedDefinitionId: string
-	setSelectedDefinitionId: (definitionId: string) => void
-	isEditingDefinition: boolean
-	isAddingDefinition: boolean
-	isDuplicatingDefinition: boolean
-	toggleEditDefinition: () => void
-	toggleAddDefinition: () => void
-	toggleDuplicateDefinition: () => void
-	onChange: (_: unknown, value?: string) => void
-	definitionName: string
-	onSave: (name?: string) => void
-	onDelete: () => void
-	saveDefinition: (newDefinition: CausalFactor) => void //??
-} {
-	const [selectedDefinitionId, setSelectedDefinitionId] = useState<string>('')
-	const [isEditingDefinition, setIsEditingDefinition] = useState<boolean>(false)
-	const [isAddingDefinition, setIsAddingDefinition] = useState<boolean>(false)
-	const [isDuplicatingDefinition, setIsDuplicatingDefinition] =
-		useState<boolean>(false)
-	const [definitionName, setDefinitionName] = useState<string>('')
-	const saveDefinition = useSaveDefinition()
-	const removeDefinition = useRemoveDefinition()
-	const definition = useSelectedDefinition(
-		selectedDefinitionId,
-		defineQuestionData,
-	)
+	const definition = useMemo(() => {
+		return defineQuestionData?.definition.find(x => x.id === selectedId)
+	}, [selectedId, defineQuestionData])
 
 	useEffect(() => {
 		if (!definition && defineQuestionData) {
-			setSelectedDefinitionId(defineQuestionData?.definition[0]?.id || '')
+			setSelectedId(defineQuestionData?.definition[0]?.id || '')
 		}
-	}, [
-		definition,
-		selectedDefinitionId,
-		setSelectedDefinitionId,
-		defineQuestionData,
-	])
+	}, [definition, selectedId, setSelectedId, defineQuestionData])
 
-	const toggleEditDefinition = useCallback(() => {
-		setIsEditingDefinition(prev => !prev)
-		setDefinitionName(definition?.variable || '')
-	}, [setIsEditingDefinition, definition, setDefinitionName])
-
-	const toggleAddDefinition = useCallback(() => {
-		setIsAddingDefinition(prev => !prev)
-		setDefinitionName('New definition')
-	}, [setDefinitionName, setIsAddingDefinition])
-
-	const toggleDuplicateDefinition = useCallback(() => {
-		setIsDuplicatingDefinition(prev => !prev)
-		setDefinitionName(`${definition?.variable} new`)
-	}, [setDefinitionName, setIsDuplicatingDefinition, definition])
-
-	const onChange = useCallback(
-		(_, value?: string) => {
-			setDefinitionName(value || '')
+	const onSelect = useCallback(
+		(id: string) => {
+			setSelectedId(id)
 		},
-		[setDefinitionName],
-	)
-
-	const onDelete = useCallback(() => {
-		definition && removeDefinition(definition)
-	}, [definition, removeDefinition])
-
-	const onSave = useCallback(
-		(name?: string) => {
-			const newId = v4()
-			const props = isAddingDefinition
-				? { id: newId, description: '', level: CausalityLevel.Secondary }
-				: isDuplicatingDefinition
-				? { ...definition, id: newId, level: CausalityLevel.Secondary }
-				: definition
-			const newDefinition = {
-				...props,
-				variable: name,
-			} as ElementDefinition
-			saveDefinition(newDefinition)
-
-			setIsEditingDefinition(false)
-			setIsAddingDefinition(false)
-			setIsDuplicatingDefinition(false)
-
-			setTimeout(() => {
-				if (isAddingDefinition || isDuplicatingDefinition) {
-					setSelectedDefinitionId(newId)
-				}
-			}, 300)
-		},
-		[
-			saveDefinition,
-			setIsEditingDefinition,
-			setIsAddingDefinition,
-			isAddingDefinition,
-			definition,
-			setSelectedDefinitionId,
-			isDuplicatingDefinition,
-			setIsDuplicatingDefinition,
-		],
+		[setSelectedId],
 	)
 
 	return {
-		selectedDefinitionId,
-		setSelectedDefinitionId,
-		isEditingDefinition,
-		isAddingDefinition,
-		isDuplicatingDefinition,
-		toggleEditDefinition,
-		onChange,
-		toggleAddDefinition,
-		onSave,
-		definitionName,
-		onDelete,
-		toggleDuplicateDefinition,
-		saveDefinition,
+		definition,
+		onSelect,
 	}
 }
 
@@ -184,4 +86,47 @@ export function useSetTargetVariable(
 		},
 		[selectedDefinitionId, saveDefinition, defineQuestionData?.definition],
 	)
+}
+
+export function useDefinitionActions(
+	toggleCallout: (type?: RenameCalloutType) => void,
+	setSelectedId: (id: string) => void,
+	definition?: ElementDefinition | CausalFactor,
+	calloutOpen?: RenameCalloutType,
+): DefinitionActions {
+	const onSave = useSaveDefinition()
+	const removeDefinition = useRemoveDefinition()
+
+	const onDelete = useCallback(() => {
+		definition && removeDefinition(definition)
+	}, [definition, removeDefinition])
+
+	const onSaveCallout = useCallback(
+		(name?: string) => {
+			const newId = v4()
+			const props =
+				calloutOpen === RenameCalloutType.New
+					? { id: newId, description: '', level: CausalityLevel.Secondary }
+					: calloutOpen === RenameCalloutType.Duplicate
+					? { ...definition, id: newId, level: CausalityLevel.Secondary }
+					: definition
+			const newDefinition = {
+				...props,
+				variable: name,
+			} as ElementDefinition
+			onSave(newDefinition)
+			toggleCallout(undefined)
+
+			setTimeout(() => {
+				setSelectedId(newDefinition.id)
+			}, 300)
+		},
+		[calloutOpen, definition, onSave, setSelectedId, toggleCallout],
+	)
+
+	return {
+		onDelete,
+		onSave,
+		onSaveCallout,
+	}
 }

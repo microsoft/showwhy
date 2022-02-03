@@ -8,7 +8,7 @@ import {
 	guessDelimiter,
 } from '@data-wrangling-components/utilities'
 import { IDropdownOption } from '@fluentui/react'
-import { useBoolean } from 'ahooks'
+import { useBoolean } from '@fluentui/react-hooks'
 import ColumnTable from 'arquero/dist/types/table/column-table'
 import { useCallback, useEffect, useState } from 'react'
 import { SetterOrUpdater } from 'recoil'

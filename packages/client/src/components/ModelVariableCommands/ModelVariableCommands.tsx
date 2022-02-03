@@ -5,34 +5,29 @@
 import { IconButton } from '@fluentui/react'
 import { FC, memo } from 'react'
 import styled from 'styled-components'
+import { RenameCalloutType } from '~types'
 
 interface ModelVariableCommandsProps {
 	selectedDefinition: string
-	onEdit: () => void
+	onCallout: (type?: RenameCalloutType) => void
 	onDelete: () => void
-	onDuplicate: () => void
 }
 export const ModelVariableCommands: FC<ModelVariableCommandsProps> = memo(
-	function ModelVariableCommands({
-		selectedDefinition,
-		onEdit,
-		onDelete,
-		onDuplicate,
-	}) {
+	function ModelVariableCommands({ selectedDefinition, onCallout, onDelete }) {
 		return (
 			<Buttons>
 				<IconButton
 					iconProps={{ iconName: 'Edit' }}
 					disabled={!selectedDefinition}
-					onClick={onEdit}
+					onClick={() => onCallout(RenameCalloutType.Edit)}
 					title="Edit"
 					ariaLabel="Edit Icon"
 				/>
 				<IconButton
 					iconProps={{ iconName: 'DuplicateRow' }}
 					disabled={!selectedDefinition}
-					onClick={onDuplicate}
-					id="duplicateDefinition"
+					onClick={() => onCallout(RenameCalloutType.Duplicate)}
+					id={RenameCalloutType.Duplicate}
 					title="DuplicateRow"
 					ariaLabel="DuplicateRow Icon"
 				/>

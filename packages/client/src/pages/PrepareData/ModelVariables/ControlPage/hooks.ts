@@ -8,7 +8,14 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import { v4 } from 'uuid'
 import { useAddOrEditFactor, useDeleteCausalFactor, usePageType } from '~hooks'
 import { useCausalFactors } from '~state'
-import { CausalFactor, PageType } from '~types'
+import {
+	CausalFactor,
+	DefinitionActions,
+	DefinitionArgs,
+	ElementDefinition,
+	PageType,
+	RenameCalloutType,
+} from '~types'
 
 export function useBusinessLogic(): {
 	pageType: PageType
@@ -21,15 +28,6 @@ export function useBusinessLogic(): {
 		pageType,
 		definitions,
 	}
-}
-
-export function useSelectedDefinition(
-	definitionId: string,
-	causalFactors: CausalFactor[],
-): CausalFactor | undefined {
-	return useMemo(() => {
-		return causalFactors?.find(x => x.id === definitionId)
-	}, [definitionId, causalFactors])
 }
 
 export function useDefinitionDropdown(
@@ -47,8 +45,8 @@ export function useDefinitionDropdown(
 
 export function useSetTargetVariable(
 	selectedDefinitionId: string,
-	causalFactors: CausalFactor[],
 	saveCausalFactor: (causalFactor: CausalFactor) => void,
+	causalFactors: CausalFactor[],
 ): (column: string) => void {
 	return useCallback(
 		(column: string) => {
@@ -66,113 +64,72 @@ export function useSetTargetVariable(
 	)
 }
 
-export function useDefinitions(causalFactors: CausalFactor[]): {
-	selectedDefinitionId: string
-	setSelectedDefinitionId: (definitionId: string) => void
-	isEditingDefinition: boolean
-	isAddingDefinition: boolean
-	isDuplicatingDefinition: boolean
-	toggleEditDefinition: () => void
-	toggleAddDefinition: () => void
-	toggleDuplicateDefinition: () => void
-	onChange: (_: unknown, value?: string) => void
-	definitionName: string
-	onSave: (name?: string) => void
-	onDelete: () => void
-	saveCausalFactor: (factor) => void
-} {
-	const [selectedDefinitionId, setSelectedDefinitionId] = useState<string>('')
-	const [isEditingDefinition, setIsEditingDefinition] = useState<boolean>(false)
-	const [isAddingDefinition, setIsAddingDefinition] = useState<boolean>(false)
-	const [isDuplicatingDefinition, setIsDuplicatingDefinition] =
-		useState<boolean>(false)
-	const [definitionName, setDefinitionName] = useState<string>('')
-	const saveCausalFactor = useAddOrEditFactor()
-	const deleteCausalFactor = useDeleteCausalFactor()
-	const definition = useSelectedDefinition(selectedDefinitionId, causalFactors)
+export function useDefinitions(definitions: CausalFactor[]): DefinitionArgs {
+	const [selectedId, setSelectedId] = useState<string>('')
+	const definition = useMemo(() => {
+		return definitions?.find(x => x.id === selectedId)
+	}, [selectedId, definitions])
 
 	useEffect(() => {
-		if (!definition && causalFactors) {
-			setSelectedDefinitionId(causalFactors[0]?.id || '')
+		if (!definition && definitions) {
+			setSelectedId(definitions[0]?.id || '')
 		}
-	}, [definition, setSelectedDefinitionId, causalFactors])
+	}, [definition, setSelectedId, definitions])
 
-	const toggleEditDefinition = useCallback(() => {
-		setIsEditingDefinition(prev => !prev)
-		setDefinitionName(definition?.variable || '')
-	}, [setIsEditingDefinition, definition, setDefinitionName])
-
-	const toggleAddDefinition = useCallback(() => {
-		setIsAddingDefinition(prev => !prev)
-		setDefinitionName('New definition')
-	}, [setDefinitionName, setIsAddingDefinition])
-
-	const toggleDuplicateDefinition = useCallback(() => {
-		setIsDuplicatingDefinition(prev => !prev)
-		setDefinitionName(`${definition?.variable} new`)
-	}, [setDefinitionName, setIsDuplicatingDefinition, definition])
-
-	const onChange = useCallback(
-		(_, value?: string) => {
-			setDefinitionName(value || '')
+	const onSelect = useCallback(
+		(id: string) => {
+			setSelectedId(id)
 		},
-		[setDefinitionName],
+		[setSelectedId],
 	)
+
+	return {
+		definition,
+		onSelect,
+	}
+}
+
+export function useDefinitionActions(
+	toggleCallout: (type?: RenameCalloutType) => void,
+	setSelectedId: (id: string) => void,
+	definition?: ElementDefinition | CausalFactor,
+	calloutOpen?: RenameCalloutType,
+): DefinitionActions {
+	const onSave = useAddOrEditFactor()
+	const deleteCausalFactor = useDeleteCausalFactor()
 
 	const onDelete = useCallback(() => {
 		definition && deleteCausalFactor(definition)
 	}, [definition, deleteCausalFactor])
 
-	const onSave = useCallback(
+	const onSaveCallout = useCallback(
 		(name?: string) => {
 			const newId = v4()
-			const props = isAddingDefinition
-				? { id: newId, description: '' }
-				: isDuplicatingDefinition
-				? { ...definition, id: newId }
-				: definition
+			const props =
+				calloutOpen === RenameCalloutType.New
+					? { id: newId, description: '' }
+					: calloutOpen === RenameCalloutType.Duplicate
+					? { ...definition, id: newId }
+					: definition
 
 			const newCausalFactor = {
 				...props,
 				variable: name,
 			} as CausalFactor
-			saveCausalFactor(newCausalFactor)
 
-			setIsEditingDefinition(false)
-			setIsAddingDefinition(false)
-			setIsDuplicatingDefinition(false)
+			onSave(newCausalFactor)
+			toggleCallout(undefined)
 
 			setTimeout(() => {
-				if (isAddingDefinition || isDuplicatingDefinition) {
-					setSelectedDefinitionId(newId)
-				}
+				setSelectedId(newCausalFactor.id)
 			}, 300)
 		},
-		[
-			setIsEditingDefinition,
-			setIsAddingDefinition,
-			isAddingDefinition,
-			definition,
-			setSelectedDefinitionId,
-			isDuplicatingDefinition,
-			setIsDuplicatingDefinition,
-			saveCausalFactor,
-		],
+		[definition, setSelectedId, onSave, toggleCallout, calloutOpen],
 	)
 
 	return {
-		selectedDefinitionId,
-		setSelectedDefinitionId,
-		isEditingDefinition,
-		isAddingDefinition,
-		isDuplicatingDefinition,
-		toggleEditDefinition,
-		onChange,
-		toggleAddDefinition,
-		onSave,
-		definitionName,
 		onDelete,
-		toggleDuplicateDefinition,
-		saveCausalFactor,
+		onSave,
+		onSaveCallout,
 	}
 }

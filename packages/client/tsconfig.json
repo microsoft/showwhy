@@ -2,7 +2,7 @@
 	"compilerOptions": {
 		"module": "ESNext",
 		"moduleResolution": "Node",
-		"baseUrl": "./",
+		"baseUrl": ".",
 		"paths": {
 			"~arquero": ["src/arquero/index.ts"],
 			"~components": ["src/components/index.ts"],
