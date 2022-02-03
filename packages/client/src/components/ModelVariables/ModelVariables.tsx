@@ -2,23 +2,25 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { FC, memo, useCallback } from 'react'
-import styled from 'styled-components'
-import { Header } from './Header'
 import {
 	ArqueroTableHeader,
 	ColumnTransformModal,
 } from '@data-wrangling-components/react'
 import {
 	Dropdown,
-	ICommandBarItemProps,
 	IconButton,
 	IDetailsColumnProps,
 	IDropdownOption,
 	IRenderFunction,
 	Separator,
 } from '@fluentui/react'
+import ColumnTable from 'arquero/dist/types/table/column-table'
+import { FC, memo } from 'react'
 import { If, Then, Else } from 'react-if'
+import styled from 'styled-components'
+import { Header } from './Header'
+import { RenameCallout } from './RenameCallout'
+import { StepsList } from './StepsList'
 import { EmptyDataPageWarning } from '~components/EmptyDataPageWarning'
 import { ModelVariableCommands } from '~components/ModelVariableCommands'
 import { ArqueroDetailsTable } from '~components/Tables/ArqueroDetailsTable'
@@ -29,14 +31,8 @@ import {
 	TransformTable,
 	RenameCalloutArgs,
 	DefinitionArgs,
-	CausalityLevel,
-	ElementDefinition,
 	DefinitionActions,
 } from '~types'
-import { StepsList } from './StepsList'
-import ColumnTable from 'arquero/dist/types/table/column-table'
-import { RenameCallout } from './RenameCallout'
-import { v4 } from 'uuid'
 
 interface ModelVariablesProps {
 	pageType: PageType

@@ -4,7 +4,6 @@
  */
 
 import { memo } from 'react'
-import { ModelVariables } from '~components/ModelVariables'
 import {
 	useCommandBar,
 	useDefinitionDropdown,
@@ -18,6 +17,7 @@ import {
 	useSetTargetVariable,
 	useDefinitionActions,
 } from './hooks'
+import { ModelVariables } from '~components/ModelVariables'
 
 export const GeneralPage: React.FC = memo(function GeneralPage() {
 	const { pageType, defineQuestionData, definitions } = useBusinessLogic()

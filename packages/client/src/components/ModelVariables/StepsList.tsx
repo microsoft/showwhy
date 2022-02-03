@@ -2,11 +2,11 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import { Step } from '@data-wrangling-components/core'
 import { FC, memo } from 'react'
 import styled from 'styled-components'
-import { Step } from '@data-wrangling-components/core'
-import { EmptyVariableSteps } from '~components/EmptyVariableSteps'
 import { StepComponent } from './StepComponent'
+import { EmptyVariableSteps } from '~components/EmptyVariableSteps'
 import { VariableDefinition } from '~types'
 
 interface StepsListProps {
