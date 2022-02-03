@@ -95,6 +95,13 @@ const EvaluateHypothesisPage = lazy(
 		),
 )
 
+const ControlPage = lazy(
+	() =>
+		/* webpackChunkName: "ControlPage" */ import(
+			'../../pages/PrepareData/ControlPage'
+		),
+)
+
 export const Routes: React.FC = memo(function Routes() {
 	return (
 		<Switch>
@@ -113,6 +120,7 @@ export const Routes: React.FC = memo(function Routes() {
 				path={Pages.ProcessTableColumns}
 				component={ProcessTableColumnsPage}
 			/>
+			<Route path={Pages.VariablesControl} component={ControlPage} />
 			<Route path={Pages.Variables} component={ModelVariablesPage} />
 			<Route
 				path={Pages.SelectCausalEstimators}

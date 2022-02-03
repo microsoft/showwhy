@@ -147,7 +147,7 @@ export function useDefinitions(
 			if (page === PageType.Control) {
 				setSelectedDefinitionId(causalFactors[0]?.id || '')
 			} else {
-				setSelectedDefinitionId(defineQuestionData.definition[0]?.id || '')
+				setSelectedDefinitionId(defineQuestionData?.definition[0]?.id || '')
 			}
 		}
 	}, [
