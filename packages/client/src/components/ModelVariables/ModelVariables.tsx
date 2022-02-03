@@ -33,6 +33,8 @@ import {
 	DefinitionArgs,
 	DefinitionActions,
 } from '~types'
+import { DialogConfirm } from '~components/DialogConfirm'
+import { SharedLogic } from 'src/pages/PrepareData/ModelVariables/interfaces'
 
 interface ModelVariablesProps {
 	pageType: PageType
@@ -43,6 +45,7 @@ interface ModelVariablesProps {
 	commandBar: IRenderFunction<IDetailsColumnProps>
 	renameCalloutArgs: RenameCalloutArgs
 	definitionActions: DefinitionActions
+	sharedLogic: SharedLogic
 }
 export const ModelVariables: FC<ModelVariablesProps> = memo(
 	function ModelVariables({
@@ -54,8 +57,10 @@ export const ModelVariables: FC<ModelVariablesProps> = memo(
 		commandBar,
 		renameCalloutArgs,
 		definitionActions,
+		sharedLogic,
 	}) {
 		const { definition, onSelect } = definitionArgs
+		const { showConfirmDelete, toggleShowConfirmDelete } = sharedLogic
 		const { onDelete, onSaveCallout } = definitionActions
 		const selectedId = definition?.id ?? ''
 
@@ -72,6 +77,13 @@ export const ModelVariables: FC<ModelVariablesProps> = memo(
 
 		return (
 			<>
+				<DialogConfirm
+					onConfirm={onDelete}
+					show={showConfirmDelete}
+					toggle={toggleShowConfirmDelete}
+					title="Are you sure you want to delete?"
+					subText="You will lose all the column transformations made in the table for this definition"
+				/>
 				<Header pageType={pageType} />
 				{/* //fix this correctly */}
 				<If condition={!definitionDropdown.length}>
@@ -113,7 +125,7 @@ export const ModelVariables: FC<ModelVariablesProps> = memo(
 										<ModelVariableCommands
 											selectedDefinition={selectedId}
 											onCallout={toggleCallout}
-											onDelete={onDelete}
+											onDelete={toggleShowConfirmDelete}
 										/>
 									</VariablesContainer>
 

@@ -7,6 +7,7 @@ import {
 	useCommandBar,
 	useDefinitionDropdown,
 	useRenameCallout,
+	useSharedBusinessLogic,
 	useTable,
 	useTableTransform,
 } from '../hooks'
@@ -28,9 +29,13 @@ export const ControlPage: React.FC = memo(function ControlPage() {
 	const renameCallout = useRenameCallout(definition)
 	const { calloutOpen, toggleCallout } = renameCallout
 
+	const sharedLogic = useSharedBusinessLogic()
+	const { toggleShowConfirmDelete } = sharedLogic
+
 	const definitionActions = useDefinitionActions(
 		toggleCallout,
 		onSelect,
+		toggleShowConfirmDelete,
 		definition,
 		calloutOpen,
 	)
@@ -62,6 +67,7 @@ export const ControlPage: React.FC = memo(function ControlPage() {
 			definitionArgs={definitionArgs}
 			renameCalloutArgs={renameCallout}
 			definitionActions={definitionActions}
+			sharedLogic={sharedLogic}
 		/>
 	)
 })

@@ -34,12 +34,24 @@ import {
 	ColumnRelevance,
 	ElementDefinition,
 	FactorsOrDefinitions,
+	Handler,
 	PageType,
 	RenameCalloutArgs,
 	RenameCalloutType,
 	TransformTable,
 	VariableDefinition,
 } from '~types'
+import { SharedLogic } from './interfaces'
+
+export function useSharedBusinessLogic(): SharedLogic {
+	const [showConfirmDelete, { toggle: toggleShowConfirmDelete }] =
+		useBoolean(false)
+
+	return {
+		showConfirmDelete,
+		toggleShowConfirmDelete,
+	}
+}
 
 export function useDefinitionDropdown(
 	definitionOptions: FactorsOrDefinitions,

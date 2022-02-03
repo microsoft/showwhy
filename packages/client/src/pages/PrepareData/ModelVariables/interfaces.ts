@@ -12,6 +12,7 @@ import {
 	Setter,
 	FactorsOrDefinitions,
 	Maybe,
+	Handler,
 } from '~types'
 
 export interface SelectedArgs {
@@ -31,4 +32,9 @@ export interface SubjectIdentifierDataArgs {
 	allOriginalTables: DataTable[]
 	subjectIdentifier: string[]
 	setTableIdentifier: Setter<Maybe<DataTable>>
+}
+
+export interface SharedLogic {
+	showConfirmDelete: boolean
+	toggleShowConfirmDelete: Handler
 }

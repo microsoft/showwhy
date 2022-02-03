@@ -4,9 +4,10 @@
  */
 
 import { CausalFactor, ElementDefinition } from '~types'
+import { Handler, Handler1, Maybe } from '../primitives'
 
 export interface DefinitionActions {
-	onDelete: () => void
-	onSave: (definitionToSave: ElementDefinition | CausalFactor) => void
-	onSaveCallout: (name?: string) => void
+	onDelete: Handler
+	onSave: Handler1<ElementDefinition | CausalFactor>
+	onSaveCallout: Handler1<Maybe<string>>
 }

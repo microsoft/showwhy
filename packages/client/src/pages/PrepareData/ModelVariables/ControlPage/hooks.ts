@@ -13,6 +13,9 @@ import {
 	DefinitionActions,
 	DefinitionArgs,
 	ElementDefinition,
+	Handler,
+	Handler1,
+	Maybe,
 	PageType,
 	RenameCalloutType,
 } from '~types'
@@ -90,8 +93,9 @@ export function useDefinitions(definitions: CausalFactor[]): DefinitionArgs {
 }
 
 export function useDefinitionActions(
-	toggleCallout: (type?: RenameCalloutType) => void,
-	setSelectedId: (id: string) => void,
+	toggleCallout: Handler1<Maybe<RenameCalloutType>>,
+	setSelectedId: Handler1<string>,
+	toggleShowConfirmDelete: Handler,
 	definition?: ElementDefinition | CausalFactor,
 	calloutOpen?: RenameCalloutType,
 ): DefinitionActions {
@@ -100,7 +104,8 @@ export function useDefinitionActions(
 
 	const onDelete = useCallback(() => {
 		definition && deleteCausalFactor(definition)
-	}, [definition, deleteCausalFactor])
+		toggleShowConfirmDelete()
+	}, [definition, deleteCausalFactor, toggleShowConfirmDelete])
 
 	const onSaveCallout = useCallback(
 		(name?: string) => {

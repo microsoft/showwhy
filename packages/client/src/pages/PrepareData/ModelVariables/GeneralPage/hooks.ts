@@ -3,6 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import { useBoolean } from '@fluentui/react-hooks'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { v4 } from 'uuid'
 import { usePageType, useRemoveDefinition, useSaveDefinition } from '~hooks'
@@ -14,6 +15,7 @@ import {
 	DefinitionArgs,
 	Element,
 	ElementDefinition,
+	Handler,
 	PageType,
 	RenameCalloutType,
 } from '~types'
@@ -91,6 +93,7 @@ export function useSetTargetVariable(
 export function useDefinitionActions(
 	toggleCallout: (type?: RenameCalloutType) => void,
 	setSelectedId: (id: string) => void,
+	toggleShowConfirmDelete: Handler,
 	definition?: ElementDefinition | CausalFactor,
 	calloutOpen?: RenameCalloutType,
 ): DefinitionActions {
@@ -99,7 +102,8 @@ export function useDefinitionActions(
 
 	const onDelete = useCallback(() => {
 		definition && removeDefinition(definition)
-	}, [definition, removeDefinition])
+		toggleShowConfirmDelete()
+	}, [definition, removeDefinition, toggleShowConfirmDelete])
 
 	const onSaveCallout = useCallback(
 		(name?: string) => {

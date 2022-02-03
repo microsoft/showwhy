@@ -12,9 +12,10 @@ export const DialogConfirm: React.FC<{
 	onConfirm: Handler
 	show: Maybe<boolean>
 	title: string
-}> = memo(function DialogConfirm({ toggle, onConfirm, show, title }) {
+	subText?: string
+}> = memo(function DialogConfirm({ toggle, onConfirm, show, title, subText }) {
 	const dialogContentProps = useMemo(
-		() => ({ type: DialogType.normal, title }),
+		() => ({ type: DialogType.normal, title, subText }),
 		[title],
 	)
 	return (
