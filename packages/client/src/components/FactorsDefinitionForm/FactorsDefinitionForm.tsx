@@ -7,48 +7,44 @@ import { IComboBoxOption } from '@fluentui/react'
 import { memo } from 'react'
 import styled from 'styled-components'
 import { useFactorsDefinitionForm } from './hooks'
-import { PageType, CausalFactor, Experiment } from '~types'
+import { PageType, CausalFactor, Experiment, OptionalId, Maybe } from '~types'
 
-interface FactorsDefinitionFormProps {
+export const FactorsDefinitionForm: React.FC<{
 	factor?: CausalFactor
-	showLevel?: boolean | undefined
+	showLevel?: Maybe<boolean>
 	defineQuestion?: Experiment
 	pageType: PageType
 	variables?: IComboBoxOption[]
-	onAdd?: (factor: Omit<CausalFactor, 'id'>) => void
+	onAdd?: (factor: OptionalId<CausalFactor>) => void
 	onChange?: (f: Partial<CausalFactor>) => void
-}
-
-export const FactorsDefinitionForm: React.FC<FactorsDefinitionFormProps> = memo(
-	function FactorsDefinitionForm({
+}> = memo(function FactorsDefinitionForm({
+	factor,
+	defineQuestion,
+	onAdd,
+	onChange,
+	showLevel = true,
+	pageType,
+	variables,
+}) {
+	const { level, description, variable } = useFactorsDefinitionForm({
 		factor,
-		defineQuestion,
-		onAdd,
+		experiment: defineQuestion,
 		onChange,
-		showLevel = true,
+		onAdd,
 		pageType,
 		variables,
-	}) {
-		const { level, description, variable } = useFactorsDefinitionForm({
-			factor,
-			defineQuestion,
-			onChange,
-			onAdd,
-			pageType,
-			variables,
-		})
+	})
 
-		return (
-			<Container showLevel={!!showLevel}>
-				{showLevel ? level : null}
-				{variable}
-				{description}
-			</Container>
-		)
-	},
-)
+	return (
+		<Container showLevel={!!showLevel}>
+			{showLevel ? level : null}
+			{variable}
+			{description}
+		</Container>
+	)
+})
 
-const Container = styled.form<{ showLevel: boolean | undefined }>`
+const Container = styled.form<{ showLevel: Maybe<boolean> }>`
 	display: grid;
 	grid-template-columns: ${({ showLevel }) =>
 		showLevel ? '15% 25% 60%' : '30% 70%'};

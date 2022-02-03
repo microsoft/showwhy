@@ -8,26 +8,34 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useAddOrEditFactor, usePageType, useVariableOptions } from '~hooks'
 import { useCausalFactors, useSetCausalFactors } from '~state'
-import { PageType, CausalFactor, FlatCausalFactor } from '~types'
+import {
+	PageType,
+	CausalFactor,
+	FlatCausalFactor,
+	OptionalId,
+	Maybe,
+	Handler,
+} from '~types'
+import { noop } from '~utils'
 
 interface PathData {
-	path: string | undefined
-	page: string | undefined
+	path: Maybe<string>
+	page: Maybe<string>
 }
 
 export function useBusinessLogic(): {
-	factor: CausalFactor | undefined
+	factor: Maybe<CausalFactor>
 	isEditing: boolean
 	flatFactorsList: FlatCausalFactor[]
-	page: string | undefined
+	page: Maybe<string>
 	pageType: PageType
 	variables: IComboBoxOption[]
-	addFactor: (factor: Omit<CausalFactor, 'id'>) => void
+	addFactor: (factor: OptionalId<CausalFactor>) => void
 	editFactor: (factor: CausalFactor) => void
 	deleteFactor: (factor: CausalFactor) => void
-	setFactor: (factor: CausalFactor | undefined) => void
+	setFactor: (factor: Maybe<CausalFactor>) => void
 	setIsEditing: (value: boolean) => void
-	goToFactorsPage: () => void
+	goToFactorsPage: Handler
 } {
 	const causalFactors = useCausalFactors()
 	const pageType = usePageType()
@@ -84,11 +92,11 @@ function useEditFactor(
 function useAddFactor(
 	isEditing: boolean,
 	setIsEditing: (value: boolean) => void,
-	setFactor: (factor: CausalFactor | undefined) => void,
-): (factor: Omit<CausalFactor, 'id'>) => void {
+	setFactor: (factor: Maybe<CausalFactor>) => void,
+): (factor: OptionalId<CausalFactor>) => void {
 	const addOrEditFactor = useAddOrEditFactor()
 	return useCallback(
-		(newFactor: Omit<CausalFactor, 'id'>) => {
+		(newFactor: OptionalId<CausalFactor>) => {
 			addOrEditFactor(newFactor)
 			isEditing && setIsEditing(false)
 			setFactor(undefined)
@@ -109,7 +117,7 @@ function useFlatFactorsList(causalFactors: CausalFactor[]): FlatCausalFactor[] {
 	}, [causalFactors])
 }
 
-function useFactorsNavigation(): [() => void, PathData] {
+function useFactorsNavigation(): [Handler, PathData] {
 	const history = useHistory()
 	const [historyState, setHistoryState] = useState<string>()
 	const factorsPathData = useFactorsPathData(historyState)
@@ -122,17 +130,10 @@ function useFactorsNavigation(): [() => void, PathData] {
 		setHistoryState(undefined)
 	}, [factorsPathData, setHistoryState, history])
 
-	return [
-		factorsPathData?.path
-			? goToFactorsPage
-			: () => {
-					/*nothing*/
-			  },
-		factorsPathData,
-	]
+	return [factorsPathData?.path ? goToFactorsPage : noop, factorsPathData]
 }
 
-function useFactorsPathData(historyState: string | undefined): PathData {
+function useFactorsPathData(historyState: Maybe<string>): PathData {
 	return useMemo((): PathData => {
 		return {
 			path: historyState,

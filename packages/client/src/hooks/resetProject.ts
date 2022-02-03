@@ -17,8 +17,9 @@ import {
 	useResetSelectedFile,
 	useResetSpecificationCurveConfig,
 } from '~state'
+import { Handler } from '~types'
 
-export function useResetProject(): () => void {
+export function useResetProject(): Handler {
 	const resetCausalFactors = useResetCausalFactors()
 	const resetRefutationTests = useResetRefutationType()
 	const resetEstimators = useResetEstimators()

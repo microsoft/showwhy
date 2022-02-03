@@ -5,14 +5,14 @@
 
 import { useCallback } from 'react'
 import { useSetHoverState } from '~state'
-import { DecisionFeature, Specification } from '~types'
+import { DecisionFeature, Specification, Maybe } from '~types'
 
 export function useOnMouseOver(): (
-	item: Specification | DecisionFeature | undefined,
+	item: Maybe<Specification | DecisionFeature>,
 ) => void {
 	const setHovered = useSetHoverState()
 	return useCallback(
-		(item: Specification | DecisionFeature | undefined) => {
+		(item: Maybe<Specification | DecisionFeature>) => {
 			setHovered(item?.id)
 		},
 		[setHovered],

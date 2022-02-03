@@ -6,16 +6,10 @@
 import { useMemo } from 'react'
 import { useSetFullRefutation, useSetQuickRefutation } from '~hooks'
 import { useRefutationType } from '~state'
-import { RefutationType } from '~types'
+import { RefutationType, RefutationChoice } from '~types'
 
 export function useRefutations(): {
-	refutationOptions: Array<{
-		key: RefutationType
-		title: string
-		description: string
-		isSelected: boolean
-		onChange: () => void
-	}>
+	refutationOptions: RefutationChoice[]
 } {
 	const refutation = useRefutationType()
 	const setQuickRefutation = useSetQuickRefutation()

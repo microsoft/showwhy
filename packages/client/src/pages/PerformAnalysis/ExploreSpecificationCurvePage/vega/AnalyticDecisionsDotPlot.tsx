@@ -19,7 +19,9 @@ import {
 	SpecificationCurveConfig,
 } from '~types'
 
-export interface AnalyticDecisionsDotPlotProps {
+const templateString = JSON.stringify(template)
+
+export const AnalyticDecisionsDotPlot: React.FC<{
 	data: Specification[]
 	config: SpecificationCurveConfig
 	width: number
@@ -27,109 +29,103 @@ export interface AnalyticDecisionsDotPlotProps {
 	height: number
 	onMouseClick?: (datum?: Specification) => void
 	onMouseOver?: (datum?: DecisionFeature) => void
-	onAxisClick?: (axis: string, datum: any | undefined) => void
+	onAxisClick?: (axis: string, datum: any) => void
 	hovered?: number
 	selected?: number
-}
+}> = memo(function AnalyticDecisionsDotPlot({
+	data,
+	config,
+	width,
+	height,
+	onMouseOver,
+	onMouseClick,
+	onAxisClick,
+	hovered,
+	selected,
+}) {
+	const theme = useThematic()
+	const primarySpecificationConfig = usePrimarySpecificationConfig()
+	const shapColor = theme
+		.rule({ selectionState: SelectionState.Hovered })
+		.stroke()
+		.hex()
 
-const templateString = JSON.stringify(template)
+	const shap = useTransformShap(data)
 
-export const AnalyticDecisionsDotPlot: React.FC<AnalyticDecisionsDotPlotProps> =
-	memo(function AnalyticDecisionsDotPlot({
-		data,
-		config,
-		width,
-		height,
-		onMouseOver,
-		onMouseClick,
-		onAxisClick,
-		hovered,
-		selected,
-	}) {
-		const theme = useThematic()
-		const primarySpecificationConfig = usePrimarySpecificationConfig()
-		const shapColor = theme
-			.rule({ selectionState: SelectionState.Hovered })
-			.stroke()
-			.hex()
+	const spec = useMemo(() => {
+		const shapValues = shap.map(s => s.value)
+		const greater = max(shapValues) || 0.1
+		const lowest = min(shapValues) || 0.1
+		const maxDomainValue = Math.max(Math.abs(lowest), Math.abs(greater))
+		const shapDomain = [-maxDomainValue, 0, maxDomainValue]
 
-		const shap = useTransformShap(data)
+		const rawSpec = JSON.parse(templateString)
+		const primarySpecificationId = data.find(
+			d =>
+				d.populationType === CausalityLevel.Primary &&
+				d.treatmentType === CausalityLevel.Primary &&
+				d.outcomeType === CausalityLevel.Primary &&
+				d.causalModel
+					.toLowerCase()
+					.includes(primarySpecificationConfig.causalModel.toLowerCase()) &&
+				d.estimator.toLowerCase() ===
+					primarySpecificationConfig.type?.toLowerCase(),
+		)?.id
 
-		const spec = useMemo(() => {
-			const shapValues = shap.map(s => s.value)
-			const greater = max(shapValues) || 0.1
-			const lowest = min(shapValues) || 0.1
-			const maxDomainValue = Math.max(Math.abs(lowest), Math.abs(greater))
-			const shapDomain = [-maxDomainValue, 0, maxDomainValue]
+		const pathspec = {
+			"$.data[?(@.name == 'specifications')].values": data,
+			"$.marks[?(@.name == 'inactiveMarks')].encode.update.fill.value": theme
+				.rect({ selectionState: SelectionState.NoData })
+				.fill()
+				.hex(),
+			"$.marks[?(@.name == 'shapMarks')].encode.update.fill.value": shapColor,
+			"$.marks[?(@.name == 'shapArrows')].encode.update.fill.value": shapColor,
+			"$.signals[?(@.name == 'primaryColors')].value": theme
+				.scales()
+				.nominalBold(10)
+				.toArray(),
+			"$.signals[?(@.name == 'shapDomain')].value": shapDomain,
+			"$.signals[?(@.name == 'primaryEstimatorId')].value":
+				primarySpecificationId,
+		}
 
-			const rawSpec = JSON.parse(templateString)
-			const primarySpecificationId = data.find(
-				d =>
-					d.populationType === CausalityLevel.Primary &&
-					d.treatmentType === CausalityLevel.Primary &&
-					d.outcomeType === CausalityLevel.Primary &&
-					d.causalModel
-						.toLowerCase()
-						.includes(primarySpecificationConfig.causalModel.toLowerCase()) &&
-					d.estimator.toLowerCase() ===
-						primarySpecificationConfig.type?.toLowerCase(),
-			)?.id
+		const overlay = parseJsonPathSpec(rawSpec, pathspec)
+		return mergeSpec(rawSpec, overlay)
+	}, [theme, data, primarySpecificationConfig, shap, shapColor])
 
-			const pathspec = {
-				"$.data[?(@.name == 'specifications')].values": data,
-				"$.marks[?(@.name == 'inactiveMarks')].encode.update.fill.value": theme
-					.rect({ selectionState: SelectionState.NoData })
-					.fill()
-					.hex(),
-				"$.marks[?(@.name == 'shapMarks')].encode.update.fill.value": shapColor,
-				"$.marks[?(@.name == 'shapArrows')].encode.update.fill.value":
-					shapColor,
-				"$.signals[?(@.name == 'primaryColors')].value": theme
-					.scales()
-					.nominalBold(10)
-					.toArray(),
-				"$.signals[?(@.name == 'shapDomain')].value": shapDomain,
-				"$.signals[?(@.name == 'primaryEstimatorId')].value":
-					primarySpecificationId,
-			}
+	const signals = useMemo(
+		() => ({
+			hoveredId: hovered,
+			selectedId: selected,
+			showShap: config.shapTicks,
+			inactiveFeatures: config.inactiveFeatures,
+			inactiveSpecifications: config.inactiveSpecifications,
+		}),
+		[hovered, selected, config],
+	)
 
-			const overlay = parseJsonPathSpec(rawSpec, pathspec)
-			return mergeSpec(rawSpec, overlay)
-		}, [theme, data, primarySpecificationConfig, shap, shapColor])
+	const datasets = useMemo(
+		() => ({
+			shap,
+		}),
+		[shap],
+	)
 
-		const signals = useMemo(
-			() => ({
-				hoveredId: hovered,
-				selectedId: selected,
-				showShap: config.shapTicks,
-				inactiveFeatures: config.inactiveFeatures,
-				inactiveSpecifications: config.inactiveSpecifications,
-			}),
-			[hovered, selected, config],
-		)
-
-		const datasets = useMemo(
-			() => ({
-				shap,
-			}),
-			[shap],
-		)
-
-		return (
-			<Container>
-				<VegaHost
-					spec={spec}
-					width={width}
-					height={height}
-					onDatumMouseOver={onMouseOver}
-					onDatumClick={onMouseClick}
-					onAxisClick={onAxisClick}
-					signals={signals}
-					data={datasets}
-				/>
-			</Container>
-		)
-	})
+	return (
+		<Container>
+			<VegaHost
+				spec={spec}
+				width={width}
+				height={height}
+				onDatumMouseOver={onMouseOver}
+				onDatumClick={onMouseClick}
+				onAxisClick={onAxisClick}
+				signals={signals}
+				data={datasets}
+			/>
+		</Container>
+	)
+})
 
 const Container = styled.div``
 

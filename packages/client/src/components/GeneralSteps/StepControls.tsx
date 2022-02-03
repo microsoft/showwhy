@@ -6,49 +6,43 @@ import { DefaultButton, Icon, PrimaryButton } from '@fluentui/react'
 import { memo } from 'react'
 
 import styled from 'styled-components'
-import { Step, StepStatus } from '~types'
+import { useGoToPage } from '~hooks'
+import { Step, StepStatus, Maybe, Handler } from '~types'
 
-interface StepControlsProps {
+export const StepControls: React.FC<{
 	step?: Step
 	stepStatus?: StepStatus
-	goToPage: (url: string) => void
-	toggleStatus: () => void
+	toggleStatus: Handler
 	previousUrl: string
 	nextUrl: string
-}
-
-export const StepControls: React.FC<StepControlsProps> = memo(
-	function StepControls({
-		step,
-		stepStatus,
-		goToPage,
-		toggleStatus,
-		previousUrl,
-		nextUrl,
-	}) {
-		return (
-			<Container>
-				<MarkDoneButton
-					done={stepStatus === StepStatus.Done}
-					disabled={!step?.showStatus}
-					onClick={toggleStatus}
-				>
-					<Icon iconName="CheckMark"></Icon>Mark as
-					{stepStatus === StepStatus.Done ? ' to do' : ' done'}
-				</MarkDoneButton>
-				<PreviousButton
-					onClick={() => goToPage(previousUrl)}
-					disabled={!previousUrl}
-				>
-					Previous step
-				</PreviousButton>
-				<NextButton onClick={() => goToPage(nextUrl)} disabled={!nextUrl}>
-					Next step
-				</NextButton>
-			</Container>
-		)
-	},
-)
+}> = memo(function StepControls({
+	step,
+	stepStatus,
+	toggleStatus,
+	previousUrl,
+	nextUrl,
+}) {
+	const handleNavigatePrev = useGoToPage(previousUrl)
+	const handleNavigateNext = useGoToPage(nextUrl)
+	return (
+		<Container>
+			<MarkDoneButton
+				done={stepStatus === StepStatus.Done}
+				disabled={!step?.showStatus}
+				onClick={toggleStatus}
+			>
+				<Icon iconName="CheckMark"></Icon>Mark as
+				{stepStatus === StepStatus.Done ? ' to do' : ' done'}
+			</MarkDoneButton>
+			<PreviousButton onClick={handleNavigatePrev} disabled={!previousUrl}>
+				Previous step
+			</PreviousButton>
+			<NextButton onClick={handleNavigateNext} disabled={!nextUrl}>
+				Next step
+			</NextButton>
+		</Container>
+	)
+})
 
 const Container = styled.div`
 	display: flex;
@@ -67,7 +61,7 @@ const PreviousButton = styled(DefaultButton)`
 	width: 100%;
 `
 
-const MarkDoneButton = styled(DefaultButton)<{ done: boolean | undefined }>`
+const MarkDoneButton = styled(DefaultButton)<{ done: Maybe<boolean> }>`
 	margin: 0px 8px;
 	width: 50%;
 

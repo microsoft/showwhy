@@ -12,6 +12,7 @@ import {
 	TotalExecutionsResponse,
 	OrchestratorStatusResponse,
 	NodeResponseStatus,
+	Maybe,
 } from '~types'
 import { getStorageItem, SESSION_ID_KEY } from '~utils'
 
@@ -73,7 +74,7 @@ export async function uploadFiles(
 
 export async function downloadFile(
 	fileName: string,
-): Promise<{ blob: Blob; url: string } | undefined> {
+): Promise<Maybe<{ blob: Blob; url: string }>> {
 	const fileUrl: { signed_url: string } = await fetch(
 		`${BASE_URL}/api/getdownloadurl?session_id=${getStorageItem(
 			SESSION_ID_KEY,
@@ -106,7 +107,7 @@ async function fetchHandler(
 	url: string,
 	options: RequestInit & { maxRetries?: number },
 	retryCount = 0,
-) {
+): Promise<Response> {
 	const { maxRetries = 0, ...fetchOptions } = options
 	try {
 		return await fetch(url, fetchOptions)

@@ -20,12 +20,12 @@ import {
 import { useOnDropRejected } from './dropzone'
 import { useAddFilesToCollection } from './fileCollection'
 import { useSupportedFileTypes } from './supportedFileTypes'
-import { DropFilesCount, ProjectFile } from '~types'
+import { DropFilesCount, ProjectFile, Handler } from '~types'
 import { createDefaultTable } from '~utils'
 
 export function useDrop(
 	onFileLoad: (file: ProjectFile, table: ColumnTable) => void,
-	onLoadStart?: () => void,
+	onLoadStart?: Handler,
 ): (files: BaseFile[], delimiter?: string) => void {
 	return useCallback(
 		(files: BaseFile[], delimiter?: string) => {
@@ -112,7 +112,7 @@ export function useHandleDropzone(
 	}
 }
 
-export function useOnLoadStart(setLoading: any, onError: any): () => void {
+export function useOnLoadStart(setLoading: any, onError: any): Handler {
 	return useCallback(() => {
 		setLoading(true)
 		onError && onError(null)
@@ -120,17 +120,17 @@ export function useOnLoadStart(setLoading: any, onError: any): () => void {
 }
 
 export function useOnFileLoadCompleted(
-	setFilesCount: (prev: any) => any,
+	setFilesCount: (dispatch: (prev: DropFilesCount) => DropFilesCount) => void,
 	setLoading: Dispatch<SetStateAction<boolean>>,
 	onLoad?: (file: ProjectFile, table: ColumnTable) => void,
 ): (file: ProjectFile, table: ColumnTable) => void {
 	return useCallback(
 		(file: ProjectFile, table: ColumnTable) => {
-			setFilesCount(prev => {
+			setFilesCount((prev: DropFilesCount) => {
 				return {
 					...prev,
 					completed: prev.completed + 1,
-				}
+				} as DropFilesCount
 			})
 			setLoading(false)
 			onLoad && onLoad(file, table)
@@ -158,7 +158,7 @@ export function useOnDropDatasetFilesAccepted(
 
 export function useResetCount(
 	setFilesCount: (count: DropFilesCount) => void,
-): () => void {
+): Handler {
 	return useCallback(() => {
 		setFilesCount({
 			total: 0,

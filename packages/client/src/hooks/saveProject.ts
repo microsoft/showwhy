@@ -8,6 +8,7 @@ import {
 	createFileWithPath,
 	fetchFile,
 	FileWithPath,
+	FileCollection,
 } from '@data-wrangling-components/utilities'
 import { useCallback, useMemo } from 'react'
 import { useGetCSVResult, useGetStepUrlsByStatus } from '~hooks'
@@ -27,10 +28,16 @@ import {
 	useOriginalTables,
 	useRunHistory,
 } from '~state'
-import { PageType, Workspace, NodeResponseStatus } from '~types'
+import {
+	PageType,
+	Workspace,
+	NodeResponseStatus,
+	Maybe,
+	AsyncHandler,
+} from '~types'
 import { isDataUrl } from '~utils'
 
-export const useSaveProject = (): (() => Promise<void>) => {
+export function useSaveProject(): AsyncHandler {
 	const fileCollection = useFileCollection()
 	const confidenceInterval = useConfidenceInterval()
 	const primarySpecification = usePrimarySpecificationConfig()
@@ -84,7 +91,7 @@ export const useSaveProject = (): (() => Promise<void>) => {
 	])
 }
 
-const usePrimary = (): (() => FileWithPath | undefined) => {
+function usePrimary(): () => Maybe<FileWithPath> {
 	const primaryTable = usePrimaryTable()
 	const originalTables = useOriginalTables()
 	return useCallback(() => {
@@ -101,7 +108,7 @@ const usePrimary = (): (() => FileWithPath | undefined) => {
 	}, [primaryTable, originalTables])
 }
 
-const useTables = fileCollection => {
+function useTables(fileCollection: FileCollection) {
 	return useCallback(
 		primary => {
 			const files = fileCollection.list(FileType.table)
@@ -121,7 +128,7 @@ const useTables = fileCollection => {
 	)
 }
 
-const useCSVResult = (): Promise<FileWithPath | undefined> => {
+function useCSVResult(): Promise<Maybe<FileWithPath>> {
 	const getCSVResult = useGetCSVResult()
 	const runHistory = useRunHistory()
 	return useMemo(async () => {
@@ -143,7 +150,7 @@ const useCSVResult = (): Promise<FileWithPath | undefined> => {
 	}, [getCSVResult, runHistory])
 }
 
-const useResults = () => {
+function useResults() {
 	const defaultDatasetResult = useDefaultDatasetResult()
 	const csvResult = useCSVResult()
 	return useMemo(async () => {
@@ -173,16 +180,15 @@ const useResults = () => {
 	}, [defaultDatasetResult, csvResult])
 }
 
-const useDownload = fileCollection => {
+function useDownload(fileCollection: FileCollection) {
 	const results = useResults()
 	const getPrimary = usePrimary()
 	const getTables = useTables(fileCollection)
 	return useCallback(
 		async (workspace: Partial<Workspace>) => {
-			const primary: FileWithPath | undefined = getPrimary()
+			const primary = getPrimary()
 			const tables = getTables(primary)
-			const result: { file: FileWithPath; url: string } | undefined =
-				await results
+			const result = await results
 			workspace.tables = tables
 			if (fileCollection.name) {
 				workspace.name = fileCollection.name
@@ -198,7 +204,7 @@ const useDownload = fileCollection => {
 				new Blob([JSON.stringify(workspace, null, 4)]),
 				options,
 			)
-			const files = [file, primary]
+			const files = [file, primary].filter(t => !!t) as FileWithPath[]
 			if (result?.file) {
 				files.push(result.file)
 			}

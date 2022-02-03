@@ -3,6 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import { Maybe } from '../primitives'
 import { VariableDefinition } from './VariableDefinition'
 
 export interface Definition {
@@ -10,4 +11,5 @@ export interface Definition {
 	exposure?: VariableDefinition[]
 	outcome?: VariableDefinition[]
 	control?: VariableDefinition[]
+	[key: string]: Maybe<VariableDefinition[]>
 }

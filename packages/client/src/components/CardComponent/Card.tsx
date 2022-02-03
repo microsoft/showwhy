@@ -4,15 +4,14 @@
  */
 import { memo } from 'react'
 import styled from 'styled-components'
+import { Maybe } from '~types'
 
-interface CardProps {
+export const CardComponent: React.FC<{
 	title?: string
 	actionButtons?: React.ReactNode
 	styles?: React.CSSProperties
 	isSticky?: boolean
-}
-
-export const CardComponent: React.FC<CardProps> = memo(function CardComponent({
+}> = memo(function CardComponent({
 	title,
 	actionButtons,
 	children,
@@ -34,7 +33,7 @@ export const CardComponent: React.FC<CardProps> = memo(function CardComponent({
 	)
 })
 
-const Card = styled.div<{ isSticky: boolean | undefined }>`
+const Card = styled.div<{ isSticky: Maybe<boolean> }>`
 	padding: 8px;
 	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 	border-radius: 4px;

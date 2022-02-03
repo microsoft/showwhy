@@ -27,14 +27,15 @@ import {
 	ProjectFile,
 	TableColumn,
 	Setter,
+	Maybe,
 } from '~types'
 
 export function useBusinessLogic(): {
 	files: ProjectFile[]
 	columns: IColumn[]
-	selectedFile: ProjectFile | undefined
-	selectedTable: DataTable | undefined
-	selectedColumn: string | undefined
+	selectedFile: Maybe<ProjectFile>
+	selectedTable: Maybe<DataTable>
+	selectedColumn: Maybe<string>
 	onSelectColumn: (evt: any, column?: IColumn) => void
 	tableCommands: ReturnType<typeof useTableCommands>
 	restoreColumn: (value: string) => void
@@ -45,7 +46,7 @@ export function useBusinessLogic(): {
 	const setSelectedFile = useSetSelectedFile()
 	const originalTables = useOriginalTables()
 	const [selectedColumn, setSelectedColumn] = useState<string>()
-	const [relevance, setRelevance] = useState<ColumnRelevance | undefined>()
+	const [relevance, setRelevance] = useState<Maybe<ColumnRelevance>>()
 	const tableColumns = useTableColumns(selectedFile?.id)
 	const setTableColumns = useSetTableColumns(selectedFile?.id)
 	const restoreColumn = useRestoreColumn(selectedFile?.id as string)
@@ -114,7 +115,7 @@ export function useBusinessLogic(): {
 
 	const onSelectColumn = useCallback(
 		(evt: any, column?: IColumn) => {
-			setSelectedColumn(column?.name || undefined)
+			setSelectedColumn(column?.name)
 		},
 		[setSelectedColumn],
 	)
@@ -184,17 +185,14 @@ export function useOnRelevanceChange({
 	relevance,
 	onRemoveColumn,
 }: {
-	setTableColumns: Setter<TableColumn[] | undefined>
+	setTableColumns: Setter<Maybe<TableColumn[]>>
 	tableColumns?: TableColumn[]
-	setRelevance: Setter<ColumnRelevance | undefined>
+	setRelevance: Setter<Maybe<ColumnRelevance>>
 	relevance?: ColumnRelevance
 	onRemoveColumn: (columnName?: string) => void
-}): (
-	changedRelevance: ColumnRelevance | undefined,
-	columnName?: string,
-) => void {
+}): (changedRelevance: Maybe<ColumnRelevance>, columnName?: string) => void {
 	return useCallback(
-		(changedRelevance: ColumnRelevance | undefined, columnName?: string) => {
+		(changedRelevance: Maybe<ColumnRelevance>, columnName?: string) => {
 			if (relevance === changedRelevance) {
 				changedRelevance = undefined
 			}

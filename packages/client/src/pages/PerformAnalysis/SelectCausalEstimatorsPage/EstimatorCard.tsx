@@ -8,73 +8,66 @@ import styled from 'styled-components'
 import { ActionButtons } from '~components/ActionButtons'
 import { LinkCallout } from '~components/Callout'
 import { CardComponent } from '~components/CardComponent'
-import { Estimator } from '~types'
+import { Estimator, Maybe, Handler } from '~types'
 
 interface ExtendedEstimator extends Estimator {
 	description: string
 	isChecked: boolean
 	isDefault?: boolean
-	onChange?: (ev: unknown, checked: boolean | undefined) => void
-	onDefaultChange?: () => void
+	onChange?: (ev: unknown, checked: Maybe<boolean>) => void
+	onDefaultChange?: Handler
 }
 
-interface EstimatorCardProps {
+export const EstimatorCard: React.FC<{
 	list: ExtendedEstimator[]
 	title: string
 	description?: string
 	isCardChecked: boolean
-	onCardClick: () => void
-}
-
-export const EstimatorCard: React.FC<EstimatorCardProps> = memo(
-	function EstimatorCard({
-		list,
-		title,
-		description,
-		isCardChecked,
-		onCardClick,
-	}) {
-		return (
-			<CardComponent>
-				<Container>
-					<SelectorContainer isChecked={!!isCardChecked} onClick={onCardClick}>
-						<FontIcon iconName="CheckMark" />
-					</SelectorContainer>
-					<Div>
-						<Title>{title}</Title>
-						<Description>{description}</Description>
-					</Div>
-					<CheckBoxContainer>
-						<Stack>
-							{list.map((item, i) => {
-								return (
-									<CheckBoxWrapper key={item.type} isChecked={item.isChecked}>
-										<Checkbox
-											checked={item.isChecked}
-											onChange={item.onChange}
+	onCardClick: Handler
+}> = memo(function EstimatorCard({
+	list,
+	title,
+	description,
+	isCardChecked,
+	onCardClick,
+}) {
+	return (
+		<CardComponent>
+			<Container>
+				<SelectorContainer isChecked={!!isCardChecked} onClick={onCardClick}>
+					<FontIcon iconName="CheckMark" />
+				</SelectorContainer>
+				<Div>
+					<Title>{title}</Title>
+					<Description>{description}</Description>
+				</Div>
+				<CheckBoxContainer>
+					<Stack>
+						{list.map((item, i) => {
+							return (
+								<CheckBoxWrapper key={item.type} isChecked={item.isChecked}>
+									<Checkbox checked={item.isChecked} onChange={item.onChange} />
+									<LinkCallout title={item.type} id={`estimator-card-${i}`}>
+										{item.description}
+									</LinkCallout>
+									{item.hasOwnProperty('onDefaultChange') ? (
+										<ActionButtons
+											onFavorite={item.onDefaultChange}
+											favoriteProps={{
+												title: 'Set estimator as primary',
+												isFavorite: !!item.isDefault,
+											}}
 										/>
-										<LinkCallout title={item.type} id={`estimator-card-${i}`}>
-											{item.description}
-										</LinkCallout>
-										{item.hasOwnProperty('onDefaultChange') ? (
-											<ActionButtons
-												onFavorite={item.onDefaultChange}
-												favoriteProps={{
-													title: 'Set estimator as primary',
-													isFavorite: !!item.isDefault,
-												}}
-											/>
-										) : null}
-									</CheckBoxWrapper>
-								)
-							})}
-						</Stack>
-					</CheckBoxContainer>
-				</Container>
-			</CardComponent>
-		)
-	},
-)
+									) : null}
+								</CheckBoxWrapper>
+							)
+						})}
+					</Stack>
+				</CheckBoxContainer>
+			</Container>
+		</CardComponent>
+	)
+})
 
 const Container = styled.section`
 	display: grid;

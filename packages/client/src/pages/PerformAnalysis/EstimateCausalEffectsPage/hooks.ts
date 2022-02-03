@@ -33,6 +33,9 @@ import {
 	ProjectFile,
 	RefutationOption,
 	RunHistory,
+	Maybe,
+	AsyncHandler,
+	Handler,
 } from '~types'
 import {
 	createFormData,
@@ -43,13 +46,13 @@ import {
 export function useBusinessLogic(): {
 	isProcessing: boolean
 	totalEstimatorsCount: number
-	specCount: number | undefined
+	specCount: Maybe<number>
 	estimators: Estimator[]
 	definitions: Experiment
 	runHistory: RunHistory[]
-	errors: string | undefined
-	cancelRun: () => void
-	runEstimate: () => Promise<void>
+	errors: Maybe<string>
+	cancelRun: Handler
+	runEstimate: AsyncHandler
 	setRunAsDefault: (run: RunHistory) => void
 	loadingSpecCount: boolean
 	hasConfidenceInterval: boolean

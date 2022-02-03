@@ -9,140 +9,136 @@ import styled from 'styled-components'
 import { ErrorMessage } from '~components/ErrorMessage'
 import { RunProgressIndicator } from '~components/RunProgressIndicator'
 import { Title, Text, ContainerFlexColumn } from '~styles'
-import { RunHistory, NodeResponseStatus } from '~types'
+import { RunHistory, NodeResponseStatus, Handler } from '~types'
 import { isStatusProcessing, returnElapsedTime } from '~utils'
 
-interface RunHistoryListProps {
+export const RunHistoryList: React.FC<{
 	setRunAsDefault: (run: RunHistory) => void
 	loadingSpecCount: boolean
 	specCount?: number
-	cancelRun?: () => void
+	cancelRun?: Handler
 	runHistory: RunHistory[]
 	errors?: string
 	isCanceled: boolean
-}
+}> = memo(function RunHistoryList({
+	specCount = 0,
+	loadingSpecCount,
+	runHistory,
+	errors,
+	setRunAsDefault,
+	cancelRun,
+	isCanceled,
+}) {
+	const theme = useThematic()
 
-export const RunHistoryList: React.FC<RunHistoryListProps> = memo(
-	function RunHistoryList({
-		specCount = 0,
-		loadingSpecCount,
-		runHistory,
-		errors,
-		setRunAsDefault,
-		cancelRun,
-		isCanceled,
-	}) {
-		const theme = useThematic()
+	const runHistorySorted = useMemo((): RunHistory[] => {
+		const history = [...runHistory]
+		return history?.sort(function (a, b) {
+			return a?.runNumber - b?.runNumber
+		})
+	}, [runHistory])
 
-		const runHistorySorted = useMemo((): RunHistory[] => {
-			const history = [...runHistory]
-			return history?.sort(function (a, b) {
-				return a?.runNumber - b?.runNumber
-			})
-		}, [runHistory])
-
-		return (
-			<TableContainer>
-				<Title>Estimates Available</Title>
-				<Table>
-					<TableHead>
-						<Tr>
-							<Th>
-								<ColumnName>Run</ColumnName>
-							</Th>
-							<Th>
-								<ColumnName>Estimates available</ColumnName>
-							</Th>
-							<Th>
-								<ColumnName>Active</ColumnName>
-							</Th>
-						</Tr>
-					</TableHead>
-					<TableBody>
-						{runHistorySorted.length > 0 &&
-							runHistorySorted.map(run => (
-								<Tr key={run.runNumber}>
-									<Td>{run.runNumber}</Td>
-									<Td>
-										{isStatusProcessing(
-											run?.status?.status as NodeResponseStatus,
-										) ? (
-											<RunProgressIndicator
-												run={run}
-												theme={theme}
-												cancelRun={
-													!isCanceled && run.isActive && cancelRun
-														? cancelRun
-														: undefined
-												}
-												props={
-													isCanceled && run.isActive
-														? {
-																label: 'Canceling run...',
-																description: 'This could take a few seconds.',
-																percentComplete: undefined,
-														  }
-														: undefined
-												}
-											/>
-										) : (
-											<ContainerFlexColumn>
-												{!run.id && '-/' + specCount}
-												{run.status?.estimated_effect_completed &&
-													`${run.status?.estimated_effect_completed} [${
-														run.status?.percentage
-													}%] available${
-														run.status.time?.end
-															? `, took ${returnElapsedTime(
-																	run.status.time?.start,
-																	run.status.time?.end,
-															  )}`
-															: ''
-													}`}
-												{run.status?.error && (
-													<ErrorMessage message={run.status?.error} />
-												)}
-											</ContainerFlexColumn>
-										)}
-									</Td>
-									<Td>
-										<DefaultButton
-											onClick={() => setRunAsDefault(run)}
-											disabled={run.isActive || !!run.status?.error}
-											checked={run.isActive}
-										>
-											{run.isActive ? (
-												<Icon iconName="CheckMark" />
-											) : (
-												'Set active'
-											)}
-										</DefaultButton>
-									</Td>
-								</Tr>
-							))}
-						{!runHistory.find(run =>
-							isStatusProcessing(run?.status?.status as NodeResponseStatus),
-						) && (
-							<Tr>
-								<Td> {runHistory.length + 1} </Td>
+	return (
+		<TableContainer>
+			<Title>Estimates Available</Title>
+			<Table>
+				<TableHead>
+					<Tr>
+						<Th>
+							<ColumnName>Run</ColumnName>
+						</Th>
+						<Th>
+							<ColumnName>Estimates available</ColumnName>
+						</Th>
+						<Th>
+							<ColumnName>Active</ColumnName>
+						</Th>
+					</Tr>
+				</TableHead>
+				<TableBody>
+					{runHistorySorted.length > 0 &&
+						runHistorySorted.map(run => (
+							<Tr key={run.runNumber}>
+								<Td>{run.runNumber}</Td>
 								<Td>
-									{loadingSpecCount ? (
-										<Text>Loading specifications count...</Text>
-									) : errors ? (
-										<Text>{!!errors && <ErrorMessage message={errors} />}</Text>
+									{isStatusProcessing(
+										run?.status?.status as NodeResponseStatus,
+									) ? (
+										<RunProgressIndicator
+											run={run}
+											theme={theme}
+											cancelRun={
+												!isCanceled && run.isActive && cancelRun
+													? cancelRun
+													: undefined
+											}
+											props={
+												isCanceled && run.isActive
+													? {
+															label: 'Canceling run...',
+															description: 'This could take a few seconds.',
+															percentComplete: undefined,
+													  }
+													: undefined
+											}
+										/>
 									) : (
-										<Text>{'-/' + specCount} [0%] available</Text>
+										<ContainerFlexColumn>
+											{!run.id && '-/' + specCount}
+											{run.status?.estimated_effect_completed &&
+												`${run.status?.estimated_effect_completed} [${
+													run.status?.percentage
+												}%] available${
+													run.status.time?.end
+														? `, took ${returnElapsedTime(
+																run.status.time?.start,
+																run.status.time?.end,
+														  )}`
+														: ''
+												}`}
+											{run.status?.error && (
+												<ErrorMessage message={run.status?.error} />
+											)}
+										</ContainerFlexColumn>
 									)}
 								</Td>
-								<Td>-</Td>
+								<Td>
+									<DefaultButton
+										onClick={() => setRunAsDefault(run)}
+										disabled={run.isActive || !!run.status?.error}
+										checked={run.isActive}
+									>
+										{run.isActive ? (
+											<Icon iconName="CheckMark" />
+										) : (
+											'Set active'
+										)}
+									</DefaultButton>
+								</Td>
 							</Tr>
-						)}
-					</TableBody>
-				</Table>
-			</TableContainer>
-		)
-	},
-)
+						))}
+					{!runHistory.find(run =>
+						isStatusProcessing(run?.status?.status as NodeResponseStatus),
+					) && (
+						<Tr>
+							<Td> {runHistory.length + 1} </Td>
+							<Td>
+								{loadingSpecCount ? (
+									<Text>Loading specifications count...</Text>
+								) : errors ? (
+									<Text>{!!errors && <ErrorMessage message={errors} />}</Text>
+								) : (
+									<Text>{'-/' + specCount} [0%] available</Text>
+								)}
+							</Td>
+							<Td>-</Td>
+						</Tr>
+					)}
+				</TableBody>
+			</Table>
+		</TableContainer>
+	)
+})
 
 const Td = styled.td`
 	padding: 6px 6px;

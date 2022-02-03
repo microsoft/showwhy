@@ -7,39 +7,39 @@ import { useBoolean } from '@fluentui/react-hooks'
 import { memo } from 'react'
 import styled from 'styled-components'
 
-interface LinkCalloutProps {
+export const LinkCallout: React.FC<{
 	title?: string
 	id?: string
 	detailsTitle?: string
-}
+}> = memo(function LinkCallout({
+	title,
+	children,
+	id = 'callout-link',
+	detailsTitle,
+}) {
+	const [isVisible, { toggle: handleToggleVisible }] = useBoolean(false)
 
-export const LinkCallout: React.FC<LinkCalloutProps> = memo(
-	function LinkCallout({ title, children, id = 'callout-link', detailsTitle }) {
-		const [isCalloutVisible, { toggle: toggleIsCalloutVisible }] =
-			useBoolean(false)
-
-		return (
-			<>
-				<Text id={id} onClick={toggleIsCalloutVisible}>
-					{title}
-				</Text>
-				{isCalloutVisible && (
-					<CalloutInfo
-						role="alertdialog"
-						gapSpace={0}
-						onDismiss={toggleIsCalloutVisible}
-						setInitialFocus
-						target={`#${id}`}
-					>
-						{title && !detailsTitle && <CalloutTitle>{title}</CalloutTitle>}
-						{detailsTitle && <CalloutTitle>{detailsTitle}</CalloutTitle>}
-						{children}
-					</CalloutInfo>
-				)}
-			</>
-		)
-	},
-)
+	return (
+		<>
+			<Text id={id} onClick={handleToggleVisible}>
+				{title}
+			</Text>
+			{isVisible && (
+				<CalloutInfo
+					role="alertdialog"
+					gapSpace={0}
+					onDismiss={handleToggleVisible}
+					setInitialFocus
+					target={`#${id}`}
+				>
+					{title && !detailsTitle && <CalloutTitle>{title}</CalloutTitle>}
+					{detailsTitle && <CalloutTitle>{detailsTitle}</CalloutTitle>}
+					{children}
+				</CalloutInfo>
+			)}
+		</>
+	)
+})
 
 const Text = styled.span`
 	text-decoration: underline;

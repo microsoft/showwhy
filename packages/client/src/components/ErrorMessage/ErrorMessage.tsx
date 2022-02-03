@@ -6,27 +6,23 @@ import { Icon } from '@fluentui/react'
 import { memo } from 'react'
 import styled from 'styled-components'
 
-interface ErrorMessageProps {
+export const ErrorMessage: React.FC<{
 	message?: string
 	styles?: React.CSSProperties
-}
-
-export const ErrorMessage: React.FC<ErrorMessageProps> = memo(
-	function ErrorMessage({
-		message = 'Undefined error, please try again.',
-		children,
-		styles = {},
-	}) {
-		return (
-			<Container style={styles}>
-				<Error>
-					<Icon iconName="IncidentTriangle" />
-					{children ?? message}
-				</Error>
-			</Container>
-		)
-	},
-)
+}> = memo(function ErrorMessage({
+	message = 'Undefined error, please try again.',
+	children,
+	styles,
+}) {
+	return (
+		<Container style={styles}>
+			<Error>
+				<Icon iconName="IncidentTriangle" />
+				{children ?? message}
+			</Error>
+		</Container>
+	)
+})
 
 const Container = styled.p`
 	margin: 0;

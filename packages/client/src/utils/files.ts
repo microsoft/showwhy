@@ -11,7 +11,7 @@ import {
 	createBaseFile,
 } from '@data-wrangling-components/utilities'
 import { fetchTable } from './arquero'
-import { DataTableFileDefinition, ProjectFile, ZipData } from '~types'
+import { DataTableFileDefinition, ProjectFile, ZipData, Maybe } from '~types'
 
 export function createTextFile(name: string, content: string): File {
 	const type = { type: `text/${name.split('.').pop()}` }
@@ -40,14 +40,14 @@ export function isDataUrl(url: string): boolean {
 	return /^data:/.test(url.toLowerCase())
 }
 
-export const groupFilesByType = async (
+export async function groupFilesByType(
 	fileCollection: FileCollection,
-): Promise<ZipData> => {
+): Promise<ZipData> {
 	const filesByType: ZipData = {
 		name: fileCollection.name || 'FileCollection',
 	}
 	const resultsRegExp = /result(.+).(c|t)sv/gi
-	const isResult = filename => resultsRegExp.test(filename)
+	const isResult = (filename: string) => resultsRegExp.test(filename)
 	const tableFiles: BaseFile[] = fileCollection.list(FileType.table)
 
 	const [jsonFile] = fileCollection.list(FileType.json)
@@ -59,21 +59,25 @@ export const groupFilesByType = async (
 	}
 
 	if (defaultResult) {
-		let file
+		let file: Maybe<BaseFile>
 		let { url } = defaultResult
 		if (isZipUrl(url)) {
 			file = tableFiles.find(f => url.includes(f.name))
-			const options = {
-				name: file.name,
-				type: 'text/csv',
+			if (file) {
+				const options = {
+					name: file.name,
+					type: 'text/csv',
+				}
+				file = createBaseFile(file, options)
+				url = await file.toDataURL()
 			}
-			file = createBaseFile(file, options)
-			url = await file.toDataURL()
 		}
 
-		filesByType['results'] = {
-			file,
-			dataUri: url,
+		if (file) {
+			filesByType['results'] = {
+				file,
+				dataUri: url,
+			}
 		}
 	} else {
 		//TODO: It gets the first coincidence, should it be an array instead?

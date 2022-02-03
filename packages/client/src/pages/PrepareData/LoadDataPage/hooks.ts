@@ -23,26 +23,26 @@ import {
 	useSetProjectFiles,
 	useSetSelectedFile,
 } from '~state'
-import { DropFilesCount, ProjectFile } from '~types'
+import { DropFilesCount, ProjectFile, Handler1, Maybe, Handler } from '~types'
 import { createDefaultTable, replaceItemAtIndex } from '~utils'
 
 export function useBusinessLogic(): {
 	showConfirm: boolean
-	errorMessage: string | undefined | null
-	selectedFile: ProjectFile | undefined
+	errorMessage: Maybe<string> | null
+	selectedFile: Maybe<ProjectFile>
 	projectFiles: ProjectFile[]
 	originalTable: ColumnTable
-	selectedDelimiter: string | undefined
+	selectedDelimiter: Maybe<string>
 	loading: boolean
 	fileCount: DropFilesCount
 	acceptedFileTypes: string[]
-	setSelectedFile: SetterOrUpdater<ProjectFile | undefined>
-	toggleShowConfirm: () => void
-	toggleLoadedCorrectly: () => void
-	handleDismissError: () => void
-	handleDelimiterChange: (e, option: IDropdownOption | undefined) => void
+	setSelectedFile: SetterOrUpdater<Maybe<ProjectFile>>
+	toggleShowConfirm: Handler
+	toggleLoadedCorrectly: Handler
+	handleDismissError: Handler
+	handleDelimiterChange: (e: unknown, option: Maybe<IDropdownOption>) => void
 	handleOnDropAccepted: (f: FileCollection) => void
-	onConfirmDelete: () => void
+	onConfirmDelete: Handler
 	onRenameTable: (alias: string) => void
 	onDrop: (f: FileCollection) => void
 	onDropAccepted: (f: FileCollection) => void
@@ -53,9 +53,7 @@ export function useBusinessLogic(): {
 	const projectFiles = useProjectFiles()
 	const setProjectFiles = useSetProjectFiles()
 	const [errorMessage, setErrorMessage] = useState<string | null>()
-	const [selectedDelimiter, setSelectedDelimiter] = useState<
-		string | undefined
-	>()
+	const [selectedDelimiter, setSelectedDelimiter] = useState<Maybe<string>>()
 	const [showConfirm, { toggle: toggleShowConfirm }] = useBoolean(false)
 	const originalTableState = useSelectOriginalTable(selectedFile?.id as string)
 	const originalTable = originalTableState()?.table
@@ -92,7 +90,7 @@ export function useBusinessLogic(): {
 	)
 
 	const handleDelimiterChange = useCallback(
-		(e, option: IDropdownOption | undefined): void => {
+		(e, option: Maybe<IDropdownOption>): void => {
 			const delimiter = `${option?.key}`
 			if (selectedFile && selectedFile.id) {
 				const table = createDefaultTable(selectedFile.content, delimiter)
@@ -152,10 +150,10 @@ export function useBusinessLogic(): {
 }
 
 function useToggleLoadedCorrectly(
-	selectedFile,
-	projectFiles,
-	setProjectFiles,
-	setSelectedFile,
+	selectedFile: Maybe<ProjectFile>,
+	projectFiles: ProjectFile[],
+	setProjectFiles: SetterOrUpdater<ProjectFile[]>,
+	setSelectedFile: SetterOrUpdater<Maybe<ProjectFile>>,
 ) {
 	return useCallback(() => {
 		const stateNow = selectedFile?.loadedCorrectly || false
@@ -170,7 +168,11 @@ function useToggleLoadedCorrectly(
 	}, [selectedFile, projectFiles, setProjectFiles, setSelectedFile])
 }
 
-function useDefaultSelectedFile(current, files, setSelectedFile) {
+function useDefaultSelectedFile(
+	current: Maybe<ProjectFile>,
+	files: ProjectFile[],
+	setSelectedFile: SetterOrUpdater<Maybe<ProjectFile>>,
+) {
 	useEffect(() => {
 		if (!current) {
 			const [file] = files
@@ -183,11 +185,11 @@ function useDefaultSelectedFile(current, files, setSelectedFile) {
 }
 
 function useOnConfirmDelete(
-	projectFiles,
-	selectedFile,
-	setProjectFiles,
-	toggleShowConfirm,
-	setSelectedFile,
+	projectFiles: ProjectFile[],
+	selectedFile: Maybe<ProjectFile>,
+	setProjectFiles: SetterOrUpdater<ProjectFile[]>,
+	toggleShowConfirm: (value?: boolean) => void,
+	setSelectedFile: SetterOrUpdater<Maybe<ProjectFile>>,
 ) {
 	return useCallback(() => {
 		const filteredFiles = projectFiles.filter(p => p.id !== selectedFile?.id)
@@ -203,7 +205,7 @@ function useOnConfirmDelete(
 	])
 }
 
-function useHandleLoadFile(setErrorMessage) {
+function useHandleLoadFile(setErrorMessage: Handler1<string>) {
 	const projectFiles = useProjectFiles()
 	const addFile = useAddProjectFile()
 	const addOriginalTable = useSetOrUpdateOriginalTable()

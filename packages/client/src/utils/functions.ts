@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { EstimateEffectStatusResponse, NodeResponseStatus } from '~types'
+import { EstimateEffectStatusResponse, NodeResponseStatus, Maybe } from '~types'
 
 export function replaceItemAtIndex<T>(
 	arr: T[],
@@ -12,10 +12,12 @@ export function replaceItemAtIndex<T>(
 	return [...arr.slice(0, index), newValue, ...arr.slice(index + 1)]
 }
 
-export const sortGroupByKey = (key: string, asc = true) => {
+export function sortGroupByKey(key: string, asc = true) {
 	return <T>(a: T, b: T): number => {
-		const aValue = isNaN(a[key]) ? a[key] : +a[key]
-		const bValue = isNaN(b[key]) ? b[key] : +b[key]
+		const aKey = (a as any)[key]
+		const bKey = (b as any)[key]
+		const aValue = isNaN(aKey) ? aKey : +aKey
+		const bValue = isNaN(bKey) ? bKey : +bKey
 		if (aValue > bValue) return 1 * (asc ? 1 : -1)
 		else if (aValue < bValue) return -1 * (asc ? 1 : -1)
 		else return 0
@@ -39,7 +41,7 @@ export function addOrRemoveArrayElement(
 
 export const findRunError = (
 	response: Partial<EstimateEffectStatusResponse>,
-): string | undefined => {
+): Maybe<string> => {
 	if (response.runtimeStatus?.toLowerCase() === NodeResponseStatus.Failed) {
 		const error =
 			response.partial_results &&

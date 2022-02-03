@@ -10,7 +10,7 @@ import { ComponentArrows } from './ComponentArrows'
 import { Container, Paragraph } from '~styles'
 import { CausalEffectSize } from '~types'
 
-export interface CausalEffectsProps {
+export const CausalEffects: React.FC<{
 	size?: CausalEffectSize
 	confounders: string[]
 	outcomeDeterminants: string[]
@@ -18,39 +18,35 @@ export interface CausalEffectsProps {
 	generalOutcome: string
 	excludedFactors: string[]
 	excludedMessage: string
-}
-
-export const CausalEffects: React.FC<CausalEffectsProps> = memo(
-	function CausalEffects({
-		size = CausalEffectSize.Medium,
-		confounders,
-		outcomeDeterminants,
-		generalExposure,
-		generalOutcome,
-		excludedFactors,
-		excludedMessage,
-	}) {
-		return (
-			<Container>
-				<ComponentArrows
-					size={size}
-					confounders={confounders}
-					outcomeDeterminants={outcomeDeterminants}
-					exposure={generalExposure}
-					outcome={generalOutcome}
-				/>
-				{excludedFactors.length ? (
-					<ExcludedContainer>
-						<Paragraph>
-							<FluentIcon iconName="info"></FluentIcon>
-							{excludedMessage}
-						</Paragraph>
-					</ExcludedContainer>
-				) : null}
-			</Container>
-		)
-	},
-)
+}> = memo(function CausalEffects({
+	size = CausalEffectSize.Medium,
+	confounders,
+	outcomeDeterminants,
+	generalExposure,
+	generalOutcome,
+	excludedFactors,
+	excludedMessage,
+}) {
+	return (
+		<Container>
+			<ComponentArrows
+				size={size}
+				confounders={confounders}
+				outcomeDeterminants={outcomeDeterminants}
+				exposure={generalExposure}
+				outcome={generalOutcome}
+			/>
+			{excludedFactors.length ? (
+				<ExcludedContainer>
+					<Paragraph>
+						<FluentIcon iconName="info"></FluentIcon>
+						{excludedMessage}
+					</Paragraph>
+				</ExcludedContainer>
+			) : null}
+		</Container>
+	)
+})
 
 const FluentIcon = styled(Icon)`
 	vertical-align: bottom;

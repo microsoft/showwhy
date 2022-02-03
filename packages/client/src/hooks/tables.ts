@@ -19,16 +19,17 @@ import {
 	TableColumn,
 	TableDerivation,
 	TableDerivationType,
+	Maybe,
 } from '~types'
 
-export function useTableWithColumnsDropped(): ColumnTable | undefined {
+export function useTableWithColumnsDropped(): Maybe<ColumnTable> {
 	const selectedFile = useSelectedFile()
 	const originalTable = useSelectOriginalTable(selectedFile?.fileId as string)
 
 	return useMemo(() => {
 		const columns = selectedFile?.steps?.find(f => f.key === 'columns')?.value
 		let table = originalTable().table
-		columns?.map(v => (table = table?.select(not(v))))
+		columns?.map((v: any) => (table = table?.select(not(v))))
 		return table
 	}, [originalTable, selectedFile])
 }
@@ -64,7 +65,9 @@ export function useCaptureTable(
 			const values = filteredTable.indices()
 			const originalTable = originalTables().table
 			const capturedTable = originalTable.derive({
-				[columnName]: escape(d => (values.includes(d.index) ? '1' : '0')),
+				[columnName]: escape((d: any) =>
+					values.includes(d.index) ? '1' : '0',
+				),
 			}) as ColumnTable
 			const newProjectFile = projectFiles.find(
 				x => x.id === tableId,
@@ -86,7 +89,7 @@ export function useDuplicateColumn(
 		(columnName: string, columnToDuplicate: string) => {
 			const originalTable = originalTables().table
 			const capturedTable = originalTable.derive({
-				[columnName]: escape(d => d[columnToDuplicate]),
+				[columnName]: escape((d: any) => d[columnToDuplicate]),
 			}) as ColumnTable
 			const newProjectFile = projectFiles.find(
 				x => x.id === tableId,
@@ -142,7 +145,7 @@ export function useSetDeriveTable(
 			const ranked = ordered.derive({ rank: op.percent_rank() })
 			let rank = ranked
 				.filter(
-					escape(d => {
+					escape((d: any) => {
 						return d.rank >= +(1 - derive.threshold / 100).toFixed(2)
 					}),
 				)
@@ -151,7 +154,7 @@ export function useSetDeriveTable(
 			if (derive.type === TableDerivationType.PercentageBottomRanking) {
 				rank = ranked
 					.filter(
-						escape(d => {
+						escape((d: any) => {
 							return d.rank <= +(1 - derive.threshold / 100).toFixed(2)
 						}),
 					)
@@ -160,7 +163,7 @@ export function useSetDeriveTable(
 
 			let capturedTable = originalTable?.table
 			capturedTable = capturedTable.derive({
-				[derive?.columnName]: escape(d =>
+				[derive?.columnName]: escape((d: any) =>
 					rank.map(x => x[derive?.column]).includes(d[derive?.column])
 						? 'TRUE'
 						: 'FALSE',

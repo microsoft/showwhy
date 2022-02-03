@@ -7,12 +7,7 @@ import { useId } from '@fluentui/react-hooks'
 import { memo, Suspense } from 'react'
 import styled from 'styled-components'
 import { AppHeader } from '../AppHeader'
-import {
-	useProcessStepInfo,
-	useGuidance,
-	useOnClickProject,
-	useGoToPageHandler,
-} from './hooks'
+import { useProcessStepInfo, useGuidance, useOnClickProject } from './hooks'
 import { StepControls, StepSelector } from '~components/GeneralSteps'
 import { Guidance } from '~components/Guidance'
 import { StepTitle } from '~components/StepTitle'
@@ -27,6 +22,7 @@ import {
 	useSetStepStatuses,
 } from '~state'
 import { StyledSpinner } from '~styles'
+import { Maybe } from '~types'
 
 export const Layout: React.FC = memo(function Layout({ children }) {
 	const handleGetStepUrls = useGetStepUrls()
@@ -38,8 +34,7 @@ export const Layout: React.FC = memo(function Layout({ children }) {
 	const project = useSelectedProject()
 	const [isGuidanceVisible, toggleGuidance] = useGuidance()
 	const onClickProject = useOnClickProject()
-	const goToPage = useGoToPageHandler()
-	const { step, stepStatus, toggleStepStatus, previousStepUrl, nextStepUrl } =
+	const { step, stepStatus, onToggleStepStatus, previousStepUrl, nextStepUrl } =
 		useProcessStepInfo()
 
 	return (
@@ -57,13 +52,11 @@ export const Layout: React.FC = memo(function Layout({ children }) {
 					<TooltipHost
 						content={`${isGuidanceVisible ? 'Hide' : 'Show'} Guidance`}
 						id={tooltipId}
-						styles={{
-							root: { position: 'absolute', right: 0, padding: '0 15px' },
-						}}
+						styles={styles.tooltipHost}
 					>
 						<Button
 							onClick={toggleGuidance}
-							iconProps={{ iconName: 'ReadingMode' }}
+							iconProps={styles.button}
 							aria-describedby={tooltipId}
 						/>
 					</TooltipHost>
@@ -82,10 +75,9 @@ export const Layout: React.FC = memo(function Layout({ children }) {
 						<StepControls
 							step={step}
 							stepStatus={stepStatus}
-							goToPage={goToPage}
 							nextUrl={nextStepUrl}
 							previousUrl={previousStepUrl}
-							toggleStatus={toggleStepStatus}
+							toggleStatus={onToggleStepStatus}
 						/>
 					</ControlsContainer>
 				</Content>
@@ -119,7 +111,7 @@ const ControlsContainer = styled.div`
 `
 
 const GuidanceContainer = styled.div<{
-	isVisible: boolean | undefined
+	isVisible: Maybe<boolean>
 }>`
 	width: ${({ isVisible }) => (isVisible ? 23 : 0)}%;
 	transition: 0.5s;
@@ -152,3 +144,10 @@ const Button = styled(IconButton)`
 	right: 0;
 	color: white;
 `
+
+const styles = {
+	tooltipHost: {
+		root: { position: 'absolute' as const, right: 0, padding: '0 15px' },
+	},
+	button: { iconName: 'ReadingMode' },
+}

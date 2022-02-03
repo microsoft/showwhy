@@ -3,26 +3,24 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { DefaultButton, Icon } from '@fluentui/react'
-import { memo } from 'react'
+import { memo, useCallback } from 'react'
 import styled from 'styled-components'
+import { Handler, Maybe } from '~types'
 
-interface SelectableCardProps {
-	onClick: () => void
+export const SelectableCard: React.FC<{
+	onClick: Handler
 	title?: string
-	isChecked?: boolean | undefined
+	isChecked?: Maybe<boolean>
 	icon?: string
-}
-
-export const SelectableCard: React.FC<SelectableCardProps> = memo(
-	function CardComponent({ title, onClick, isChecked, icon }) {
-		return (
-			<Card checked={isChecked} onClick={() => !isChecked && onClick()}>
-				{icon && <ButtonIcon iconName={icon}></ButtonIcon>}
-				{title || null}
-			</Card>
-		)
-	},
-)
+}> = memo(function CardComponent({ title, onClick, isChecked, icon }) {
+	const handleOnClick = useOnClickHandler(isChecked, onClick)
+	return (
+		<Card checked={isChecked} onClick={handleOnClick}>
+			{icon && <ButtonIcon iconName={icon}></ButtonIcon>}
+			{title || null}
+		</Card>
+	)
+})
 
 const Card = styled(DefaultButton)`
 	margin: 8px;
@@ -39,3 +37,7 @@ const Card = styled(DefaultButton)`
 const ButtonIcon = styled(Icon)`
 	margin-right: 8px;
 `
+
+function useOnClickHandler(isChecked: Maybe<boolean>, onClick: Handler) {
+	return useCallback(() => !isChecked && onClick(), [isChecked, onClick])
+}

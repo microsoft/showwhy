@@ -4,15 +4,15 @@
  */
 
 import { upperFirst } from 'lodash'
-import { useCallback, useMemo } from 'react'
-import { useHistory } from 'react-router-dom'
-import { usePageType } from '~hooks'
+import { useMemo } from 'react'
+import { useGoToPage, usePageType } from '~hooks'
+import { Pages, Handler } from '~types'
 
 export function useBusinessLogic(): {
 	pageName: string
 	causeType: string
 	tableHeader: Array<{ fieldName: string; value: string }>
-	goToConsiderCausalFactors: () => void
+	goToConsiderCausalFactors: Handler
 } {
 	const { pageName, causeType, question } = usePageComponents()
 	const tableHeader = useTableHeader(question)
@@ -62,11 +62,7 @@ function useTableHeader(
 	}, [question])
 }
 
-function useGoToConsiderCausalFactors(): () => void {
+function useGoToConsiderCausalFactors(): Handler {
 	const pageType = usePageType()
-	const history = useHistory()
-	return useCallback(() => {
-		history.push('/define/causalFactors')
-		history.location.state = pageType
-	}, [history, pageType])
+	return useGoToPage(Pages.ConsiderCausalFactors, pageType)
 }

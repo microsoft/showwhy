@@ -33,24 +33,26 @@ import {
 	SignificanceTest,
 	Specification,
 	RefutationType,
+	Maybe,
+	Handler,
 } from '~types'
 
 export function useBusinessLogic(): {
 	alternativeModels: AlternativeModels
-	defaultRun: RunHistory | undefined
+	defaultRun: Maybe<RunHistory>
 	causalEffects: ReturnType<typeof useCausalEffects>
 	specificationData: Specification[]
 	defaultDataset: DefaultDatasetResult | null
 	refutationLength: number
 	defineQuestion: Experiment
 	activeValues: number[]
-	significanceTestsResult: SignificanceTest | undefined
+	significanceTestsResult: Maybe<SignificanceTest>
 	significanceFailed: boolean
 	activeTaskIds: string[]
 	refutationType: RefutationType
 	isCanceled: boolean
 	runSignificance: (taskIds: string[]) => void
-	cancelRun: () => void
+	cancelRun: Handler
 } {
 	const defineQuestion = useDefineQuestion()
 	const primarySpecificationConfig = usePrimarySpecificationConfig()

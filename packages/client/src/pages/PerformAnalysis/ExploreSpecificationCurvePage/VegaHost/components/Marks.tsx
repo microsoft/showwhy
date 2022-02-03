@@ -5,10 +5,8 @@
 import { memo } from 'react'
 import { Spec } from 'vega'
 
-export interface MarksProps {
+export const Marks: React.FC<{
 	spec: Spec
-}
-
-export const Marks: React.FC<MarksProps> = memo(function Marks() {
+}> = memo(function Marks() {
 	return null
 })

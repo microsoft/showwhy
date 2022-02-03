@@ -11,37 +11,44 @@ import { useRemoveDefinition } from './remove'
 import { useSaveDefinitions } from './save'
 import { usePageType, useVariableOptions } from '~hooks'
 import { useDefineQuestion, useSetDefineQuestion } from '~state'
-import { PageType, Experiment, ElementDefinition, Item, Setter } from '~types'
+import {
+	PageType,
+	Experiment,
+	ElementDefinition,
+	Item,
+	Setter,
+	Maybe,
+} from '~types'
 
 export function useBusinessLogic(): {
 	labelInterest: string
 	descriptionInterest: string
 	itemList: Item[]
-	definitionToEdit: ElementDefinition | undefined
+	definitionToEdit: Maybe<ElementDefinition>
 	pageType: PageType
 	defineQuestion: Experiment
 	variables: IComboBoxOption[]
 	addDefinition: (def: ElementDefinition) => void
 	removeDefinition: (def: ElementDefinition) => void
 	editDefinition: (def: ElementDefinition) => void
-	setDefinitionToEdit: Setter<ElementDefinition | undefined>
+	setDefinitionToEdit: Setter<Maybe<ElementDefinition>>
 } {
 	const defineQuestion = useDefineQuestion()
 	const pageType = usePageType()
 	const variables = useVariableOptions()
 	const setDefineQuestion = useSetDefineQuestion()
 	const [definitions, setDefinitions] = useState<ElementDefinition[]>(
-		defineQuestion[pageType]?.definition || [],
+		(defineQuestion as any)[pageType]?.definition || [],
 	)
 	const [definitionToEdit, setDefinitionToEdit] = useState<ElementDefinition>()
 
 	const labelInterest = useMemo<string>(
-		() => defineQuestion[pageType]?.label || '',
+		() => (defineQuestion as any)[pageType]?.label || '',
 		[defineQuestion, pageType],
 	)
 
 	const descriptionInterest = useMemo<string>(
-		() => defineQuestion[pageType]?.description || '',
+		() => (defineQuestion as any)[pageType]?.description || '',
 		[defineQuestion, pageType],
 	)
 
@@ -72,7 +79,7 @@ export function useBusinessLogic(): {
 	const itemList = useItemList(definitions)
 
 	useEffect(() => {
-		setDefinitions(defineQuestion[pageType]?.definition || [])
+		setDefinitions((defineQuestion as any)[pageType]?.definition || [])
 		setDefinitionToEdit(undefined)
 	}, [defineQuestion, pageType, setDefinitionToEdit, setDefinitions])
 
@@ -91,7 +98,7 @@ export function useBusinessLogic(): {
 	}
 }
 
-function useItemList(definitions): Item[] {
+function useItemList(definitions: ElementDefinition[]): Item[] {
 	return useMemo(() => {
 		return definitions?.map(x => {
 			const newObj = { ...x }

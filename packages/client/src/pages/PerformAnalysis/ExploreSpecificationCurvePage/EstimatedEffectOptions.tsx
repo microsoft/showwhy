@@ -5,36 +5,34 @@
 import { Toggle } from '@fluentui/react'
 import { memo } from 'react'
 import styled from 'styled-components'
+import { Maybe } from '~types'
 
-interface EstimatedEffectOptionsProps {
-	checked: boolean | undefined
+export const EstimatedEffectOptions: React.FC<{
+	checked: Maybe<boolean>
 	onChange: (checked: boolean) => void
 	label: string
 	title: string
 	disabledTitle?: string
-	disabled?: boolean | undefined
-}
-
-export const EstimatedEffectOptions: React.FC<EstimatedEffectOptionsProps> =
-	memo(function EstimatedEffectOptions({
-		checked,
-		onChange,
-		label,
-		title,
-		disabledTitle = title,
-		disabled = false,
-	}) {
-		return (
-			<ToggleComponent
-				label={label}
-				inlineLabel
-				title={disabled ? disabledTitle : title}
-				disabled={disabled}
-				checked={checked}
-				onChange={(_, checked) => onChange(!!checked)}
-			/>
-		)
-	})
+	disabled?: Maybe<boolean>
+}> = memo(function EstimatedEffectOptions({
+	checked,
+	onChange,
+	label,
+	title,
+	disabledTitle = title,
+	disabled = false,
+}) {
+	return (
+		<ToggleComponent
+			label={label}
+			inlineLabel
+			title={disabled ? disabledTitle : title}
+			disabled={disabled}
+			checked={checked}
+			onChange={(_, checked) => onChange(!!checked)}
+		/>
+	)
+})
 
 const ToggleComponent = styled(Toggle)`
 	margin-right: 24px;

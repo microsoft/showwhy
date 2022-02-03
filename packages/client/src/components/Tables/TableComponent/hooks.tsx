@@ -6,44 +6,49 @@
 import { Checkbox, IComboBoxOption } from '@fluentui/react'
 import { useCallback, useMemo, useState } from 'react'
 import { useFactorsDefinitionForm } from '~components/FactorsDefinitionForm'
-import { PageType, CausalFactor, ElementDefinition, HeaderData } from '~types'
+import {
+	PageType,
+	HeaderData,
+	Setter,
+	CausalityLevel,
+	ElementDefinition,
+	Handler,
+	Handler1,
+	Maybe,
+} from '~types'
 
-const actionsHeader = { fieldName: 'actions', value: 'Actions' }
+const actionsHeader: HeaderData = { fieldName: 'actions', value: 'Actions' }
 
 export function useTableComponent(
-	columns: CausalFactor[],
+	columns: ElementDefinition[],
 	headers: HeaderData[],
-	definitionToEdit: ElementDefinition | undefined,
-	factorToEdit: CausalFactor | undefined,
+	definitionToEdit: Maybe<ElementDefinition>,
+	factorToEdit: Maybe<ElementDefinition>,
 	pageType: PageType,
-	variables: IComboBoxOption[] | undefined,
-	onDelete: undefined | ((def: CausalFactor) => void),
-	onSave: undefined | ((def: CausalFactor) => void),
-	onEdit: undefined | ((def: CausalFactor) => void),
-	onCancel: undefined | ((def: CausalFactor) => void),
+	variables: Maybe<IComboBoxOption[]>,
+	onDelete?: Maybe<Handler1<ElementDefinition>>,
+	onSave?: Maybe<Handler1<ElementDefinition>>,
+	onEdit?: Maybe<Handler1<ElementDefinition>>,
+	onCancel?: Maybe<Handler>,
 ): {
 	items: any
 	headersData: any[]
 	customColumnsWidth: { fieldName: string; width: string }[]
 } {
-	const [editedDefinition, setEditedDefinition] = useState<
-		ElementDefinition | undefined
-	>()
-	const [editedFactor, setEditedFactor] = useState<CausalFactor | undefined>()
+	const [editedDefinition, setEditedDefinition] =
+		useState<Maybe<ElementDefinition>>()
+	const [editedFactor, setEditedFactor] = useState<Maybe<ElementDefinition>>()
 	const setter = definitionToEdit ? setEditedDefinition : setEditedFactor
-	const onChange = useOnchange(setter, definitionToEdit || factorToEdit)
+	const onChange = useOnChange(setter, definitionToEdit || factorToEdit)
 	const { level, description, variable } = useFactorsDefinitionForm({
-		factor: (definitionToEdit || factorToEdit) as CausalFactor,
+		factor: (definitionToEdit || factorToEdit) as ElementDefinition,
 		onChange,
 		pageType,
 		variables,
 	})
 	const headersData = useHeadersData(
 		headers,
-		onDelete,
-		onEdit,
-		onCancel,
-		onSave,
+		Boolean(onDelete || onEdit || onCancel || onSave),
 	)
 	const customColumnsWidth = useCustomColumnsWidth(headersData)
 
@@ -66,7 +71,7 @@ export function useTableComponent(
 										onSave({
 											...definitionToEdit,
 											...editedDefinition,
-										} as CausalFactor)
+										} as ElementDefinition)
 								: null,
 						disableSave: !editedDefinition?.variable,
 					},
@@ -87,10 +92,10 @@ export function useTableComponent(
 			} else {
 				props.forEach(prop => {
 					obj[prop] =
-						typeof item[prop] === 'boolean' ? (
-							<Checkbox checked={item[prop]} />
+						typeof (item as any)[prop] === 'boolean' ? (
+							<Checkbox checked={(item as any)[prop]} />
 						) : (
-							item[prop]
+							(item as any)[prop]
 						)
 				})
 				obj.actions = {
@@ -122,11 +127,17 @@ export function useTableComponent(
 	}
 }
 
-function useOnchange(set, valueToEdit) {
+function useOnChange(
+	set: Setter<Maybe<ElementDefinition>>,
+	valueToEdit: Maybe<{ id: string }>,
+) {
 	return useCallback(
-		(value: Partial<CausalFactor>) => {
+		(value: Partial<ElementDefinition>) => {
 			set({
 				...value,
+				description: value.description ?? '',
+				variable: value?.variable ?? '',
+				level: value?.level ?? CausalityLevel.Primary,
 				id: valueToEdit?.id || '',
 			})
 		},
@@ -134,16 +145,16 @@ function useOnchange(set, valueToEdit) {
 	)
 }
 
-function useHeadersData(headers, onDelete, onEdit, onCancel, onSave) {
+function useHeadersData(
+	headers: HeaderData[],
+	hasHandlers: boolean,
+): HeaderData[] {
 	return useMemo(() => {
-		return [
-			...headers,
-			(onDelete || onEdit || onCancel || onSave) && actionsHeader,
-		]
-	}, [headers, onDelete, onEdit, onCancel, onSave])
+		return hasHandlers ? [...headers, actionsHeader] : headers
+	}, [headers, hasHandlers])
 }
 
-function useCustomColumnsWidth(headersData) {
+function useCustomColumnsWidth(headersData: HeaderData[]) {
 	return useMemo(() => {
 		const props = headersData.map(h => h.fieldName)
 		const hasLevel = props.includes('level')

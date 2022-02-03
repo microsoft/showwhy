@@ -31,28 +31,30 @@ import {
 	Specification,
 	SpecificationCurveConfig,
 	NodeResponseStatus,
+	Maybe,
+	Handler,
 } from '~types'
 
 export function useSpecificationCurve(): {
-	activeProcessing: RunHistory | null
+	activeProcessing: Maybe<RunHistory>
 	config: SpecificationCurveConfig
 	data: Specification[]
-	defaultRun: RunHistory | undefined
+	defaultRun: Maybe<RunHistory>
 	failedRefutationIds: number[]
 	failedRefutations: string[]
 	handleConfidenceIntervalTicksChange: (checked: boolean) => void
 	handleShapTicksChange: (checked: boolean) => void
-	hovered: number | undefined
+	hovered: Maybe<number>
 	isConfidenceIntervalDisabled: boolean
 	isShapDisabled: boolean
 	isSpecificationOn: boolean
-	onMouseOver: (item: Specification | DecisionFeature | undefined) => void
+	onMouseOver: (item: Maybe<Specification | DecisionFeature>) => void
 	onSpecificationsChange: (config: SpecificationCurveConfig) => void
-	onToggleRejectEstimate: () => void
-	outcome: string | undefined
+	onToggleRejectEstimate: Handler
+	outcome: Maybe<string>
 	refutationNumbers: string
-	selectedSpecification: Specification | undefined
-	setSelectedSpecification: (s: Specification | undefined) => void
+	selectedSpecification: Maybe<Specification>
+	setSelectedSpecification: (s: Maybe<Specification>) => void
 	theme: Theme
 	vegaWindowDimensions: Dimensions
 } {
@@ -69,9 +71,8 @@ export function useSpecificationCurve(): {
 	const outcome = useOutcome(defineQuestion)
 	useWakeLock()
 	const activeProcessing = useActiveProcessing(runHistory)
-	const [selectedSpecification, setSelectedSpecification] = useState<
-		Specification | undefined
-	>()
+	const [selectedSpecification, setSelectedSpecification] =
+		useState<Maybe<Specification>>()
 	const isShapDisabled = useIsShapDisabled()
 	const isConfidenceIntervalDisabled = useIsConfidenceIntervalDisabled(data)
 	const handleShapTicksChange = useHandleShapTicksChange(isShapDisabled)
@@ -129,15 +130,13 @@ function useOutcome(defineQuestion: Experiment) {
 	)
 }
 
-function useActiveProcessing(runHistory: RunHistory[]): RunHistory | null {
+function useActiveProcessing(runHistory: RunHistory[]): Maybe<RunHistory> {
 	return useMemo(() => {
-		return (
-			runHistory.find(
-				x =>
-					x.status?.status.toLowerCase() === NodeResponseStatus.Pending ||
-					x.status?.status.toLowerCase() === NodeResponseStatus.Processing ||
-					x.status?.status.toLowerCase() === NodeResponseStatus.Running,
-			) || null
+		return runHistory.find(
+			x =>
+				x.status?.status.toLowerCase() === NodeResponseStatus.Pending ||
+				x.status?.status.toLowerCase() === NodeResponseStatus.Processing ||
+				x.status?.status.toLowerCase() === NodeResponseStatus.Running,
 		)
 	}, [runHistory])
 }
@@ -209,7 +208,7 @@ function useOnSpecificationsChange() {
 }
 
 function useRefutationKeys(
-	selectedSpecification: Specification | undefined,
+	selectedSpecification: Maybe<Specification>,
 ): string[] {
 	return useMemo(() => {
 		if (selectedSpecification) {
@@ -218,7 +217,7 @@ function useRefutationKeys(
 			)
 
 			const refutationRun = keys.filter(
-				ref => !isNaN(selectedSpecification[ref]),
+				ref => !isNaN((selectedSpecification as any)[ref]),
 			)
 
 			return refutationRun
@@ -228,14 +227,14 @@ function useRefutationKeys(
 }
 
 function useFailedRefutations(
-	selectedSpecification: Specification | undefined,
+	selectedSpecification: Maybe<Specification>,
 	refutationKeys: string[],
 ): string[] {
 	return useMemo(() => {
 		if (selectedSpecification) {
 			return (
 				refutationKeys.filter(
-					actualKey => selectedSpecification[actualKey] === 0,
+					actualKey => (selectedSpecification as any)[actualKey] === 0,
 				) || []
 			)
 		}
@@ -244,7 +243,7 @@ function useFailedRefutations(
 }
 
 function useRefutationNumbers(
-	selectedSpecification: Specification | undefined,
+	selectedSpecification: Maybe<Specification>,
 	refutationKeys: string[],
 	failedRefutations: string[],
 ): string {
@@ -262,7 +261,7 @@ function useRefutationNumbers(
 }
 
 function useIsSpecificationOn(
-	selectedSpecification: Specification | undefined,
+	selectedSpecification: Maybe<Specification>,
 ): boolean {
 	const config = useSpecificationCurveConfig()
 	return useMemo(() => {
@@ -276,7 +275,7 @@ function useIsSpecificationOn(
 }
 
 function useOnToggleRejectEstimateHandler(
-	selectedSpecification: Specification | undefined,
+	selectedSpecification: Maybe<Specification>,
 	isSpecificationOn: boolean,
 ) {
 	const config = useSpecificationCurveConfig()

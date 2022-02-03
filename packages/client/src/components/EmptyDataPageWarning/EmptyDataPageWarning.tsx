@@ -5,24 +5,26 @@
 import { memo } from 'react'
 import { Link } from 'react-router-dom'
 import { ContainerTextCenter, Text } from '~styles'
-import { Pages } from '~types'
+import { Pages, Maybe } from '~types'
 
-interface EmptyDataPageWarningProps {
+export const EmptyDataPageWarning: React.FC<{
 	text: string
 	linkText: string
 	page: Pages
-	marginTop?: boolean | undefined
-}
-export const EmptyDataPageWarning: React.FC<EmptyDataPageWarningProps> = memo(
-	function EmptyDataPageWarning({ text, linkText, page, marginTop = false }) {
-		return (
-			<ContainerTextCenter marginTop={marginTop}>
-				<Text>{text}</Text>
+	marginTop?: Maybe<boolean>
+}> = memo(function EmptyDataPageWarning({
+	text,
+	linkText,
+	page,
+	marginTop = false,
+}) {
+	return (
+		<ContainerTextCenter marginTop={marginTop}>
+			<Text>{text}</Text>
 
-				<Link rel="noopener" to={page}>
-					{linkText}
-				</Link>
-			</ContainerTextCenter>
-		)
-	},
-)
+			<Link rel="noopener" to={page}>
+				{linkText}
+			</Link>
+		</ContainerTextCenter>
+	)
+})
