@@ -15,6 +15,7 @@ import { ProjectFile, Maybe } from '~types'
 const selectedFileState = atom<Maybe<ProjectFile>>({
 	key: 'selected-file',
 	default: undefined,
+	dangerouslyAllowMutability: true,
 })
 
 export function useSelectedFile(): Maybe<ProjectFile> {

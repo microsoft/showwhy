@@ -238,6 +238,7 @@ export function useTableTransform(selectedDefinition: string): TransformTable {
 	const handleTransformRequested = useCallback(
 		async (step: Step, selectedDefinitionId: string) => {
 			if (originalTable && step) {
+				debugger
 				const output = await runPipeline(originalTable, [step])
 				derive(output)
 				//how would I know the type T

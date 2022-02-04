@@ -3,6 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { ArqueroTableHeader } from '@data-wrangling-components/react'
+import * as aq from 'arquero'
 import ColumnTable from 'arquero/dist/types/table/column-table'
 import { memo } from 'react'
 
@@ -12,28 +13,26 @@ import { ProjectFile } from '~types'
 
 export const SelectedTableDisplay: React.FC<{
 	selectedFile?: ProjectFile
-	originalTable: ColumnTable
 	projectFiles: ProjectFile[]
 	onRenameTable: (name: string) => void
 }> = memo(function SelectedTableDisplay({
 	selectedFile,
-	originalTable,
 	projectFiles,
 	onRenameTable,
 }) {
 	return (
 		<Container>
-			{selectedFile && originalTable ? (
+			{selectedFile ? (
 				<SelectedFile>
 					<ArqueroTableHeader
-						table={originalTable}
+						table={selectedFile.table}
 						name={selectedFile?.alias ?? selectedFile?.name}
 						showRowCount
 						showColumnCount
 						onRenameTable={onRenameTable}
 					/>
 					<DatasetContainer>
-						<ArqueroDetailsTable table={originalTable} />
+						<ArqueroDetailsTable table={selectedFile?.table} />
 					</DatasetContainer>
 				</SelectedFile>
 			) : (

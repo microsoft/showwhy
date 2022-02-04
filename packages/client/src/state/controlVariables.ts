@@ -11,29 +11,29 @@ import {
 	useResetRecoilState,
 	useSetRecoilState,
 } from 'recoil'
-import { VariableDefinition1 } from '~types'
+import { VariableDefinition } from '~types'
 
-export const controlVariablesState = atom<VariableDefinition1[]>({
+export const controlVariablesState = atom<VariableDefinition[]>({
 	key: 'control-variables-state',
 	default: [],
 })
 
-export function useControlVariables(): VariableDefinition1[] {
+export function useControlVariables(): VariableDefinition[] {
 	return useRecoilValue(controlVariablesState)
 }
 
 export function useSetControlVariables(): SetterOrUpdater<
-	VariableDefinition1[]
+	VariableDefinition[]
 > {
 	return useSetRecoilState(controlVariablesState)
 }
 
 export function useSetOrUpdateControlVariables(): (
-	variableDefinition: VariableDefinition1,
+	variableDefinition: VariableDefinition,
 ) => void {
 	const setControlVariables = useSetRecoilState(controlVariablesState)
 	return useCallback(
-		(variableDefinition: VariableDefinition1) => {
+		(variableDefinition: VariableDefinition) => {
 			setControlVariables(prev => {
 				const exists = prev.find(i => i.id === variableDefinition.id)
 				return !exists

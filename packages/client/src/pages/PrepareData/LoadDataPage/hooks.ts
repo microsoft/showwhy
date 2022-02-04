@@ -9,7 +9,6 @@ import {
 } from '@data-wrangling-components/utilities'
 import { IDropdownOption } from '@fluentui/react'
 import { useBoolean } from '@fluentui/react-hooks'
-import ColumnTable from 'arquero/dist/types/table/column-table'
 import { useCallback, useEffect, useState } from 'react'
 import { SetterOrUpdater } from 'recoil'
 import { v4 as uuidv4 } from 'uuid'
@@ -18,8 +17,6 @@ import {
 	useAddProjectFile,
 	useProjectFiles,
 	useSelectedFile,
-	useSelectOriginalTable,
-	useSetOrUpdateOriginalTable,
 	useSetProjectFiles,
 	useSetSelectedFile,
 } from '~state'
@@ -31,7 +28,6 @@ export function useBusinessLogic(): {
 	errorMessage: Maybe<string> | null
 	selectedFile: Maybe<ProjectFile>
 	projectFiles: ProjectFile[]
-	originalTable: ColumnTable
 	selectedDelimiter: Maybe<string>
 	loading: boolean
 	fileCount: DropFilesCount
@@ -55,19 +51,17 @@ export function useBusinessLogic(): {
 	const [errorMessage, setErrorMessage] = useState<string | null>()
 	const [selectedDelimiter, setSelectedDelimiter] = useState<Maybe<string>>()
 	const [showConfirm, { toggle: toggleShowConfirm }] = useBoolean(false)
-	const originalTableState = useSelectOriginalTable(selectedFile?.id as string)
-	const originalTable = originalTableState()?.table
 
 	const handleDismissError = useCallback(() => {
 		setErrorMessage('')
 	}, [setErrorMessage])
 
-	const addOriginalTable = useSetOrUpdateOriginalTable()
 	const handleOnDropAccepted = useOnDropAccepted(setErrorMessage)
 
 	// TODO: this should be tracked as part of the file management
 	useEffect(() => {
-		if (selectedFile) {
+		//TODO: If I change page and go back, it's empty
+		if (selectedFile && selectedFile.loadedCorrectly) {
 			const delimiter = guessDelimiter(selectedFile.name)
 			setSelectedDelimiter(delimiter)
 		}
@@ -89,16 +83,30 @@ export function useBusinessLogic(): {
 		setSelectedFile,
 	)
 
+	const updateProjectFiles = useCallback(
+		(file: ProjectFile) => {
+			const index = projectFiles.findIndex(f => f.id === file.id)
+			const files = replaceItemAtIndex(projectFiles, index, file)
+			setSelectedFile(file)
+			setProjectFiles(files)
+		},
+		[selectedFile, projectFiles, setSelectedFile, setProjectFiles],
+	)
+
 	const handleDelimiterChange = useCallback(
 		(e, option: Maybe<IDropdownOption>): void => {
 			const delimiter = `${option?.key}`
 			if (selectedFile && selectedFile.id) {
 				const table = createDefaultTable(selectedFile.content, delimiter)
-				addOriginalTable({ tableId: selectedFile.id, table })
+				const file = {
+					...selectedFile,
+					table,
+				} as ProjectFile
+				updateProjectFiles(file)
 			}
 			setSelectedDelimiter(delimiter)
 		},
-		[setSelectedDelimiter, selectedFile, addOriginalTable],
+		[setSelectedDelimiter, selectedFile, updateProjectFiles],
 	)
 
 	const handleLoadFile = useHandleLoadFile(setErrorMessage)
@@ -118,19 +126,15 @@ export function useBusinessLogic(): {
 				...selectedFile,
 				alias: alias,
 			} as ProjectFile
-			const index = projectFiles.findIndex(f => f.id === file.id)
-			const files = replaceItemAtIndex(projectFiles, index, file)
-			setSelectedFile(file)
-			setProjectFiles(files)
+			updateProjectFiles(file)
 		},
-		[selectedFile, projectFiles, setSelectedFile, setProjectFiles],
+		[selectedFile, updateProjectFiles],
 	)
 	return {
 		showConfirm,
 		errorMessage,
 		selectedFile,
 		projectFiles,
-		originalTable,
 		selectedDelimiter,
 		onConfirmDelete,
 		setSelectedFile,
@@ -208,9 +212,8 @@ function useOnConfirmDelete(
 function useHandleLoadFile(setErrorMessage: Handler1<string>) {
 	const projectFiles = useProjectFiles()
 	const addFile = useAddProjectFile()
-	const addOriginalTable = useSetOrUpdateOriginalTable()
 	return useCallback(
-		(file: ProjectFile, table: ColumnTable) => {
+		(file: ProjectFile) => {
 			if (projectFiles.find(s => s.name === file.name)) {
 				setErrorMessage('File already uploaded')
 			} else {
@@ -218,9 +221,8 @@ function useHandleLoadFile(setErrorMessage: Handler1<string>) {
 				file.id = fileId
 				file.loadedCorrectly = true
 				addFile(file)
-				addOriginalTable({ tableId: fileId, table })
 			}
 		},
-		[addFile, projectFiles, addOriginalTable, setErrorMessage],
+		[addFile, projectFiles, setErrorMessage],
 	)
 }

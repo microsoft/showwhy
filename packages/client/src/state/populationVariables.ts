@@ -11,29 +11,29 @@ import {
 	useResetRecoilState,
 	useSetRecoilState,
 } from 'recoil'
-import { VariableDefinition1 } from '~types'
+import { VariableDefinition } from '~types'
 
-export const populationVariablesState = atom<VariableDefinition1[]>({
+export const populationVariablesState = atom<VariableDefinition[]>({
 	key: 'population-variables-state',
 	default: [],
 })
 
-export function usePopulationVariables(): VariableDefinition1[] {
+export function usePopulationVariables(): VariableDefinition[] {
 	return useRecoilValue(populationVariablesState)
 }
 
 export function useSetPopulationVariables(): SetterOrUpdater<
-	VariableDefinition1[]
+	VariableDefinition[]
 > {
 	return useSetRecoilState(populationVariablesState)
 }
 
 export function useSetOrUpdatePopulationVariables(): (
-	variableDefinition: VariableDefinition1,
+	variableDefinition: VariableDefinition,
 ) => void {
 	const setPopulationVariables = useSetRecoilState(populationVariablesState)
 	return useCallback(
-		(variableDefinition: VariableDefinition1) => {
+		(variableDefinition: VariableDefinition) => {
 			setPopulationVariables(prev => {
 				const exists = prev.find(i => i.id === variableDefinition.id)
 				return !exists

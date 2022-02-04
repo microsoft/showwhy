@@ -11,29 +11,29 @@ import {
 	useResetRecoilState,
 	useSetRecoilState,
 } from 'recoil'
-import { VariableDefinition1 } from '~types'
+import { VariableDefinition } from '~types'
 
-export const exposureVariablesState = atom<VariableDefinition1[]>({
+export const exposureVariablesState = atom<VariableDefinition[]>({
 	key: 'exposure-variables-state',
 	default: [],
 })
 
-export function useExposureVariables(): VariableDefinition1[] {
+export function useExposureVariables(): VariableDefinition[] {
 	return useRecoilValue(exposureVariablesState)
 }
 
 export function useSetExposureVariables(): SetterOrUpdater<
-	VariableDefinition1[]
+	VariableDefinition[]
 > {
 	return useSetRecoilState(exposureVariablesState)
 }
 
 export function useSetOrUpdateExposureVariables(): (
-	variableDefinition: VariableDefinition1,
+	variableDefinition: VariableDefinition,
 ) => void {
 	const setExposureVariables = useSetRecoilState(exposureVariablesState)
 	return useCallback(
-		(variableDefinition: VariableDefinition1) => {
+		(variableDefinition: VariableDefinition) => {
 			setExposureVariables(prev => {
 				const exists = prev.find(i => i.id === variableDefinition.id)
 				return !exists

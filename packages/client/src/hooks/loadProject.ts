@@ -33,7 +33,6 @@ import {
 	ElementDefinition,
 	FileDefinition,
 	ZipData,
-	FilterObject,
 	ProjectFile,
 	TableColumn,
 	VariableDefinition,
@@ -277,13 +276,13 @@ function prepVariableDefinitions(
 		definition =>
 			({
 				...definition,
-				filters: (definition?.filters || []).map(
-					d =>
-						({
-							id: uuidv4(),
-							...(d as Partial<FilterObject>),
-						} as FilterObject),
-				),
+				// filters: (definition?.filters || []).map(
+				// 	d =>
+				// 		({
+				// 			id: uuidv4(),
+				// 			...(d as Partial<any>),
+				// 		} as any),
+				// ),
 			} as VariableDefinition),
 	)
 }

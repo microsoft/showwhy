@@ -11,29 +11,29 @@ import {
 	useResetRecoilState,
 	useSetRecoilState,
 } from 'recoil'
-import { VariableDefinition1 } from '~types'
+import { VariableDefinition } from '~types'
 
-export const outcomeVariablesState = atom<VariableDefinition1[]>({
+export const outcomeVariablesState = atom<VariableDefinition[]>({
 	key: 'outcome-variables-state',
 	default: [],
 })
 
-export function useOutcomeVariables(): VariableDefinition1[] {
+export function useOutcomeVariables(): VariableDefinition[] {
 	return useRecoilValue(outcomeVariablesState)
 }
 
 export function useSetOutcomeVariables(): SetterOrUpdater<
-	VariableDefinition1[]
+	VariableDefinition[]
 > {
 	return useSetRecoilState(outcomeVariablesState)
 }
 
 export function useSetOrUpdateOutcomeVariables(): (
-	variableDefinition: VariableDefinition1,
+	variableDefinition: VariableDefinition,
 ) => void {
 	const setOutcomeVariables = useSetRecoilState(outcomeVariablesState)
 	return useCallback(
-		(variableDefinition: VariableDefinition1) => {
+		(variableDefinition: VariableDefinition) => {
 			setOutcomeVariables(prev => {
 				const exists = prev.find(i => i.id === variableDefinition.id)
 				return !exists

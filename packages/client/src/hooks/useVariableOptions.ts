@@ -24,8 +24,9 @@ export function useVariableOptions(): IComboBoxOption[] {
 	return useMemo(() => {
 		const removedColumns =
 			columns
-				?.filter(col => col.relevance === ColumnRelevance.NotCausallyRelevant)
+				?.filter(col => col.relevance === ColumnRelevance.NotRelevant)
 				.map(x => x.name) || []
+
 		const filteredColumns =
 			originalTable?.columnNames().filter(x => !removedColumns?.includes(x)) ||
 			[]

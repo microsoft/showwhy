@@ -14,7 +14,7 @@ import { DataTableFileDefinition } from '~types'
 import { isZipUrl } from '~utils'
 /**
  * Creates a default data table by parsing csv/tsv content.
- * This adds an incremented rowId column to the front to ensure all tables
+ * This adds an incremented index column to the front to ensure all tables
  * have some form of unique id.
  * @param content
  * @param delimiter

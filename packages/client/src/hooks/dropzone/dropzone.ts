@@ -24,7 +24,7 @@ import {
 import { DropFilesCount, ProjectFile, Handler } from '~types'
 
 export function useHandleOnDrop(
-	onFileLoadCompleted: (file: ProjectFile, table: ColumnTable) => void,
+	onFileLoadCompleted: (file: ProjectFile) => void,
 	onLoadStart?: Handler,
 ): (files: FileCollection) => void {
 	const onDrop = useDrop(onFileLoadCompleted, onLoadStart)
@@ -72,7 +72,7 @@ function useAccepted(): string[] {
 
 export function useGlobalDropzone(
 	onError?: (msg: string) => void,
-	onLoad?: (file: ProjectFile, table: ColumnTable) => void,
+	onLoad?: (file: ProjectFile) => void,
 ): {
 	onDrop: (f: FileCollection) => void
 	onDropAccepted: (f: FileCollection) => void
