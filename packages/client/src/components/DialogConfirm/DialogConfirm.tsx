@@ -16,7 +16,7 @@ export const DialogConfirm: React.FC<{
 }> = memo(function DialogConfirm({ toggle, onConfirm, show, title, subText }) {
 	const dialogContentProps = useMemo(
 		() => ({ type: DialogType.normal, title, subText }),
-		[title],
+		[title, subText],
 	)
 	return (
 		<Dialog

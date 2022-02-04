@@ -34,16 +34,15 @@ import {
 	ColumnRelevance,
 	ElementDefinition,
 	FactorsOrDefinitions,
-	Handler,
 	PageType,
 	RenameCalloutArgs,
 	RenameCalloutType,
 	TransformTable,
 	VariableDefinition,
+	SharedModelVariableLogic,
 } from '~types'
-import { SharedLogic } from './interfaces'
 
-export function useSharedBusinessLogic(): SharedLogic {
+export function useSharedBusinessLogic(): SharedModelVariableLogic {
 	const [showConfirmDelete, { toggle: toggleShowConfirmDelete }] =
 		useBoolean(false)
 

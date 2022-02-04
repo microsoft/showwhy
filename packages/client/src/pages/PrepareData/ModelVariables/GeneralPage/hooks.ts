@@ -3,7 +3,6 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { useBoolean } from '@fluentui/react-hooks'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { v4 } from 'uuid'
 import { usePageType, useRemoveDefinition, useSaveDefinition } from '~hooks'
@@ -27,7 +26,7 @@ export function useBusinessLogic(): {
 } {
 	const pageType = usePageType()
 	const defineQuestion = useDefineQuestion()
-	const defineQuestionData = defineQuestion[pageType] as Element
+	const defineQuestionData = defineQuestion[pageType]
 
 	const definitions = useMemo((): ElementDefinition[] => {
 		return defineQuestionData?.definition || []

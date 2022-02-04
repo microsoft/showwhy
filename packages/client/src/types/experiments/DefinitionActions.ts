@@ -3,8 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { CausalFactor, ElementDefinition } from '~types'
 import { Handler, Handler1, Maybe } from '../primitives'
+import { CausalFactor, ElementDefinition } from '~types'
 
 export interface DefinitionActions {
 	onDelete: Handler

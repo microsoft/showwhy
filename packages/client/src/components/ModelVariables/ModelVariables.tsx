@@ -21,6 +21,7 @@ import styled from 'styled-components'
 import { Header } from './Header'
 import { RenameCallout } from './RenameCallout'
 import { StepsList } from './StepsList'
+import { DialogConfirm } from '~components/DialogConfirm'
 import { EmptyDataPageWarning } from '~components/EmptyDataPageWarning'
 import { ModelVariableCommands } from '~components/ModelVariableCommands'
 import { ArqueroDetailsTable } from '~components/Tables/ArqueroDetailsTable'
@@ -32,9 +33,8 @@ import {
 	RenameCalloutArgs,
 	DefinitionArgs,
 	DefinitionActions,
+	SharedModelVariableLogic,
 } from '~types'
-import { DialogConfirm } from '~components/DialogConfirm'
-import { SharedLogic } from 'src/pages/PrepareData/ModelVariables/interfaces'
 
 interface ModelVariablesProps {
 	pageType: PageType
@@ -45,7 +45,7 @@ interface ModelVariablesProps {
 	commandBar: IRenderFunction<IDetailsColumnProps>
 	renameCalloutArgs: RenameCalloutArgs
 	definitionActions: DefinitionActions
-	sharedLogic: SharedLogic
+	sharedLogic: SharedModelVariableLogic
 }
 export const ModelVariables: FC<ModelVariablesProps> = memo(
 	function ModelVariables({
