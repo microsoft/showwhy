@@ -3,7 +3,6 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { BaseFile } from '@data-wrangling-components/utilities'
-import { all, op } from 'arquero'
 import { useCallback, useMemo } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import { useGetStepUrls } from '~hooks'
@@ -17,9 +16,7 @@ import {
 	useSetEstimators,
 	useSetFileCollection,
 	useSetModelVariables,
-	useSetOrUpdateOriginalTable,
 	useSetPrimarySpecificationConfig,
-	useSetPrimaryTable,
 	useSetRefutationType,
 	useSetStepStatuses,
 	useSetTableColumns,
@@ -40,7 +37,6 @@ import {
 	DataTableFileDefinition,
 	StepStatus,
 	Handler1,
-	DataTable,
 	Maybe,
 } from '~types'
 import {
@@ -63,10 +59,8 @@ export function useLoadProject(
 	const setOrUpdateEst = useSetEstimators()
 	const setRefutationType = useSetRefutationType()
 	const addFile = useAddProjectFile()
-	const setOriginalTable = useSetOrUpdateOriginalTable()
 	const setConfidenceInterval = useSetConfidenceInterval()
 	const setDefaultDatasetResult = useSetDefaultDatasetResult()
-	const setPrimaryTable = useSetPrimaryTable()
 	const getStepUrls = useGetStepUrls()
 	const setAllStepStatus = useSetStepStatuses()
 	const updateCollection = useUpdateCollection()
@@ -133,14 +127,7 @@ export function useLoadProject(
 			setDefaultDatasetResult(defaultDatasetResult)
 			setConfidenceInterval(!!confidenceInterval)
 
-			await processTables(
-				workspace,
-				id,
-				addFile,
-				setOriginalTable,
-				setPrimaryTable,
-				tables as File[],
-			)
+			await processTables(workspace, id, addFile, tables as File[])
 
 			const completed = getStepUrls(workspace.todoPages, true)
 			setAllStepStatus(completed, StepStatus.Done)
@@ -149,7 +136,6 @@ export function useLoadProject(
 		[
 			id,
 			source,
-			setOriginalTable,
 			addFile,
 			setPrimarySpecificationConfig,
 			setCausalFactors,
@@ -162,7 +148,6 @@ export function useLoadProject(
 			getStepUrls,
 			setDefaultDatasetResult,
 			setConfidenceInterval,
-			setPrimaryTable,
 			updateCollection,
 		],
 	)
@@ -178,52 +163,58 @@ async function processTables(
 	workspace: Workspace,
 	id: string,
 	addFile: Handler1<ProjectFile>,
-	setOriginalTable: Handler1<DataTable>,
-	setPrimaryTable: Handler1<{ name: string; id: string }>,
 	tableFiles?: File[],
 ) {
-	const { tables, postLoad } = workspace
+	const { tables } = workspace
 
 	// if we have a post-load,
 	// run it and save just the final result
 	// otherwise, only save the primary table
 
+	//load raw tables
+	//save step 0 to steps list
+	//save step 1 to steps list
+
 	const primary = tables.find(table => table.primary)
+	// if (primary) {
+	// 	setPrimaryTable({ name: primary.name, id })
+	// }
+	// if (postLoad) {
+	// 	//TODO: add this to pipeline? how?
+	// 	let result = await runPipeline(tables, postLoad.steps, tableFiles)
+	// 	result = result.derive(
+	// 		{
+	// 			index: op.row_number(),
+	// 		},
+	// 		{ before: all() },
+	// 	)
+
+	// 	const file: ProjectFile = {
+	// 		id,
+	// 		content: result.toCSV(),
+	// 		name: workspace.name,
+	// 	}
+	// 	addFile(file)
+	// 	setOriginalTable({ tableId: id, table: result })
+	// } else {
+	// 	// this effectively uses a "first one wins" for the primary table
+	// 	// this shouldn't actually happen in practice, but until we can support multiples correctly...
 	if (primary) {
-		setPrimaryTable({ name: primary.name, id })
-	}
-	if (postLoad) {
-		//TODO: add this to pipeline? how?
-		let result = await runPipeline(tables, postLoad.steps, tableFiles)
-		result = result.derive(
-			{
-				index: op.row_number(),
-			},
-			{ before: all() },
-		)
+		//only loading one table
+		const result = await (!isZipUrl(primary.url)
+			? fetchTable(primary)
+			: loadTable(primary, tableFiles))
+
 		const file: ProjectFile = {
 			id,
 			content: result.toCSV(),
-			name: workspace.name,
+			name: primary.name,
+			table: result,
 		}
 		addFile(file)
-		setOriginalTable({ tableId: id, table: result })
-	} else {
-		// this effectively uses a "first one wins" for the primary table
-		// this shouldn't actually happen in practice, but until we can support multiples correctly...
-		if (primary) {
-			const result = await (!isZipUrl(primary.url)
-				? fetchTable(primary)
-				: loadTable(primary, tableFiles))
-			const file: ProjectFile = {
-				id,
-				content: result.toCSV(),
-				name: primary.name,
-			}
-			addFile(file)
-			setOriginalTable({ tableId: id, table: result })
-		}
+		// 		setOriginalTable({ tableId: id, table: result })
 	}
+	// }
 }
 
 function prepCausalFactors(factors?: Partial<CausalFactor>[]): CausalFactor[] {
