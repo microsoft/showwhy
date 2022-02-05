@@ -90,6 +90,15 @@ export async function groupFilesByType(
 		}
 	}
 
+	// TODO: change this filter when dwc/utilities have support for jupiter notebooks extension
+	const notebooks: BaseFile[] = fileCollection
+		.list()
+		.filter(f => f.name.endsWith('.ipynb'))
+
+	if (notebooks.length > 0) {
+		filesByType['notebooks'] = notebooks
+	}
+
 	const tables: BaseFile[] = tableFiles.filter(file => !isResult(file.name))
 	if (tables.length > 0) {
 		filesByType['tables'] = tables
