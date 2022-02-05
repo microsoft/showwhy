@@ -2,14 +2,15 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { IconButton, TooltipHost } from '@fluentui/react'
+import { IconButton, TooltipHost, MessageBarType } from '@fluentui/react'
 import { useId } from '@fluentui/react-hooks'
-import { memo, Suspense } from 'react'
+import { memo, Suspense, useState } from 'react'
 import styled from 'styled-components'
 import { AppHeader } from '../AppHeader'
 import { useProcessStepInfo, useGuidance, useOnClickProject } from './hooks'
 import { StepControls, StepSelector } from '~components/GeneralSteps'
 import { Guidance } from '~components/Guidance'
+import { MessageContainer } from '~components/MessageContainer'
 import { StepTitle } from '~components/StepTitle'
 import {
 	useExampleProjects,
@@ -25,11 +26,12 @@ import { StyledSpinner } from '~styles'
 import { Maybe } from '~types'
 
 export const Layout: React.FC = memo(function Layout({ children }) {
+	const [error, setError] = useState<Maybe<string>>()
 	const handleGetStepUrls = useGetStepUrls()
 	const handleSetAllStepStatus = useSetStepStatuses()
 	const defineQuestion = useDefineQuestion()
 	const exampleProjects = useExampleProjects()
-	const uploadZipMenuOption = useUploadZipMenuOption()
+	const uploadZipMenuOption = useUploadZipMenuOption(setError)
 	const tooltipId = useId('tooltip')
 	const project = useSelectedProject()
 	const [isGuidanceVisible, toggleGuidance] = useGuidance()
@@ -70,6 +72,15 @@ export const Layout: React.FC = memo(function Layout({ children }) {
 					<StepTitle title="Workspace" />
 					<ControlsContainer>
 						<ChildrenContainer>
+							{error ? (
+								<MessageContainer
+									onDismiss={() => setError(undefined)}
+									type={MessageBarType.error}
+									styles={{ margin: '1rem 0' }}
+								>
+									{error}
+								</MessageContainer>
+							) : null}
 							<Suspense fallback={<StyledSpinner />}>{children}</Suspense>
 						</ChildrenContainer>
 						<StepControls
@@ -117,12 +128,7 @@ const GuidanceContainer = styled.div<{
 	transition: 0.5s;
 	border-right: 1px solid ${({ theme }) => theme.application().lowContrast()};
 	height: 90vh;
-	${({ isVisible }) =>
-		!isVisible
-			? 'border: none;'
-			: ''}// This is for resizing, but behaves weird in the graph page
-	// resize: horizontal;
-	// overflow: hidden;
+	${({ isVisible }) => (!isVisible ? 'border: none;' : '')}
 `
 
 const Container = styled.div`

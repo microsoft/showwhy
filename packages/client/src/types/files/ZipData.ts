@@ -8,6 +8,7 @@ import { BaseFile, Json } from '@data-wrangling-components/utilities'
 export interface ZipData {
 	json?: Json
 	tables?: BaseFile[]
+	notebooks?: BaseFile[]
 	results?: {
 		file?: BaseFile
 		dataUri: string
