@@ -4,6 +4,7 @@
  */
 
 import {
+	FileMimeType,
 	FileType,
 	createFileWithPath,
 	fetchFile,
@@ -11,7 +12,7 @@ import {
 	FileCollection,
 } from '@data-wrangling-components/utilities'
 import { useCallback, useMemo } from 'react'
-import { useGetCSVResult, useGetStepUrlsByStatus } from '~hooks'
+import { useGetResult, useGetStepUrlsByStatus } from '~hooks'
 import {
 	useCausalFactors,
 	useConfidenceInterval,
@@ -34,6 +35,8 @@ import {
 	NodeResponseStatus,
 	Maybe,
 	AsyncHandler,
+	DownloadType,
+	DataTableFileDefinition,
 } from '~types'
 import { isDataUrl } from '~utils'
 
@@ -101,7 +104,7 @@ function usePrimary(): () => Maybe<FileWithPath> {
 		if (ogTables) {
 			const options = {
 				name: `subject_${primaryTable.name}`,
-				type: 'text/csv',
+				type: FileMimeType.csv,
 			}
 			return createFileWithPath(new Blob([ogTables.table.toCSV()]), options)
 		}
@@ -109,6 +112,7 @@ function usePrimary(): () => Maybe<FileWithPath> {
 }
 
 function useTables(fileCollection: FileCollection) {
+	const projectFiles = useProjectFiles()
 	return useCallback(
 		primary => {
 			const files = fileCollection.list(FileType.table)
@@ -116,20 +120,25 @@ function useTables(fileCollection: FileCollection) {
 				files.push(primary)
 			}
 			return files.map(file => {
-				const isPrimary = files.length === 1 || file.name === primary.name
-				return {
+				const isPrimary = files.length === 1 || file.name === primary?.name
+				const project = projectFiles.find(p => p.name === file.name)
+				const definition: DataTableFileDefinition = {
 					url: `zip://${file.name}`,
 					name: file.name,
 					primary: isPrimary,
 				}
+				if (project?.delimiter) {
+					definition.delimiter = project.delimiter
+				}
+				return definition
 			})
 		},
-		[fileCollection],
+		[fileCollection, projectFiles],
 	)
 }
 
-function useCSVResult(): Promise<Maybe<FileWithPath>> {
-	const getCSVResult = useGetCSVResult()
+function useResult(type?: DownloadType): Promise<Maybe<FileWithPath>> {
+	const getResult = useGetResult()
 	const runHistory = useRunHistory()
 	return useMemo(async () => {
 		const completed = runHistory.find(
@@ -137,22 +146,23 @@ function useCSVResult(): Promise<Maybe<FileWithPath>> {
 				run.isActive && run.status?.status === NodeResponseStatus.Completed,
 		)
 		if (completed) {
+			const isNotebook = type === DownloadType.jupyter
 			const options = {
-				name: 'results.csv',
-				type: 'text/csv',
+				name: isNotebook ? DownloadType.jupyter : DownloadType.csv,
+				type: isNotebook ? 'application/x-ipynb+json' : FileMimeType.csv,
 			}
-			const csvResult = await getCSVResult()
-			if (csvResult) {
-				return createFileWithPath(csvResult, options)
+			const result = await getResult(type)
+			if (result) {
+				return createFileWithPath(result, options)
 			}
 		}
 		return undefined
-	}, [getCSVResult, runHistory])
+	}, [getResult, runHistory, type])
 }
 
-function useResults() {
+function useCSVResult() {
 	const defaultDatasetResult = useDefaultDatasetResult()
-	const csvResult = useCSVResult()
+	const csvResult = useResult()
 	return useMemo(async () => {
 		const file = await csvResult
 		if (file) {
@@ -166,8 +176,8 @@ function useResults() {
 			if (isDataUrl(defaultDatasetResult.url)) {
 				const f = await fetchFile(defaultDatasetResult.url)
 				const options = {
-					name: 'results.csv',
-					type: 'text/csv',
+					name: DownloadType.csv,
+					type: FileMimeType.csv,
 				}
 				file = createFileWithPath(f, options)
 				url = `zip://${file.name}`
@@ -181,20 +191,23 @@ function useResults() {
 }
 
 function useDownload(fileCollection: FileCollection) {
-	const results = useResults()
+	const csvResult = useCSVResult()
 	const getPrimary = usePrimary()
 	const getTables = useTables(fileCollection)
+	const notebookResult = useResult(DownloadType.jupyter)
 	return useCallback(
 		async (workspace: Partial<Workspace>) => {
 			const primary = getPrimary()
 			const tables = getTables(primary)
-			const result = await results
+			/* eslint-disable @essex/adjacent-await */
+			const csv = await csvResult
+			const notebook = await notebookResult
 			workspace.tables = tables
 			if (fileCollection.name) {
 				workspace.name = fileCollection.name
 			}
-			if (result?.url) {
-				workspace.defaultResult = { url: result.url }
+			if (csv?.url) {
+				workspace.defaultResult = { url: csv.url }
 			}
 			const options = {
 				name: 'workspace_config.json',
@@ -205,14 +218,17 @@ function useDownload(fileCollection: FileCollection) {
 				options,
 			)
 			const files = [file, primary].filter(t => !!t) as FileWithPath[]
-			if (result?.file) {
-				files.push(result.file)
+			if (csv?.file) {
+				files.push(csv.file)
+			}
+			if (notebook) {
+				files.push(notebook)
 			}
 			const copy = fileCollection.copy()
 			/* eslint-disable @essex/adjacent-await */
 			await copy.add(files)
 			await copy.toZip()
 		},
-		[fileCollection, results, getTables, getPrimary],
+		[fileCollection, csvResult, getTables, getPrimary, notebookResult],
 	)
 }

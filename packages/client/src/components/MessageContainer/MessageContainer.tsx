@@ -8,12 +8,12 @@ import styled from 'styled-components'
 import { Handler } from '~types'
 
 export const MessageContainer: React.FC<{
-	type: MessageBarType
+	type?: MessageBarType
 	onDismiss?: Handler
 	styles?: IStyle
 }> = memo(function MessageContainer({
 	children,
-	type,
+	type = MessageBarType.info,
 	onDismiss,
 	styles = {},
 }) {

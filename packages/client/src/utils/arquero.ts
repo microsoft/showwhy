@@ -38,7 +38,8 @@ export async function loadTable(
 ): Promise<ColumnTable> {
 	const file = tables?.find(t => t.name === table.name) as File
 	const text = await getTextFromFile(file as BaseFile)
-	return createDefaultTable(text, guessDelimiter(table.name))
+	const delimiter = table.delimiter || guessDelimiter(table.name)
+	return createDefaultTable(text, delimiter)
 }
 
 export async function fetchTable(
