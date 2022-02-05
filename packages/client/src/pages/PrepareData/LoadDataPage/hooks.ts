@@ -95,10 +95,16 @@ export function useBusinessLogic(): {
 			if (selectedFile && selectedFile.id) {
 				const table = createDefaultTable(selectedFile.content, delimiter)
 				addOriginalTable({ tableId: selectedFile.id, table })
+				toggleLoadedCorrectly(delimiter)
 			}
 			setSelectedDelimiter(delimiter)
 		},
-		[setSelectedDelimiter, selectedFile, addOriginalTable],
+		[
+			setSelectedDelimiter,
+			selectedFile,
+			addOriginalTable,
+			toggleLoadedCorrectly,
+		],
 	)
 
 	const handleLoadFile = useHandleLoadFile(setErrorMessage)
@@ -155,17 +161,21 @@ function useToggleLoadedCorrectly(
 	setProjectFiles: SetterOrUpdater<ProjectFile[]>,
 	setSelectedFile: SetterOrUpdater<Maybe<ProjectFile>>,
 ) {
-	return useCallback(() => {
-		const stateNow = selectedFile?.loadedCorrectly || false
-		const file = {
-			...selectedFile,
-			loadedCorrectly: !stateNow,
-		} as ProjectFile
-		const index = projectFiles.findIndex(f => f.id === file.id)
-		const files = replaceItemAtIndex(projectFiles, index, file)
-		setProjectFiles(files)
-		setSelectedFile(file)
-	}, [selectedFile, projectFiles, setProjectFiles, setSelectedFile])
+	return useCallback(
+		(delimiter?: string) => {
+			const stateNow = selectedFile?.loadedCorrectly || false
+			const file = {
+				...selectedFile,
+				loadedCorrectly: !stateNow,
+				delimiter,
+			} as ProjectFile
+			const index = projectFiles.findIndex(f => f.id === file.id)
+			const files = replaceItemAtIndex(projectFiles, index, file)
+			setProjectFiles(files)
+			setSelectedFile(file)
+		},
+		[selectedFile, projectFiles, setProjectFiles, setSelectedFile],
+	)
 }
 
 function useDefaultSelectedFile(
