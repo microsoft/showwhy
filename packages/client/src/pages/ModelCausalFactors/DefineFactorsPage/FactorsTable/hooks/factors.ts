@@ -27,7 +27,7 @@ export function useFlatFactorsList(
 			return {
 				variable: factor.variable,
 				causes: equal?.causes || false,
-				degree: equal?.degree || null,
+				degree: equal?.degree ?? null,
 				reasoning: equal?.reasoning || '',
 				id: factor.id,
 				description: factor.description,
@@ -52,7 +52,7 @@ export function useSaveFactors(
 				...oldCauses,
 				[causeType]: {
 					causes: newValue.causes,
-					degree: newValue.degree || null,
+					degree: newValue.degree ?? null,
 					reasoning: newValue.reasoning,
 				} as Cause,
 			} as ExposureAndOutcomeCauses
