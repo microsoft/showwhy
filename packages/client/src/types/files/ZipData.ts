@@ -4,6 +4,7 @@
  */
 
 import { BaseFile, Json } from '@data-wrangling-components/utilities'
+import { RunHistory } from '~types'
 
 export interface ZipData {
 	json?: Json
@@ -14,4 +15,5 @@ export interface ZipData {
 		dataUri: string
 	}
 	name?: string
+	runHistory?: RunHistory[]
 }

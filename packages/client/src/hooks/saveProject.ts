@@ -190,11 +190,30 @@ function useCSVResult() {
 	}, [defaultDatasetResult, csvResult])
 }
 
+function useRunHistoryFile(): Maybe<FileWithPath> {
+	const rh = useRunHistory()
+	return useMemo(() => {
+		if (rh?.length) {
+			const options = {
+				name: 'run_history.json',
+				type: FileMimeType.json,
+			}
+			const file = createFileWithPath(
+				new Blob([JSON.stringify(rh, null, 4)]),
+				options,
+			)
+			return file
+		}
+		return undefined
+	}, [rh])
+}
+
 function useDownload(fileCollection: FileCollection) {
 	const csvResult = useCSVResult()
 	const getPrimary = usePrimary()
 	const getTables = useTables(fileCollection)
 	const notebookResult = useResult(DownloadType.jupyter)
+	const runHistoryFile = useRunHistoryFile()
 	return useCallback(
 		async (workspace: Partial<Workspace>) => {
 			const primary = getPrimary()
@@ -211,7 +230,7 @@ function useDownload(fileCollection: FileCollection) {
 			}
 			const options = {
 				name: 'workspace_config.json',
-				type: 'application/json',
+				type: FileMimeType.json,
 			}
 			const file = createFileWithPath(
 				new Blob([JSON.stringify(workspace, null, 4)]),
@@ -224,11 +243,21 @@ function useDownload(fileCollection: FileCollection) {
 			if (notebook) {
 				files.push(notebook)
 			}
+			if (runHistoryFile) {
+				files.push(runHistoryFile)
+			}
 			const copy = fileCollection.copy()
 			/* eslint-disable @essex/adjacent-await */
 			await copy.add(files)
 			await copy.toZip()
 		},
-		[fileCollection, csvResult, getTables, getPrimary, notebookResult],
+		[
+			fileCollection,
+			csvResult,
+			getTables,
+			getPrimary,
+			notebookResult,
+			runHistoryFile,
+		],
 	)
 }

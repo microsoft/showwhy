@@ -7,11 +7,18 @@ import {
 	FileCollection,
 	FileType,
 	BaseFile,
+	FileMimeType,
 	FileWithPath,
 	createBaseFile,
 } from '@data-wrangling-components/utilities'
 import { fetchTable } from './arquero'
-import { DataTableFileDefinition, ProjectFile, ZipData, Maybe } from '~types'
+import {
+	DataTableFileDefinition,
+	ProjectFile,
+	ZipData,
+	Maybe,
+	RunHistory,
+} from '~types'
 
 export function createTextFile(name: string, content: string): File {
 	const type = { type: `text/${name.split('.').pop()}` }
@@ -47,13 +54,16 @@ export async function groupFilesByType(
 		name: fileCollection.name || 'FileCollection',
 	}
 	const resultsRegExp = /result(.+).(c|t)sv/gi
+	const configRegExp = /config(.*).json$/gi
+	const runHistoryRegExp = /run(.*)history(.*).json$/gi
 	const isResult = (filename: string) => resultsRegExp.test(filename)
 	const tableFiles: BaseFile[] = fileCollection.list(FileType.table)
 
-	const [jsonFile] = fileCollection.list(FileType.json)
+	const jsonFiles = fileCollection.list(FileType.json)
+	const configFile = jsonFiles.find(f => configRegExp.test(f.name))
 	let defaultResult
-	if (jsonFile) {
-		const json = await jsonFile.toJson()
+	if (configFile) {
+		const json = await configFile.toJson()
 		filesByType[FileType.json] = json
 		defaultResult = json.defaultResult
 	}
@@ -66,7 +76,7 @@ export async function groupFilesByType(
 			if (file) {
 				const options = {
 					name: file.name,
-					type: 'text/csv',
+					type: FileMimeType.csv,
 				}
 				file = createBaseFile(file, options)
 				url = await file.toDataURL()
@@ -102,6 +112,13 @@ export async function groupFilesByType(
 	const tables: BaseFile[] = tableFiles.filter(file => !isResult(file.name))
 	if (tables.length > 0) {
 		filesByType['tables'] = tables
+	}
+
+	const runHistoryFile = jsonFiles.find(f => runHistoryRegExp.test(f.name))
+	if (runHistoryFile) {
+		const json = await runHistoryFile.toJson()
+		filesByType['runHistory'] = json as RunHistory[]
+		defaultResult = json.defaultResult
 	}
 	return filesByType
 }
