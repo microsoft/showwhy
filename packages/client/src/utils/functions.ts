@@ -85,7 +85,18 @@ export const calculateMedian = (values: number[]): number => {
 	return (values[half - 1] + values[half]) / 2.0
 }
 
-export const returnElapsedTime = (startDate: Date, endDate: Date): string => {
+export const returnElapsedTime = (
+	startDate: Date | string,
+	endDate: Date | string,
+): string => {
+	if (typeof startDate === 'string') {
+		startDate = new Date(startDate)
+	}
+
+	if (typeof endDate === 'string') {
+		endDate = new Date(endDate)
+	}
+
 	const diffInMilliSeconds = endDate.valueOf() - startDate.valueOf()
 	const minutes = Math.floor(diffInMilliSeconds / 1000 / 60)
 	const seconds = Math.floor((diffInMilliSeconds / 1000) % 60)
