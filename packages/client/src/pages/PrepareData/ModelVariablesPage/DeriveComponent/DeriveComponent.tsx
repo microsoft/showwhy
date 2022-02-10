@@ -321,7 +321,7 @@ export const DeriveComponent: React.FC<{
 	])
 
 	return (
-		<Container>
+		<Container data-pw="derive-column-form">
 			<FilterOptionsContainer>
 				<TextField
 					title="columnName"
@@ -329,6 +329,7 @@ export const DeriveComponent: React.FC<{
 					label="New column name"
 					value={actualFilterValue?.columnName || ''}
 					onChange={addFilterValues}
+					data-pw="derive-column-form-name"
 				/>
 				<Div style={{ display: 'flex' }}>
 					{/* <DropdownFilter
@@ -348,6 +349,7 @@ export const DeriveComponent: React.FC<{
 						title="column"
 						onChange={addFilterValues}
 						selectedKey={actualFilterValue?.column}
+						data-pw="derive-column-form-column"
 					/>
 					<DropdownFilter
 						label="Function"
@@ -356,6 +358,7 @@ export const DeriveComponent: React.FC<{
 						title="filter"
 						onChange={addFilterValues}
 						selectedKey={actualFilterValue?.filter}
+						data-pw="derive-column-form-filter"
 					/>
 				</Div>
 				{actualFilterValue?.filter?.endsWith('in range') ? (
@@ -400,6 +403,7 @@ export const DeriveComponent: React.FC<{
 							}
 							value={(actualFilterValue?.value as string) || ''}
 							onChange={addFilterValues}
+							data-pw="derive-column-form-value"
 						/>
 						<CheckboxDefinition
 							disabled={!!editing}
@@ -419,6 +423,7 @@ export const DeriveComponent: React.FC<{
 							!actualFilterValue?.upper?.toString().length
 						}
 						onClick={deriveData}
+						data-pw="derive-column-form-apply"
 					>
 						Apply
 					</ApplyButton>

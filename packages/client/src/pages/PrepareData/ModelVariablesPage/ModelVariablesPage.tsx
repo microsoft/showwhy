@@ -67,7 +67,7 @@ export const ModelVariablesPage: React.FC = memo(function ModelVariablesPage() {
 					<Else>
 						<Container>
 							<Header />
-							<NormalContainer>
+							<NormalContainer data-pw="table">
 								<ArqueroTableHeader
 									table={subjectIdentifierData.table}
 									showRowCount
@@ -101,7 +101,7 @@ export const ModelVariablesPage: React.FC = memo(function ModelVariablesPage() {
 												type={pageType}
 											/>
 										</DefinitionListContainer>
-										<StepsContainer>
+										<StepsContainer data-pw="definition-steps">
 											<TitleContainer>
 												<DefinitionTitle>Definition steps</DefinitionTitle>
 											</TitleContainer>
@@ -132,7 +132,10 @@ export const ModelVariablesPage: React.FC = memo(function ModelVariablesPage() {
 															allowDisabledFocus
 														/>
 														{pageType !== PageType.Control && (
-															<StepsButton onClick={onToggleDeriveVisible}>
+															<StepsButton
+																onClick={onToggleDeriveVisible}
+																data-pw="derive-column-button"
+															>
 																Derive new column before capturing
 															</StepsButton>
 														)}

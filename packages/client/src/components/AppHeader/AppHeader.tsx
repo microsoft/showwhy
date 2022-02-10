@@ -34,7 +34,7 @@ export const AppHeader: React.FC<{
 	return (
 		<AppHeaderContainer>
 			<TitleContainer>
-				<Title>ShowWhy</Title>
+				<Title data-pw="main-title">ShowWhy</Title>
 			</TitleContainer>
 			<Container>
 				<CausalQuestion defineQuestion={defineQuestion} />

@@ -30,7 +30,7 @@ export const ProgressBar: React.FC<{
 	return (
 		<>
 			{label && <ProgressIndicatorLabel>{label}</ProgressIndicatorLabel>}
-			<ProgressIndicatorWrapper>
+			<ProgressIndicatorWrapper data-pw="progress-bar">
 				<ProgressIndicator
 					styles={{ root: { width: '100%' } }}
 					description={

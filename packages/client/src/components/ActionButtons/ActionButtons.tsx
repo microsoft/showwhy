@@ -53,6 +53,7 @@ export const ActionButtons: React.FC<ActionButtonsProps> = memo(
 						title="Save"
 						ariaLabel="Save Emoji"
 						disabled={disableSave}
+						data-pw="save-button"
 					/>
 				)}
 				{onCancel && (
@@ -61,6 +62,7 @@ export const ActionButtons: React.FC<ActionButtonsProps> = memo(
 						title="Cancel"
 						ariaLabel="Cancel Emoji"
 						onClick={onCancel}
+						data-pw="cancel-button"
 					/>
 				)}
 				{onEdit && (
@@ -69,6 +71,7 @@ export const ActionButtons: React.FC<ActionButtonsProps> = memo(
 						title="Edit"
 						ariaLabel="Edit Emoji"
 						onClick={onEdit}
+						data-pw="edit-button"
 					/>
 				)}
 				{onDuplicate && (
@@ -77,6 +80,7 @@ export const ActionButtons: React.FC<ActionButtonsProps> = memo(
 						title="Duplicate"
 						ariaLabel="DuplicateRow Emoji"
 						onClick={onDuplicate}
+						data-pw="duplicate-button"
 					/>
 				)}
 				{infoButton && (
@@ -90,6 +94,7 @@ export const ActionButtons: React.FC<ActionButtonsProps> = memo(
 						title={favoriteProps?.title || 'Favorite'}
 						ariaLabel="FavoriteStar Emoji"
 						onClick={onFavorite}
+						data-pw="favorite-button"
 					/>
 				)}
 				{onDelete && (
@@ -98,6 +103,7 @@ export const ActionButtons: React.FC<ActionButtonsProps> = memo(
 						title="Delete"
 						ariaLabel="Delete Emoji"
 						onClick={onDelete}
+						data-pw="delete-button"
 					/>
 				)}
 			</Container>

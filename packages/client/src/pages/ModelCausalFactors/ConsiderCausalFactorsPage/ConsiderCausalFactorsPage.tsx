@@ -37,7 +37,7 @@ export const ConsiderCausalFactorsPage: React.FC = memo(
 		return (
 			<Container>
 				<Container>
-					<FieldTitle>Possible causal factors</FieldTitle>
+					<FieldTitle data-pw="title">Possible causal factors</FieldTitle>
 					<TableComponent
 						headers={tableHeaders}
 						columns={flatFactorsList}
@@ -60,9 +60,9 @@ export const ConsiderCausalFactorsPage: React.FC = memo(
 					pageType={pageType}
 					variables={variables}
 				/>
-				{goToFactorsPage ? (
+				{page ? (
 					<ButtonContainer>
-						<DefaultButton onClick={goToFactorsPage}>
+						<DefaultButton onClick={goToFactorsPage} data-pw="go-back-button">
 							Go back to {page} page
 						</DefaultButton>
 					</ButtonContainer>

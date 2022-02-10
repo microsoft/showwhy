@@ -110,7 +110,7 @@ async function fetchHandler(
 ): Promise<Response> {
 	const { maxRetries = 0, ...fetchOptions } = options
 	try {
-		return await fetch(url, fetchOptions)
+		return fetch(url, fetchOptions)
 	} catch (error) {
 		console.log(`Error@fetchHandler ${retryCount}/${maxRetries}`, {
 			error,
@@ -125,7 +125,7 @@ async function fetchHandler(
 export async function returnOrchestratorStatus(
 	url: string,
 ): Promise<OrchestratorStatusResponse> {
-	return await fetch(localhostUrl(url))
+	return fetch(localhostUrl(url))
 		.then(response => response?.json())
 		.catch(() => {
 			return { runtimeStatus: NodeResponseStatus.Failed }

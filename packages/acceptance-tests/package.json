@@ -1,0 +1,28 @@
+{
+	"name": "@showwhy/acceptance-tests",
+	"version": "1.0.0",
+	"description": "",
+	"scripts": {
+		"pw": "playwright test",
+		"pwdebug": "PWDEBUG=1 yarn pw",
+		"pwcodegen": "playwright codegen localhost:3000",
+		"pw_all": "yarn pw --browser=all",
+		"pw_all_ci": "NODE_CONFIG_ENV=ci yarn pw_all",
+		"pw:test": "NODE_CONFIG_ENV=test yarn pw",
+		"install:playwright_deps": "playwright install-deps && yarn playwright install",
+		"acceptance:test": "yarn test-with-app"
+	},
+	"devDependencies": {
+		"@playwright/test": "^1.15.1",
+		"@tsconfig/node14": "^1.0.1",
+		"@types/config": "^0.0.39",
+		"@types/node": "^16.10.2",
+		"config": "^3.3.6",
+		"debug": "^4.3.2",
+		"dotenv": "^10.0.0",
+		"npm-run-all": "^4.1.5",
+		"start-server-and-test": "^1.14.0",
+		"ts-node": "^10.2.1",
+		"typescript": "^4.4.3"
+	}
+}
