@@ -81,7 +81,7 @@ export const VegaSpecificationCurve: React.FC<{
 		[config, onConfigChange, data],
 	)
 	return (
-		<Container>
+		<Container data-pw="specification-curve">
 			<OutcomeEffectScatterplot
 				data={data}
 				config={config}

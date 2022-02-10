@@ -1,0 +1,11 @@
+{
+	"workers": null,
+	"headless": true,
+	"coverage": false,
+	"allProjects": false,
+	"video": null,
+	"trace": "retain-on-failure",
+	"timeout": 60000,
+	"retries": 0,
+	"url": "http://localhost:3000"
+}

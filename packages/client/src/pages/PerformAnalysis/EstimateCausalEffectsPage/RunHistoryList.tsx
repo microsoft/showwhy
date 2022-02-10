@@ -39,7 +39,7 @@ export const RunHistoryList: React.FC<{
 	}, [runHistory])
 
 	return (
-		<TableContainer>
+		<TableContainer data-pw="available-estimates-table">
 			<Title>Estimates Available</Title>
 			<Table>
 				<TableHead>
@@ -58,7 +58,7 @@ export const RunHistoryList: React.FC<{
 				<TableBody>
 					{runHistorySorted.length > 0 &&
 						runHistorySorted.map(run => (
-							<Tr key={run.runNumber}>
+							<Tr key={run.runNumber} data-pw="run">
 								<Td>{run.runNumber}</Td>
 								<Td>
 									{isStatusProcessing(

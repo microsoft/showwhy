@@ -23,7 +23,7 @@ export const ProjectsSelector: React.FC<{
 		onClickProject,
 	)
 	return (
-		<Container>
+		<Container data-pw="load">
 			<OptionsButton text="Load" menuProps={menuProps} />
 		</Container>
 	)
@@ -38,6 +38,7 @@ function useMenuProps(
 		const items: IContextualMenuItem[] = exampleProjects.map(example => ({
 			key: example.url,
 			text: example.name,
+			'data-pw': example.name.replace(/\s/g, ''),
 			onClick: () => onClickProject(example),
 		}))
 		if (loadProjectOption) {

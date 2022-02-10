@@ -108,7 +108,7 @@ export function useBusinessLogic(): {
 	const uploadProjectFiles = useCallback(
 		async (projectFiles: ProjectFile[]) => {
 			const filesData = createFormData(projectFiles)
-			return await uploadFiles(filesData)
+			return uploadFiles(filesData)
 		},
 		[],
 	)

@@ -16,7 +16,7 @@ const hypothesisOptions: IChoiceGroupOption[] = [
 	{ key: Hypothesis.Change, text: Hypothesis.Change },
 	{ key: Hypothesis.Increase, text: Hypothesis.Increase },
 	{ key: Hypothesis.Decrease, text: Hypothesis.Decrease },
-]
+].map(i => ({ ...i, 'data-pw': 'hypothesis-choice' }))
 
 export const DescribeElementsPage: React.FC = memo(
 	function DescribeElementsPage() {

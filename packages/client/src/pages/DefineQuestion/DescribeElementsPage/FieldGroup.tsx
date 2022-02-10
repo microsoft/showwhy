@@ -15,20 +15,22 @@ export const FieldGroup: React.FC<{
 	onChange: (value: Maybe<string>, type: string, field: string) => void
 }> = memo(function FieldGroup({ type, question, onChange }) {
 	return (
-		<Container>
-			<FieldTitle>{upperFirst(type)}</FieldTitle>
+		<Container data-pw="field-group">
+			<FieldTitle data-pw="field-group-title">{upperFirst(type)}</FieldTitle>
 			<ContainerFlexRow justifyContent="space-between">
 				<HalfField
 					value={question?.label}
 					onChange={(_, value) => onChange(value, type, 'label')}
 					label="Label"
 					placeholder={`Enter short label describing the ${type} of interest​`}
+					data-pw="field-group-label"
 				/>
 				<HalfField
 					value={question?.dataset}
 					onChange={(_, value) => onChange(value, type, 'dataset')}
 					label="Dataset"
 					placeholder="Dataset name"
+					data-pw="field-group-dataset"
 				/>
 			</ContainerFlexRow>
 
@@ -39,6 +41,7 @@ export const FieldGroup: React.FC<{
 				label="Description"
 				placeholder={`Enter full description of the ${type} of interest​`}
 				multiline
+				data-pw="field-group-description"
 			/>
 		</Container>
 	)
