@@ -22,13 +22,13 @@ export class UnderstandProcessPage extends Page {
 	}
 
 	public async getTitle(): Promise<string> {
-		return await this.page.locator(selectors.title).innerText()
+		return this.page.locator(selectors.title).innerText()
 	}
 
 	public async countResourceLinks(): Promise<number> {
 		await this.page.waitForSelector(selectors.resourceLink, {
 			state: 'visible',
 		})
-		return await this.page.locator(selectors.resourceLink).count()
+		return this.page.locator(selectors.resourceLink).count()
 	}
 }

@@ -4,7 +4,6 @@
  */
 
 import {
-	FileMimeType,
 	FileType,
 	createFileWithPath,
 	fetchFile,
@@ -102,11 +101,9 @@ function usePrimary(): () => Maybe<FileWithPath> {
 			file => file.tableId === primaryTable.id,
 		)
 		if (ogTables) {
-			const options = {
+			return createFileWithPath(new Blob([ogTables.table.toCSV()]), {
 				name: `subject_${primaryTable.name}`,
-				type: FileMimeType.csv,
-			}
-			return createFileWithPath(new Blob([ogTables.table.toCSV()]), options)
+			})
 		}
 	}, [primaryTable, originalTables])
 }
@@ -146,10 +143,11 @@ function useResult(type?: DownloadType): Promise<Maybe<FileWithPath>> {
 				run.isActive && run.status?.status === NodeResponseStatus.Completed,
 		)
 		if (completed) {
-			const isNotebook = type === DownloadType.jupyter
 			const options = {
-				name: isNotebook ? DownloadType.jupyter : DownloadType.csv,
-				type: isNotebook ? 'application/x-ipynb+json' : FileMimeType.csv,
+				name:
+					type === DownloadType.jupyter
+						? DownloadType.jupyter
+						: DownloadType.csv,
 			}
 			const result = await getResult(type)
 			if (result) {
@@ -175,11 +173,7 @@ function useCSVResult() {
 			let file
 			if (isDataUrl(defaultDatasetResult.url)) {
 				const f = await fetchFile(defaultDatasetResult.url)
-				const options = {
-					name: DownloadType.csv,
-					type: FileMimeType.csv,
-				}
-				file = createFileWithPath(f, options)
+				file = createFileWithPath(f, { name: DownloadType.csv })
 				url = `zip://${file.name}`
 			}
 			return {
@@ -194,14 +188,9 @@ function useRunHistoryFile(): Maybe<FileWithPath> {
 	const rh = useRunHistory()
 	return useMemo(() => {
 		if (rh?.length) {
-			const options = {
+			const file = createFileWithPath(new Blob([JSON.stringify(rh, null, 4)]), {
 				name: 'run_history.json',
-				type: FileMimeType.json,
-			}
-			const file = createFileWithPath(
-				new Blob([JSON.stringify(rh, null, 4)]),
-				options,
-			)
+			})
 			return file
 		}
 		return undefined
@@ -228,13 +217,9 @@ function useDownload(fileCollection: FileCollection) {
 			if (csv?.url) {
 				workspace.defaultResult = { url: csv.url }
 			}
-			const options = {
-				name: 'workspace_config.json',
-				type: FileMimeType.json,
-			}
 			const file = createFileWithPath(
 				new Blob([JSON.stringify(workspace, null, 4)]),
-				options,
+				{ name: 'workspace_config.json' },
 			)
 			const files = [file, primary].filter(t => !!t) as FileWithPath[]
 			if (csv?.file) {

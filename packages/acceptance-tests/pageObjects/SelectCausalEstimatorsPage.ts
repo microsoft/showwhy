@@ -51,6 +51,6 @@ export class SelectCausalEstimatorsPage extends Page {
 	}
 
 	public async clickOnRefuter(): Promise<void> {
-		return await this.page.locator(selectors.refuter).first().click()
+		return this.page.locator(selectors.refuter).first().click()
 	}
 }

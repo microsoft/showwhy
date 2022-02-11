@@ -19,9 +19,9 @@ const selectors: Record<string, string> = {
 }
 
 export class Header extends Page {
-	public open() {
-		return super.open('')
-	}
+	// public open() {
+	// 	return super.open()
+	// }
 
 	public async waitForLoad(): Promise<void> {
 		await super.waitForLoad()
@@ -70,6 +70,7 @@ export class Header extends Page {
 	}
 
 	public async getQuestion(): Promise<Locator> {
+		await this.page.waitForTimeout(1000)
 		return this.page.locator(selectors.question)
 	}
 }
