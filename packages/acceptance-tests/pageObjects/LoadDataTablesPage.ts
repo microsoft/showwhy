@@ -14,9 +14,7 @@ const selectors: Record<string, string> = {
 }
 
 export class LoadDataTablesPage extends Page {
-	public open() {
-		return super.open('#/prepare/load')
-	}
+	protected PAGE_PATH: string = '#/prepare/load'
 
 	public async waitForLoad(): Promise<void> {
 		await super.waitForLoad()

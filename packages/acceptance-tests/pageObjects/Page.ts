@@ -11,8 +11,10 @@ const selectors: Record<string, string> = {
 	body: 'body',
 }
 
-export class Page {
+export abstract class Page {
 	public constructor(private _page: PWPage) {}
+
+	protected PAGE_PATH: string = ''
 
 	protected get page() {
 		return this._page
@@ -27,7 +29,7 @@ export class Page {
 		await this.page.waitForSelector(selectors.spinners, { state: 'detached' })
 	}
 
-	protected async open(path = ''): Promise<void> {
+	protected async open(path = this.PAGE_PATH): Promise<void> {
 		this.page.goto(`${this.rootUrl}/${path}`)
 	}
 

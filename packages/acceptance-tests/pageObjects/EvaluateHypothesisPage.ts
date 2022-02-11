@@ -13,9 +13,7 @@ const selectors: Record<string, string> = {
 }
 
 export class EvaluateHypothesisPage extends Page {
-	public open() {
-		return super.open('#/perform/evaluate')
-	}
+	protected PAGE_PATH: string = '#/perform/evaluate'
 
 	public async waitForLoad(): Promise<void> {
 		await super.waitForLoad()
