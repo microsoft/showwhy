@@ -6,11 +6,9 @@
 		"pw": "playwright test",
 		"pwdebug": "PWDEBUG=1 yarn pw",
 		"pwcodegen": "playwright codegen localhost:3000",
-		"pw_all": "yarn pw --browser=all",
-		"pw_all_ci": "NODE_CONFIG_ENV=ci yarn pw_all",
-		"pw:test": "NODE_CONFIG_ENV=test yarn pw",
+		"pwall": "yarn pw --browser=all",
 		"install:playwright_deps": "playwright install-deps && yarn playwright install",
-		"acceptance:test": "yarn test-with-app"
+		"acceptance:test": "start-server-and-test 'yarn start:client' 'http-get://localhost:3000/' pw"
 	},
 	"devDependencies": {
 		"@playwright/test": "^1.15.1",
