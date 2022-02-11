@@ -19,7 +19,7 @@ const pwConfig: PlaywrightTestConfig = {
 		trace: config.get('trace') ?? undefined,
 	},
 	expect: {
-		timeout: config.get('expectTimeout') ?? 10000,
+		timeout: 10000,
 	},
 }
 
