@@ -52,7 +52,9 @@ async function validateProjectFiles(
 	return true
 }
 
-export function useHandleFiles(): AsyncHandler1<FileCollection> {
+export function useHandleFiles(
+	onError?: (msg: string) => void,
+): AsyncHandler1<FileCollection> {
 	const loadProject = useLoadProject(ProjectSource.zip)
 	return async function handleFiles(fileCollection: FileCollection) {
 		if (!fileCollection) return
@@ -62,7 +64,11 @@ export function useHandleFiles(): AsyncHandler1<FileCollection> {
 			const files = await groupFilesByType(fileCollection)
 			loadProject(undefined, files)
 		} catch (e) {
-			throw e
+			if (onError) {
+				onError((e as Error).message)
+			} else {
+				throw e
+			}
 		}
 	}
 }
@@ -83,9 +89,11 @@ export function useOnDropZipFilesAccepted(
 	)
 }
 
-export function useUploadZipMenuOption(): IContextualMenuItem {
+export function useUploadZipMenuOption(
+	onError?: (msg: string) => void,
+): IContextualMenuItem {
 	const id = useUploadZipButtonId()
-	const handleFiles = useHandleFiles()
+	const handleFiles = useHandleFiles(onError)
 	const handleClick = useHandleOnUploadClick(acceptedFileTypes, handleFiles)
 	return useMemo(() => {
 		return {

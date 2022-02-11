@@ -88,7 +88,7 @@ export function useLoadProject(
 					}))) as Workspace
 			}
 
-			const { tables = [], results } = zip as ZipData
+			const { tables = [], results, notebooks = [] } = zip as ZipData
 
 			const {
 				primarySpecification,
@@ -131,7 +131,7 @@ export function useLoadProject(
 
 			const completed = getStepUrls(workspace.todoPages, true)
 			setAllStepStatus(completed, StepStatus.Done)
-			updateCollection(workspace, tables)
+			updateCollection(workspace, tables, notebooks)
 		},
 		[
 			id,
@@ -281,7 +281,7 @@ function prepVariableDefinitions(
 function prepElement(element: Element): Element {
 	return {
 		...element,
-		definition: element.definition.map(
+		definition: element.definition?.map(
 			d =>
 				({
 					id: uuidv4(),
@@ -304,14 +304,15 @@ function prepTableColumns(columns?: Partial<TableColumn>[]): TableColumn[] {
 const useUpdateCollection = (): ((
 	workspace: Workspace,
 	tableFiles: BaseFile[],
+	notebooks: BaseFile[],
 ) => Promise<void>) => {
 	const setCollection = useSetFileCollection()
 	const fileCollection = useFileCollection().copy()
 	return useCallback(
-		async (workspace: Workspace, tableFiles = []) => {
+		async (workspace: Workspace, tableFiles = [], notebooks = []) => {
 			const { name, tables = [], defaultResult } = workspace
 			const fetched = await fetchRemoteTables(tables)
-			await fileCollection.add([...fetched, ...tableFiles])
+			await fileCollection.add([...fetched, ...tableFiles, ...notebooks])
 			if (defaultResult) {
 				const resultTable: DataTableFileDefinition = {
 					...(defaultResult || {}),

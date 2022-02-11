@@ -13,4 +13,6 @@ export interface ProjectFile {
 	id?: string
 	loadedCorrectly?: boolean
 	fileId?: string //why id and fileId?
+	// steps?: FileStep[]
+	delimiter?: string
 }

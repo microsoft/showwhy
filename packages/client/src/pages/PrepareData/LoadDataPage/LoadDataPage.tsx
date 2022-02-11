@@ -96,7 +96,7 @@ export const LoadDataPage: React.FC = memo(function LoadDataPage() {
 							onText="Yes"
 							checked={selectedFile?.loadedCorrectly || false}
 							offText="No"
-							onChange={toggleLoadedCorrectly}
+							onChange={() => toggleLoadedCorrectly()}
 						/>
 						{!selectedFile.loadedCorrectly ? (
 							<DelimiterDropdown
