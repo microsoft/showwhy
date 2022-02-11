@@ -12,10 +12,6 @@ const selectors: Record<string, string> = {
 }
 
 export class UnderstandProcessPage extends Page {
-	public open(path = '') {
-		return super.open(path)
-	}
-
 	public async waitForLoad(): Promise<void> {
 		await super.waitForLoad()
 		await this.page.waitForSelector(selectors.title, { state: 'visible' })

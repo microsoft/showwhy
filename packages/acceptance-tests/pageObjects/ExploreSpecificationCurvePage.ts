@@ -17,9 +17,7 @@ const selectors: Record<string, string | fn> = {
 }
 
 export class ExploreSpecificationCurvePage extends Page {
-	public open() {
-		return super.open('#/perform/estimate-distribution')
-	}
+	protected PAGE_PATH: string = '#/perform/estimate-distribution'
 
 	public async waitForLoad(): Promise<void> {
 		await super.waitForLoad()
