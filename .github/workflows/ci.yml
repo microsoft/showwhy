@@ -22,5 +22,5 @@ jobs:
 
       - run: yarn install
       - run: yarn ci
-      - run: install:playwright_deps
-      - run: acceptance:test
+      - run: yarn install:playwright_deps
+      - run: yarn acceptance:test

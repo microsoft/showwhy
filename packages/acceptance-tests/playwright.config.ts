@@ -18,6 +18,9 @@ const pwConfig: PlaywrightTestConfig = {
 		video: config.get('video') ?? undefined,
 		trace: config.get('trace') ?? undefined,
 	},
+	expect: {
+		timeout: 10000,
+	},
 }
 
 export default pwConfig
