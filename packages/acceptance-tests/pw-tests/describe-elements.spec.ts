@@ -19,7 +19,7 @@ test.describe('Describe Elements Page', () => {
 		await po.describeElementsPage.waitForLoad()
 	})
 
-	test.only('Describe all elements', async () => {
+	test('Describe all elements', async () => {
 		await po.describeElementsPage.enterFieldGroupData(
 			generateFieldData('Population'),
 		)
