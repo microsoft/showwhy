@@ -6,6 +6,6 @@
 	"video": null,
 	"trace": "retain-on-failure",
 	"timeout": null,
-	"retries": 0,
+	"retries": 2,
 	"url": "http://localhost:3000"
 }

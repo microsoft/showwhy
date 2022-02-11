@@ -20,10 +20,17 @@ test.describe('Evaluate Hypothesis', () => {
 		await po.evaluateHypothesisPage.waitForLoad()
 	})
 
-	test('Evaluate hypothesis', async () => {
+	test('Renders content', async () => {
 		test.setTimeout(45000)
-		await po.evaluateHypothesisPage.clickOnTestButton()
-		const isRunning = await po.evaluateHypothesisPage.isRunning()
-		await expect(isRunning).toBeTruthy()
+		const isVisible = await po.evaluateHypothesisPage.contentIsVisible()
+		await expect(isVisible).toBeTruthy()
 	})
+
+	// TODO: uncomment when there's backend support for running significance tests of projects loaded from zip
+	// test('Evaluate hypothesis', async () => {
+	// 	test.setTimeout(45000)
+	// 	await po.evaluateHypothesisPage.clickOnTestButton()
+	// 	const isRunning = await po.evaluateHypothesisPage.isRunning()
+	// 	await expect(isRunning).toBeTruthy()
+	// })
 })
