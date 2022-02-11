@@ -34,33 +34,13 @@ export class DescribeElementsPage extends Page {
 
 	public async enterFieldGroupData(fieldData: Field): Promise<void> {
 		const { type, label, dataset, description } = fieldData
-		// FIXME:
-		// const selector = (sel: string) =>
-		// 	`${selectors.group}:has-text('${type}') ${sel}`
-		// this.page.fill(selector(selectors.label), label),
-		// this.page.fill(selector(selectors.dataset), dataset),
-		// this.page.fill(selector(selectors.description), description),
-		// await this.page.screenshot({ pa:th: 'screenshot-before-promise.png', fullPage: true})
-
-		const promises = [
-			this.page.fill('#population-label', label),
-			this.page.fill('#population-dataset', dataset),
-			this.page.fill('#population-description', description),
-		]
-		await Promise.all(promises)
-
-		//FIXME:
-		// await this.page.fill(selector(selectors.label), label)
-
-		// if (dataset) {
-		// 	// promises.push(this.page.fill(selector(selectors.dataset), dataset))
-		// }
-
-		// if (description) {
-		// 	// promises.push(this.page.fill(selector(selectors.description), description))
-		// }
-
-		await this.page.pause()
+		await this.page.fill(`#${type.toLowerCase()}-label`, label),
+			await this.page.fill(`#${type.toLowerCase()}-dataset`, dataset || ``),
+			await this.page.fill(
+				`#${type.toLowerCase()}-description`,
+				description || ``,
+			),
+			await this.page.pause()
 	}
 
 	public async selectHypothesis(type: string): Promise<void> {
