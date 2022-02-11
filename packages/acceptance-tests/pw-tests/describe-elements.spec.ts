@@ -31,7 +31,6 @@ test.describe('Describe Elements Page', () => {
 		)
 		await po.describeElementsPage.selectHypothesis('Change')
 
-		//await page.screenshot({ path: './shot.png' })
 		const expected =
 			'For Population label, does Exposure label cause Outcome label to Change?'
 		const question = await po.header.getQuestion()

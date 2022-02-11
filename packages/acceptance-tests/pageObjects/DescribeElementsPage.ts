@@ -6,13 +6,18 @@
 import { Page } from './Page'
 import { dataAttr } from '../util'
 
+type fn = (type: string) => string
+
 const selectors: Record<string, string> = {
 	group: dataAttr('field-group'),
 	title: dataAttr('field-group-title'),
-	label: dataAttr('field-group-label'),
-	dataset: dataAttr('field-group-dataset'),
-	description: dataAttr('field-group-description'),
 	hypothesis: dataAttr('hypothesis-choice'),
+}
+
+const fnSelectors: Record<string, fn> = {
+	label: (type: string) => `#${type.toLowerCase()}-label`,
+	dataset: (type: string) => `#${type.toLowerCase()}-dataset`,
+	description: (type: string) => `#${type.toLowerCase()}-description`,
 }
 
 interface Field {
@@ -31,14 +36,10 @@ export class DescribeElementsPage extends Page {
 	}
 
 	public async enterFieldGroupData(fieldData: Field): Promise<void> {
-		const { type, label, dataset, description } = fieldData
-		await this.page.fill(`#${type.toLowerCase()}-label`, label),
-			await this.page.fill(`#${type.toLowerCase()}-dataset`, dataset || ``),
-			await this.page.fill(
-				`#${type.toLowerCase()}-description`,
-				description || ``,
-			),
-			await this.page.pause()
+		const { type, label, dataset = '', description = '' } = fieldData
+		await this.page.fill(fnSelectors.label(type), label)
+		await this.page.fill(fnSelectors.dataset(type), dataset)
+		await this.page.fill(fnSelectors.description(type), description)
 	}
 
 	public async selectHypothesis(type: string): Promise<void> {
