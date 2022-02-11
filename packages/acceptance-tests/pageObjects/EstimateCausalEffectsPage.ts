@@ -15,9 +15,7 @@ const selectors: Record<string, string> = {
 }
 
 export class EstimateCausalEffectsPage extends Page {
-	public open() {
-		return super.open('#/perform/effects')
-	}
+	protected PAGE_PATH: string = '#/perform/effects'
 
 	public async waitForLoad(): Promise<void> {
 		await super.waitForLoad()

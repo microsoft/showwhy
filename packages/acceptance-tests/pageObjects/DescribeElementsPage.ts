@@ -28,9 +28,7 @@ interface Field {
 }
 
 export class DescribeElementsPage extends Page {
-	public open() {
-		return super.open('#/define/elements')
-	}
+	protected PAGE_PATH: string = '#/define/elements'
 
 	public async waitForLoad(): Promise<void> {
 		await super.waitForLoad()
