@@ -19,21 +19,22 @@ test.describe('Describe Elements Page', () => {
 		await po.describeElementsPage.waitForLoad()
 	})
 
-	test('Describe all elements', async () => {
+	test.only('Describe all elements', async () => {
 		await po.describeElementsPage.enterFieldGroupData(
 			generateFieldData('Population'),
 		)
-		// TODO: uncomment this when the promise.all bug is fixed
-		// await po.describeElementsPage.enterFieldGroupData(
-		// 	generateFieldData('Exposure'),
-		// )
-		// await po.describeElementsPage.enterFieldGroupData(
-		// 	generateFieldData('Outcome'),
-		// )
+		await po.describeElementsPage.enterFieldGroupData(
+			generateFieldData('Exposure'),
+		)
+		await po.describeElementsPage.enterFieldGroupData(
+			generateFieldData('Outcome'),
+		)
 		await po.describeElementsPage.selectHypothesis('Change')
+
+		//await page.screenshot({ path: './shot.png' })
 		const expected =
 			'For Population label, does Exposure label cause Outcome label to Change?'
 		const question = await po.header.getQuestion()
-		await expect(question).toHaveText(expected)
+		expect(question).toHaveText(expected)
 	})
 })
