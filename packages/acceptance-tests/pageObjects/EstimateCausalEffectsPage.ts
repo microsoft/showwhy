@@ -41,6 +41,6 @@ export class EstimateCausalEffectsPage extends Page {
 	}
 
 	public async isRunning(): Promise<boolean> {
-		return await this.page.locator(selectors.progressBar).isVisible()
+		return this.page.locator(selectors.progressBar).isVisible()
 	}
 }

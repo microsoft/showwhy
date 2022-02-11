@@ -27,7 +27,7 @@ export class Page {
 		await this.page.waitForSelector(selectors.spinners, { state: 'detached' })
 	}
 
-	protected async open(path: string): Promise<void> {
+	protected async open(path = ''): Promise<void> {
 		this.page.goto(`${this.rootUrl}/${path}`)
 	}
 

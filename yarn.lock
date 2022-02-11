@@ -883,9 +883,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@data-wrangling-components/react@npm:^1.7.1":
-  version: 1.7.1
-  resolution: "@data-wrangling-components/react@npm:1.7.1"
+"@data-wrangling-components/react@npm:^2.1.1":
+  version: 2.1.1
+  resolution: "@data-wrangling-components/react@npm:2.1.1"
   dependencies:
     "@essex-js-toolkit/hooks": ^3.0.2
     core-js: ^3.20.2
@@ -914,19 +914,19 @@ __metadata:
     react: ^17.0.2
     react-dom: ^17.0.2
     styled-components: ^5.3.0
-  checksum: 94dae1e253062a1886e3c0056c53c01c6d56589c84bb1691a79491f08787636375d7d5f5d5279deb5443fc6c78da1d1df3a020266734629b4502873ab60a46d0
+  checksum: 229d105833fc36e7113ea2a42da8b8bec8202e6290ef71f0faae3820be81242fd020ad8d9cd0a848be4744ec309c62a48246df6684931a6eb4107d9cb5eb40db
   languageName: node
   linkType: hard
 
-"@data-wrangling-components/utilities@npm:^1.4.0":
-  version: 1.4.0
-  resolution: "@data-wrangling-components/utilities@npm:1.4.0"
+"@data-wrangling-components/utilities@npm:^1.4.1":
+  version: 1.4.1
+  resolution: "@data-wrangling-components/utilities@npm:1.4.1"
   dependencies:
     "@zip.js/zip.js": ^2.3.19
     core-js: ^3.20.2
   peerDependencies:
     arquero: ^4.8.7
-  checksum: af3d6a7c5baed16ed595264f087f2ec70abc7ecf744b2cb2a6d5989c68f55ad691b22eaaca28c3ba925efc8a3fd857ffb9a2bfc05f983fc0d6526088299a3fa3
+  checksum: d518b0c8b169544e328372be5421c83a213748f76d1533a37bf7e36e9df0708f918dc127d31004c304628ceb278032ab6f0eebc231acc67a45481b11337fd31d
   languageName: node
   linkType: hard
 
@@ -1990,8 +1990,8 @@ __metadata:
   resolution: "@showwhy/client@workspace:packages/client"
   dependencies:
     "@data-wrangling-components/core": ^1.4.0
-    "@data-wrangling-components/react": ^1.7.1
-    "@data-wrangling-components/utilities": ^1.4.0
+    "@data-wrangling-components/react": ^2.1.1
+    "@data-wrangling-components/utilities": ^1.4.1
     "@essex-js-toolkit/boolean-expression-component": ^0.1.1
     "@essex-js-toolkit/hooks": ^3.0.2
     "@essex-js-toolkit/thematic-lineup": ^1.1.7

@@ -28,6 +28,6 @@ export class EvaluateHypothesisPage extends Page {
 
 	public async isRunning(): Promise<boolean> {
 		await this.page.waitForSelector(selectors.progressBar, { state: 'visible' })
-		return await this.page.locator(selectors.progressBar).isVisible()
+		return this.page.locator(selectors.progressBar).isVisible()
 	}
 }

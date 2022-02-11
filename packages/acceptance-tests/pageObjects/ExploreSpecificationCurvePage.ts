@@ -36,7 +36,7 @@ export class ExploreSpecificationCurvePage extends Page {
 	}
 
 	public async isTextVisible(): Promise<boolean> {
-		return await this.page.locator(selectors.text).isVisible()
+		return this.page.locator(selectors.text).isVisible()
 	}
 
 	public async clickToggleButton(): Promise<void> {

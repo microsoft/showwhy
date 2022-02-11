@@ -48,7 +48,7 @@ export class ModelCausalFactorsPage extends Page {
 
 	public async countElements(): Promise<number> {
 		await this.page.waitForSelector(selectors.element, { state: 'visible' })
-		return await this.page.locator(selectors.element).count()
+		return this.page.locator(selectors.element).count()
 	}
 
 	public async goToBackToPage(): Promise<void> {

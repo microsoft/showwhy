@@ -55,6 +55,6 @@ export class DefineModelPage extends Page {
 		await this.page.waitForSelector(selectors.definitionElement, {
 			state: 'visible',
 		})
-		return await this.page.locator(selectors.definitionElement).count()
+		return this.page.locator(selectors.definitionElement).count()
 	}
 }

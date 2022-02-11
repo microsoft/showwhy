@@ -24,6 +24,7 @@ export const FieldGroup: React.FC<{
 					label="Label"
 					placeholder={`Enter short label describing the ${type} of interest​`}
 					data-pw="field-group-label"
+					id={`${type.toLowerCase()}-label`}
 				/>
 				<HalfField
 					value={question?.dataset}
@@ -31,6 +32,7 @@ export const FieldGroup: React.FC<{
 					label="Dataset"
 					placeholder="Dataset name"
 					data-pw="field-group-dataset"
+					id={`${type.toLowerCase()}-dataset`}
 				/>
 			</ContainerFlexRow>
 
@@ -42,6 +44,7 @@ export const FieldGroup: React.FC<{
 				placeholder={`Enter full description of the ${type} of interest​`}
 				multiline
 				data-pw="field-group-description"
+				id={`${type.toLowerCase()}-description`}
 			/>
 		</Container>
 	)

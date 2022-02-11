@@ -27,11 +27,11 @@ export class DefineFactorsPage extends Page {
 	}
 
 	public async goToAddNewFactor(): Promise<void> {
-		await this.page.click(selectors.addNewFactorButton)
+		return this.page.click(selectors.addNewFactorButton)
 	}
 
 	public async countElements(): Promise<number> {
 		await this.page.waitForSelector(selectors.element, { state: 'visible' })
-		return await this.page.locator(selectors.element).count()
+		return this.page.locator(selectors.element).count()
 	}
 }

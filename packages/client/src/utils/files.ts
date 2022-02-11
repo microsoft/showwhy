@@ -7,7 +7,6 @@ import {
 	FileCollection,
 	FileType,
 	BaseFile,
-	FileMimeType,
 	FileWithPath,
 	createBaseFile,
 } from '@data-wrangling-components/utilities'
@@ -74,11 +73,7 @@ export async function groupFilesByType(
 		if (isZipUrl(url)) {
 			file = tableFiles.find(f => url.includes(f.name))
 			if (file) {
-				const options = {
-					name: file.name,
-					type: FileMimeType.csv,
-				}
-				file = createBaseFile(file, options)
+				file = createBaseFile(file, { name: file.name })
 				url = await file.toDataURL()
 			}
 		}
@@ -100,10 +95,7 @@ export async function groupFilesByType(
 		}
 	}
 
-	// TODO: change this filter when dwc/utilities have support for jupiter notebooks extension
-	const notebooks: BaseFile[] = fileCollection
-		.list()
-		.filter(f => f.name.endsWith('.ipynb'))
+	const notebooks: BaseFile[] = fileCollection.list(FileType.ipynb)
 
 	if (notebooks.length > 0) {
 		filesByType['notebooks'] = notebooks
