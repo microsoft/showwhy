@@ -5,9 +5,10 @@
 
 import { Page as PWPage } from '@playwright/test'
 import config from 'config'
+import { dataAttr } from '../util'
 
 const selectors: Record<string, string> = {
-	spinners: '.waitSpinner',
+	spinners: dataAttr('wait-spinner'),
 	body: 'body',
 }
 
@@ -29,7 +30,7 @@ export abstract class Page {
 		await this.page.waitForSelector(selectors.spinners, { state: 'detached' })
 	}
 
-	protected async open(path = this.PAGE_PATH): Promise<void> {
+	public async open(path = this.PAGE_PATH): Promise<void> {
 		this.page.goto(`${this.rootUrl}/${path}`)
 	}
 

@@ -7,7 +7,7 @@
 		"pwdebug": "PWDEBUG=1 yarn pw",
 		"pwcodegen": "playwright codegen localhost:3000",
 		"pwall": "yarn pw --browser=all",
-		"ci": "NODE_CONFIG_ENV=ci",
+		"node:ci": "NODE_ENV=ci",
 		"install:playwright_deps": "playwright install-deps && yarn playwright install",
 		"acceptance:test": "start-server-and-test 'yarn start:client' 'http-get://localhost:3000/' pw"
 	},
