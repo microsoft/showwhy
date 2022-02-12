@@ -5,7 +5,7 @@
 	"allProjects": false,
 	"video": null,
 	"trace": "retain-on-failure",
-	"timeout": null,
+	"timeout": 60000,
 	"retries": 2,
 	"url": "http://localhost:3000"
 }

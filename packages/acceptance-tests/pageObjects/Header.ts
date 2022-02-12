@@ -19,10 +19,6 @@ const selectors: Record<string, string> = {
 }
 
 export class Header extends Page {
-	// public open() {
-	// 	return super.open()
-	// }
-
 	public async waitForLoad(): Promise<void> {
 		await super.waitForLoad()
 		await this.page.waitForSelector(selectors.title, { state: 'visible' })

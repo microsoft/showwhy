@@ -81,7 +81,9 @@ export const Layout: React.FC = memo(function Layout({ children }) {
 									{error}
 								</MessageContainer>
 							) : null}
-							<Suspense fallback={<StyledSpinner />}>{children}</Suspense>
+							<Suspense fallback={<StyledSpinner data-pw="wait-spinner" />}>
+								{children}
+							</Suspense>
 						</ChildrenContainer>
 						<StepControls
 							step={step}
