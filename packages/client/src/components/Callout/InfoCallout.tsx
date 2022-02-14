@@ -20,7 +20,7 @@ export const InfoCallout: React.FC<{
 	const [isVisible, { toggle: handleToggleVisible }] = useBoolean(false)
 
 	return (
-		<>
+		<Container data-pw="callout-info">
 			<Icon
 				alignSelf={alignSelf}
 				id={id}
@@ -39,9 +39,11 @@ export const InfoCallout: React.FC<{
 					{children}
 				</CalloutInfo>
 			)}
-		</>
+		</Container>
 	)
 })
+
+const Container = styled.div``
 
 const Icon = styled(IconButton)<{ alignSelf: string }>`
 	align-self: ${({ alignSelf }) => alignSelf};

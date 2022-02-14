@@ -15,7 +15,7 @@ export const CausalQuestion: React.FC<{
 	const hypothesis = defineQuestion.hypothesis || '<hypothesis>'
 
 	return (
-		<Title>
+		<Title data-pw="question">
 			For {population}, does {exposure} cause {outcome} to {hypothesis}?
 		</Title>
 	)

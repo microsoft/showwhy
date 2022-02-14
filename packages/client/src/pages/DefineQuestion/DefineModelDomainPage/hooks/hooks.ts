@@ -101,7 +101,7 @@ export function useBusinessLogic(): {
 function useItemList(definitions: ElementDefinition[]): Item[] {
 	return useMemo(() => {
 		return definitions?.map(x => {
-			const newObj = { ...x }
+			const newObj = { ...x, dataPw: 'definition-element' }
 			delete newObj.column
 			return newObj
 		})

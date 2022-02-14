@@ -59,7 +59,7 @@ export const EvaluateHypothesisPage: React.FC = memo(
 		}
 
 		return (
-			<ContainerFlexColumn>
+			<ContainerFlexColumn data-pw="evaluate-hypothesis-content">
 				<Container>
 					<CausalQuestion defineQuestion={defineQuestion} />
 				</Container>

@@ -36,8 +36,8 @@ export const FactorsDefinitionForm: React.FC<{
 	})
 
 	return (
-		<Container showLevel={!!showLevel}>
-			{showLevel ? level : null}
+		<Container showLevel={!!showLevel} data-pw="factors-form">
+			{showLevel ? <div data-pw="factors-form-is-primary">{level}</div> : null}
 			{variable}
 			{description}
 		</Container>

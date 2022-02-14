@@ -19,7 +19,7 @@ export const DefinitionList: React.FC<{
 	const { itemList } = useDefinitionList(list, onClick, type, tableId, onUpdate)
 
 	return (
-		<Container>
+		<Container data-pw="definition-list">
 			<GenericTableComponent
 				items={itemList}
 				props={{ styles: { width: '45%' } }}

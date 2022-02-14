@@ -15,7 +15,10 @@ export const RefutationTests: React.FC<{
 		<Container>
 			{options.map(option => (
 				<CardComponent key={option.key}>
-					<RefutationOption onClick={option.onChange}>
+					<RefutationOption
+						onClick={option.onChange}
+						data-pw={`${option.isSelected ? 'selected-' : ''}refuter`}
+					>
 						<Title>
 							<Icon iconName={`RadioBtn${option.isSelected ? 'On' : 'Off'}`} />
 							{option.title}

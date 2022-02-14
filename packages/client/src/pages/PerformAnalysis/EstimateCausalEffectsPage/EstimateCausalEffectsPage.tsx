@@ -43,6 +43,7 @@ export const EstimateCausalEffects: React.FC = memo(
 					<Button
 						disabled={isProcessing || !totalEstimatorsCount || !specCount}
 						onClick={runEstimate}
+						data-pw="run-estimate-button"
 					>
 						{isProcessing ? 'Loading...' : 'Run now'}
 					</Button>

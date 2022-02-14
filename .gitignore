@@ -4,6 +4,7 @@ dist/
 out/
 lib/
 coverage/
+test-results/
 
 # exclude any csv from client public data folder
 packages/client/public/data/*/*.csv

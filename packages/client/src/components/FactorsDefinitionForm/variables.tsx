@@ -64,10 +64,15 @@ export function useDescriptionBox(
 					placeholder="Enter description"
 					multiline={(description?.length || 0) > 70}
 					resizable={false}
+					data-pw="factors-form-description"
 				/>
 				{!factor ? (
 					<ButtonContainer>
-						<AddButton disabled={!variable?.length} onClick={add}>
+						<AddButton
+							disabled={!variable?.length}
+							onClick={add}
+							data-pw="factors-form-add-button"
+						>
 							Add
 						</AddButton>
 					</ButtonContainer>
