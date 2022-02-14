@@ -34,7 +34,11 @@ export const EstimatorCard: React.FC<{
 	return (
 		<CardComponent>
 			<Container>
-				<SelectorContainer isChecked={!!isCardChecked} onClick={onCardClick}>
+				<SelectorContainer
+					isChecked={!!isCardChecked}
+					onClick={onCardClick}
+					data-pw="estimator-group-selector"
+				>
 					<FontIcon iconName="CheckMark" />
 				</SelectorContainer>
 				<Div>
@@ -45,7 +49,11 @@ export const EstimatorCard: React.FC<{
 					<Stack>
 						{list.map((item, i) => {
 							return (
-								<CheckBoxWrapper key={item.type} isChecked={item.isChecked}>
+								<CheckBoxWrapper
+									key={item.type}
+									isChecked={item.isChecked}
+									data-pw={item.isChecked ? 'selected-estimator' : 'estimator'}
+								>
 									<Checkbox checked={item.isChecked} onChange={item.onChange} />
 									<LinkCallout title={item.type} id={`estimator-card-${i}`}>
 										{item.description}

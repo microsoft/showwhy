@@ -4,7 +4,6 @@
  */
 
 import {
-	FileMimeType,
 	FileType,
 	createFileWithPath,
 	fetchFile,
@@ -102,11 +101,9 @@ function usePrimary(): () => Maybe<FileWithPath> {
 			file => file.tableId === primaryTable.id,
 		)
 		if (ogTables) {
-			const options = {
+			return createFileWithPath(new Blob([ogTables.table.toCSV()]), {
 				name: `subject_${primaryTable.name}`,
-				type: FileMimeType.csv,
-			}
-			return createFileWithPath(new Blob([ogTables.table.toCSV()]), options)
+			})
 		}
 	}, [primaryTable, originalTables])
 }
@@ -146,10 +143,11 @@ function useResult(type?: DownloadType): Promise<Maybe<FileWithPath>> {
 				run.isActive && run.status?.status === NodeResponseStatus.Completed,
 		)
 		if (completed) {
-			const isNotebook = type === DownloadType.jupyter
 			const options = {
-				name: isNotebook ? DownloadType.jupyter : DownloadType.csv,
-				type: isNotebook ? 'application/x-ipynb+json' : FileMimeType.csv,
+				name:
+					type === DownloadType.jupyter
+						? DownloadType.jupyter
+						: DownloadType.csv,
 			}
 			const result = await getResult(type)
 			if (result) {
@@ -175,11 +173,7 @@ function useCSVResult() {
 			let file
 			if (isDataUrl(defaultDatasetResult.url)) {
 				const f = await fetchFile(defaultDatasetResult.url)
-				const options = {
-					name: DownloadType.csv,
-					type: FileMimeType.csv,
-				}
-				file = createFileWithPath(f, options)
+				file = createFileWithPath(f, { name: DownloadType.csv })
 				url = `zip://${file.name}`
 			}
 			return {
@@ -190,11 +184,25 @@ function useCSVResult() {
 	}, [defaultDatasetResult, csvResult])
 }
 
+function useRunHistoryFile(): Maybe<FileWithPath> {
+	const rh = useRunHistory()
+	return useMemo(() => {
+		if (rh?.length) {
+			const file = createFileWithPath(new Blob([JSON.stringify(rh, null, 4)]), {
+				name: 'run_history.json',
+			})
+			return file
+		}
+		return undefined
+	}, [rh])
+}
+
 function useDownload(fileCollection: FileCollection) {
 	const csvResult = useCSVResult()
 	const getPrimary = usePrimary()
 	const getTables = useTables(fileCollection)
 	const notebookResult = useResult(DownloadType.jupyter)
+	const runHistoryFile = useRunHistoryFile()
 	return useCallback(
 		async (workspace: Partial<Workspace>) => {
 			const primary = getPrimary()
@@ -209,13 +217,9 @@ function useDownload(fileCollection: FileCollection) {
 			if (csv?.url) {
 				workspace.defaultResult = { url: csv.url }
 			}
-			const options = {
-				name: 'workspace_config.json',
-				type: 'application/json',
-			}
 			const file = createFileWithPath(
 				new Blob([JSON.stringify(workspace, null, 4)]),
-				options,
+				{ name: 'workspace_config.json' },
 			)
 			const files = [file, primary].filter(t => !!t) as FileWithPath[]
 			if (csv?.file) {
@@ -224,11 +228,21 @@ function useDownload(fileCollection: FileCollection) {
 			if (notebook) {
 				files.push(notebook)
 			}
+			if (runHistoryFile) {
+				files.push(runHistoryFile)
+			}
 			const copy = fileCollection.copy()
 			/* eslint-disable @essex/adjacent-await */
 			await copy.add(files)
 			await copy.toZip()
 		},
-		[fileCollection, csvResult, getTables, getPrimary, notebookResult],
+		[
+			fileCollection,
+			csvResult,
+			getTables,
+			getPrimary,
+			notebookResult,
+			runHistoryFile,
+		],
 	)
 }

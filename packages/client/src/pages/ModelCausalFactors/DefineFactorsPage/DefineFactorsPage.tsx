@@ -16,14 +16,17 @@ export const DefineFactorsPage: React.FC = memo(function DefineFactorsPage() {
 	return (
 		<Container>
 			<Container>
-				<FieldTitle>
+				<FieldTitle data-pw="title">
 					Factors assumed to {pageName.includes('caused') ? 'be ' : null}{' '}
 					{pageName}
 				</FieldTitle>
 				<FactorsTable causeType={causeType} headers={tableHeader} />
 			</Container>
 			<ButtonContainer>
-				<ButtonAdd onClick={goToConsiderCausalFactors}>
+				<ButtonAdd
+					onClick={goToConsiderCausalFactors}
+					data-pw="add-new-factor-button"
+				>
 					Add new factor
 				</ButtonAdd>
 			</ButtonContainer>

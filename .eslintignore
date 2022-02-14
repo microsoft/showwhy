@@ -10,3 +10,4 @@ public/
 .cache/
 node_modules/
 venv/
+packages/acceptance-tests/

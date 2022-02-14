@@ -124,13 +124,16 @@ export const returnStatus = (
 
 	let percentage = 100
 	const totalResults = status?.total_results ?? 0
-	const totalRefuters = returnRefutationCount(totalResults, refutersLength)
+	const refuteCompleted = returnRefutationCount(
+		status?.refute_completed ?? 0,
+		refutersLength,
+	)
 
 	status.total_results = totalResults
 	status.estimated_effect_completed = status?.estimated_effect_completed ?? 0
 	status.confidence_interval_completed =
 		status?.confidence_interval_completed ?? 0
-	status.refute_completed = status?.refute_completed ?? 0
+	status.refute_completed = refuteCompleted
 
 	if (
 		!matchStatus(
@@ -159,7 +162,7 @@ export const returnStatus = (
 			NodeResponseStatus.Completed,
 		)
 	) {
-		percentage = returnPercentage(status?.refute_completed, totalRefuters)
+		percentage = returnPercentage(status?.refute_completed, totalResults)
 	}
 
 	const st = {
@@ -174,21 +177,20 @@ export const returnStatus = (
 	if (totalResults) {
 		st.estimated_effect_completed = `${status.estimated_effect_completed}/${status.total_results}`
 		st.confidence_interval_completed = `${status.confidence_interval_completed}/${status.total_results}`
-		st.refute_completed = `${status?.refute_completed}/${totalRefuters}`
+		st.refute_completed = `${status?.refute_completed}/${totalResults}`
 	}
 	return st
 }
 
 export function returnRefutationCount(
-	estimatesCount: number,
+	refutationCount: number,
 	refutationLength: number,
 ): number {
-	return estimatesCount * refutationLength
+	return Math.floor(refutationCount / refutationLength)
 }
 
 export function returnInitialRunHistory(
 	specCount: number,
-	totalRefuters: number,
 	hasConfidenceInterval: boolean,
 	refutationType: RefutationType,
 	runHistoryLength: number,
@@ -201,7 +203,7 @@ export function returnInitialRunHistory(
 			status: NodeResponseStatus.Running,
 			estimated_effect_completed: `0/${specCount}`,
 			confidence_interval_completed: `0/${specCount}`,
-			refute_completed: `0/${totalRefuters}`,
+			refute_completed: `0/${specCount}`,
 			percentage: 0,
 			time: {
 				start: new Date(),

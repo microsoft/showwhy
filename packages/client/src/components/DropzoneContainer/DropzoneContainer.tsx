@@ -37,31 +37,38 @@ export const DropzoneContainer: FC<{
 	const contentText = useContentText(text, hasSelectedFiles)
 
 	return (
-		<Dropzone
-			placeholder={text}
-			onDrop={onDrop}
-			onDropAccepted={onDropAccepted}
-			onDropRejected={onDropRejected}
-			acceptedFileTypes={acceptedFileTypes}
-			styles={styles}
-			dropzoneOptions={dropzoneOptions}
-		>
-			{loading ? (
-				<>
-					<Spinner />
+		<Container data-pw="dropzone">
+			<Dropzone
+				placeholder={text}
+				onDrop={onDrop}
+				onDropAccepted={onDropAccepted}
+				onDropRejected={onDropRejected}
+				acceptedFileTypes={acceptedFileTypes}
+				styles={styles}
+				dropzoneOptions={dropzoneOptions}
+			>
+				{loading ? (
+					<>
+						<Spinner />
+						<Text>
+							Loading ({filesCount.completed}/{filesCount.total})
+						</Text>
+					</>
+				) : (
 					<Text>
-						Loading ({filesCount.completed}/{filesCount.total})
+						<FluentIcon iconName="Upload" />
+						{contentText}
 					</Text>
-				</>
-			) : (
-				<Text>
-					<FluentIcon iconName="Upload" />
-					{contentText}
-				</Text>
-			)}
-		</Dropzone>
+				)}
+			</Dropzone>
+		</Container>
 	)
 })
+
+const Container = styled.div`
+	height: 100%;
+	margin: 1rem;
+`
 
 const Text = styled.span`
 	margin-left: 4px;

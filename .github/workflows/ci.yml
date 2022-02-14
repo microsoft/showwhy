@@ -7,6 +7,8 @@ jobs:
     strategy:
       matrix:
         node-version: [14.x, 16.x]
+    env:
+      CI: true
 
     steps:
       - uses: actions/checkout@v2
@@ -19,9 +21,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - run: yarn install
-        name: Install Dependencies
-
       - run: yarn ci
-        name: Execute Tests
-        env:
-          CI: true
+      - run: yarn install:playwright_deps
+      - run: yarn node:ci
+      - run: yarn acceptance:test
