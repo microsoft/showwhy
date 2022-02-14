@@ -12,6 +12,11 @@ const selectors: Record<string, string> = {
 	run: dataAttr('run'),
 	progressBar: dataAttr('progress-bar'),
 	runEstimateButton: dataAttr('run-estimate-button'),
+	populationSpec: dataAttr('specification-population'),
+	exposureSpec: dataAttr('specification-exposure'),
+	outcomeSpec: dataAttr('specification-outcome'),
+	causalModelsSpec: dataAttr('specification-causal-models'),
+	estimatorsSpec: dataAttr('specification-estimators'),
 }
 
 export class EstimateCausalEffectsPage extends Page {
@@ -34,11 +39,23 @@ export class EstimateCausalEffectsPage extends Page {
 		return (await this.getRun()).count()
 	}
 
-	public async runEstimate(): Promise<void> {
-		await this.page.locator(selectors.runEstimateButton).first().click()
+	public async getPopulationSpec(): Promise<Locator> {
+		return this.page.locator(selectors.populationSpec)
 	}
 
-	public async isRunning(): Promise<boolean> {
-		return this.page.locator(selectors.progressBar).isVisible()
+	public async getOutcomeSpec(): Promise<Locator> {
+		return this.page.locator(selectors.outcomeSpec)
+	}
+
+	public async getExposureSpec(): Promise<Locator> {
+		return this.page.locator(selectors.exposureSpec)
+	}
+
+	public async getCausalModelsSpec(): Promise<Locator> {
+		return this.page.locator(selectors.causalModelsSpec)
+	}
+
+	public async getEstimatorsSpec(): Promise<Locator> {
+		return this.page.locator(selectors.estimatorsSpec)
 	}
 }

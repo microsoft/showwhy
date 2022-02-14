@@ -24,9 +24,17 @@ test.describe('Estimate Causal Effects', () => {
 		await expect(count).toEqual(2)
 	})
 
-	test('Click on run estimate', async () => {
-		await po.estimateCausalEffectsPage.runEstimate()
-		const isRunning = await po.estimateCausalEffectsPage.isRunning()
-		await expect(isRunning).toBeTruthy()
+	test('Load specifications', async () => {
+		const population = await po.estimateCausalEffectsPage.getPopulationSpec()
+		const exposure = await po.estimateCausalEffectsPage.getExposureSpec()
+		const outcome = await po.estimateCausalEffectsPage.getOutcomeSpec()
+		const causalModels =
+			await po.estimateCausalEffectsPage.getCausalModelsSpec()
+		const estimators = await po.estimateCausalEffectsPage.getEstimatorsSpec()
+		await expect(population).toContainText('1 population definition')
+		await expect(exposure).toContainText('2 exposure definitions')
+		await expect(outcome).toContainText('1 outcome definition')
+		await expect(causalModels).toContainText('3 causal models')
+		await expect(estimators).toContainText('5 estimator configurations')
 	})
 })
