@@ -2,7 +2,8 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { memo } from 'react'
+import Markdown from 'markdown-to-jsx'
+import { memo, useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { StepTitle } from '~components/StepTitle'
 import { Step, Maybe } from '~types'
@@ -11,14 +12,32 @@ export const Guidance: React.FC<{
 	isVisible: Maybe<boolean>
 	step?: Step
 }> = memo(function Instructions({ isVisible, step }) {
+	const [markdown, setMarkdown] = useState('')
+
+	useEffect(() => {
+		setMarkdown('')
+		if (step?.markdownPath) {
+			import(`../../markdown/${step.markdownPath}`)
+				.then(md => {
+					setMarkdown(md.default)
+				})
+				.catch(console.error)
+		}
+	}, [step])
 	return isVisible ? (
 		<>
 			<TitleContainer>
 				<StepTitle title="Guidance" />
 			</TitleContainer>
-			<GuidanceText
-				dangerouslySetInnerHTML={{ __html: step?.guidance || '' }}
-			/>
+			{markdown ? (
+				<GuidanceText>
+					<Markdown>{markdown}</Markdown>
+				</GuidanceText>
+			) : (
+				<GuidanceText
+					dangerouslySetInnerHTML={{ __html: step?.guidance || '' }}
+				/>
+			)}
 		</>
 	) : null
 })

@@ -9,7 +9,8 @@ import { StepStatus } from './StepStatus'
 export interface Step {
 	id: string
 	title: string
-	guidance: string
+	guidance?: string
+	markdownPath?: string
 	status: StepStatus
 	url: string
 	showStatus?: boolean
