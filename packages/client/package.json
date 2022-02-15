@@ -65,6 +65,7 @@
 		"react-router-dom": "^5.3.0",
 		"react-xarrows": "^2.0.2",
 		"recoil": "^0.6.1",
+		"rxjs": "^7.5.4",
 		"styled-components": "^5.3.3",
 		"uuid": "^8.3.2",
 		"vega": "5.15.0"

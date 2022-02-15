@@ -13,11 +13,16 @@ import {
 	useSetRecoilState,
 } from 'recoil'
 import { ProjectFile } from '~types'
+import { observableEffect } from './effects/observableEffect'
+import { Subject } from 'rxjs'
 
-const filesState = atom<ProjectFile[]>({
+export const filesStateChanged = new Subject<void>()
+
+export const filesState = atom<ProjectFile[]>({
 	key: 'files',
 	default: [],
 	dangerouslyAllowMutability: true,
+	effects: [observableEffect(filesStateChanged)],
 })
 
 export function useProjectFiles(): ProjectFile[] {
