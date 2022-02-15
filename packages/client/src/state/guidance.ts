@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { atom, useRecoilValue, useRecoilState } from 'recoil'
+import { atom, useRecoilValue, useRecoilState, SetterOrUpdater } from 'recoil'
 
 const SHOW_GUIDANCE_LS_KEY = 'showwhy:show_guidance'
 
@@ -28,7 +28,7 @@ export const guidanceState = atom<boolean>({
 	],
 })
 
-export function useGuidanceState() {
+export function useGuidanceState(): [boolean, SetterOrUpdater<boolean>] {
 	return useRecoilState(guidanceState)
 }
 
