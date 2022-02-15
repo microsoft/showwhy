@@ -7,12 +7,17 @@ import {
 	SetterOrUpdater,
 	useRecoilValue,
 	useSetRecoilState,
+	useRecoilState,
 } from 'recoil'
 
 export const guidanceState = atom<boolean>({
 	key: 'guidance',
 	default: true,
 })
+
+export function useGuidanceState() {
+	return useRecoilState(guidanceState)
+}
 
 export function useGuidance(): boolean {
 	return useRecoilValue(guidanceState)
