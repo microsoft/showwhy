@@ -23,5 +23,6 @@ jobs:
       - run: yarn install
       - run: yarn ci
       - run: yarn install:playwright_deps
-      - run: yarn node:ci
       - run: yarn acceptance:test
+        env:
+          NODE_CONFIG_ENV: ci
