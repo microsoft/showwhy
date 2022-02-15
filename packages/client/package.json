@@ -56,6 +56,7 @@
 		"jsonpath-plus": "^6.0.1",
 		"lineupjs": "3.3.1",
 		"lodash": "^4.17.21",
+		"markdown-to-jsx": "^7.1.6",
 		"office-ui-fabric-react": "^7.182.0",
 		"react": "^17.0.2",
 		"react-animate-height": "^2.0.23",

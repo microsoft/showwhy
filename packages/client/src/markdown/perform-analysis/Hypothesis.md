@@ -1,0 +1,3 @@
+ShowWhy provides a short summary of your current analysis, along with the result of a statistical significance test performed on your final set of specifications that you selected from the previous page. The test considers the null hypothesis that the exposure has no effect on the outcome. It then computes the median effect size of all estimates in the final specification curve, and determines how inconsistent this result with the null hypothesis.
+
+If you have not done so, please consider running the analysis with the Full Refutation mode to obtain a more valid refutation results before making further inferences.

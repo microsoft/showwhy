@@ -1,0 +1,5 @@
+ShowWhy follows best practices in real-world evidence development pioneered in the medical domain. By emulating the process of designing and performing a randomized control trial, as described in [“Ten Rules for Conducting Retrospective Pharmacoepidemiological Analyses: Example COVID-19 Study”](https://www.frontiersin.org/articles/10.3389/fphar.2021.700776/full"), ShowWhy guides the user through the rigorous process of obtaining the highest quality evidence that can be derived from observational data.​
+
+Behind the scenes, ShowWhy generates auditable reports of the causal inference process, including Python notebooks using the causal inference libraries DoWhy and EconML. These can be independently reviewed and validated by causal inference experts as needed or used by data scientists to learn causal inference grounded in real data and questions.
+
+Please note that the current version of ShowWhy only supports causal inference with _binary_ exposures using [conditioning-based methods](https://causalinference.gitlab.io/kdd-tutorial/methods.html). We plan to provide support for categorical and continuous exposures in future releases.
