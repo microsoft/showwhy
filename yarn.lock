@@ -2021,7 +2021,6 @@ __metadata:
     "@types/d3-shape": ^3.0.2
     "@types/jest": ^27.4.0
     "@types/lodash": ^4.14.178
-    "@types/node": ^14.18.5
     "@types/react": ^17.0.38
     "@types/react-dom": ^17.0.11
     "@types/react-is": ^17.0.3
@@ -2042,12 +2041,14 @@ __metadata:
     d3-selection: ^3.0.0
     d3-shape: ^3.0.1
     file-loader: ^6.2.0
+    front-matter: ^4.0.2
     graphql: ^15.8.0
     history: ^5.2.0
     jest: ^27.4.7
     jsonpath-plus: ^6.0.1
     lineupjs: 3.3.1
     lodash: ^4.17.21
+    markdown-to-jsx: ^7.1.6
     office-ui-fabric-react: ^7.180.3
     react: ^17.0.2
     react-animate-height: ^2.0.23
@@ -2063,6 +2064,7 @@ __metadata:
     uuid: ^8.3.2
     vega: 5.15.0
     vite: ^2.7.12
+    vite-plugin-markdown: ^2.0.2
   languageName: unknown
   linkType: soft
 
@@ -2852,13 +2854,6 @@ __metadata:
   version: 12.20.43
   resolution: "@types/node@npm:12.20.43"
   checksum: 8d0d6cfdfcdb54b6d0bbae82b2754535b886e16ca461e305c13bc43cdab52d2ed894bd1d932f0e9be272d8b8c13b14bbb9f61a47d559465a50615700c33dfe8f
-  languageName: node
-  linkType: hard
-
-"@types/node@npm:^14.18.5":
-  version: 14.18.10
-  resolution: "@types/node@npm:14.18.10"
-  checksum: e722eec37be85dd7dddc4cfd26c501c66f1f2a7e0f603f57ff925348e65a5db603b06363fa27489cbecff44f0ae59812f22509923c4c45ffa5958604cc002401
   languageName: node
   linkType: hard
 
@@ -5126,12 +5121,50 @@ __metadata:
   languageName: node
   linkType: hard
 
+"dom-serializer@npm:^1.0.1":
+  version: 1.3.2
+  resolution: "dom-serializer@npm:1.3.2"
+  dependencies:
+    domelementtype: ^2.0.1
+    domhandler: ^4.2.0
+    entities: ^2.0.0
+  checksum: bff48714944d67b160db71ba244fb0f3fe72e77ef2ec8414e2eeb56f2d926e404a13456b8b83a5392e217ba47dec2ec0c368801b31481813e94d185276c3e964
+  languageName: node
+  linkType: hard
+
+"domelementtype@npm:^2.0.1, domelementtype@npm:^2.2.0":
+  version: 2.2.0
+  resolution: "domelementtype@npm:2.2.0"
+  checksum: 24cb386198640cd58aa36f8c987f2ea61859929106d06ffcc8f547e70cb2ed82a6dc56dcb8252b21fba1f1ea07df6e4356d60bfe57f77114ca1aed6828362629
+  languageName: node
+  linkType: hard
+
 "domexception@npm:^2.0.1":
   version: 2.0.1
   resolution: "domexception@npm:2.0.1"
   dependencies:
     webidl-conversions: ^5.0.0
   checksum: d638e9cb05c52999f1b2eb87c374b03311ea5b1d69c2f875bc92da73e17db60c12142b45c950228642ff7f845c536b65305483350d080df59003a653da80b691
+  languageName: node
+  linkType: hard
+
+"domhandler@npm:^4.0.0, domhandler@npm:^4.2.0":
+  version: 4.3.0
+  resolution: "domhandler@npm:4.3.0"
+  dependencies:
+    domelementtype: ^2.2.0
+  checksum: d2a2dbf40dd99abf936b65ad83c6b530afdb3605a87cad37a11b5d9220e68423ebef1b86c89e0f6d93ffaf315cc327cf1a988652e7a9a95cce539e3984f4c64d
+  languageName: node
+  linkType: hard
+
+"domutils@npm:^2.5.2":
+  version: 2.8.0
+  resolution: "domutils@npm:2.8.0"
+  dependencies:
+    dom-serializer: ^1.0.1
+    domelementtype: ^2.2.0
+    domhandler: ^4.2.0
+  checksum: abf7434315283e9aadc2a24bac0e00eab07ae4313b40cc239f89d84d7315ebdfd2fb1b5bf750a96bc1b4403d7237c7b2ebf60459be394d625ead4ca89b934391
   languageName: node
   linkType: hard
 
@@ -5208,6 +5241,20 @@ __metadata:
   dependencies:
     ansi-colors: ^4.1.1
   checksum: 1c0911e14a6f8d26721c91e01db06092a5f7675159f0261d69c403396a385afd13dd76825e7678f66daffa930cfaa8d45f506fb35f818a2788463d022af1b884
+  languageName: node
+  linkType: hard
+
+"entities@npm:^2.0.0":
+  version: 2.2.0
+  resolution: "entities@npm:2.2.0"
+  checksum: 19010dacaf0912c895ea262b4f6128574f9ccf8d4b3b65c7e8334ad0079b3706376360e28d8843ff50a78aabcb8f08f0a32dbfacdc77e47ed77ca08b713669b3
+  languageName: node
+  linkType: hard
+
+"entities@npm:~2.1.0":
+  version: 2.1.0
+  resolution: "entities@npm:2.1.0"
+  checksum: a10a877e489586a3f6a691fe49bf3fc4e58f06c8e80522f08214a5150ba457e7017b447d4913a3fa041bda06ee4c92517baa4d8d75373eaa79369e9639225ffd
   languageName: node
   linkType: hard
 
@@ -6214,6 +6261,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"front-matter@npm:^4.0.0, front-matter@npm:^4.0.2":
+  version: 4.0.2
+  resolution: "front-matter@npm:4.0.2"
+  dependencies:
+    js-yaml: ^3.13.1
+  checksum: a5b4c36d75a820301ebf31db0f677332d189c4561903ab6853eaa0504b43634f98557dbf87752e09043dbd2c9dcc14b4bcf9151cb319c8ad7e26edb203c0cd23
+  languageName: node
+  linkType: hard
+
 "fs-constants@npm:^1.0.0":
   version: 1.0.0
   resolution: "fs-constants@npm:1.0.0"
@@ -6568,6 +6624,18 @@ __metadata:
   version: 2.0.2
   resolution: "html-escaper@npm:2.0.2"
   checksum: d2df2da3ad40ca9ee3a39c5cc6475ef67c8f83c234475f24d8e9ce0dc80a2c82df8e1d6fa78ddd1e9022a586ea1bd247a615e80a5cd9273d90111ddda7d9e974
+  languageName: node
+  linkType: hard
+
+"htmlparser2@npm:^6.0.0":
+  version: 6.1.0
+  resolution: "htmlparser2@npm:6.1.0"
+  dependencies:
+    domelementtype: ^2.0.1
+    domhandler: ^4.0.0
+    domutils: ^2.5.2
+    entities: ^2.0.0
+  checksum: 81a7b3d9c3bb9acb568a02fc9b1b81ffbfa55eae7f1c41ae0bf840006d1dbf54cb3aa245b2553e2c94db674840a9f0fdad7027c9a9d01a062065314039058c4e
   languageName: node
   linkType: hard
 
@@ -7862,6 +7930,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"linkify-it@npm:^3.0.1":
+  version: 3.0.3
+  resolution: "linkify-it@npm:3.0.3"
+  dependencies:
+    uc.micro: ^1.0.1
+  checksum: 31367a4bb70c5bbc9703246236b504b0a8e049bcd4e0de4291fa50f0ebdebf235b5eb54db6493cb0b1319357c6eeafc4324c9f4aa34b0b943d9f2e11a1268fbc
+  languageName: node
+  linkType: hard
+
 "lint-staged@npm:^11.2.6":
   version: 11.2.6
   resolution: "lint-staged@npm:11.2.6"
@@ -8154,12 +8231,43 @@ __metadata:
   languageName: node
   linkType: hard
 
+"markdown-it@npm:^12.0.0":
+  version: 12.3.2
+  resolution: "markdown-it@npm:12.3.2"
+  dependencies:
+    argparse: ^2.0.1
+    entities: ~2.1.0
+    linkify-it: ^3.0.1
+    mdurl: ^1.0.1
+    uc.micro: ^1.0.5
+  bin:
+    markdown-it: bin/markdown-it.js
+  checksum: 890555711c1c00fa03b936ca2b213001a3b9b37dea140d8445ae4130ce16628392aad24b12e2a0a9935336ca5951f2957a38f4e5309a2e38eab44e25ff32a41e
+  languageName: node
+  linkType: hard
+
+"markdown-to-jsx@npm:^7.1.6":
+  version: 7.1.6
+  resolution: "markdown-to-jsx@npm:7.1.6"
+  peerDependencies:
+    react: ">= 0.14.0"
+  checksum: f7d8375f9871f228f2d0a06055f1d01f82c57cbd93fde2b9cb24ccebde741b9ebc0f4b8c52239f7b192c72e7f587cca4d3e752b731539be1936b3290470d119c
+  languageName: node
+  linkType: hard
+
 "marked@npm:^4.0.10":
   version: 4.0.12
   resolution: "marked@npm:4.0.12"
   bin:
     marked: bin/marked.js
   checksum: 7575117f85a8986652f3ac8b8a7b95056c4c5fce01a1fc76dc4c7960412cb4c9bd9da8133487159b6b3ff84f52b543dfe9a36f826a5f358892b5ec4b6824f192
+  languageName: node
+  linkType: hard
+
+"mdurl@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "mdurl@npm:1.0.1"
+  checksum: 71731ecba943926bfbf9f9b51e28b5945f9411c4eda80894221b47cc105afa43ba2da820732b436f0798fd3edbbffcd1fc1415843c41a87fea08a41cc1e3d02b
   languageName: node
   linkType: hard
 
@@ -10675,6 +10783,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"uc.micro@npm:^1.0.1, uc.micro@npm:^1.0.5":
+  version: 1.0.6
+  resolution: "uc.micro@npm:1.0.6"
+  checksum: 6898bb556319a38e9cf175e3628689347bd26fec15fc6b29fa38e0045af63075ff3fea4cf1fdba9db46c9f0cbf07f2348cd8844889dd31ebd288c29fe0d27e7a
+  languageName: node
+  linkType: hard
+
 "unbox-primitive@npm:^1.0.1":
   version: 1.0.1
   resolution: "unbox-primitive@npm:1.0.1"
@@ -11182,6 +11297,19 @@ __metadata:
     vega-voronoi: ~4.1.4
     vega-wordcloud: ~4.1.2
   checksum: be571e26df0393d6c11f5abc3d097a560e0374bff47242575cc22357358858ed128d20af3737cc53a0126e530114a1407f765d00e77de586f33d6d3ec132feda
+  languageName: node
+  linkType: hard
+
+"vite-plugin-markdown@npm:^2.0.2":
+  version: 2.0.2
+  resolution: "vite-plugin-markdown@npm:2.0.2"
+  dependencies:
+    front-matter: ^4.0.0
+    htmlparser2: ^6.0.0
+    markdown-it: ^12.0.0
+  peerDependencies:
+    vite: ^2.0.0
+  checksum: 38da0751c532526c624b034aae7004049ab688e07a549102542ebe8e6d86821116b4026d742c7fc94b086e537e4a13f0022e73be144ec933099b01af8a2df187
   languageName: node
   linkType: hard
 
