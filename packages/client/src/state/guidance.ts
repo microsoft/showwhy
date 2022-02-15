@@ -4,9 +4,28 @@
  */
 import { atom, useRecoilValue, useRecoilState } from 'recoil'
 
+const SHOW_GUIDANCE_LS_KEY = 'showwhy:show_guidance'
+
+function defaultShowGuidance(): boolean {
+	const found = localStorage.getItem(SHOW_GUIDANCE_LS_KEY)
+	if (found != null) {
+		try {
+			return JSON.parse(found)
+		} catch (err: unknown) {}
+	}
+	return true
+}
+
 export const guidanceState = atom<boolean>({
 	key: 'guidance',
-	default: true,
+	default: defaultShowGuidance(),
+	effects: [
+		({ onSet }) => {
+			onSet(newVal => {
+				localStorage.setItem(SHOW_GUIDANCE_LS_KEY, JSON.stringify(newVal))
+			})
+		},
+	],
 })
 
 export function useGuidanceState() {
