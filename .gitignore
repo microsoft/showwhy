@@ -13,8 +13,8 @@ packages/client/public/data/*/*.csv
 node_modules/
 
 # Yarn v2 Gitignores - https://yarnpkg.com/getting-started/qa/#which-files-should-be-gitignored
+.pnp.*
 .yarn/*
-!.yarn/cache
 !.yarn/patches
 !.yarn/plugins
 !.yarn/releases
