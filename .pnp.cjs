@@ -3665,7 +3665,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["d3-selection", "npm:3.0.0"],
             ["d3-shape", "npm:3.1.0"],
             ["file-loader", "virtual:43234044b7438fe2d61705a53806e3cf1b57c36f9d0076f4ea9860d4c0f5b9f7239021252d58389c52e724a7d4da6edf23f1d58bae876b1fdf20bda31e9357ce#npm:6.2.0"],
-            ["front-matter", "npm:4.0.2"],
             ["graphql", "npm:15.8.0"],
             ["history", "npm:5.2.0"],
             ["jest", "virtual:43234044b7438fe2d61705a53806e3cf1b57c36f9d0076f4ea9860d4c0f5b9f7239021252d58389c52e724a7d4da6edf23f1d58bae876b1fdf20bda31e9357ce#npm:27.5.1"],
@@ -9060,16 +9059,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/from-npm-0.1.7-6dcf14a57d-b85125b789.zip/node_modules/from/",
           "packageDependencies": [
             ["from", "npm:0.1.7"]
-          ],
-          "linkType": "HARD",
-        }]
-      ]],
-      ["front-matter", [
-        ["npm:4.0.2", {
-          "packageLocation": "./.yarn/cache/front-matter-npm-4.0.2-e1cc0efa69-a5b4c36d75.zip/node_modules/front-matter/",
-          "packageDependencies": [
-            ["front-matter", "npm:4.0.2"],
-            ["js-yaml", "npm:3.14.1"]
           ],
           "linkType": "HARD",
         }]

@@ -51,7 +51,6 @@
 		"d3-selection": "^3.0.0",
 		"d3-shape": "^3.0.1",
 		"file-loader": "^6.2.0",
-		"front-matter": "^4.0.2",
 		"graphql": "^15.8.0",
 		"history": "^5.2.0",
 		"jsonpath-plus": "^6.0.1",
