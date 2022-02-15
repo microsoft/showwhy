@@ -15,13 +15,17 @@ export const Guidance: React.FC<{
 	const [markdown, setMarkdown] = useState('')
 
 	useEffect(() => {
-		setMarkdown('')
 		if (step?.markdownPath) {
 			import(`../../markdown/${step.markdownPath}`)
 				.then(md => {
 					setMarkdown(md.default)
 				})
-				.catch(console.error)
+				.catch(error => {
+					console.error('Error importing guidance:', error)
+					setMarkdown('')
+				})
+		} else {
+			setMarkdown('')
 		}
 	}, [step])
 	return isVisible ? (
