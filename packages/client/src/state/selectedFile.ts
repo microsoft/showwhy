@@ -10,11 +10,22 @@ import {
 	useResetRecoilState,
 	useSetRecoilState,
 } from 'recoil'
+import { filesState } from './files'
 import { ProjectFile, Maybe } from '~types'
+import { filesStateChanged } from './files'
 
 const selectedFileState = atom<Maybe<ProjectFile>>({
 	key: 'selected-file',
 	default: undefined,
+	effects: [
+		({ setSelf, getPromise }) => {
+			const subscription = filesStateChanged.subscribe(async () => {
+				const files = await getPromise(filesState)
+				setSelf(files[0])
+			})
+			return () => subscription.unsubscribe()
+		},
+	],
 })
 
 export function useSelectedFile(): Maybe<ProjectFile> {
