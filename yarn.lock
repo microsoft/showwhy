@@ -2159,7 +2159,7 @@ __metadata:
     jsonpath-plus: ^6.0.1
     lineupjs: 3.3.1
     lodash: ^4.17.21
-    office-ui-fabric-react: ^7.180.3
+    office-ui-fabric-react: ^7.182.0
     react: ^17.0.2
     react-animate-height: ^2.0.23
     react-dom: ^17.0.2
@@ -8806,7 +8806,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"office-ui-fabric-react@npm:^7.176.0, office-ui-fabric-react@npm:^7.180.3":
+"office-ui-fabric-react@npm:^7.176.0":
   version: 7.181.1
   resolution: "office-ui-fabric-react@npm:7.181.1"
   dependencies:
@@ -8829,6 +8829,32 @@ __metadata:
     react: ">=16.8.0 <17.0.0"
     react-dom: ">=16.8.0 <17.0.0"
   checksum: 1ad983ae64ea1864aa6f967750906839e6ef4feb667790e389227998c232fa3c6bf6d2c4ee3b81931c7adbfee6f63e8e69e7878c46271f7a08f21ea037412e0a
+  languageName: node
+  linkType: hard
+
+"office-ui-fabric-react@npm:^7.182.0":
+  version: 7.182.0
+  resolution: "office-ui-fabric-react@npm:7.182.0"
+  dependencies:
+    "@fluentui/date-time-utilities": ^7.9.1
+    "@fluentui/react-focus": ^7.18.1
+    "@fluentui/react-window-provider": ^1.0.2
+    "@microsoft/load-themed-styles": ^1.10.26
+    "@uifabric/foundation": ^7.10.1
+    "@uifabric/icons": ^7.6.2
+    "@uifabric/merge-styles": ^7.19.2
+    "@uifabric/react-hooks": ^7.14.0
+    "@uifabric/set-version": ^7.0.24
+    "@uifabric/styling": ^7.20.0
+    "@uifabric/utilities": ^7.33.5
+    prop-types: ^15.7.2
+    tslib: ^1.10.0
+  peerDependencies:
+    "@types/react": ">=16.8.0 <17.0.0"
+    "@types/react-dom": ">=16.8.0 <17.0.0"
+    react: ">=16.8.0 <17.0.0"
+    react-dom: ">=16.8.0 <17.0.0"
+  checksum: dcb944f8d081785a944647fa5b0e69d020f77fd169aa2f49a9559220ff133e0e13bedd9bfd8d4e1fb7b759a2643f92466b87129bb4a4c5d855f48122e520a4d6
   languageName: node
   linkType: hard
 
