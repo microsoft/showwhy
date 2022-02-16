@@ -146,7 +146,7 @@ export const ModelVariables: FC<ModelVariablesProps> = memo(
 										variables={variables}
 									/>
 									{table && (
-										<>
+										<NormalContainer data-pw="table">
 											<ArqueroTableHeader table={table} commands={commands} />
 											<DetailsListContainer>
 												<ArqueroDetailsTable
@@ -163,7 +163,7 @@ export const ModelVariables: FC<ModelVariablesProps> = memo(
 													}}
 												/>
 											</DetailsListContainer>
-										</>
+										</NormalContainer>
 									)}
 								</NormalContainer>
 							</Container>
