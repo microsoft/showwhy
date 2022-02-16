@@ -2,6 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import { isStatus } from './api'
 import { percentage } from './stats'
 import {
 	EstimateEffectStatusResponse,
@@ -9,7 +10,6 @@ import {
 	NodeResponseStatus,
 	Maybe,
 } from '~types'
-import { isStatus } from './api'
 
 //TODO: simplify this function
 export function getRunStatus(
