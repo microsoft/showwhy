@@ -4,6 +4,7 @@
  */
 export * from './arquero'
 export * from './arrays'
+export * from './comparators'
 export * from './confidenceInterval'
 export * from './consts'
 export * from './estimate'

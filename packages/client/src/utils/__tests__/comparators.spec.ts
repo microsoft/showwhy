@@ -3,13 +3,13 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { sortGroupByKey } from '../functions'
+import { sortByField } from '../comparators'
 
-describe('Utils Functions', () => {
-	it('sortGroupByKey', () => {
+describe('Compartor Functions', () => {
+	it('sortByField', () => {
 		const elements = [{ name: 'Bob' }, { name: 'Anne' }, { name: 'Carol' }]
 		const expected = [{ name: 'Anne' }, { name: 'Bob' }, { name: 'Carol' }]
-		const sort = sortGroupByKey('name')
+		const sort = sortByField('name')
 		const result = [...elements].sort(sort)
 		expect(result).toEqual(expected)
 	})
