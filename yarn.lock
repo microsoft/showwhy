@@ -2098,6 +2098,7 @@ __metadata:
     react-xarrows: ^2.0.2
     recoil: ^0.6.1
     regenerator-runtime: ^0.13.9
+    rxjs: ^7.5.4
     styled-components: ^5.3.3
     typescript: ^4.5.5
     uuid: ^8.3.2
@@ -9728,7 +9729,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rxjs@npm:^7.1.0, rxjs@npm:^7.5.1":
+"rxjs@npm:^7.1.0, rxjs@npm:^7.5.1, rxjs@npm:^7.5.4":
   version: 7.5.4
   resolution: "rxjs@npm:7.5.4"
   dependencies:
