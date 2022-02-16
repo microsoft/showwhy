@@ -23,7 +23,8 @@ export const stepsList = [
 				status: StepStatus.ToDo,
 				url: `${Pages.UnderstandProcess}/${PageType.Why}`,
 				showStatus: false,
-				markdownPath: 'understand-process/Why.md',
+				getMarkdown: async () =>
+					import('../markdown/understand-process/Why.md'),
 			},
 			{
 				id: uuidv4(),
@@ -32,7 +33,8 @@ export const stepsList = [
 				status: StepStatus.ToDo,
 				url: `${Pages.UnderstandProcess}/${PageType.Who}`,
 				showStatus: false,
-				markdownPath: 'understand-process/Who.md',
+				getMarkdown: async () =>
+					import('../markdown/understand-process/Who.md'),
 			},
 			{
 				id: uuidv4(),
@@ -41,7 +43,8 @@ export const stepsList = [
 				status: StepStatus.ToDo,
 				url: `${Pages.UnderstandProcess}/${PageType.When}`,
 				showStatus: false,
-				markdownPath: 'understand-process/When.md',
+				getMarkdown: async () =>
+					import('../markdown/understand-process/When.md'),
 			},
 			{
 				id: uuidv4(),
@@ -50,7 +53,8 @@ export const stepsList = [
 				status: StepStatus.ToDo,
 				url: `${Pages.UnderstandProcess}/${PageType.How}`,
 				showStatus: false,
-				markdownPath: 'understand-process/How.md',
+				getMarkdown: async () =>
+					import('../markdown/understand-process/How.md'),
 			},
 		],
 	},
@@ -64,7 +68,8 @@ export const stepsList = [
 				status: StepStatus.ToDo,
 				url: `${Pages.DefineElements}`,
 				showStatus: true,
-				markdownPath: 'define-question/Elements.md',
+				getMarkdown: async () =>
+					import('../markdown/define-question/Elements.md'),
 			},
 			{
 				id: uuidv4(),
@@ -72,7 +77,8 @@ export const stepsList = [
 				status: StepStatus.ToDo,
 				url: `${Pages.Define}/${PageType.Population}`,
 				showStatus: true,
-				markdownPath: 'define-question/Population.md',
+				getMarkdown: async () =>
+					import('../markdown/define-question/Population.md'),
 			},
 			{
 				id: uuidv4(),
@@ -80,7 +86,8 @@ export const stepsList = [
 				status: StepStatus.ToDo,
 				url: `${Pages.Define}/${PageType.Exposure}`,
 				showStatus: true,
-				markdownPath: 'define-question/Exposure.md',
+				getMarkdown: async () =>
+					import('../markdown/define-question/Exposure.md'),
 			},
 			{
 				id: uuidv4(),
@@ -88,7 +95,8 @@ export const stepsList = [
 				status: StepStatus.ToDo,
 				url: `${Pages.Define}/${PageType.Outcome}`,
 				showStatus: true,
-				markdownPath: 'define-question/Outcome.md',
+				getMarkdown: async () =>
+					import('../markdown/define-question/Outcome.md'),
 			},
 		],
 	},
@@ -102,7 +110,8 @@ export const stepsList = [
 				status: StepStatus.ToDo,
 				url: `${Pages.ConsiderCausalFactors}`,
 				showStatus: true,
-				markdownPath: 'model-causal-factors/ConsiderCausalFactors.md',
+				getMarkdown: async () =>
+					import('../markdown/model-causal-factors/ConsiderCausalFactors.md'),
 			},
 			{
 				id: uuidv4(),
@@ -110,7 +119,8 @@ export const stepsList = [
 				status: StepStatus.ToDo,
 				showStatus: true,
 				url: `${Pages.DefineFactors}/${PageType.CauseExposure}`,
-				markdownPath: 'model-causal-factors/CausingExposure.md',
+				getMarkdown: async () =>
+					import('../markdown/model-causal-factors/CausingExposure.md'),
 			},
 			{
 				id: uuidv4(),
@@ -118,7 +128,8 @@ export const stepsList = [
 				status: StepStatus.ToDo,
 				url: `${Pages.DefineFactors}/${PageType.CausedByExposure}`,
 				showStatus: true,
-				markdownPath: 'model-causal-factors/CausedByExposure.md',
+				getMarkdown: async () =>
+					import('../markdown/model-causal-factors/CausedByExposure.md'),
 			},
 			{
 				id: uuidv4(),
@@ -126,7 +137,8 @@ export const stepsList = [
 				status: StepStatus.ToDo,
 				url: `${Pages.DefineFactors}/${PageType.CauseOutcome}`,
 				showStatus: true,
-				markdownPath: 'model-causal-factors/CausingOutcome.md',
+				getMarkdown: async () =>
+					import('../markdown/model-causal-factors/CausingOutcome.md'),
 			},
 			{
 				id: uuidv4(),
@@ -134,7 +146,8 @@ export const stepsList = [
 				status: StepStatus.ToDo,
 				url: `${Pages.DefineFactors}/${PageType.CausedByOutcome}`,
 				showStatus: true,
-				markdownPath: 'model-causal-factors/CausedByOutcome.md',
+				getMarkdown: async () =>
+					import('../markdown/model-causal-factors/CausedByOutcome.md'),
 			},
 			{
 				id: uuidv4(),
@@ -142,7 +155,10 @@ export const stepsList = [
 				status: StepStatus.ToDo,
 				url: `${Pages.Confirm}`,
 				showStatus: true,
-				markdownPath: 'model-causal-factors/ConfirmAlternativeModels.md',
+				getMarkdown: async () =>
+					import(
+						'../markdown/model-causal-factors/ConfirmAlternativeModels.md'
+					),
 			},
 		],
 	},
@@ -156,7 +172,7 @@ export const stepsList = [
 				status: StepStatus.ToDo,
 				url: `${Pages.LoadData}`,
 				showStatus: true,
-				markdownPath: 'prepare-data/Load.md',
+				getMarkdown: async () => import('../markdown/prepare-data/Load.md'),
 			},
 			{
 				id: uuidv4(),
@@ -164,7 +180,7 @@ export const stepsList = [
 				status: StepStatus.ToDo,
 				url: Pages.ProcessTableColumns,
 				showStatus: true,
-				markdownPath: 'prepare-data/Prepare.md',
+				getMarkdown: async () => import('../markdown/prepare-data/Prepare.md'),
 			},
 			{
 				id: uuidv4(),
@@ -172,7 +188,8 @@ export const stepsList = [
 				status: StepStatus.ToDo,
 				url: `${Pages.Variables}/${PageType.Population}`,
 				showStatus: true,
-				markdownPath: 'prepare-data/PopulationVariables.md',
+				getMarkdown: async () =>
+					import('../markdown/prepare-data/PopulationVariables.md'),
 			},
 			{
 				id: uuidv4(),
@@ -180,7 +197,8 @@ export const stepsList = [
 				status: StepStatus.ToDo,
 				url: `${Pages.Variables}/${PageType.Exposure}`,
 				showStatus: true,
-				markdownPath: 'prepare-data/ExposureVariables.md',
+				getMarkdown: async () =>
+					import('../markdown/prepare-data/ExposureVariables.md'),
 			},
 			{
 				id: uuidv4(),
@@ -188,7 +206,8 @@ export const stepsList = [
 				status: StepStatus.ToDo,
 				url: `${Pages.Variables}/${PageType.Outcome}`,
 				showStatus: true,
-				markdownPath: 'prepare-data/OutcomeVariables.md',
+				getMarkdown: async () =>
+					import('../markdown/prepare-data/OutcomeVariables.md'),
 			},
 			{
 				id: uuidv4(),
@@ -196,7 +215,8 @@ export const stepsList = [
 				status: StepStatus.ToDo,
 				url: `${Pages.Variables}/${PageType.Control}`,
 				showStatus: true,
-				markdownPath: 'prepare-data/ControlVariables.md',
+				getMarkdown: async () =>
+					import('../markdown/prepare-data/ControlVariables.md'),
 			},
 		],
 	},
@@ -210,7 +230,8 @@ export const stepsList = [
 				status: StepStatus.ToDo,
 				url: Pages.SelectCausalEstimators,
 				showStatus: true,
-				markdownPath: 'perform-analysis/Estimators.md',
+				getMarkdown: async () =>
+					import('../markdown/perform-analysis/Estimators.md'),
 			},
 			{
 				id: uuidv4(),
@@ -218,7 +239,8 @@ export const stepsList = [
 				status: StepStatus.ToDo,
 				url: Pages.EstimateCausalEffects,
 				showStatus: true,
-				markdownPath: 'perform-analysis/CausalEffects.md',
+				getMarkdown: async () =>
+					import('../markdown/perform-analysis/CausalEffects.md'),
 			},
 			{
 				id: uuidv4(),
@@ -226,7 +248,8 @@ export const stepsList = [
 				status: StepStatus.ToDo,
 				url: Pages.SpecificationCurvePage,
 				showStatus: true,
-				markdownPath: 'perform-analysis/SpecificationCurve.md',
+				getMarkdown: async () =>
+					import('../markdown/perform-analysis/SpecificationCurve.md'),
 			},
 			{
 				id: uuidv4(),
@@ -234,7 +257,8 @@ export const stepsList = [
 				status: StepStatus.ToDo,
 				url: Pages.EvaluateHypothesisPage,
 				showStatus: true,
-				markdownPath: 'perform-analysis/Hypothesis.md',
+				getMarkdown: async () =>
+					import('../markdown/perform-analysis/Hypothesis.md'),
 			},
 		],
 	},

@@ -10,7 +10,7 @@ export interface Step {
 	id: string
 	title: string
 	guidance?: string
-	markdownPath?: string
+	getMarkdown?: () => Promise<{ default: string }>
 	status: StepStatus
 	url: string
 	showStatus?: boolean
