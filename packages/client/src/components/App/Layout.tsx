@@ -7,7 +7,7 @@ import { useId } from '@fluentui/react-hooks'
 import { memo, Suspense, useState } from 'react'
 import styled from 'styled-components'
 import { AppHeader } from '../AppHeader'
-import { useProcessStepInfo, useGuidance, useOnClickProject } from './hooks'
+import { useProcessStepInfo, useOnClickProject } from './hooks'
 import { StepControls, StepSelector } from '~components/GeneralSteps'
 import { Guidance } from '~components/Guidance'
 import { MessageContainer } from '~components/MessageContainer'
@@ -21,6 +21,7 @@ import {
 	useDefineQuestion,
 	useSelectedProject,
 	useSetStepStatuses,
+	useGuidance,
 } from '~state'
 import { StyledSpinner } from '~styles'
 import { Maybe } from '~types'
