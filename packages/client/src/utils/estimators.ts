@@ -12,7 +12,7 @@ import {
 import { isStatus } from './api'
 
 //TODO: simplify this function
-export function returnStatus(
+export function getRunStatus(
 	status: Partial<EstimateEffectStatusResponse>,
 	hasConfidenceInterval: boolean,
 	refutersLength: number,

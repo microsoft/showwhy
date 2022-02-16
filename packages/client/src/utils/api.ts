@@ -4,7 +4,7 @@
  */
 
 import { v4 } from 'uuid'
-import { SESSION_ID_KEY } from './consts'
+import { SESSION_ID_KEY } from './constants'
 import { createAndReturnStorageItem } from './sessionStorage'
 import { RunHistory, NodeResponseStatus, RefutationType, Maybe } from '~types'
 

@@ -13,7 +13,7 @@ import {
 	SignificanceTest,
 	SignificanceTestResponse,
 } from '~types'
-import { isStatus, returnInitialConfidenceInterval, percentage } from '~utils'
+import { isStatus, getConfidenceInterval, percentage } from '~utils'
 
 export function useRunConfidenceInterval(): any {
 	const defaultRun = useDefaultRun()
@@ -43,7 +43,7 @@ export function useRunConfidenceInterval(): any {
 
 	const onStart = useCallback(
 		(nodeResponse: NodeResponse) => {
-			const initialRun = returnInitialConfidenceInterval(
+			const initialRun = getConfidenceInterval(
 				defaultRun?.id as string,
 				nodeResponse,
 			)

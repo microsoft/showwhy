@@ -10,7 +10,7 @@ import { ErrorMessage } from '~components/ErrorMessage'
 import { RunProgressIndicator } from '~components/RunProgressIndicator'
 import { Title, Text, ContainerFlexColumn } from '~styles'
 import { RunHistory, NodeResponseStatus, Handler } from '~types'
-import { isProcessingStatus, returnElapsedTime } from '~utils'
+import { isProcessingStatus, elapsedTime } from '~utils'
 
 export const RunHistoryList: React.FC<{
 	setRunAsDefault: (run: RunHistory) => void
@@ -90,7 +90,7 @@ export const RunHistoryList: React.FC<{
 													run.status?.percentage
 												}%] available${
 													run.status.time?.end
-														? `, took ${returnElapsedTime(
+														? `, took ${elapsedTime(
 																run.status.time?.start,
 																run.status.time?.end,
 														  )}`

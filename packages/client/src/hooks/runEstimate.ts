@@ -12,7 +12,7 @@ import {
 } from '~hooks'
 import { useConfidenceInterval } from '~state'
 import { EstimateEffectStatusResponse, NodeResponse, RunStatus } from '~types'
-import { returnStatus } from '~utils'
+import { getRunStatus } from '~utils'
 
 export function useRunEstimate(): () => Orchestrator<EstimateEffectStatusResponse> {
 	const updateActive = useUpdateActiveRunHistory()
@@ -23,7 +23,7 @@ export function useRunEstimate(): () => Orchestrator<EstimateEffectStatusRespons
 
 	const onUpdate = useCallback(
 		(status: EstimateEffectStatusResponse) => {
-			const updatedStatus = returnStatus(
+			const updatedStatus = getRunStatus(
 				status,
 				hasConfidenceInterval,
 				refutersLength,

@@ -11,7 +11,7 @@ export function wait(ms: number): Promise<boolean> {
 	})
 }
 
-export function returnElapsedTime(
+export function elapsedTime(
 	startDate: Date | string,
 	endDate: Date | string,
 ): string {

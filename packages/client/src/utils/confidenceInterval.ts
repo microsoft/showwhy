@@ -4,7 +4,7 @@
  */
 import { NodeResponse, SignificanceTest, NodeResponseStatus } from '~types'
 
-export function returnInitialConfidenceInterval(
+export function getConfidenceInterval(
 	runId: string,
 	nodeResponse: NodeResponse,
 ): SignificanceTest {

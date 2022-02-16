@@ -34,7 +34,7 @@ export const DefinitionSteps: React.FC<{
 		return newValues
 	}, [modelVariables, type, selectedDefinition])
 
-	const returnFilterType = useCallback((filter): string => {
+	const filterType = useCallback((filter): string => {
 		if (filter.filter === TableDerivationType.PercentageTopRanking) {
 			return ' in top ' + filter?.value + '%'
 		} else if (filter.filter === TableDerivationType.PercentageBottomRanking) {
@@ -72,7 +72,7 @@ export const DefinitionSteps: React.FC<{
 					return (
 						<FilterClause key={key}>
 							{filter?.columnName}: {filter?.column}
-							{returnFilterType(filter)}
+							{filterType(filter)}
 							<IconButton
 								iconProps={{ iconName: 'Edit' }}
 								title="Edit"
