@@ -97,11 +97,11 @@ export function disableAllRuns(runHistory: RunHistory[]): RunHistory[] {
 }
 
 //TODO: simplify this function
-export const returnStatus = (
+export function returnStatus(
 	status: Partial<EstimateEffectStatusResponse>,
 	hasConfidenceInterval: boolean,
 	refutersLength: number,
-): RunStatus => {
+): RunStatus {
 	const estimators = returnEstimatorStatus(status)
 	const confidenceIntervals = returnConfidenceIntervalsStatus(
 		status,
