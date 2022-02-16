@@ -10,7 +10,7 @@ import { ErrorMessage } from '~components/ErrorMessage'
 import { RunProgressIndicator } from '~components/RunProgressIndicator'
 import { Title, Text, ContainerFlexColumn } from '~styles'
 import { RunHistory, NodeResponseStatus, Handler } from '~types'
-import { isStatusProcessing, returnElapsedTime } from '~utils'
+import { isProcessingStatus, returnElapsedTime } from '~utils'
 
 export const RunHistoryList: React.FC<{
 	setRunAsDefault: (run: RunHistory) => void
@@ -61,7 +61,7 @@ export const RunHistoryList: React.FC<{
 							<Tr key={run.runNumber} data-pw="run">
 								<Td>{run.runNumber}</Td>
 								<Td>
-									{isStatusProcessing(
+									{isProcessingStatus(
 										run?.status?.status as NodeResponseStatus,
 									) ? (
 										<RunProgressIndicator
@@ -118,7 +118,7 @@ export const RunHistoryList: React.FC<{
 							</Tr>
 						))}
 					{!runHistory.find(run =>
-						isStatusProcessing(run?.status?.status as NodeResponseStatus),
+						isProcessingStatus(run?.status?.status as NodeResponseStatus),
 					) && (
 						<Tr>
 							<Td> {runHistory.length + 1} </Td>

@@ -2,100 +2,14 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-
-import { v4 } from 'uuid'
-import { SESSION_ID_KEY } from './consts'
-import { createAndReturnStorageItem } from './sessionStorage'
 import { percentage } from './stats'
 import {
 	EstimateEffectStatusResponse,
-	RunHistory,
 	RunStatus,
 	NodeResponseStatus,
-	RefutationType,
 	Maybe,
 } from '~types'
-
-/**
- * It's the first to always run and to get the status depends only of itself
- */
-export function returnEstimatorStatus(
-	response: Partial<EstimateEffectStatusResponse>,
-): Partial<RunStatus> {
-	return {
-		status:
-			!!response?.estimated_effect_completed &&
-			response?.estimated_effect_completed === response?.total_results
-				? NodeResponseStatus.Completed
-				: NodeResponseStatus.Running,
-	}
-}
-
-/**
- * If enabled, runs after estimators
- * So to get the status, it depends on the status of it
- */
-export function returnConfidenceIntervalsStatus(
-	response: Partial<EstimateEffectStatusResponse>,
-	isEstimatorCompleted: boolean,
-): Partial<RunStatus> {
-	return {
-		status:
-			!!response?.confidence_interval_completed &&
-			response?.confidence_interval_completed === response?.total_results
-				? NodeResponseStatus.Completed
-				: isEstimatorCompleted
-				? NodeResponseStatus.Running
-				: NodeResponseStatus.Idle,
-	}
-}
-/**
- * Runs after estimators and confidence intervals (if enabled)
- * So to get the status, it depends on the status of these other 2
- */
-export function returnRefutersStatus(
-	response: Partial<EstimateEffectStatusResponse>,
-	isEstimatorCompleted: boolean,
-	isConfidenceIntervalsCompleted: boolean,
-	hasConfidenceInterval: boolean,
-): Partial<RunStatus> {
-	return {
-		status:
-			!!response?.refute_completed &&
-			response?.refute_completed === response?.total_results
-				? NodeResponseStatus.Completed
-				: (
-						hasConfidenceInterval
-							? isConfidenceIntervalsCompleted
-							: isEstimatorCompleted
-				  )
-				? NodeResponseStatus.Running
-				: NodeResponseStatus.Idle,
-	}
-}
-
-export function isStatusProcessing(nodeStatus: NodeResponseStatus): boolean {
-	const status = nodeStatus?.toLowerCase()
-	return (
-		status === NodeResponseStatus.Processing ||
-		status === NodeResponseStatus.InProgress ||
-		status === NodeResponseStatus.Pending ||
-		status === NodeResponseStatus.Running
-	)
-}
-
-export function matchStatus(
-	status: NodeResponseStatus,
-	match: NodeResponseStatus,
-): boolean {
-	return status.toLowerCase() === match
-}
-
-export function disableAllRuns(runHistory: RunHistory[]): RunHistory[] {
-	return runHistory.map(run => {
-		return { ...run, isActive: false }
-	})
-}
+import { isStatus } from './api'
 
 //TODO: simplify this function
 export function returnStatus(
@@ -103,30 +17,21 @@ export function returnStatus(
 	hasConfidenceInterval: boolean,
 	refutersLength: number,
 ): RunStatus {
-	const estimators = returnEstimatorStatus(status)
-	const confidenceIntervals = returnConfidenceIntervalsStatus(
+	const estimators = getEstimatorStatus(status)
+	const confidenceIntervals = getConfidenceIntervalStatus(
 		status,
-		matchStatus(
-			estimators.status as NodeResponseStatus,
-			NodeResponseStatus.Completed,
-		),
+		isStatus(estimators.status, NodeResponseStatus.Completed),
 	)
-	const refuters = returnRefutersStatus(
+	const refuters = getRefutationStatus(
 		status,
-		matchStatus(
-			estimators.status as NodeResponseStatus,
-			NodeResponseStatus.Completed,
-		),
-		matchStatus(
-			confidenceIntervals.status as NodeResponseStatus,
-			NodeResponseStatus.Completed,
-		),
+		isStatus(estimators.status, NodeResponseStatus.Completed),
+		isStatus(confidenceIntervals.status, NodeResponseStatus.Completed),
 		hasConfidenceInterval,
 	)
 
 	let pct = 100
 	const totalResults = status?.total_results ?? 0
-	const refuteCompleted = returnRefutationCount(
+	const refuteCompleted = getRefutationCount(
 		status?.refute_completed ?? 0,
 		refutersLength,
 	)
@@ -137,30 +42,17 @@ export function returnStatus(
 		status?.confidence_interval_completed ?? 0
 	status.refute_completed = refuteCompleted
 
-	if (
-		!matchStatus(
-			estimators.status as NodeResponseStatus,
-			NodeResponseStatus.Completed,
-		)
-	) {
+	if (!isStatus(estimators.status, NodeResponseStatus.Completed)) {
 		pct = percentage(status?.estimated_effect_completed, status?.total_results)
 	} else if (
 		hasConfidenceInterval &&
-		!matchStatus(
-			confidenceIntervals.status as NodeResponseStatus,
-			NodeResponseStatus.Completed,
-		)
+		!isStatus(confidenceIntervals.status, NodeResponseStatus.Completed)
 	) {
 		pct = percentage(
 			status?.confidence_interval_completed,
 			status?.total_results,
 		)
-	} else if (
-		!matchStatus(
-			refuters.status as NodeResponseStatus,
-			NodeResponseStatus.Completed,
-		)
-	) {
+	} else if (!isStatus(refuters.status, NodeResponseStatus.Completed)) {
 		pct = percentage(status?.refute_completed, totalResults)
 	}
 
@@ -181,39 +73,12 @@ export function returnStatus(
 	return st
 }
 
-export function returnRefutationCount(
+function getRefutationCount(
 	refutationCount: number,
 	refutationLength: number,
 ): number {
 	return Math.floor(refutationCount / refutationLength)
 }
-
-export function returnInitialRunHistory(
-	specCount: number,
-	hasConfidenceInterval: boolean,
-	refutationType: RefutationType,
-	runHistoryLength: number,
-): RunHistory {
-	return {
-		id: v4(),
-		runNumber: runHistoryLength + 1,
-		isActive: true,
-		status: {
-			status: NodeResponseStatus.Running,
-			estimated_effect_completed: `0/${specCount}`,
-			confidence_interval_completed: `0/${specCount}`,
-			refute_completed: `0/${specCount}`,
-			percentage: 0,
-			time: {
-				start: new Date(),
-			},
-		},
-		sessionId: createAndReturnStorageItem(SESSION_ID_KEY, v4()),
-		hasConfidenceInterval,
-		refutationType,
-	} as RunHistory
-}
-
 function findRunError(
 	response: Partial<EstimateEffectStatusResponse>,
 ): Maybe<string> {
@@ -229,4 +94,63 @@ function findRunError(
 		return errorMessage
 	}
 	return undefined
+}
+
+/**
+ * It's the first to always run and to get the status depends only of itself
+ */
+function getEstimatorStatus(
+	response: Partial<EstimateEffectStatusResponse>,
+): Partial<RunStatus> {
+	return {
+		status:
+			!!response?.estimated_effect_completed &&
+			response?.estimated_effect_completed === response?.total_results
+				? NodeResponseStatus.Completed
+				: NodeResponseStatus.Running,
+	}
+}
+
+/**
+ * If enabled, runs after estimators
+ * So to get the status, it depends on the status of it
+ */
+function getConfidenceIntervalStatus(
+	response: Partial<EstimateEffectStatusResponse>,
+	isEstimatorCompleted: boolean,
+): Partial<RunStatus> {
+	return {
+		status:
+			!!response?.confidence_interval_completed &&
+			response?.confidence_interval_completed === response?.total_results
+				? NodeResponseStatus.Completed
+				: isEstimatorCompleted
+				? NodeResponseStatus.Running
+				: NodeResponseStatus.Idle,
+	}
+}
+
+/**
+ * Runs after estimators and confidence intervals (if enabled)
+ * So to get the status, it depends on the status of these other 2
+ */
+function getRefutationStatus(
+	response: Partial<EstimateEffectStatusResponse>,
+	isEstimatorCompleted: boolean,
+	isConfidenceIntervalsCompleted: boolean,
+	hasConfidenceInterval: boolean,
+): Partial<RunStatus> {
+	return {
+		status:
+			!!response?.refute_completed &&
+			response?.refute_completed === response?.total_results
+				? NodeResponseStatus.Completed
+				: (
+						hasConfidenceInterval
+							? isConfidenceIntervalsCompleted
+							: isEstimatorCompleted
+				  )
+				? NodeResponseStatus.Running
+				: NodeResponseStatus.Idle,
+	}
 }

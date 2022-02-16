@@ -13,11 +13,7 @@ import {
 	SignificanceTest,
 	SignificanceTestResponse,
 } from '~types'
-import {
-	matchStatus,
-	returnInitialConfidenceInterval,
-	percentage,
-} from '~utils'
+import { isStatus, returnInitialConfidenceInterval, percentage } from '~utils'
 
 export function useRunConfidenceInterval(): any {
 	const defaultRun = useDefaultRun()
@@ -25,7 +21,7 @@ export function useRunConfidenceInterval(): any {
 
 	const onUpdate = useCallback(
 		(status: SignificanceTestResponse) => {
-			if (matchStatus(status.runtimeStatus, NodeResponseStatus.Terminated)) {
+			if (isStatus(status.runtimeStatus, NodeResponseStatus.Terminated)) {
 				return updateSignificanceTests(undefined)
 			}
 			updateSignificanceTests(prev => {

@@ -18,7 +18,7 @@ import {
 	OrchestratorStatusResponse,
 	Maybe,
 } from '~types'
-import { isStatusProcessing, wait } from '~utils'
+import { isProcessingStatus, wait } from '~utils'
 
 export type OrchestratorHandler = (...args: unknown[]) => void
 export type OrchestratorOnStartHandler = (nodeResponse: NodeResponse) => void
@@ -67,7 +67,7 @@ export class Orchestrator<UpdateStatus> {
 		)
 
 		let estimateStatus: Partial<OrchestratorStatusResponse> | null = null
-		while (isStatusProcessing(status?.runtimeStatus as NodeResponseStatus)) {
+		while (isProcessingStatus(status?.runtimeStatus as NodeResponseStatus)) {
 			[status, estimateStatus] = await Promise.all([
 				returnOrchestratorStatus(this.orchestratorResponse.statusQueryGetUri),
 				genericCheckStatus(status?.instanceId, type),

@@ -37,7 +37,7 @@ import {
 	AsyncHandler,
 	Handler,
 } from '~types'
-import { createFormData, returnInitialRunHistory } from '~utils'
+import { createFormData, initialRunHistory } from '~utils'
 
 export function useBusinessLogic(): {
 	isProcessing: boolean
@@ -110,7 +110,7 @@ export function useBusinessLogic(): {
 	)
 
 	const saveNewRunHistory = useCallback(() => {
-		const initialRun = returnInitialRunHistory(
+		const initialRun = initialRunHistory(
 			specCount as number,
 			hasConfidenceInterval,
 			refutationType,

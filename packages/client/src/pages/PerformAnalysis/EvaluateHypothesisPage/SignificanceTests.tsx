@@ -17,7 +17,7 @@ import {
 	Maybe,
 	Handler,
 } from '~types'
-import { isStatusProcessing } from '~utils'
+import { isProcessingStatus } from '~utils'
 
 export const SignificanceTests: React.FC<{
 	significanceTestsResult: Maybe<SignificanceTest>
@@ -54,7 +54,7 @@ export const SignificanceTests: React.FC<{
 			)}
 
 			{significanceTestsResult &&
-				isStatusProcessing(
+				isProcessingStatus(
 					significanceTestsResult.status as NodeResponseStatus,
 				) && (
 					<ProgressBar
