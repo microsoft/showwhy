@@ -5,23 +5,23 @@
 
 import { v4 } from 'uuid'
 import { SESSION_ID_KEY } from './consts'
-import { percentage } from './stats'
-import { findRunError } from './functions'
 import { createAndReturnStorageItem } from './sessionStorage'
+import { percentage } from './stats'
 import {
 	EstimateEffectStatusResponse,
 	RunHistory,
 	RunStatus,
 	NodeResponseStatus,
 	RefutationType,
+	Maybe,
 } from '~types'
 
 /**
  * It's the first to always run and to get the status depends only of itself
  */
-export const returnEstimatorStatus = (
+export function returnEstimatorStatus(
 	response: Partial<EstimateEffectStatusResponse>,
-): Partial<RunStatus> => {
+): Partial<RunStatus> {
 	return {
 		status:
 			!!response?.estimated_effect_completed &&
@@ -30,14 +30,15 @@ export const returnEstimatorStatus = (
 				: NodeResponseStatus.Running,
 	}
 }
+
 /**
  * If enabled, runs after estimators
  * So to get the status, it depends on the status of it
  */
-export const returnConfidenceIntervalsStatus = (
+export function returnConfidenceIntervalsStatus(
 	response: Partial<EstimateEffectStatusResponse>,
 	isEstimatorCompleted: boolean,
-): Partial<RunStatus> => {
+): Partial<RunStatus> {
 	return {
 		status:
 			!!response?.confidence_interval_completed &&
@@ -52,12 +53,12 @@ export const returnConfidenceIntervalsStatus = (
  * Runs after estimators and confidence intervals (if enabled)
  * So to get the status, it depends on the status of these other 2
  */
-export const returnRefutersStatus = (
+export function returnRefutersStatus(
 	response: Partial<EstimateEffectStatusResponse>,
 	isEstimatorCompleted: boolean,
 	isConfidenceIntervalsCompleted: boolean,
 	hasConfidenceInterval: boolean,
-): Partial<RunStatus> => {
+): Partial<RunStatus> {
 	return {
 		status:
 			!!response?.refute_completed &&
@@ -73,7 +74,7 @@ export const returnRefutersStatus = (
 	}
 }
 
-export const isStatusProcessing = (nodeStatus: NodeResponseStatus): boolean => {
+export function isStatusProcessing(nodeStatus: NodeResponseStatus): boolean {
 	const status = nodeStatus?.toLowerCase()
 	return (
 		status === NodeResponseStatus.Processing ||
@@ -83,10 +84,10 @@ export const isStatusProcessing = (nodeStatus: NodeResponseStatus): boolean => {
 	)
 }
 
-export const matchStatus = (
+export function matchStatus(
 	status: NodeResponseStatus,
 	match: NodeResponseStatus,
-): boolean => {
+): boolean {
 	return status.toLowerCase() === match
 }
 
@@ -211,4 +212,21 @@ export function returnInitialRunHistory(
 		hasConfidenceInterval,
 		refutationType,
 	} as RunHistory
+}
+
+function findRunError(
+	response: Partial<EstimateEffectStatusResponse>,
+): Maybe<string> {
+	if (response.runtimeStatus?.toLowerCase() === NodeResponseStatus.Failed) {
+		const error =
+			response.partial_results &&
+			response.partial_results.find(r => r.state === NodeResponseStatus.Failed)
+		const errorMessage = !!error
+			? error?.traceback || error?.error
+			: (response?.output as string) ||
+			  'Undefined error. Please, execute the run again.'
+		console.log('Traceback:', errorMessage)
+		return errorMessage
+	}
+	return undefined
 }

@@ -3,21 +3,19 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-export const getStorageItem = (key: string): string | null => {
+export function getStorageItem(key: string): string | null {
 	return sessionStorage.getItem(key)
 }
-export const setStorageItem = (key: string, value: string): void => {
+
+export function setStorageItem(key: string, value: string): void {
 	sessionStorage.setItem(key, value)
 }
 
-export const createAndReturnStorageItem = (
-	key: string,
-	value: string,
-): string => {
+export function createAndReturnStorageItem(key: string, value: string): string {
 	sessionStorage.setItem(key, value)
 	return value
 }
 
-export const removeStorageItem = (key: string): void => {
+export function removeStorageItem(key: string): void {
 	sessionStorage.removeItem(key)
 }
