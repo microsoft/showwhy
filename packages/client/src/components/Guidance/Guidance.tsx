@@ -15,10 +15,11 @@ export const Guidance: React.FC<{
 	const [markdown, setMarkdown] = useState('')
 
 	useEffect(() => {
-		if (step?.markdownPath) {
-			import(`../../markdown/${step.markdownPath}`)
-				.then(md => {
-					setMarkdown(md.default)
+		if (step?.getMarkdown) {
+			step
+				?.getMarkdown()
+				.then(({ default: md }: { default: string }) => {
+					setMarkdown(md)
 				})
 				.catch(error => {
 					console.error('Error importing guidance:', error)
