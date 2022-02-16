@@ -15,7 +15,7 @@ import {
 	RefutationTestMethodString,
 	Handler,
 } from '~types'
-import { addS } from '~utils'
+import { pluralize } from '~utils'
 
 export const SpecificationDescription: React.FC<{
 	specification?: Specification
@@ -63,7 +63,7 @@ export const SpecificationDescription: React.FC<{
 								This estimate passed <Value>{refutationNumbers}</Value>{' '}
 								refutations
 								{failedRefutations.length > 0
-									? `, failing on the following test${addS(
+									? `, failing on the following test${pluralize(
 											failedRefutations.length,
 									  )}: `
 									: ''}

@@ -16,10 +16,6 @@ export function sortGroupByKey(key: string, asc = true) {
 	}
 }
 
-export function addS(len: number): string {
-	return len !== 1 ? 's' : ''
-}
-
 export function findRunError(
 	response: Partial<EstimateEffectStatusResponse>,
 ): Maybe<string> {

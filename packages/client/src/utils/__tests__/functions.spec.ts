@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { addS, sortGroupByKey } from '../functions'
+import { sortGroupByKey } from '../functions'
 
 describe('Utils Functions', () => {
 	it('sortGroupByKey', () => {
@@ -12,11 +12,5 @@ describe('Utils Functions', () => {
 		const sort = sortGroupByKey('name')
 		const result = [...elements].sort(sort)
 		expect(result).toEqual(expected)
-	})
-
-	it('addS', () => {
-		const elements = [1, 2]
-		const result = addS(elements.length)
-		expect(result).toBe('s')
 	})
 })

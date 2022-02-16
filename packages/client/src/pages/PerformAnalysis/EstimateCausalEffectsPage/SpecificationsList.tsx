@@ -8,7 +8,7 @@ import styled from 'styled-components'
 import { RefutationOptionsCallout } from '~components/RefutationOptionsCallout'
 import { Bold, Container, Text, Title } from '~styles'
 import { Experiment, Estimator, RefutationOption } from '~types'
-import { addS } from '~utils'
+import { pluralize } from '~utils'
 
 interface SpecificationsListProp {
 	estimators: Estimator[]
@@ -37,7 +37,7 @@ export const SpecificationsList: React.FC<SpecificationsListProp> = memo(
 							<Text>
 								<Bold>{definitions.population.definition.length}</Bold>{' '}
 								population definition
-								{addS(definitions?.population?.definition.length)}
+								{pluralize(definitions?.population?.definition.length)}
 							</Text>
 						) : (
 							<Link to="/define/population">Define population</Link>
@@ -49,7 +49,7 @@ export const SpecificationsList: React.FC<SpecificationsListProp> = memo(
 							<Text>
 								<Bold>{definitions.exposure.definition.length}</Bold> exposure
 								definition
-								{addS(definitions?.exposure?.definition.length)}
+								{pluralize(definitions?.exposure?.definition.length)}
 							</Text>
 						) : (
 							<Link to="/define/exposure">Define exposure</Link>
@@ -61,7 +61,7 @@ export const SpecificationsList: React.FC<SpecificationsListProp> = memo(
 							<Text>
 								<Bold>{definitions.outcome.definition.length}</Bold> outcome
 								definition
-								{addS(definitions?.outcome?.definition.length)}
+								{pluralize(definitions?.outcome?.definition.length)}
 							</Text>
 						) : (
 							<Link to="/define/outcome">Define outcome</Link>
@@ -73,7 +73,7 @@ export const SpecificationsList: React.FC<SpecificationsListProp> = memo(
 					</ListItem>
 					<ListItem data-pw="specification-estimators">
 						<Bold>{totalEstimatorsCount}</Bold> estimator configuration
-						{addS(totalEstimatorsCount)}
+						{pluralize(totalEstimatorsCount)}
 					</ListItem>
 				</List>
 				<span>For each specification, compute:</span>
