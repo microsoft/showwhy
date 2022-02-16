@@ -153,7 +153,7 @@ export const GenericTableComponent: React.FC<{
 	})
 
 	const tBodyContent = sortedItems.map((item, i) => {
-		const { onClick, ref, colSpan } = item
+		const { onClick, ref, colSpan, dataPw } = item
 		const excluded = ['ref', 'onClick', 'colSpan']
 		const id = item.id || i.toString()
 		const keys = (
@@ -167,6 +167,7 @@ export const GenericTableComponent: React.FC<{
 				onClick={() => onClick && onSelectedRow(id, item, onClick)}
 				isClickable={!!onClick}
 				isSelected={onClick && selectedRow === id}
+				data-pw={dataPw || 'generic-table-row'}
 			>
 				{keys.map(
 					(key, i) =>

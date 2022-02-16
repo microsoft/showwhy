@@ -7,11 +7,25 @@ jobs:
     strategy:
       matrix:
         node-version: [14.x, 16.x]
+    env:
+      CI: true
 
     steps:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
+
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
+
+      - uses: actions/cache@v2
+        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
 
       - name: Use Node ${{ matrix.node-version }}
         uses: actions/setup-node@v1
@@ -19,9 +33,8 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - run: yarn install
-        name: Install Dependencies
-
       - run: yarn ci
-        name: Execute Tests
+      - run: yarn install:playwright_deps
+      - run: yarn acceptance:test
         env:
-          CI: true
+          NODE_CONFIG_ENV: ci

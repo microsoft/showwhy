@@ -43,6 +43,7 @@ export const VariablePicker: React.FC<{
 					value && onChange(value)
 				}
 				placeholder="Select/Type a variable"
+				data-pw="factors-form-variable-picker"
 			/>
 		</Container>
 	)

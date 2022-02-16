@@ -97,6 +97,7 @@ export function useUploadZipMenuOption(
 	const handleClick = useHandleOnUploadClick(acceptedFileTypes, handleFiles)
 	return useMemo(() => {
 		return {
+			'data-pw': id,
 			key: id,
 			text: 'Open project',
 			iconProps: { iconName: 'Upload' },

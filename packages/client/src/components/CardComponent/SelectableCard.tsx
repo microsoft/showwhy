@@ -15,7 +15,11 @@ export const SelectableCard: React.FC<{
 }> = memo(function CardComponent({ title, onClick, isChecked, icon }) {
 	const handleOnClick = useOnClickHandler(isChecked, onClick)
 	return (
-		<Card checked={isChecked} onClick={handleOnClick}>
+		<Card
+			checked={isChecked}
+			onClick={handleOnClick}
+			data-pw={isChecked ? 'selected-card' : 'card'}
+		>
 			{icon && <ButtonIcon iconName={icon}></ButtonIcon>}
 			{title || null}
 		</Card>

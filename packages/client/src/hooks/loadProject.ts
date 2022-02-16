@@ -5,7 +5,7 @@
 import { BaseFile } from '@data-wrangling-components/utilities'
 import { useCallback, useMemo } from 'react'
 import { v4 as uuidv4 } from 'uuid'
-import { useGetStepUrls } from '~hooks'
+import { useGetStepUrls, useSetRunAsDefault } from '~hooks'
 import {
 	useAddProjectFile,
 	useFileCollection,
@@ -18,6 +18,7 @@ import {
 	useSetModelVariables,
 	useSetPrimarySpecificationConfig,
 	useSetRefutationType,
+	useSetRunHistory,
 	useSetStepStatuses,
 	useSetTableColumns,
 } from '~state'
@@ -38,6 +39,7 @@ import {
 	StepStatus,
 	Handler1,
 	Maybe,
+	RunHistory,
 } from '~types'
 import {
 	fetchRemoteTables,
@@ -64,6 +66,7 @@ export function useLoadProject(
 	const getStepUrls = useGetStepUrls()
 	const setAllStepStatus = useSetStepStatuses()
 	const updateCollection = useUpdateCollection()
+	const updateRunHistory = useUpdateRunHistory()
 
 	return useCallback(
 		async (definition?: FileDefinition, zip: ZipData = {}) => {
@@ -88,7 +91,12 @@ export function useLoadProject(
 					}))) as Workspace
 			}
 
-			const { tables = [], results, notebooks = [] } = zip as ZipData
+			const {
+				tables = [],
+				results,
+				notebooks = [],
+				runHistory = [],
+			} = zip as ZipData
 
 			const {
 				primarySpecification,
@@ -132,6 +140,7 @@ export function useLoadProject(
 			const completed = getStepUrls(workspace.todoPages, true)
 			setAllStepStatus(completed, StepStatus.Done)
 			updateCollection(workspace, tables, notebooks)
+			updateRunHistory(runHistory)
 		},
 		[
 			id,
@@ -149,6 +158,7 @@ export function useLoadProject(
 			setDefaultDatasetResult,
 			setConfidenceInterval,
 			updateCollection,
+			updateRunHistory,
 		],
 	)
 }
@@ -327,5 +337,21 @@ const useUpdateCollection = (): ((
 			setCollection(fileCollection)
 		},
 		[fileCollection, setCollection],
+	)
+}
+
+function useUpdateRunHistory() {
+	const setRunHistory = useSetRunHistory()
+	const setDefaultRun = useSetRunAsDefault()
+	return useCallback(
+		(runHistory: RunHistory[]) => {
+			if (!runHistory.length) {
+				return
+			}
+			setRunHistory(runHistory)
+			const defaultRun = runHistory.find(run => run.isActive) || runHistory[0]
+			setDefaultRun(defaultRun)
+		},
+		[setRunHistory, setDefaultRun],
 	)
 }

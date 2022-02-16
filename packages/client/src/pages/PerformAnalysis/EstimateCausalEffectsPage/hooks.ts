@@ -37,11 +37,7 @@ import {
 	AsyncHandler,
 	Handler,
 } from '~types'
-import {
-	createFormData,
-	returnInitialRunHistory,
-	returnRefutationCount,
-} from '~utils'
+import { createFormData, returnInitialRunHistory } from '~utils'
 
 export function useBusinessLogic(): {
 	isProcessing: boolean
@@ -108,19 +104,14 @@ export function useBusinessLogic(): {
 	const uploadProjectFiles = useCallback(
 		async (projectFiles: ProjectFile[]) => {
 			const filesData = createFormData(projectFiles)
-			return await uploadFiles(filesData)
+			return uploadFiles(filesData)
 		},
 		[],
 	)
 
 	const saveNewRunHistory = useCallback(() => {
-		const totalRefutation = returnRefutationCount(
-			specCount as number,
-			refutationOptions.length,
-		)
 		const initialRun = returnInitialRunHistory(
 			specCount as number,
-			totalRefutation,
 			hasConfidenceInterval,
 			refutationType,
 			runHistory.length,
@@ -132,7 +123,6 @@ export function useBusinessLogic(): {
 		hasConfidenceInterval,
 		refutationType,
 		runHistory.length,
-		refutationOptions.length,
 	])
 
 	const runEstimate = useCallback(async () => {

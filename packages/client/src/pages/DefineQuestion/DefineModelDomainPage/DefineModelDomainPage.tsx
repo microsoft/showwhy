@@ -36,7 +36,7 @@ export const DefineModelDomainPage: React.FC = memo(
 			<Container>
 				<Container>
 					<Div>
-						<FieldTitle>{pageType}: &nbsp;</FieldTitle>
+						<FieldTitle data-pw="title">{pageType}: &nbsp;</FieldTitle>
 						<DetailsText>{labelInterest}</DetailsText>
 					</Div>
 					<DetailsText>{descriptionInterest}</DetailsText>

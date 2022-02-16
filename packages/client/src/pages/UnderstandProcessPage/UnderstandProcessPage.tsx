@@ -15,7 +15,7 @@ export const UnderstandProcessPage: React.FC = memo(
 			<Root>
 				<ContainerFlexRow justifyContent="space-between">
 					<WorkspaceContainer>
-						<Title>Learn more about key concepts​</Title>
+						<Title data-pw="title">Learn more about key concepts​</Title>
 						{step?.resources?.map(resource => {
 							return (
 								<LinksContainer key={resource.id}>
@@ -28,6 +28,7 @@ export const UnderstandProcessPage: React.FC = memo(
 												href={link.url}
 												key={link.url}
 												title="Open link"
+												data-pw="resource-link"
 											>
 												<LinkDescription>{link.description}</LinkDescription>
 												<Container>{link.title}</Container>

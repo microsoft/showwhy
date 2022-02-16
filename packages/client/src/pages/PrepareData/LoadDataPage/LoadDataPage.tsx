@@ -80,39 +80,40 @@ export const LoadDataPage: React.FC = memo(function LoadDataPage() {
 				/>
 			</ContainerFlexRow>
 
-			<TableContainer>
-				<SelectedTableDisplay
-					selectedFile={selectedFile}
-					projectFiles={projectFiles}
-					onRenameTable={onRenameTable}
-				/>
-			</TableContainer>
-
 			{selectedFile ? (
-				<DataLoadIndicator>
-					<FlexContainer>
-						<Toggle
-							label="Data loaded correctly"
-							onText="Yes"
-							checked={selectedFile?.loadedCorrectly || false}
-							offText="No"
-							onChange={() => toggleLoadedCorrectly()}
+				<>
+					<TableContainer>
+						<SelectedTableDisplay
+							selectedFile={selectedFile}
+							projectFiles={projectFiles}
+							onRenameTable={onRenameTable}
 						/>
-						{!selectedFile.loadedCorrectly ? (
-							<DelimiterDropdown
-								selectedKey={selectedDelimiter}
-								onChange={handleDelimiterChange}
-								styles={{ root: { width: '9em' } }}
+					</TableContainer>
+					<DataLoadIndicator>
+						<FlexContainer>
+							<Toggle
+								label="Data loaded correctly"
+								onText="Yes"
+								checked={selectedFile?.loadedCorrectly || false}
+								offText="No"
+								onChange={() => toggleLoadedCorrectly()}
 							/>
-						) : null}
-					</FlexContainer>
-					<DeleteButton
-						title="Delete current dataset"
-						onClick={() => toggleShowConfirm()}
-					>
-						Delete dataset
-					</DeleteButton>
-				</DataLoadIndicator>
+							{!selectedFile.loadedCorrectly ? (
+								<DelimiterDropdown
+									selectedKey={selectedDelimiter}
+									onChange={handleDelimiterChange}
+									styles={{ root: { width: '9em' } }}
+								/>
+							) : null}
+						</FlexContainer>
+						<DeleteButton
+							title="Delete current dataset"
+							onClick={() => toggleShowConfirm()}
+						>
+							Delete dataset
+						</DeleteButton>
+					</DataLoadIndicator>
+				</>
 			) : null}
 		</Container>
 	)

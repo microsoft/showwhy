@@ -40,7 +40,7 @@ export const ProcessTableColumnsPage: React.FC = memo(
 				)}
 
 				{selectedTable && (
-					<TableDetailsContainer>
+					<TableDetailsContainer data-pw="table">
 						<TableContainer>
 							<ArqueroTableHeader
 								table={selectedTable.table}

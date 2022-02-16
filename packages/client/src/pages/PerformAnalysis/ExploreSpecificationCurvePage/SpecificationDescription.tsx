@@ -36,7 +36,7 @@ export const SpecificationDescription: React.FC<{
 		<Container>
 			{specification ? (
 				<>
-					<Paragraph noMarginTop>
+					<Paragraph noMarginTop data-pw="selected-specification-text">
 						Specification
 						<Value>{specification.id}</Value>uses a
 						<Value>{specification.causalModel}</Value>
@@ -82,7 +82,10 @@ export const SpecificationDescription: React.FC<{
 							</Text>
 						)}
 					</Paragraph>
-					<ToggleButton onClick={onToggleRejectEstimate}>
+					<ToggleButton
+						onClick={onToggleRejectEstimate}
+						data-pw="toggle-estimate-button"
+					>
 						{isSpecificationOn ? 'Reject estimate' : 'Accept estimate'}
 					</ToggleButton>
 				</>

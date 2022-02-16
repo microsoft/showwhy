@@ -4,35 +4,6 @@
  */
 import { v4 as uuidv4 } from 'uuid'
 import {
-	defineExposure,
-	defineOutcome,
-	definePopulation,
-	describeElements,
-	defineCausalFactors,
-	defineFactorsCausingExposure,
-	defineFactorsCausedByExposure,
-	defineFactorsCausingOutcome,
-	defineFactorsCausedByOutcome,
-	confirmAlternativeModels,
-} from '../locales/en-US/define-question'
-import {
-	estimateCausalEffects,
-	selectCausalEstimators,
-} from '../locales/en-US/perform-analysis'
-import {
-	deriveControl,
-	deriveExposure,
-	deriveOutcome,
-	derivePopulation,
-	loadData,
-	tableColumns,
-} from '../locales/en-US/prepare-data'
-import { evaluateHypothesis, graph } from '../locales/en-US/review-results'
-import {
-	why,
-	who,
-	how,
-	when,
 	whyLinks,
 	whoLinks,
 	whenLinks,
@@ -48,38 +19,42 @@ export const stepsList = [
 			{
 				id: uuidv4(),
 				title: 'Why use ShowWhy?',
-				guidance: why,
 				resources: whyLinks.map(link => ({ ...link, id: uuidv4() })),
 				status: StepStatus.ToDo,
 				url: `${Pages.UnderstandProcess}/${PageType.Why}`,
 				showStatus: false,
+				getMarkdown: async () =>
+					import('../markdown/understand-process/Why.md'),
 			},
 			{
 				id: uuidv4(),
 				title: 'Who is ShowWhy for?',
-				guidance: who,
 				resources: whoLinks.map(link => ({ ...link, id: uuidv4() })),
 				status: StepStatus.ToDo,
 				url: `${Pages.UnderstandProcess}/${PageType.Who}`,
 				showStatus: false,
+				getMarkdown: async () =>
+					import('../markdown/understand-process/Who.md'),
 			},
 			{
 				id: uuidv4(),
 				title: 'When to use ShowWhy?',
-				guidance: when,
 				resources: whenLinks.map(link => ({ ...link, id: uuidv4() })),
 				status: StepStatus.ToDo,
 				url: `${Pages.UnderstandProcess}/${PageType.When}`,
 				showStatus: false,
+				getMarkdown: async () =>
+					import('../markdown/understand-process/When.md'),
 			},
 			{
 				id: uuidv4(),
 				title: 'How does ShowWhy work?',
-				guidance: how,
 				resources: howLinks.map(link => ({ ...link, id: uuidv4() })),
 				status: StepStatus.ToDo,
 				url: `${Pages.UnderstandProcess}/${PageType.How}`,
 				showStatus: false,
+				getMarkdown: async () =>
+					import('../markdown/understand-process/How.md'),
 			},
 		],
 	},
@@ -90,34 +65,38 @@ export const stepsList = [
 			{
 				id: uuidv4(),
 				title: 'Describe elements',
-				guidance: describeElements,
 				status: StepStatus.ToDo,
 				url: `${Pages.DefineElements}`,
 				showStatus: true,
+				getMarkdown: async () =>
+					import('../markdown/define-question/Elements.md'),
 			},
 			{
 				id: uuidv4(),
 				title: 'Define population',
-				guidance: definePopulation,
 				status: StepStatus.ToDo,
 				url: `${Pages.Define}/${PageType.Population}`,
 				showStatus: true,
+				getMarkdown: async () =>
+					import('../markdown/define-question/Population.md'),
 			},
 			{
 				id: uuidv4(),
 				title: 'Define exposure',
-				guidance: defineExposure,
 				status: StepStatus.ToDo,
 				url: `${Pages.Define}/${PageType.Exposure}`,
 				showStatus: true,
+				getMarkdown: async () =>
+					import('../markdown/define-question/Exposure.md'),
 			},
 			{
 				id: uuidv4(),
 				title: 'Define outcome',
-				guidance: defineOutcome,
 				status: StepStatus.ToDo,
 				url: `${Pages.Define}/${PageType.Outcome}`,
 				showStatus: true,
+				getMarkdown: async () =>
+					import('../markdown/define-question/Outcome.md'),
 			},
 		],
 	},
@@ -128,50 +107,58 @@ export const stepsList = [
 			{
 				id: uuidv4(),
 				title: 'Consider causal factors',
-				guidance: defineCausalFactors,
 				status: StepStatus.ToDo,
 				url: `${Pages.ConsiderCausalFactors}`,
 				showStatus: true,
+				getMarkdown: async () =>
+					import('../markdown/model-causal-factors/ConsiderCausalFactors.md'),
 			},
 			{
 				id: uuidv4(),
 				title: 'Factors causing exposure',
-				guidance: defineFactorsCausingExposure,
 				status: StepStatus.ToDo,
 				showStatus: true,
 				url: `${Pages.DefineFactors}/${PageType.CauseExposure}`,
+				getMarkdown: async () =>
+					import('../markdown/model-causal-factors/CausingExposure.md'),
 			},
 			{
 				id: uuidv4(),
 				title: 'Factors caused by exposure',
-				guidance: defineFactorsCausedByExposure,
 				status: StepStatus.ToDo,
 				url: `${Pages.DefineFactors}/${PageType.CausedByExposure}`,
 				showStatus: true,
+				getMarkdown: async () =>
+					import('../markdown/model-causal-factors/CausedByExposure.md'),
 			},
 			{
 				id: uuidv4(),
 				title: 'Factors causing outcome',
-				guidance: defineFactorsCausingOutcome,
 				status: StepStatus.ToDo,
 				url: `${Pages.DefineFactors}/${PageType.CauseOutcome}`,
 				showStatus: true,
+				getMarkdown: async () =>
+					import('../markdown/model-causal-factors/CausingOutcome.md'),
 			},
 			{
 				id: uuidv4(),
 				title: 'Factors caused by outcome',
-				guidance: defineFactorsCausedByOutcome,
 				status: StepStatus.ToDo,
 				url: `${Pages.DefineFactors}/${PageType.CausedByOutcome}`,
 				showStatus: true,
+				getMarkdown: async () =>
+					import('../markdown/model-causal-factors/CausedByOutcome.md'),
 			},
 			{
 				id: uuidv4(),
 				title: 'Confirm alternative models',
-				guidance: confirmAlternativeModels.replace(/\u200B/g, ''),
 				status: StepStatus.ToDo,
 				url: `${Pages.Confirm}`,
 				showStatus: true,
+				getMarkdown: async () =>
+					import(
+						'../markdown/model-causal-factors/ConfirmAlternativeModels.md'
+					),
 			},
 		],
 	},
@@ -182,50 +169,54 @@ export const stepsList = [
 			{
 				id: uuidv4(),
 				title: 'Load data tables',
-				guidance: loadData,
 				status: StepStatus.ToDo,
 				url: `${Pages.LoadData}`,
 				showStatus: true,
+				getMarkdown: async () => import('../markdown/prepare-data/Load.md'),
 			},
 			{
 				id: uuidv4(),
 				title: 'Process table columns',
-				guidance: tableColumns,
 				status: StepStatus.ToDo,
 				url: Pages.ProcessTableColumns,
 				showStatus: true,
+				getMarkdown: async () => import('../markdown/prepare-data/Prepare.md'),
 			},
 			{
 				id: uuidv4(),
 				title: 'Population variables',
-				guidance: derivePopulation,
 				status: StepStatus.ToDo,
 				url: `${Pages.Variables}/${PageType.Population}`,
 				showStatus: true,
+				getMarkdown: async () =>
+					import('../markdown/prepare-data/PopulationVariables.md'),
 			},
 			{
 				id: uuidv4(),
 				title: 'Exposure variables',
-				guidance: deriveExposure,
 				status: StepStatus.ToDo,
 				url: `${Pages.Variables}/${PageType.Exposure}`,
 				showStatus: true,
+				getMarkdown: async () =>
+					import('../markdown/prepare-data/ExposureVariables.md'),
 			},
 			{
 				id: uuidv4(),
 				title: 'Outcome variables',
-				guidance: deriveOutcome,
 				status: StepStatus.ToDo,
 				url: `${Pages.Variables}/${PageType.Outcome}`,
 				showStatus: true,
+				getMarkdown: async () =>
+					import('../markdown/prepare-data/OutcomeVariables.md'),
 			},
 			{
 				id: uuidv4(),
 				title: 'Control variables',
-				guidance: deriveControl,
 				status: StepStatus.ToDo,
 				url: `${Pages.Variables}/${PageType.Control}`,
 				showStatus: true,
+				getMarkdown: async () =>
+					import('../markdown/prepare-data/ControlVariables.md'),
 			},
 		],
 	},
@@ -236,34 +227,38 @@ export const stepsList = [
 			{
 				id: uuidv4(),
 				title: 'Select causal estimators',
-				guidance: selectCausalEstimators,
 				status: StepStatus.ToDo,
 				url: Pages.SelectCausalEstimators,
 				showStatus: true,
+				getMarkdown: async () =>
+					import('../markdown/perform-analysis/Estimators.md'),
 			},
 			{
 				id: uuidv4(),
 				title: 'Estimate causal effects',
-				guidance: estimateCausalEffects,
 				status: StepStatus.ToDo,
 				url: Pages.EstimateCausalEffects,
 				showStatus: true,
+				getMarkdown: async () =>
+					import('../markdown/perform-analysis/CausalEffects.md'),
 			},
 			{
 				id: uuidv4(),
 				title: 'Explore specification curve',
-				guidance: graph,
 				status: StepStatus.ToDo,
 				url: Pages.SpecificationCurvePage,
 				showStatus: true,
+				getMarkdown: async () =>
+					import('../markdown/perform-analysis/SpecificationCurve.md'),
 			},
 			{
 				id: uuidv4(),
 				title: 'Evaluate hypothesis',
-				guidance: evaluateHypothesis,
 				status: StepStatus.ToDo,
 				url: Pages.EvaluateHypothesisPage,
 				showStatus: true,
+				getMarkdown: async () =>
+					import('../markdown/perform-analysis/Hypothesis.md'),
 			},
 		],
 	},

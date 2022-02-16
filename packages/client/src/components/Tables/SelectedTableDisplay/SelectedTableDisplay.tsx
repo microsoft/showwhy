@@ -21,7 +21,7 @@ export const SelectedTableDisplay: React.FC<{
 	onRenameTable,
 }) {
 	return (
-		<Container>
+		<Container data-pw="table">
 			{selectedFile ? (
 				<SelectedFile>
 					<ArqueroTableHeader

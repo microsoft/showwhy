@@ -33,6 +33,7 @@ export const PageButtons: React.FC<{
 						!defaultRun
 					}
 					onClick={() => runSignificance(activeTaskIds)}
+					data-pw="run-significance-test-button"
 				>
 					Run significance test
 				</ButtonWithMargin>

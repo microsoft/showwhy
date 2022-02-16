@@ -4,6 +4,7 @@ dist/
 out/
 lib/
 coverage/
+test-results/
 
 # exclude any csv from client public data folder
 packages/client/public/data/*/*.csv
@@ -12,8 +13,8 @@ packages/client/public/data/*/*.csv
 node_modules/
 
 # Yarn v2 Gitignores - https://yarnpkg.com/getting-started/qa/#which-files-should-be-gitignored
+.pnp.*
 .yarn/*
-!.yarn/cache
 !.yarn/patches
 !.yarn/plugins
 !.yarn/releases
