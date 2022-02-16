@@ -2,43 +2,43 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { isStatusProcessing } from '../estimate'
+import { isProcessingStatus } from '../api'
 import { NodeResponseStatus } from '~types'
 
-describe('estimate utils functions', () => {
-	it('isStatusProcessing => Running', () => {
+describe('api utils functions', () => {
+	it('isProcessingStatus => Running', () => {
 		const status = NodeResponseStatus.Running
-		const result = isStatusProcessing(status)
+		const result = isProcessingStatus(status)
 		expect(result).toBe(true)
 	})
 
-	it('isStatusProcessing => Processing', () => {
+	it('isProcessingStatus => Processing', () => {
 		const status = NodeResponseStatus.Processing
-		const result = isStatusProcessing(status)
+		const result = isProcessingStatus(status)
 		expect(result).toBe(true)
 	})
 
-	it('isStatusProcessing => InProgress', () => {
+	it('isProcessingStatus => InProgress', () => {
 		const status = NodeResponseStatus.InProgress
-		const result = isStatusProcessing(status)
+		const result = isProcessingStatus(status)
 		expect(result).toBe(true)
 	})
 
-	it('isStatusProcessing => Pending', () => {
+	it('isProcessingStatus => Pending', () => {
 		const status = NodeResponseStatus.Pending
-		const result = isStatusProcessing(status)
+		const result = isProcessingStatus(status)
 		expect(result).toBe(true)
 	})
 
-	it('isStatusProcessing => Terminated', () => {
+	it('isProcessingStatus => Terminated', () => {
 		const status = NodeResponseStatus.Terminated
-		const result = isStatusProcessing(status)
+		const result = isProcessingStatus(status)
 		expect(result).toBe(false)
 	})
 
-	it('isStatusProcessing => Completed', () => {
+	it('isProcessingStatus => Completed', () => {
 		const status = NodeResponseStatus.Completed
-		const result = isStatusProcessing(status)
+		const result = isProcessingStatus(status)
 		expect(result).toBe(false)
 	})
 })

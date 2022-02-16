@@ -16,7 +16,7 @@ import {
 	Maybe,
 	Handler,
 } from '~types'
-import { sortGroupByKey } from '~utils'
+import { sortByField } from '~utils'
 
 interface GenericHeader {
 	data: HeaderData[]
@@ -66,7 +66,7 @@ export const GenericTableComponent: React.FC<{
 
 	const sortItems = useCallback(
 		(column: string, asc?: boolean) => {
-			const sortBy = sortGroupByKey(column, asc)
+			const sortBy = sortByField(column, asc)
 			const sorted = [...items]
 			sorted.sort(sortBy)
 			setSortedItems(sorted.slice(0, tableSample))

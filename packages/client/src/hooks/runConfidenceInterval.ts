@@ -13,11 +13,7 @@ import {
 	SignificanceTest,
 	SignificanceTestResponse,
 } from '~types'
-import {
-	matchStatus,
-	returnInitialConfidenceInterval,
-	returnPercentage,
-} from '~utils'
+import { isStatus, getConfidenceInterval, percentage } from '~utils'
 
 export function useRunConfidenceInterval(): any {
 	const defaultRun = useDefaultRun()
@@ -25,7 +21,7 @@ export function useRunConfidenceInterval(): any {
 
 	const onUpdate = useCallback(
 		(status: SignificanceTestResponse) => {
-			if (matchStatus(status.runtimeStatus, NodeResponseStatus.Terminated)) {
+			if (isStatus(status.runtimeStatus, NodeResponseStatus.Terminated)) {
 				return updateSignificanceTests(undefined)
 			}
 			updateSignificanceTests(prev => {
@@ -35,7 +31,7 @@ export function useRunConfidenceInterval(): any {
 					test_results: status.test_results,
 					total_simulations: status.total_simulations || 0,
 					status: status.runtimeStatus,
-					percentage: returnPercentage(
+					percentage: percentage(
 						status?.simulation_completed || 0,
 						status.total_simulations || 1,
 					),
@@ -47,7 +43,7 @@ export function useRunConfidenceInterval(): any {
 
 	const onStart = useCallback(
 		(nodeResponse: NodeResponse) => {
-			const initialRun = returnInitialConfidenceInterval(
+			const initialRun = getConfidenceInterval(
 				defaultRun?.id as string,
 				nodeResponse,
 			)

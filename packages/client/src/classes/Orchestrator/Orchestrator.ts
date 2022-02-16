@@ -7,7 +7,7 @@ import { OrchestratorType } from './OrchestratorType'
 import {
 	executeNode,
 	genericCheckStatus,
-	returnOrchestratorStatus,
+	getOrchestratorStatus,
 	terminateRun,
 } from '~resources'
 import {
@@ -18,7 +18,7 @@ import {
 	OrchestratorStatusResponse,
 	Maybe,
 } from '~types'
-import { isStatusProcessing, wait } from '~utils'
+import { isProcessingStatus, wait } from '~utils'
 
 export type OrchestratorHandler = (...args: unknown[]) => void
 export type OrchestratorOnStartHandler = (nodeResponse: NodeResponse) => void
@@ -62,14 +62,14 @@ export class Orchestrator<UpdateStatus> {
 		if (this.orchestratorResponse == null) {
 			throw new Error('response not available')
 		}
-		let status = await returnOrchestratorStatus(
+		let status = await getOrchestratorStatus(
 			this.orchestratorResponse.statusQueryGetUri,
 		)
 
 		let estimateStatus: Partial<OrchestratorStatusResponse> | null = null
-		while (isStatusProcessing(status?.runtimeStatus as NodeResponseStatus)) {
+		while (isProcessingStatus(status?.runtimeStatus as NodeResponseStatus)) {
 			[status, estimateStatus] = await Promise.all([
-				returnOrchestratorStatus(this.orchestratorResponse.statusQueryGetUri),
+				getOrchestratorStatus(this.orchestratorResponse.statusQueryGetUri),
 				genericCheckStatus(status?.instanceId, type),
 				wait(3000),
 			])
