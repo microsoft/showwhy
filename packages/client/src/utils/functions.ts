@@ -4,14 +4,6 @@
  */
 import { EstimateEffectStatusResponse, NodeResponseStatus, Maybe } from '~types'
 
-export function replaceItemAtIndex<T>(
-	arr: T[],
-	index: number,
-	newValue: T,
-): T[] {
-	return [...arr.slice(0, index), newValue, ...arr.slice(index + 1)]
-}
-
 export function sortGroupByKey(key: string, asc = true) {
 	return <T>(a: T, b: T): number => {
 		const aKey = (a as any)[key]
@@ -26,17 +18,6 @@ export function sortGroupByKey(key: string, asc = true) {
 
 export function addS(len: number): string {
 	return len !== 1 ? 's' : ''
-}
-
-export function addOrRemoveArrayElement(
-	array: string[],
-	item: string,
-	add: boolean,
-): string[] {
-	if (add) {
-		return [...array, item]
-	}
-	return array.filter(d => d !== item)
 }
 
 export function findRunError(
@@ -62,13 +43,6 @@ export function wait(ms: number): Promise<boolean> {
 			resolve(true)
 		}, ms)
 	})
-}
-
-export function equalArrays(arr1: any[], arr2: any[]): boolean {
-	if (arr1.length !== arr2.length) {
-		return false
-	}
-	return arr1.every(item => arr2.includes(item))
 }
 
 export function returnElapsedTime(

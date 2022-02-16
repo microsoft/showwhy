@@ -15,7 +15,7 @@ import {
 	CausalModelLevel,
 	OptionalId,
 } from '~types'
-import { replaceItemAtIndex } from '~utils/functions'
+import { replaceItemAtIndex } from '~utils/arrays'
 
 export function useExcludedFactors(): string[] {
 	return useExcludedFactorsTestable(useCausalFactors())
