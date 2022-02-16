@@ -91,10 +91,6 @@ export function useBusinessLogic(): {
 			})
 	}, [selectedTable, removedColumns, columnIsDone])
 
-	useEffect(() => {
-		setSelectedFile(files[0])
-	}, [files, setSelectedFile])
-
 	const selectFirstColumn = useCallback(() => {
 		setSelectedColumn(
 			selectedTable?.table?.select(not(removedColumns)).columnNames()[0],
