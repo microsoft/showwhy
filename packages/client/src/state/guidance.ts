@@ -2,8 +2,9 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { atom, useRecoilValue, useRecoilState, SetterOrUpdater } from 'recoil'
+import { atom } from 'recoil'
 import { localStorageEffect } from './effects/localStorageEffect'
+import { ToggleCallback, useRecoilBasedToggle } from '~hooks'
 
 export const guidanceState = atom<boolean>({
 	key: 'guidance',
@@ -11,10 +12,6 @@ export const guidanceState = atom<boolean>({
 	effects: [localStorageEffect('showwhy:show_guidance')],
 })
 
-export function useGuidanceState(): [boolean, SetterOrUpdater<boolean>] {
-	return useRecoilState(guidanceState)
-}
-
-export function useGuidance(): boolean {
-	return useRecoilValue(guidanceState)
+export function useGuidance(): [boolean, ToggleCallback] {
+	return useRecoilBasedToggle(guidanceState)
 }
