@@ -24,7 +24,7 @@ export function sortGroupByKey(key: string, asc = true) {
 	}
 }
 
-export const addS = (len: number): string => {
+export function addS(len: number): string {
 	return len !== 1 ? 's' : ''
 }
 
@@ -39,9 +39,9 @@ export function addOrRemoveArrayElement(
 	return array.filter(d => d !== item)
 }
 
-export const findRunError = (
+export function findRunError(
 	response: Partial<EstimateEffectStatusResponse>,
-): Maybe<string> => {
+): Maybe<string> {
 	if (response.runtimeStatus?.toLowerCase() === NodeResponseStatus.Failed) {
 		const error =
 			response.partial_results &&
@@ -56,7 +56,7 @@ export const findRunError = (
 	return undefined
 }
 
-export const wait = (ms: number): Promise<boolean> => {
+export function wait(ms: number): Promise<boolean> {
 	return new Promise(resolve => {
 		setTimeout(() => {
 			resolve(true)
@@ -64,31 +64,17 @@ export const wait = (ms: number): Promise<boolean> => {
 	})
 }
 
-export const equalArrays = (arr1: any[], arr2: any[]): boolean => {
+export function equalArrays(arr1: any[], arr2: any[]): boolean {
 	if (arr1.length !== arr2.length) {
 		return false
 	}
 	return arr1.every(item => arr2.includes(item))
 }
 
-export const calculateMedian = (values: number[]): number => {
-	if (values.length === 0) return 0
-
-	values.sort(function (a, b) {
-		return a - b
-	})
-
-	const half = Math.floor(values.length / 2)
-
-	if (values.length % 2) return values[half]
-
-	return (values[half - 1] + values[half]) / 2.0
-}
-
-export const returnElapsedTime = (
+export function returnElapsedTime(
 	startDate: Date | string,
 	endDate: Date | string,
-): string => {
+): string {
 	if (typeof startDate === 'string') {
 		startDate = new Date(startDate)
 	}
@@ -103,8 +89,4 @@ export const returnElapsedTime = (
 		.toString()
 		.padStart(2, '0')
 	return `${minutes}min ${seconds}s`
-}
-
-export const returnPercentage = (completed = 0, total = 0): number => {
-	return Math.min(+((100 * completed) / total || 0).toFixed(2), 100)
 }

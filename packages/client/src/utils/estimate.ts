@@ -5,7 +5,8 @@
 
 import { v4 } from 'uuid'
 import { SESSION_ID_KEY } from './consts'
-import { findRunError, returnPercentage } from './functions'
+import { percentage } from './stats'
+import { findRunError } from './functions'
 import { createAndReturnStorageItem } from './sessionStorage'
 import {
 	EstimateEffectStatusResponse,
@@ -122,7 +123,7 @@ export const returnStatus = (
 		hasConfidenceInterval,
 	)
 
-	let percentage = 100
+	let pct = 100
 	const totalResults = status?.total_results ?? 0
 	const refuteCompleted = returnRefutationCount(
 		status?.refute_completed ?? 0,
@@ -141,10 +142,7 @@ export const returnStatus = (
 			NodeResponseStatus.Completed,
 		)
 	) {
-		percentage = returnPercentage(
-			status?.estimated_effect_completed,
-			status?.total_results,
-		)
+		pct = percentage(status?.estimated_effect_completed, status?.total_results)
 	} else if (
 		hasConfidenceInterval &&
 		!matchStatus(
@@ -152,7 +150,7 @@ export const returnStatus = (
 			NodeResponseStatus.Completed,
 		)
 	) {
-		percentage = returnPercentage(
+		pct = percentage(
 			status?.confidence_interval_completed,
 			status?.total_results,
 		)
@@ -162,13 +160,13 @@ export const returnStatus = (
 			NodeResponseStatus.Completed,
 		)
 	) {
-		percentage = returnPercentage(status?.refute_completed, totalResults)
+		pct = percentage(status?.refute_completed, totalResults)
 	}
 
 	const st = {
 		status: status.runtimeStatus?.toLowerCase() as NodeResponseStatus,
 		error: findRunError(status),
-		percentage,
+		percentage: pct,
 		estimators,
 		confidenceIntervals,
 		refuters,

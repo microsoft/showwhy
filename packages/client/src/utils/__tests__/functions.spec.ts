@@ -8,7 +8,6 @@ import {
 	addS,
 	replaceItemAtIndex,
 	returnElapsedTime,
-	returnPercentage,
 	sortGroupByKey,
 } from '../functions'
 
@@ -54,14 +53,6 @@ describe('Utils Functions', () => {
 		const expected = '5min 05s'
 
 		const result = returnElapsedTime(initialTime, finalTime)
-		expect(result).toEqual(expected)
-	})
-
-	it('returnPercentage', () => {
-		const completed = 10
-		const total = 100
-		const expected = 10
-		const result = returnPercentage(completed, total)
 		expect(result).toEqual(expected)
 	})
 })

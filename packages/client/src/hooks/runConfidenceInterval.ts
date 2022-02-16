@@ -16,7 +16,7 @@ import {
 import {
 	matchStatus,
 	returnInitialConfidenceInterval,
-	returnPercentage,
+	percentage,
 } from '~utils'
 
 export function useRunConfidenceInterval(): any {
@@ -35,7 +35,7 @@ export function useRunConfidenceInterval(): any {
 					test_results: status.test_results,
 					total_simulations: status.total_simulations || 0,
 					status: status.runtimeStatus,
-					percentage: returnPercentage(
+					percentage: percentage(
 						status?.simulation_completed || 0,
 						status.total_simulations || 1,
 					),
