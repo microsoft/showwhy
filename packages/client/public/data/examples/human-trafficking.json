@@ -1,0 +1,158 @@
+{
+  "primarySpecification": {
+    "causalModel": "Maximum",
+    "type": "Propensity Score Stratification"
+  },
+  "confidenceInterval": true,
+  "causalFactors": [
+    {
+      "description": "Patient's age group derived from the Wolfram dataset",
+      "variable": "Patient Age",
+      "column": "age_group",
+      "causes": {
+        "causeOutcome": {
+          "causes": true,
+          "degree": 100,
+          "reasoning": "Older adults are likely to have higher mortality rates than younger adults"
+        },
+        "causeExposure": {
+          "causes": true,
+          "degree": 100,
+          "reasoning": "Older adults are more likely to experience chronic diseases than younger adults"
+        }
+      }
+    },
+    {
+      "description": "Patient gender recorded in the Wolfram dataset",
+      "variable": "Patient Gender",
+      "column": "gender",
+      "causes": {
+        "causeOutcome": {
+          "causes": true,
+          "degree": 50,
+          "reasoning": "There might be differences in risk of mortality between men and women"
+        },
+        "causeExposure": {
+          "causes": true,
+          "degree": 50,
+          "reasoning": "Women tend to be more affected by long-term and chronic illness"
+        }
+      }
+    }
+  ],
+  "defineQuestion": {
+    "exposure": {
+      "label": "Chronic Disease",
+      "description": "Patient presented in the Wolfram dataset who reported having a chronic disease prior to contracting COVID-19",
+      "dataset": "Wolfram dataset",
+      "definition": [
+        {
+          "level": "Primary",
+          "variable": "Experienced chronic disease",
+          "description": "A binary variable indicating whether the patient reported having a chronic disease",
+          "column": "chronic_disease"
+        },
+        {
+          "level": "Secondary",
+          "variable": "Experienced diabetes & hypertension chronic disease",
+          "description": "COVID-19 patients recorded in the Wolfram dataset. Records must include complete information on the patient's age, gender, chronic disease status, and survival status",
+          "column": "diabetes_hypertension"
+        }
+      ]
+    },
+    "population": {
+      "label": "Confirmed COVID-19 Cases",
+      "description": "Patients who tested positive for COVID-19 and were presented in the Wolfram's Patient Medical Data for Novel Coronavirus COVID-19 dataset",
+      "dataset": "Wolfram dataset",
+      "definition": [
+        {
+          "level": "Primary",
+          "variable": "Confirmed COVID-19 cases",
+          "description": "COVID-19 patients recorded in the Wolfram dataset. Records must include complete information on the patient's age, gender, chronic disease status, and survival status",
+          "column": "subject_inclusion"
+        }
+      ]
+    },
+    "outcome": {
+      "label": "Mortality Risk",
+      "description": "Patients did not survive after contracting COVID-19",
+      "dataset": "Wolfram dataset",
+      "definition": [
+        {
+          "level": "Primary",
+          "variable": "Mortality",
+          "description": "Binary variable indicating whether the patient died after contracting COVID-19",
+          "column": "death"
+        }
+      ]
+    },
+    "hypothesis": "Increase"
+  },
+  "estimators": [
+    {
+      "group": "Exposure-assignment",
+      "type": "Inverse Propensity Weighting"
+    },
+    {
+      "group": "Exposure-assignment",
+      "type": "Propensity Score Stratification"
+    },
+    {
+      "group": "Outcome-based",
+      "type": "Linear Double Machine Learning"
+    },
+    {
+      "group": "Outcome-based",
+      "type": "Linear Doubly Robust Learner"
+    },
+    {
+      "group": "Outcome-based",
+      "type": "Linear Regression"
+    }
+  ],
+  "refutations": "Quick Refutation",
+  "tableColumns": [
+    {
+      "name": "index",
+      "relevance": "SubjectIdentifier"
+    }
+  ],
+  "modelVariables": {},
+  "todoPages": [
+    "/perform/effects",
+    "/perform/estimate-distribution",
+    "/perform/evaluate"
+  ],
+  "tables": [
+    {
+      "url": "data/pre-processed-results/gdp_per_capita.csv",
+      "name": "gdp_per-capita.csv"
+    },
+    {
+      "url": "data/pre-processed-results/country_governance_vdem.csv",
+      "name": "country_governance_vdem.csv"
+    },
+    {
+      "url": "data/pre-processed-results/disasters_affected_people.csv",
+      "name": "disasters_affected_people.csv"
+    },
+    {
+      "url": "data/pre-processed-results/country_codes.csv",
+      "name": "country_codes.csv"
+    }
+  ],
+  "tablesPrep": {
+    "steps": [
+      {
+        "verb": "join",
+        "input": "country_codes.csv",
+        "output": "prep-table-1",
+        "args": {
+          "other": "gdp_per-capita.csv",
+          "on": [
+            "country_code"
+          ]
+        }
+      }
+    ]}
+}

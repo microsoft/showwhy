@@ -13,7 +13,7 @@ export enum Pages {
 	LoadData = '/prepare/load',
 	VariablesControl = '/prepare/variables/control',
 	Variables = '/prepare/variables',
-	ProcessTableColumns = '/prepare/columns',
+	ProcessData = '/prepare/data',
 	EstimateCausalEffects = '/perform/effects',
 	SelectCausalEstimators = '/perform/estimators',
 	RefutationTests = '/perform/refutation',

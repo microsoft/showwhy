@@ -435,7 +435,8 @@
     "defaultResult": {
         "url": "data/pre-processed-results/smoking-cessation.csv"
     },
-    "postLoad": {
+    "postLoad": [{
+        "tableName": "nhefs.csv",
         "steps": [
             {
                 "type": "verb",
@@ -555,5 +556,5 @@
                 }
             }
         ]
-    }
+    }]
 }

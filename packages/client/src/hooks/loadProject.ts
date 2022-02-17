@@ -2,7 +2,9 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import { Step as FileStep } from '@data-wrangling-components/core'
 import { BaseFile } from '@data-wrangling-components/utilities'
+import { all, op } from 'arquero'
 import { useCallback, useMemo } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import { useGetStepUrls, useSetRunAsDefault } from '~hooks'
@@ -21,6 +23,7 @@ import {
 	useSetRunHistory,
 	useSetStepStatuses,
 	useSetTableColumns,
+	useSetStepsTablePrep,
 } from '~state'
 import {
 	ProjectSource,
@@ -40,6 +43,7 @@ import {
 	Handler1,
 	Maybe,
 	RunHistory,
+	Step,
 } from '~types'
 import {
 	fetchRemoteTables,
@@ -52,9 +56,9 @@ import {
 export function useLoadProject(
 	source = ProjectSource.url,
 ): (definition?: Maybe<FileDefinition>, zip?: Maybe<ZipData>) => Promise<void> {
-	const id = useMemo(() => uuidv4(), [])
-	const setTableColumns = useSetTableColumns(id)
-	const setModelVariables = useSetModelVariables(id)
+	// const id = useMemo(() => uuidv4(), [])
+	const setTableColumns = useSetTableColumns('identifier')
+	// const setModelVariables = useSetModelVariables(id)
 	const setPrimarySpecificationConfig = useSetPrimarySpecificationConfig()
 	const setCausalFactors = useSetCausalFactors()
 	const setDefineQuestion = useSetDefineQuestion()
@@ -67,6 +71,7 @@ export function useLoadProject(
 	const setAllStepStatus = useSetStepStatuses()
 	const updateCollection = useUpdateCollection()
 	const updateRunHistory = useUpdateRunHistory()
+	const setStepsTablePrep = useSetStepsTablePrep()
 
 	return useCallback(
 		async (definition?: FileDefinition, zip: ZipData = {}) => {
@@ -108,6 +113,7 @@ export function useLoadProject(
 				modelVariables,
 				confidenceInterval,
 				defaultResult,
+				tablesPrep,
 			} = workspace
 
 			if (results && defaultResult) {
@@ -121,6 +127,7 @@ export function useLoadProject(
 			const est = estimators || []
 			const tcs = prepTableColumns(tableColumns)
 			const mvs = prepModelVariables(modelVariables)
+			const tp = prepTablesPrep(tablesPrep?.steps)
 			const defaultDatasetResult = defaultResult || null
 
 			primarySpecification &&
@@ -131,11 +138,12 @@ export function useLoadProject(
 			setDefineQuestion(df)
 			setOrUpdateEst(est)
 			setTableColumns(tcs)
-			setModelVariables(mvs)
+			// setModelVariables(mvs)
+			setStepsTablePrep(tp)
 			setDefaultDatasetResult(defaultDatasetResult)
 			setConfidenceInterval(!!confidenceInterval)
 
-			await processTables(workspace, id, addFile, tables as File[])
+			await processTables(workspace, addFile, tables as File[])
 
 			const completed = getStepUrls(workspace.todoPages, true)
 			setAllStepStatus(completed, StepStatus.Done)
@@ -143,7 +151,7 @@ export function useLoadProject(
 			updateRunHistory(runHistory)
 		},
 		[
-			id,
+			// id,
 			source,
 			addFile,
 			setPrimarySpecificationConfig,
@@ -152,13 +160,14 @@ export function useLoadProject(
 			setOrUpdateEst,
 			setRefutationType,
 			setTableColumns,
-			setModelVariables,
+			// setModelVariables,
 			setAllStepStatus,
 			getStepUrls,
 			setDefaultDatasetResult,
 			setConfidenceInterval,
 			updateCollection,
 			updateRunHistory,
+			setStepsTablePrep,
 		],
 	)
 }
@@ -171,11 +180,11 @@ export function useLoadProject(
 // right now we need only one final table to submit, but don't provide enough data wrangling to enable anything complex.
 async function processTables(
 	workspace: Workspace,
-	id: string,
+	// id: string,
 	addFile: Handler1<ProjectFile>,
 	tableFiles?: File[],
 ) {
-	const { tables } = workspace
+	const { tables, postLoad } = workspace
 
 	// if we have a post-load,
 	// run it and save just the final result
@@ -185,46 +194,51 @@ async function processTables(
 	//save step 0 to steps list
 	//save step 1 to steps list
 
-	const primary = tables.find(table => table.primary)
+	//why?
 	// if (primary) {
 	// 	setPrimaryTable({ name: primary.name, id })
 	// }
-	// if (postLoad) {
-	// 	//TODO: add this to pipeline? how?
-	// 	let result = await runPipeline(tables, postLoad.steps, tableFiles)
-	// 	result = result.derive(
-	// 		{
-	// 			index: op.row_number(),
-	// 		},
-	// 		{ before: all() },
-	// 	)
 
-	// 	const file: ProjectFile = {
-	// 		id,
-	// 		content: result.toCSV(),
-	// 		name: workspace.name,
-	// 	}
-	// 	addFile(file)
-	// 	setOriginalTable({ tableId: id, table: result })
-	// } else {
-	// 	// this effectively uses a "first one wins" for the primary table
-	// 	// this shouldn't actually happen in practice, but until we can support multiples correctly...
-	if (primary) {
-		//only loading one table
-		const result = await (!isZipUrl(primary.url)
-			? fetchTable(primary)
-			: loadTable(primary, tableFiles))
+	tables.forEach(async table => {
+		const stepPostLoad = postLoad?.find(p => p.tableName === table.name)
+		if (stepPostLoad) {
+			const id = uuidv4()
+			let result = await runPipeline(tables, stepPostLoad.steps, tableFiles)
+			result = result.derive(
+				{
+					index: op.row_number(),
+				},
+				{ before: all() },
+			)
 
-		const file: ProjectFile = {
-			id,
-			content: result.toCSV(),
-			name: primary.name,
-			table: result,
+			const file: ProjectFile = {
+				id,
+				content: result.toCSV(),
+				name: stepPostLoad.tableName,
+				table: result,
+			}
+
+			addFile(file)
+		} else {
+			// 	// this effectively uses a "first one wins" for the primary table
+			// 	// this shouldn't actually happen in practice, but until we can support multiples correctly...
+			const id = uuidv4()
+
+			//only loading one table
+			const result = await (!isZipUrl(table.url)
+				? fetchTable(table)
+				: loadTable(table, tableFiles))
+
+			const file: ProjectFile = {
+				id,
+				content: result.toCSV(),
+				name: table.name,
+				table: result,
+			}
+			addFile(file)
+			// 		setOriginalTable({ tableId: id, table: result })
 		}
-		addFile(file)
-		// 		setOriginalTable({ tableId: id, table: result })
-	}
-	// }
+	})
 }
 
 function prepCausalFactors(factors?: Partial<CausalFactor>[]): CausalFactor[] {
@@ -268,6 +282,10 @@ function prepModelVariables(model?: Partial<Definition>): Definition {
 	}
 
 	return prepped as Definition
+}
+
+function prepTablesPrep(steps?: FileStep[]): FileStep[] {
+	return steps as FileStep[]
 }
 
 function prepVariableDefinitions(

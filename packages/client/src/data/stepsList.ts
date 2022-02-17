@@ -176,9 +176,9 @@ export const stepsList = [
 			},
 			{
 				id: uuidv4(),
-				title: 'Process table columns',
+				title: 'Process data',
 				status: StepStatus.ToDo,
-				url: Pages.ProcessTableColumns,
+				url: Pages.ProcessData,
 				showStatus: true,
 				getMarkdown: async () => import('../markdown/prepare-data/Prepare.md'),
 			},

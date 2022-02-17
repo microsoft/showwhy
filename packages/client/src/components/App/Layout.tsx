@@ -23,7 +23,9 @@ import {
 	useSetStepStatuses,
 } from '~state'
 import { StyledSpinner } from '~styles'
-import { Maybe } from '~types'
+import { Maybe, Pages } from '~types'
+
+const noChildPadding = [Pages.ProcessData]
 
 export const Layout: React.FC = memo(function Layout({ children }) {
 	const [error, setError] = useState<Maybe<string>>()
@@ -69,9 +71,11 @@ export const Layout: React.FC = memo(function Layout({ children }) {
 				</GuidanceContainer>
 
 				<Content>
-					<StepTitle title="Workspace" />
 					<ControlsContainer>
-						<ChildrenContainer>
+						<StepTitle title="Workspace" />
+						<ChildrenContainer
+							noPadding={noChildPadding.includes(step?.url as Pages)}
+						>
 							{error ? (
 								<MessageContainer
 									onDismiss={() => setError(undefined)}
@@ -85,14 +89,14 @@ export const Layout: React.FC = memo(function Layout({ children }) {
 								{children}
 							</Suspense>
 						</ChildrenContainer>
-						<StepControls
-							step={step}
-							stepStatus={stepStatus}
-							nextUrl={nextStepUrl}
-							previousUrl={previousStepUrl}
-							toggleStatus={onToggleStepStatus}
-						/>
 					</ControlsContainer>
+					<StepControls
+						step={step}
+						stepStatus={stepStatus}
+						nextUrl={nextStepUrl}
+						previousUrl={previousStepUrl}
+						toggleStatus={onToggleStepStatus}
+					/>
 				</Content>
 			</PagesContainer>
 		</Container>
@@ -111,16 +115,17 @@ const StepsContainer = styled.div`
 	position: relative;
 `
 
-const ChildrenContainer = styled.div`
-	padding: 0 16px;
+const ChildrenContainer = styled.div<{ noPadding: boolean }>`
+	padding: ${({ noPadding }) => (noPadding ? '0' : '0 16px')};
 	margin-bottom: 1rem;
+	height: 100%;
 `
 
 const ControlsContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	height: 100%;
-	justify-content: space-between;
+	justify-content: flex-start;
 `
 
 const GuidanceContainer = styled.div<{

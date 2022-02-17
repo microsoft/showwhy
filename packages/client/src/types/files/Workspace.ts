@@ -15,6 +15,11 @@ import {
 	DefaultDatasetResult,
 } from '~types'
 
+interface PostLoadTable {
+	tableName: string
+	steps: Step[]
+}
+
 /**
  * This contains a collection of step data and file definitions for a saveable
  * project package.
@@ -33,8 +38,6 @@ export interface Workspace {
 	defaultResult?: DefaultDatasetResult
 	// TODO: this should be integrated as a flag on each page's data
 	todoPages?: string[]
-	postLoad?: {
-		steps: Step[]
-	}
+	postLoad?: PostLoadTable[]
 	confidenceInterval?: boolean
 }

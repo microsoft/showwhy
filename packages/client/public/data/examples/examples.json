@@ -6,5 +6,9 @@
     {
         "name": "Smoking Cessation",
         "url": "data/examples/smoking-cessation.json"
+    },
+    {
+        "name": "Human Trafficking",
+        "url": "data/examples/human-trafficking.json"
     }
 ]

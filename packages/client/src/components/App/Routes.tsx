@@ -61,10 +61,10 @@ const GeneralPage = lazy(
 		),
 )
 
-const ProcessTableColumnsPage = lazy(
+const ProcessDataPage = lazy(
 	() =>
-		/* webpackChunkName: "ProcessTableColumnsPage" */ import(
-			'../../pages/PrepareData/ProcessTableColumnsPage'
+		/* webpackChunkName: "ProcessDataPage" */ import(
+			'../../pages/PrepareData/ProcessDataPage'
 		),
 )
 
@@ -116,10 +116,7 @@ export const Routes: React.FC = memo(function Routes() {
 			<Route path={Pages.Confirm} component={ConfirmPage} />
 			<Route path={Pages.Define} component={DefinePage} />
 			<Route path={Pages.LoadData} component={LoadDataPage} />
-			<Route
-				path={Pages.ProcessTableColumns}
-				component={ProcessTableColumnsPage}
-			/>
+			<Route path={Pages.ProcessData} component={ProcessDataPage} />
 			<Route path={Pages.VariablesControl} component={ControlPage} />
 			<Route path={Pages.Variables} component={GeneralPage} />
 			<Route

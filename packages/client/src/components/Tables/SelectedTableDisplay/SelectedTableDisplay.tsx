@@ -3,8 +3,6 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { ArqueroTableHeader } from '@data-wrangling-components/react'
-import * as aq from 'arquero'
-import ColumnTable from 'arquero/dist/types/table/column-table'
 import { memo } from 'react'
 
 import styled from 'styled-components'
@@ -29,7 +27,7 @@ export const SelectedTableDisplay: React.FC<{
 						name={selectedFile?.alias ?? selectedFile?.name}
 						showRowCount
 						showColumnCount
-						onRenameTable={onRenameTable}
+						// onRenameTable={onRenameTable}//disabled while DWC is not prepared for that
 					/>
 					<DatasetContainer>
 						<ArqueroDetailsTable table={selectedFile?.table} />

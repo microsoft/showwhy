@@ -12,18 +12,17 @@ import {
 } from 'recoil'
 import { Step } from '@data-wrangling-components/core'
 
-//change names
-export const stepsOutputTablePrepState = atom<Step[]>({
-	key: 'pre-load-steps',
+export const stepsTablesPrepState = atom<Step[]>({
+	key: 'steps-tables-prep',
 	default: [],
 })
 
-export function useStepsOutputTablePrep(): Step[] {
-	return useRecoilValue(stepsOutputTablePrepState)
+export function useStepsTablePrep(): Step[] {
+	return useRecoilValue(stepsTablesPrepState)
 }
 
-export function useSetStepsOutputTablePrep(): SetterOrUpdater<Step[]> {
-	return useSetRecoilState(stepsOutputTablePrepState)
+export function useSetStepsTablePrep(): SetterOrUpdater<Step[]> {
+	return useSetRecoilState(stepsTablesPrepState)
 }
 
 //step doesn't have an id. What is the identifier
@@ -47,6 +46,6 @@ export function useSetStepsOutputTablePrep(): SetterOrUpdater<Step[]> {
 // 	)
 // }
 
-export function useResetStepsOutputTablePrep(): Resetter {
-	return useResetRecoilState(stepsOutputTablePrepState)
+export function useResetStepTablePrep(): Resetter {
+	return useResetRecoilState(stepsTablesPrepState)
 }
