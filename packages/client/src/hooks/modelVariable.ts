@@ -21,15 +21,14 @@ export function useSaveDefinition(): (newDefinition: CausalFactor) => void {
 
 export function useSaveDefinitionTestable(
 	type: PageType,
-	defineQuestion: Experiment,
-	setDefineQuestion: SetterOrUpdater<Experiment>,
+	experiment: Experiment,
+	setExperiment: SetterOrUpdater<Experiment>,
 ): (newDefinition: CausalFactor) => void {
 	return useCallback(
 		(newDefinition: CausalFactor) => {
-			let newDefinitionList =
-				[...(defineQuestion as any)[type]?.definition] || []
+			let newDefinitionList = [...(experiment as any)[type]?.definition] || []
 
-			const index = (defineQuestion as any)[type]?.definition?.findIndex(
+			const index = (experiment as any)[type]?.definition?.findIndex(
 				(x: ElementDefinition) => x.id === newDefinition?.id,
 			)
 			if (index > -1) {
@@ -42,15 +41,15 @@ export function useSaveDefinitionTestable(
 				newDefinitionList.push(newDefinition)
 			}
 			const newList = {
-				...defineQuestion,
+				...experiment,
 				[type]: {
-					...(defineQuestion as any)[type],
+					...(experiment as any)[type],
 					definition: newDefinitionList,
 				},
 			}
-			setDefineQuestion(newList)
+			setExperiment(newList)
 		},
-		[defineQuestion, type, setDefineQuestion],
+		[experiment, type, setExperiment],
 	)
 }
 
@@ -59,7 +58,7 @@ export function useRemoveDefinition(): (
 ) => void {
 	return useRemoveDefinitionTestable(
 		usePageType(),
-		useDefineQuestion(),
+		useExperiment(),
 		useSetExperiment(),
 	)
 }
