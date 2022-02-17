@@ -90,7 +90,7 @@ export function useBusinessLogic(): {
 			setSelectedFile(file)
 			setProjectFiles(files)
 		},
-		[selectedFile, projectFiles, setSelectedFile, setProjectFiles],
+		[projectFiles, setSelectedFile, setProjectFiles],
 	)
 
 	const handleDelimiterChange = useCallback(
@@ -107,7 +107,12 @@ export function useBusinessLogic(): {
 			}
 			setSelectedDelimiter(delimiter)
 		},
-		[setSelectedDelimiter, selectedFile, updateProjectFiles],
+		[
+			setSelectedDelimiter,
+			selectedFile,
+			updateProjectFiles,
+			toggleLoadedCorrectly,
+		],
 	)
 
 	const handleLoadFile = useHandleLoadFile(setErrorMessage)

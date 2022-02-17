@@ -5,7 +5,7 @@
 import { Step as FileStep } from '@data-wrangling-components/core'
 import { BaseFile } from '@data-wrangling-components/utilities'
 import { all, op } from 'arquero'
-import { useCallback, useMemo } from 'react'
+import { useCallback } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import { useGetStepUrls, useSetRunAsDefault } from '~hooks'
 import {
@@ -17,7 +17,6 @@ import {
 	useSetDefineQuestion,
 	useSetEstimators,
 	useSetFileCollection,
-	useSetModelVariables,
 	useSetPrimarySpecificationConfig,
 	useSetRefutationType,
 	useSetRunHistory,
@@ -43,7 +42,6 @@ import {
 	Handler1,
 	Maybe,
 	RunHistory,
-	Step,
 } from '~types'
 import {
 	fetchRemoteTables,

@@ -2,6 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import { Step } from '@data-wrangling-components/core'
 import {
 	atom,
 	Resetter,
@@ -10,7 +11,6 @@ import {
 	useResetRecoilState,
 	useSetRecoilState,
 } from 'recoil'
-import { Step } from '@data-wrangling-components/core'
 
 //change names
 export const stepsOutputTablePrepState = atom<Step[]>({

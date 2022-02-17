@@ -905,25 +905,25 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@data-wrangling-components/core@npm:^1.4.0":
-  version: 1.4.0
-  resolution: "@data-wrangling-components/core@npm:1.4.0"
+"@data-wrangling-components/core@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "@data-wrangling-components/core@npm:2.1.0"
   dependencies:
     core-js: ^3.20.2
-    lodash: ^4.17.21
+    lodash-es: ^4.17.21
   peerDependencies:
     "@types/node": "*"
     arquero: ^4.8.7
   peerDependenciesMeta:
     "@types/node":
       optional: true
-  checksum: 776111739caee2f9cd4865df5ecf9579a5e86162ff897220d6b5c03bedbd1e83834653eb66ff8747bc2e365db6b997b99a7420a7a94c0779abeaedee02134e34
+  checksum: 64668f8d244023b287bf92f104d686339c67a0b9fa1bbb921d50a1c75b64445c1e8f3f9a92021398b94e29ba1124a9a43095250d3575ea31eec0ee17d8cdb6bf
   languageName: node
   linkType: hard
 
-"@data-wrangling-components/react@npm:^2.1.1":
-  version: 2.1.1
-  resolution: "@data-wrangling-components/react@npm:2.1.1"
+"@data-wrangling-components/react@npm:^2.2.1":
+  version: 2.2.1
+  resolution: "@data-wrangling-components/react@npm:2.2.1"
   dependencies:
     "@essex-js-toolkit/hooks": ^3.0.2
     core-js: ^3.20.2
@@ -952,19 +952,19 @@ __metadata:
     react: ^17.0.2
     react-dom: ^17.0.2
     styled-components: ^5.3.0
-  checksum: 229d105833fc36e7113ea2a42da8b8bec8202e6290ef71f0faae3820be81242fd020ad8d9cd0a848be4744ec309c62a48246df6684931a6eb4107d9cb5eb40db
+  checksum: 76e93bc6918594d407373dd0f05665a2029707bcf619f0e1f61331915854da0db763d20d2fce463025e4356d7aa2e791eadffda0d97e833511ab2b454c98cc9e
   languageName: node
   linkType: hard
 
-"@data-wrangling-components/utilities@npm:^1.4.1":
-  version: 1.4.1
-  resolution: "@data-wrangling-components/utilities@npm:1.4.1"
+"@data-wrangling-components/utilities@npm:^1.5.0":
+  version: 1.5.0
+  resolution: "@data-wrangling-components/utilities@npm:1.5.0"
   dependencies:
-    "@zip.js/zip.js": ^2.3.19
+    "@zip.js/zip.js": ^2.4.3
     core-js: ^3.20.2
   peerDependencies:
     arquero: ^4.8.7
-  checksum: d518b0c8b169544e328372be5421c83a213748f76d1533a37bf7e36e9df0708f918dc127d31004c304628ceb278032ab6f0eebc231acc67a45481b11337fd31d
+  checksum: cb5c85dcc9ceb3db0a96a4fcbe0423283a1a703ada9e13131e562602bf59dc9a255797d05ede056c1068a945eefeedc02011e11fe366b842760490f295027a25
   languageName: node
   linkType: hard
 
@@ -2029,9 +2029,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/client@workspace:packages/client"
   dependencies:
-    "@data-wrangling-components/core": ^1.4.0
-    "@data-wrangling-components/react": ^2.1.1
-    "@data-wrangling-components/utilities": ^1.4.1
+    "@data-wrangling-components/core": ^2.1.0
+    "@data-wrangling-components/react": ^2.2.1
+    "@data-wrangling-components/utilities": ^1.5.0
     "@essex-js-toolkit/boolean-expression-component": ^0.1.1
     "@essex-js-toolkit/hooks": ^3.0.2
     "@essex-js-toolkit/thematic-lineup": ^1.1.7
@@ -3247,7 +3247,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@zip.js/zip.js@npm:^2.3.19":
+"@zip.js/zip.js@npm:^2.4.3":
   version: 2.4.4
   resolution: "@zip.js/zip.js@npm:2.4.4"
   checksum: f6d427fe66dc42795c7fe871f9de19e80f1f4317788b616bd7e79bd36beacf261bc88c498baa119abab87ddcfad3843c641086d0a9343ef78f459251c1d993e6
@@ -7985,6 +7985,13 @@ __metadata:
   dependencies:
     p-locate: ^4.1.0
   checksum: 83e51725e67517287d73e1ded92b28602e3ae5580b301fe54bfb76c0c723e3f285b19252e375712316774cf52006cb236aed5704692c32db0d5d089b69696e30
+  languageName: node
+  linkType: hard
+
+"lodash-es@npm:^4.17.21":
+  version: 4.17.21
+  resolution: "lodash-es@npm:4.17.21"
+  checksum: 05cbffad6e2adbb331a4e16fbd826e7faee403a1a04873b82b42c0f22090f280839f85b95393f487c1303c8a3d2a010048bf06151a6cbe03eee4d388fb0a12d2
   languageName: node
   linkType: hard
 

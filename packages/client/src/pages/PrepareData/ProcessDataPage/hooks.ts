@@ -5,11 +5,7 @@
 
 import { Step } from '@data-wrangling-components/core'
 import { createDefaultCommandBar } from '@data-wrangling-components/react'
-import {
-	BaseFile,
-	createBaseFile,
-	FileType,
-} from '@data-wrangling-components/utilities'
+import { BaseFile, createBaseFile } from '@data-wrangling-components/utilities'
 import {
 	ICommandBarItemProps,
 	IDetailsColumnProps,
@@ -17,7 +13,6 @@ import {
 } from '@fluentui/react'
 import { useCallback, useMemo, useState } from 'react'
 import {
-	useFileCollection,
 	useProjectFiles,
 	useSetStepsTablePrep,
 	useSetTableColumns,
@@ -54,7 +49,7 @@ export function useBusinessLogic(): {
 			})
 			return createBaseFile(file, { name: x.name })
 		})
-	}, [projectFiles, steps])
+	}, [projectFiles])
 
 	const onRelevanceChange = useOnRelevanceChange({
 		setTableColumns,

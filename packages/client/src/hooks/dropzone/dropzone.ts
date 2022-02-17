@@ -8,7 +8,6 @@ import {
 	FileType,
 	isZipFile,
 } from '@data-wrangling-components/utilities'
-import ColumnTable from 'arquero/dist/types/table/column-table'
 import { useMemo, useCallback, useState } from 'react'
 import {
 	useAcceptedFileTypes,
