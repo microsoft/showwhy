@@ -30,10 +30,8 @@ import {
 	Definition,
 	Experiment,
 	Element,
-	ElementDefinition,
 	FileDefinition,
 	ZipData,
-	FilterObject,
 	ProjectFile,
 	TableColumn,
 	VariableDefinition,
@@ -51,6 +49,7 @@ import {
 	isZipUrl,
 	loadTable,
 	runPipeline,
+	withRandomId,
 } from '~utils'
 
 export function useLoadProject(
@@ -230,13 +229,7 @@ async function processTables(
 }
 
 function prepCausalFactors(factors?: Partial<CausalFactor>[]): CausalFactor[] {
-	return (factors || []).map(
-		factor =>
-			({
-				id: uuidv4(),
-				...factor,
-			} as CausalFactor),
-	)
+	return (factors || []).map(withRandomId) as CausalFactor[]
 }
 
 function prepDefineQuestion(define?: Partial<Experiment>): Experiment {
@@ -279,13 +272,7 @@ function prepVariableDefinitions(
 		definition =>
 			({
 				...definition,
-				filters: (definition?.filters || []).map(
-					d =>
-						({
-							id: uuidv4(),
-							...(d as Partial<FilterObject>),
-						} as FilterObject),
-				),
+				filters: (definition?.filters || []).map(withRandomId),
 			} as VariableDefinition),
 	)
 }
@@ -293,31 +280,19 @@ function prepVariableDefinitions(
 function prepElement(element: Element): Element {
 	return {
 		...element,
-		definition: element.definition?.map(
-			d =>
-				({
-					id: uuidv4(),
-					...(d as Partial<ElementDefinition>),
-				} as ElementDefinition),
-		),
+		definition: element.definition?.map(withRandomId),
 	}
 }
 
 function prepTableColumns(columns?: Partial<TableColumn>[]): TableColumn[] {
-	return (columns || []).map(
-		column =>
-			({
-				id: uuidv4(),
-				...column,
-			} as TableColumn),
-	)
+	return (columns || []).map(withRandomId) as TableColumn[]
 }
 
-const useUpdateCollection = (): ((
+function useUpdateCollection(): (
 	workspace: Workspace,
 	tableFiles: BaseFile[],
 	notebooks: BaseFile[],
-) => Promise<void>) => {
+) => Promise<void> {
 	const setCollection = useSetFileCollection()
 	const fileCollection = useFileCollection().copy()
 	return useCallback(
