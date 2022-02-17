@@ -10,36 +10,32 @@ import { withRandomId } from '~utils'
 export function useAddDefinition(
 	setDefinitions: Setter<ElementDefinition[]>,
 	saveDefinitions: (definitions: ElementDefinition[]) => void,
-	definitionList?: ElementDefinition[],
+	defs?: ElementDefinition[],
 ): (definition: ElementDefinition) => void {
 	return useCallback(
 		(definition: ElementDefinition) => {
 			if (!definition.variable?.length) {
 				return
 			}
-			const newDefinition = withRandomId(definition)
-			const newDefinitionList = updatedDefinitionList(
-				definitionList,
-				newDefinition,
-			)
-			setDefinitions(newDefinitionList)
-			saveDefinitions(newDefinitionList)
+			const newDefs = updatedDefinitionList(defs, withRandomId(definition))
+			setDefinitions(newDefs)
+			saveDefinitions(newDefs)
 		},
-		[setDefinitions, saveDefinitions, definitionList],
+		[setDefinitions, saveDefinitions, defs],
 	)
 }
 
 function updatedDefinitionList(
-	definitions: Maybe<ElementDefinition[]>,
-	newDefinition: ElementDefinition,
+	defs: Maybe<ElementDefinition[]>,
+	newDef: ElementDefinition,
 ) {
-	const isNewDefinitionPrimary = newDefinition.level === CausalityLevel.Primary
-	let result = definitions ? [...definitions] : []
+	const isNewDefinitionPrimary = newDef.level === CausalityLevel.Primary
+	let result = defs ? [...defs] : []
 
 	// If the new definition is a primary cause, mark other elements as secondary causes
 	if (isNewDefinitionPrimary) {
 		result = result.map(d => ({ ...d, level: CausalityLevel.Secondary }))
 	}
-	result.push(newDefinition)
+	result.push(newDef)
 	return result
 }
