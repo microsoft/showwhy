@@ -21,7 +21,7 @@ import {
 	useSetSpecificationCurveConfig,
 	useSetSignificanceTests,
 	useSpecificationCurveConfig,
-	useDefineQuestion,
+	useExperiment,
 } from '~state'
 import {
 	CausalityLevel,
@@ -67,7 +67,7 @@ export function useSpecificationCurve(): {
 	const failedRefutationIds = useFailedRefutationIds(data)
 	const vegaWindowDimensions = useVegaWindowDimensions()
 	const theme = useThematic()
-	const defineQuestion = useDefineQuestion()
+	const defineQuestion = useExperiment()
 	const outcome = useOutcome(defineQuestion)
 	useWakeLock()
 	const activeProcessing = useActiveProcessing(runHistory)

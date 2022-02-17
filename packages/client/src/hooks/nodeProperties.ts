@@ -7,7 +7,7 @@ import { useMemo } from 'react'
 import { useAlternativeModels } from '~hooks'
 import {
 	useConfidenceInterval,
-	useDefineQuestion,
+	useExperiment,
 	useEstimators,
 	useRefutationType,
 } from '~state'
@@ -30,7 +30,7 @@ export function useNodeProperties(): {
 	intermediateLevel: AlternativeModels
 	unadjustedModel: AlternativeModels
 } {
-	const definitions = useDefineQuestion()
+	const definitions = useExperiment()
 	const estimators = useEstimators()
 	const refutationType = useRefutationType()
 	const confidenceInterval = useConfidenceInterval()

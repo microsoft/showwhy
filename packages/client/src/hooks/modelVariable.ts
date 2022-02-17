@@ -6,7 +6,7 @@
 import { useCallback } from 'react'
 import { SetterOrUpdater } from 'recoil'
 import { usePageType } from './usePageType'
-import { useDefineQuestion, useSetDefineQuestion } from '~state/defineQuestion'
+import { useExperiment, useSetExperiment } from '~state/experiment'
 import { PageType, Experiment, ElementDefinition, CausalFactor } from '~types'
 import { replaceItemAtIndex } from '~utils/arrays'
 // HACK to pass the unit tests
@@ -14,8 +14,8 @@ import { replaceItemAtIndex } from '~utils/arrays'
 export function useSaveDefinition(): (newDefinition: CausalFactor) => void {
 	return useSaveDefinitionTestable(
 		usePageType(),
-		useDefineQuestion(),
-		useSetDefineQuestion(),
+		useExperiment(),
+		useSetExperiment(),
 	)
 }
 
@@ -60,7 +60,7 @@ export function useRemoveDefinition(): (
 	return useRemoveDefinitionTestable(
 		usePageType(),
 		useDefineQuestion(),
-		useSetDefineQuestion(),
+		useSetExperiment(),
 	)
 }
 

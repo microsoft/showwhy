@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { isStatus } from './api'
-import { percentage } from './stats'
+import { percentage as calcPercent } from './stats'
 import {
 	EstimateEffectStatusResponse,
 	RunStatus,
@@ -29,7 +29,7 @@ export function getRunStatus(
 		hasConfidenceInterval,
 	)
 
-	let pct = 100
+	let percentage = 100
 	const totalResults = status?.total_results ?? 0
 	const refuteCompleted = getRefutationCount(
 		status?.refute_completed ?? 0,
@@ -43,23 +43,26 @@ export function getRunStatus(
 	status.refute_completed = refuteCompleted
 
 	if (!isStatus(estimators.status, NodeResponseStatus.Completed)) {
-		pct = percentage(status?.estimated_effect_completed, status?.total_results)
+		percentage = calcPercent(
+			status?.estimated_effect_completed,
+			status?.total_results,
+		)
 	} else if (
 		hasConfidenceInterval &&
 		!isStatus(confidenceIntervals.status, NodeResponseStatus.Completed)
 	) {
-		pct = percentage(
+		percentage = calcPercent(
 			status?.confidence_interval_completed,
 			status?.total_results,
 		)
 	} else if (!isStatus(refuters.status, NodeResponseStatus.Completed)) {
-		pct = percentage(status?.refute_completed, totalResults)
+		percentage = calcPercent(status?.refute_completed, totalResults)
 	}
 
 	const st = {
 		status: status.runtimeStatus?.toLowerCase() as NodeResponseStatus,
 		error: findRunError(status),
-		percentage: pct,
+		percentage,
 		estimators,
 		confidenceIntervals,
 		refuters,

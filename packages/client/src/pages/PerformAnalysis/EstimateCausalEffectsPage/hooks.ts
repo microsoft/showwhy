@@ -18,7 +18,7 @@ import {
 import { buildLoadNode, numberExecutions, uploadFiles } from '~resources'
 import {
 	useConfidenceInterval,
-	useDefineQuestion,
+	useExperiment,
 	useEstimators,
 	useProjectFiles,
 	useRefutationType,
@@ -55,7 +55,7 @@ export function useBusinessLogic(): {
 	refutationOptions: RefutationOption[]
 	isCanceled: boolean
 } {
-	const definitions = useDefineQuestion()
+	const definitions = useExperiment()
 	const updateRunHistory = useUpdateAndDisableRunHistory()
 	const projectFiles = useProjectFiles()
 	const estimators = useEstimators()

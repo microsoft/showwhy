@@ -18,7 +18,7 @@ import {
 import { buildSignificanceTestsNode } from '~resources'
 import {
 	useDefaultDatasetResult,
-	useDefineQuestion,
+	useExperiment,
 	usePrimarySpecificationConfig,
 	useRefutationType,
 	useSignificanceTests,
@@ -54,7 +54,7 @@ export function useBusinessLogic(): {
 	runSignificance: (taskIds: string[]) => void
 	cancelRun: Handler
 } {
-	const defineQuestion = useDefineQuestion()
+	const defineQuestion = useExperiment()
 	const primarySpecificationConfig = usePrimarySpecificationConfig()
 	const causalModel = primarySpecificationConfig.causalModel
 	const causalEffects = useCausalEffects(causalModel)

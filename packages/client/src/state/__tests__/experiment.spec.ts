@@ -6,12 +6,12 @@
 import { renderHook } from '@testing-library/react-hooks'
 import { useEffect } from 'react'
 import { RecoilRoot } from 'recoil'
-import { useSetDefineQuestion, useDefineQuestion } from '../defineQuestion'
+import { useSetExperiment, useExperiment } from '../experiment'
 import { Experiment } from '~types'
 
-describe('useDefineQuestion', () => {
+describe('useExperiment', () => {
 	it('should return empty object as default value', () => {
-		const { result } = renderHook(() => useDefineQuestion(), {
+		const { result } = renderHook(() => useExperiment(), {
 			wrapper: RecoilRoot,
 		})
 
@@ -28,8 +28,8 @@ describe('useDefineQuestion', () => {
 
 		const { result } = renderHook(
 			() => {
-				const setDefineQuestion = useSetDefineQuestion()
-				const defineQuestion = useDefineQuestion()
+				const setDefineQuestion = useSetExperiment()
+				const defineQuestion = useExperiment()
 				useEffect(() => {
 					setDefineQuestion(define)
 				}, [setDefineQuestion])

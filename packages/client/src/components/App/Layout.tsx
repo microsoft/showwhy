@@ -18,7 +18,7 @@ import {
 	useUploadZipMenuOption,
 } from '~hooks'
 import {
-	useDefineQuestion,
+	useExperiment,
 	useSelectedProject,
 	useSetStepStatuses,
 	useGuidance,
@@ -30,7 +30,7 @@ export const Layout: React.FC = memo(function Layout({ children }) {
 	const [error, setError] = useState<Maybe<string>>()
 	const handleGetStepUrls = useGetStepUrls()
 	const handleSetAllStepStatus = useSetStepStatuses()
-	const defineQuestion = useDefineQuestion()
+	const defineQuestion = useExperiment()
 	const exampleProjects = useExampleProjects()
 	const uploadZipMenuOption = useUploadZipMenuOption(setError)
 	const tooltipId = useId('tooltip')
