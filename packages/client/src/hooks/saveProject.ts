@@ -27,6 +27,7 @@ import {
 	useDefaultDatasetResult,
 	useOriginalTables,
 	useRunHistory,
+	useStepsTablePrep,
 } from '~state'
 import {
 	PageType,
@@ -48,6 +49,7 @@ export function useSaveProject(): AsyncHandler {
 	const estimators = useEstimators()
 	const refutations = useRefutationType()
 	const projectFiles = useProjectFiles()
+	const tablesPrep = useStepsTablePrep()
 	const todoPages = useGetStepUrlsByStatus()({ exclude: true })
 	const [tableColumns] = useAllTableColumns(projectFiles)
 	const [exposure] = useAllModelVariables(projectFiles, PageType.Exposure)
@@ -77,6 +79,7 @@ export function useSaveProject(): AsyncHandler {
 			tableColumns,
 			modelVariables,
 			todoPages,
+			tablesPrep,
 		}
 		await download(workspace)
 	}, [

@@ -40,4 +40,5 @@ export interface Workspace {
 	todoPages?: string[]
 	postLoad?: PostLoadTable[]
 	confidenceInterval?: boolean
+	tablesPrep?: Step[]
 }

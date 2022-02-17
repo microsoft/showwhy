@@ -125,19 +125,19 @@
   ],
   "tables": [
     {
-      "url": "data/pre-processed-results/gdp_per_capita.csv",
+      "url": "http://localhost:3000/data/pre-processed-results/gdp_per_capita.csv",
       "name": "gdp_per-capita.csv"
     },
     {
-      "url": "data/pre-processed-results/country_governance_vdem.csv",
+      "url": "http://localhost:3000/data/pre-processed-results/country_governance_vdem.csv",
       "name": "country_governance_vdem.csv"
     },
     {
-      "url": "data/pre-processed-results/disasters_affected_people.csv",
+      "url": "http://localhost:3000/data/pre-processed-results/disasters_affected_people.csv",
       "name": "disasters_affected_people.csv"
     },
     {
-      "url": "data/pre-processed-results/country_codes.csv",
+      "url": "http://localhost:3000/data/pre-processed-results/country_codes.csv",
       "name": "country_codes.csv"
     }
   ],
