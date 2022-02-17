@@ -5,7 +5,7 @@
 
 import { IChoiceGroupOption } from '@fluentui/react'
 import { useCallback } from 'react'
-import { useDefineQuestion, useSetDefineQuestion } from '~state'
+import { useExperiment, useSetExperiment } from '~state'
 import { Hypothesis, Experiment, Maybe } from '~types'
 
 export function useBusinessLogic(): {
@@ -13,7 +13,7 @@ export function useBusinessLogic(): {
 	onInputChange: (value: Maybe<string>, type: string, field: string) => void
 	setHypothesis: (e: any, option: Maybe<IChoiceGroupOption>) => void
 } {
-	const defineQuestion = useDefineQuestion()
+	const defineQuestion = useExperiment()
 	const onInputChange = useOnInputChange()
 	const setHypothesis = useSetHypothesis()
 	return {
@@ -28,8 +28,8 @@ function useOnInputChange(): (
 	type: string,
 	field: string,
 ) => void {
-	const defineQuestion = useDefineQuestion()
-	const setDefineQuestion = useSetDefineQuestion()
+	const defineQuestion = useExperiment()
+	const setDefineQuestion = useSetExperiment()
 	return useCallback(
 		(value, type, field) => {
 			const newValues = {
@@ -49,8 +49,8 @@ function useSetHypothesis(): (
 	e: any,
 	option: Maybe<IChoiceGroupOption>,
 ) => void {
-	const defineQuestion = useDefineQuestion()
-	const setDefineQuestion = useSetDefineQuestion()
+	const defineQuestion = useExperiment()
+	const setDefineQuestion = useSetExperiment()
 	return useCallback(
 		(e, option) => {
 			if (option) {

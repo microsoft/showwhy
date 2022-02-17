@@ -4,14 +4,14 @@
  */
 import { useMemo } from 'react'
 import { useAlternativeModels, useExcludedFactors } from './causalFactors'
-import { useDefineQuestion } from '~state/defineQuestion'
+import { useExperiment } from '~state/experiment'
 import { AlternativeModels, Experiment, CausalModelLevel } from '~types'
 
 export function useCausalEffects(
 	causalLevel: CausalModelLevel,
 ): ReturnType<typeof useCausalEffectsTestable> {
 	return useCausalEffectsTestable(
-		useDefineQuestion(),
+		useExperiment(),
 		useExcludedFactors(),
 		useAlternativeModels(causalLevel),
 	)

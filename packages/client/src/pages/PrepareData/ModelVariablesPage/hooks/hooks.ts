@@ -20,7 +20,7 @@ import {
 	useAllModelVariables,
 	useAllTableColumns,
 	useCausalFactors,
-	useDefineQuestion,
+	useExperiment,
 	useOriginalTables,
 	useProjectFiles,
 } from '~state'
@@ -66,7 +66,7 @@ export function useBusinessLogic(): {
 	const saveDefinition = useSaveDefinition()
 	const [isDeriveVisible, { toggle: onToggleDeriveVisible }] = useBoolean(false)
 
-	const defineQuestion = useDefineQuestion()
+	const defineQuestion = useExperiment()
 	const defineQuestionData = (defineQuestion as any)[pageType] as Element
 	const [editingClause, setEditingClause] = useState<FilterObject>()
 	const [tableIdentifier, setTableIdentifier] = useState<Maybe<DataTable>>(

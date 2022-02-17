@@ -10,7 +10,7 @@ import { useEditDefinition } from './edit'
 import { useRemoveDefinition } from './remove'
 import { useSaveDefinitions } from './save'
 import { usePageType, useVariableOptions } from '~hooks'
-import { useDefineQuestion, useSetDefineQuestion } from '~state'
+import { useExperiment, useSetExperiment } from '~state'
 import {
 	PageType,
 	Experiment,
@@ -33,10 +33,10 @@ export function useBusinessLogic(): {
 	editDefinition: (def: ElementDefinition) => void
 	setDefinitionToEdit: Setter<Maybe<ElementDefinition>>
 } {
-	const defineQuestion = useDefineQuestion()
+	const defineQuestion = useExperiment()
 	const pageType = usePageType()
 	const variables = useVariableOptions()
-	const setDefineQuestion = useSetDefineQuestion()
+	const setDefineQuestion = useSetExperiment()
 	const [definitions, setDefinitions] = useState<ElementDefinition[]>(
 		(defineQuestion as any)[pageType]?.definition || [],
 	)

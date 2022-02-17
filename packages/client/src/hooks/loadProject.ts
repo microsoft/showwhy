@@ -12,7 +12,7 @@ import {
 	useSetCausalFactors,
 	useSetConfidenceInterval,
 	useSetDefaultDatasetResult,
-	useSetDefineQuestion,
+	useSetExperiment,
 	useSetEstimators,
 	useSetFileCollection,
 	useSetModelVariables,
@@ -60,7 +60,7 @@ export function useLoadProject(
 	const setModelVariables = useSetModelVariables(id)
 	const setPrimarySpecificationConfig = useSetPrimarySpecificationConfig()
 	const setCausalFactors = useSetCausalFactors()
-	const setDefineQuestion = useSetDefineQuestion()
+	const setDefineQuestion = useSetExperiment()
 	const setOrUpdateEst = useSetEstimators()
 	const setRefutationType = useSetRefutationType()
 	const addFile = useAddProjectFile()
