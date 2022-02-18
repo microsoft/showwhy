@@ -16,8 +16,9 @@ import {
 	useSubjectIdentifier,
 	useProjectFiles,
 	useSetSubjectIdentifier,
-	useSetStepsTablePrep,
-	useStepsTablePrep,
+	useSetOutputTablePrep,
+	useTablesPrepSpecification,
+	useSetTablesPrepSpecification,
 } from '~state'
 import { runPipelineFromProjectFiles } from '~utils'
 
@@ -28,8 +29,9 @@ export function useBusinessLogic(): {
 	commandBar: IRenderFunction<IDetailsColumnProps>
 } {
 	const projectFiles = useProjectFiles()
-	const steps = useStepsTablePrep()
-	const setStepsTablePrep = useSetStepsTablePrep()
+	const prepSpecification = useTablesPrepSpecification()
+	const setStepsTablePrep = useSetTablesPrepSpecification()
+	const setOutputTablePrep = useSetOutputTablePrep()
 
 	const [columnsMicrodata, setColumnsMicrodata] = useState<string[]>([])
 	const subjectIdentifier = useSubjectIdentifier()
@@ -43,6 +45,10 @@ export function useBusinessLogic(): {
 		[setStepsTablePrep, setSubjectIdentifier],
 	)
 
+	const steps = useMemo((): any => {
+		return prepSpecification.length ? prepSpecification[0].steps : []
+	}, [prepSpecification])
+
 	const updateMicrodata = useCallback(async () => {
 		const output = await runPipelineFromProjectFiles(projectFiles, steps)
 		const stats = introspect(output, true)
@@ -50,8 +56,9 @@ export function useBusinessLogic(): {
 		const columns = columnNames.filter(c => {
 			return stats.columns[c].stats?.distinct === stats.rows
 		})
+		setOutputTablePrep(output)
 		setColumnsMicrodata(columns)
-	}, [projectFiles, steps, setColumnsMicrodata])
+	}, [projectFiles, steps, setColumnsMicrodata, setOutputTablePrep])
 
 	useEffect(() => {
 		const f = async () => {

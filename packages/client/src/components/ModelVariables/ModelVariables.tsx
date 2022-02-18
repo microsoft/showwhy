@@ -14,7 +14,6 @@ import {
 	IRenderFunction,
 	Separator,
 } from '@fluentui/react'
-import ColumnTable from 'arquero/dist/types/table/column-table'
 import { FC, memo } from 'react'
 import { If, Then, Else } from 'react-if'
 import styled from 'styled-components'
@@ -40,7 +39,7 @@ interface ModelVariablesProps {
 	pageType: PageType
 	definitionArgs: DefinitionArgs
 	transformTable: TransformTable
-	table: ColumnTable
+	// table: ColumnTable
 	definitionDropdown: IDropdownOption<any>[]
 	commandBar: IRenderFunction<IDetailsColumnProps>
 	renameCalloutArgs: RenameCalloutArgs
@@ -52,7 +51,7 @@ export const ModelVariables: FC<ModelVariablesProps> = memo(
 		pageType,
 		definitionArgs,
 		transformTable,
-		table,
+		// table,
 		definitionDropdown,
 		commandBar,
 		renameCalloutArgs,
@@ -70,6 +69,7 @@ export const ModelVariables: FC<ModelVariablesProps> = memo(
 			commands,
 			isModalOpen,
 			hideModal,
+			viewTable,
 			originalTable,
 			handleTransformRequested,
 			variables,
@@ -135,7 +135,7 @@ export const ModelVariables: FC<ModelVariablesProps> = memo(
 											isOpen={isModalOpen}
 											onDismiss={hideModal}
 											onTransformRequested={step =>
-												handleTransformRequested(step, selectedId)
+												handleTransformRequested(step)
 											}
 										/>
 									)}
@@ -145,13 +145,16 @@ export const ModelVariables: FC<ModelVariablesProps> = memo(
 										selectedDefinitionId={selectedId}
 										variables={variables}
 									/>
-									{table && (
+									{viewTable && (
 										<NormalContainer data-pw="table">
-											<ArqueroTableHeader table={table} commands={commands} />
+											<ArqueroTableHeader
+												table={viewTable}
+												commands={commands}
+											/>
 											<DetailsListContainer>
 												<ArqueroDetailsTable
-													table={table}
-													columns={(table.columnNames() || []).map(n => ({
+													table={viewTable}
+													columns={(viewTable.columnNames() || []).map(n => ({
 														name: n,
 														key: n,
 														fieldName: n,
@@ -186,7 +189,7 @@ const StepsTitle = styled.h4`
 const NormalContainer = styled.div``
 
 const DetailsListContainer = styled.div`
-	height: 60vh;
+	height: 50vh;
 `
 
 const VariablesContainer = styled.div`

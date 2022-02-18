@@ -4,6 +4,7 @@
     "type": "Propensity Score Stratification"
   },
   "confidenceInterval": true,
+  "subjectIdentifier": "index_2",
   "causalFactors": [
     {
       "description": "Patient's age group derived from the Wolfram dataset",
@@ -135,7 +136,7 @@
       "name": "country_codes.csv"
     }
   ],
-  "tablesPrep": {
+  "tablesPrep": [{
     "steps": [
       {
         "verb": "join",
@@ -148,5 +149,6 @@
           ]
         }
       }
-    ]}
+    ]
+  }]
 }

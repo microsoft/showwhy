@@ -4,6 +4,7 @@
       "type": "Propensity Score Stratification"
     },
     "confidenceInterval": true,
+    "subjectIdentifier": "index",
     "causalFactors": [
       {
         "description": "Patient's age group derived from the Wolfram dataset",
@@ -111,12 +112,6 @@
       }
     ],
     "refutations": "Quick Refutation",
-    "tableColumns": [
-      {
-        "name": "index",
-        "relevance": "SubjectIdentifier"
-      }
-    ],
     "modelVariables": {},
     "todoPages": [
       "/perform/effects",
@@ -138,7 +133,6 @@
       "url": "data/pre-processed-results/covid-19.csv"
     },
     "postLoad": [{
-      "tableName": "covid19_small_data.csv",
       "steps": [
         {
           "type": "verb",
@@ -768,7 +762,7 @@
         }
       ]
     }],
-    "tablesPrep": {
+    "tablesPrep": [{
       "steps": [
         {
           "verb": "select",
@@ -785,6 +779,7 @@
             ]
           }
         }
-      ]}
+      ]
+    }]
   }
   

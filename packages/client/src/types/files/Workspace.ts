@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { Step } from '@data-wrangling-components/core'
+import { Specification } from '@data-wrangling-components/core'
 import { RefutationType } from '../refutation'
 import { DataTableFileDefinition } from './DataTableDefinition'
 import {
@@ -11,14 +11,8 @@ import {
 	Experiment,
 	Estimator,
 	PrimarySpecificationConfig,
-	TableColumn,
 	DefaultDatasetResult,
 } from '~types'
-
-interface PostLoadTable {
-	tableName: string
-	steps: Step[]
-}
 
 /**
  * This contains a collection of step data and file definitions for a saveable
@@ -33,13 +27,12 @@ export interface Workspace {
 	defineQuestion?: Experiment
 	estimators?: Estimator[]
 	refutations?: RefutationType
-	tableColumns?: TableColumn[]
 	modelVariables?: Definition
 	defaultResult?: DefaultDatasetResult
 	// TODO: this should be integrated as a flag on each page's data
 	todoPages?: string[]
-	postLoad?: PostLoadTable[]
 	confidenceInterval?: boolean
-	tablesPrep?: Step[]
 	subjectIdentifier?: string
+	postLoad?: Specification[]
+	tablesPrep?: Specification[]
 }

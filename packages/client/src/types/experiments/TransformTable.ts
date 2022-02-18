@@ -11,10 +11,8 @@ export interface TransformTable {
 	commands: ICommandBarItemProps[]
 	isModalOpen: boolean
 	hideModal: () => void
+	viewTable?: ColumnTable
 	originalTable?: ColumnTable
-	handleTransformRequested: (
-		step: any,
-		selectedDefinition: string,
-	) => Promise<void>
+	handleTransformRequested: (step: any) => Promise<void>
 	variables: VariableDefinition[]
 }

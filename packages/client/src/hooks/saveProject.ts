@@ -26,8 +26,8 @@ import {
 	useDefaultDatasetResult,
 	useOriginalTables,
 	useRunHistory,
-	useStepsTablePrep,
 	useSubjectIdentifier,
+	useTablesPrepSpecification,
 } from '~state'
 import {
 	PageType,
@@ -50,7 +50,7 @@ export function useSaveProject(): AsyncHandler {
 	const estimators = useEstimators()
 	const refutations = useRefutationType()
 	const projectFiles = useProjectFiles()
-	const tablesPrep = useStepsTablePrep()
+	const tablesPrep = useTablesPrepSpecification()
 	const todoPages = useGetStepUrlsByStatus()({ exclude: true })
 	const [exposure] = useAllModelVariables(projectFiles, PageType.Exposure)
 	const [outcome] = useAllModelVariables(projectFiles, PageType.Outcome)

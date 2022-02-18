@@ -13,10 +13,9 @@ import {
 	IRenderFunction,
 } from '@fluentui/react'
 import { useBoolean } from '@fluentui/react-hooks'
-import * as aq from 'arquero'
 import ColumnTable from 'arquero/dist/types/table/column-table'
 import { useCallback, useMemo, useState } from 'react'
-import { useDeriveTable1, usePageType } from '~hooks'
+import { usePageType } from '~hooks'
 import {
 	usePopulationVariables,
 	useExposureVariables,
@@ -26,12 +25,13 @@ import {
 	useSetOrUpdateExposureVariables,
 	useSetOrUpdateOutcomeVariables,
 	useSetOrUpdateControlVariables,
-	useOriginalTables,
-	useTableColumns,
+	useOutputTablePrep,
+	useSubjectIdentifier,
+	useOutputTableModelVariables,
+	useSetOutputTableModelVariables,
 } from '~state'
 import {
 	CausalFactor,
-	ColumnRelevance,
 	ElementDefinition,
 	FactorsOrDefinitions,
 	PageType,
@@ -40,15 +40,20 @@ import {
 	TransformTable,
 	VariableDefinition,
 	SharedModelVariableLogic,
+	Maybe,
 } from '~types'
 
 export function useSharedBusinessLogic(): SharedModelVariableLogic {
 	const [showConfirmDelete, { toggle: toggleShowConfirmDelete }] =
 		useBoolean(false)
+	const outputTablePrep = useOutputTablePrep()
+	const subjectIdentifier = useSubjectIdentifier()
 
 	return {
 		showConfirmDelete,
 		toggleShowConfirmDelete,
+		outputTablePrep,
+		subjectIdentifier,
 	}
 }
 
@@ -103,38 +108,38 @@ export function useVariables(
 	])
 }
 
-export function useTable(
-	selectedDefinitionId: string,
-	variables: VariableDefinition[],
-	originalTable?: ColumnTable,
-): ColumnTable {
-	const originalTables = useOriginalTables()
-	const tableColumns = useTableColumns(originalTables[0]?.tableId)
+// export function useTable(
+// 	selectedDefinitionId: string,
+// 	variables: VariableDefinition[],
+// 	originalTable?: ColumnTable,
+// ): ColumnTable {
+// 	const originalTables = useOriginalTables()
+// 	const tableColumns = useTableColumns(originalTables[0]?.tableId)
 
-	const key = useMemo((): string => {
-		return (
-			tableColumns?.find(x => x.relevance === ColumnRelevance.SubjectIdentifier)
-				?.name || ''
-		)
-	}, [tableColumns])
+// 	const key = useMemo((): string => {
+// 		return (
+// 			tableColumns?.find(x => x.relevance === ColumnRelevance.SubjectIdentifier)
+// 				?.name || ''
+// 		)
+// 	}, [tableColumns])
 
-	return useMemo((): any => {
-		if (!originalTable) {
-			return aq.table({})
-		}
+// 	return useMemo((): any => {
+// 		if (!originalTable) {
+// 			return aq.table({})
+// 		}
 
-		if (!variables.length) {
-			return originalTable.select([key])
-		}
+// 		if (!variables.length) {
+// 			return originalTable.select([key])
+// 		}
 
-		const steps =
-			variables
-				.find(a => a.id === selectedDefinitionId)
-				?.steps.flatMap(s => s.args.to) || []
-		//this works while we're doing commands with to arg
-		return originalTable?.select([key, ...steps])
-	}, [originalTable, variables, selectedDefinitionId, key])
-}
+// 		const steps =
+// 			variables
+// 				.find(a => a.id === selectedDefinitionId)
+// 				?.steps.flatMap(s => s.args.to) || []
+// 		//this works while we're doing commands with to arg
+// 		return originalTable?.select([key, ...steps])
+// 	}, [originalTable, variables, selectedDefinitionId, key])
+// }
 
 export function useCommandBar(
 	definitionOptions: FactorsOrDefinitions,
@@ -211,36 +216,41 @@ function useDeriveColumnCommand(
 	return cmd
 }
 
-export function useTableTransform(selectedDefinition: string): TransformTable {
+export function useTableTransform(
+	selectedDefinitionId: string,
+): TransformTable {
 	const pageType = usePageType()
 	const [variables, setVariable] = useVariables(pageType)
-	const originalTables = useOriginalTables()
-	const tableColumns = useTableColumns(originalTables[0]?.tableId)
-	const derive = useDeriveTable1(originalTables[0]?.tableId)
+	const originalTable = useOutputTableModelVariables()
+	//default is originalTable
+	const setOutp = useSetOutputTableModelVariables()
+	const subjectIdentifier = useSubjectIdentifier()
+	// const derive =
+	//  useDeriveTable1(originalTables[0]?.tableId)
 	const [isModalOpen, { setTrue: showModal, setFalse: hideModal }] =
 		useBoolean(false)
-	const commands = useCommands(showModal, selectedDefinition)
+	const commands = useCommands(showModal, selectedDefinitionId)
 
-	const removedColumns = useMemo((): string[] => {
-		return (
-			tableColumns
-				?.filter(x => x.relevance === ColumnRelevance.NotRelevant)
-				.map(x => x.name) || []
-		)
-	}, [tableColumns])
-
-	const originalTable = useMemo((): ColumnTable | undefined => {
-		return originalTables.length
-			? originalTables[0].table.select(aq.not(removedColumns))
-			: undefined
-	}, [originalTables, removedColumns])
+	const viewTable = useMemo((): Maybe<ColumnTable> => {
+		debugger
+		const steps =
+			variables
+				.find(a => a.id === selectedDefinitionId)
+				?.steps.flatMap(s => {
+					const a = s.args as Record<string, any>
+					return a.to //validate to see if there's really a to
+				}) || []
+		const aa = [subjectIdentifier, ...steps]
+		//what is the user didnt chose one
+		return subjectIdentifier ? originalTable?.select(aa) : undefined
+	}, [variables, subjectIdentifier, selectedDefinitionId, originalTable])
 
 	const handleTransformRequested = useCallback(
-		async (step: Step, selectedDefinitionId: string) => {
+		async (step: Step) => {
 			if (originalTable && step) {
-				debugger
 				const output = await runPipeline(originalTable, [step])
-				derive(output)
+				setOutp(output)
+				// derive(output)
 				//how would I know the type T
 				//it's not all of them that have to
 				//store the steps
@@ -250,16 +260,17 @@ export function useTableTransform(selectedDefinition: string): TransformTable {
 				})
 			}
 		},
-		[originalTable, derive, variables, setVariable],
+		[originalTable, variables, setVariable, setOutp, selectedDefinitionId],
 	)
 
 	return {
 		commands,
 		isModalOpen,
 		hideModal,
-		originalTable,
+		viewTable,
 		handleTransformRequested,
 		variables,
+		originalTable,
 	}
 }
 

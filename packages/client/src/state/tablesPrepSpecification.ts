@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { Step } from '@data-wrangling-components/core'
+import { Specification } from '@data-wrangling-components/core'
 import {
 	atom,
 	Resetter,
@@ -12,18 +12,19 @@ import {
 	useSetRecoilState,
 } from 'recoil'
 
-//change names
-export const stepsOutputTablePrepState = atom<Step[]>({
-	key: 'pre-load-steps',
+export const stepsTablesPrepSpecification = atom<Specification[]>({
+	key: 'tables-prep-spec',
 	default: [],
 })
 
-export function useStepsOutputTablePrep(): Step[] {
-	return useRecoilValue(stepsOutputTablePrepState)
+export function useTablesPrepSpecification(): Specification[] {
+	return useRecoilValue(stepsTablesPrepSpecification)
 }
 
-export function useSetStepsOutputTablePrep(): SetterOrUpdater<Step[]> {
-	return useSetRecoilState(stepsOutputTablePrepState)
+export function useSetTablesPrepSpecification(): SetterOrUpdater<
+	Specification[]
+> {
+	return useSetRecoilState(stepsTablesPrepSpecification)
 }
 
 //step doesn't have an id. What is the identifier
@@ -47,6 +48,6 @@ export function useSetStepsOutputTablePrep(): SetterOrUpdater<Step[]> {
 // 	)
 // }
 
-export function useResetStepsOutputTablePrep(): Resetter {
-	return useResetRecoilState(stepsOutputTablePrepState)
+export function useResetTablesPrepSpecification(): Resetter {
+	return useResetRecoilState(stepsTablesPrepSpecification)
 }
