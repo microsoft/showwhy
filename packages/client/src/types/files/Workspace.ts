@@ -41,4 +41,5 @@ export interface Workspace {
 	postLoad?: PostLoadTable[]
 	confidenceInterval?: boolean
 	tablesPrep?: Step[]
+	subjectIdentifier?: string
 }

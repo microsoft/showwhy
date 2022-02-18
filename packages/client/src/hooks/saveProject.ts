@@ -19,7 +19,6 @@ import {
 	useEstimators,
 	usePrimarySpecificationConfig,
 	useRefutationType,
-	useAllTableColumns,
 	useProjectFiles,
 	useAllModelVariables,
 	useFileCollection,
@@ -28,6 +27,7 @@ import {
 	useOriginalTables,
 	useRunHistory,
 	useStepsTablePrep,
+	useSubjectIdentifier,
 } from '~state'
 import {
 	PageType,
@@ -45,13 +45,13 @@ export function useSaveProject(): AsyncHandler {
 	const confidenceInterval = useConfidenceInterval()
 	const primarySpecification = usePrimarySpecificationConfig()
 	const causalFactors = useCausalFactors()
+	const subjectIdentifier = useSubjectIdentifier()
 	const defineQuestion = useDefineQuestion()
 	const estimators = useEstimators()
 	const refutations = useRefutationType()
 	const projectFiles = useProjectFiles()
 	const tablesPrep = useStepsTablePrep()
 	const todoPages = useGetStepUrlsByStatus()({ exclude: true })
-	const [tableColumns] = useAllTableColumns(projectFiles)
 	const [exposure] = useAllModelVariables(projectFiles, PageType.Exposure)
 	const [outcome] = useAllModelVariables(projectFiles, PageType.Outcome)
 	const [control] = useAllModelVariables(projectFiles, PageType.Control)
@@ -76,10 +76,10 @@ export function useSaveProject(): AsyncHandler {
 			defineQuestion,
 			estimators,
 			refutations,
-			tableColumns,
 			modelVariables,
 			todoPages,
 			tablesPrep,
+			subjectIdentifier,
 		}
 		await download(workspace)
 	}, [
@@ -89,9 +89,10 @@ export function useSaveProject(): AsyncHandler {
 		defineQuestion,
 		estimators,
 		refutations,
-		tableColumns,
 		modelVariables,
 		todoPages,
+		tablesPrep,
+		subjectIdentifier,
 		download,
 	])
 }

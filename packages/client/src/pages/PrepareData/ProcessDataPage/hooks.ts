@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { Step } from '@data-wrangling-components/core'
+import { Step, introspect } from '@data-wrangling-components/core'
 import { createDefaultCommandBar } from '@data-wrangling-components/react'
 import { BaseFile, createBaseFile } from '@data-wrangling-components/utilities'
 import {
@@ -11,15 +11,15 @@ import {
 	IDetailsColumnProps,
 	IRenderFunction,
 } from '@fluentui/react'
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import {
+	useSubjectIdentifier,
 	useProjectFiles,
+	useSetSubjectIdentifier,
 	useSetStepsTablePrep,
-	useSetTableColumns,
 	useStepsTablePrep,
-	useTableColumns,
 } from '~state'
-import { ColumnRelevance, Maybe, Setter, TableColumn } from '~types'
+import { runPipelineFromProjectFiles } from '~utils'
 
 export function useBusinessLogic(): {
 	files: BaseFile[]
@@ -31,16 +31,34 @@ export function useBusinessLogic(): {
 	const steps = useStepsTablePrep()
 	const setStepsTablePrep = useSetStepsTablePrep()
 
-	const [relevance, setRelevance] = useState<Maybe<ColumnRelevance>>()
-	const tableColumns = useTableColumns('identifier') //default any key
-	const setTableColumns = useSetTableColumns('identifier')
+	const [columnsMicrodata, setColumnsMicrodata] = useState<string[]>([])
+	const subjectIdentifier = useSubjectIdentifier()
+	const setSubjectIdentifier = useSetSubjectIdentifier()
 
 	const onChangeSteps = useCallback(
-		(step: Step[]) => {
-			setStepsTablePrep(step)
+		(steps: Step[]) => {
+			setStepsTablePrep(steps)
+			setSubjectIdentifier(undefined)
 		},
-		[setStepsTablePrep],
+		[setStepsTablePrep, setSubjectIdentifier],
 	)
+
+	const updateMicrodata = useCallback(async () => {
+		const output = await runPipelineFromProjectFiles(projectFiles, steps)
+		const stats = introspect(output, true)
+		const columnNames = Object.keys(stats.columns)
+		const columns = columnNames.filter(c => {
+			return stats.columns[c].stats?.distinct === stats.rows
+		})
+		setColumnsMicrodata(columns)
+	}, [projectFiles, steps, setColumnsMicrodata])
+
+	useEffect(() => {
+		const f = async () => {
+			updateMicrodata()
+		}
+		f()
+	}, [steps, updateMicrodata])
 
 	const files = useMemo((): BaseFile[] => {
 		return projectFiles.map(x => {
@@ -51,40 +69,29 @@ export function useBusinessLogic(): {
 		})
 	}, [projectFiles])
 
-	const onRelevanceChange = useOnRelevanceChange({
-		setTableColumns,
-		tableColumns,
-		setRelevance,
-		relevance,
-	})
-
-	const subjectIdentifier = useMemo(
-		(): TableColumn | undefined =>
-			tableColumns?.find(
-				x => x.relevance === ColumnRelevance.SubjectIdentifier,
-			),
-		[tableColumns],
-	)
-
 	const commandBar = useCallback(
 		(props?: IDetailsColumnProps) => {
-			const columnName = props?.column.name
+			const columnName = props?.column.name ?? ''
+			const canBeIdentifier = columnsMicrodata.includes(columnName)
 			const items: ICommandBarItemProps[] = [
 				{
-					key: 'newItem',
-					text: 'Set as subject identifier',
+					key: 'subjectIdentifier',
+					text: canBeIdentifier
+						? 'Set as subject Identifier'
+						: "Can't be a subject identifier",
 					iconOnly: true,
-					iconProps: { iconName: 'Permissions' },
+					iconProps: canBeIdentifier ? iconProps.key : iconProps.block,
 					toggle: true,
-					disabled: subjectIdentifier && subjectIdentifier?.name !== columnName,
-					checked: subjectIdentifier?.name === columnName,
-					onClick: () =>
-						onRelevanceChange(ColumnRelevance.SubjectIdentifier, columnName),
+					disabled:
+						!canBeIdentifier ||
+						(!!subjectIdentifier && subjectIdentifier !== columnName),
+					checked: subjectIdentifier === columnName,
+					onClick: () => setSubjectIdentifier(columnName),
 				},
 			]
 			return createDefaultCommandBar(items)
 		},
-		[onRelevanceChange, subjectIdentifier],
+		[setSubjectIdentifier, subjectIdentifier, columnsMicrodata],
 	)
 
 	return {
@@ -95,47 +102,7 @@ export function useBusinessLogic(): {
 	}
 }
 
-export function useOnRelevanceChange({
-	setTableColumns,
-	tableColumns,
-	setRelevance,
-	relevance,
-	onRemoveColumn,
-}: {
-	setTableColumns: Setter<Maybe<TableColumn[]>>
-	tableColumns?: TableColumn[]
-	setRelevance: Setter<Maybe<ColumnRelevance>>
-	relevance?: ColumnRelevance
-	onRemoveColumn?: (columnName?: string) => void
-}): (changedRelevance: Maybe<ColumnRelevance>, columnName?: string) => void {
-	return useCallback(
-		(changedRelevance: Maybe<ColumnRelevance>, columnName?: string) => {
-			if (relevance === changedRelevance) {
-				changedRelevance = undefined
-			}
-
-			setRelevance(changedRelevance)
-			const column = {
-				...tableColumns?.find(a => a.name === columnName),
-				name: columnName,
-				relevance: changedRelevance,
-			} as TableColumn
-
-			if (changedRelevance === ColumnRelevance.SubjectIdentifier) {
-				column.isDone = true
-			} else {
-				column.isDone = false
-			}
-
-			const newArray = [
-				...(tableColumns?.filter(a => a.name !== columnName) || []),
-			]
-			newArray.push(column)
-			setTableColumns(newArray)
-			if (changedRelevance === ColumnRelevance.NotRelevant) {
-				onRemoveColumn && onRemoveColumn(undefined)
-			}
-		},
-		[setTableColumns, tableColumns, setRelevance, relevance, onRemoveColumn],
-	)
+const iconProps = {
+	key: { iconName: 'Permissions' },
+	block: { iconName: 'StatusCircleBlock2' },
 }

@@ -21,8 +21,8 @@ import {
 	useSetRefutationType,
 	useSetRunHistory,
 	useSetStepStatuses,
-	useSetTableColumns,
 	useSetStepsTablePrep,
+	useSetSubjectIdentifier,
 } from '~state'
 import {
 	ProjectSource,
@@ -34,7 +34,6 @@ import {
 	FileDefinition,
 	ZipData,
 	ProjectFile,
-	TableColumn,
 	VariableDefinition,
 	Workspace,
 	DataTableFileDefinition,
@@ -54,11 +53,10 @@ import {
 export function useLoadProject(
 	source = ProjectSource.url,
 ): (definition?: Maybe<FileDefinition>, zip?: Maybe<ZipData>) => Promise<void> {
-	// const id = useMemo(() => uuidv4(), [])
-	const setTableColumns = useSetTableColumns('identifier')
 	// const setModelVariables = useSetModelVariables(id)
 	const setPrimarySpecificationConfig = useSetPrimarySpecificationConfig()
 	const setCausalFactors = useSetCausalFactors()
+	const setSubjectIdentifier = useSetSubjectIdentifier()
 	const setDefineQuestion = useSetDefineQuestion()
 	const setOrUpdateEst = useSetEstimators()
 	const setRefutationType = useSetRefutationType()
@@ -107,7 +105,7 @@ export function useLoadProject(
 				defineQuestion,
 				estimators,
 				refutations,
-				tableColumns,
+				subjectIdentifier,
 				modelVariables,
 				confidenceInterval,
 				defaultResult,
@@ -123,7 +121,7 @@ export function useLoadProject(
 			const cfs = prepCausalFactors(causalFactors)
 			const df = prepDefineQuestion(defineQuestion)
 			const est = estimators || []
-			const tcs = prepTableColumns(tableColumns)
+			// const tcs = prepTableColumns(tableColumns)
 			const mvs = prepModelVariables(modelVariables)
 			const tp = prepTablesPrep(tablesPrep?.steps)
 			const defaultDatasetResult = defaultResult || null
@@ -135,7 +133,7 @@ export function useLoadProject(
 			setCausalFactors(cfs)
 			setDefineQuestion(df)
 			setOrUpdateEst(est)
-			setTableColumns(tcs)
+			setSubjectIdentifier(subjectIdentifier)
 			// setModelVariables(mvs)
 			setStepsTablePrep(tp)
 			setDefaultDatasetResult(defaultDatasetResult)
@@ -157,7 +155,7 @@ export function useLoadProject(
 			setDefineQuestion,
 			setOrUpdateEst,
 			setRefutationType,
-			setTableColumns,
+			setSubjectIdentifier,
 			// setModelVariables,
 			setAllStepStatus,
 			getStepUrls,
@@ -317,15 +315,15 @@ function prepElement(element: Element): Element {
 	}
 }
 
-function prepTableColumns(columns?: Partial<TableColumn>[]): TableColumn[] {
-	return (columns || []).map(
-		column =>
-			({
-				id: uuidv4(),
-				...column,
-			} as TableColumn),
-	)
-}
+// function prepTableColumns(columns?: Partial<TableColumn>[]): TableColumn[] {
+// 	return (columns || []).map(
+// 		column =>
+// 			({
+// 				id: uuidv4(),
+// 				...column,
+// 			} as TableColumn),
+// 	)
+// }
 
 const useUpdateCollection = (): ((
 	workspace: Workspace,

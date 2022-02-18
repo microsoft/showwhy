@@ -111,12 +111,6 @@
     }
   ],
   "refutations": "Quick Refutation",
-  "tableColumns": [
-    {
-      "name": "index",
-      "relevance": "SubjectIdentifier"
-    }
-  ],
   "modelVariables": {},
   "todoPages": [
     "/perform/effects",

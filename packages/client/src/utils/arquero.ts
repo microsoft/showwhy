@@ -10,7 +10,7 @@ import {
 } from '@data-wrangling-components/utilities'
 import { fromCSV, all, op } from 'arquero'
 import ColumnTable from 'arquero/dist/types/table/column-table'
-import { DataTableFileDefinition } from '~types'
+import { DataTableFileDefinition, ProjectFile } from '~types'
 import { isZipUrl } from '~utils'
 /**
  * Creates a default data table by parsing csv/tsv content.
@@ -82,6 +82,26 @@ export async function runPipeline(
 	const fetched = await fetchTables(tables, tableFiles)
 	tables.forEach((table, index) => {
 		store.set(table.name, fetched[index])
+	})
+	const pipeline = new Pipeline(store)
+	pipeline.addAll(steps)
+
+	return pipeline.run()
+}
+
+/**
+ * Utility to wrap execution of a pipeline without needing to
+ * know about the TableStore, etc.
+ * @param tables
+ * @param steps
+ */
+export async function runPipelineFromProjectFiles(
+	tables: ProjectFile[],
+	steps: Step[],
+): Promise<any> {
+	const store = new TableStore()
+	tables.forEach(table => {
+		store.set(table.name, table.table)
 	})
 	const pipeline = new Pipeline(store)
 	pipeline.addAll(steps)
