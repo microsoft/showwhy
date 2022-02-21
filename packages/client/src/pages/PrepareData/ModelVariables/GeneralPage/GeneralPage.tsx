@@ -46,7 +46,6 @@ export const GeneralPage: React.FC = memo(function GeneralPage() {
 
 	const transformTable = useTableTransform(definitionId)
 
-	// const table = useTable(definitionId, variables, originalTable)
 	const setTargetVariable = useSetTargetVariable(
 		definitionId,
 		onSave,
@@ -59,7 +58,6 @@ export const GeneralPage: React.FC = memo(function GeneralPage() {
 		//What if no visible columns?
 		//What if no define question?
 		<ModelVariables
-			// table={table}
 			pageType={pageType}
 			commandBar={commandBar}
 			definitionDropdown={definitionDropdown}

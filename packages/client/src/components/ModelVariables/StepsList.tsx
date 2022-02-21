@@ -5,18 +5,14 @@
 import { Step } from '@data-wrangling-components/core'
 import { FC, memo } from 'react'
 import styled from 'styled-components'
-import { StepComponent } from './StepComponent'
 import { EmptyVariableSteps } from '~components/EmptyVariableSteps'
 import { VariableDefinition } from '~types'
+import { StepCard } from '@data-wrangling-components/react'
 
-interface StepsListProps {
+export const StepsList: FC<{
 	selectedDefinitionId: string
 	variables: VariableDefinition[]
-}
-export const StepsList: FC<StepsListProps> = memo(function StepsList({
-	variables,
-	selectedDefinitionId,
-}) {
+}> = memo(function StepsList({ variables, selectedDefinitionId }) {
 	return (
 		<List>
 			{!variables.find(x => x.id === selectedDefinitionId) && (
@@ -25,7 +21,7 @@ export const StepsList: FC<StepsListProps> = memo(function StepsList({
 			{variables
 				.find(x => x.id === selectedDefinitionId)
 				?.steps.map((step: Step, index: number) => {
-					return <StepComponent key={index} step={step} />
+					return <StepCard index={index} step={step} />
 				})}
 		</List>
 	)
@@ -33,4 +29,9 @@ export const StepsList: FC<StepsListProps> = memo(function StepsList({
 
 const List = styled.div`
 	display: flex;
+	margin-bottom: 10px;
+	margin-top: 5px;
+	column-gap: 12px;
+	width: 100%;
+	overflow: auto;
 `

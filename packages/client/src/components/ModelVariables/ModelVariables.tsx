@@ -39,7 +39,6 @@ interface ModelVariablesProps {
 	pageType: PageType
 	definitionArgs: DefinitionArgs
 	transformTable: TransformTable
-	// table: ColumnTable
 	definitionDropdown: IDropdownOption<any>[]
 	commandBar: IRenderFunction<IDetailsColumnProps>
 	renameCalloutArgs: RenameCalloutArgs
@@ -51,7 +50,6 @@ export const ModelVariables: FC<ModelVariablesProps> = memo(
 		pageType,
 		definitionArgs,
 		transformTable,
-		// table,
 		definitionDropdown,
 		commandBar,
 		renameCalloutArgs,
@@ -69,8 +67,8 @@ export const ModelVariables: FC<ModelVariablesProps> = memo(
 			commands,
 			isModalOpen,
 			hideModal,
-			viewTable,
-			originalTable,
+			outputTable,
+			outputViewTable,
 			handleTransformRequested,
 			variables,
 		} = transformTable
@@ -129,9 +127,9 @@ export const ModelVariables: FC<ModelVariablesProps> = memo(
 										/>
 									</VariablesContainer>
 
-									{originalTable && (
+									{outputTable && (
 										<ColumnTransformModal
-											table={originalTable}
+											table={outputTable}
 											isOpen={isModalOpen}
 											onDismiss={hideModal}
 											onTransformRequested={step =>
@@ -145,21 +143,23 @@ export const ModelVariables: FC<ModelVariablesProps> = memo(
 										selectedDefinitionId={selectedId}
 										variables={variables}
 									/>
-									{viewTable && (
+									{outputViewTable && (
 										<NormalContainer data-pw="table">
 											<ArqueroTableHeader
-												table={viewTable}
+												table={outputViewTable}
 												commands={commands}
 											/>
 											<DetailsListContainer>
 												<ArqueroDetailsTable
-													table={viewTable}
-													columns={(viewTable.columnNames() || []).map(n => ({
-														name: n,
-														key: n,
-														fieldName: n,
-														minWidth: 170,
-													}))}
+													table={outputViewTable}
+													columns={(outputViewTable.columnNames() || []).map(
+														n => ({
+															name: n,
+															key: n,
+															fieldName: n,
+															minWidth: 170,
+														}),
+													)}
 													features={{
 														smartHeaders: true,
 														commandBar: [commandBar],
@@ -189,7 +189,7 @@ const StepsTitle = styled.h4`
 const NormalContainer = styled.div``
 
 const DetailsListContainer = styled.div`
-	height: 50vh;
+	height: 48vh;
 `
 
 const VariablesContainer = styled.div`

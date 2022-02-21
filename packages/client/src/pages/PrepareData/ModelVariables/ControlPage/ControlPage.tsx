@@ -8,7 +8,7 @@ import {
 	useDefinitionDropdown,
 	useRenameCallout,
 	useSharedBusinessLogic,
-	useTable,
+	// useTable,
 	useTableTransform,
 } from '../hooks'
 import {
@@ -44,9 +44,7 @@ export const ControlPage: React.FC = memo(function ControlPage() {
 	const definitionDropdown = useDefinitionDropdown(definitions)
 
 	const transformTable = useTableTransform(definitionId)
-	const { variables, originalTable } = transformTable
 
-	const table = useTable(definitionId, variables, originalTable)
 	const setTargetVariable = useSetTargetVariable(
 		definitionId,
 		onSave,
@@ -59,7 +57,6 @@ export const ControlPage: React.FC = memo(function ControlPage() {
 		//What if no visible columns?
 		//What if no define question?
 		<ModelVariables
-			table={table}
 			pageType={pageType}
 			commandBar={commandBar}
 			definitionDropdown={definitionDropdown}
