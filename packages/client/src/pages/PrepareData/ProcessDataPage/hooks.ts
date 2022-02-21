@@ -39,7 +39,12 @@ export function useBusinessLogic(): {
 
 	const onChangeSteps = useCallback(
 		(steps: Step[]) => {
-			setStepsTablePrep(steps)
+			setStepsTablePrep(prev => {
+				const _prev = [...prev]
+				_prev[0] = { ..._prev[0], steps }
+				return _prev
+			})
+
 			setSubjectIdentifier(undefined)
 		},
 		[setStepsTablePrep, setSubjectIdentifier],
@@ -50,6 +55,7 @@ export function useBusinessLogic(): {
 	}, [prepSpecification])
 
 	const updateMicrodata = useCallback(async () => {
+		if (!projectFiles.length) return
 		const output = await runPipelineFromProjectFiles(projectFiles, steps)
 		const stats = introspect(output, true)
 		const columnNames = Object.keys(stats.columns)

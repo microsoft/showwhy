@@ -13,41 +13,41 @@ import {
 	useSetOutputTableModelVariables,
 	useSubjectIdentifier,
 } from '~state'
-import { TransformTable } from '~types'
+import { Maybe, TransformTable, VariableDefinition } from '~types'
 import { useVariables } from './useVariables'
 import { useViewTable } from './useViewTable'
 
-function useDeriveColumnCommand(
-	onClick: (
-		ev?: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>,
-		item?: IContextualMenuItem,
-	) => boolean | void,
-	selectedDefinitionId: string,
-) {
-	const cmd = useMemo(() => {
-		return {
-			key: 'derive-column',
-			text: 'Create column',
-			disabled: !selectedDefinitionId,
-			iconProps: {
-				iconName: 'Add',
-			},
-			onClick,
-		}
-	}, [onClick, selectedDefinitionId])
-	return cmd
-}
-
-function useCommands(
-	showModal: (
-		ev?: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>,
-		item?: IContextualMenuItem,
-	) => boolean | void,
-	selectedDefinitionId: string,
-) {
-	const dccmd = useDeriveColumnCommand(showModal, selectedDefinitionId)
-	return useMemo(() => [dccmd], [dccmd])
-}
+// function useDeriveColumnCommand(
+// 	onClick: (
+// 		ev?: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>,
+// 		item?: IContextualMenuItem,
+// 	) => boolean | void,
+// 	selectedDefinitionId: string,
+// ) {
+// 	const cmd = useMemo(() => {
+// 		return {
+// 			key: 'derive-column',
+// 			text: 'Create column',
+// 			disabled: !selectedDefinitionId,
+// 			iconProps: {
+// 				iconName: 'Add',
+// 			},
+// 			onClick,
+// 		}
+// 	}, [onClick, selectedDefinitionId])
+// 	return cmd
+// }
+// 857900000095 820400092103 222010993392 488900212447
+// function useCommands(
+// 	showModal: (
+// 		ev?: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>,
+// 		item?: IContextualMenuItem,
+// 	) => boolean | void,
+// 	selectedDefinitionId: string,
+// ) {
+// 	const dccmd = useDeriveColumnCommand(showModal, selectedDefinitionId)
+// 	return useMemo(() => [dccmd], [dccmd])
+// }
 
 export function useTableTransform(
 	selectedDefinitionId: string,
@@ -58,16 +58,16 @@ export function useTableTransform(
 	const setOutp = useSetOutputTableModelVariables()
 	const subjectIdentifier = useSubjectIdentifier()
 
-	const [isModalOpen, { setTrue: showModal, setFalse: hideModal }] =
-		useBoolean(false)
-	const commands = useCommands(showModal, selectedDefinitionId)
-
 	const outputViewTable = useViewTable(
 		selectedDefinitionId,
 		variables,
 		outputTable,
 		subjectIdentifier,
 	)
+
+	const selectedVariable = useMemo((): Maybe<VariableDefinition> => {
+		return variables.find(x => x.id === selectedDefinitionId)
+	}, [variables, selectedDefinitionId])
 
 	const handleTransformRequested = useCallback(
 		async (step: Step) => {
@@ -83,13 +83,16 @@ export function useTableTransform(
 		[outputTable, variables, setVariable, setOutp, selectedDefinitionId],
 	)
 
+	const onDeleteStep = useCallback((index: number) => {}, [])
+
 	return {
-		commands,
-		isModalOpen,
-		hideModal,
+		// commands,
+		// isModalOpen,
+		// hideModal,
 		outputViewTable,
 		handleTransformRequested,
-		variables,
+		selectedVariable,
 		outputTable,
+		onDeleteStep,
 	}
 }

@@ -905,11 +905,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@data-wrangling-components/core@npm:^2.1.0":
-  version: 2.1.0
-  resolution: "@data-wrangling-components/core@npm:2.1.0"
+"@data-wrangling-components/core@npm:^2.2.0":
+  version: 2.2.0
+  resolution: "@data-wrangling-components/core@npm:2.2.0"
   dependencies:
-    core-js: ^3.20.2
+    core-js: ^3.21.1
     lodash-es: ^4.17.21
   peerDependencies:
     "@types/node": "*"
@@ -917,22 +917,21 @@ __metadata:
   peerDependenciesMeta:
     "@types/node":
       optional: true
-  checksum: 64668f8d244023b287bf92f104d686339c67a0b9fa1bbb921d50a1c75b64445c1e8f3f9a92021398b94e29ba1124a9a43095250d3575ea31eec0ee17d8cdb6bf
+  checksum: b66f2d8a00f3cd432f216b93569e191adf07bef2c07f83e47a66742e7c6500f93704f484d486be46e4bc3cd8cdeace2fa9325809537c7b47d43022e08fe83184
   languageName: node
   linkType: hard
 
-"@data-wrangling-components/react@npm:^2.2.1":
-  version: 2.2.1
-  resolution: "@data-wrangling-components/react@npm:2.2.1"
+"@data-wrangling-components/react@npm:^2.4.2":
+  version: 2.4.2
+  resolution: "@data-wrangling-components/react@npm:2.4.2"
   dependencies:
-    "@essex-js-toolkit/hooks": ^3.0.2
-    core-js: ^3.20.2
+    "@essex-js-toolkit/hooks": ^4.0.1
     d3-format: ^3.1.0
     d3-scale: ^4.0.2
     d3-selection: ^3.0.0
-    d3-shape: ^3.0.1
-    lodash: ^4.17.21
-    react-dropzone: ^11.4.2
+    d3-shape: ^3.1.0
+    lodash-es: ^4.17.21
+    react-dropzone: ^12.0.4
     react-if: ^4.1.1
   peerDependencies:
     "@data-wrangling-components/core": "*"
@@ -948,23 +947,22 @@ __metadata:
     "@thematic/react": ^1.3.0
     "@uifabric/icons": ^7.5.23
     arquero: ^4.8.7
-    office-ui-fabric-react: ^7.173.1
     react: ^17.0.2
     react-dom: ^17.0.2
     styled-components: ^5.3.0
-  checksum: 76e93bc6918594d407373dd0f05665a2029707bcf619f0e1f61331915854da0db763d20d2fce463025e4356d7aa2e791eadffda0d97e833511ab2b454c98cc9e
+  checksum: ba988c5a822c9f54243261c6c974f5f475fd428c2aba97aaf7cc532ab8f0a991b59d013b6e7866ff4a720c97af2d43ca3953566c17d3becdcd281702f99bf780
   languageName: node
   linkType: hard
 
-"@data-wrangling-components/utilities@npm:^1.5.0":
-  version: 1.5.0
-  resolution: "@data-wrangling-components/utilities@npm:1.5.0"
+"@data-wrangling-components/utilities@npm:^1.6.0":
+  version: 1.6.0
+  resolution: "@data-wrangling-components/utilities@npm:1.6.0"
   dependencies:
-    "@zip.js/zip.js": ^2.4.3
-    core-js: ^3.20.2
+    "@zip.js/zip.js": ^2.4.4
+    core-js: ^3.21.1
   peerDependencies:
     arquero: ^4.8.7
-  checksum: cb5c85dcc9ceb3db0a96a4fcbe0423283a1a703ada9e13131e562602bf59dc9a255797d05ede056c1068a945eefeedc02011e11fe366b842760490f295027a25
+  checksum: 52d6a3c2f758cf8a06ff91789e263dc6941071c9e1bed7e2aaf8a86ed65c8de492491ada6d5e57915e0b538880b65e2c217160022729e76c94b2c2f06602836d
   languageName: node
   linkType: hard
 
@@ -1079,6 +1077,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@essex-js-toolkit/hooks@npm:^4.0.1":
+  version: 4.0.1
+  resolution: "@essex-js-toolkit/hooks@npm:4.0.1"
+  dependencies:
+    "@essex-js-toolkit/toolbox": 3.0.1
+    lodash-es: ^4.17.21
+  peerDependencies:
+    "@types/node": "*"
+    "@types/react": "*"
+    "@types/react-dom": "*"
+    react: ">=16.8.0"
+  checksum: 3c120777bc3653b61b0e1ad4f96addf3248e330dcc7053009120443e91e878fe44daf232c62147070ff9a83f0dbeb0ece43a9ccb37c0f644cf5d622802f600ba
+  languageName: node
+  linkType: hard
+
 "@essex-js-toolkit/thematic-lineup@npm:^1.1.7":
   version: 1.1.8
   resolution: "@essex-js-toolkit/thematic-lineup@npm:1.1.8"
@@ -1143,6 +1156,13 @@ __metadata:
   dependencies:
     core-js: ^3.21.0
   checksum: 515d7f7ce2719da085f446db89068e3067c27c3572fb750b5f5bce632c5b22cc199f783b49b240a722c784a94dd1e3ad46d14d269d7651c28ab4a48f63fd3355
+  languageName: node
+  linkType: hard
+
+"@essex-js-toolkit/toolbox@npm:3.0.1":
+  version: 3.0.1
+  resolution: "@essex-js-toolkit/toolbox@npm:3.0.1"
+  checksum: 24b864ce1819374b00ab6f5b8633232c3ea212993dc52467a7de4f606843cfaa19ad3239bb257fcfd0c6bf189319602005be372070bc1f4f98570288a3dfdac6
   languageName: node
   linkType: hard
 
@@ -2029,9 +2049,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/client@workspace:packages/client"
   dependencies:
-    "@data-wrangling-components/core": ^2.1.0
-    "@data-wrangling-components/react": ^2.2.1
-    "@data-wrangling-components/utilities": ^1.5.0
+    "@data-wrangling-components/core": ^2.2.0
+    "@data-wrangling-components/react": ^2.4.2
+    "@data-wrangling-components/utilities": ^1.6.0
     "@essex-js-toolkit/boolean-expression-component": ^0.1.1
     "@essex-js-toolkit/hooks": ^3.0.2
     "@essex-js-toolkit/thematic-lineup": ^1.1.7
@@ -3247,7 +3267,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@zip.js/zip.js@npm:^2.4.3":
+"@zip.js/zip.js@npm:^2.4.4":
   version: 2.4.4
   resolution: "@zip.js/zip.js@npm:2.4.4"
   checksum: f6d427fe66dc42795c7fe871f9de19e80f1f4317788b616bd7e79bd36beacf261bc88c498baa119abab87ddcfad3843c641086d0a9343ef78f459251c1d993e6
@@ -4408,6 +4428,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"core-js@npm:^3.21.1":
+  version: 3.21.1
+  resolution: "core-js@npm:3.21.1"
+  checksum: d68eddd831340ad5b24ac29c72fda022a43b17f194c4278b6b875a843283d316502cb4abd07f28631d6ebc4387f66aa06e2b1b3c8fd7e08096a751b5c63f6889
+  languageName: node
+  linkType: hard
+
 "core-util-is@npm:~1.0.0":
   version: 1.0.3
   resolution: "core-util-is@npm:1.0.3"
@@ -4826,7 +4853,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"d3-shape@npm:^3.0.1":
+"d3-shape@npm:^3.0.1, d3-shape@npm:^3.1.0":
   version: 3.1.0
   resolution: "d3-shape@npm:3.1.0"
   dependencies:
@@ -9310,16 +9337,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dropzone@npm:^11.4.2":
-  version: 11.7.1
-  resolution: "react-dropzone@npm:11.7.1"
+"react-dropzone@npm:^12.0.4":
+  version: 12.0.4
+  resolution: "react-dropzone@npm:12.0.4"
   dependencies:
     attr-accept: ^2.2.2
     file-selector: ^0.4.0
     prop-types: ^15.8.1
   peerDependencies:
     react: ">= 16.8"
-  checksum: 7549bb67da5222dfbb7b79d9df84a4f2bd417e53396df8b0772a95fd7621ec967b87a17ff7f1e54eb5597d73c51c2a0d16328c792b11e751c73e18e2f7160207
+  checksum: cc8c2036c72cbe02ddea1e141de45aeee7b399321b5791174d04fb8c1f52eb2ee3ae2d3fb1240fc23008a435c4ceb437e85831f0388a6b34be2bc39417701096
   languageName: node
   linkType: hard
 

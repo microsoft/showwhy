@@ -3,16 +3,14 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { ICommandBarItemProps } from '@fluentui/react'
 import ColumnTable from 'arquero/dist/types/table/column-table'
-import { VariableDefinition } from '~types'
+import { Maybe, VariableDefinition } from '~types'
+import { Handler1 } from '../primitives'
 
 export interface TransformTable {
-	commands: ICommandBarItemProps[]
-	isModalOpen: boolean
-	hideModal: () => void
 	outputViewTable?: ColumnTable
 	outputTable?: ColumnTable
 	handleTransformRequested: (step: any) => Promise<void>
-	variables: VariableDefinition[]
+	onDeleteStep: Handler1<number>
+	selectedVariable: Maybe<VariableDefinition>
 }

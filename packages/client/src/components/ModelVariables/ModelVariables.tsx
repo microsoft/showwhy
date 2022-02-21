@@ -5,6 +5,8 @@
 import {
 	ArqueroTableHeader,
 	ColumnTransformModal,
+	ManageSteps,
+	StepsType,
 } from '@data-wrangling-components/react'
 import {
 	Dropdown,
@@ -19,7 +21,6 @@ import { If, Then, Else } from 'react-if'
 import styled from 'styled-components'
 import { Header } from './Header'
 import { RenameCallout } from './RenameCallout'
-import { StepsList } from './StepsList'
 import { DialogConfirm } from '~components/DialogConfirm'
 import { EmptyDataPageWarning } from '~components/EmptyDataPageWarning'
 import { ModelVariableCommands } from '~components/ModelVariableCommands'
@@ -64,13 +65,11 @@ export const ModelVariables: FC<ModelVariablesProps> = memo(
 		const { toggleCallout, definitionName, calloutOpen } = renameCalloutArgs
 
 		const {
-			commands,
-			isModalOpen,
-			hideModal,
 			outputTable,
 			outputViewTable,
 			handleTransformRequested,
-			variables,
+			onDeleteStep,
+			selectedVariable,
 		} = transformTable
 
 		return (
@@ -127,28 +126,19 @@ export const ModelVariables: FC<ModelVariablesProps> = memo(
 										/>
 									</VariablesContainer>
 
-									{outputTable && (
-										<ColumnTransformModal
-											table={outputTable}
-											isOpen={isModalOpen}
-											onDismiss={hideModal}
-											onTransformRequested={step =>
-												handleTransformRequested(step)
-											}
-										/>
-									)}
-
 									<StepsTitle>Definition steps</StepsTitle>
-									<StepsList
-										selectedDefinitionId={selectedId}
-										variables={variables}
-									/>
+									<Steps>
+										<ManageSteps
+											table={outputTable}
+											onDelete={onDeleteStep}
+											onSave={handleTransformRequested}
+											steps={selectedVariable?.steps}
+											type={StepsType.Column}
+										/>
+									</Steps>
 									{outputViewTable && (
 										<NormalContainer data-pw="table">
-											<ArqueroTableHeader
-												table={outputViewTable}
-												commands={commands}
-											/>
+											<ArqueroTableHeader table={outputViewTable} />
 											<DetailsListContainer>
 												<ArqueroDetailsTable
 													table={outputViewTable}
@@ -184,6 +174,12 @@ const Container = styled.div`
 
 const StepsTitle = styled.h4`
 	margin-bottom: unset;
+`
+
+const Steps = styled.div`
+	margin-bottom: 10px;
+	margin-top: 5px;
+	min-height: 150px;
 `
 
 const NormalContainer = styled.div``
