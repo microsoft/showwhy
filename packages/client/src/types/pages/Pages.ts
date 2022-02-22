@@ -14,6 +14,7 @@ export enum Pages {
 	VariablesControl = '/prepare/variables/control',
 	Variables = '/prepare/variables',
 	ProcessData = '/prepare/data',
+	ConfirmData = '/prepare/confirm',
 	EstimateCausalEffects = '/perform/effects',
 	SelectCausalEstimators = '/perform/estimators',
 	RefutationTests = '/perform/refutation',

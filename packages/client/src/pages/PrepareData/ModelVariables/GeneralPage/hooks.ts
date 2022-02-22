@@ -132,8 +132,13 @@ export function useDefinitionActions(
 			const newDefinition = {
 				...props,
 				variable: name,
+				column: undefined,
 			} as ElementDefinition
 			onSave(newDefinition)
+
+			//duplicate steps
+			//add steps
+			//run steps
 			toggleCallout(undefined)
 
 			setTimeout(() => {

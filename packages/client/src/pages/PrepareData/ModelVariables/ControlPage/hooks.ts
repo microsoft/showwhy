@@ -18,6 +18,7 @@ import {
 	Maybe,
 	PageType,
 	RenameCalloutType,
+	VariableAssignedCount,
 } from '~types'
 
 export function useBusinessLogic(): {
@@ -58,7 +59,8 @@ export function useSetTargetVariable(
 			} as CausalFactor
 
 			if (selectedCausal) {
-				selectedCausal.column = column
+				selectedCausal.column =
+					selectedCausal.column === column ? undefined : column
 			}
 
 			saveCausalFactor(selectedCausal)
@@ -86,9 +88,21 @@ export function useDefinitions(definitions: CausalFactor[]): DefinitionArgs {
 		[setSelectedId],
 	)
 
+	const assignedCount = useMemo((): Maybe<VariableAssignedCount> => {
+		const total = definitions.length
+		if (!total) return undefined
+		const assigned = definitions.filter(x => x.column?.length).length
+
+		return {
+			total,
+			assigned,
+		}
+	}, [definitions])
+
 	return {
 		definition,
 		onSelect,
+		assignedCount,
 	}
 }
 

@@ -8,7 +8,6 @@ import {
 	useDefinitionDropdown,
 	useRenameCallout,
 	useSharedBusinessLogic,
-	// useTable,
 	useTableTransform,
 } from '../hooks'
 import {

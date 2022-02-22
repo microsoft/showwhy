@@ -218,6 +218,15 @@ export const stepsList = [
 				getMarkdown: async () =>
 					import('../markdown/prepare-data/ControlVariables.md'),
 			},
+			{
+				id: uuidv4(),
+				title: 'Confirm data',
+				status: StepStatus.ToDo,
+				url: Pages.ConfirmData,
+				showStatus: true,
+				getMarkdown: async () =>
+					import('../markdown/prepare-data/ControlVariables.md'),
+			},
 		],
 	},
 	{
