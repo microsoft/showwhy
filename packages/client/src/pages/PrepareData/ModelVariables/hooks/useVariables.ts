@@ -5,11 +5,11 @@
 
 import { useMemo } from 'react'
 import {
-	usePopulationVariables,
+	// usePopulationVariables,
 	useExposureVariables,
 	useOutcomeVariables,
 	useControlVariables,
-	useSetOrUpdatePopulationVariables,
+	// useSetOrUpdatePopulationVariables,
 	useSetOrUpdateExposureVariables,
 	useSetOrUpdateOutcomeVariables,
 	useSetOrUpdateControlVariables,
@@ -19,19 +19,19 @@ import { PageType, VariableDefinition } from '~types'
 export function useVariables(
 	pageType: PageType,
 ): [VariableDefinition[], (variableDefinition: VariableDefinition) => void] {
-	const population = usePopulationVariables()
+	// const population = usePopulationVariables()
 	const exposure = useExposureVariables()
 	const outcome = useOutcomeVariables()
 	const control = useControlVariables()
-	const setPopulation = useSetOrUpdatePopulationVariables()
+	// const setPopulation = useSetOrUpdatePopulationVariables()
 	const setExposure = useSetOrUpdateExposureVariables()
 	const setOutcome = useSetOrUpdateOutcomeVariables()
 	const setControl = useSetOrUpdateControlVariables()
 
 	return useMemo(() => {
 		switch (pageType) {
-			case PageType.Population:
-				return [population, setPopulation]
+			// case PageType.Population:
+			// 	return [population, setPopulation]
 			case PageType.Exposure:
 				return [exposure, setExposure]
 			case PageType.Outcome:
@@ -43,11 +43,11 @@ export function useVariables(
 		}
 	}, [
 		pageType,
-		population,
+		// population,
 		exposure,
 		outcome,
 		control,
-		setPopulation,
+		// setPopulation,
 		setExposure,
 		setOutcome,
 		setControl,

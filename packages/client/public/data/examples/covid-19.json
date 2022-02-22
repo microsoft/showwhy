@@ -112,7 +112,10 @@
       }
     ],
     "refutations": "Quick Refutation",
-    "modelVariables": {},
+    "modelVariables": [{
+      "variable": "Confirmed COVID-19 cases",
+      "columns": ["output"]
+    }],
     "todoPages": [
       "/perform/effects",
       "/perform/estimate-distribution",
@@ -779,6 +782,21 @@
             ]
           }
         }
+      ]
+    }],
+    "columnsPrep": [{
+      "steps": [
+        {
+          "verb": "bin",
+          "input": "prep-table-1",
+          "output": "output",
+          "args": {
+              "to": "output",
+              "strategy": "auto",
+              "fixedcount": 10,
+              "column": "index"
+          }
+      }
       ]
     }]
   }

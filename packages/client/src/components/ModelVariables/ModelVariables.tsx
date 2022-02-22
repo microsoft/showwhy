@@ -69,7 +69,7 @@ export const ModelVariables: FC<ModelVariablesProps> = memo(
 			outputViewTable,
 			handleTransformRequested,
 			onDeleteStep,
-			selectedVariable,
+			actualSteps,
 		} = transformTable
 
 		return (
@@ -132,7 +132,7 @@ export const ModelVariables: FC<ModelVariablesProps> = memo(
 											table={outputTable}
 											onDelete={onDeleteStep}
 											onSave={handleTransformRequested}
-											steps={selectedVariable?.steps}
+											steps={actualSteps}
 											type={StepsType.Column}
 										/>
 									</Steps>

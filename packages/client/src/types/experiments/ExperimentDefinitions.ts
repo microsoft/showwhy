@@ -13,3 +13,8 @@ export interface Definition {
 	control?: VariableDefinition[]
 	[key: string]: Maybe<VariableDefinition[]>
 }
+
+export interface Ma {
+	variable: string
+	columns: string[]
+}

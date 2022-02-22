@@ -5,24 +5,19 @@
 
 import ColumnTable from 'arquero/dist/types/table/column-table'
 import { useMemo } from 'react'
-import { Maybe, VariableDefinition } from '~types'
+import { Maybe } from '~types'
 
 export function useViewTable(
 	selectedDefinitionId: string,
-	variables: VariableDefinition[],
+	selectedColumns: string[],
 	outputTable?: ColumnTable,
 	subjectIdentifier?: string,
 ): Maybe<ColumnTable> {
 	return useMemo((): Maybe<ColumnTable> => {
-		const steps =
-			variables
-				.find(a => a.id === selectedDefinitionId)
-				?.steps.flatMap(s => {
-					const a = s.args as Record<string, any>
-					return a.to
-				}) || []
-		const columns = [subjectIdentifier, ...steps]
+		const columns = [subjectIdentifier || '', ...selectedColumns].filter(x =>
+			outputTable?.columnNames().includes(x),
+		)
 		//what if the user didnt chose one
 		return subjectIdentifier ? outputTable?.select(columns) : undefined
-	}, [variables, subjectIdentifier, selectedDefinitionId, outputTable])
+	}, [selectedColumns, subjectIdentifier, selectedDefinitionId, outputTable])
 }

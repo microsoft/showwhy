@@ -3,95 +3,153 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { runPipeline, Step } from '@data-wrangling-components/core'
-import { IContextualMenuItem } from '@fluentui/react'
-import { useBoolean } from 'ahooks'
-import { useCallback, useMemo } from 'react'
-import { usePageType } from '~hooks'
 import {
+	runPipeline,
+	Specification,
+	Step,
+} from '@data-wrangling-components/core'
+import cloneDeep from 'lodash/cloneDeep'
+import isArray from 'lodash/isArray'
+import { useCallback, useMemo } from 'react'
+import {
+	useAllVariables,
 	useOutputTableModelVariables,
+	useOutputTablePrep,
+	useSetOrUpdateAllVariables,
 	useSetOutputTableModelVariables,
 	useSubjectIdentifier,
 } from '~state'
+import {
+	useColumnsPrepSpecification,
+	useSetColumnsPrepSpecification,
+} from '~state/columnsPrepSpecification'
 import { Maybe, TransformTable, VariableDefinition } from '~types'
-import { useVariables } from './useVariables'
 import { useViewTable } from './useViewTable'
-
-// function useDeriveColumnCommand(
-// 	onClick: (
-// 		ev?: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>,
-// 		item?: IContextualMenuItem,
-// 	) => boolean | void,
-// 	selectedDefinitionId: string,
-// ) {
-// 	const cmd = useMemo(() => {
-// 		return {
-// 			key: 'derive-column',
-// 			text: 'Create column',
-// 			disabled: !selectedDefinitionId,
-// 			iconProps: {
-// 				iconName: 'Add',
-// 			},
-// 			onClick,
-// 		}
-// 	}, [onClick, selectedDefinitionId])
-// 	return cmd
-// }
-// 857900000095 820400092103 222010993392 488900212447
-// function useCommands(
-// 	showModal: (
-// 		ev?: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>,
-// 		item?: IContextualMenuItem,
-// 	) => boolean | void,
-// 	selectedDefinitionId: string,
-// ) {
-// 	const dccmd = useDeriveColumnCommand(showModal, selectedDefinitionId)
-// 	return useMemo(() => [dccmd], [dccmd])
-// }
 
 export function useTableTransform(
 	selectedDefinitionId: string,
 ): TransformTable {
-	const pageType = usePageType()
-	const [variables, setVariable] = useVariables(pageType)
+	const columnsPrep = useColumnsPrepSpecification()
+	const setColumnsPrep = useSetColumnsPrepSpecification()
+	const allVariables = useAllVariables()
+	const setVariables = useSetOrUpdateAllVariables()
 	const outputTable = useOutputTableModelVariables()
+	const tablePrep = useOutputTablePrep()
 	const setOutp = useSetOutputTableModelVariables()
 	const subjectIdentifier = useSubjectIdentifier()
 
+	const selectedVariable = useMemo((): VariableDefinition | undefined => {
+		return allVariables.find(x => x.id === selectedDefinitionId)
+	}, [allVariables, selectedDefinitionId])
+
+	const selectedSpecification = useMemo((): Maybe<Specification> => {
+		return columnsPrep[0] || undefined
+	}, [columnsPrep])
+
+	const selectedColumns = useMemo((): string[] => {
+		return selectedVariable?.columns || []
+	}, [selectedVariable])
+
 	const outputViewTable = useViewTable(
 		selectedDefinitionId,
-		variables,
+		selectedColumns,
 		outputTable,
 		subjectIdentifier,
 	)
 
-	const selectedVariable = useMemo((): Maybe<VariableDefinition> => {
-		return variables.find(x => x.id === selectedDefinitionId)
-	}, [variables, selectedDefinitionId])
+	const actualSteps = useMemo((): Step[] => {
+		return (
+			selectedSpecification?.steps?.filter(a => {
+				const args = a.args as Record<string, unknown>
+				if (!isArray(args['to'])) {
+					return selectedColumns?.includes(args['to'] as string)
+				}
+			}) || []
+		)
+	}, [selectedSpecification, selectedColumns])
 
 	const handleTransformRequested = useCallback(
-		async (step: Step) => {
+		async (step: Step, index?: number) => {
 			if (outputTable && step) {
-				const output = await runPipeline(outputTable, [step])
+				//if add, just run on top of it
+				//if edit or delete, run everything
+				const tab = index != undefined && tablePrep ? tablePrep : outputTable
+				//if index, run all steps
+				let spec = cloneDeep(selectedSpecification) || {}
+				const args = step.args as Record<string, unknown>
+				let columns = [...(selectedVariable?.columns || [])]
+				let output = tab
+				let inde = undefined
+				if (index != undefined && spec.steps) {
+					const bb = actualSteps[index]
+					inde = spec.steps?.findIndex(
+						x => JSON.stringify(x) === JSON.stringify(bb),
+					)
+					spec.steps[inde] = step
+					output = await runPipeline(tab, spec.steps)
+					columns = columns.filter(x => output.columnNames().includes(x))
+					columns?.push(args['to'] as string)
+				} else {
+					output = await runPipeline(tab, [step])
+					spec = {
+						...spec,
+						steps: [...(spec?.steps || []), step],
+					}
+					columns?.push(args['to'] as string)
+				}
+				const variableDefinition = {
+					id: selectedDefinitionId,
+					columns: columns,
+				}
 				setOutp(output)
-				setVariable({
-					steps: [...variables.flatMap(x => x.steps), step],
-					id: selectedDefinitionId, //TODO: change to definitionId?
-				})
+				setVariables(variableDefinition)
+				setColumnsPrep([spec])
 			}
 		},
-		[outputTable, variables, setVariable, setOutp, selectedDefinitionId],
+		[
+			tablePrep,
+			outputTable,
+			setOutp,
+			selectedDefinitionId,
+			setVariables,
+			setColumnsPrep,
+			selectedSpecification,
+			selectedVariable,
+		],
 	)
 
-	const onDeleteStep = useCallback((index: number) => {}, [])
+	const onDeleteStep = useCallback(
+		async (index: number) => {
+			let spec = cloneDeep(columnsPrep[0])
+
+			const bb = actualSteps[index]
+			const inde = spec.steps?.findIndex(
+				x => JSON.stringify(x) === JSON.stringify(bb),
+			)
+			if (inde != undefined && spec.steps && tablePrep) {
+				let columns = [...(selectedVariable?.columns || [])]
+				delete spec.steps[inde]
+				spec.steps = spec.steps.filter(x => x)
+				const output = spec.steps
+					? await runPipeline(tablePrep, spec.steps)
+					: tablePrep
+				columns = columns.filter(x => output.columnNames().includes(x))
+				const aa = {
+					id: selectedDefinitionId,
+					columns: columns,
+				}
+				setOutp(output)
+				setVariables(aa)
+				setColumnsPrep(spec.steps ? [spec] : [])
+			}
+		},
+		[selectedVariable, actualSteps, tablePrep, selectedDefinitionId],
+	)
 
 	return {
-		// commands,
-		// isModalOpen,
-		// hideModal,
+		actualSteps,
 		outputViewTable,
 		handleTransformRequested,
-		selectedVariable,
 		outputTable,
 		onDeleteStep,
 	}

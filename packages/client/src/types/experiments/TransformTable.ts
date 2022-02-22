@@ -3,6 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import { Step } from '@data-wrangling-components/core'
 import ColumnTable from 'arquero/dist/types/table/column-table'
 import { Maybe, VariableDefinition } from '~types'
 import { Handler1 } from '../primitives'
@@ -10,7 +11,7 @@ import { Handler1 } from '../primitives'
 export interface TransformTable {
 	outputViewTable?: ColumnTable
 	outputTable?: ColumnTable
-	handleTransformRequested: (step: any) => Promise<void>
+	handleTransformRequested: (step: any, index?: number) => Promise<void>
 	onDeleteStep: Handler1<number>
-	selectedVariable: Maybe<VariableDefinition>
+	actualSteps: Step[]
 }

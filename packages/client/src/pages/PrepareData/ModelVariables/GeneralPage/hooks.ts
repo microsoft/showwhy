@@ -26,7 +26,7 @@ export function useBusinessLogic(): {
 } {
 	const pageType = usePageType()
 	const defineQuestion = useDefineQuestion()
-	const defineQuestionData = defineQuestion[pageType]
+	const defineQuestionData = defineQuestion[pageType] //TODO: ??
 
 	const definitions = useMemo((): ElementDefinition[] => {
 		return defineQuestionData?.definition || []
