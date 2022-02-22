@@ -15,8 +15,10 @@ import {
 	Element,
 	ElementDefinition,
 	Handler,
+	Maybe,
 	PageType,
 	RenameCalloutType,
+	VariableAssignedCount,
 } from '~types'
 
 export function useBusinessLogic(): {
@@ -46,6 +48,19 @@ export function useDefinitions(defineQuestionData: Element): DefinitionArgs {
 		return defineQuestionData?.definition.find(x => x.id === selectedId)
 	}, [selectedId, defineQuestionData])
 
+	const assignedCount = useMemo((): Maybe<VariableAssignedCount> => {
+		const total = defineQuestionData?.definition.length
+		if (!total) return undefined
+		const assigned = defineQuestionData.definition.filter(
+			x => x.column?.length,
+		).length
+
+		return {
+			total,
+			assigned,
+		}
+	}, [defineQuestionData])
+
 	useEffect(() => {
 		if (!definition && defineQuestionData) {
 			setSelectedId(defineQuestionData?.definition[0]?.id || '')
@@ -62,6 +77,7 @@ export function useDefinitions(defineQuestionData: Element): DefinitionArgs {
 	return {
 		definition,
 		onSelect,
+		assignedCount,
 	}
 }
 

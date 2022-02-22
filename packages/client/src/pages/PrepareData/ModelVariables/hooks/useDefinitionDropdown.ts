@@ -15,7 +15,13 @@ export function useDefinitionDropdown(
 			return {
 				key: x.id,
 				text: x.variable,
+				data: x.column ? iconProps.check : iconProps.questionMark,
 			} as IDropdownOption
 		})
 	}, [definitionOptions])
+}
+
+const iconProps = {
+	check: { icon: 'StatusCircleCheckmark' },
+	questionMark: { icon: 'StatusCircleQuestionMark' },
 }

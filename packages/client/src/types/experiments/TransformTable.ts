@@ -5,7 +5,6 @@
 
 import { Step } from '@data-wrangling-components/core'
 import ColumnTable from 'arquero/dist/types/table/column-table'
-import { Maybe, VariableDefinition } from '~types'
 import { Handler1 } from '../primitives'
 
 export interface TransformTable {

@@ -3,5 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-export * from './useRenderDropdownOption'
-export * from './useRenderDropdownTitle'
+export interface VariableAssignedCount {
+	total: number
+	assigned: number
+}

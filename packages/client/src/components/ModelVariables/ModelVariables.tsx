@@ -4,23 +4,25 @@
  */
 import {
 	ArqueroTableHeader,
-	ColumnTransformModal,
 	ManageSteps,
 	StepsType,
 } from '@data-wrangling-components/react'
 import {
 	Dropdown,
+	Icon,
 	IconButton,
 	IDetailsColumnProps,
 	IDropdownOption,
+	IDropdownStyles,
 	IRenderFunction,
 	Separator,
 } from '@fluentui/react'
-import { FC, memo } from 'react'
+import { FC, memo, useCallback } from 'react'
 import { If, Then, Else } from 'react-if'
 import styled from 'styled-components'
 import { Header } from './Header'
 import { RenameCallout } from './RenameCallout'
+import { useRenderDropdownOption, useRenderDropdownTitle } from './hooks'
 import { DialogConfirm } from '~components/DialogConfirm'
 import { EmptyDataPageWarning } from '~components/EmptyDataPageWarning'
 import { ModelVariableCommands } from '~components/ModelVariableCommands'
@@ -57,9 +59,11 @@ export const ModelVariables: FC<ModelVariablesProps> = memo(
 		definitionActions,
 		sharedLogic,
 	}) {
-		const { definition, onSelect } = definitionArgs
+		const { definition, onSelect, assignedCount } = definitionArgs
 		const { showConfirmDelete, toggleShowConfirmDelete } = sharedLogic
 		const { onDelete, onSaveCallout } = definitionActions
+		const renderDropdownOption = useRenderDropdownOption()
+		const renderDropdownTitle = useRenderDropdownTitle(assignedCount)
 		const selectedId = definition?.id ?? ''
 
 		const { toggleCallout, definitionName, calloutOpen } = renameCalloutArgs
@@ -82,7 +86,7 @@ export const ModelVariables: FC<ModelVariablesProps> = memo(
 					subText="You will lose all the column transformations made in the table for this definition"
 				/>
 				<Header pageType={pageType} />
-				{/* //fix this correctly */}
+				{/* //fix this correctly //O QUE */}
 				<If condition={!definitionDropdown.length}>
 					<Then>
 						<EmptyDataPageWarning
@@ -106,11 +110,17 @@ export const ModelVariables: FC<ModelVariablesProps> = memo(
 												/>
 											)}
 											<Dropdown
+												styles={dropdownStyles}
 												id={RenameCalloutType.Edit}
 												selectedKey={selectedId}
+												onRenderOption={renderDropdownOption}
+												onRenderTitle={renderDropdownTitle}
 												options={definitionDropdown}
 												onChange={(_, value) => onSelect(value?.key as string)}
 											/>
+											<CounterInstructions>
+												Variables assigned/total variables
+											</CounterInstructions>
 										</NameContainer>
 										<IconButton
 											id={RenameCalloutType.New}
@@ -167,6 +177,14 @@ export const ModelVariables: FC<ModelVariablesProps> = memo(
 		)
 	},
 )
+
+const dropdownStyles: Partial<IDropdownStyles> = {
+	dropdown: { width: 300 },
+	dropdownOptionText: { overflow: 'visible', whiteSpace: 'normal' },
+	dropdownItem: { height: 'auto' },
+}
+
+const CounterInstructions = styled.small``
 
 const Container = styled.div`
 	height: 100%;
