@@ -34,18 +34,18 @@ export function useSetOrUpdateColumnsPrepSpecification(): (
 	specification: Specification,
 	index?: number,
 ) => void {
-	const useSetColumnsPrepSpecification = useSetRecoilState(
+	const setColumnsPrepSpecification = useSetRecoilState(
 		stepsColumnsPrepSpecification,
 	)
 	return useCallback(
 		(specification: Specification, index?: number) => {
-			useSetColumnsPrepSpecification(prev => {
+			setColumnsPrepSpecification(prev => {
 				return index === undefined
 					? [...prev, specification]
 					: replaceItemAtIndex(prev, index, specification)
 			})
 		},
-		[useSetColumnsPrepSpecification],
+		[setColumnsPrepSpecification],
 	)
 }
 

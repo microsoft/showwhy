@@ -11,6 +11,7 @@ import {
 import cloneDeep from 'lodash/cloneDeep'
 import isArray from 'lodash/isArray'
 import { useCallback, useMemo } from 'react'
+import { useViewTable } from './useViewTable'
 import {
 	useAllVariables,
 	useOutputTableModelVariables,
@@ -24,7 +25,6 @@ import {
 	useSetColumnsPrepSpecification,
 } from '~state/columnsPrepSpecification'
 import { Maybe, TransformTable, VariableDefinition } from '~types'
-import { useViewTable } from './useViewTable'
 
 export function useTableTransform(
 	selectedDefinitionId: string,
@@ -51,7 +51,6 @@ export function useTableTransform(
 	}, [selectedVariable])
 
 	const outputViewTable = useViewTable(
-		selectedDefinitionId,
 		selectedColumns,
 		outputTable,
 		subjectIdentifier,
@@ -64,6 +63,7 @@ export function useTableTransform(
 				if (!isArray(args['to'])) {
 					return selectedColumns?.includes(args['to'] as string)
 				}
+				return false
 			}) || []
 		)
 	}, [selectedSpecification, selectedColumns])
@@ -73,14 +73,14 @@ export function useTableTransform(
 			if (outputTable && step) {
 				//if add, just run on top of it
 				//if edit or delete, run everything
-				const tab = index != undefined && tablePrep ? tablePrep : outputTable
+				const tab = index !== undefined && tablePrep ? tablePrep : outputTable
 				//if index, run all steps
 				let spec = cloneDeep(selectedSpecification) || {}
 				const args = step.args as Record<string, unknown>
 				let columns = [...(selectedVariable?.columns || [])]
 				let output = tab
 				let inde = undefined
-				if (index != undefined && spec.steps) {
+				if (index !== undefined && spec.steps) {
 					const bb = actualSteps[index]
 					inde = spec.steps?.findIndex(
 						x => JSON.stringify(x) === JSON.stringify(bb),
@@ -109,6 +109,7 @@ export function useTableTransform(
 		[
 			tablePrep,
 			outputTable,
+			actualSteps,
 			setOutp,
 			selectedDefinitionId,
 			setVariables,
@@ -120,13 +121,13 @@ export function useTableTransform(
 
 	const onDeleteStep = useCallback(
 		async (index: number) => {
-			let spec = cloneDeep(columnsPrep[0])
+			const spec = cloneDeep(columnsPrep[0])
 
 			const bb = actualSteps[index]
 			const inde = spec.steps?.findIndex(
 				x => JSON.stringify(x) === JSON.stringify(bb),
 			)
-			if (inde != undefined && spec.steps && tablePrep) {
+			if (inde !== undefined && spec.steps && tablePrep) {
 				let columns = [...(selectedVariable?.columns || [])]
 				delete spec.steps[inde]
 				spec.steps = spec.steps.filter(x => x)
@@ -143,7 +144,16 @@ export function useTableTransform(
 				setColumnsPrep(spec.steps ? [spec] : [])
 			}
 		},
-		[selectedVariable, actualSteps, tablePrep, selectedDefinitionId],
+		[
+			selectedVariable,
+			actualSteps,
+			tablePrep,
+			selectedDefinitionId,
+			columnsPrep,
+			setColumnsPrep,
+			setOutp,
+			setVariables,
+		],
 	)
 
 	return {

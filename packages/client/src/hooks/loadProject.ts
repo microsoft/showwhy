@@ -46,7 +46,6 @@ import {
 	Workspace,
 	DataTableFileDefinition,
 	StepStatus,
-	Handler1,
 	Maybe,
 	RunHistory,
 	Ma,
@@ -326,24 +325,6 @@ function prepModelVariables(
 
 function prepTablesSpec(specifications?: Specification[]): Specification[] {
 	return specifications as Specification[]
-}
-
-function prepVariableDefinitions(
-	definitions?: Partial<VariableDefinition>[],
-): VariableDefinition[] {
-	return (definitions || []).map(
-		definition =>
-			({
-				...definition,
-				// filters: (definition?.filters || []).map(
-				// 	d =>
-				// 		({
-				// 			id: uuidv4(),
-				// 			...(d as Partial<any>),
-				// 		} as any),
-				// ),
-			} as VariableDefinition),
-	)
 }
 
 function prepElement(element: Element): Element {

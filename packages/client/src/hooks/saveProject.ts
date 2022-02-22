@@ -20,7 +20,6 @@ import {
 	usePrimarySpecificationConfig,
 	useRefutationType,
 	useProjectFiles,
-	useAllModelVariables,
 	useFileCollection,
 	usePrimaryTable,
 	useDefaultDatasetResult,
@@ -32,7 +31,6 @@ import {
 } from '~state'
 import { useColumnsPrepSpecification } from '~state/columnsPrepSpecification'
 import {
-	PageType,
 	Workspace,
 	NodeResponseStatus,
 	Maybe,

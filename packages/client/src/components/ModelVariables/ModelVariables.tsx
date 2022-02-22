@@ -9,7 +9,6 @@ import {
 } from '@data-wrangling-components/react'
 import {
 	Dropdown,
-	Icon,
 	IconButton,
 	IDetailsColumnProps,
 	IDropdownOption,
@@ -17,7 +16,7 @@ import {
 	IRenderFunction,
 	Separator,
 } from '@fluentui/react'
-import { FC, memo, useCallback } from 'react'
+import { FC, memo } from 'react'
 import { If, Then, Else } from 'react-if'
 import styled from 'styled-components'
 import { Header } from './Header'

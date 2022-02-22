@@ -8,7 +8,6 @@ import { useMemo } from 'react'
 import { Maybe } from '~types'
 
 export function useViewTable(
-	selectedDefinitionId: string,
 	selectedColumns: string[],
 	outputTable?: ColumnTable,
 	subjectIdentifier?: string,
@@ -19,5 +18,5 @@ export function useViewTable(
 		)
 		//what if the user didnt chose one
 		return subjectIdentifier ? outputTable?.select(columns) : undefined
-	}, [selectedColumns, subjectIdentifier, selectedDefinitionId, outputTable])
+	}, [selectedColumns, subjectIdentifier, outputTable])
 }
