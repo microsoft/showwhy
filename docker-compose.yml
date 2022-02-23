@@ -29,7 +29,7 @@ services:
   functions:
     container_name: showwhyfunctions
     cpus: 4
-    build: ./packages/functions/src
+    build: ./python/showwhy-backend
     ports:
       - '7071:80'
     expose:
@@ -37,7 +37,8 @@ services:
     environment:
       # Well-know azurite connection string (https://docs.microsoft.com/en-us/azure/storage/common/storage-use-azurite?tabs=visual-studio#http-connection-strings)
       - AzureWebJobsStorage=AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;DefaultEndpointsProtocol=http;BlobEndpoint=http://azurite:10000/devstoreaccount1;QueueEndpoint=http://azurite:10001/devstoreaccount1;TableEndpoint=http://azurite:10002/devstoreaccount1;
-      - LOCAL_EXECUTION=True
+      - LOCAL_STORAGE_ENABLED=True
+      - DISABLE_SSL_COSMOS=True
       - WEBSITE_HOSTNAME=localhost:7071
       - MONGO_CONNECTION=mongodb://showwhy:showwhy@mongodb/
       - ESTIMATE_EFFECT_BATCH_SIZE=20

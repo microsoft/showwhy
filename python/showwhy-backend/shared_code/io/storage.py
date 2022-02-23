@@ -267,4 +267,4 @@ class LocalStorageClient(StorageClient):
 
 
 def get_storage_client():
-    return LocalStorageClient() if os.environ.get('LOCAL_EXECUTION', False) else BlobStorageClient(os.environ['CONTEXT_STORAGE_ACCOUNT_CONNECTION'])
+    return LocalStorageClient() if os.environ.get('LOCAL_STORAGE_ENABLED', False) else BlobStorageClient(os.environ['CONTEXT_STORAGE_ACCOUNT_CONNECTION'])

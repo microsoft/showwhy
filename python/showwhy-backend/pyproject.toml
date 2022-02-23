@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "showwhy-backend"
+version = "0.0.1"
+description = ""
+authors = ["Andres Morales Esquivel <andresmor@microsoft.com>"]
+
+[tool.poetry.dependencies]
+python = ">=3.9,<3.11"
+azure-functions = "^1.9.0"
+azure-functions-durable = "^1.1.3"
+azure-storage-blob = "^12.9.0"
+llvmlite = "^0.38.0"
+econml = {git = "https://github.com/microsoft/EconML.git", rev = "main"}
+dowhy = {git = "https://github.com/microsoft/dowhy.git"}
+data-wrangling-components = "^0.0.1"
+pymongo = "^4.0.1"
+dnspython = "^2.2.0"
+xgboost = "^1.5.2"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

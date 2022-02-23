@@ -9,11 +9,9 @@ import logging
 import azure.durable_functions as df
 import azure.functions as func
 
-from shared_code.models.showwhy_durable_orchestration_client import ShowWhyDurableOrchestrationClient
-
 
 async def main(req: func.HttpRequest, starter: str) -> func.HttpResponse:
-    client = ShowWhyDurableOrchestrationClient(starter)
+    client = df.DurableOrchestrationClient(starter)
 
     request_data = req.get_json()
     logging.info(f"request data: {json.dumps(request_data)}")
