@@ -60,7 +60,6 @@ export function useBusinessLogic(): {
 
 	// TODO: this should be tracked as part of the file management
 	useEffect(() => {
-		//TODO: If I change page and go back, it's empty
 		if (selectedFile && selectedFile.loadedCorrectly) {
 			const delimiter = guessDelimiter(selectedFile.name)
 			setSelectedDelimiter(delimiter)

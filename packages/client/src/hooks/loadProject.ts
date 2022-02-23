@@ -160,7 +160,10 @@ export function useLoadProject(
 			const processedTables = await Promise.all(processedTablesPromise)
 			setFiles(processedTables)
 
+			debugger
 			const dataPrepTable = await processDataTables(tps, processedTables)
+			debugger
+
 			setOutputTablePrep(dataPrepTable)
 
 			const dataPrepColumn = await processDataColumns(tcs, dataPrepTable)
@@ -227,14 +230,18 @@ function preProcessTables(workspace: Workspace, tableFiles?: File[]) {
 			}
 			return file
 		} else {
-			// 	// this effectively uses a "first one wins" for the primary table
-			// 	// this shouldn't actually happen in practice, but until we can support multiples correctly...
 			const id = uuidv4()
 
-			//only loading one table
-			const result = await (!isZipUrl(table.url)
+			let result = await (!isZipUrl(table.url)
 				? fetchTable(table)
 				: loadTable(table, tableFiles))
+
+			result = result.derive(
+				{
+					index: op.row_number(),
+				},
+				{ before: all() },
+			)
 
 			const file: ProjectFile = {
 				id,

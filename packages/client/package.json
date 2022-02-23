@@ -24,7 +24,7 @@
 	},
 	"dependencies": {
 		"@data-wrangling-components/core": "^2.2.0",
-		"@data-wrangling-components/react": "^2.4.2",
+		"@data-wrangling-components/react": "^2.5.0",
 		"@data-wrangling-components/utilities": "^1.6.0",
 		"@essex-js-toolkit/boolean-expression-component": "^0.1.1",
 		"@essex-js-toolkit/hooks": "^3.0.2",

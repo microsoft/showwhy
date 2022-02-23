@@ -3,7 +3,11 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { Step, introspect } from '@data-wrangling-components/core'
+import {
+	Step,
+	introspect,
+	TableContainer,
+} from '@data-wrangling-components/core'
 import { createDefaultCommandBar } from '@data-wrangling-components/react'
 import { BaseFile, createBaseFile } from '@data-wrangling-components/utilities'
 import {
@@ -23,7 +27,7 @@ import {
 import { runPipelineFromProjectFiles } from '~utils'
 
 export function useBusinessLogic(): {
-	files: BaseFile[]
+	tables: TableContainer[]
 	steps?: Step[]
 	onChangeSteps: (step: Step[]) => void
 	commandBar: IRenderFunction<IDetailsColumnProps>
@@ -73,12 +77,12 @@ export function useBusinessLogic(): {
 		f()
 	}, [steps, updateMicrodata])
 
-	const files = useMemo((): BaseFile[] => {
+	const tables = useMemo((): TableContainer[] => {
 		return projectFiles.map(x => {
-			const file = new Blob([x.content], {
-				type: 'text/csv',
-			})
-			return createBaseFile(file, { name: x.name })
+			return {
+				name: x.name,
+				table: x.table,
+			}
 		})
 	}, [projectFiles])
 
@@ -108,7 +112,7 @@ export function useBusinessLogic(): {
 	)
 
 	return {
-		files,
+		tables,
 		onChangeSteps,
 		steps,
 		commandBar,

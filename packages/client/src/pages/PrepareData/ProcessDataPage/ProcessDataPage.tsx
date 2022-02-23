@@ -8,14 +8,14 @@ import styled from 'styled-components'
 import { useBusinessLogic } from './hooks'
 
 export const ProcessDataPage: FC = memo(function ProcessDataPage() {
-	const { files, onChangeSteps, steps, commandBar } = useBusinessLogic()
+	const { tables, onChangeSteps, steps, commandBar } = useBusinessLogic()
 
 	return (
 		<Container>
 			<PrepareDataFull
 				steps={steps}
 				onUpdateSteps={onChangeSteps}
-				files={files}
+				tables={tables}
 				outputHeaderCommandBar={[commandBar]}
 			/>
 		</Container>

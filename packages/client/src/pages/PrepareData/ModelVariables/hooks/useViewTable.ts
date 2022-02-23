@@ -13,10 +13,10 @@ export function useViewTable(
 	subjectIdentifier?: string,
 ): Maybe<ColumnTable> {
 	return useMemo((): Maybe<ColumnTable> => {
-		const columns = [subjectIdentifier || '', ...selectedColumns].filter(x =>
-			outputTable?.columnNames().includes(x),
+		const columns = [subjectIdentifier || '', ...selectedColumns].filter(
+			column => outputTable?.columnNames().includes(column),
 		)
-		//what if the user didnt chose one
+
 		return subjectIdentifier ? outputTable?.select(columns) : undefined
 	}, [selectedColumns, subjectIdentifier, outputTable])
 }
