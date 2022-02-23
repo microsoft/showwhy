@@ -5,7 +5,7 @@ FROM mcr.microsoft.com/azure-functions/python:3.0-python3.9
 ENV AzureWebJobsScriptRoot=/home/site/wwwroot \
     AzureFunctionsJobHost__Logging__Console__IsEnabled=true
 
-COPY . /home/site/wwwroot
+COPY . /home/site/wwwroot/
 
 RUN mkdir /etc/secrets/
 ENV FUNCTIONS_SECRETS_PATH=/etc/secrets
@@ -16,6 +16,10 @@ RUN apt-get update && apt-get install -y \
     build-essential \
     git
 
-RUN pip install --upgrade pip 
+RUN python -m ensurepip &&\
+    python -m pip install --upgrade pip &&\
+    python -m pip install poetry==1.1.12
 
-RUN cd /home/site/wwwroot && pip install -r requirements.txt
+RUN cd /home/site/wwwroot &&\
+    python -m poetry config virtualenvs.create false &&\
+    python -m poetry install --no-dev --no-interaction --no-ansi

@@ -2107,12 +2107,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@showwhy/functions@workspace:packages/functions":
-  version: 0.0.0-use.local
-  resolution: "@showwhy/functions@workspace:packages/functions"
-  languageName: unknown
-  linkType: soft
-
 "@showwhy/project@workspace:.":
   version: 0.0.0-use.local
   resolution: "@showwhy/project@workspace:."
