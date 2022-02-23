@@ -5,7 +5,7 @@
 
 import { useCallback } from 'react'
 import { v4 } from 'uuid'
-import { InputRef, SetModelVariables } from './types'
+import type { InputRef, SetModelVariables } from './types'
 import { PageType, CausalFactor, Definition, AsyncHandler1 } from '~types'
 import { wait } from '~utils'
 

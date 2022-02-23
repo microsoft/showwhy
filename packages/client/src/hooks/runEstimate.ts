@@ -11,7 +11,11 @@ import {
 	useUpdateNodeResponseActiveRunHistory,
 } from '~hooks'
 import { useConfidenceInterval } from '~state'
-import { EstimateEffectStatusResponse, NodeResponse, RunStatus } from '~types'
+import type {
+	EstimateEffectStatusResponse,
+	NodeResponse,
+	RunStatus,
+} from '~types'
 import { getRunStatus } from '~utils'
 
 export function useRunEstimate(): () => Orchestrator<EstimateEffectStatusResponse> {

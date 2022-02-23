@@ -1313,6 +1313,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@essex/tsconfig-base@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "@essex/tsconfig-base@npm:1.0.2"
+  checksum: 1ad019130560bd1f29e3702d7dce3019fa476b12b2138aebd2698ed008bf8bf856719c475e9e955a84291eda05b56db6cb360b97e683be9774279e73139abe18
+  languageName: node
+  linkType: hard
+
 "@essex/vite-config@npm:^19.0.3":
   version: 19.0.3
   resolution: "@essex/vite-config@npm:19.0.3"
@@ -1999,6 +2006,7 @@ __metadata:
     "@essex-js-toolkit/themed-components": ^2.0.1
     "@essex/jest-config": ^21.0.0
     "@essex/scripts": ^20.3.2
+    "@essex/tsconfig-base": ^1.0.2
     "@essex/vite-config": ^19.0.3
     "@fluentui/font-icons-mdl2": ^8.1.24
     "@fluentui/react": ^8.56.0

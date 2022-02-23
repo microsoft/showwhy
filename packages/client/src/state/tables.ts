@@ -12,7 +12,7 @@ import {
 	useResetRecoilState,
 	useSetRecoilState,
 } from 'recoil'
-import { DataTable } from '~types'
+import type { DataTable } from '~types'
 
 interface PrimaryTable {
 	name: string

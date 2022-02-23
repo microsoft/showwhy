@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { Cause } from './Cause'
+import type { Cause } from './Cause'
 
 export interface ExposureAndOutcomeCauses {
 	causeExposure?: Cause

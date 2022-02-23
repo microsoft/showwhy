@@ -3,8 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { TestResults } from '../experiments'
-import { NodeResponseStatus } from '~types'
+import type { TestResults } from '../experiments'
+import type { NodeResponseStatus } from '~types'
 
 export interface SignificanceTestResponse {
 	runtimeStatus: NodeResponseStatus

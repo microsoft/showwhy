@@ -101,7 +101,7 @@ const newItem: CausalFactor = {
 
 describe('causalFactorsHooks', () => {
 	it('useExcludedFactors', () => {
-		const expected = [causalFactors[0].variable]
+		const expected = [causalFactors[0]!.variable]
 		const { result } = renderHook(() => useExcludedFactors(causalFactors), {
 			wrapper: RecoilRoot,
 		})
@@ -119,15 +119,15 @@ describe('causalFactorsHooks', () => {
 			},
 		)
 		const response = result.current
-		response(causalFactors[0])
+		response(causalFactors[0]!)
 		expect(setCausalFactors).toHaveBeenCalledWith(expected)
 	})
 
 	describe('useAlternativeModels', () => {
 		it('Maximum Model', () => {
 			const expected = {
-				confounders: [causalFactors[3].variable],
-				outcomeDeterminants: [causalFactors[1].variable],
+				confounders: [causalFactors[3]!.variable],
+				outcomeDeterminants: [causalFactors[1]!.variable],
 			}
 			const { result } = renderHook(
 				() =>
@@ -145,7 +145,7 @@ describe('causalFactorsHooks', () => {
 		it('Minimum Model', () => {
 			const expected = {
 				confounders: [],
-				outcomeDeterminants: [causalFactors[1].variable],
+				outcomeDeterminants: [causalFactors[1]!.variable],
 			}
 			const { result } = renderHook(
 				() =>
@@ -162,8 +162,8 @@ describe('causalFactorsHooks', () => {
 
 		it('Intermediate Model', () => {
 			const expected = {
-				confounders: [causalFactors[3].variable],
-				outcomeDeterminants: [causalFactors[1].variable],
+				confounders: [causalFactors[3]!.variable],
+				outcomeDeterminants: [causalFactors[1]!.variable],
 			}
 			const { result } = renderHook(
 				() =>
@@ -183,8 +183,8 @@ describe('causalFactorsHooks', () => {
 
 		it('Maximum confounders', () => {
 			const expected = {
-				confounders: [causalFactors[3].variable],
-				outcomeDeterminants: [causalFactors[1].variable],
+				confounders: [causalFactors[3]!.variable],
+				outcomeDeterminants: [causalFactors[1]!.variable],
 			}
 			const { result } = renderHook(
 				() =>
@@ -225,7 +225,7 @@ describe('useAddOrEditFactor', () => {
 			},
 		)
 		const response = result.current
-		response(causalFactors[1])
+		response(causalFactors[1]!)
 		expect(setCausalFactors).toHaveBeenCalledWith(causalFactors)
 	})
 })

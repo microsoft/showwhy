@@ -3,14 +3,14 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { IContextualMenuItem } from '@fluentui/react'
+import type { IContextualMenuItem } from '@fluentui/react'
 import { useMemo } from 'react'
-import {
+import type {
 	SelectedArgs,
 	SubjectIdentifierArgs,
 	SubjectIdentifierDataArgs,
 } from './interfaces'
-import { FactorsOrDefinitions } from './types'
+import type { FactorsOrDefinitions } from './types'
 import {
 	PageType,
 	DataTable,

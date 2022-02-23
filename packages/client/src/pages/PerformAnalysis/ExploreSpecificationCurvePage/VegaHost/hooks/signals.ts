@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { useEffect } from 'react'
-import { SignalListenerHandler, SignalValue, View } from 'vega'
+import type { SignalListenerHandler, SignalValue, View } from 'vega'
 
 export function useSignals(
 	view: View,

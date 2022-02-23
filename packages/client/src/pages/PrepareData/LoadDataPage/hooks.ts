@@ -7,11 +7,11 @@ import {
 	FileCollection,
 	guessDelimiter,
 } from '@data-wrangling-components/utilities'
-import { IDropdownOption } from '@fluentui/react'
+import type { IDropdownOption } from '@fluentui/react'
 import { useBoolean } from 'ahooks'
-import ColumnTable from 'arquero/dist/types/table/column-table'
+import type ColumnTable from 'arquero/dist/types/table/column-table'
 import { useCallback, useEffect, useState } from 'react'
-import { SetterOrUpdater } from 'recoil'
+import type { SetterOrUpdater } from 'recoil'
 import { v4 as uuidv4 } from 'uuid'
 import { useGlobalDropzone, useOnDropAccepted } from '~hooks'
 import {
@@ -23,7 +23,13 @@ import {
 	useSetProjectFiles,
 	useSetSelectedFile,
 } from '~state'
-import { DropFilesCount, ProjectFile, Handler1, Maybe, Handler } from '~types'
+import type {
+	DropFilesCount,
+	ProjectFile,
+	Handler1,
+	Maybe,
+	Handler,
+} from '~types'
 import { createDefaultTable, replaceItemAtIndex } from '~utils'
 
 export function useBusinessLogic(): {
@@ -90,7 +96,7 @@ export function useBusinessLogic(): {
 	)
 
 	const handleDelimiterChange = useCallback(
-		(e, option: Maybe<IDropdownOption>): void => {
+		(_e, option: Maybe<IDropdownOption>): void => {
 			const delimiter = `${option?.key}`
 			if (selectedFile && selectedFile.id) {
 				const table = createDefaultTable(selectedFile.content, delimiter)

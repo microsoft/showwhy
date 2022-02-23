@@ -4,7 +4,7 @@
  */
 
 import { useCallback } from 'react'
-import { ElementDefinition, Setter } from '~types'
+import type { ElementDefinition, Setter } from '~types'
 
 export function useRemoveDefinition(
 	setDefinitions: Setter<ElementDefinition[]>,

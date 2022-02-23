@@ -13,7 +13,7 @@ import {
 	useOnChangeReasoning,
 } from './onChange'
 import { useCausalFactors, useSetCausalFactors } from '~state'
-import { FlatCausalFactor, CausalFactor, Item } from '~types'
+import type { FlatCausalFactor, CausalFactor, Item } from '~types'
 
 export function useFactorsTable(causeType: string): {
 	flatFactorsList: FlatCausalFactor[]

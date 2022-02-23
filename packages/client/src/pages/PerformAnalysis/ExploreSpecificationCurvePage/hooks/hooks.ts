@@ -7,7 +7,7 @@ import isNull from 'lodash/isNull'
 import { useEffect, useMemo, useState } from 'react'
 import { useDefaultRun } from '~hooks'
 import { useDefaultDatasetResult } from '~state'
-import { Specification, SpecificationCurveConfig } from '~types'
+import type { Specification, SpecificationCurveConfig } from '~types'
 
 export function useLoadSpecificationData(): Specification[] {
 	const [data, setData] = useState<Specification[]>([])

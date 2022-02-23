@@ -5,7 +5,7 @@
 
 import { useCallback } from 'react'
 import { v4 } from 'uuid'
-import { SetEditingDefinition, SetModelVariables } from './types'
+import type { SetEditingDefinition, SetModelVariables } from './types'
 import {
 	PageType,
 	CausalFactor,

@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { BaseFile } from '@data-wrangling-components/utilities'
+import type { BaseFile } from '@data-wrangling-components/utilities'
 import { useCallback, useMemo } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import { useGetStepUrls, useSetRunAsDefault } from '~hooks'
@@ -326,7 +326,7 @@ function useUpdateRunHistory() {
 				return
 			}
 			setRunHistory(runHistory)
-			const defaultRun = runHistory.find(run => run.isActive) || runHistory[0]
+			const defaultRun = runHistory.find(run => run.isActive) || runHistory[0]!
 			setDefaultRun(defaultRun)
 		},
 		[setRunHistory, setDefaultRun],

@@ -6,9 +6,9 @@
 import { TextField } from '@fluentui/react'
 import { useCallback } from 'react'
 import styled from 'styled-components'
-import { InputRef } from './types'
+import type { InputRef } from './types'
 import { Text } from '~styles'
-import { CausalFactor, Item, Setter, Maybe, Handler } from '~types'
+import type { CausalFactor, Item, Setter, Maybe, Handler } from '~types'
 
 export function useItem({
 	isEditingLabel,
@@ -42,7 +42,7 @@ export function useItem({
 					isEditingLabel && editingDefinition === x ? (
 						<Input
 							value={newLabel}
-							onChange={(e, v) => setNewLabel(v || '')}
+							onChange={(_e, v) => setNewLabel(v || '')}
 							onKeyPress={e => e.key === 'Enter' && onSave(x)}
 						/>
 					) : (

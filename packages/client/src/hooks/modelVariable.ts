@@ -4,10 +4,15 @@
  */
 
 import { useCallback } from 'react'
-import { SetterOrUpdater } from 'recoil'
+import type { SetterOrUpdater } from 'recoil'
 import { usePageType } from './usePageType'
 import { useExperiment, useSetExperiment } from '~state/experiment'
-import { PageType, Experiment, ElementDefinition, CausalFactor } from '~types'
+import type {
+	PageType,
+	Experiment,
+	ElementDefinition,
+	CausalFactor,
+} from '~types'
 import { replaceItemAtIndex } from '~utils/arrays'
 // HACK to pass the unit tests
 

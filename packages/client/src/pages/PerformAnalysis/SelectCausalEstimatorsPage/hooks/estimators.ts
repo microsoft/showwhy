@@ -4,7 +4,7 @@
  */
 
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { SetterOrUpdater } from 'recoil'
+import type { SetterOrUpdater } from 'recoil'
 import { getEstimatorByRanking, estimatorGroups } from './constants'
 import { useEstimatorShortDescription, useEstimatorsList } from '~hooks'
 import {
@@ -16,7 +16,7 @@ import {
 	useToggleConfidenceInterval,
 	useConfidenceInterval,
 } from '~state'
-import {
+import type {
 	EstimatorGroup,
 	EstimatorType,
 	Estimator,

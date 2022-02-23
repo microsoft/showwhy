@@ -115,7 +115,7 @@ export function buildModelLevel(
 export function models(
 	max: AlternativeModels,
 	min: AlternativeModels,
-	interm: AlternativeModels,
+	_interm: AlternativeModels,
 	unadju: AlternativeModels,
 ): AlternativeModelsRequest[] {
 	const modelsList: AlternativeModelsRequest[] = []

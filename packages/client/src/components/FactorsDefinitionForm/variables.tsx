@@ -14,7 +14,7 @@ import {
 import { useMemo } from 'react'
 import styled from 'styled-components'
 import { VariablePicker } from '~components/VariablePicker'
-import { CausalFactor, Handler } from '~types'
+import type { CausalFactor, Handler } from '~types'
 
 export function useCheckbox(
 	isPrimary: boolean,

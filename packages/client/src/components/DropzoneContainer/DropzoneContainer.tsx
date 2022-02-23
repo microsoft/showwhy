@@ -7,11 +7,11 @@ import {
 	DropzoneOptions,
 	FileRejection,
 } from '@data-wrangling-components/react'
-import { FileCollection } from '@data-wrangling-components/utilities'
+import type { FileCollection } from '@data-wrangling-components/utilities'
 import { Icon, Spinner } from '@fluentui/react'
 import { FC, memo, useMemo } from 'react'
 import styled from 'styled-components'
-import { DropFilesCount, Maybe } from '~types'
+import type { DropFilesCount, Maybe } from '~types'
 
 export const DropzoneContainer: FC<{
 	loading: Maybe<boolean>

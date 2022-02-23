@@ -3,14 +3,14 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { OrchestratorType } from './OrchestratorType'
+import type { OrchestratorType } from './OrchestratorType'
 import {
 	executeNode,
 	genericCheckStatus,
 	getOrchestratorStatus,
 	terminateRun,
 } from '~resources'
-import {
+import type {
 	NodeRequest,
 	NodeResponse,
 	StatusResponse,

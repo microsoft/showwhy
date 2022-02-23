@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { useCallback, useEffect } from 'react'
-import { EventListenerHandler, View } from 'vega'
+import type { EventListenerHandler, View } from 'vega'
 
 export function useAddClickHandler(
 	view: View,
@@ -11,7 +11,7 @@ export function useAddClickHandler(
 	onAxisClick?: (datum: any, axis: string) => void,
 ): void {
 	const handleClick = useCallback(
-		(e, item) => {
+		(_e, item) => {
 			const { datum, mark } = item
 			if (mark.role.includes('axis')) {
 				const axis = item.align === 'left' || item.align === 'right' ? 'y' : 'x'
@@ -35,7 +35,7 @@ export function useAddMouseOverHandler(
 	onDatumMouseOver?: (datum: any) => void,
 ): void {
 	const handleMouseOver = useCallback(
-		(e, item) => {
+		(_e, item) => {
 			const { datum } = item
 			onDatumMouseOver && onDatumMouseOver(datum)
 		},

@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { Comparator } from '~types'
+import type { Comparator } from '~types'
 
 export function sortByField<T>(key: string, asc = true): Comparator<T> {
 	return (a: T, b: T): number => {

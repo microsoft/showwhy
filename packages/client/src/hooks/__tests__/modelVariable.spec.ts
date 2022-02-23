@@ -73,7 +73,7 @@ describe('modelVariableHooks', () => {
 			},
 		)
 		const response = result.current
-		response(question.population.definition[0])
+		response(question.population.definition[0]!)
 		expect(setDefineQuestion).toHaveBeenCalledWith(expected)
 	})
 })

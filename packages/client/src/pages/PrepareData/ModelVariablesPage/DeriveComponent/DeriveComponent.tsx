@@ -5,7 +5,7 @@
 import { Dropdown, TextField, DefaultButton, Checkbox } from '@fluentui/react'
 import { useBoolean } from '@fluentui/react-hooks'
 import { escape } from 'arquero'
-import ColumnTable from 'arquero/dist/types/table/column-table'
+import type ColumnTable from 'arquero/dist/types/table/column-table'
 import { memo, useState, useCallback, useMemo } from 'react'
 
 import styled from 'styled-components'

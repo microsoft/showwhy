@@ -3,9 +3,9 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { NodeResponse } from '../api'
-import { RefutationType } from '../refutation'
-import { RunStatus } from './RunStatus'
+import type { NodeResponse } from '../api'
+import type { RefutationType } from '../refutation'
+import type { RunStatus } from './RunStatus'
 
 export interface RunHistory {
 	runNumber: number

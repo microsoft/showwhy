@@ -3,6 +3,6 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { CausalFactor, ElementDefinition } from '~types'
+import type { CausalFactor, ElementDefinition } from '~types'
 
 export type FactorsOrDefinitions = CausalFactor[] | ElementDefinition[]

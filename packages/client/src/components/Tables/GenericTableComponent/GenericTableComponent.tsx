@@ -8,7 +8,7 @@ import { memo, useCallback, useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
 import { ActionButtons } from '~components/ActionButtons'
 import { useDefaultTableSample } from '~hooks'
-import {
+import type {
 	Item,
 	TableFooter,
 	HeaderData,
@@ -56,9 +56,9 @@ export const GenericTableComponent: React.FC<{
 	const colSpan = useMemo((): number => {
 		if (tableTitle) {
 			const [item] = items
-			delete item.onClick
-			delete item.ref
-			const keys = Object.keys(item)
+			delete item!.onClick
+			delete item!.ref
+			const keys = Object.keys(item!)
 			return keys.length
 		}
 		return 0
@@ -88,7 +88,7 @@ export const GenericTableComponent: React.FC<{
 	)
 
 	const onSelectedRow = useCallback(
-		(id: string, row: any, onClick: Handler) => {
+		(id: string, _row: any, onClick: Handler) => {
 			setSelectedRow(id)
 			onClick()
 		},
@@ -155,7 +155,7 @@ export const GenericTableComponent: React.FC<{
 	const tBodyContent = sortedItems.map((item, i) => {
 		const { onClick, ref, colSpan, dataPw } = item
 		const excluded = ['ref', 'onClick', 'colSpan']
-		const id = item.id || i.toString()
+		const id = item['id'] || i.toString()
 		const keys = (
 			(headers?.data.length && headers?.data.map(h => h.fieldName)) ||
 			Object.keys(item)

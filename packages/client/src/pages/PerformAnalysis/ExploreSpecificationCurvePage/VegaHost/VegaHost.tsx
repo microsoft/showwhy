@@ -5,8 +5,8 @@
 // eslint-disable @typescript-eslint/no-explicit-any
 import { memo, useRef, useEffect } from 'react'
 import styled from 'styled-components'
-import * as vega from 'vega'
-import {
+import type { Spec } from 'vega'
+import type {
 	DataListenerHandler,
 	EventListenerHandler,
 	SignalListenerHandler,
@@ -30,7 +30,7 @@ import {
 import { LogLevel } from './types'
 
 export const VegaHost: React.FC<{
-	spec: vega.Spec
+	spec: Spec
 	width: number
 	height: number
 	/**

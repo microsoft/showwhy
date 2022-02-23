@@ -3,8 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { IColumn } from '@fluentui/react'
-import { ColumnRelevance, TableColumn, Setter, Maybe } from '~types'
+import type { IColumn } from '@fluentui/react'
+import type { ColumnRelevance, TableColumn, Setter, Maybe } from '~types'
 
 export interface OnChange {
 	setTableColumns: Setter<TableColumn[]>

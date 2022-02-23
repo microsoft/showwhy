@@ -10,7 +10,7 @@ import {
 	useResetRecoilState,
 	useSetRecoilState,
 } from 'recoil'
-import { RunHistory } from '~types'
+import type { RunHistory } from '~types'
 
 export const runHistoryState = atom<RunHistory[]>({
 	key: 'run-history-store',

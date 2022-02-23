@@ -5,7 +5,7 @@
 import { memo } from 'react'
 import { LinkCallout } from '~components/Callout'
 import { Text } from '~styles'
-import { RefutationOption, Maybe } from '~types'
+import type { RefutationOption, Maybe } from '~types'
 
 export const RefutationOptionsCallout: React.FC<{
 	title: string

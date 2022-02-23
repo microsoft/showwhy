@@ -4,7 +4,7 @@
  */
 import { memo, useCallback } from 'react'
 import { SelectableCard } from '~components/CardComponent'
-import { Handler1, ProjectFile, Maybe } from '~types'
+import type { Handler1, ProjectFile, Maybe } from '~types'
 
 export const Dataset: React.FC<{
 	file: ProjectFile

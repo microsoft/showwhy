@@ -9,7 +9,7 @@ import styled from 'styled-components'
 import { ErrorMessage } from '~components/ErrorMessage'
 import { RunProgressIndicator } from '~components/RunProgressIndicator'
 import { Title, Text, ContainerFlexColumn } from '~styles'
-import { RunHistory, NodeResponseStatus, Handler } from '~types'
+import type { RunHistory, NodeResponseStatus, Handler } from '~types'
 import { isProcessingStatus, elapsedTime } from '~utils'
 
 export const RunHistoryList: React.FC<{

@@ -16,7 +16,7 @@ import {
 	usePanels,
 } from './hooks'
 import { StepTitle } from '~components/StepTitle'
-import { Workflow, StepList } from '~types'
+import type { Workflow, StepList } from '~types'
 
 export const StepSelector: React.FC<{
 	project: Workflow

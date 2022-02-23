@@ -18,7 +18,7 @@
 		"start": "vite",
 		"start:client": "yarn start",
 		"archive": "essex zip --baseDir dist deploy.zip '**/*'",
-		"test": "NODE_OPTIONS=--experimental-vm-modules yarn jest --no-cache",
+		"test": "NODE_OPTIONS=--experimental-vm-modules yarn node $(yarn bin jest) --no-cache",
 		"test:jest": "yarn test",
 		"test:cov": "jest --coverage"
 	},
@@ -73,6 +73,7 @@
 	"devDependencies": {
 		"@essex/jest-config": "^21.0.0",
 		"@essex/scripts": "^20.3.2",
+		"@essex/tsconfig-base": "^1.0.2",
 		"@essex/vite-config": "^19.0.3",
 		"@jest/globals": "^27.5.1",
 		"@testing-library/react": "^12.1.3",

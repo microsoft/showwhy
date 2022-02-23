@@ -39,7 +39,7 @@ describe('estimatorState', () => {
 					const addEstimator = useAddEstimator()
 					const estimators = useEstimators()
 					useEffect(() => {
-						addEstimator(estimator)
+						addEstimator(estimator!)
 					}, [addEstimator])
 
 					return estimators
@@ -60,7 +60,7 @@ describe('estimatorState', () => {
 					const addEstimator = useAddEstimator()
 					const estimators = useEstimators()
 					useEffect(() => {
-						addEstimator(estimator)
+						addEstimator(estimator!)
 					}, [addEstimator])
 
 					return estimators

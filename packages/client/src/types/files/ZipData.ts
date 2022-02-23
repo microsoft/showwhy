@@ -3,8 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { BaseFile, Json } from '@data-wrangling-components/utilities'
-import { RunHistory } from '~types'
+import type { BaseFile, Json } from '@data-wrangling-components/utilities'
+import type { RunHistory } from '~types'
 
 export interface ZipData {
 	json?: Json

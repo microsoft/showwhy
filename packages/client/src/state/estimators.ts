@@ -11,7 +11,7 @@ import {
 	useResetRecoilState,
 	useSetRecoilState,
 } from 'recoil'
-import { Estimator } from '~types'
+import type { Estimator } from '~types'
 
 export const estimatorState = atom<Estimator[]>({
 	key: 'estimators',
