@@ -5,8 +5,8 @@
 // eslint-disable @typescript-eslint/no-explicit-any
 import { memo, useRef, useEffect } from 'react'
 import styled from 'styled-components'
-import type { Spec } from 'vega'
 import type {
+	Spec,
 	DataListenerHandler,
 	EventListenerHandler,
 	SignalListenerHandler,
