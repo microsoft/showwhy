@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { FileStep } from './FileStep'
+import type { FileStep } from './FileStep'
 
 export interface ProjectFile {
 	name: string

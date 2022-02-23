@@ -6,7 +6,7 @@
 import { useCallback, useMemo } from 'react'
 import { useBuildEstimateEffectNode } from '~resources/hooks'
 import { buildLoadNode } from '~resources/prepareDoWhyData'
-import { NodeRequest, ProjectFile, Maybe } from '~types'
+import type { NodeRequest, ProjectFile, Maybe } from '~types'
 
 //TODO: fix for CI
 export function useGetNodes(
@@ -36,6 +36,6 @@ export function useEstimateNode(
 		if (!projectFiles.length) {
 			return undefined
 		}
-		return buildEstimateEffectNode(projectFiles[0].name)
+		return buildEstimateEffectNode(projectFiles[0]!.name)
 	}, [projectFiles, buildEstimateEffectNode])
 }

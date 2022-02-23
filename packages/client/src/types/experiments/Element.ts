@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { ElementDefinition } from './ElementDefinition'
+import type { ElementDefinition } from './ElementDefinition'
 
 export interface Element {
 	label: string

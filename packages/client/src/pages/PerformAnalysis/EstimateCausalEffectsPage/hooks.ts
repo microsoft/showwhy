@@ -26,7 +26,7 @@ import {
 	useSetSpecCount,
 	useSpecCount,
 } from '~state'
-import {
+import type {
 	Experiment,
 	Estimator,
 	NodeRequest,
@@ -130,8 +130,8 @@ export function useBusinessLogic(): {
 		saveNewRunHistory()
 		const files = await uploadProjectFiles(projectFiles)
 		const loadNode = buildLoadNode(
-			files.uploaded_files[projectFiles[0].name],
-			projectFiles[0].name,
+			files.uploaded_files[projectFiles[0]!.name]!,
+			projectFiles[0]!.name,
 		)
 		const nodes = {
 			nodes: [...loadNode.nodes, ...(estimateNode as NodeRequest).nodes],

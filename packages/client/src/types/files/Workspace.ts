@@ -2,10 +2,10 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { Step } from '@data-wrangling-components/core'
-import { RefutationType } from '../refutation'
-import { DataTableFileDefinition } from './DataTableDefinition'
-import {
+import type { Step } from '@data-wrangling-components/core'
+import type { RefutationType } from '../refutation'
+import type { DataTableFileDefinition } from './DataTableDefinition'
+import type {
 	CausalFactor,
 	Definition,
 	Experiment,

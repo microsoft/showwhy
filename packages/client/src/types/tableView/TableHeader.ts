@@ -3,8 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { HeaderData } from './HeaderData'
-import { TableProps } from './TableProps'
+import type { HeaderData } from './HeaderData'
+import type { TableProps } from './TableProps'
 
 export interface TableHeader {
 	data: HeaderData[]

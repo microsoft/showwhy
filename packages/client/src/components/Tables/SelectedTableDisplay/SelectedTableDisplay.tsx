@@ -3,12 +3,12 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { ArqueroTableHeader } from '@data-wrangling-components/react'
-import ColumnTable from 'arquero/dist/types/table/column-table'
+import type ColumnTable from 'arquero/dist/types/table/column-table'
 import { memo } from 'react'
 
 import styled from 'styled-components'
 import { ArqueroDetailsTable } from '../ArqueroDetailsTable'
-import { ProjectFile } from '~types'
+import type { ProjectFile } from '~types'
 
 export const SelectedTableDisplay: React.FC<{
 	selectedFile?: ProjectFile

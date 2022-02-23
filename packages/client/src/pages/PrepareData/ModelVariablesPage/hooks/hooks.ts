@@ -3,10 +3,10 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { IContextualMenuProps } from '@fluentui/react'
+import type { IContextualMenuProps } from '@fluentui/react'
 import { useBoolean } from 'ahooks'
 import { useCallback, useState } from 'react'
-import { FactorsOrDefinitions } from './types'
+import type { FactorsOrDefinitions } from './types'
 import {
 	useColumnsAsTarget,
 	useDefinitionOptions,

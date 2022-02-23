@@ -4,7 +4,7 @@
  */
 
 import { useCallback } from 'react'
-import { Experiment, ElementDefinition, AsyncHandler1 } from '~types'
+import type { Experiment, ElementDefinition, AsyncHandler1 } from '~types'
 import { wait } from '~utils'
 
 export function useSaveDefinitions(

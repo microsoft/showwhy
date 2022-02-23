@@ -3,10 +3,10 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { IChoiceGroupOption } from '@fluentui/react'
+import type { IChoiceGroupOption } from '@fluentui/react'
 import { useCallback } from 'react'
 import { useExperiment, useSetExperiment } from '~state'
-import { Hypothesis, Experiment, Maybe } from '~types'
+import type { Hypothesis, Experiment, Maybe } from '~types'
 
 export function useBusinessLogic(): {
 	defineQuestion: Experiment
@@ -52,7 +52,7 @@ function useSetHypothesis(): (
 	const defineQuestion = useExperiment()
 	const setDefineQuestion = useSetExperiment()
 	return useCallback(
-		(e, option) => {
+		(_e, option) => {
 			if (option) {
 				const newQuestion: Experiment = { ...defineQuestion }
 				newQuestion.hypothesis = option.key as Hypothesis

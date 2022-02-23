@@ -4,7 +4,7 @@
  */
 import { useCallback } from 'react'
 import { useLoadProject, useResetProject } from '~hooks'
-import { FileDefinition, Handler1 } from '~types'
+import type { FileDefinition, Handler1 } from '~types'
 
 type OnClickHandler = Handler1<FileDefinition>
 

@@ -4,7 +4,7 @@
  */
 import { useCallback } from 'react'
 import { useHistory } from 'react-router-dom'
-import { Handler } from '~types'
+import type { Handler } from '~types'
 
 export function useGoToPage(url: string, state?: unknown): Handler {
 	const history = useHistory()

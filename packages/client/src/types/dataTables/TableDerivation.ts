@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { TableDerivationType } from './TableDerivationType'
+import type { TableDerivationType } from './TableDerivationType'
 
 export interface TableDerivation {
 	id: string

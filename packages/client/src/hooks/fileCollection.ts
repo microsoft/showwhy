@@ -3,13 +3,13 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import {
+import type {
 	FileWithPath,
 	FileCollection,
 } from '@data-wrangling-components/utilities'
 import { useCallback, useMemo } from 'react'
 import { useFileCollection, useSetFileCollection } from '~state'
-import { AsyncHandler1 } from '~types'
+import type { AsyncHandler1 } from '~types'
 
 export const useIsCollectionEmpty = (): boolean => {
 	const fileCollection = useFileCollection().copy()

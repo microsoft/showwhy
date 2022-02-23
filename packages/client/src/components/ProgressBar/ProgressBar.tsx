@@ -8,7 +8,7 @@ import styled from 'styled-components'
 import { ActionButtons } from '~components/ActionButtons'
 import { useTimeElapsed } from '~hooks'
 import { Text } from '~styles'
-import { Handler } from '~types'
+import type { Handler } from '~types'
 
 export const ProgressBar: React.FC<{
 	percentage: number

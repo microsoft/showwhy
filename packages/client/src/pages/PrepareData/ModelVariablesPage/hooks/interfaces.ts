@@ -3,8 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { FactorsOrDefinitions } from './types'
-import {
+import type { FactorsOrDefinitions } from './types'
+import type {
 	DataTable,
 	CausalFactor,
 	VariableDefinition,

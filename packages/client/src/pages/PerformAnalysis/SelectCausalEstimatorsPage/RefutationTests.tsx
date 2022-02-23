@@ -6,7 +6,7 @@ import { FontIcon } from '@fluentui/react'
 import { memo } from 'react'
 import styled from 'styled-components'
 import { CardComponent } from '~components/CardComponent'
-import { RefutationChoice } from '~types'
+import type { RefutationChoice } from '~types'
 
 export const RefutationTests: React.FC<{
 	options: RefutationChoice[]

@@ -10,7 +10,7 @@ import {
 	useRecoilValue,
 	useSetRecoilState,
 } from 'recoil'
-import { StepStatus, Maybe } from '~types'
+import type { StepStatus, Maybe } from '~types'
 
 export const stepStatusState = atomFamily<Maybe<StepStatus>, Maybe<string>>({
 	key: 'step-status-store',

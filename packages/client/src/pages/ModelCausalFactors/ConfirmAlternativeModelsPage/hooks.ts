@@ -3,13 +3,13 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { useXarrow } from 'react-xarrows'
-import { SetterOrUpdater } from 'recoil'
+import type { SetterOrUpdater } from 'recoil'
 import { useCausalEffects } from '~hooks'
 import {
 	usePrimarySpecificationConfig,
 	useSetPrimarySpecificationConfig,
 } from '~state'
-import { PrimarySpecificationConfig, Handler } from '~types'
+import type { PrimarySpecificationConfig, Handler } from '~types'
 
 export function useBusinessLogic(): {
 	causalEffects: ReturnType<typeof useCausalEffects>

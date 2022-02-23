@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { IComboBoxOption } from '@fluentui/react'
+import type { IComboBoxOption } from '@fluentui/react'
 import { useEffect, useMemo, useState } from 'react'
 import { useAddDefinition } from './add'
 import { useEditDefinition } from './edit'
@@ -11,7 +11,7 @@ import { useRemoveDefinition } from './remove'
 import { useSaveDefinitions } from './save'
 import { usePageType, useVariableOptions } from '~hooks'
 import { useExperiment, useSetExperiment } from '~state'
-import {
+import type {
 	PageType,
 	Experiment,
 	ElementDefinition,

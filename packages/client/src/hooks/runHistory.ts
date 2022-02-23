@@ -9,7 +9,7 @@ import {
 	useRunHistory,
 	useSetRunHistory,
 } from '~state'
-import {
+import type {
 	NodeResponseStatus,
 	NodeResponse,
 	PartialResults,

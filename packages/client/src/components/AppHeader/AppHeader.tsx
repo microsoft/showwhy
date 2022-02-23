@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { IContextualMenuItem } from '@fluentui/react'
+import type { IContextualMenuItem } from '@fluentui/react'
 import { memo } from 'react'
 import styled from 'styled-components'
 import { ProjectsSelector } from './ProjectsSelector'
@@ -10,7 +10,7 @@ import { SaveProject } from './SaveProject'
 import { Settings } from './Settings'
 import { CausalQuestion } from '~components/CausalQuestion'
 import { Container } from '~styles'
-import { StepStatus, Experiment, FileDefinition, Handler1 } from '~types'
+import type { StepStatus, Experiment, FileDefinition, Handler1 } from '~types'
 
 type GetStepUrlsHandler = (urls?: string[], exclude?: any) => string[]
 type SetAllStepStatusHandler = (urls: string[], status: StepStatus) => void

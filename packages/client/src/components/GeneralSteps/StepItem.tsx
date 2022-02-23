@@ -7,7 +7,7 @@ import { NavLink } from 'react-router-dom'
 import styled from 'styled-components'
 import { StepStatusDetail } from '.'
 import { useStepStatus } from '~state'
-import { Step, Maybe } from '~types'
+import type { Step, Maybe } from '~types'
 
 export const StepItem: React.FC<{
 	stepDetail: Step

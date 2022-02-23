@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { IColumn } from '@fluentui/react'
+import type { IColumn } from '@fluentui/react'
 import { not } from 'arquero'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useRestoreColumn, useTableCommands } from '~hooks'
@@ -120,7 +120,7 @@ export function useBusinessLogic(): {
 	)
 
 	const onSelectColumn = useCallback(
-		(evt: any, column?: IColumn) => {
+		(_evt: any, column?: IColumn) => {
 			setSelectedColumn(column?.name)
 		},
 		[setSelectedColumn],

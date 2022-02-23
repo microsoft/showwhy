@@ -11,7 +11,7 @@ import {
 	useResetRecoilState,
 	useSetRecoilState,
 } from 'recoil'
-import { CausalFactor } from '~types'
+import type { CausalFactor } from '~types'
 
 const causalFactorsState = atom<CausalFactor[]>({
 	key: 'causal-factors',

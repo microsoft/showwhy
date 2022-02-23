@@ -6,7 +6,7 @@ import { memo, useCallback, useState } from 'react'
 import styled from 'styled-components'
 import { AnalyticDecisionsDotPlot } from './AnalyticDecisionsDotPlot'
 import { OutcomeEffectScatterplot } from './OutcomeEffectScatterplot'
-import {
+import type {
 	DecisionFeature,
 	Specification,
 	SpecificationCurveConfig,

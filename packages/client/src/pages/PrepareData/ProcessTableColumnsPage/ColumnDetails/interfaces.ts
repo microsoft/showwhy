@@ -3,8 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { RowObject } from 'arquero/dist/types/table/table'
-import { TableColumn, Maybe } from '~types'
+import type { RowObject } from 'arquero/dist/types/table/table'
+import type { TableColumn, Maybe } from '~types'
 
 export interface ColumnDetailsProps {
 	columnName: string

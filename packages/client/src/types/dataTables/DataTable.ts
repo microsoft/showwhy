@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import ColumnTable from 'arquero/dist/types/table/column-table'
+import type ColumnTable from 'arquero/dist/types/table/column-table'
 
 export interface DataTable {
 	table: ColumnTable

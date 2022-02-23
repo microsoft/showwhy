@@ -10,7 +10,7 @@ import { useBusinessLogic } from './hooks'
 import { FactorsDefinitionForm } from '~components/FactorsDefinitionForm'
 import { TableComponent } from '~components/Tables/TableComponent'
 import { Container } from '~styles'
-import { HeaderData } from '~types'
+import type { HeaderData } from '~types'
 
 const tableHeaders: HeaderData[] = [
 	{ fieldName: 'variable', value: 'Factor' },

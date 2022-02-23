@@ -62,7 +62,7 @@ function usePreviousStepUrl(
 	return useMemo(() => {
 		const idx = currentStepIndex - 1
 		if (idx >= 0) {
-			return allSteps[idx].url
+			return allSteps[idx]!.url
 		}
 		return ''
 	}, [currentStepIndex, allSteps])
@@ -71,7 +71,7 @@ function usePreviousStepUrl(
 function useNextStepUrl(allSteps: Step[], currentStepIndex: number): string {
 	return useMemo(() => {
 		if (currentStepIndex < allSteps.length - 1) {
-			return allSteps[currentStepIndex + 1].url
+			return allSteps[currentStepIndex + 1]!.url
 		}
 		return ''
 	}, [currentStepIndex, allSteps])

@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { escape, not, op } from 'arquero'
-import ColumnTable from 'arquero/dist/types/table/column-table'
+import type ColumnTable from 'arquero/dist/types/table/column-table'
 import { useCallback, useMemo } from 'react'
 import {
 	useProjectFiles,

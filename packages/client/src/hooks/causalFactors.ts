@@ -4,7 +4,7 @@
  */
 
 import { useCallback, useMemo } from 'react'
-import { SetterOrUpdater } from 'recoil'
+import type { SetterOrUpdater } from 'recoil'
 import { v4 } from 'uuid'
 // HACK to pass the unit tests
 import { useCausalFactors, useSetCausalFactors } from '~state/causalFactors'

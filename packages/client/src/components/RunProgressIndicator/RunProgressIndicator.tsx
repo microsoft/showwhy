@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { Theme } from '@thematic/core'
+import type { Theme } from '@thematic/core'
 import { memo, useMemo } from 'react'
 import Xarrow from 'react-xarrows'
 import styled from 'styled-components'

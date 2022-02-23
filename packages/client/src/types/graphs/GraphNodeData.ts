@@ -3,8 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { AlternativeModelsRequest } from '../api'
-import { Graph, GraphNodeType } from '~types'
+import type { AlternativeModelsRequest } from '../api'
+import type { Graph, GraphNodeType } from '~types'
 
 export interface GraphNodeData {
 	id: string

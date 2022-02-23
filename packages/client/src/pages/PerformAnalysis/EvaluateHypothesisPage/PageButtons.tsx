@@ -7,7 +7,7 @@ import { memo } from 'react'
 import styled from 'styled-components'
 import { ErrorMessage } from '~components/ErrorMessage'
 import { ContainerFlexColumn, ContainerFlexRow } from '~styles'
-import { RunHistory, SignificanceTest, Maybe } from '~types'
+import type { RunHistory, SignificanceTest, Maybe } from '~types'
 
 export const PageButtons: React.FC<{
 	activeTaskIds: string[]

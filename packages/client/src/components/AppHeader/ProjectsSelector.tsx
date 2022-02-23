@@ -2,11 +2,11 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { IContextualMenuProps, IContextualMenuItem } from '@fluentui/react'
+import type { IContextualMenuProps, IContextualMenuItem } from '@fluentui/react'
 import { memo, useMemo } from 'react'
 import { OptionsButton } from './OptionsButton'
 import { Container } from '~styles'
-import { FileDefinition, Maybe } from '~types'
+import type { FileDefinition, Maybe } from '~types'
 
 export const ProjectsSelector: React.FC<{
 	exampleProjects: FileDefinition[]

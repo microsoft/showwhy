@@ -11,7 +11,7 @@ import {
 	createBaseFile,
 } from '@data-wrangling-components/utilities'
 import { fetchTable } from './arquero'
-import {
+import type {
 	DataTableFileDefinition,
 	ProjectFile,
 	ZipData,
@@ -64,7 +64,7 @@ export async function groupFilesByType(
 	if (configFile) {
 		const json = await configFile.toJson()
 		filesByType[FileType.json] = json
-		defaultResult = json.defaultResult
+		defaultResult = json['defaultResult']
 	}
 
 	if (defaultResult) {
@@ -110,7 +110,7 @@ export async function groupFilesByType(
 	if (runHistoryFile) {
 		const json = await runHistoryFile.toJson()
 		filesByType['runHistory'] = json as RunHistory[]
-		defaultResult = json.defaultResult
+		defaultResult = json['defaultResult']
 	}
 	return filesByType
 }

@@ -24,7 +24,7 @@ import {
 	useGuidance,
 } from '~state'
 import { StyledSpinner } from '~styles'
-import { Maybe } from '~types'
+import type { Maybe } from '~types'
 
 export const Layout: React.FC = memo(function Layout({ children }) {
 	const [error, setError] = useState<Maybe<string>>()

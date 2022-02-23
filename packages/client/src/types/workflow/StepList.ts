@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { Step } from './Step'
+import type { Step } from './Step'
 
 export interface StepList {
 	id: string

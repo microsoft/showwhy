@@ -14,7 +14,7 @@ import {
 } from 'recoil'
 import { Subject } from 'rxjs'
 import { observableEffect } from './effects/observableEffect'
-import { ProjectFile } from '~types'
+import type { ProjectFile } from '~types'
 
 export const filesStateChanged = new Subject<void>()
 

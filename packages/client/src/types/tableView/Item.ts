@@ -2,8 +2,8 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { Handler } from '../primitives'
-import { ActionButtonsProps } from '~components/ActionButtons'
+import type { Handler } from '../primitives'
+import type { ActionButtonsProps } from '~components/ActionButtons'
 
 export interface Item {
 	onClick?: Handler

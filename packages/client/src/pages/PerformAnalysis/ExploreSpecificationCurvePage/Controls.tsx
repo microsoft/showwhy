@@ -6,7 +6,7 @@ import { Checkbox, Label } from '@fluentui/react'
 import { memo, useCallback, useMemo } from 'react'
 import styled from 'styled-components'
 import { useUniqueFeatures } from './hooks'
-import { Specification, SpecificationCurveConfig } from '~types'
+import type { Specification, SpecificationCurveConfig } from '~types'
 import { addOrRemoveArrayElement } from '~utils'
 
 export const Controls: React.FC<{

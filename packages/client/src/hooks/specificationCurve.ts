@@ -3,8 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { Dimensions } from '@essex-js-toolkit/hooks'
-import { Theme } from '@thematic/core'
+import type { Dimensions } from '@essex-js-toolkit/hooks'
+import type { Theme } from '@thematic/core'
 import { useThematic } from '@thematic/react'
 import { useCallback, useMemo, useState } from 'react'
 import { useLoadSpecificationData } from '../pages/PerformAnalysis/ExploreSpecificationCurvePage/hooks'
