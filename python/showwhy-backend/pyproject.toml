@@ -16,6 +16,7 @@ data-wrangling-components = "^0.0.1"
 pymongo = "^4.0.1"
 dnspython = "^2.2.0"
 xgboost = "^1.5.2"
+azure-cosmos = "^4.2.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"

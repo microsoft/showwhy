@@ -72,6 +72,18 @@ requests = ">=2.18.4"
 six = ">=1.11.0"
 
 [[package]]
+name = "azure-cosmos"
+version = "4.2.0"
+description = "Microsoft Azure Cosmos Client Library for Python"
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+azure-core = ">=1.0.0,<2.0.0"
+six = ">=1.6"
+
+[[package]]
 name = "azure-functions"
 version = "1.9.0"
 description = "Azure Functions for Python"
@@ -826,7 +838,7 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.9,<3.11"
-content-hash = "7a19cfaeb44ec91ef0f97a7092e980cc83986903dc199961ddb87683bb81954d"
+content-hash = "1d43760ee82e0be663c448bac9b2bbd667829d5cc9fb628e1fa6603324c19a07"
 
 [metadata.files]
 aiohttp = [
@@ -922,6 +934,10 @@ attrs = [
 azure-core = [
     {file = "azure-core-1.22.1.zip", hash = "sha256:4b6e405268a33b873107796495cec3f2f1b1ffe935624ce0fbddff36d38d3a4d"},
     {file = "azure_core-1.22.1-py3-none-any.whl", hash = "sha256:407381c74e2ccc16adb1f29c4a1b381ebd39e8661bbf60422926d8252d5b757d"},
+]
+azure-cosmos = [
+    {file = "azure-cosmos-4.2.0.zip", hash = "sha256:867191fa5966446101f7ca3834f23060a85735d0b660303ca353864945d572b6"},
+    {file = "azure_cosmos-4.2.0-py2.py3-none-any.whl", hash = "sha256:d0edcc3acd09e5c422b6cf07a34f9faa418414ba72eea3db2a3dcfaa9b1ee610"},
 ]
 azure-functions = [
     {file = "azure-functions-1.9.0.tar.gz", hash = "sha256:b2a39032f30287e5ce40f2e06f43b56f0ffdfbee7e3f379aecb9e3da4191303e"},
