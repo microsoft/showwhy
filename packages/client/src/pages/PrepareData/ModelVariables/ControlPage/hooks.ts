@@ -110,6 +110,7 @@ export function useDefinitionActions(
 	toggleCallout: Handler1<Maybe<RenameCalloutType>>,
 	setSelectedId: Handler1<string>,
 	toggleShowConfirmDelete: Handler,
+	onDuplicateDefinition: (definitionId: string, newDefinition: string) => void,
 	definition?: ElementDefinition | CausalFactor,
 	calloutOpen?: RenameCalloutType,
 ): DefinitionActions {
@@ -137,6 +138,9 @@ export function useDefinitionActions(
 			} as CausalFactor
 
 			onSave(newCausalFactor)
+			if (calloutOpen === RenameCalloutType.Duplicate && definition) {
+				onDuplicateDefinition(definition.id, newId)
+			}
 			toggleCallout(undefined)
 
 			setTimeout(() => {

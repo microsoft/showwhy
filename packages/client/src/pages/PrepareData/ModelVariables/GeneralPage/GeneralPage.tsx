@@ -32,19 +32,20 @@ export const GeneralPage: React.FC = memo(function GeneralPage() {
 	const sharedLogic = useSharedBusinessLogic()
 	const { toggleShowConfirmDelete } = sharedLogic
 
+	const definitionDropdown = useDefinitionDropdown(definitions)
+
+	const transformTable = useTableTransform(definitionId)
+	const { onDuplicateDefinition, onDuplicateStep } = transformTable
+
 	const definitionActions = useDefinitionActions(
 		toggleCallout,
 		onSelect,
 		toggleShowConfirmDelete,
+		onDuplicateDefinition,
 		definition,
 		calloutOpen,
 	)
-
 	const { onSave } = definitionActions
-
-	const definitionDropdown = useDefinitionDropdown(definitions)
-
-	const transformTable = useTableTransform(definitionId)
 
 	const setTargetVariable = useSetTargetVariable(
 		definitionId,
@@ -52,7 +53,12 @@ export const GeneralPage: React.FC = memo(function GeneralPage() {
 		defineQuestionData,
 	)
 
-	const commandBar = useCommandBar(definitions, definitionId, setTargetVariable)
+	const commandBar = useCommandBar(
+		definitions,
+		definitionId,
+		setTargetVariable,
+		onDuplicateStep,
+	)
 
 	return (
 		//What if no visible columns?

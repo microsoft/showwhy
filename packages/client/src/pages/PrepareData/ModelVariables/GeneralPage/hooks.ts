@@ -109,6 +109,7 @@ export function useDefinitionActions(
 	toggleCallout: (type?: RenameCalloutType) => void,
 	setSelectedId: (id: string) => void,
 	toggleShowConfirmDelete: Handler,
+	onDuplicateDefinition: (definitionId: string, newDefinition: string) => void,
 	definition?: ElementDefinition | CausalFactor,
 	calloutOpen?: RenameCalloutType,
 ): DefinitionActions {
@@ -129,6 +130,7 @@ export function useDefinitionActions(
 					: calloutOpen === RenameCalloutType.Duplicate
 					? { ...definition, id: newId, level: CausalityLevel.Secondary }
 					: definition
+
 			const newDefinition = {
 				...props,
 				variable: name,
@@ -136,9 +138,9 @@ export function useDefinitionActions(
 			} as ElementDefinition
 			onSave(newDefinition)
 
-			//duplicate steps
-			//add steps
-			//run steps
+			if (calloutOpen === RenameCalloutType.Duplicate && definition) {
+				onDuplicateDefinition(definition.id, newId)
+			}
 			toggleCallout(undefined)
 
 			setTimeout(() => {

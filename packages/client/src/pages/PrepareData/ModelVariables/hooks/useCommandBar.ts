@@ -16,6 +16,7 @@ export function useCommandBar(
 	definitionOptions: FactorsOrDefinitions,
 	selectedDefinitionId: string,
 	setTargetVariable: (actualColumn: string) => void,
+	onDuplicateStep: (actualColumn: string) => void,
 ): IRenderFunction<IDetailsColumnProps> {
 	return useCallback(
 		(props?: IDetailsColumnProps) => {
@@ -31,26 +32,35 @@ export function useCommandBar(
 					buttonStyles: { root: { fontWeight: 'bold' } },
 					onClick: () => setTargetVariable(actualColumn),
 					checked: selectedColumn === actualColumn,
-					iconProps: {
-						//TODO: change icon props to new style on Chris's pR
-						iconName: 'CheckMark',
-					},
+					iconProps: iconProps.check,
 				},
 				{
 					key: 'duplicateItem',
 					text: 'Duplicate',
 					iconOnly: true,
-					iconProps: { iconName: 'DuplicateRow' },
+					iconProps: iconProps.duplicate,
+					onClick: () => onDuplicateStep(actualColumn),
 				},
 				{
 					key: 'addItem',
 					text: 'Add from this column',
 					iconOnly: true,
-					iconProps: { iconName: 'Add' },
+					iconProps: iconProps.add,
 				},
 			]
 			return createDefaultCommandBar(items)
 		},
-		[definitionOptions, selectedDefinitionId, setTargetVariable],
+		[
+			definitionOptions,
+			selectedDefinitionId,
+			setTargetVariable,
+			onDuplicateStep,
+		],
 	)
+}
+
+const iconProps = {
+	check: { iconName: 'CheckMark' },
+	duplicate: { iconName: 'DuplicateRow' },
+	add: { iconName: 'Add' },
 }

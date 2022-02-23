@@ -160,10 +160,7 @@ export function useLoadProject(
 			const processedTables = await Promise.all(processedTablesPromise)
 			setFiles(processedTables)
 
-			debugger
 			const dataPrepTable = await processDataTables(tps, processedTables)
-			debugger
-
 			setOutputTablePrep(dataPrepTable)
 
 			const dataPrepColumn = await processDataColumns(tcs, dataPrepTable)

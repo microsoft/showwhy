@@ -13,4 +13,6 @@ export interface TransformTable {
 	handleTransformRequested: (step: any, index?: number) => Promise<void>
 	onDeleteStep: Handler1<number>
 	actualSteps: Step[]
+	onDuplicateDefinition: (definitionId: string, newDefinition: string) => void
+	onDuplicateStep: (column: string) => void
 }

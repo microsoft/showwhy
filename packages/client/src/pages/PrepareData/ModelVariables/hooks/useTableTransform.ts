@@ -3,14 +3,9 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import {
-	runPipeline,
-	Specification,
-	Step,
-} from '@data-wrangling-components/core'
+import { Specification, Step } from '@data-wrangling-components/core'
 import cloneDeep from 'lodash/cloneDeep'
-import isArray from 'lodash/isArray'
-import { useCallback, useMemo } from 'react'
+import { useCallback, useEffect, useMemo } from 'react'
 import { useViewTable } from './useViewTable'
 import {
 	useAllVariables,
@@ -24,7 +19,15 @@ import {
 	useColumnsPrepSpecification,
 	useSetColumnsPrepSpecification,
 } from '~state/columnsPrepSpecification'
-import { Maybe, TransformTable, VariableDefinition } from '~types'
+import { Element, Maybe, TransformTable, VariableDefinition } from '~types'
+import { useActualIndex, useActualSteps, useStartPipeline } from '.'
+import {
+	useFormatedColumnArgWithCount,
+	usePipeline,
+	useStore,
+} from '@data-wrangling-components/react'
+import { useHandleTransformRequested } from './useHandleTransformRequested'
+import { isArray } from 'lodash'
 
 export function useTableTransform(
 	selectedDefinitionId: string,
@@ -34,17 +37,25 @@ export function useTableTransform(
 	const allVariables = useAllVariables()
 	const setVariables = useSetOrUpdateAllVariables()
 	const outputTable = useOutputTableModelVariables()
+	const setOutputTable = useSetOutputTableModelVariables()
 	const tablePrep = useOutputTablePrep()
-	const setOutp = useSetOutputTableModelVariables()
 	const subjectIdentifier = useSubjectIdentifier()
 
-	const selectedVariable = useMemo((): VariableDefinition | undefined => {
-		return allVariables.find(x => x.id === selectedDefinitionId)
+	const store = useStore()
+	const pipeline = usePipeline(store)
+
+	const selectedVariable = useMemo((): VariableDefinition => {
+		return (
+			allVariables.find(x => x.id === selectedDefinitionId) ||
+			({
+				id: selectedDefinitionId,
+			} as VariableDefinition)
+		)
 	}, [allVariables, selectedDefinitionId])
 
 	const selectedSpecification = useMemo((): Maybe<Specification> => {
 		return columnsPrep[0] || undefined
-	}, [columnsPrep])
+	}, [columnsPrep, selectedDefinitionId])
 
 	const selectedColumns = useMemo((): string[] => {
 		return selectedVariable?.columns || []
@@ -56,103 +67,155 @@ export function useTableTransform(
 		subjectIdentifier,
 	)
 
-	const actualSteps = useMemo((): Step[] => {
-		return (
-			selectedSpecification?.steps?.filter(a => {
+	const actualSteps = useActualSteps(selectedSpecification, selectedColumns)
+	const startPipeline = useStartPipeline(pipeline, actualSteps, outputTable)
+	const getActualIndex = useActualIndex(actualSteps)
+	const formatColumnArgs = useFormatedColumnArgWithCount()
+
+	useEffect(() => {
+		startPipeline()
+	}, [outputTable])
+
+	const handleTransformRequested = useHandleTransformRequested(
+		pipeline,
+		actualSteps,
+		selectedSpecification,
+		selectedColumns,
+		selectedVariable,
+		setOutputTable,
+		setVariables,
+		setColumnsPrep,
+	)
+
+	const onDuplicateStep = useCallback(
+		async (columnName: string) => {
+			const step = selectedSpecification?.steps?.find(a => {
 				const args = a.args as Record<string, unknown>
 				if (!isArray(args['to'])) {
-					return selectedColumns?.includes(args['to'] as string)
+					return args['to'] === columnName
 				}
 				return false
-			}) || []
-		)
-	}, [selectedSpecification, selectedColumns])
+			}) as Step
 
-	const handleTransformRequested = useCallback(
-		async (step: Step, index?: number) => {
-			if (outputTable && step) {
-				//if add, just run on top of it
-				//if edit or delete, run everything
-				const tab = index !== undefined && tablePrep ? tablePrep : outputTable
-				//if index, run all steps
-				let spec = cloneDeep(selectedSpecification) || {}
-				const args = step.args as Record<string, unknown>
-				let columns = [...(selectedVariable?.columns || [])]
-				let output = tab
-				let inde = undefined
-				if (index !== undefined && spec.steps) {
-					const bb = actualSteps[index]
-					inde = spec.steps?.findIndex(
-						x => JSON.stringify(x) === JSON.stringify(bb),
-					)
-					spec.steps[inde] = step
-					output = await runPipeline(tab, spec.steps)
-					columns = columns.filter(x => output.columnNames().includes(x))
-					columns?.push(args['to'] as string)
-				} else {
-					output = await runPipeline(tab, [step])
-					spec = {
-						...spec,
-						steps: [...(spec?.steps || []), step],
-					}
-					columns?.push(args['to'] as string)
-				}
-				const variableDefinition = {
-					id: selectedDefinitionId,
-					columns: columns,
-				}
-				setOutp(output)
-				setVariables(variableDefinition)
-				setColumnsPrep([spec])
+			let args = formatColumnArgs(step, outputTable?.columnNames() as string[])
+			const _step = {
+				...step,
+				args,
 			}
+
+			pipeline.add(_step)
+			const output = await pipeline.run()
+			const columnTo = (_step.args as Record<string, unknown>).to as string
+			let columns = [...(selectedColumns || [])]
+			columns.push(columnTo)
+
+			let specification = cloneDeep(selectedSpecification) || {}
+			specification.steps?.push(_step)
+
+			const variableA = {
+				...selectedVariable,
+				columns: columns,
+			}
+
+			setOutputTable(output)
+			setVariables(variableA)
+			setColumnsPrep([specification])
 		},
 		[
-			tablePrep,
-			outputTable,
-			actualSteps,
-			setOutp,
-			selectedDefinitionId,
-			setVariables,
-			setColumnsPrep,
 			selectedSpecification,
 			selectedVariable,
+			selectedColumns,
+			outputTable,
+			setOutputTable,
+			setVariables,
+			setColumnsPrep,
+		],
+	)
+
+	const onDuplicateDefinition = useCallback(
+		async (definitionId: string, newDefinition: string) => {
+			const variable = allVariables.find(x => x.id === definitionId)
+			const steps =
+				selectedSpecification?.steps?.filter(a => {
+					const args = a.args as Record<string, unknown>
+					if (!isArray(args['to'])) {
+						return variable?.columns?.includes(args['to'] as string)
+					}
+					return false
+				}) || []
+
+			const _steps = steps.map(s => {
+				let args = formatColumnArgs(s, outputTable?.columnNames() as string[])
+
+				return {
+					...s,
+					args,
+				}
+			})
+			pipeline.addAll(_steps)
+			const output = await pipeline.run()
+
+			const newColumns = _steps.map(a => {
+				const args = a.args as Record<string, unknown>
+				return args['to']
+			})
+
+			const variableA = {
+				id: newDefinition,
+				columns: newColumns,
+			} as VariableDefinition
+
+			let specification = cloneDeep(selectedSpecification) || {}
+			specification.steps?.push(..._steps)
+
+			setOutputTable(output)
+			setVariables(variableA)
+			setColumnsPrep([specification])
+		},
+		[
+			allVariables,
+			selectedSpecification,
+			outputTable,
+			pipeline,
+			setOutputTable,
+			setVariables,
+			setColumnsPrep,
 		],
 	)
 
 	const onDeleteStep = useCallback(
 		async (index: number) => {
-			const spec = cloneDeep(columnsPrep[0])
+			let specification = cloneDeep(selectedSpecification) || {}
 
-			const bb = actualSteps[index]
-			const inde = spec.steps?.findIndex(
-				x => JSON.stringify(x) === JSON.stringify(bb),
-			)
-			if (inde !== undefined && spec.steps && tablePrep) {
-				let columns = [...(selectedVariable?.columns || [])]
-				delete spec.steps[inde]
-				spec.steps = spec.steps.filter(x => x)
-				const output = spec.steps
-					? await runPipeline(tablePrep, spec.steps)
+			const actualIndex = getActualIndex(index, specification)
+			if (specification.steps && tablePrep) {
+				specification.steps.splice(actualIndex, 1)
+				pipeline.clear()
+				pipeline.addAll(specification.steps)
+				pipeline.store.set('output', tablePrep)
+				const output = specification.steps.length
+					? await pipeline.run()
 					: tablePrep
+				setOutputTable(output)
+
+				let columns = [...(selectedColumns || [])]
 				columns = columns.filter(x => output.columnNames().includes(x))
-				const aa = {
-					id: selectedDefinitionId,
+				const variable = {
+					...selectedVariable,
 					columns: columns,
 				}
-				setOutp(output)
-				setVariables(aa)
-				setColumnsPrep(spec.steps ? [spec] : [])
+				setVariables(variable)
+				setColumnsPrep(specification.steps)
 			}
 		},
 		[
-			selectedVariable,
-			actualSteps,
-			tablePrep,
-			selectedDefinitionId,
-			columnsPrep,
+			selectedSpecification,
+			getActualIndex,
 			setColumnsPrep,
-			setOutp,
 			setVariables,
+			tablePrep,
+			selectedVariable,
+			selectedColumns,
 		],
 	)
 
@@ -162,5 +225,7 @@ export function useTableTransform(
 		handleTransformRequested,
 		outputTable,
 		onDeleteStep,
+		onDuplicateDefinition,
+		onDuplicateStep,
 	}
 }
