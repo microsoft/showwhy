@@ -1,8 +1,7 @@
 {
 	"IsEncrypted": false,
 	"Values": {
-		"LOCAL_STORAGE_ENABLED": "True",
-		"DISABLE_SSL_COSMOS": "True",
+		"LOCAL_EXECUTION": "True",
 		"FUNCTIONS_WORKER_RUNTIME": "python"
 	},
 	"Host": {
