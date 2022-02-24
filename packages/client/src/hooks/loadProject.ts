@@ -182,6 +182,8 @@ export function useLoadProject(
 			updateRunHistory,
 			setTablePrepSpec,
 			setOutputTablePrep,
+			pipeline,
+			store,
 		],
 	)
 }
