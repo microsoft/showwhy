@@ -4,7 +4,7 @@
  */
 
 import { useCallback } from 'react'
-import { CausalFactor } from '~types'
+import type { CausalFactor } from '~types'
 
 export function useSetTargetCausalFactor(
 	saveCausalFactor: (causalFactor: CausalFactor) => void,

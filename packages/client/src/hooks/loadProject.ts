@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import {
+import type {
 	Specification,
 	Step as FileStep,
 	TableStore,
@@ -12,7 +12,7 @@ import {
 import { usePipeline, useStore } from '@data-wrangling-components/react'
 import type { BaseFile } from '@data-wrangling-components/utilities'
 import { all, op } from 'arquero'
-import ColumnTable from 'arquero/dist/types/table/column-table'
+import type ColumnTable from 'arquero/dist/types/table/column-table'
 import { useCallback } from 'react'
 import { useGetStepUrls, useSetRunAsDefault } from '~hooks'
 import {
@@ -54,6 +54,7 @@ import {
 	loadTable,
 	runPipeline,
 	runPipelineFromProjectFiles,
+	withRandomId,
 } from '~utils'
 
 export function useLoadProject(
@@ -255,7 +256,7 @@ async function processDataTables(
 	tps?: Specification[],
 	projectFiles?: ProjectFile[],
 ): Promise<TableContainer | undefined> {
-	if (tps?.length && projectFiles?.length) {
+	if (tps !== undefined && projectFiles?.length) {
 		const steps = tps[0].steps as FileStep[]
 		pipeline.clear()
 		return await runPipelineFromProjectFiles(projectFiles, steps, pipeline)

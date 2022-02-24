@@ -11,7 +11,7 @@ import {
 	useSetOrUpdateOriginalTable,
 	useSetProjectFiles,
 } from '~state'
-import { ProjectFile } from '~types'
+import type { ProjectFile } from '~types'
 
 function useSaveFile(
 	projectFiles: ProjectFile[],

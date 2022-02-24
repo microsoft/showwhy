@@ -16,7 +16,7 @@ import type {
 import { replaceItemAtIndex } from '~utils/arrays'
 // HACK to pass the unit tests
 
-export function useSaveDefinitionTestable(
+export function useSaveDefinition(
 	experiment: Experiment,
 	setExperiment: SetterOrUpdater<Experiment>,
 ): (newDefinition: CausalFactor, type: PageType) => void {

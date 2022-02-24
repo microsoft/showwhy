@@ -6,7 +6,7 @@
 import { DropdownMenuItemType, IDropdownOption } from '@fluentui/react'
 import upperFirst from 'lodash/upperFirst'
 import { useMemo } from 'react'
-import { CausalFactor, ElementDefinition, Experiment } from '~types'
+import type { CausalFactor, ElementDefinition, Experiment } from '~types'
 
 export enum DefinitionType {
 	Population = 'population',

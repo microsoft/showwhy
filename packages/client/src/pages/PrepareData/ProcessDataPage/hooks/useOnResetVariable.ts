@@ -3,9 +3,9 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { IDropdownOption } from '@fluentui/react'
+import type { IDropdownOption } from '@fluentui/react'
 import { useCallback } from 'react'
-import { FactorsOrDefinitions, Maybe } from '~types'
+import type { FactorsOrDefinitions, Maybe } from '~types'
 
 export function useOnResetVariable(
 	allElements: FactorsOrDefinitions,

@@ -16,7 +16,7 @@ export const SelectedTableDisplay: React.FC<{
 }> = memo(function SelectedTableDisplay({
 	selectedFile,
 	projectFiles,
-	onRenameTable,
+	// onRenameTable,
 }) {
 	return (
 		<Container data-pw="table">

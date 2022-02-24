@@ -5,7 +5,7 @@
 
 import { Dropdown, IDropdownOption } from '@fluentui/react'
 import { useCallback } from 'react'
-import { FactorsOrDefinitions, Maybe } from '~types'
+import type { FactorsOrDefinitions, Maybe } from '~types'
 
 export function useRenderDropdown(
 	allElements: FactorsOrDefinitions,

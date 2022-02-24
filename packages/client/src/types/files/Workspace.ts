@@ -10,8 +10,8 @@ import type {
 	Estimator,
 	PrimarySpecificationConfig,
 	DefaultDatasetResult,
-	Specification,
 } from '~types'
+import type { Specification } from '@data-wrangling-components/core'
 
 /**
  * This contains a collection of step data and file definitions for a saveable

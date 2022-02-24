@@ -3,16 +3,16 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { IDropdownOption } from '@fluentui/react'
+import type { IDropdownOption } from '@fluentui/react'
 import { useCallback } from 'react'
-import { SetterOrUpdater } from 'recoil'
+import type { SetterOrUpdater } from 'recoil'
 import {
 	useSetTargetCausalFactor,
 	useSetTargetDefinition,
 	DefinitionType,
 } from './index'
 import { useAddOrEditFactor, useSaveDefinition } from '~hooks'
-import { CausalFactor, Experiment, Maybe } from '~types'
+import type { CausalFactor, Experiment, Maybe } from '~types'
 
 export function useOnSelectVariable(
 	causalFactors: CausalFactor[],

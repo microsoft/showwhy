@@ -4,7 +4,7 @@
  */
 
 import { useMemo } from 'react'
-import { CausalFactor, Experiment, FactorsOrDefinitions } from '~types'
+import type { CausalFactor, Experiment, FactorsOrDefinitions } from '~types'
 
 export function useAllVariables(
 	causalFactors: CausalFactor[],

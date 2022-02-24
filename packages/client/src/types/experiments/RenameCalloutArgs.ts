@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { RenameCalloutType } from './RenameCalloutType'
+import type { RenameCalloutType } from './RenameCalloutType'
 
 export interface RenameCalloutArgs {
 	toggleCallout: (type?: RenameCalloutType) => void

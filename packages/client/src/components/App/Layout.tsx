@@ -24,7 +24,7 @@ import {
 	useGuidance,
 } from '~state'
 import { StyledSpinner } from '~styles'
-import type { Maybe, Pages } from '~types'
+import { Maybe, Pages } from '~types'
 
 const noChildPadding = [Pages.ProcessData]
 

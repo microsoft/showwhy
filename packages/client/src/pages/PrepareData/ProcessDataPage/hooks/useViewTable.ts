@@ -3,9 +3,9 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import ColumnTable from 'arquero/dist/types/table/column-table'
+import type ColumnTable from 'arquero/dist/types/table/column-table'
 import { useMemo } from 'react'
-import { Maybe } from '~types'
+import type { Maybe } from '~types'
 
 export function useViewTable(
 	selectedColumns: string[],

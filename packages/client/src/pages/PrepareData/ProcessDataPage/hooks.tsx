@@ -3,9 +3,9 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { Step, TableContainer } from '@data-wrangling-components/core'
+import type { Step, TableContainer } from '@data-wrangling-components/core'
 import { createDefaultCommandBar } from '@data-wrangling-components/react'
-import {
+import type {
 	ICommandBarItemProps,
 	IDetailsColumnProps,
 	IRenderFunction,
@@ -21,9 +21,8 @@ import {
 	useTablesPrepSpecification,
 	useSetTablesPrepSpecification,
 	useCausalFactors,
-	useDefineQuestion,
-	useSetDefineQuestion,
 } from '~state'
+import { useExperiment, useSetExperiment } from '~state/experiment'
 
 export function useBusinessLogic(): {
 	tables: TableContainer[]
@@ -37,8 +36,8 @@ export function useBusinessLogic(): {
 	const prepSpecification = useTablesPrepSpecification()
 	const setStepsTablePrep = useSetTablesPrepSpecification()
 	const causalFactors = useCausalFactors()
-	const defineQuestion = useDefineQuestion()
-	const setDefineQuestion = useSetDefineQuestion()
+	const defineQuestion = useExperiment()
+	const setDefineQuestion = useSetExperiment()
 
 	const dropdownOptions = useDefinitionDropdownOptions(
 		defineQuestion,

@@ -6,8 +6,8 @@ import { PrepareDataFull } from '@data-wrangling-components/react'
 import { ProgressIndicator } from '@fluentui/react'
 import { FC, memo } from 'react'
 import styled from 'styled-components'
+import { percentage } from '~utils/stats'
 import { useBusinessLogic } from './hooks'
-import { returnDecimalPercentage } from '~utils'
 
 export const ProcessDataPage: FC = memo(function ProcessDataPage() {
 	const {
@@ -25,7 +25,7 @@ export const ProcessDataPage: FC = memo(function ProcessDataPage() {
 				<ProgressIndicator
 					label="Variables definition"
 					description={`Completed ${completedElements}/${elements}`}
-					percentComplete={returnDecimalPercentage(completedElements, elements)}
+					percentComplete={percentage(completedElements, elements) / 100}
 				/>
 			</ProgressContainer>
 			<PrepareDataFull
