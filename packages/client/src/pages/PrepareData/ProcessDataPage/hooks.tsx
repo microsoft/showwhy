@@ -3,11 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import {
-	Step,
-	introspect,
-	TableContainer,
-} from '@data-wrangling-components/core'
+import { Step, TableContainer } from '@data-wrangling-components/core'
 import { createDefaultCommandBar } from '@data-wrangling-components/react'
 import {
 	ICommandBarItemProps,
@@ -30,7 +26,7 @@ import {
 	useDefineQuestion,
 	useSetDefineQuestion,
 } from '~state'
-import { Maybe } from '~types'
+import { FactorsOrDefinitions, Maybe } from '~types'
 import { DefinitionType, useDefinitionDropdown } from '../ModelVariables/hooks'
 import { useSetTargetCausalFactor } from './hooks/useSetTargetCausalFactor'
 import { useSetTargetDefinition } from './hooks/useSetTargetDefinition'
@@ -40,6 +36,8 @@ export function useBusinessLogic(): {
 	steps?: Step[]
 	onChangeSteps: (step: Step[]) => void
 	commandBar: IRenderFunction<IDetailsColumnProps>
+	elements: number
+	completedElements: number
 } {
 	const projectFiles = useProjectFiles()
 	const prepSpecification = useTablesPrepSpecification()
@@ -122,14 +120,20 @@ export function useBusinessLogic(): {
 		[setCausalFactor, setDefinition],
 	)
 
-	const allElements = useMemo(() => {
+	const allElements = useMemo((): FactorsOrDefinitions => {
 		const { population, exposure, outcome } = defineQuestion
 		return causalFactors.concat(
-			population?.definition,
-			exposure?.definition,
-			outcome?.definition,
+			...(population?.definition || []),
+			...(exposure?.definition || []),
+			...(outcome?.definition || []),
 		)
 	}, [causalFactors, defineQuestion])
+
+	const completedElements = useMemo((): number => {
+		return allElements.find(x => x)
+			? allElements?.filter(x => x.column).length
+			: 0
+	}, [allElements])
 
 	const renderDropdown = useCallback(
 		(columnName: string) => {
@@ -167,6 +171,8 @@ export function useBusinessLogic(): {
 		onChangeSteps,
 		steps,
 		commandBar,
+		elements: allElements.length,
+		completedElements,
 	}
 }
 

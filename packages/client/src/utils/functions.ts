@@ -105,6 +105,10 @@ export const returnElapsedTime = (
 	return `${minutes}min ${seconds}s`
 }
 
+export const returnDecimalPercentage = (completed = 0, total = 0): number => {
+	return returnPercentage(completed, total) / 100
+}
+
 export const returnPercentage = (completed = 0, total = 0): number => {
 	return Math.min(+((100 * completed) / total || 0).toFixed(2), 100)
 }

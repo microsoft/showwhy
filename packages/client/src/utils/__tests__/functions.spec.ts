@@ -64,4 +64,12 @@ describe('Utils Functions', () => {
 		const result = returnPercentage(completed, total)
 		expect(result).toEqual(expected)
 	})
+
+	it('returnDecimalPercentage', () => {
+		const completed = 10
+		const total = 100
+		const expected = 0.1
+		const result = returnPercentage(completed, total)
+		expect(result).toEqual(expected)
+	})
 })
