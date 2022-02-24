@@ -916,22 +916,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@data-wrangling-components/core@npm:^1.4.0":
-  version: 1.4.0
-  resolution: "@data-wrangling-components/core@npm:1.4.0"
-  dependencies:
-    core-js: ^3.20.2
-    lodash: ^4.17.21
-  peerDependencies:
-    "@types/node": "*"
-    arquero: ^4.8.7
-  peerDependenciesMeta:
-    "@types/node":
-      optional: true
-  checksum: 776111739caee2f9cd4865df5ecf9579a5e86162ff897220d6b5c03bedbd1e83834653eb66ff8747bc2e365db6b997b99a7420a7a94c0779abeaedee02134e34
-  languageName: node
-  linkType: hard
-
 "@data-wrangling-components/core@npm:^3.0.0":
   version: 3.0.0
   resolution: "@data-wrangling-components/core@npm:3.0.0"
@@ -947,7 +931,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@data-wrangling-components/react@npm:^2.1.1, @data-wrangling-components/react@npm:^2.6.0":
+"@data-wrangling-components/react@npm:^2.6.0":
   version: 2.6.0
   resolution: "@data-wrangling-components/react@npm:2.6.0"
   dependencies:
@@ -980,7 +964,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@data-wrangling-components/utilities@npm:^1.4.1, @data-wrangling-components/utilities@npm:^1.6.1":
+"@data-wrangling-components/utilities@npm:^1.6.1":
   version: 1.6.1
   resolution: "@data-wrangling-components/utilities@npm:1.6.1"
   dependencies:
@@ -1984,9 +1968,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/client@workspace:packages/client"
   dependencies:
-    "@data-wrangling-components/core": ^1.4.0
-    "@data-wrangling-components/react": ^2.1.1
-    "@data-wrangling-components/utilities": ^1.4.1
+    "@data-wrangling-components/core": ^3.0.0
+    "@data-wrangling-components/react": ^2.6.0
+    "@data-wrangling-components/utilities": ^1.6.1
     "@essex-js-toolkit/boolean-expression-component": ^1.0.1
     "@essex-js-toolkit/hooks": ^4.0.1
     "@essex-js-toolkit/thematic-lineup": ^2.0.1
@@ -2066,13 +2050,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/project@workspace:."
   dependencies:
-    "@data-wrangling-components/core": ^3.0.0
-    "@data-wrangling-components/react": ^2.6.0
-    "@data-wrangling-components/utilities": ^1.6.1
-    "@essex-js-toolkit/boolean-expression-component": ^1.0.1
-    "@essex-js-toolkit/hooks": ^4.0.1
-    "@essex-js-toolkit/thematic-lineup": ^2.0.1
-    "@essex-js-toolkit/themed-components": ^2.0.1
     "@essex/eslint-config": ^20.0.0
     "@essex/eslint-plugin": ^20.0.1
     "@essex/jest-config": ^21.0.0
@@ -4449,13 +4426,6 @@ __metadata:
   version: 3.21.0
   resolution: "core-js-pure@npm:3.21.0"
   checksum: 0b9b72fb241b106997a14fe8099bf62d38f9e5e0e6b46f8ae71f3b05822508a27f34e629f3d7766042a33ae3438938aa401aa1a5d2dbc296affaefed5fe06d68
-  languageName: node
-  linkType: hard
-
-"core-js@npm:^3.20.2":
-  version: 3.21.0
-  resolution: "core-js@npm:3.21.0"
-  checksum: 87df49aa2c5d0a521c52102b6669842dd30b334742e86dd4e0173c51230bc48d610060ab6de0f149766d188325b8c1b84598f901cf455674fe6c03ccc5c8026f
   languageName: node
   linkType: hard
 
