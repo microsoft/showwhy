@@ -56,7 +56,7 @@ export function useBusinessLogic(): {
 	)
 
 	const steps = useMemo((): any => {
-		return prepSpecification?.length ? prepSpecification[0].steps : []
+		return prepSpecification !== undefined ? prepSpecification[0]?.steps : []
 	}, [prepSpecification])
 
 	const tables = useMemo((): TableContainer[] => {

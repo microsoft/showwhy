@@ -257,7 +257,7 @@ async function processDataTables(
 	projectFiles?: ProjectFile[],
 ): Promise<TableContainer | undefined> {
 	if (tps !== undefined && projectFiles?.length) {
-		const steps = tps[0].steps as FileStep[]
+		const steps = tps[0]?.steps as FileStep[]
 		pipeline.clear()
 		return await runPipelineFromProjectFiles(projectFiles, steps, pipeline)
 	}

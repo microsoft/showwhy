@@ -2,6 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import type { Specification } from '@data-wrangling-components/core'
 import type { RefutationType } from '../refutation'
 import type { DataTableFileDefinition } from './DataTableDefinition'
 import type {
@@ -11,7 +12,6 @@ import type {
 	PrimarySpecificationConfig,
 	DefaultDatasetResult,
 } from '~types'
-import type { Specification } from '@data-wrangling-components/core'
 
 /**
  * This contains a collection of step data and file definitions for a saveable

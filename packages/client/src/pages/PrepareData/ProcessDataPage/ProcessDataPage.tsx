@@ -6,8 +6,8 @@ import { PrepareDataFull } from '@data-wrangling-components/react'
 import { ProgressIndicator } from '@fluentui/react'
 import { FC, memo } from 'react'
 import styled from 'styled-components'
-import { percentage } from '~utils/stats'
 import { useBusinessLogic } from './hooks'
+import { percentage } from '~utils/stats'
 
 export const ProcessDataPage: FC = memo(function ProcessDataPage() {
 	const {
