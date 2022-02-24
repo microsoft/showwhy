@@ -3,8 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { StepResource } from './StepResource'
-import { StepStatus } from './StepStatus'
+import type { StepResource } from './StepResource'
+import type { StepStatus } from './StepStatus'
 
 export interface Step {
 	id: string

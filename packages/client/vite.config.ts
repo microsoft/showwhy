@@ -9,5 +9,4 @@ import { plugin } from './vite-plugin-md'
 // https://vitejs.dev/config/
 export default defineConfig({
 	...essexViteConfig,
-	plugins: [...essexViteConfig.plugins, plugin()],
 })

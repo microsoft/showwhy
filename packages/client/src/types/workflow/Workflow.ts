@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { StepList } from './StepList'
+import type { StepList } from './StepList'
 
 export interface Workflow {
 	key: string

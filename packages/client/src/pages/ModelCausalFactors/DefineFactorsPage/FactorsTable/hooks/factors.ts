@@ -4,7 +4,7 @@
  */
 
 import { useCallback, useMemo } from 'react'
-import {
+import type {
 	CausalFactor,
 	Cause,
 	ExposureAndOutcomeCauses,

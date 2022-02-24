@@ -3,17 +3,17 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { IChoiceGroupOption } from '@fluentui/react'
+import type { IChoiceGroupOption } from '@fluentui/react'
 import { useCallback } from 'react'
-import { useDefineQuestion, useSetDefineQuestion } from '~state'
-import { Hypothesis, Experiment, Maybe } from '~types'
+import { useExperiment, useSetExperiment } from '~state'
+import type { Hypothesis, Experiment, Maybe } from '~types'
 
 export function useBusinessLogic(): {
 	defineQuestion: Experiment
 	onInputChange: (value: Maybe<string>, type: string, field: string) => void
 	setHypothesis: (e: any, option: Maybe<IChoiceGroupOption>) => void
 } {
-	const defineQuestion = useDefineQuestion()
+	const defineQuestion = useExperiment()
 	const onInputChange = useOnInputChange()
 	const setHypothesis = useSetHypothesis()
 	return {
@@ -28,8 +28,8 @@ function useOnInputChange(): (
 	type: string,
 	field: string,
 ) => void {
-	const defineQuestion = useDefineQuestion()
-	const setDefineQuestion = useSetDefineQuestion()
+	const defineQuestion = useExperiment()
+	const setDefineQuestion = useSetExperiment()
 	return useCallback(
 		(value, type, field) => {
 			const newValues = {
@@ -49,10 +49,10 @@ function useSetHypothesis(): (
 	e: any,
 	option: Maybe<IChoiceGroupOption>,
 ) => void {
-	const defineQuestion = useDefineQuestion()
-	const setDefineQuestion = useSetDefineQuestion()
+	const defineQuestion = useExperiment()
+	const setDefineQuestion = useSetExperiment()
 	return useCallback(
-		(e, option) => {
+		(_e, option) => {
 			if (option) {
 				const newQuestion: Experiment = { ...defineQuestion }
 				newQuestion.hypothesis = option.key as Hypothesis

@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { IComboBoxOption } from '@fluentui/react'
+import type { IComboBoxOption } from '@fluentui/react'
 import { useCallback, useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import {

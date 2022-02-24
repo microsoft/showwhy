@@ -9,7 +9,7 @@ import {
 	FileType,
 	BaseFile,
 } from '@data-wrangling-components/utilities'
-import { IContextualMenuItem } from '@fluentui/react'
+import type { IContextualMenuItem } from '@fluentui/react'
 import { useMemo, useCallback } from 'react'
 import { useLoadProject } from './loadProject'
 import { ProjectSource, FileDefinition, AsyncHandler1 } from '~types'
@@ -36,7 +36,7 @@ async function validateProjectFiles(
 	if (!jsonFile) {
 		throw new Error('No JSON file found in zip')
 	}
-	const jsonTables = (await jsonFile.toJson()).tables as FileDefinition[]
+	const jsonTables = (await jsonFile.toJson())['tables'] as FileDefinition[]
 	const tableEntries = fileCollection.list(FileType.table).map(e => e.name)
 
 	const requiredTables = jsonTables

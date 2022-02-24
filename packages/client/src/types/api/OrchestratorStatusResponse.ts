@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { StatusResponse } from './StatusResponse'
+import type { StatusResponse } from './StatusResponse'
 
 export interface OrchestratorStatusResponse extends StatusResponse {
 	name: string

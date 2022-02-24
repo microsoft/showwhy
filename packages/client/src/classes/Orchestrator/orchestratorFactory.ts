@@ -3,14 +3,14 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import {
+import type {
 	OrchestatorOnUpdateHandler,
 	OrchestratorHandler,
 	OrchestratorOnStartHandler,
 } from './Orchestrator'
 import { OrchestratorType } from './OrchestratorType'
 import { Orchestrator } from '~classes'
-import { Maybe } from '~types'
+import type { Maybe } from '~types'
 
 const orchestrators: Partial<Record<OrchestratorType, Orchestrator<unknown>>> =
 	{}

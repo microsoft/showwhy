@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { AtomEffect } from 'recoil'
+import type { AtomEffect } from 'recoil'
 
 export function localStorageEffect<T>(key: string): AtomEffect<T> {
 	return ({ setSelf, onSet }) => {

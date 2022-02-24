@@ -18,7 +18,7 @@ import {
 import { buildLoadNode, numberExecutions, uploadFiles } from '~resources'
 import {
 	useConfidenceInterval,
-	useDefineQuestion,
+	useExperiment,
 	useEstimators,
 	useProjectFiles,
 	useRefutationType,
@@ -26,7 +26,7 @@ import {
 	useSetSpecCount,
 	useSpecCount,
 } from '~state'
-import {
+import type {
 	Experiment,
 	Estimator,
 	NodeRequest,
@@ -37,7 +37,7 @@ import {
 	AsyncHandler,
 	Handler,
 } from '~types'
-import { createFormData, returnInitialRunHistory } from '~utils'
+import { createFormData, initialRunHistory } from '~utils'
 
 export function useBusinessLogic(): {
 	isProcessing: boolean
@@ -55,7 +55,7 @@ export function useBusinessLogic(): {
 	refutationOptions: RefutationOption[]
 	isCanceled: boolean
 } {
-	const definitions = useDefineQuestion()
+	const definitions = useExperiment()
 	const updateRunHistory = useUpdateAndDisableRunHistory()
 	const projectFiles = useProjectFiles()
 	const estimators = useEstimators()
@@ -110,7 +110,7 @@ export function useBusinessLogic(): {
 	)
 
 	const saveNewRunHistory = useCallback(() => {
-		const initialRun = returnInitialRunHistory(
+		const initialRun = initialRunHistory(
 			specCount as number,
 			hasConfidenceInterval,
 			refutationType,
@@ -130,8 +130,8 @@ export function useBusinessLogic(): {
 		saveNewRunHistory()
 		const files = await uploadProjectFiles(projectFiles)
 		const loadNode = buildLoadNode(
-			files.uploaded_files[projectFiles[0].name],
-			projectFiles[0].name,
+			files.uploaded_files[projectFiles[0]!.name]!,
+			projectFiles[0]!.name,
 		)
 		const nodes = {
 			nodes: [...loadNode.nodes, ...(estimateNode as NodeRequest).nodes],

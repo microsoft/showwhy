@@ -6,7 +6,7 @@ import Markdown from 'markdown-to-jsx'
 import { memo, useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { StepTitle } from '~components/StepTitle'
-import { Step, Maybe } from '~types'
+import type { Step, Maybe } from '~types'
 
 export const Guidance: React.FC<{
 	isVisible: Maybe<boolean>

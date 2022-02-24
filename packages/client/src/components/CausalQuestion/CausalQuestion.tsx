@@ -4,7 +4,7 @@
  */
 import { memo } from 'react'
 import { Title } from '~styles'
-import { Experiment } from '~types'
+import type { Experiment } from '~types'
 
 export const CausalQuestion: React.FC<{
 	defineQuestion: Experiment

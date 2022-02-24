@@ -4,14 +4,14 @@
  */
 import { useMemo } from 'react'
 import { useAlternativeModels, useExcludedFactors } from './causalFactors'
-import { useDefineQuestion } from '~state/defineQuestion'
-import { AlternativeModels, Experiment, CausalModelLevel } from '~types'
+import { useExperiment } from '~state/experiment'
+import type { AlternativeModels, Experiment, CausalModelLevel } from '~types'
 
 export function useCausalEffects(
 	causalLevel: CausalModelLevel,
 ): ReturnType<typeof useCausalEffectsTestable> {
 	return useCausalEffectsTestable(
-		useDefineQuestion(),
+		useExperiment(),
 		useExcludedFactors(),
 		useAlternativeModels(causalLevel),
 	)
@@ -37,13 +37,15 @@ export function useCausalEffectsTestable(
 		)}.`
 	}, [excludedFactors])
 
-	const generalExposure = useMemo((): string => {
-		return question.exposure?.label || ''
-	}, [question])
+	const generalExposure = useMemo(
+		() => question.exposure?.label || '',
+		[question],
+	)
 
-	const generalOutcome = useMemo((): string => {
-		return question.outcome?.label || ''
-	}, [question])
+	const generalOutcome = useMemo(
+		() => question.outcome?.label || '',
+		[question],
+	)
 
 	return {
 		confounders,

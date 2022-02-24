@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { Dimensions } from '@essex-js-toolkit/hooks'
+import type { Dimensions } from '@essex-js-toolkit/hooks'
 import { memo } from 'react'
 import { OutcomeEffectScatterplot } from '../ExploreSpecificationCurvePage/vega'
 import { Paragraph, Value, Container, Bold, Text } from '~styles'
@@ -14,7 +14,7 @@ import {
 	SpecificationCurveConfig,
 	Maybe,
 } from '~types'
-import { calculateMedian } from '~utils'
+import { median as calcMedian } from '~utils'
 
 export const ResultsGraph: React.FC<{
 	specificationData: Specification[]
@@ -37,7 +37,7 @@ export const ResultsGraph: React.FC<{
 	failedRefutationIds,
 	refutationType,
 }) {
-	const median = parseFloat(calculateMedian(activeValues).toFixed(3))
+	const median = parseFloat(calcMedian(activeValues).toFixed(3))
 	const exposure = defineQuestion?.exposure?.label || '<exposure>'
 	const outcome = defineQuestion?.outcome?.label || '<outcome>'
 	const hypothesis = defineQuestion?.hypothesis || '<hypothesis>'

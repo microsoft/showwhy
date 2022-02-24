@@ -1,4 +1,5 @@
 {
+	"extends": "@essex/tsconfig-base",
 	"compilerOptions": {
 		"module": "ESNext",
 		"moduleResolution": "Node",
@@ -23,14 +24,9 @@
 		"outDir": "lib",
 		"jsx": "react-jsx",
 		"resolveJsonModule": true,
-		"forceConsistentCasingInFileNames": true,
 		"allowSyntheticDefaultImports": true,
-		"strict": true,
 		"declaration": true,
 		"incremental": true,
-		"noImplicitOverride": true,
-		"noFallthroughCasesInSwitch": true,
-		"noImplicitThis": true,
 		"target": "ESNext",
 		"allowJs": true,
 		"skipLibCheck": true,

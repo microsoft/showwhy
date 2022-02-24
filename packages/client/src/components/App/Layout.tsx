@@ -7,7 +7,7 @@ import { useId } from '@fluentui/react-hooks'
 import { memo, Suspense, useState } from 'react'
 import styled from 'styled-components'
 import { AppHeader } from '../AppHeader'
-import { useProcessStepInfo, useGuidance, useOnClickProject } from './hooks'
+import { useProcessStepInfo, useOnClickProject } from './hooks'
 import { StepControls, StepSelector } from '~components/GeneralSteps'
 import { Guidance } from '~components/Guidance'
 import { MessageContainer } from '~components/MessageContainer'
@@ -18,12 +18,13 @@ import {
 	useUploadZipMenuOption,
 } from '~hooks'
 import {
-	useDefineQuestion,
+	useExperiment,
 	useSelectedProject,
 	useSetStepStatuses,
+	useGuidance,
 } from '~state'
 import { StyledSpinner } from '~styles'
-import { Maybe, Pages } from '~types'
+import type { Maybe, Pages } from '~types'
 
 const noChildPadding = [Pages.ProcessData]
 
@@ -31,7 +32,7 @@ export const Layout: React.FC = memo(function Layout({ children }) {
 	const [error, setError] = useState<Maybe<string>>()
 	const handleGetStepUrls = useGetStepUrls()
 	const handleSetAllStepStatus = useSetStepStatuses()
-	const defineQuestion = useDefineQuestion()
+	const defineQuestion = useExperiment()
 	const exampleProjects = useExampleProjects()
 	const uploadZipMenuOption = useUploadZipMenuOption(setError)
 	const tooltipId = useId('tooltip')

@@ -9,7 +9,7 @@ import {
 	useRunHistory,
 	useSetRunHistory,
 } from '~state'
-import {
+import type {
 	NodeResponseStatus,
 	NodeResponse,
 	PartialResults,
@@ -19,7 +19,7 @@ import {
 } from '~types'
 import {
 	disableAllRuns,
-	isStatusProcessing,
+	isProcessingStatus,
 	setStorageItem,
 	SESSION_ID_KEY,
 } from '~utils'
@@ -58,7 +58,7 @@ export function useIsDefaultRunProcessing(): boolean {
 	const defaultRun = useDefaultRun()
 
 	return useMemo(() => {
-		return isStatusProcessing(defaultRun?.status?.status as NodeResponseStatus)
+		return isProcessingStatus(defaultRun?.status?.status as NodeResponseStatus)
 	}, [defaultRun])
 }
 

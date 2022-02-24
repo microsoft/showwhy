@@ -3,11 +3,17 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { IComboBoxOption } from '@fluentui/react'
+import type { IComboBoxOption } from '@fluentui/react'
 import { memo } from 'react'
 import styled from 'styled-components'
 import { useFactorsDefinitionForm } from './hooks'
-import { PageType, CausalFactor, Experiment, OptionalId, Maybe } from '~types'
+import type {
+	PageType,
+	CausalFactor,
+	Experiment,
+	OptionalId,
+	Maybe,
+} from '~types'
 
 export const FactorsDefinitionForm: React.FC<{
 	factor?: CausalFactor

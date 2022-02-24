@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { RefutationResult } from '../refutation'
+import type { RefutationResult } from '../refutation'
 
 export interface Specification {
 	id: number

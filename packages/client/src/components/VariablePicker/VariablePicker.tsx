@@ -5,7 +5,7 @@
 import { ComboBox, IComboBoxOption } from '@fluentui/react'
 import { memo, useMemo } from 'react'
 import styled from 'styled-components'
-import { Maybe } from '~types'
+import type { Maybe } from '~types'
 
 export const VariablePicker: React.FC<{
 	onChange: (value: string) => void
@@ -33,13 +33,13 @@ export const VariablePicker: React.FC<{
 			<ComboBox
 				selectedKey={variable}
 				label={showLabel ? 'Select a variable or create a new one' : ''}
-				onChange={(_, option, index, value) =>
+				onChange={(_, option, _index, value) =>
 					onChange(option?.text ?? value ?? '')
 				}
 				options={variablesList}
 				autoComplete={variablesList?.length ? 'on' : 'off'}
 				allowFreeform={true}
-				onPendingValueChanged={(option, index, value) =>
+				onPendingValueChanged={(_option, _index, value) =>
 					value && onChange(value)
 				}
 				placeholder="Select/Type a variable"

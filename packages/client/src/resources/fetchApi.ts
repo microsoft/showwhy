@@ -122,7 +122,7 @@ async function fetchHandler(
 	}
 }
 
-export async function returnOrchestratorStatus(
+export async function getOrchestratorStatus(
 	url: string,
 ): Promise<OrchestratorStatusResponse> {
 	return fetch(localhostUrl(url))

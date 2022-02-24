@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { useEffect } from 'react'
-import { DataListenerHandler, View } from 'vega'
+import type { DataListenerHandler, View } from 'vega'
 
 // eslint-disable-next-line
 export function useData(view: View, data: { [key: string]: any }): void {

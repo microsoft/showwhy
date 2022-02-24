@@ -15,7 +15,7 @@ import { useGetResult, useGetStepUrlsByStatus } from '~hooks'
 import {
 	useCausalFactors,
 	useConfidenceInterval,
-	useDefineQuestion,
+	useExperiment,
 	useEstimators,
 	usePrimarySpecificationConfig,
 	useRefutationType,
@@ -44,7 +44,7 @@ export function useSaveProject(): AsyncHandler {
 	const primarySpecification = usePrimarySpecificationConfig()
 	const causalFactors = useCausalFactors()
 	const subjectIdentifier = useSubjectIdentifier()
-	const defineQuestion = useDefineQuestion()
+	const defineQuestion = useExperiment()
 	const estimators = useEstimators()
 	const refutations = useRefutationType()
 	const tablesPrep = useTablesPrepSpecification()

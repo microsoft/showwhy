@@ -11,7 +11,7 @@ import {
 	useResetRecoilState,
 	useSetRecoilState,
 } from 'recoil'
-import { Maybe } from '~types'
+import type { Maybe } from '~types'
 
 export const specCountState = atom<Maybe<number>>({
 	key: 'spec-count-state',

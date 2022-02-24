@@ -6,7 +6,7 @@
 import { useCallback } from 'react'
 import {
 	useResetCausalFactors,
-	useResetDefineQuestion,
+	useResetExperiment,
 	useResetEstimators,
 	useResetHoverState,
 	useResetOriginalTables,
@@ -20,13 +20,13 @@ import {
 	useResetSubjectIdentifier,
 	useResetTablesPrepSpecification,
 } from '~state'
-import { Handler } from '~types'
+import type { Handler } from '~types'
 
 export function useResetProject(): Handler {
 	const resetCausalFactors = useResetCausalFactors()
 	const resetRefutationTests = useResetRefutationType()
 	const resetEstimators = useResetEstimators()
-	const resetDefineQuestion = useResetDefineQuestion()
+	const resetDefineQuestion = useResetExperiment()
 	const resetOriginalTables = useResetOriginalTables()
 	const resetProjectFiles = useResetProjectFiles()
 	const resetSelectedFile = useResetSelectedFile()

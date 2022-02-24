@@ -4,7 +4,7 @@
  */
 
 import { useCallback, useMemo } from 'react'
-import { SetterOrUpdater } from 'recoil'
+import type { SetterOrUpdater } from 'recoil'
 import { v4 } from 'uuid'
 // HACK to pass the unit tests
 import { useCausalFactors, useSetCausalFactors } from '~state/causalFactors'
@@ -15,7 +15,7 @@ import {
 	CausalModelLevel,
 	OptionalId,
 } from '~types'
-import { replaceItemAtIndex } from '~utils/functions'
+import { replaceItemAtIndex } from '~utils/arrays'
 
 export function useExcludedFactors(): string[] {
 	return useExcludedFactorsTestable(useCausalFactors())

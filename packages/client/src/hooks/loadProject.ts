@@ -10,18 +10,17 @@ import {
 	TableContainer,
 } from '@data-wrangling-components/core'
 import { usePipeline, useStore } from '@data-wrangling-components/react'
-import { BaseFile } from '@data-wrangling-components/utilities'
+import type { BaseFile } from '@data-wrangling-components/utilities'
 import { all, op } from 'arquero'
 import ColumnTable from 'arquero/dist/types/table/column-table'
 import { useCallback } from 'react'
-import { v4 as uuidv4 } from 'uuid'
 import { useGetStepUrls, useSetRunAsDefault } from '~hooks'
 import {
 	useFileCollection,
 	useSetCausalFactors,
 	useSetConfidenceInterval,
 	useSetDefaultDatasetResult,
-	useSetDefineQuestion,
+	useSetExperiment,
 	useSetEstimators,
 	useSetFileCollection,
 	useSetPrimarySpecificationConfig,
@@ -38,7 +37,6 @@ import {
 	CausalFactor,
 	Experiment,
 	Element,
-	ElementDefinition,
 	FileDefinition,
 	ZipData,
 	ProjectFile,
@@ -64,7 +62,7 @@ export function useLoadProject(
 	const setPrimarySpecificationConfig = useSetPrimarySpecificationConfig()
 	const setCausalFactors = useSetCausalFactors()
 	const setSubjectIdentifier = useSetSubjectIdentifier()
-	const setDefineQuestion = useSetDefineQuestion()
+	const setDefineQuestion = useSetExperiment()
 	const setOrUpdateEst = useSetEstimators()
 	const setRefutationType = useSetRefutationType()
 	const setFiles = useSetProjectFiles()
@@ -266,13 +264,7 @@ async function processDataTables(
 }
 
 function prepCausalFactors(factors?: Partial<CausalFactor>[]): CausalFactor[] {
-	return (factors || []).map(
-		factor =>
-			({
-				id: uuidv4(),
-				...factor,
-			} as CausalFactor),
-	)
+	return (factors || []).map(withRandomId) as CausalFactor[]
 }
 
 function prepDefineQuestion(define?: Partial<Experiment>): Experiment {
@@ -297,21 +289,15 @@ function prepTablesSpec(specifications?: Specification[]): Specification[] {
 function prepElement(element: Element): Element {
 	return {
 		...element,
-		definition: element.definition?.map(
-			d =>
-				({
-					id: uuidv4(),
-					...(d as Partial<ElementDefinition>),
-				} as ElementDefinition),
-		),
+		definition: element.definition?.map(withRandomId),
 	}
 }
 
-const useUpdateCollection = (): ((
+function useUpdateCollection(): (
 	workspace: Workspace,
 	tableFiles: BaseFile[],
 	notebooks: BaseFile[],
-) => Promise<void>) => {
+) => Promise<void> {
 	const setCollection = useSetFileCollection()
 	const fileCollection = useFileCollection().copy()
 	return useCallback(
@@ -345,7 +331,7 @@ function useUpdateRunHistory() {
 				return
 			}
 			setRunHistory(runHistory)
-			const defaultRun = runHistory.find(run => run.isActive) || runHistory[0]
+			const defaultRun = runHistory.find(run => run.isActive) || runHistory[0]!
 			setDefaultRun(defaultRun)
 		},
 		[setRunHistory, setDefaultRun],

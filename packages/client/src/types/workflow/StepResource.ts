@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { StepLink } from './StepLink'
+import type { StepLink } from './StepLink'
 
 export interface StepResource {
 	id: string

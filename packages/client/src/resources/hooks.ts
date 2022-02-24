@@ -36,7 +36,7 @@ export function useGetNodeProperties(): (
 			const [dataframeName] = fileName.split('.')
 
 			const properties = {
-				...buildSpecs(dataframeName, population, exposure, outcome),
+				...buildSpecs(dataframeName!, population, exposure, outcome),
 				model_specs: models(
 					maximumLevel,
 					minimumModel,

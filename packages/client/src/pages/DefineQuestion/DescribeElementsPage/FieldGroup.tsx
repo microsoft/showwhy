@@ -7,7 +7,7 @@ import { upperFirst } from 'lodash'
 import { memo } from 'react'
 import styled from 'styled-components'
 import { Container, ContainerFlexRow } from '~styles'
-import { Element, Maybe } from '~types'
+import type { Element, Maybe } from '~types'
 
 export const FieldGroup: React.FC<{
 	type: string

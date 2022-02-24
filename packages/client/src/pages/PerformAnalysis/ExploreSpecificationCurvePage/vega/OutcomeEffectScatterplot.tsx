@@ -100,7 +100,9 @@ function useOverlay(data: Specification[], title?: string, outcome?: string) {
 			"$.data[?(@.name == 'specifications')].values": data,
 			"$.scales[?(@.name == 'refutationLegend')].domain": refutationLegend,
 			"$.signals[?(@.name == 'outcome')].value": (
-				outcome ?? data[0]?.outcome
+				outcome ??
+				data[0]?.outcome ??
+				''
 			).toLowerCase(),
 			"$.signals[?(@.name == 'refutationColors')].value": refutationColors,
 			"$.axes[?(@.scale == 'x')].title": title,

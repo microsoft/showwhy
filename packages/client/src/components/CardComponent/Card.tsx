@@ -4,7 +4,7 @@
  */
 import { memo } from 'react'
 import styled from 'styled-components'
-import { Maybe } from '~types'
+import type { Maybe } from '~types'
 
 export const CardComponent: React.FC<{
 	title?: string

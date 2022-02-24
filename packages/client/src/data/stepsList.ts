@@ -24,7 +24,7 @@ export const stepsList = [
 				url: `${Pages.UnderstandProcess}/${PageType.Why}`,
 				showStatus: false,
 				getMarkdown: async () =>
-					import('../markdown/understand-process/Why.md'),
+					import('../markdown/understand-process/Why.md?raw'),
 			},
 			{
 				id: uuidv4(),
@@ -34,7 +34,7 @@ export const stepsList = [
 				url: `${Pages.UnderstandProcess}/${PageType.Who}`,
 				showStatus: false,
 				getMarkdown: async () =>
-					import('../markdown/understand-process/Who.md'),
+					import('../markdown/understand-process/Who.md?raw'),
 			},
 			{
 				id: uuidv4(),
@@ -44,7 +44,7 @@ export const stepsList = [
 				url: `${Pages.UnderstandProcess}/${PageType.When}`,
 				showStatus: false,
 				getMarkdown: async () =>
-					import('../markdown/understand-process/When.md'),
+					import('../markdown/understand-process/When.md?raw'),
 			},
 			{
 				id: uuidv4(),
@@ -54,7 +54,7 @@ export const stepsList = [
 				url: `${Pages.UnderstandProcess}/${PageType.How}`,
 				showStatus: false,
 				getMarkdown: async () =>
-					import('../markdown/understand-process/How.md'),
+					import('../markdown/understand-process/How.md?raw'),
 			},
 		],
 	},
@@ -69,7 +69,7 @@ export const stepsList = [
 				url: `${Pages.DefineElements}`,
 				showStatus: true,
 				getMarkdown: async () =>
-					import('../markdown/define-question/Elements.md'),
+					import('../markdown/define-question/Elements.md?raw'),
 			},
 			{
 				id: uuidv4(),
@@ -78,7 +78,7 @@ export const stepsList = [
 				url: `${Pages.Define}/${PageType.Population}`,
 				showStatus: true,
 				getMarkdown: async () =>
-					import('../markdown/define-question/Population.md'),
+					import('../markdown/define-question/Population.md?raw'),
 			},
 			{
 				id: uuidv4(),
@@ -87,7 +87,7 @@ export const stepsList = [
 				url: `${Pages.Define}/${PageType.Exposure}`,
 				showStatus: true,
 				getMarkdown: async () =>
-					import('../markdown/define-question/Exposure.md'),
+					import('../markdown/define-question/Exposure.md?raw'),
 			},
 			{
 				id: uuidv4(),
@@ -96,7 +96,7 @@ export const stepsList = [
 				url: `${Pages.Define}/${PageType.Outcome}`,
 				showStatus: true,
 				getMarkdown: async () =>
-					import('../markdown/define-question/Outcome.md'),
+					import('../markdown/define-question/Outcome.md?raw'),
 			},
 		],
 	},
@@ -111,7 +111,9 @@ export const stepsList = [
 				url: `${Pages.ConsiderCausalFactors}`,
 				showStatus: true,
 				getMarkdown: async () =>
-					import('../markdown/model-causal-factors/ConsiderCausalFactors.md'),
+					import(
+						'../markdown/model-causal-factors/ConsiderCausalFactors.md?raw'
+					),
 			},
 			{
 				id: uuidv4(),
@@ -120,7 +122,7 @@ export const stepsList = [
 				showStatus: true,
 				url: `${Pages.DefineFactors}/${PageType.CauseExposure}`,
 				getMarkdown: async () =>
-					import('../markdown/model-causal-factors/CausingExposure.md'),
+					import('../markdown/model-causal-factors/CausingExposure.md?raw'),
 			},
 			{
 				id: uuidv4(),
@@ -129,7 +131,7 @@ export const stepsList = [
 				url: `${Pages.DefineFactors}/${PageType.CausedByExposure}`,
 				showStatus: true,
 				getMarkdown: async () =>
-					import('../markdown/model-causal-factors/CausedByExposure.md'),
+					import('../markdown/model-causal-factors/CausedByExposure.md?raw'),
 			},
 			{
 				id: uuidv4(),
@@ -138,7 +140,7 @@ export const stepsList = [
 				url: `${Pages.DefineFactors}/${PageType.CauseOutcome}`,
 				showStatus: true,
 				getMarkdown: async () =>
-					import('../markdown/model-causal-factors/CausingOutcome.md'),
+					import('../markdown/model-causal-factors/CausingOutcome.md?raw'),
 			},
 			{
 				id: uuidv4(),
@@ -147,7 +149,7 @@ export const stepsList = [
 				url: `${Pages.DefineFactors}/${PageType.CausedByOutcome}`,
 				showStatus: true,
 				getMarkdown: async () =>
-					import('../markdown/model-causal-factors/CausedByOutcome.md'),
+					import('../markdown/model-causal-factors/CausedByOutcome.md?raw'),
 			},
 			{
 				id: uuidv4(),
@@ -157,7 +159,7 @@ export const stepsList = [
 				showStatus: true,
 				getMarkdown: async () =>
 					import(
-						'../markdown/model-causal-factors/ConfirmAlternativeModels.md'
+						'../markdown/model-causal-factors/ConfirmAlternativeModels.md?raw'
 					),
 			},
 		],
@@ -172,7 +174,7 @@ export const stepsList = [
 				status: StepStatus.ToDo,
 				url: `${Pages.LoadData}`,
 				showStatus: true,
-				getMarkdown: async () => import('../markdown/prepare-data/Load.md'),
+				getMarkdown: async () => import('../markdown/prepare-data/Load.md?raw'),
 			},
 			{
 				id: uuidv4(),
@@ -180,7 +182,8 @@ export const stepsList = [
 				status: StepStatus.ToDo,
 				url: Pages.ProcessData,
 				showStatus: true,
-				getMarkdown: async () => import('../markdown/prepare-data/Process.md'),
+				getMarkdown: async () =>
+					import('../markdown/prepare-data/Process.md?raw'),
 			},
 			{
 				id: uuidv4(),
@@ -188,7 +191,8 @@ export const stepsList = [
 				status: StepStatus.ToDo,
 				url: Pages.ConfirmData,
 				showStatus: true,
-				getMarkdown: async () => import('../markdown/prepare-data/Confirm.md'),
+				getMarkdown: async () =>
+					import('../markdown/prepare-data/Confirm.md?raw'),
 			},
 		],
 	},
@@ -203,7 +207,7 @@ export const stepsList = [
 				url: Pages.SelectCausalEstimators,
 				showStatus: true,
 				getMarkdown: async () =>
-					import('../markdown/perform-analysis/Estimators.md'),
+					import('../markdown/perform-analysis/Estimators.md?raw'),
 			},
 			{
 				id: uuidv4(),
@@ -212,7 +216,7 @@ export const stepsList = [
 				url: Pages.EstimateCausalEffects,
 				showStatus: true,
 				getMarkdown: async () =>
-					import('../markdown/perform-analysis/CausalEffects.md'),
+					import('../markdown/perform-analysis/CausalEffects.md?raw'),
 			},
 			{
 				id: uuidv4(),
@@ -221,7 +225,7 @@ export const stepsList = [
 				url: Pages.SpecificationCurvePage,
 				showStatus: true,
 				getMarkdown: async () =>
-					import('../markdown/perform-analysis/SpecificationCurve.md'),
+					import('../markdown/perform-analysis/SpecificationCurve.md?raw'),
 			},
 			{
 				id: uuidv4(),
@@ -230,7 +234,7 @@ export const stepsList = [
 				url: Pages.EvaluateHypothesisPage,
 				showStatus: true,
 				getMarkdown: async () =>
-					import('../markdown/perform-analysis/Hypothesis.md'),
+					import('../markdown/perform-analysis/Hypothesis.md?raw'),
 			},
 		],
 	},

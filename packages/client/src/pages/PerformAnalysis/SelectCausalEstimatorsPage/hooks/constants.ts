@@ -3,8 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { IChoiceGroupOption } from '@fluentui/react'
-
+import type { IChoiceGroupOption } from '@fluentui/react'
 import { EstimatorGroup, EstimatorType } from '~types'
 
 export const estimatorGroups: IChoiceGroupOption[] = [
@@ -64,8 +63,8 @@ export function getEstimatorByRanking(
 ): EstimatorType {
 	const ranking = estimators.map(
 		estimator => defaultEstimatorRanking[estimator],
-	)
+	) as number[]
 	const min = Math.min(...ranking)
 	const index = ranking.indexOf(min)
-	return estimators[index]
+	return estimators[index] as EstimatorType
 }

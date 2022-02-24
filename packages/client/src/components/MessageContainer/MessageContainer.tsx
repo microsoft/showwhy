@@ -5,7 +5,7 @@
 import { MessageBar, MessageBarType, IStyle } from '@fluentui/react'
 import { memo, useCallback } from 'react'
 import styled from 'styled-components'
-import { Handler } from '~types'
+import type { Handler } from '~types'
 
 export const MessageContainer: React.FC<{
 	type?: MessageBarType
@@ -34,7 +34,7 @@ export const MessageContainer: React.FC<{
 			messageBarType={type}
 			onDismiss={onDismiss}
 			dismissButtonAriaLabel="Close"
-			type={MessageBarType[type]}
+			type={MessageBarType[type]!}
 			messageBarIconProps={iconProps(type)}
 			styles={{ root: styles }}
 		>

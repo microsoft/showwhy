@@ -27,12 +27,12 @@
 	"prettier": "@essex/prettier-config",
 	"devDependencies": {
 		"@essex/eslint-config": "^20.0.0",
-		"@essex/eslint-plugin": "^20.0.0",
-		"@essex/jest-config": "^20.1.0",
+		"@essex/eslint-plugin": "^20.0.1",
+		"@essex/jest-config": "^21.0.0",
 		"@essex/prettier-config": "^18.0.2",
-		"@essex/scripts": "^20.2.1",
-		"@typescript-eslint/eslint-plugin": "^5.12.0",
-		"@typescript-eslint/parser": "^5.12.0",
+		"@essex/scripts": "^20.3.2",
+		"@typescript-eslint/eslint-plugin": "^5.12.1",
+		"@typescript-eslint/parser": "^5.12.1",
 		"eslint": "^7.32.0",
 		"eslint-import-resolver-node": "^0.3.6",
 		"husky": "^7.0.4",
@@ -44,5 +44,14 @@
 	"workspaces": [
 		"packages/*"
 	],
-	"packageManager": "yarn@3.1.1"
+	"packageManager": "yarn@3.1.1",
+	"dependencies": {
+		"@data-wrangling-components/core": "^3.0.0",
+		"@data-wrangling-components/react": "^2.6.0",
+		"@data-wrangling-components/utilities": "^1.6.1",
+		"@essex-js-toolkit/boolean-expression-component": "^1.0.1",
+		"@essex-js-toolkit/hooks": "^4.0.1",
+		"@essex-js-toolkit/thematic-lineup": "^2.0.1",
+		"@essex-js-toolkit/themed-components": "^2.0.1"
+	}
 }

@@ -4,7 +4,7 @@
  */
 import { isArray, merge, mergeWith } from 'lodash'
 import { Children, useMemo } from 'react'
-import { Spec } from 'vega'
+import type { Spec } from 'vega'
 
 /**
  * Lodash merge customizer to ensure that arrays are note overwritten, but rather concatenated.

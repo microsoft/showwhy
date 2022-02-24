@@ -4,22 +4,27 @@
  */
 
 import { useCallback } from 'react'
-import { SetterOrUpdater } from 'recoil'
+import type { SetterOrUpdater } from 'recoil'
 import { usePageType } from './usePageType'
-import { useDefineQuestion, useSetDefineQuestion } from '~state/defineQuestion'
-import { PageType, Experiment, ElementDefinition, CausalFactor } from '~types'
-import { replaceItemAtIndex } from '~utils/functions'
+import { useExperiment, useSetExperiment } from '~state/experiment'
+import type {
+	PageType,
+	Experiment,
+	ElementDefinition,
+	CausalFactor,
+} from '~types'
+import { replaceItemAtIndex } from '~utils/arrays'
+// HACK to pass the unit tests
 
-export function useSaveDefinition(
-	defineQuestion: Experiment,
-	setDefineQuestion: SetterOrUpdater<Experiment>,
+export function useSaveDefinitionTestable(
+	experiment: Experiment,
+	setExperiment: SetterOrUpdater<Experiment>,
 ): (newDefinition: CausalFactor, type: PageType) => void {
 	return useCallback(
 		(newDefinition: CausalFactor, type: PageType) => {
-			let newDefinitionList =
-				[...(defineQuestion as any)[type]?.definition] || []
+			let newDefinitionList = [...(experiment as any)[type]?.definition] || []
 
-			const index = (defineQuestion as any)[type]?.definition?.findIndex(
+			const index = (experiment as any)[type]?.definition?.findIndex(
 				(x: ElementDefinition) => x.id === newDefinition?.id,
 			)
 			if (index > -1) {
@@ -32,15 +37,15 @@ export function useSaveDefinition(
 				newDefinitionList.push(newDefinition)
 			}
 			const newList = {
-				...defineQuestion,
+				...experiment,
 				[type]: {
-					...(defineQuestion as any)[type],
+					...(experiment as any)[type],
 					definition: newDefinitionList,
 				},
 			}
-			setDefineQuestion(newList)
+			setExperiment(newList)
 		},
-		[defineQuestion, setDefineQuestion],
+		[experiment, setExperiment],
 	)
 }
 
@@ -49,8 +54,8 @@ export function useRemoveDefinition(): (
 ) => void {
 	return useRemoveDefinitionTestable(
 		usePageType(),
-		useDefineQuestion(),
-		useSetDefineQuestion(),
+		useExperiment(),
+		useSetExperiment(),
 	)
 }
 

@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { Significance } from './Significance'
+import type { Significance } from './Significance'
 
 export interface TestResults {
 	p_value: string

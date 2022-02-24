@@ -3,8 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { useEffect } from 'react'
-import { View } from 'vega'
-import { LogLevel } from '../types'
+import type { View } from 'vega'
+import type { LogLevel } from '../types'
 
 export function useLogLevel(view: View, logLevel: LogLevel): void {
 	useEffect(() => {

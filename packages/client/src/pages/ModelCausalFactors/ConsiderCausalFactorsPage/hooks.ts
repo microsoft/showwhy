@@ -3,12 +3,12 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { IComboBoxOption } from '@fluentui/react'
+import type { IComboBoxOption } from '@fluentui/react'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useAddOrEditFactor, usePageType, useVariableOptions } from '~hooks'
 import { useCausalFactors, useSetCausalFactors } from '~state'
-import {
+import type {
 	PageType,
 	CausalFactor,
 	FlatCausalFactor,
