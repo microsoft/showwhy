@@ -39,7 +39,7 @@ const buildDropdownOption = (
 	return options
 }
 
-export function useDefinitionDropdown(
+export function useDefinitionDropdownOptions(
 	defineQuestion: Experiment,
 	causalFactors: CausalFactor[],
 ): IDropdownOption[] {

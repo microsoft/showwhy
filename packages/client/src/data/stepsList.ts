@@ -180,43 +180,7 @@ export const stepsList = [
 				status: StepStatus.ToDo,
 				url: Pages.ProcessData,
 				showStatus: true,
-				getMarkdown: async () => import('../markdown/prepare-data/Prepare.md'),
-			},
-			{
-				id: uuidv4(),
-				title: 'Population variables',
-				status: StepStatus.ToDo,
-				url: `${Pages.Variables}/${PageType.Population}`,
-				showStatus: true,
-				getMarkdown: async () =>
-					import('../markdown/prepare-data/PopulationVariables.md'),
-			},
-			{
-				id: uuidv4(),
-				title: 'Exposure variables',
-				status: StepStatus.ToDo,
-				url: `${Pages.Variables}/${PageType.Exposure}`,
-				showStatus: true,
-				getMarkdown: async () =>
-					import('../markdown/prepare-data/ExposureVariables.md'),
-			},
-			{
-				id: uuidv4(),
-				title: 'Outcome variables',
-				status: StepStatus.ToDo,
-				url: `${Pages.Variables}/${PageType.Outcome}`,
-				showStatus: true,
-				getMarkdown: async () =>
-					import('../markdown/prepare-data/OutcomeVariables.md'),
-			},
-			{
-				id: uuidv4(),
-				title: 'Control variables',
-				status: StepStatus.ToDo,
-				url: `${Pages.Variables}/${PageType.Control}`,
-				showStatus: true,
-				getMarkdown: async () =>
-					import('../markdown/prepare-data/ControlVariables.md'),
+				getMarkdown: async () => import('../markdown/prepare-data/Process.md'),
 			},
 			{
 				id: uuidv4(),
@@ -224,8 +188,7 @@ export const stepsList = [
 				status: StepStatus.ToDo,
 				url: Pages.ConfirmData,
 				showStatus: true,
-				getMarkdown: async () =>
-					import('../markdown/prepare-data/ControlVariables.md'),
+				getMarkdown: async () => import('../markdown/prepare-data/Confirm.md'),
 			},
 		],
 	},

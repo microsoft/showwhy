@@ -4,35 +4,15 @@
  */
 import { IComboBoxOption } from '@fluentui/react'
 import { useMemo } from 'react'
-import {
-	useProjectFiles,
-	useSelectOriginalTable,
-	useTableColumns,
-} from '~state'
-import { ColumnRelevance } from '~types'
+import { useOutputTablePrep } from '~state'
 
 export function useVariableOptions(): IComboBoxOption[] {
-	const projectFiles = useProjectFiles()
-	const originalTableState = useSelectOriginalTable(
-		projectFiles ? (projectFiles[0]?.id as string) : '',
-	)
-	const originalTable = originalTableState()?.table
-	const columns = useTableColumns(
-		projectFiles ? projectFiles[0]?.id : undefined,
-	)
+	const outputTable = useOutputTablePrep()
 
 	return useMemo(() => {
-		const removedColumns =
-			columns
-				?.filter(col => col.relevance === ColumnRelevance.NotRelevant)
-				.map(x => x.name) || []
-
-		const filteredColumns =
-			originalTable?.columnNames().filter(x => !removedColumns?.includes(x)) ||
-			[]
-		const validColumns = filteredColumns.map(x => {
+		const validColumns = outputTable?.columnNames()?.map(x => {
 			return { key: x, text: x }
 		})
 		return validColumns || []
-	}, [columns, originalTable])
+	}, [outputTable])
 }

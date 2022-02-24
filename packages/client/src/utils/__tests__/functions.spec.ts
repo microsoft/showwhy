@@ -7,6 +7,7 @@ import {
 	addOrRemoveArrayElement,
 	addS,
 	replaceItemAtIndex,
+	returnDecimalPercentage,
 	returnElapsedTime,
 	returnPercentage,
 	sortGroupByKey,
@@ -69,7 +70,7 @@ describe('Utils Functions', () => {
 		const completed = 10
 		const total = 100
 		const expected = 0.1
-		const result = returnPercentage(completed, total)
+		const result = returnDecimalPercentage(completed, total)
 		expect(result).toEqual(expected)
 	})
 })

@@ -27,9 +27,7 @@ import {
 	useRunHistory,
 	useSubjectIdentifier,
 	useTablesPrepSpecification,
-	useAllVariables,
 } from '~state'
-import { useColumnsPrepSpecification } from '~state/columnsPrepSpecification'
 import {
 	Workspace,
 	NodeResponseStatus,
@@ -37,7 +35,6 @@ import {
 	AsyncHandler,
 	DownloadType,
 	DataTableFileDefinition,
-	Ma,
 } from '~types'
 import { isDataUrl } from '~utils'
 
@@ -51,22 +48,7 @@ export function useSaveProject(): AsyncHandler {
 	const estimators = useEstimators()
 	const refutations = useRefutationType()
 	const tablesPrep = useTablesPrepSpecification()
-	const columnsPrep = useColumnsPrepSpecification()
 	const todoPages = useGetStepUrlsByStatus()({ exclude: true })
-	const variables = useAllVariables()
-	const modelVariables = variables.map(x => {
-		const moi = [
-			...defineQuestion.exposure.definition.flatMap(x => x),
-			...defineQuestion.population.definition.flatMap(x => x),
-			...defineQuestion.outcome.definition.flatMap(x => x),
-		]
-		const aqui = moi.find(a => a.id === x.id)
-		return {
-			variable: aqui?.variable,
-			columns: x.columns,
-		} as Ma
-	})
-
 	const download = useDownload(fileCollection)
 
 	//TODO: Add postLoad steps into workspace
@@ -78,11 +60,9 @@ export function useSaveProject(): AsyncHandler {
 			defineQuestion,
 			estimators,
 			refutations,
-			modelVariables,
 			todoPages,
 			subjectIdentifier,
 			tablesPrep,
-			columnsPrep,
 		}
 		await download(workspace)
 	}, [
@@ -92,10 +72,8 @@ export function useSaveProject(): AsyncHandler {
 		defineQuestion,
 		estimators,
 		refutations,
-		modelVariables,
 		todoPages,
 		tablesPrep,
-		columnsPrep,
 		subjectIdentifier,
 		download,
 	])

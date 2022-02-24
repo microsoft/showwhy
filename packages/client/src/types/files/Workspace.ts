@@ -7,7 +7,6 @@ import { RefutationType } from '../refutation'
 import { DataTableFileDefinition } from './DataTableDefinition'
 import {
 	CausalFactor,
-	Ma,
 	Experiment,
 	Estimator,
 	PrimarySpecificationConfig,
@@ -27,7 +26,6 @@ export interface Workspace {
 	defineQuestion?: Experiment
 	estimators?: Estimator[]
 	refutations?: RefutationType
-	modelVariables?: Ma[]
 	defaultResult?: DefaultDatasetResult
 	// TODO: this should be integrated as a flag on each page's data
 	todoPages?: string[]
@@ -35,5 +33,4 @@ export interface Workspace {
 	subjectIdentifier?: string
 	postLoad?: Specification[]
 	tablesPrep?: Specification[]
-	columnsPrep?: Specification[]
 }

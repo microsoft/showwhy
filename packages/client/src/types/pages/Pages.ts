@@ -11,8 +11,6 @@ export enum Pages {
 	Confirm = '/define/confirm',
 	Define = '/define',
 	LoadData = '/prepare/load',
-	VariablesControl = '/prepare/variables/control',
-	Variables = '/prepare/variables',
 	ProcessData = '/prepare/data',
 	ConfirmData = '/prepare/confirm',
 	EstimateCausalEffects = '/perform/effects',

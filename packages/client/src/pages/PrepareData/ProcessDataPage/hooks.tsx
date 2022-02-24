@@ -9,27 +9,23 @@ import {
 	ICommandBarItemProps,
 	IDetailsColumnProps,
 	IRenderFunction,
-	Dropdown,
 	ICommandBarProps,
-	IDropdownOption,
 } from '@fluentui/react'
-import { useCallback, useMemo, useState } from 'react'
-import { DefinitionType, useDefinitionDropdown } from '../ModelVariables/hooks'
-import { useSetTargetCausalFactor } from './hooks/useSetTargetCausalFactor'
-import { useSetTargetDefinition } from './hooks/useSetTargetDefinition'
-import { useAddOrEditFactor, useSaveDefinition } from '~hooks'
+import { useCallback, useMemo } from 'react'
+import { useDefinitionDropdownOptions, useOnResetVariable } from './hooks/index'
 import {
 	useSubjectIdentifier,
 	useProjectFiles,
 	useSetSubjectIdentifier,
-	useSetOutputTablePrep,
 	useTablesPrepSpecification,
 	useSetTablesPrepSpecification,
 	useCausalFactors,
 	useDefineQuestion,
 	useSetDefineQuestion,
 } from '~state'
-import { FactorsOrDefinitions, Maybe } from '~types'
+import { useOnSelectVariable } from './hooks/useOnSelectVariable'
+import { useRenderDropdown } from './hooks/useRenderDropdownOption'
+import { useAllVariables } from './hooks/useAllVariables'
 
 export function useBusinessLogic(): {
 	tables: TableContainer[]
@@ -42,16 +38,14 @@ export function useBusinessLogic(): {
 	const projectFiles = useProjectFiles()
 	const prepSpecification = useTablesPrepSpecification()
 	const setStepsTablePrep = useSetTablesPrepSpecification()
-	const setOutputTablePrep = useSetOutputTablePrep()
 	const causalFactors = useCausalFactors()
 
-	const [columnsMicrodata, setColumnsMicrodata] = useState<string[]>([])
 	const subjectIdentifier = useSubjectIdentifier()
 	const setSubjectIdentifier = useSetSubjectIdentifier()
 	const defineQuestion = useDefineQuestion()
 	const setDefineQuestion = useSetDefineQuestion()
 
-	const definitionDropdown = useDefinitionDropdown(
+	const dropdownOptions = useDefinitionDropdownOptions(
 		defineQuestion,
 		causalFactors,
 	)
@@ -73,25 +67,6 @@ export function useBusinessLogic(): {
 		return prepSpecification?.length ? prepSpecification[0].steps : []
 	}, [prepSpecification])
 
-	// const updateMicrodata = useCallback(async () => {
-	// 	if (!projectFiles.length) return
-	// 	const output = await runPipelineFromProjectFiles(projectFiles, steps)
-	// 	const stats = introspect(output, true)
-	// 	const columnNames = Object.keys(stats.columns)
-	// 	const columns = columnNames.filter(c => {
-	// 		return stats.columns[c].stats?.distinct === stats.rows
-	// 	})
-	// 	setOutputTablePrep(output)
-	// 	setColumnsMicrodata(columns)
-	// }, [projectFiles, steps, setColumnsMicrodata, setOutputTablePrep])
-
-	// useEffect(() => {
-	// 	const f = async () => {
-	// 		updateMicrodata()
-	// 	}
-	// 	f()
-	// }, [steps, updateMicrodata])
-
 	const tables = useMemo((): TableContainer[] => {
 		return projectFiles.map(x => {
 			return {
@@ -102,32 +77,19 @@ export function useBusinessLogic(): {
 		})
 	}, [projectFiles])
 
-	const onSaveCausalFactor = useAddOrEditFactor()
-	const setCausalFactor = useSetTargetCausalFactor(
-		onSaveCausalFactor,
+	const onSelectVariable = useOnSelectVariable(
 		causalFactors,
-	)
-	const onSaveDefinition = useSaveDefinition(defineQuestion, setDefineQuestion)
-	const setDefinition = useSetTargetDefinition(onSaveDefinition, defineQuestion)
-
-	const onSelect = useCallback(
-		(option: Maybe<IDropdownOption<any>>, columnName: string) => {
-			if (option?.data.type === DefinitionType.Factor) {
-				return setCausalFactor(option?.key as string, columnName)
-			}
-			setDefinition(option?.key as string, columnName)
-		},
-		[setCausalFactor, setDefinition],
+		defineQuestion,
+		setDefineQuestion,
 	)
 
-	const allElements = useMemo((): FactorsOrDefinitions => {
-		const { population, exposure, outcome } = defineQuestion
-		return causalFactors.concat(
-			...(population?.definition || []),
-			...(exposure?.definition || []),
-			...(outcome?.definition || []),
-		)
-	}, [causalFactors, defineQuestion])
+	const allElements = useAllVariables(causalFactors, defineQuestion)
+
+	const onResetVariable = useOnResetVariable(
+		allElements,
+		dropdownOptions,
+		onSelectVariable,
+	)
 
 	const completedElements = useMemo((): number => {
 		return allElements.find(x => x)
@@ -135,32 +97,10 @@ export function useBusinessLogic(): {
 			: 0
 	}, [allElements])
 
-	const renderDropdown = useCallback(
-		(columnName: string) => {
-			return (
-				<Dropdown
-					selectedKey={
-						allElements.find(a => a.column === columnName)?.id || null
-					}
-					onChange={(_, option) => onSelect(option, columnName)}
-					style={{ width: '200px' }}
-					options={definitionDropdown}
-				/>
-			)
-		},
-		[definitionDropdown, allElements],
-	)
-
-	const resetSelection = useCallback(
-		(columnName: string) => {
-			const id = allElements.find(a => a.column === columnName)?.id
-			const opt = definitionDropdown.find(x => x.key === id)
-			if (opt?.data.type === DefinitionType.Factor) {
-				return setCausalFactor(opt?.key as string, columnName)
-			}
-			setDefinition(opt?.key as string, columnName)
-		},
-		[allElements, definitionDropdown, setCausalFactor, setDefinition],
+	const renderDropdown = useRenderDropdown(
+		allElements,
+		onSelectVariable,
+		dropdownOptions,
 	)
 
 	const commandBar = useCallback(
@@ -177,7 +117,7 @@ export function useBusinessLogic(): {
 					text: 'Reset selection',
 					iconOnly: true,
 					iconProps: iconProps.reset,
-					onClick: () => resetSelection(columnName),
+					onClick: () => onResetVariable(columnName),
 					disabled: !allElements.find(x => x.column === columnName),
 				},
 			]
@@ -185,13 +125,7 @@ export function useBusinessLogic(): {
 				style: { width: 250 },
 			} as ICommandBarProps)
 		},
-		[
-			setSubjectIdentifier,
-			renderDropdown,
-			subjectIdentifier,
-			columnsMicrodata,
-			allElements,
-		],
+		[setSubjectIdentifier, renderDropdown, subjectIdentifier, allElements],
 	)
 
 	return {

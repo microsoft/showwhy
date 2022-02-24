@@ -54,12 +54,6 @@ const LoadDataPage = lazy(
 			'../../pages/PrepareData/LoadDataPage'
 		),
 )
-const GeneralPage = lazy(
-	() =>
-		/* webpackChunkName: "GeneralPage" */ import(
-			'../../pages/PrepareData/ModelVariables/GeneralPage'
-		),
-)
 
 const ProcessDataPage = lazy(
 	() =>
@@ -102,13 +96,6 @@ const EvaluateHypothesisPage = lazy(
 		),
 )
 
-const ControlPage = lazy(
-	() =>
-		/* webpackChunkName: "ControlPage" */ import(
-			'../../pages/PrepareData/ModelVariables/ControlPage'
-		),
-)
-
 export const Routes: React.FC = memo(function Routes() {
 	return (
 		<Switch>
@@ -124,8 +111,6 @@ export const Routes: React.FC = memo(function Routes() {
 			<Route path={Pages.Define} component={DefinePage} />
 			<Route path={Pages.LoadData} component={LoadDataPage} />
 			<Route path={Pages.ProcessData} component={ProcessDataPage} />
-			<Route path={Pages.VariablesControl} component={ControlPage} />
-			<Route path={Pages.Variables} component={GeneralPage} />
 			<Route path={Pages.ConfirmData} component={ConfirmDataPage} />
 			<Route
 				path={Pages.SelectCausalEstimators}

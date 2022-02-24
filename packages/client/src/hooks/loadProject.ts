@@ -5,8 +5,6 @@
 import {
 	Specification,
 	Step as FileStep,
-	runPipeline as runColumnTablePipeline,
-	TableContainer,
 	TableStore,
 	Pipeline,
 } from '@data-wrangling-components/core'
@@ -33,10 +31,7 @@ import {
 	useSetOutputTablePrep,
 	useSetProjectFiles,
 	useSetTablesPrepSpecification,
-	useSetAllVariables,
-	useSetOutputTableModelVariables,
 } from '~state'
-import { useSetColumnsPrepSpecification } from '~state/columnsPrepSpecification'
 import {
 	ProjectSource,
 	CausalFactor,
@@ -46,14 +41,13 @@ import {
 	FileDefinition,
 	ZipData,
 	ProjectFile,
-	VariableDefinition,
 	Workspace,
 	DataTableFileDefinition,
 	StepStatus,
 	Maybe,
 	RunHistory,
-	Ma,
 } from '~types'
+
 import {
 	fetchRemoteTables,
 	fetchTable,
@@ -66,7 +60,6 @@ import {
 export function useLoadProject(
 	source = ProjectSource.url,
 ): (definition?: Maybe<FileDefinition>, zip?: Maybe<ZipData>) => Promise<void> {
-	const setAllVariables = useSetAllVariables()
 	const setPrimarySpecificationConfig = useSetPrimarySpecificationConfig()
 	const setCausalFactors = useSetCausalFactors()
 	const setSubjectIdentifier = useSetSubjectIdentifier()
@@ -81,9 +74,7 @@ export function useLoadProject(
 	const updateCollection = useUpdateCollection()
 	const updateRunHistory = useUpdateRunHistory()
 	const setTablePrepSpec = useSetTablesPrepSpecification()
-	const setColumnsPrepSpec = useSetColumnsPrepSpecification()
 	const setOutputTablePrep = useSetOutputTablePrep()
-	const setOutputTableModelVariables = useSetOutputTableModelVariables()
 	const store = useStore()
 	const pipeline = usePipeline(store)
 
@@ -140,9 +131,7 @@ export function useLoadProject(
 			const cfs = prepCausalFactors(causalFactors)
 			const df = prepDefineQuestion(defineQuestion)
 			const est = estimators || []
-			const mvs = prepModelVariables(df, modelVariables)
 			const tps = prepTablesSpec(tablesPrep)
-			const tcs = prepTablesSpec(columnsPrep)
 			const defaultDatasetResult = defaultResult || null
 
 			primarySpecification &&
@@ -153,9 +142,7 @@ export function useLoadProject(
 			setDefineQuestion(df)
 			setOrUpdateEst(est)
 			setSubjectIdentifier(subjectIdentifier)
-			setAllVariables(mvs)
 			setTablePrepSpec(tps)
-			setColumnsPrepSpec(tcs)
 			setDefaultDatasetResult(defaultDatasetResult)
 			setConfidenceInterval(!!confidenceInterval)
 
@@ -176,16 +163,12 @@ export function useLoadProject(
 			)
 			setOutputTablePrep(dataPrepTable)
 
-			const dataPrepColumn = await processDataColumns(tcs, dataPrepTable)
-			setOutputTableModelVariables(dataPrepColumn?.table)
-
 			const completed = getStepUrls(workspace.todoPages, true)
 			setAllStepStatus(completed, StepStatus.Done)
 			updateCollection(workspace, tables, notebooks)
 			updateRunHistory(runHistory)
 		},
 		[
-			// id,
 			source,
 			store,
 			pipeline,
@@ -196,9 +179,7 @@ export function useLoadProject(
 			setOrUpdateEst,
 			setRefutationType,
 			setSubjectIdentifier,
-			setAllVariables,
 			setAllStepStatus,
-			setColumnsPrepSpec,
 			getStepUrls,
 			setDefaultDatasetResult,
 			setConfidenceInterval,
@@ -206,7 +187,6 @@ export function useLoadProject(
 			updateRunHistory,
 			setTablePrepSpec,
 			setOutputTablePrep,
-			setOutputTableModelVariables,
 		],
 	)
 }
@@ -292,16 +272,6 @@ async function processDataTables(
 	}
 }
 
-async function processDataColumns(
-	tcs?: Specification[],
-	table?: ColumnTable,
-): Promise<TableContainer | undefined> {
-	if (tcs?.length && table) {
-		const steps = tcs[0].steps as FileStep[]
-		return await runColumnTablePipeline(table, steps)
-	}
-}
-
 function prepCausalFactors(factors?: Partial<CausalFactor>[]): CausalFactor[] {
 	return (factors || []).map(
 		factor =>
@@ -325,37 +295,6 @@ function prepDefineQuestion(define?: Partial<Experiment>): Experiment {
 	}
 
 	return prepped as Experiment
-}
-
-function prepModelVariables(
-	experiment: Experiment,
-	model: Ma[],
-): VariableDefinition[] {
-	const moi = [
-		...experiment.exposure.definition.flatMap(x => x),
-		...experiment.population.definition.flatMap(x => x),
-		...experiment.outcome.definition.flatMap(x => x),
-	]
-
-	return model.map(x => {
-		const aqui = moi.find(a => a.variable === x.variable)
-		return {
-			id: aqui?.id,
-			columns: x.columns,
-		} as VariableDefinition
-	})
-	// if (prepped.exposure) {
-	// 	prepped.exposure = prepVariableDefinitions(prepped.exposure)
-	// }
-	// if (prepped.population) {
-	// 	prepped.population = prepVariableDefinitions(prepped.population)
-	// }
-	// if (prepped.outcome) {
-	// 	prepped.outcome = prepVariableDefinitions(prepped.outcome)
-	// }
-	// if (prepped.control) {
-	// 	prepped.control = prepVariableDefinitions(prepped.control)
-	// }
 }
 
 function prepTablesSpec(specifications?: Specification[]): Specification[] {
