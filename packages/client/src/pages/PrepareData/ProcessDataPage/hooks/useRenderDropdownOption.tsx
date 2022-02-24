@@ -25,6 +25,6 @@ export function useRenderDropdown(
 				/>
 			)
 		},
-		[dropdownOptions, allElements],
+		[dropdownOptions, allElements, onSelect],
 	)
 }

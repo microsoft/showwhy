@@ -6,19 +6,19 @@
 import { IDropdownOption } from '@fluentui/react'
 import { useCallback } from 'react'
 import { SetterOrUpdater } from 'recoil'
-import { useAddOrEditFactor, useSaveDefinition } from '~hooks'
-import { CausalFactor, Experiment, Maybe } from '~types'
 import {
 	useSetTargetCausalFactor,
 	useSetTargetDefinition,
 	DefinitionType,
 } from './index'
+import { useAddOrEditFactor, useSaveDefinition } from '~hooks'
+import { CausalFactor, Experiment, Maybe } from '~types'
 
 export function useOnSelectVariable(
 	causalFactors: CausalFactor[],
 	defineQuestion: Experiment,
 	setDefineQuestion: SetterOrUpdater<Experiment>,
-) {
+): (option: Maybe<IDropdownOption<any>>, columnName: string) => void {
 	const onSaveCausalFactor = useAddOrEditFactor()
 	const setCausalFactor = useSetTargetCausalFactor(
 		onSaveCausalFactor,
@@ -30,9 +30,10 @@ export function useOnSelectVariable(
 	return useCallback(
 		(option: Maybe<IDropdownOption<any>>, columnName: string) => {
 			if (option?.data.type === DefinitionType.Factor) {
-				return setCausalFactor(option?.key as string, columnName)
+				setCausalFactor(option?.key as string, columnName)
+			} else {
+				setDefinition(option?.key as string, columnName)
 			}
-			setDefinition(option?.key as string, columnName)
 		},
 		[setCausalFactor, setDefinition],
 	)

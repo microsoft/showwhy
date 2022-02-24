@@ -14,7 +14,7 @@ export function useOnResetVariable(
 		option: Maybe<IDropdownOption<any>>,
 		columnName: string,
 	) => void,
-) {
+): (columnName: string) => void {
 	return useCallback(
 		(columnName: string) => {
 			const id = allElements.find(a => a.column === columnName)?.id

@@ -115,11 +115,9 @@ export function useLoadProject(
 				estimators,
 				refutations,
 				subjectIdentifier,
-				modelVariables,
 				confidenceInterval,
 				defaultResult,
 				tablesPrep,
-				columnsPrep,
 			} = workspace
 
 			if (results && defaultResult) {

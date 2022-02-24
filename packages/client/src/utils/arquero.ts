@@ -8,8 +8,6 @@ import {
 	TableContainer,
 	TableStore,
 } from '@data-wrangling-components/core'
-import { v4 as uuidv4 } from 'uuid'
-import { usePipeline, useStore } from '@data-wrangling-components/react'
 import {
 	BaseFile,
 	guessDelimiter,

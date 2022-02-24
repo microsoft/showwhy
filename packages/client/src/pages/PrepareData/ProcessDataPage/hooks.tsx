@@ -13,19 +13,17 @@ import {
 } from '@fluentui/react'
 import { useCallback, useMemo } from 'react'
 import { useDefinitionDropdownOptions, useOnResetVariable } from './hooks/index'
+import { useAllVariables } from './hooks/useAllVariables'
+import { useOnSelectVariable } from './hooks/useOnSelectVariable'
+import { useRenderDropdown } from './hooks/useRenderDropdownOption'
 import {
-	useSubjectIdentifier,
 	useProjectFiles,
-	useSetSubjectIdentifier,
 	useTablesPrepSpecification,
 	useSetTablesPrepSpecification,
 	useCausalFactors,
 	useDefineQuestion,
 	useSetDefineQuestion,
 } from '~state'
-import { useOnSelectVariable } from './hooks/useOnSelectVariable'
-import { useRenderDropdown } from './hooks/useRenderDropdownOption'
-import { useAllVariables } from './hooks/useAllVariables'
 
 export function useBusinessLogic(): {
 	tables: TableContainer[]
@@ -39,9 +37,6 @@ export function useBusinessLogic(): {
 	const prepSpecification = useTablesPrepSpecification()
 	const setStepsTablePrep = useSetTablesPrepSpecification()
 	const causalFactors = useCausalFactors()
-
-	const subjectIdentifier = useSubjectIdentifier()
-	const setSubjectIdentifier = useSetSubjectIdentifier()
 	const defineQuestion = useDefineQuestion()
 	const setDefineQuestion = useSetDefineQuestion()
 
@@ -57,10 +52,8 @@ export function useBusinessLogic(): {
 				_prev[0] = { ..._prev[0], steps }
 				return _prev
 			})
-
-			setSubjectIdentifier(undefined)
 		},
-		[setStepsTablePrep, setSubjectIdentifier],
+		[setStepsTablePrep],
 	)
 
 	const steps = useMemo((): any => {
@@ -125,7 +118,7 @@ export function useBusinessLogic(): {
 				style: { width: 250 },
 			} as ICommandBarProps)
 		},
-		[setSubjectIdentifier, renderDropdown, subjectIdentifier, allElements],
+		[renderDropdown, onResetVariable, allElements],
 	)
 
 	return {
