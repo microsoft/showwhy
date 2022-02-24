@@ -8,16 +8,10 @@ import {
 } from '@data-wrangling-components/react'
 import { FC, memo } from 'react'
 import styled from 'styled-components'
-import { useOutputTablePrep } from '~state'
+import { useBusinessLogic } from './hooks'
 
 export const ConfirmDataPage: FC = memo(function ConfirmDataPage() {
-	const output = useOutputTablePrep()
-	// const allVariables = useAllVariables()
-	// const subjectIdentifier = useSubjectIdentifier()
-
-	// const columns = useMemo(() => {
-	// 	return [subjectIdentifier ?? '', ...allVariables.flatMap(x => x.columns)]
-	// }, [allVariables, subjectIdentifier])
+	const { output } = useBusinessLogic()
 
 	if (!output) return <span>Empty result</span>
 	return (

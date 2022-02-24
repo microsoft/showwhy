@@ -6,6 +6,5 @@
 export * from './useSetTargetCausalFactor'
 export * from './useSetTargetDefinition'
 export * from './useDefinitionDropdownOptions'
-export * from './useAllVariables'
 export * from './useOnResetVariable'
 export * from './useOnSelectVariable'

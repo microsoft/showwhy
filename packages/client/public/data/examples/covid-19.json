@@ -769,7 +769,8 @@
           "args": {
             "columns": [
               "index",
-              "age",
+              "diabetes_hypertension",
+              "subject_inclusion",
               "chronic_disease",
               "gender",
               "death",

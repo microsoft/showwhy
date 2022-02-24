@@ -13,7 +13,6 @@ import type {
 } from '@fluentui/react'
 import { useCallback, useMemo } from 'react'
 import { useDefinitionDropdownOptions, useOnResetVariable } from './hooks/index'
-import { useAllVariables } from './hooks/useAllVariables'
 import { useOnSelectVariable } from './hooks/useOnSelectVariable'
 import { useRenderDropdown } from './hooks/useRenderDropdownOption'
 import {
@@ -23,6 +22,7 @@ import {
 	useCausalFactors,
 } from '~state'
 import { useExperiment, useSetExperiment } from '~state/experiment'
+import { useAllVariables } from '~hooks'
 
 export function useBusinessLogic(): {
 	tables: TableContainer[]
