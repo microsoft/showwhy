@@ -7,17 +7,13 @@ import { ProgressIndicator } from '@fluentui/react'
 import { FC, memo } from 'react'
 import styled from 'styled-components'
 import { useBusinessLogic } from './hooks'
+import { useTables } from './hooks/useTables'
 import { percentage } from '~utils/stats'
 
 export const ProcessDataPage: FC = memo(function ProcessDataPage() {
-	const {
-		tables,
-		onChangeSteps,
-		steps,
-		commandBar,
-		elements,
-		completedElements,
-	} = useBusinessLogic()
+	const tables = useTables()
+	const { onChangeSteps, steps, commandBar, elements, completedElements } =
+		useBusinessLogic()
 
 	return (
 		<Container>

@@ -3,21 +3,18 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { Step, TableContainer } from '@data-wrangling-components/core'
-import { createDefaultCommandBar } from '@data-wrangling-components/react'
-import type {
-	ICommandBarItemProps,
-	IDetailsColumnProps,
-	IRenderFunction,
-	ICommandBarProps,
-} from '@fluentui/react'
+import type { Step } from '@data-wrangling-components/core'
+import type { IDetailsColumnProps, IRenderFunction } from '@fluentui/react'
 import { useCallback, useMemo } from 'react'
-import { useDefinitionDropdownOptions, useOnResetVariable } from './hooks/index'
+import {
+	useCommandBar,
+	useDefinitionDropdownOptions,
+	useOnResetVariable,
+} from './hooks/index'
 import { useOnSelectVariable } from './hooks/useOnSelectVariable'
 import { useRenderDropdown } from './hooks/useRenderDropdownOption'
 import { useAllVariables } from '~hooks'
 import {
-	useProjectFiles,
 	useTablesPrepSpecification,
 	useSetTablesPrepSpecification,
 	useCausalFactors,
@@ -25,14 +22,12 @@ import {
 import { useExperiment, useSetExperiment } from '~state/experiment'
 
 export function useBusinessLogic(): {
-	tables: TableContainer[]
 	steps?: Step[]
 	onChangeSteps: (step: Step[]) => void
 	commandBar: IRenderFunction<IDetailsColumnProps>
 	elements: number
 	completedElements: number
 } {
-	const projectFiles = useProjectFiles()
 	const prepSpecification = useTablesPrepSpecification()
 	const setStepsTablePrep = useSetTablesPrepSpecification()
 	const causalFactors = useCausalFactors()
@@ -58,16 +53,6 @@ export function useBusinessLogic(): {
 	const steps = useMemo((): any => {
 		return prepSpecification !== undefined ? prepSpecification[0]?.steps : []
 	}, [prepSpecification])
-
-	const tables = useMemo((): TableContainer[] => {
-		return projectFiles.map(x => {
-			return {
-				id: x.id,
-				name: x.name,
-				table: x.table,
-			} as TableContainer
-		})
-	}, [projectFiles])
 
 	const onSelectVariable = useOnSelectVariable(
 		causalFactors,
@@ -95,41 +80,13 @@ export function useBusinessLogic(): {
 		dropdownOptions,
 	)
 
-	const commandBar = useCallback(
-		(props?: IDetailsColumnProps) => {
-			const columnName = props?.column.name ?? ''
-			const items: ICommandBarItemProps[] = [
-				{
-					key: 'definition',
-					iconOnly: true,
-					onRender: () => renderDropdown(columnName),
-				},
-				{
-					key: 'reset',
-					text: 'Reset selection',
-					iconOnly: true,
-					iconProps: iconProps.reset,
-					onClick: () => onResetVariable(columnName),
-					disabled: !allElements.find(x => x.column === columnName),
-				},
-			]
-			return createDefaultCommandBar(items, {
-				style: { width: 250 },
-			} as ICommandBarProps)
-		},
-		[renderDropdown, onResetVariable, allElements],
-	)
+	const commandBar = useCommandBar(renderDropdown, onResetVariable, allElements)
 
 	return {
-		tables,
 		onChangeSteps,
 		steps,
 		commandBar,
 		elements: allElements.length,
 		completedElements,
 	}
-}
-
-const iconProps = {
-	reset: { iconName: 'RemoveLink' },
 }
