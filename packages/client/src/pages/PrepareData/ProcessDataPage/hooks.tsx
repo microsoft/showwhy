@@ -15,6 +15,7 @@ import { useCallback, useMemo } from 'react'
 import { useDefinitionDropdownOptions, useOnResetVariable } from './hooks/index'
 import { useOnSelectVariable } from './hooks/useOnSelectVariable'
 import { useRenderDropdown } from './hooks/useRenderDropdownOption'
+import { useAllVariables } from '~hooks'
 import {
 	useProjectFiles,
 	useTablesPrepSpecification,
@@ -22,7 +23,6 @@ import {
 	useCausalFactors,
 } from '~state'
 import { useExperiment, useSetExperiment } from '~state/experiment'
-import { useAllVariables } from '~hooks'
 
 export function useBusinessLogic(): {
 	tables: TableContainer[]

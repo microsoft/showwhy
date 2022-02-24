@@ -931,9 +931,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@data-wrangling-components/react@npm:^2.6.0":
-  version: 2.6.0
-  resolution: "@data-wrangling-components/react@npm:2.6.0"
+"@data-wrangling-components/react@npm:^2.7.0":
+  version: 2.7.0
+  resolution: "@data-wrangling-components/react@npm:2.7.0"
   dependencies:
     "@essex-js-toolkit/hooks": ^4.0.1
     d3-format: ^3.1.0
@@ -960,7 +960,7 @@ __metadata:
     react: ^17.0.2
     react-dom: ^17.0.2
     styled-components: ^5.3.0
-  checksum: 8e80032b6241a10cf76b3fcd86c0263ce5d09585c192562fe2587248a4b5add1f32ce304f309b8bb18d567758b358867fdf911cf5fa0ae70de870d518d50ec63
+  checksum: fe055b9e2293d2a738d76011334aeffb2cac9b4c32e4238bb970d889111c72be8dc60bc9bcde91eab3d066f3dbe82828abc3fcb0b5a786fd246d9efeb3bb01e8
   languageName: node
   linkType: hard
 
@@ -1969,7 +1969,7 @@ __metadata:
   resolution: "@showwhy/client@workspace:packages/client"
   dependencies:
     "@data-wrangling-components/core": ^3.0.0
-    "@data-wrangling-components/react": ^2.6.0
+    "@data-wrangling-components/react": ^2.7.0
     "@data-wrangling-components/utilities": ^1.6.1
     "@essex-js-toolkit/boolean-expression-component": ^1.0.1
     "@essex-js-toolkit/hooks": ^4.0.1
