@@ -14,6 +14,9 @@ import {
 	IDropdownOption,
 } from '@fluentui/react'
 import { useCallback, useMemo, useState } from 'react'
+import { DefinitionType, useDefinitionDropdown } from '../ModelVariables/hooks'
+import { useSetTargetCausalFactor } from './hooks/useSetTargetCausalFactor'
+import { useSetTargetDefinition } from './hooks/useSetTargetDefinition'
 import { useAddOrEditFactor, useSaveDefinition } from '~hooks'
 import {
 	useSubjectIdentifier,
@@ -27,9 +30,6 @@ import {
 	useSetDefineQuestion,
 } from '~state'
 import { FactorsOrDefinitions, Maybe } from '~types'
-import { DefinitionType, useDefinitionDropdown } from '../ModelVariables/hooks'
-import { useSetTargetCausalFactor } from './hooks/useSetTargetCausalFactor'
-import { useSetTargetDefinition } from './hooks/useSetTargetDefinition'
 
 export function useBusinessLogic(): {
 	tables: TableContainer[]
@@ -139,14 +139,28 @@ export function useBusinessLogic(): {
 		(columnName: string) => {
 			return (
 				<Dropdown
-					selectedKey={allElements.find(a => a.column === columnName)?.id}
+					selectedKey={
+						allElements.find(a => a.column === columnName)?.id || null
+					}
 					onChange={(_, option) => onSelect(option, columnName)}
 					style={{ width: '200px' }}
 					options={definitionDropdown}
 				/>
 			)
 		},
-		[definitionDropdown],
+		[definitionDropdown, allElements],
+	)
+
+	const resetSelection = useCallback(
+		(columnName: string) => {
+			const id = allElements.find(a => a.column === columnName)?.id
+			const opt = definitionDropdown.find(x => x.key === id)
+			if (opt?.data.type === DefinitionType.Factor) {
+				return setCausalFactor(opt?.key as string, columnName)
+			}
+			setDefinition(opt?.key as string, columnName)
+		},
+		[allElements, definitionDropdown, setCausalFactor, setDefinition],
 	)
 
 	const commandBar = useCallback(
@@ -156,14 +170,28 @@ export function useBusinessLogic(): {
 				{
 					key: 'definition',
 					iconOnly: true,
-					onRender: props => renderDropdown(columnName),
+					onRender: () => renderDropdown(columnName),
+				},
+				{
+					key: 'reset',
+					text: 'Reset selection',
+					iconOnly: true,
+					iconProps: iconProps.reset,
+					onClick: () => resetSelection(columnName),
+					disabled: !allElements.find(x => x.column === columnName),
 				},
 			]
 			return createDefaultCommandBar(items, {
-				style: { width: 200 },
+				style: { width: 250 },
 			} as ICommandBarProps)
 		},
-		[setSubjectIdentifier, renderDropdown, subjectIdentifier, columnsMicrodata],
+		[
+			setSubjectIdentifier,
+			renderDropdown,
+			subjectIdentifier,
+			columnsMicrodata,
+			allElements,
+		],
 	)
 
 	return {
@@ -177,6 +205,5 @@ export function useBusinessLogic(): {
 }
 
 const iconProps = {
-	key: { iconName: 'Permissions' },
-	block: { iconName: 'StatusCircleBlock2' },
+	reset: { iconName: 'RemoveLink' },
 }
