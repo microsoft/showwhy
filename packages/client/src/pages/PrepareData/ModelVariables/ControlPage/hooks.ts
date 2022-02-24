@@ -47,28 +47,6 @@ export function useDefinitionDropdown(
 	}, [definitionOptions])
 }
 
-export function useSetTargetVariable(
-	selectedDefinitionId: string,
-	saveCausalFactor: (causalFactor: CausalFactor) => void,
-	causalFactors: CausalFactor[],
-): (column: string) => void {
-	return useCallback(
-		(column: string) => {
-			const selectedCausal = {
-				...causalFactors.find(x => x.id === selectedDefinitionId),
-			} as CausalFactor
-
-			if (selectedCausal) {
-				selectedCausal.column =
-					selectedCausal.column === column ? undefined : column
-			}
-
-			saveCausalFactor(selectedCausal)
-		},
-		[selectedDefinitionId, causalFactors, saveCausalFactor],
-	)
-}
-
 export function useDefinitions(definitions: CausalFactor[]): DefinitionArgs {
 	const [selectedId, setSelectedId] = useState<string>('')
 	const definition = useMemo(() => {

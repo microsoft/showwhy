@@ -905,11 +905,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@data-wrangling-components/core@npm:^2.2.0":
-  version: 2.2.0
-  resolution: "@data-wrangling-components/core@npm:2.2.0"
+"@data-wrangling-components/core@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "@data-wrangling-components/core@npm:3.0.0"
   dependencies:
-    core-js: ^3.21.1
     lodash-es: ^4.17.21
   peerDependencies:
     "@types/node": "*"
@@ -917,13 +916,13 @@ __metadata:
   peerDependenciesMeta:
     "@types/node":
       optional: true
-  checksum: b66f2d8a00f3cd432f216b93569e191adf07bef2c07f83e47a66742e7c6500f93704f484d486be46e4bc3cd8cdeace2fa9325809537c7b47d43022e08fe83184
+  checksum: 8b33883d627810dcb45685d7d3622918543e07ccede3adac199de4974c61abf740e8aef3656e3bcb955835cc45bd02193cd1f415f1741925e76e63941c5c07b0
   languageName: node
   linkType: hard
 
-"@data-wrangling-components/react@npm:^2.5.0":
-  version: 2.5.0
-  resolution: "@data-wrangling-components/react@npm:2.5.0"
+"@data-wrangling-components/react@npm:^2.6.0":
+  version: 2.6.0
+  resolution: "@data-wrangling-components/react@npm:2.6.0"
   dependencies:
     "@essex-js-toolkit/hooks": ^4.0.1
     d3-format: ^3.1.0
@@ -950,7 +949,7 @@ __metadata:
     react: ^17.0.2
     react-dom: ^17.0.2
     styled-components: ^5.3.0
-  checksum: 19cbb5cafd89ba5dd07812cf8932755b07df3ee7de0ed15bbfa82fd3bc83fcf50e103194fdea5676d2225fdcd8886bdf5965311d5dfae9d1eb76441437258ffa
+  checksum: 8e80032b6241a10cf76b3fcd86c0263ce5d09585c192562fe2587248a4b5add1f32ce304f309b8bb18d567758b358867fdf911cf5fa0ae70de870d518d50ec63
   languageName: node
   linkType: hard
 
@@ -2049,8 +2048,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/client@workspace:packages/client"
   dependencies:
-    "@data-wrangling-components/core": ^2.2.0
-    "@data-wrangling-components/react": ^2.5.0
+    "@data-wrangling-components/core": ^3.0.0
+    "@data-wrangling-components/react": ^2.6.0
     "@data-wrangling-components/utilities": ^1.6.0
     "@essex-js-toolkit/boolean-expression-component": ^0.1.1
     "@essex-js-toolkit/hooks": ^3.0.2

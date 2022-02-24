@@ -6,7 +6,11 @@ import {
 	Specification,
 	Step as FileStep,
 	runPipeline as runColumnTablePipeline,
+	TableContainer,
+	TableStore,
+	Pipeline,
 } from '@data-wrangling-components/core'
+import { usePipeline, useStore } from '@data-wrangling-components/react'
 import { BaseFile } from '@data-wrangling-components/utilities'
 import { all, op } from 'arquero'
 import ColumnTable from 'arquero/dist/types/table/column-table'
@@ -80,6 +84,8 @@ export function useLoadProject(
 	const setColumnsPrepSpec = useSetColumnsPrepSpecification()
 	const setOutputTablePrep = useSetOutputTablePrep()
 	const setOutputTableModelVariables = useSetOutputTableModelVariables()
+	const store = useStore()
+	const pipeline = usePipeline(store)
 
 	return useCallback(
 		async (definition?: FileDefinition, zip: ZipData = {}) => {
@@ -155,16 +161,23 @@ export function useLoadProject(
 
 			const processedTablesPromise = preProcessTables(
 				workspace,
+				store,
+				pipeline,
 				tables as File[],
 			)
 			const processedTables = await Promise.all(processedTablesPromise)
 			setFiles(processedTables)
 
-			const dataPrepTable = await processDataTables(tps, processedTables)
+			const dataPrepTable = await processDataTables(
+				store,
+				pipeline,
+				tps,
+				processedTables,
+			)
 			setOutputTablePrep(dataPrepTable)
 
 			const dataPrepColumn = await processDataColumns(tcs, dataPrepTable)
-			setOutputTableModelVariables(dataPrepColumn)
+			setOutputTableModelVariables(dataPrepColumn?.table)
 
 			const completed = getStepUrls(workspace.todoPages, true)
 			setAllStepStatus(completed, StepStatus.Done)
@@ -174,6 +187,8 @@ export function useLoadProject(
 		[
 			// id,
 			source,
+			store,
+			pipeline,
 			setFiles,
 			setPrimarySpecificationConfig,
 			setCausalFactors,
@@ -202,7 +217,12 @@ export function useLoadProject(
 // 2: apply a post-load pipeline to any combination of tables
 // 3: specify which tables to display to the user for usage in the model
 // right now we need only one final table to submit, but don't provide enough data wrangling to enable anything complex.
-function preProcessTables(workspace: Workspace, tableFiles?: File[]) {
+function preProcessTables(
+	workspace: Workspace,
+	store: TableStore,
+	pipeline: Pipeline,
+	tableFiles?: File[],
+) {
 	const { tables, postLoad } = workspace
 
 	return tables.map(async table => {
@@ -210,25 +230,29 @@ function preProcessTables(workspace: Workspace, tableFiles?: File[]) {
 			!!postLoad?.length &&
 			postLoad.find(p => p?.steps && p?.steps[0]?.input === table.name)
 		if (stepPostLoad && stepPostLoad.steps) {
-			const id = uuidv4()
-			let result = await runPipeline(tables, stepPostLoad.steps, tableFiles)
-			result = result.derive(
+			const result = await runPipeline(
+				tables,
+				stepPostLoad.steps,
+				store,
+				pipeline,
+				tableFiles,
+			)
+
+			const resultTable = result?.table?.derive(
 				{
 					index: op.row_number(),
 				},
 				{ before: all() },
-			)
+			) as ColumnTable
 
 			const file: ProjectFile = {
-				id,
-				content: result.toCSV(),
+				content: resultTable.toCSV(),
 				name: table.name,
-				table: result,
+				id: table.name,
+				table: resultTable,
 			}
 			return file
 		} else {
-			const id = uuidv4()
-
 			let result = await (!isZipUrl(table.url)
 				? fetchTable(table)
 				: loadTable(table, tableFiles))
@@ -241,7 +265,7 @@ function preProcessTables(workspace: Workspace, tableFiles?: File[]) {
 			)
 
 			const file: ProjectFile = {
-				id,
+				id: table.name,
 				content: result.toCSV(),
 				name: table.name,
 				table: result,
@@ -252,19 +276,26 @@ function preProcessTables(workspace: Workspace, tableFiles?: File[]) {
 }
 
 async function processDataTables(
+	store: TableStore,
+	pipeline: Pipeline,
 	tps?: Specification[],
 	projectFiles?: ProjectFile[],
 ): Promise<ColumnTable | undefined> {
 	if (tps?.length && projectFiles?.length) {
 		const steps = tps[0].steps as FileStep[]
-		return await runPipelineFromProjectFiles(projectFiles, steps)
+		return await runPipelineFromProjectFiles(
+			projectFiles,
+			steps,
+			store,
+			pipeline,
+		)
 	}
 }
 
 async function processDataColumns(
 	tcs?: Specification[],
 	table?: ColumnTable,
-): Promise<ColumnTable | undefined> {
+): Promise<TableContainer | undefined> {
 	if (tcs?.length && table) {
 		const steps = tcs[0].steps as FileStep[]
 		return await runColumnTablePipeline(table, steps)

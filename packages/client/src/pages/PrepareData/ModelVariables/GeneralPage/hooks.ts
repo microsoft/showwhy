@@ -81,30 +81,6 @@ export function useDefinitions(defineQuestionData: Element): DefinitionArgs {
 	}
 }
 
-export function useSetTargetVariable(
-	selectedDefinitionId: string,
-	saveDefinition: (definition: ElementDefinition) => void,
-	defineQuestionData: Element,
-): (column: string) => void {
-	return useCallback(
-		(column: string) => {
-			const newDefinition = {
-				...defineQuestionData?.definition.find(
-					x => x.id === selectedDefinitionId,
-				),
-			} as ElementDefinition
-
-			if (newDefinition) {
-				newDefinition.column =
-					newDefinition.column === column ? undefined : column
-			}
-
-			saveDefinition(newDefinition)
-		},
-		[selectedDefinitionId, saveDefinition, defineQuestionData?.definition],
-	)
-}
-
 export function useDefinitionActions(
 	toggleCallout: (type?: RenameCalloutType) => void,
 	setSelectedId: (id: string) => void,
@@ -113,7 +89,6 @@ export function useDefinitionActions(
 	definition?: ElementDefinition | CausalFactor,
 	calloutOpen?: RenameCalloutType,
 ): DefinitionActions {
-	const onSave = useSaveDefinition()
 	const removeDefinition = useRemoveDefinition()
 
 	const onDelete = useCallback(() => {
@@ -136,7 +111,7 @@ export function useDefinitionActions(
 				variable: name,
 				column: undefined,
 			} as ElementDefinition
-			onSave(newDefinition)
+			// onSave(newDefinition)
 
 			if (calloutOpen === RenameCalloutType.Duplicate && definition) {
 				onDuplicateDefinition(definition.id, newId)
@@ -147,12 +122,11 @@ export function useDefinitionActions(
 				setSelectedId(newDefinition.id)
 			}, 300)
 		},
-		[calloutOpen, definition, onSave, setSelectedId, toggleCallout],
+		[calloutOpen, definition, setSelectedId, toggleCallout],
 	)
 
 	return {
 		onDelete,
-		onSave,
 		onSaveCallout,
 	}
 }

@@ -19,7 +19,7 @@ import {
 	useColumnsPrepSpecification,
 	useSetColumnsPrepSpecification,
 } from '~state/columnsPrepSpecification'
-import { Element, Maybe, TransformTable, VariableDefinition } from '~types'
+import { Maybe, TransformTable, VariableDefinition } from '~types'
 import { useActualIndex, useActualSteps, useStartPipeline } from '.'
 import {
 	useFormatedColumnArgWithCount,
@@ -117,7 +117,7 @@ export function useTableTransform(
 				columns: columns,
 			}
 
-			setOutputTable(output)
+			// setOutputTable(output)
 			setVariables(variableA)
 			setColumnsPrep([specification])
 		},
@@ -168,7 +168,7 @@ export function useTableTransform(
 			let specification = cloneDeep(selectedSpecification) || {}
 			specification.steps?.push(..._steps)
 
-			setOutputTable(output)
+			// setOutputTable(output)
 			setVariables(variableA)
 			setColumnsPrep([specification])
 		},
@@ -192,14 +192,14 @@ export function useTableTransform(
 				specification.steps.splice(actualIndex, 1)
 				pipeline.clear()
 				pipeline.addAll(specification.steps)
-				pipeline.store.set('output', tablePrep)
+				// pipeline.store.set('output', tablePrep)
 				const output = specification.steps.length
 					? await pipeline.run()
 					: tablePrep
-				setOutputTable(output)
+				// setOutputTable(output)
 
 				let columns = [...(selectedColumns || [])]
-				columns = columns.filter(x => output.columnNames().includes(x))
+				// columns = columns.filter(x => output.columnNames().includes(x))
 				const variable = {
 					...selectedVariable,
 					columns: columns,

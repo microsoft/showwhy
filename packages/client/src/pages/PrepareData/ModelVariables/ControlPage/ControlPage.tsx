@@ -17,6 +17,7 @@ import {
 	useDefinitionActions,
 } from './hooks'
 import { ModelVariables } from '~components/ModelVariables'
+import { useCausalFactors } from '~state'
 
 export const ControlPage: React.FC = memo(function ControlPage() {
 	const { pageType, definitions } = useBusinessLogic()
@@ -31,7 +32,7 @@ export const ControlPage: React.FC = memo(function ControlPage() {
 	const sharedLogic = useSharedBusinessLogic()
 	const { toggleShowConfirmDelete } = sharedLogic
 
-	const definitionDropdown = useDefinitionDropdown(definitions)
+	// const definitionDropdown = useDefinitionDropdown(definitions)
 	const transformTable = useTableTransform(definitionId)
 	const { onDuplicateDefinition, onDuplicateStep } = transformTable
 
@@ -59,17 +60,18 @@ export const ControlPage: React.FC = memo(function ControlPage() {
 	)
 
 	return (
+		<h1>UE</h1>
 		//What if no visible columns?
 		//What if no define question?
-		<ModelVariables
-			pageType={pageType}
-			commandBar={commandBar}
-			definitionDropdown={definitionDropdown}
-			transformTable={transformTable}
-			definitionArgs={definitionArgs}
-			renameCalloutArgs={renameCallout}
-			definitionActions={definitionActions}
-			sharedLogic={sharedLogic}
-		/>
+		// <ModelVariables
+		// 	pageType={pageType}
+		// 	commandBar={commandBar}
+		// 	definitionDropdown={definitionDropdown}
+		// 	transformTable={transformTable}
+		// 	definitionArgs={definitionArgs}
+		// 	renameCalloutArgs={renameCallout}
+		// 	definitionActions={definitionActions}
+		// 	sharedLogic={sharedLogic}
+		// />
 	)
 })

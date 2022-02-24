@@ -10,21 +10,12 @@ import { useDefineQuestion, useSetDefineQuestion } from '~state/defineQuestion'
 import { PageType, Experiment, ElementDefinition, CausalFactor } from '~types'
 import { replaceItemAtIndex } from '~utils/functions'
 
-export function useSaveDefinition(): (newDefinition: CausalFactor) => void {
-	return useSaveDefinitionTestable(
-		usePageType(),
-		useDefineQuestion(),
-		useSetDefineQuestion(),
-	)
-}
-
-export function useSaveDefinitionTestable(
-	type: PageType,
+export function useSaveDefinition(
 	defineQuestion: Experiment,
 	setDefineQuestion: SetterOrUpdater<Experiment>,
-): (newDefinition: CausalFactor) => void {
+): (newDefinition: CausalFactor, type: PageType) => void {
 	return useCallback(
-		(newDefinition: CausalFactor) => {
+		(newDefinition: CausalFactor, type: PageType) => {
 			let newDefinitionList =
 				[...(defineQuestion as any)[type]?.definition] || []
 
@@ -49,7 +40,7 @@ export function useSaveDefinitionTestable(
 			}
 			setDefineQuestion(newList)
 		},
-		[defineQuestion, type, setDefineQuestion],
+		[defineQuestion, setDefineQuestion],
 	)
 }
 

@@ -2,7 +2,14 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { Step, TableStore, Pipeline } from '@data-wrangling-components/core'
+import {
+	Pipeline,
+	Step,
+	TableContainer,
+	TableStore,
+} from '@data-wrangling-components/core'
+import { v4 as uuidv4 } from 'uuid'
+import { usePipeline, useStore } from '@data-wrangling-components/react'
 import {
 	BaseFile,
 	guessDelimiter,
@@ -76,14 +83,18 @@ export async function fetchTables(
 export async function runPipeline(
 	tables: DataTableFileDefinition[],
 	steps: Step[],
+	store: TableStore,
+	pipeline: Pipeline,
 	tableFiles?: File[],
-): Promise<any> {
-	const store = new TableStore()
+): Promise<TableContainer> {
 	const fetched = await fetchTables(tables, tableFiles)
 	tables.forEach((table, index) => {
-		store.set(table.name, fetched[index])
+		store.set({
+			id: table.name,
+			table: fetched[index] as ColumnTable,
+			name: table.name,
+		})
 	})
-	const pipeline = new Pipeline(store)
 	pipeline.addAll(steps)
 
 	return pipeline.run()
@@ -98,12 +109,16 @@ export async function runPipeline(
 export async function runPipelineFromProjectFiles(
 	tables: ProjectFile[],
 	steps: Step[],
+	store: TableStore,
+	pipeline: Pipeline,
 ): Promise<any> {
-	const store = new TableStore()
 	tables.forEach(table => {
-		store.set(table.name, table.table)
+		store.set({
+			id: table.name,
+			table: table?.table as ColumnTable,
+			name: table.name,
+		})
 	})
-	const pipeline = new Pipeline(store)
 	pipeline.addAll(steps)
 
 	return pipeline.run()
