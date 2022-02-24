@@ -7,6 +7,7 @@ import {
 	Step as FileStep,
 	TableStore,
 	Pipeline,
+	TableContainer,
 } from '@data-wrangling-components/core'
 import { usePipeline, useStore } from '@data-wrangling-components/react'
 import { BaseFile } from '@data-wrangling-components/utilities'
@@ -143,7 +144,6 @@ export function useLoadProject(
 			setTablePrepSpec(tps)
 			setDefaultDatasetResult(defaultDatasetResult)
 			setConfidenceInterval(!!confidenceInterval)
-
 			const processedTablesPromise = preProcessTables(
 				workspace,
 				store,
@@ -154,12 +154,11 @@ export function useLoadProject(
 			setFiles(processedTables)
 
 			const dataPrepTable = await processDataTables(
-				store,
 				pipeline,
 				tps,
 				processedTables,
 			)
-			setOutputTablePrep(dataPrepTable)
+			setOutputTablePrep(dataPrepTable?.table)
 
 			const completed = getStepUrls(workspace.todoPages, true)
 			setAllStepStatus(completed, StepStatus.Done)
@@ -168,8 +167,6 @@ export function useLoadProject(
 		},
 		[
 			source,
-			store,
-			pipeline,
 			setFiles,
 			setPrimarySpecificationConfig,
 			setCausalFactors,
@@ -254,20 +251,16 @@ function preProcessTables(
 }
 
 async function processDataTables(
-	store: TableStore,
 	pipeline: Pipeline,
 	tps?: Specification[],
 	projectFiles?: ProjectFile[],
-): Promise<ColumnTable | undefined> {
+): Promise<TableContainer | undefined> {
 	if (tps?.length && projectFiles?.length) {
 		const steps = tps[0].steps as FileStep[]
-		return await runPipelineFromProjectFiles(
-			projectFiles,
-			steps,
-			store,
-			pipeline,
-		)
+		pipeline.clear()
+		return await runPipelineFromProjectFiles(projectFiles, steps, pipeline)
 	}
+	return undefined
 }
 
 function prepCausalFactors(factors?: Partial<CausalFactor>[]): CausalFactor[] {

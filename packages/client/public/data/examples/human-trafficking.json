@@ -4,7 +4,6 @@
     "type": "Propensity Score Stratification"
   },
   "confidenceInterval": true,
-  "subjectIdentifier": "index_2",
   "causalFactors": [
     {
       "description": "Patient's age group derived from the Wolfram dataset",
@@ -112,7 +111,6 @@
     }
   ],
   "refutations": "Quick Refutation",
-  "modelVariables": {},
   "todoPages": [
     "/perform/effects",
     "/perform/estimate-distribution",

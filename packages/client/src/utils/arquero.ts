@@ -107,11 +107,10 @@ export async function runPipeline(
 export async function runPipelineFromProjectFiles(
 	tables: ProjectFile[],
 	steps: Step[],
-	store: TableStore,
 	pipeline: Pipeline,
 ): Promise<any> {
 	tables.forEach(table => {
-		store.set({
+		pipeline.store.set({
 			id: table.name,
 			table: table?.table as ColumnTable,
 			name: table.name,

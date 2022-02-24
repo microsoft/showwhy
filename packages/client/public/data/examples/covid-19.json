@@ -4,7 +4,6 @@
       "type": "Propensity Score Stratification"
     },
     "confidenceInterval": true,
-    "subjectIdentifier": "index",
     "causalFactors": [
       {
         "description": "Patient's age group derived from the Wolfram dataset",
@@ -112,10 +111,6 @@
       }
     ],
     "refutations": "Quick Refutation",
-    "modelVariables": [{
-      "variable": "Confirmed COVID-19 cases",
-      "columns": ["output"]
-    }],
     "todoPages": [
       "/perform/effects",
       "/perform/estimate-distribution",
@@ -782,21 +777,6 @@
             ]
           }
         }
-      ]
-    }],
-    "columnsPrep": [{
-      "steps": [
-        {
-          "verb": "bin",
-          "input": "output",
-          "output": "output",
-          "args": {
-              "to": "output",
-              "strategy": "auto",
-              "fixedcount": 10,
-              "column": "index"
-          }
-      }
       ]
     }]
   }
