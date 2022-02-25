@@ -4,6 +4,7 @@
 #
 
 import itertools
+
 from typing import Dict, List
 
 import networkx as nx
@@ -11,16 +12,18 @@ import networkx as nx
 
 class CausalGraph:
     """
-    Generate gml-formatted causal graphs given treatment, outcome, confounder and effect modifier specifications.
-    This simplifies the json input by enabling front end to pass on a list 
-    of confounders and effect modifiers as model specs instead of passing on actual gml graphs.
+    Generate gml-formatted causal graphs given treatment, outcome,
+    confounder and effect modifier specifications.
+    This simplifies the json input by enabling front end to pass on a list
+    of confounders and effect modifiers as model specs instead of passing
+    on actual gml graphs.
     """
 
     def __init__(
         self,
         treatment_specs: List[Dict],
         outcome_specs: List[Dict],
-        model_specs: List[Dict]
+        model_specs: List[Dict],
     ):
         self.treatment_specs = treatment_specs
         self.outcome_specs = outcome_specs
@@ -28,17 +31,20 @@ class CausalGraph:
 
     def create_gml_graph(self, model_spec) -> List:
         """
-        Given input for a model type (e.g. maximum model), create associated causal graphs in the gml format
+        Given input for a model type (e.g. maximum model),
+        create associated causal graphs in the gml format
         """
-        confounders = model_spec['confounders']
-        effect_modifiers = model_spec['outcome_determinants']
-        model_type = model_spec['type']
-        model_label = model_spec['label']
+        confounders = model_spec["confounders"]
+        effect_modifiers = model_spec["outcome_determinants"]
+        model_type = model_spec["type"]
+        model_label = model_spec["label"]
 
         graphs = []
-        for treatment_outcome in list(itertools.product(self.treatment_specs, self.outcome_specs)):
-            treatment = treatment_outcome[0]['variable']
-            outcome = treatment_outcome[1]['variable']
+        for treatment_outcome in list(
+            itertools.product(self.treatment_specs, self.outcome_specs)
+        ):
+            treatment = treatment_outcome[0]["variable"]
+            outcome = treatment_outcome[1]["variable"]
             causal_graph = nx.DiGraph()
 
             # add nodes
@@ -57,9 +63,16 @@ class CausalGraph:
             causal_graph.add_edge(treatment, outcome)
 
             graphs.append(
-                {'type': model_type, 'label': model_label, 'treatment': treatment, 'outcome': outcome,
-                 'confounders': confounders, 'effect_modifiers': effect_modifiers,
-                 'causal_graph': ' '.join(nx.generate_gml(causal_graph))})
+                {
+                    "type": model_type,
+                    "label": model_label,
+                    "treatment": treatment,
+                    "outcome": outcome,
+                    "confounders": confounders,
+                    "effect_modifiers": effect_modifiers,
+                    "causal_graph": " ".join(nx.generate_gml(causal_graph)),
+                }
+            )
         return graphs
 
     def create_gml_model_specs(self) -> List:

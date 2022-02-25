@@ -33,9 +33,12 @@ force_single_line = false
 combine_as_imports = true
 lines_between_types = 1
 lines_after_imports = 2
-src_paths = ["data_wrangling_components", "tests"]
+src_paths = ["showwhy_backend", "tests"]
 extend_skip = ["setup.py"]
 
+[flake8]
+max-line-length = 88
+extend-ignore = "E203"
 
 [tool.black]
 target-version = ['py36']

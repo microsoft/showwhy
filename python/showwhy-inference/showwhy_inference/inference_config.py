@@ -5,15 +5,17 @@
 
 import os
 
+
 DEFAULT_REFUTATION_TESTS = [
     "random_common_cause",
     "placebo_treatment_refuter",
     "data_subset_refuter",
-    "bootstrap_refuter"
+    "bootstrap_refuter",
 ]
 
-# Failing these refuters should only result in warning, not automatic rejection of the estimate
-SENSITIVITY_REFUTERS = ['add_unobserved_common_cause']
+# Failing these refuters should only result in warning,
+# not automatic rejection of the estimate
+SENSITIVITY_REFUTERS = ["add_unobserved_common_cause"]
 
 # whether to include sensitivity test
 INCLUDE_SENSITIVITY_REFUTERS = False
@@ -39,7 +41,7 @@ def get_batch_size(env_var):
 def get_batch(iterable, size):
     if size is None:
         size = len(iterable)
-    l = len(iterable)
-    for start in range(0, l, size):
-        end = min(start + size, l)
-        yield (l, end, iterable[start:end])
+    length = len(iterable)
+    for start in range(0, length, size):
+        end = min(start + size, length)
+        yield (length, end, iterable[start:end])

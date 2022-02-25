@@ -4,11 +4,13 @@
 #
 
 import logging
+
 from typing import List
 
 import lightgbm as lgb
 import pandas as pd
 import shap
+
 from sklearn import preprocessing
 from sklearn.metrics import mean_absolute_error
 
@@ -23,7 +25,7 @@ class SpecificationIntepreter:
         self,
         spec_results: pd.DataFrame,
         spec_features: List,
-        estimated_effect_col: str = "estimated_effect"
+        estimated_effect_col: str = "estimated_effect",
     ):
         self.spec_results = spec_results
         self.spec_features = spec_features
@@ -36,34 +38,32 @@ class SpecificationIntepreter:
         for feature in self.spec_features:
             self.spec_results[feature] = self.spec_results[feature].astype(str)
             self.spec_results[f"{feature}_encoded"] = le.fit_transform(
-                self.spec_results[feature])
+                self.spec_results[feature]
+            )
             encoded_features.append(f"{feature}_encoded")
 
         # create training data
         X = self.spec_results[encoded_features]
         y = self.spec_results[self.estimated_effect_col]
-        train_data = lgb.Dataset(
-            X, label=y, categorical_feature=encoded_features)
+        train_data = lgb.Dataset(X, label=y, categorical_feature=encoded_features)
 
         # train a LightGBM regressor to predict estimated effects given spec features
         params = {
-            'objective': 'regression',
-            'boosting_type': 'gbdt',
-            'max_depth': 3,
-            'num_leaves': 5,
-            'min_data_in_leaf': 1,
-            'min_data_per_group': 1,
-            'cat_smooth': 1
+            "objective": "regression",
+            "boosting_type": "gbdt",
+            "max_depth": 3,
+            "num_leaves": 5,
+            "min_data_in_leaf": 1,
+            "min_data_per_group": 1,
+            "cat_smooth": 1,
         }
         spec_regressor = lgb.train(
-            params=params,
-            train_set=train_data,
-            categorical_feature=encoded_features)
+            params=params, train_set=train_data, categorical_feature=encoded_features
+        )
 
         # train performance
         y_hat = spec_regressor.predict(X)
-        logging.info("Train MAE: {:.3f}" .format(
-            mean_absolute_error(y, y_hat)))
+        logging.info("Train MAE: {:.3f}".format(mean_absolute_error(y, y_hat)))
 
         # use SHAP for feature importance
         explainer = shap.TreeExplainer(spec_regressor)
@@ -75,12 +75,18 @@ class SpecificationIntepreter:
 
         # remove encoded feature columns from the final results
         cleaned_columns = [
-            col for col in self.spec_results.columns if col not in encoded_features]
+            col for col in self.spec_results.columns if col not in encoded_features
+        ]
         return self.spec_results[cleaned_columns]
 
 
 def run_interpreter(results_df: pd.DataFrame) -> pd.DataFrame:
-    spec_features = ['population_name', 'treatment', 'outcome',
-                     'causal_model', 'estimator']
+    spec_features = [
+        "population_name",
+        "treatment",
+        "outcome",
+        "causal_model",
+        "estimator",
+    ]
     spec_interpreter = SpecificationIntepreter(results_df, spec_features)
     return spec_interpreter.interpret()
