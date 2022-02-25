@@ -13,5 +13,18 @@
 	"azureFunctions.pythonVenv": "packages/functions/src/.venv",
 	"azureFunctions.projectLanguage": "Python",
 	"azureFunctions.projectRuntime": "~3",
-	"jest.jestCommandLine": "yarn run test:jest"
+	"jest.jestCommandLine": "yarn run test:jest",
+	"python.linting.flake8Enabled": true,
+	"python.linting.enabled": true,
+	"python.formatting.provider": "black",
+	"python.linting.flake8Args": ["--max-line-length=88"],
+	"python.testing.pytestArgs": ["tests"],
+	"python.testing.unittestEnabled": false,
+	"python.testing.pytestEnabled": true,
+	"python.sortImports.args": ["--profile", "black"],
+	"[python]": {
+		"editor.codeActionsOnSave": {
+			"source.organizeImports": true
+		}
+	}
 }
