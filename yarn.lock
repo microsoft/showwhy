@@ -1975,9 +1975,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@showwhy/acceptance-tests@workspace:packages/acceptance-tests":
+"@showwhy/acceptance-tests@workspace:javascript/acceptance-tests":
   version: 0.0.0-use.local
-  resolution: "@showwhy/acceptance-tests@workspace:packages/acceptance-tests"
+  resolution: "@showwhy/acceptance-tests@workspace:javascript/acceptance-tests"
   dependencies:
     "@playwright/test": ^1.19.1
     "@tsconfig/node14": ^1.0.1
@@ -1993,9 +1993,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@showwhy/client@workspace:packages/client":
+"@showwhy/client@workspace:javascript/client":
   version: 0.0.0-use.local
-  resolution: "@showwhy/client@workspace:packages/client"
+  resolution: "@showwhy/client@workspace:javascript/client"
   dependencies:
     "@data-wrangling-components/core": ^1.4.0
     "@data-wrangling-components/react": ^2.1.1

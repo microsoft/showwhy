@@ -3,8 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { Page } from './Page'
 import { dataAttr } from '../util'
+import { Page } from './Page'
 
 const selectors: Record<string, string> = {
 	title: dataAttr('title'),
