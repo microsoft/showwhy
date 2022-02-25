@@ -20,7 +20,7 @@ This process will get the backend running in your local environment, all the dat
 
 1. Clone the repository.
 2. Open the repository in VSCode and open a Terminal (Terminal -> New Terminal)
-3. Navigate to the functions folder using the command: `cd packages/functions`
+3. Navigate to the functions folder using the command: `cd javascript/functions`
 4. Run `yarn build` to create the virtual environment and install dependencies
 5. Run `yarn start` to start cosmosdb, azurite and the backend functions (This command will take a while since it will download and run cosmosdb and azurite docker containers)
 
@@ -53,7 +53,7 @@ To be able to run this code locally you will need to install the following tools
 3. Open VSCode and hit `Ctrl+Shift+P`, type `azurite: start` and press enter
 4. Create a virtual environment to install the dependencies:
    1. Open a Terminal (Terminal -> New Terminal)
-   2. Navigate to the functions folder `cd packages/functions`
+   2. Navigate to the functions folder `cd javascript/functions`
    3. Create a virtual environment `python -m venv src/.venv`
    4. Activate the environment `./src/.venv/Scripts/Activate.ps1`
    5. Install the required dependencies `pip install -r requirements.txt`

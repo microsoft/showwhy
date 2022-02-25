@@ -8,8 +8,8 @@ In other words, ShowWhy enables emulation of randomized controlled trials that p
 
 ## Packages
 
-- [client](packages/client)
-- [functions](packages/functions)
+- [client](javascript/client)
+- [functions](javascript/functions)
 
 ## Getting Started
 
