@@ -7,7 +7,8 @@ import { memo, useCallback, useMemo } from 'react'
 import styled from 'styled-components'
 import { useRemoveColumn } from '~hooks'
 import { useModelVariables, useSetModelVariables } from '~state'
-import { FilterObject, TableDerivationType, Definition } from '~types'
+import { TableDerivationType } from '~types'
+import type { Definition, FilterObject } from '@showwhy/types'
 
 export const DefinitionSteps: React.FC<{
 	fileId: string

@@ -4,7 +4,7 @@
  */
 import { memo } from 'react'
 import { Text, Value } from '~styles'
-import type { AlternativeModels } from '~types'
+import type { AlternativeModels } from '@showwhy/types'
 
 export const CausalDetails: React.FC<{
 	alternativeModels: AlternativeModels

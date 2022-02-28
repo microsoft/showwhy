@@ -8,14 +8,12 @@ import { memo } from 'react'
 import styled from 'styled-components'
 import { useTableComponent } from './hooks'
 import { GenericTableComponent } from '~components/Tables/GenericTableComponent'
+import type { PageType, HeaderData, Item } from '~types'
 import type {
-	PageType,
 	ElementDefinition,
 	FlatCausalFactor,
 	CausalFactor,
-	HeaderData,
-	Item,
-} from '~types'
+} from '@showwhy/types'
 
 export const TableComponent: React.FC<{
 	headers: HeaderData[]

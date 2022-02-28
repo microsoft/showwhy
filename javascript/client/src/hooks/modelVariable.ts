@@ -8,11 +8,11 @@ import type { SetterOrUpdater } from 'recoil'
 import { usePageType } from './usePageType'
 import { useExperiment, useSetExperiment } from '~state/experiment'
 import type {
-	PageType,
 	Experiment,
 	ElementDefinition,
 	CausalFactor,
-} from '~types'
+} from '@showwhy/types'
+import type { PageType } from '~types'
 import { replaceItemAtIndex } from '~utils/arrays'
 // HACK to pass the unit tests
 

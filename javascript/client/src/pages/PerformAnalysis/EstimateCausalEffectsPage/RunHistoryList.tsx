@@ -3,8 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { DefaultButton, Icon } from '@fluentui/react'
-import { NodeResponseStatus, isProcessingStatus } from '@showwhy/api-client'
-import type { Handler } from '@showwhy/types'
+import { isProcessingStatus } from '@showwhy/api-client'
+import type { Handler, NodeResponseStatus } from '@showwhy/types'
 import { useThematic } from '@thematic/react'
 import { memo, useMemo } from 'react'
 import styled from 'styled-components'

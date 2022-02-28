@@ -14,7 +14,7 @@ import {
 	CausalFactor,
 	BeliefDegree,
 	CausalModelLevel,
-} from '~types'
+} from '@showwhy/types'
 import { replaceItemAtIndex } from '~utils/arrays'
 
 export function useExcludedFactors(): string[] {

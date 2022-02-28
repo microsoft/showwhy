@@ -15,7 +15,7 @@ import {
 	PrimarySpecificationConfig,
 	EstimatorType,
 	CausalModelLevel,
-} from '~types'
+} from '@showwhy/types'
 
 export const primarySpecificationConfigState = atom<PrimarySpecificationConfig>(
 	{

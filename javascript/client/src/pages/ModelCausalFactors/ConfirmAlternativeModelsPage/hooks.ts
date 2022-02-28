@@ -10,7 +10,7 @@ import {
 	usePrimarySpecificationConfig,
 	useSetPrimarySpecificationConfig,
 } from '~state'
-import type { PrimarySpecificationConfig } from '~types'
+import type { PrimarySpecificationConfig } from '@showwhy/types'
 
 export function useBusinessLogic(): {
 	causalEffects: ReturnType<typeof useCausalEffects>

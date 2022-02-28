@@ -3,13 +3,13 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import {
+import { isProcessingStatus } from '@showwhy/api-client'
+import type {
+	Maybe,
 	NodeResponseStatus,
 	NodeResponse,
 	PartialResults,
-	isProcessingStatus,
-} from '@showwhy/api-client'
-import type { Maybe } from '@showwhy/types'
+} from '@showwhy/types'
 import { useCallback, useMemo } from 'react'
 import {
 	useResetSpecificationCurveConfig,

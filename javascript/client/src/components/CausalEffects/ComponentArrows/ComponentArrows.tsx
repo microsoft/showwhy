@@ -7,7 +7,7 @@ import styled from 'styled-components'
 import { BoxCausalModel } from './BoxCausalModel'
 import { useGetArrows } from './arrows'
 import { box1, box2, box3, box4 } from './constants'
-import { CausalEffectSize } from '~types'
+import { CausalEffectSize } from '@showwhy/types'
 
 export const ComponentArrows: React.FC<{
 	confounders: string[]

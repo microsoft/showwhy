@@ -17,7 +17,8 @@ import {
 	useSaveDefinition,
 } from '~hooks'
 import { useModelVariables, useSetModelVariables } from '~state'
-import type { Item, CausalFactor } from '~types'
+import type { Item } from '~types'
+import type { CausalFactor } from '@showwhy/types'
 
 export function useDefinitionList(
 	list: CausalFactor[],

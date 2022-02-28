@@ -3,17 +3,16 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import type { Step } from '@data-wrangling-components/core'
-import type { RefutationType } from '../refutation'
-import type { DataTableFileDefinition } from './DataTableDefinition'
 import type {
+	RefutationType,
 	CausalFactor,
 	Definition,
 	Experiment,
 	Estimator,
 	PrimarySpecificationConfig,
-	TableColumn,
-	DefaultDatasetResult,
-} from '~types'
+} from '@showwhy/types'
+import type { DataTableFileDefinition } from './DataTableDefinition'
+import type { TableColumn, DefaultDatasetResult } from '~types'
 
 /**
  * This contains a collection of step data and file definitions for a saveable

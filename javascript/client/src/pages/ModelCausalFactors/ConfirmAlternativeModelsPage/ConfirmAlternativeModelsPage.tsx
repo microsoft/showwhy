@@ -10,7 +10,7 @@ import styled from 'styled-components'
 import { useBusinessLogic } from './hooks'
 import { CausalEffects } from '~components/CausalEffects'
 import { Container } from '~styles'
-import { CausalModelLevel } from '~types'
+import { CausalModelLevel } from '@showwhy/types'
 
 const causalModelOptions: IChoiceGroupOption[] = [
 	{

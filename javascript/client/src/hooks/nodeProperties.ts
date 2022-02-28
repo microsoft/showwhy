@@ -17,7 +17,7 @@ import {
 	Estimator,
 	RefutationType,
 	CausalModelLevel,
-} from '~types'
+} from '@showwhy/types'
 
 export function useNodeProperties(): {
 	fileName?: string

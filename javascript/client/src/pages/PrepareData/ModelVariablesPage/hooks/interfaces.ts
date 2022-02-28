@@ -3,16 +3,15 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { Setter, Maybe } from '@showwhy/types'
-import type { FactorsOrDefinitions } from './types'
 import type {
-	DataTable,
+	Setter,
+	Maybe,
 	CausalFactor,
 	VariableDefinition,
 	Element,
-	TableColumn,
-	ColumnRelation,
-} from '~types'
+} from '@showwhy/types'
+import type { FactorsOrDefinitions } from './types'
+import type { DataTable, TableColumn, ColumnRelation } from '~types'
 
 export interface SelectedArgs {
 	defineQuestionData: Element

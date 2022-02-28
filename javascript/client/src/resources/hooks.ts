@@ -2,8 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-
-import { GraphNodeData, GraphNodeType, NodeRequest } from '@showwhy/api-client'
+import { GraphNodeData, GraphNodeType, NodeRequest } from '@showwhy/types'
 import { useCallback } from 'react'
 import {
 	buildEstimators,
@@ -11,7 +10,7 @@ import {
 	buildRefutationSpecs,
 	buildSpecs,
 	models,
-} from './builders'
+} from '@showwhy/builders'
 import { useNodeProperties } from '~hooks'
 
 export function useGetNodeProperties(): (

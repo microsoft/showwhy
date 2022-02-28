@@ -9,11 +9,8 @@ import styled from 'styled-components'
 import { VegaHost } from '../VegaHost'
 import template from './scatter-plot.json'
 import { mergeSpec, parseJsonPathSpec } from './util'
-import {
-	RefutationResultString,
-	Specification,
-	SpecificationCurveConfig,
-} from '~types'
+import type { Specification, SpecificationCurveConfig } from '~types'
+import { RefutationResultString } from '@showwhy/types'
 
 const templateString = JSON.stringify(template)
 

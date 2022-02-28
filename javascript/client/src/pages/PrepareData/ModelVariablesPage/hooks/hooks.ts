@@ -25,15 +25,14 @@ import {
 	useOriginalTables,
 	useProjectFiles,
 } from '~state'
-import {
-	PageType,
-	DataTable,
+import { PageType, DataTable } from '~types'
+import type {
 	ElementDefinition,
 	FilterObject,
 	Element,
 	CausalFactor,
 	VariableDefinition,
-} from '~types'
+} from '@showwhy/types'
 
 export function useBusinessLogic(): {
 	pageType: PageType

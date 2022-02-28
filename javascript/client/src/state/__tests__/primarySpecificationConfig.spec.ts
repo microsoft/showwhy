@@ -12,7 +12,7 @@ import {
 	PrimarySpecificationConfig,
 	EstimatorType,
 	CausalModelLevel,
-} from '~types'
+} from '@showwhy/types'
 
 describe('primarySpecificationConfig', () => {
 	describe('usePrimarySpecificationConfig', () => {

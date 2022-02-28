@@ -4,11 +4,18 @@
  */
 import { Dropdown, TextField, DefaultButton, Checkbox } from '@fluentui/react'
 import { useBoolean } from '@fluentui/react-hooks'
-import type { Maybe, Handler } from '@showwhy/types'
+import {
+	Maybe,
+	Handler,
+	CausalityLevel,
+	CausalFactor,
+	FilterObject,
+	Definition,
+	VariableDefinition,
+} from '@showwhy/types'
 import { escape } from 'arquero'
 import type ColumnTable from 'arquero/dist/types/table/column-table'
 import { memo, useState, useCallback, useMemo } from 'react'
-
 import styled from 'styled-components'
 import { v4 as uuidv4 } from 'uuid'
 import { usePageType } from '../../../../hooks/usePageType'
@@ -26,15 +33,7 @@ import {
 	useSetModelVariables,
 	useAllTableColumns,
 } from '~state'
-import {
-	CausalityLevel,
-	TableDerivation,
-	CausalFactor,
-	FilterObject,
-	TableDerivationType,
-	Definition,
-	VariableDefinition,
-} from '~types'
+import { TableDerivation, TableDerivationType } from '~types'
 
 export const DeriveComponent: React.FC<{
 	selectedDefinition: string

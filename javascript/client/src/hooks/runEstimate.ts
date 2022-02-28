@@ -3,12 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import {
-	getEstimatorOrchestrator,
-	Orchestrator,
-	EstimateEffectStatusResponse,
-	NodeResponse,
-} from '@showwhy/api-client'
+import { getEstimatorOrchestrator, Orchestrator } from '@showwhy/api-client'
+import type { EstimateEffectStatusResponse, NodeResponse } from '@showwhy/types'
 import { useCallback } from 'react'
 import {
 	useRefutationLength,

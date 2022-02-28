@@ -5,7 +5,8 @@
 
 import type ColumnTable from 'arquero/dist/types/table/column-table'
 import { useCallback } from 'react'
-import { FilterType, FilterObject, TableDerivationType } from '~types'
+import { TableDerivationType } from '~types'
+import type { FilterType, FilterObject } from '@showwhy/types'
 
 export const FILTER_FUNCTIONS: FilterType[] = [
 	{

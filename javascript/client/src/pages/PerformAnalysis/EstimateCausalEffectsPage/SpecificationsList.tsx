@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { RefutationOptionsCallout } from '~components/RefutationOptionsCallout'
 import { Bold, Container, Text, Title } from '~styles'
-import type { Experiment, Estimator, RefutationOption } from '~types'
+import type { Experiment, Estimator, RefutationOption } from '@showwhy/types'
 import { pluralize } from '~utils'
 
 interface SpecificationsListProp {

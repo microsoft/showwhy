@@ -11,7 +11,7 @@ import {
 	useResetRecoilState,
 	useSetRecoilState,
 } from 'recoil'
-import { RefutationType } from '~types'
+import { RefutationType } from '@showwhy/types'
 
 export const RefutationTypeState = atom<RefutationType>({
 	key: 'refutation-tests',

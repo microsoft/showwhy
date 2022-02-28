@@ -4,7 +4,7 @@
  */
 import { memo } from 'react'
 import { Text, Value } from '~styles'
-import { RefutationType } from '~types'
+import { RefutationType } from '@showwhy/types'
 
 export const AnalysisSpecifications: React.FC<{
 	specificationLength: number

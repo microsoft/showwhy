@@ -10,11 +10,8 @@ import styled from 'styled-components'
 import { ConfidenceIntervalDetails } from './ConfidenceIntervalDetails'
 import { RefutationOptionsCallout } from '~components/RefutationOptionsCallout'
 import { Paragraph, Text } from '~styles'
-import {
-	RefutationOption,
-	Specification,
-	RefutationTestMethodString,
-} from '~types'
+import type { Specification } from '~types'
+import { RefutationOption, RefutationTestMethodString } from '@showwhy/types'
 import { pluralize } from '~utils'
 
 export const SpecificationDescription: React.FC<{

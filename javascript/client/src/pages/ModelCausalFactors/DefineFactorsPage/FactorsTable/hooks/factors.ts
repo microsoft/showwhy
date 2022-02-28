@@ -3,14 +3,14 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { Setter } from '@showwhy/types'
-import { useCallback, useMemo } from 'react'
 import type {
+	Setter,
 	CausalFactor,
 	Cause,
 	ExposureAndOutcomeCauses,
 	FlatCausalFactor,
-} from '~types'
+} from '@showwhy/types'
+import { useCallback, useMemo } from 'react'
 import { replaceItemAtIndex } from '~utils'
 
 export function useFlatFactorsList(

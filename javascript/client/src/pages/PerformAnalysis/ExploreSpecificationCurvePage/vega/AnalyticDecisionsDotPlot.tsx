@@ -12,12 +12,12 @@ import { useSpecificationSHAPColumns } from '../hooks'
 import template from './dot-plot.json'
 import { mergeSpec, parseJsonPathSpec } from './util'
 import { usePrimarySpecificationConfig } from '~state'
-import {
-	CausalityLevel,
+import type {
 	DecisionFeature,
 	Specification,
 	SpecificationCurveConfig,
 } from '~types'
+import { CausalityLevel } from '@showwhy/types'
 
 const templateString = JSON.stringify(template)
 

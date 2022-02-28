@@ -3,11 +3,11 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { NodeResponseStatus } from '@showwhy/api-client'
+import { NodeResponseStatus, RefutationType } from '@showwhy/types'
 import { v4 } from 'uuid'
 import { SESSION_ID_KEY } from './constants'
 import { createAndReturnStorageItem } from './sessionStorage'
-import type { RunHistory, RefutationType } from '~types'
+import type { RunHistory } from '~types'
 
 export function initialRunHistory(
 	specCount: number,

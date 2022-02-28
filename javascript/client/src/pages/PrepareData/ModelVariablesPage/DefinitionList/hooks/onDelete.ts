@@ -5,7 +5,12 @@
 
 import { useCallback } from 'react'
 import type { SetModelVariables } from './types'
-import { PageType, CausalFactor, Definition, ElementDefinition } from '~types'
+import { PageType } from '~types'
+import type {
+	CausalFactor,
+	Definition,
+	ElementDefinition,
+} from '@showwhy/types'
 
 export function useOnDelete({
 	modelVariables,

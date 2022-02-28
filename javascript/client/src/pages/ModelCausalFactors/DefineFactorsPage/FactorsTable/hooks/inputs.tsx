@@ -5,7 +5,7 @@
 
 import { Checkbox, ComboBox, IComboBoxOption, TextField } from '@fluentui/react'
 import { useCallback } from 'react'
-import { FlatCausalFactor, BeliefDegree } from '~types'
+import { FlatCausalFactor, BeliefDegree } from '@showwhy/types'
 
 const beliefOptions: IComboBoxOption[] = [
 	{ key: BeliefDegree.Strong, text: 'Strong' },

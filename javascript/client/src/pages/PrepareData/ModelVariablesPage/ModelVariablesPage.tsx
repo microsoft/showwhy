@@ -19,7 +19,8 @@ import { useBusinessLogic } from './hooks'
 import { EmptyDataPageWarning } from '~components/EmptyDataPageWarning'
 import { ArqueroDetailsTable } from '~components/Tables/ArqueroDetailsTable'
 import { ContainerFlexRow } from '~styles'
-import { PageType, Pages, CausalFactor } from '~types'
+import { PageType, Pages } from '~types'
+import type { CausalFactor } from '@showwhy/types'
 
 export const ModelVariablesPage: React.FC = memo(function ModelVariablesPage() {
 	const {

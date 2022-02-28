@@ -4,8 +4,13 @@
  */
 
 import type { Dimensions } from '@essex-js-toolkit/hooks'
-import { NodeResponseStatus } from '@showwhy/api-client'
-import type { Maybe, Handler } from '@showwhy/types'
+import {
+	Maybe,
+	Handler,
+	NodeResponseStatus,
+	CausalityLevel,
+	Experiment,
+} from '@showwhy/types'
 import type { Theme } from '@thematic/core'
 import { useThematic } from '@thematic/react'
 import { useCallback, useMemo, useState } from 'react'
@@ -25,10 +30,8 @@ import {
 	useSpecificationCurveConfig,
 	useExperiment,
 } from '~state'
-import {
-	CausalityLevel,
+import type {
 	DecisionFeature,
-	Experiment,
 	RunHistory,
 	Specification,
 	SpecificationCurveConfig,

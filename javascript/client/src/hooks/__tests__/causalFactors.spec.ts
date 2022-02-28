@@ -17,7 +17,7 @@ import {
 	CausalModelLevel,
 	CausalFactor,
 	CausalityLevel,
-} from '~types'
+} from '@showwhy/types'
 
 const causalFactors: CausalFactor[] = [
 	{

@@ -10,7 +10,8 @@ import {
 	useRemoveDefinitionTestable,
 	useSaveDefinitionTestable,
 } from '../modelVariable'
-import { Experiment, CausalFactor, CausalityLevel, PageType } from '~types'
+import { Experiment, CausalFactor, CausalityLevel } from '@showwhy/types'
+import { PageType } from '~types'
 
 const question = {
 	population: {

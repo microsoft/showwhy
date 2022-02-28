@@ -4,12 +4,18 @@
  */
 
 import type { IComboBoxOption } from '@fluentui/react'
-import type { OptionalId, Maybe, Handler } from '@showwhy/types'
+import type {
+	OptionalId,
+	Maybe,
+	Handler,
+	CausalFactor,
+	FlatCausalFactor,
+} from '@showwhy/types'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useAddOrEditFactor, usePageType, useVariableOptions } from '~hooks'
 import { useCausalFactors, useSetCausalFactors } from '~state'
-import type { PageType, CausalFactor, FlatCausalFactor } from '~types'
+import type { PageType } from '~types'
 import { noop } from '~utils'
 
 interface PathData {

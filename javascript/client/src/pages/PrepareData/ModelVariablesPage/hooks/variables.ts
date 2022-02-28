@@ -11,13 +11,8 @@ import type {
 	SubjectIdentifierDataArgs,
 } from './interfaces'
 import type { FactorsOrDefinitions } from './types'
-import {
-	PageType,
-	DataTable,
-	CausalFactor,
-	ColumnRelation,
-	ColumnRelevance,
-} from '~types'
+import { PageType, DataTable, ColumnRelation, ColumnRelevance } from '~types'
+import type { CausalFactor } from '@showwhy/types'
 
 export function useDefinitionOptions({
 	defineQuestionData,
