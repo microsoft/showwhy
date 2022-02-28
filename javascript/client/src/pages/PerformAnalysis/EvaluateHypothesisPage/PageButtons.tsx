@@ -3,12 +3,12 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { DefaultButton } from '@fluentui/react'
-import type { Maybe } from '@showwhy/types'
+import type { Maybe, SignificanceTest } from '@showwhy/types'
 import { memo } from 'react'
 import styled from 'styled-components'
 import { ErrorMessage } from '~components/ErrorMessage'
 import { ContainerFlexColumn, ContainerFlexRow } from '~styles'
-import type { RunHistory, SignificanceTest } from '~types'
+import type { RunHistory } from '~types'
 
 export const PageButtons: React.FC<{
 	activeTaskIds: string[]

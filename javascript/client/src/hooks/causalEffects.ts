@@ -2,10 +2,14 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import type {
+	AlternativeModels,
+	Experiment,
+	CausalModelLevel,
+} from '@showwhy/types'
 import { useMemo } from 'react'
 import { useAlternativeModels, useExcludedFactors } from './causalFactors'
 import { useExperiment } from '~state/experiment'
-import type { AlternativeModels, Experiment, CausalModelLevel } from '~types'
 
 export function useCausalEffects(
 	causalLevel: CausalModelLevel,

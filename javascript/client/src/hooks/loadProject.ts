@@ -3,7 +3,15 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import type { BaseFile } from '@data-wrangling-components/utilities'
-import type { Maybe, Handler1 } from '@showwhy/types'
+import type {
+	Maybe,
+	Handler1,
+	CausalFactor,
+	Definition,
+	Experiment,
+	Element,
+	VariableDefinition,
+} from '@showwhy/types'
 import { useCallback, useMemo } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import { useGetStepUrls, useSetRunAsDefault } from '~hooks'
@@ -27,15 +35,10 @@ import {
 } from '~state'
 import {
 	ProjectSource,
-	CausalFactor,
-	Definition,
-	Experiment,
-	Element,
 	FileDefinition,
 	ZipData,
 	ProjectFile,
 	TableColumn,
-	VariableDefinition,
 	Workspace,
 	DataTableFileDefinition,
 	StepStatus,

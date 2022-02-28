@@ -3,8 +3,17 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { NodeResponseStatus, OrchestratorType } from '@showwhy/api-client'
-import type { Maybe, Handler } from '@showwhy/types'
+import { OrchestratorType } from '@showwhy/api-client'
+import { buildSignificanceTestsNode } from '@showwhy/builders'
+import {
+	Maybe,
+	Handler,
+	NodeResponseStatus,
+	AlternativeModels,
+	Experiment,
+	SignificanceTest,
+	RefutationType,
+} from '@showwhy/types'
 import { useCallback, useMemo, useState } from 'react'
 import { useLoadSpecificationData } from '../ExploreSpecificationCurvePage/hooks'
 import {
@@ -15,8 +24,6 @@ import {
 	useSpecificationCurve,
 	useRunConfidenceInterval,
 } from '~hooks'
-
-import { buildSignificanceTestsNode } from '~resources'
 import {
 	useDefaultDatasetResult,
 	useExperiment,
@@ -25,15 +32,7 @@ import {
 	useSignificanceTests,
 	useSpecificationCurveConfig,
 } from '~state'
-import type {
-	AlternativeModels,
-	DefaultDatasetResult,
-	Experiment,
-	RunHistory,
-	SignificanceTest,
-	Specification,
-	RefutationType,
-} from '~types'
+import type { DefaultDatasetResult, RunHistory, Specification } from '~types'
 
 export function useBusinessLogic(): {
 	alternativeModels: AlternativeModels

@@ -3,12 +3,12 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { Icon } from '@fluentui/react'
+import { CausalEffectSize } from '@showwhy/types'
 import { memo } from 'react'
 
 import styled from 'styled-components'
 import { ComponentArrows } from './ComponentArrows'
 import { Container, Paragraph } from '~styles'
-import { CausalEffectSize } from '~types'
 
 export const CausalEffects: React.FC<{
 	size?: CausalEffectSize

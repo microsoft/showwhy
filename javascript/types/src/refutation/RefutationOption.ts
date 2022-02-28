@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { RefutationTestMethod } from '~types'
+import type { RefutationTestMethod } from '../refutation'
 
 export interface RefutationOption {
 	method_name: RefutationTestMethod

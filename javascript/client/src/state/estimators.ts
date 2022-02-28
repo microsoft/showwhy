@@ -2,6 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import type { Estimator } from '@showwhy/types'
 import { useCallback } from 'react'
 import {
 	atom,
@@ -11,7 +12,6 @@ import {
 	useResetRecoilState,
 	useSetRecoilState,
 } from 'recoil'
-import type { Estimator } from '~types'
 
 export const estimatorState = atom<Estimator[]>({
 	key: 'estimators',

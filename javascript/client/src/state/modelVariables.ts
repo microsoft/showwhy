@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { Maybe } from '@showwhy/types'
+import type { Maybe, Definition, VariableDefinition } from '@showwhy/types'
 import { useCallback } from 'react'
 import {
 	atom,
@@ -16,7 +16,7 @@ import {
 	useResetRecoilState,
 	useSetRecoilState,
 } from 'recoil'
-import type { Definition, ProjectFile, VariableDefinition } from '~types'
+import type { ProjectFile } from '~types'
 
 const modelVariablesState = atomFamily<Maybe<Definition>, Maybe<string>>({
 	key: 'model-variables',

@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { NodeResponseStatus } from '@showwhy/api-client'
+import { NodeResponseStatus } from '@showwhy/types'
 import type { Handler } from '@showwhy/types'
 import type { Theme } from '@thematic/core'
 import { memo, useMemo } from 'react'

@@ -3,14 +3,13 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { Maybe } from '@showwhy/types'
+import type { Maybe, SignificanceTest } from '@showwhy/types'
 import {
 	atomFamily,
 	SetterOrUpdater,
 	useRecoilValue,
 	useSetRecoilState,
 } from 'recoil'
-import type { SignificanceTest } from '~types'
 
 export const significanceTestsState = atomFamily<
 	Maybe<SignificanceTest>,

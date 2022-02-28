@@ -2,6 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import { EstimatorType, EstimatorGroup, Estimator } from '@showwhy/types'
 import { renderHook } from '@testing-library/react-hooks'
 import { RecoilRoot } from 'recoil'
 import {
@@ -20,7 +21,6 @@ import {
 	useExposureAssignedEstimators,
 	useOutcomeBasedEstimators,
 } from '../estimators'
-import { EstimatorType, EstimatorGroup, Estimator } from '~types'
 
 describe('estimatorsHooks', () => {
 	/* eslint-disable-next-line jest/no-commented-out-tests */

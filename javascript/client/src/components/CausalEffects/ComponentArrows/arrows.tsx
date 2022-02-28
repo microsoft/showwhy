@@ -4,12 +4,12 @@
  */
 
 import type { Handler } from '@showwhy/types'
+import { CausalEffectSize } from '@showwhy/types'
 import { useThematic } from '@thematic/react'
 import { useCallback } from 'react'
 import Xarrow from 'react-xarrows'
 import styled from 'styled-components'
 import { box1, box2, box3, box4 } from './constants'
-import { CausalEffectSize } from '~types'
 
 export const arrows = [
 	{

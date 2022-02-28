@@ -8,6 +8,7 @@ import {
 	DefaultButton,
 	IContextualMenuProps,
 } from '@fluentui/react'
+import type { CausalFactor } from '@showwhy/types'
 import { memo } from 'react'
 import { If, Then, Else } from 'react-if'
 import styled from 'styled-components'
@@ -19,7 +20,7 @@ import { useBusinessLogic } from './hooks'
 import { EmptyDataPageWarning } from '~components/EmptyDataPageWarning'
 import { ArqueroDetailsTable } from '~components/Tables/ArqueroDetailsTable'
 import { ContainerFlexRow } from '~styles'
-import { PageType, Pages, CausalFactor } from '~types'
+import { PageType, Pages } from '~types'
 
 export const ModelVariablesPage: React.FC = memo(function ModelVariablesPage() {
 	const {

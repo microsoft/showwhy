@@ -3,14 +3,12 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import type { Dimensions } from '@essex-js-toolkit/hooks'
-import type { Maybe } from '@showwhy/types'
+import { RefutationType, Maybe, Experiment } from '@showwhy/types'
 import { memo } from 'react'
 import { OutcomeEffectScatterplot } from '../ExploreSpecificationCurvePage/vega'
 import { Paragraph, Value, Container, Bold, Text } from '~styles'
-import {
-	RefutationType,
+import type {
 	DecisionFeature,
-	Experiment,
 	Specification,
 	SpecificationCurveConfig,
 } from '~types'

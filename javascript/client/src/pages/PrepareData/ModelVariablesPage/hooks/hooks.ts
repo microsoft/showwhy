@@ -4,7 +4,15 @@
  */
 
 import type { IContextualMenuProps } from '@fluentui/react'
-import type { Maybe, Handler } from '@showwhy/types'
+import type {
+	Maybe,
+	Handler,
+	ElementDefinition,
+	FilterObject,
+	Element,
+	CausalFactor,
+	VariableDefinition,
+} from '@showwhy/types'
 import { useBoolean } from 'ahooks'
 import { useCallback, useState } from 'react'
 import type { FactorsOrDefinitions } from './types'
@@ -25,15 +33,7 @@ import {
 	useOriginalTables,
 	useProjectFiles,
 } from '~state'
-import {
-	PageType,
-	DataTable,
-	ElementDefinition,
-	FilterObject,
-	Element,
-	CausalFactor,
-	VariableDefinition,
-} from '~types'
+import { PageType, DataTable } from '~types'
 
 export function useBusinessLogic(): {
 	pageType: PageType

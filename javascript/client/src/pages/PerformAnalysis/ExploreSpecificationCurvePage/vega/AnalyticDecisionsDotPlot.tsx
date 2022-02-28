@@ -2,6 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import { CausalityLevel } from '@showwhy/types'
 import { SelectionState } from '@thematic/core'
 import { useThematic } from '@thematic/react'
 import { max, min } from 'lodash'
@@ -12,8 +13,7 @@ import { useSpecificationSHAPColumns } from '../hooks'
 import template from './dot-plot.json'
 import { mergeSpec, parseJsonPathSpec } from './util'
 import { usePrimarySpecificationConfig } from '~state'
-import {
-	CausalityLevel,
+import type {
 	DecisionFeature,
 	Specification,
 	SpecificationCurveConfig,

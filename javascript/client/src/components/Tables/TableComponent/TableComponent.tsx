@@ -3,19 +3,18 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import type { IComboBoxOption } from '@fluentui/react'
-import type { Handler1, Handler } from '@showwhy/types'
+import type {
+	Handler1,
+	Handler,
+	ElementDefinition,
+	FlatCausalFactor,
+	CausalFactor,
+} from '@showwhy/types'
 import { memo } from 'react'
 import styled from 'styled-components'
 import { useTableComponent } from './hooks'
 import { GenericTableComponent } from '~components/Tables/GenericTableComponent'
-import type {
-	PageType,
-	ElementDefinition,
-	FlatCausalFactor,
-	CausalFactor,
-	HeaderData,
-	Item,
-} from '~types'
+import type { PageType, HeaderData, Item } from '~types'
 
 export const TableComponent: React.FC<{
 	headers: HeaderData[]

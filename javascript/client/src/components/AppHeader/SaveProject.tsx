@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import type { IContextualMenuProps } from '@fluentui/react'
-import { NodeResponseStatus } from '@showwhy/api-client'
+import { NodeResponseStatus } from '@showwhy/types'
 import { memo, useCallback, useMemo } from 'react'
 import { OptionsButton } from './OptionsButton'
 import {

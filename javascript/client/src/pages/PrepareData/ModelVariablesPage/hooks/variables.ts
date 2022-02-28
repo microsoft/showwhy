@@ -4,6 +4,7 @@
  */
 
 import type { IContextualMenuItem } from '@fluentui/react'
+import type { CausalFactor } from '@showwhy/types'
 import { useMemo } from 'react'
 import type {
 	SelectedArgs,
@@ -11,13 +12,7 @@ import type {
 	SubjectIdentifierDataArgs,
 } from './interfaces'
 import type { FactorsOrDefinitions } from './types'
-import {
-	PageType,
-	DataTable,
-	CausalFactor,
-	ColumnRelation,
-	ColumnRelevance,
-} from '~types'
+import { PageType, DataTable, ColumnRelation, ColumnRelevance } from '~types'
 
 export function useDefinitionOptions({
 	defineQuestionData,

@@ -3,6 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import type { CausalFactor } from '@showwhy/types'
 import { useBoolean } from 'ahooks'
 import { useCallback, useRef, useState, useMemo } from 'react'
 import { useItem } from './item'
@@ -17,7 +18,7 @@ import {
 	useSaveDefinition,
 } from '~hooks'
 import { useModelVariables, useSetModelVariables } from '~state'
-import type { Item, CausalFactor } from '~types'
+import type { Item } from '~types'
 
 export function useDefinitionList(
 	list: CausalFactor[],

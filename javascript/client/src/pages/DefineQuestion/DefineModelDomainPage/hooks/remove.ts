@@ -3,9 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { Setter } from '@showwhy/types'
+import type { Setter, ElementDefinition } from '@showwhy/types'
 import { useCallback } from 'react'
-import type { ElementDefinition } from '~types'
 
 export function useRemoveDefinition(
 	setDefinitions: Setter<ElementDefinition[]>,

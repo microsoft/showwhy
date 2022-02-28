@@ -2,10 +2,10 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import { RefutationType } from '@showwhy/types'
 import { renderHook } from '@testing-library/react-hooks'
 import { RecoilRoot, snapshot_UNSTABLE } from 'recoil'
 import { RefutationTypeState, useRefutationType } from '../refutationTests'
-import { RefutationType } from '~types'
 
 describe('refutationTypeState', () => {
 	describe('useRefutationType', () => {

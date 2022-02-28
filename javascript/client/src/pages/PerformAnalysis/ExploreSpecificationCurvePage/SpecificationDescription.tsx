@@ -4,17 +4,14 @@
  */
 import { DefaultButton } from '@fluentui/react'
 import type { Handler } from '@showwhy/types'
+import { RefutationOption, RefutationTestMethodString } from '@showwhy/types'
 import { round } from 'lodash'
 import { memo } from 'react'
 import styled from 'styled-components'
 import { ConfidenceIntervalDetails } from './ConfidenceIntervalDetails'
 import { RefutationOptionsCallout } from '~components/RefutationOptionsCallout'
 import { Paragraph, Text } from '~styles'
-import {
-	RefutationOption,
-	Specification,
-	RefutationTestMethodString,
-} from '~types'
+import type { Specification } from '~types'
 import { pluralize } from '~utils'
 
 export const SpecificationDescription: React.FC<{

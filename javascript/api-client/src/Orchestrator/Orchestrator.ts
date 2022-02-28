@@ -3,15 +3,15 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { Maybe } from '@showwhy/types'
-import type { FetchApiInteractor } from '../FetchApiInteractor'
 import type {
+	Maybe,
 	NodeRequest,
 	NodeResponse,
 	StatusResponse,
 	NodeResponseStatus,
 	OrchestratorStatusResponse,
-} from '../types'
+} from '@showwhy/types'
+import type { FetchApiInteractor } from '../FetchApiInteractor'
 import { isProcessingStatus, wait } from '../utils'
 import type { OrchestratorType } from './OrchestratorType'
 

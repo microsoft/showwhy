@@ -10,8 +10,7 @@ import {
 	FileWithPath,
 	FileCollection,
 } from '@data-wrangling-components/utilities'
-import { NodeResponseStatus } from '@showwhy/api-client'
-import type { Maybe, AsyncHandler } from '@showwhy/types'
+import { Maybe, AsyncHandler, NodeResponseStatus } from '@showwhy/types'
 import { useCallback, useMemo } from 'react'
 import { useGetResult, useGetStepUrlsByStatus } from '~hooks'
 import {

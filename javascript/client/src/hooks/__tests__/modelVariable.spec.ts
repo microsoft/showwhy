@@ -3,6 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { jest } from '@jest/globals'
+import { Experiment, CausalFactor, CausalityLevel } from '@showwhy/types'
 import { renderHook } from '@testing-library/react-hooks'
 import { RecoilRoot } from 'recoil'
 import { v4 } from 'uuid'
@@ -10,7 +11,7 @@ import {
 	useRemoveDefinitionTestable,
 	useSaveDefinitionTestable,
 } from '../modelVariable'
-import { Experiment, CausalFactor, CausalityLevel, PageType } from '~types'
+import { PageType } from '~types'
 
 const question = {
 	population: {

@@ -3,8 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { Maybe, Setter } from '@showwhy/types'
-import type { Definition, CausalFactor } from '~types'
+import type { Maybe, Setter, Definition, CausalFactor } from '@showwhy/types'
 
 export type InputRef = React.RefObject<HTMLInputElement>
 

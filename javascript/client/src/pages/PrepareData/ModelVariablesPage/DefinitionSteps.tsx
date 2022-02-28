@@ -3,11 +3,12 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { IconButton } from '@fluentui/react'
+import type { Definition, FilterObject } from '@showwhy/types'
 import { memo, useCallback, useMemo } from 'react'
 import styled from 'styled-components'
 import { useRemoveColumn } from '~hooks'
 import { useModelVariables, useSetModelVariables } from '~state'
-import { FilterObject, TableDerivationType, Definition } from '~types'
+import { TableDerivationType } from '~types'
 
 export const DefinitionSteps: React.FC<{
 	fileId: string

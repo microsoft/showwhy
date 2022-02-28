@@ -3,10 +3,10 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import { RefutationType, RefutationChoice } from '@showwhy/types'
 import { useMemo } from 'react'
 import { useSetFullRefutation, useSetQuickRefutation } from '~hooks'
 import { useRefutationType } from '~state'
-import { RefutationType, RefutationChoice } from '~types'
 
 export function useRefutations(): {
 	refutationOptions: RefutationChoice[]
