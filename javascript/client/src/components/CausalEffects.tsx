@@ -7,7 +7,7 @@ import { CausalEffectSize } from '@showwhy/types'
 import { memo } from 'react'
 
 import styled from 'styled-components'
-import { ComponentArrows } from '../ComponentArrows'
+import { ComponentArrows } from './ComponentArrows'
 import { Container, Paragraph } from '~styles'
 
 export const CausalEffects: React.FC<{

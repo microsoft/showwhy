@@ -7,7 +7,7 @@ import type ColumnTable from 'arquero/dist/types/table/column-table'
 import { memo } from 'react'
 
 import styled from 'styled-components'
-import { ArqueroDetailsTable } from '../ArqueroDetailsTable'
+import { ArqueroDetailsTable } from './ArqueroDetailsTable'
 import type { ProjectFile } from '~types'
 
 export const SelectedTableDisplay: React.FC<{
