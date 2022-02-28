@@ -4,6 +4,7 @@
  */
 
 import type { Dimensions } from '@essex-js-toolkit/hooks'
+import { NodeResponseStatus } from '@showwhy/api-client'
 import type { Theme } from '@thematic/core'
 import { useThematic } from '@thematic/react'
 import { useCallback, useMemo, useState } from 'react'
@@ -33,7 +34,6 @@ import {
 	Maybe,
 	Handler,
 } from '~types'
-import { NodeResponseStatus } from '@showwhy/api-client'
 
 export function useSpecificationCurve(): {
 	activeProcessing: Maybe<RunHistory>

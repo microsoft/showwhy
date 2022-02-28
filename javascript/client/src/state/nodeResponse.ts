@@ -3,6 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import type { NodeResponse } from '@showwhy/api-client'
 import {
 	atom,
 	SetterOrUpdater,
@@ -10,7 +11,6 @@ import {
 	useSetRecoilState,
 } from 'recoil'
 import type { Maybe } from '~types'
-import type { NodeResponse } from '@showwhy/api-client'
 
 export const nodeResponseState = atom<Maybe<NodeResponse>>({
 	key: 'node-response-store',

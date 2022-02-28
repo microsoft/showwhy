@@ -2,6 +2,11 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import {
+	isProcessingStatus,
+	Significance,
+	NodeResponseStatus,
+} from '@showwhy/api-client'
 import { memo } from 'react'
 import {
 	confidenceIntervalCalloutLine1,
@@ -11,11 +16,6 @@ import { LinkCallout } from '~components/Callout'
 import { ProgressBar } from '~components/ProgressBar'
 import { Paragraph, Value } from '~styles'
 import type { SignificanceTest, Maybe, Handler } from '~types'
-import {
-	isProcessingStatus,
-	Significance,
-	NodeResponseStatus,
-} from '@showwhy/api-client'
 
 export const SignificanceTests: React.FC<{
 	significanceTestsResult: Maybe<SignificanceTest>

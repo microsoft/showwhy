@@ -3,15 +3,15 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import type { FetchApiInteractor } from '../FetchApiInteractor'
+import type { Maybe } from '../types'
 import type {
 	OrchestatorOnUpdateHandler,
 	OrchestratorHandler,
 	OrchestratorOnStartHandler,
 } from './Orchestrator'
-import { OrchestratorType } from './OrchestratorType'
 import { Orchestrator } from './Orchestrator'
-import type { FetchApiInteractor } from '../FetchApiInteractor'
-import type { Maybe } from '../types'
+import { OrchestratorType } from './OrchestratorType'
 
 const orchestrators: Partial<Record<OrchestratorType, Orchestrator<unknown>>> =
 	{}

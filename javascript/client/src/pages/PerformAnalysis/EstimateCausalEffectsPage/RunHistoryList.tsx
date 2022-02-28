@@ -3,6 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { DefaultButton, Icon } from '@fluentui/react'
+import { NodeResponseStatus, isProcessingStatus } from '@showwhy/api-client'
 import { useThematic } from '@thematic/react'
 import { memo, useMemo } from 'react'
 import styled from 'styled-components'
@@ -11,7 +12,6 @@ import { RunProgressIndicator } from '~components/RunProgressIndicator'
 import { Title, Text, ContainerFlexColumn } from '~styles'
 import type { RunHistory, Handler } from '~types'
 import { elapsedTime } from '~utils'
-import { NodeResponseStatus, isProcessingStatus } from '@showwhy/api-client'
 
 export const RunHistoryList: React.FC<{
 	setRunAsDefault: (run: RunHistory) => void

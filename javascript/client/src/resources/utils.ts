@@ -2,8 +2,8 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { RefutationType, EstimatorGroup, EstimatorType } from '~types'
 import { GraphNodeData, GraphNodeType } from '@showwhy/api-client'
+import { RefutationType, EstimatorGroup, EstimatorType } from '~types'
 
 export enum NodeIds {
 	IdentifyEstimand = 'Identify Estimand',

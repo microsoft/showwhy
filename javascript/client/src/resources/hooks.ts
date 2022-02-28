@@ -3,6 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import { GraphNodeData, GraphNodeType, NodeRequest } from '@showwhy/api-client'
 import { useCallback } from 'react'
 import {
 	buildEstimators,
@@ -12,7 +13,6 @@ import {
 	models,
 } from './builders'
 import { useNodeProperties } from '~hooks'
-import { GraphNodeData, GraphNodeType, NodeRequest } from '@showwhy/api-client'
 
 export function useGetNodeProperties(): (
 	fileName: string,

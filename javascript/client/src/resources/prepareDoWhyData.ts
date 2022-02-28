@@ -3,7 +3,6 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { buildNodes } from './builders'
 import {
 	GraphNode,
 	GraphEdge,
@@ -11,6 +10,7 @@ import {
 	NodeResponse,
 	GraphNodeType,
 } from '@showwhy/api-client'
+import { buildNodes } from './builders'
 import { api } from '~resources'
 
 function dataObject(value: string): GraphNode {

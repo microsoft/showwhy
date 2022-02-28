@@ -3,8 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { v4 } from 'uuid'
 import { NodeResponseStatus } from '@showwhy/api-client'
+import { v4 } from 'uuid'
 import { SESSION_ID_KEY } from './constants'
 import { createAndReturnStorageItem } from './sessionStorage'
 import type { RunHistory, RefutationType } from '~types'

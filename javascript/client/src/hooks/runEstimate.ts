@@ -3,22 +3,22 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { useCallback } from 'react'
 import {
 	getEstimatorOrchestrator,
 	Orchestrator,
 	EstimateEffectStatusResponse,
 	NodeResponse,
 } from '@showwhy/api-client'
+import { useCallback } from 'react'
 import {
 	useRefutationLength,
 	useUpdateActiveRunHistory,
 	useUpdateNodeResponseActiveRunHistory,
 } from '~hooks'
+import { api } from '~resources'
 import { useConfidenceInterval } from '~state'
 import type { RunStatus } from '~types'
 import { getRunStatus } from '~utils'
-import { api } from '~resources'
 
 export function useRunEstimate(): () => Orchestrator<EstimateEffectStatusResponse> {
 	const updateActive = useUpdateActiveRunHistory()

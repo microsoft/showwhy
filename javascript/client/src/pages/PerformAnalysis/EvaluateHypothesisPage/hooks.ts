@@ -3,6 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import { NodeResponseStatus, OrchestratorType } from '@showwhy/api-client'
 import { useCallback, useMemo, useState } from 'react'
 import { useLoadSpecificationData } from '../ExploreSpecificationCurvePage/hooks'
 import {
@@ -34,7 +35,6 @@ import type {
 	Maybe,
 	Handler,
 } from '~types'
-import { NodeResponseStatus, OrchestratorType } from '@showwhy/api-client'
 
 export function useBusinessLogic(): {
 	alternativeModels: AlternativeModels

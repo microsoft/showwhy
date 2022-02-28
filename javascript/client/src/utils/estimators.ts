@@ -7,8 +7,8 @@ import {
 	EstimateEffectStatusResponse,
 	NodeResponseStatus,
 } from '@showwhy/api-client'
-import { percentage as calcPercent } from './stats'
 import type { Maybe } from '@showwhy/api-client'
+import { percentage as calcPercent } from './stats'
 import type { RunStatus } from '~types'
 
 //TODO: simplify this function

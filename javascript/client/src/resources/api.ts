@@ -1,6 +1,10 @@
+/*!
+ * Copyright (c) Microsoft. All rights reserved.
+ * Licensed under the MIT license. See LICENSE file in the project.
+ */
 import { FetchApiInteractor } from '@showwhy/api-client'
-import { getEnv } from './getEnv'
 import { getStorageItem, SESSION_ID_KEY } from '../utils'
+import { getEnv } from './getEnv'
 
 const env = getEnv()
 

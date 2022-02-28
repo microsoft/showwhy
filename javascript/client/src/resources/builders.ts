@@ -3,6 +3,11 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import type {
+	AlternativeModelsRequest,
+	GraphNodeType,
+	NodeRequest,
+} from '@showwhy/api-client'
 import {
 	getModelNameByEstimatorType,
 	getModelTypeByEstimatorGroup,
@@ -18,11 +23,6 @@ import {
 	EstimatorType,
 	Maybe,
 } from '~types'
-import type {
-	AlternativeModelsRequest,
-	GraphNodeType,
-	NodeRequest,
-} from '@showwhy/api-client'
 
 interface Node {
 	type: GraphNodeType

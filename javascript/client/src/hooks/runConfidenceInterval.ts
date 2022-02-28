@@ -3,7 +3,6 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { useCallback } from 'react'
 import {
 	getConfidenceOrchestrator,
 	NodeResponseStatus,
@@ -11,11 +10,12 @@ import {
 	SignificanceTestResponse,
 	isStatus,
 } from '@showwhy/api-client'
-import type { SignificanceTest } from '~types'
+import { useCallback } from 'react'
 import { useDefaultRun } from '~hooks'
-import { useSetSignificanceTests } from '~state'
-import { getConfidenceInterval, percentage } from '~utils'
 import { api } from '~resources'
+import { useSetSignificanceTests } from '~state'
+import type { SignificanceTest } from '~types'
+import { getConfidenceInterval, percentage } from '~utils'
 
 export function useRunConfidenceInterval(): any {
 	const defaultRun = useDefaultRun()
