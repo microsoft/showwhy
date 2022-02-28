@@ -2,8 +2,6 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { GraphNodeData, GraphNodeType, NodeRequest } from '@showwhy/types'
-import { useCallback } from 'react'
 import {
 	buildEstimators,
 	buildNodes,
@@ -11,6 +9,8 @@ import {
 	buildSpecs,
 	models,
 } from '@showwhy/builders'
+import { GraphNodeData, GraphNodeType, NodeRequest } from '@showwhy/types'
+import { useCallback } from 'react'
 import { useNodeProperties } from '~hooks'
 
 export function useGetNodeProperties(): (

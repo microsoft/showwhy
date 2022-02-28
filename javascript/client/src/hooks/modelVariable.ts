@@ -3,15 +3,15 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { useCallback } from 'react'
-import type { SetterOrUpdater } from 'recoil'
-import { usePageType } from './usePageType'
-import { useExperiment, useSetExperiment } from '~state/experiment'
 import type {
 	Experiment,
 	ElementDefinition,
 	CausalFactor,
 } from '@showwhy/types'
+import { useCallback } from 'react'
+import type { SetterOrUpdater } from 'recoil'
+import { usePageType } from './usePageType'
+import { useExperiment, useSetExperiment } from '~state/experiment'
 import type { PageType } from '~types'
 import { replaceItemAtIndex } from '~utils/arrays'
 // HACK to pass the unit tests

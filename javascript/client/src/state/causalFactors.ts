@@ -3,6 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import type { CausalFactor } from '@showwhy/types'
 import {
 	atom,
 	Resetter,
@@ -11,7 +12,6 @@ import {
 	useResetRecoilState,
 	useSetRecoilState,
 } from 'recoil'
-import type { CausalFactor } from '@showwhy/types'
 
 const causalFactorsState = atom<CausalFactor[]>({
 	key: 'causal-factors',

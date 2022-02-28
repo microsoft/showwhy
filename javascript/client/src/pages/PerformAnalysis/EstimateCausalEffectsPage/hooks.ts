@@ -5,14 +5,16 @@
 
 import { useBoolean } from '@fluentui/react-hooks'
 import { OrchestratorType } from '@showwhy/api-client'
+import { buildLoadNode } from '@showwhy/builders'
 import type {
 	Experiment,
 	Estimator,
 	RefutationOption,
 	NodeRequest,
+	Maybe,
+	AsyncHandler,
+	Handler,
 } from '@showwhy/types'
-import type { Maybe, AsyncHandler, Handler } from '@showwhy/types'
-import { buildLoadNode } from '@showwhy/builders'
 import { useCallback, useEffect, useState } from 'react'
 import {
 	useEstimateNode,

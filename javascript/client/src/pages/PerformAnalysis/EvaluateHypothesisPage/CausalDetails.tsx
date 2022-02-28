@@ -2,9 +2,9 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import type { AlternativeModels } from '@showwhy/types'
 import { memo } from 'react'
 import { Text, Value } from '~styles'
-import type { AlternativeModels } from '@showwhy/types'
 
 export const CausalDetails: React.FC<{
 	alternativeModels: AlternativeModels

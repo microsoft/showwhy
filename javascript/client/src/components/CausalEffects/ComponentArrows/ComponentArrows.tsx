@@ -2,12 +2,12 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import { CausalEffectSize } from '@showwhy/types'
 import { memo } from 'react'
 import styled from 'styled-components'
 import { BoxCausalModel } from './BoxCausalModel'
 import { useGetArrows } from './arrows'
 import { box1, box2, box3, box4 } from './constants'
-import { CausalEffectSize } from '@showwhy/types'
 
 export const ComponentArrows: React.FC<{
 	confounders: string[]

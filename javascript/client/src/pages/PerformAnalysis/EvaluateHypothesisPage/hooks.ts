@@ -4,6 +4,7 @@
  */
 
 import { OrchestratorType } from '@showwhy/api-client'
+import { buildSignificanceTestsNode } from '@showwhy/builders'
 import {
 	Maybe,
 	Handler,
@@ -23,7 +24,6 @@ import {
 	useSpecificationCurve,
 	useRunConfidenceInterval,
 } from '~hooks'
-import { buildSignificanceTestsNode } from '@showwhy/builders'
 import {
 	useDefaultDatasetResult,
 	useExperiment,

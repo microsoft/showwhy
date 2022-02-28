@@ -2,6 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import { RefutationResultString } from '@showwhy/types'
 import { SelectionState } from '@thematic/core'
 import { useThematic } from '@thematic/react'
 import { memo, useMemo } from 'react'
@@ -10,7 +11,6 @@ import { VegaHost } from '../VegaHost'
 import template from './scatter-plot.json'
 import { mergeSpec, parseJsonPathSpec } from './util'
 import type { Specification, SpecificationCurveConfig } from '~types'
-import { RefutationResultString } from '@showwhy/types'
 
 const templateString = JSON.stringify(template)
 

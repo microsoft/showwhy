@@ -3,6 +3,13 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import {
+	AlternativeModels,
+	Experiment,
+	Estimator,
+	RefutationType,
+	CausalModelLevel,
+} from '@showwhy/types'
 import { useMemo } from 'react'
 import { useAlternativeModels } from '~hooks'
 import {
@@ -11,13 +18,6 @@ import {
 	useEstimators,
 	useRefutationType,
 } from '~state'
-import {
-	AlternativeModels,
-	Experiment,
-	Estimator,
-	RefutationType,
-	CausalModelLevel,
-} from '@showwhy/types'
 
 export function useNodeProperties(): {
 	fileName?: string

@@ -2,10 +2,10 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import { CausalEffectSize } from '@showwhy/types'
 import { memo } from 'react'
 import styled from 'styled-components'
 import { Text } from '~styles'
-import { CausalEffectSize } from '@showwhy/types'
 
 export const BoxCausalModel: React.FC<{
 	id: string

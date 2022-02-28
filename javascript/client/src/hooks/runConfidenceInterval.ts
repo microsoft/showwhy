@@ -4,16 +4,16 @@
  */
 
 import { getConfidenceOrchestrator, isStatus } from '@showwhy/api-client'
-import { useCallback } from 'react'
-import { useDefaultRun } from '~hooks'
-import { api } from '~resources'
-import { useSetSignificanceTests } from '~state'
 import {
 	SignificanceTest,
 	NodeResponseStatus,
 	NodeResponse,
 	SignificanceTestResponse,
 } from '@showwhy/types'
+import { useCallback } from 'react'
+import { useDefaultRun } from '~hooks'
+import { api } from '~resources'
+import { useSetSignificanceTests } from '~state'
 import { getConfidenceInterval, percentage } from '~utils'
 
 export function useRunConfidenceInterval(): any {

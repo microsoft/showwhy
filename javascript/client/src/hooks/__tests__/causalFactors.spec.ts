@@ -3,6 +3,12 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { jest } from '@jest/globals'
+import {
+	BeliefDegree,
+	CausalModelLevel,
+	CausalFactor,
+	CausalityLevel,
+} from '@showwhy/types'
 import { renderHook } from '@testing-library/react-hooks'
 import { RecoilRoot } from 'recoil'
 import { v4 } from 'uuid'
@@ -12,12 +18,6 @@ import {
 	useDeleteCausalFactorTestable as useDeleteCausalFactor,
 	useExcludedFactorsTestable as useExcludedFactors,
 } from '../causalFactors'
-import {
-	BeliefDegree,
-	CausalModelLevel,
-	CausalFactor,
-	CausalityLevel,
-} from '@showwhy/types'
 
 const causalFactors: CausalFactor[] = [
 	{

@@ -22,6 +22,14 @@ interface Node {
 	[key: string]: any
 }
 
+enum NodeIds {
+	IdentifyEstimand = 'Identify Estimand',
+	CreateCausalGraph = 'Create Causal Graph',
+	LoadDataset = 'Load Dataset',
+	EstimateEffects = 'Estimate Effects',
+	SignificanceTest = 'Significance Test',
+}
+
 export function buildNodes(nodes: Node[]): NodeRequest {
 	return {
 		nodes: nodes.map(node => {
@@ -258,12 +266,4 @@ export function getNodeProperties(type: GraphNodeType): GraphNodeData {
 				name: NodeIds.SignificanceTest,
 			}
 	}
-}
-
-enum NodeIds {
-	IdentifyEstimand = 'Identify Estimand',
-	CreateCausalGraph = 'Create Causal Graph',
-	LoadDataset = 'Load Dataset',
-	EstimateEffects = 'Estimate Effects',
-	SignificanceTest = 'Significance Test',
 }

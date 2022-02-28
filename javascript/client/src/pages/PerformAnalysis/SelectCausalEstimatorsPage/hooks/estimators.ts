@@ -2,6 +2,15 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import type {
+	Setter,
+	Maybe,
+	Handler,
+	EstimatorGroup,
+	EstimatorType,
+	Estimator,
+	PrimarySpecificationConfig,
+} from '@showwhy/types'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import type { SetterOrUpdater } from 'recoil'
 import { getEstimatorByRanking, estimatorGroups } from './constants'
@@ -15,15 +24,6 @@ import {
 	useToggleConfidenceInterval,
 	useConfidenceInterval,
 } from '~state'
-import type {
-	Setter,
-	Maybe,
-	Handler,
-	EstimatorGroup,
-	EstimatorType,
-	Estimator,
-	PrimarySpecificationConfig,
-} from '@showwhy/types'
 
 enum BatchUpdateAction {
 	Delete = 'delete',

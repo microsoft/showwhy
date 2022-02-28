@@ -3,10 +3,10 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { FontIcon } from '@fluentui/react'
+import type { RefutationChoice } from '@showwhy/types'
 import { memo } from 'react'
 import styled from 'styled-components'
 import { CardComponent } from '~components/CardComponent'
-import type { RefutationChoice } from '@showwhy/types'
 
 export const RefutationTests: React.FC<{
 	options: RefutationChoice[]

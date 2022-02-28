@@ -2,6 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import { CausalityLevel } from '@showwhy/types'
 import { SelectionState } from '@thematic/core'
 import { useThematic } from '@thematic/react'
 import { max, min } from 'lodash'
@@ -17,7 +18,6 @@ import type {
 	Specification,
 	SpecificationCurveConfig,
 } from '~types'
-import { CausalityLevel } from '@showwhy/types'
 
 const templateString = JSON.stringify(template)
 

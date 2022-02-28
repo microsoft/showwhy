@@ -4,6 +4,11 @@
  */
 
 import {
+	PrimarySpecificationConfig,
+	EstimatorType,
+	CausalModelLevel,
+} from '@showwhy/types'
+import {
 	atom,
 	Resetter,
 	SetterOrUpdater,
@@ -11,11 +16,6 @@ import {
 	useResetRecoilState,
 	useSetRecoilState,
 } from 'recoil'
-import {
-	PrimarySpecificationConfig,
-	EstimatorType,
-	CausalModelLevel,
-} from '@showwhy/types'
 
 export const primarySpecificationConfigState = atom<PrimarySpecificationConfig>(
 	{

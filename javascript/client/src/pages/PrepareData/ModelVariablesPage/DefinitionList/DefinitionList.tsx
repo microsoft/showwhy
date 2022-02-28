@@ -2,11 +2,11 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import type { CausalFactor } from '@showwhy/types'
 import { memo } from 'react'
 import styled from 'styled-components'
 import { useDefinitionList } from './hooks'
 import { GenericTableComponent } from '~components/Tables/GenericTableComponent'
-import type { CausalFactor } from '@showwhy/types'
 
 export const DefinitionList: React.FC<{
 	list: CausalFactor[]

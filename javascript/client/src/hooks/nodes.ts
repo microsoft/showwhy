@@ -2,10 +2,10 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import { buildLoadNode } from '@showwhy/builders'
 import type { Maybe, NodeRequest } from '@showwhy/types'
 import { useCallback, useMemo } from 'react'
 import { useBuildEstimateEffectNode } from '~resources/hooks'
-import { buildLoadNode } from '@showwhy/builders'
 import type { ProjectFile } from '~types'
 
 //TODO: fix for CI

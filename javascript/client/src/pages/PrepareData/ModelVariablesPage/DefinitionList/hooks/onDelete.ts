@@ -3,14 +3,14 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { useCallback } from 'react'
-import type { SetModelVariables } from './types'
-import { PageType } from '~types'
 import type {
 	CausalFactor,
 	Definition,
 	ElementDefinition,
 } from '@showwhy/types'
+import { useCallback } from 'react'
+import type { SetModelVariables } from './types'
+import { PageType } from '~types'
 
 export function useOnDelete({
 	modelVariables,

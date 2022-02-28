@@ -3,6 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import { RefutationType } from '@showwhy/types'
 import {
 	atom,
 	Resetter,
@@ -11,7 +12,6 @@ import {
 	useResetRecoilState,
 	useSetRecoilState,
 } from 'recoil'
-import { RefutationType } from '@showwhy/types'
 
 export const RefutationTypeState = atom<RefutationType>({
 	key: 'refutation-tests',

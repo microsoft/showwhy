@@ -2,17 +2,17 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import {
+	PrimarySpecificationConfig,
+	EstimatorType,
+	CausalModelLevel,
+} from '@showwhy/types'
 import { renderHook } from '@testing-library/react-hooks'
 import { RecoilRoot, snapshot_UNSTABLE } from 'recoil'
 import {
 	usePrimarySpecificationConfig,
 	primarySpecificationConfigState,
 } from '../primarySpecificationConfig'
-import {
-	PrimarySpecificationConfig,
-	EstimatorType,
-	CausalModelLevel,
-} from '@showwhy/types'
 
 describe('primarySpecificationConfig', () => {
 	describe('usePrimarySpecificationConfig', () => {

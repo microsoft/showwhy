@@ -3,6 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import type { FlatCausalFactor, CausalFactor } from '@showwhy/types'
 import { useBoolean } from 'ahooks'
 import { useCallback, useMemo, useState } from 'react'
 import { useFlatFactorsList, useSaveFactors } from './factors'
@@ -14,7 +15,6 @@ import {
 } from './onChange'
 import { useCausalFactors, useSetCausalFactors } from '~state'
 import type { Item } from '~types'
-import type { FlatCausalFactor, CausalFactor } from '@showwhy/types'
 
 export function useFactorsTable(causeType: string): {
 	flatFactorsList: FlatCausalFactor[]
