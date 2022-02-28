@@ -7,7 +7,7 @@ import {
 	buildNodes,
 	buildRefutationSpecs,
 	buildSpecs,
-	models,
+	buildAlternativeModels,
 } from '@showwhy/builders'
 import { GraphNodeData, GraphNodeType, NodeRequest } from '@showwhy/types'
 import { useCallback } from 'react'
@@ -36,7 +36,7 @@ export function useGetNodeProperties(): (
 
 			const properties = {
 				...buildSpecs(dataframeName!, population, exposure, outcome),
-				model_specs: models(
+				model_specs: buildAlternativeModels(
 					maximumLevel,
 					minimumModel,
 					intermediateLevel,
