@@ -15,6 +15,7 @@ import type { SignificanceTest } from '~types'
 import { useDefaultRun } from '~hooks'
 import { useSetSignificanceTests } from '~state'
 import { getConfidenceInterval, percentage } from '~utils'
+import { api } from '~resources'
 
 export function useRunConfidenceInterval(): any {
 	const defaultRun = useDefaultRun()
@@ -54,7 +55,7 @@ export function useRunConfidenceInterval(): any {
 	)
 
 	const run = useCallback((): any => {
-		return getConfidenceOrchestrator(onStart, onUpdate)
+		return getConfidenceOrchestrator(api, onStart, onUpdate)
 	}, [onStart, onUpdate])
 
 	return run

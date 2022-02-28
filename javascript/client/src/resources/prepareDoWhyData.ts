@@ -10,8 +10,8 @@ import {
 	NodeRequest,
 	NodeResponse,
 	GraphNodeType,
-	executeNode,
 } from '@showwhy/api-client'
+import { api } from '~resources'
 
 function dataObject(value: string): GraphNode {
 	return {
@@ -92,7 +92,7 @@ export function prepareData(
 		},
 	])
 
-	return executeNode(nodeReq)
+	return api.executeNode(nodeReq)
 }
 
 export const buildSignificanceTestsNode = (taskIds: string[]): NodeRequest => {

@@ -8,7 +8,8 @@ import {
 	NodeResponseStatus,
 } from '@showwhy/api-client'
 import { percentage as calcPercent } from './stats'
-import type { RunStatus, Maybe } from '@showwhy/api-client'
+import type { Maybe } from '@showwhy/api-client'
+import type { RunStatus } from '~types'
 
 //TODO: simplify this function
 export function getRunStatus(

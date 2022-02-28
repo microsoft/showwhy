@@ -18,6 +18,7 @@ import {
 import { useConfidenceInterval } from '~state'
 import type { RunStatus } from '~types'
 import { getRunStatus } from '~utils'
+import { api } from '~resources'
 
 export function useRunEstimate(): () => Orchestrator<EstimateEffectStatusResponse> {
 	const updateActive = useUpdateActiveRunHistory()
@@ -56,7 +57,7 @@ export function useRunEstimate(): () => Orchestrator<EstimateEffectStatusRespons
 	)
 
 	const run = useCallback((): Orchestrator<EstimateEffectStatusResponse> => {
-		return getEstimatorOrchestrator(onStart, onUpdate, onComplete)
+		return getEstimatorOrchestrator(api, onStart, onUpdate, onComplete)
 	}, [onUpdate, onComplete, onStart])
 
 	return run

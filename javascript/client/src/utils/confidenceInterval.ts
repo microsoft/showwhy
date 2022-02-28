@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { NodeResponse, NodeResponseStatus } from '@showwhy/api-client'
-import { SignificanceTest } from '~types'
+import type { SignificanceTest } from '~types'
 
 export function getConfidenceInterval(
 	runId: string,

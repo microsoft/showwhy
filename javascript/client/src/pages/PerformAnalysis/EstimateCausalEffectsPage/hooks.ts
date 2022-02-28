@@ -14,7 +14,7 @@ import {
 	useUpdateAndDisableRunHistory,
 	useWakeLock,
 } from '~hooks'
-import { buildLoadNode, numberExecutions, uploadFiles } from '~resources'
+import { buildLoadNode, api } from '~resources'
 import {
 	useConfidenceInterval,
 	useExperiment,
@@ -81,7 +81,8 @@ export function useBusinessLogic(): {
 		if (!estimateNode || isProcessing) return
 		trueLoadingSpecCount()
 		setErrors('')
-		numberExecutions(estimateNode)
+		api
+			.numberExecutions(estimateNode)
 			.then(res => {
 				setSpecCount(res.total_executions)
 			})
@@ -103,7 +104,7 @@ export function useBusinessLogic(): {
 	const uploadProjectFiles = useCallback(
 		async (projectFiles: ProjectFile[]) => {
 			const filesData = createFormData(projectFiles)
-			return uploadFiles(filesData)
+			return api.uploadFiles(filesData)
 		},
 		[],
 	)
