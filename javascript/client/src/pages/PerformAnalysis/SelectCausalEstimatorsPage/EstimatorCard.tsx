@@ -7,7 +7,7 @@ import type { Maybe, Handler, Estimator } from '@showwhy/types'
 import { memo } from 'react'
 import styled from 'styled-components'
 import { ActionButtons } from '~components/ActionButtons'
-import { LinkCallout } from '~components/Callout'
+import { LinkCallout } from '~components/LinkCallout'
 import { CardComponent } from '~components/CardComponent'
 
 interface ExtendedEstimator extends Estimator {

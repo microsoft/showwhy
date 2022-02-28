@@ -18,7 +18,7 @@ import { DefinitionSteps } from './DefinitionSteps'
 import { Header } from './Header'
 import { useBusinessLogic } from './hooks'
 import { EmptyDataPageWarning } from '~components/EmptyDataPageWarning'
-import { ArqueroDetailsTable } from '~components/Tables/ArqueroDetailsTable'
+import { ArqueroDetailsTable } from '~components/ArqueroDetailsTable'
 import { ContainerFlexRow } from '~styles'
 import { PageType, Pages } from '~types'
 

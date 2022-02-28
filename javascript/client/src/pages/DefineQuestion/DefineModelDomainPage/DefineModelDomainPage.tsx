@@ -7,7 +7,7 @@ import { memo } from 'react'
 import styled from 'styled-components'
 import { useBusinessLogic } from './hooks'
 import { FactorsDefinitionForm } from '~components/FactorsDefinitionForm'
-import { TableComponent } from '~components/Tables/TableComponent'
+import { TableComponent } from '~components/TableComponent'
 import { Container } from '~styles'
 import type { HeaderData } from '~types'
 

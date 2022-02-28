@@ -15,7 +15,7 @@ import {
 	confidenceIntervalCalloutLine1,
 	confidenceIntervalCalloutLine2,
 } from '../../../locales/en-US/perform-analysis'
-import { LinkCallout } from '~components/Callout'
+import { LinkCallout } from '~components/LinkCallout'
 import { ProgressBar } from '~components/ProgressBar'
 import { Paragraph, Value } from '~styles'
 

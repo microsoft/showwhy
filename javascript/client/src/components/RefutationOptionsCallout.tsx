@@ -4,7 +4,7 @@
  */
 import type { Maybe, RefutationOption } from '@showwhy/types'
 import { memo } from 'react'
-import { LinkCallout } from '~components/Callout'
+import { LinkCallout } from '~components/LinkCallout'
 import { Text } from '~styles'
 
 export const RefutationOptionsCallout: React.FC<{

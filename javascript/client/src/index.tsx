@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { render } from 'react-dom'
-import { App } from './components'
+import { App } from './App'
 
 function mount(): void {
 	try {

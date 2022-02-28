@@ -6,7 +6,7 @@
 import { memo } from 'react'
 import styled from 'styled-components'
 import { useFactorsTable } from './hooks'
-import { GenericTableComponent } from '~components/Tables/GenericTableComponent'
+import { GenericTableComponent } from '~components/GenericTableComponent'
 import { Container } from '~styles'
 
 export const FactorsTable: React.FC<{

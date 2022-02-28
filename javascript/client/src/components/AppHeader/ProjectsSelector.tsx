@@ -5,7 +5,7 @@
 import type { IContextualMenuProps, IContextualMenuItem } from '@fluentui/react'
 import type { Maybe } from '@showwhy/types'
 import { memo, useMemo } from 'react'
-import { OptionsButton } from './OptionsButton'
+import { OptionsButton } from '../OptionsButton'
 import { Container } from '~styles'
 import type { FileDefinition } from '~types'
 

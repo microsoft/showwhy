@@ -5,7 +5,7 @@
 import type { IContextualMenuProps } from '@fluentui/react'
 import { NodeResponseStatus } from '@showwhy/types'
 import { memo, useCallback, useMemo } from 'react'
-import { OptionsButton } from './OptionsButton'
+import { OptionsButton } from '../OptionsButton'
 import {
 	useDefaultRun,
 	useDownloadResult,

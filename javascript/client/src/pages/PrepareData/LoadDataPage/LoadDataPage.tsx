@@ -12,7 +12,7 @@ import { DelimiterDropdown } from '~components/DelimiterDropdown'
 import { DialogConfirm } from '~components/DialogConfirm'
 import { DropzoneContainer } from '~components/DropzoneContainer'
 import { MessageContainer } from '~components/MessageContainer'
-import { SelectedTableDisplay } from '~components/Tables/SelectedTableDisplay'
+import { SelectedTableDisplay } from '~components/SelectedTableDisplay'
 import { ContainerFlexRow } from '~styles'
 
 export const LoadDataPage: React.FC = memo(function LoadDataPage() {

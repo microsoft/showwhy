@@ -9,89 +9,89 @@ import { Pages } from '~types'
 const UnderstandProcessPage = lazy(
 	() =>
 		/* webpackChunkName: "UnderstandProcessPage" */ import(
-			'../../pages/UnderstandProcessPage'
+			'../pages/UnderstandProcessPage'
 		),
 )
 
 const DescribeElementsPage = lazy(
 	() =>
 		/* webpackChunkName: "DescribeElementsPage" */ import(
-			'../../pages/DefineQuestion/DescribeElementsPage'
+			'../pages/DefineQuestion/DescribeElementsPage'
 		),
 )
 
 const DefinePage = lazy(
 	() =>
 		/* webpackChunkName: "DefinePage" */ import(
-			'../../pages/DefineQuestion/DefineModelDomainPage'
+			'../pages/DefineQuestion/DefineModelDomainPage'
 		),
 )
 
 const ConsiderCausalFactorsPage = lazy(
 	() =>
 		/* webpackChunkName: "ConsiderCausalFactorsPage" */ import(
-			'../../pages/ModelCausalFactors/ConsiderCausalFactorsPage'
+			'../pages/ModelCausalFactors/ConsiderCausalFactorsPage'
 		),
 )
 
 const DefineFactorsPage = lazy(
 	() =>
 		/* webpackChunkName: "DefineFactorsPage" */ import(
-			'../../pages/ModelCausalFactors/DefineFactorsPage'
+			'../pages/ModelCausalFactors/DefineFactorsPage'
 		),
 )
 
 const ConfirmPage = lazy(
 	() =>
 		/* webpackChunkName: "ConfirmAlternativeModelsPage" */ import(
-			'../../pages/ModelCausalFactors/ConfirmAlternativeModelsPage'
+			'../pages/ModelCausalFactors/ConfirmAlternativeModelsPage'
 		),
 )
 
 const LoadDataPage = lazy(
 	() =>
 		/* webpackChunkName: "LoadDataPage" */ import(
-			'../../pages/PrepareData/LoadDataPage'
+			'../pages/PrepareData/LoadDataPage'
 		),
 )
 const ModelVariablesPage = lazy(
 	() =>
 		/* webpackChunkName: "ModelVariablesPage" */ import(
-			'../../pages/PrepareData/ModelVariablesPage'
+			'../pages/PrepareData/ModelVariablesPage'
 		),
 )
 
 const ProcessTableColumnsPage = lazy(
 	() =>
 		/* webpackChunkName: "ProcessTableColumnsPage" */ import(
-			'../../pages/PrepareData/ProcessTableColumnsPage'
+			'../pages/PrepareData/ProcessTableColumnsPage'
 		),
 )
 
 const SelectCausalEstimatorsPage = lazy(
 	() =>
 		/* webpackChunkName: "SelectCausalEstimatorsPage" */ import(
-			'../../pages/PerformAnalysis/SelectCausalEstimatorsPage'
+			'../pages/PerformAnalysis/SelectCausalEstimatorsPage'
 		),
 )
 const EstimateCausalEffects = lazy(
 	() =>
 		/* webpackChunkName: "EstimateCausalEffects" */ import(
-			'../../pages/PerformAnalysis/EstimateCausalEffectsPage'
+			'../pages/PerformAnalysis/EstimateCausalEffectsPage'
 		),
 )
 
 const ExploreSpecificationCurvePage = lazy(
 	() =>
 		/* webpackChunkName: "ExploreSpecificationCurvePage" */ import(
-			'../../pages/PerformAnalysis/ExploreSpecificationCurvePage'
+			'../pages/PerformAnalysis/ExploreSpecificationCurvePage'
 		),
 )
 
 const EvaluateHypothesisPage = lazy(
 	() =>
 		/* webpackChunkName: "EvaluateHypothesisPage" */ import(
-			'../../pages/PerformAnalysis/EvaluateHypothesisPage'
+			'../pages/PerformAnalysis/EvaluateHypothesisPage'
 		),
 )
 

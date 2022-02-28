@@ -6,7 +6,7 @@ import { IconButton, IIconProps } from '@fluentui/react'
 import type { Handler } from '@showwhy/types'
 import { memo, useMemo } from 'react'
 import styled from 'styled-components'
-import { InfoCallout } from '~components/Callout'
+import { InfoCallout } from '~components/InfoCallout'
 import { Text } from '~styles'
 
 const DEFAULT_FAVORITE_PROPS = Object.freeze({ isFavorite: false, title: '' })

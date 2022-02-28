@@ -8,7 +8,7 @@ import styled from 'styled-components'
 import { ColumnRelevanceSelector } from './ColumnRelevanceSelector'
 import { useBusinessLogic } from './hooks'
 import { DatasetsList } from '~components/DatasetsList'
-import { ArqueroDetailsTable } from '~components/Tables/ArqueroDetailsTable'
+import { ArqueroDetailsTable } from '~components/ArqueroDetailsTable'
 import { Container } from '~styles'
 
 export const ProcessTableColumnsPage: React.FC = memo(
