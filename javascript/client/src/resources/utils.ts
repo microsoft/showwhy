@@ -2,15 +2,8 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-
-import { getEnv } from '~resources/getEnv'
-import {
-	GraphNodeData,
-	GraphNodeType,
-	RefutationType,
-	EstimatorGroup,
-	EstimatorType,
-} from '~types'
+import { RefutationType, EstimatorGroup, EstimatorType } from '~types'
+import { GraphNodeData, GraphNodeType } from '@showwhy/api-client'
 
 export enum NodeIds {
 	IdentifyEstimand = 'Identify Estimand',
@@ -102,14 +95,4 @@ export function getNodeProperties(type: GraphNodeType): GraphNodeData {
 				name: NodeIds.SignificanceTest,
 			}
 	}
-}
-
-export function localhostUrl(url: string): string {
-	return url.replace('http://functions/', 'http://localhost:81/')
-}
-
-export const replaceAzureUrl = (url: string): string => {
-	const { BASE_URL } = getEnv()
-	const regExp = new RegExp(/^https?:\/\/azurite:10000/)
-	return url.replace(regExp, BASE_URL)
 }

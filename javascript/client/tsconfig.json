@@ -10,8 +10,6 @@
 			"~components/*": ["./src/components/*"],
 			"~resources": ["./src/resources/index.ts"],
 			"~resources/*": ["./src/resources/*"],
-			"~classes": ["./src/classes/index.ts"],
-			"~classes/*": ["./src/classes/*"],
 			"~state": ["./src/state/index.ts"],
 			"~state/*": ["./src/state/*"],
 			"~types": ["./src/types/index.ts"],

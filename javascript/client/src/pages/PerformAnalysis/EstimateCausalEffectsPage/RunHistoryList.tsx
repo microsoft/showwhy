@@ -9,8 +9,9 @@ import styled from 'styled-components'
 import { ErrorMessage } from '~components/ErrorMessage'
 import { RunProgressIndicator } from '~components/RunProgressIndicator'
 import { Title, Text, ContainerFlexColumn } from '~styles'
-import type { RunHistory, NodeResponseStatus, Handler } from '~types'
-import { isProcessingStatus, elapsedTime } from '~utils'
+import type { RunHistory, Handler } from '~types'
+import { elapsedTime } from '~utils'
+import { NodeResponseStatus, isProcessingStatus } from '@showwhy/api-client'
 
 export const RunHistoryList: React.FC<{
 	setRunAsDefault: (run: RunHistory) => void

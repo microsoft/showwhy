@@ -10,14 +10,12 @@ import {
 import { LinkCallout } from '~components/Callout'
 import { ProgressBar } from '~components/ProgressBar'
 import { Paragraph, Value } from '~styles'
+import type { SignificanceTest, Maybe, Handler } from '~types'
 import {
+	isProcessingStatus,
 	Significance,
 	NodeResponseStatus,
-	SignificanceTest,
-	Maybe,
-	Handler,
-} from '~types'
-import { isProcessingStatus } from '~utils'
+} from '@showwhy/api-client'
 
 export const SignificanceTests: React.FC<{
 	significanceTestsResult: Maybe<SignificanceTest>

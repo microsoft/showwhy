@@ -9,14 +9,16 @@ import type {
 	OrchestratorOnStartHandler,
 } from './Orchestrator'
 import { OrchestratorType } from './OrchestratorType'
-import { Orchestrator } from '~classes'
-import type { Maybe } from '~types'
+import { Orchestrator } from './Orchestrator'
+import type { FetchApiInteractor } from '../FetchApiInteractor'
+import type { Maybe } from '../types'
 
 const orchestrators: Partial<Record<OrchestratorType, Orchestrator<unknown>>> =
 	{}
 
 function getOrchestrator<UpdateStatus>(
 	type: OrchestratorType,
+	apiInteractor: FetchApiInteractor,
 	onStart?: Maybe<OrchestratorOnStartHandler>,
 	onUpdate?: Maybe<OrchestatorOnUpdateHandler<UpdateStatus>>,
 	onComplete?: Maybe<OrchestratorHandler>,
@@ -26,6 +28,7 @@ function getOrchestrator<UpdateStatus>(
 
 	if (!existing) {
 		const newOrchestrator = new Orchestrator(
+			apiInteractor,
 			onStart,
 			onUpdate,
 			onComplete,
@@ -41,6 +44,7 @@ function getOrchestrator<UpdateStatus>(
 }
 
 export function getEstimatorOrchestrator<UpdateStatus>(
+	apiInteractor: FetchApiInteractor,
 	onStart?: Maybe<OrchestratorOnStartHandler>,
 	onUpdate?: Maybe<OrchestatorOnUpdateHandler<UpdateStatus>>,
 	onComplete?: Maybe<OrchestratorHandler>,
@@ -48,6 +52,7 @@ export function getEstimatorOrchestrator<UpdateStatus>(
 ): Orchestrator<UpdateStatus> {
 	return getOrchestrator(
 		OrchestratorType.Estimator,
+		apiInteractor,
 		onStart,
 		onUpdate,
 		onComplete,
@@ -56,6 +61,7 @@ export function getEstimatorOrchestrator<UpdateStatus>(
 }
 
 export function getConfidenceOrchestrator<UpdateStatus>(
+	apiInteractor: FetchApiInteractor,
 	onStart?: Maybe<OrchestratorOnStartHandler>,
 	onUpdate?: Maybe<OrchestatorOnUpdateHandler<UpdateStatus>>,
 	onComplete?: Maybe<OrchestratorHandler>,
@@ -63,6 +69,7 @@ export function getConfidenceOrchestrator<UpdateStatus>(
 ): Orchestrator<UpdateStatus> {
 	return getOrchestrator(
 		OrchestratorType.ConfidenceInterval,
+		apiInteractor,
 		onStart,
 		onUpdate,
 		onComplete,

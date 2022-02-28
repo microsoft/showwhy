@@ -9,20 +9,14 @@ import {
 	useRunHistory,
 	useSetRunHistory,
 } from '~state'
-import type {
+import type { RunHistory, RunStatus, Maybe } from '~types'
+import { disableAllRuns, setStorageItem, SESSION_ID_KEY } from '~utils'
+import {
 	NodeResponseStatus,
 	NodeResponse,
 	PartialResults,
-	RunHistory,
-	RunStatus,
-	Maybe,
-} from '~types'
-import {
-	disableAllRuns,
 	isProcessingStatus,
-	setStorageItem,
-	SESSION_ID_KEY,
-} from '~utils'
+} from '@showwhy/api-client'
 
 export function useSetRunAsDefault(): (run: RunHistory) => void {
 	const setRunHistory = useSetRunHistory()

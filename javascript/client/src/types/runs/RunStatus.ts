@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { NodeResponseStatus } from '../api'
+import type { NodeResponseStatus } from '@showwhy/api-client'
 import type { RunTime } from './RunTime'
 
 export interface RunStatus {

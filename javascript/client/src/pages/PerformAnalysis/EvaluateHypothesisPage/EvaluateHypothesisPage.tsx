@@ -14,7 +14,8 @@ import { CausalQuestion } from '~components/CausalQuestion'
 import { EmptyDataPageWarning } from '~components/EmptyDataPageWarning'
 import { useSpecificationCurve } from '~hooks'
 import { Container, ContainerFlexColumn } from '~styles'
-import { Pages, CausalEffectSize, NodeResponseStatus } from '~types'
+import { Pages, CausalEffectSize } from '~types'
+import { NodeResponseStatus } from '@showwhy/api-client'
 
 export const EvaluateHypothesisPage: React.FC = memo(
 	function EvaluateHypothesisPage() {

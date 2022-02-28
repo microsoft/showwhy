@@ -30,10 +30,10 @@ import {
 	RunHistory,
 	Specification,
 	SpecificationCurveConfig,
-	NodeResponseStatus,
 	Maybe,
 	Handler,
 } from '~types'
+import { NodeResponseStatus } from '@showwhy/api-client'
 
 export function useSpecificationCurve(): {
 	activeProcessing: Maybe<RunHistory>

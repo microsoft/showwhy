@@ -5,7 +5,6 @@
 
 import { useCallback, useMemo, useState } from 'react'
 import { useLoadSpecificationData } from '../ExploreSpecificationCurvePage/hooks'
-import { OrchestratorType } from '~classes'
 import {
 	useAlternativeModels,
 	useDefaultRun,
@@ -24,11 +23,10 @@ import {
 	useSignificanceTests,
 	useSpecificationCurveConfig,
 } from '~state'
-import {
+import type {
 	AlternativeModels,
 	DefaultDatasetResult,
 	Experiment,
-	NodeResponseStatus,
 	RunHistory,
 	SignificanceTest,
 	Specification,
@@ -36,6 +34,7 @@ import {
 	Maybe,
 	Handler,
 } from '~types'
+import { NodeResponseStatus, OrchestratorType } from '@showwhy/api-client'
 
 export function useBusinessLogic(): {
 	alternativeModels: AlternativeModels

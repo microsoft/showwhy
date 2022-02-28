@@ -4,9 +4,10 @@
  */
 
 import { v4 } from 'uuid'
+import { NodeResponseStatus } from '@showwhy/api-client'
 import { SESSION_ID_KEY } from './constants'
 import { createAndReturnStorageItem } from './sessionStorage'
-import { RunHistory, NodeResponseStatus, RefutationType, Maybe } from '~types'
+import type { RunHistory, RefutationType } from '~types'
 
 export function initialRunHistory(
 	specCount: number,
@@ -32,23 +33,6 @@ export function initialRunHistory(
 		hasConfidenceInterval,
 		refutationType,
 	} as RunHistory
-}
-
-export function isProcessingStatus(nodeStatus: NodeResponseStatus): boolean {
-	const status = nodeStatus?.toLowerCase()
-	return (
-		status === NodeResponseStatus.Processing ||
-		status === NodeResponseStatus.InProgress ||
-		status === NodeResponseStatus.Pending ||
-		status === NodeResponseStatus.Running
-	)
-}
-
-export function isStatus(
-	status: Maybe<NodeResponseStatus>,
-	match: NodeResponseStatus,
-): boolean {
-	return (status && status.toLowerCase() === match) ?? false
 }
 
 export function disableAllRuns(runHistory: RunHistory[]): RunHistory[] {

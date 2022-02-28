@@ -31,13 +31,13 @@ import {
 import {
 	PageType,
 	Workspace,
-	NodeResponseStatus,
 	Maybe,
 	AsyncHandler,
 	DownloadType,
 	DataTableFileDefinition,
 } from '~types'
 import { isDataUrl } from '~utils'
+import { NodeResponseStatus } from '@showwhy/api-client'
 
 export function useSaveProject(): AsyncHandler {
 	const fileCollection = useFileCollection()

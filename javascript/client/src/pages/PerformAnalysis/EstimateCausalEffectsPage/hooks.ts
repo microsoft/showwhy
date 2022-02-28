@@ -5,7 +5,6 @@
 
 import { useBoolean } from '@fluentui/react-hooks'
 import { useCallback, useEffect, useState } from 'react'
-import { OrchestratorType } from '~classes'
 import {
 	useEstimateNode,
 	useIsDefaultRunProcessing,
@@ -29,7 +28,6 @@ import {
 import type {
 	Experiment,
 	Estimator,
-	NodeRequest,
 	ProjectFile,
 	RefutationOption,
 	RunHistory,
@@ -38,6 +36,7 @@ import type {
 	Handler,
 } from '~types'
 import { createFormData, initialRunHistory } from '~utils'
+import { OrchestratorType, NodeRequest } from '@showwhy/api-client'
 
 export function useBusinessLogic(): {
 	isProcessing: boolean

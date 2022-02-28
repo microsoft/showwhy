@@ -4,12 +4,7 @@
  */
 
 import type { OrchestratorType } from './OrchestratorType'
-import {
-	executeNode,
-	genericCheckStatus,
-	getOrchestratorStatus,
-	terminateRun,
-} from '~resources'
+import type { FetchApiInteractor } from '../FetchApiInteractor'
 import type {
 	NodeRequest,
 	NodeResponse,
@@ -17,8 +12,8 @@ import type {
 	NodeResponseStatus,
 	OrchestratorStatusResponse,
 	Maybe,
-} from '~types'
-import { isProcessingStatus, wait } from '~utils'
+} from '../types'
+import { isProcessingStatus, wait } from '../utils'
 
 export type OrchestratorHandler = (...args: unknown[]) => void
 export type OrchestratorOnStartHandler = (nodeResponse: NodeResponse) => void
@@ -38,7 +33,8 @@ export class Orchestrator<UpdateStatus> {
 	public _onComplete: Maybe<OrchestratorHandler>
 	private _orchestratorResponse: Maybe<OrchestratorResponse>
 
-	constructor(
+	public constructor(
+		private api: FetchApiInteractor,
 		onStart?: Maybe<OrchestratorOnStartHandler>,
 		onUpdate?: Maybe<OrchestatorOnUpdateHandler<UpdateStatus>>,
 		onComplete?: Maybe<OrchestratorHandler>,
@@ -50,27 +46,25 @@ export class Orchestrator<UpdateStatus> {
 		this._onCancel = onCancel
 	}
 
-	get orchestratorResponse(): Maybe<OrchestratorResponse> {
+	public get orchestratorResponse(): Maybe<OrchestratorResponse> {
 		return this._orchestratorResponse
-	}
-
-	setOrchestratorResponse(res: OrchestratorResponse): void {
-		this._orchestratorResponse = res
 	}
 
 	private async getStatus(type: OrchestratorType): Promise<StatusResponse> {
 		if (this.orchestratorResponse == null) {
 			throw new Error('response not available')
 		}
-		let status = await getOrchestratorStatus(
+		let status = await this.api.getOrchestratorStatus(
 			this.orchestratorResponse.statusQueryGetUri,
 		)
 
 		let estimateStatus: Partial<OrchestratorStatusResponse> | null = null
 		while (isProcessingStatus(status?.runtimeStatus as NodeResponseStatus)) {
-			[status, estimateStatus] = await Promise.all([
-				getOrchestratorStatus(this.orchestratorResponse.statusQueryGetUri),
-				genericCheckStatus(status?.instanceId, type),
+			;[status, estimateStatus] = await Promise.all([
+				this.api.getOrchestratorStatus(
+					this.orchestratorResponse.statusQueryGetUri,
+				),
+				this.api.genericCheckStatus(status?.instanceId, type),
 				wait(3000),
 			])
 
@@ -80,8 +74,8 @@ export class Orchestrator<UpdateStatus> {
 	}
 
 	async execute(nodes: NodeRequest, type: OrchestratorType): Promise<void> {
-		const response = await executeNode(nodes)
-		this.setOrchestratorResponse(response)
+		const response = await this.api.executeNode(nodes)
+		this._orchestratorResponse = response
 		this._onStart && this._onStart(response)
 		const status = await this.getStatus(type)
 		this._onComplete && this._onComplete(status)
@@ -89,7 +83,7 @@ export class Orchestrator<UpdateStatus> {
 
 	async cancel(): Promise<void> {
 		if (this.orchestratorResponse != null) {
-			await terminateRun(this.orchestratorResponse.terminatePostUri)
+			await this.api.terminateRun(this.orchestratorResponse.terminatePostUri)
 		}
 		this._onCancel && this._onCancel()
 	}

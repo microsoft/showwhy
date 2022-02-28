@@ -12,15 +12,17 @@ import {
 import {
 	CausalityLevel,
 	AlternativeModels,
-	AlternativeModelsRequest,
 	ElementDefinition,
 	Estimator,
-	GraphNodeType,
-	NodeRequest,
 	RefutationType,
 	EstimatorType,
 	Maybe,
 } from '~types'
+import type {
+	AlternativeModelsRequest,
+	GraphNodeType,
+	NodeRequest,
+} from '@showwhy/api-client'
 
 interface Node {
 	type: GraphNodeType

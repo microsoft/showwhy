@@ -8,7 +8,8 @@ import Xarrow from 'react-xarrows'
 import styled from 'styled-components'
 import { ProgressBar } from '~components/ProgressBar'
 import { Container } from '~styles'
-import { NodeResponseStatus, RunHistory, Handler } from '~types'
+import type { RunHistory, Handler } from '~types'
+import { NodeResponseStatus } from '@showwhy/api-client'
 
 interface LabelProps {
 	id: string

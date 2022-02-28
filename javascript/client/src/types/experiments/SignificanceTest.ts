@@ -2,9 +2,11 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-
-import type { TestResults } from './TestResults'
-import type { NodeResponse, NodeResponseStatus } from '~types'
+import type {
+	NodeResponse,
+	NodeResponseStatus,
+	TestResults,
+} from '@showwhy/api-client'
 
 export interface SignificanceTest {
 	runId: string

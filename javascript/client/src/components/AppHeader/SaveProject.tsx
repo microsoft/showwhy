@@ -12,7 +12,8 @@ import {
 	useSaveProject,
 } from '~hooks'
 import { Container } from '~styles'
-import { FileType, NodeResponseStatus } from '~types'
+import { FileType } from '~types'
+import { NodeResponseStatus } from '@showwhy/api-client'
 
 export const SaveProject: React.FC = memo(function SaveProject() {
 	const saveProps = useSaveProps()

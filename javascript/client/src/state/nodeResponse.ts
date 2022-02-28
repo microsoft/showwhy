@@ -9,7 +9,8 @@ import {
 	useRecoilValue,
 	useSetRecoilState,
 } from 'recoil'
-import type { NodeResponse, Maybe } from '~types'
+import type { Maybe } from '~types'
+import type { NodeResponse } from '@showwhy/api-client'
 
 export const nodeResponseState = atom<Maybe<NodeResponse>>({
 	key: 'node-response-store',

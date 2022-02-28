@@ -4,14 +4,14 @@
  */
 
 import { buildNodes } from './builders'
-import { executeNode } from '~resources'
 import {
 	GraphNode,
 	GraphEdge,
 	NodeRequest,
 	NodeResponse,
 	GraphNodeType,
-} from '~types'
+	executeNode,
+} from '@showwhy/api-client'
 
 function dataObject(value: string): GraphNode {
 	return {
