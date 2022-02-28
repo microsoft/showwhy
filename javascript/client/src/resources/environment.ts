@@ -12,6 +12,7 @@ export interface EnvSettings {
 	UPLOAD_FILES_API_KEY: string
 	EXECUTIONS_NUMBER_API_KEY: string
 }
+
 export function getEnv(): EnvSettings {
 	return {
 		BASE_URL: import.meta.env['VITE_API_URI'] as string,
