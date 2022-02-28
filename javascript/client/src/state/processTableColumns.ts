@@ -15,7 +15,8 @@ import {
 	useResetRecoilState,
 	useSetRecoilState,
 } from 'recoil'
-import type { ProjectFile, TableColumn, Maybe } from '~types'
+import type { ProjectFile, TableColumn } from '~types'
+import type { Maybe } from '@showwhy/types'
 
 export const tableColumnsState = atomFamily<
 	Maybe<TableColumn[]>,

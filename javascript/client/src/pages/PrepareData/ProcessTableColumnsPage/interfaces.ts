@@ -4,7 +4,8 @@
  */
 
 import type { IColumn } from '@fluentui/react'
-import type { ColumnRelevance, TableColumn, Setter, Maybe } from '~types'
+import type { ColumnRelevance, TableColumn } from '~types'
+import type { Maybe, Setter } from '@showwhy/types'
 
 export interface OnChange {
 	setTableColumns: Setter<TableColumn[]>

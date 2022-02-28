@@ -10,8 +10,8 @@ import type {
 	DecisionFeature,
 	Specification,
 	SpecificationCurveConfig,
-	Maybe,
 } from '~types'
+import type { Maybe } from '@showwhy/types'
 import { addOrRemoveArrayElement } from '~utils'
 
 export const VegaSpecificationCurve: React.FC<{

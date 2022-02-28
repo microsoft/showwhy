@@ -9,7 +9,8 @@ import {
 	useRecoilValue,
 	useSetRecoilState,
 } from 'recoil'
-import type { SignificanceTest, Maybe } from '~types'
+import type { SignificanceTest } from '~types'
+import type { Maybe } from '@showwhy/types'
 
 export const significanceTestsState = atomFamily<
 	Maybe<SignificanceTest>,

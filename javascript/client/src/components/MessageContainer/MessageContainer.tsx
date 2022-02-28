@@ -5,7 +5,7 @@
 import { MessageBar, MessageBarType, IStyle } from '@fluentui/react'
 import { memo, useCallback } from 'react'
 import styled from 'styled-components'
-import type { Handler } from '~types'
+import type { Handler } from '@showwhy/types'
 
 export const MessageContainer: React.FC<{
 	type?: MessageBarType

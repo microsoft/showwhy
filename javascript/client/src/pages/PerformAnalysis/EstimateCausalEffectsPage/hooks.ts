@@ -32,10 +32,8 @@ import type {
 	ProjectFile,
 	RefutationOption,
 	RunHistory,
-	Maybe,
-	AsyncHandler,
-	Handler,
 } from '~types'
+import type { Maybe, AsyncHandler, Handler } from '@showwhy/types'
 import { createFormData, initialRunHistory } from '~utils'
 
 export function useBusinessLogic(): {

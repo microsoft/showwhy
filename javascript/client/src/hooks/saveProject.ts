@@ -32,12 +32,11 @@ import {
 import {
 	PageType,
 	Workspace,
-	Maybe,
-	AsyncHandler,
 	DownloadType,
 	DataTableFileDefinition,
 } from '~types'
 import { isDataUrl } from '~utils'
+import type { Maybe, AsyncHandler } from '@showwhy/types'
 
 export function useSaveProject(): AsyncHandler {
 	const fileCollection = useFileCollection()

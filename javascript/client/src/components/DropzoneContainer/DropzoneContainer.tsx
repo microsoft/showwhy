@@ -11,7 +11,8 @@ import type { FileCollection } from '@data-wrangling-components/utilities'
 import { Icon, Spinner } from '@fluentui/react'
 import { FC, memo, useMemo } from 'react'
 import styled from 'styled-components'
-import type { DropFilesCount, Maybe } from '~types'
+import type { DropFilesCount } from '~types'
+import type { Maybe } from '@showwhy/types'
 
 export const DropzoneContainer: FC<{
 	loading: Maybe<boolean>

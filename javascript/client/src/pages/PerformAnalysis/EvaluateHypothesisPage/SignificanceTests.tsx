@@ -15,7 +15,8 @@ import {
 import { LinkCallout } from '~components/Callout'
 import { ProgressBar } from '~components/ProgressBar'
 import { Paragraph, Value } from '~styles'
-import type { SignificanceTest, Maybe, Handler } from '~types'
+import type { SignificanceTest } from '~types'
+import type { Maybe, Handler } from '@showwhy/types'
 
 export const SignificanceTests: React.FC<{
 	significanceTestsResult: Maybe<SignificanceTest>

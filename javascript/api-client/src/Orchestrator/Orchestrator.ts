@@ -10,10 +10,10 @@ import type {
 	StatusResponse,
 	NodeResponseStatus,
 	OrchestratorStatusResponse,
-	Maybe,
 } from '../types'
 import { isProcessingStatus, wait } from '../utils'
 import type { OrchestratorType } from './OrchestratorType'
+import type { Maybe } from '@showwhy/types'
 
 export type OrchestratorHandler = (...args: unknown[]) => void
 export type OrchestratorOnStartHandler = (nodeResponse: NodeResponse) => void
@@ -60,7 +60,7 @@ export class Orchestrator<UpdateStatus> {
 
 		let estimateStatus: Partial<OrchestratorStatusResponse> | null = null
 		while (isProcessingStatus(status?.runtimeStatus as NodeResponseStatus)) {
-			[status, estimateStatus] = await Promise.all([
+			;[status, estimateStatus] = await Promise.all([
 				this.api.getOrchestratorStatus(
 					this.orchestratorResponse.statusQueryGetUri,
 				),

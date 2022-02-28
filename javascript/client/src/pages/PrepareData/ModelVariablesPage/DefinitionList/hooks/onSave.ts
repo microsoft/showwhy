@@ -6,15 +6,8 @@
 import { useCallback } from 'react'
 import { v4 } from 'uuid'
 import type { SetEditingDefinition, SetModelVariables } from './types'
-import {
-	PageType,
-	CausalFactor,
-	Definition,
-	Setter,
-	Maybe,
-	CausalityLevel,
-	Handler,
-} from '~types'
+import { PageType, CausalFactor, Definition, CausalityLevel } from '~types'
+import type { Setter, Maybe, Handler } from '@showwhy/types'
 
 export function useOnSaveCausalFactor({
 	setNewLabel,

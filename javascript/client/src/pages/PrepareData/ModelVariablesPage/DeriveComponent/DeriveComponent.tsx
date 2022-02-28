@@ -33,9 +33,8 @@ import {
 	TableDerivationType,
 	Definition,
 	VariableDefinition,
-	Maybe,
-	Handler,
 } from '~types'
+import type { Maybe, Handler } from '@showwhy/types'
 
 export const DeriveComponent: React.FC<{
 	selectedDefinition: string

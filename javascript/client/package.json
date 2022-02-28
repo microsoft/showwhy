@@ -35,6 +35,7 @@
 		"@fluentui/react-hooks": "^8.3.13",
 		"@fluentui/utilities": "^8.4.2",
 		"@showwhy/api-client": "workspace:javascript/api-client",
+		"@showwhy/types": "workspace:javascript/types",
 		"@thematic/color": "^2.0.4",
 		"@thematic/core": "^2.0.4",
 		"@thematic/d3": "^2.0.4",

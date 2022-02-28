@@ -11,7 +11,8 @@ import {
 	useSetRecoilState,
 } from 'recoil'
 import { filesState, filesStateChanged } from './files'
-import type { ProjectFile, Maybe } from '~types'
+import type { ProjectFile } from '~types'
+import type { Maybe } from '@showwhy/types'
 
 const selectedFileState = atom<Maybe<ProjectFile>>({
 	key: 'selected-file',

@@ -4,7 +4,7 @@
  */
 
 import { useCallback } from 'react'
-import type { Handler } from '~types'
+import type { Handler } from '@showwhy/types'
 
 export function useOnDropRejected(
 	onError?: (text: string) => void,

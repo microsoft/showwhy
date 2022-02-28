@@ -23,13 +23,8 @@ import {
 	useSetProjectFiles,
 	useSetSelectedFile,
 } from '~state'
-import type {
-	DropFilesCount,
-	ProjectFile,
-	Handler1,
-	Maybe,
-	Handler,
-} from '~types'
+import type { DropFilesCount, ProjectFile } from '~types'
+import type { Handler1, Maybe, Handler } from '@showwhy/types'
 import { createDefaultTable, replaceItemAtIndex } from '~utils'
 
 export function useBusinessLogic(): {

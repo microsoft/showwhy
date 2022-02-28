@@ -4,7 +4,8 @@
  */
 
 import type { RowObject } from 'arquero/dist/types/table/table'
-import type { TableColumn, Maybe } from '~types'
+import type { TableColumn } from '~types'
+import type { Maybe } from '@showwhy/types'
 
 export interface ColumnDetailsProps {
 	columnName: string

@@ -7,7 +7,7 @@ import { memo, useMemo } from 'react'
 import styled from 'styled-components'
 import { InfoCallout } from '~components/Callout'
 import { Text } from '~styles'
-import type { Handler } from '~types'
+import type { Handler } from '@showwhy/types'
 
 const DEFAULT_FAVORITE_PROPS = Object.freeze({ isFavorite: false, title: '' })
 

@@ -38,11 +38,10 @@ import {
 	Workspace,
 	DataTableFileDefinition,
 	StepStatus,
-	Handler1,
 	DataTable,
-	Maybe,
 	RunHistory,
 } from '~types'
+import type { Maybe, Handler1 } from '@showwhy/types'
 import {
 	fetchRemoteTables,
 	fetchTable,

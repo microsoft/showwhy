@@ -9,7 +9,8 @@ import Xarrow from 'react-xarrows'
 import styled from 'styled-components'
 import { ProgressBar } from '~components/ProgressBar'
 import { Container } from '~styles'
-import type { RunHistory, Handler } from '~types'
+import type { RunHistory } from '~types'
+import type { Handler } from '@showwhy/types'
 
 interface LabelProps {
 	id: string

@@ -5,7 +5,7 @@
 import { ComboBox, IComboBoxOption } from '@fluentui/react'
 import { memo, useMemo } from 'react'
 import styled from 'styled-components'
-import type { Maybe } from '~types'
+import type { Maybe } from '@showwhy/types'
 
 export const VariablePicker: React.FC<{
 	onChange: (value: string) => void

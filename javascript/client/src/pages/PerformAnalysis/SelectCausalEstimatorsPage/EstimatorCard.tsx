@@ -8,7 +8,8 @@ import styled from 'styled-components'
 import { ActionButtons } from '~components/ActionButtons'
 import { LinkCallout } from '~components/Callout'
 import { CardComponent } from '~components/CardComponent'
-import type { Estimator, Maybe, Handler } from '~types'
+import type { Estimator } from '~types'
+import type { Maybe, Handler } from '@showwhy/types'
 
 interface ExtendedEstimator extends Estimator {
 	description: string

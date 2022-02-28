@@ -15,7 +15,8 @@ import {
 	useResetRecoilState,
 	useSetRecoilState,
 } from 'recoil'
-import type { Definition, ProjectFile, VariableDefinition, Maybe } from '~types'
+import type { Definition, ProjectFile, VariableDefinition } from '~types'
+import type { Maybe } from '@showwhy/types'
 
 const modelVariablesState = atomFamily<Maybe<Definition>, Maybe<string>>({
 	key: 'model-variables',

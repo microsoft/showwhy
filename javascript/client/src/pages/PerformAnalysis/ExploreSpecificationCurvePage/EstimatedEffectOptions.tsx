@@ -5,7 +5,7 @@
 import { Toggle } from '@fluentui/react'
 import { memo } from 'react'
 import styled from 'styled-components'
-import type { Maybe } from '~types'
+import type { Maybe } from '@showwhy/types'
 
 export const EstimatedEffectOptions: React.FC<{
 	checked: Maybe<boolean>

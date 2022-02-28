@@ -17,7 +17,7 @@ import {
 	useResetSelectedFile,
 	useResetSpecificationCurveConfig,
 } from '~state'
-import type { Handler } from '~types'
+import type { Handler } from '@showwhy/types'
 
 export function useResetProject(): Handler {
 	const resetCausalFactors = useResetCausalFactors()

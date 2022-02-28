@@ -32,9 +32,8 @@ import type {
 	SignificanceTest,
 	Specification,
 	RefutationType,
-	Maybe,
-	Handler,
 } from '~types'
+import type { Maybe, Handler } from '@showwhy/types'
 
 export function useBusinessLogic(): {
 	alternativeModels: AlternativeModels

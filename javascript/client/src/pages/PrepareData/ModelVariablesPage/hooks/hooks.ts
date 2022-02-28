@@ -32,9 +32,8 @@ import {
 	Element,
 	CausalFactor,
 	VariableDefinition,
-	Maybe,
-	Handler,
 } from '~types'
+import type { Maybe, Handler } from '@showwhy/types'
 
 export function useBusinessLogic(): {
 	pageType: PageType

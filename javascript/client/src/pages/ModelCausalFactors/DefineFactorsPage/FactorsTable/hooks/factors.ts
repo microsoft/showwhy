@@ -9,8 +9,8 @@ import type {
 	Cause,
 	ExposureAndOutcomeCauses,
 	FlatCausalFactor,
-	Setter,
 } from '~types'
+import type { Setter } from '@showwhy/types'
 import { replaceItemAtIndex } from '~utils'
 
 export function useFlatFactorsList(

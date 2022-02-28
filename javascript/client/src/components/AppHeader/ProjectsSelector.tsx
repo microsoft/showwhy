@@ -6,7 +6,8 @@ import type { IContextualMenuProps, IContextualMenuItem } from '@fluentui/react'
 import { memo, useMemo } from 'react'
 import { OptionsButton } from './OptionsButton'
 import { Container } from '~styles'
-import type { FileDefinition, Maybe } from '~types'
+import type { FileDefinition } from '~types'
+import type { Maybe } from '@showwhy/types'
 
 export const ProjectsSelector: React.FC<{
 	exampleProjects: FileDefinition[]

@@ -10,7 +10,8 @@ import {
 } from '@fluentui/react'
 import { memo, useCallback } from 'react'
 import styled from 'styled-components'
-import { ColumnRelation, ColumnRelevance, Maybe, Handler } from '~types'
+import { ColumnRelation, ColumnRelevance } from '~types'
+import type { Maybe, Handler } from '@showwhy/types'
 
 type DefinitionChangeHandler = (changedRelation: ColumnRelation[]) => void
 type ToggleSelectHandler = (

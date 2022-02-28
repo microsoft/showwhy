@@ -21,7 +21,8 @@ import {
 	useResetCount,
 	useSupportedFileTypes,
 } from '~hooks'
-import type { DropFilesCount, ProjectFile, Handler } from '~types'
+import type { DropFilesCount, ProjectFile } from '~types'
+import type { Handler } from '@showwhy/types'
 
 export function useHandleOnDrop(
 	onFileLoadCompleted: (file: ProjectFile, table: ColumnTable) => void,

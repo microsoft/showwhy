@@ -11,8 +11,8 @@ import {
 	RefutationTestMethod,
 	RefutationType,
 	RefutationResult,
-	Handler,
 } from '~types'
+import type { Handler } from '@showwhy/types'
 
 export const REFUTATIONS: RefutationOption[] = [
 	{

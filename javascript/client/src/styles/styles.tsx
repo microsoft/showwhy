@@ -5,7 +5,7 @@
 
 import { Spinner } from '@fluentui/react'
 import styled from 'styled-components'
-import type { Maybe } from '~types'
+import type { Maybe } from '@showwhy/types'
 
 export const Title = styled.h3<{
 	noMarginBottom?: Maybe<boolean>

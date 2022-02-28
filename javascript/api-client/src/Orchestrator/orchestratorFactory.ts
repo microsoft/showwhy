@@ -4,7 +4,7 @@
  */
 
 import type { FetchApiInteractor } from '../FetchApiInteractor'
-import type { Maybe } from '../types'
+import type { Maybe } from '@showwhy/types'
 import type {
 	OrchestatorOnUpdateHandler,
 	OrchestratorHandler,

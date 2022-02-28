@@ -31,9 +31,8 @@ import {
 	RunHistory,
 	Specification,
 	SpecificationCurveConfig,
-	Maybe,
-	Handler,
 } from '~types'
+import type { Maybe, Handler } from '@showwhy/types'
 
 export function useSpecificationCurve(): {
 	activeProcessing: Maybe<RunHistory>

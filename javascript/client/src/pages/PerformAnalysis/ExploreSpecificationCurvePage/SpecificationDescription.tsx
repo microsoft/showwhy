@@ -13,8 +13,8 @@ import {
 	RefutationOption,
 	Specification,
 	RefutationTestMethodString,
-	Handler,
 } from '~types'
+import type { Handler } from '@showwhy/types'
 import { pluralize } from '~utils'
 
 export const SpecificationDescription: React.FC<{

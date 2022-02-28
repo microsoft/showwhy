@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { NodeResponseStatus } from './types'
-import type { Maybe } from './types'
+import type { Maybe } from '@showwhy/types'
 
 export function wait(ms: number): Promise<boolean> {
 	return new Promise(resolve => {

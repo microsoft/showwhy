@@ -21,8 +21,8 @@ import {
 	Estimator,
 	RefutationType,
 	EstimatorType,
-	Maybe,
 } from '~types'
+import type { Maybe } from '@showwhy/types'
 
 interface Node {
 	type: GraphNodeType

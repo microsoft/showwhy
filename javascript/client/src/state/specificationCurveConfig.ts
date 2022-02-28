@@ -11,7 +11,8 @@ import {
 	useResetRecoilState,
 	useSetRecoilState,
 } from 'recoil'
-import type { SpecificationCurveConfig, Maybe } from '~types'
+import type { SpecificationCurveConfig } from '~types'
+import type { Maybe } from '@showwhy/types'
 
 export const defaultConfig = {
 	medianLine: true,

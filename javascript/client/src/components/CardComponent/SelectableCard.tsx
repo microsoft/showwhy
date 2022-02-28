@@ -5,7 +5,7 @@
 import { DefaultButton, Icon } from '@fluentui/react'
 import { memo, useCallback } from 'react'
 import styled from 'styled-components'
-import type { Handler, Maybe } from '~types'
+import type { Handler, Maybe } from '@showwhy/types'
 
 export const SelectableCard: React.FC<{
 	onClick: Handler

@@ -10,10 +10,9 @@ import type {
 	VariableDefinition,
 	Element,
 	TableColumn,
-	Setter,
 	ColumnRelation,
-	Maybe,
 } from '~types'
+import type { Setter, Maybe } from '@showwhy/types'
 
 export interface SelectedArgs {
 	defineQuestionData: Element

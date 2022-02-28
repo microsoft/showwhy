@@ -15,9 +15,9 @@ import type {
 	DataTableFileDefinition,
 	ProjectFile,
 	ZipData,
-	Maybe,
 	RunHistory,
 } from '~types'
+import type { Maybe } from '@showwhy/types'
 
 export function createTextFile(name: string, content: string): File {
 	const type = { type: `text/${name.split('.').pop()}` }

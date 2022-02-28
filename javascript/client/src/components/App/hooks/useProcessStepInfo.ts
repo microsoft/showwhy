@@ -5,7 +5,8 @@
 import { useCallback, useMemo } from 'react'
 import { useCurrentStep, useAllSteps } from '~hooks'
 import { useSetStepStatus, useStepStatus } from '~state'
-import { Handler, Step, StepStatus, Maybe } from '~types'
+import { Step, StepStatus } from '~types'
+import type { Maybe, Handler } from '@showwhy/types'
 
 export type ToggleStepStatusHandler = Handler
 export interface ProcessStepInfo {

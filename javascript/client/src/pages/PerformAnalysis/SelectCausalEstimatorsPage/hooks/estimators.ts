@@ -21,10 +21,8 @@ import type {
 	EstimatorType,
 	Estimator,
 	PrimarySpecificationConfig,
-	Setter,
-	Maybe,
-	Handler,
 } from '~types'
+import type { Setter, Maybe, Handler } from '@showwhy/types'
 
 enum BatchUpdateAction {
 	Delete = 'delete',

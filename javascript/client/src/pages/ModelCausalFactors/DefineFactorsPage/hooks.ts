@@ -6,7 +6,8 @@
 import { upperFirst } from 'lodash'
 import { useMemo } from 'react'
 import { useGoToPage, usePageType } from '~hooks'
-import { Pages, Handler } from '~types'
+import { Pages } from '~types'
+import type { Handler } from '@showwhy/types'
 
 export function useBusinessLogic(): {
 	pageName: string

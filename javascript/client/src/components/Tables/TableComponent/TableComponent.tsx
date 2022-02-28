@@ -14,9 +14,8 @@ import type {
 	CausalFactor,
 	HeaderData,
 	Item,
-	Handler1,
-	Handler,
 } from '~types'
+import type { Handler1, Handler } from '@showwhy/types'
 
 export const TableComponent: React.FC<{
 	headers: HeaderData[]

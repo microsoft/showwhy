@@ -1,5 +1,5 @@
 {
-	"name": "@showwhy/api-client",
+	"name": "@showwhy/types",
 	"version": "0.0.1",
 	"type": "module",
 	"main": "src/index.ts",
@@ -12,11 +12,9 @@
 		"clean": "essex clean",
 		"build": "essex build --mode legacy"
 	},
-	"dependencies": {
-		"@showwhy/types": "workspace:javascript/types"
-	},
 	"devDependencies": {
 		"@essex/scripts": "^20.3.2",
-		"@essex/tsconfig-base": "^1.0.2"
+		"@essex/tsconfig-base": "^1.0.2",
+		"@types/react": "^17.0.39"
 	}
 }

@@ -19,8 +19,8 @@ import {
 	TableColumn,
 	TableDerivation,
 	TableDerivationType,
-	Maybe,
 } from '~types'
+import type { Maybe } from '@showwhy/types'
 
 export function useTableWithColumnsDropped(): Maybe<ColumnTable> {
 	const selectedFile = useSelectedFile()

@@ -5,7 +5,8 @@
 
 import { useCallback } from 'react'
 import { useSetHoverState } from '~state'
-import type { DecisionFeature, Specification, Maybe } from '~types'
+import type { DecisionFeature, Specification } from '~types'
+import type { Maybe } from '@showwhy/types'
 
 export function useOnMouseOver(): (
 	item: Maybe<Specification | DecisionFeature>,

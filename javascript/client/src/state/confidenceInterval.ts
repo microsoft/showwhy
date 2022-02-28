@@ -11,7 +11,7 @@ import {
 	useResetRecoilState,
 	useSetRecoilState,
 } from 'recoil'
-import type { Handler } from '~types'
+import type { Handler } from '@showwhy/types'
 
 export const confidenceIntervalState = atom<boolean>({
 	key: 'confidence-interval',

@@ -6,7 +6,8 @@
 import { visibleColumnsCommand } from '@data-wrangling-components/react'
 import type { IColumn, ICommandBarItemProps } from '@fluentui/react'
 import { useCallback, useMemo } from 'react'
-import type { DataTable, Maybe } from '~types'
+import type { DataTable } from '~types'
+import type { Maybe } from '@showwhy/types'
 
 export function useTableCommands(
 	table: Maybe<DataTable>,

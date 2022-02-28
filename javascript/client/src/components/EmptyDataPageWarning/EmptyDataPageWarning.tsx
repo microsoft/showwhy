@@ -5,7 +5,8 @@
 import { memo } from 'react'
 import { Link } from 'react-router-dom'
 import { ContainerTextCenter, Text } from '~styles'
-import type { Pages, Maybe } from '~types'
+import type { Pages } from '~types'
+import type { Maybe } from '@showwhy/types'
 
 export const EmptyDataPageWarning: React.FC<{
 	text: string

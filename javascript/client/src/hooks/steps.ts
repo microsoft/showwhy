@@ -7,7 +7,8 @@ import { useLocation } from 'react-router-dom'
 // HACK to pass unit tests
 import { useSelectedProject } from '~state/project'
 import { useStepStatus } from '~state/stepStatus'
-import { StepStatus, Workflow, Step, Maybe } from '~types'
+import { StepStatus, Workflow, Step } from '~types'
+import type { Maybe } from '@showwhy/types'
 
 export function useFindStepsByPathname(pathNames: string[]): Step[] {
 	const steps = useSelectedProject().steps

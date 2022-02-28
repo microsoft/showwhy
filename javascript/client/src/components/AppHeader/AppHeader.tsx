@@ -10,7 +10,8 @@ import { SaveProject } from './SaveProject'
 import { Settings } from './Settings'
 import { CausalQuestion } from '~components/CausalQuestion'
 import { Container } from '~styles'
-import type { StepStatus, Experiment, FileDefinition, Handler1 } from '~types'
+import type { StepStatus, Experiment, FileDefinition } from '~types'
+import type { Handler1 } from '@showwhy/types'
 
 type GetStepUrlsHandler = (urls?: string[], exclude?: any) => string[]
 type SetAllStepStatusHandler = (urls: string[], status: StepStatus) => void

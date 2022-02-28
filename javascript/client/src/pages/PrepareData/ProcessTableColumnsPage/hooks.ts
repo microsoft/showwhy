@@ -21,9 +21,8 @@ import {
 	DataTable,
 	ProjectFile,
 	TableColumn,
-	Setter,
-	Maybe,
 } from '~types'
+import type { Setter, Maybe } from '@showwhy/types'
 
 export function useBusinessLogic(): {
 	files: ProjectFile[]

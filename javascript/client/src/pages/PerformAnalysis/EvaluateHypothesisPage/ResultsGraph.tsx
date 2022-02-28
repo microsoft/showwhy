@@ -12,8 +12,8 @@ import {
 	Experiment,
 	Specification,
 	SpecificationCurveConfig,
-	Maybe,
 } from '~types'
+import type { Maybe } from '@showwhy/types'
 import { median as calcMedian } from '~utils'
 
 export const ResultsGraph: React.FC<{

@@ -4,7 +4,8 @@
  */
 import { useCallback, useEffect, useMemo } from 'react'
 import { useLocation } from 'react-router-dom'
-import type { Setter, StepList, Workflow } from '~types'
+import type { StepList, Workflow } from '~types'
+import type { Setter } from '@showwhy/types'
 
 export function usePanels(project: Workflow): StepList[] {
 	return useMemo(() => {
