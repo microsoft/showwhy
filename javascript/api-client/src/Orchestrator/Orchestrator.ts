@@ -60,7 +60,7 @@ export class Orchestrator<UpdateStatus> {
 
 		let estimateStatus: Partial<OrchestratorStatusResponse> | null = null
 		while (isProcessingStatus(status?.runtimeStatus as NodeResponseStatus)) {
-			;[status, estimateStatus] = await Promise.all([
+			[status, estimateStatus] = await Promise.all([
 				this.api.getOrchestratorStatus(
 					this.orchestratorResponse.statusQueryGetUri,
 				),
