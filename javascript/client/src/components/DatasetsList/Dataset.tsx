@@ -2,9 +2,10 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import type { Maybe, Handler1 } from '@showwhy/types'
 import { memo, useCallback } from 'react'
 import { SelectableCard } from '~components/CardComponent'
-import type { Handler1, ProjectFile, Maybe } from '~types'
+import type { ProjectFile } from '~types'
 
 export const Dataset: React.FC<{
 	file: ProjectFile

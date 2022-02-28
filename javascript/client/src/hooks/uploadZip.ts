@@ -10,9 +10,10 @@ import {
 	BaseFile,
 } from '@data-wrangling-components/utilities'
 import type { IContextualMenuItem } from '@fluentui/react'
+import type { AsyncHandler1 } from '@showwhy/types'
 import { useMemo, useCallback } from 'react'
 import { useLoadProject } from './loadProject'
-import { ProjectSource, FileDefinition, AsyncHandler1 } from '~types'
+import { ProjectSource, FileDefinition } from '~types'
 import { groupFilesByType, isZipUrl } from '~utils'
 
 const uploadZipButtonId = 'uploadZip'

@@ -3,6 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import type { Handler } from '@showwhy/types'
 import { useCallback } from 'react'
 import {
 	useResetCausalFactors,
@@ -17,7 +18,6 @@ import {
 	useResetSelectedFile,
 	useResetSpecificationCurveConfig,
 } from '~state'
-import type { Handler } from '~types'
 
 export function useResetProject(): Handler {
 	const resetCausalFactors = useResetCausalFactors()

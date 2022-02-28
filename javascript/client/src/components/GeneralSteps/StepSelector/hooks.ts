@@ -2,9 +2,10 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import type { Setter } from '@showwhy/types'
 import { useCallback, useEffect, useMemo } from 'react'
 import { useLocation } from 'react-router-dom'
-import type { Setter, StepList, Workflow } from '~types'
+import type { StepList, Workflow } from '~types'
 
 export function usePanels(project: Workflow): StepList[] {
 	return useMemo(() => {

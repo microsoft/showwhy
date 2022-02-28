@@ -2,6 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import type { Maybe } from '@showwhy/types'
 import {
 	atom,
 	Resetter,
@@ -11,7 +12,7 @@ import {
 	useSetRecoilState,
 } from 'recoil'
 import { filesState, filesStateChanged } from './files'
-import type { ProjectFile, Maybe } from '~types'
+import type { ProjectFile } from '~types'
 
 const selectedFileState = atom<Maybe<ProjectFile>>({
 	key: 'selected-file',

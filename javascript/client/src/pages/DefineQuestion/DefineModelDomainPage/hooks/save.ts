@@ -3,8 +3,9 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import type { AsyncHandler1 } from '@showwhy/types'
 import { useCallback } from 'react'
-import type { Experiment, ElementDefinition, AsyncHandler1 } from '~types'
+import type { Experiment, ElementDefinition } from '~types'
 import { wait } from '~utils'
 
 export function useSaveDefinitions(

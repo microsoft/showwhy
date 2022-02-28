@@ -2,6 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import type { Maybe } from '@showwhy/types'
 import { memo, useCallback, useState } from 'react'
 import styled from 'styled-components'
 import { AnalyticDecisionsDotPlot } from './AnalyticDecisionsDotPlot'
@@ -10,7 +11,6 @@ import type {
 	DecisionFeature,
 	Specification,
 	SpecificationCurveConfig,
-	Maybe,
 } from '~types'
 import { addOrRemoveArrayElement } from '~utils'
 

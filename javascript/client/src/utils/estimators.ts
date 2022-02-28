@@ -2,14 +2,14 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { isStatus } from './api'
-import { percentage as calcPercent } from './stats'
 import {
+	isStatus,
 	EstimateEffectStatusResponse,
-	RunStatus,
 	NodeResponseStatus,
-	Maybe,
-} from '~types'
+} from '@showwhy/api-client'
+import type { Maybe } from '@showwhy/types'
+import { percentage as calcPercent } from './stats'
+import type { RunStatus } from '~types'
 
 //TODO: simplify this function
 export function getRunStatus(

@@ -4,8 +4,8 @@
  */
 
 import { useInterval } from '@essex-js-toolkit/hooks'
+import type { Maybe } from '@showwhy/types'
 import { useState, useMemo } from 'react'
-import type { Maybe } from '~types'
 import { elapsedTime } from '~utils'
 
 export function useTimeElapsed(startTime: Maybe<Date>): string {

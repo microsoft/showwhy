@@ -3,13 +3,14 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import type { NodeResponse } from '@showwhy/api-client'
+import type { Maybe } from '@showwhy/types'
 import {
 	atom,
 	SetterOrUpdater,
 	useRecoilValue,
 	useSetRecoilState,
 } from 'recoil'
-import type { NodeResponse, Maybe } from '~types'
 
 export const nodeResponseState = atom<Maybe<NodeResponse>>({
 	key: 'node-response-store',

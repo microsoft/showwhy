@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { NodeResponseStatus } from '~types'
+import type { NodeResponseStatus } from './NodeResponseStatus'
 
 export interface StatusResponse {
 	runtimeStatus: NodeResponseStatus

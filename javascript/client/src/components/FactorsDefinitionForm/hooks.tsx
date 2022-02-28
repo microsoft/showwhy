@@ -4,6 +4,7 @@
  */
 
 import type { IComboBoxOption } from '@fluentui/react'
+import type { Handler, Setter, OptionalId } from '@showwhy/types'
 import { useCallback, useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import {
@@ -12,15 +13,7 @@ import {
 	useHasLevel,
 	useVariablePicker,
 } from './variables'
-import {
-	PageType,
-	Experiment,
-	CausalFactor,
-	CausalityLevel,
-	Handler,
-	Setter,
-	OptionalId,
-} from '~types'
+import { PageType, Experiment, CausalFactor, CausalityLevel } from '~types'
 import { noop } from '~utils'
 
 type OnAddHandler = (factor: OptionalId<CausalFactor>) => void

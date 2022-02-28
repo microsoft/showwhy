@@ -3,6 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import type { Maybe } from '@showwhy/types'
 import { useCallback } from 'react'
 import {
 	atom,
@@ -15,7 +16,7 @@ import {
 	useResetRecoilState,
 	useSetRecoilState,
 } from 'recoil'
-import type { ProjectFile, TableColumn, Maybe } from '~types'
+import type { ProjectFile, TableColumn } from '~types'
 
 export const tableColumnsState = atomFamily<
 	Maybe<TableColumn[]>,

@@ -3,10 +3,12 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import type { NodeRequest } from '@showwhy/api-client'
+import type { Maybe } from '@showwhy/types'
 import { useCallback, useMemo } from 'react'
 import { useBuildEstimateEffectNode } from '~resources/hooks'
 import { buildLoadNode } from '~resources/prepareDoWhyData'
-import type { NodeRequest, ProjectFile, Maybe } from '~types'
+import type { ProjectFile } from '~types'
 
 //TODO: fix for CI
 export function useGetNodes(

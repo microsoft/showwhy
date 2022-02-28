@@ -2,8 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { isProcessingStatus } from '../api'
-import { NodeResponseStatus } from '~types'
+import { NodeResponseStatus, isProcessingStatus } from '@showwhy/api-client'
 
 describe('api utils functions', () => {
 	it('isProcessingStatus => Running', () => {

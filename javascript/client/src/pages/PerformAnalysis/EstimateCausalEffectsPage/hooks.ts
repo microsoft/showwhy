@@ -4,8 +4,9 @@
  */
 
 import { useBoolean } from '@fluentui/react-hooks'
+import { OrchestratorType, NodeRequest } from '@showwhy/api-client'
+import type { Maybe, AsyncHandler, Handler } from '@showwhy/types'
 import { useCallback, useEffect, useState } from 'react'
-import { OrchestratorType } from '~classes'
 import {
 	useEstimateNode,
 	useIsDefaultRunProcessing,
@@ -15,7 +16,7 @@ import {
 	useUpdateAndDisableRunHistory,
 	useWakeLock,
 } from '~hooks'
-import { buildLoadNode, numberExecutions, uploadFiles } from '~resources'
+import { buildLoadNode, api } from '~resources'
 import {
 	useConfidenceInterval,
 	useExperiment,
@@ -29,13 +30,9 @@ import {
 import type {
 	Experiment,
 	Estimator,
-	NodeRequest,
 	ProjectFile,
 	RefutationOption,
 	RunHistory,
-	Maybe,
-	AsyncHandler,
-	Handler,
 } from '~types'
 import { createFormData, initialRunHistory } from '~utils'
 
@@ -82,7 +79,8 @@ export function useBusinessLogic(): {
 		if (!estimateNode || isProcessing) return
 		trueLoadingSpecCount()
 		setErrors('')
-		numberExecutions(estimateNode)
+		api
+			.numberExecutions(estimateNode)
 			.then(res => {
 				setSpecCount(res.total_executions)
 			})
@@ -104,7 +102,7 @@ export function useBusinessLogic(): {
 	const uploadProjectFiles = useCallback(
 		async (projectFiles: ProjectFile[]) => {
 			const filesData = createFormData(projectFiles)
-			return uploadFiles(filesData)
+			return api.uploadFiles(filesData)
 		},
 		[],
 	)

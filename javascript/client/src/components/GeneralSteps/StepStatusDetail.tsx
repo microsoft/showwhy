@@ -3,9 +3,10 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { Spinner, SpinnerSize } from '@fluentui/react'
+import type { Maybe } from '@showwhy/types'
 import { memo, useCallback } from 'react'
 import styled from 'styled-components'
-import { StepStatus, Maybe } from '~types'
+import { StepStatus } from '~types'
 
 export const StepStatusDetail: React.FC<{
 	status: Maybe<StepStatus>

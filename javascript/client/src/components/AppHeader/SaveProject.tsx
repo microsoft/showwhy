@@ -3,6 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import type { IContextualMenuProps } from '@fluentui/react'
+import { NodeResponseStatus } from '@showwhy/api-client'
 import { memo, useCallback, useMemo } from 'react'
 import { OptionsButton } from './OptionsButton'
 import {
@@ -12,7 +13,7 @@ import {
 	useSaveProject,
 } from '~hooks'
 import { Container } from '~styles'
-import { FileType, NodeResponseStatus } from '~types'
+import { FileType } from '~types'
 
 export const SaveProject: React.FC = memo(function SaveProject() {
 	const saveProps = useSaveProps()

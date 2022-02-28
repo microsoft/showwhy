@@ -2,10 +2,11 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import type { Maybe } from '@showwhy/types'
 import { memo } from 'react'
 import { Link } from 'react-router-dom'
 import { ContainerTextCenter, Text } from '~styles'
-import type { Pages, Maybe } from '~types'
+import type { Pages } from '~types'
 
 export const EmptyDataPageWarning: React.FC<{
 	text: string

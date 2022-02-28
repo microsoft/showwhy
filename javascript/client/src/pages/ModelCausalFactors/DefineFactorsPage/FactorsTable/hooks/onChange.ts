@@ -4,8 +4,9 @@
  */
 
 import type { IComboBoxOption } from '@fluentui/react'
+import type { Handler } from '@showwhy/types'
 import { useCallback } from 'react'
-import { Cause, FlatCausalFactor, BeliefDegree, Handler } from '~types'
+import { Cause, FlatCausalFactor, BeliefDegree } from '~types'
 
 export function useOnChangeCauses(
 	flatFactorsList: FlatCausalFactor[],

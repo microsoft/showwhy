@@ -3,17 +3,19 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { useCallback } from 'react'
-import { getConfidenceOrchestrator } from '~classes'
-import { useDefaultRun } from '~hooks'
-import { useSetSignificanceTests } from '~state'
 import {
+	getConfidenceOrchestrator,
 	NodeResponseStatus,
 	NodeResponse,
-	SignificanceTest,
 	SignificanceTestResponse,
-} from '~types'
-import { isStatus, getConfidenceInterval, percentage } from '~utils'
+	isStatus,
+} from '@showwhy/api-client'
+import { useCallback } from 'react'
+import { useDefaultRun } from '~hooks'
+import { api } from '~resources'
+import { useSetSignificanceTests } from '~state'
+import type { SignificanceTest } from '~types'
+import { getConfidenceInterval, percentage } from '~utils'
 
 export function useRunConfidenceInterval(): any {
 	const defaultRun = useDefaultRun()
@@ -53,7 +55,7 @@ export function useRunConfidenceInterval(): any {
 	)
 
 	const run = useCallback((): any => {
-		return getConfidenceOrchestrator(onStart, onUpdate)
+		return getConfidenceOrchestrator(api, onStart, onUpdate)
 	}, [onStart, onUpdate])
 
 	return run

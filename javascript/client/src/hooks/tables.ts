@@ -2,6 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import type { Maybe } from '@showwhy/types'
 import { escape, not, op } from 'arquero'
 import type ColumnTable from 'arquero/dist/types/table/column-table'
 import { useCallback, useMemo } from 'react'
@@ -19,7 +20,6 @@ import {
 	TableColumn,
 	TableDerivation,
 	TableDerivationType,
-	Maybe,
 } from '~types'
 
 export function useTableWithColumnsDropped(): Maybe<ColumnTable> {

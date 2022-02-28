@@ -2,9 +2,10 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import type { Handler1 } from '@showwhy/types'
 import { useCallback } from 'react'
 import { useLoadProject, useResetProject } from '~hooks'
-import type { FileDefinition, Handler1 } from '~types'
+import type { FileDefinition } from '~types'
 
 type OnClickHandler = Handler1<FileDefinition>
 

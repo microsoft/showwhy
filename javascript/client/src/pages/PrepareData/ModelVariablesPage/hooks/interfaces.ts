@@ -3,6 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import type { Setter, Maybe } from '@showwhy/types'
 import type { FactorsOrDefinitions } from './types'
 import type {
 	DataTable,
@@ -10,9 +11,7 @@ import type {
 	VariableDefinition,
 	Element,
 	TableColumn,
-	Setter,
 	ColumnRelation,
-	Maybe,
 } from '~types'
 
 export interface SelectedArgs {

@@ -8,9 +8,10 @@ import {
 	IContextualMenuProps,
 	IContextualMenuItem,
 } from '@fluentui/react'
+import type { Maybe, Handler } from '@showwhy/types'
 import { memo, useCallback } from 'react'
 import styled from 'styled-components'
-import { ColumnRelation, ColumnRelevance, Maybe, Handler } from '~types'
+import { ColumnRelation, ColumnRelevance } from '~types'
 
 type DefinitionChangeHandler = (changedRelation: ColumnRelation[]) => void
 type ToggleSelectHandler = (

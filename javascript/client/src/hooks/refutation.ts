@@ -3,6 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import type { Handler } from '@showwhy/types'
 import { useCallback, useMemo } from 'react'
 import { useSetRefutationType } from '~state'
 import {
@@ -11,7 +12,6 @@ import {
 	RefutationTestMethod,
 	RefutationType,
 	RefutationResult,
-	Handler,
 } from '~types'
 
 export const REFUTATIONS: RefutationOption[] = [

@@ -12,8 +12,6 @@ const configuration = {
 		'~resources/getEnv': ['<rootDir>/src/resources/__mocks__/getEnv.ts'],
 		'~resources/(.*)*': ['<rootDir>/src/resources/$1'],
 		'~resources': ['<rootDir>/src/resources/index.ts'],
-		'~classes/(.*)*': ['<rootDir>/src/classes/$1'],
-		'~classes': ['<rootDir>/src/classes/index.ts'],
 		'~arquero/(.*)': ['<rootDir>/src/arquero/index.ts'],
 		'~components': ['<rootDir>/src/components/index.ts'],
 		'~components/(.*)*': ['<rootDir>/src/components/$1'],

@@ -4,6 +4,7 @@
  */
 import { Dropdown, TextField, DefaultButton, Checkbox } from '@fluentui/react'
 import { useBoolean } from '@fluentui/react-hooks'
+import type { Maybe, Handler } from '@showwhy/types'
 import { escape } from 'arquero'
 import type ColumnTable from 'arquero/dist/types/table/column-table'
 import { memo, useState, useCallback, useMemo } from 'react'
@@ -33,8 +34,6 @@ import {
 	TableDerivationType,
 	Definition,
 	VariableDefinition,
-	Maybe,
-	Handler,
 } from '~types'
 
 export const DeriveComponent: React.FC<{

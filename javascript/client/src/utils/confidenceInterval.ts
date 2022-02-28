@@ -2,7 +2,8 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { NodeResponse, SignificanceTest, NodeResponseStatus } from '~types'
+import { NodeResponse, NodeResponseStatus } from '@showwhy/api-client'
+import type { SignificanceTest } from '~types'
 
 export function getConfidenceInterval(
 	runId: string,

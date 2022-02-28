@@ -10,12 +10,12 @@ import {
 	FileWithPath,
 	createBaseFile,
 } from '@data-wrangling-components/utilities'
+import type { Maybe } from '@showwhy/types'
 import { fetchTable } from './arquero'
 import type {
 	DataTableFileDefinition,
 	ProjectFile,
 	ZipData,
-	Maybe,
 	RunHistory,
 } from '~types'
 

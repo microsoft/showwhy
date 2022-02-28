@@ -4,18 +4,10 @@
  */
 
 import { Checkbox, IComboBoxOption } from '@fluentui/react'
+import type { Setter, Handler, Handler1, Maybe } from '@showwhy/types'
 import { useCallback, useMemo, useState } from 'react'
 import { useFactorsDefinitionForm } from '~components/FactorsDefinitionForm'
-import {
-	PageType,
-	HeaderData,
-	Setter,
-	CausalityLevel,
-	ElementDefinition,
-	Handler,
-	Handler1,
-	Maybe,
-} from '~types'
+import { PageType, HeaderData, CausalityLevel, ElementDefinition } from '~types'
 
 const actionsHeader: HeaderData = { fieldName: 'actions', value: 'Actions' }
 

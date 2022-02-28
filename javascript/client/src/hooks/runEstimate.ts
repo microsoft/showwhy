@@ -3,19 +3,21 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import {
+	getEstimatorOrchestrator,
+	Orchestrator,
+	EstimateEffectStatusResponse,
+	NodeResponse,
+} from '@showwhy/api-client'
 import { useCallback } from 'react'
-import { getEstimatorOrchestrator, Orchestrator } from '~classes'
 import {
 	useRefutationLength,
 	useUpdateActiveRunHistory,
 	useUpdateNodeResponseActiveRunHistory,
 } from '~hooks'
+import { api } from '~resources'
 import { useConfidenceInterval } from '~state'
-import type {
-	EstimateEffectStatusResponse,
-	NodeResponse,
-	RunStatus,
-} from '~types'
+import type { RunStatus } from '~types'
 import { getRunStatus } from '~utils'
 
 export function useRunEstimate(): () => Orchestrator<EstimateEffectStatusResponse> {
@@ -55,7 +57,7 @@ export function useRunEstimate(): () => Orchestrator<EstimateEffectStatusRespons
 	)
 
 	const run = useCallback((): Orchestrator<EstimateEffectStatusResponse> => {
-		return getEstimatorOrchestrator(onStart, onUpdate, onComplete)
+		return getEstimatorOrchestrator(api, onStart, onUpdate, onComplete)
 	}, [onUpdate, onComplete, onStart])
 
 	return run

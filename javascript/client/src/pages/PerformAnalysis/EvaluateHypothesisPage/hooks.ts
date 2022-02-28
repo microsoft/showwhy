@@ -3,9 +3,10 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import { NodeResponseStatus, OrchestratorType } from '@showwhy/api-client'
+import type { Maybe, Handler } from '@showwhy/types'
 import { useCallback, useMemo, useState } from 'react'
 import { useLoadSpecificationData } from '../ExploreSpecificationCurvePage/hooks'
-import { OrchestratorType } from '~classes'
 import {
 	useAlternativeModels,
 	useDefaultRun,
@@ -24,17 +25,14 @@ import {
 	useSignificanceTests,
 	useSpecificationCurveConfig,
 } from '~state'
-import {
+import type {
 	AlternativeModels,
 	DefaultDatasetResult,
 	Experiment,
-	NodeResponseStatus,
 	RunHistory,
 	SignificanceTest,
 	Specification,
 	RefutationType,
-	Maybe,
-	Handler,
 } from '~types'
 
 export function useBusinessLogic(): {

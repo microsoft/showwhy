@@ -3,15 +3,16 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import type { Maybe, AsyncHandler1 } from '@showwhy/types'
 import { useCallback } from 'react'
-import { downloadFile } from '~resources'
-import { DownloadType, FileType, Maybe, AsyncHandler1 } from '~types'
+import { api } from '~resources'
+import { DownloadType, FileType } from '~types'
 
 export function useReturnResult(): AsyncHandler1<
 	string,
 	Maybe<{ blob: Blob; url: string }>
 > {
-	return useCallback((fileName: string) => downloadFile(fileName), [])
+	return useCallback((fileName: string) => api.downloadFile(fileName), [])
 }
 
 export function useDownloadResult(): (fileType: FileType) => void {
@@ -38,7 +39,7 @@ export function useGetResult(): AsyncHandler1<
 	Maybe<Blob>
 > {
 	return useCallback(async (type = DownloadType.csv) => {
-		const result = await downloadFile(type)
+		const result = await api.downloadFile(type)
 		if (!result) return
 		return result.blob
 	}, [])

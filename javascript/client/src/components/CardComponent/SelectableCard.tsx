@@ -3,9 +3,9 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { DefaultButton, Icon } from '@fluentui/react'
+import type { Handler, Maybe } from '@showwhy/types'
 import { memo, useCallback } from 'react'
 import styled from 'styled-components'
-import type { Handler, Maybe } from '~types'
 
 export const SelectableCard: React.FC<{
 	onClick: Handler

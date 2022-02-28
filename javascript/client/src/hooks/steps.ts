@@ -2,12 +2,13 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import type { Maybe } from '@showwhy/types'
 import { useCallback, useMemo } from 'react'
 import { useLocation } from 'react-router-dom'
 // HACK to pass unit tests
 import { useSelectedProject } from '~state/project'
 import { useStepStatus } from '~state/stepStatus'
-import { StepStatus, Workflow, Step, Maybe } from '~types'
+import { StepStatus, Workflow, Step } from '~types'
 
 export function useFindStepsByPathname(pathNames: string[]): Step[] {
 	const steps = useSelectedProject().steps

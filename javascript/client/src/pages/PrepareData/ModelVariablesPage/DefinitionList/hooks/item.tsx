@@ -4,11 +4,12 @@
  */
 
 import { TextField } from '@fluentui/react'
+import type { Setter, Maybe, Handler } from '@showwhy/types'
 import { useCallback } from 'react'
 import styled from 'styled-components'
 import type { InputRef } from './types'
 import { Text } from '~styles'
-import type { CausalFactor, Item, Setter, Maybe, Handler } from '~types'
+import type { CausalFactor, Item } from '~types'
 
 export function useItem({
 	isEditingLabel,

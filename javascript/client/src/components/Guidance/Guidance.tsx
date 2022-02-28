@@ -2,11 +2,12 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import type { Maybe } from '@showwhy/types'
 import Markdown from 'markdown-to-jsx'
 import { memo, useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { StepTitle } from '~components/StepTitle'
-import type { Step, Maybe } from '~types'
+import type { Step } from '~types'
 
 export const Guidance: React.FC<{
 	isVisible: Maybe<boolean>

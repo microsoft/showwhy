@@ -2,6 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import { NodeResponseStatus } from '@showwhy/api-client'
 import { memo } from 'react'
 import { AnalysisSpecifications } from './AnalysisSpecifications'
 import { CausalDetails } from './CausalDetails'
@@ -14,7 +15,7 @@ import { CausalQuestion } from '~components/CausalQuestion'
 import { EmptyDataPageWarning } from '~components/EmptyDataPageWarning'
 import { useSpecificationCurve } from '~hooks'
 import { Container, ContainerFlexColumn } from '~styles'
-import { Pages, CausalEffectSize, NodeResponseStatus } from '~types'
+import { Pages, CausalEffectSize } from '~types'
 
 export const EvaluateHypothesisPage: React.FC = memo(
 	function EvaluateHypothesisPage() {
