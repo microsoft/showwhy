@@ -3,9 +3,9 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import type { Setter, Maybe } from '@showwhy/types'
 import { useCallback } from 'react'
 import { CausalityLevel, ElementDefinition } from '~types'
-import type { Setter, Maybe } from '@showwhy/types'
 
 export function useEditDefinition(
 	setDefinitions: Setter<ElementDefinition[]>,

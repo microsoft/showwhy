@@ -4,6 +4,7 @@
  */
 
 import type { IColumn } from '@fluentui/react'
+import type { Setter, Maybe } from '@showwhy/types'
 import { not } from 'arquero'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useRestoreColumn, useTableCommands } from '~hooks'
@@ -22,7 +23,6 @@ import {
 	ProjectFile,
 	TableColumn,
 } from '~types'
-import type { Setter, Maybe } from '@showwhy/types'
 
 export function useBusinessLogic(): {
 	files: ProjectFile[]

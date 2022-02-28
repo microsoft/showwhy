@@ -3,9 +3,9 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { ComboBox, IComboBoxOption } from '@fluentui/react'
+import type { Maybe } from '@showwhy/types'
 import { memo, useMemo } from 'react'
 import styled from 'styled-components'
-import type { Maybe } from '@showwhy/types'
 
 export const VariablePicker: React.FC<{
 	onChange: (value: string) => void

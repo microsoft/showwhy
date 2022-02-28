@@ -2,11 +2,11 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import type { Maybe, Handler } from '@showwhy/types'
 import { useCallback, useMemo } from 'react'
 import { useCurrentStep, useAllSteps } from '~hooks'
 import { useSetStepStatus, useStepStatus } from '~state'
 import { Step, StepStatus } from '~types'
-import type { Maybe, Handler } from '@showwhy/types'
 
 export type ToggleStepStatusHandler = Handler
 export interface ProcessStepInfo {

@@ -3,6 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { NodeResponseStatus } from '@showwhy/api-client'
+import type { Handler } from '@showwhy/types'
 import type { Theme } from '@thematic/core'
 import { memo, useMemo } from 'react'
 import Xarrow from 'react-xarrows'
@@ -10,7 +11,6 @@ import styled from 'styled-components'
 import { ProgressBar } from '~components/ProgressBar'
 import { Container } from '~styles'
 import type { RunHistory } from '~types'
-import type { Handler } from '@showwhy/types'
 
 interface LabelProps {
 	id: string

@@ -4,6 +4,7 @@
  */
 
 import type { IContextualMenuProps } from '@fluentui/react'
+import type { Maybe, Handler } from '@showwhy/types'
 import { useBoolean } from 'ahooks'
 import { useCallback, useState } from 'react'
 import type { FactorsOrDefinitions } from './types'
@@ -33,7 +34,6 @@ import {
 	CausalFactor,
 	VariableDefinition,
 } from '~types'
-import type { Maybe, Handler } from '@showwhy/types'
 
 export function useBusinessLogic(): {
 	pageType: PageType

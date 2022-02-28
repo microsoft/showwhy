@@ -9,6 +9,7 @@ import {
 	PartialResults,
 	isProcessingStatus,
 } from '@showwhy/api-client'
+import type { Maybe } from '@showwhy/types'
 import { useCallback, useMemo } from 'react'
 import {
 	useResetSpecificationCurveConfig,
@@ -17,7 +18,6 @@ import {
 } from '~state'
 import type { RunHistory, RunStatus } from '~types'
 import { disableAllRuns, setStorageItem, SESSION_ID_KEY } from '~utils'
-import type { Maybe } from '@showwhy/types'
 
 export function useSetRunAsDefault(): (run: RunHistory) => void {
 	const setRunHistory = useSetRunHistory()

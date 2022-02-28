@@ -3,10 +3,10 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import type { Maybe } from '@showwhy/types'
 import { useCallback } from 'react'
 import { useSetHoverState } from '~state'
 import type { DecisionFeature, Specification } from '~types'
-import type { Maybe } from '@showwhy/types'
 
 export function useOnMouseOver(): (
 	item: Maybe<Specification | DecisionFeature>,

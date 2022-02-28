@@ -7,9 +7,9 @@ import type {
 	FileWithPath,
 	FileCollection,
 } from '@data-wrangling-components/utilities'
+import type { AsyncHandler1 } from '@showwhy/types'
 import { useCallback, useMemo } from 'react'
 import { useFileCollection, useSetFileCollection } from '~state'
-import type { AsyncHandler1 } from '@showwhy/types'
 
 export const useIsCollectionEmpty = (): boolean => {
 	const fileCollection = useFileCollection().copy()

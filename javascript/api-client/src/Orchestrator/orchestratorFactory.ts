@@ -3,8 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { FetchApiInteractor } from '../FetchApiInteractor'
 import type { Maybe } from '@showwhy/types'
+import type { FetchApiInteractor } from '../FetchApiInteractor'
 import type {
 	OrchestatorOnUpdateHandler,
 	OrchestratorHandler,

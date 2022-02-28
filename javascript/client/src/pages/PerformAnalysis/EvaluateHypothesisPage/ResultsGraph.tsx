@@ -3,6 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import type { Dimensions } from '@essex-js-toolkit/hooks'
+import type { Maybe } from '@showwhy/types'
 import { memo } from 'react'
 import { OutcomeEffectScatterplot } from '../ExploreSpecificationCurvePage/vega'
 import { Paragraph, Value, Container, Bold, Text } from '~styles'
@@ -13,7 +14,6 @@ import {
 	Specification,
 	SpecificationCurveConfig,
 } from '~types'
-import type { Maybe } from '@showwhy/types'
 import { median as calcMedian } from '~utils'
 
 export const ResultsGraph: React.FC<{

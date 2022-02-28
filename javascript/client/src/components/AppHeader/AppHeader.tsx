@@ -3,6 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import type { IContextualMenuItem } from '@fluentui/react'
+import type { Handler1 } from '@showwhy/types'
 import { memo } from 'react'
 import styled from 'styled-components'
 import { ProjectsSelector } from './ProjectsSelector'
@@ -11,7 +12,6 @@ import { Settings } from './Settings'
 import { CausalQuestion } from '~components/CausalQuestion'
 import { Container } from '~styles'
 import type { StepStatus, Experiment, FileDefinition } from '~types'
-import type { Handler1 } from '@showwhy/types'
 
 type GetStepUrlsHandler = (urls?: string[], exclude?: any) => string[]
 type SetAllStepStatusHandler = (urls: string[], status: StepStatus) => void

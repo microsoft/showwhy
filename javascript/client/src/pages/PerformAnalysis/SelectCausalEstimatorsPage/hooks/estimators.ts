@@ -3,6 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import type { Setter, Maybe, Handler } from '@showwhy/types'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import type { SetterOrUpdater } from 'recoil'
 import { getEstimatorByRanking, estimatorGroups } from './constants'
@@ -22,7 +23,6 @@ import type {
 	Estimator,
 	PrimarySpecificationConfig,
 } from '~types'
-import type { Setter, Maybe, Handler } from '@showwhy/types'
 
 enum BatchUpdateAction {
 	Delete = 'delete',

@@ -3,6 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import type { OptionalId } from '@showwhy/types'
 import { useCallback, useMemo } from 'react'
 import type { SetterOrUpdater } from 'recoil'
 import { v4 } from 'uuid'
@@ -14,7 +15,6 @@ import {
 	BeliefDegree,
 	CausalModelLevel,
 } from '~types'
-import type { OptionalId } from '@showwhy/types'
 import { replaceItemAtIndex } from '~utils/arrays'
 
 export function useExcludedFactors(): string[] {

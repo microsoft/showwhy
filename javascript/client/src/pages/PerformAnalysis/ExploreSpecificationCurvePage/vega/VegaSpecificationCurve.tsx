@@ -2,6 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import type { Maybe } from '@showwhy/types'
 import { memo, useCallback, useState } from 'react'
 import styled from 'styled-components'
 import { AnalyticDecisionsDotPlot } from './AnalyticDecisionsDotPlot'
@@ -11,7 +12,6 @@ import type {
 	Specification,
 	SpecificationCurveConfig,
 } from '~types'
-import type { Maybe } from '@showwhy/types'
 import { addOrRemoveArrayElement } from '~utils'
 
 export const VegaSpecificationCurve: React.FC<{

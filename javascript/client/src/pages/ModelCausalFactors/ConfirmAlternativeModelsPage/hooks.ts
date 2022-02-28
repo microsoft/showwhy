@@ -2,6 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import type { Handler } from '@showwhy/types'
 import { useXarrow } from 'react-xarrows'
 import type { SetterOrUpdater } from 'recoil'
 import { useCausalEffects } from '~hooks'
@@ -10,7 +11,6 @@ import {
 	useSetPrimarySpecificationConfig,
 } from '~state'
 import type { PrimarySpecificationConfig } from '~types'
-import type { Handler } from '@showwhy/types'
 
 export function useBusinessLogic(): {
 	causalEffects: ReturnType<typeof useCausalEffects>

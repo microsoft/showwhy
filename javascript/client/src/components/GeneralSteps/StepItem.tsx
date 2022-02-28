@@ -2,13 +2,13 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import type { Maybe } from '@showwhy/types'
 import { memo, useCallback } from 'react'
 import { NavLink } from 'react-router-dom'
 import styled from 'styled-components'
 import { StepStatusDetail } from '.'
 import { useStepStatus } from '~state'
 import type { Step } from '~types'
-import type { Maybe } from '@showwhy/types'
 
 export const StepItem: React.FC<{
 	stepDetail: Step

@@ -4,13 +4,13 @@
  */
 
 import type { NodeResponse } from '@showwhy/api-client'
+import type { Maybe } from '@showwhy/types'
 import {
 	atom,
 	SetterOrUpdater,
 	useRecoilValue,
 	useSetRecoilState,
 } from 'recoil'
-import type { Maybe } from '@showwhy/types'
 
 export const nodeResponseState = atom<Maybe<NodeResponse>>({
 	key: 'node-response-store',

@@ -3,11 +3,11 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import type { Setter, Maybe, Handler } from '@showwhy/types'
 import { useCallback } from 'react'
 import { v4 } from 'uuid'
 import type { SetEditingDefinition, SetModelVariables } from './types'
 import { PageType, CausalFactor, Definition, CausalityLevel } from '~types'
-import type { Setter, Maybe, Handler } from '@showwhy/types'
 
 export function useOnSaveCausalFactor({
 	setNewLabel,

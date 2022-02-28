@@ -4,6 +4,7 @@
  */
 
 import { NodeResponseStatus, OrchestratorType } from '@showwhy/api-client'
+import type { Maybe, Handler } from '@showwhy/types'
 import { useCallback, useMemo, useState } from 'react'
 import { useLoadSpecificationData } from '../ExploreSpecificationCurvePage/hooks'
 import {
@@ -33,7 +34,6 @@ import type {
 	Specification,
 	RefutationType,
 } from '~types'
-import type { Maybe, Handler } from '@showwhy/types'
 
 export function useBusinessLogic(): {
 	alternativeModels: AlternativeModels

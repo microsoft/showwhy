@@ -2,12 +2,12 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import type { Maybe } from '@showwhy/types'
 import { memo } from 'react'
 import styled from 'styled-components'
 import { Dataset } from './Dataset'
 import { ContainerFlexRow } from '~styles'
 import type { ProjectFile } from '~types'
-import type { Maybe } from '@showwhy/types'
 
 export const DatasetsList: React.FC<{
 	onFileSelected: (projectFile: ProjectFile) => void

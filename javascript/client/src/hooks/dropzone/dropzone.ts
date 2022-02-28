@@ -8,6 +8,7 @@ import {
 	FileType,
 	isZipFile,
 } from '@data-wrangling-components/utilities'
+import type { Handler } from '@showwhy/types'
 import type ColumnTable from 'arquero/dist/types/table/column-table'
 import { useMemo, useCallback, useState } from 'react'
 import {
@@ -22,7 +23,6 @@ import {
 	useSupportedFileTypes,
 } from '~hooks'
 import type { DropFilesCount, ProjectFile } from '~types'
-import type { Handler } from '@showwhy/types'
 
 export function useHandleOnDrop(
 	onFileLoadCompleted: (file: ProjectFile, table: ColumnTable) => void,

@@ -3,10 +3,10 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import type { Maybe, AsyncHandler1 } from '@showwhy/types'
 import { useCallback } from 'react'
 import { api } from '~resources'
 import { DownloadType, FileType } from '~types'
-import type { Maybe, AsyncHandler1 } from '@showwhy/types'
 
 export function useReturnResult(): AsyncHandler1<
 	string,

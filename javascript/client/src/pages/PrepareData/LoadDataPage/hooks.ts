@@ -8,6 +8,7 @@ import {
 	guessDelimiter,
 } from '@data-wrangling-components/utilities'
 import type { IDropdownOption } from '@fluentui/react'
+import type { Handler1, Maybe, Handler } from '@showwhy/types'
 import { useBoolean } from 'ahooks'
 import type ColumnTable from 'arquero/dist/types/table/column-table'
 import { useCallback, useEffect, useState } from 'react'
@@ -24,7 +25,6 @@ import {
 	useSetSelectedFile,
 } from '~state'
 import type { DropFilesCount, ProjectFile } from '~types'
-import type { Handler1, Maybe, Handler } from '@showwhy/types'
 import { createDefaultTable, replaceItemAtIndex } from '~utils'
 
 export function useBusinessLogic(): {

@@ -8,6 +8,7 @@ import type {
 	GraphNodeType,
 	NodeRequest,
 } from '@showwhy/api-client'
+import type { Maybe } from '@showwhy/types'
 import {
 	getModelNameByEstimatorType,
 	getModelTypeByEstimatorGroup,
@@ -22,7 +23,6 @@ import {
 	RefutationType,
 	EstimatorType,
 } from '~types'
-import type { Maybe } from '@showwhy/types'
 
 interface Node {
 	type: GraphNodeType

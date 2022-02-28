@@ -3,6 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { DefaultButton } from '@fluentui/react'
+import type { Handler } from '@showwhy/types'
 import { round } from 'lodash'
 import { memo } from 'react'
 import styled from 'styled-components'
@@ -14,7 +15,6 @@ import {
 	Specification,
 	RefutationTestMethodString,
 } from '~types'
-import type { Handler } from '@showwhy/types'
 import { pluralize } from '~utils'
 
 export const SpecificationDescription: React.FC<{

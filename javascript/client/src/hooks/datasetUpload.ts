@@ -9,6 +9,7 @@ import {
 	FileType,
 	FileWithPath,
 } from '@data-wrangling-components/utilities'
+import type { Handler } from '@showwhy/types'
 import type ColumnTable from 'arquero/dist/types/table/column-table'
 import {
 	useState,
@@ -21,7 +22,6 @@ import { useOnDropRejected } from './dropzone'
 import { useAddFilesToCollection } from './fileCollection'
 import { useSupportedFileTypes } from './supportedFileTypes'
 import type { DropFilesCount, ProjectFile } from '~types'
-import type { Handler } from '@showwhy/types'
 import { createDefaultTable } from '~utils'
 
 export function useDrop(

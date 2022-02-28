@@ -2,8 +2,8 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { NodeResponseStatus } from './types'
 import type { Maybe } from '@showwhy/types'
+import { NodeResponseStatus } from './types'
 
 export function wait(ms: number): Promise<boolean> {
 	return new Promise(resolve => {

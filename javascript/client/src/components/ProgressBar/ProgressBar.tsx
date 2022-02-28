@@ -3,12 +3,12 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { ProgressIndicator } from '@fluentui/react'
+import type { Handler } from '@showwhy/types'
 import { memo } from 'react'
 import styled from 'styled-components'
 import { ActionButtons } from '~components/ActionButtons'
 import { useTimeElapsed } from '~hooks'
 import { Text } from '~styles'
-import type { Handler } from '@showwhy/types'
 
 export const ProgressBar: React.FC<{
 	percentage: number

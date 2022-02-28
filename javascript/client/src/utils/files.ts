@@ -10,6 +10,7 @@ import {
 	FileWithPath,
 	createBaseFile,
 } from '@data-wrangling-components/utilities'
+import type { Maybe } from '@showwhy/types'
 import { fetchTable } from './arquero'
 import type {
 	DataTableFileDefinition,
@@ -17,7 +18,6 @@ import type {
 	ZipData,
 	RunHistory,
 } from '~types'
-import type { Maybe } from '@showwhy/types'
 
 export function createTextFile(name: string, content: string): File {
 	const type = { type: `text/${name.split('.').pop()}` }

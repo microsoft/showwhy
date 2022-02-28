@@ -4,6 +4,7 @@
  */
 import { IconButton, TooltipHost, MessageBarType } from '@fluentui/react'
 import { useId } from '@fluentui/react-hooks'
+import type { Maybe } from '@showwhy/types'
 import { memo, Suspense, useState } from 'react'
 import styled from 'styled-components'
 import { AppHeader } from '../AppHeader'
@@ -24,7 +25,6 @@ import {
 	useGuidance,
 } from '~state'
 import { StyledSpinner } from '~styles'
-import type { Maybe } from '@showwhy/types'
 
 export const Layout: React.FC = memo(function Layout({ children }) {
 	const [error, setError] = useState<Maybe<string>>()

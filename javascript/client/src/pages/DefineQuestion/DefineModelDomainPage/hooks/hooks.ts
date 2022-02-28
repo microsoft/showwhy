@@ -4,6 +4,7 @@
  */
 
 import type { IComboBoxOption } from '@fluentui/react'
+import type { Maybe, Setter } from '@showwhy/types'
 import { useEffect, useMemo, useState } from 'react'
 import { useAddDefinition } from './add'
 import { useEditDefinition } from './edit'
@@ -12,7 +13,6 @@ import { useSaveDefinitions } from './save'
 import { usePageType, useVariableOptions } from '~hooks'
 import { useExperiment, useSetExperiment } from '~state'
 import type { PageType, Experiment, ElementDefinition, Item } from '~types'
-import type { Maybe, Setter } from '@showwhy/types'
 
 export function useBusinessLogic(): {
 	labelInterest: string

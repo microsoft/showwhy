@@ -3,8 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { useCallback } from 'react'
 import type { Handler } from '@showwhy/types'
+import { useCallback } from 'react'
 
 export function useOnDropRejected(
 	onError?: (text: string) => void,

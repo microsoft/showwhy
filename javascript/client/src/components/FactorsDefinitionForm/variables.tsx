@@ -11,11 +11,11 @@ import {
 	IComboBoxOption,
 	TextField,
 } from '@fluentui/react'
+import type { Handler } from '@showwhy/types'
 import { useMemo } from 'react'
 import styled from 'styled-components'
 import { VariablePicker } from '~components/VariablePicker'
 import type { CausalFactor } from '~types'
-import type { Handler } from '@showwhy/types'
 
 export function useCheckbox(
 	isPrimary: boolean,
