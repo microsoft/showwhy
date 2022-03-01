@@ -5,8 +5,8 @@
 
 import { memo } from 'react'
 import styled from 'styled-components'
-import { useFactorsTable } from './hooks'
-import { GenericTableComponent } from '~components/GenericTableComponent'
+import { useFactorsTable } from './FactorsTable.hooks'
+import { PopulatedDataTable } from '~components/PopulatedDataTable'
 import { Container } from '~styles'
 
 export const FactorsTable: React.FC<{
@@ -18,7 +18,7 @@ export const FactorsTable: React.FC<{
 	return (
 		<Container>
 			{flatFactorsList.length ? (
-				<GenericTableComponent
+				<PopulatedDataTable
 					items={itemList}
 					headers={{ data: headers }}
 					props={{

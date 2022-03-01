@@ -5,8 +5,8 @@
 import type { CausalFactor } from '@showwhy/types'
 import { memo } from 'react'
 import styled from 'styled-components'
-import { useDefinitionList } from './hooks'
-import { GenericTableComponent } from '~components/GenericTableComponent'
+import { useDefinitionList } from './DefinitionList.hooks'
+import { PopulatedDataTable } from '~components/PopulatedDataTable'
 
 export const DefinitionList: React.FC<{
 	list: CausalFactor[]
@@ -20,7 +20,7 @@ export const DefinitionList: React.FC<{
 
 	return (
 		<Container data-pw="definition-list">
-			<GenericTableComponent
+			<PopulatedDataTable
 				items={itemList}
 				props={{ styles: { width: '45%' } }}
 			/>

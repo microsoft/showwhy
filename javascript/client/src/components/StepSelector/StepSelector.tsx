@@ -14,7 +14,7 @@ import {
 	useOnHeaderClick,
 	useOnOpenParent,
 	usePanels,
-} from './hooks'
+} from './StepSelector.hooks'
 import { StepTitle } from '~components/StepTitle'
 import type { Workflow, StepList } from '~types'
 

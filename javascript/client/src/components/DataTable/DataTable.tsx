@@ -12,11 +12,11 @@ import type {
 } from '@showwhy/types'
 import { memo } from 'react'
 import styled from 'styled-components'
-import { useTableComponent } from './hooks'
-import { GenericTableComponent } from '~components/GenericTableComponent'
+import { useTableComponent } from './DataTable.hooks'
+import { PopulatedDataTable } from '../PopulatedDataTable'
 import type { PageType, HeaderData, Item } from '~types'
 
-export const TableComponent: React.FC<{
+export const DataTable: React.FC<{
 	headers: HeaderData[]
 	columns: FlatCausalFactor[] | ElementDefinition[] | Item[]
 	definitionToEdit?: ElementDefinition
@@ -54,7 +54,7 @@ export const TableComponent: React.FC<{
 	return (
 		<Container>
 			{items.length ? (
-				<GenericTableComponent
+				<PopulatedDataTable
 					items={items}
 					headers={{
 						data: headersData,

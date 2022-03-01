@@ -8,7 +8,7 @@ import { memo } from 'react'
 import styled from 'styled-components'
 import { ActionButtons } from '~components/ActionButtons'
 import { LinkCallout } from '~components/LinkCallout'
-import { CardComponent } from '~components/CardComponent'
+import { Card } from '~components/Card'
 
 interface ExtendedEstimator extends Estimator {
 	description: string
@@ -32,7 +32,7 @@ export const EstimatorCard: React.FC<{
 	onCardClick,
 }) {
 	return (
-		<CardComponent>
+		<Card>
 			<Container>
 				<SelectorContainer
 					isChecked={!!isCardChecked}
@@ -73,7 +73,7 @@ export const EstimatorCard: React.FC<{
 					</Stack>
 				</CheckBoxContainer>
 			</Container>
-		</CardComponent>
+		</Card>
 	)
 })
 

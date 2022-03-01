@@ -16,7 +16,7 @@ import { DeriveComponent } from '../../../pages/PrepareData/ModelVariablesPage/D
 import { DefinitionList } from './DefinitionList/DefinitionList'
 import { DefinitionSteps } from './DefinitionSteps'
 import { Header } from './Header'
-import { useBusinessLogic } from './hooks'
+import { useBusinessLogic } from './ModelVariablesPage.hooks'
 import { EmptyDataPageWarning } from '~components/EmptyDataPageWarning'
 import { ArqueroDetailsTable } from '~components/ArqueroDetailsTable'
 import { ContainerFlexRow } from '~styles'

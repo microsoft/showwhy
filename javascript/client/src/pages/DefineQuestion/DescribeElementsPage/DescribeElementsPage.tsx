@@ -7,8 +7,8 @@ import { ChoiceGroup, IChoiceGroupOption } from '@fluentui/react'
 import { Hypothesis } from '@showwhy/types'
 import { memo } from 'react'
 import styled from 'styled-components'
-import { FieldGroup } from './FieldGroup'
-import { useBusinessLogic } from './hooks'
+import { FieldGroup } from '../../../components/FieldGroup'
+import { useBusinessLogic } from './DescribeElementsPage.hooks'
 import { Container } from '~styles'
 
 const hypothesisOptions: IChoiceGroupOption[] = [

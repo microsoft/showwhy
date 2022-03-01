@@ -12,7 +12,7 @@ import type {
 } from '@showwhy/types'
 import { memo } from 'react'
 import styled from 'styled-components'
-import { useFactorsDefinitionForm } from './hooks'
+import { useFactorsDefinitionForm } from './FactorsDefinitionForm.hooks'
 import type { PageType } from '~types'
 
 export const FactorsDefinitionForm: React.FC<{

@@ -12,7 +12,7 @@ export const SelectableCard: React.FC<{
 	title?: string
 	isChecked?: Maybe<boolean>
 	icon?: string
-}> = memo(function CardComponent({ title, onClick, isChecked, icon }) {
+}> = memo(function SelectableCard({ title, onClick, isChecked, icon }) {
 	const handleOnClick = useOnClickHandler(isChecked, onClick)
 	return (
 		<Card

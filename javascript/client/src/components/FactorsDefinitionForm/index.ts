@@ -3,5 +3,5 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-export * from './hooks'
+export * from './FactorsDefinitionForm.hooks'
 export * from './FactorsDefinitionForm'

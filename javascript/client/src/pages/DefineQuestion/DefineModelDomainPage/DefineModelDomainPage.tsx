@@ -5,9 +5,9 @@
 import type { ElementDefinition } from '@showwhy/types'
 import { memo } from 'react'
 import styled from 'styled-components'
-import { useBusinessLogic } from './hooks'
+import { useBusinessLogic } from './DefineModelDomainPage.hooks'
 import { FactorsDefinitionForm } from '~components/FactorsDefinitionForm'
-import { TableComponent } from '~components/TableComponent'
+import { DataTable } from '~components/DataTable'
 import { Container } from '~styles'
 import type { HeaderData } from '~types'
 
@@ -46,7 +46,7 @@ export const DefineModelDomainPage: React.FC = memo(
 				<FormContainer>
 					<DefinitionTitle>Alternative {pageType} definitions</DefinitionTitle>
 					<TableContainer>
-						<TableComponent
+						<DataTable
 							headers={tableHeadersList}
 							columns={itemList}
 							definitionToEdit={definitionToEdit}

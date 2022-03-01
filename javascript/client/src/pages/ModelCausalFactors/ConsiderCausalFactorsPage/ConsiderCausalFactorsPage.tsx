@@ -6,9 +6,9 @@
 import { DefaultButton } from '@fluentui/react'
 import { memo } from 'react'
 import styled from 'styled-components'
-import { useBusinessLogic } from './hooks'
+import { useBusinessLogic } from './ConsiderCausalFactorsPage.hooks'
 import { FactorsDefinitionForm } from '~components/FactorsDefinitionForm'
-import { TableComponent } from '~components/TableComponent'
+import { DataTable } from '~components/DataTable'
 import { Container } from '~styles'
 import type { HeaderData } from '~types'
 
@@ -38,7 +38,7 @@ export const ConsiderCausalFactorsPage: React.FC = memo(
 			<Container>
 				<Container>
 					<FieldTitle data-pw="title">Possible causal factors</FieldTitle>
-					<TableComponent
+					<DataTable
 						headers={tableHeaders}
 						columns={flatFactorsList}
 						onDelete={deleteFactor}

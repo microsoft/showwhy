@@ -6,7 +6,7 @@ import type { Maybe } from '@showwhy/types'
 import { memo } from 'react'
 import styled from 'styled-components'
 
-export const CardComponent: React.FC<{
+export const Card: React.FC<{
 	title?: string
 	actionButtons?: React.ReactNode
 	styles?: React.CSSProperties
@@ -19,21 +19,21 @@ export const CardComponent: React.FC<{
 	isSticky = false,
 }) {
 	return (
-		<Card isSticky={isSticky} style={styles}>
+		<Container isSticky={isSticky} style={styles}>
 			{title || actionButtons ? (
-				<CardTitle>
+				<Title>
 					{title || null}
 					{actionButtons ? (
 						<ButtonContainer>{actionButtons}</ButtonContainer>
 					) : null}
-				</CardTitle>
+				</Title>
 			) : null}
-			<CardContent>{children}</CardContent>
-		</Card>
+			<Content>{children}</Content>
+		</Container>
 	)
 })
 
-const Card = styled.div<{ isSticky: Maybe<boolean> }>`
+const Container = styled.div<{ isSticky: Maybe<boolean> }>`
 	padding: 8px;
 	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 	border-radius: 4px;
@@ -59,13 +59,13 @@ const Card = styled.div<{ isSticky: Maybe<boolean> }>`
 	`}
 `
 
-const CardTitle = styled.h4`
+const Title = styled.h4`
 	margin-top: unset;
 	align-items: center;
 	display: flex;
 	justify-content: space-between;
 `
-const CardContent = styled.div`
+const Content = styled.div`
 	justify-content: space-between;
 	align-items: center;
 `

@@ -6,7 +6,7 @@ import { FontIcon } from '@fluentui/react'
 import type { RefutationChoice } from '@showwhy/types'
 import { memo } from 'react'
 import styled from 'styled-components'
-import { CardComponent } from '~components/CardComponent'
+import { Card } from '~components/Card'
 
 export const RefutationTests: React.FC<{
 	options: RefutationChoice[]
@@ -14,7 +14,7 @@ export const RefutationTests: React.FC<{
 	return (
 		<Container>
 			{options.map(option => (
-				<CardComponent key={option.key}>
+				<Card key={option.key}>
 					<RefutationOption
 						onClick={option.onChange}
 						data-pw={`${option.isSelected ? 'selected-' : ''}refuter`}
@@ -25,7 +25,7 @@ export const RefutationTests: React.FC<{
 						</Title>
 						<P>{option.description}</P>
 					</RefutationOption>
-				</CardComponent>
+				</Card>
 			))}
 		</Container>
 	)

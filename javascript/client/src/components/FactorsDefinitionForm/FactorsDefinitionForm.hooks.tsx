@@ -3,7 +3,12 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { IComboBoxOption } from '@fluentui/react'
+import {
+	Checkbox,
+	DefaultButton,
+	IComboBoxOption,
+	TextField,
+} from '@fluentui/react'
 import {
 	Handler,
 	Setter,
@@ -14,14 +19,11 @@ import {
 } from '@showwhy/types'
 import { useCallback, useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
-import {
-	useCheckbox,
-	useDescriptionBox,
-	useHasLevel,
-	useVariablePicker,
-} from './variables'
 import type { PageType } from '~types'
 import { noop } from '~utils'
+import { useMemo } from 'react'
+import styled from 'styled-components'
+import { VariablePicker } from '~components/VariablePicker'
 
 type OnAddHandler = (factor: OptionalId<CausalFactor>) => void
 type OnChangeHandler = (f: Partial<CausalFactor>) => void
@@ -134,3 +136,89 @@ function useAdd(
 		resetFields()
 	}, [resetFields, variable, isPrimary, description, onAdd])
 }
+
+function useCheckbox(
+	isPrimary: boolean,
+	setIsPrimary: (value: boolean) => void,
+): JSX.Element {
+	return useMemo(() => {
+		return (
+			<Checkbox
+				label="Is primary?"
+				checked={isPrimary}
+				onChange={(_, value) => setIsPrimary(value ?? false)}
+			/>
+		)
+	}, [isPrimary, setIsPrimary])
+}
+
+function useVariablePicker(
+	variable: string,
+	setVariable: (v: string) => void,
+	variables?: IComboBoxOption[],
+): JSX.Element {
+	return useMemo(() => {
+		return (
+			<VariablePicker
+				variable={variable}
+				onChange={setVariable}
+				showLabel={false}
+				variables={variables}
+			/>
+		)
+	}, [variable, variables, setVariable])
+}
+
+function useDescriptionBox(
+	description: string,
+	setDescription: (value: string) => void,
+	variable: string,
+	add: Handler,
+	factor?: CausalFactor,
+): JSX.Element {
+	return useMemo(() => {
+		return (
+			<DetailsContainer>
+				<Field
+					onChange={(_, value) => setDescription(value ?? '')}
+					value={description}
+					placeholder="Enter description"
+					multiline={(description?.length || 0) > 70}
+					resizable={false}
+					data-pw="factors-form-description"
+				/>
+				{!factor ? (
+					<ButtonContainer>
+						<AddButton
+							disabled={!variable?.length}
+							onClick={add}
+							data-pw="factors-form-add-button"
+						>
+							Add
+						</AddButton>
+					</ButtonContainer>
+				) : null}
+			</DetailsContainer>
+		)
+	}, [description, setDescription, variable, add, factor])
+}
+
+function useHasLevel(factor?: CausalFactor): boolean {
+	return useMemo(() => !!factor?.hasOwnProperty('level'), [factor])
+}
+
+const DetailsContainer = styled.div`
+	display: flex;
+`
+
+const Field = styled(TextField)`
+	width: 100%;
+	margin: 0px 8px;
+`
+
+const AddButton = styled(DefaultButton)``
+
+const ButtonContainer = styled.div`
+	text-align: end;
+	padding-right: 8px;
+`

@@ -7,7 +7,7 @@ import type { Maybe, Handler } from '@showwhy/types'
 import { useBoolean } from 'ahooks'
 import { memo, useCallback, useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
-import { ActionButtons } from '~components/ActionButtons'
+import { ActionButtons } from './ActionButtons'
 import { useDefaultTableSample } from '~hooks'
 import type { Item, TableFooter, HeaderData, TableProps } from '~types'
 import { sortByField } from '~utils'
@@ -17,7 +17,7 @@ interface GenericHeader {
 	props?: any
 }
 
-export const GenericTableComponent: React.FC<{
+export const PopulatedDataTable: React.FC<{
 	headers?: GenericHeader
 	props?: TableProps
 	tableTitle?: string | React.ReactNode
