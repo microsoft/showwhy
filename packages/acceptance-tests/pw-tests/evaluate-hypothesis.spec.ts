@@ -11,7 +11,7 @@ test.describe('Evaluate Hypothesis', () => {
 	let po: PageObjects
 
 	test.beforeEach(async ({ browser }) => {
-		test.setTimeout(45000)
+		test.setTimeout(60000)
 		const ctx = await browser.newContext()
 		page = await ctx.newPage()
 		po = createPageObjects(page)
@@ -21,7 +21,7 @@ test.describe('Evaluate Hypothesis', () => {
 	})
 
 	test('Renders content', async () => {
-		test.setTimeout(45000)
+		test.setTimeout(60000)
 		const isVisible = await po.evaluateHypothesisPage.contentIsVisible()
 		await expect(isVisible).toBeTruthy()
 	})

@@ -120,12 +120,14 @@ const ChildrenContainer = styled.div<{ noPadding: boolean }>`
 	padding: ${({ noPadding }) => (noPadding ? '0' : '0 16px')};
 	margin-bottom: 1rem;
 	height: 95%;
+	overflow-y: auto;
+	margin-bottom: 6rem;
 `
 
 const ControlsContainer = styled.div`
 	display: flex;
 	flex-direction: column;
-	height: 93%;
+	height: 100%;
 	justify-content: flex-start;
 `
 
@@ -144,6 +146,7 @@ const Container = styled.div`
 	height: 100vh;
 	display: flex;
 	flex-flow: column;
+	overflow-y: hidden;
 `
 
 const Content = styled.div`
