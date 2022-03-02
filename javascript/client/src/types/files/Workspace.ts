@@ -3,7 +3,6 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import type { Specification } from '@data-wrangling-components/core'
-import type { DataTableFileDefinition } from './DataTableDefinition'
 import type {
 	RefutationType,
 	CausalFactor,
@@ -11,6 +10,7 @@ import type {
 	Estimator,
 	PrimarySpecificationConfig,
 } from '@showwhy/types'
+import type { DataTableFileDefinition } from './DataTableDefinition'
 import type { DefaultDatasetResult } from '~types'
 
 /**

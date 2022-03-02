@@ -3,8 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import type { CausalFactor } from '@showwhy/types'
 import { useCallback } from 'react'
-import type { CausalFactor } from '~types'
 
 export function useSetTargetCausalFactor(
 	saveCausalFactor: (causalFactor: CausalFactor) => void,

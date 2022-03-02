@@ -4,8 +4,12 @@
  */
 
 import type { IDropdownOption } from '@fluentui/react'
+import type {
+	FactorsOrDefinitions,
+	Maybe,
+	ElementDefinition,
+} from '@showwhy/types'
 import { useCallback } from 'react'
-import type { FactorsOrDefinitions, Maybe } from '~types'
 
 export function useOnResetVariable(
 	allElements: FactorsOrDefinitions,
@@ -17,8 +21,12 @@ export function useOnResetVariable(
 ): (columnName: string) => void {
 	return useCallback(
 		(columnName: string) => {
-			const id = allElements.find(a => a.column === columnName)?.id
-			const option = definitionDropdown.find(x => x.key === id)
+			const id = allElements.find(
+				(a: ElementDefinition) => a.column === columnName,
+			)?.id
+			const option = definitionDropdown.find(
+				(x: IDropdownOption) => x.key === id,
+			)
 			onSelectVariable(option, columnName)
 		},
 		[onSelectVariable, definitionDropdown, allElements],

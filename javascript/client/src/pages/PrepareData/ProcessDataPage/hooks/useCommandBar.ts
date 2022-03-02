@@ -9,8 +9,12 @@ import type {
 	ICommandBarItemProps,
 	ICommandBarProps,
 } from '@fluentui/react'
+import type {
+	FactorsOrDefinitions,
+	CausalFactor,
+	ElementDefinition,
+} from '@showwhy/types'
 import { useCallback } from 'react'
-import type { FactorsOrDefinitions } from '~types'
 
 export function useCommandBar(
 	renderDropdown: (columnName: string) => JSX.Element,
@@ -32,7 +36,9 @@ export function useCommandBar(
 					iconOnly: true,
 					iconProps: iconProps.reset,
 					onClick: () => onResetVariable(columnName),
-					disabled: !allElements.find(x => x.column === columnName),
+					disabled: !allElements.find(
+						(x: ElementDefinition | CausalFactor) => x.column === columnName,
+					),
 				},
 			]
 			return createDefaultCommandBar(items, {

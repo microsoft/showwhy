@@ -5,6 +5,7 @@
 
 import type { Step } from '@data-wrangling-components/core'
 import type { IDetailsColumnProps, IRenderFunction } from '@fluentui/react'
+import type { CausalFactor, ElementDefinition } from '@showwhy/types'
 import { useCallback, useMemo } from 'react'
 import {
 	useCommandBar,
@@ -69,8 +70,9 @@ export function useBusinessLogic(): {
 	)
 
 	const completedElements = useMemo((): number => {
-		return allElements.find(x => x)
-			? allElements?.filter(x => x.column).length
+		return allElements.find((x: CausalFactor | ElementDefinition) => x)
+			? allElements?.filter((x: CausalFactor | ElementDefinition) => x.column)
+					.length
 			: 0
 	}, [allElements])
 

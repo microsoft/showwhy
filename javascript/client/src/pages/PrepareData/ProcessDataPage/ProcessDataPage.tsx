@@ -35,7 +35,7 @@ export const ProcessDataPage: FC = memo(function ProcessDataPage() {
 })
 
 const Container = styled.div`
-	height: 100%;
+	height: 100vh;
 	margin-top: 0.5rem;
 `
 

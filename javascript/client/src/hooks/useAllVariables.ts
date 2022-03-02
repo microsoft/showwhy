@@ -3,8 +3,12 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import type {
+	CausalFactor,
+	Experiment,
+	FactorsOrDefinitions,
+} from '@showwhy/types'
 import { useMemo } from 'react'
-import type { CausalFactor, Experiment, FactorsOrDefinitions } from '~types'
 
 export function useAllVariables(
 	causalFactors: CausalFactor[],

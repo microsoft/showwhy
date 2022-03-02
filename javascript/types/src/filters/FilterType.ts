@@ -8,3 +8,9 @@ export enum RenameCalloutType {
 	Edit = 'edit',
 	Duplicate = 'duplicate',
 }
+
+export interface FilterType {
+	key: string
+	text: string
+	placeholder: string
+}
