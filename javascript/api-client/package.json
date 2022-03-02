@@ -1,7 +1,6 @@
 {
 	"name": "@showwhy/api-client",
 	"version": "0.0.1",
-	"type": "module",
 	"main": "src/index.ts",
 	"publishConfig": {
 		"main": "dist/cjs/index.js",
@@ -16,7 +15,7 @@
 		"@showwhy/types": "workspace:javascript/types"
 	},
 	"devDependencies": {
-		"@essex/scripts": "^20.3.2",
+		"@essex/scripts": "^20.4.1",
 		"@essex/tsconfig-base": "^1.0.2"
 	}
 }

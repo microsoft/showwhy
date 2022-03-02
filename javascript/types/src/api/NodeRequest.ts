@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { GraphNodeData } from '../graphs'
+import type { GraphNodeData } from '../graphs'
 
 export interface NodeRequest {
 	session_id?: string
