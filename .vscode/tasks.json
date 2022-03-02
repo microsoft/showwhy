@@ -8,24 +8,24 @@
 			"isBackground": true,
 			"dependsOn": "pip install (functions)",
 			"options": {
-				"cwd": "${workspaceFolder}/packages/functions"
+				"cwd": "${workspaceFolder}/javascript/functions"
 			}
 		},
 		{
 			"label": "pip install (functions)",
 			"type": "shell",
 			"osx": {
-				"command": "${config:azureFunctions.pythonVenv}/bin/python -m pip install -r ${workspaceFolder}/packages/functions/src/requirements.txt"
+				"command": "${config:azureFunctions.pythonVenv}/bin/python -m pip install -r ${workspaceFolder}/javascript/functions/src/requirements.txt"
 			},
 			"windows": {
-				"command": "${config:azureFunctions.pythonVenv}/Scripts/python -m pip install -r ${workspaceFolder}/packages/functions/src/requirements.txt"
+				"command": "${config:azureFunctions.pythonVenv}/Scripts/python -m pip install -r ${workspaceFolder}/javascript/functions/src/requirements.txt"
 			},
 			"linux": {
-				"command": "${config:azureFunctions.pythonVenv}/bin/python -m pip install -r ${workspaceFolder}/packages/functions/src/requirements.txt"
+				"command": "${config:azureFunctions.pythonVenv}/bin/python -m pip install -r ${workspaceFolder}/javascript/functions/src/requirements.txt"
 			},
 			"problemMatcher": [],
 			"options": {
-				"cwd": "${workspaceFolder}/packages/functions"
+				"cwd": "${workspaceFolder}/javascript/functions"
 			}
 		}
 	]

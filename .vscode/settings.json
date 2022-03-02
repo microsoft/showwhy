@@ -8,9 +8,9 @@
 	"typescript.enablePromptUseWorkspaceTsdk": true,
 	"prettier.prettierPath": ".yarn/sdks/prettier/index.js",
 	"editor.formatOnSave": true,
-	"azureFunctions.deploySubpath": "packages/functions/src",
+	"azureFunctions.deploySubpath": "javascript/functions/src",
 	"azureFunctions.scmDoBuildDuringDeployment": true,
-	"azureFunctions.pythonVenv": "packages/functions/src/.venv",
+	"azureFunctions.pythonVenv": "javascript/functions/src/.venv",
 	"azureFunctions.projectLanguage": "Python",
 	"azureFunctions.projectRuntime": "~3",
 	"jest.jestCommandLine": "yarn run test:jest"

@@ -1,0 +1,10 @@
+{
+	"extends": "@essex/tsconfig-base",
+	"compilerOptions": {
+		"module": "ESNext",
+		"moduleResolution": "Node",
+		"lib": ["ESNext", "DOM", "DOM.Iterable", "ES2020.BigInt"],
+		"outDir": "lib"
+	},
+	"include": ["./src/"]
+}
