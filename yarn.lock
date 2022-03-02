@@ -1171,7 +1171,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@essex/scripts@npm:^20.4.1":
+"@essex/scripts@npm:^20.3.2, @essex/scripts@npm:^20.4.1":
   version: 20.4.1
   resolution: "@essex/scripts@npm:20.4.1"
   dependencies:
@@ -2071,7 +2071,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/types@workspace:javascript/types"
   dependencies:
-    "@essex/scripts": ^20.4.1
+    "@essex/scripts": ^20.3.2
     "@essex/tsconfig-base": ^1.0.2
     "@types/react": ^17.0.39
   languageName: unknown
