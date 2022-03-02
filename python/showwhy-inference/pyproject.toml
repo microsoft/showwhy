@@ -36,16 +36,12 @@ lines_after_imports = 2
 src_paths = ["showwhy_inference", "tests"]
 extend_skip = ["setup.py"]
 
-
 [tool.black]
 target-version = ['py36']
 force-exclude = '''
 .*/setup\.py$
 '''
-
-[flake8]
-max-line-length = 88
-extend-ignore = "E203"
+line-length = 88
 
 
 [tool.mypy]

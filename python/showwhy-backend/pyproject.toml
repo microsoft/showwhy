@@ -36,15 +36,12 @@ lines_after_imports = 2
 src_paths = ["showwhy_backend", "tests"]
 extend_skip = ["setup.py"]
 
-[flake8]
-max-line-length = 88
-extend-ignore = "E203"
-
 [tool.black]
 target-version = ['py36']
 force-exclude = '''
 .*/setup\.py$
 '''
+line-length = 88
 
 
 [tool.mypy]
