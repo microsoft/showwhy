@@ -8,8 +8,9 @@ import uuid
 
 from typing import Dict
 
-from shared_code.io.storage import get_storage_client
 from showwhy_inference.inference import join_results
+
+from shared_code.io.storage import get_storage_client
 
 
 storage = get_storage_client()

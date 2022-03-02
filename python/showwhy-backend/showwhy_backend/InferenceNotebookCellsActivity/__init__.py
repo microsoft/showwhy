@@ -9,7 +9,6 @@ import re
 
 from typing import Dict
 
-from shared_code.io.notebook import new_code_cell, new_markdown_cell
 from showwhy_inference import (
     causal_graph,
     confidence_interval,
@@ -19,6 +18,8 @@ from showwhy_inference import (
     refutation,
     specification_interpreter,
 )
+
+from shared_code.io.notebook import new_code_cell, new_markdown_cell
 
 
 def main(body: Dict) -> str:

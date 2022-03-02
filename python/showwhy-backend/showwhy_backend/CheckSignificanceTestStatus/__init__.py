@@ -8,9 +8,10 @@ import logging
 
 import azure.functions as func
 
+from showwhy_inference.inference_config import DEFAULT_SIGNIFICANCE_TEST_SIMULATIONS
+
 from shared_code.io.db import get_db_client
 from shared_code.io.storage import get_storage_client
-from showwhy_inference.inference_config import DEFAULT_SIGNIFICANCE_TEST_SIMULATIONS
 
 
 storage = get_storage_client()

@@ -11,9 +11,10 @@ from typing import Dict
 
 import pandas as pd
 
+from showwhy_inference.inference import estimate_specification
+
 from shared_code.io.db import get_db_client
 from shared_code.io.storage import get_storage_client
-from showwhy_inference.inference import estimate_specification
 
 
 storage = get_storage_client()

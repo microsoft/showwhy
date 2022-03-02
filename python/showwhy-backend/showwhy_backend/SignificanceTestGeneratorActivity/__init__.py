@@ -8,10 +8,11 @@ import uuid
 
 from typing import Dict
 
-from shared_code.io.db import get_db_client
-from shared_code.io.storage import get_storage_client
 from showwhy_inference.inference_config import DEFAULT_SIGNIFICANCE_TEST_SIMULATIONS
 from showwhy_inference.significance_test import calculate_all_propensity_scores
+
+from shared_code.io.db import get_db_client
+from shared_code.io.storage import get_storage_client
 
 
 storage = get_storage_client()

@@ -11,6 +11,7 @@ import numpy as np
 from dowhy.causal_estimator import CausalEstimate
 from dowhy.causal_identifier import IdentifiedEstimand
 from dowhy.causal_model import CausalModel
+
 from showwhy_inference.inference_config import (
     DEFAULT_REFUTATION_SIMULATIONS,
     DEFAULT_REFUTATION_TESTS,

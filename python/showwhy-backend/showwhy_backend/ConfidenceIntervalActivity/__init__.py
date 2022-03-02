@@ -7,9 +7,10 @@ import logging
 
 from typing import Dict
 
+from showwhy_inference.confidence_interval import ConfidenceInterval
+
 from shared_code.io.db import get_db_client
 from shared_code.io.storage import get_storage_client
-from showwhy_inference.confidence_interval import ConfidenceInterval
 
 
 storage = get_storage_client()

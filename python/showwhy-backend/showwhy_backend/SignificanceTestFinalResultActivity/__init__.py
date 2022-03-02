@@ -7,9 +7,10 @@ import logging
 
 from typing import Dict
 
+from showwhy_inference.significance_test import perform_significance_test
+
 from shared_code.io.db import get_db_client
 from shared_code.io.storage import get_storage_client
-from showwhy_inference.significance_test import perform_significance_test
 
 
 storage = get_storage_client()

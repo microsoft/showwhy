@@ -9,8 +9,9 @@ from typing import Dict
 
 import azure.durable_functions as df
 
-from shared_code.exception.invalid_request import InvalidRequestException
 from showwhy_inference.inference_config import get_batch, get_batch_size
+
+from shared_code.exception.invalid_request import InvalidRequestException
 
 
 SIGNIFICANCE_BATCH_SIZE = get_batch_size("SIGNIFICANCE_BATCH_SIZE")

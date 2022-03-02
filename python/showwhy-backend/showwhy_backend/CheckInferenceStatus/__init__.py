@@ -11,9 +11,10 @@ from collections import ChainMap
 
 import azure.functions as func
 
+from showwhy_inference.inference import check_refutation_result
+
 from shared_code.io.db import get_db_client
 from shared_code.io.storage import get_storage_client
-from showwhy_inference.inference import check_refutation_result
 
 
 storage = get_storage_client()
