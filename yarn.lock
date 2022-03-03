@@ -2,7 +2,7 @@
 # Manual changes might be lost - proceed with caution!
 
 __metadata:
-  version: 5
+  version: 6
   cacheKey: 8
 
 "@ampproject/remapping@npm:^2.1.0":
@@ -1028,7 +1028,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@essex-js-toolkit/hooks@npm:4.0.1, @essex-js-toolkit/hooks@npm:^4.0.0, @essex-js-toolkit/hooks@npm:^4.0.1":
+"@essex-js-toolkit/hooks@npm:4.0.1":
   version: 4.0.1
   resolution: "@essex-js-toolkit/hooks@npm:4.0.1"
   dependencies:
@@ -1040,6 +1040,21 @@ __metadata:
     "@types/react-dom": "*"
     react: ">=16.8.0"
   checksum: 3c120777bc3653b61b0e1ad4f96addf3248e330dcc7053009120443e91e878fe44daf232c62147070ff9a83f0dbeb0ece43a9ccb37c0f644cf5d622802f600ba
+  languageName: node
+  linkType: hard
+
+"@essex-js-toolkit/hooks@npm:^4.0.0, @essex-js-toolkit/hooks@npm:^4.0.1":
+  version: 4.0.3
+  resolution: "@essex-js-toolkit/hooks@npm:4.0.3"
+  dependencies:
+    "@essex-js-toolkit/toolbox": 3.0.1
+    lodash-es: ^4.17.21
+  peerDependencies:
+    "@types/node": "*"
+    "@types/react": "*"
+    "@types/react-dom": "*"
+    react: ">=16.8.0"
+  checksum: 112b417dea249809b77741d38d6f95a856c94871021604c05239fe6c7b685e98693248887ea6a6e9208391bf9c76358b531aa45d7ae09cf0f4ed40410d345148
   languageName: node
   linkType: hard
 
@@ -1281,13 +1296,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fluentui/date-time-utilities@npm:^8.3.0":
-  version: 8.3.0
-  resolution: "@fluentui/date-time-utilities@npm:8.3.0"
+"@fluentui/date-time-utilities@npm:^8.4.0":
+  version: 8.4.0
+  resolution: "@fluentui/date-time-utilities@npm:8.4.0"
   dependencies:
-    "@fluentui/set-version": ^8.1.5
+    "@fluentui/set-version": ^8.2.0
     tslib: ^2.1.0
-  checksum: 1d9e0fbf661efce2f03c167abe43df2c41d448633c3e63d80139b1a0a896e14b659cba3b1b087cc309d584d66d24526573dccdc2e0dc10fe206588933db1f415
+  checksum: 8afac5cbb7a264af11aed9015fb6499a7fe5defeb9795fa8ba8b72ab410b7ded5dab43e9449fe62890c19603108fc99b7c0c4ae44dc77f0a518204812dda0cb3
   languageName: node
   linkType: hard
 
@@ -1301,122 +1316,122 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fluentui/dom-utilities@npm:^2.1.5":
-  version: 2.1.5
-  resolution: "@fluentui/dom-utilities@npm:2.1.5"
+"@fluentui/dom-utilities@npm:^2.2.0":
+  version: 2.2.0
+  resolution: "@fluentui/dom-utilities@npm:2.2.0"
   dependencies:
-    "@fluentui/set-version": ^8.1.5
+    "@fluentui/set-version": ^8.2.0
     tslib: ^2.1.0
-  checksum: 77b852a9f5c862db59d69fd504ada9836ccb9448c399b96856880217d5715e99f071ed72940e297175cb59e582ce1150936254c276d7f666e37d3876cfc53152
+  checksum: ba0f29a4649c2b9a409cb5df975a15c942c501e91da27d49e9dc94600471bd73fe6bd6513794b2a4543eee60436da6de3ad8ee825b6220f00f92ec3ba1153e48
   languageName: node
   linkType: hard
 
-"@fluentui/font-icons-mdl2@npm:^8.1.24, @fluentui/font-icons-mdl2@npm:^8.1.26":
-  version: 8.1.26
-  resolution: "@fluentui/font-icons-mdl2@npm:8.1.26"
+"@fluentui/font-icons-mdl2@npm:^8.1.24, @fluentui/font-icons-mdl2@npm:^8.2.0":
+  version: 8.2.0
+  resolution: "@fluentui/font-icons-mdl2@npm:8.2.0"
   dependencies:
-    "@fluentui/set-version": ^8.1.5
-    "@fluentui/style-utilities": ^8.5.8
+    "@fluentui/set-version": ^8.2.0
+    "@fluentui/style-utilities": ^8.6.0
     tslib: ^2.1.0
-  checksum: ef9b82cf8c3e039319e5d7bcf204b57c71dfad3f3128195f6eaef168caa944a2d5732b7588db9c2c30245705e5a6c591c36bf2dace4f2a6916d57a5c2b2444ce
+  checksum: 84f4646a97f6ad69f38a054e87efcf6757a1848b3195bd0b1ea69a45d51d2780a05ce8f621eed50a1a6eaf6f91cb553e5033312b89fa7917daff73469fe19da4
   languageName: node
   linkType: hard
 
-"@fluentui/foundation-legacy@npm:^8.1.25":
-  version: 8.1.25
-  resolution: "@fluentui/foundation-legacy@npm:8.1.25"
+"@fluentui/foundation-legacy@npm:^8.2.0":
+  version: 8.2.0
+  resolution: "@fluentui/foundation-legacy@npm:8.2.0"
   dependencies:
-    "@fluentui/merge-styles": ^8.3.0
-    "@fluentui/set-version": ^8.1.5
-    "@fluentui/style-utilities": ^8.5.8
-    "@fluentui/utilities": ^8.5.0
-    tslib: ^2.1.0
-  peerDependencies:
-    "@types/react": ">=16.8.0 <18.0.0"
-    react: ">=16.8.0 <18.0.0"
-  checksum: e204dc53fbd8ac3353b6e6c73e75349cb788270897da8fdd460679b0f1619463303acc0b1ddd6201861136ce4c208ca1783c8c150bf634c2b4a04c390e33bb9e
-  languageName: node
-  linkType: hard
-
-"@fluentui/keyboard-key@npm:^0.3.5":
-  version: 0.3.5
-  resolution: "@fluentui/keyboard-key@npm:0.3.5"
-  dependencies:
-    tslib: ^2.1.0
-  checksum: e9cc74230faecb3d75b5d71cb09955959ecc018da60e60b12e3d9a3f4b88bd747f7a5e232dde38d9fc16ea8b9c1128deeb1444865a1cb7cbf573543281dd0335
-  languageName: node
-  linkType: hard
-
-"@fluentui/merge-styles@npm:^8.3.0":
-  version: 8.3.0
-  resolution: "@fluentui/merge-styles@npm:8.3.0"
-  dependencies:
-    "@fluentui/set-version": ^8.1.5
-    tslib: ^2.1.0
-  checksum: 8d810e5f9cedad3d4c8f98f92a2b29fcf9045ca5a4c681ea5f66aedc8d61cbeaba431942238725f661ce3b8de8b3db9c6151c8765752c52d394bd96f335f1380
-  languageName: node
-  linkType: hard
-
-"@fluentui/react-focus@npm:^8.3.21":
-  version: 8.3.21
-  resolution: "@fluentui/react-focus@npm:8.3.21"
-  dependencies:
-    "@fluentui/keyboard-key": ^0.3.5
-    "@fluentui/merge-styles": ^8.3.0
-    "@fluentui/set-version": ^8.1.5
-    "@fluentui/style-utilities": ^8.5.8
-    "@fluentui/utilities": ^8.5.0
+    "@fluentui/merge-styles": ^8.4.0
+    "@fluentui/set-version": ^8.2.0
+    "@fluentui/style-utilities": ^8.6.0
+    "@fluentui/utilities": ^8.6.0
     tslib: ^2.1.0
   peerDependencies:
     "@types/react": ">=16.8.0 <18.0.0"
     react: ">=16.8.0 <18.0.0"
-  checksum: 10d74bbc73801c470ce9716aab68f9f18335773747f95e409f4ba5942750246c67ddf0545523da2076fce826229c392b35ff8a5982e951af6ea3018c7d5401de
+  checksum: 8158b23be6039001f4c33078099632d38d73e778c7a523b5a2fb5b0702436a2b9819ff209e18adf8c27f91ef13e4b426c384f593f5c4d60a77e353cb799d846e
   languageName: node
   linkType: hard
 
-"@fluentui/react-hooks@npm:^8.3.13, @fluentui/react-hooks@npm:^8.4.0":
+"@fluentui/keyboard-key@npm:^0.4.0":
+  version: 0.4.0
+  resolution: "@fluentui/keyboard-key@npm:0.4.0"
+  dependencies:
+    tslib: ^2.1.0
+  checksum: e114cf098cbe579ca5fead8a8349a02ebe3b888414ab18f6c065a714eb9636f0bbf8b80ad86f1095ba3e53adab9ca00f97ee7b4e4addeac34c1d08a343c3470d
+  languageName: node
+  linkType: hard
+
+"@fluentui/merge-styles@npm:^8.4.0":
   version: 8.4.0
-  resolution: "@fluentui/react-hooks@npm:8.4.0"
+  resolution: "@fluentui/merge-styles@npm:8.4.0"
   dependencies:
-    "@fluentui/react-window-provider": ^2.1.6
-    "@fluentui/set-version": ^8.1.5
-    "@fluentui/utilities": ^8.5.0
+    "@fluentui/set-version": ^8.2.0
     tslib: ^2.1.0
-  peerDependencies:
-    "@types/react": ">=16.8.0 <18.0.0"
-    react: ">=16.8.0 <18.0.0"
-  checksum: c84b9e5f4a11d52bdccb2f68567bd9a8ed8b9907d31244e71f2e407e6e8308e87cd33a3176096c9e4b80ff6eefda3ce9d57d898d40f99a6b89c1f0c32fb90931
+  checksum: e85ddbbda53583dd4f21e72a2a1b0f24094deef506fe1771f82ad1c9cef471dd8ba18f2303fa48ecab2beea6d0e846095d326660b314cc8e100f48d5429ace0f
   languageName: node
   linkType: hard
 
-"@fluentui/react-window-provider@npm:^2.1.6":
-  version: 2.1.6
-  resolution: "@fluentui/react-window-provider@npm:2.1.6"
+"@fluentui/react-focus@npm:^8.4.0":
+  version: 8.4.0
+  resolution: "@fluentui/react-focus@npm:8.4.0"
   dependencies:
-    "@fluentui/set-version": ^8.1.5
+    "@fluentui/keyboard-key": ^0.4.0
+    "@fluentui/merge-styles": ^8.4.0
+    "@fluentui/set-version": ^8.2.0
+    "@fluentui/style-utilities": ^8.6.0
+    "@fluentui/utilities": ^8.6.0
     tslib: ^2.1.0
   peerDependencies:
     "@types/react": ">=16.8.0 <18.0.0"
     react: ">=16.8.0 <18.0.0"
-  checksum: 31ef1c018a32c121ca4aa8958ffaa8b8a48c16a80f48a6091831e3de9767d8e0c406357922e549959cb7e1f16aa3fb075140ab9aeb1bf7258b00cadf15f8cd7e
+  checksum: 4aeb395725445511e0f8d2be2c2ba70cad3e988b2bb3a4c184bdd712a0b8ea592f3577e8b01849e1a1e0c97f7fdc571b202be760446dc93b05f749bf11ccd89d
+  languageName: node
+  linkType: hard
+
+"@fluentui/react-hooks@npm:^8.3.13, @fluentui/react-hooks@npm:^8.5.0":
+  version: 8.5.0
+  resolution: "@fluentui/react-hooks@npm:8.5.0"
+  dependencies:
+    "@fluentui/react-window-provider": ^2.2.0
+    "@fluentui/set-version": ^8.2.0
+    "@fluentui/utilities": ^8.6.0
+    tslib: ^2.1.0
+  peerDependencies:
+    "@types/react": ">=16.8.0 <18.0.0"
+    react: ">=16.8.0 <18.0.0"
+  checksum: b863642c00c951ca15c9d4b35458ea7e5a1f01a8e5bd10ac2e663d24da823a52779cbd9d9360273813cf0056fb6a31f9dab54325d708e68a65e40223411076de
+  languageName: node
+  linkType: hard
+
+"@fluentui/react-window-provider@npm:^2.2.0":
+  version: 2.2.0
+  resolution: "@fluentui/react-window-provider@npm:2.2.0"
+  dependencies:
+    "@fluentui/set-version": ^8.2.0
+    tslib: ^2.1.0
+  peerDependencies:
+    "@types/react": ">=16.8.0 <18.0.0"
+    react: ">=16.8.0 <18.0.0"
+  checksum: 31a92060f018911f9bb4c99f44d600abe53267d6250417f7c256cb3e4073899ef171e79cc5e9847075140d13aedcb999a5b2f9ee6b3bc2a9299dac58d20588d0
   languageName: node
   linkType: hard
 
 "@fluentui/react@npm:^8.56.0":
-  version: 8.56.3
-  resolution: "@fluentui/react@npm:8.56.3"
+  version: 8.57.0
+  resolution: "@fluentui/react@npm:8.57.0"
   dependencies:
-    "@fluentui/date-time-utilities": ^8.3.0
-    "@fluentui/font-icons-mdl2": ^8.1.26
-    "@fluentui/foundation-legacy": ^8.1.25
-    "@fluentui/merge-styles": ^8.3.0
-    "@fluentui/react-focus": ^8.3.21
-    "@fluentui/react-hooks": ^8.4.0
-    "@fluentui/react-window-provider": ^2.1.6
-    "@fluentui/set-version": ^8.1.5
-    "@fluentui/style-utilities": ^8.5.8
-    "@fluentui/theme": ^2.4.12
-    "@fluentui/utilities": ^8.5.0
+    "@fluentui/date-time-utilities": ^8.4.0
+    "@fluentui/font-icons-mdl2": ^8.2.0
+    "@fluentui/foundation-legacy": ^8.2.0
+    "@fluentui/merge-styles": ^8.4.0
+    "@fluentui/react-focus": ^8.4.0
+    "@fluentui/react-hooks": ^8.5.0
+    "@fluentui/react-window-provider": ^2.2.0
+    "@fluentui/set-version": ^8.2.0
+    "@fluentui/style-utilities": ^8.6.0
+    "@fluentui/theme": ^2.5.0
+    "@fluentui/utilities": ^8.6.0
     "@microsoft/load-themed-styles": ^1.10.26
     tslib: ^2.1.0
   peerDependencies:
@@ -1424,30 +1439,30 @@ __metadata:
     "@types/react-dom": ">=16.8.0 <18.0.0"
     react: ">=16.8.0 <18.0.0"
     react-dom: ">=16.8.0 <18.0.0"
-  checksum: 39c5559566e88c0c2a845e6a092461757f038203ce5c8fd108d152e76c7f5bf2bb581d5e9ad45ec5e46e6a1825a67495d178cdb163d3cd1c6cb0373f93808654
+  checksum: 60b3325fb38c7381de8b25033519e1036883a91e9d8f26217030396cce79f358483987aea3e2bd5cdfa7ba08f553502b27d48f88b16bd245633edd655245988e
   languageName: node
   linkType: hard
 
-"@fluentui/set-version@npm:^8.1.5":
-  version: 8.1.5
-  resolution: "@fluentui/set-version@npm:8.1.5"
+"@fluentui/set-version@npm:^8.2.0":
+  version: 8.2.0
+  resolution: "@fluentui/set-version@npm:8.2.0"
   dependencies:
     tslib: ^2.1.0
-  checksum: ada6f0891bb423ab25aacc8420e52377d4f31d2aa913b109389d931b5779f11632a6019b209808d9c202df1e6fb2d21d5a8022a0c39025102d13540cf9a47a09
+  checksum: c2e212d965b9bc75f59e4688c156b4af076e2f13d392c309fbb3b28c47e07a7f3e8b621358dacc5a2f934d59d1c2af5c2f416510325e13e40eb716368bcd5513
   languageName: node
   linkType: hard
 
-"@fluentui/style-utilities@npm:^8.5.8":
-  version: 8.5.8
-  resolution: "@fluentui/style-utilities@npm:8.5.8"
+"@fluentui/style-utilities@npm:^8.6.0":
+  version: 8.6.0
+  resolution: "@fluentui/style-utilities@npm:8.6.0"
   dependencies:
-    "@fluentui/merge-styles": ^8.3.0
-    "@fluentui/set-version": ^8.1.5
-    "@fluentui/theme": ^2.4.12
-    "@fluentui/utilities": ^8.5.0
+    "@fluentui/merge-styles": ^8.4.0
+    "@fluentui/set-version": ^8.2.0
+    "@fluentui/theme": ^2.5.0
+    "@fluentui/utilities": ^8.6.0
     "@microsoft/load-themed-styles": ^1.10.26
     tslib: ^2.1.0
-  checksum: 001742a689e06f4dbefec0158fa9f13a4a57132b8ae5c404ae01cc323dd81f60c309b3ccf90dfc34116ba1bb5b86109b7464a29adeb5d60f265f9207ceaba0a8
+  checksum: 4947f0125acadac84318d5f3620a8969ff132ee8cf7bb4dbdec476fc5d02cab598b7a5e8fda3384f4374862d33ccd7dd873c7df6839fc3826d7277c1c7a8cd52
   languageName: node
   linkType: hard
 
@@ -1468,33 +1483,33 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fluentui/theme@npm:^2.4.12":
-  version: 2.4.12
-  resolution: "@fluentui/theme@npm:2.4.12"
+"@fluentui/theme@npm:^2.5.0":
+  version: 2.5.0
+  resolution: "@fluentui/theme@npm:2.5.0"
   dependencies:
-    "@fluentui/merge-styles": ^8.3.0
-    "@fluentui/set-version": ^8.1.5
-    "@fluentui/utilities": ^8.5.0
+    "@fluentui/merge-styles": ^8.4.0
+    "@fluentui/set-version": ^8.2.0
+    "@fluentui/utilities": ^8.6.0
     tslib: ^2.1.0
   peerDependencies:
     "@types/react": ">=16.8.0 <18.0.0"
     react: ">=16.8.0 <18.0.0"
-  checksum: 4c870397a4bb6dc5927a6ea841585f13556e4b02cac8a3ae1e27ee3567c194832f3772d99138f29f02d2d44dab23b9f8465c972dab800e02bbc19e8521feabc4
+  checksum: 5bc67f6936de0a052e70fa064c3336847dd2ab7e3d5f5f83f27a8c72029a5da3692e514bfeecb78c413d8cd4d4f0c39bbac6c8ab8ab1a25ec73ae69f8e619534
   languageName: node
   linkType: hard
 
-"@fluentui/utilities@npm:^8.4.2, @fluentui/utilities@npm:^8.5.0":
-  version: 8.5.0
-  resolution: "@fluentui/utilities@npm:8.5.0"
+"@fluentui/utilities@npm:^8.4.2, @fluentui/utilities@npm:^8.6.0":
+  version: 8.6.0
+  resolution: "@fluentui/utilities@npm:8.6.0"
   dependencies:
-    "@fluentui/dom-utilities": ^2.1.5
-    "@fluentui/merge-styles": ^8.3.0
-    "@fluentui/set-version": ^8.1.5
+    "@fluentui/dom-utilities": ^2.2.0
+    "@fluentui/merge-styles": ^8.4.0
+    "@fluentui/set-version": ^8.2.0
     tslib: ^2.1.0
   peerDependencies:
     "@types/react": ">=16.8.0 <18.0.0"
     react: ">=16.8.0 <18.0.0"
-  checksum: ad896ef8963a31704df978cffe3ee22644058e62659fde163bd9bca2930a68138efc24ba6524ee5be513f63975690982fc6731101775dafe9f1738951416b836
+  checksum: 8742db67d99be34396930022ea83eff531bcd922a3bfa65044f956fd1a9c80e10fca8941aa237bf9f83d89d5b5b1fd23745995ca4e0fb0f4b3985c5c53bce6cc
   languageName: node
   linkType: hard
 
@@ -2809,11 +2824,11 @@ __metadata:
   linkType: hard
 
 "@types/react-dom@npm:*, @types/react-dom@npm:>=16.9.0, @types/react-dom@npm:^17.0.11":
-  version: 17.0.12
-  resolution: "@types/react-dom@npm:17.0.12"
+  version: 17.0.13
+  resolution: "@types/react-dom@npm:17.0.13"
   dependencies:
     "@types/react": "*"
-  checksum: 9754e1d0c0107310eab35a2eb1dad45f6ef0a41e562c23a29d6bf723a29c8a2036c4acd6a1a1422bf7cf956d431e41b154608dd917f6e69c7ab0d87720c5e27e
+  checksum: 62c42a54ac8961c23a0e74b9cdd8b0a78563757e462b1ab665b2aa365bfd8b86a73d3f6eafc09a4a80fb08659321db168f012aa597c41c0df36f645a94e9266b
   languageName: node
   linkType: hard
 
@@ -2930,9 +2945,9 @@ __metadata:
   linkType: hard
 
 "@types/yargs-parser@npm:*":
-  version: 20.2.1
-  resolution: "@types/yargs-parser@npm:20.2.1"
-  checksum: 1d039e64494a7a61ddd278349a3dc60b19f99ff0517425696e796f794e4252452b9d62178e69755ad03f439f9dc0c8c3d7b3a1201b3a24e134bac1a09fa11eaa
+  version: 21.0.0
+  resolution: "@types/yargs-parser@npm:21.0.0"
+  checksum: b2f4c8d12ac18a567440379909127cf2cec393daffb73f246d0a25df36ea983b93b7e9e824251f959e9f928cbc7c1aab6728d0a0ff15d6145f66cec2be67d9a2
   languageName: node
   linkType: hard
 
@@ -3263,8 +3278,8 @@ __metadata:
   linkType: hard
 
 "ahooks@npm:^3.1.9":
-  version: 3.1.10
-  resolution: "ahooks@npm:3.1.10"
+  version: 3.1.11
+  resolution: "ahooks@npm:3.1.11"
   dependencies:
     "@types/js-cookie": ^2.x.x
     ahooks-v3-count: ^1.0.0
@@ -3276,7 +3291,7 @@ __metadata:
     screenfull: ^5.0.0
   peerDependencies:
     react: ^16.8.6 || ^17.0
-  checksum: 64fb8e177c8c5d46da4815d49711ba2d855974254415ad77830dd49fbd1683aebb96c1079da979a8a8b332948c7014d6159a633a3a7576080b44dfddc39a5a9b
+  checksum: 7bd097fadd4a120ef8eff76c8b385d7a028fffa0a737f820e6ade28dcb331554e47895d21f1baf63fdbc03e40e221b2ed47e2e0a644662978f4ef478af948005
   languageName: node
   linkType: hard
 
@@ -4421,9 +4436,9 @@ __metadata:
   linkType: hard
 
 "csstype@npm:^3.0.2":
-  version: 3.0.10
-  resolution: "csstype@npm:3.0.10"
-  checksum: 20a8fa324f2b33ddf94aa7507d1b6ab3daa6f3cc308888dc50126585d7952f2471de69b2dbe0635d1fdc31223fef8e070842691877e725caf456e2378685a631
+  version: 3.0.11
+  resolution: "csstype@npm:3.0.11"
+  checksum: 95e56abfe9ca219ae065acb4e43f61771a03170eed919127f558dfa168240867aba7629c8d98a201a0dd06d9a5ce82686f0570031c928516c61816adbc7c877f
   languageName: node
   linkType: hard
 
@@ -5146,163 +5161,173 @@ __metadata:
   languageName: node
   linkType: hard
 
-"esbuild-android-arm64@npm:0.14.23":
-  version: 0.14.23
-  resolution: "esbuild-android-arm64@npm:0.14.23"
+"esbuild-android-64@npm:0.14.24":
+  version: 0.14.24
+  resolution: "esbuild-android-64@npm:0.14.24"
+  conditions: os=android & cpu=x64
+  languageName: node
+  linkType: hard
+
+"esbuild-android-arm64@npm:0.14.24":
+  version: 0.14.24
+  resolution: "esbuild-android-arm64@npm:0.14.24"
   conditions: os=android & cpu=arm64
   languageName: node
   linkType: hard
 
-"esbuild-darwin-64@npm:0.14.23":
-  version: 0.14.23
-  resolution: "esbuild-darwin-64@npm:0.14.23"
+"esbuild-darwin-64@npm:0.14.24":
+  version: 0.14.24
+  resolution: "esbuild-darwin-64@npm:0.14.24"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-"esbuild-darwin-arm64@npm:0.14.23":
-  version: 0.14.23
-  resolution: "esbuild-darwin-arm64@npm:0.14.23"
+"esbuild-darwin-arm64@npm:0.14.24":
+  version: 0.14.24
+  resolution: "esbuild-darwin-arm64@npm:0.14.24"
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
-"esbuild-freebsd-64@npm:0.14.23":
-  version: 0.14.23
-  resolution: "esbuild-freebsd-64@npm:0.14.23"
+"esbuild-freebsd-64@npm:0.14.24":
+  version: 0.14.24
+  resolution: "esbuild-freebsd-64@npm:0.14.24"
   conditions: os=freebsd & cpu=x64
   languageName: node
   linkType: hard
 
-"esbuild-freebsd-arm64@npm:0.14.23":
-  version: 0.14.23
-  resolution: "esbuild-freebsd-arm64@npm:0.14.23"
+"esbuild-freebsd-arm64@npm:0.14.24":
+  version: 0.14.24
+  resolution: "esbuild-freebsd-arm64@npm:0.14.24"
   conditions: os=freebsd & cpu=arm64
   languageName: node
   linkType: hard
 
-"esbuild-linux-32@npm:0.14.23":
-  version: 0.14.23
-  resolution: "esbuild-linux-32@npm:0.14.23"
+"esbuild-linux-32@npm:0.14.24":
+  version: 0.14.24
+  resolution: "esbuild-linux-32@npm:0.14.24"
   conditions: os=linux & cpu=ia32
   languageName: node
   linkType: hard
 
-"esbuild-linux-64@npm:0.14.23":
-  version: 0.14.23
-  resolution: "esbuild-linux-64@npm:0.14.23"
+"esbuild-linux-64@npm:0.14.24":
+  version: 0.14.24
+  resolution: "esbuild-linux-64@npm:0.14.24"
   conditions: os=linux & cpu=x64
   languageName: node
   linkType: hard
 
-"esbuild-linux-arm64@npm:0.14.23":
-  version: 0.14.23
-  resolution: "esbuild-linux-arm64@npm:0.14.23"
+"esbuild-linux-arm64@npm:0.14.24":
+  version: 0.14.24
+  resolution: "esbuild-linux-arm64@npm:0.14.24"
   conditions: os=linux & cpu=arm64
   languageName: node
   linkType: hard
 
-"esbuild-linux-arm@npm:0.14.23":
-  version: 0.14.23
-  resolution: "esbuild-linux-arm@npm:0.14.23"
+"esbuild-linux-arm@npm:0.14.24":
+  version: 0.14.24
+  resolution: "esbuild-linux-arm@npm:0.14.24"
   conditions: os=linux & cpu=arm
   languageName: node
   linkType: hard
 
-"esbuild-linux-mips64le@npm:0.14.23":
-  version: 0.14.23
-  resolution: "esbuild-linux-mips64le@npm:0.14.23"
+"esbuild-linux-mips64le@npm:0.14.24":
+  version: 0.14.24
+  resolution: "esbuild-linux-mips64le@npm:0.14.24"
   conditions: os=linux & cpu=mips64el
   languageName: node
   linkType: hard
 
-"esbuild-linux-ppc64le@npm:0.14.23":
-  version: 0.14.23
-  resolution: "esbuild-linux-ppc64le@npm:0.14.23"
+"esbuild-linux-ppc64le@npm:0.14.24":
+  version: 0.14.24
+  resolution: "esbuild-linux-ppc64le@npm:0.14.24"
   conditions: os=linux & cpu=ppc64
   languageName: node
   linkType: hard
 
-"esbuild-linux-riscv64@npm:0.14.23":
-  version: 0.14.23
-  resolution: "esbuild-linux-riscv64@npm:0.14.23"
+"esbuild-linux-riscv64@npm:0.14.24":
+  version: 0.14.24
+  resolution: "esbuild-linux-riscv64@npm:0.14.24"
   conditions: os=linux & cpu=riscv64
   languageName: node
   linkType: hard
 
-"esbuild-linux-s390x@npm:0.14.23":
-  version: 0.14.23
-  resolution: "esbuild-linux-s390x@npm:0.14.23"
+"esbuild-linux-s390x@npm:0.14.24":
+  version: 0.14.24
+  resolution: "esbuild-linux-s390x@npm:0.14.24"
   conditions: os=linux & cpu=s390x
   languageName: node
   linkType: hard
 
-"esbuild-netbsd-64@npm:0.14.23":
-  version: 0.14.23
-  resolution: "esbuild-netbsd-64@npm:0.14.23"
+"esbuild-netbsd-64@npm:0.14.24":
+  version: 0.14.24
+  resolution: "esbuild-netbsd-64@npm:0.14.24"
   conditions: os=netbsd & cpu=x64
   languageName: node
   linkType: hard
 
-"esbuild-openbsd-64@npm:0.14.23":
-  version: 0.14.23
-  resolution: "esbuild-openbsd-64@npm:0.14.23"
+"esbuild-openbsd-64@npm:0.14.24":
+  version: 0.14.24
+  resolution: "esbuild-openbsd-64@npm:0.14.24"
   conditions: os=openbsd & cpu=x64
   languageName: node
   linkType: hard
 
-"esbuild-sunos-64@npm:0.14.23":
-  version: 0.14.23
-  resolution: "esbuild-sunos-64@npm:0.14.23"
+"esbuild-sunos-64@npm:0.14.24":
+  version: 0.14.24
+  resolution: "esbuild-sunos-64@npm:0.14.24"
   conditions: os=sunos & cpu=x64
   languageName: node
   linkType: hard
 
-"esbuild-windows-32@npm:0.14.23":
-  version: 0.14.23
-  resolution: "esbuild-windows-32@npm:0.14.23"
+"esbuild-windows-32@npm:0.14.24":
+  version: 0.14.24
+  resolution: "esbuild-windows-32@npm:0.14.24"
   conditions: os=win32 & cpu=ia32
   languageName: node
   linkType: hard
 
-"esbuild-windows-64@npm:0.14.23":
-  version: 0.14.23
-  resolution: "esbuild-windows-64@npm:0.14.23"
+"esbuild-windows-64@npm:0.14.24":
+  version: 0.14.24
+  resolution: "esbuild-windows-64@npm:0.14.24"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
 
-"esbuild-windows-arm64@npm:0.14.23":
-  version: 0.14.23
-  resolution: "esbuild-windows-arm64@npm:0.14.23"
+"esbuild-windows-arm64@npm:0.14.24":
+  version: 0.14.24
+  resolution: "esbuild-windows-arm64@npm:0.14.24"
   conditions: os=win32 & cpu=arm64
   languageName: node
   linkType: hard
 
 "esbuild@npm:^0.14.14":
-  version: 0.14.23
-  resolution: "esbuild@npm:0.14.23"
+  version: 0.14.24
+  resolution: "esbuild@npm:0.14.24"
   dependencies:
-    esbuild-android-arm64: 0.14.23
-    esbuild-darwin-64: 0.14.23
-    esbuild-darwin-arm64: 0.14.23
-    esbuild-freebsd-64: 0.14.23
-    esbuild-freebsd-arm64: 0.14.23
-    esbuild-linux-32: 0.14.23
-    esbuild-linux-64: 0.14.23
-    esbuild-linux-arm: 0.14.23
-    esbuild-linux-arm64: 0.14.23
-    esbuild-linux-mips64le: 0.14.23
-    esbuild-linux-ppc64le: 0.14.23
-    esbuild-linux-riscv64: 0.14.23
-    esbuild-linux-s390x: 0.14.23
-    esbuild-netbsd-64: 0.14.23
-    esbuild-openbsd-64: 0.14.23
-    esbuild-sunos-64: 0.14.23
-    esbuild-windows-32: 0.14.23
-    esbuild-windows-64: 0.14.23
-    esbuild-windows-arm64: 0.14.23
+    esbuild-android-64: 0.14.24
+    esbuild-android-arm64: 0.14.24
+    esbuild-darwin-64: 0.14.24
+    esbuild-darwin-arm64: 0.14.24
+    esbuild-freebsd-64: 0.14.24
+    esbuild-freebsd-arm64: 0.14.24
+    esbuild-linux-32: 0.14.24
+    esbuild-linux-64: 0.14.24
+    esbuild-linux-arm: 0.14.24
+    esbuild-linux-arm64: 0.14.24
+    esbuild-linux-mips64le: 0.14.24
+    esbuild-linux-ppc64le: 0.14.24
+    esbuild-linux-riscv64: 0.14.24
+    esbuild-linux-s390x: 0.14.24
+    esbuild-netbsd-64: 0.14.24
+    esbuild-openbsd-64: 0.14.24
+    esbuild-sunos-64: 0.14.24
+    esbuild-windows-32: 0.14.24
+    esbuild-windows-64: 0.14.24
+    esbuild-windows-arm64: 0.14.24
   dependenciesMeta:
+    esbuild-android-64:
+      optional: true
     esbuild-android-arm64:
       optional: true
     esbuild-darwin-64:
@@ -5343,7 +5368,7 @@ __metadata:
       optional: true
   bin:
     esbuild: bin/esbuild
-  checksum: 41d26f9022a9f95a1ccf280fd6c2cf2684264663c03d5d4338bfab17710292b9c2ca45624ed55d9f37d7be5f29557ebd6d101b21ed5592fb0b6e6ac5e76bc58d
+  checksum: 6e13ebc60c6aab61cd51b68b8df5626d809a49e50615a1dc5e913afff2464e75b461aa393b6b1e293185e807505b0ce10b386e6d1b19d411d416a6e6769dea74
   languageName: node
   linkType: hard
 
@@ -5395,13 +5420,13 @@ __metadata:
   linkType: hard
 
 "eslint-config-prettier@npm:^8.4.0":
-  version: 8.4.0
-  resolution: "eslint-config-prettier@npm:8.4.0"
+  version: 8.5.0
+  resolution: "eslint-config-prettier@npm:8.5.0"
   peerDependencies:
     eslint: ">=7.0.0"
   bin:
     eslint-config-prettier: bin/cli.js
-  checksum: ee8dc343f1fed15dc0658e190a966cc23644477f2331a7f56ae2bb79dd74892e3cde8ea5c142e7a3329a8291a1de041e13ca96e54d0c85ff4a2aba13390c5f10
+  checksum: 0d0f5c32e7a0ad91249467ce71ca92394ccd343178277d318baf32063b79ea90216f4c81d1065d60f96366fdc60f151d4d68ae7811a58bd37228b84c2083f893
   languageName: node
   linkType: hard
 
@@ -8214,8 +8239,8 @@ __metadata:
   linkType: hard
 
 "minipass-fetch@npm:^2.0.1":
-  version: 2.0.1
-  resolution: "minipass-fetch@npm:2.0.1"
+  version: 2.0.2
+  resolution: "minipass-fetch@npm:2.0.2"
   dependencies:
     encoding: ^0.1.13
     minipass: ^3.1.6
@@ -8224,7 +8249,7 @@ __metadata:
   dependenciesMeta:
     encoding:
       optional: true
-  checksum: 2a032e94def4c4a89ef6553fd10c563fefffafd16d6d95527ab132e2895fcf731b73a0ab3712f236e82c4467afb41148c2d272c319351f1a23d9524b399c6bba
+  checksum: 0613b0a6ef427609707c2b73b69230348fe3c24b33c144622e8e248404534fa1f125b94c324c555cd665ef623abedab0f7891e460b1c9ac6babc3ab2385b3c18
   languageName: node
   linkType: hard
 
@@ -10583,11 +10608,11 @@ __metadata:
 
 "typescript@patch:typescript@^4.5.5#~builtin<compat/typescript>, typescript@patch:typescript@^4.6.2#~builtin<compat/typescript>":
   version: 4.6.2
-  resolution: "typescript@patch:typescript@npm%3A4.6.2#~builtin<compat/typescript>::version=4.6.2&hash=493e53"
+  resolution: "typescript@patch:typescript@npm%3A4.6.2#~builtin<compat/typescript>::version=4.6.2&hash=bda367"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: efb83260a22ee49d4c8bdc59b3cefe54fdf51d6f563f5c3a35aa3d5e46fb12f3f1d33a36d6f9f64171e567ead1847e99cb612d0a9a74e7d44e16cad9d0bbc937
+  checksum: 40b493a71747fb89fa70df104e2c4a5e284b43750af5bea024090a5261cefa387f7a9372411b13030f7bf5555cee4275443d08805642ae5c74ef76740854a4c7
   languageName: node
   linkType: hard
 
