@@ -1,5 +1,8 @@
-For each table, select a column to view the distribution of values within it. Remove any columns that have no possible causal relationship with either the exposure or outcome.​
+We now use the loaded datasets to derive the data variables that will provide concrete data for the causal factors that you have defined in your causal model. The result of this step is a single data table that serves as the input to the effect estimation stage. The final table should contain one row per subject, with data columns binding to the following variables:
 
-Columns may be related to the causal question in various ways, for example by identifying the subjects of the population (e.g., via a subject ID) or by identifying attributes of these subjects that allow linking to additional relevant variables (e.g., a country identifier column that allows country-level variables to be linked to subjects via their country).​
+1. Population columns: Each alternative population definition should be associated with a binary data column indicating whether (1) or not (0) the subject is a member of the population.
+2. Exposure columns: Each alternative exposure definition should be associated with a binary data column indicating whether (1) or not (0) the subject was exposed to the exposure.
+3. Outcome variables: Each alternative outcome definition should be associated with a binary or a numerical data column indicating the outcome of the exposure experienced by the subject.
+4. Control columns: Each confounder or outcome determinant should be associated with a binary or a numerical data column.
 
-Any newly identified causal factors, e.g., those related to the specifics of the data collection process rather than the domain more generally, will be integrated into the overall causal model.​
+You can apply various processing steps on your loaded datasets before binding the derived data columns to the pre-defined causal factors and reviewing the final output table.
