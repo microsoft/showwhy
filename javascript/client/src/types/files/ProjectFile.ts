@@ -3,15 +3,16 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { FileStep } from './FileStep'
+import type ColumnTable from 'arquero/dist/types/table/column-table'
 
 export interface ProjectFile {
 	name: string
 	content: string
 	alias?: string
+	table: ColumnTable
 	id?: string
 	loadedCorrectly?: boolean
-	fileId?: string
-	steps?: FileStep[]
+	fileId?: string //why id and fileId?
+	// steps?: FileStep[]
 	delimiter?: string
 }

@@ -9,8 +9,7 @@ import {
 	FileType,
 	FileWithPath,
 } from '@data-wrangling-components/utilities'
-import type { Handler } from '@showwhy/types'
-import type ColumnTable from 'arquero/dist/types/table/column-table'
+import type { Handler, Handler1 } from '@showwhy/types'
 import {
 	useState,
 	useCallback,
@@ -25,7 +24,7 @@ import type { DropFilesCount, ProjectFile } from '~types'
 import { createDefaultTable } from '~utils'
 
 export function useDrop(
-	onFileLoad: (file: ProjectFile, table: ColumnTable) => void,
+	onFileLoad: Handler1<ProjectFile>,
 	onLoadStart?: Handler,
 ): (files: BaseFile[], delimiter?: string) => void {
 	return useCallback(
@@ -44,13 +43,11 @@ export function useDrop(
 						content,
 						delimiter || name.includes('.tsv') ? '\t' : ',',
 					)
-					onFileLoad(
-						{
-							content,
-							name,
-						},
+					onFileLoad({
+						content,
+						name,
 						table,
-					)
+					})
 				}
 				reader.readAsBinaryString(file)
 			})
@@ -60,8 +57,8 @@ export function useDrop(
 }
 
 export function useHandleDropzone(
-	onError?: (message: string | null) => void,
-	onLoad?: (file: ProjectFile, table: ColumnTable) => void,
+	onError?: (message: string | null) => void, //TODO: as Handler1?
+	onLoad?: Handler1<ProjectFile>,
 ): {
 	loading: boolean
 	filesCount: DropFilesCount
@@ -123,10 +120,10 @@ export function useOnLoadStart(setLoading: any, onError: any): Handler {
 export function useOnFileLoadCompleted(
 	setFilesCount: (dispatch: (prev: DropFilesCount) => DropFilesCount) => void,
 	setLoading: Dispatch<SetStateAction<boolean>>,
-	onLoad?: (file: ProjectFile, table: ColumnTable) => void,
-): (file: ProjectFile, table: ColumnTable) => void {
+	onLoad?: (file: ProjectFile) => void,
+): (file: ProjectFile) => void {
 	return useCallback(
-		(file: ProjectFile, table: ColumnTable) => {
+		(file: ProjectFile) => {
 			setFilesCount((prev: DropFilesCount) => {
 				return {
 					...prev,
@@ -134,7 +131,7 @@ export function useOnFileLoadCompleted(
 				} as DropFilesCount
 			})
 			setLoading(false)
-			onLoad && onLoad(file, table)
+			onLoad && onLoad(file)
 		},
 		[setFilesCount, setLoading, onLoad],
 	)

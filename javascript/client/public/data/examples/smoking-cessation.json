@@ -368,54 +368,6 @@
             ]
         }
     ],
-    "modelVariables": {
-        "exposure": [
-            {
-                "name": "Quit smoking",
-                "filters": [
-                    {
-                        "value": "-1",
-                        "filter": "==",
-                        "column": "smoke_intensity_change_pct",
-                        "columnName": "quit_smoking"
-                    }
-                ]
-            },
-            {
-                "name": "Reduced smoking by 25%",
-                "filters": [
-                    {
-                        "value": "-0.25",
-                        "filter": "<=",
-                        "column": "smoke_intensity_change_pct",
-                        "columnName": "smoke_reduction_25pct"
-                    }
-                ]
-            },
-            {
-                "name": "Reduced smoking by 50%",
-                "filters": [
-                    {
-                        "value": "-0.5",
-                        "filter": "<=",
-                        "column": "smoke_intensity_change_pct",
-                        "columnName": "smoke_reduction_50pct"
-                    }
-                ]
-            },
-            {
-                "name": "Reduced smoking by 75%",
-                "filters": [
-                    {
-                        "value": "-0.75",
-                        "filter": "<=",
-                        "column": "smoke_intensity_change_pct",
-                        "columnName": "smoke_reduction_75pct"
-                    }
-                ]
-            }
-        ]
-    },
     "todoPages": [
         "/perform/effects",
         "/perform/estimate-distribution",
@@ -435,7 +387,8 @@
     "defaultResult": {
         "url": "data/pre-processed-results/smoking-cessation.csv"
     },
-    "postLoad": {
+    "postLoad": [{
+        "tableName": "nhefs.csv",
         "steps": [
             {
                 "type": "verb",
@@ -555,5 +508,5 @@
                 }
             }
         ]
-    }
+    }]
 }

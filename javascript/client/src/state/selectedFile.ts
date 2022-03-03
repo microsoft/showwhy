@@ -17,6 +17,7 @@ import type { ProjectFile } from '~types'
 const selectedFileState = atom<Maybe<ProjectFile>>({
 	key: 'selected-file',
 	default: undefined,
+	dangerouslyAllowMutability: true,
 	effects: [
 		({ setSelf, getPromise }) => {
 			const subscription = filesStateChanged.subscribe(async () => {

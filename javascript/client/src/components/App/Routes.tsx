@@ -54,17 +54,18 @@ const LoadDataPage = lazy(
 			'../../pages/PrepareData/LoadDataPage'
 		),
 )
-const ModelVariablesPage = lazy(
+
+const ProcessDataPage = lazy(
 	() =>
-		/* webpackChunkName: "ModelVariablesPage" */ import(
-			'../../pages/PrepareData/ModelVariablesPage'
+		/* webpackChunkName: "ProcessDataPage" */ import(
+			'../../pages/PrepareData/ProcessDataPage'
 		),
 )
 
-const ProcessTableColumnsPage = lazy(
+const ConfirmDataPage = lazy(
 	() =>
-		/* webpackChunkName: "ProcessTableColumnsPage" */ import(
-			'../../pages/PrepareData/ProcessTableColumnsPage'
+		/* webpackChunkName: "ConfirmDataPage" */ import(
+			'../../pages/PrepareData/ConfirmDataPage'
 		),
 )
 
@@ -109,11 +110,8 @@ export const Routes: React.FC = memo(function Routes() {
 			<Route path={Pages.Confirm} component={ConfirmPage} />
 			<Route path={Pages.Define} component={DefinePage} />
 			<Route path={Pages.LoadData} component={LoadDataPage} />
-			<Route
-				path={Pages.ProcessTableColumns}
-				component={ProcessTableColumnsPage}
-			/>
-			<Route path={Pages.Variables} component={ModelVariablesPage} />
+			<Route path={Pages.ProcessData} component={ProcessDataPage} />
+			<Route path={Pages.ConfirmData} component={ConfirmDataPage} />
 			<Route
 				path={Pages.SelectCausalEstimators}
 				component={SelectCausalEstimatorsPage}

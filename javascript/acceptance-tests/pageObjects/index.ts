@@ -12,7 +12,6 @@ import { DefineModelPage } from './DefineModelPage'
 import { ModelCausalFactorsPage } from './ModelCausalFactorsPage'
 import { DefineFactorsPage } from './DefineFactorsPage'
 import { LoadDataTablesPage } from './LoadDataTablesPage'
-import { ModelVariablesPage } from './ModelVariablesPage'
 import { SelectCausalEstimatorsPage } from './SelectCausalEstimatorsPage'
 import { EstimateCausalEffectsPage } from './EstimateCausalEffectsPage'
 import { ExploreSpecificationCurvePage } from './ExploreSpecificationCurvePage'
@@ -26,7 +25,6 @@ export interface PageObjects {
 	modelCausalFactorsPage: ModelCausalFactorsPage
 	defineFactorsPage: DefineFactorsPage
 	loadDataTablesPage: LoadDataTablesPage
-	modelVariablesPage: ModelVariablesPage
 	selectCausalEstimatorsPage: SelectCausalEstimatorsPage
 	estimateCausalEffectsPage: EstimateCausalEffectsPage
 	exploreSpecificationCurvePage: ExploreSpecificationCurvePage
@@ -41,7 +39,6 @@ export function createPageObjects(page: Page): PageObjects {
 	const modelCausalFactorsPage = new ModelCausalFactorsPage(page)
 	const defineFactorsPage = new DefineFactorsPage(page)
 	const loadDataTablesPage = new LoadDataTablesPage(page)
-	const modelVariablesPage = new ModelVariablesPage(page)
 	const selectCausalEstimatorsPage = new SelectCausalEstimatorsPage(page)
 	const estimateCausalEffectsPage = new EstimateCausalEffectsPage(page)
 	const exploreSpecificationCurvePage = new ExploreSpecificationCurvePage(page)
@@ -55,7 +52,6 @@ export function createPageObjects(page: Page): PageObjects {
 		modelCausalFactorsPage,
 		defineFactorsPage,
 		loadDataTablesPage,
-		modelVariablesPage,
 		selectCausalEstimatorsPage,
 		estimateCausalEffectsPage,
 		exploreSpecificationCurvePage,

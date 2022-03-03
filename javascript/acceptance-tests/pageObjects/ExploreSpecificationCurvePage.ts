@@ -9,12 +9,13 @@ import { dataAttr } from '../util'
 
 type fn = (n: number) => string
 
-const selectors: Record<string, string | fn> = {
+const selectors: Record<string, string> = {
 	graph: dataAttr('specification-curve'),
 	toggleEstimateButton: dataAttr('toggle-estimate-button'),
 	text: dataAttr('selected-specification-text'),
-	specification: (n = 72) => `path:nth-child(${n})`,
 }
+
+const specificationSelector: fn = (n = 72) => `path:nth-child(${n})`
 
 export class ExploreSpecificationCurvePage extends Page {
 	protected PAGE_PATH: string = '#/perform/estimate-distribution'
@@ -28,7 +29,7 @@ export class ExploreSpecificationCurvePage extends Page {
 		specification?: number,
 	): Promise<void> {
 		await this.page
-			.locator((selectors.specification as fn)(specification))
+			.locator(specificationSelector(specification))
 			.first()
 			.click()
 	}

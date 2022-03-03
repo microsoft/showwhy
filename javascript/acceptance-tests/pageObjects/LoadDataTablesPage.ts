@@ -21,14 +21,6 @@ export class LoadDataTablesPage extends Page {
 		await this.page.waitForSelector(selectors.dropzone, { state: 'visible' })
 	}
 
-	public async uploadFile(fileName = 'COVID-19'): Promise<void> {
-		const [fileChooser] = await Promise.all([
-			this.page.waitForEvent('filechooser'),
-			this.page.locator(selectors.dropzone).click(),
-		])
-		await fileChooser.setFiles(`./files/${fileName}.zip`)
-	}
-
 	public async getSelectedDataset(): Promise<Locator> {
 		return this.page.locator(selectors.selectedDataset)
 	}

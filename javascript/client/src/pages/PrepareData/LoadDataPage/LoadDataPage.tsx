@@ -22,7 +22,6 @@ export const LoadDataPage: React.FC = memo(function LoadDataPage() {
 		selectedFile,
 		selectedDelimiter,
 		projectFiles,
-		originalTable,
 		onConfirmDelete,
 		setSelectedFile,
 		toggleShowConfirm,
@@ -87,7 +86,6 @@ export const LoadDataPage: React.FC = memo(function LoadDataPage() {
 						<SelectedTableDisplay
 							selectedFile={selectedFile}
 							projectFiles={projectFiles}
-							originalTable={originalTable}
 							onRenameTable={onRenameTable}
 						/>
 					</TableContainer>

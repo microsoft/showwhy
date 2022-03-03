@@ -19,12 +19,9 @@ test.describe('Load Data Tables', () => {
 	})
 
 	test('Load COVID-19 Dataset from Dropzone', async () => {
-		await po.loadDataTablesPage.uploadFile()
+		await po.header.loadCovidDataset()
 		const dataset = await po.loadDataTablesPage.getSelectedDataset()
-		const table = await po.loadDataTablesPage.getTable()
-		const isVisible = await table.isVisible()
-		const expected = 'subject_covid19_small_data.csv'
+		const expected = 'covid19_small_data.csv'
 		await expect(dataset).toContainText(expected)
-		await expect(isVisible).toBeTruthy()
 	})
 })

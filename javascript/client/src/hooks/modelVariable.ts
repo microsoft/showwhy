@@ -16,21 +16,12 @@ import type { PageType } from '~types'
 import { replaceItemAtIndex } from '~utils/arrays'
 // HACK to pass the unit tests
 
-export function useSaveDefinition(): (newDefinition: CausalFactor) => void {
-	return useSaveDefinitionTestable(
-		usePageType(),
-		useExperiment(),
-		useSetExperiment(),
-	)
-}
-
-export function useSaveDefinitionTestable(
-	type: PageType,
+export function useSaveDefinition(
 	experiment: Experiment,
 	setExperiment: SetterOrUpdater<Experiment>,
-): (newDefinition: CausalFactor) => void {
+): (newDefinition: CausalFactor, type: PageType) => void {
 	return useCallback(
-		(newDefinition: CausalFactor) => {
+		(newDefinition: CausalFactor, type: PageType) => {
 			let newDefinitionList = [...(experiment as any)[type]?.definition] || []
 
 			const index = (experiment as any)[type]?.definition?.findIndex(
@@ -54,7 +45,7 @@ export function useSaveDefinitionTestable(
 			}
 			setExperiment(newList)
 		},
-		[experiment, type, setExperiment],
+		[experiment, setExperiment],
 	)
 }
 
@@ -85,6 +76,7 @@ export function useRemoveDefinitionTestable(
 					definition: newDefinitionList,
 				},
 			}
+			//TODO: REMOVE ALL TABLE TRANSFORM
 			setDefineQuestion(newList)
 		},
 		[defineQuestion, type, setDefineQuestion],

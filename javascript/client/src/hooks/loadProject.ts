@@ -2,21 +2,21 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import type { BaseFile } from '@data-wrangling-components/utilities'
 import type {
-	Maybe,
-	Handler1,
-	CausalFactor,
-	Definition,
-	Experiment,
-	Element,
-	VariableDefinition,
-} from '@showwhy/types'
-import { useCallback, useMemo } from 'react'
-import { v4 as uuidv4 } from 'uuid'
+	Specification,
+	Step as FileStep,
+	TableStore,
+	Pipeline,
+	TableContainer,
+} from '@data-wrangling-components/core'
+import { usePipeline, useStore } from '@data-wrangling-components/react'
+import type { BaseFile } from '@data-wrangling-components/utilities'
+import type { Maybe, CausalFactor, Experiment, Element } from '@showwhy/types'
+import { all, op } from 'arquero'
+import type ColumnTable from 'arquero/dist/types/table/column-table'
+import { useCallback } from 'react'
 import { useGetStepUrls, useSetRunAsDefault } from '~hooks'
 import {
-	useAddProjectFile,
 	useFileCollection,
 	useSetCausalFactors,
 	useSetConfidenceInterval,
@@ -24,56 +24,56 @@ import {
 	useSetExperiment,
 	useSetEstimators,
 	useSetFileCollection,
-	useSetModelVariables,
-	useSetOrUpdateOriginalTable,
 	useSetPrimarySpecificationConfig,
-	useSetPrimaryTable,
 	useSetRefutationType,
 	useSetRunHistory,
 	useSetStepStatuses,
-	useSetTableColumns,
+	useSetSubjectIdentifier,
+	useSetOutputTablePrep,
+	useSetProjectFiles,
+	useSetTablesPrepSpecification,
 } from '~state'
 import {
 	ProjectSource,
 	FileDefinition,
 	ZipData,
 	ProjectFile,
-	TableColumn,
 	Workspace,
 	DataTableFileDefinition,
 	StepStatus,
-	DataTable,
 	RunHistory,
 } from '~types'
+
 import {
 	fetchRemoteTables,
 	fetchTable,
 	isZipUrl,
 	loadTable,
 	runPipeline,
+	runPipelineFromProjectFiles,
 	withRandomId,
 } from '~utils'
 
 export function useLoadProject(
 	source = ProjectSource.url,
 ): (definition?: Maybe<FileDefinition>, zip?: Maybe<ZipData>) => Promise<void> {
-	const id = useMemo(() => uuidv4(), [])
-	const setTableColumns = useSetTableColumns(id)
-	const setModelVariables = useSetModelVariables(id)
 	const setPrimarySpecificationConfig = useSetPrimarySpecificationConfig()
 	const setCausalFactors = useSetCausalFactors()
+	const setSubjectIdentifier = useSetSubjectIdentifier()
 	const setDefineQuestion = useSetExperiment()
 	const setOrUpdateEst = useSetEstimators()
 	const setRefutationType = useSetRefutationType()
-	const addFile = useAddProjectFile()
-	const setOriginalTable = useSetOrUpdateOriginalTable()
+	const setFiles = useSetProjectFiles()
 	const setConfidenceInterval = useSetConfidenceInterval()
 	const setDefaultDatasetResult = useSetDefaultDatasetResult()
-	const setPrimaryTable = useSetPrimaryTable()
 	const getStepUrls = useGetStepUrls()
 	const setAllStepStatus = useSetStepStatuses()
 	const updateCollection = useUpdateCollection()
 	const updateRunHistory = useUpdateRunHistory()
+	const setTablePrepSpec = useSetTablesPrepSpecification()
+	const setOutputTablePrep = useSetOutputTablePrep()
+	const store = useStore()
+	const pipeline = usePipeline(store)
 
 	return useCallback(
 		async (definition?: FileDefinition, zip: ZipData = {}) => {
@@ -111,10 +111,10 @@ export function useLoadProject(
 				defineQuestion,
 				estimators,
 				refutations,
-				tableColumns,
-				modelVariables,
+				subjectIdentifier,
 				confidenceInterval,
 				defaultResult,
+				tablesPrep,
 			} = workspace
 
 			if (results && defaultResult) {
@@ -126,8 +126,7 @@ export function useLoadProject(
 			const cfs = prepCausalFactors(causalFactors)
 			const df = prepDefineQuestion(defineQuestion)
 			const est = estimators || []
-			const tcs = prepTableColumns(tableColumns)
-			const mvs = prepModelVariables(modelVariables)
+			const tps = prepTablesSpec(tablesPrep)
 			const defaultDatasetResult = defaultResult || null
 
 			primarySpecification &&
@@ -137,19 +136,25 @@ export function useLoadProject(
 			setCausalFactors(cfs)
 			setDefineQuestion(df)
 			setOrUpdateEst(est)
-			setTableColumns(tcs)
-			setModelVariables(mvs)
+			setSubjectIdentifier(subjectIdentifier)
+			setTablePrepSpec(tps)
 			setDefaultDatasetResult(defaultDatasetResult)
 			setConfidenceInterval(!!confidenceInterval)
-
-			await processTables(
+			const processedTablesPromise = preProcessTables(
 				workspace,
-				id,
-				addFile,
-				setOriginalTable,
-				setPrimaryTable,
+				store,
+				pipeline,
 				tables as File[],
 			)
+			const processedTables = await Promise.all(processedTablesPromise)
+			setFiles(processedTables)
+
+			const dataPrepTable = await processDataTables(
+				pipeline,
+				tps,
+				processedTables,
+			)
+			setOutputTablePrep(dataPrepTable?.table)
 
 			const completed = getStepUrls(workspace.todoPages, true)
 			setAllStepStatus(completed, StepStatus.Done)
@@ -157,24 +162,24 @@ export function useLoadProject(
 			updateRunHistory(runHistory)
 		},
 		[
-			id,
 			source,
-			setOriginalTable,
-			addFile,
+			setFiles,
 			setPrimarySpecificationConfig,
 			setCausalFactors,
 			setDefineQuestion,
 			setOrUpdateEst,
 			setRefutationType,
-			setTableColumns,
-			setModelVariables,
+			setSubjectIdentifier,
 			setAllStepStatus,
 			getStepUrls,
 			setDefaultDatasetResult,
 			setConfidenceInterval,
-			setPrimaryTable,
 			updateCollection,
 			updateRunHistory,
+			setTablePrepSpec,
+			setOutputTablePrep,
+			pipeline,
+			store,
 		],
 	)
 }
@@ -185,49 +190,75 @@ export function useLoadProject(
 // 2: apply a post-load pipeline to any combination of tables
 // 3: specify which tables to display to the user for usage in the model
 // right now we need only one final table to submit, but don't provide enough data wrangling to enable anything complex.
-async function processTables(
+function preProcessTables(
 	workspace: Workspace,
-	id: string,
-	addFile: Handler1<ProjectFile>,
-	setOriginalTable: Handler1<DataTable>,
-	setPrimaryTable: Handler1<{ name: string; id: string }>,
+	store: TableStore,
+	pipeline: Pipeline,
 	tableFiles?: File[],
 ) {
 	const { tables, postLoad } = workspace
 
-	// if we have a post-load,
-	// run it and save just the final result
-	// otherwise, only save the primary table
+	return tables.map(async table => {
+		const stepPostLoad =
+			!!postLoad?.length &&
+			postLoad.find(p => p?.steps && p?.steps[0]?.input === table.name)
+		if (stepPostLoad && stepPostLoad.steps) {
+			const result = await runPipeline(
+				tables,
+				stepPostLoad.steps,
+				store,
+				pipeline,
+				tableFiles,
+			)
 
-	const primary = tables.find(table => table.primary)
-	if (primary) {
-		setPrimaryTable({ name: primary.name, id })
-	}
-	if (postLoad) {
-		const result = await runPipeline(tables, postLoad.steps, tableFiles)
-		const file: ProjectFile = {
-			id,
-			content: result.toCSV(),
-			name: workspace.name,
-		}
-		addFile(file)
-		setOriginalTable({ tableId: id, table: result })
-	} else {
-		// this effectively uses a "first one wins" for the primary table
-		// this shouldn't actually happen in practice, but until we can support multiples correctly...
-		if (primary) {
-			const result = await (!isZipUrl(primary.url)
-				? fetchTable(primary)
-				: loadTable(primary, tableFiles))
+			const resultTable = result?.table?.derive(
+				{
+					index: op.row_number(),
+				},
+				{ before: all() },
+			) as ColumnTable
+
 			const file: ProjectFile = {
-				id,
-				content: result.toCSV(),
-				name: primary.name,
+				content: resultTable.toCSV(),
+				name: table.name,
+				id: table.name,
+				table: resultTable,
 			}
-			addFile(file)
-			setOriginalTable({ tableId: id, table: result })
+			return file
+		} else {
+			let result = await (!isZipUrl(table.url)
+				? fetchTable(table)
+				: loadTable(table, tableFiles))
+
+			result = result.derive(
+				{
+					index: op.row_number(),
+				},
+				{ before: all() },
+			)
+
+			const file: ProjectFile = {
+				id: table.name,
+				content: result.toCSV(),
+				name: table.name,
+				table: result,
+			}
+			return file
 		}
+	})
+}
+
+async function processDataTables(
+	pipeline: Pipeline,
+	tps?: Specification[],
+	projectFiles?: ProjectFile[],
+): Promise<TableContainer | undefined> {
+	if (tps !== undefined && projectFiles?.length) {
+		const steps = tps[0]?.steps as FileStep[]
+		pipeline.clear()
+		return await runPipelineFromProjectFiles(projectFiles, steps, pipeline)
 	}
+	return undefined
 }
 
 function prepCausalFactors(factors?: Partial<CausalFactor>[]): CausalFactor[] {
@@ -249,34 +280,8 @@ function prepDefineQuestion(define?: Partial<Experiment>): Experiment {
 	return prepped as Experiment
 }
 
-function prepModelVariables(model?: Partial<Definition>): Definition {
-	const prepped = { ...model }
-	if (prepped.exposure) {
-		prepped.exposure = prepVariableDefinitions(prepped.exposure)
-	}
-	if (prepped.population) {
-		prepped.population = prepVariableDefinitions(prepped.population)
-	}
-	if (prepped.outcome) {
-		prepped.outcome = prepVariableDefinitions(prepped.outcome)
-	}
-	if (prepped.control) {
-		prepped.control = prepVariableDefinitions(prepped.control)
-	}
-
-	return prepped as Definition
-}
-
-function prepVariableDefinitions(
-	definitions?: Partial<VariableDefinition>[],
-): VariableDefinition[] {
-	return (definitions || []).map(
-		definition =>
-			({
-				...definition,
-				filters: (definition?.filters || []).map(withRandomId),
-			} as VariableDefinition),
-	)
+function prepTablesSpec(specifications?: Specification[]): Specification[] {
+	return specifications as Specification[]
 }
 
 function prepElement(element: Element): Element {
@@ -284,10 +289,6 @@ function prepElement(element: Element): Element {
 		...element,
 		definition: element.definition?.map(withRandomId),
 	}
-}
-
-function prepTableColumns(columns?: Partial<TableColumn>[]): TableColumn[] {
-	return (columns || []).map(withRandomId) as TableColumn[]
 }
 
 function useUpdateCollection(): (

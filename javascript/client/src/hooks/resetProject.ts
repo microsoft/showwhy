@@ -11,12 +11,15 @@ import {
 	useResetEstimators,
 	useResetHoverState,
 	useResetOriginalTables,
+	useResetOutputTablePrep,
 	useResetPrimarySpecificationConfig,
 	useResetProjectFiles,
 	useResetRefutationType,
 	useResetRunHistory,
 	useResetSelectedFile,
 	useResetSpecificationCurveConfig,
+	useResetSubjectIdentifier,
+	useResetTablesPrepSpecification,
 } from '~state'
 
 export function useResetProject(): Handler {
@@ -31,6 +34,9 @@ export function useResetProject(): Handler {
 	const resetSpecificationCurveConfig = useResetSpecificationCurveConfig()
 	const resetPrimarySpecificationConfig = useResetPrimarySpecificationConfig()
 	const resetHoverState = useResetHoverState()
+	const resetSubjectIdentifier = useResetSubjectIdentifier()
+	const resetOutputTablePrep = useResetOutputTablePrep()
+	const resetTablePrepSpecification = useResetTablesPrepSpecification()
 
 	return useCallback(() => {
 		resetProjectFiles()
@@ -44,6 +50,9 @@ export function useResetProject(): Handler {
 		resetRunHistory()
 		resetSpecificationCurveConfig()
 		resetPrimarySpecificationConfig()
+		resetSubjectIdentifier()
+		resetOutputTablePrep()
+		resetTablePrepSpecification()
 	}, [
 		resetProjectFiles,
 		resetSelectedFile,
@@ -56,5 +65,8 @@ export function useResetProject(): Handler {
 		resetRunHistory,
 		resetSpecificationCurveConfig,
 		resetPrimarySpecificationConfig,
+		resetSubjectIdentifier,
+		resetOutputTablePrep,
+		resetTablePrepSpecification,
 	])
 }

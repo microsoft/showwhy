@@ -3,8 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { FontIcon, IconButton } from '@fluentui/react'
+import { useBoolean } from '@fluentui/react-hooks'
 import type { Maybe, Handler } from '@showwhy/types'
-import { useBoolean } from 'ahooks'
 import { memo, useCallback, useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
 import { ActionButtons } from '~components/ActionButtons'

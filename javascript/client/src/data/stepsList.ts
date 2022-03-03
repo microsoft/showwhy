@@ -178,48 +178,21 @@ export const stepsList = [
 			},
 			{
 				id: uuidv4(),
-				title: 'Process table columns',
+				title: 'Process data',
 				status: StepStatus.ToDo,
-				url: Pages.ProcessTableColumns,
+				url: Pages.ProcessData,
 				showStatus: true,
 				getMarkdown: async () =>
-					import('../markdown/prepare-data/Prepare.md?raw'),
+					import('../markdown/prepare-data/Process.md?raw'),
 			},
 			{
 				id: uuidv4(),
-				title: 'Population variables',
+				title: 'Confirm data',
 				status: StepStatus.ToDo,
-				url: `${Pages.Variables}/${PageType.Population}`,
+				url: Pages.ConfirmData,
 				showStatus: true,
 				getMarkdown: async () =>
-					import('../markdown/prepare-data/PopulationVariables.md?raw'),
-			},
-			{
-				id: uuidv4(),
-				title: 'Exposure variables',
-				status: StepStatus.ToDo,
-				url: `${Pages.Variables}/${PageType.Exposure}`,
-				showStatus: true,
-				getMarkdown: async () =>
-					import('../markdown/prepare-data/ExposureVariables.md?raw'),
-			},
-			{
-				id: uuidv4(),
-				title: 'Outcome variables',
-				status: StepStatus.ToDo,
-				url: `${Pages.Variables}/${PageType.Outcome}`,
-				showStatus: true,
-				getMarkdown: async () =>
-					import('../markdown/prepare-data/OutcomeVariables.md?raw'),
-			},
-			{
-				id: uuidv4(),
-				title: 'Control variables',
-				status: StepStatus.ToDo,
-				url: `${Pages.Variables}/${PageType.Control}`,
-				showStatus: true,
-				getMarkdown: async () =>
-					import('../markdown/prepare-data/ControlVariables.md?raw'),
+					import('../markdown/prepare-data/Confirm.md?raw'),
 			},
 		],
 	},

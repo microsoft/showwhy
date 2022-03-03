@@ -3,8 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import { useBoolean } from '@fluentui/react-hooks'
 import type { FlatCausalFactor, CausalFactor } from '@showwhy/types'
-import { useBoolean } from 'ahooks'
 import { useCallback, useMemo, useState } from 'react'
 import { useFlatFactorsList, useSaveFactors } from './factors'
 import { useCheckbox, useComboBox, useTextField } from './inputs'

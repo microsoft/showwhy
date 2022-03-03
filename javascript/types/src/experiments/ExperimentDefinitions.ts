@@ -3,8 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import type { Maybe } from '../primitives'
 import type { VariableDefinition } from './VariableDefinition'
-import type { Maybe } from '@showwhy/types'
 
 export interface Definition {
 	population?: VariableDefinition[]

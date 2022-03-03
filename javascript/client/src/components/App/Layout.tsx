@@ -25,6 +25,9 @@ import {
 	useGuidance,
 } from '~state'
 import { StyledSpinner } from '~styles'
+import { Pages } from '~types'
+
+const noChildPadding = [Pages.ProcessData]
 
 export const Layout: React.FC = memo(function Layout({ children }) {
 	const [error, setError] = useState<Maybe<string>>()
@@ -70,9 +73,11 @@ export const Layout: React.FC = memo(function Layout({ children }) {
 				</GuidanceContainer>
 
 				<Content>
-					<StepTitle title="Workspace" />
 					<ControlsContainer>
-						<ChildrenContainer>
+						<StepTitle title="Workspace" />
+						<ChildrenContainer
+							noPadding={noChildPadding.includes(step?.url as Pages)}
+						>
 							{error ? (
 								<MessageContainer
 									onDismiss={() => setError(undefined)}
@@ -86,14 +91,14 @@ export const Layout: React.FC = memo(function Layout({ children }) {
 								{children}
 							</Suspense>
 						</ChildrenContainer>
-						<StepControls
-							step={step}
-							stepStatus={stepStatus}
-							nextUrl={nextStepUrl}
-							previousUrl={previousStepUrl}
-							toggleStatus={onToggleStepStatus}
-						/>
 					</ControlsContainer>
+					<StepControls
+						step={step}
+						stepStatus={stepStatus}
+						nextUrl={nextStepUrl}
+						previousUrl={previousStepUrl}
+						toggleStatus={onToggleStepStatus}
+					/>
 				</Content>
 			</PagesContainer>
 		</Container>
@@ -102,7 +107,7 @@ export const Layout: React.FC = memo(function Layout({ children }) {
 const PagesContainer = styled.div`
 	display: flex;
 	width: 100%;
-	height: 100%;
+	height: 94%;
 `
 
 const StepsContainer = styled.div`
@@ -112,16 +117,19 @@ const StepsContainer = styled.div`
 	position: relative;
 `
 
-const ChildrenContainer = styled.div`
-	padding: 0 16px;
+const ChildrenContainer = styled.div<{ noPadding: boolean }>`
+	padding: ${({ noPadding }) => (noPadding ? '0' : '0 16px')};
 	margin-bottom: 1rem;
+	height: 95%;
+	overflow-y: auto;
+	margin-bottom: 6rem;
 `
 
 const ControlsContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	height: 100%;
-	justify-content: space-between;
+	justify-content: flex-start;
 `
 
 const GuidanceContainer = styled.div<{
@@ -139,6 +147,7 @@ const Container = styled.div`
 	height: 100vh;
 	display: flex;
 	flex-flow: column;
+	overflow-y: hidden;
 `
 
 const Content = styled.div`

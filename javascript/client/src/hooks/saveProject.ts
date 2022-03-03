@@ -20,21 +20,16 @@ import {
 	useEstimators,
 	usePrimarySpecificationConfig,
 	useRefutationType,
-	useAllTableColumns,
 	useProjectFiles,
-	useAllModelVariables,
 	useFileCollection,
 	usePrimaryTable,
 	useDefaultDatasetResult,
 	useOriginalTables,
 	useRunHistory,
+	useSubjectIdentifier,
+	useTablesPrepSpecification,
 } from '~state'
-import {
-	PageType,
-	Workspace,
-	DownloadType,
-	DataTableFileDefinition,
-} from '~types'
+import { Workspace, DownloadType, DataTableFileDefinition } from '~types'
 import { isDataUrl } from '~utils'
 
 export function useSaveProject(): AsyncHandler {
@@ -42,25 +37,12 @@ export function useSaveProject(): AsyncHandler {
 	const confidenceInterval = useConfidenceInterval()
 	const primarySpecification = usePrimarySpecificationConfig()
 	const causalFactors = useCausalFactors()
+	const subjectIdentifier = useSubjectIdentifier()
 	const defineQuestion = useExperiment()
 	const estimators = useEstimators()
 	const refutations = useRefutationType()
-	const projectFiles = useProjectFiles()
+	const tablesPrep = useTablesPrepSpecification()
 	const todoPages = useGetStepUrlsByStatus()({ exclude: true })
-	const [tableColumns] = useAllTableColumns(projectFiles)
-	const [exposure] = useAllModelVariables(projectFiles, PageType.Exposure)
-	const [outcome] = useAllModelVariables(projectFiles, PageType.Outcome)
-	const [control] = useAllModelVariables(projectFiles, PageType.Control)
-	const [population] = useAllModelVariables(projectFiles, PageType.Population)
-	const modelVariables = useMemo(
-		() => ({
-			exposure,
-			outcome,
-			control,
-			population,
-		}),
-		[exposure, outcome, control, population],
-	)
 	const download = useDownload(fileCollection)
 
 	//TODO: Add postLoad steps into workspace
@@ -72,9 +54,9 @@ export function useSaveProject(): AsyncHandler {
 			defineQuestion,
 			estimators,
 			refutations,
-			tableColumns,
-			modelVariables,
 			todoPages,
+			subjectIdentifier,
+			tablesPrep,
 		}
 		await download(workspace)
 	}, [
@@ -84,9 +66,9 @@ export function useSaveProject(): AsyncHandler {
 		defineQuestion,
 		estimators,
 		refutations,
-		tableColumns,
-		modelVariables,
 		todoPages,
+		tablesPrep,
+		subjectIdentifier,
 		download,
 	])
 }
