@@ -185,15 +185,15 @@ export const stepsList = [
 				getMarkdown: async () =>
 					import('../markdown/prepare-data/Process.md?raw'),
 			},
-			{
-				id: uuidv4(),
-				title: 'Confirm data',
-				status: StepStatus.ToDo,
-				url: Pages.ConfirmData,
-				showStatus: true,
-				getMarkdown: async () =>
-					import('../markdown/prepare-data/Confirm.md?raw'),
-			},
+			// {
+			// 	id: uuidv4(),
+			// 	title: 'Confirm data',
+			// 	status: StepStatus.ToDo,
+			// 	url: Pages.ConfirmData,
+			// 	showStatus: true,
+			// 	getMarkdown: async () =>
+			// 		import('../markdown/prepare-data/Confirm.md?raw'),
+			// },
 		],
 	},
 	{
