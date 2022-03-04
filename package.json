@@ -11,7 +11,7 @@
 		"Alonso Guevara <alonsog@microsoft.com>"
 	],
 	"scripts": {
-		"preinstall": "npx only-allow yarn",
+		"preinstall": "npx only-allow yarn && (cd python/showwhy-backend && poetry install) && (cd python/showwhy-inference && poetry install)",
 		"postinstall": "husky install",
 		"clean": "yarn workspaces foreach -pv run clean",
 		"build": "yarn workspaces foreach -pivt run build",

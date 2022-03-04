@@ -5,5 +5,5 @@ yarn lint-staged
 
 
 # Python pre-commit execution - commented for now
-# (cd python/showwhy-backend && poetry run pre-commit)
-# (cd python/showwhy-inference && poetry run pre-commit)
+(cd python/showwhy-backend && poetry run pre-commit)
+(cd python/showwhy-inference && poetry run pre-commit)
