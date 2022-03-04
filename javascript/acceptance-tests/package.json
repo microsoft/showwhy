@@ -11,7 +11,7 @@
 		"acceptance:test": "start-server-and-test 'yarn start:client' 'http-get://localhost:3000/' pw"
 	},
 	"devDependencies": {
-		"@playwright/test": "^1.19.1",
+		"@playwright/test": "^1.19.2",
 		"@tsconfig/node14": "^1.0.1",
 		"@types/config": "^0.0.41",
 		"@types/node": "^17.0.21",

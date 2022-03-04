@@ -12,7 +12,7 @@
 		"build": "essex build --mode legacy"
 	},
 	"devDependencies": {
-		"@essex/scripts": "^20.3.2",
+		"@essex/scripts": "^20.4.4",
 		"@essex/tsconfig-base": "^1.0.2",
 		"@types/react": "^17.0.39"
 	}
