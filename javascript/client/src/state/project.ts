@@ -7,6 +7,8 @@ import {
 	SetterOrUpdater,
 	useRecoilValue,
 	useSetRecoilState,
+	useResetRecoilState,
+	Resetter,
 } from 'recoil'
 import { stepsList } from '../data/stepsList'
 import type { Workflow } from '~types'
@@ -22,4 +24,8 @@ export function useSelectedProject(): Workflow {
 
 export function useSetSelectedProject(): SetterOrUpdater<Workflow> {
 	return useSetRecoilState(selectedProject)
+}
+
+export function useResetSelectedProject(): Resetter {
+	return useResetRecoilState(selectedProject)
 }

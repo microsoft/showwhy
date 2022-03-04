@@ -179,7 +179,7 @@ export class FetchApiInteractor {
 	}
 
 	private replaceAzureUrl(url: string): string {
-		const regExp = new RegExp(/^https?:\/\/azurite:10000/)
+		const regExp = new RegExp(/^https?:\/\/localhost:10000/)
 		return url.replace(regExp, this.baseUrl)
 	}
 }

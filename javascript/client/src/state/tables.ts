@@ -14,23 +14,10 @@ import {
 } from 'recoil'
 import type { DataTable } from '~types'
 
-interface PrimaryTable {
-	name: string
-	id?: string
-}
-
 const originalTablesState = atom<DataTable[]>({
 	key: 'original-tables-store',
 	default: [],
 	dangerouslyAllowMutability: true,
-})
-
-const primaryTableState = atom<PrimaryTable>({
-	key: 'primary-table-store',
-	default: {
-		name: '',
-		id: '',
-	},
 })
 
 export function useSetOriginalTables(): SetterOrUpdater<DataTable[]> {
@@ -63,16 +50,4 @@ export function useSelectOriginalTable(id: string): () => DataTable {
 
 export function useResetOriginalTables(): Resetter {
 	return useResetRecoilState(originalTablesState)
-}
-
-export function useSetPrimaryTable(): SetterOrUpdater<PrimaryTable> {
-	return useSetRecoilState(primaryTableState)
-}
-
-export function usePrimaryTable(): PrimaryTable {
-	return useRecoilValue(primaryTableState)
-}
-
-export function useResetPrimaryTable(): Resetter {
-	return useResetRecoilState(primaryTableState)
 }

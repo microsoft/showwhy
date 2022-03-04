@@ -21,7 +21,7 @@ test.describe('Estimate Causal Effects', () => {
 
 	test('Count current runs', async () => {
 		const count = await po.estimateCausalEffectsPage.countRuns()
-		await expect(count).toEqual(2)
+		await expect(count).toEqual(1)
 	})
 
 	test('Load specifications', async () => {

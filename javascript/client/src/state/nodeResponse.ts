@@ -8,6 +8,8 @@ import {
 	SetterOrUpdater,
 	useRecoilValue,
 	useSetRecoilState,
+	Resetter,
+	useResetRecoilState,
 } from 'recoil'
 
 export const nodeResponseState = atom<Maybe<NodeResponse>>({
@@ -21,4 +23,8 @@ export function useSetNodeResponse(): SetterOrUpdater<Maybe<NodeResponse>> {
 
 export function useNodeResponse(): Maybe<NodeResponse> {
 	return useRecoilValue(nodeResponseState)
+}
+
+export function useResetNodeResponse(): Resetter {
+	return useResetRecoilState(nodeResponseState)
 }

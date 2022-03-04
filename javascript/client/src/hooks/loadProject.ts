@@ -32,6 +32,7 @@ import {
 	useSetOutputTablePrep,
 	useSetProjectFiles,
 	useSetTablesPrepSpecification,
+	useSetConfigJson,
 } from '~state'
 import {
 	ProjectSource,
@@ -74,6 +75,7 @@ export function useLoadProject(
 	const setOutputTablePrep = useSetOutputTablePrep()
 	const store = useStore()
 	const pipeline = usePipeline(store)
+	const setConfigJson = useSetConfigJson()
 
 	return useCallback(
 		async (definition?: FileDefinition, zip: ZipData = {}) => {
@@ -160,6 +162,7 @@ export function useLoadProject(
 			setAllStepStatus(completed, StepStatus.Done)
 			updateCollection(workspace, tables, notebooks)
 			updateRunHistory(runHistory)
+			setConfigJson(workspace)
 		},
 		[
 			source,
@@ -180,6 +183,7 @@ export function useLoadProject(
 			setOutputTablePrep,
 			pipeline,
 			store,
+			setConfigJson,
 		],
 	)
 }

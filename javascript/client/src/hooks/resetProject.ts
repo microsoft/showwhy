@@ -20,6 +20,13 @@ import {
 	useResetSpecificationCurveConfig,
 	useResetSubjectIdentifier,
 	useResetTablesPrepSpecification,
+	useResetConfigJson,
+	useResetConfidenceInterval,
+	useResetDefaultDatasetResult,
+	useResetFileCollection,
+	useResetNodeResponse,
+	useResetSelectedProject,
+	useResetSpecCount,
 } from '~state'
 
 export function useResetProject(): Handler {
@@ -37,6 +44,13 @@ export function useResetProject(): Handler {
 	const resetSubjectIdentifier = useResetSubjectIdentifier()
 	const resetOutputTablePrep = useResetOutputTablePrep()
 	const resetTablePrepSpecification = useResetTablesPrepSpecification()
+	const resetConfigJson = useResetConfigJson()
+	const resetConfidenceInterval = useResetConfidenceInterval()
+	const resetDefaultDatasetResult = useResetDefaultDatasetResult()
+	const resetFileCollection = useResetFileCollection()
+	const resetNodeResponse = useResetNodeResponse()
+	const resetSelectedProject = useResetSelectedProject()
+	const resetSpecCount = useResetSpecCount()
 
 	return useCallback(() => {
 		resetProjectFiles()
@@ -53,6 +67,13 @@ export function useResetProject(): Handler {
 		resetSubjectIdentifier()
 		resetOutputTablePrep()
 		resetTablePrepSpecification()
+		resetConfigJson()
+		resetConfidenceInterval()
+		resetDefaultDatasetResult()
+		resetFileCollection()
+		resetNodeResponse()
+		resetSelectedProject()
+		resetSpecCount()
 	}, [
 		resetProjectFiles,
 		resetSelectedFile,
@@ -68,5 +89,12 @@ export function useResetProject(): Handler {
 		resetSubjectIdentifier,
 		resetOutputTablePrep,
 		resetTablePrepSpecification,
+		resetConfigJson,
+		resetConfidenceInterval,
+		resetDefaultDatasetResult,
+		resetFileCollection,
+		resetNodeResponse,
+		resetSelectedProject,
+		resetSpecCount,
 	])
 }
