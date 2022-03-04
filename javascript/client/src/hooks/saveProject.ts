@@ -22,12 +22,12 @@ import {
 	useRefutationType,
 	useProjectFiles,
 	useFileCollection,
-	usePrimaryTable,
 	useDefaultDatasetResult,
-	useOriginalTables,
 	useRunHistory,
 	useSubjectIdentifier,
 	useTablesPrepSpecification,
+	useOutputTablePrep,
+	useConfigJson,
 } from '~state'
 import { Workspace, DownloadType, DataTableFileDefinition } from '~types'
 import { isDataUrl } from '~utils'
@@ -44,8 +44,8 @@ export function useSaveProject(): AsyncHandler {
 	const tablesPrep = useTablesPrepSpecification()
 	const todoPages = useGetStepUrlsByStatus()({ exclude: true })
 	const download = useDownload(fileCollection)
+	const oldConfig = useConfigJson()
 
-	//TODO: Add postLoad steps into workspace
 	return useCallback(async () => {
 		const workspace: Partial<Workspace> = {
 			primarySpecification,
@@ -57,6 +57,7 @@ export function useSaveProject(): AsyncHandler {
 			todoPages,
 			subjectIdentifier,
 			tablesPrep,
+			postLoad: oldConfig.postLoad,
 		}
 		await download(workspace)
 	}, [
@@ -70,31 +71,31 @@ export function useSaveProject(): AsyncHandler {
 		tablesPrep,
 		subjectIdentifier,
 		download,
+		oldConfig,
 	])
 }
 
-function usePrimary(): () => Maybe<FileWithPath> {
-	const primaryTable = usePrimaryTable()
-	const originalTables = useOriginalTables()
-	return useCallback(() => {
-		const ogTables = originalTables.find(
-			file => file.tableId === primaryTable.id,
-		)
-		if (ogTables) {
-			return createFileWithPath(new Blob([ogTables.table.toCSV()]), {
-				name: `subject_${primaryTable.name}`,
+function useOutputTable(): Maybe<FileWithPath> {
+	const outputTablePrep = useOutputTablePrep()
+	return useMemo(() => {
+		if (outputTablePrep) {
+			return createFileWithPath(new Blob([outputTablePrep.toCSV()]), {
+				name: 'output_table.csv',
 			})
 		}
-	}, [primaryTable, originalTables])
+		return undefined
+	}, [outputTablePrep])
 }
 
 function useTables(fileCollection: FileCollection) {
 	const projectFiles = useProjectFiles()
+	const oldConfig = useConfigJson()
 	return useCallback(
-		primary => {
+		output => {
 			const files = fileCollection.list(FileType.table)
-			if (primary) {
-				files.push(primary)
+			const primary = oldConfig.tables?.find(t => t.primary)
+			if (output) {
+				files.push(output)
 			}
 			return files.map(file => {
 				const isPrimary = files.length === 1 || file.name === primary?.name
@@ -110,7 +111,7 @@ function useTables(fileCollection: FileCollection) {
 				return definition
 			})
 		},
-		[fileCollection, projectFiles],
+		[fileCollection, projectFiles, oldConfig],
 	)
 }
 
@@ -179,14 +180,13 @@ function useRunHistoryFile(): Maybe<FileWithPath> {
 
 function useDownload(fileCollection: FileCollection) {
 	const csvResult = useCSVResult()
-	const getPrimary = usePrimary()
+	const outputTable = useOutputTable()
 	const getTables = useTables(fileCollection)
 	const notebookResult = useResult(DownloadType.jupyter)
 	const runHistoryFile = useRunHistoryFile()
 	return useCallback(
 		async (workspace: Partial<Workspace>) => {
-			const primary = getPrimary()
-			const tables = getTables(primary)
+			const tables = getTables(outputTable)
 			/* eslint-disable @essex/adjacent-await */
 			const csv = await csvResult
 			const notebook = await notebookResult
@@ -201,7 +201,7 @@ function useDownload(fileCollection: FileCollection) {
 				new Blob([JSON.stringify(workspace, null, 4)]),
 				{ name: 'workspace_config.json' },
 			)
-			const files = [file, primary].filter(t => !!t) as FileWithPath[]
+			const files = [file, outputTable].filter(t => !!t) as FileWithPath[]
 			if (csv?.file) {
 				files.push(csv.file)
 			}
@@ -220,7 +220,7 @@ function useDownload(fileCollection: FileCollection) {
 			fileCollection,
 			csvResult,
 			getTables,
-			getPrimary,
+			outputTable,
 			notebookResult,
 			runHistoryFile,
 		],
