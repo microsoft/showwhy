@@ -882,9 +882,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@data-wrangling-components/core@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "@data-wrangling-components/core@npm:3.0.0"
+"@data-wrangling-components/core@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "@data-wrangling-components/core@npm:4.0.0"
   dependencies:
     lodash-es: ^4.17.21
   peerDependencies:
@@ -893,20 +893,30 @@ __metadata:
   peerDependenciesMeta:
     "@types/node":
       optional: true
-  checksum: 8b33883d627810dcb45685d7d3622918543e07ccede3adac199de4974c61abf740e8aef3656e3bcb955835cc45bd02193cd1f415f1741925e76e63941c5c07b0
+  checksum: a4f10bd4966f6997b9721cead9affdd8a861955449c8a84e386d1a63885f999d9523794a8d44461633e0e9404e705b8070bcc8fa9a5c5082939e382c94f8733f
   languageName: node
   linkType: hard
 
-"@data-wrangling-components/react@npm:^2.7.0":
-  version: 2.7.0
-  resolution: "@data-wrangling-components/react@npm:2.7.0"
+"@data-wrangling-components/guidance@npm:0.1.0":
+  version: 0.1.0
+  resolution: "@data-wrangling-components/guidance@npm:0.1.0"
+  checksum: 5a2c5c414e5c794e163fbb1b5460e508b03d705abce69d0f70da0cb1dd71fae99973a2992070057c524f848cfc94e7dc54e83c19c54fcfa870252b93f8fd6856
+  languageName: node
+  linkType: hard
+
+"@data-wrangling-components/react@npm:^2.8.0":
+  version: 2.8.0
+  resolution: "@data-wrangling-components/react@npm:2.8.0"
   dependencies:
+    "@data-wrangling-components/guidance": 0.1.0
     "@essex-js-toolkit/hooks": ^4.0.1
+    core-js: ^3.21.1
     d3-format: ^3.1.0
     d3-scale: ^4.0.2
     d3-selection: ^3.0.0
     d3-shape: ^3.1.0
     lodash-es: ^4.17.21
+    markdown-to-jsx: ^7.1.6
     react-dropzone: ^12.0.4
     react-if: ^4.1.1
   peerDependencies:
@@ -926,7 +936,7 @@ __metadata:
     react: ^17.0.2
     react-dom: ^17.0.2
     styled-components: ^5.3.0
-  checksum: fe055b9e2293d2a738d76011334aeffb2cac9b4c32e4238bb970d889111c72be8dc60bc9bcde91eab3d066f3dbe82828abc3fcb0b5a786fd246d9efeb3bb01e8
+  checksum: 2b2c2434f36de4c3eef463f9438280c99a79f750d037917cdff191938ab4792feb84730cefe7ac022340cb6e742542b812cd2c27698bfae5c805b22f15b08165
   languageName: node
   linkType: hard
 
@@ -1927,7 +1937,6 @@ __metadata:
     "@types/node": ^17.0.21
     config: ^3.3.7
     debug: ^4.3.3
-    dotenv: ^10.0.0
     npm-run-all: ^4.1.5
     start-server-and-test: ^1.14.0
     typescript: ^4.6.2
@@ -1959,8 +1968,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/client@workspace:javascript/client"
   dependencies:
-    "@data-wrangling-components/core": ^3.0.0
-    "@data-wrangling-components/react": ^2.7.0
+    "@data-wrangling-components/core": ^4.0.0
+    "@data-wrangling-components/react": ^2.8.0
     "@data-wrangling-components/utilities": ^1.6.1
     "@essex-js-toolkit/boolean-expression-component": ^1.0.1
     "@essex-js-toolkit/hooks": ^4.0.3
@@ -4230,6 +4239,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"core-js@npm:^3.21.1":
+  version: 3.21.1
+  resolution: "core-js@npm:3.21.1"
+  checksum: d68eddd831340ad5b24ac29c72fda022a43b17f194c4278b6b875a843283d316502cb4abd07f28631d6ebc4387f66aa06e2b1b3c8fd7e08096a751b5c63f6889
+  languageName: node
+  linkType: hard
+
 "core-util-is@npm:~1.0.0":
   version: 1.0.3
   resolution: "core-util-is@npm:1.0.3"
@@ -4902,13 +4918,6 @@ __metadata:
   dependencies:
     webidl-conversions: ^5.0.0
   checksum: d638e9cb05c52999f1b2eb87c374b03311ea5b1d69c2f875bc92da73e17db60c12142b45c950228642ff7f845c536b65305483350d080df59003a653da80b691
-  languageName: node
-  linkType: hard
-
-"dotenv@npm:^10.0.0":
-  version: 10.0.0
-  resolution: "dotenv@npm:10.0.0"
-  checksum: f412c5fe8c24fbe313d302d2500e247ba8a1946492db405a4de4d30dd0eb186a88a43f13c958c5a7de303938949c4231c56994f97d05c4bc1f22478d631b4005
   languageName: node
   linkType: hard
 
