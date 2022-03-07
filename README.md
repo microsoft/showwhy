@@ -9,7 +9,8 @@ In other words, ShowWhy enables emulation of randomized controlled trials that p
 ## Packages
 
 - [client](packages/client)
-- [functions](packages/functions)
+- [showwhy-backend](python/showwhy-backend)
+- [showwhy-inference](python/showwhy-inference)
 
 ## Getting Started
 
@@ -50,6 +51,17 @@ To stop using showwhy you can run these commands on the same powershell terminal
 - `docker-compose stop`: Stops the containers without removing anything
 - `docker-compose down -v`: Stops and removes all the containers and volumes used - Use when you stop using ShowWhy
 - `docker-compose rm --force`: Use after `docker-compose down -v` to delete all the data used in previous ShowWhy runs
+
+### Development
+
+To be able to work on this package you will need to install:
+
+- [yarn](https://yarnpkg.com/)
+- [Poetry](https://python-poetry.org/)
+
+To install all dependencies you must run `yarn install` in the root folder of this project and `poetry install` in `python/showwhy-backend` and `python/showwhy-inference`. You can also use the `install` script in the `scripts` folder.
+
+This process will setup all dependencies on python and javascript needed to run all packages locally.
 
 ## License
 
