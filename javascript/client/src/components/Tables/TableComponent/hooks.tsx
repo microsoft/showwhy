@@ -3,15 +3,16 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { Checkbox, IComboBoxOption } from '@fluentui/react'
-import {
+import type { IComboBoxOption } from '@fluentui/react'
+import { Checkbox } from '@fluentui/react'
+import type {
 	Setter,
 	Handler,
 	Handler1,
 	Maybe,
-	CausalityLevel,
 	ElementDefinition,
 } from '@showwhy/types'
+import { CausalityLevel } from '@showwhy/types'
 import { useCallback, useMemo, useState } from 'react'
 import { useFactorsDefinitionForm } from '~components/FactorsDefinitionForm'
 import type { PageType, HeaderData } from '~types'

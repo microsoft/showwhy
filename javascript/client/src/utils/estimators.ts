@@ -3,11 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { isStatus } from '@showwhy/api-client'
-import {
-	Maybe,
-	EstimateEffectStatusResponse,
-	NodeResponseStatus,
-} from '@showwhy/types'
+import type { Maybe, EstimateEffectStatusResponse } from '@showwhy/types'
+import { NodeResponseStatus } from '@showwhy/types'
 import { percentage as calcPercent } from './stats'
 import type { RunStatus } from '~types'
 

@@ -3,10 +3,12 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import {
+import type {
 	FileCollection,
-	FileType,
 	BaseFile,
+} from '@data-wrangling-components/utilities'
+import {
+	FileType,
 	FileWithPath,
 	createBaseFile,
 } from '@data-wrangling-components/utilities'

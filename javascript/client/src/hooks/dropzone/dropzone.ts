@@ -3,11 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import {
-	FileCollection,
-	FileType,
-	isZipFile,
-} from '@data-wrangling-components/utilities'
+import type { FileCollection } from '@data-wrangling-components/utilities'
+import { FileType, isZipFile } from '@data-wrangling-components/utilities'
 import type { Handler } from '@showwhy/types'
 import { useMemo, useCallback, useState } from 'react'
 import {

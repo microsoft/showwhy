@@ -3,20 +3,15 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { useDropzone } from '@data-wrangling-components/react'
-import {
+import type {
 	BaseFile,
 	FileCollection,
-	FileType,
 	FileWithPath,
 } from '@data-wrangling-components/utilities'
+import { FileType } from '@data-wrangling-components/utilities'
 import type { Handler, Handler1 } from '@showwhy/types'
-import {
-	useState,
-	useCallback,
-	useEffect,
-	SetStateAction,
-	Dispatch,
-} from 'react'
+import type { SetStateAction, Dispatch } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import { useOnDropRejected } from './dropzone'
 import { useAddFilesToCollection } from './fileCollection'
 import { useSupportedFileTypes } from './supportedFileTypes'

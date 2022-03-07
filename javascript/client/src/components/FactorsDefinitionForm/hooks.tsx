@@ -4,14 +4,14 @@
  */
 
 import type { IComboBoxOption } from '@fluentui/react'
-import {
+import type {
 	Handler,
 	Setter,
 	OptionalId,
 	Experiment,
 	CausalFactor,
-	CausalityLevel,
 } from '@showwhy/types'
+import { CausalityLevel } from '@showwhy/types'
 import { useCallback, useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import {

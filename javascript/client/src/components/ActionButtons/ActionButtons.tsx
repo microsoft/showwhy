@@ -2,7 +2,8 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { IconButton, IIconProps } from '@fluentui/react'
+import type { IIconProps } from '@fluentui/react'
+import { IconButton } from '@fluentui/react'
 import type { Handler } from '@showwhy/types'
 import { memo, useMemo } from 'react'
 import styled from 'styled-components'

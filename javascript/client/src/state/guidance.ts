@@ -4,7 +4,8 @@
  */
 import { atom } from 'recoil'
 import { localStorageEffect } from './effects/localStorageEffect'
-import { ToggleCallback, useRecoilBasedToggle } from '~hooks'
+import type { ToggleCallback } from '~hooks'
+import { useRecoilBasedToggle } from '~hooks'
 
 export const guidanceState = atom<boolean>({
 	key: 'guidance',

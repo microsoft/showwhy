@@ -3,7 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { EstimatorGroup, EstimatorType, Estimator } from '@showwhy/types'
+import type { Estimator } from '@showwhy/types'
+import { EstimatorGroup, EstimatorType } from '@showwhy/types'
 import { useMemo } from 'react'
 
 export const ESTIMATORS_LEARN_MORE_INFO = {

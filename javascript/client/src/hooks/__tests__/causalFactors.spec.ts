@@ -3,12 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { jest } from '@jest/globals'
-import {
-	BeliefDegree,
-	CausalModelLevel,
-	CausalFactor,
-	CausalityLevel,
-} from '@showwhy/types'
+import type { CausalFactor } from '@showwhy/types'
+import { BeliefDegree, CausalModelLevel, CausalityLevel } from '@showwhy/types'
 import { renderHook } from '@testing-library/react-hooks'
 import { RecoilRoot } from 'recoil'
 import { v4 } from 'uuid'

@@ -4,12 +4,8 @@
  */
 
 import type { Maybe, SignificanceTest } from '@showwhy/types'
-import {
-	atomFamily,
-	SetterOrUpdater,
-	useRecoilValue,
-	useSetRecoilState,
-} from 'recoil'
+import type { SetterOrUpdater } from 'recoil'
+import { atomFamily, useRecoilValue, useSetRecoilState } from 'recoil'
 
 export const significanceTestsState = atomFamily<
 	Maybe<SignificanceTest>,

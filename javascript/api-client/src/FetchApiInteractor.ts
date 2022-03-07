@@ -2,15 +2,15 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import {
+import type {
 	Maybe,
 	UploadFilesResponse,
 	NodeRequest,
 	NodeResponse,
 	TotalExecutionsResponse,
 	OrchestratorStatusResponse,
-	NodeResponseStatus,
 } from '@showwhy/types'
+import { NodeResponseStatus } from '@showwhy/types'
 import { OrchestratorType } from './Orchestrator'
 
 export class FetchApiInteractor {

@@ -7,7 +7,8 @@ import { renderHook } from '@testing-library/react-hooks'
 import { RecoilRoot } from 'recoil'
 import { stepsList } from '../../data/stepsList'
 import * as steps from '../steps'
-import { Workflow, Pages } from '~types'
+import type { Workflow } from '~types'
+import { Pages } from '~types'
 
 describe('stepsHooks', () => {
 	it('useCurrentStep', () => {

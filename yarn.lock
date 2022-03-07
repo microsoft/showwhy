@@ -882,9 +882,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@data-wrangling-components/core@npm:^4.0.1":
-  version: 4.0.1
-  resolution: "@data-wrangling-components/core@npm:4.0.1"
+"@data-wrangling-components/core@npm:^4.0.2":
+  version: 4.0.2
+  resolution: "@data-wrangling-components/core@npm:4.0.2"
   dependencies:
     lodash-es: ^4.17.21
   peerDependencies:
@@ -893,30 +893,30 @@ __metadata:
   peerDependenciesMeta:
     "@types/node":
       optional: true
-  checksum: 4d5ebd24d39076e32b4f345efa58adaeff387bd696f6a1da90c935881306d163b82e9363c1f3348a6203cbcbe1405d56a6f4d7f6e27b10480fa96fb9f1347387
+  checksum: 03cf3ce492639b2c4fd0f0344bd497752f1c4bfc5c2cca51ffbd6e9e2148bdf33311fee65f59e551459d4558f23cc91590ae6f98d5afcbb9daf2da63a55c0b43
   languageName: node
   linkType: hard
 
-"@data-wrangling-components/guidance@npm:^0.1.1":
-  version: 0.1.1
-  resolution: "@data-wrangling-components/guidance@npm:0.1.1"
-  checksum: 54fb6dc34cf45b41c85c52b995b4e45567c384724ec34323e5614bf505e4fafb47f2d948df9f056d2941b0c0167541ef48f932432845c17ccaf4ceee92987c42
+"@data-wrangling-components/guidance@npm:^0.1.2":
+  version: 0.1.2
+  resolution: "@data-wrangling-components/guidance@npm:0.1.2"
+  checksum: df79e8b61b3032cd582c63c9a9961ca458000cda9601f6688fb31ed23b782165f556f0d6264ac2dcdab548db8f504ae1f230fb2b322a4275c0b98e9e91e35bb3
   languageName: node
   linkType: hard
 
-"@data-wrangling-components/react@npm:^2.8.1":
-  version: 2.8.1
-  resolution: "@data-wrangling-components/react@npm:2.8.1"
+"@data-wrangling-components/react@npm:^2.8.2":
+  version: 2.8.2
+  resolution: "@data-wrangling-components/react@npm:2.8.2"
   dependencies:
-    "@data-wrangling-components/guidance": ^0.1.1
-    "@essex/hooks": ^4.0.4
+    "@data-wrangling-components/guidance": ^0.1.2
+    "@essex/hooks": ^4.0.5
     core-js: ^3.21.1
     d3-format: ^3.1.0
     d3-scale: ^4.0.2
     d3-selection: ^3.0.0
     d3-shape: ^3.1.0
     lodash-es: ^4.17.21
-    markdown-to-jsx: ^7.1.6
+    markdown-to-jsx: ^7.1.7
     react-dropzone: ^12.0.4
     react-if: ^4.1.1
   peerDependencies:
@@ -936,18 +936,18 @@ __metadata:
     react: ^17.0.2
     react-dom: ^17.0.2
     styled-components: ^5.3.0
-  checksum: 43ae11c812a6c609dc150c902aa6c0749542e9f78973a0cef7d57678495e42b8ba84d2a587ba95d4517c65d24921e6f0fc0a5f24eaea115141f51244df6e2482
+  checksum: b744b65d9ce9887a7945cb4afce2f047e02f259c8c710803ad81b97508d23c78f2a22cb1e7f76b77fd1a9cfd46b16675873c07d579bdd8bcbf902cfb8a0134f4
   languageName: node
   linkType: hard
 
-"@data-wrangling-components/utilities@npm:^1.6.2":
-  version: 1.6.2
-  resolution: "@data-wrangling-components/utilities@npm:1.6.2"
+"@data-wrangling-components/utilities@npm:^1.6.3":
+  version: 1.6.3
+  resolution: "@data-wrangling-components/utilities@npm:1.6.3"
   dependencies:
     "@zip.js/zip.js": ^2.4.5
   peerDependencies:
     arquero: ^4.8.7
-  checksum: f5395a9c3ef4984fb2a07e5ed27e6a861b04ce0fca5850fa1345abbc1464b8177480265f1633c7f6cc1ed9e445fdd1b724e35d63b79d77b2d6ece1f2700a7e12
+  checksum: f69bf052eda34d251812c4de6450e8dd7eebb3e5b6c8dcba7260f007d95806c7ee2304d4584f9be3086842c61b8744efe44b12d40edb97119a631ef04a736217
   languageName: node
   linkType: hard
 
@@ -998,33 +998,33 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@essex/boolean-expression-component@npm:^1.0.2":
-  version: 1.0.2
-  resolution: "@essex/boolean-expression-component@npm:1.0.2"
+"@essex/boolean-expression-component@npm:^1.0.3":
+  version: 1.0.3
+  resolution: "@essex/boolean-expression-component@npm:1.0.3"
   peerDependencies:
     "@fluentui/react": "*"
     "@types/react": "*"
     "@types/react-dom": "*"
     react: "*"
-  checksum: e6165f3035357f709f785aeb770920ff1ef6db4bfbdd541e3e633d4c862e583adb145aee59d97625332493f6823fd4b9504d9873cadef550b5f57d1381534e51
+  checksum: a1355c56035e1c04cb7d666b953926a208f2412cb6a47fdb8f5cf84455d26a8e7480e40e92e0494c763fb875f6af7196d20b6393217f7e93c3a34a0969820209
   languageName: node
   linkType: hard
 
-"@essex/eslint-config@npm:^20.0.5":
-  version: 20.0.5
-  resolution: "@essex/eslint-config@npm:20.0.5"
+"@essex/eslint-config@npm:^20.0.6":
+  version: 20.0.6
+  resolution: "@essex/eslint-config@npm:20.0.6"
   peerDependencies:
-    "@essex/eslint-plugin": ">=20.0.6"
+    "@essex/eslint-plugin": ">=20.0.7"
     "@typescript-eslint/eslint-plugin": ">= 4.4.1"
     "@typescript-eslint/parser": ">= 4.4.1"
     eslint-import-resolver-node: ">= 0.3.4"
-  checksum: 78a86a2078a169becfb74248d320fcd628c01951ca9f8b55a55d61e62acf6218b58108db01bfedecd7a914bb4e716e6b3d3c172a0b193867acb17a05e6e8ec24
+  checksum: dbb36c508682a8a8946dad0c886b7674e0e4003a77a18b3c220227cbb4f6625e9464dc00b5ca7e7242f9861852e65684e42205ddb68fb98594137f86bd490b66
   languageName: node
   linkType: hard
 
-"@essex/eslint-plugin@npm:^20.0.6":
-  version: 20.0.6
-  resolution: "@essex/eslint-plugin@npm:20.0.6"
+"@essex/eslint-plugin@npm:^20.0.7":
+  version: 20.0.7
+  resolution: "@essex/eslint-plugin@npm:20.0.7"
   dependencies:
     "@babel/core": ^7.17.5
     "@babel/eslint-parser": ^7.17.0
@@ -1047,7 +1047,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": ">= 4.4.1"
     "@typescript-eslint/parser": ">= 4.4.1"
     eslint-import-resolver-node: ">= 0.3.4"
-  checksum: 85887249ed7a736653c283000f249769d49654dd5a98f9fa83c6424066a7d723de900cd7cb7ac4dfab755b436fbe9d97b6d2b2d18ffc40d9801360ca05bd9ee0
+  checksum: 3d0754508d6b271e8971e3c33856e101ee665402790542db8ae889e876debede7b4b6684c6811374f48a07af983a7b0587a24afa32182c506eb377f7a089ebb7
   languageName: node
   linkType: hard
 
@@ -1066,9 +1066,24 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@essex/jest-config@npm:^21.0.3":
-  version: 21.0.3
-  resolution: "@essex/jest-config@npm:21.0.3"
+"@essex/hooks@npm:^4.0.5":
+  version: 4.0.5
+  resolution: "@essex/hooks@npm:4.0.5"
+  dependencies:
+    "@essex/toolbox": ^3.0.3
+    lodash-es: ^4.17.21
+  peerDependencies:
+    "@types/node": "*"
+    "@types/react": "*"
+    "@types/react-dom": "*"
+    react: ">=16.8.0"
+  checksum: d656c9a48aac86cfa4472b96192a8233a0ffdd6389826ace679a03c8e2801ba40e1756910e7400e3c262422f341447510af83a6fe544469034e42268554bd055
+  languageName: node
+  linkType: hard
+
+"@essex/jest-config@npm:^21.0.4":
+  version: 21.0.4
+  resolution: "@essex/jest-config@npm:21.0.4"
   dependencies:
     "@essex/swc-opts": ^20.0.5
     "@swc/core": 1.2.148
@@ -1081,7 +1096,7 @@ __metadata:
   peerDependenciesMeta:
     jest:
       optional: true
-  checksum: 14895a94c51667e77c884213cd8e7a36905e629e36e3d1d3364f436101ade88e9c65165b24711d38e88804c602de167f31613121ca59772d379ae26baa260e89
+  checksum: d2d7099d970e064bf8dc0873daa35e234239f2dc5eb2521db68862b5e2e188c883544f372f24680b73c24102516a7a7d61adb0f560b56c766070e80ea2e92a1a
   languageName: node
   linkType: hard
 
@@ -1092,13 +1107,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@essex/scripts@npm:^20.4.5":
-  version: 20.4.5
-  resolution: "@essex/scripts@npm:20.4.5"
+"@essex/scripts@npm:^20.4.6":
+  version: 20.4.6
+  resolution: "@essex/scripts@npm:20.4.6"
   dependencies:
     "@azure/storage-blob": ^12.8.0
-    "@essex/eslint-config": ^20.0.5
-    "@essex/eslint-plugin": ^20.0.6
+    "@essex/eslint-config": ^20.0.6
+    "@essex/eslint-plugin": ^20.0.7
     "@essex/shellrunner": ^20.0.4
     "@essex/swc-opts": ^20.0.5
     "@swc/core": 1.2.148
@@ -1123,8 +1138,8 @@ __metadata:
     typedoc: ^0.22.12
     typescript: ^4.6.2
   peerDependencies:
-    "@essex/eslint-config": ">=20.0.5"
-    "@essex/jest-config": ">=21.0.3"
+    "@essex/eslint-config": ">=20.0.6"
+    "@essex/jest-config": ">=21.0.4"
     "@essex/prettier-config": ">=18.0.2"
     "@typescript-eslint/eslint-plugin": ">= 4.4.1"
     "@typescript-eslint/parser": ">= 4.4.1"
@@ -1154,7 +1169,7 @@ __metadata:
   bin:
     essex: ./lib/index.mjs
     essex-scripts: ./lib/index.mjs
-  checksum: 55351fc03afefeeb4e6469b90295ecd45ea40253731f93b3a162803de79552becb6f836d80fd550f661b790e77a0f4a730d40e4724791bcbc8e089bb338c7a2e
+  checksum: f3908b3ecc25b577430d84d42ebe1a9f9a859b381c2571fb10591fd41980e5b68fdbd3fd77f0b2a02ff216359011c2425e6abd97c8d3aea624b3f3891f08ed62
   languageName: node
   linkType: hard
 
@@ -1179,9 +1194,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@essex/thematic-lineup@npm:^2.0.2":
-  version: 2.0.2
-  resolution: "@essex/thematic-lineup@npm:2.0.2"
+"@essex/thematic-lineup@npm:^2.0.4":
+  version: 2.0.4
+  resolution: "@essex/thematic-lineup@npm:2.0.4"
   peerDependencies:
     "@thematic/color": ">=0.8.0"
     "@thematic/core": ">=0.8.0"
@@ -1193,16 +1208,16 @@ __metadata:
     react: ">=16.8.6"
     react-dom: ">=16.8.6"
     tslib: "*"
-  checksum: 8b9d521841657c9c16ae81e04b362fb040cd823eee5014a6f448437bbb0ee1d3e7e9905da38d243d3956dd8b01716b3f2d3969fada28ec0ef53e7930ce4cb493
+  checksum: 8e35984ccae59c0a1e28bce8a5b8da6dabb3d2a9d7c63c97af72baf2fd66ca58807cc372f01e51ec2f120e39ca1df1f7b86fc40a34eb3ad35e3a5de6a64f49dc
   languageName: node
   linkType: hard
 
-"@essex/themed-components@npm:^2.0.2":
-  version: 2.0.2
-  resolution: "@essex/themed-components@npm:2.0.2"
+"@essex/themed-components@npm:^2.0.4":
+  version: 2.0.4
+  resolution: "@essex/themed-components@npm:2.0.4"
   dependencies:
-    "@essex/hooks": ^4.0.4
-    "@essex/toolbox": ^3.0.2
+    "@essex/hooks": ^4.0.5
+    "@essex/toolbox": ^3.0.3
     "@types/d3-array": ^3.0.2
     "@types/d3-axis": ^3.0.1
     "@types/d3-brush": ^3.0.1
@@ -1228,7 +1243,7 @@ __metadata:
     "@uifabric/icons": ">= 7.3.38"
     react: ">= 16.8.6"
     react-dom: ">= 16.8.6"
-  checksum: b146959523bd8c0c99c62a0f7113691f8883542f21db2d935e2217e8600edf1a1bda3d29c15493fab594950d39d374fe240e59c7e49776b45ceaf4dd42a3b932
+  checksum: 6df08da3fbb6c69b47b0374f2ea9574d7a0c8b4f86f93ea4ba812b08496b47f458d9e217caa1fabdcc64a2be4851cd7b20f0af44b68e00a3fd9c816cdc00aa6c
   languageName: node
   linkType: hard
 
@@ -1236,6 +1251,13 @@ __metadata:
   version: 3.0.2
   resolution: "@essex/toolbox@npm:3.0.2"
   checksum: c9e56378d736e26af4b6a4ce28a2f7f9378c2c66ffbcdb69df241743a57761aec3babf6ffa7f7711d3c6d664d4c85895a028aa462dfd91ae49bc77376ad4d7be
+  languageName: node
+  linkType: hard
+
+"@essex/toolbox@npm:^3.0.3":
+  version: 3.0.3
+  resolution: "@essex/toolbox@npm:3.0.3"
+  checksum: 9db0b2bddbf85757bb0b0227476151731eafac86a843fe65e0b9c872758d99d367e2c6ea848af7d2f5ccdf7f685f7c1da66ff560685b3730e96b278093ce5fed
   languageName: node
   linkType: hard
 
@@ -1910,7 +1932,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/api-client@workspace:javascript/api-client"
   dependencies:
-    "@essex/scripts": ^20.4.5
+    "@essex/scripts": ^20.4.6
     "@essex/tsconfig-base": ^1.0.2
     "@showwhy/types": "workspace:javascript/types"
   languageName: unknown
@@ -1920,7 +1942,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/builders@workspace:javascript/builders"
   dependencies:
-    "@essex/scripts": ^20.4.5
+    "@essex/scripts": ^20.4.6
     "@essex/tsconfig-base": ^1.0.2
     "@showwhy/types": "workspace:javascript/types"
     "@types/react": ^17.0.39
@@ -1931,15 +1953,15 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/client@workspace:javascript/client"
   dependencies:
-    "@data-wrangling-components/core": ^4.0.1
-    "@data-wrangling-components/react": ^2.8.1
-    "@data-wrangling-components/utilities": ^1.6.2
-    "@essex/boolean-expression-component": ^1.0.2
-    "@essex/hooks": ^4.0.4
-    "@essex/jest-config": ^21.0.3
-    "@essex/scripts": ^20.4.5
-    "@essex/thematic-lineup": ^2.0.2
-    "@essex/themed-components": ^2.0.2
+    "@data-wrangling-components/core": ^4.0.2
+    "@data-wrangling-components/react": ^2.8.2
+    "@data-wrangling-components/utilities": ^1.6.3
+    "@essex/boolean-expression-component": ^1.0.3
+    "@essex/hooks": ^4.0.5
+    "@essex/jest-config": ^21.0.4
+    "@essex/scripts": ^20.4.6
+    "@essex/thematic-lineup": ^2.0.4
+    "@essex/themed-components": ^2.0.4
     "@essex/tsconfig-base": ^1.0.2
     "@essex/vite-config": ^19.0.4
     "@fluentui/font-icons-mdl2": ^8.2.0
@@ -1952,12 +1974,12 @@ __metadata:
     "@showwhy/types": "workspace:javascript/types"
     "@testing-library/react": ^12.1.3
     "@testing-library/react-hooks": ^7.0.2
-    "@thematic/color": ^2.0.5
-    "@thematic/core": ^2.0.5
-    "@thematic/d3": ^2.0.5
-    "@thematic/fluent": ^3.0.5
-    "@thematic/react": ^2.0.5
-    "@thematic/vega": ^2.0.5
+    "@thematic/color": ^2.0.6
+    "@thematic/core": ^2.0.6
+    "@thematic/d3": ^2.0.6
+    "@thematic/fluent": ^3.0.6
+    "@thematic/react": ^2.0.6
+    "@thematic/vega": ^2.0.6
     "@types/babel__core": ^7.1.18
     "@types/d3-axis": ^3.0.1
     "@types/d3-dsv": ^3.0.0
@@ -2015,10 +2037,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/project@workspace:."
   dependencies:
-    "@essex/eslint-config": ^20.0.5
-    "@essex/jest-config": ^21.0.3
+    "@essex/eslint-config": ^20.0.6
+    "@essex/jest-config": ^21.0.4
     "@essex/prettier-config": ^18.0.2
-    "@essex/scripts": ^20.4.5
+    "@essex/scripts": ^20.4.6
     eslint: ^8.10.0
     husky: ^7.0.4
     lint-staged: ^12.3.4
@@ -2032,7 +2054,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/types@workspace:javascript/types"
   dependencies:
-    "@essex/scripts": ^20.4.5
+    "@essex/scripts": ^20.4.6
     "@essex/tsconfig-base": ^1.0.2
     "@types/react": ^17.0.39
   languageName: unknown
@@ -2283,9 +2305,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@thematic/color@npm:^2.0.5":
-  version: 2.0.5
-  resolution: "@thematic/color@npm:2.0.5"
+"@thematic/color@npm:^2.0.6":
+  version: 2.0.6
+  resolution: "@thematic/color@npm:2.0.6"
   dependencies:
     chroma-js: ^2.4.2
     color-blind: ^0.1.1
@@ -2298,15 +2320,15 @@ __metadata:
       optional: true
     "@types/node":
       optional: true
-  checksum: b9deffdcafb94e181a41238ac7c7e34418983f643107334f12323f3d793ee071236fcd16c66afa7a2474868679af78b2c031bbd9a1f7f3650c1fb1e05408d459
+  checksum: f6dc37f74bd5b38d78c5e09f206d6cc6cb40c42f5145f8c6f6f3e4ae2c373392ca767189e4b3a370eaa79b6af4e03226d6b0818957e95e93102197ed5dad24ab
   languageName: node
   linkType: hard
 
-"@thematic/core@npm:^2.0.5":
-  version: 2.0.5
-  resolution: "@thematic/core@npm:2.0.5"
+"@thematic/core@npm:^2.0.6":
+  version: 2.0.6
+  resolution: "@thematic/core@npm:2.0.6"
   dependencies:
-    "@thematic/color": ^2.0.5
+    "@thematic/color": ^2.0.6
     d3-scale: ^3.3.0
     lodash-es: ^4.17.21
     murmurhash-js: ^1.0.0
@@ -2318,15 +2340,15 @@ __metadata:
       optional: true
     "@types/node":
       optional: true
-  checksum: 7da6682a73033d811c908e68ec7ac04dec5fdeda3a1f83eea7a02da0a9e1abc8227b7b1e636ac68d093ecded8beac90b7cb9b51040ced15465b66485d7a7999a
+  checksum: d5740d03293a5b5d0ca80fb960a81ceed789164bed1a127f8b0f9f670114007b5f3b9cc1c66fb9ce7dd97e7cab843f055f24a433054352c93b097de5acbb3f99
   languageName: node
   linkType: hard
 
-"@thematic/d3@npm:^2.0.5":
-  version: 2.0.5
-  resolution: "@thematic/d3@npm:2.0.5"
+"@thematic/d3@npm:^2.0.6":
+  version: 2.0.6
+  resolution: "@thematic/d3@npm:2.0.6"
   dependencies:
-    "@thematic/core": ^2.0.5
+    "@thematic/core": ^2.0.6
     d3-axis: ^1.0.12
     d3-selection: ^1.4.2
   peerDependencies:
@@ -2340,18 +2362,18 @@ __metadata:
       optional: true
     "@types/node":
       optional: true
-  checksum: 7186518f0e6a2bd5fcc52b0290e43aca183f9f77bc6f70c01f4f670dcbf6224596dbbca3579929154e0661eacc6ed3bc5c3eaa772245ea39429f5b61eb889bcb
+  checksum: ab502d5e84a55b311e6296da323d59e1815c1e6c5683545f765e8067e3da7a6c2fdf669ecb32bbfc59ab5ae52110be33f140bfcdcec0f33be2beba57b2dbecc8
   languageName: node
   linkType: hard
 
-"@thematic/fluent@npm:^3.0.5":
-  version: 3.0.5
-  resolution: "@thematic/fluent@npm:3.0.5"
+"@thematic/fluent@npm:^3.0.6":
+  version: 3.0.6
+  resolution: "@thematic/fluent@npm:3.0.6"
   dependencies:
     "@essex/hooks": ^4.0.4
-    "@thematic/color": ^2.0.5
-    "@thematic/core": ^2.0.5
-    "@thematic/react": ^2.0.5
+    "@thematic/color": ^2.0.6
+    "@thematic/core": ^2.0.6
+    "@thematic/react": ^2.0.6
     d3-scale: ^3.3.0
   peerDependencies:
     "@fluentui/font-icons-mdl2": ">= 8"
@@ -2370,16 +2392,16 @@ __metadata:
       optional: true
     react:
       optional: false
-  checksum: 9ff6e64ca96626f2050c3745df4b9971d10d9301fa5157f5a0226cb21fbde62851e291b85c7663e0de7bc1c92a5e6d12089f8c1817ecbd4b9171afffb0acdc84
+  checksum: fc7aff04581bfecceccc866267c1e8a537e3e41ad8902fc68f90724949037aaab01b9676403ba0f6b086d4c15e1d84d02f246046f3ee0b1ffd5f5819d1ea73fa
   languageName: node
   linkType: hard
 
-"@thematic/react@npm:^2.0.5":
-  version: 2.0.5
-  resolution: "@thematic/react@npm:2.0.5"
+"@thematic/react@npm:^2.0.6":
+  version: 2.0.6
+  resolution: "@thematic/react@npm:2.0.6"
   dependencies:
-    "@thematic/color": ^2.0.5
-    "@thematic/core": ^2.0.5
+    "@thematic/color": ^2.0.6
+    "@thematic/core": ^2.0.6
   peerDependencies:
     "@types/node": "*"
     "@types/react": ">= 17"
@@ -2391,21 +2413,21 @@ __metadata:
       optional: true
     react:
       optional: false
-  checksum: e614797b3314a374948dd4372a4e7df0583916aec9820b407ff2651cec75b7b3c1ff0d9e5b6d1c9c74fe88377fb488cb6561f3ccc464799992028b811b44b36a
+  checksum: e9df15756a03ea137ef290db34b7e95748759bae659bcfdf8bd75fba26f85c959d6ed088fa68aeeac4ec83d6b4c9053abd9f433eb8ef449bd5448c48deec70f9
   languageName: node
   linkType: hard
 
-"@thematic/vega@npm:^2.0.5":
-  version: 2.0.5
-  resolution: "@thematic/vega@npm:2.0.5"
+"@thematic/vega@npm:^2.0.6":
+  version: 2.0.6
+  resolution: "@thematic/vega@npm:2.0.6"
   dependencies:
-    "@thematic/core": ^2.0.5
+    "@thematic/core": ^2.0.6
   peerDependencies:
     vega: 5
   peerDependenciesMeta:
     vega:
       optional: false
-  checksum: 6501386834455e20890e98fd6c2d412f11fc96a1ded2477576b18eca4e2743e5a37b2880c5bcfcb23757eeb206ea388ef9ee4cc0b2eb1417cc7cae72412d950b
+  checksum: 87616e2caafa2bd13d100a0e0bf2a44b050474256a60c4adee01dc5b55c3c97be20f460b5f01120d03e93dd4caa56c97716367e5726e3c18138545d5fb90de98
   languageName: node
   linkType: hard
 
@@ -7901,6 +7923,15 @@ __metadata:
   peerDependencies:
     react: ">= 0.14.0"
   checksum: f7d8375f9871f228f2d0a06055f1d01f82c57cbd93fde2b9cb24ccebde741b9ebc0f4b8c52239f7b192c72e7f587cca4d3e752b731539be1936b3290470d119c
+  languageName: node
+  linkType: hard
+
+"markdown-to-jsx@npm:^7.1.7":
+  version: 7.1.7
+  resolution: "markdown-to-jsx@npm:7.1.7"
+  peerDependencies:
+    react: ">= 0.14.0"
+  checksum: b2c0ea7d0988fad0c709989b3b1b3a5600d1e80b60266f9618386f7afead4a6b5eba9ee1a3943df6a3dcb1599ea89e58467d1b17b6dd3af3c60984c60a85d06d
   languageName: node
   linkType: hard
 

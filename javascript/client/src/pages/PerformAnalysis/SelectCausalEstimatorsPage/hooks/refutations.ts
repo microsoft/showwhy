@@ -3,7 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { RefutationType, RefutationChoice } from '@showwhy/types'
+import type { RefutationChoice } from '@showwhy/types'
+import { RefutationType } from '@showwhy/types'
 import { useMemo } from 'react'
 import { useSetFullRefutation, useSetQuickRefutation } from '~hooks'
 import { useRefutationType } from '~state'

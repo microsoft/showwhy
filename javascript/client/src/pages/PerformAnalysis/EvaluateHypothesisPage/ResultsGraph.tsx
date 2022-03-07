@@ -3,7 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import type { Dimensions } from '@essex/hooks'
-import { RefutationType, Maybe, Experiment } from '@showwhy/types'
+import type { Maybe, Experiment } from '@showwhy/types'
+import { RefutationType } from '@showwhy/types'
 import { memo } from 'react'
 import { OutcomeEffectScatterplot } from '../ExploreSpecificationCurvePage/vega'
 import { Paragraph, Value, Container, Bold, Text } from '~styles'
