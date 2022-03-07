@@ -2016,7 +2016,6 @@ __metadata:
   resolution: "@showwhy/project@workspace:."
   dependencies:
     "@essex/eslint-config": ^20.0.5
-    "@essex/eslint-plugin": ^20.0.6
     "@essex/jest-config": ^21.0.3
     "@essex/prettier-config": ^18.0.2
     "@essex/scripts": ^20.4.5
