@@ -34,16 +34,15 @@ import {
 	useSetTablesPrepSpecification,
 	useSetConfigJson,
 } from '~state'
-import {
-	ProjectSource,
+import type {
 	FileDefinition,
 	ZipData,
 	ProjectFile,
 	Workspace,
 	DataTableFileDefinition,
-	StepStatus,
 	RunHistory,
 } from '~types'
+import { ProjectSource, StepStatus } from '~types'
 
 import {
 	fetchRemoteTables,

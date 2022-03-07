@@ -3,7 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { DropdownMenuItemType, IDropdownOption } from '@fluentui/react'
+import type { IDropdownOption } from '@fluentui/react'
+import { DropdownMenuItemType } from '@fluentui/react'
 import type {
 	CausalFactor,
 	ElementDefinition,

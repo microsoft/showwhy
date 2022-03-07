@@ -4,9 +4,9 @@
  */
 
 import type { Maybe } from '@showwhy/types'
+import type { SetterOrUpdater } from 'recoil'
 import {
 	atomFamily,
-	SetterOrUpdater,
 	useRecoilTransaction_UNSTABLE,
 	useRecoilValue,
 	useSetRecoilState,

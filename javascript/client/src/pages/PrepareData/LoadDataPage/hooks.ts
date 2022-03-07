@@ -3,10 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import {
-	FileCollection,
-	guessDelimiter,
-} from '@data-wrangling-components/utilities'
+import type { FileCollection } from '@data-wrangling-components/utilities'
+import { guessDelimiter } from '@data-wrangling-components/utilities'
 import type { IDropdownOption } from '@fluentui/react'
 import type { Handler1, Maybe, Handler } from '@showwhy/types'
 import { useBoolean } from 'ahooks'

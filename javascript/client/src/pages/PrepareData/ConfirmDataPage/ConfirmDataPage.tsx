@@ -6,7 +6,8 @@ import {
 	ArqueroDetailsList,
 	ArqueroTableHeader,
 } from '@data-wrangling-components/react'
-import { FC, memo } from 'react'
+import type { FC } from 'react'
+import { memo } from 'react'
 import styled from 'styled-components'
 import { useBusinessLogic } from './hooks'
 

@@ -3,8 +3,10 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { Checkbox, ComboBox, IComboBoxOption, TextField } from '@fluentui/react'
-import { FlatCausalFactor, BeliefDegree } from '@showwhy/types'
+import type { IComboBoxOption } from '@fluentui/react'
+import { Checkbox, ComboBox, TextField } from '@fluentui/react'
+import type { FlatCausalFactor } from '@showwhy/types'
+import { BeliefDegree } from '@showwhy/types'
 import { useCallback } from 'react'
 
 const beliefOptions: IComboBoxOption[] = [

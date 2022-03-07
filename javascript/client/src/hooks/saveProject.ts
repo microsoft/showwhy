@@ -3,14 +3,17 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import type {
+	FileWithPath,
+	FileCollection,
+} from '@data-wrangling-components/utilities'
 import {
 	FileType,
 	createFileWithPath,
 	fetchFile,
-	FileWithPath,
-	FileCollection,
 } from '@data-wrangling-components/utilities'
-import { Maybe, AsyncHandler, NodeResponseStatus } from '@showwhy/types'
+import type { Maybe, AsyncHandler } from '@showwhy/types'
+import { NodeResponseStatus } from '@showwhy/types'
 import { useCallback, useMemo } from 'react'
 import { useGetResult, useGetStepUrlsByStatus } from '~hooks'
 import {
@@ -29,7 +32,8 @@ import {
 	useOutputTablePrep,
 	useConfigJson,
 } from '~state'
-import { Workspace, DownloadType, DataTableFileDefinition } from '~types'
+import type { Workspace, DataTableFileDefinition } from '~types'
+import { DownloadType } from '~types'
 import { isDataUrl } from '~utils'
 
 export function useSaveProject(): AsyncHandler {

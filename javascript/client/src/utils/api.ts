@@ -3,7 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { NodeResponseStatus, RefutationType } from '@showwhy/types'
+import type { RefutationType } from '@showwhy/types'
+import { NodeResponseStatus } from '@showwhy/types'
 import { v4 } from 'uuid'
 import { SESSION_ID_KEY } from './constants'
 import { createAndReturnStorageItem } from './sessionStorage'

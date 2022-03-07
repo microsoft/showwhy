@@ -5,15 +5,15 @@
 
 import { OrchestratorType } from '@showwhy/api-client'
 import { buildSignificanceTestsNode } from '@showwhy/builders'
-import {
+import type {
 	Maybe,
 	Handler,
-	NodeResponseStatus,
 	AlternativeModels,
 	Experiment,
 	SignificanceTest,
 	RefutationType,
 } from '@showwhy/types'
+import { NodeResponseStatus } from '@showwhy/types'
 import { useCallback, useMemo, useState } from 'react'
 import { useLoadSpecificationData } from '../ExploreSpecificationCurvePage/hooks'
 import {

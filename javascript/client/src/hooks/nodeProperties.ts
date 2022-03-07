@@ -3,13 +3,13 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import {
+import type {
 	AlternativeModels,
 	Experiment,
 	Estimator,
 	RefutationType,
-	CausalModelLevel,
 } from '@showwhy/types'
+import { CausalModelLevel } from '@showwhy/types'
 import { useMemo } from 'react'
 import { useAlternativeModels } from '~hooks'
 import {
