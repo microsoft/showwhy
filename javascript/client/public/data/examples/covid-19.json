@@ -1,0 +1,784 @@
+{
+    "primarySpecification": {
+      "causalModel": "Maximum",
+      "type": "Propensity Score Stratification"
+    },
+    "confidenceInterval": true,
+    "causalFactors": [
+      {
+        "description": "Patient's age group derived from the Wolfram dataset",
+        "variable": "Patient Age",
+        "column": "age_group",
+        "causes": {
+          "causeOutcome": {
+            "causes": true,
+            "degree": 100,
+            "reasoning": "Older adults are likely to have higher mortality rates than younger adults"
+          },
+          "causeExposure": {
+            "causes": true,
+            "degree": 100,
+            "reasoning": "Older adults are more likely to experience chronic diseases than younger adults"
+          }
+        }
+      },
+      {
+        "description": "Patient gender recorded in the Wolfram dataset",
+        "variable": "Patient Gender",
+        "column": "gender",
+        "causes": {
+          "causeOutcome": {
+            "causes": true,
+            "degree": 50,
+            "reasoning": "There might be differences in risk of mortality between men and women"
+          },
+          "causeExposure": {
+            "causes": true,
+            "degree": 50,
+            "reasoning": "Women tend to be more affected by long-term and chronic illness"
+          }
+        }
+      }
+    ],
+    "defineQuestion": {
+      "exposure": {
+        "label": "Chronic Disease",
+        "description": "Patient presented in the Wolfram dataset who reported having a chronic disease prior to contracting COVID-19",
+        "dataset": "Wolfram dataset",
+        "definition": [
+          {
+            "level": "Primary",
+            "variable": "Experienced chronic disease",
+            "description": "A binary variable indicating whether the patient reported having a chronic disease",
+            "column": "chronic_disease"
+          },
+          {
+            "level": "Secondary",
+            "variable": "Experienced diabetes & hypertension chronic disease",
+            "description": "COVID-19 patients recorded in the Wolfram dataset. Records must include complete information on the patient's age, gender, chronic disease status, and survival status",
+            "column": "diabetes_hypertension"
+          }
+        ]
+      },
+      "population": {
+        "label": "Confirmed COVID-19 Cases",
+        "description": "Patients who tested positive for COVID-19 and were presented in the Wolfram's Patient Medical Data for Novel Coronavirus COVID-19 dataset",
+        "dataset": "Wolfram dataset",
+        "definition": [
+          {
+            "level": "Primary",
+            "variable": "Confirmed COVID-19 cases",
+            "description": "COVID-19 patients recorded in the Wolfram dataset. Records must include complete information on the patient's age, gender, chronic disease status, and survival status",
+            "column": "subject_inclusion"
+          }
+        ]
+      },
+      "outcome": {
+        "label": "Mortality Risk",
+        "description": "Patients did not survive after contracting COVID-19",
+        "dataset": "Wolfram dataset",
+        "definition": [
+          {
+            "level": "Primary",
+            "variable": "Mortality",
+            "description": "Binary variable indicating whether the patient died after contracting COVID-19",
+            "column": "death"
+          }
+        ]
+      },
+      "hypothesis": "Increase"
+    },
+    "estimators": [
+      {
+        "group": "Exposure-assignment",
+        "type": "Inverse Propensity Weighting"
+      },
+      {
+        "group": "Exposure-assignment",
+        "type": "Propensity Score Stratification"
+      },
+      {
+        "group": "Outcome-based",
+        "type": "Linear Double Machine Learning"
+      },
+      {
+        "group": "Outcome-based",
+        "type": "Linear Doubly Robust Learner"
+      },
+      {
+        "group": "Outcome-based",
+        "type": "Linear Regression"
+      }
+    ],
+    "refutations": "Quick Refutation",
+    "todoPages": [
+      "/perform/effects",
+      "/perform/estimate-distribution",
+      "/perform/evaluate"
+    ],
+    "tables": [
+      {
+        "url": "https://raw.githubusercontent.com/stccenter/COVID-19/master/prediction/patiant-level%20fatality/data/small%20records.csv",
+        "name": "covid19_small_data.csv",
+        "metadata": {
+          "source": "https://www.frontiersin.org/articles/10.3389/fpubh.2020.587937/full",
+          "citation": "Li, Yun, et al. (2020). Individual-level fatality prediction of COVID-19 patients using AI methods. Frontiers in Public Health 8 (2020): 566."
+        },
+        "primary": true
+      }
+    ],
+    "defaultResult": {
+      "url": "data/pre-processed-results/covid-19.csv"
+    },
+    "postLoad": [{
+      "steps": [
+        {
+          "type": "verb",
+          "verb": "select",
+          "input": "covid19_small_data.csv",
+          "output": "preload-table-0",
+          "args": {
+            "columns": {
+              "age": "age",
+              "ChronicDiseaseQ": "ChronicDiseaseQ",
+              "gender_binary": "gender_binary",
+              "death_binary": "death_binary",
+              "hypertension": "hypertension",
+              "diabetes": "diabetes"
+            }
+          }
+        },
+        {
+          "type": "verb",
+          "verb": "rename",
+          "input": "preload-table-0",
+          "output": "preload-table-1",
+          "args": {
+            "columns": {
+              "age": "age",
+              "ChronicDiseaseQ": "chronic_disease",
+              "gender_binary": "gender",
+              "death_binary": "death",
+              "hypertension": "hypertension",
+              "diabetes": "diabetes"
+            }
+          }
+        },
+        {
+          "type": "verb",
+          "verb": "filter",
+          "input": "preload-table-1",
+          "output": "preload-table-2",
+          "args": {
+            "column": "age",
+            "operator": "is not equal",
+            "type": "value",
+            "value": "0-6"
+          }
+        },
+        {
+          "type": "verb",
+          "verb": "filter",
+          "input": "preload-table-2",
+          "output": "preload-table-3",
+          "args": {
+            "column": "age",
+            "operator": "is not equal",
+            "type": "value",
+            "value": "0-10"
+          }
+        },
+        {
+          "type": "verb",
+          "verb": "filter",
+          "input": "preload-table-3",
+          "output": "preload-table-4",
+          "args": {
+            "column": "age",
+            "operator": "is not equal",
+            "type": "value",
+            "value": "1"
+          }
+        },
+        {
+          "type": "verb",
+          "verb": "filter",
+          "input": "preload-table-4",
+          "output": "preload-table-5",
+          "args": {
+            "column": "age",
+            "operator": "is not equal",
+            "type": "value",
+            "value": "2"
+          }
+        },
+        {
+          "type": "verb",
+          "verb": "filter",
+          "input": "preload-table-5",
+          "output": "preload-table-6",
+          "args": {
+            "column": "age",
+            "operator": "is not equal",
+            "type": "value",
+            "value": "3"
+          }
+        },
+        {
+          "type": "verb",
+          "verb": "filter",
+          "input": "preload-table-6",
+          "output": "preload-table-7",
+          "args": {
+            "column": "age",
+            "operator": "is not equal",
+            "type": "value",
+            "value": "4"
+          }
+        },
+        {
+          "type": "verb",
+          "verb": "filter",
+          "input": "preload-table-7",
+          "output": "preload-table-8",
+          "args": {
+            "column": "age",
+            "operator": "is not equal",
+            "type": "value",
+            "value": "5"
+          }
+        },
+        {
+          "type": "verb",
+          "verb": "filter",
+          "input": "preload-table-8",
+          "output": "preload-table-9",
+          "args": {
+            "column": "age",
+            "operator": "is not equal",
+            "type": "value",
+            "value": "6"
+          }
+        },
+        {
+          "type": "verb",
+          "verb": "filter",
+          "input": "preload-table-9",
+          "output": "preload-table-10",
+          "args": {
+            "column": "age",
+            "operator": "is not equal",
+            "type": "value",
+            "value": "7"
+          }
+        },
+        {
+          "type": "verb",
+          "verb": "filter",
+          "input": "preload-table-10",
+          "output": "preload-table-11",
+          "args": {
+            "column": "age",
+            "operator": "is not equal",
+            "type": "value",
+            "value": "8"
+          }
+        },
+        {
+          "type": "verb",
+          "verb": "filter",
+          "input": "preload-table-11",
+          "output": "preload-table-12",
+          "args": {
+            "column": "age",
+            "operator": "is not equal",
+            "type": "value",
+            "value": "9"
+          }
+        },
+        {
+          "type": "verb",
+          "verb": "binarize",
+          "input": "preload-table-12",
+          "output": "preload-table-13",
+          "args": {
+            "to": "age_10_19",
+            "column": "age",
+            "operator": "starts with",
+            "type": "value",
+            "value": "1"
+          }
+        },
+        {
+          "type": "verb",
+          "verb": "binarize",
+          "input": "preload-table-13",
+          "output": "preload-table-14",
+          "args": {
+            "to": "age_20_29",
+            "column": "age",
+            "operator": "starts with",
+            "type": "value",
+            "value": "2"
+          }
+        },
+        {
+          "type": "verb",
+          "verb": "binarize",
+          "input": "preload-table-14",
+          "output": "preload-table-15",
+          "args": {
+            "to": "age_30_39",
+            "column": "age",
+            "operator": "starts with",
+            "type": "value",
+            "value": "3"
+          }
+        },
+        {
+          "type": "verb",
+          "verb": "binarize",
+          "input": "preload-table-15",
+          "output": "preload-table-16",
+          "args": {
+            "to": "age_40_49",
+            "column": "age",
+            "operator": "starts with",
+            "type": "value",
+            "value": "4"
+          }
+        },
+        {
+          "type": "verb",
+          "verb": "binarize",
+          "input": "preload-table-16",
+          "output": "preload-table-17",
+          "args": {
+            "to": "age_50_59",
+            "column": "age",
+            "operator": "starts with",
+            "type": "value",
+            "value": "5"
+          }
+        },
+        {
+          "type": "verb",
+          "verb": "binarize",
+          "input": "preload-table-17",
+          "output": "preload-table-18",
+          "args": {
+            "to": "age_60_69",
+            "column": "age",
+            "operator": "starts with",
+            "type": "value",
+            "value": "6"
+          }
+        },
+        {
+          "type": "verb",
+          "verb": "binarize",
+          "input": "preload-table-18",
+          "output": "preload-table-19",
+          "args": {
+            "to": "age_70_79",
+            "column": "age",
+            "operator": "starts with",
+            "type": "value",
+            "value": "7"
+          }
+        },
+        {
+          "type": "verb",
+          "verb": "binarize",
+          "input": "preload-table-19",
+          "output": "preload-table-20",
+          "args": {
+            "to": "age_80_89",
+            "column": "age",
+            "operator": "starts with",
+            "type": "value",
+            "value": "8"
+          }
+        },
+        {
+          "type": "verb",
+          "verb": "binarize",
+          "input": "preload-table-20",
+          "output": "preload-table-21",
+          "args": {
+            "to": "age_90_99",
+            "column": "age",
+            "operator": "starts with",
+            "type": "value",
+            "value": "9"
+          }
+        },
+        {
+          "type": "verb",
+          "verb": "fill",
+          "input": "preload-table-21",
+          "output": "preload-table-22",
+          "args": {
+            "to": "age_group_1",
+            "value": "1"
+          }
+        },
+        {
+          "type": "verb",
+          "verb": "fill",
+          "input": "preload-table-22",
+          "output": "preload-table-23",
+          "args": {
+            "to": "age_group_2",
+            "value": "2"
+          }
+        },
+        {
+          "type": "verb",
+          "verb": "fill",
+          "input": "preload-table-23",
+          "output": "preload-table-24",
+          "args": {
+            "to": "age_group_3",
+            "value": "3"
+          }
+        },
+        {
+          "type": "verb",
+          "verb": "fill",
+          "input": "preload-table-24",
+          "output": "preload-table-25",
+          "args": {
+            "to": "age_group_4",
+            "value": "4"
+          }
+        },
+        {
+          "type": "verb",
+          "verb": "fill",
+          "input": "preload-table-25",
+          "output": "preload-table-26",
+          "args": {
+            "to": "age_group_5",
+            "value": "5"
+          }
+        },
+        {
+          "type": "verb",
+          "verb": "fill",
+          "input": "preload-table-26",
+          "output": "preload-table-27",
+          "args": {
+            "to": "age_group_6",
+            "value": "6"
+          }
+        },
+        {
+          "type": "verb",
+          "verb": "fill",
+          "input": "preload-table-27",
+          "output": "preload-table-28",
+          "args": {
+            "to": "age_group_7",
+            "value": "7"
+          }
+        },
+        {
+          "type": "verb",
+          "verb": "fill",
+          "input": "preload-table-28",
+          "output": "preload-table-29",
+          "args": {
+            "to": "age_group_8",
+            "value": "8"
+          }
+        },
+        {
+          "type": "verb",
+          "verb": "fill",
+          "input": "preload-table-29",
+          "output": "preload-table-30",
+          "args": {
+            "to": "age_group_9",
+            "value": "9"
+          }
+        },
+        {
+          "type": "verb",
+          "verb": "derive",
+          "input": "preload-table-30",
+          "output": "preload-table-31",
+          "args": {
+            "to": "age_10_19",
+            "column1": "age_10_19",
+            "operator": "*",
+            "column2": "age_group_1"
+          }
+        },
+        {
+          "type": "verb",
+          "verb": "derive",
+          "input": "preload-table-31",
+          "output": "preload-table-32",
+          "args": {
+            "to": "age_20_29",
+            "column1": "age_20_29",
+            "operator": "*",
+            "column2": "age_group_2"
+          }
+        },
+        {
+          "type": "verb",
+          "verb": "derive",
+          "input": "preload-table-32",
+          "output": "preload-table-33",
+          "args": {
+            "to": "age_30_39",
+            "column1": "age_30_39",
+            "operator": "*",
+            "column2": "age_group_3"
+          }
+        },
+        {
+          "type": "verb",
+          "verb": "derive",
+          "input": "preload-table-33",
+          "output": "preload-table-34",
+          "args": {
+            "to": "age_40_49",
+            "column1": "age_40_49",
+            "operator": "*",
+            "column2": "age_group_4"
+          }
+        },
+        {
+          "type": "verb",
+          "verb": "derive",
+          "input": "preload-table-34",
+          "output": "preload-table-35",
+          "args": {
+            "to": "age_50_59",
+            "column1": "age_50_59",
+            "operator": "*",
+            "column2": "age_group_5"
+          }
+        },
+        {
+          "type": "verb",
+          "verb": "derive",
+          "input": "preload-table-35",
+          "output": "preload-table-36",
+          "args": {
+            "to": "age_60_69",
+            "column1": "age_60_69",
+            "operator": "*",
+            "column2": "age_group_6"
+          }
+        },
+        {
+          "type": "verb",
+          "verb": "derive",
+          "input": "preload-table-36",
+          "output": "preload-table-37",
+          "args": {
+            "to": "age_70_79",
+            "column1": "age_70_79",
+            "operator": "*",
+            "column2": "age_group_7"
+          }
+        },
+        {
+          "type": "verb",
+          "verb": "derive",
+          "input": "preload-table-37",
+          "output": "preload-table-38",
+          "args": {
+            "to": "age_80_89",
+            "column1": "age_80_89",
+            "operator": "*",
+            "column2": "age_group_8"
+          }
+        },
+        {
+          "type": "verb",
+          "verb": "derive",
+          "input": "preload-table-38",
+          "output": "preload-table-39",
+          "args": {
+            "to": "age_90_99",
+            "column1": "age_90_99",
+            "operator": "*",
+            "column2": "age_group_9"
+          }
+        },
+        {
+          "type": "verb",
+          "verb": "derive",
+          "input": "preload-table-39",
+          "output": "preload-table-40",
+          "args": {
+            "to": "age_10_29",
+            "column1": "age_10_19",
+            "operator": "+",
+            "column2": "age_20_29"
+          }
+        },
+        {
+          "type": "verb",
+          "verb": "derive",
+          "input": "preload-table-40",
+          "output": "preload-table-41",
+          "args": {
+            "to": "age_30_49",
+            "column1": "age_30_39",
+            "operator": "+",
+            "column2": "age_40_49"
+          }
+        },
+        {
+          "type": "verb",
+          "verb": "derive",
+          "input": "preload-table-41",
+          "output": "preload-table-42",
+          "args": {
+            "to": "age_50_69",
+            "column1": "age_50_59",
+            "operator": "+",
+            "column2": "age_60_69"
+          }
+        },
+        {
+          "type": "verb",
+          "verb": "derive",
+          "input": "preload-table-42",
+          "output": "preload-table-43",
+          "args": {
+            "to": "age_70_89",
+            "column1": "age_70_79",
+            "operator": "+",
+            "column2": "age_80_89"
+          }
+        },
+        {
+          "type": "verb",
+          "verb": "derive",
+          "input": "preload-table-43",
+          "output": "preload-table-44",
+          "args": {
+            "to": "age_10_49",
+            "column1": "age_10_29",
+            "operator": "+",
+            "column2": "age_30_49"
+          }
+        },
+        {
+          "type": "verb",
+          "verb": "derive",
+          "input": "preload-table-44",
+          "output": "preload-table-45",
+          "args": {
+            "to": "age_50_89",
+            "column1": "age_50_69",
+            "operator": "+",
+            "column2": "age_70_89"
+          }
+        },
+        {
+          "type": "verb",
+          "verb": "derive",
+          "input": "preload-table-45",
+          "output": "preload-table-46",
+          "args": {
+            "to": "age_10_89",
+            "column1": "age_10_49",
+            "operator": "+",
+            "column2": "age_50_89"
+          }
+        },
+        {
+          "type": "verb",
+          "verb": "derive",
+          "input": "preload-table-46",
+          "output": "preload-table-47",
+          "args": {
+            "to": "age_group",
+            "column1": "age_10_89",
+            "operator": "+",
+            "column2": "age_90_99"
+          }
+        },
+        {
+          "type": "verb",
+          "verb": "derive",
+          "input": "preload-table-47",
+          "output": "preload-table-48",
+          "args": {
+            "column1": "diabetes",
+            "column2": "hypertension",
+            "operator": "+",
+            "to": "Combined"
+          }
+        },
+        {
+          "type": "verb",
+          "verb": "binarize",
+          "input": "preload-table-48",
+          "output": "preload-table-49",
+          "args": {
+            "column": "Combined",
+            "operator": ">",
+            "value": 0,
+            "type": "value",
+            "to": "diabetes_hypertension"
+          }
+        },
+        {
+          "type": "verb",
+          "verb": "select",
+          "input": "preload-table-49",
+          "output": "preload-table-50",
+          "args": {
+            "columns": {
+              "age": "age",
+              "chronic_disease": "chronic_disease",
+              "gender": "gender",
+              "death": "death",
+              "age_group": "age_group",
+              "diabetes_hypertension": "diabetes_hypertension"
+            }
+          }
+        },
+        {
+          "type": "verb",
+          "verb": "fill",
+          "input": "preload-table-50",
+          "output": "preload-table-51",
+          "args": {
+            "to": "subject_inclusion",
+            "value": "1"
+          }
+        }
+      ]
+    }],
+    "tablesPrep": [{
+      "steps": [
+        {
+          "verb": "select",
+          "input": "covid19_small_data.csv",
+          "output": "prep-table-1",
+          "args": {
+            "columns": [
+              "index",
+              "diabetes_hypertension",
+              "subject_inclusion",
+              "chronic_disease",
+              "gender",
+              "death",
+              "age_group"
+            ]
+          }
+        }
+      ]
+    }]
+  }
+  

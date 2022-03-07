@@ -1,0 +1,19 @@
+{
+	"name": "@showwhy/types",
+	"version": "0.0.1",
+	"main": "src/index.ts",
+	"publishConfig": {
+		"main": "dist/cjs/index.js",
+		"module": "dist/esm/index.js",
+		"types": "dist/types/index.d.ts"
+	},
+	"scripts": {
+		"clean": "essex clean",
+		"build": "essex build --mode legacy"
+	},
+	"devDependencies": {
+		"@essex/scripts": "^20.4.4",
+		"@essex/tsconfig-base": "^1.0.2",
+		"@types/react": "^17.0.39"
+	}
+}
