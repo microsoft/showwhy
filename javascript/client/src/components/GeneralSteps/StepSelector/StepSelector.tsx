@@ -5,7 +5,7 @@
 import {
 	CollapsiblePanel,
 	CollapsiblePanelContainer,
-} from '@essex-js-toolkit/themed-components'
+} from '@essex/themed-components'
 import { memo, useCallback, useState } from 'react'
 import styled from 'styled-components'
 import { StepItem } from '../StepItem'

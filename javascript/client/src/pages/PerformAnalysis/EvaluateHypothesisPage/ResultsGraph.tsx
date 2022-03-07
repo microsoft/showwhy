@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import type { Dimensions } from '@essex-js-toolkit/hooks'
+import type { Dimensions } from '@essex/hooks'
 import { RefutationType, Maybe, Experiment } from '@showwhy/types'
 import { memo } from 'react'
 import { OutcomeEffectScatterplot } from '../ExploreSpecificationCurvePage/vega'

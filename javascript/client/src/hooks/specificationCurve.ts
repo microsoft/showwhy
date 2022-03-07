@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { Dimensions } from '@essex-js-toolkit/hooks'
+import type { Dimensions } from '@essex/hooks'
 import {
 	Maybe,
 	Handler,
