@@ -4,6 +4,7 @@
 yarn lint-staged 
 
 
-# Python pre-commit execution - commented for now
+# Python pre-commit execution
+# Make sure to install python dependencies with poetry if this fails
 (cd python/showwhy-backend && poetry run pre-commit)
 (cd python/showwhy-inference && poetry run pre-commit)
