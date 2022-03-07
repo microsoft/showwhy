@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { useInterval } from '@essex-js-toolkit/hooks'
+import { useInterval } from '@essex/hooks'
 import type { Maybe } from '@showwhy/types'
 import { useState, useMemo } from 'react'
 import { elapsedTime } from '~utils'

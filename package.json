@@ -28,9 +28,9 @@
 	"devDependencies": {
 		"@essex/eslint-config": "^20.0.5",
 		"@essex/eslint-plugin": "^20.0.6",
-		"@essex/jest-config": "^21.0.2",
+		"@essex/jest-config": "^21.0.3",
 		"@essex/prettier-config": "^18.0.2",
-		"@essex/scripts": "^20.4.4",
+		"@essex/scripts": "^20.4.5",
 		"eslint": "^8.10.0",
 		"husky": "^7.0.4",
 		"lint-staged": "^12.3.4",
