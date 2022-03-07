@@ -11,12 +11,8 @@ import {
 	buildAlternativeModels,
 	buildLoadNode,
 } from '@showwhy/builders'
-import {
-	Maybe,
-	NodeRequest,
-	GraphNodeType,
-	GraphNodeData,
-} from '@showwhy/types'
+import type { Maybe, NodeRequest, GraphNodeData } from '@showwhy/types'
+import { GraphNodeType } from '@showwhy/types'
 import { useCallback, useMemo } from 'react'
 import { useNodeProperties } from './nodeProperties'
 import type { ProjectFile } from '~types'

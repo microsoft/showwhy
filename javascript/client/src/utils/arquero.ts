@@ -8,8 +8,8 @@ import type {
 	TableContainer,
 	TableStore,
 } from '@data-wrangling-components/core'
+import type { BaseFile } from '@data-wrangling-components/utilities'
 import {
-	BaseFile,
 	guessDelimiter,
 	getTextFromFile,
 } from '@data-wrangling-components/utilities'

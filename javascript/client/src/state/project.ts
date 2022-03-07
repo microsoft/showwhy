@@ -2,13 +2,12 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import type { SetterOrUpdater, Resetter } from 'recoil'
 import {
 	atom,
-	SetterOrUpdater,
 	useRecoilValue,
 	useSetRecoilState,
 	useResetRecoilState,
-	Resetter,
 } from 'recoil'
 import { stepsList } from '../data/stepsList'
 import type { Workflow } from '~types'

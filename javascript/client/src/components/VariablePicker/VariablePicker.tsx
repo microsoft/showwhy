@@ -2,7 +2,8 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { ComboBox, IComboBoxOption } from '@fluentui/react'
+import type { IComboBoxOption } from '@fluentui/react'
+import { ComboBox } from '@fluentui/react'
 import type { Maybe } from '@showwhy/types'
 import { memo, useMemo } from 'react'
 import styled from 'styled-components'

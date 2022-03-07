@@ -3,15 +3,11 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import {
-	PrimarySpecificationConfig,
-	EstimatorType,
-	CausalModelLevel,
-} from '@showwhy/types'
+import type { PrimarySpecificationConfig } from '@showwhy/types'
+import { EstimatorType, CausalModelLevel } from '@showwhy/types'
+import type { Resetter, SetterOrUpdater } from 'recoil'
 import {
 	atom,
-	Resetter,
-	SetterOrUpdater,
 	useRecoilValue,
 	useResetRecoilState,
 	useSetRecoilState,

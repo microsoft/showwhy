@@ -2,7 +2,8 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { MessageBar, MessageBarType, IStyle } from '@fluentui/react'
+import type { IStyle } from '@fluentui/react'
+import { MessageBar, MessageBarType } from '@fluentui/react'
 import type { Handler } from '@showwhy/types'
 import { memo, useCallback } from 'react'
 import styled from 'styled-components'

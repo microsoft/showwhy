@@ -3,12 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import {
-	Setter,
-	Maybe,
-	CausalityLevel,
-	ElementDefinition,
-} from '@showwhy/types'
+import type { Setter, Maybe, ElementDefinition } from '@showwhy/types'
+import { CausalityLevel } from '@showwhy/types'
 import { useCallback } from 'react'
 
 export function useEditDefinition(

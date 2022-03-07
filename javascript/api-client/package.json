@@ -15,7 +15,7 @@
 		"@showwhy/types": "workspace:javascript/types"
 	},
 	"devDependencies": {
-		"@essex/scripts": "^20.4.5",
+		"@essex/scripts": "^20.4.6",
 		"@essex/tsconfig-base": "^1.0.2"
 	}
 }

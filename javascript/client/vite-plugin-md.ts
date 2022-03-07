@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { Plugin } from 'vite'
+import type { Plugin } from 'vite'
 
 async function tf(code, id) {
 	if (!id.endsWith('.md')) return null

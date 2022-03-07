@@ -4,10 +4,9 @@
  */
 
 import { FileCollection } from '@data-wrangling-components/utilities'
+import type { Resetter, SetterOrUpdater } from 'recoil'
 import {
 	atom,
-	Resetter,
-	SetterOrUpdater,
 	useRecoilValue,
 	useResetRecoilState,
 	useSetRecoilState,
