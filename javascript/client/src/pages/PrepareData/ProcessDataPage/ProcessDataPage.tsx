@@ -4,7 +4,8 @@
  */
 import { PrepareDataFull } from '@data-wrangling-components/react'
 import { ProgressIndicator } from '@fluentui/react'
-import { FC, memo } from 'react'
+import type { FC } from 'react'
+import { memo } from 'react'
 import styled from 'styled-components'
 import { useBusinessLogic } from './hooks'
 import { useTables } from './hooks/useTables'

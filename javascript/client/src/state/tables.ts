@@ -4,10 +4,9 @@
  */
 
 import { useCallback } from 'react'
+import type { Resetter, SetterOrUpdater } from 'recoil'
 import {
 	atom,
-	Resetter,
-	SetterOrUpdater,
 	useRecoilValue,
 	useResetRecoilState,
 	useSetRecoilState,

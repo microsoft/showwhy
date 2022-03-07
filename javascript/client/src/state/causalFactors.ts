@@ -4,10 +4,9 @@
  */
 
 import type { CausalFactor } from '@showwhy/types'
+import type { Resetter, SetterOrUpdater } from 'recoil'
 import {
 	atom,
-	Resetter,
-	SetterOrUpdater,
 	useRecoilValue,
 	useResetRecoilState,
 	useSetRecoilState,

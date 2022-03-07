@@ -2,7 +2,8 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { GraphNodeType, NodeRequest } from '@showwhy/types'
+import type { NodeRequest } from '@showwhy/types'
+import { GraphNodeType } from '@showwhy/types'
 import { buildNodes } from './buildNodes'
 
 export function buildLoadNode(url: string, fileName: string): NodeRequest {

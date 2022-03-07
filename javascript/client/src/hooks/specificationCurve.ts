@@ -3,14 +3,9 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { Dimensions } from '@essex-js-toolkit/hooks'
-import {
-	Maybe,
-	Handler,
-	NodeResponseStatus,
-	CausalityLevel,
-	Experiment,
-} from '@showwhy/types'
+import type { Dimensions } from '@essex/hooks'
+import type { Maybe, Handler, Experiment } from '@showwhy/types'
+import { NodeResponseStatus, CausalityLevel } from '@showwhy/types'
 import type { Theme } from '@thematic/core'
 import { useThematic } from '@thematic/react'
 import { useCallback, useMemo, useState } from 'react'

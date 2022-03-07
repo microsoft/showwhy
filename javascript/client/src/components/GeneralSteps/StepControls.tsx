@@ -8,7 +8,8 @@ import { memo } from 'react'
 
 import styled from 'styled-components'
 import { useGoToPage } from '~hooks'
-import { Step, StepStatus } from '~types'
+import type { Step } from '~types'
+import { StepStatus } from '~types'
 
 export const StepControls: React.FC<{
 	step?: Step

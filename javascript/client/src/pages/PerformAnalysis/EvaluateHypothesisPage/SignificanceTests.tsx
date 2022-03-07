@@ -3,13 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { isProcessingStatus } from '@showwhy/api-client'
-import {
-	Maybe,
-	Handler,
-	SignificanceTest,
-	Significance,
-	NodeResponseStatus,
-} from '@showwhy/types'
+import type { Maybe, Handler, SignificanceTest } from '@showwhy/types'
+import { Significance, NodeResponseStatus } from '@showwhy/types'
 import { memo } from 'react'
 import {
 	confidenceIntervalCalloutLine1,

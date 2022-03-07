@@ -3,7 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { ChoiceGroup, IChoiceGroupOption } from '@fluentui/react'
+import type { IChoiceGroupOption } from '@fluentui/react'
+import { ChoiceGroup } from '@fluentui/react'
 import { CausalModelLevel } from '@showwhy/types'
 import { memo } from 'react'
 

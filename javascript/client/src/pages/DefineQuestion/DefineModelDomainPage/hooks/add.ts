@@ -3,12 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import {
-	Maybe,
-	Setter,
-	CausalityLevel,
-	ElementDefinition,
-} from '@showwhy/types'
+import type { Maybe, Setter, ElementDefinition } from '@showwhy/types'
+import { CausalityLevel } from '@showwhy/types'
 import { useCallback } from 'react'
 import { withRandomId } from '~utils'
 

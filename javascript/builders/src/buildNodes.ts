@@ -2,7 +2,8 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { GraphNodeType, GraphNodeData, NodeRequest } from '@showwhy/types'
+import type { GraphNodeData, NodeRequest } from '@showwhy/types'
+import { GraphNodeType } from '@showwhy/types'
 
 interface Node {
 	type: GraphNodeType

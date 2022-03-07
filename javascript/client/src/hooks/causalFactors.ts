@@ -3,13 +3,12 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { OptionalId } from '@showwhy/types'
-import {
+import type {
+	OptionalId,
 	AlternativeModels,
 	CausalFactor,
-	BeliefDegree,
-	CausalModelLevel,
 } from '@showwhy/types'
+import { BeliefDegree, CausalModelLevel } from '@showwhy/types'
 import { useCallback, useMemo } from 'react'
 import type { SetterOrUpdater } from 'recoil'
 import { v4 } from 'uuid'

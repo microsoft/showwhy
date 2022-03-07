@@ -3,7 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { useCallback } from 'react'
-import { RecoilState, useRecoilState } from 'recoil'
+import type { RecoilState } from 'recoil'
+import { useRecoilState } from 'recoil'
 
 export type ToggleCallback = () => void
 
