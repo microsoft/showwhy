@@ -11,9 +11,9 @@ import type {
 	NodeResponseStatus,
 	OrchestratorStatusResponse,
 } from '@showwhy/types'
-import type { FetchApiInteractor } from '../FetchApiInteractor'
-import { isProcessingStatus, wait } from '../utils'
-import type { OrchestratorType } from './OrchestratorType'
+import type { FetchApiInteractor } from '../FetchApiInteractor.js'
+import { isProcessingStatus, wait } from '../utils.js'
+import type { OrchestratorType } from './OrchestratorType.js'
 
 export type OrchestratorHandler = (...args: unknown[]) => void
 export type OrchestratorOnStartHandler = (nodeResponse: NodeResponse) => void

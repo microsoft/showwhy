@@ -2,7 +2,11 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import type { NodeResponse, NodeResponseStatus, TestResults } from '../api'
+import type {
+	NodeResponse,
+	NodeResponseStatus,
+	TestResults,
+} from '../api/index.js'
 
 export interface SignificanceTest {
 	runId: string

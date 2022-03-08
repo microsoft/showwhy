@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { CausalityLevel } from '../causality'
+import type { CausalityLevel } from '../causality/index.js'
 
 export interface ElementDefinition {
 	id: string

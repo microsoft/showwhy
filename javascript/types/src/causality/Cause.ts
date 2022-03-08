@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { BeliefDegree } from './BeliefDegree'
+import type { BeliefDegree } from './BeliefDegree.js'
 
 export interface Cause {
 	causes: boolean

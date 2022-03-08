@@ -11,7 +11,7 @@ import type {
 	OrchestratorStatusResponse,
 } from '@showwhy/types'
 import { NodeResponseStatus } from '@showwhy/types'
-import { OrchestratorType } from './Orchestrator'
+import { OrchestratorType } from './Orchestrator/index.js'
 
 export class FetchApiInteractor {
 	public constructor(
