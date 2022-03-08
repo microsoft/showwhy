@@ -7,12 +7,14 @@ import type { IDropdownOption } from '@fluentui/react'
 import type { CausalFactor, Experiment, Maybe } from '@showwhy/types'
 import { useCallback } from 'react'
 import type { SetterOrUpdater } from 'recoil'
+
+import { useAddOrEditFactor, useSaveDefinition } from '~hooks'
+
 import {
+	DefinitionType,
 	useSetTargetCausalFactor,
 	useSetTargetDefinition,
-	DefinitionType,
 } from './index'
-import { useAddOrEditFactor, useSaveDefinition } from '~hooks'
 
 export function useOnSelectVariable(
 	causalFactors: CausalFactor[],

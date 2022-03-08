@@ -6,7 +6,8 @@
 import type { FileCollection } from '@data-wrangling-components/utilities'
 import { FileType, isZipFile } from '@data-wrangling-components/utilities'
 import type { Handler } from '@showwhy/types'
-import { useMemo, useCallback, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
+
 import {
 	useAcceptedFileTypes,
 	useDrop,

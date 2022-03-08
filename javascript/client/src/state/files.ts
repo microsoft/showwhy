@@ -12,8 +12,10 @@ import {
 	useSetRecoilState,
 } from 'recoil'
 import { Subject } from 'rxjs'
-import { observableEffect } from './effects/observableEffect'
+
 import type { ProjectFile } from '~types'
+
+import { observableEffect } from './effects/observableEffect'
 
 export const filesStateChanged = new Subject<void>()
 

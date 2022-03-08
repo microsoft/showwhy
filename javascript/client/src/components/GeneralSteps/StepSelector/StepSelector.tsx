@@ -8,6 +8,10 @@ import {
 } from '@essex/themed-components'
 import { memo, useCallback, useState } from 'react'
 import styled from 'styled-components'
+
+import { StepTitle } from '~components/StepTitle'
+import type { StepList, Workflow } from '~types'
+
 import { StepItem } from '../StepItem'
 import {
 	useHeaderAndParentSynchronization,
@@ -15,8 +19,6 @@ import {
 	useOnOpenParent,
 	usePanels,
 } from './hooks'
-import { StepTitle } from '~components/StepTitle'
-import type { Workflow, StepList } from '~types'
 
 export const StepSelector: React.FC<{
 	project: Workflow

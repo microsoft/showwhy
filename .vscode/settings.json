@@ -24,7 +24,8 @@
 	"python.sortImports.args": ["--profile", "black"],
 	"[python]": {
 		"editor.codeActionsOnSave": {
-			"source.organizeImports": true
+			"source.organizeImports": true,
+			"source.fixAll": true
 		}
 	}
 }

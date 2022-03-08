@@ -4,8 +4,12 @@
  */
 
 import { useBoolean } from '@fluentui/react-hooks'
-import type { FlatCausalFactor, CausalFactor } from '@showwhy/types'
+import type { CausalFactor, FlatCausalFactor } from '@showwhy/types'
 import { useCallback, useMemo, useState } from 'react'
+
+import { useCausalFactors, useSetCausalFactors } from '~state'
+import type { Item } from '~types'
+
 import { useFlatFactorsList, useSaveFactors } from './factors'
 import { useCheckbox, useComboBox, useTextField } from './inputs'
 import {
@@ -13,8 +17,6 @@ import {
 	useOnChangeDegree,
 	useOnChangeReasoning,
 } from './onChange'
-import { useCausalFactors, useSetCausalFactors } from '~state'
-import type { Item } from '~types'
 
 export function useFactorsTable(causeType: string): {
 	flatFactorsList: FlatCausalFactor[]

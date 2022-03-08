@@ -4,14 +4,15 @@
  */
 
 import type {
-	OptionalId,
 	AlternativeModels,
 	CausalFactor,
+	OptionalId,
 } from '@showwhy/types'
 import { BeliefDegree, CausalModelLevel } from '@showwhy/types'
 import { useCallback, useMemo } from 'react'
 import type { SetterOrUpdater } from 'recoil'
 import { v4 } from 'uuid'
+
 // HACK to pass the unit tests
 import { useCausalFactors, useSetCausalFactors } from '~state/causalFactors'
 import { replaceItemAtIndex } from '~utils/arrays'

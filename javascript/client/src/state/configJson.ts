@@ -10,6 +10,7 @@ import {
 	useResetRecoilState,
 	useSetRecoilState,
 } from 'recoil'
+
 import type { Workspace } from '~types'
 
 const configJsonState = atom<Partial<Workspace>>({

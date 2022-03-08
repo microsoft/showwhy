@@ -5,7 +5,7 @@
 import type { IContextualMenuProps } from '@fluentui/react'
 import { NodeResponseStatus } from '@showwhy/types'
 import { memo, useCallback, useMemo } from 'react'
-import { OptionsButton } from './OptionsButton'
+
 import {
 	useDefaultRun,
 	useDownloadResult,
@@ -14,6 +14,8 @@ import {
 } from '~hooks'
 import { Container } from '~styles'
 import { FileType } from '~types'
+
+import { OptionsButton } from './OptionsButton'
 
 export const SaveProject: React.FC = memo(function SaveProject() {
 	const saveProps = useSaveProps()

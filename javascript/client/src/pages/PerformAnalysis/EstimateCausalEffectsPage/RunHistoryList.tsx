@@ -8,9 +8,10 @@ import type { Handler, NodeResponseStatus } from '@showwhy/types'
 import { useThematic } from '@thematic/react'
 import { memo, useMemo } from 'react'
 import styled from 'styled-components'
+
 import { ErrorMessage } from '~components/ErrorMessage'
 import { RunProgressIndicator } from '~components/RunProgressIndicator'
-import { Title, Text, ContainerFlexColumn } from '~styles'
+import { ContainerFlexColumn, Text, Title } from '~styles'
 import type { RunHistory } from '~types'
 import { elapsedTime } from '~utils'
 

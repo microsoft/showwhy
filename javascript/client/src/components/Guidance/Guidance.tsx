@@ -4,8 +4,9 @@
  */
 import type { Maybe } from '@showwhy/types'
 import Markdown from 'markdown-to-jsx'
-import { memo, useState, useEffect } from 'react'
+import { memo, useEffect, useState } from 'react'
 import styled from 'styled-components'
+
 import { StepTitle } from '~components/StepTitle'
 import type { Step } from '~types'
 

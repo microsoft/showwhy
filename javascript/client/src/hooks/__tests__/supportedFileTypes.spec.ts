@@ -4,6 +4,7 @@
  */
 import { renderHook } from '@testing-library/react-hooks'
 import { RecoilRoot } from 'recoil'
+
 import { FILE_TYPES, useSupportedFileTypes } from '../supportedFileTypes'
 it('supportedFileTypes', () => {
 	const expected = FILE_TYPES

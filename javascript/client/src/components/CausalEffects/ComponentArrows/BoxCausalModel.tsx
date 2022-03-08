@@ -5,6 +5,7 @@
 import { CausalEffectSize } from '@showwhy/types'
 import { memo } from 'react'
 import styled from 'styled-components'
+
 import { Text } from '~styles'
 
 export const BoxCausalModel: React.FC<{

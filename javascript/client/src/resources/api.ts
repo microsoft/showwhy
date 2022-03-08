@@ -3,6 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { FetchApiInteractor } from '@showwhy/api-client'
+
 import { getStorageItem, SESSION_ID_KEY } from '../utils'
 import { getEnv } from './environment'
 

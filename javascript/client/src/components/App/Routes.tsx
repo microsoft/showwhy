@@ -3,7 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { lazy, memo } from 'react'
-import { Switch, Route, Redirect } from 'react-router-dom'
+import { Redirect, Route, Switch } from 'react-router-dom'
+
 import { Pages } from '~types'
 
 const UnderstandProcessPage = lazy(

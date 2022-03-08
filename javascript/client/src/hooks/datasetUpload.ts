@@ -10,13 +10,15 @@ import type {
 } from '@data-wrangling-components/utilities'
 import { FileType } from '@data-wrangling-components/utilities'
 import type { Handler, Handler1 } from '@showwhy/types'
-import type { SetStateAction, Dispatch } from 'react'
-import { useState, useCallback, useEffect } from 'react'
+import type { Dispatch, SetStateAction } from 'react'
+import { useCallback, useEffect, useState } from 'react'
+
+import type { DropFilesCount, ProjectFile } from '~types'
+import { createDefaultTable } from '~utils'
+
 import { useOnDropRejected } from './dropzone'
 import { useAddFilesToCollection } from './fileCollection'
 import { useSupportedFileTypes } from './supportedFileTypes'
-import type { DropFilesCount, ProjectFile } from '~types'
-import { createDefaultTable } from '~utils'
 
 export function useDrop(
 	onFileLoad: Handler1<ProjectFile>,

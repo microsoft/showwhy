@@ -8,9 +8,11 @@ import { ChoiceGroup } from '@fluentui/react'
 import { Hypothesis } from '@showwhy/types'
 import { memo } from 'react'
 import styled from 'styled-components'
+
+import { Container } from '~styles'
+
 import { FieldGroup } from './FieldGroup'
 import { useBusinessLogic } from './hooks'
-import { Container } from '~styles'
 
 const hypothesisOptions: IChoiceGroupOption[] = [
 	{ key: Hypothesis.Change, text: Hypothesis.Change },

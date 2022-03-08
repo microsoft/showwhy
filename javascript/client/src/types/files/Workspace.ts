@@ -4,14 +4,16 @@
  */
 import type { Specification } from '@data-wrangling-components/core'
 import type {
-	RefutationType,
 	CausalFactor,
-	Experiment,
 	Estimator,
+	Experiment,
 	PrimarySpecificationConfig,
+	RefutationType,
 } from '@showwhy/types'
-import type { DataTableFileDefinition } from './DataTableDefinition'
+
 import type { DefaultDatasetResult } from '~types'
+
+import type { DataTableFileDefinition } from './DataTableDefinition'
 
 /**
  * This contains a collection of step data and file definitions for a saveable

@@ -4,6 +4,7 @@
  */
 import { memo } from 'react'
 import styled from 'styled-components'
+
 import { InfoCallout } from '~components/Callout'
 
 export const SupportedFileTypes: React.FC<{

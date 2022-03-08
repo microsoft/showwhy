@@ -4,12 +4,13 @@
  */
 import { FontIcon, IconButton } from '@fluentui/react'
 import { useBoolean } from '@fluentui/react-hooks'
-import type { Maybe, Handler } from '@showwhy/types'
+import type { Handler, Maybe } from '@showwhy/types'
 import { memo, useCallback, useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
+
 import { ActionButtons } from '~components/ActionButtons'
 import { useDefaultTableSample } from '~hooks'
-import type { Item, TableFooter, HeaderData, TableProps } from '~types'
+import type { HeaderData, Item, TableFooter, TableProps } from '~types'
 import { sortByField } from '~utils'
 
 interface GenericHeader {

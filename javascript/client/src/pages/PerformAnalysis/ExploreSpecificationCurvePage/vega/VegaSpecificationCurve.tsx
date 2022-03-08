@@ -5,14 +5,16 @@
 import type { Maybe } from '@showwhy/types'
 import { memo, useCallback, useState } from 'react'
 import styled from 'styled-components'
-import { AnalyticDecisionsDotPlot } from './AnalyticDecisionsDotPlot'
-import { OutcomeEffectScatterplot } from './OutcomeEffectScatterplot'
+
 import type {
 	DecisionFeature,
 	Specification,
 	SpecificationCurveConfig,
 } from '~types'
 import { addOrRemoveArrayElement } from '~utils'
+
+import { AnalyticDecisionsDotPlot } from './AnalyticDecisionsDotPlot'
+import { OutcomeEffectScatterplot } from './OutcomeEffectScatterplot'
 
 export const VegaSpecificationCurve: React.FC<{
 	data: Specification[]

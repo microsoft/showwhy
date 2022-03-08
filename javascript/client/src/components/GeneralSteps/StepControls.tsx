@@ -3,10 +3,10 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { DefaultButton, Icon, PrimaryButton } from '@fluentui/react'
-import type { Maybe, Handler } from '@showwhy/types'
+import type { Handler, Maybe } from '@showwhy/types'
 import { memo } from 'react'
-
 import styled from 'styled-components'
+
 import { useGoToPage } from '~hooks'
 import type { Step } from '~types'
 import { StepStatus } from '~types'

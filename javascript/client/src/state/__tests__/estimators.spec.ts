@@ -5,8 +5,9 @@
 import { renderHook } from '@testing-library/react-hooks'
 import { useEffect } from 'react'
 import { RecoilRoot, snapshot_UNSTABLE } from 'recoil'
+
 import { EXPOSURE_ESTIMATORS } from '../../hooks/estimators'
-import { estimatorState, useEstimators, useAddEstimator } from '../estimators'
+import { estimatorState, useAddEstimator, useEstimators } from '../estimators'
 const [estimator] = EXPOSURE_ESTIMATORS
 
 describe('estimatorState', () => {

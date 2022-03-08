@@ -3,17 +3,19 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import type { Dimensions } from '@essex/hooks'
-import type { Maybe, Experiment } from '@showwhy/types'
+import type { Experiment, Maybe } from '@showwhy/types'
 import { RefutationType } from '@showwhy/types'
 import { memo } from 'react'
-import { OutcomeEffectScatterplot } from '../ExploreSpecificationCurvePage/vega'
-import { Paragraph, Value, Container, Bold, Text } from '~styles'
+
+import { Bold, Container, Paragraph, Text, Value } from '~styles'
 import type {
 	DecisionFeature,
 	Specification,
 	SpecificationCurveConfig,
 } from '~types'
 import { median as calcMedian } from '~utils'
+
+import { OutcomeEffectScatterplot } from '../ExploreSpecificationCurvePage/vega'
 
 export const ResultsGraph: React.FC<{
 	specificationData: Specification[]

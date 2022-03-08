@@ -4,13 +4,14 @@
  */
 
 import type {
-	Setter,
 	CausalFactor,
 	Cause,
 	ExposureAndOutcomeCauses,
 	FlatCausalFactor,
+	Setter,
 } from '@showwhy/types'
 import { useCallback, useMemo } from 'react'
+
 import { replaceItemAtIndex } from '~utils'
 
 export function useFlatFactorsList(

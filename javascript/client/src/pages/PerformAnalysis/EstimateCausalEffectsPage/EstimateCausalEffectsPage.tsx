@@ -6,11 +6,13 @@ import { PrimaryButton } from '@fluentui/react'
 import { memo } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+
+import { Container, ContainerFlexRow, ContainerTextCenter } from '~styles'
+import { Pages } from '~types'
+
+import { useBusinessLogic } from './hooks'
 import { RunHistoryList } from './RunHistoryList'
 import { SpecificationsList } from './SpecificationsList'
-import { useBusinessLogic } from './hooks'
-import { ContainerFlexRow, ContainerTextCenter, Container } from '~styles'
-import { Pages } from '~types'
 
 export const EstimateCausalEffects: React.FC = memo(
 	function EstimateCausalEffects() {

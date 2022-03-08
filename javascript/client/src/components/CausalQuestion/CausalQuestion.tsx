@@ -4,6 +4,7 @@
  */
 import type { Experiment } from '@showwhy/types'
 import { memo } from 'react'
+
 import { Title } from '~styles'
 
 export const CausalQuestion: React.FC<{

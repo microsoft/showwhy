@@ -5,9 +5,11 @@
 import { DefaultButton } from '@fluentui/react'
 import { memo } from 'react'
 import styled from 'styled-components'
+
+import { Container } from '~styles'
+
 import { FactorsTable } from './FactorsTable'
 import { useBusinessLogic } from './hooks'
-import { Container } from '~styles'
 
 export const DefineFactorsPage: React.FC = memo(function DefineFactorsPage() {
 	const { pageName, causeType, tableHeader, goToConsiderCausalFactors } =

@@ -7,7 +7,8 @@ import type { Experiment } from '@showwhy/types'
 import { renderHook } from '@testing-library/react-hooks'
 import { useEffect } from 'react'
 import { RecoilRoot } from 'recoil'
-import { useSetExperiment, useExperiment } from '../experiment'
+
+import { useExperiment, useSetExperiment } from '../experiment'
 
 describe('useExperiment', () => {
 	it('should return empty object as default value', () => {

@@ -5,10 +5,11 @@
 import type { Maybe } from '@showwhy/types'
 import { useCallback, useMemo } from 'react'
 import { useLocation } from 'react-router-dom'
+
 // HACK to pass unit tests
 import { useSelectedProject } from '~state/project'
 import { useStepStatus } from '~state/stepStatus'
-import type { Workflow, Step } from '~types'
+import type { Step, Workflow } from '~types'
 import { StepStatus } from '~types'
 
 export function useFindStepsByPathname(pathNames: string[]): Step[] {

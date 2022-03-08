@@ -3,9 +3,9 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import type {
-	Maybe,
-	AlternativeModelSpec,
 	AlternativeModels,
+	AlternativeModelSpec,
+	Maybe,
 } from '@showwhy/types'
 
 export function buildModelLevel(

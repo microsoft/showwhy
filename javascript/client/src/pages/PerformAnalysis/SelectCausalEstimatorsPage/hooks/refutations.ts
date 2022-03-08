@@ -6,6 +6,7 @@
 import type { RefutationChoice } from '@showwhy/types'
 import { RefutationType } from '@showwhy/types'
 import { useMemo } from 'react'
+
 import { useSetFullRefutation, useSetQuickRefutation } from '~hooks'
 import { useRefutationType } from '~state'
 

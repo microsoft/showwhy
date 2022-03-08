@@ -5,6 +5,7 @@
 import type { Setter } from '@showwhy/types'
 import { useCallback, useEffect, useMemo } from 'react'
 import { useLocation } from 'react-router-dom'
+
 import type { StepList, Workflow } from '~types'
 
 export function usePanels(project: Workflow): StepList[] {

@@ -4,6 +4,7 @@
  */
 import { RefutationType } from '@showwhy/types'
 import { memo } from 'react'
+
 import { Text, Value } from '~styles'
 
 export const AnalysisSpecifications: React.FC<{

@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { ThematicFluentProvider, loadFluentTheme } from '@thematic/fluent'
+import { loadFluentTheme, ThematicFluentProvider } from '@thematic/fluent'
 import { ApplicationStyles, useThematic } from '@thematic/react'
 import { memo, useMemo } from 'react'
 import { createGlobalStyle, ThemeProvider } from 'styled-components'

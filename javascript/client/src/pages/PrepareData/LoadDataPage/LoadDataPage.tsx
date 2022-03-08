@@ -2,11 +2,10 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { DefaultButton, Toggle, MessageBarType } from '@fluentui/react'
+import { DefaultButton, MessageBarType, Toggle } from '@fluentui/react'
 import { memo } from 'react'
 import styled from 'styled-components'
-import { SupportedFileTypes } from './SupportedFileTypes'
-import { useBusinessLogic } from './hooks'
+
 import { DatasetsList } from '~components/DatasetsList'
 import { DelimiterDropdown } from '~components/DelimiterDropdown'
 import { DialogConfirm } from '~components/DialogConfirm'
@@ -14,6 +13,9 @@ import { DropzoneContainer } from '~components/DropzoneContainer'
 import { MessageContainer } from '~components/MessageContainer'
 import { SelectedTableDisplay } from '~components/Tables/SelectedTableDisplay'
 import { ContainerFlexRow } from '~styles'
+
+import { useBusinessLogic } from './hooks'
+import { SupportedFileTypes } from './SupportedFileTypes'
 
 export const LoadDataPage: React.FC = memo(function LoadDataPage() {
 	const {

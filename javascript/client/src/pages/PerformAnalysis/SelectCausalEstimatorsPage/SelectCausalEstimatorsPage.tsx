@@ -4,9 +4,10 @@
  */
 import { memo } from 'react'
 import styled from 'styled-components'
+
 import { EstimatorCard } from './EstimatorCard'
-import { RefutationTests } from './RefutationTests'
 import { useBusinessLogic } from './hooks'
+import { RefutationTests } from './RefutationTests'
 
 export const SelectCausalEstimatorsPage: React.FC = memo(
 	function SelectCausalEstimatorsPage() {

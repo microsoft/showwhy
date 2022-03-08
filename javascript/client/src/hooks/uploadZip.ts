@@ -5,17 +5,19 @@
 
 import { useHandleOnUploadClick } from '@data-wrangling-components/react'
 import type {
-	FileCollection,
 	BaseFile,
+	FileCollection,
 } from '@data-wrangling-components/utilities'
 import { FileType } from '@data-wrangling-components/utilities'
 import type { IContextualMenuItem } from '@fluentui/react'
 import type { AsyncHandler1 } from '@showwhy/types'
-import { useMemo, useCallback } from 'react'
-import { useLoadProject } from './loadProject'
+import { useCallback, useMemo } from 'react'
+
 import type { FileDefinition } from '~types'
 import { ProjectSource } from '~types'
 import { groupFilesByType, isZipUrl } from '~utils'
+
+import { useLoadProject } from './loadProject'
 
 const uploadZipButtonId = 'uploadZip'
 const acceptedFileTypes = [`.${FileType.zip}`]

@@ -4,9 +4,11 @@
  */
 import type { IContextualMenuProps } from '@fluentui/react'
 import { memo, useCallback, useMemo } from 'react'
-import { OptionsButton } from './OptionsButton'
+
 import { Container } from '~styles'
 import { StepStatus } from '~types'
+
+import { OptionsButton } from './OptionsButton'
 
 type GetStepUrlsHandler = (urls?: string[], exclude?: any) => string[]
 type SetAllStepStatusHandler = (urls: string[], status: StepStatus) => void

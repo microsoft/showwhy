@@ -4,6 +4,7 @@
  */
 import { memo } from 'react'
 import { HashRouter as Router } from 'react-router-dom'
+
 import { DataContext } from './DataContext'
 import { Layout } from './Layout'
 import { Routes } from './Routes'

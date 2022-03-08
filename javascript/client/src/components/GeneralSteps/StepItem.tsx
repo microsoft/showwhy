@@ -6,9 +6,11 @@ import type { Maybe } from '@showwhy/types'
 import { memo, useCallback } from 'react'
 import { NavLink } from 'react-router-dom'
 import styled from 'styled-components'
-import { StepStatusDetail } from '.'
+
 import { useStepStatus } from '~state'
 import type { Step } from '~types'
+
+import { StepStatusDetail } from '.'
 
 export const StepItem: React.FC<{
 	stepDetail: Step

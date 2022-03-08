@@ -9,6 +9,7 @@ import {
 import type { FC } from 'react'
 import { memo } from 'react'
 import styled from 'styled-components'
+
 import { useBusinessLogic } from './hooks'
 
 export const ConfirmDataPage: FC = memo(function ConfirmDataPage() {

@@ -3,12 +3,12 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import type { Maybe, NodeResponse } from '@showwhy/types'
-import type { SetterOrUpdater, Resetter } from 'recoil'
+import type { Resetter, SetterOrUpdater } from 'recoil'
 import {
 	atom,
 	useRecoilValue,
-	useSetRecoilState,
 	useResetRecoilState,
+	useSetRecoilState,
 } from 'recoil'
 
 export const nodeResponseState = atom<Maybe<NodeResponse>>({

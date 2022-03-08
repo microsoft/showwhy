@@ -3,14 +3,16 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { v4 as uuidv4 } from 'uuid'
-import {
-	whyLinks,
-	whoLinks,
-	whenLinks,
-	howLinks,
-} from '../locales/en-US/understand-process'
+
 import type { StepList } from '~types'
-import { PageType, Pages, StepStatus } from '~types'
+import { Pages, PageType, StepStatus } from '~types'
+
+import {
+	howLinks,
+	whenLinks,
+	whoLinks,
+	whyLinks,
+} from '../locales/en-US/understand-process'
 
 export const stepsList = [
 	{

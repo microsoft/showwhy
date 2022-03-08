@@ -5,17 +5,18 @@
 
 import type {
 	AlternativeModels,
-	Experiment,
 	Estimator,
+	Experiment,
 	RefutationType,
 } from '@showwhy/types'
 import { CausalModelLevel } from '@showwhy/types'
 import { useMemo } from 'react'
+
 import { useAlternativeModels } from '~hooks'
 import {
 	useConfidenceInterval,
-	useExperiment,
 	useEstimators,
+	useExperiment,
 	useRefutationType,
 } from '~state'
 

@@ -2,20 +2,22 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { NodeResponseStatus, CausalEffectSize } from '@showwhy/types'
+import { CausalEffectSize, NodeResponseStatus } from '@showwhy/types'
 import { memo } from 'react'
-import { AnalysisSpecifications } from './AnalysisSpecifications'
-import { CausalDetails } from './CausalDetails'
-import { PageButtons } from './PageButtons'
-import { ResultsGraph } from './ResultsGraph'
-import { SignificanceTests } from './SignificanceTests'
-import { useBusinessLogic } from './hooks'
+
 import { CausalEffects } from '~components/CausalEffects'
 import { CausalQuestion } from '~components/CausalQuestion'
 import { EmptyDataPageWarning } from '~components/EmptyDataPageWarning'
 import { useSpecificationCurve } from '~hooks'
 import { Container, ContainerFlexColumn } from '~styles'
 import { Pages } from '~types'
+
+import { AnalysisSpecifications } from './AnalysisSpecifications'
+import { CausalDetails } from './CausalDetails'
+import { useBusinessLogic } from './hooks'
+import { PageButtons } from './PageButtons'
+import { ResultsGraph } from './ResultsGraph'
+import { SignificanceTests } from './SignificanceTests'
 
 export const EvaluateHypothesisPage: React.FC = memo(
 	function EvaluateHypothesisPage() {

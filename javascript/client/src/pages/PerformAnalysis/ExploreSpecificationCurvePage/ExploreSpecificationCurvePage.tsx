@@ -4,15 +4,17 @@
  */
 import { memo } from 'react'
 import styled from 'styled-components'
-import { EstimatedEffectOptions } from './EstimatedEffectOptions'
-import { SpecificationDescription } from './SpecificationDescription'
-import { VegaSpecificationCurve } from './vega/VegaSpecificationCurve'
+
 import { EmptyDataPageWarning } from '~components/EmptyDataPageWarning'
 import { ErrorMessage } from '~components/ErrorMessage'
 import { RunProgressIndicator } from '~components/RunProgressIndicator'
 import { useRefutationOptions, useSpecificationCurve } from '~hooks'
-import { Title, ContainerFlexColumn, ContainerFlexRow } from '~styles'
+import { ContainerFlexColumn, ContainerFlexRow, Title } from '~styles'
 import { Pages } from '~types'
+
+import { EstimatedEffectOptions } from './EstimatedEffectOptions'
+import { SpecificationDescription } from './SpecificationDescription'
+import { VegaSpecificationCurve } from './vega/VegaSpecificationCurve'
 
 export const ExploreSpecificationCurvePage: React.FC = memo(
 	function SpecificationCurve() {

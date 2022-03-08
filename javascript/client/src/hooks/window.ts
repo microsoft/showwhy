@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import type { Dimensions } from '@essex/hooks'
-import { useState, useEffect, useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 export function useWindowDimensions(): Dimensions {
 	const [windowDimensions, setWindowDimensions] = useState({

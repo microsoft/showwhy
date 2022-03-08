@@ -3,24 +3,25 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import type { Estimator } from '@showwhy/types'
-import { EstimatorType, EstimatorGroup } from '@showwhy/types'
+import { EstimatorGroup, EstimatorType } from '@showwhy/types'
 import { renderHook } from '@testing-library/react-hooks'
 import { RecoilRoot } from 'recoil'
+
 import {
-	ESTIMATORS_SHORT_DESCRIPTION,
-	useEstimatorShortDescription,
-	useExposureEstimatorsList,
-	EXPOSURE_ESTIMATORS,
-	useOutcomeEstimatorsList,
-	OUTCOME_ESTIMATORS,
-	useEstimatorsList,
 	ESTIMATORS,
-	useEstimatorHelpText,
 	ESTIMATORS_LEARN_MORE_INFO,
+	ESTIMATORS_SHORT_DESCRIPTION,
+	EXPOSURE_ESTIMATORS,
+	OUTCOME_ESTIMATORS,
+	useEstimatorHelpText,
+	useEstimatorShortDescription,
+	useEstimatorsList,
+	useExposureAssignedEstimators,
+	useExposureEstimatorsList,
 	//useForestDoublyRobustLearner,
 	useLinearDoublyRobustLearner,
-	useExposureAssignedEstimators,
 	useOutcomeBasedEstimators,
+	useOutcomeEstimatorsList,
 } from '../estimators'
 
 describe('estimatorsHooks', () => {

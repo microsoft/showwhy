@@ -4,6 +4,7 @@
  */
 
 import { renderHook } from '@testing-library/react-hooks'
+
 import * as win from '../window'
 
 describe('windowHook', () => {

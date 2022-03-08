@@ -3,7 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import type { ElementDefinition } from '@showwhy/types'
-import type { Spec, PopulationSpec } from './types'
+
+import type { PopulationSpec, Spec } from './types'
 
 export function buildSpecs(
 	dataframeName: string,

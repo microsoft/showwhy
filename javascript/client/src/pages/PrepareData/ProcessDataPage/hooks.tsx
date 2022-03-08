@@ -7,6 +7,15 @@ import type { Step } from '@data-wrangling-components/core'
 import type { IDetailsColumnProps, IRenderFunction } from '@fluentui/react'
 import type { CausalFactor, ElementDefinition } from '@showwhy/types'
 import { useCallback, useMemo } from 'react'
+
+import { useAllVariables } from '~hooks'
+import {
+	useCausalFactors,
+	useSetTablesPrepSpecification,
+	useTablesPrepSpecification,
+} from '~state'
+import { useExperiment, useSetExperiment } from '~state/experiment'
+
 import {
 	useCommandBar,
 	useDefinitionDropdownOptions,
@@ -14,13 +23,6 @@ import {
 } from './hooks/index'
 import { useOnSelectVariable } from './hooks/useOnSelectVariable'
 import { useRenderDropdown } from './hooks/useRenderDropdownOption'
-import { useAllVariables } from '~hooks'
-import {
-	useTablesPrepSpecification,
-	useSetTablesPrepSpecification,
-	useCausalFactors,
-} from '~state'
-import { useExperiment, useSetExperiment } from '~state/experiment'
 
 export function useBusinessLogic(): {
 	steps?: Step[]

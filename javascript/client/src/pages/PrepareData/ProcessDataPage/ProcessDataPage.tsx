@@ -7,9 +7,11 @@ import { ProgressIndicator } from '@fluentui/react'
 import type { FC } from 'react'
 import { memo } from 'react'
 import styled from 'styled-components'
+
+import { percentage } from '~utils/stats'
+
 import { useBusinessLogic } from './hooks'
 import { useTables } from './hooks/useTables'
-import { percentage } from '~utils/stats'
 
 export const ProcessDataPage: FC = memo(function ProcessDataPage() {
 	const tables = useTables()

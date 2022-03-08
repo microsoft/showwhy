@@ -6,23 +6,23 @@
 import { OrchestratorType } from '@showwhy/api-client'
 import { buildSignificanceTestsNode } from '@showwhy/builders'
 import type {
-	Maybe,
-	Handler,
 	AlternativeModels,
 	Experiment,
-	SignificanceTest,
+	Handler,
+	Maybe,
 	RefutationType,
+	SignificanceTest,
 } from '@showwhy/types'
 import { NodeResponseStatus } from '@showwhy/types'
 import { useCallback, useMemo, useState } from 'react'
-import { useLoadSpecificationData } from '../ExploreSpecificationCurvePage/hooks'
+
 import {
 	useAlternativeModels,
-	useDefaultRun,
 	useCausalEffects,
+	useDefaultRun,
 	useRefutationLength,
-	useSpecificationCurve,
 	useRunConfidenceInterval,
+	useSpecificationCurve,
 } from '~hooks'
 import {
 	useDefaultDatasetResult,
@@ -33,6 +33,8 @@ import {
 	useSpecificationCurveConfig,
 } from '~state'
 import type { DefaultDatasetResult, RunHistory, Specification } from '~types'
+
+import { useLoadSpecificationData } from '../ExploreSpecificationCurvePage/hooks'
 
 export function useBusinessLogic(): {
 	alternativeModels: AlternativeModels
