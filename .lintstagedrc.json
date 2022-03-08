@@ -1,7 +1,6 @@
 {
 	"*.{json,md}": ["essex prettify --staged"],
 	"javascript/**/*.*.{js,jsx,cjs,mjs,ts,tsx,cts,mts}": [
-		"essex prettify --staged",
 		"essex lint --fix --staged"
 	],
 	"python/showwhy-backend/**/*": [
