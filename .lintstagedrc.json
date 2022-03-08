@@ -1,4 +1,12 @@
 {
-	"*": ["essex prettify --staged"],
-	"*.{js,jsx,ts,tsx}": ["essex lint --fix --staged"]
+	"*.{json,md}": ["essex prettify --staged"],
+	"javascript/**/*.*.{js,jsx,cjs,mjs,ts,tsx,cts,mts}": [
+		"essex lint --fix --staged"
+	],
+	"python/showwhy-backend/**/*": [
+		"cd python/showwhy-backend && poetry run pre-commit"
+	],
+	"python/showwhy-interface/**/*": [
+		"cd python/showwhy-interface && poetry run pre-commit"
+	]
 }
