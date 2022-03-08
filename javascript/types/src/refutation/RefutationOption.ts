@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { RefutationTestMethod } from '../refutation'
+import type { RefutationTestMethod } from './RefutationTestMethod.js'
 
 export interface RefutationOption {
 	method_name: RefutationTestMethod

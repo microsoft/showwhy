@@ -2,5 +2,5 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-export * from './FilterObject'
-export * from './FilterType'
+export * from './FilterObject.js'
+export * from './FilterType.js'
