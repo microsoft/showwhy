@@ -1,4 +1,4 @@
-from showwhy_backend import __version__
+from showwhy_inference import __version__
 
 
 def test_version():
