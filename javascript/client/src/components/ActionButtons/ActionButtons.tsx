@@ -7,6 +7,7 @@ import { IconButton } from '@fluentui/react'
 import type { Handler } from '@showwhy/types'
 import { memo, useMemo } from 'react'
 import styled from 'styled-components'
+
 import { InfoCallout } from '~components/Callout'
 import { Text } from '~styles'
 

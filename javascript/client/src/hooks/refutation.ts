@@ -5,11 +5,12 @@
 
 import type { Handler, RefutationOption } from '@showwhy/types'
 import {
+	RefutationResult,
 	RefutationTestMethod,
 	RefutationType,
-	RefutationResult,
 } from '@showwhy/types'
 import { useCallback, useMemo } from 'react'
+
 import { useSetRefutationType } from '~state'
 import type { Specification } from '~types'
 

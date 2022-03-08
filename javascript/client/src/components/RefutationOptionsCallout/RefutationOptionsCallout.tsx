@@ -4,6 +4,7 @@
  */
 import type { Maybe, RefutationOption } from '@showwhy/types'
 import { memo } from 'react'
+
 import { LinkCallout } from '~components/Callout'
 import { Text } from '~styles'
 

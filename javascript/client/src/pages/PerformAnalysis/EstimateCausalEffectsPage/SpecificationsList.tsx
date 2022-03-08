@@ -2,10 +2,11 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import type { Experiment, Estimator, RefutationOption } from '@showwhy/types'
+import type { Estimator, Experiment, RefutationOption } from '@showwhy/types'
 import { memo } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+
 import { RefutationOptionsCallout } from '~components/RefutationOptionsCallout'
 import { Bold, Container, Text, Title } from '~styles'
 import { pluralize } from '~utils'

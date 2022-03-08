@@ -6,6 +6,7 @@
 import type { Handler } from '@showwhy/types'
 import { upperFirst } from 'lodash'
 import { useMemo } from 'react'
+
 import { useGoToPage, usePageType } from '~hooks'
 import { Pages } from '~types'
 

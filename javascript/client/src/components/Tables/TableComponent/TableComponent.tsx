@@ -4,17 +4,19 @@
  */
 import type { IComboBoxOption } from '@fluentui/react'
 import type {
-	Handler1,
-	Handler,
+	CausalFactor,
 	ElementDefinition,
 	FlatCausalFactor,
-	CausalFactor,
+	Handler,
+	Handler1,
 } from '@showwhy/types'
 import { memo } from 'react'
 import styled from 'styled-components'
-import { useTableComponent } from './hooks'
+
 import { GenericTableComponent } from '~components/Tables/GenericTableComponent'
-import type { PageType, HeaderData, Item } from '~types'
+import type { HeaderData, Item, PageType } from '~types'
+
+import { useTableComponent } from './hooks'
 
 export const TableComponent: React.FC<{
 	headers: HeaderData[]

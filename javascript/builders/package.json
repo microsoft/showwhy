@@ -15,7 +15,7 @@
 		"@showwhy/types": "workspace:^"
 	},
 	"devDependencies": {
-		"@essex/scripts": "^20.4.6",
+		"@essex/scripts": "^20.4.7",
 		"@essex/tsconfig-base": "^1.0.2",
 		"@types/react": "^17.0.39"
 	}

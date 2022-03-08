@@ -4,26 +4,26 @@
  */
 
 import type { Dimensions } from '@essex/hooks'
-import type { Maybe, Handler, Experiment } from '@showwhy/types'
-import { NodeResponseStatus, CausalityLevel } from '@showwhy/types'
+import type { Experiment, Handler, Maybe } from '@showwhy/types'
+import { CausalityLevel, NodeResponseStatus } from '@showwhy/types'
 import type { Theme } from '@thematic/core'
 import { useThematic } from '@thematic/react'
 import { useCallback, useMemo, useState } from 'react'
-import { useLoadSpecificationData } from '../pages/PerformAnalysis/ExploreSpecificationCurvePage/hooks'
+
 import {
 	useDefaultRun,
-	useOnMouseOver,
-	useWakeLock,
 	useFailedRefutationIds,
+	useOnMouseOver,
 	useVegaWindowDimensions,
+	useWakeLock,
 } from '~hooks'
 import {
+	useExperiment,
 	useHoverState,
 	useRunHistory,
-	useSetSpecificationCurveConfig,
 	useSetSignificanceTests,
+	useSetSpecificationCurveConfig,
 	useSpecificationCurveConfig,
-	useExperiment,
 } from '~state'
 import type {
 	DecisionFeature,
@@ -31,6 +31,8 @@ import type {
 	Specification,
 	SpecificationCurveConfig,
 } from '~types'
+
+import { useLoadSpecificationData } from '../pages/PerformAnalysis/ExploreSpecificationCurvePage/hooks'
 
 export function useSpecificationCurve(): {
 	activeProcessing: Maybe<RunHistory>

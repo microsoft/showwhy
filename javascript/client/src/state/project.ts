@@ -2,15 +2,17 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import type { SetterOrUpdater, Resetter } from 'recoil'
+import type { Resetter, SetterOrUpdater } from 'recoil'
 import {
 	atom,
 	useRecoilValue,
-	useSetRecoilState,
 	useResetRecoilState,
+	useSetRecoilState,
 } from 'recoil'
-import { stepsList } from '../data/stepsList'
+
 import type { Workflow } from '~types'
+
+import { stepsList } from '../data/stepsList'
 
 export const selectedProject = atom<Workflow>({
 	key: 'hovered-node',

@@ -4,10 +4,11 @@
  */
 import { ArqueroTableHeader } from '@data-wrangling-components/react'
 import { memo } from 'react'
-
 import styled from 'styled-components'
-import { ArqueroDetailsTable } from '../ArqueroDetailsTable'
+
 import type { ProjectFile } from '~types'
+
+import { ArqueroDetailsTable } from '../ArqueroDetailsTable'
 
 export const SelectedTableDisplay: React.FC<{
 	selectedFile?: ProjectFile

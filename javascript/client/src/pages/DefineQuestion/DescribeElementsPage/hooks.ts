@@ -4,8 +4,9 @@
  */
 
 import type { IChoiceGroupOption } from '@fluentui/react'
-import type { Maybe, Hypothesis, Experiment } from '@showwhy/types'
+import type { Experiment, Hypothesis, Maybe } from '@showwhy/types'
 import { useCallback } from 'react'
+
 import { useExperiment, useSetExperiment } from '~state'
 
 export function useBusinessLogic(): {

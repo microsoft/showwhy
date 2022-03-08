@@ -5,6 +5,7 @@
 import type { Maybe } from '@showwhy/types'
 import { memo } from 'react'
 import { Link } from 'react-router-dom'
+
 import { ContainerTextCenter, Text } from '~styles'
 import type { Pages } from '~types'
 

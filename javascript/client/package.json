@@ -74,8 +74,8 @@
 		"vega": "5.15.0"
 	},
 	"devDependencies": {
-		"@essex/jest-config": "^21.0.4",
-		"@essex/scripts": "^20.4.6",
+		"@essex/jest-config": "^21.0.5",
+		"@essex/scripts": "^20.4.7",
 		"@essex/tsconfig-base": "^1.0.2",
 		"@essex/vite-config": "^19.0.4",
 		"@jest/globals": "^27.5.1",

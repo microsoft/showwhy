@@ -3,8 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { DefaultButton, PrimaryButton } from '@fluentui/react'
-import { Dialog, DialogType, DialogFooter } from '@fluentui/react/lib/Dialog'
-import type { Maybe, Handler } from '@showwhy/types'
+import { Dialog, DialogFooter, DialogType } from '@fluentui/react/lib/Dialog'
+import type { Handler, Maybe } from '@showwhy/types'
 import { memo, useMemo } from 'react'
 
 export const DialogConfirm: React.FC<{

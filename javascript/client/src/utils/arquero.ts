@@ -10,11 +10,12 @@ import type {
 } from '@data-wrangling-components/core'
 import type { BaseFile } from '@data-wrangling-components/utilities'
 import {
-	guessDelimiter,
 	getTextFromFile,
+	guessDelimiter,
 } from '@data-wrangling-components/utilities'
-import { fromCSV, all, op } from 'arquero'
+import { all, fromCSV, op } from 'arquero'
 import type ColumnTable from 'arquero/dist/types/table/column-table'
+
 import type { DataTableFileDefinition, ProjectFile } from '~types'
 import { isZipUrl } from '~utils'
 /**

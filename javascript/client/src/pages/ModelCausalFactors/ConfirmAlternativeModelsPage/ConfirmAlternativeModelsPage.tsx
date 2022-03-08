@@ -7,11 +7,12 @@ import type { IChoiceGroupOption } from '@fluentui/react'
 import { ChoiceGroup } from '@fluentui/react'
 import { CausalModelLevel } from '@showwhy/types'
 import { memo } from 'react'
-
 import styled from 'styled-components'
-import { useBusinessLogic } from './hooks'
+
 import { CausalEffects } from '~components/CausalEffects'
 import { Container } from '~styles'
+
+import { useBusinessLogic } from './hooks'
 
 const causalModelOptions: IChoiceGroupOption[] = [
 	{

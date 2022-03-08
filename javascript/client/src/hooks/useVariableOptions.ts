@@ -4,6 +4,7 @@
  */
 import type { IComboBoxOption } from '@fluentui/react'
 import { useMemo } from 'react'
+
 import { useOutputTablePrep } from '~state'
 
 export function useVariableOptions(): IComboBoxOption[] {

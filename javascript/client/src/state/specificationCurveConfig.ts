@@ -11,6 +11,7 @@ import {
 	useResetRecoilState,
 	useSetRecoilState,
 } from 'recoil'
+
 import type { SpecificationCurveConfig } from '~types'
 
 export const defaultConfig = {

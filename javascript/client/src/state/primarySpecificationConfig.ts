@@ -4,7 +4,7 @@
  */
 
 import type { PrimarySpecificationConfig } from '@showwhy/types'
-import { EstimatorType, CausalModelLevel } from '@showwhy/types'
+import { CausalModelLevel, EstimatorType } from '@showwhy/types'
 import type { Resetter, SetterOrUpdater } from 'recoil'
 import {
 	atom,

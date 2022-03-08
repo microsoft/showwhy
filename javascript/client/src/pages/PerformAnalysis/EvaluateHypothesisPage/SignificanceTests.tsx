@@ -3,16 +3,18 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { isProcessingStatus } from '@showwhy/api-client'
-import type { Maybe, Handler, SignificanceTest } from '@showwhy/types'
-import { Significance, NodeResponseStatus } from '@showwhy/types'
+import type { Handler, Maybe, SignificanceTest } from '@showwhy/types'
+import { NodeResponseStatus, Significance } from '@showwhy/types'
 import { memo } from 'react'
+
+import { LinkCallout } from '~components/Callout'
+import { ProgressBar } from '~components/ProgressBar'
+import { Paragraph, Value } from '~styles'
+
 import {
 	confidenceIntervalCalloutLine1,
 	confidenceIntervalCalloutLine2,
 } from '../../../locales/en-US/perform-analysis'
-import { LinkCallout } from '~components/Callout'
-import { ProgressBar } from '~components/ProgressBar'
-import { Paragraph, Value } from '~styles'
 
 export const SignificanceTests: React.FC<{
 	significanceTestsResult: Maybe<SignificanceTest>

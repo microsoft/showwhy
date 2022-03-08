@@ -5,11 +5,17 @@
 
 import type { Handler } from '@showwhy/types'
 import { useCallback } from 'react'
+
 import {
 	useResetCausalFactors,
-	useResetExperiment,
+	useResetConfidenceInterval,
+	useResetConfigJson,
+	useResetDefaultDatasetResult,
 	useResetEstimators,
+	useResetExperiment,
+	useResetFileCollection,
 	useResetHoverState,
+	useResetNodeResponse,
 	useResetOriginalTables,
 	useResetOutputTablePrep,
 	useResetPrimarySpecificationConfig,
@@ -17,16 +23,11 @@ import {
 	useResetRefutationType,
 	useResetRunHistory,
 	useResetSelectedFile,
+	useResetSelectedProject,
+	useResetSpecCount,
 	useResetSpecificationCurveConfig,
 	useResetSubjectIdentifier,
 	useResetTablesPrepSpecification,
-	useResetConfigJson,
-	useResetConfidenceInterval,
-	useResetDefaultDatasetResult,
-	useResetFileCollection,
-	useResetNodeResponse,
-	useResetSelectedProject,
-	useResetSpecCount,
 } from '~state'
 
 export function useResetProject(): Handler {

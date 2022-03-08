@@ -4,8 +4,10 @@
  */
 import { memo } from 'react'
 import styled from 'styled-components'
-import { useCurrentStep } from '../../hooks'
+
 import { Container, ContainerFlexRow, Text, Title } from '~styles'
+
+import { useCurrentStep } from '../../hooks'
 
 export const UnderstandProcessPage: React.FC = memo(
 	function UnderstandProcessPage() {

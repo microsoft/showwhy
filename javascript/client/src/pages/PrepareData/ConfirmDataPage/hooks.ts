@@ -3,11 +3,12 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { Maybe, CausalFactor, ElementDefinition } from '@showwhy/types'
+import type { CausalFactor, ElementDefinition, Maybe } from '@showwhy/types'
 import type ColumnTable from 'arquero/dist/types/table/column-table'
 import { useMemo } from 'react'
+
 import { useAllVariables } from '~hooks'
-import { useOutputTablePrep, useCausalFactors, useExperiment } from '~state'
+import { useCausalFactors, useExperiment, useOutputTablePrep } from '~state'
 
 export function useBusinessLogic(): { output: Maybe<ColumnTable> } {
 	const outputTablePrep = useOutputTablePrep()

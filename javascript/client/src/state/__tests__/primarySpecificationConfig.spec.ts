@@ -3,12 +3,13 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import type { PrimarySpecificationConfig } from '@showwhy/types'
-import { EstimatorType, CausalModelLevel } from '@showwhy/types'
+import { CausalModelLevel, EstimatorType } from '@showwhy/types'
 import { renderHook } from '@testing-library/react-hooks'
 import { RecoilRoot, snapshot_UNSTABLE } from 'recoil'
+
 import {
-	usePrimarySpecificationConfig,
 	primarySpecificationConfigState,
+	usePrimarySpecificationConfig,
 } from '../primarySpecificationConfig'
 
 describe('primarySpecificationConfig', () => {

@@ -5,12 +5,13 @@
 import { renderHook } from '@testing-library/react-hooks'
 import { useEffect } from 'react'
 import { RecoilRoot, snapshot_UNSTABLE } from 'recoil'
+
 import {
-	specificationCurveConfig,
-	useSpecificationCurveConfig,
 	defaultConfig,
-	useSetSpecificationCurveConfig,
+	specificationCurveConfig,
 	useResetSpecificationCurveConfig,
+	useSetSpecificationCurveConfig,
+	useSpecificationCurveConfig,
 } from '../specificationCurveConfig'
 
 describe('specificationCurveState', () => {
