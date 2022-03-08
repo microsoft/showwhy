@@ -15,7 +15,7 @@
 		"files": "javascript/client/src/**/*",
 		"rules": {
 			// not working w/ Vite yet
-			"import/extensions": 0,
+			"import/extensions": ["error", "never"],
 			// TODO: Re-enable
 			"jsx-a11y/click-events-have-key-events": 0,
 			"jsx-a11y/no-static-element-interactions": 0
