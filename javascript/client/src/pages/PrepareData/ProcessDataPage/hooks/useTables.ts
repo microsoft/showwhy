@@ -14,7 +14,7 @@ export function useTables(): TableContainer[] {
 	return useMemo((): TableContainer[] => {
 		return projectFiles.map(f => {
 			return {
-				id: f.id,
+				id: f.name,
 				name: f.name,
 				table: f.table,
 			} as TableContainer
