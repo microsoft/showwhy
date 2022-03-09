@@ -1,0 +1,34 @@
+name: Python-Publish-CI
+on:
+  push:
+    paths:
+      - 'python/showwhy-inference/pyproject.toml'
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    strategy:
+      matrix:
+        python-version: [3.8]
+        poetry-version: [1.1.13]
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install poetry ${{ matrix.poetry-version }}
+        run: |
+          python -m ensurepip
+          python -m pip install --upgrade pip
+          python -m pip install poetry==${{ matrix.poetry-version }}
+      - name: Install dependencies
+        shell: bash
+        working-directory: ./python/showwhy-inference
+        run: python -m poetry install
+      - name: Publish to PyPi
+        working-directory: ./python/showwhy-inference
+        run: |
+          python -m poetry publish --build --username ${{ secrets.PYPI_USERNAME }} --password ${{ secrets.PYPI_PASSWORD }}

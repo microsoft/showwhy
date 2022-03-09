@@ -4,9 +4,11 @@
 		"essex lint --fix --staged"
 	],
 	"python/showwhy-backend/**/*": [
-		"cd python/showwhy-backend && poetry run pre-commit"
+		"bash -c \"(cd python/showwhy-backend && poetry run isort .)\"",
+		"bash -c \"(cd python/showwhy-backend && poetry run black .)\""
 	],
 	"python/showwhy-interface/**/*": [
-		"cd python/showwhy-interface && poetry run pre-commit"
+		"bash -c \"(cd python/showwhy-inference && poetry run isort .)\"",
+		"bash -c \"(cd python/showwhy-inference && poetry run black .)\""
 	]
 }
