@@ -72,6 +72,58 @@ stages:
             env:
               CI: true
 
+  - stage: DeploymentDev
+      displayName: Deployment (Dev)
+      dependsOn:
+        - Compliance
+        - Verification
+      condition: and(succeeded(), eq(variables['Build.Reason'], 'Manual', eq(variables['build.sourceBranch'], 'refs/heads/dev'))
+      jobs:
+        - job: DeploymentJob
+          steps:
+            - checkout: self
+              clean: true
+              persistCredentials: true
+              fetchDepth: 1
+
+            - task: Bash@3
+              displayName: Install Dependencies
+              inputs:
+                targetType: 'inline'
+                script: yarn install
+              env:
+                CI: true
+
+            - task: DeleteFiles@1
+              displayName: Delete .env file
+              inputs:
+                SourceFolder: '$(System.DefaultWorkingDirectory)/javascript/client'
+                Contents: '.env'
+                RemoveDotFiles: true
+
+            - task: Bash@3
+              displayName: Build Client
+              inputs:
+                targetType: 'inline'
+                script: yarn build:client
+              env:
+                VITE_API_URI: $(VITE_API_URI)
+                VITE_UPLOAD_FILES_API_KEY: $(VITE_UPLOAD_FILES_API_KEY)
+                VITE_DOWNLOAD_FILES_API_KEY: $(VITE_DOWNLOAD_FILES_API_KEY)
+                VITE_CHECK_STATUS_API_KEY: $(VITE_CHECK_STATUS_API_KEY)
+                VITE_CHECK_SIGNIFICANCE_STATUS_API_KEY: $(VITE_CHECK_SIGNIFICANCE_STATUS_API_KEY)
+                VITE_ORCHESTRATORS_API_KEY: $(VITE_ORCHESTRATORS_API_KEY)
+                VITE_EXECUTIONS_NUMBER_API_KEY: $(VITE_EXECUTIONS_NUMBER_API_KEY)
+
+            - task: AzureRmWebAppDeployment@4
+              displayName: Deploy Webapp
+              inputs:
+                ConnectionType: 'AzureRM'
+                appType: 'webApp'
+                ConnectedServiceName: '$(subscription)'
+                WebAppName: 'showwhy-dev-ui'
+                packageForLinux: '$(System.DefaultWorkingDirectory)/javascript/client/deploy.zip'
+
   - stage: DeploymentInteg
     displayName: Deployment (Integ)
     dependsOn:
