@@ -882,9 +882,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@data-wrangling-components/core@npm:^4.0.2":
-  version: 4.0.2
-  resolution: "@data-wrangling-components/core@npm:4.0.2"
+"@data-wrangling-components/core@npm:^4.1.0":
+  version: 4.1.0
+  resolution: "@data-wrangling-components/core@npm:4.1.0"
   dependencies:
     lodash-es: ^4.17.21
   peerDependencies:
@@ -893,22 +893,22 @@ __metadata:
   peerDependenciesMeta:
     "@types/node":
       optional: true
-  checksum: 03cf3ce492639b2c4fd0f0344bd497752f1c4bfc5c2cca51ffbd6e9e2148bdf33311fee65f59e551459d4558f23cc91590ae6f98d5afcbb9daf2da63a55c0b43
+  checksum: a45be8eaa5bec7a7dc764b60dfc112dcf79f47964fc4d84bf4109279d13417f3dc078aa3e4f670243a6a8d7405445affe84eae601a49e4b684b28a572a95541e
   languageName: node
   linkType: hard
 
-"@data-wrangling-components/guidance@npm:^0.1.2":
-  version: 0.1.2
-  resolution: "@data-wrangling-components/guidance@npm:0.1.2"
-  checksum: df79e8b61b3032cd582c63c9a9961ca458000cda9601f6688fb31ed23b782165f556f0d6264ac2dcdab548db8f504ae1f230fb2b322a4275c0b98e9e91e35bb3
+"@data-wrangling-components/guidance@npm:^0.1.4":
+  version: 0.1.4
+  resolution: "@data-wrangling-components/guidance@npm:0.1.4"
+  checksum: c1dc5a4c69f24405d6603ca0421bda6166b45e43a56385745465756bcc7752549369895b655fa50be977a6888ad97f4ed316ab7275ec25e5fdf8dcd0032fb5c6
   languageName: node
   linkType: hard
 
-"@data-wrangling-components/react@npm:^2.8.2":
-  version: 2.8.2
-  resolution: "@data-wrangling-components/react@npm:2.8.2"
+"@data-wrangling-components/react@npm:^2.9.0":
+  version: 2.9.0
+  resolution: "@data-wrangling-components/react@npm:2.9.0"
   dependencies:
-    "@data-wrangling-components/guidance": ^0.1.2
+    "@data-wrangling-components/guidance": ^0.1.4
     "@essex/hooks": ^4.0.5
     core-js: ^3.21.1
     d3-format: ^3.1.0
@@ -936,18 +936,18 @@ __metadata:
     react: ^17.0.2
     react-dom: ^17.0.2
     styled-components: ^5.3.0
-  checksum: b744b65d9ce9887a7945cb4afce2f047e02f259c8c710803ad81b97508d23c78f2a22cb1e7f76b77fd1a9cfd46b16675873c07d579bdd8bcbf902cfb8a0134f4
+  checksum: df0e6e0a9e38f3ffaed07645acc11074ee61808ed439c3d587001b9733c18408e05b24600da00fca06b0c6c30c24b7e17c3b9e82681b1148d421f1c1b83c9aa6
   languageName: node
   linkType: hard
 
-"@data-wrangling-components/utilities@npm:^1.6.3":
-  version: 1.6.3
-  resolution: "@data-wrangling-components/utilities@npm:1.6.3"
+"@data-wrangling-components/utilities@npm:^1.6.4":
+  version: 1.6.4
+  resolution: "@data-wrangling-components/utilities@npm:1.6.4"
   dependencies:
-    "@zip.js/zip.js": ^2.4.5
+    "@zip.js/zip.js": ^2.4.6
   peerDependencies:
     arquero: ^4.8.7
-  checksum: f69bf052eda34d251812c4de6450e8dd7eebb3e5b6c8dcba7260f007d95806c7ee2304d4584f9be3086842c61b8744efe44b12d40edb97119a631ef04a736217
+  checksum: 64a342b6a01bd6dc8488d694fc4d6be5b0f33c562f199a1f28b88d6fc0abca58f28d8959d347c96e4f07362335306320e61008f8a9c49ba2adea038dd6e3222b
   languageName: node
   linkType: hard
 
@@ -1954,9 +1954,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/client@workspace:javascript/client"
   dependencies:
-    "@data-wrangling-components/core": ^4.0.2
-    "@data-wrangling-components/react": ^2.8.2
-    "@data-wrangling-components/utilities": ^1.6.3
+    "@data-wrangling-components/core": ^4.1.0
+    "@data-wrangling-components/react": ^2.9.0
+    "@data-wrangling-components/utilities": ^1.6.4
     "@essex/boolean-expression-component": ^1.0.3
     "@essex/hooks": ^4.0.5
     "@essex/jest-config": ^21.0.5
@@ -3142,10 +3142,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@zip.js/zip.js@npm:^2.4.5":
-  version: 2.4.5
-  resolution: "@zip.js/zip.js@npm:2.4.5"
-  checksum: c2d7d9a7b61f600c4e7d06f1d087076ddab11c7e235539573c86e83f2c3d0286c2fba7ebd23d577c15230fd6220234a5257d08516f2ce839c498f50a609baae8
+"@zip.js/zip.js@npm:^2.4.6":
+  version: 2.4.6
+  resolution: "@zip.js/zip.js@npm:2.4.6"
+  checksum: ee0150c640d9368ed4d6bc2f43df827076e70e2c5b8f024d0a6f2f8bce8abc8214db1876f33df54435d3a9802034b49aba62d91fc2c4c5aaf8844bd49e75fe93
   languageName: node
   linkType: hard
 
