@@ -3,6 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { renderHook } from '@testing-library/react-hooks'
+
 import { usePageTypeTestable } from '../usePageType'
 
 it('should return the page type', () => {

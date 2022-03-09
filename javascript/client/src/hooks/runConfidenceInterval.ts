@@ -5,12 +5,13 @@
 
 import { getConfidenceOrchestrator, isStatus } from '@showwhy/api-client'
 import type {
-	SignificanceTest,
 	NodeResponse,
+	SignificanceTest,
 	SignificanceTestResponse,
 } from '@showwhy/types'
 import { NodeResponseStatus } from '@showwhy/types'
 import { useCallback } from 'react'
+
 import { useDefaultRun } from '~hooks'
 import { api } from '~resources'
 import { useSetSignificanceTests } from '~state'

@@ -5,14 +5,14 @@
 
 import { createDefaultCommandBar } from '@data-wrangling-components/react'
 import type {
-	IDetailsColumnProps,
 	ICommandBarItemProps,
 	ICommandBarProps,
+	IDetailsColumnProps,
 } from '@fluentui/react'
 import type {
-	FactorsOrDefinitions,
 	CausalFactor,
 	ElementDefinition,
+	FactorsOrDefinitions,
 } from '@showwhy/types'
 import { useCallback } from 'react'
 

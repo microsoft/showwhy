@@ -10,8 +10,10 @@ import {
 	useResetRecoilState,
 	useSetRecoilState,
 } from 'recoil'
-import { filesState, filesStateChanged } from './files'
+
 import type { ProjectFile } from '~types'
+
+import { filesState, filesStateChanged } from './files'
 
 const selectedFileState = atom<Maybe<ProjectFile>>({
 	key: 'selected-file',

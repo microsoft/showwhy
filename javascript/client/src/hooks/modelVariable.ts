@@ -4,16 +4,18 @@
  */
 
 import type {
-	Experiment,
-	ElementDefinition,
 	CausalFactor,
+	ElementDefinition,
+	Experiment,
 } from '@showwhy/types'
 import { useCallback } from 'react'
 import type { SetterOrUpdater } from 'recoil'
-import { usePageType } from './usePageType'
+
 import { useExperiment, useSetExperiment } from '~state/experiment'
 import type { PageType } from '~types'
 import { replaceItemAtIndex } from '~utils/arrays'
+
+import { usePageType } from './usePageType'
 // HACK to pass the unit tests
 
 export function useSaveDefinition(

@@ -2,8 +2,9 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import type { AlternativeModelSpec, AlternativeModels } from '@showwhy/types'
-import { buildModelLevel } from './buildModelLevel'
+import type { AlternativeModels, AlternativeModelSpec } from '@showwhy/types'
+
+import { buildModelLevel } from './buildModelLevel.js'
 
 export function buildAlternativeModels(
 	max: AlternativeModels,

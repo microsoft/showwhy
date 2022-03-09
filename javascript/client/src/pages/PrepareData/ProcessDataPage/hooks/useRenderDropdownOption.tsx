@@ -6,10 +6,10 @@
 import type { IDropdownOption } from '@fluentui/react'
 import { Dropdown } from '@fluentui/react'
 import type {
-	FactorsOrDefinitions,
-	Maybe,
 	CausalFactor,
 	ElementDefinition,
+	FactorsOrDefinitions,
+	Maybe,
 } from '@showwhy/types'
 import { useCallback } from 'react'
 

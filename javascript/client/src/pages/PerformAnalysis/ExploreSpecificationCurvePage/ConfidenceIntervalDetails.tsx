@@ -4,6 +4,7 @@
  */
 import { round } from 'lodash'
 import { memo } from 'react'
+
 import { Text } from '~styles'
 
 export const ConfidenceIntervalDetails: React.FC<{

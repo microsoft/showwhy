@@ -29,7 +29,7 @@ services:
   functions:
     container_name: showwhyfunctions
     cpus: 4
-    build: ./python/showwhy-backend
+    build: ./python/
     ports:
       - '7071:80'
     expose:

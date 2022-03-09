@@ -7,13 +7,14 @@ import type {
 	Maybe,
 	NodeRequest,
 	NodeResponse,
-	StatusResponse,
 	NodeResponseStatus,
 	OrchestratorStatusResponse,
+	StatusResponse,
 } from '@showwhy/types'
-import type { FetchApiInteractor } from '../FetchApiInteractor'
-import { isProcessingStatus, wait } from '../utils'
-import type { OrchestratorType } from './OrchestratorType'
+
+import type { FetchApiInteractor } from '../FetchApiInteractor.js'
+import { isProcessingStatus, wait } from '../utils.js'
+import type { OrchestratorType } from './OrchestratorType.js'
 
 export type OrchestratorHandler = (...args: unknown[]) => void
 export type OrchestratorOnStartHandler = (nodeResponse: NodeResponse) => void
@@ -60,7 +61,8 @@ export class Orchestrator<UpdateStatus> {
 
 		let estimateStatus: Partial<OrchestratorStatusResponse> | null = null
 		while (isProcessingStatus(status?.runtimeStatus as NodeResponseStatus)) {
-			[status, estimateStatus] = await Promise.all([
+			// eslint-disable-next-line @typescript-eslint/no-extra-semi
+			;[status, estimateStatus] = await Promise.all([
 				this.api.getOrchestratorStatus(
 					this.orchestratorResponse.statusQueryGetUri,
 				),

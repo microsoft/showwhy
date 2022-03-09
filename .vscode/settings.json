@@ -12,7 +12,7 @@
 	"azureFunctions.scmDoBuildDuringDeployment": true,
 	"azureFunctions.pythonVenv": "python/showwhy-backend/.venv",
 	"azureFunctions.projectLanguage": "Python",
-	"azureFunctions.projectRuntime": "~4",
+	"azureFunctions.projectRuntime": "~3",
 	"jest.jestCommandLine": "yarn run test:jest",
 	"python.linting.flake8Enabled": true,
 	"python.linting.enabled": true,
@@ -24,7 +24,8 @@
 	"python.sortImports.args": ["--profile", "black"],
 	"[python]": {
 		"editor.codeActionsOnSave": {
-			"source.organizeImports": true
+			"source.organizeImports": true,
+			"source.fixAll": true
 		}
 	}
 }

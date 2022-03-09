@@ -3,47 +3,47 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import type {
+	Pipeline,
 	Specification,
 	Step as FileStep,
-	TableStore,
-	Pipeline,
 	TableContainer,
+	TableStore,
 } from '@data-wrangling-components/core'
 import { usePipeline, useStore } from '@data-wrangling-components/react'
 import type { BaseFile } from '@data-wrangling-components/utilities'
-import type { Maybe, CausalFactor, Experiment, Element } from '@showwhy/types'
+import type { CausalFactor, Element, Experiment, Maybe } from '@showwhy/types'
 import { all, op } from 'arquero'
 import type ColumnTable from 'arquero/dist/types/table/column-table'
 import { useCallback } from 'react'
+
 import { useGetStepUrls, useSetRunAsDefault } from '~hooks'
 import {
 	useFileCollection,
 	useSetCausalFactors,
 	useSetConfidenceInterval,
+	useSetConfigJson,
 	useSetDefaultDatasetResult,
-	useSetExperiment,
 	useSetEstimators,
+	useSetExperiment,
 	useSetFileCollection,
+	useSetOutputTablePrep,
 	useSetPrimarySpecificationConfig,
+	useSetProjectFiles,
 	useSetRefutationType,
 	useSetRunHistory,
 	useSetStepStatuses,
 	useSetSubjectIdentifier,
-	useSetOutputTablePrep,
-	useSetProjectFiles,
 	useSetTablesPrepSpecification,
-	useSetConfigJson,
 } from '~state'
 import type {
-	FileDefinition,
-	ZipData,
-	ProjectFile,
-	Workspace,
 	DataTableFileDefinition,
+	FileDefinition,
+	ProjectFile,
 	RunHistory,
+	Workspace,
+	ZipData,
 } from '~types'
 import { ProjectSource, StepStatus } from '~types'
-
 import {
 	fetchRemoteTables,
 	fetchTable,

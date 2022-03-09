@@ -5,6 +5,7 @@
 
 import type { TableContainer } from '@data-wrangling-components/core'
 import { useMemo } from 'react'
+
 import { useProjectFiles } from '~state'
 
 export function useTables(): TableContainer[] {

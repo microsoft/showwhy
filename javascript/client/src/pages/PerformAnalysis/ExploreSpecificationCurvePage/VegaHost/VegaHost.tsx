@@ -3,29 +3,30 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 // eslint-disable @typescript-eslint/no-explicit-any
-import { memo, useRef, useEffect } from 'react'
+import { memo, useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import type {
-	Spec,
 	DataListenerHandler,
 	EventListenerHandler,
 	SignalListenerHandler,
 	SignalValue,
+	Spec,
 	View,
 } from 'vega'
+
 import {
-	useSignalListeners,
-	useSignals,
-	useData,
-	useDataListeners,
-	useLogLevel,
 	useAddClickHandler,
 	useAddMouseOverHandler,
 	useCreateView,
-	useInitializeView,
-	useOnCreateView,
-	useMergeChildSpecs,
+	useData,
+	useDataListeners,
 	useEventListeners,
+	useInitializeView,
+	useLogLevel,
+	useMergeChildSpecs,
+	useOnCreateView,
+	useSignalListeners,
+	useSignals,
 } from './hooks'
 import { LogLevel } from './types'
 

@@ -8,16 +8,18 @@ import { useThematic } from '@thematic/react'
 import { max, min } from 'lodash'
 import { memo, useMemo } from 'react'
 import styled from 'styled-components'
-import { VegaHost } from '../VegaHost'
-import { useSpecificationSHAPColumns } from '../hooks'
-import template from './dot-plot.json'
-import { mergeSpec, parseJsonPathSpec } from './util'
+
 import { usePrimarySpecificationConfig } from '~state'
 import type {
 	DecisionFeature,
 	Specification,
 	SpecificationCurveConfig,
 } from '~types'
+
+import { useSpecificationSHAPColumns } from '../hooks'
+import { VegaHost } from '../VegaHost'
+import template from './dot-plot.json'
+import { mergeSpec, parseJsonPathSpec } from './util'
 
 const templateString = JSON.stringify(template)
 

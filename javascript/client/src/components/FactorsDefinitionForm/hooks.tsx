@@ -5,23 +5,25 @@
 
 import type { IComboBoxOption } from '@fluentui/react'
 import type {
-	Handler,
-	Setter,
-	OptionalId,
-	Experiment,
 	CausalFactor,
+	Experiment,
+	Handler,
+	OptionalId,
+	Setter,
 } from '@showwhy/types'
 import { CausalityLevel } from '@showwhy/types'
 import { useCallback, useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
+
+import type { PageType } from '~types'
+import { noop } from '~utils'
+
 import {
 	useCheckbox,
 	useDescriptionBox,
 	useHasLevel,
 	useVariablePicker,
 } from './variables'
-import type { PageType } from '~types'
-import { noop } from '~utils'
 
 type OnAddHandler = (factor: OptionalId<CausalFactor>) => void
 type OnChangeHandler = (f: Partial<CausalFactor>) => void

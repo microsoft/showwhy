@@ -3,27 +3,29 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import type {
-	Setter,
-	Maybe,
-	Handler,
+	Estimator,
 	EstimatorGroup,
 	EstimatorType,
-	Estimator,
+	Handler,
+	Maybe,
 	PrimarySpecificationConfig,
+	Setter,
 } from '@showwhy/types'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import type { SetterOrUpdater } from 'recoil'
-import { getEstimatorByRanking, estimatorGroups } from './constants'
+
 import { useEstimatorShortDescription, useEstimatorsList } from '~hooks'
 import {
+	useConfidenceInterval,
+	useEstimators,
+	usePrimarySpecificationConfig,
+	useSetConfidenceInterval,
 	useSetEstimators,
 	useSetPrimarySpecificationConfig,
-	usePrimarySpecificationConfig,
-	useEstimators,
-	useSetConfidenceInterval,
 	useToggleConfidenceInterval,
-	useConfidenceInterval,
 } from '~state'
+
+import { estimatorGroups, getEstimatorByRanking } from './constants'
 
 enum BatchUpdateAction {
 	Delete = 'delete',

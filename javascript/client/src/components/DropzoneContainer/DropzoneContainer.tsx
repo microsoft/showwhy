@@ -13,6 +13,7 @@ import type { Maybe } from '@showwhy/types'
 import type { FC } from 'react'
 import { memo, useMemo } from 'react'
 import styled from 'styled-components'
+
 import type { DropFilesCount } from '~types'
 
 export const DropzoneContainer: FC<{

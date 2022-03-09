@@ -5,9 +5,11 @@
 
 import { memo } from 'react'
 import styled from 'styled-components'
-import { useFactorsTable } from './hooks'
+
 import { GenericTableComponent } from '~components/Tables/GenericTableComponent'
 import { Container } from '~styles'
+
+import { useFactorsTable } from './hooks'
 
 export const FactorsTable: React.FC<{
 	headers: { fieldName: string; value: string | React.ReactNode }[]

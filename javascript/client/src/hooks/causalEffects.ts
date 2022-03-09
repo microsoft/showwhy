@@ -4,12 +4,14 @@
  */
 import type {
 	AlternativeModels,
-	Experiment,
 	CausalModelLevel,
+	Experiment,
 } from '@showwhy/types'
 import { useMemo } from 'react'
-import { useAlternativeModels, useExcludedFactors } from './causalFactors'
+
 import { useExperiment } from '~state/experiment'
+
+import { useAlternativeModels, useExcludedFactors } from './causalFactors'
 
 export function useCausalEffects(
 	causalLevel: CausalModelLevel,

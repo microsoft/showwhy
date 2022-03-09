@@ -6,9 +6,11 @@
 import type { RefutationType } from '@showwhy/types'
 import { NodeResponseStatus } from '@showwhy/types'
 import { v4 } from 'uuid'
+
+import type { RunHistory } from '~types'
+
 import { SESSION_ID_KEY } from './constants'
 import { createAndReturnStorageItem } from './sessionStorage'
-import type { RunHistory } from '~types'
 
 export function initialRunHistory(
 	specCount: number,

@@ -3,8 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { CausalModelLevel } from '../causality'
-import type { EstimatorType } from '../estimators'
+import type { CausalModelLevel } from '../causality/index.js'
+import type { EstimatorType } from '../estimators/index.js'
 
 export interface PrimarySpecificationConfig {
 	causalModel: CausalModelLevel

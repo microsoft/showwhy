@@ -4,11 +4,12 @@
  */
 
 import type {
-	FileWithPath,
 	FileCollection,
+	FileWithPath,
 } from '@data-wrangling-components/utilities'
 import type { AsyncHandler1 } from '@showwhy/types'
 import { useCallback, useMemo } from 'react'
+
 import { useFileCollection, useSetFileCollection } from '~state'
 
 export const useIsCollectionEmpty = (): boolean => {

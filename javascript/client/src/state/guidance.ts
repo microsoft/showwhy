@@ -3,9 +3,11 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { atom } from 'recoil'
-import { localStorageEffect } from './effects/localStorageEffect'
+
 import type { ToggleCallback } from '~hooks'
 import { useRecoilBasedToggle } from '~hooks'
+
+import { localStorageEffect } from './effects/localStorageEffect'
 
 export const guidanceState = atom<boolean>({
 	key: 'guidance',

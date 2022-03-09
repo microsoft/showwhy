@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import type { Estimator } from '@showwhy/types'
-import { EstimatorType, EstimatorGroup } from '@showwhy/types'
+import { EstimatorGroup, EstimatorType } from '@showwhy/types'
 
 export interface BuiltEstimator {
 	type: string

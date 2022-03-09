@@ -3,6 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { useEffect, useState } from 'react'
+
 import type { FileDefinition } from '~types'
 
 export function useExampleProjects(): FileDefinition[] {

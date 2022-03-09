@@ -2,9 +2,10 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import type { Maybe, Handler } from '@showwhy/types'
+import type { Handler, Maybe } from '@showwhy/types'
 import { useCallback, useMemo } from 'react'
-import { useCurrentStep, useAllSteps } from '~hooks'
+
+import { useAllSteps, useCurrentStep } from '~hooks'
 import { useSetStepStatus, useStepStatus } from '~state'
 import type { Step } from '~types'
 import { StepStatus } from '~types'

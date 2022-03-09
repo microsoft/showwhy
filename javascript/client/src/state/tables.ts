@@ -11,6 +11,7 @@ import {
 	useResetRecoilState,
 	useSetRecoilState,
 } from 'recoil'
+
 import type { DataTable } from '~types'
 
 const originalTablesState = atom<DataTable[]>({

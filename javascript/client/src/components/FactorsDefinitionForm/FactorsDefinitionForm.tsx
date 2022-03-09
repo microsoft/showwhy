@@ -5,15 +5,17 @@
 
 import type { IComboBoxOption } from '@fluentui/react'
 import type {
-	OptionalId,
-	Maybe,
 	CausalFactor,
 	Experiment,
+	Maybe,
+	OptionalId,
 } from '@showwhy/types'
 import { memo } from 'react'
 import styled from 'styled-components'
-import { useFactorsDefinitionForm } from './hooks'
+
 import type { PageType } from '~types'
+
+import { useFactorsDefinitionForm } from './hooks'
 
 export const FactorsDefinitionForm: React.FC<{
 	factor?: CausalFactor

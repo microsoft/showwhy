@@ -7,11 +7,18 @@
 		"@typescript-eslint/no-redeclare": ["warn"],
 		"@typescript-eslint/explicit-module-boundary-types": [
 			"warn",
-			{ "allowArgumentsExplicitlyTypedAsAny": true },
+			{ "allowArgumentsExplicitlyTypedAsAny": true }
 		],
-		// TODO: Re-enable
-		"jsx-a11y/click-events-have-key-events": 0,
-		"jsx-a11y/no-static-element-interactions": 0,
 		"@typescript-eslint/no-non-null-assertion": 0
-	}
+	},
+	"overrides": [{
+		"files": "javascript/client/src/**/*",
+		"rules": {
+			// not working w/ Vite yet
+			"import/extensions": ["error", "never"],
+			// TODO: Re-enable
+			"jsx-a11y/click-events-have-key-events": 0,
+			"jsx-a11y/no-static-element-interactions": 0
+		}
+	}]
 }

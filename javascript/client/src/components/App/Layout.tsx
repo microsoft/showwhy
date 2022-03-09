@@ -2,13 +2,12 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { IconButton, TooltipHost, MessageBarType } from '@fluentui/react'
+import { IconButton, MessageBarType, TooltipHost } from '@fluentui/react'
 import { useId } from '@fluentui/react-hooks'
 import type { Maybe } from '@showwhy/types'
 import { memo, Suspense, useState } from 'react'
 import styled from 'styled-components'
-import { AppHeader } from '../AppHeader'
-import { useProcessStepInfo, useOnClickProject } from './hooks'
+
 import { StepControls, StepSelector } from '~components/GeneralSteps'
 import { Guidance } from '~components/Guidance'
 import { MessageContainer } from '~components/MessageContainer'
@@ -20,12 +19,15 @@ import {
 } from '~hooks'
 import {
 	useExperiment,
+	useGuidance,
 	useSelectedProject,
 	useSetStepStatuses,
-	useGuidance,
 } from '~state'
 import { StyledSpinner } from '~styles'
 import { Pages } from '~types'
+
+import { AppHeader } from '../AppHeader'
+import { useOnClickProject, useProcessStepInfo } from './hooks'
 
 const noChildPadding = [Pages.ProcessData]
 

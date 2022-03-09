@@ -5,10 +5,11 @@
 import { Icon } from '@fluentui/react'
 import { CausalEffectSize } from '@showwhy/types'
 import { memo } from 'react'
-
 import styled from 'styled-components'
-import { ComponentArrows } from './ComponentArrows'
+
 import { Container, Paragraph } from '~styles'
+
+import { ComponentArrows } from './ComponentArrows'
 
 export const CausalEffects: React.FC<{
 	size?: CausalEffectSize

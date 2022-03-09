@@ -8,11 +8,13 @@ import { RefutationTestMethodString } from '@showwhy/types'
 import { round } from 'lodash'
 import { memo } from 'react'
 import styled from 'styled-components'
-import { ConfidenceIntervalDetails } from './ConfidenceIntervalDetails'
+
 import { RefutationOptionsCallout } from '~components/RefutationOptionsCallout'
 import { Paragraph, Text } from '~styles'
 import type { Specification } from '~types'
 import { pluralize } from '~utils'
+
+import { ConfidenceIntervalDetails } from './ConfidenceIntervalDetails'
 
 export const SpecificationDescription: React.FC<{
 	specification?: Specification

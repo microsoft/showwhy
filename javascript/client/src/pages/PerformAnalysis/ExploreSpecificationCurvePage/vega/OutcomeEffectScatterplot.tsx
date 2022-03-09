@@ -7,10 +7,12 @@ import { SelectionState } from '@thematic/core'
 import { useThematic } from '@thematic/react'
 import { memo, useMemo } from 'react'
 import styled from 'styled-components'
+
+import type { Specification, SpecificationCurveConfig } from '~types'
+
 import { VegaHost } from '../VegaHost'
 import template from './scatter-plot.json'
 import { mergeSpec, parseJsonPathSpec } from './util'
-import type { Specification, SpecificationCurveConfig } from '~types'
 
 const templateString = JSON.stringify(template)
 

@@ -4,14 +4,15 @@
  */
 
 import type { Maybe } from '@showwhy/types'
-import type { FetchApiInteractor } from '../FetchApiInteractor'
+
+import type { FetchApiInteractor } from '../FetchApiInteractor.js'
 import type {
 	OrchestatorOnUpdateHandler,
 	OrchestratorHandler,
 	OrchestratorOnStartHandler,
-} from './Orchestrator'
-import { Orchestrator } from './Orchestrator'
-import { OrchestratorType } from './OrchestratorType'
+} from './Orchestrator.js'
+import { Orchestrator } from './Orchestrator.js'
+import { OrchestratorType } from './OrchestratorType.js'
 
 const orchestrators: Partial<Record<OrchestratorType, Orchestrator<unknown>>> =
 	{}

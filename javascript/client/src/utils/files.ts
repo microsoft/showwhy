@@ -4,22 +4,24 @@
  */
 
 import type {
-	FileCollection,
 	BaseFile,
+	FileCollection,
 } from '@data-wrangling-components/utilities'
 import {
+	createBaseFile,
 	FileType,
 	FileWithPath,
-	createBaseFile,
 } from '@data-wrangling-components/utilities'
 import type { Maybe } from '@showwhy/types'
-import { fetchTable } from './arquero'
+
 import type {
 	DataTableFileDefinition,
 	ProjectFile,
-	ZipData,
 	RunHistory,
+	ZipData,
 } from '~types'
+
+import { fetchTable } from './arquero'
 
 export function createTextFile(name: string, content: string): File {
 	const type = { type: `text/${name.split('.').pop()}` }

@@ -4,18 +4,20 @@
  */
 
 import {
+	buildAlternativeModels,
 	buildEstimators,
+	buildLoadNode,
 	buildNodes,
 	buildRefutationSpecs,
 	buildSpecs,
-	buildAlternativeModels,
-	buildLoadNode,
 } from '@showwhy/builders'
-import type { Maybe, NodeRequest, GraphNodeData } from '@showwhy/types'
+import type { GraphNodeData, Maybe, NodeRequest } from '@showwhy/types'
 import { GraphNodeType } from '@showwhy/types'
 import { useCallback, useMemo } from 'react'
-import { useNodeProperties } from './nodeProperties'
+
 import type { ProjectFile } from '~types'
+
+import { useNodeProperties } from './nodeProperties'
 
 //TODO: fix for CI
 export function useGetNodes(

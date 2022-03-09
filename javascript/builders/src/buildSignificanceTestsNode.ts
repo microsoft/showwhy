@@ -4,7 +4,8 @@
  */
 import type { NodeRequest } from '@showwhy/types'
 import { GraphNodeType } from '@showwhy/types'
-import { buildNodes } from './buildNodes'
+
+import { buildNodes } from './buildNodes.js'
 
 export function buildSignificanceTestsNode(taskIds: string[]): NodeRequest {
 	const nodeReq = buildNodes([

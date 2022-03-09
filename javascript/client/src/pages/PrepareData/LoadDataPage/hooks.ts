@@ -6,11 +6,12 @@
 import type { FileCollection } from '@data-wrangling-components/utilities'
 import { guessDelimiter } from '@data-wrangling-components/utilities'
 import type { IDropdownOption } from '@fluentui/react'
-import type { Handler1, Maybe, Handler } from '@showwhy/types'
+import type { Handler, Handler1, Maybe } from '@showwhy/types'
 import { useBoolean } from 'ahooks'
 import { useCallback, useEffect, useState } from 'react'
 import type { SetterOrUpdater } from 'recoil'
 import { v4 as uuidv4 } from 'uuid'
+
 import { useGlobalDropzone, useOnDropAccepted } from '~hooks'
 import {
 	useAddProjectFile,

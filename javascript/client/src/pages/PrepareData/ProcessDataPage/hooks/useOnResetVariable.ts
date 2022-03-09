@@ -5,9 +5,9 @@
 
 import type { IDropdownOption } from '@fluentui/react'
 import type {
+	ElementDefinition,
 	FactorsOrDefinitions,
 	Maybe,
-	ElementDefinition,
 } from '@showwhy/types'
 import { useCallback } from 'react'
 

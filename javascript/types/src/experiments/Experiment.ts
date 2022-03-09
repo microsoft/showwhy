@@ -3,8 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { Element } from './Element'
-import type { Hypothesis } from './Hypothesis'
+import type { Element } from './Element.js'
+import type { Hypothesis } from './Hypothesis.js'
 
 export interface Experiment {
 	population: Element

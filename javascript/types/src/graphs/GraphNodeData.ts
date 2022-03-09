@@ -2,8 +2,8 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import type { Graph } from './Graph'
-import type { GraphNodeType } from './GraphNodeType'
+import type { Graph } from './Graph.js'
+import type { GraphNodeType } from './GraphNodeType.js'
 
 export interface GraphNodeData {
 	id: string

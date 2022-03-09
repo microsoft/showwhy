@@ -4,10 +4,11 @@
  */
 import { jest } from '@jest/globals'
 import type { CausalFactor } from '@showwhy/types'
-import { BeliefDegree, CausalModelLevel, CausalityLevel } from '@showwhy/types'
+import { BeliefDegree, CausalityLevel, CausalModelLevel } from '@showwhy/types'
 import { renderHook } from '@testing-library/react-hooks'
 import { RecoilRoot } from 'recoil'
 import { v4 } from 'uuid'
+
 import {
 	useAddOrEditFactorTestable as useAddOrEditFactor,
 	useAlternativeModelsTestable as useAlternativeModels,
