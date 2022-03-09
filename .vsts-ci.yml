@@ -77,7 +77,7 @@ stages:
       dependsOn:
         - Compliance
         - Verification
-      condition: and(succeeded(), eq(variables['Build.Reason'], 'Manual', eq(variables['build.sourceBranch'], 'refs/heads/dev'))
+      condition: and(succeeded(), eq(variables['build.sourceBranch'], 'refs/heads/dev'))
       jobs:
         - job: DeploymentJob
           steps:
