@@ -3,7 +3,6 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { IComboBoxOption } from '@fluentui/react'
 import type {
 	ElementDefinition,
 	Experiment,
@@ -12,7 +11,7 @@ import type {
 } from '@showwhy/types'
 import { useEffect, useMemo, useState } from 'react'
 
-import { usePageType, useVariableOptions } from '~hooks'
+import { usePageType } from '~hooks'
 import { useExperiment, useSetExperiment } from '~state'
 import type { Item, PageType } from '~types'
 
@@ -28,7 +27,6 @@ export function useBusinessLogic(): {
 	definitionToEdit: Maybe<ElementDefinition>
 	pageType: PageType
 	defineQuestion: Experiment
-	variables: IComboBoxOption[]
 	addDefinition: (def: ElementDefinition) => void
 	removeDefinition: (def: ElementDefinition) => void
 	editDefinition: (def: ElementDefinition) => void
@@ -36,7 +34,6 @@ export function useBusinessLogic(): {
 } {
 	const defineQuestion = useExperiment()
 	const pageType = usePageType()
-	const variables = useVariableOptions()
 	const setDefineQuestion = useSetExperiment()
 	const [definitions, setDefinitions] = useState<ElementDefinition[]>(
 		(defineQuestion as any)[pageType]?.definition || [],
@@ -91,7 +88,6 @@ export function useBusinessLogic(): {
 		definitionToEdit,
 		pageType,
 		defineQuestion,
-		variables,
 		addDefinition,
 		removeDefinition,
 		editDefinition,

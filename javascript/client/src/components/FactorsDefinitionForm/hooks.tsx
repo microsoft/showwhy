@@ -3,7 +3,6 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { IComboBoxOption } from '@fluentui/react'
 import type {
 	CausalFactor,
 	Experiment,
@@ -22,7 +21,7 @@ import {
 	useCheckbox,
 	useDescriptionBox,
 	useHasLevel,
-	useVariablePicker,
+	useVariableField,
 } from './variables'
 
 type OnAddHandler = (factor: OptionalId<CausalFactor>) => void
@@ -32,12 +31,10 @@ export function useFactorsDefinitionForm({
 	experiment,
 	factor,
 	pageType,
-	variables,
 	onAdd = noop,
 	onChange = noop,
 }: {
 	pageType: PageType
-	variables?: IComboBoxOption[]
 	experiment?: Experiment
 	factor?: CausalFactor
 	onAdd?: OnAddHandler
@@ -91,7 +88,7 @@ export function useFactorsDefinitionForm({
 	)
 
 	const checkbox = useCheckbox(isPrimary, setIsPrimary)
-	const variablePicker = useVariablePicker(variable, setVariable, variables)
+	const variableField = useVariableField(variable, setVariable)
 	const descriptionBox = useDescriptionBox(
 		description,
 		setDescription,
@@ -102,7 +99,7 @@ export function useFactorsDefinitionForm({
 
 	return {
 		level: checkbox,
-		variable: variablePicker,
+		variable: variableField,
 		description: descriptionBox,
 	}
 }
