@@ -3,7 +3,6 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { IComboBoxOption } from '@fluentui/react'
 import type {
 	CausalFactor,
 	FlatCausalFactor,
@@ -14,7 +13,7 @@ import type {
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 
-import { useAddOrEditFactor, usePageType, useVariableOptions } from '~hooks'
+import { useAddOrEditFactor, usePageType } from '~hooks'
 import { useCausalFactors, useSetCausalFactors } from '~state'
 import type { PageType } from '~types'
 import { noop } from '~utils'
@@ -30,7 +29,6 @@ export function useBusinessLogic(): {
 	flatFactorsList: FlatCausalFactor[]
 	page: Maybe<string>
 	pageType: PageType
-	variables: IComboBoxOption[]
 	addFactor: (factor: OptionalId<CausalFactor>) => void
 	editFactor: (factor: CausalFactor) => void
 	deleteFactor: (factor: CausalFactor) => void
@@ -40,7 +38,6 @@ export function useBusinessLogic(): {
 } {
 	const causalFactors = useCausalFactors()
 	const pageType = usePageType()
-	const variables = useVariableOptions()
 	const [factor, setFactor] = useState<CausalFactor>()
 	const [isEditing, setIsEditing] = useState(false)
 
@@ -62,7 +59,6 @@ export function useBusinessLogic(): {
 		goToFactorsPage,
 		page: factorsPathData?.page,
 		pageType,
-		variables,
 	}
 }
 
