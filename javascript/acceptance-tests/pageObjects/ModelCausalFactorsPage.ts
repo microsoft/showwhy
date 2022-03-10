@@ -10,7 +10,7 @@ const selectors: Record<string, string> = {
 	title: dataAttr('title'),
 	form: dataAttr('factors-form'),
 	element: dataAttr('generic-table-row'),
-	variablePicker: `${dataAttr('factors-form-variable-picker')} input`,
+	variableField: `${dataAttr('factors-form-variable-name')} input`,
 	description: dataAttr('factors-form-description'),
 	addButton: dataAttr('factors-form-add-button'),
 	goBackButton: dataAttr('go-back-button'),
@@ -34,7 +34,7 @@ export class ModelCausalFactorsPage extends Page {
 		const { variable, description } = data
 
 		if (variable) {
-			await this.page.fill(selectors.variablePicker, variable)
+			await this.page.fill(selectors.variableField, variable)
 		}
 
 		if (description) {
