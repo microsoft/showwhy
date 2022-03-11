@@ -9,37 +9,38 @@
         "description": "Patient's age group derived from the Wolfram dataset",
         "variable": "Patient Age",
         "column": "age_group",
-        "causes": {
-          "causeOutcome": {
+        "causes": [{
             "causes": true,
             "degree": 100,
+            "type": "causeOutcome",
             "reasoning": "Older adults are likely to have higher mortality rates than younger adults"
           },
-          "causeExposure": {
+          {
             "causes": true,
             "degree": 100,
+            "type": "causeExposure",
             "reasoning": "Older adults are more likely to experience chronic diseases than younger adults"
-          }
-        }
+        }]
       },
       {
         "description": "Patient gender recorded in the Wolfram dataset",
         "variable": "Patient Gender",
         "column": "gender",
-        "causes": {
-          "causeOutcome": {
+        "causes": [{
             "causes": true,
             "degree": 50,
+            "type": "causeOutcome",
+
             "reasoning": "There might be differences in risk of mortality between men and women"
           },
-          "causeExposure": {
+          {
             "causes": true,
             "degree": 50,
+            "type": "causeExposure",
             "reasoning": "Women tend to be more affected by long-term and chronic illness"
-          }
         }
-      }
-    ],
+    ]
+    }],
     "defineQuestion": {
       "exposure": {
         "label": "Chronic Disease",

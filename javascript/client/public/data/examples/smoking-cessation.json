@@ -9,149 +9,166 @@
             "description": "Participant's age recorded at the baseline visit in 1971",
             "variable": "Age",
             "column": "age",
-            "causes": {
-                "causeOutcome": {
+            "causes": [
+                {
                     "causes": true,
                     "degree": 100,
+                    "type": "causeOutcome",
                     "reasoning": "We are likely to gain more weight as we get older"
                 },
-                "causeExposure": {
+                {
                     "causes": true,
                     "degree": 100,
+                    "type": "causeExposure",
                     "reasoning": "Older adults may have higher smoking cessation rates compared to younger adults"
                 }
-            }
+            ]
         },
         {
             "description": "Participant's gender recorded at the baseline visit in 1971",
             "variable": "Gender",
             "column": "sex",
-            "causes": {
-                "causeOutcome": {
+            "causes": [
+                {
                     "causes": true,
                     "degree": 100,
+                    "type": "causeOutcome",
                     "reasoning": "There may be differences in the amount of body weight gain between men and women"
                 },
-                "causeExposure": {
+                {
                     "causes": true,
                     "degree": 100,
+                    "type": "causeExposure",
                     "reasoning": "There may be differences in smoking cessation rates between men and women"
                 }
-            }
+            ]
         },
         {
             "description": "A binary indicator of whether the participant is Caucasian, recorded at the baseline visit in 1971",
             "variable": "Race",
             "column": "race",
-            "causes": {
-                "causeOutcome": {
+            "causes": [
+                {
                     "causes": true,
                     "degree": 50,
+                    "type": "causeOutcome",
                     "reasoning": "There may be racial differences in body weight change over time"
                 },
-                "causeExposure": {
+                {
                     "causes": true,
                     "degree": 50,
+                    "type": "causeExposure",
                     "reasoning": "There may be racial differences in smoking initiation, cessation and intensity"
                 }
-            }
+            ]
         },
         {
             "description": "Participant's education level recorded at the baseline visit in 1971",
             "variable": "Education Level",
             "column": "education",
-            "causes": {
-                "causeOutcome": {
+            "causes": [
+                {
                     "causes": true,
                     "degree": 50,
+                    "type": "causeOutcome",
                     "reasoning": "People with higher education level might have more exposure to weight management programs"
                 },
-                "causeExposure": {
+                {
                     "causes": true,
                     "degree": 50,
+                    "type": "causeExposure",
                     "reasoning": "People with higher education level might have more exposure to smoking cessation programs"
                 }
-            }
+            ]
         },
         {
             "description": "Measured as number of cigarettes smoked per day in 1971",
             "variable": "Smoking Intensity",
             "column": "smoke_intensity_1971",
-            "causes": {
-                "causeOutcome": {
+            "causes": [
+                {
                     "causes": true,
                     "degree": 50,
+                    "type": "causeOutcome",
                     "reasoning": "Heavy smokers may have lower body weight than light smokers"
                 },
-                "causeExposure": {
+                {
                     "causes": true,
                     "degree": 50,
+                    "type": "causeExposure",
                     "reasoning": "Heavy smokers may have low confidence in quitting, which may be a predictor of cessation"
                 }
-            }
+            ]
         },
         {
             "description": "Measures the participant's years of smoking, recorded at the baseline visit in 1971",
             "variable": "Years of Smoking",
             "column": "smoke_years",
-            "causes": {
-                "causeOutcome": {
+            "causes": [
+                {
                     "causes": true,
                     "degree": 50,
+                    "type": "causeOutcome",
                     "reasoning": "Smokers with long smoking history may have lower body weight than those with more recent smoking history"
                 },
-                "causeExposure": {
+                {
                     "causes": true,
                     "degree": 50,
+                    "type": "causeExposure",
                     "reasoning": "Age at smoking onset may have significant effects on smoking cessation success"
                 }
-            }
+            ]
         },
         {
             "description": "Measures how active the participant was in a usual day, recorded at the baseline visit in 191",
             "variable": "Active",
             "column": "active",
-            "causes": {
-                "causeOutcome": {
+            "causes":[
+                {
                     "causes": true,
                     "degree": 50,
+                    "type": "causeOutcome",
                     "reasoning": "Highly active lifestyle may have a positive impact on weight control"
                 },
-                "causeExposure": {
+                {
                     "causes": true,
                     "degree": 50,
+                    "type": "causeExposure",
                     "reasoning": "Highly active lifestyle may have a positive impact on smoking cessation"
                 }
-            }
+            ]
         },
         {
             "description": "Measures the amount of physical exercise in recreation the participant had, recorded at teh baseline visit in 1971",
             "variable": "Exercise",
             "column": "exercise",
-            "causes": {
-                "causeOutcome": {
+            "causes": [
+                {
                     "causes": true,
                     "degree": 50,
+                    "type": "causeOutcome",
                     "reasoning": "Frequent physical exercise is likely to have a positive impact on weight control"
                 },
-                "causeExposure": {
+                {
                     "causes": true,
                     "degree": 50,
+                    "type": "causeExposure",
                     "reasoning": "Frequent phyiscal exercise may help relieve nicotine withdrawal symptoms and smoking craving"
                 }
-            }
+            ]
         },
         {
             "description": "Measures the participant's body weights in kilograms, recorded at the baseline visit in 1971",
             "variable": "Body Weight in 1971 (kg)",
             "column": "weight_1971",
-            "causes": {
-                "causeOutcome": {
+            "causes": [
+                {
                     "causes": true,
                     "degree": 100,
+                    "type": "causeOutcome",
                     "reasoning": "Participant's weight at baseline is likely to affect the amount of weight gain they experience at the follow-up visit"
                 }
-            }
+            ]
         }
     ],
     "defineQuestion": {
