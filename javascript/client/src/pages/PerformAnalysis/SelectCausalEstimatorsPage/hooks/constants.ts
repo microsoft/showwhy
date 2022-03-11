@@ -63,8 +63,8 @@ export function getEstimatorByRanking(
 ): EstimatorType {
 	const ranking = estimators.map(
 		estimator => defaultEstimatorRanking[estimator],
-	)
+	) as number[]
 	const min = Math.min(...ranking)
 	const index = ranking.indexOf(min)
-	return estimators[index]
+	return estimators[index]!
 }

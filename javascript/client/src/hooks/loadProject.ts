@@ -251,7 +251,7 @@ async function processDataTables(
 	projectFiles?: ProjectFile[],
 ): Promise<TableContainer | undefined> {
 	if (tps !== undefined && projectFiles?.length) {
-		const steps = tps[0]?.steps
+		const steps = tps[0]?.steps ?? []
 		pipeline.clear()
 		return await runPipelineFromProjectFiles(projectFiles, steps, pipeline)
 	}
@@ -259,7 +259,7 @@ async function processDataTables(
 }
 
 function prepCausalFactors(factors?: Partial<CausalFactor>[]): CausalFactor[] {
-	return (factors || []).map(withRandomId)
+	return (factors || []).map(withRandomId) as CausalFactor[]
 }
 
 function prepDefineQuestion(define?: Partial<Experiment>): Experiment {
@@ -278,6 +278,9 @@ function prepDefineQuestion(define?: Partial<Experiment>): Experiment {
 }
 
 function prepTablesSpec(specifications?: Specification[]): Specification[] {
+	if (!specifications) {
+		throw new Error('specifications not ready')
+	}
 	return specifications
 }
 

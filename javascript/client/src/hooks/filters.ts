@@ -87,10 +87,10 @@ export function useMatchFilter(): (
 			filterObject: FilterObject,
 			actualFilterValue?: FilterObject | null,
 		) => {
-			const column = filterObject.column
+			const column = filterObject.column as string
 			const value = filterObject.value as string
-			const upper = filterObject.upper
-			const lower = filterObject.lower
+			const upper = filterObject.upper as number
+			const lower = filterObject.lower as number
 
 			const val = (d as any)[column]
 

@@ -51,10 +51,12 @@ export const GenericTableComponent: React.FC<{
 	const colSpan = useMemo((): number => {
 		if (tableTitle) {
 			const [item] = items
-			delete item.onClick
-			delete item.ref
-			const keys = Object.keys(item)
-			return keys.length
+			if (item) {
+				delete item.onClick
+				delete item.ref
+				const keys = Object.keys(item)
+				return keys.length
+			}
 		}
 		return 0
 	}, [items, tableTitle])

@@ -44,10 +44,10 @@ export function useSetOrUpdateOriginalTable(): (table: DataTable) => void {
 }
 
 export function useSelectOriginalTable(id: string): () => DataTable {
-	const tables = useRecoilValue(originalTablesState)
+	const tables = useRecoilValue(originalTablesState) ?? []
 
 	return useCallback(() => {
-		return tables?.find(t => t.tableId === id)
+		return tables.find(t => t.tableId === id) as DataTable
 	}, [tables, id])
 }
 

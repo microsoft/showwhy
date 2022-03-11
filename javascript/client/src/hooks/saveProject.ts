@@ -218,7 +218,7 @@ function useDownload(fileCollection: FileCollection) {
 			}
 			const copy = fileCollection.copy()
 			/* eslint-disable @essex/adjacent-await */
-			await copy.add(files)
+			await copy.add(files.filter(f => !!f) as FileWithPath[])
 			await copy.toZip()
 		},
 		[

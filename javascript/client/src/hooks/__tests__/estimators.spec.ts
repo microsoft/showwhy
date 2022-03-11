@@ -42,7 +42,7 @@ describe('estimatorsHooks', () => {
 	it('useLinearDoublyRobustLearner', () => {
 		const expected = ESTIMATORS.find(
 			e => e.type === EstimatorType.LinearDoublyRobustLearner,
-		)
+		)!
 		const { result } = renderHook(
 			() => useLinearDoublyRobustLearner([expected]),
 			{
@@ -56,7 +56,7 @@ describe('estimatorsHooks', () => {
 	it('useExposureAssignedEstimators', () => {
 		const expected = ESTIMATORS.find(
 			e => e.type === EstimatorType.InversePropensityWeighting,
-		)
+		)!
 		const { result } = renderHook(
 			() => useExposureAssignedEstimators([expected]),
 			{
@@ -70,7 +70,7 @@ describe('estimatorsHooks', () => {
 	it('useOutcomeBasedEstimators', () => {
 		const expected = ESTIMATORS.find(
 			e => e.type === EstimatorType.LinearRegression,
-		)
+		)!
 		const { result } = renderHook(() => useOutcomeBasedEstimators([expected]), {
 			wrapper: RecoilRoot,
 		})
