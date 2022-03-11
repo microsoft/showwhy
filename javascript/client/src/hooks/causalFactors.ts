@@ -6,6 +6,8 @@
 import type {
 	AlternativeModels,
 	CausalFactor,
+	Cause,
+	ExposureAndOutcomeCauses,
 	OptionalId,
 } from '@showwhy/types'
 import { BeliefDegree, CausalModelLevel } from '@showwhy/types'
@@ -27,12 +29,21 @@ export function useExcludedFactorsTestable(
 	return useMemo((): string[] => {
 		return causalFactors
 			.filter((factor: CausalFactor) => {
-				const keys = Object.keys(factor.causes || {})
+				const factorCauses = factor.causes || {}
+				const keys = Object.keys(factorCauses || {})
 				if (keys.length > 1) {
-					const lengthCaused = keys.filter(r => /^caused/.test(r)).length
-					const lengthCauses = keys.filter(r =>
-						/^cause(Exposure|Outcome)/.test(r),
+					const causesKeys = keys.filter(
+						a =>
+							(factorCauses[a as keyof ExposureAndOutcomeCauses] as Cause)
+								?.causes,
+					)
+
+					const lengthCaused = causesKeys.filter(k => /^caused/.test(k)).length
+
+					const lengthCauses = causesKeys.filter(k =>
+						/^cause(Exposure|Outcome)/.test(k),
 					).length
+
 					if (lengthCaused > 0 && lengthCauses > 0) {
 						return factor
 					}
