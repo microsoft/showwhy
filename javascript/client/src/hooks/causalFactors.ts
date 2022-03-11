@@ -32,17 +32,16 @@ export function useExcludedFactorsTestable(
 				const factorCauses = factor.causes || {}
 				const keys = Object.keys(factorCauses || {})
 				if (keys.length > 1) {
-					const caused = keys.filter(r => /^caused/.test(r))
-					const lengthCaused = caused.filter(
-						x =>
-							(factorCauses[x as keyof ExposureAndOutcomeCauses] as Cause)
+					const causesKeys = keys.filter(
+						a =>
+							(factorCauses[a as keyof ExposureAndOutcomeCauses] as Cause)
 								?.causes,
-					).length
-					const causes = keys.filter(r => /^cause(Exposure|Outcome)/.test(r))
-					const lengthCauses = causes.filter(
-						x =>
-							(factorCauses[x as keyof ExposureAndOutcomeCauses] as Cause)
-								?.causes,
+					)
+
+					const lengthCaused = causesKeys.filter(k => /^caused/.test(k)).length
+
+					const lengthCauses = causesKeys.filter(k =>
+						/^cause(Exposure|Outcome)/.test(k),
 					).length
 
 					if (lengthCaused > 0 && lengthCauses > 0) {
