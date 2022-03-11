@@ -12,8 +12,8 @@
 		"build": "essex build"
 	},
 	"devDependencies": {
-		"@essex/scripts": "^20.4.7",
+		"@essex/scripts": "^20.5.1",
 		"@essex/tsconfig-base": "^1.0.2",
-		"@types/react": "^17.0.39"
+		"@types/react": "^17.0.40"
 	}
 }

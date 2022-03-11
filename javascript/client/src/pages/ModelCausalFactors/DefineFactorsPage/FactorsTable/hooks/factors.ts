@@ -48,7 +48,7 @@ export function useSaveFactors(
 			setValues(prev => [...(prev || []).filter(x => x.id !== id), newValue])
 			const index = causalFactors.findIndex(v => v.id === id)
 			const oldFactor = causalFactors.find(x => x.id === id)
-			const oldCauses = oldFactor?.causes as ExposureAndOutcomeCauses
+			const oldCauses = oldFactor?.causes
 			const causes = {
 				...oldCauses,
 				[causeType]: {

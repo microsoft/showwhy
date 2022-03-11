@@ -33,7 +33,10 @@ export function useSetOrUpdateOriginalTable(): (table: DataTable) => void {
 	return useCallback(
 		(table: DataTable) => {
 			setOriginalTable(prev => {
-				return [...prev?.filter(i => i.tableId !== table.tableId), table]
+				return [
+					...(prev?.filter(i => i.tableId !== table.tableId) ?? []),
+					table,
+				]
 			})
 		},
 		[setOriginalTable],
@@ -44,7 +47,7 @@ export function useSelectOriginalTable(id: string): () => DataTable {
 	const tables = useRecoilValue(originalTablesState)
 
 	return useCallback(() => {
-		return tables?.find(t => t.tableId === id) as DataTable
+		return tables?.find(t => t.tableId === id)
 	}, [tables, id])
 }
 

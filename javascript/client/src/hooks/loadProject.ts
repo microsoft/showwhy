@@ -5,7 +5,6 @@
 import type {
 	Pipeline,
 	Specification,
-	Step as FileStep,
 	TableContainer,
 	TableStore,
 } from '@data-wrangling-components/core'
@@ -85,7 +84,7 @@ export function useLoadProject(
 			let workspace: any
 
 			if (source === ProjectSource.zip) {
-				const { json, name } = zip as ZipData
+				const { json, name } = zip
 				workspace = {
 					...json,
 					name,
@@ -99,12 +98,7 @@ export function useLoadProject(
 					}))) as Workspace
 			}
 
-			const {
-				tables = [],
-				results,
-				notebooks = [],
-				runHistory = [],
-			} = zip as ZipData
+			const { tables = [], results, notebooks = [], runHistory = [] } = zip
 
 			const {
 				primarySpecification,
@@ -159,7 +153,7 @@ export function useLoadProject(
 
 			const completed = getStepUrls(workspace.todoPages, true)
 			setAllStepStatus(completed, StepStatus.Done)
-			updateCollection(workspace, tables, notebooks)
+			void updateCollection(workspace, tables, notebooks)
 			updateRunHistory(runHistory)
 			setConfigJson(workspace)
 		},
@@ -257,7 +251,7 @@ async function processDataTables(
 	projectFiles?: ProjectFile[],
 ): Promise<TableContainer | undefined> {
 	if (tps !== undefined && projectFiles?.length) {
-		const steps = tps[0]?.steps as FileStep[]
+		const steps = tps[0]?.steps
 		pipeline.clear()
 		return await runPipelineFromProjectFiles(projectFiles, steps, pipeline)
 	}
@@ -265,7 +259,7 @@ async function processDataTables(
 }
 
 function prepCausalFactors(factors?: Partial<CausalFactor>[]): CausalFactor[] {
-	return (factors || []).map(withRandomId) as CausalFactor[]
+	return (factors || []).map(withRandomId)
 }
 
 function prepDefineQuestion(define?: Partial<Experiment>): Experiment {
@@ -284,7 +278,7 @@ function prepDefineQuestion(define?: Partial<Experiment>): Experiment {
 }
 
 function prepTablesSpec(specifications?: Specification[]): Specification[] {
-	return specifications as Specification[]
+	return specifications
 }
 
 function prepElement(element: Element): Element {

@@ -71,7 +71,7 @@ function useGetNodeProperties(): (fileName: string) => Partial<GraphNodeData> {
 			const [dataframeName] = fileName.split('.')
 
 			const properties = {
-				...buildSpecs(dataframeName!, population, exposure, outcome),
+				...buildSpecs(dataframeName, population, exposure, outcome),
 				model_specs: buildAlternativeModels(
 					maximumLevel,
 					minimumModel,

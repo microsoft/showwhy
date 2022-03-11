@@ -39,7 +39,7 @@ function useOnInputChange(): (
 			} as Element
 
 			const newElements = { ...defineQuestion }
-			;(newElements as any)[type] = newValues
+			newElements[type] = newValues
 			setDefineQuestion(newElements)
 		},
 		[defineQuestion, setDefineQuestion],

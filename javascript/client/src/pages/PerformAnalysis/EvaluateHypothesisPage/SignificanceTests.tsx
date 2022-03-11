@@ -51,16 +51,14 @@ export const SignificanceTests: React.FC<{
 			)}
 
 			{significanceTestsResult &&
-				isProcessingStatus(
-					significanceTestsResult.status as NodeResponseStatus,
-				) && (
+				isProcessingStatus(significanceTestsResult.status) && (
 					<ProgressBar
 						description={
 							isCanceled ? 'This could take a few seconds.' : undefined
 						}
 						label={`Significance test: Simulations ${significanceTestsResult?.simulation_completed}/${significanceTestsResult?.total_simulations}`}
-						percentage={significanceTestsResult?.percentage as number}
-						startTime={significanceTestsResult?.startTime as Date}
+						percentage={significanceTestsResult?.percentage}
+						startTime={significanceTestsResult?.startTime}
 						onCancel={() => (!isCanceled ? cancelRun() : undefined)}
 					/>
 				)}

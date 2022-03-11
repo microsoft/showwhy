@@ -22,7 +22,7 @@ export function useDownloadResult(): (fileType: FileType) => void {
 		(fileType: FileType) => {
 			const fileName =
 				fileType === FileType.csv ? DownloadType.csv : DownloadType.jupyter
-			getResult(fileName).then(res => {
+			void getResult(fileName).then(res => {
 				if (!res) return
 				const file = window.URL.createObjectURL(res.blob)
 				const anchor = document.createElement('a')

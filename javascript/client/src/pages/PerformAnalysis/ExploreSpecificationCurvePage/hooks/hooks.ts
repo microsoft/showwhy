@@ -38,7 +38,7 @@ export function useLoadSpecificationData(): Specification[] {
 						setData([])
 					}
 				}
-				f()
+				void f()
 			}
 		}
 	}, [setData, defaultRun, defaultDatasetResult])

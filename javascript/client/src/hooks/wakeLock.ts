@@ -37,14 +37,14 @@ export function useWakeLock(): void {
 		/**
 		 * Request the wake lock on mount
 		 */
-		requestWakeLock()
+		void requestWakeLock()
 
 		/**
 		 * Request WakeLock when page is visible again
 		 */
-		document.addEventListener('visibilitychange', async () => {
+		document.addEventListener('visibilitychange', () => {
 			if (document.visibilityState === 'visible') {
-				requestWakeLock()
+				void requestWakeLock()
 			}
 		})
 
@@ -52,7 +52,7 @@ export function useWakeLock(): void {
 		 * Release WakeLock on unmount
 		 */
 		return () => {
-			wakeLock?.release().then(() => {
+			void wakeLock?.release().then(() => {
 				wakeLock = null
 			})
 		}

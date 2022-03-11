@@ -63,7 +63,7 @@ export const LoadDataPage: React.FC = memo(function LoadDataPage() {
 						loading={loading}
 						filesCount={fileCount}
 						text={
-							!!selectedFile
+							selectedFile
 								? 'Upload dataset'
 								: 'Drop or upload a .zip or .csv file'
 						}

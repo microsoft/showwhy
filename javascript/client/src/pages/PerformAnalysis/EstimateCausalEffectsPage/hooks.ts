@@ -103,13 +103,10 @@ export function useBusinessLogic(): {
 		trueLoadingSpecCount,
 	])
 
-	const uploadProjectFiles = useCallback(
-		async (projectFiles: ProjectFile[]) => {
-			const filesData = createFormData(projectFiles)
-			return api.uploadFiles(filesData)
-		},
-		[],
-	)
+	const uploadProjectFiles = useCallback((projectFiles: ProjectFile[]) => {
+		const filesData = createFormData(projectFiles)
+		return api.uploadFiles(filesData)
+	}, [])
 
 	const saveNewRunHistory = useCallback(() => {
 		const initialRun = initialRunHistory(

@@ -2,7 +2,6 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import type { Estimator } from '@showwhy/types'
 import { EstimatorGroup, EstimatorType } from '@showwhy/types'
 import { renderHook } from '@testing-library/react-hooks'
 import { RecoilRoot } from 'recoil'
@@ -43,7 +42,7 @@ describe('estimatorsHooks', () => {
 	it('useLinearDoublyRobustLearner', () => {
 		const expected = ESTIMATORS.find(
 			e => e.type === EstimatorType.LinearDoublyRobustLearner,
-		) as Estimator
+		)
 		const { result } = renderHook(
 			() => useLinearDoublyRobustLearner([expected]),
 			{
@@ -57,7 +56,7 @@ describe('estimatorsHooks', () => {
 	it('useExposureAssignedEstimators', () => {
 		const expected = ESTIMATORS.find(
 			e => e.type === EstimatorType.InversePropensityWeighting,
-		) as Estimator
+		)
 		const { result } = renderHook(
 			() => useExposureAssignedEstimators([expected]),
 			{
@@ -71,7 +70,7 @@ describe('estimatorsHooks', () => {
 	it('useOutcomeBasedEstimators', () => {
 		const expected = ESTIMATORS.find(
 			e => e.type === EstimatorType.LinearRegression,
-		) as Estimator
+		)
 		const { result } = renderHook(() => useOutcomeBasedEstimators([expected]), {
 			wrapper: RecoilRoot,
 		})

@@ -88,10 +88,9 @@ function findRunError(
 		const error =
 			response.partial_results &&
 			response.partial_results.find(r => r.state === NodeResponseStatus.Failed)
-		const errorMessage = !!error
+		const errorMessage = error
 			? error?.traceback || error?.error
-			: (response?.output as string) ||
-			  'Undefined error. Please, execute the run again.'
+			: response?.output || 'Undefined error. Please, execute the run again.'
 		console.log('Traceback:', errorMessage)
 		return errorMessage
 	}

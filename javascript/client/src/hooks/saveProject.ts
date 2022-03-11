@@ -206,7 +206,7 @@ function useDownload(fileCollection: FileCollection) {
 				new Blob([JSON.stringify(workspace, null, 4)]),
 				{ name: 'workspace_config.json' },
 			)
-			const files = [file, outputTable].filter(t => !!t) as FileWithPath[]
+			const files = [file, outputTable].filter(t => !!t)
 			if (csv?.file) {
 				files.push(csv.file)
 			}

@@ -24,7 +24,7 @@ export function useSaveDefinition(
 ): (newDefinition: CausalFactor, type: PageType) => void {
 	return useCallback(
 		(newDefinition: CausalFactor, type: PageType) => {
-			let newDefinitionList = [...(experiment as any)[type]?.definition] || []
+			let newDefinitionList = [...((experiment as any)[type]?.definition ?? [])]
 
 			const index = (experiment as any)[type]?.definition?.findIndex(
 				(x: ElementDefinition) => x.id === newDefinition?.id,

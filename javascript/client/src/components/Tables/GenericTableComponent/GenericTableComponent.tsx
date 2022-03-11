@@ -51,9 +51,9 @@ export const GenericTableComponent: React.FC<{
 	const colSpan = useMemo((): number => {
 		if (tableTitle) {
 			const [item] = items
-			delete item!.onClick
-			delete item!.ref
-			const keys = Object.keys(item!)
+			delete item.onClick
+			delete item.ref
+			const keys = Object.keys(item)
 			return keys.length
 		}
 		return 0
@@ -99,16 +99,16 @@ export const GenericTableComponent: React.FC<{
 	if (!headers.props) {
 		headers.props = {}
 	}
-	if (!headers.props?.hasOwnProperty('isSticky')) {
+	if (!headers.props.hasOwnProperty('isSticky')) {
 		headers.props.isSticky = true
 	}
-	if (!headers.props?.hasOwnProperty('styles')) {
+	if (!headers.props.hasOwnProperty('styles')) {
 		headers.props.styles = {}
 	}
-	if (!headers.props?.hasOwnProperty('isVisible')) {
+	if (!headers.props.hasOwnProperty('isVisible')) {
 		headers.props.isVisible = true
 	}
-	if (!headers.props?.hasOwnProperty('isSortable')) {
+	if (!headers.props.hasOwnProperty('isSortable')) {
 		headers.props.isSortable = false
 	}
 
