@@ -14,6 +14,8 @@ import {
 
 import type { DataTable } from '~types'
 
+const NO_TABLES: DataTable[] = []
+
 const originalTablesState = atom<DataTable[]>({
 	key: 'original-tables-store',
 	default: [],
@@ -44,10 +46,10 @@ export function useSetOrUpdateOriginalTable(): (table: DataTable) => void {
 }
 
 export function useSelectOriginalTable(id: string): () => DataTable {
-	const tables = useRecoilValue(originalTablesState) ?? []
+	const tables = useRecoilValue(originalTablesState) ?? NO_TABLES
 
 	return useCallback(() => {
-		return tables.find(t => t.tableId === id) as DataTable
+		return tables.find(t => t.tableId === id)!
 	}, [tables, id])
 }
 

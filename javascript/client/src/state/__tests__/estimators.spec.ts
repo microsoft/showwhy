@@ -9,7 +9,7 @@ import { RecoilRoot, snapshot_UNSTABLE } from 'recoil'
 
 import { EXPOSURE_ESTIMATORS } from '../../hooks/estimators'
 import { estimatorState, useAddEstimator, useEstimators } from '../estimators'
-const [estimator] = EXPOSURE_ESTIMATORS
+const estimator: Estimator = EXPOSURE_ESTIMATORS[0]!
 
 describe('estimatorState', () => {
 	describe('useEstimators', () => {

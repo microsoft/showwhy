@@ -10,6 +10,9 @@
 		"@typescript-eslint/no-non-null-assertion": 0,
 		"no-prototype-builtins": 0,
 
+		// TS/ESlint clashing
+		"@typescript-eslint/no-unnecessary-type-assertion": 0,
+
 		// TODO: re-enable
 		"@typescript-eslint/no-unsafe-argument": 0,
 		"@typescript-eslint/no-unsafe-member-access": 0,

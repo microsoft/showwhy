@@ -12,6 +12,7 @@
 		"bundle": "vite build",
 		"build": "yarn typecheck && yarn bundle",
 		"typecheck": "tsc -b .",
+		"typecheck:client": "yarn typecheck",
 		"build-dev": "yarn typecheck && yarn bundle --mode dev",
 		"build:client-dev": "yarn build-dev && yarn archive",
 		"build:client": "yarn build && yarn archive",
