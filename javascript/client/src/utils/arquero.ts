@@ -42,7 +42,7 @@ export async function loadTable(
 	table: DataTableFileDefinition,
 	tables?: File[],
 ): Promise<ColumnTable> {
-	const file = tables?.find(t => t.name === table.name) as File
+	const file = tables?.find(t => t.name === table.name)
 	const text = await getTextFromFile(file as BaseFile)
 	const delimiter = table.delimiter || guessDelimiter(table.name)
 	return createDefaultTable(text, delimiter)
@@ -66,7 +66,7 @@ export async function fetchTables(
 	return Promise.all(
 		tables.map(table => {
 			if (isZipUrl(table.url)) {
-				return loadTable(table, tableFiles as File[])
+				return loadTable(table, tableFiles)
 			}
 			return fetchTable(table)
 		}),
@@ -90,7 +90,7 @@ export async function runPipeline(
 	tables.forEach((table, index) => {
 		store.set({
 			id: table.name,
-			table: fetched[index] as ColumnTable,
+			table: fetched[index],
 			name: table.name,
 		})
 	})

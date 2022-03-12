@@ -6,6 +6,7 @@
 import type { Plugin } from 'vite'
 
 async function tf(code, id) {
+	await Promise.resolve()
 	if (!id.endsWith('.md')) return null
 	// eslint-disable-next-line
 	return 'export default `' + `${code}` + '`'

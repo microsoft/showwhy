@@ -38,8 +38,10 @@ function useOnInputChange(): (
 				[field]: value,
 			} as Element
 
-			const newElements = { ...defineQuestion }
-			;(newElements as any)[type] = newValues
+			const newElements: Experiment & Record<string, unknown> = {
+				...defineQuestion,
+			}
+			newElements[type] = newValues
 			setDefineQuestion(newElements)
 		},
 		[defineQuestion, setDefineQuestion],

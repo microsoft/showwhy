@@ -111,7 +111,7 @@ export const VegaHost: React.FC<{
 // this batches them up add the end of the render
 function useRenderTriggers(view: View, ...deps: unknown[]) {
 	useEffect(() => {
-		view.runAsync()
+		void view.runAsync()
 		/* eslint-disable-next-line react-hooks/exhaustive-deps */
 	}, [view, ...deps])
 }

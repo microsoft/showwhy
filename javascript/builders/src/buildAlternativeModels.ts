@@ -24,7 +24,9 @@ export function buildAlternativeModels(
 	}
 
 	const unadjusted = buildModelLevel('Unadjusted', unadju)
-	modelsList.push(unadjusted as AlternativeModelSpec)
+	if (unadjusted) {
+		modelsList.push(unadjusted)
+	}
 
 	return modelsList
 }

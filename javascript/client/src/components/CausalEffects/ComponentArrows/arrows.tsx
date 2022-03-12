@@ -61,7 +61,7 @@ const ArrowLabel = styled.span<{ size: CausalEffectSize; color?: string }>`
 	font-weight: bold;
 	font-size: ${({ size }) =>
 		size === CausalEffectSize.Small ? '12px' : '14px'};
-	padding: 0 ${({ color }) => (!!color ? '4px' : '')};
+	padding: 0 ${({ color }) => (color ? '4px' : '')};
 	color: ${({ color }) => color};
 	background-color: white;
 `

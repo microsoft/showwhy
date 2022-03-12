@@ -15,7 +15,7 @@ export function useExampleProjects(): FileDefinition[] {
 			)
 			setExamples(json as FileDefinition[])
 		}
-		f()
+		void f()
 	}, [setExamples])
 	return examples
 }

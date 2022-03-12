@@ -30,7 +30,7 @@ export const SpecificationsList: React.FC<SpecificationsListProp> = memo(
 
 		return (
 			<Container>
-				<Title>Analysis specifications as combinations of: ​​</Title>
+				<Title>Analysis specifications as combinations of:</Title>
 
 				<List>
 					<ListItem data-pw="specification-population">
@@ -43,7 +43,6 @@ export const SpecificationsList: React.FC<SpecificationsListProp> = memo(
 						) : (
 							<Link to="/define/population">Define population</Link>
 						)}
-						​
 					</ListItem>
 					<ListItem data-pw="specification-exposure">
 						{definitions?.exposure ? (
@@ -55,7 +54,6 @@ export const SpecificationsList: React.FC<SpecificationsListProp> = memo(
 						) : (
 							<Link to="/define/exposure">Define exposure</Link>
 						)}
-						​
 					</ListItem>
 					<ListItem data-pw="specification-outcome">
 						{definitions?.outcome ? (
@@ -67,10 +65,9 @@ export const SpecificationsList: React.FC<SpecificationsListProp> = memo(
 						) : (
 							<Link to="/define/outcome">Define outcome</Link>
 						)}
-						​
 					</ListItem>
 					<ListItem data-pw="specification-causal-models">
-						<Bold>{causalModels.length + 1}</Bold> causal models​
+						<Bold>{causalModels.length + 1}</Bold> causal models
 					</ListItem>
 					<ListItem data-pw="specification-estimators">
 						<Bold>{totalEstimatorsCount}</Bold> estimator configuration

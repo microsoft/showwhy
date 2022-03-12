@@ -2,13 +2,14 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import type { Estimator } from '@showwhy/types'
 import { renderHook } from '@testing-library/react-hooks'
 import { useEffect } from 'react'
 import { RecoilRoot, snapshot_UNSTABLE } from 'recoil'
 
 import { EXPOSURE_ESTIMATORS } from '../../hooks/estimators'
 import { estimatorState, useAddEstimator, useEstimators } from '../estimators'
-const [estimator] = EXPOSURE_ESTIMATORS
+const estimator: Estimator = EXPOSURE_ESTIMATORS[0]!
 
 describe('estimatorState', () => {
 	describe('useEstimators', () => {
@@ -40,7 +41,7 @@ describe('estimatorState', () => {
 					const addEstimator = useAddEstimator()
 					const estimators = useEstimators()
 					useEffect(() => {
-						addEstimator(estimator!)
+						addEstimator(estimator)
 					}, [addEstimator])
 
 					return estimators
@@ -61,7 +62,7 @@ describe('estimatorState', () => {
 					const addEstimator = useAddEstimator()
 					const estimators = useEstimators()
 					useEffect(() => {
-						addEstimator(estimator!)
+						addEstimator(estimator)
 					}, [addEstimator])
 
 					return estimators

@@ -27,7 +27,7 @@ export const BoxCausalModel: React.FC<{
 			<Title>{title}</Title>
 
 			<Content>
-				{!!children
+				{children
 					? children
 					: list?.length
 					? list?.map(item => <Text key={item}>{item}</Text>)

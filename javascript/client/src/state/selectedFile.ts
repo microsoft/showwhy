@@ -21,6 +21,7 @@ const selectedFileState = atom<Maybe<ProjectFile>>({
 	dangerouslyAllowMutability: true,
 	effects: [
 		({ setSelf, getPromise }) => {
+			/* eslint-disable-next-line @typescript-eslint/no-misused-promises */
 			const subscription = filesStateChanged.subscribe(async () => {
 				const files = await getPromise(filesState)
 				setSelf(files[0])

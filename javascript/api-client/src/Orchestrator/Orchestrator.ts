@@ -7,7 +7,6 @@ import type {
 	Maybe,
 	NodeRequest,
 	NodeResponse,
-	NodeResponseStatus,
 	OrchestratorStatusResponse,
 	StatusResponse,
 } from '@showwhy/types'
@@ -60,7 +59,7 @@ export class Orchestrator<UpdateStatus> {
 		)
 
 		let estimateStatus: Partial<OrchestratorStatusResponse> | null = null
-		while (isProcessingStatus(status?.runtimeStatus as NodeResponseStatus)) {
+		while (isProcessingStatus(status?.runtimeStatus)) {
 			// eslint-disable-next-line @typescript-eslint/no-extra-semi
 			;[status, estimateStatus] = await Promise.all([
 				this.api.getOrchestratorStatus(

@@ -23,7 +23,7 @@ export const FieldGroup: React.FC<{
 					value={question?.label}
 					onChange={(_, value) => onChange(value, type, 'label')}
 					label="Label"
-					placeholder={`Enter short label describing the ${type} of interest​`}
+					placeholder={`Enter short label describing the ${type} of interest`}
 					data-pw="field-group-label"
 					id={`${type.toLowerCase()}-label`}
 				/>
@@ -42,7 +42,7 @@ export const FieldGroup: React.FC<{
 				rows={3}
 				onChange={(_, value) => onChange(value, type, 'description')}
 				label="Description"
-				placeholder={`Enter full description of the ${type} of interest​`}
+				placeholder={`Enter full description of the ${type} of interest`}
 				multiline
 				data-pw="field-group-description"
 				id={`${type.toLowerCase()}-description`}

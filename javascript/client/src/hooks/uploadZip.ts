@@ -66,7 +66,7 @@ export function useHandleFiles(
 			/* eslint-disable @essex/adjacent-await */
 			await validateProjectFiles(fileCollection)
 			const files = await groupFilesByType(fileCollection)
-			loadProject(undefined, files)
+			void loadProject(undefined, files)
 		} catch (e) {
 			if (onError) {
 				onError((e as Error).message)
