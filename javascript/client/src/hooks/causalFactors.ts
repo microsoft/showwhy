@@ -6,11 +6,13 @@
 import type {
 	AlternativeModels,
 	CausalFactor,
-	Cause,
-	ExposureAndOutcomeCauses,
 	OptionalId,
 } from '@showwhy/types'
-import { BeliefDegree, CausalModelLevel } from '@showwhy/types'
+import {
+	BeliefDegree,
+	CausalFactorType,
+	CausalModelLevel,
+} from '@showwhy/types'
 import { useCallback, useMemo } from 'react'
 import type { SetterOrUpdater } from 'recoil'
 import { v4 } from 'uuid'
@@ -29,24 +31,15 @@ export function useExcludedFactorsTestable(
 	return useMemo((): string[] => {
 		return causalFactors
 			.filter((factor: CausalFactor) => {
-				const factorCauses = factor.causes || {}
-				const keys = Object.keys(factorCauses || {})
-				if (keys.length > 1) {
-					const causesKeys = keys.filter(
-						a =>
-							(factorCauses[a as keyof ExposureAndOutcomeCauses] as Cause)
-								?.causes,
+				const factorCauses = factor.causes?.filter(x => x.causes) || []
+				if (factorCauses.length > 1) {
+					const has = factorCauses.some(
+						x =>
+							/^caused/.test(x.type) &&
+							factorCauses.some(a => /^cause(Exposure|Outcome)/.test(a.type)),
 					)
 
-					const lengthCaused = causesKeys.filter(k => /^caused/.test(k)).length
-
-					const lengthCauses = causesKeys.filter(k =>
-						/^cause(Exposure|Outcome)/.test(k),
-					).length
-
-					if (lengthCaused > 0 && lengthCauses > 0) {
-						return factor
-					}
+					return has ? factor : false
 				}
 				return false
 			})
@@ -122,19 +115,23 @@ export function useAlternativeModelsTestable(
 				if (shouldUseVariable) {
 					variable = factor.variable
 				}
-				const causes = factor.causes || {}
-				const outcome = 'causeOutcome'
-				const exposure = 'causeExposure'
+				const causes = factor.causes || []
+				const causeExposure = causes.find(
+					c => c.type === CausalFactorType.CauseExposure,
+				)
+				const causeOutcome = causes.find(
+					c => c.type === CausalFactorType.CauseOutcome,
+				)
 
-				if (causes[exposure]?.causes && causes[outcome]?.causes) {
-					const degree = causes[exposure]?.degree
+				if (causeExposure?.causes && causeOutcome?.causes) {
+					const degree = causeExposure?.degree
 					if (degree && shouldIncludeInDegree(degree, causalLevel)) {
 						confoundersArray.push(variable)
 					}
 				}
 
-				if (causes[outcome]?.causes && !causes[exposure]?.causes) {
-					const degree = causes[outcome]?.degree
+				if (causeOutcome?.causes && !causeExposure?.causes) {
+					const degree = causeOutcome?.degree
 					if (degree && shouldIncludeInDegree(degree, causalLevel)) {
 						outcomeArray.push(variable)
 					}

@@ -3,6 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import type { CausalFactorType } from '@showwhy/types'
 import { memo } from 'react'
 import styled from 'styled-components'
 
@@ -13,7 +14,7 @@ import { useFactorsTable } from './hooks'
 
 export const FactorsTable: React.FC<{
 	headers: { fieldName: string; value: string | React.ReactNode }[]
-	causeType: string
+	causeType: CausalFactorType
 }> = memo(function FactorsTable({ headers, causeType }) {
 	const { flatFactorsList, itemList } = useFactorsTable(causeType)
 
