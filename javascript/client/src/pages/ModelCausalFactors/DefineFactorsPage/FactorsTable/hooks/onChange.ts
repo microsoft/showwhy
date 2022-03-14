@@ -14,7 +14,8 @@ export function useOnChangeCauses(
 ): (id: string, checked: boolean) => void {
 	return useCallback(
 		(id: string, checked: boolean) => {
-			const newValue = flatFactorsList.find(x => x.id === id) as Cause
+			const newValue =
+				(flatFactorsList.find(x => x.id === id) as Cause) || ({} as Cause)
 			newValue.causes = checked
 			if (checked && !newValue.degree) {
 				newValue.degree = BeliefDegree.Strong

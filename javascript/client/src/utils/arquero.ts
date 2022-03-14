@@ -30,7 +30,7 @@ export function createDefaultTable(
 	content: string,
 	delimiter = ',',
 ): ColumnTable {
-	return fromCSV(content, { delimiter }).derive(
+	return fromCSV(content, { delimiter, autoMax: 1000000 }).derive(
 		{
 			index: op.row_number(),
 		},

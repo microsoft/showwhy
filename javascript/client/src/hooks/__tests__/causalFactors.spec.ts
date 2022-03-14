@@ -3,8 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { jest } from '@jest/globals'
-import type { CausalFactor } from '@showwhy/types'
-import { BeliefDegree, CausalityLevel, CausalModelLevel } from '@showwhy/types'
+import type { CausalFactor} from '@showwhy/types';
+import { BeliefDegree, CausalFactorType , CausalityLevel, CausalModelLevel } from '@showwhy/types'
 import { renderHook } from '@testing-library/react-hooks'
 import { RecoilRoot } from 'recoil'
 import { v4 } from 'uuid'
@@ -22,31 +22,34 @@ const causalFactors: CausalFactor[] = [
 		description: '',
 		variable: 'Population',
 		level: CausalityLevel.Primary,
-		causes: {
-			causeOutcome: {
+		causes: [
+			{
 				causes: true,
 				degree: BeliefDegree.Moderate,
 				reasoning: '',
+				type: CausalFactorType.CauseOutcome,
 			},
-			causedByExposure: {
+			{
 				causes: true,
 				degree: BeliefDegree.Strong,
 				reasoning: '',
+				type: CausalFactorType.CausedByExposure,
 			},
-		},
+		],
 	},
 	{
 		id: v4(),
 		description: '',
 		level: CausalityLevel.Primary,
 		variable: 'Min_Pressure',
-		causes: {
-			causeOutcome: {
+		causes: [
+			{
 				causes: true,
 				degree: BeliefDegree.Strong,
 				reasoning: '',
+				type: CausalFactorType.CauseOutcome,
 			},
-		},
+		],
 	},
 	{
 		id: v4(),
@@ -54,31 +57,34 @@ const causalFactors: CausalFactor[] = [
 
 		level: CausalityLevel.Primary,
 		variable: 'Max_Pressure',
-		causes: {
-			causeOutcome: {
+		causes: [
+			{
 				causes: true,
 				degree: BeliefDegree.Weak,
 				reasoning: '',
+				type: CausalFactorType.CauseOutcome,
 			},
-		},
+		],
 	},
 	{
 		id: v4(),
 		description: '',
 		variable: 'Pressure',
 		level: CausalityLevel.Primary,
-		causes: {
-			causeExposure: {
+		causes: [
+			{
 				causes: true,
 				degree: BeliefDegree.Moderate,
 				reasoning: '',
+				type: CausalFactorType.CauseExposure,
 			},
-			causeOutcome: {
+			{
 				causes: true,
 				degree: BeliefDegree.Moderate,
 				reasoning: '',
+				type: CausalFactorType.CauseOutcome,
 			},
-		},
+		],
 	},
 ]
 const newItem: CausalFactor = {
@@ -87,13 +93,14 @@ const newItem: CausalFactor = {
 	variable: 'Category',
 
 	level: CausalityLevel.Primary,
-	causes: {
-		causeOutcome: {
+	causes: [
+		{
 			causes: true,
 			degree: BeliefDegree.Strong,
 			reasoning: '',
+			type: CausalFactorType.CauseOutcome,
 		},
-	},
+	],
 }
 
 describe('causalFactorsHooks', () => {

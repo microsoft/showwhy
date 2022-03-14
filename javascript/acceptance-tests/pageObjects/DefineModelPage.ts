@@ -10,7 +10,7 @@ const selectors: Record<string, string> = {
 	title: dataAttr('title'),
 	form: dataAttr('factors-form'),
 	definitionElement: dataAttr('definition-element'),
-	variablePicker: `${dataAttr('factors-form-variable-picker')} input`,
+	variableField: dataAttr('factors-form-variable-name'),
 	isPrimaryCheckbox: `${dataAttr('factors-form-is-primary')} input`,
 	description: dataAttr('factors-form-description'),
 	addButton: dataAttr('factors-form-add-button'),
@@ -41,7 +41,7 @@ export class DefineModelPage extends Page {
 		}
 
 		if (variable) {
-			await this.page.fill(selectors.variablePicker, variable)
+			await this.page.fill(selectors.variableField, variable)
 		}
 
 		if (description) {

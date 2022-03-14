@@ -27,7 +27,6 @@ export const DefineModelDomainPage: React.FC = memo(
 			descriptionInterest,
 			itemList,
 			pageType,
-			variables,
 			defineQuestion,
 			addDefinition,
 			editDefinition,
@@ -57,7 +56,6 @@ export const DefineModelDomainPage: React.FC = memo(
 							onCancel={() => setDefinitionToEdit(undefined)}
 							onSave={editDefinition}
 							pageType={pageType}
-							variables={variables}
 						/>
 						<FactorsDefinitionForm
 							onAdd={definition =>
@@ -65,7 +63,6 @@ export const DefineModelDomainPage: React.FC = memo(
 							}
 							defineQuestion={defineQuestion}
 							pageType={pageType}
-							variables={variables}
 						/>
 					</TableContainer>
 				</FormContainer>

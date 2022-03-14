@@ -33,7 +33,6 @@ export const ConsiderCausalFactorsPage: React.FC = memo(
 			goToFactorsPage,
 			page,
 			pageType,
-			variables,
 		} = useBusinessLogic()
 
 		return (
@@ -52,7 +51,6 @@ export const ConsiderCausalFactorsPage: React.FC = memo(
 							setFactor(undefined)
 						}}
 						pageType={pageType}
-						variables={variables}
 					/>
 				</Container>
 				<FactorsDefinitionForm
@@ -60,7 +58,6 @@ export const ConsiderCausalFactorsPage: React.FC = memo(
 					onAdd={addFactor}
 					showLevel={false}
 					pageType={pageType}
-					variables={variables}
 				/>
 				{page ? (
 					<ButtonContainer>

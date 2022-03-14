@@ -10,4 +10,5 @@ export interface FlatCausalFactor {
 	causes: boolean
 	degree: number
 	reasoning: string
+	type: string
 }

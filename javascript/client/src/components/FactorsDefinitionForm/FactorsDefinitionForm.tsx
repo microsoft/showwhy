@@ -3,7 +3,6 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { IComboBoxOption } from '@fluentui/react'
 import type {
 	CausalFactor,
 	Experiment,
@@ -22,7 +21,6 @@ export const FactorsDefinitionForm: React.FC<{
 	showLevel?: Maybe<boolean>
 	defineQuestion?: Experiment
 	pageType: PageType
-	variables?: IComboBoxOption[]
 	onAdd?: (factor: OptionalId<CausalFactor>) => void
 	onChange?: (f: Partial<CausalFactor>) => void
 }> = memo(function FactorsDefinitionForm({
@@ -32,7 +30,6 @@ export const FactorsDefinitionForm: React.FC<{
 	onChange,
 	showLevel = true,
 	pageType,
-	variables,
 }) {
 	const { level, description, variable } = useFactorsDefinitionForm({
 		factor,
@@ -40,7 +37,6 @@ export const FactorsDefinitionForm: React.FC<{
 		onChange,
 		onAdd,
 		pageType,
-		variables,
 	})
 
 	return (

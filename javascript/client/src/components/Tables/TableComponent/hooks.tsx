@@ -3,7 +3,6 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { IComboBoxOption } from '@fluentui/react'
 import { Checkbox } from '@fluentui/react'
 import type {
 	ElementDefinition,
@@ -26,7 +25,6 @@ export function useTableComponent(
 	definitionToEdit: Maybe<ElementDefinition>,
 	factorToEdit: Maybe<ElementDefinition>,
 	pageType: PageType,
-	variables: Maybe<IComboBoxOption[]>,
 	onDelete?: Maybe<Handler1<ElementDefinition>>,
 	onSave?: Maybe<Handler1<ElementDefinition>>,
 	onEdit?: Maybe<Handler1<ElementDefinition>>,
@@ -45,7 +43,6 @@ export function useTableComponent(
 		factor: (definitionToEdit || factorToEdit) as ElementDefinition,
 		onChange,
 		pageType,
-		variables,
 	})
 	const headersData = useHeadersData(
 		headers,

@@ -5,8 +5,8 @@
 
 import type {
 	CausalFactor,
+	CausalFactorType,
 	Cause,
-	ExposureAndOutcomeCauses,
 	FlatCausalFactor,
 	Setter,
 } from '@showwhy/types'
@@ -16,14 +16,16 @@ import { replaceItemAtIndex } from '~utils'
 
 export function useFlatFactorsList(
 	causalFactors: CausalFactor[],
-	causeType: string,
+	causeType: CausalFactorType,
 	values?: CausalFactor[],
 ): FlatCausalFactor[] {
 	return useMemo((): FlatCausalFactor[] => {
 		return causalFactors.map((factor: CausalFactor) => {
 			const equal =
-				values?.find(existing => existing.id === factor.id) ||
-				(factor.causes && (factor.causes as any)[causeType])
+				values
+					?.find(existing => existing.id === factor.id)
+					?.causes?.find(c => c.type === causeType) ||
+				(factor.causes && factor.causes.find(c => c.type === causeType))
 
 			return {
 				variable: factor.variable,
@@ -39,34 +41,37 @@ export function useFlatFactorsList(
 
 export function useSaveFactors(
 	causalFactors: CausalFactor[],
-	causeType: string,
+	causeType: CausalFactorType,
 	setValues: Setter<CausalFactor[]>,
 	save: (factors: CausalFactor[]) => void,
-): (id: string, value: any) => void {
+): (id: string, value: Cause) => void {
 	return useCallback(
-		(id: string, newValue) => {
-			setValues(prev => [...(prev || []).filter(x => x.id !== id), newValue])
+		(id: string, newValue: Cause) => {
 			const index = causalFactors.findIndex(v => v.id === id)
 			const oldFactor = causalFactors.find(x => x.id === id)
-			const oldCauses = oldFactor?.causes as ExposureAndOutcomeCauses
-			const causes = {
-				...oldCauses,
-				[causeType]: {
+			const oldCauses = oldFactor?.causes?.filter(
+				x => x.type !== causeType,
+			) as Cause[]
+			const causes = [
+				...(oldCauses || []),
+				{
 					causes: newValue.causes,
 					degree: newValue.degree ?? null,
 					reasoning: newValue.reasoning,
+					type: causeType,
 				} as Cause,
-			} as ExposureAndOutcomeCauses
-
+			]
 			const factorObject = {
 				...oldFactor,
 				causes,
 			} as CausalFactor
+
 			const newFactorsList = replaceItemAtIndex(
 				causalFactors,
 				index,
 				factorObject,
 			)
+			setValues(newFactorsList)
 			save(newFactorsList)
 		},
 		[causalFactors, setValues, causeType, save],

@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { Handler } from '@showwhy/types'
+import type { CausalFactorType, Handler } from '@showwhy/types'
 import { upperFirst } from 'lodash'
 import { useMemo } from 'react'
 
@@ -12,7 +12,7 @@ import { Pages } from '~types'
 
 export function useBusinessLogic(): {
 	pageName: string
-	causeType: string
+	causeType: CausalFactorType
 	tableHeader: Array<{ fieldName: string; value: string }>
 	goToConsiderCausalFactors: Handler
 } {
@@ -30,7 +30,7 @@ export function useBusinessLogic(): {
 
 function usePageComponents(): {
 	pageName: string
-	causeType: string
+	causeType: CausalFactorType
 	question: string
 } {
 	const pageType = usePageType()
@@ -40,9 +40,9 @@ function usePageComponents(): {
 		return pop.join(' ')
 	}, [pageType])
 
-	const causeType: string = useMemo(() => {
+	const causeType: CausalFactorType = useMemo(() => {
 		const pop = pageType.split('-').map((x, i) => (i > 0 ? upperFirst(x) : x))
-		return pop.join('')
+		return pop.join('') as CausalFactorType
 	}, [pageType])
 
 	const question = useMemo((): string => {
