@@ -36,7 +36,10 @@ async function validateProjectFiles(
 	if (!fileCollection) {
 		throw new Error('No file collection provided')
 	}
-	const [jsonFile]: BaseFile[] = fileCollection.list(FileType.json)
+
+	const jsonFile: BaseFile | undefined = fileCollection
+		.list(FileType.json)
+		.find(a => a.path === 'workspace_config.json')
 	if (!jsonFile) {
 		throw new Error('No JSON file found in zip')
 	}
