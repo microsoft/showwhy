@@ -51,7 +51,9 @@ export function useDefinitionDropdownOptions(
 	return useMemo((): IDropdownOption[] => {
 		const { population, exposure, outcome } = defineQuestion
 		const all: IDropdownOption[] = []
+
 		population &&
+			population.definition &&
 			all.push(
 				...buildDropdownOption(
 					population.definition,
@@ -59,10 +61,12 @@ export function useDefinitionDropdownOptions(
 				),
 			)
 		exposure &&
+			exposure.definition &&
 			all.push(
 				...buildDropdownOption(exposure.definition, DefinitionType.Exposure),
 			)
 		outcome &&
+			outcome.definition &&
 			all.push(
 				...buildDropdownOption(outcome.definition, DefinitionType.Outcome),
 			)
