@@ -30,5 +30,25 @@ const GlobalStyle = createGlobalStyle`
 			sans-serif;
 		-webkit-font-smoothing: antialiased;
 		-moz-osx-font-smoothing: grayscale;
+
+		* {
+			scrollbar-width: thin;
+			scrollbar-color: #9d9d9d #f1f1f1;
+		}
+
+		*::-webkit-scrollbar {
+			width: 12px;
+			height: 12px
+		}
+
+		*::-webkit-scrollbar-track {
+			background: #f1f1f1;
+		}
+
+		*::-webkit-scrollbar-thumb {
+			background-color: #9d9d9d;
+			border-radius: 10px;
+			border: 2px solid #f1f1f1;
+		}
 	}
 `
