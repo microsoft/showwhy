@@ -121,7 +121,6 @@ const StepsContainer = styled.div`
 
 const ChildrenContainer = styled.div<{ noPadding: boolean }>`
 	padding: ${({ noPadding }) => (noPadding ? '0' : '0 16px')};
-	margin-bottom: 1rem;
 	height: 95%;
 	overflow-y: auto;
 	margin-bottom: 6rem;
