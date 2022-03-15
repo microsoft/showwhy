@@ -2,8 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { IconButton, MessageBarType, TooltipHost } from '@fluentui/react'
-import { useId } from '@fluentui/react-hooks'
+import { MessageBarType } from '@fluentui/react'
 import type { Maybe } from '@showwhy/types'
 import { memo, Suspense, useState } from 'react'
 import styled from 'styled-components'
@@ -17,12 +16,7 @@ import {
 	useGetStepUrls,
 	useUploadZipMenuOption,
 } from '~hooks'
-import {
-	useExperiment,
-	useGuidance,
-	useSelectedProject,
-	useSetStepStatuses,
-} from '~state'
+import { useExperiment, useSelectedProject, useSetStepStatuses } from '~state'
 import { StyledSpinner } from '~styles'
 import { Pages } from '~types'
 
@@ -38,9 +32,7 @@ export const Layout: React.FC = memo(function Layout({ children }) {
 	const defineQuestion = useExperiment()
 	const exampleProjects = useExampleProjects()
 	const uploadZipMenuOption = useUploadZipMenuOption(setError)
-	const tooltipId = useId('tooltip')
 	const project = useSelectedProject()
-	const [isGuidanceVisible, toggleGuidance] = useGuidance()
 	const onClickProject = useOnClickProject()
 	const { step, stepStatus, onToggleStepStatus, previousStepUrl, nextStepUrl } =
 		useProcessStepInfo()
@@ -56,23 +48,14 @@ export const Layout: React.FC = memo(function Layout({ children }) {
 				uploadZipMenuOption={uploadZipMenuOption}
 			/>
 			<PagesContainer>
-				<StepsContainer>
-					<TooltipHost
-						content={`${isGuidanceVisible ? 'Hide' : 'Show'} Guidance`}
-						id={tooltipId}
-						styles={styles.tooltipHost}
-					>
-						<Button
-							onClick={toggleGuidance}
-							iconProps={styles.button}
-							aria-describedby={tooltipId}
-						/>
-					</TooltipHost>
-					<StepSelector project={project} />
-				</StepsContainer>
-				<GuidanceContainer isVisible={isGuidanceVisible}>
-					<Guidance isVisible={isGuidanceVisible} step={step} />
-				</GuidanceContainer>
+				<Nav>
+					<StepsContainer>
+						<StepSelector project={project} />
+					</StepsContainer>
+					<GuidanceContainer>
+						<Guidance step={step} />
+					</GuidanceContainer>
+				</Nav>
 
 				<Content>
 					<ControlsContainer>
@@ -112,10 +95,18 @@ const PagesContainer = styled.div`
 	height: 94%;
 `
 
-const StepsContainer = styled.div`
-	width: 17%;
-	height: 100%;
+const Nav = styled.div`
+	max-width: 17vw;
+	min-width: 12vw;
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+	margin-bottom: 2rem;
+	overflow: hidden auto;
 	border-right: 1px solid ${({ theme }) => theme.application().lowContrast()};
+`
+
+const StepsContainer = styled.div`
 	position: relative;
 `
 
@@ -133,14 +124,9 @@ const ControlsContainer = styled.div`
 	justify-content: flex-start;
 `
 
-const GuidanceContainer = styled.div<{
-	isVisible: Maybe<boolean>
-}>`
-	width: ${({ isVisible }) => (isVisible ? 23 : 0)}%;
-	transition: 0.5s;
+const GuidanceContainer = styled.div`
 	border-right: 1px solid ${({ theme }) => theme.application().lowContrast()};
-	height: 90vh;
-	${({ isVisible }) => (!isVisible ? 'border: none;' : '')}
+	width: 100%;
 `
 
 const Container = styled.div`
@@ -158,15 +144,3 @@ const Content = styled.div`
 	height: 100%;
 	width: 50%;
 `
-const Button = styled(IconButton)`
-	position: absolute;
-	right: 0;
-	color: white;
-`
-
-const styles = {
-	tooltipHost: {
-		root: { position: 'absolute' as const, right: 0, padding: '0 15px' },
-	},
-	button: { iconName: 'ReadingMode' },
-}

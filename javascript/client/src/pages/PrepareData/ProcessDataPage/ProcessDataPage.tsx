@@ -27,14 +27,12 @@ export const ProcessDataPage: FC = memo(function ProcessDataPage() {
 					percentComplete={percentage(completedElements, elements) / 100}
 				/>
 			</ProgressContainer>
-			<PrepareDataContainer>
-				<PrepareDataFull
-					steps={steps}
-					onUpdateSteps={onChangeSteps}
-					tables={tables}
-					outputHeaderCommandBar={[commandBar]}
-				/>
-			</PrepareDataContainer>
+			<PrepareDataFull
+				steps={steps}
+				onUpdateSteps={onChangeSteps}
+				tables={tables}
+				outputHeaderCommandBar={[commandBar]}
+			/>
 		</Container>
 	)
 })
@@ -42,13 +40,6 @@ export const ProcessDataPage: FC = memo(function ProcessDataPage() {
 const Container = styled.div`
 	height: 100vh;
 	margin-top: 0.5rem;
-	position: relative;
-`
-
-const PrepareDataContainer = styled.div`
-	height: 110%;
-	min-width: 100%;
-	width: fit-content;
 	position: relative;
 `
 
