@@ -5,7 +5,7 @@ description = ""
 authors = ["Andres Morales Esquivel <andresmor@microsoft.com>"]
 
 [tool.poetry.dependencies]
-python = ">=3.8,<3.10"
+python = ">=3.8,<4.0"
 llvmlite = ">=0.36.0rc1,<0.37"
 xgboost = "==1.4.2"
 econml = {git = "https://github.com/microsoft/EconML.git", rev = "main"}

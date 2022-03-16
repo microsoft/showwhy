@@ -52,7 +52,7 @@ stages:
           - task: UsePythonVersion@0
             displayName: Use python
             inputs:
-              versionSpec: '3.x'
+              versionSpec: '3.8.x'
               addToPath: true
               architecture: 'x64'
 
