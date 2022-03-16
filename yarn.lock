@@ -1229,6 +1229,41 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@essex/themed-components@npm:^2.0.5":
+  version: 2.0.5
+  resolution: "@essex/themed-components@npm:2.0.5"
+  dependencies:
+    "@essex/hooks": ^4.0.6
+    "@essex/toolbox": ^3.0.4
+    "@types/d3-array": ^3.0.2
+    "@types/d3-axis": ^3.0.1
+    "@types/d3-brush": ^3.0.1
+    "@types/d3-scale": ^4.0.2
+    "@types/d3-selection": ^3.0.2
+    d3-array: ^3.1.1
+    d3-axis: ^3.0.0
+    d3-brush: ^3.0.0
+    d3-scale: ^4.0.2
+    d3-selection: ^3.0.0
+    react-animate-height: ^2.0.23
+  peerDependencies:
+    "@fluentui/react": ">= 7.114.2"
+    "@thematic/color": ">= 0.8.0"
+    "@thematic/core": ">= 0.8.0"
+    "@thematic/d3": ">= 0.8.0"
+    "@thematic/fluent": ">= 0.8.0"
+    "@thematic/react": ">= 0.8.0"
+    "@types/d3": "*"
+    "@types/d3-axis": ^2.0.0
+    "@types/node": "*"
+    "@types/react": ">= 16.9"
+    "@uifabric/icons": ">= 7.3.38"
+    react: ">= 16.8.6"
+    react-dom: ">= 16.8.6"
+  checksum: d600baebcba4b84470f8c202db98132d4b2d83f8886aca046a58cd13033861c2185f1578f03d7e1964cd99f630e652debbbb5bcf1554aa2203ae0ffc97855aae
+  languageName: node
+  linkType: hard
+
 "@essex/themed-components@npm:^2.1.2":
   version: 2.1.2
   resolution: "@essex/themed-components@npm:2.1.2"
@@ -1262,41 +1297,6 @@ __metadata:
     react: ">= 16.8.6"
     react-dom: ">= 16.8.6"
   checksum: aaeceb87e679087e1a456570a7ed43b79470bd3a21a0e17edae311dd8aadafd8ec9a07d9f39b45f5ad40fed8893f8cbbc35dc89762f2ed861e72daf583823363
-  languageName: node
-  linkType: hard
-
-"@essex/themed-components@npm:^2.0.5":
-  version: 2.0.5
-  resolution: "@essex/themed-components@npm:2.0.5"
-  dependencies:
-    "@essex/hooks": ^4.0.6
-    "@essex/toolbox": ^3.0.4
-    "@types/d3-array": ^3.0.2
-    "@types/d3-axis": ^3.0.1
-    "@types/d3-brush": ^3.0.1
-    "@types/d3-scale": ^4.0.2
-    "@types/d3-selection": ^3.0.2
-    d3-array: ^3.1.1
-    d3-axis: ^3.0.0
-    d3-brush: ^3.0.0
-    d3-scale: ^4.0.2
-    d3-selection: ^3.0.0
-    react-animate-height: ^2.0.23
-  peerDependencies:
-    "@fluentui/react": ">= 7.114.2"
-    "@thematic/color": ">= 0.8.0"
-    "@thematic/core": ">= 0.8.0"
-    "@thematic/d3": ">= 0.8.0"
-    "@thematic/fluent": ">= 0.8.0"
-    "@thematic/react": ">= 0.8.0"
-    "@types/d3": "*"
-    "@types/d3-axis": ^2.0.0
-    "@types/node": "*"
-    "@types/react": ">= 16.9"
-    "@uifabric/icons": ">= 7.3.38"
-    react: ">= 16.8.6"
-    react-dom: ">= 16.8.6"
-  checksum: d600baebcba4b84470f8c202db98132d4b2d83f8886aca046a58cd13033861c2185f1578f03d7e1964cd99f630e652debbbb5bcf1554aa2203ae0ffc97855aae
   languageName: node
   linkType: hard
 
