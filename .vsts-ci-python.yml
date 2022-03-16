@@ -71,7 +71,7 @@ stages:
               workingDirectory: '$(System.DefaultWorkingDirectory)/python/showwhy-inference/'
               script: |
                 source $HOME/.poetry/env
-                poetry install
+                poetry install --no-dev
                 poetry build
 
           - task: Bash@3
@@ -81,7 +81,7 @@ stages:
               workingDirectory: '$(System.DefaultWorkingDirectory)/python/showwhy-backend/'
               script: |
                 source $HOME/.poetry/env
-                poetry install
+                poetry install --no-dev
 
           - task: Bash@3
             displayName: Export dependencies
