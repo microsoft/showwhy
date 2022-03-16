@@ -8,11 +8,9 @@ trigger:
     include:
       - main
       - dev
-      - python/ci
   paths:
     include:
       - javascript/client
-      - python/*
 
 pr:
   branches:
