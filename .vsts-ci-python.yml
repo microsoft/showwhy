@@ -43,7 +43,8 @@ stages:
               ArtifactName: 'CodeAnalysisLogs'
               ArtifactType: 'Container'
   - stage: Deployment
-    dependsOn: []
+    dependsOn:
+      - Compliance
     jobs:
       - job: DeploymentJob
         steps:
