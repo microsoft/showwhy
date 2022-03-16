@@ -25,7 +25,7 @@ export function useCommandBar(
 				},
 			]
 			return createDefaultCommandBar(items, {
-				style: { width: 200 },
+				style: { width: 200, paddingBottom: 13 },
 			} as ICommandBarProps)
 		},
 		[renderDropdown],

@@ -30,7 +30,7 @@
 		"@essex/boolean-expression-component": "^1.0.3",
 		"@essex/hooks": "^4.0.5",
 		"@essex/thematic-lineup": "^2.0.4",
-		"@essex/themed-components": "^2.0.4",
+		"@essex/themed-components": "^2.1.2",
 		"@fluentui/font-icons-mdl2": "^8.2.0",
 		"@fluentui/react": "^8.59.0",
 		"@fluentui/react-hooks": "^8.5.0",

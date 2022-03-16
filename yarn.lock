@@ -1082,6 +1082,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@essex/hooks@npm:^4.0.6":
+  version: 4.0.6
+  resolution: "@essex/hooks@npm:4.0.6"
+  dependencies:
+    "@essex/toolbox": ^3.0.4
+    lodash-es: ^4.17.21
+  peerDependencies:
+    "@types/node": "*"
+    "@types/react": "*"
+    "@types/react-dom": "*"
+    react: ">=16.8.0"
+  checksum: 9abdb7335174e815c1330c11946be395bf3fcbcfd2c9c1d8e24d77d3940295c30a31af9296b323afc19d14e8a78eeeb308253f780dd793f7234c44f1ae3cb024
+  languageName: node
+  linkType: hard
+
 "@essex/jest-config@npm:^21.0.5":
   version: 21.0.5
   resolution: "@essex/jest-config@npm:21.0.5"
@@ -1213,12 +1228,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@essex/themed-components@npm:^2.0.4":
-  version: 2.0.4
-  resolution: "@essex/themed-components@npm:2.0.4"
+"@essex/themed-components@npm:^2.1.2":
+  version: 2.1.2
+  resolution: "@essex/themed-components@npm:2.1.2"
   dependencies:
-    "@essex/hooks": ^4.0.5
-    "@essex/toolbox": ^3.0.3
+    "@essex/hooks": ^4.0.6
+    "@essex/toolbox": ^3.0.4
     "@types/d3-array": ^3.0.2
     "@types/d3-axis": ^3.0.1
     "@types/d3-brush": ^3.0.1
@@ -1229,6 +1244,7 @@ __metadata:
     d3-brush: ^3.0.0
     d3-scale: ^4.0.2
     d3-selection: ^3.0.0
+    lodash-es: ^4.17.21
     react-animate-height: ^2.0.23
   peerDependencies:
     "@fluentui/react": ">= 7.114.2"
@@ -1244,7 +1260,7 @@ __metadata:
     "@uifabric/icons": ">= 7.3.38"
     react: ">= 16.8.6"
     react-dom: ">= 16.8.6"
-  checksum: 6df08da3fbb6c69b47b0374f2ea9574d7a0c8b4f86f93ea4ba812b08496b47f458d9e217caa1fabdcc64a2be4851cd7b20f0af44b68e00a3fd9c816cdc00aa6c
+  checksum: aaeceb87e679087e1a456570a7ed43b79470bd3a21a0e17edae311dd8aadafd8ec9a07d9f39b45f5ad40fed8893f8cbbc35dc89762f2ed861e72daf583823363
   languageName: node
   linkType: hard
 
@@ -1259,6 +1275,13 @@ __metadata:
   version: 3.0.3
   resolution: "@essex/toolbox@npm:3.0.3"
   checksum: 9db0b2bddbf85757bb0b0227476151731eafac86a843fe65e0b9c872758d99d367e2c6ea848af7d2f5ccdf7f685f7c1da66ff560685b3730e96b278093ce5fed
+  languageName: node
+  linkType: hard
+
+"@essex/toolbox@npm:^3.0.4":
+  version: 3.0.4
+  resolution: "@essex/toolbox@npm:3.0.4"
+  checksum: f93bcd7947472b3c143f90a88e870b7fefaa2646cea7a28de35bf98731637c7ac2c54fe717ed81487c615701bedbe1cde88674d58b2dd1f799b669a09c9bae24
   languageName: node
   linkType: hard
 
@@ -1962,7 +1985,7 @@ __metadata:
     "@essex/jest-config": ^21.0.5
     "@essex/scripts": ^20.4.7
     "@essex/thematic-lineup": ^2.0.4
-    "@essex/themed-components": ^2.0.4
+    "@essex/themed-components": ^2.1.2
     "@essex/tsconfig-base": ^1.0.2
     "@essex/vite-config": ^19.0.4
     "@fluentui/font-icons-mdl2": ^8.2.0

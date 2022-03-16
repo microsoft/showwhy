@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { IDropdownOption } from '@fluentui/react'
+import type { IContextualMenuItem } from '@fluentui/react'
 import type {
 	ElementDefinition,
 	FactorsOrDefinitions,
@@ -13,9 +13,9 @@ import { useCallback } from 'react'
 
 export function useOnResetVariable(
 	allElements: FactorsOrDefinitions,
-	definitionDropdown: IDropdownOption<any>[],
+	definitionDropdown: IContextualMenuItem[],
 	onSelectVariable: (
-		option: Maybe<IDropdownOption<any>>,
+		option: Maybe<IContextualMenuItem>,
 		columnName: string,
 	) => void,
 ): (columnName: string) => void {
@@ -24,9 +24,11 @@ export function useOnResetVariable(
 			const id = allElements.find(
 				(a: ElementDefinition) => a.column === columnName,
 			)?.id
-			const option = definitionDropdown.find(
-				(x: IDropdownOption) => x.key === id,
-			)
+			const option = definitionDropdown
+				.flatMap((x: IContextualMenuItem) =>
+					x.sectionProps?.items.find(a => a.key === id),
+				)
+				.find(o => o)
 			onSelectVariable(option, columnName)
 		},
 		[onSelectVariable, definitionDropdown, allElements],

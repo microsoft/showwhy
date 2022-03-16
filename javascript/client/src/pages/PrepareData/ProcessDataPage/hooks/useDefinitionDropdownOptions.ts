@@ -3,8 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { IDropdownOption } from '@fluentui/react'
-import { DropdownMenuItemType } from '@fluentui/react'
+import type { IContextualMenuItem } from '@fluentui/react'
+import { ContextualMenuItemType } from '@fluentui/react'
 import type {
 	CausalFactor,
 	ElementDefinition,
@@ -23,65 +23,61 @@ export enum DefinitionType {
 const buildDropdownOption = (
 	all: ElementDefinition[],
 	type: DefinitionType,
-): IDropdownOption[] => {
-	const options: IDropdownOption[] = [
-		{
-			key: type,
-			text: upperFirst(type.toString()),
-			itemType: DropdownMenuItemType.Header,
+): IContextualMenuItem => {
+	const options: IContextualMenuItem = {
+		key: type,
+		itemType: ContextualMenuItemType.Section,
+		sectionProps: {
+			title: upperFirst(type.toString()),
+			items: all.map(x => {
+				return {
+					key: x.id,
+					text: x.variable,
+					title: x.variable,
+					data: {
+						type: type,
+					},
+					disabled: !!x.column,
+				}
+			}),
 		},
-	]
-	all.forEach(x => {
-		options.push({
-			key: x.id,
-			text: x.variable,
-			data: {
-				type: type,
-			},
-			disabled: !!x.column,
-		})
-	})
+	}
 	return options
 }
 
 export function useDefinitionDropdownOptions(
 	defineQuestion: Experiment,
 	causalFactors: CausalFactor[],
-): IDropdownOption[] {
-	return useMemo((): IDropdownOption[] => {
+): IContextualMenuItem[] {
+	return useMemo((): IContextualMenuItem[] => {
 		const { population, exposure, outcome } = defineQuestion
-		const all: IDropdownOption[] = []
+		const all: IContextualMenuItem[] = [
+			{
+				key: 'reset-action',
+				text: 'Reset',
+				title: 'Reset',
+				data: {
+					button: true,
+					reset: true,
+				},
+			},
+		]
 
 		population &&
 			population.definition &&
 			all.push(
-				...buildDropdownOption(
-					population.definition,
-					DefinitionType.Population,
-				),
+				buildDropdownOption(population.definition, DefinitionType.Population),
 			)
 		exposure &&
 			exposure.definition &&
 			all.push(
-				...buildDropdownOption(exposure.definition, DefinitionType.Exposure),
+				buildDropdownOption(exposure.definition, DefinitionType.Exposure),
 			)
 		outcome &&
 			outcome.definition &&
-			all.push(
-				...buildDropdownOption(outcome.definition, DefinitionType.Outcome),
-			)
+			all.push(buildDropdownOption(outcome.definition, DefinitionType.Outcome))
 		causalFactors &&
-			all.push(...buildDropdownOption(causalFactors, DefinitionType.Factor))
-
-		all.push({
-			key: '--actions--',
-			text: '',
-			itemType: 2,
-			data: {
-				button: true,
-			},
-			selected: false,
-		})
+			all.push(buildDropdownOption(causalFactors, DefinitionType.Factor))
 		return all
 	}, [defineQuestion, causalFactors])
 }
