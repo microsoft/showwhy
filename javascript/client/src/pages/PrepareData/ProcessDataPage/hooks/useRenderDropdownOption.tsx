@@ -16,6 +16,7 @@ import type {
 } from '@showwhy/types'
 import { useCallback } from 'react'
 import styled from 'styled-components'
+
 import {
 	useSelectedOptionByColumn,
 	useSelectedOptionByColumnAndVariable,
