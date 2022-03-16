@@ -91,7 +91,7 @@ stages:
     jobs:
       - job: DeploymentJob
         steps:
-           - task: Bash@3
+          - task: Bash@3
             displayName: Export dependencies
             inputs:
               targetType: 'inline'
