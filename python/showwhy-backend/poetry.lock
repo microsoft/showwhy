@@ -112,14 +112,14 @@ requests = ">=2.0.0,<3.0.0"
 
 [[package]]
 name = "azure-storage-blob"
-version = "12.9.0"
+version = "12.10.0"
 description = "Microsoft Azure Blob Storage Client Library for Python"
 category = "main"
 optional = false
-python-versions = "*"
+python-versions = ">=3.6"
 
 [package.dependencies]
-azure-core = ">=1.10.0,<2.0.0"
+azure-core = ">=1.15.0,<2.0.0"
 cryptography = ">=2.1.4"
 msrest = ">=0.6.21"
 
@@ -327,7 +327,7 @@ tf = ["keras (<2.4)", "tensorflow (>1.10,<2.3)"]
 type = "git"
 url = "https://github.com/microsoft/EconML.git"
 reference = "main"
-resolved_reference = "7dd7683c987018511a07318b6f4b165018373aad"
+resolved_reference = "289c5412f4492035b794c2833e7f6f6f48807dd1"
 
 [[package]]
 name = "filelock"
@@ -914,7 +914,7 @@ version = "0.0.1"
 description = ""
 category = "main"
 optional = false
-python-versions = ">=3.9,<3.10"
+python-versions = ">=3.8,<3.10"
 develop = false
 
 [package.dependencies]
@@ -1116,8 +1116,8 @@ multidict = ">=4.0"
 
 [metadata]
 lock-version = "1.1"
-python-versions = ">=3.9,<3.10"
-content-hash = "f318ca7b041306e3ff55fca5a61e8d3412e280bd8c856d2a195ea2fd28603202"
+python-versions = ">=3.8,<3.10"
+content-hash = "998a7802b0aa3d6a922d37e4d332f7ba482e8379511bf16fd656f00ff344bfae"
 
 [metadata.files]
 aiohttp = [
@@ -1227,8 +1227,8 @@ azure-functions-durable = [
     {file = "azure_functions_durable-1.1.3-py3-none-any.whl", hash = "sha256:422306a328397f24d21c48baec85ecff78e8fa51ea57fce937c24d93eb4571f9"},
 ]
 azure-storage-blob = [
-    {file = "azure-storage-blob-12.9.0.zip", hash = "sha256:cff66a115c73c90e496c8c8b3026898a3ce64100840276e9245434e28a864225"},
-    {file = "azure_storage_blob-12.9.0-py2.py3-none-any.whl", hash = "sha256:859195b4850dcfe77ffafbe53500abb74b001e52e77fe6d9492fa73639a22127"},
+    {file = "azure-storage-blob-12.10.0.zip", hash = "sha256:3c7dc2c93e7ff2a731acd66a36a1f0a6266072b4154deba4894dab891285ea3a"},
+    {file = "azure_storage_blob-12.10.0-py3-none-any.whl", hash = "sha256:a70995c4f9310eb704594f30505d1499286b4caac5543a2ebfe84431c4a38b0b"},
 ]
 black = [
     {file = "black-21.12b0-py3-none-any.whl", hash = "sha256:a615e69ae185e08fdd73e4715e260e2479c861b5740057fde6e8b4e3b7dd589f"},

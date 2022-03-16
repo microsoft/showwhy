@@ -1,0 +1,121 @@
+name: ShowWhy Python CI
+pool:
+  vmImage: ubuntu-latest
+
+trigger:
+  batch: true
+  branches:
+    include:
+      - python/ci
+  paths:
+    include:
+      - python/*
+
+pr:
+  branches:
+    include:
+      - python/ci
+  paths:
+    include:
+      - python/*
+
+stages:
+  - stage: Compliance
+    dependsOn: []
+    jobs:
+      - job: ComplianceJob
+        pool:
+          vmImage: windows-latest
+        steps:
+          - task: CredScan@3
+            inputs:
+              outputFormat: sarif
+              debugMode: false
+
+          - task: ComponentGovernanceComponentDetection@0
+            inputs:
+              scanType: 'Register'
+              verbosity: 'Verbose'
+              alertWarningLevel: 'High'
+
+          - task: PublishSecurityAnalysisLogs@3
+            inputs:
+              ArtifactName: 'CodeAnalysisLogs'
+              ArtifactType: 'Container'
+  - stage: Verification
+    dependsOn: []
+    jobs:
+      - job: VerificationJob
+        steps:
+          # Install tooling
+          - task: UsePythonVersion@0
+            displayName: Use python
+            inputs:
+              versionSpec: '3.x'
+              addToPath: true
+              architecture: 'x64'
+
+          - task: Bash@3
+            displayName: Install poetry
+            inputs:
+              targetType: 'inline'
+              workingDirectory: '$(System.DefaultWorkingDirectory)/python/showwhy-inference/'
+              script: curl -sSL https://install.python-poetry.org | python3 -
+
+          # Install dependencies
+          - task: Bash@3
+            displayName: Install inference dependencies
+            inputs:
+              targetType: 'inline'
+              workingDirectory: '$(System.DefaultWorkingDirectory)/python/showwhy-inference/'
+              script: |
+                source $HOME/.poetry/env
+                poetry install
+                poetry build
+
+          - task: Bash@3
+            displayName: Install backend dependencies
+            inputs:
+              targetType: 'inline'
+              workingDirectory: '$(System.DefaultWorkingDirectory)/python/showwhy-backend/'
+              script: |
+                source $HOME/.poetry/env
+                poetry install
+
+  - stage: DeploymentDev
+    displayName: Deployment (Dev)
+    dependsOn:
+      - Compliance
+      - Verification
+    # condition: and(succeeded(), eq(variables['build.sourceBranch'], 'refs/heads/dev'))
+    jobs:
+      - job: DeploymentJob
+        steps:
+           - task: Bash@3
+            displayName: Export dependencies
+            inputs:
+              targetType: 'inline'
+              workingDirectory: '$(System.DefaultWorkingDirectory)/python/showwhy-backend'
+              script: |
+                source $HOME/.poetry/env 
+                poetry export -f requirements.txt --output showwhy_backend/requirements.txt --without-hashes
+
+          - task: Bash@3
+            displayName: Install requirements locally
+            inputs:
+              targetType: 'inline'
+              workingDirectory: '$(System.DefaultWorkingDirectory)/python/showwhy-backend/showwhy_backend'
+              script: |
+                source $HOME/.poetry/env
+                rm local.settings.json
+                poetry run pip install --target="./.python_packages/lib/site-packages" -r requirements.txt
+
+          - task: AzureFunctionApp@1
+            displayName: Deploy Functions
+            inputs:
+              azureSubscription: '$(subscription)'
+              appType: 'functionAppLinux'
+              appName: 'showwhy-functions-experiment'
+              package: '$(System.DefaultWorkingDirectory)/python/showwhy-backend/showwhy_backend/'
+              runtimeStack: 'PYTHON|3.8'
+              deploymentMethod: zipDeploy

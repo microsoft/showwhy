@@ -159,7 +159,7 @@ tf = ["keras (<2.4)", "tensorflow (>1.10,<2.3)"]
 type = "git"
 url = "https://github.com/microsoft/EconML.git"
 reference = "main"
-resolved_reference = "7dd7683c987018511a07318b6f4b165018373aad"
+resolved_reference = "289c5412f4492035b794c2833e7f6f6f48807dd1"
 
 [[package]]
 name = "filelock"
@@ -755,8 +755,8 @@ scikit-learn = ["scikit-learn"]
 
 [metadata]
 lock-version = "1.1"
-python-versions = ">=3.9,<3.10"
-content-hash = "13bd4bbf39ec0993c37453ddaca823efbc41564180c10f4845c47e0a8836bd37"
+python-versions = ">=3.8,<3.10"
+content-hash = "f6f997593f9cfd2d62179f251896ed38bc0043b5b02956115ccc7bc909f0b5d0"
 
 [metadata.files]
 atomicwrites = [
