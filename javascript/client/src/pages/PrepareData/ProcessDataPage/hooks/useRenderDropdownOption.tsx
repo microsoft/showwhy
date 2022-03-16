@@ -14,8 +14,13 @@ import type {
 	FactorsOrDefinitions,
 	Maybe,
 } from '@showwhy/types'
-import { useCallback, useMemo } from 'react'
+import { useCallback } from 'react'
 import styled from 'styled-components'
+import {
+	useSelectedOptionByColumn,
+	useSelectedOptionByColumnAndVariable,
+	useSelectedOptions,
+} from './useSelectedOption'
 
 const buttonStyles = {
 	root: {
@@ -24,44 +29,6 @@ const buttonStyles = {
 	label: {
 		width: 150,
 	},
-}
-
-function useSelectedOptions(allElements: FactorsOrDefinitions): string[] {
-	return useMemo((): string[] => {
-		return allElements
-			.filter((x: ElementDefinition | CausalFactor) => x.column)
-			.map(x => x.variable)
-	}, [allElements])
-}
-
-function useSelectedOptionByColumnAndVariable(
-	allElements: FactorsOrDefinitions,
-): (
-	text: string,
-	columnName: string,
-) => Maybe<ElementDefinition | CausalFactor> {
-	return useCallback(
-		(text: string, columnName: string) => {
-			return allElements.find(
-				(x: ElementDefinition | CausalFactor) =>
-					x.variable === text && x.column === columnName,
-			)
-		},
-		[allElements],
-	)
-}
-
-function useSelectedOptionByColumn(
-	allElements: FactorsOrDefinitions,
-): (columnName: string) => Maybe<ElementDefinition | CausalFactor> {
-	return useCallback(
-		(columnName: string) => {
-			return allElements.find(
-				(x: ElementDefinition | CausalFactor) => x.column === columnName,
-			)
-		},
-		[allElements],
-	)
 }
 
 function useRenderMenuList(
