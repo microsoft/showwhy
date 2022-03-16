@@ -764,7 +764,7 @@ scikit-learn = ["scikit-learn"]
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.8,<4.0"
-content-hash = "d3f9d9961e28e4817bb907d827ba49e9a3f2a1e2a061ae29d691438010aa2f7b"
+content-hash = "5c85be8e35eea9f8913c18c77496564148499f73a5e0f0837887b8053084a93b"
 
 [metadata.files]
 atomicwrites = [

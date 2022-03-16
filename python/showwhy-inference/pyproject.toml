@@ -10,6 +10,8 @@ llvmlite = ">=0.36.0rc1,<0.37"
 xgboost = "==1.4.2"
 econml = {git = "https://github.com/microsoft/EconML.git", rev = "main"}
 dowhy = {git = "https://github.com/microsoft/dowhy.git"}
+numpy = "^1.22.3"
+pandas = "^1.4.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"

@@ -929,6 +929,8 @@ develop = false
 dowhy = {git = "https://github.com/microsoft/dowhy.git", branch = "master"}
 econml = {git = "https://github.com/microsoft/EconML.git", rev = "main"}
 llvmlite = ">=0.36.0rc1,<0.37"
+numpy = "^1.22.3"
+pandas = "^1.4.1"
 xgboost = "==1.4.2"
 
 [package.source]
