@@ -81,10 +81,11 @@ export function useBusinessLogic(): {
 	const renderDropdown = useRenderDropdown(
 		allElements,
 		onSelectVariable,
+		onResetVariable,
 		dropdownOptions,
 	)
 
-	const commandBar = useCommandBar(renderDropdown, onResetVariable, allElements)
+	const commandBar = useCommandBar(renderDropdown)
 
 	return {
 		onChangeSteps,

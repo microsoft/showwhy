@@ -72,6 +72,16 @@ export function useDefinitionDropdownOptions(
 			)
 		causalFactors &&
 			all.push(...buildDropdownOption(causalFactors, DefinitionType.Factor))
+
+		all.push({
+			key: '--actions--',
+			text: '',
+			itemType: 2,
+			data: {
+				button: true,
+			},
+			selected: false,
+		})
 		return all
 	}, [defineQuestion, causalFactors])
 }
