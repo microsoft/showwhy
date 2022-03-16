@@ -68,7 +68,6 @@ const AppHeaderContainer = styled.div`
 
 const TitleContainer = styled.div`
 	width: 17%;
-	border-right: 1px solid rgba(255, 255, 255, 0.5);
 `
 
 const Title = styled.h3`

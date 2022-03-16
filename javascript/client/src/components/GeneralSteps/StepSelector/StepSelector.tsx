@@ -95,10 +95,7 @@ export const StepSelector: React.FC<{
 	)
 })
 
-const Container = styled.div`
-	overflow: auto;
-	max-height: 85vh;
-`
+const Container = styled.div``
 
 const CollapsibleSubPanelContainer = styled.div`
 	padding-left: 16px;

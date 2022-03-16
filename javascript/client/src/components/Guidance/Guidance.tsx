@@ -2,6 +2,8 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import { IconButton, TooltipHost } from '@fluentui/react'
+import { useId } from '@fluentui/react-hooks'
 import type { Maybe } from '@showwhy/types'
 import Markdown from 'markdown-to-jsx'
 import { memo, useEffect, useState } from 'react'
@@ -10,11 +12,14 @@ import styled from 'styled-components'
 import { StepTitle } from '~components/StepTitle'
 import type { Step } from '~types'
 
+import { useGuidance } from '../../state'
+
 export const Guidance: React.FC<{
-	isVisible: Maybe<boolean>
 	step?: Step
-}> = memo(function Instructions({ isVisible, step }) {
+}> = memo(function Instructions({ step }) {
 	const [markdown, setMarkdown] = useState('')
+	const [isGuidanceVisible, toggleGuidance] = useGuidance()
+	const tooltipId = useId('tooltip')
 
 	useEffect(() => {
 		if (step?.getMarkdown) {
@@ -31,30 +36,63 @@ export const Guidance: React.FC<{
 			setMarkdown('')
 		}
 	}, [step])
-	return isVisible ? (
+	return (
 		<>
 			<TitleContainer>
 				<StepTitle title="Guidance" />
+				<TooltipHost
+					content={`${isGuidanceVisible ? 'Hide' : 'Show'} Guidance`}
+					id={tooltipId}
+					styles={styles.tooltipHost}
+				>
+					<Button
+						onClick={toggleGuidance}
+						iconProps={styles.button}
+						aria-describedby={tooltipId}
+					/>
+				</TooltipHost>
 			</TitleContainer>
 			{markdown ? (
-				<GuidanceText>
+				<GuidanceText isVisible={isGuidanceVisible}>
 					<Markdown>{markdown}</Markdown>
 				</GuidanceText>
 			) : (
 				<GuidanceText
+					isVisible={isGuidanceVisible}
 					dangerouslySetInnerHTML={{ __html: step?.guidance || '' }}
 				/>
 			)}
 		</>
-	) : null
+	)
 })
 
-const GuidanceText = styled.div`
+const GuidanceText = styled.div<{
+	isVisible: Maybe<boolean>
+}>`
 	padding: 0px 16px;
-	overflow: auto;
-	max-height: 95%;
+	transition: height 1.5s ease;
+	height: ${({ isVisible }) => (isVisible ? '100%' : 0)};
+	overflow: hidden;
 `
 
 const TitleContainer = styled.div`
 	position: relative;
 `
+
+const Button = styled(IconButton)`
+	position: absolute;
+	right: 0;
+	color: white;
+`
+
+const styles = {
+	tooltipHost: {
+		root: {
+			position: 'absolute' as const,
+			right: 0,
+			padding: '0 15px',
+			top: 0,
+		},
+	},
+	button: { iconName: 'ReadingMode' },
+}
