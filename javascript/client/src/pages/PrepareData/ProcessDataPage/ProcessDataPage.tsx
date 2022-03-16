@@ -44,6 +44,7 @@ const Container = styled.div`
 	height: 100vh;
 	margin-top: 0.5rem;
 	position: relative;
+	overflow: hidden;
 `
 
 const ProgressContainer = styled.div`

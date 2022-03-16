@@ -26,8 +26,9 @@ export const FactorsTable: React.FC<{
 					headers={{ data: headers }}
 					props={{
 						customColumnsWidth: [
-							{ fieldName: 'causes', width: '12%' },
-							{ fieldName: 'degree', width: '17%' },
+							{ fieldName: 'variable', width: '12rem' },
+							{ fieldName: 'causes', width: '10rem' },
+							{ fieldName: 'degree', width: '10rem' },
 						],
 					}}
 				/>
