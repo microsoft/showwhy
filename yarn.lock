@@ -882,9 +882,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@data-wrangling-components/core@npm:^4.2.1":
-  version: 4.2.1
-  resolution: "@data-wrangling-components/core@npm:4.2.1"
+"@data-wrangling-components/core@npm:^5.0.1":
+  version: 5.0.1
+  resolution: "@data-wrangling-components/core@npm:5.0.1"
   dependencies:
     lodash-es: ^4.17.21
   peerDependencies:
@@ -893,7 +893,7 @@ __metadata:
   peerDependenciesMeta:
     "@types/node":
       optional: true
-  checksum: f2181272940ebd6474050ab09db4bbf80e74b3eaf5fe81bda2a4c972689cd833e27480e54fdb76c95508ad064ca359ef1efd30d51be69631b5134358b7c8ba59
+  checksum: 561c85d75bc07f720bddd0dae7f1ebb778d771ecd5996580b2d2721b932a08a6299695daf4982ff3d6e0c8990c9de4394da78bca78306eb0441077c1a44f7adf
   languageName: node
   linkType: hard
 
@@ -904,12 +904,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@data-wrangling-components/react@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "@data-wrangling-components/react@npm:3.0.0"
+"@data-wrangling-components/react@npm:^3.1.0":
+  version: 3.1.0
+  resolution: "@data-wrangling-components/react@npm:3.1.0"
   dependencies:
     "@data-wrangling-components/guidance": ^0.1.7
     "@essex/hooks": ^4.0.6
+    "@essex/themed-components": ^2.0.5
     core-js: ^3.21.1
     d3-format: ^3.1.0
     d3-scale: ^4.0.2
@@ -936,7 +937,7 @@ __metadata:
     react: ^17.0.2
     react-dom: ^17.0.2
     styled-components: ^5.3.0
-  checksum: 7922089166c7b9c90a83acbaf17f4ee9c34036355ae356c241d782eb638675772387d9c2ad2ff54004daaa9cd2c35abcc51105db98502224220857a0efed88b5
+  checksum: 3807f3191f55958733bef0d83bd443904ec58df85104dbfc556c93dbaba1725ad0a86972194d4ac860081ef183c9f09edac4309e2c6bbea8e415afb987da2d1a
   languageName: node
   linkType: hard
 
@@ -1260,6 +1261,41 @@ __metadata:
     react: ">= 16.8.6"
     react-dom: ">= 16.8.6"
   checksum: 6df08da3fbb6c69b47b0374f2ea9574d7a0c8b4f86f93ea4ba812b08496b47f458d9e217caa1fabdcc64a2be4851cd7b20f0af44b68e00a3fd9c816cdc00aa6c
+  languageName: node
+  linkType: hard
+
+"@essex/themed-components@npm:^2.0.5":
+  version: 2.0.5
+  resolution: "@essex/themed-components@npm:2.0.5"
+  dependencies:
+    "@essex/hooks": ^4.0.6
+    "@essex/toolbox": ^3.0.4
+    "@types/d3-array": ^3.0.2
+    "@types/d3-axis": ^3.0.1
+    "@types/d3-brush": ^3.0.1
+    "@types/d3-scale": ^4.0.2
+    "@types/d3-selection": ^3.0.2
+    d3-array: ^3.1.1
+    d3-axis: ^3.0.0
+    d3-brush: ^3.0.0
+    d3-scale: ^4.0.2
+    d3-selection: ^3.0.0
+    react-animate-height: ^2.0.23
+  peerDependencies:
+    "@fluentui/react": ">= 7.114.2"
+    "@thematic/color": ">= 0.8.0"
+    "@thematic/core": ">= 0.8.0"
+    "@thematic/d3": ">= 0.8.0"
+    "@thematic/fluent": ">= 0.8.0"
+    "@thematic/react": ">= 0.8.0"
+    "@types/d3": "*"
+    "@types/d3-axis": ^2.0.0
+    "@types/node": "*"
+    "@types/react": ">= 16.9"
+    "@uifabric/icons": ">= 7.3.38"
+    react: ">= 16.8.6"
+    react-dom: ">= 16.8.6"
+  checksum: d600baebcba4b84470f8c202db98132d4b2d83f8886aca046a58cd13033861c2185f1578f03d7e1964cd99f630e652debbbb5bcf1554aa2203ae0ffc97855aae
   languageName: node
   linkType: hard
 
@@ -1976,8 +2012,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/client@workspace:javascript/client"
   dependencies:
-    "@data-wrangling-components/core": ^4.2.1
-    "@data-wrangling-components/react": ^3.0.0
+    "@data-wrangling-components/core": ^5.0.1
+    "@data-wrangling-components/react": ^3.1.0
     "@data-wrangling-components/utilities": ^1.7.0
     "@essex/boolean-expression-component": ^1.0.3
     "@essex/hooks": ^4.0.5
