@@ -100,7 +100,7 @@ stages:
               script: |
                 source $HOME/.poetry/env
                 rm local.settings.json
-                poetry run pip install --target="./.python_packages/lib/site-packages" -r requirements.txt
+                pip install --target="./.python_packages/lib/site-packages" -r requirements.txt
 
           - task: AzureCLI@2
             displayName: Download azure fn core tools
