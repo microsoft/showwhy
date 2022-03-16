@@ -12,7 +12,7 @@ import {
 	fetchFile,
 	FileType,
 } from '@data-wrangling-components/utilities'
-import type { AsyncHandler, Maybe } from '@showwhy/types'
+import type { AsyncHandler, Experiment , Maybe } from '@showwhy/types'
 import { NodeResponseStatus } from '@showwhy/types'
 import { useCallback, useMemo } from 'react'
 
@@ -48,7 +48,7 @@ export function useSaveProject(): AsyncHandler {
 	const refutations = useRefutationType()
 	const tablesPrep = useTablesPrepSpecification()
 	const todoPages = useGetStepUrlsByStatus()({ exclude: true })
-	const download = useDownload(fileCollection)
+	const download = useDownload(fileCollection, defineQuestion)
 	const oldConfig = useConfigJson()
 
 	return useCallback(async () => {
@@ -183,7 +183,7 @@ function useRunHistoryFile(): Maybe<FileWithPath> {
 	}, [rh])
 }
 
-function useDownload(fileCollection: FileCollection) {
+function useDownload(fileCollection: FileCollection, defineQuestion: Experiment) {
 	const csvResult = useCSVResult()
 	const outputTable = useOutputTable()
 	const getTables = useTables(fileCollection)
@@ -217,12 +217,18 @@ function useDownload(fileCollection: FileCollection) {
 				files.push(runHistoryFile)
 			}
 			const copy = fileCollection.copy()
+			const { exposure, outcome } = defineQuestion
+			if (exposure?.label && outcome?.label) {
+				const formatLabel = (label: string) => label.trim().replace(/\s/g, '_')
+				copy.name = `ShowWhy_${formatLabel(exposure.label)}_causes_${formatLabel(outcome.label)}_${new Date().toISOString()}`
+			}
 			/* eslint-disable @essex/adjacent-await */
 			await copy.add(files)
 			await copy.toZip()
 		},
 		[
 			fileCollection,
+			defineQuestion,
 			csvResult,
 			getTables,
 			outputTable,
