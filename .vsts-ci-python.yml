@@ -42,10 +42,10 @@ stages:
             inputs:
               ArtifactName: 'CodeAnalysisLogs'
               ArtifactType: 'Container'
-  - stage: Verification
+  - stage: Deployment
     dependsOn: []
     jobs:
-      - job: VerificationJob
+      - job: DeploymentJob
         steps:
           # Install tooling
           - task: UsePythonVersion@0
@@ -82,15 +82,6 @@ stages:
                 source $HOME/.poetry/env
                 poetry install
 
-  - stage: DeploymentDev
-    displayName: Deployment (Dev)
-    dependsOn:
-      - Compliance
-      - Verification
-    # condition: and(succeeded(), eq(variables['build.sourceBranch'], 'refs/heads/dev'))
-    jobs:
-      - job: DeploymentJob
-        steps:
           - task: Bash@3
             displayName: Export dependencies
             inputs:
