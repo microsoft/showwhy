@@ -21,7 +21,7 @@ import {
 	useSetSelectedFile,
 } from '~state'
 import type { DropFilesCount, ProjectFile } from '~types'
-import { createDefaultTable, replaceItemAtIndex } from '~utils'
+import { createDefaultTable, replaceItemAtIndex, wait } from '~utils'
 
 export function useBusinessLogic(): {
 	showConfirm: boolean
@@ -221,8 +221,9 @@ function useOnConfirmDelete(
 function useHandleLoadFile(setErrorMessage: Handler1<string>) {
 	const projectFiles = useProjectFiles()
 	const addFile = useAddProjectFile()
+	const setSelectedFile = useSetSelectedFile()
 	return useCallback(
-		(file: ProjectFile) => {
+		async (file: ProjectFile) => {
 			if (projectFiles.find(s => s.name === file.name)) {
 				setErrorMessage('File already uploaded')
 			} else {
@@ -230,8 +231,10 @@ function useHandleLoadFile(setErrorMessage: Handler1<string>) {
 				file.id = fileId
 				file.loadedCorrectly = true
 				addFile(file)
+				await wait(500)
+				setSelectedFile(file)
 			}
 		},
-		[addFile, projectFiles, setErrorMessage],
+		[addFile, projectFiles, setErrorMessage, setSelectedFile],
 	)
 }
