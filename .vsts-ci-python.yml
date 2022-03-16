@@ -123,4 +123,4 @@ stages:
               scriptLocation: 'inlineScript'
               inlineScript: |
                 cd python/showwhy-backend/showwhy_backend
-                func azure functionapp publish showwhy-functions-experiment --no-build
+                func azure functionapp publish showwhy-functions-experiment --python --no-build
