@@ -11,10 +11,12 @@ import styled from 'styled-components'
 import { percentage } from '~utils/stats'
 
 import { useBusinessLogic } from './hooks'
+import { useOnUpdateTables } from './hooks/useOnUpdateTables'
 import { useTables } from './hooks/useTables'
 
 export const ProcessDataPage: FC = memo(function ProcessDataPage() {
 	const tables = useTables()
+	const onUpdateTables = useOnUpdateTables()
 	const { onChangeSteps, steps, commandBar, elements, completedElements } =
 		useBusinessLogic()
 
@@ -27,14 +29,13 @@ export const ProcessDataPage: FC = memo(function ProcessDataPage() {
 					percentComplete={percentage(completedElements, elements) / 100}
 				/>
 			</ProgressContainer>
-			<PrepareDataContainer>
-				<PrepareDataFull
-					steps={steps}
-					onUpdateSteps={onChangeSteps}
-					tables={tables}
-					outputHeaderCommandBar={[commandBar]}
-				/>
-			</PrepareDataContainer>
+			<PrepareDataFull
+				steps={steps}
+				onUpdateSteps={onChangeSteps}
+				tables={tables}
+				onUpdateTables={onUpdateTables}
+				outputHeaderCommandBar={[commandBar]}
+			/>
 		</Container>
 	)
 })
@@ -42,13 +43,6 @@ export const ProcessDataPage: FC = memo(function ProcessDataPage() {
 const Container = styled.div`
 	height: 100vh;
 	margin-top: 0.5rem;
-	position: relative;
-`
-
-const PrepareDataContainer = styled.div`
-	height: 110%;
-	min-width: 100%;
-	width: fit-content;
 	position: relative;
 `
 
