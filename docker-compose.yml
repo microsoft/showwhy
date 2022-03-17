@@ -13,7 +13,7 @@ services:
   azurite:
     container_name: azurite
     cpus: 1
-    image: mcr.microsoft.com/azure-storage/azurite
+    image: mcr.microsoft.com/azure-storage/azurite:3.16.0
     mem_limit: 2G
     restart: always
     ports:
