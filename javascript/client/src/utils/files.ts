@@ -13,13 +13,9 @@ import {
 	FileWithPath,
 } from '@data-wrangling-components/utilities'
 import type { Maybe } from '@showwhy/types'
+import type ColumnTable from 'arquero/dist/types/table/column-table'
 
-import type {
-	DataTableFileDefinition,
-	ProjectFile,
-	RunHistory,
-	ZipData,
-} from '~types'
+import type { DataTableFileDefinition, RunHistory, ZipData } from '~types'
 
 import { fetchTable } from './arquero'
 
@@ -29,12 +25,11 @@ export function createTextFile(name: string, content: string): File {
 	return new File([blob], name, type)
 }
 
-export function createFormData(files: ProjectFile[]): FormData {
+export function createFormData(file: ColumnTable, name: string): FormData {
 	const formData = new FormData()
-	files.forEach((f, i) => {
-		const file = createTextFile(f.name, f.content)
-		formData.append(`file${i}`, file)
-	})
+	const content = file.toCSV()
+	const _file = createTextFile(name, content)
+	formData.append(`file`, _file)
 	return formData
 }
 
