@@ -35,7 +35,6 @@ import {
 	useEstimators,
 	useExperiment,
 	useOutputTablePrep,
-	useProjectFiles,
 	useRefutationType,
 	useRunHistory,
 	useSetSpecCount,
@@ -64,7 +63,6 @@ export function useBusinessLogic(): {
 } {
 	const definitions = useExperiment()
 	const updateRunHistory = useUpdateAndDisableRunHistory()
-	const projectFiles = useProjectFiles()
 	const outputTablePrep = useOutputTablePrep()
 	const estimators = useEstimators()
 	const hasConfidenceInterval = useConfidenceInterval()
@@ -149,7 +147,6 @@ export function useBusinessLogic(): {
 	}, [
 		run,
 		estimateNode,
-		projectFiles,
 		setIsCanceled,
 		saveNewRunHistory,
 		uploadOutputFile,
