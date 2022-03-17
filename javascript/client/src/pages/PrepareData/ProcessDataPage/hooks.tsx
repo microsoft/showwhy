@@ -5,7 +5,11 @@
 
 import type { Step } from '@data-wrangling-components/core'
 import type { IDetailsColumnProps, IRenderFunction } from '@fluentui/react'
-import type { CausalFactor, ElementDefinition } from '@showwhy/types'
+import type {
+	CausalFactor,
+	ElementDefinition,
+	FactorsOrDefinitions,
+} from '@showwhy/types'
 import { useCallback, useMemo } from 'react'
 
 import { useAllVariables } from '~hooks'
@@ -30,6 +34,8 @@ export function useBusinessLogic(): {
 	commandBar: IRenderFunction<IDetailsColumnProps>
 	elements: number
 	completedElements: number
+	allElements: FactorsOrDefinitions
+	isElementComplete: (element: CausalFactor | ElementDefinition) => boolean
 } {
 	const prepSpecification = useTablesPrepSpecification()
 	const setStepsTablePrep = useSetTablesPrepSpecification()
@@ -78,6 +84,16 @@ export function useBusinessLogic(): {
 			: 0
 	}, [allElements])
 
+	const isElementComplete = useCallback(
+		(element: CausalFactor | ElementDefinition) => {
+			const found = allElements?.find(
+				(x: CausalFactor | ElementDefinition) => x.id === element.id,
+			)
+			return !!found?.column
+		},
+		[allElements],
+	)
+
 	const renderDropdown = useRenderDropdown(
 		allElements,
 		onSelectVariable,
@@ -93,5 +109,7 @@ export function useBusinessLogic(): {
 		commandBar,
 		elements: allElements.length,
 		completedElements,
+		allElements,
+		isElementComplete,
 	}
 }

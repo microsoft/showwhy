@@ -88,7 +88,7 @@ export function useFactorsDefinitionForm({
 	)
 
 	const checkbox = useCheckbox(isPrimary, setIsPrimary)
-	const variableField = useVariableField(variable, setVariable)
+	const variableField = useVariableField(variable, add, setVariable)
 	const descriptionBox = useDescriptionBox(
 		description,
 		setDescription,
@@ -124,6 +124,7 @@ function useAdd(
 	resetFields: Handler,
 ): Handler {
 	return useCallback(() => {
+		if (!variable) return
 		const newFactor = {
 			variable,
 			description,

@@ -7,6 +7,19 @@ import type { CausalFactor, Handler } from '@showwhy/types'
 import { useMemo } from 'react'
 import styled from 'styled-components'
 
+function handleKeyPress(fn: Handler) {
+	return (event: React.KeyboardEvent<HTMLInputElement>) => {
+		const enter = 'enter'
+		if (
+			event.code.toLowerCase() === enter ||
+			event.key.toLowerCase() === enter ||
+			event.keyCode === 13
+		) {
+			fn()
+		}
+	}
+}
+
 export function useCheckbox(
 	isPrimary: boolean,
 	setIsPrimary: (value: boolean) => void,
@@ -24,18 +37,21 @@ export function useCheckbox(
 
 export function useVariableField(
 	variable: string,
+	add: Handler,
 	setVariable: (v: string) => void,
 ): JSX.Element {
 	return useMemo(() => {
+		const handler = handleKeyPress(add)
 		return (
 			<VariableField
 				onChange={(_, value) => setVariable(value ?? '')}
 				value={variable}
 				placeholder="Type a variable"
 				data-pw="factors-form-variable-name"
+				onKeyPress={handler}
 			/>
 		)
-	}, [variable, setVariable])
+	}, [variable, setVariable, add])
 }
 
 export function useDescriptionBox(
@@ -46,6 +62,7 @@ export function useDescriptionBox(
 	factor?: CausalFactor,
 ): JSX.Element {
 	return useMemo(() => {
+		const handler = handleKeyPress(add)
 		return (
 			<DetailsContainer>
 				<Field
@@ -55,6 +72,7 @@ export function useDescriptionBox(
 					multiline={(description?.length || 0) > 70}
 					resizable={false}
 					data-pw="factors-form-description"
+					onKeyPress={handler}
 				/>
 				{!factor ? (
 					<ButtonContainer>
@@ -78,6 +96,7 @@ export function useHasLevel(factor?: CausalFactor): boolean {
 
 const DetailsContainer = styled.div`
 	display: flex;
+	gap: 2.5rem;
 `
 
 const Field = styled(TextField)`
