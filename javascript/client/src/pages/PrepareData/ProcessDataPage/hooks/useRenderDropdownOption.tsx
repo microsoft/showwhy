@@ -29,6 +29,7 @@ const buttonStyles = {
 	},
 	label: {
 		width: 150,
+		lineHeight: 'unset',
 	},
 }
 

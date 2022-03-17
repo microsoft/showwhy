@@ -69,7 +69,7 @@ export const ResultsGraph: React.FC<{
 			<OutcomeEffectScatterplot
 				data={specificationData}
 				config={specificationCurveConfig}
-				width={vegaWindowDimensions.width * 0.9}
+				width={vegaWindowDimensions.width}
 				height={vegaWindowDimensions.height * 0.25}
 				onMouseOver={onMouseOver}
 				hovered={hovered}

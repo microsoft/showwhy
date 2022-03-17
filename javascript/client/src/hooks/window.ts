@@ -5,6 +5,9 @@
 import type { Dimensions } from '@essex/hooks'
 import { useEffect, useMemo, useState } from 'react'
 
+const DETAILS_WIDTH_PERCENTAGE_MAX = 0.17
+const DETAILS_WIDTH_PERCENTAGE_MIN = 0.12
+
 export function useWindowDimensions(): Dimensions {
 	const [windowDimensions, setWindowDimensions] = useState({
 		width: 0,
@@ -34,21 +37,14 @@ export function useVegaWindowDimensionsTestable(
 	windowSize: Dimensions,
 ): Dimensions {
 	return useMemo(() => {
-		let percentage = 3.5
-		if (windowSize.width >= 1800) {
-			percentage = 2.3
-		} else if (windowSize.width >= 1600) {
-			percentage = 2.4
-		} else if (windowSize.width >= 1400) {
-			percentage = 2.5
-		} else if (windowSize.width >= 1200) {
-			percentage = 2.7
-		} else if (windowSize.width >= 1096) {
-			percentage = 2.9
+		let percentage = DETAILS_WIDTH_PERCENTAGE_MAX * 2
+		if (windowSize.width < 1200) {
+			percentage = DETAILS_WIDTH_PERCENTAGE_MIN * 3.5
 		}
+		const detailsWidth = window.innerWidth * percentage
 
 		return {
-			width: window.innerWidth / percentage,
+			width: window.innerWidth - detailsWidth,
 			height: window.innerHeight / 2,
 		}
 	}, [windowSize])
