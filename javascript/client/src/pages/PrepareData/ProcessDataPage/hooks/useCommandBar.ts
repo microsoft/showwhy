@@ -9,17 +9,10 @@ import type {
 	ICommandBarProps,
 	IDetailsColumnProps,
 } from '@fluentui/react'
-import type {
-	CausalFactor,
-	ElementDefinition,
-	FactorsOrDefinitions,
-} from '@showwhy/types'
 import { useCallback } from 'react'
 
 export function useCommandBar(
 	renderDropdown: (columnName: string) => JSX.Element,
-	onResetVariable: (columnName: string) => void,
-	allElements: FactorsOrDefinitions,
 ): () => JSX.Element {
 	return useCallback(
 		(props?: IDetailsColumnProps) => {
@@ -30,25 +23,11 @@ export function useCommandBar(
 					iconOnly: true,
 					onRender: () => renderDropdown(columnName),
 				},
-				{
-					key: 'reset',
-					text: 'Reset selection',
-					iconOnly: true,
-					iconProps: iconProps.reset,
-					onClick: () => onResetVariable(columnName),
-					disabled: !allElements.find(
-						(x: ElementDefinition | CausalFactor) => x.column === columnName,
-					),
-				},
 			]
 			return createDefaultCommandBar(items, {
-				style: { width: 250 },
+				style: { width: 200, paddingBottom: 13 },
 			} as ICommandBarProps)
 		},
-		[renderDropdown, onResetVariable, allElements],
+		[renderDropdown],
 	)
-}
-
-const iconProps = {
-	reset: { iconName: 'RemoveLink' },
 }
