@@ -6,7 +6,6 @@
 import {
 	buildAlternativeModels,
 	buildEstimators,
-	buildLoadNode,
 	buildNodes,
 	buildRefutationSpecs,
 	buildSpecs,
@@ -15,40 +14,16 @@ import type { GraphNodeData, Maybe, NodeRequest } from '@showwhy/types'
 import { GraphNodeType } from '@showwhy/types'
 import { useCallback, useMemo } from 'react'
 
-import type { ProjectFile } from '~types'
-
 import { useNodeProperties } from './nodeProperties'
 
-//TODO: fix for CI
-export function useGetNodes(
-	projectFiles: ProjectFile[],
-): (url: string, fileName: string) => Maybe<NodeRequest> {
-	const estimateNode = useEstimateNode(projectFiles)
-
-	return useCallback(
-		(url: string, fileName: string): Maybe<NodeRequest> => {
-			if (projectFiles.length && estimateNode) {
-				const loadNode = buildLoadNode(url, fileName)
-				return {
-					nodes: [...loadNode.nodes, ...estimateNode.nodes],
-				}
-			}
-			return undefined
-		},
-		[estimateNode, projectFiles],
-	)
-}
-
-export function useEstimateNode(
-	projectFiles: ProjectFile[],
-): Maybe<NodeRequest> {
+export function useEstimateNode(fileName?: string): Maybe<NodeRequest> {
 	const buildEstimateEffectNode = useBuildEstimateEffectNode()
 	return useMemo(() => {
-		if (!projectFiles.length) {
+		if (!fileName) {
 			return undefined
 		}
-		return buildEstimateEffectNode(projectFiles[0]!.name)
-	}, [projectFiles, buildEstimateEffectNode])
+		return buildEstimateEffectNode(fileName)
+	}, [fileName, buildEstimateEffectNode])
 }
 
 function useGetNodeProperties(): (fileName: string) => Partial<GraphNodeData> {

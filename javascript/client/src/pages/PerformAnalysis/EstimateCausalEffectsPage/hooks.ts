@@ -15,9 +15,11 @@ import type {
 	NodeRequest,
 	RefutationOption,
 } from '@showwhy/types'
+import type ColumnTable from 'arquero/dist/types/table/column-table'
 import { useCallback, useEffect, useState } from 'react'
 
 import {
+	useAllColumns,
 	useEstimateNode,
 	useIsDefaultRunProcessing,
 	useRefutationOptions,
@@ -28,17 +30,20 @@ import {
 } from '~hooks'
 import { api } from '~resources'
 import {
+	useCausalFactors,
 	useConfidenceInterval,
 	useEstimators,
 	useExperiment,
-	useProjectFiles,
+	useOutputTablePrep,
 	useRefutationType,
 	useRunHistory,
 	useSetSpecCount,
 	useSpecCount,
 } from '~state'
-import type { ProjectFile, RunHistory } from '~types'
+import type { RunHistory } from '~types'
 import { createFormData, initialRunHistory } from '~utils'
+
+const OUTPUT_FILE_NAME = 'output'
 
 export function useBusinessLogic(): {
 	isProcessing: boolean
@@ -58,7 +63,7 @@ export function useBusinessLogic(): {
 } {
 	const definitions = useExperiment()
 	const updateRunHistory = useUpdateAndDisableRunHistory()
-	const projectFiles = useProjectFiles()
+	const outputTablePrep = useOutputTablePrep()
 	const estimators = useEstimators()
 	const hasConfidenceInterval = useConfidenceInterval()
 	const [
@@ -74,9 +79,11 @@ export function useBusinessLogic(): {
 	const refutationOptions = useRefutationOptions()
 	const refutationType = useRefutationType()
 	const run = useRunEstimate()
-	const estimateNode = useEstimateNode(projectFiles)
+	const estimateNode = useEstimateNode(OUTPUT_FILE_NAME)
 	const isProcessing = useIsDefaultRunProcessing()
 	const totalEstimatorsCount = estimators.length
+	const causalFactors = useCausalFactors()
+	const allColumns = useAllColumns(causalFactors, definitions)
 	useWakeLock()
 
 	useEffect(() => {
@@ -103,13 +110,10 @@ export function useBusinessLogic(): {
 		trueLoadingSpecCount,
 	])
 
-	const uploadProjectFiles = useCallback(
-		async (projectFiles: ProjectFile[]) => {
-			const filesData = createFormData(projectFiles)
-			return api.uploadFiles(filesData)
-		},
-		[],
-	)
+	const uploadOutputFile = useCallback(async (file: ColumnTable) => {
+		const filesData = createFormData(file, OUTPUT_FILE_NAME)
+		return api.uploadFiles(filesData)
+	}, [])
 
 	const saveNewRunHistory = useCallback(() => {
 		const initialRun = initialRunHistory(
@@ -130,10 +134,11 @@ export function useBusinessLogic(): {
 	const runEstimate = useCallback(async () => {
 		setIsCanceled(false)
 		saveNewRunHistory()
-		const files = await uploadProjectFiles(projectFiles)
+		const output = outputTablePrep?.select(allColumns) as ColumnTable
+		const files = await uploadOutputFile(output)
 		const loadNode = buildLoadNode(
-			files.uploaded_files[projectFiles[0]!.name]!,
-			projectFiles[0]!.name,
+			files.uploaded_files[OUTPUT_FILE_NAME]!,
+			OUTPUT_FILE_NAME,
 		)
 		const nodes = {
 			nodes: [...loadNode.nodes, ...(estimateNode as NodeRequest).nodes],
@@ -142,10 +147,11 @@ export function useBusinessLogic(): {
 	}, [
 		run,
 		estimateNode,
-		projectFiles,
 		setIsCanceled,
 		saveNewRunHistory,
-		uploadProjectFiles,
+		uploadOutputFile,
+		outputTablePrep,
+		allColumns,
 	])
 
 	const cancelRun = useCallback(() => {
