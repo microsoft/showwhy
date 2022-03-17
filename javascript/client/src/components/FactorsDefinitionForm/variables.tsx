@@ -95,8 +95,10 @@ export function useHasLevel(factor?: CausalFactor): boolean {
 }
 
 const DetailsContainer = styled.div`
-	display: flex;
-	gap: 2.5rem;
+	display: grid;
+	grid-template-columns: 85% 15%;
+	justify-content: center;
+	gap: 0.5rem;
 `
 
 const Field = styled(TextField)`
@@ -110,6 +112,6 @@ const VariableField = styled(TextField)`
 const AddButton = styled(DefaultButton)``
 
 const ButtonContainer = styled.div`
-	text-align: end;
+	text-align: center;
 	padding-right: 8px;
 `

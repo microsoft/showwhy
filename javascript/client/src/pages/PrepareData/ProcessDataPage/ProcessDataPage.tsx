@@ -15,19 +15,28 @@ import { useTables } from './hooks/useTables'
 export const ProcessDataPage: FC = memo(function ProcessDataPage() {
 	const tables = useTables()
 	const onUpdateTables = useOnUpdateTables()
-	const { onChangeSteps, steps, commandBar, elements, completedElements, allElements, isElementComplete } =
-		useBusinessLogic()
+	const {
+		onChangeSteps,
+		steps,
+		commandBar,
+		elements,
+		completedElements,
+		allElements,
+		isElementComplete,
+		onResetVariable,
+	} = useBusinessLogic()
 
 	return (
 		<Container>
-			{completedElements ? 
+			{allElements.length ? (
 				<CompletedElements
 					completedElements={completedElements}
 					elements={elements}
 					allElements={allElements}
 					isElementComplete={isElementComplete}
+					onResetVariable={onResetVariable}
 				/>
-			: null}
+			) : null}
 			<PrepareDataFull
 				steps={steps}
 				onUpdateSteps={onChangeSteps}

@@ -12,7 +12,7 @@ import {
 	fetchFile,
 	FileType,
 } from '@data-wrangling-components/utilities'
-import type { AsyncHandler, Experiment , Maybe } from '@showwhy/types'
+import type { AsyncHandler, Experiment, Maybe } from '@showwhy/types'
 import { NodeResponseStatus } from '@showwhy/types'
 import { useCallback, useMemo } from 'react'
 
@@ -183,7 +183,10 @@ function useRunHistoryFile(): Maybe<FileWithPath> {
 	}, [rh])
 }
 
-function useDownload(fileCollection: FileCollection, defineQuestion: Experiment) {
+function useDownload(
+	fileCollection: FileCollection,
+	defineQuestion: Experiment,
+) {
 	const csvResult = useCSVResult()
 	const outputTable = useOutputTable()
 	const getTables = useTables(fileCollection)
@@ -218,13 +221,16 @@ function useDownload(fileCollection: FileCollection, defineQuestion: Experiment)
 			}
 			const copy = fileCollection.copy()
 			const { exposure, outcome } = defineQuestion
+			let zipName = copy.name
 			if (exposure?.label && outcome?.label) {
 				const formatLabel = (label: string) => label.trim().replace(/\s/g, '_')
-				copy.name = `ShowWhy_${formatLabel(exposure.label)}_causes_${formatLabel(outcome.label)}_${new Date().toISOString()}`
+				zipName = `ShowWhy_${formatLabel(exposure.label)}_causes_${formatLabel(
+					outcome.label,
+				)}_${new Date().toISOString()}`
 			}
 			/* eslint-disable @essex/adjacent-await */
 			await copy.add(files)
-			await copy.toZip()
+			await copy.toZip(zipName)
 		},
 		[
 			fileCollection,

@@ -17,7 +17,11 @@ import { useCallback, useMemo, useState } from 'react'
 import { useFactorsDefinitionForm } from '~components/FactorsDefinitionForm'
 import type { HeaderData, PageType } from '~types'
 
-const actionsHeader: HeaderData = { fieldName: 'actions', value: 'Actions' }
+const actionsHeader: HeaderData = {
+	fieldName: 'actions',
+	value: 'Actions',
+	width: '15%',
+}
 
 export function useTableComponent(
 	columns: ElementDefinition[],

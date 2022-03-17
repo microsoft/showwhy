@@ -2,79 +2,117 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { Icon } from '@fluentui/react'
-import { useBoolean } from '@fluentui/react-hooks'
-import type { CausalFactor, ElementDefinition, FactorsOrDefinitions } from '@showwhy/types'
-import type { FC} from 'react';
+import { Callout, DefaultButton, DirectionalHint, Icon } from '@fluentui/react'
+import { useBoolean, useId } from '@fluentui/react-hooks'
+import type {
+	CausalFactor,
+	ElementDefinition,
+	FactorsOrDefinitions,
+} from '@showwhy/types'
+import type { FC } from 'react'
 import { memo } from 'react'
 import styled from 'styled-components'
 
-import { CardComponent } from '../../../components/CardComponent'
-
 interface Props {
-    completedElements: number
-    elements: number
-    allElements: FactorsOrDefinitions
+	completedElements: number
+	elements: number
+	allElements: FactorsOrDefinitions
 	isElementComplete: (element: CausalFactor | ElementDefinition) => boolean
+	onResetVariable: (columnName: string) => void
 }
 
-export const CompletedElements: FC<Props> = memo(
-    function CompletedElements({completedElements, elements, allElements, isElementComplete}) {
-        const [isVisible, {toggle}] = useBoolean(true)
-        return (
-            <CardComponent styles={CardStyles as React.CSSProperties}>
-                <Title onClick={toggle}>Selected Variables {completedElements}/{elements} <Small>(see {isVisible ? 'less' : 'more'})</Small></Title>
-                <Ul isVisible={isVisible}>
-                    {allElements.map((element, index) => {
-                        const isComplete = isElementComplete(element)
-                        return (
-                            <Li 
-                                key={index}
-                                isComplete={isComplete}
-                            >
-                                {isComplete ? <Icon iconName="SkypeCircleCheck" /> : null}
-                                {element.variable}
-                            </Li>
-                        )
-                    })}
-                </Ul>
-            </CardComponent>
-        )
-    },
-)
+export const CompletedElements: FC<Props> = memo(function CompletedElements({
+	completedElements,
+	elements,
+	allElements,
+	isElementComplete,
+	onResetVariable,
+}) {
+	const [isVisible, { toggle }] = useBoolean(false)
+	const buttonId = useId('callout-button')
+	const all = allElements.map(element => {
+		const isComplete = isElementComplete(element)
+		return {
+			variable: element.variable,
+			key: element.id,
+			isComplete,
+			icon: isComplete ? 'SkypeCircleCheck' : 'SkypeCircleMinus',
+			onClick: isComplete ? () => onResetVariable(element.column) : undefined,
+		}
+	})
+	return (
+		<Container>
+			<DefaultButton id={buttonId} onClick={toggle}>
+				{isVisible ? 'Hide' : 'Show'} Assigned Variables {completedElements}/
+				{elements}
+			</DefaultButton>
+			{isVisible ? (
+				<Callout
+					gapSpace={2}
+					target={`#${buttonId}`}
+					isBeakVisible={false}
+					onDismiss={toggle}
+					directionalHint={DirectionalHint.bottomAutoEdge}
+					setInitialFocus
+					styles={CalloutStyles}
+				>
+					<List list={all} />
+				</Callout>
+			) : null}
+		</Container>
+	)
+})
 
-const CardStyles = {
-	padding: '0 8px',
-    margin: '0 8px',
-    maxWidth: '25%',
-    position: 'absolute',
-    right: '0',
-    zIndex: '1',
-	backgroundColor: 'white',
+const List: FC = memo(function ListItem({ list }) {
+	return list.length ? (
+		<Ul>
+			{list.map(item => {
+				const { icon, variable, onClick, key, isComplete = false } = item
+				return (
+					<Li key={key} isComplete={isComplete} onClick={onClick}>
+						{icon ? <Icon iconName={icon} /> : null}
+						{variable}
+					</Li>
+				)
+			})}
+		</Ul>
+	) : null
+})
+
+const CalloutStyles = {
+	calloutMain: {
+		display: 'grid',
+		gridTemplateColumns: '1fr auto',
+		gap: '1rem',
+		padding: '0.5rem',
+		maxWidth: '40vw',
+		minWidth: '20vw',
+	},
 }
 
-const Title = styled.h4`
-	cursor: pointer;
-	text-align: center;
+const Container = styled.div`
+	padding: 0 8px;
+	margin: 0 8px;
+	position: absolute;
+	right: 0;
+	z-index: 1;
 `
 
-const Ul = styled.ul<{isVisible: boolean}>`
+const Ul = styled.ul`
 	list-style: none;
-    padding: ${({isVisible}) => isVisible ? '0.5rem' : '0'};
-    border-radius: 3px;
-    margin: 0;
-	height: ${({isVisible}) => isVisible ? 'auto' : '0'};
-	overflow: ${({isVisible}) => isVisible ? 'auto' : 'hidden'};
+	padding: 0.5rem;
+	border-radius: 3px;
+	margin: 0;
 `
 
-const Li = styled.li<{isComplete: boolean}>`
+const Li = styled.li<{ isComplete: boolean }>`
 	display: flex;
 	align-items: center;
 	gap: 0.5rem;
-	padding: ${({isComplete}) => (isComplete ? '0 0 0.5rem 0' : '0 0 0.5rem 1.5rem')};
-	color: ${({theme, isComplete}) => isComplete ? theme.application().accent() : theme.application().foreground()};
-`
-
-const Small = styled.small`
-	font-weight: 300;
+	padding: 0 0 0.5rem 0;
+	color: ${({ theme, isComplete }) =>
+		isComplete
+			? theme.application().accent()
+			: theme.application().foreground()};
+	cursor: ${({ isComplete }) => (isComplete ? 'pointer' : 'default')};
 `
