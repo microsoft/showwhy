@@ -35,6 +35,7 @@ import {
 	useEstimators,
 	useExperiment,
 	useOutputTablePrep,
+	useProjectFiles,
 	useRefutationType,
 	useRunHistory,
 	useSetSpecCount,
@@ -64,6 +65,7 @@ export function useBusinessLogic(): {
 	const definitions = useExperiment()
 	const updateRunHistory = useUpdateAndDisableRunHistory()
 	const outputTablePrep = useOutputTablePrep()
+	const projectFiles = useProjectFiles()
 	const estimators = useEstimators()
 	const hasConfidenceInterval = useConfidenceInterval()
 	const [
@@ -134,7 +136,14 @@ export function useBusinessLogic(): {
 	const runEstimate = useCallback(async () => {
 		setIsCanceled(false)
 		saveNewRunHistory()
-		const output = outputTablePrep?.select(allColumns) as ColumnTable
+		let output = projectFiles[0]?.table as ColumnTable
+		if (outputTablePrep) {
+			output = outputTablePrep
+		}
+
+		if (allColumns) {
+			output = output?.select(allColumns)
+		}
 		const files = await uploadOutputFile(output)
 		const loadNode = buildLoadNode(
 			files.uploaded_files[OUTPUT_FILE_NAME]!,
@@ -152,6 +161,7 @@ export function useBusinessLogic(): {
 		uploadOutputFile,
 		outputTablePrep,
 		allColumns,
+		projectFiles,
 	])
 
 	const cancelRun = useCallback(() => {
