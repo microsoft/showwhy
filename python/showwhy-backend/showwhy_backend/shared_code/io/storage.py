@@ -2,7 +2,6 @@ import json
 import logging
 import os
 import pickle
-import tempfile
 
 from abc import ABC, abstractmethod
 from datetime import datetime, timedelta
@@ -11,7 +10,12 @@ from typing import Any, Dict
 
 import pandas as pd
 
-from azure.storage.blob import BlobSasPermissions, BlobServiceClient, generate_blob_sas
+from azure.storage.blob import (
+    BlobSasPermissions,
+    BlobServiceClient,
+    PublicAccess,
+    generate_blob_sas,
+)
 
 
 class StorageClient(ABC):
@@ -179,7 +183,9 @@ class LocalStorageClient(StorageClient):
 
         # Create a container
         try:
-            blob_service_client.create_container(name="sessions")
+            blob_service_client.create_container(
+                name="sessions", public_access=PublicAccess.Blob
+            )
         except:
             logging.info(f"Container [sessions] already exists")
 
@@ -269,26 +275,8 @@ class LocalStorageClient(StorageClient):
         with open(local_path, "rb") as data:
             blob_client.upload_blob(data, overwrite=True)
 
-        # Generate a SAS token (required even locally)
-        account_key_index = 1 if "devstoreaccount1" in storage_connection_string else 2
-        _, _, account_key = storage_connection_string.split(";")[
-            account_key_index
-        ].partition("=")
-
-        start_time = datetime.utcnow()
-        end_time = start_time + timedelta(hours=1)
-        token = generate_blob_sas(
-            blob_service_client.account_name,
-            "sessions",
-            blob_path,
-            account_key=account_key,
-            start=start_time,
-            expiry=end_time,
-            permission=BlobSasPermissions(read=True),
-        )
-
         # Return azurite url (replace with localhost)
-        return f'{blob_service_client.primary_endpoint.replace("azurite:10000", "localhost:81")}sessions/{blob_path}?{token}'
+        return f'{blob_service_client.primary_endpoint.replace("azurite:10000", "localhost:81")}sessions/{blob_path}'
 
 
 def get_storage_client():
