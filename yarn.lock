@@ -882,9 +882,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@data-wrangling-components/core@npm:^5.0.1":
-  version: 5.0.1
-  resolution: "@data-wrangling-components/core@npm:5.0.1"
+"@data-wrangling-components/core@npm:^5.1.0":
+  version: 5.1.0
+  resolution: "@data-wrangling-components/core@npm:5.1.0"
   dependencies:
     lodash-es: ^4.17.21
   peerDependencies:
@@ -893,7 +893,7 @@ __metadata:
   peerDependenciesMeta:
     "@types/node":
       optional: true
-  checksum: 561c85d75bc07f720bddd0dae7f1ebb778d771ecd5996580b2d2721b932a08a6299695daf4982ff3d6e0c8990c9de4394da78bca78306eb0441077c1a44f7adf
+  checksum: 2e817782ea4e2cb408ee0af05faa414ed8fd2f841dd8c8d284669d5f44730e514b3d390707a9d698edf3be41458520ea98f01dde0654fcaa98bfa53fe6e2b8c0
   languageName: node
   linkType: hard
 
@@ -904,9 +904,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@data-wrangling-components/react@npm:^3.1.0":
-  version: 3.1.0
-  resolution: "@data-wrangling-components/react@npm:3.1.0"
+"@data-wrangling-components/react@npm:^3.2.0":
+  version: 3.2.0
+  resolution: "@data-wrangling-components/react@npm:3.2.0"
   dependencies:
     "@data-wrangling-components/guidance": ^0.1.7
     "@essex/hooks": ^4.0.6
@@ -937,7 +937,7 @@ __metadata:
     react: ^17.0.2
     react-dom: ^17.0.2
     styled-components: ^5.3.0
-  checksum: 3807f3191f55958733bef0d83bd443904ec58df85104dbfc556c93dbaba1725ad0a86972194d4ac860081ef183c9f09edac4309e2c6bbea8e415afb987da2d1a
+  checksum: 3ebf0a0306f81e44b556e25aeb63ece9b9a47b44a732db7ccb90a2e52e33ea0f3dd054b0cebfc98aa001ce276ab669a640eb61c595c61a2754c3fd121a0e1e6c
   languageName: node
   linkType: hard
 
@@ -2013,8 +2013,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/client@workspace:javascript/client"
   dependencies:
-    "@data-wrangling-components/core": ^5.0.1
-    "@data-wrangling-components/react": ^3.1.0
+    "@data-wrangling-components/core": ^5.1.0
+    "@data-wrangling-components/react": ^3.2.0
     "@data-wrangling-components/utilities": ^1.7.0
     "@essex/boolean-expression-component": ^1.0.3
     "@essex/hooks": ^4.0.5
