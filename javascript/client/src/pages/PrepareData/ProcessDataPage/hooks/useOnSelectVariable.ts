@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { IDropdownOption } from '@fluentui/react'
+import type { IContextualMenuItem } from '@fluentui/react'
 import type { CausalFactor, Experiment, Maybe } from '@showwhy/types'
 import { useCallback } from 'react'
 import type { SetterOrUpdater } from 'recoil'
@@ -20,7 +20,7 @@ export function useOnSelectVariable(
 	causalFactors: CausalFactor[],
 	defineQuestion: Experiment,
 	setDefineQuestion: SetterOrUpdater<Experiment>,
-): (option: Maybe<IDropdownOption<any>>, columnName: string) => void {
+): (option: Maybe<IContextualMenuItem>, columnName: string) => void {
 	const onSaveCausalFactor = useAddOrEditFactor()
 	const setCausalFactor = useSetTargetCausalFactor(
 		onSaveCausalFactor,
@@ -30,7 +30,7 @@ export function useOnSelectVariable(
 	const setDefinition = useSetTargetDefinition(onSaveDefinition, defineQuestion)
 
 	return useCallback(
-		(option: Maybe<IDropdownOption<any>>, columnName: string) => {
+		(option: Maybe<IContextualMenuItem>, columnName: string) => {
 			if (option?.data.type === DefinitionType.Factor) {
 				setCausalFactor(option?.key as string, columnName)
 			} else {
