@@ -10,7 +10,7 @@ import * as win from '../window'
 describe('windowHook', () => {
 	it('useVegaWindowDimensions', () => {
 		const expected = {
-			width: window.innerWidth / 3.5,
+			width: window.innerWidth - window.innerWidth * (0.12 * 3.5),
 			height: window.innerHeight / 2,
 		}
 		const { result } = renderHook(() =>

@@ -30,7 +30,6 @@ export function useWindowDimensions(): Dimensions {
 
 export function useVegaWindowDimensions(): Dimensions {
 	const size = useWindowDimensions()
-	console.log('size', size)
 	return useVegaWindowDimensionsTestable(size)
 }
 
