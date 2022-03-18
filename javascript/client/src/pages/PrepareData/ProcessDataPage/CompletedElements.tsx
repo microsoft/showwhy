@@ -8,6 +8,7 @@ import type {
 	CausalFactor,
 	ElementDefinition,
 	FactorsOrDefinitions,
+    Maybe,
 } from '@showwhy/types'
 import type { FC } from 'react'
 import { memo } from 'react'
@@ -21,6 +22,14 @@ interface Props {
 	onResetVariable: (columnName: string) => void
 }
 
+interface ListElement {
+    key: string
+    variable: string
+    isComplete: boolean
+    icon: string
+    onClick: Maybe<() => void>
+}
+
 export const CompletedElements: FC<Props> = memo(function CompletedElements({
 	completedElements,
 	elements,
@@ -30,14 +39,14 @@ export const CompletedElements: FC<Props> = memo(function CompletedElements({
 }) {
 	const [isVisible, { toggle }] = useBoolean(false)
 	const buttonId = useId('callout-button')
-	const all = allElements.map(element => {
+	const all: ListElement[] = allElements.map(element => {
 		const isComplete = isElementComplete(element)
 		return {
 			variable: element.variable,
 			key: element.id,
 			isComplete,
 			icon: isComplete ? 'SkypeCircleCheck' : 'SkypeCircleMinus',
-			onClick: isComplete ? () => onResetVariable(element.column) : undefined,
+			onClick: isComplete ? () => onResetVariable(element.column || '') : undefined,
 		}
 	})
 	return (
@@ -63,7 +72,7 @@ export const CompletedElements: FC<Props> = memo(function CompletedElements({
 	)
 })
 
-const List: FC = memo(function ListItem({ list }) {
+const List: FC<{list: ListElement[]}> = memo(function ListItem({ list }) {
 	return list.length ? (
 		<Ul>
 			{list.map(item => {

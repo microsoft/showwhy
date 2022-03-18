@@ -11,11 +11,13 @@ import { Container, ContainerFlexRow, ContainerTextCenter } from '~styles'
 import { Pages } from '~types'
 
 import { useBusinessLogic } from './hooks'
+import { useInfoMessage } from './InfoMessage'
 import { RunHistoryList } from './RunHistoryList'
 import { SpecificationsList } from './SpecificationsList'
 
 export const EstimateCausalEffects: React.FC = memo(
 	function EstimateCausalEffects() {
+		const InfoMessage = useInfoMessage()
 		const {
 			isProcessing,
 			totalEstimatorsCount,
@@ -35,6 +37,7 @@ export const EstimateCausalEffects: React.FC = memo(
 
 		return (
 			<Container>
+				{InfoMessage}
 				<SpecificationsList
 					hasConfidenceInterval={hasConfidenceInterval}
 					estimators={estimators}
