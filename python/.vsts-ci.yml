@@ -45,7 +45,7 @@ stages:
               ArtifactName: 'CodeAnalysisLogs'
               ArtifactType: 'Container'
 
-  - stage: Deployment Dev
+  - stage: DeploymentDev
     dependsOn:
       - Compliance
     condition: and(succeeded(), eq(variables['build.sourceBranch'], 'refs/heads/dev'))
@@ -129,7 +129,7 @@ stages:
                 cd python/showwhy-backend/showwhy_backend
                 func azure functionapp publish showwhy-functions-experiment --python --no-build
 
-  - stage: Deployment Integ
+  - stage: DeploymentInteg
     dependsOn:
       - Compliance
     condition: and(succeeded(), eq(variables['build.sourceBranch'], 'refs/heads/main'))
