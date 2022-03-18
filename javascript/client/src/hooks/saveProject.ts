@@ -12,6 +12,7 @@ import {
 	fetchFile,
 	FileType,
 } from '@data-wrangling-components/utilities'
+import { isProcessingStatus } from '@showwhy/api-client'
 import type { AsyncHandler, Experiment, Maybe } from '@showwhy/types'
 import { NodeResponseStatus } from '@showwhy/types'
 import { useCallback, useMemo } from 'react'
@@ -171,7 +172,7 @@ function useCSVResult() {
 }
 
 function useRunHistoryFile(): Maybe<FileWithPath> {
-	const rh = useRunHistory()
+	const rh = useRunHistory().filter(r => !isProcessingStatus(r.status.status))
 	return useMemo(() => {
 		if (rh?.length) {
 			const file = createFileWithPath(new Blob([JSON.stringify(rh, null, 4)]), {
