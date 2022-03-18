@@ -20,6 +20,7 @@ import { useSpecificationSHAPColumns } from '../hooks'
 import { VegaHost } from '../VegaHost'
 import template from './dot-plot.json'
 import { mergeSpec, parseJsonPathSpec } from './util'
+import { MIN_SPEC_ADDITIONAL_PADDING } from './VegaSpecificationCurve'
 
 const templateString = JSON.stringify(template)
 
@@ -34,6 +35,7 @@ export const AnalyticDecisionsDotPlot: React.FC<{
 	onAxisClick?: (axis: string, datum: any) => void
 	hovered?: number
 	selected?: number
+	totalSpecs?: number
 }> = memo(function AnalyticDecisionsDotPlot({
 	data,
 	config,
@@ -44,6 +46,7 @@ export const AnalyticDecisionsDotPlot: React.FC<{
 	onAxisClick,
 	hovered,
 	selected,
+	totalSpecs = data.length,
 }) {
 	const theme = useThematic()
 	const primarySpecificationConfig = usePrimarySpecificationConfig()
@@ -53,6 +56,10 @@ export const AnalyticDecisionsDotPlot: React.FC<{
 		.hex()
 
 	const shap = useTransformShap(data)
+
+	const padding = useMemo((): any => {
+		return totalSpecs > MIN_SPEC_ADDITIONAL_PADDING ? 10 : width * 0.25
+	}, [totalSpecs, width])
 
 	const spec = useMemo(() => {
 		const shapValues = shap.map(s => s.value)
@@ -86,6 +93,7 @@ export const AnalyticDecisionsDotPlot: React.FC<{
 				.scales()
 				.nominalBold(10)
 				.toArray(),
+			"$.scales[?(@.name == 'x')].padding": padding,
 			"$.signals[?(@.name == 'shapDomain')].value": shapDomain,
 			"$.signals[?(@.name == 'primaryEstimatorId')].value":
 				primarySpecificationId,
@@ -93,7 +101,7 @@ export const AnalyticDecisionsDotPlot: React.FC<{
 
 		const overlay = parseJsonPathSpec(rawSpec, pathspec)
 		return mergeSpec(rawSpec, overlay)
-	}, [theme, data, primarySpecificationConfig, shap, shapColor])
+	}, [theme, data, primarySpecificationConfig, shap, shapColor, padding])
 
 	const signals = useMemo(
 		() => ({

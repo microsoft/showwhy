@@ -23,6 +23,7 @@ import {
 	useRunHistory,
 	useSetSignificanceTests,
 	useSetSpecificationCurveConfig,
+	useSpecCount,
 	useSpecificationCurveConfig,
 } from '~state'
 import type {
@@ -56,6 +57,7 @@ export function useSpecificationCurve(): {
 	setSelectedSpecification: (s: Maybe<Specification>) => void
 	theme: Theme
 	vegaWindowDimensions: Dimensions
+	totalSpecs?: number
 } {
 	const data = useLoadSpecificationData()
 	const config = useSpecificationCurveConfig()
@@ -68,6 +70,7 @@ export function useSpecificationCurve(): {
 	const theme = useThematic()
 	const defineQuestion = useExperiment()
 	const outcome = useOutcome(defineQuestion)
+	const totalSpecs = useSpecCount()
 	useWakeLock()
 	const activeProcessing = useActiveProcessing(runHistory)
 	const [selectedSpecification, setSelectedSpecification] =
@@ -116,6 +119,7 @@ export function useSpecificationCurve(): {
 		setSelectedSpecification,
 		theme,
 		vegaWindowDimensions,
+		totalSpecs,
 	}
 }
 

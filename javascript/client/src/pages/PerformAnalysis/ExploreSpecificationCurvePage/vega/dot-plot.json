@@ -110,7 +110,6 @@
 				"data": "features",
 				"field": "id"
 			},
-			"padding": 10,
 			"zero": false,
 			"range": [
 				0,
