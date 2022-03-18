@@ -6,4 +6,5 @@ export interface HeaderData {
 	value: string | React.ReactNode
 	fieldName: string
 	iconName?: string
+	width?: string
 }

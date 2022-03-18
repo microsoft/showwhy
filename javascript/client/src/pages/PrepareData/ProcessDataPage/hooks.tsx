@@ -36,6 +36,7 @@ export function useBusinessLogic(): {
 	completedElements: number
 	allElements: FactorsOrDefinitions
 	isElementComplete: (element: CausalFactor | ElementDefinition) => boolean
+	onResetVariable: (columnName: string) => void
 } {
 	const prepSpecification = useTablesPrepSpecification()
 	const setStepsTablePrep = useSetTablesPrepSpecification()
@@ -111,5 +112,6 @@ export function useBusinessLogic(): {
 		completedElements,
 		allElements,
 		isElementComplete,
+		onResetVariable,
 	}
 }
