@@ -3,9 +3,10 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-export interface StepLink {
+import type { ProcessHelpLink } from './ProcessHelpLink'
+
+export interface ProcessHelpResource {
+	id: string
 	title: string
-	description: string
-	image: string
-	url: string
+	links: ProcessHelpLink[]
 }

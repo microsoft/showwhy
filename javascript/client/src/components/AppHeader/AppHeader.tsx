@@ -14,6 +14,7 @@ import type { FileDefinition, StepStatus } from '~types'
 import { ProjectsSelector } from './ProjectsSelector'
 import { SaveProject } from './SaveProject'
 import { Settings } from './Settings'
+import { UnderstandProcessButton } from './UnderstandProcessButton'
 
 type GetStepUrlsHandler = (urls?: string[], exclude?: any) => string[]
 type SetAllStepStatusHandler = (urls: string[], status: StepStatus) => void
@@ -53,6 +54,7 @@ export const AppHeader: React.FC<{
 					loadProjectOption={uploadZipMenuOption}
 				/>
 				<SaveProject />
+				<UnderstandProcessButton />
 			</UserInformationContainer>
 		</AppHeaderContainer>
 	)
@@ -65,7 +67,6 @@ const AppHeaderContainer = styled.div`
 	color: white;
 	justify-content: space-between;
 `
-
 const TitleContainer = styled.div`
 	width: 17%;
 `
