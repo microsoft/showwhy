@@ -117,7 +117,7 @@ export const ExploreSpecificationCurvePage: React.FC = memo(
 )
 
 const EstimatesContainer = styled.div`
-	width: 60%;
+	width: 80%;
 `
 
 const Main = styled.div`

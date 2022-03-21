@@ -3,18 +3,12 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type {
-	IIconProps} from '@fluentui/react';
-import {
-	mergeStyleSets,
-	Modal,
-	Pivot,
-	PivotItem,
-} from '@fluentui/react'
+import type { IIconProps } from '@fluentui/react'
+import { mergeStyleSets, Modal, Pivot, PivotItem } from '@fluentui/react'
 import { IconButton } from '@fluentui/react/lib/Button'
 import { useId } from '@fluentui/react-hooks'
 import type { Handler } from '@showwhy/types'
-import type { FC} from 'react';
+import type { FC } from 'react'
 import { memo, useCallback, useState } from 'react'
 import { understandProcessSteps } from 'src/data/understandProcess'
 import styled from 'styled-components'
@@ -42,13 +36,14 @@ export const UnderstandProcessModal: FC<{
 
 	return (
 		<UnderstandModal
+			data-pw="understand-question-modal"
 			titleAriaId={titleId}
 			isOpen={isModalOpen}
 			onDismiss={toggleModal}
 			containerClassName={contentStyles.container}
 		>
 			<Header>
-				<Title>Understand process</Title>
+				<Title data-pw="understand-question-title">Understand process</Title>
 				<Icon
 					iconProps={cancelIcon}
 					ariaLabel="Close popup modal"

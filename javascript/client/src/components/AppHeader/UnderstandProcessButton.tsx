@@ -19,7 +19,7 @@ export const UnderstandProcessButton: FC = memo(
 		return (
 			<>
 				<TooltipHost
-					data-pw="understand-question"
+					data-pw="understand-question-button"
 					content="Understand showwhy process"
 					id={tooltipId}
 					setAriaDescribedBy={false}
