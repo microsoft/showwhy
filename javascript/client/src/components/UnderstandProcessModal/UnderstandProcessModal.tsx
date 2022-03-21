@@ -70,7 +70,7 @@ const MainPivot = styled(Pivot)`
 const UnderstandModal = styled(Modal)`
 	.ms-Dialog-main {
 		width: 80%;
-		min-height: 75%;
+		min-height: 80%;
 		display: flex;
 		flex-flow: column nowrap;
 		align-items: stretch;
