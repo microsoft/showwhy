@@ -13,6 +13,7 @@ import type { Specification, SpecificationCurveConfig } from '~types'
 import { VegaHost } from '../VegaHost'
 import template from './scatter-plot.json'
 import { mergeSpec, parseJsonPathSpec } from './util'
+import { MIN_SPEC_ADDITIONAL_PADDING } from './VegaSpecificationCurve'
 
 const templateString = JSON.stringify(template)
 
@@ -29,6 +30,7 @@ export const OutcomeEffectScatterplot: React.FC<{
 	title?: string
 	outcome?: string
 	failedRefutationIds: number[]
+	totalSpecs?: number
 }> = memo(function OutcomeEffectScatterplot({
 	data,
 	config,
@@ -41,8 +43,9 @@ export const OutcomeEffectScatterplot: React.FC<{
 	title,
 	failedRefutationIds,
 	outcome,
+	totalSpecs = data.length,
 }) {
-	const spec = useOverlay(data, title, outcome)
+	const spec = useOverlay(data, width, totalSpecs, title, outcome)
 
 	const signals = useMemo(
 		() => ({
@@ -72,11 +75,21 @@ export const OutcomeEffectScatterplot: React.FC<{
 	)
 })
 
-function useOverlay(data: Specification[], title?: string, outcome?: string) {
+function useOverlay(
+	data: Specification[],
+	width: number,
+	totalSpecs: number,
+	title?: string,
+	outcome?: string,
+) {
 	const theme = useThematic()
 	const refutationLegend = Object.keys(RefutationResultString).map(
 		key => (RefutationResultString as any)[key],
 	)
+
+	const padding = useMemo((): any => {
+		return totalSpecs > MIN_SPEC_ADDITIONAL_PADDING ? 10 : width * 0.25
+	}, [totalSpecs, width])
 
 	return useMemo(() => {
 		const colors = theme.scales().nominal(15)
@@ -106,6 +119,7 @@ function useOverlay(data: Specification[], title?: string, outcome?: string) {
 			"$.signals[?(@.name == 'refutationColors')].value": refutationColors,
 			"$.axes[?(@.scale == 'x')].title": title,
 			"$.axes[?(@.scale == 'x')].labels": title && title.length > 0,
+			"$.scales[?(@.name == 'x')].padding": padding,
 			// TODO: thematic needs to support title config
 			'$.title.color': theme.axisTitle().fill().hex(),
 			"$.marks[?(@.name == 'inactiveEffects')].encode.update.fill.value":
@@ -119,7 +133,7 @@ function useOverlay(data: Specification[], title?: string, outcome?: string) {
 		}
 		const overlay = parseJsonPathSpec(spec, pathspec)
 		return mergeSpec(spec, overlay)
-	}, [theme, data, title, outcome, refutationLegend])
+	}, [theme, data, title, outcome, refutationLegend, padding])
 }
 
 const Container = styled.div`

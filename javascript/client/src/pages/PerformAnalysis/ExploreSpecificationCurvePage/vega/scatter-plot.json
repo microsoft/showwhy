@@ -120,7 +120,6 @@
 			"type": "linear",
 			"nice": false,
 			"zero": false,
-			"padding": 10,
 			"domain": {
 				"data": "marked",
 				"field": "id"
@@ -171,6 +170,7 @@
 			"title": "",
 			"titleFontSize": 13,
 			"labels": false,
+			"tickMinStep": 1,
 			"encode": {
 				"title": {
 					"update": {

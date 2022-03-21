@@ -41,6 +41,7 @@ export const ExploreSpecificationCurvePage: React.FC = memo(
 			refutationNumbers,
 			failedRefutations,
 			onToggleRejectEstimate,
+			totalSpecs,
 		} = useSpecificationCurve()
 
 		if (!data.length && !defaultRun) {
@@ -99,6 +100,7 @@ export const ExploreSpecificationCurvePage: React.FC = memo(
 						hovered={hovered}
 						outcome={outcome}
 						failedRefutationIds={failedRefutationIds}
+						totalSpecs={totalSpecs}
 					/>
 					<SpecificationDescription
 						refutationOptions={refutationOptions}
