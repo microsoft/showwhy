@@ -4,7 +4,7 @@
  */
 import type { IContextualMenuProps, IIconProps } from '@fluentui/react'
 import { CommandButton } from '@fluentui/react'
-import type { Handler1 } from '@showwhy/types'
+import type { Handler } from '@showwhy/types'
 import { memo } from 'react'
 import styled from 'styled-components'
 
@@ -12,7 +12,7 @@ export const OptionsButton: React.FC<{
 	menuProps?: IContextualMenuProps
 	text?: string
 	iconProps?: IIconProps
-	onClick?: Handler1
+	onClick?: Handler
 }> = memo(function OptionsButton({ menuProps, text, iconProps, onClick }) {
 	return (
 		<Options
