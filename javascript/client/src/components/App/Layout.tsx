@@ -37,6 +37,8 @@ export const Layout: React.FC = memo(function Layout({ children }) {
 	const { step, stepStatus, onToggleStepStatus, previousStepUrl, nextStepUrl } =
 		useProcessStepInfo()
 
+	console.log('step', step)
+
 	return (
 		<Container>
 			<AppHeader
@@ -62,6 +64,7 @@ export const Layout: React.FC = memo(function Layout({ children }) {
 						<StepTitle title="Workspace" />
 						<ChildrenContainer
 							noPadding={noChildPadding.includes(step?.url as Pages)}
+							url={step?.url}
 						>
 							{error ? (
 								<MessageContainer
@@ -110,11 +113,11 @@ const StepsContainer = styled.div`
 	position: relative;
 `
 
-const ChildrenContainer = styled.div<{ noPadding: boolean }>`
+const ChildrenContainer = styled.div<{ noPadding: boolean; url?: string }>`
 	padding: ${({ noPadding }) => (noPadding ? '0' : '0 16px')};
 	height: 95%;
 	overflow-y: auto;
-	margin-bottom: 6rem;
+	margin-bottom: ${({ url }) => (url === '/prepare/data' ? 4 : 6)}rem;
 `
 
 const ControlsContainer = styled.div`

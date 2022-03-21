@@ -882,9 +882,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@data-wrangling-components/core@npm:^5.1.0":
-  version: 5.1.0
-  resolution: "@data-wrangling-components/core@npm:5.1.0"
+"@data-wrangling-components/core@npm:^5.2.0":
+  version: 5.2.0
+  resolution: "@data-wrangling-components/core@npm:5.2.0"
   dependencies:
     lodash-es: ^4.17.21
   peerDependencies:
@@ -893,24 +893,24 @@ __metadata:
   peerDependenciesMeta:
     "@types/node":
       optional: true
-  checksum: 2e817782ea4e2cb408ee0af05faa414ed8fd2f841dd8c8d284669d5f44730e514b3d390707a9d698edf3be41458520ea98f01dde0654fcaa98bfa53fe6e2b8c0
+  checksum: 8916b34fd6e2e3ae524315d00599520e058ea2e8082201c67d159fb31a54cfd93f7a8bfee2ba3f0ee223c30715e3d7239a66198aa182ebed044ed1c20eb1fa4b
   languageName: node
   linkType: hard
 
-"@data-wrangling-components/guidance@npm:^0.1.7":
-  version: 0.1.7
-  resolution: "@data-wrangling-components/guidance@npm:0.1.7"
-  checksum: e9a76cdbf2fb1441711f30987910e80ebadd6e99d78d0fcb9949945e7a369ee3340307548687ddbc3ca15b27029f2e83e8fe619d27f5d8cd0d28efd44422f337
+"@data-wrangling-components/guidance@npm:^0.1.8":
+  version: 0.1.8
+  resolution: "@data-wrangling-components/guidance@npm:0.1.8"
+  checksum: bd12cfb93203757affcbf60db28a4fee35bb1dc670fc27a4b446632db23139e630ebc931dee48f365e55a55a400bd30c2a74b073db5e7fda994fa721cc88d4a8
   languageName: node
   linkType: hard
 
-"@data-wrangling-components/react@npm:^3.2.0":
-  version: 3.2.0
-  resolution: "@data-wrangling-components/react@npm:3.2.0"
+"@data-wrangling-components/react@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "@data-wrangling-components/react@npm:4.0.0"
   dependencies:
-    "@data-wrangling-components/guidance": ^0.1.7
+    "@data-wrangling-components/guidance": ^0.1.8
     "@essex/hooks": ^4.0.6
-    "@essex/themed-components": ^2.0.5
+    "@essex/themed-components": ^2.1.3
     core-js: ^3.21.1
     d3-format: ^3.1.0
     d3-scale: ^4.0.2
@@ -937,18 +937,18 @@ __metadata:
     react: ^17.0.2
     react-dom: ^17.0.2
     styled-components: ^5.3.0
-  checksum: 3ebf0a0306f81e44b556e25aeb63ece9b9a47b44a732db7ccb90a2e52e33ea0f3dd054b0cebfc98aa001ce276ab669a640eb61c595c61a2754c3fd121a0e1e6c
+  checksum: f5c807f8ec3807b34acabf8add77cd2236c5c9b24bdee7524c909f1758a0526addf5d74a30e0a45d275391f2def6d1dac898a0cd94e73095bc4986244b34a679
   languageName: node
   linkType: hard
 
-"@data-wrangling-components/utilities@npm:^1.7.0":
-  version: 1.7.0
-  resolution: "@data-wrangling-components/utilities@npm:1.7.0"
+"@data-wrangling-components/utilities@npm:^1.7.1":
+  version: 1.7.1
+  resolution: "@data-wrangling-components/utilities@npm:1.7.1"
   dependencies:
     "@zip.js/zip.js": ^2.4.6
   peerDependencies:
     arquero: ^4.8.7
-  checksum: 6cde3c467fcada84c26a43f377b4db949dcb742c9b898eb63d73c7f2b0833aa2e647c56e4fe0eee2b8fb8504c0bfaa213f3974c52ab8cdf577fcee0645a0de08
+  checksum: 8a69961a9badb26c3515aaebf7a0ea41fd094282e664ba3b718b12f644986ea226de65992f7ef5feedfe5a483cb71a95f84c329b18dabf0ef2f2fbcda844675b
   languageName: node
   linkType: hard
 
@@ -1226,41 +1226,6 @@ __metadata:
     react-dom: ">=16.8.6"
     tslib: "*"
   checksum: 8e35984ccae59c0a1e28bce8a5b8da6dabb3d2a9d7c63c97af72baf2fd66ca58807cc372f01e51ec2f120e39ca1df1f7b86fc40a34eb3ad35e3a5de6a64f49dc
-  languageName: node
-  linkType: hard
-
-"@essex/themed-components@npm:^2.0.5":
-  version: 2.0.5
-  resolution: "@essex/themed-components@npm:2.0.5"
-  dependencies:
-    "@essex/hooks": ^4.0.6
-    "@essex/toolbox": ^3.0.4
-    "@types/d3-array": ^3.0.2
-    "@types/d3-axis": ^3.0.1
-    "@types/d3-brush": ^3.0.1
-    "@types/d3-scale": ^4.0.2
-    "@types/d3-selection": ^3.0.2
-    d3-array: ^3.1.1
-    d3-axis: ^3.0.0
-    d3-brush: ^3.0.0
-    d3-scale: ^4.0.2
-    d3-selection: ^3.0.0
-    react-animate-height: ^2.0.23
-  peerDependencies:
-    "@fluentui/react": ">= 7.114.2"
-    "@thematic/color": ">= 0.8.0"
-    "@thematic/core": ">= 0.8.0"
-    "@thematic/d3": ">= 0.8.0"
-    "@thematic/fluent": ">= 0.8.0"
-    "@thematic/react": ">= 0.8.0"
-    "@types/d3": "*"
-    "@types/d3-axis": ^2.0.0
-    "@types/node": "*"
-    "@types/react": ">= 16.9"
-    "@uifabric/icons": ">= 7.3.38"
-    react: ">= 16.8.6"
-    react-dom: ">= 16.8.6"
-  checksum: d600baebcba4b84470f8c202db98132d4b2d83f8886aca046a58cd13033861c2185f1578f03d7e1964cd99f630e652debbbb5bcf1554aa2203ae0ffc97855aae
   languageName: node
   linkType: hard
 
@@ -2013,9 +1978,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/client@workspace:javascript/client"
   dependencies:
-    "@data-wrangling-components/core": ^5.1.0
-    "@data-wrangling-components/react": ^3.2.0
-    "@data-wrangling-components/utilities": ^1.7.0
+    "@data-wrangling-components/core": ^5.2.0
+    "@data-wrangling-components/react": ^4.0.0
+    "@data-wrangling-components/utilities": ^1.7.1
     "@essex/boolean-expression-component": ^1.0.3
     "@essex/hooks": ^4.0.5
     "@essex/jest-config": ^21.0.5

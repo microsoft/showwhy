@@ -49,7 +49,7 @@ export const StepControls: React.FC<{
 const Container = styled.div`
 	display: flex;
 	justify-content: center;
-	padding: 16px 0px;
+	padding: 8px 0px;
 	position: sticky;
 	bottom: 0rem;
 	width: 100%;
