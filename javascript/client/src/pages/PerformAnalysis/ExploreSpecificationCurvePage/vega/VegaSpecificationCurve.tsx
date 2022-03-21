@@ -16,6 +16,8 @@ import { addOrRemoveArrayElement } from '~utils'
 import { AnalyticDecisionsDotPlot } from './AnalyticDecisionsDotPlot'
 import { OutcomeEffectScatterplot } from './OutcomeEffectScatterplot'
 
+export const MIN_SPEC_ADDITIONAL_PADDING = 5
+
 export const VegaSpecificationCurve: React.FC<{
 	data: Specification[]
 	config: SpecificationCurveConfig
@@ -27,6 +29,7 @@ export const VegaSpecificationCurve: React.FC<{
 	hovered: Maybe<number>
 	failedRefutationIds: number[]
 	outcome?: string
+	totalSpecs?: number
 }> = memo(function VegaSpecificationCurve({
 	data,
 	config,
@@ -38,6 +41,7 @@ export const VegaSpecificationCurve: React.FC<{
 	hovered,
 	failedRefutationIds,
 	outcome,
+	totalSpecs,
 }) {
 	// TODO: these two charts should be combinable into a single vega spec
 	// this will also greatly simplify the hover coordination
@@ -95,6 +99,7 @@ export const VegaSpecificationCurve: React.FC<{
 				selected={selected}
 				failedRefutationIds={failedRefutationIds}
 				outcome={outcome}
+				totalSpecs={totalSpecs}
 			/>
 			<AnalyticDecisionsDotPlot
 				data={data}
@@ -106,6 +111,7 @@ export const VegaSpecificationCurve: React.FC<{
 				height={height * 0.75}
 				hovered={hovered}
 				selected={selected}
+				totalSpecs={totalSpecs}
 			/>
 		</Container>
 	)
