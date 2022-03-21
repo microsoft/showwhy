@@ -8,7 +8,7 @@ import type {
 	CausalFactor,
 	ElementDefinition,
 	FactorsOrDefinitions,
-    Maybe,
+	Maybe,
 } from '@showwhy/types'
 import type { FC } from 'react'
 import { memo } from 'react'
@@ -23,11 +23,11 @@ interface Props {
 }
 
 interface ListElement {
-    key: string
-    variable: string
-    isComplete: boolean
-    icon: string
-    onClick: Maybe<() => void>
+	key: string
+	variable: string
+	isComplete: boolean
+	icon: string
+	onClick: Maybe<() => void>
 }
 
 export const CompletedElements: FC<Props> = memo(function CompletedElements({
@@ -46,7 +46,9 @@ export const CompletedElements: FC<Props> = memo(function CompletedElements({
 			key: element.id,
 			isComplete,
 			icon: isComplete ? 'SkypeCircleCheck' : 'SkypeCircleMinus',
-			onClick: isComplete ? () => onResetVariable(element.column || '') : undefined,
+			onClick: isComplete
+				? () => onResetVariable(element.column || '')
+				: undefined,
 		}
 	})
 	return (
@@ -72,7 +74,7 @@ export const CompletedElements: FC<Props> = memo(function CompletedElements({
 	)
 })
 
-const List: FC<{list: ListElement[]}> = memo(function ListItem({ list }) {
+const List: FC<{ list: ListElement[] }> = memo(function ListItem({ list }) {
 	return list.length ? (
 		<Ul>
 			{list.map(item => {
@@ -99,7 +101,7 @@ const CalloutStyles = {
 	},
 }
 
-const Container = styled.div`
+const Container = styled.section`
 	padding: 0 8px;
 	margin: 0 8px;
 	position: absolute;
