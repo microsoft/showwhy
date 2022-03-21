@@ -32,18 +32,18 @@ export class Header extends Page {
 		})
 	}
 
-	private async openLoadMenu(selector: string): Promise<void> {
+	private async openLoadMenu(selector): Promise<void> {
 		await this.page.click(selectors.load)
 		await this.page.waitForSelector(selector, { state: 'visible' })
 	}
 
-	private async openSaveMenu(selector: string): Promise<void> {
+	private async openSaveMenu(selector): Promise<void> {
 		await this.page.waitForTimeout(1000)
 		await this.page.click(selectors.save)
 		await this.page.waitForSelector(selector, { state: 'visible' })
 	}
 
-	private async openQuestionModal(selector: string): Promise<void> {
+	private async openQuestionModal(selector): Promise<void> {
 		await this.page.waitForTimeout(1000)
 		await this.page.click(selectors.understandQuestionButton)
 		await this.page.waitForSelector(selector, { state: 'visible' })

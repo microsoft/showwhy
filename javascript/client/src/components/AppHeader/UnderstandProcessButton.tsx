@@ -19,12 +19,15 @@ export const UnderstandProcessButton: FC = memo(
 		return (
 			<>
 				<TooltipHost
-					data-pw="understand-question-button"
 					content="Understand showwhy process"
 					id={tooltipId}
 					setAriaDescribedBy={false}
 				>
-					<OptionsButton onClick={toggleModal} iconProps={questionIcon} />
+					<OptionsButton
+						dataPw="understand-question-button"
+						onClick={toggleModal}
+						iconProps={questionIcon}
+					/>
 				</TooltipHost>
 				<UnderstandProcessModal
 					isModalOpen={isModalOpen}
