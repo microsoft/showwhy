@@ -8,12 +8,12 @@ import { useEffect, useState } from 'react'
 
 import type { ProcessHelp, Step } from '~types'
 
-export function useMarkdown(step: Maybe<Step | ProcessHelp>): string {
+export function useMarkdown(item: Maybe<Step | ProcessHelp>): string {
 	const [markdown, setMarkdown] = useState('')
 
 	useEffect(() => {
-		if (step?.getMarkdown) {
-			const getValue = getMarkdownValue(step?.getMarkdown)
+		if (item?.getMarkdown) {
+			const getValue = getMarkdownValue(item?.getMarkdown)
 			getValue
 				.then(md => {
 					setMarkdown(md)
@@ -25,7 +25,7 @@ export function useMarkdown(step: Maybe<Step | ProcessHelp>): string {
 		} else {
 			setMarkdown('')
 		}
-	}, [step])
+	}, [item])
 
 	return markdown
 }
