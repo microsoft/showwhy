@@ -3,10 +3,4 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { StepLink } from './StepLink'
-
-export interface StepResource {
-	id: string
-	title: string
-	links: StepLink[]
-}
+export * from './UnderstandProcessModal'

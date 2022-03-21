@@ -7,13 +7,6 @@ import { Redirect, Route, Switch } from 'react-router-dom'
 
 import { Pages } from '~types'
 
-const UnderstandProcessPage = lazy(
-	() =>
-		/* webpackChunkName: "UnderstandProcessPage" */ import(
-			'../../pages/UnderstandProcessPage'
-		),
-)
-
 const DescribeElementsPage = lazy(
 	() =>
 		/* webpackChunkName: "DescribeElementsPage" */ import(
@@ -100,8 +93,7 @@ const EvaluateHypothesisPage = lazy(
 export const Routes: React.FC = memo(function Routes() {
 	return (
 		<Switch>
-			<Redirect exact from="/" to={`${Pages.UnderstandProcess}/why`} />
-			<Route path={Pages.UnderstandProcess} component={UnderstandProcessPage} />
+			<Redirect exact from="/" to={Pages.DefineElements} />
 			<Route path={Pages.DefineElements} component={DescribeElementsPage} />
 			<Route
 				path={Pages.ConsiderCausalFactors}

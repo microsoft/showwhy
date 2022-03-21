@@ -7,60 +7,7 @@ import { v4 as uuidv4 } from 'uuid'
 import type { StepList } from '~types'
 import { Pages, PageType, StepStatus } from '~types'
 
-import {
-	howLinks,
-	whenLinks,
-	whoLinks,
-	whyLinks,
-} from '../locales/en-US/understand-process'
-
 export const stepsList = [
-	{
-		id: uuidv4(),
-		name: 'Understand process',
-		steps: [
-			{
-				id: uuidv4(),
-				title: 'Why use ShowWhy?',
-				resources: whyLinks.map(link => ({ ...link, id: uuidv4() })),
-				status: StepStatus.ToDo,
-				url: `${Pages.UnderstandProcess}/${PageType.Why}`,
-				showStatus: false,
-				getMarkdown: async () =>
-					import('../markdown/understand-process/Why.md?raw'),
-			},
-			{
-				id: uuidv4(),
-				title: 'Who is ShowWhy for?',
-				resources: whoLinks.map(link => ({ ...link, id: uuidv4() })),
-				status: StepStatus.ToDo,
-				url: `${Pages.UnderstandProcess}/${PageType.Who}`,
-				showStatus: false,
-				getMarkdown: async () =>
-					import('../markdown/understand-process/Who.md?raw'),
-			},
-			{
-				id: uuidv4(),
-				title: 'When to use ShowWhy?',
-				resources: whenLinks.map(link => ({ ...link, id: uuidv4() })),
-				status: StepStatus.ToDo,
-				url: `${Pages.UnderstandProcess}/${PageType.When}`,
-				showStatus: false,
-				getMarkdown: async () =>
-					import('../markdown/understand-process/When.md?raw'),
-			},
-			{
-				id: uuidv4(),
-				title: 'How does ShowWhy work?',
-				resources: howLinks.map(link => ({ ...link, id: uuidv4() })),
-				status: StepStatus.ToDo,
-				url: `${Pages.UnderstandProcess}/${PageType.How}`,
-				showStatus: false,
-				getMarkdown: async () =>
-					import('../markdown/understand-process/How.md?raw'),
-			},
-		],
-	},
 	{
 		id: uuidv4(),
 		name: 'Define question',

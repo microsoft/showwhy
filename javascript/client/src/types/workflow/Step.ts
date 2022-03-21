@@ -3,7 +3,6 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { StepResource } from './StepResource'
 import type { StepStatus } from './StepStatus'
 
 export interface Step {
@@ -14,6 +13,5 @@ export interface Step {
 	status: StepStatus
 	url: string
 	showStatus?: boolean
-	resources?: StepResource[]
 	subStepName?: string
 }

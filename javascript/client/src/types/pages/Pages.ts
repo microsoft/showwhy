@@ -4,7 +4,6 @@
  */
 
 export enum Pages {
-	UnderstandProcess = '/understand',
 	DefineElements = '/define/elements',
 	ConsiderCausalFactors = '/define/causalFactors',
 	DefineFactors = '/define-factors',

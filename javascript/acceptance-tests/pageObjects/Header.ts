@@ -16,6 +16,10 @@ const selectors: Record<string, string> = {
 	covid: dataAttr('COVID-19'),
 	smoking: dataAttr('SmokingCessation'),
 	saveProject: dataAttr('save-project'),
+	understandQuestion: dataAttr('understand-question'),
+	understandQuestionButton: dataAttr('understand-question-button'),
+	understandQuestionTitle: dataAttr('understand-question-title'),
+	resourceLink: dataAttr('resource-link'),
 }
 
 export class Header extends Page {
@@ -24,16 +28,25 @@ export class Header extends Page {
 		await this.page.waitForSelector(selectors.title, { state: 'visible' })
 		await this.page.waitForSelector(selectors.load, { state: 'visible' })
 		await this.page.waitForSelector(selectors.question, { state: 'visible' })
+		await this.page.waitForSelector(selectors.understandQuestion, {
+			state: 'visible',
+		})
 	}
 
-	private async openLoadMenu(selector): Promise<void> {
+	private async openLoadMenu(selector: string): Promise<void> {
 		await this.page.click(selectors.load)
 		await this.page.waitForSelector(selector, { state: 'visible' })
 	}
 
-	private async openSaveMenu(selector): Promise<void> {
+	private async openSaveMenu(selector: string): Promise<void> {
 		await this.page.waitForTimeout(1000)
 		await this.page.click(selectors.save)
+		await this.page.waitForSelector(selector, { state: 'visible' })
+	}
+
+	private async openQuestionModal(selector: string): Promise<void> {
+		await this.page.waitForTimeout(1000)
+		await this.page.click(selectors.understandQuestion)
 		await this.page.waitForSelector(selector, { state: 'visible' })
 	}
 
@@ -68,5 +81,16 @@ export class Header extends Page {
 	public async getQuestion(): Promise<Locator> {
 		await this.page.waitForTimeout(1000)
 		return this.page.locator(selectors.question)
+	}
+
+	public async understandQuestion(): Promise<void> {
+		await this.openQuestionModal(selectors.understandQuestionTitle)
+	}
+
+	public async countResourceLinks(): Promise<number> {
+		await this.page.waitForSelector(selectors.resourceLink, {
+			state: 'visible',
+		})
+		return this.page.locator(selectors.resourceLink).count()
 	}
 }

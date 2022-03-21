@@ -6,10 +6,11 @@ import { IconButton, TooltipHost } from '@fluentui/react'
 import { useId } from '@fluentui/react-hooks'
 import type { Maybe } from '@showwhy/types'
 import Markdown from 'markdown-to-jsx'
-import { memo, useEffect, useState } from 'react'
+import { memo } from 'react'
 import styled from 'styled-components'
 
 import { StepTitle } from '~components/StepTitle'
+import { useMarkdown } from '~hooks'
 import type { Step } from '~types'
 
 import { useGuidance } from '../../state'
@@ -17,25 +18,10 @@ import { useGuidance } from '../../state'
 export const Guidance: React.FC<{
 	step?: Step
 }> = memo(function Instructions({ step }) {
-	const [markdown, setMarkdown] = useState('')
 	const [isGuidanceVisible, toggleGuidance] = useGuidance()
 	const tooltipId = useId('tooltip')
+	const markdown = useMarkdown(step)
 
-	useEffect(() => {
-		if (step?.getMarkdown) {
-			step
-				?.getMarkdown()
-				.then(({ default: md }: { default: string }) => {
-					setMarkdown(md)
-				})
-				.catch(error => {
-					console.error('Error importing guidance:', error)
-					setMarkdown('')
-				})
-		} else {
-			setMarkdown('')
-		}
-	}, [step])
 	return (
 		<>
 			<TitleContainer>

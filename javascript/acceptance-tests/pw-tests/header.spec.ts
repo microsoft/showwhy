@@ -48,4 +48,10 @@ test.describe('Header', () => {
 		const download = await po.header.downloadProject()
 		await expect(download).not.toBe(null)
 	})
+
+	test('Open understand Question Modal', async () => {
+		await po.header.understandQuestion()
+		const links = await po.header.countResourceLinks()
+		await expect(links > 0).toBeTruthy()
+	})
 })

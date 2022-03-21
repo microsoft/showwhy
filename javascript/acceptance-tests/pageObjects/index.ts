@@ -6,7 +6,6 @@
 import { Page } from '@playwright/test'
 
 import { Header } from './Header'
-import { UnderstandProcessPage } from './UnderstandProcessPage'
 import { DescribeElementsPage } from './DescribeElementsPage'
 import { DefineModelPage } from './DefineModelPage'
 import { ModelCausalFactorsPage } from './ModelCausalFactorsPage'
@@ -19,7 +18,6 @@ import { EvaluateHypothesisPage } from './EvaluateHypothesisPage'
 
 export interface PageObjects {
 	header: Header
-	understandProcessPage: UnderstandProcessPage
 	describeElementsPage: DescribeElementsPage
 	defineModelPage: DefineModelPage
 	modelCausalFactorsPage: ModelCausalFactorsPage
@@ -33,7 +31,6 @@ export interface PageObjects {
 
 export function createPageObjects(page: Page): PageObjects {
 	const header = new Header(page)
-	const understandProcessPage = new UnderstandProcessPage(page)
 	const describeElementsPage = new DescribeElementsPage(page)
 	const defineModelPage = new DefineModelPage(page)
 	const modelCausalFactorsPage = new ModelCausalFactorsPage(page)
@@ -46,7 +43,6 @@ export function createPageObjects(page: Page): PageObjects {
 
 	return {
 		header,
-		understandProcessPage,
 		describeElementsPage,
 		defineModelPage,
 		modelCausalFactorsPage,
