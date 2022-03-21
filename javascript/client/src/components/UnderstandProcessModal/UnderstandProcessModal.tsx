@@ -36,7 +36,6 @@ export const UnderstandProcessModal: FC<{
 
 	return (
 		<UnderstandModal
-			data-pw="understand-question-modal"
 			titleAriaId={titleId}
 			isOpen={isModalOpen}
 			onDismiss={toggleModal}

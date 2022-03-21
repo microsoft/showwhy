@@ -2,38 +2,31 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { TooltipHost } from '@fluentui/react'
-import { useBoolean, useId } from '@fluentui/react-hooks'
+import { useBoolean } from '@fluentui/react-hooks'
 import type { FC } from 'react'
 import { memo } from 'react'
 
 import { UnderstandProcessModal } from '~components/UnderstandProcessModal'
+import { Container } from '~styles'
 
 import { OptionsButton } from './OptionsButton'
 
 export const UnderstandProcessButton: FC = memo(
 	function UnderstandProcessButton() {
-		const tooltipId = useId('tooltip')
 		const [isModalOpen, { toggle: toggleModal }] = useBoolean(false)
 
 		return (
-			<>
-				<TooltipHost
-					content="Understand showwhy process"
-					id={tooltipId}
-					setAriaDescribedBy={false}
-				>
-					<OptionsButton
-						dataPw="understand-question-button"
-						onClick={toggleModal}
-						iconProps={questionIcon}
-					/>
-				</TooltipHost>
+			<Container data-pw="understand-question">
+				<OptionsButton
+					title="Understand showwhy process"
+					onClick={toggleModal}
+					iconProps={questionIcon}
+				/>
 				<UnderstandProcessModal
 					isModalOpen={isModalOpen}
 					toggleModal={toggleModal}
 				/>
-			</>
+			</Container>
 		)
 	},
 )

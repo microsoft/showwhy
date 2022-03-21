@@ -13,21 +13,21 @@ export const OptionsButton: React.FC<{
 	text?: string
 	iconProps?: IIconProps
 	onClick?: Handler
-	dataPw?: string
+	title?: string
 }> = memo(function OptionsButton({
+	title,
 	menuProps,
 	text,
 	iconProps,
 	onClick,
-	dataPw,
 }) {
 	return (
 		<Options
 			primary
+			title={title}
 			iconProps={iconProps}
 			text={text}
 			onClick={onClick}
-			data-pw={dataPw}
 			menuProps={menuProps}
 		/>
 	)
