@@ -34,7 +34,7 @@ export const SpecificationsList: React.FC<SpecificationsListProp> = memo(
 
 				<List>
 					<ListItem data-pw="specification-population">
-						{definitions?.population ? (
+						{definitions?.population?.definition ? (
 							<Text>
 								<Bold>{definitions.population.definition.length}</Bold>{' '}
 								population definition
@@ -46,7 +46,7 @@ export const SpecificationsList: React.FC<SpecificationsListProp> = memo(
 						​
 					</ListItem>
 					<ListItem data-pw="specification-exposure">
-						{definitions?.exposure ? (
+						{definitions?.exposure?.definition ? (
 							<Text>
 								<Bold>{definitions.exposure.definition.length}</Bold> exposure
 								definition
@@ -58,7 +58,7 @@ export const SpecificationsList: React.FC<SpecificationsListProp> = memo(
 						​
 					</ListItem>
 					<ListItem data-pw="specification-outcome">
-						{definitions?.outcome ? (
+						{definitions?.outcome?.definition ? (
 							<Text>
 								<Bold>{definitions.outcome.definition.length}</Bold> outcome
 								definition

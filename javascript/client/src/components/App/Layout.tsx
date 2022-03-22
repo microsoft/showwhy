@@ -37,8 +37,6 @@ export const Layout: React.FC = memo(function Layout({ children }) {
 	const { step, stepStatus, onToggleStepStatus, previousStepUrl, nextStepUrl } =
 		useProcessStepInfo()
 
-	console.log('step', step)
-
 	return (
 		<Container>
 			<AppHeader
