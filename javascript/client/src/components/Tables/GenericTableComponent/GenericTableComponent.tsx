@@ -94,8 +94,6 @@ export const GenericTableComponent: React.FC<{
 		if (items?.length) setSortedItems([...items].slice(0, tableSample))
 	}, [items, setSortedItems, tableSample])
 
-	if (!items?.length) return null
-
 	if (!headers.props) {
 		headers.props = {}
 	}

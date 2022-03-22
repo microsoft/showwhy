@@ -98,15 +98,18 @@ const DetailsContainer = styled.div`
 	display: grid;
 	grid-template-columns: 85% 15%;
 	justify-content: center;
-	gap: 0.5rem;
+	gap: 1rem;
+    padding: 0 0.5rem;
 `
 
 const Field = styled(TextField)`
 	width: 100%;
-	margin: 0px 8px;
+	margin: 0;
+    padding: 0 0.5rem;
 `
 const VariableField = styled(TextField)`
-	margin: 0px 8px;
+	margin: 0;
+	padding: 0 0.5rem;
 `
 
 const AddButton = styled(DefaultButton)``
