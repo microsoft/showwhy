@@ -10,15 +10,11 @@ import type {
 	ElementDefinition,
 	Experiment,
 } from '@showwhy/types'
+import { CommandActionType, DefinitionType } from '@showwhy/types'
 import upperFirst from 'lodash/upperFirst'
 import { useMemo } from 'react'
 
-export enum DefinitionType {
-	Population = 'population',
-	Exposure = 'exposure',
-	Outcome = 'outcome',
-	Factor = 'causal factor',
-}
+import type { CausalEffectsProps } from '~hooks'
 
 const buildDropdownOption = (
 	all: ElementDefinition[],
@@ -48,6 +44,7 @@ const buildDropdownOption = (
 export function useDefinitionDropdownOptions(
 	defineQuestion: Experiment,
 	causalFactors: CausalFactor[],
+	causalEffects: CausalEffectsProps,
 ): IContextualMenuItem[] {
 	return useMemo((): IContextualMenuItem[] => {
 		const { population, exposure, outcome } = defineQuestion
@@ -58,26 +55,59 @@ export function useDefinitionDropdownOptions(
 				title: 'Reset',
 				data: {
 					button: true,
-					reset: true,
+					type: CommandActionType.Reset,
+				},
+			},
+			{
+				key: 'variable-action',
+				text: 'Add variable',
+				title: 'Add variable',
+				data: {
+					button: true,
+					type: CommandActionType.AddVariable,
+					bottomDivider: true,
 				},
 			},
 		]
+
+		const exposureDeterminant = causalFactors.filter(x =>
+			causalEffects.exposureDeterminants.includes(x.variable),
+		)
+		const outcomeDeterminant = causalFactors.filter(x =>
+			causalEffects.outcomeDeterminants.includes(x.variable),
+		)
+		const confounders = causalFactors.filter(x =>
+			causalEffects.confounders.includes(x.variable),
+		)
 
 		population &&
 			population.definition &&
 			all.push(
 				buildDropdownOption(population.definition, DefinitionType.Population),
 			)
+
 		exposure &&
 			exposure.definition &&
 			all.push(
 				buildDropdownOption(exposure.definition, DefinitionType.Exposure),
 			)
+
 		outcome &&
 			outcome.definition &&
 			all.push(buildDropdownOption(outcome.definition, DefinitionType.Outcome))
-		causalFactors &&
-			all.push(buildDropdownOption(causalFactors, DefinitionType.Factor))
+
+		exposureDeterminant &&
+			all.push(
+				buildDropdownOption(exposureDeterminant, DefinitionType.CauseExposure),
+			)
+
+		outcomeDeterminant &&
+			all.push(
+				buildDropdownOption(outcomeDeterminant, DefinitionType.CauseOutcome),
+			)
+
+		confounders &&
+			all.push(buildDropdownOption(confounders, DefinitionType.Confounders))
 		return all
-	}, [defineQuestion, causalFactors])
+	}, [defineQuestion, causalFactors, causalEffects])
 }

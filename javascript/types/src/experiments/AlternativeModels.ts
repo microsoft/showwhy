@@ -6,4 +6,5 @@
 export interface AlternativeModels {
 	confounders: string[]
 	outcomeDeterminants: string[]
+	exposureDeterminants: string[]
 }

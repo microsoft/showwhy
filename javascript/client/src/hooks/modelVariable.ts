@@ -5,6 +5,7 @@
 
 import type {
 	CausalFactor,
+	DefinitionType,
 	ElementDefinition,
 	Experiment,
 } from '@showwhy/types'
@@ -21,9 +22,9 @@ import { usePageType } from './usePageType'
 export function useSaveDefinition(
 	experiment: Experiment,
 	setExperiment: SetterOrUpdater<Experiment>,
-): (newDefinition: CausalFactor, type: PageType) => void {
+): (newDefinition: CausalFactor, type: PageType | DefinitionType) => void {
 	return useCallback(
-		(newDefinition: CausalFactor, type: PageType) => {
+		(newDefinition: CausalFactor, type: PageType | DefinitionType) => {
 			let newDefinitionList = [...(experiment as any)[type]?.definition] || []
 
 			const index = (experiment as any)[type]?.definition?.findIndex(

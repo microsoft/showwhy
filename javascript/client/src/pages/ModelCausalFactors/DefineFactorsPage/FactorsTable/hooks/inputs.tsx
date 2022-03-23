@@ -3,17 +3,9 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { IComboBoxOption } from '@fluentui/react'
-import { Checkbox, ComboBox, TextField } from '@fluentui/react'
+import { Checkbox, TextField } from '@fluentui/react'
 import type { FlatCausalFactor } from '@showwhy/types'
-import { BeliefDegree } from '@showwhy/types'
 import { useCallback } from 'react'
-
-const beliefOptions: IComboBoxOption[] = [
-	{ key: BeliefDegree.Strong, text: 'Strong' },
-	{ key: BeliefDegree.Moderate, text: 'Moderate' },
-	{ key: BeliefDegree.Weak, text: 'Weak' },
-]
 
 export function useCheckbox(
 	onChangeCauses: (factorId: string, checked: boolean) => void,
@@ -31,23 +23,6 @@ export function useCheckbox(
 			)
 		},
 		[onChangeCauses],
-	)
-}
-
-export function useComboBox(
-	onChangeDegree: (factorId: string, value: IComboBoxOption) => void,
-): (factor: FlatCausalFactor) => JSX.Element {
-	return useCallback(
-		(factor: FlatCausalFactor) => {
-			return (
-				<ComboBox
-					selectedKey={factor.degree}
-					onChange={(_, value) => value && onChangeDegree(factor.id, value)}
-					options={beliefOptions}
-				/>
-			)
-		},
-		[onChangeDegree],
 	)
 }
 

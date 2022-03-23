@@ -14,6 +14,7 @@ import type {
 	FactorsOrDefinitions,
 	Maybe,
 } from '@showwhy/types'
+import { CommandActionType } from '@showwhy/types'
 import { useCallback } from 'react'
 import styled from 'styled-components'
 
@@ -48,12 +49,21 @@ function useRenderMenuList(
 			columnName: string,
 		): JSX.Element => {
 			let { items } = menuListProps || []
-			const resetButton = dropdownOptions.find(x => x.data?.button)
+			const resetButton = dropdownOptions.find(
+				x => x.data?.type === CommandActionType.Reset,
+			)
+			const variableButton = dropdownOptions.find(
+				x => x.data?.type === CommandActionType.AddVariable,
+			)
 			const hasVariable = !selectedVariableByColumn(columnName)?.variable
+			items = items.filter(x => !x.data?.button)
 			if (resetButton) {
 				resetButton.disabled = hasVariable
-				items = items.filter(x => !x.data?.button)
 				items.push(resetButton)
+			}
+			if (variableButton) {
+				variableButton.disabled = !hasVariable
+				items.push(variableButton)
 			}
 			return (
 				<>
@@ -72,6 +82,7 @@ export function useRenderDropdown(
 	allElements: FactorsOrDefinitions,
 	onSelect: (option: Maybe<IContextualMenuItem>, columnName: string) => void,
 	onResetVariable: (columnName: string) => void,
+	onAddVariable: (columnName: string) => void,
 	dropdownOptions: IContextualMenuItem[],
 ): (columnName: string) => JSX.Element {
 	const selectedOptions = useSelectedOptions(allElements)
@@ -107,23 +118,22 @@ export function useRenderDropdown(
 
 			const menuProps = {
 				items: filtered,
-				disabled: true,
 				onRenderMenuList: (menuListProps: Maybe<IContextualMenuListProps>) =>
 					renderMenuList(menuListProps as IContextualMenuListProps, columnName),
 				onItemClick: (_: any, option: any) =>
-					option.data.reset
+					option.data?.type === CommandActionType.Reset
 						? onResetVariable(columnName)
+						: option.data?.type === CommandActionType.AddVariable
+						? onAddVariable(columnName)
 						: onSelect(option, columnName),
 				buttonStyles,
 			}
 
-			const variable = selectedVariableByColumn(columnName)?.variable || ''
+			const variable =
+				selectedVariableByColumn(columnName)?.variable || 'Assign variable'
 			return (
-				<Container title={variable}>
-					<ColumnarMenu
-						text={filtered.length ? variable : 'No variables to show'}
-						{...menuProps}
-					/>
+				<Container id={columnName} title={variable}>
+					<ColumnarMenu text={variable} {...menuProps} />
 				</Container>
 			)
 		},
@@ -135,6 +145,7 @@ export function useRenderDropdown(
 			renderMenuList,
 			selectedOptions,
 			selectedVariableByColumn,
+			onAddVariable,
 		],
 	)
 }

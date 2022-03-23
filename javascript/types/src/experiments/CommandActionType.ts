@@ -3,6 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-export * from './BaseCallout'
-export * from './InfoCallout'
-export * from './LinkCallout'
+export enum CommandActionType {
+	Reset = 'reset',
+	AddVariable = 'add variable',
+}

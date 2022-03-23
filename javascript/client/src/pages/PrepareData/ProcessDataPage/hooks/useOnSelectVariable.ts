@@ -9,12 +9,9 @@ import { useCallback } from 'react'
 import type { SetterOrUpdater } from 'recoil'
 
 import { useAddOrEditFactor, useSaveDefinition } from '~hooks'
+import { isCausalFactorType } from '~utils'
 
-import {
-	DefinitionType,
-	useSetTargetCausalFactor,
-	useSetTargetDefinition,
-} from './index'
+import { useSetTargetCausalFactor, useSetTargetDefinition } from './index'
 
 export function useOnSelectVariable(
 	causalFactors: CausalFactor[],
@@ -31,7 +28,7 @@ export function useOnSelectVariable(
 
 	return useCallback(
 		(option: Maybe<IContextualMenuItem>, columnName: string) => {
-			if (option?.data.type === DefinitionType.Factor) {
+			if (isCausalFactorType(option?.data.type)) {
 				setCausalFactor(option?.key as string, columnName)
 			} else {
 				setDefinition(option?.key as string, columnName)

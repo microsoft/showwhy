@@ -31,13 +31,13 @@ export function useOnChangeCauses(
 export function useOnChangeDegree(
 	flatFactorsList: FlatCausalFactor[],
 	saveNewFactors: (id: string, value: Cause) => void,
-): (id: string, selected: IComboBoxOption) => void {
+): (selected: IComboBoxOption, id?: string) => void {
 	return useCallback(
-		(id: string, selected: IComboBoxOption) => {
+		(selected: IComboBoxOption, id?: string) => {
 			const newValue = flatFactorsList.find(x => x.id === id) as Cause
 			newValue.degree = selected.key as BeliefDegree
 			newValue.causes = true
-			saveNewFactors(id, newValue)
+			saveNewFactors(id as string, newValue)
 		},
 		[flatFactorsList, saveNewFactors],
 	)
