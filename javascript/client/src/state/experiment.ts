@@ -14,11 +14,7 @@ import {
 
 const experimentState = atom<Experiment>({
 	key: 'describe-elements',
-	default: {
-		population: {},
-		exposure: {},
-		outcome: {},
-	} as Experiment,
+	default: {} as Experiment,
 })
 
 export function useExperiment(): Experiment {
