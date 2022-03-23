@@ -95,7 +95,7 @@ export function useBusinessLogic(): {
 	}
 }
 
-function useItemList(definitions: ElementDefinition[]): Item[] {
+function useItemList(definitions: ElementDefinition[] = []): Item[] {
 	return useMemo(() => {
 		return definitions?.map(x => {
 			const newObj = { ...x, dataPw: 'definition-element' }

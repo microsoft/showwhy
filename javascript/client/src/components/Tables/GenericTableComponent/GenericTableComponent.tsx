@@ -91,7 +91,7 @@ export const GenericTableComponent: React.FC<{
 	)
 
 	useEffect(() => {
-		if (items?.length) setSortedItems([...items].slice(0, tableSample))
+		if (items) setSortedItems([...items].slice(0, tableSample))
 	}, [items, setSortedItems, tableSample])
 
 	if (!headers.props) {
