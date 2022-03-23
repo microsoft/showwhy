@@ -113,6 +113,8 @@ export function useRenderDropdown(
 							items: subitems,
 						},
 					})
+				} else if (item.data?.button) {
+					filtered.push(item)
 				}
 			})
 
