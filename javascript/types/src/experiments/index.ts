@@ -3,6 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 export * from './AlternativeModels.js'
+export * from './CommandActionType.js'
+export * from './DefinitionType.js'
 export * from './Element.js'
 export * from './ElementDefinition.js'
 export * from './EstimandIdentificationVariables.js'

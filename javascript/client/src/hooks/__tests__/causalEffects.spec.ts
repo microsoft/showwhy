@@ -37,6 +37,7 @@ describe('causalEffectsHooks', () => {
 		const expected = {
 			confounders: [],
 			outcomeDeterminants: [],
+			exposureDeterminants: [],
 			generalExposure: 'Hurricane',
 			generalOutcome: '',
 			excludedFactors: ['Hurricane 2'],
@@ -48,6 +49,7 @@ describe('causalEffectsHooks', () => {
 			() => {
 				return useCausalEffects(question, ['Hurricane 2'], {
 					confounders: [],
+					exposureDeterminants: [],
 					outcomeDeterminants: [],
 				})
 			},

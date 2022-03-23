@@ -107,6 +107,7 @@ export function useAlternativeModelsTestable(
 	return useMemo(() => {
 		const confoundersArray: string[] = []
 		const outcomeArray: string[] = []
+		const exposureArray: string[] = []
 
 		causalFactors
 			.filter(c => !excludedFactors.includes(c.variable))
@@ -136,8 +137,18 @@ export function useAlternativeModelsTestable(
 						outcomeArray.push(variable)
 					}
 				}
+				if (causeExposure?.causes && !causeOutcome?.causes) {
+					const degree = causeExposure?.degree
+					if (degree && shouldIncludeInDegree(degree, causalLevel)) {
+						exposureArray.push(variable)
+					}
+				}
 			})
-		return { confounders: confoundersArray, outcomeDeterminants: outcomeArray }
+		return {
+			confounders: confoundersArray,
+			outcomeDeterminants: outcomeArray,
+			exposureDeterminants: exposureArray,
+		}
 	}, [causalFactors, excludedFactors, causalLevel, shouldUseVariable])
 }
 

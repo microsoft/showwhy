@@ -9,10 +9,13 @@ import type {
 	CausalFactor,
 	ElementDefinition,
 	FactorsOrDefinitions,
+	Handler,
+	Handler1,
 } from '@showwhy/types'
+import { CausalModelLevel } from '@showwhy/types'
 import { useCallback, useMemo } from 'react'
 
-import { useAllVariables } from '~hooks'
+import { useAllVariables, useCausalEffects } from '~hooks'
 import {
 	useCausalFactors,
 	useSetTablesPrepSpecification,
@@ -28,7 +31,10 @@ import {
 import { useOnSelectVariable } from './hooks/useOnSelectVariable'
 import { useRenderDropdown } from './hooks/useRenderDropdownOption'
 
-export function useBusinessLogic(): {
+export function useBusinessLogic(
+	toggleShowCallout: Handler,
+	setSelectedColumn: Handler1<string>,
+): {
 	steps?: Step[]
 	onChangeSteps: (step: Step[]) => void
 	commandBar: IRenderFunction<IDetailsColumnProps>
@@ -43,16 +49,38 @@ export function useBusinessLogic(): {
 	const causalFactors = useCausalFactors()
 	const defineQuestion = useExperiment()
 	const setDefineQuestion = useSetExperiment()
+	const allElements = useAllVariables(causalFactors, defineQuestion)
+
+	const causalEffects = useCausalEffects(CausalModelLevel.Maximum)
+	const onSelectVariable = useOnSelectVariable(
+		causalFactors,
+		defineQuestion,
+		setDefineQuestion,
+	)
+
+	const onAddVariable = useCallback(
+		(columnName: string) => {
+			setSelectedColumn(columnName)
+			toggleShowCallout()
+		},
+		[toggleShowCallout, setSelectedColumn],
+	)
 
 	const dropdownOptions = useDefinitionDropdownOptions(
 		defineQuestion,
 		causalFactors,
+		causalEffects,
+	)
+	const onResetVariable = useOnResetVariable(
+		allElements,
+		dropdownOptions,
+		onSelectVariable,
 	)
 
 	const onChangeSteps = useCallback(
 		(steps: Step[]) => {
 			setStepsTablePrep(prev => {
-				const _prev = [...prev]
+				const _prev = [...(prev ?? [])]
 				_prev[0] = { ..._prev[0], steps }
 				return _prev
 			})
@@ -63,20 +91,6 @@ export function useBusinessLogic(): {
 	const steps = useMemo((): any => {
 		return prepSpecification !== undefined ? prepSpecification[0]?.steps : []
 	}, [prepSpecification])
-
-	const onSelectVariable = useOnSelectVariable(
-		causalFactors,
-		defineQuestion,
-		setDefineQuestion,
-	)
-
-	const allElements = useAllVariables(causalFactors, defineQuestion)
-
-	const onResetVariable = useOnResetVariable(
-		allElements,
-		dropdownOptions,
-		onSelectVariable,
-	)
 
 	const completedElements = useMemo((): number => {
 		return allElements.find((x: CausalFactor | ElementDefinition) => x)
@@ -99,6 +113,7 @@ export function useBusinessLogic(): {
 		allElements,
 		onSelectVariable,
 		onResetVariable,
+		onAddVariable,
 		dropdownOptions,
 	)
 

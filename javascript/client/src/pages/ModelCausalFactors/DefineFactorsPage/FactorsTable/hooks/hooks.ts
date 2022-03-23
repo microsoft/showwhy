@@ -11,11 +11,12 @@ import type {
 } from '@showwhy/types'
 import { useCallback, useMemo, useState } from 'react'
 
+import { useDegreeComboBox } from '~hooks'
 import { useCausalFactors, useSetCausalFactors } from '~state'
 import type { Item } from '~types'
 
 import { useFlatFactorsList, useSaveFactors } from './factors'
-import { useCheckbox, useComboBox, useTextField } from './inputs'
+import { useCheckbox, useTextField } from './inputs'
 import {
 	useOnChangeCauses,
 	useOnChangeDegree,
@@ -57,7 +58,7 @@ export function useFactorsTable(causeType: CausalFactorType): {
 	)
 
 	const checkbox = useCheckbox(onChangeCauses)
-	const comboBox = useComboBox(onChangeDegree)
+	const comboBox = useDegreeComboBox(onChangeDegree)
 	const textField = useTextField(onChangeReasoning)
 
 	const itemList = useMemo((): Item[] => {
@@ -65,7 +66,7 @@ export function useFactorsTable(causeType: CausalFactorType): {
 			return {
 				variable: factor.variable,
 				causes: checkbox(factor),
-				degree: comboBox(factor),
+				degree: comboBox(factor.degree, factor.id),
 				reasoning: textField(factor),
 			}
 		})

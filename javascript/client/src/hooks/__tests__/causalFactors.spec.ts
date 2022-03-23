@@ -3,8 +3,13 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { jest } from '@jest/globals'
-import type { CausalFactor} from '@showwhy/types';
-import { BeliefDegree, CausalFactorType , CausalityLevel, CausalModelLevel } from '@showwhy/types'
+import type { CausalFactor } from '@showwhy/types'
+import {
+	BeliefDegree,
+	CausalFactorType,
+	CausalityLevel,
+	CausalModelLevel,
+} from '@showwhy/types'
 import { renderHook } from '@testing-library/react-hooks'
 import { RecoilRoot } from 'recoil'
 import { v4 } from 'uuid'
@@ -131,6 +136,7 @@ describe('causalFactorsHooks', () => {
 		it('Maximum Model', () => {
 			const expected = {
 				confounders: [causalFactors[3]!.variable],
+				exposureDeterminants: [],
 				outcomeDeterminants: [causalFactors[1]!.variable],
 			}
 			const { result } = renderHook(
@@ -149,6 +155,7 @@ describe('causalFactorsHooks', () => {
 		it('Minimum Model', () => {
 			const expected = {
 				confounders: [],
+				exposureDeterminants: [],
 				outcomeDeterminants: [causalFactors[1]!.variable],
 			}
 			const { result } = renderHook(
@@ -167,6 +174,7 @@ describe('causalFactorsHooks', () => {
 		it('Intermediate Model', () => {
 			const expected = {
 				confounders: [causalFactors[3]!.variable],
+				exposureDeterminants: [],
 				outcomeDeterminants: [causalFactors[1]!.variable],
 			}
 			const { result } = renderHook(
@@ -188,6 +196,7 @@ describe('causalFactorsHooks', () => {
 		it('Maximum confounders', () => {
 			const expected = {
 				confounders: [causalFactors[3]!.variable],
+				exposureDeterminants: [],
 				outcomeDeterminants: [causalFactors[1]!.variable],
 			}
 			const { result } = renderHook(

@@ -13,6 +13,16 @@ import { useExperiment } from '~state/experiment'
 
 import { useAlternativeModels, useExcludedFactors } from './causalFactors'
 
+export interface CausalEffectsProps {
+	confounders: string[]
+	outcomeDeterminants: string[]
+	exposureDeterminants: string[]
+	generalExposure: string
+	generalOutcome: string
+	excludedFactors: string[]
+	excludedMessage: string
+}
+
 export function useCausalEffects(
 	causalLevel: CausalModelLevel,
 ): ReturnType<typeof useCausalEffectsTestable> {
@@ -26,15 +36,8 @@ export function useCausalEffects(
 export function useCausalEffectsTestable(
 	question: Experiment,
 	excludedFactors: string[],
-	{ confounders, outcomeDeterminants }: AlternativeModels,
-): {
-	confounders: string[]
-	outcomeDeterminants: string[]
-	generalExposure: string
-	generalOutcome: string
-	excludedFactors: string[]
-	excludedMessage: string
-} {
+	{ confounders, outcomeDeterminants, exposureDeterminants }: AlternativeModels,
+): CausalEffectsProps {
 	const excludedMessage = useMemo((): string => {
 		return `${excludedFactors.length} potential control${
 			excludedFactors.length > 1 ? 's were' : ' was'
@@ -56,6 +59,7 @@ export function useCausalEffectsTestable(
 	return {
 		confounders,
 		outcomeDeterminants,
+		exposureDeterminants,
 		generalExposure,
 		generalOutcome,
 		excludedFactors,

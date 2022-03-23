@@ -2,10 +2,11 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { Callout } from '@fluentui/react'
 import { useBoolean } from '@fluentui/react-hooks'
 import { memo } from 'react'
 import styled from 'styled-components'
+
+import { BaseCallout } from './BaseCallout'
 
 export const LinkCallout: React.FC<{
 	title?: string
@@ -24,19 +25,11 @@ export const LinkCallout: React.FC<{
 			<Text id={id} onClick={handleToggleVisible}>
 				{title}
 			</Text>
-			{isVisible && (
-				<CalloutInfo
-					role="alertdialog"
-					gapSpace={0}
-					onDismiss={handleToggleVisible}
-					setInitialFocus
-					target={`#${id}`}
-				>
-					{title && !detailsTitle && <CalloutTitle>{title}</CalloutTitle>}
-					{detailsTitle && <CalloutTitle>{detailsTitle}</CalloutTitle>}
-					{children}
-				</CalloutInfo>
-			)}
+			<BaseCallout show={isVisible} toggleShow={handleToggleVisible} id={id}>
+				{title && !detailsTitle && <CalloutTitle>{title}</CalloutTitle>}
+				{detailsTitle && <CalloutTitle>{detailsTitle}</CalloutTitle>}
+				{children}
+			</BaseCallout>
 		</>
 	)
 })
@@ -51,11 +44,4 @@ const Text = styled.span`
 const CalloutTitle = styled.h3`
 	margin-bottom: 12;
 	font-weight: bold;
-`
-
-const CalloutInfo = styled(Callout)`
-	div.ms-Callout-main {
-		width: 320px;
-		padding: 20px 24px;
-	}
 `
