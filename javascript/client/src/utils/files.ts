@@ -34,15 +34,18 @@ export function createTextFile(name: string, content: string): File {
 export async function createFormData(
 	file: ColumnTable,
 	name: string,
-): Promise<FormData> {
+): Promise<any> {
 	const formData = new FormData()
 	const content = file.toCSV()
 	const type = { type: `text/${name.split('.').pop()}` }
 	const blob = new Blob([content], type)
 	const fileA = createFile(blob, { name: 'output.csv' })
 	const ai = await toZip([fileA])
-	formData.append(`file`, ai)
-	return formData
+	// console.log('ai', ai)
+	// formData.append(`file`, ai)
+	// console.log('formData', formData)
+
+	return ai
 }
 
 export function isZipUrl(url: string): boolean {
