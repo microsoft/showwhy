@@ -5,15 +5,16 @@
 
 import {
 	BaseFile,
-	createFile,
+	createReader,
 	FileCollection,
-	guessDelimiter,
-	toZip,
 } from '@data-wrangling-components/utilities'
 import {
 	createBaseFile,
+	createFile,
 	FileType,
 	FileWithPath,
+	guessDelimiter,
+	toZip,
 } from '@data-wrangling-components/utilities'
 import type { Maybe } from '@showwhy/types'
 import type ColumnTable from 'arquero/dist/types/table/column-table'
@@ -31,21 +32,15 @@ export function createTextFile(name: string, content: string): File {
 	return new File([blob], name, type)
 }
 
-export async function createFormData(
+export async function createZipFormData(
 	file: ColumnTable,
 	name: string,
-): Promise<any> {
-	const formData = new FormData()
+): Promise<string> {
 	const content = file.toCSV()
 	const type = { type: `text/${name.split('.').pop()}` }
 	const blob = new Blob([content], type)
-	const fileA = createFile(blob, { name: 'output.csv' })
-	const ai = await toZip([fileA])
-	// console.log('ai', ai)
-	// formData.append(`file`, ai)
-	// console.log('formData', formData)
-
-	return ai
+	const fileContent = createFile(blob, { name: 'output.csv' })
+	return await toZip([fileContent])
 }
 
 export function isZipUrl(url: string): boolean {
@@ -140,13 +135,6 @@ export async function fetchRemoteTables(
 		tableFiles.push(new FileWithPath(file, table.name, ''))
 	}
 	return tableFiles
-}
-
-function createReader() {
-	const reader = new FileReader()
-	reader.onabort = () => console.log('file reading was aborted')
-	reader.onerror = () => console.log('file reading has failed')
-	return reader
 }
 
 /**

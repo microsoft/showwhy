@@ -16,11 +16,7 @@ import { all, op } from 'arquero'
 import type ColumnTable from 'arquero/dist/types/table/column-table'
 import { useCallback } from 'react'
 
-import {
-	useCreateColumnTable,
-	useGetStepUrls,
-	useSetRunAsDefault,
-} from '~hooks'
+import { useGetStepUrls, useSetRunAsDefault } from '~hooks'
 import {
 	useFileCollection,
 	useSetCausalFactors,

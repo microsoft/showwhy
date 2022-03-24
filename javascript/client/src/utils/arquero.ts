@@ -8,11 +8,7 @@ import type {
 	TableContainer,
 	TableStore,
 } from '@data-wrangling-components/core'
-import type { BaseFile } from '@data-wrangling-components/utilities'
-import {
-	getTextFromFile,
-	guessDelimiter,
-} from '@data-wrangling-components/utilities'
+import { guessDelimiter } from '@data-wrangling-components/utilities'
 import { fromCSV } from 'arquero'
 import type ColumnTable from 'arquero/dist/types/table/column-table'
 
@@ -35,7 +31,7 @@ export function createDefaultTable(
 		delimiter,
 		header: !columnNames?.length,
 		names: columnNames,
-		autoType: false,
+		autoMax: 10000,
 	})
 }
 

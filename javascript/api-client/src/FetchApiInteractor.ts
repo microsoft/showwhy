@@ -60,20 +60,19 @@ export class FetchApiInteractor {
 		return this.fetchHandler(url, options).then(response => response?.json())
 	}
 
-	public async uploadFiles(formData: any): Promise<UploadFilesResponse> {
+	public async uploadFiles(zipFile: string): Promise<UploadFilesResponse> {
 		const url = `${
 			this.baseUrl
 		}/api/UploadFile?session_id=${this.getSessionKey()}&code=${
 			this.uploadFilesApiKey
 		}`
 
-		console.log(formData)
 		return fetch(url, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/zip',
 			},
-			body: formData,
+			body: zipFile,
 		}).then(response => response?.json())
 	}
 
