@@ -103,7 +103,7 @@ const CalloutStyles = {
 
 const Container = styled.section`
 	padding: 0 8px;
-	margin: 0 8px;
+	margin: 12px 8px 0;
 	position: absolute;
 	right: 0;
 	z-index: 1;
