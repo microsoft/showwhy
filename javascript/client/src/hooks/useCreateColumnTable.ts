@@ -16,7 +16,7 @@ export function useCreateColumnTable(
 	onFileLoad: Handler1<ProjectFile>,
 	onLoadStart?: Handler,
 ): (files: BaseFile[], delimiter?: string) => void {
-	const onFinishRead = useCallback(
+	const onFinishReading = useCallback(
 		(table: ColumnTable, name: string) => {
 			const _table = table.derive(
 				{
@@ -32,30 +32,15 @@ export function useCreateColumnTable(
 		[onFileLoad],
 	)
 
-	// useEffect((): any => {
-	// 	if (isFinished && table) {
-	// 		const _table = (table as ColumnTable).derive(
-	// 			{
-	// 				index: op.row_number(),
-	// 			},
-	// 			{ before: all() },
-	// 		)
-	// 		onFileLoad({
-	// 			table: _table,
-	// 			name: fileName,
-	// 		})
-	// 	}
-	// }, [isFinished, setNotFinished, onFileLoad, table, fileName])
-
 	return useCallback(
 		(files: BaseFile[], delimiter?: string) => {
 			onLoadStart && onLoadStart()
 			files.forEach(async (file: BaseFile) => {
 				const table = await readFile(file, delimiter)
 				const name = file.name
-				onFinishRead(table, name)
+				onFinishReading(table, name)
 			})
 		},
-		[onLoadStart],
+		[onLoadStart, onFinishReading],
 	)
 }

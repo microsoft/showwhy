@@ -3,14 +3,14 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import {
+import type {
 	BaseFile,
-	createReader,
 	FileCollection,
 } from '@data-wrangling-components/utilities'
 import {
 	createBaseFile,
 	createFile,
+	createReader,
 	FileType,
 	FileWithPath,
 	guessDelimiter,
