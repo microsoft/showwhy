@@ -13,11 +13,11 @@ import {
 	getTextFromFile,
 	guessDelimiter,
 } from '@data-wrangling-components/utilities'
-import { all, fromCSV, op } from 'arquero'
+import { fromCSV } from 'arquero'
 import type ColumnTable from 'arquero/dist/types/table/column-table'
 
 import type { DataTableFileDefinition, ProjectFile } from '~types'
-import { isZipUrl } from '~utils'
+import { isZipUrl, readFile } from '~utils'
 /**
  * Creates a default data table by parsing csv/tsv content.
  * This adds an incremented index column to the front to ensure all tables
@@ -29,13 +29,14 @@ import { isZipUrl } from '~utils'
 export function createDefaultTable(
 	content: string,
 	delimiter = ',',
+	columnNames?: string[],
 ): ColumnTable {
-	return fromCSV(content, { delimiter, autoMax: 1000000 }).derive(
-		{
-			index: op.row_number(),
-		},
-		{ before: all() },
-	)
+	return fromCSV(content, {
+		delimiter,
+		header: !columnNames?.length,
+		names: columnNames,
+		autoType: false,
+	})
 }
 
 export async function loadTable(
@@ -43,9 +44,7 @@ export async function loadTable(
 	tables?: File[],
 ): Promise<ColumnTable> {
 	const file = tables?.find(t => t.name === table.name) as File
-	const text = await getTextFromFile(file as BaseFile)
-	const delimiter = table.delimiter || guessDelimiter(table.name)
-	return createDefaultTable(text, delimiter)
+	return readFile(file)
 }
 
 export async function fetchTable(

@@ -96,7 +96,7 @@ export function useBusinessLogic(): {
 		(_e, option: Maybe<IDropdownOption>): void => {
 			const delimiter = `${option?.key}`
 			if (selectedFile && selectedFile.id) {
-				const table = createDefaultTable(selectedFile.content, delimiter)
+				const table = createDefaultTable(selectedFile.table.toCSV(), delimiter)
 				const file = {
 					...selectedFile,
 					table,

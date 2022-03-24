@@ -3,9 +3,12 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type {
+import {
 	BaseFile,
+	createFile,
 	FileCollection,
+	guessDelimiter,
+	toZip,
 } from '@data-wrangling-components/utilities'
 import {
 	createBaseFile,
@@ -17,7 +20,10 @@ import type ColumnTable from 'arquero/dist/types/table/column-table'
 
 import type { DataTableFileDefinition, RunHistory, ZipData } from '~types'
 
-import { fetchTable } from './arquero'
+import { createDefaultTable, fetchTable } from './arquero'
+
+const CHUNK_SIZE = 31457280 //1024 * 1024 * 30
+const MAX_FILE_SIZE = 350000000 //350MB
 
 export function createTextFile(name: string, content: string): File {
 	const type = { type: `text/${name.split('.').pop()}` }
@@ -25,11 +31,17 @@ export function createTextFile(name: string, content: string): File {
 	return new File([blob], name, type)
 }
 
-export function createFormData(file: ColumnTable, name: string): FormData {
+export async function createFormData(
+	file: ColumnTable,
+	name: string,
+): Promise<FormData> {
 	const formData = new FormData()
 	const content = file.toCSV()
-	const _file = createTextFile(name, content)
-	formData.append(`file`, _file)
+	const type = { type: `text/${name.split('.').pop()}` }
+	const blob = new Blob([content], type)
+	const fileA = createFile(blob, { name: 'output.csv' })
+	const ai = await toZip([fileA])
+	formData.append(`file`, ai)
 	return formData
 }
 
@@ -125,4 +137,93 @@ export async function fetchRemoteTables(
 		tableFiles.push(new FileWithPath(file, table.name, ''))
 	}
 	return tableFiles
+}
+
+function createReader() {
+	const reader = new FileReader()
+	reader.onabort = () => console.log('file reading was aborted')
+	reader.onerror = () => console.log('file reading has failed')
+	return reader
+}
+
+/**
+ *
+ * @param file
+ * @param delimiter
+ * @returns
+ */
+export function readFile(
+	file: BaseFile | File,
+	delimiter?: string,
+): Promise<ColumnTable> {
+	const _delimeter = delimiter || guessDelimiter(file.name)
+	const isBigFile = file.size > MAX_FILE_SIZE
+	const reader = createReader()
+	let index = 0
+	const size = CHUNK_SIZE
+	let columnNames: string[] = []
+	let error = ''
+	let table: ColumnTable | undefined = undefined
+
+	reader.onload = () => {
+		console.debug('file reading started')
+		const content = reader.result
+			? reader.result.toString().replace(/ï»¿/g, '')
+			: ''
+
+		let lineBreak = content
+		let columnsIndex = 0
+		if (isBigFile) {
+			/**
+			 * stores columnNames
+			 */
+			if (index === 0) {
+				columnsIndex = content.indexOf('\n')
+				const columns = content.slice(0, columnsIndex)
+				columnNames = columns.split(',')
+				/**
+				 * include \n into account
+				 */
+				columnsIndex++
+			}
+
+			lineBreak =
+				content.length < size
+					? content
+					: content.slice(columnsIndex, content.lastIndexOf('\n') + 1)
+			const lineBreakExcess = content.length - lineBreak.length - columnsIndex
+
+			index = index + size - lineBreakExcess
+		}
+		try {
+			const result = createDefaultTable(lineBreak, _delimeter, columnNames)
+			if (!table) {
+				table = result
+			} else {
+				table = table?.concat(result)
+			}
+		} catch (e: any) {
+			error = e
+		}
+	}
+
+	if (isBigFile) {
+		reader.readAsBinaryString(file.slice(index, index + size))
+	} else {
+		reader.readAsBinaryString(file)
+	}
+
+	return new Promise(resolve => {
+		reader.onloadend = () => {
+			if (error) {
+				console.log('file reading has failed')
+			}
+			if (isBigFile && index < file.size) {
+				reader.readAsBinaryString(file.slice(index, index + size))
+			} else {
+				console.debug('file reading ended')
+				return resolve(table as ColumnTable)
+			}
+		}
+	})
 }

@@ -14,47 +14,14 @@ import type { Dispatch, SetStateAction } from 'react'
 import { useCallback, useEffect, useState } from 'react'
 
 import type { DropFilesCount, ProjectFile } from '~types'
-import { createDefaultTable } from '~utils'
 
 import { useOnDropRejected } from './dropzone'
 import { useAddFilesToCollection } from './fileCollection'
 import { useSupportedFileTypes } from './supportedFileTypes'
-
-export function useDrop(
-	onFileLoad: Handler1<ProjectFile>,
-	onLoadStart?: Handler,
-): (files: BaseFile[], delimiter?: string) => void {
-	return useCallback(
-		(files: BaseFile[], delimiter?: string) => {
-			onLoadStart && onLoadStart()
-			files.forEach((file: BaseFile) => {
-				const name = file.name
-				const reader = new FileReader()
-				reader.onabort = () => console.log('file reading was aborted')
-				reader.onerror = () => console.log('file reading has failed')
-				reader.onload = () => {
-					const content = reader.result
-						? reader.result.toString().replace(/ï»¿/g, '')
-						: ''
-					const table = createDefaultTable(
-						content,
-						delimiter || name.includes('.tsv') ? '\t' : ',',
-					)
-					onFileLoad({
-						content,
-						name,
-						table,
-					})
-				}
-				reader.readAsBinaryString(file)
-			})
-		},
-		[onFileLoad, onLoadStart],
-	)
-}
+import { useCreateColumnTable } from './useCreateColumnTable'
 
 export function useHandleDropzone(
-	onError?: (message: string | null) => void, //TODO: as Handler1?
+	onError?: Handler1<string | null>,
 	onLoad?: Handler1<ProjectFile>,
 ): {
 	loading: boolean
@@ -87,7 +54,7 @@ export function useHandleDropzone(
 	const onLoadStart = useOnLoadStart(setLoading, onError)
 	const onDropFilesAccepted = useOnDropDatasetFilesAccepted(setFilesCount)
 	const onDropFilesRejected = useOnDropRejected(onError, resetCount)
-	const handleDrop = useDrop(onFileLoadComplete, onLoadStart)
+	const handleDrop = useCreateColumnTable(onFileLoadComplete, onLoadStart)
 
 	const { getRootProps, getInputProps, isDragActive } = useDropzone({
 		onDrop: (fileCollection: FileCollection) =>

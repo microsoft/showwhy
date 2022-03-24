@@ -66,6 +66,8 @@ export class FetchApiInteractor {
 		}/api/UploadFile?session_id=${this.getSessionKey()}&code=${
 			this.uploadFilesApiKey
 		}`
+
+		console.log(formData)
 		return fetch(url, {
 			method: 'POST',
 			body: formData,

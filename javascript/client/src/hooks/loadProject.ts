@@ -16,7 +16,11 @@ import { all, op } from 'arquero'
 import type ColumnTable from 'arquero/dist/types/table/column-table'
 import { useCallback } from 'react'
 
-import { useGetStepUrls, useSetRunAsDefault } from '~hooks'
+import {
+	useCreateColumnTable,
+	useGetStepUrls,
+	useSetRunAsDefault,
+} from '~hooks'
 import {
 	useFileCollection,
 	useSetCausalFactors,
@@ -222,7 +226,6 @@ function preProcessTables(
 			) as ColumnTable
 
 			const file: ProjectFile = {
-				content: resultTable.toCSV(),
 				name: table.name,
 				id: table.name,
 				table: resultTable,
@@ -242,7 +245,6 @@ function preProcessTables(
 
 			const file: ProjectFile = {
 				id: table.name,
-				content: result.toCSV(),
 				name: table.name,
 				table: result,
 			}
@@ -256,7 +258,7 @@ async function processDataTables(
 	tps?: Specification[],
 	projectFiles?: ProjectFile[],
 ): Promise<TableContainer | undefined> {
-	if (tps !== undefined && projectFiles?.length) {
+	if (tps !== undefined && tps[0]?.steps?.length && projectFiles?.length) {
 		const steps = tps[0]?.steps as FileStep[]
 		pipeline.clear()
 		return await runPipelineFromProjectFiles(projectFiles, steps, pipeline)

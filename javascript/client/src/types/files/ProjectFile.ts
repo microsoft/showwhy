@@ -7,7 +7,6 @@ import type ColumnTable from 'arquero/dist/types/table/column-table'
 
 export interface ProjectFile {
 	name: string
-	content: string
 	alias?: string
 	table: ColumnTable
 	id?: string

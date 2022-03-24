@@ -113,7 +113,8 @@ export function useBusinessLogic(): {
 	])
 
 	const uploadOutputFile = useCallback(async (file: ColumnTable) => {
-		const filesData = createFormData(file, OUTPUT_FILE_NAME)
+		const filesData = await createFormData(file, OUTPUT_FILE_NAME)
+
 		return api.uploadFiles(filesData)
 	}, [])
 

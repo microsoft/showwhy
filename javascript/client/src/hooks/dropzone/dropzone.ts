@@ -10,7 +10,7 @@ import { useCallback, useMemo, useState } from 'react'
 
 import {
 	useAcceptedFileTypes,
-	useDrop,
+	useCreateColumnTable,
 	useOnDropDatasetFilesAccepted,
 	useOnDropRejected,
 	useOnDropZipFilesAccepted,
@@ -25,7 +25,7 @@ export function useHandleOnDrop(
 	onFileLoadCompleted: (file: ProjectFile) => void,
 	onLoadStart?: Handler,
 ): (files: FileCollection) => void {
-	const onDrop = useDrop(onFileLoadCompleted, onLoadStart)
+	const onDrop = useCreateColumnTable(onFileLoadCompleted, onLoadStart)
 	return useCallback(
 		(fileCollection: FileCollection) => {
 			if (!fileCollection.list().length) return
