@@ -5,6 +5,7 @@
 
 import type {
 	CausalFactor,
+	ElementDefinition,
 	Experiment,
 	Handler,
 	OptionalId,
@@ -24,19 +25,23 @@ import {
 	useVariableField,
 } from './variables'
 
-type OnAddHandler = (factor: OptionalId<CausalFactor>) => void
-type OnChangeHandler = (f: Partial<CausalFactor>) => void
+type OnAddHandler = (
+	factor: OptionalId<CausalFactor | ElementDefinition>,
+) => void
+type OnChangeHandler = (f: Partial<CausalFactor | ElementDefinition>) => void
 
 export function useFactorsDefinitionForm({
 	experiment,
 	factor,
 	pageType,
+	showLevel,
 	onAdd = noop,
 	onChange = noop,
 }: {
 	pageType: PageType
 	experiment?: Experiment
-	factor?: CausalFactor
+	factor?: CausalFactor | ElementDefinition
+	showLevel?: boolean
 	onAdd?: OnAddHandler
 	onChange?: OnChangeHandler
 }): {
@@ -47,7 +52,7 @@ export function useFactorsDefinitionForm({
 	const [description, setDescription] = useState<string>('')
 	const [variable, setVariable] = useState<string>('')
 	const [isPrimary, setIsPrimary] = useState<boolean>(false)
-	const hasLevel = useHasLevel(factor)
+	const hasLevel = useHasLevel(factor) || showLevel
 	const location = useLocation()
 
 	const resetFields = useResetFields(setDescription, setVariable, setIsPrimary)
@@ -77,7 +82,11 @@ export function useFactorsDefinitionForm({
 
 	useEffect(
 		function syncEditedFactor() {
-			const edited: Partial<CausalFactor> = { ...factor, variable, description }
+			const edited: Partial<CausalFactor | ElementDefinition> = {
+				...factor,
+				variable,
+				description,
+			}
 			hasLevel &&
 				(edited.level = isPrimary
 					? CausalityLevel.Primary
@@ -88,7 +97,7 @@ export function useFactorsDefinitionForm({
 	)
 
 	const checkbox = useCheckbox(isPrimary, setIsPrimary)
-	const variableField = useVariableField(variable, add, setVariable)
+	const variableField = useVariableField(variable, add, setVariable, factor)
 	const descriptionBox = useDescriptionBox(
 		description,
 		setDescription,

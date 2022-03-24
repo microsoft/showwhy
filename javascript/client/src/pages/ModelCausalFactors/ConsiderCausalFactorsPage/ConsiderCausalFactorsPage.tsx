@@ -29,6 +29,7 @@ export const ConsiderCausalFactorsPage: React.FC = memo(
 			editFactor,
 			deleteFactor,
 			setFactor,
+			setNewFactor,
 			setIsEditing,
 			goToFactorsPage,
 			page,
@@ -58,6 +59,7 @@ export const ConsiderCausalFactorsPage: React.FC = memo(
 					onAdd={addFactor}
 					showLevel={false}
 					pageType={pageType}
+					onChange={setNewFactor}
 				/>
 				{page ? (
 					<ButtonContainer>
