@@ -3,8 +3,12 @@
 # Licensed under the MIT license. See LICENSE file in the project.
 #
 
+import base64
 import json
+import os
+import tempfile
 import uuid
+import zipfile
 
 from io import StringIO
 
@@ -23,21 +27,30 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
 
     storage.create_container()
 
-    for input_file in req.files.values():
-        filename = input_file.filename
-        contents = input_file.stream.read()
-
-        name = storage.write_output(
-            session_id,
-            str(uuid.uuid4()),
-            pd.read_csv(StringIO(contents.decode("utf-8"))),
-            file_type="input",
-            extension="csv",
-        )
-        files[filename] = f"blob://{name}"
+    data = req.get_body()
+    data = str(data).replace("'", "").split(",")[1]
+    file_path = os.path.join(tempfile.gettempdir(), f"{str(uuid.uuid4())}.zip")
+    with open(file_path, "wb") as file:
+        file.write(base64.b64decode(data))
+    with zipfile.ZipFile(file_path, "r") as file:
+        for data_file in file.namelist():
+            with file.open(data_file, "r") as data:
+                file_path = __write_to_context(data.read(), session_id)
+                files[data_file] = file_path
 
     return func.HttpResponse(
         body=json.dumps({"uploaded_files": files}),
         mimetype="application/json",
         status_code=200,
     )
+
+
+def __write_to_context(content: bytes, session_id: str) -> str:
+    name = storage.write_output(
+        session_id,
+        str(uuid.uuid4()),
+        pd.read_csv(StringIO(content.decode("utf-8"))),
+        file_type="input",
+        extension="csv",
+    )
+    return f"blob://{name}"
