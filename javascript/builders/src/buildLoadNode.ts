@@ -14,7 +14,6 @@ export function buildLoadNode(url: string, fileName: string): NodeRequest {
 			type: GraphNodeType.LoadDataset,
 			result: dataframeName,
 			url,
-			compression: 'zip',
 		},
 	])
 	return nodeReq

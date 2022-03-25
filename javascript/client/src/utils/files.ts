@@ -9,12 +9,10 @@ import type {
 } from '@data-wrangling-components/utilities'
 import {
 	createBaseFile,
-	createFile,
 	createReader,
 	FileType,
 	FileWithPath,
 	guessDelimiter,
-	toZip,
 } from '@data-wrangling-components/utilities'
 import type { Maybe } from '@showwhy/types'
 import type ColumnTable from 'arquero/dist/types/table/column-table'
@@ -32,15 +30,12 @@ export function createTextFile(name: string, content: string): File {
 	return new File([blob], name, type)
 }
 
-export async function createZipFormData(
-	file: ColumnTable,
-	name: string,
-): Promise<string> {
+export function createFormData(file: ColumnTable, name: string): FormData {
 	const content = file.toCSV()
-	const type = { type: `text/${name.split('.').pop()}` }
-	const blob = new Blob([content], type)
-	const fileContent = createFile(blob, { name: 'output.csv' })
-	return await toZip([fileContent])
+	const formData = new FormData()
+	const _file = createTextFile(name, content)
+	formData.append(`file`, _file)
+	return formData
 }
 
 export function isZipUrl(url: string): boolean {

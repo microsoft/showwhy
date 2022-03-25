@@ -42,7 +42,7 @@ import {
 	useSpecCount,
 } from '~state'
 import type { RunHistory } from '~types'
-import { createZipFormData, initialRunHistory } from '~utils'
+import { createFormData, initialRunHistory } from '~utils'
 
 const OUTPUT_FILE_NAME = 'output'
 
@@ -113,7 +113,7 @@ export function useBusinessLogic(): {
 	])
 
 	const uploadOutputFile = useCallback(async (file: ColumnTable) => {
-		const filesData = await createZipFormData(file, OUTPUT_FILE_NAME)
+		const filesData = createFormData(file, OUTPUT_FILE_NAME)
 		return api.uploadFiles(filesData)
 	}, [])
 
