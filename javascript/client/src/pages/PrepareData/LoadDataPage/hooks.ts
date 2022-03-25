@@ -43,6 +43,7 @@ export function useBusinessLogic(): {
 	onDrop: (f: FileCollection) => void
 	onDropAccepted: (f: FileCollection) => void
 	onDropRejected: (msg: string) => void
+	progress?: number
 } {
 	const setSelectedFile = useSetSelectedFile()
 	const selectedFile = useSelectedFile()
@@ -96,7 +97,7 @@ export function useBusinessLogic(): {
 		(_e, option: Maybe<IDropdownOption>): void => {
 			const delimiter = `${option?.key}`
 			if (selectedFile && selectedFile.id) {
-				const table = createDefaultTable(selectedFile.content, delimiter)
+				const table = createDefaultTable(selectedFile.table.toCSV(), delimiter)
 				const file = {
 					...selectedFile,
 					table,
@@ -123,6 +124,7 @@ export function useBusinessLogic(): {
 		loading,
 		fileCount,
 		acceptedFileTypes,
+		progress,
 	} = useGlobalDropzone(setErrorMessage, handleLoadFile)
 
 	const onRenameTable = useCallback(
@@ -155,6 +157,7 @@ export function useBusinessLogic(): {
 		onDrop,
 		onDropAccepted,
 		onDropRejected,
+		progress,
 	}
 }
 

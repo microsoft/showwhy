@@ -944,14 +944,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@data-wrangling-components/utilities@npm:^1.8.0":
-  version: 1.8.0
-  resolution: "@data-wrangling-components/utilities@npm:1.8.0"
+"@data-wrangling-components/utilities@npm:^1.8.1":
+  version: 1.8.1
+  resolution: "@data-wrangling-components/utilities@npm:1.8.1"
   dependencies:
     "@zip.js/zip.js": ^2.4.6
   peerDependencies:
     arquero: ^4.8.7
-  checksum: 7d12ff709da17bdf16fbadbb8ec405d438fd073c14fe7260c6c504c05b9d957c49674ecb1a614190444d1ffa817c69767ace2c310b6a5ea8f6ee3a88de489e5a
+  checksum: 319a6bccf7cde4e9d35a4848aefa8686cb3c13c5aa3ad41b4a3e34c11f0d0024635e693622189720822221f7f001b5e6380cc0fdd061ef7a221e61d80410c482
   languageName: node
   linkType: hard
 
@@ -2019,7 +2019,7 @@ __metadata:
   dependencies:
     "@data-wrangling-components/core": ^5.3.0
     "@data-wrangling-components/react": ^4.1.1
-    "@data-wrangling-components/utilities": ^1.8.0
+    "@data-wrangling-components/utilities": ^1.8.1
     "@essex/boolean-expression-component": ^1.0.3
     "@essex/hooks": ^4.0.5
     "@essex/jest-config": ^21.0.5

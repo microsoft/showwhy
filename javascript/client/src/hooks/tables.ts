@@ -23,9 +23,7 @@ function useSaveFile(
 
 	return useCallback(
 		(newProjectFile: ProjectFile, capturedTable: ColumnTable) => {
-			const newCSV = capturedTable.toCSV()
 			const project = { ...newProjectFile }
-			project.content = newCSV
 			setOriginalTable({ tableId, table: capturedTable })
 			setProjectFiles([...projectFiles.filter(x => x.id !== tableId), project])
 		},

@@ -222,7 +222,6 @@ function preProcessTables(
 			) as ColumnTable
 
 			const file: ProjectFile = {
-				content: resultTable.toCSV(),
 				name: table.name,
 				id: table.name,
 				table: resultTable,
@@ -242,7 +241,6 @@ function preProcessTables(
 
 			const file: ProjectFile = {
 				id: table.name,
-				content: result.toCSV(),
 				name: table.name,
 				table: result,
 			}
@@ -256,7 +254,7 @@ async function processDataTables(
 	tps?: Specification[],
 	projectFiles?: ProjectFile[],
 ): Promise<TableContainer | undefined> {
-	if (tps !== undefined && projectFiles?.length) {
+	if (tps !== undefined && tps[0]?.steps?.length && projectFiles?.length) {
 		const steps = tps[0]?.steps as FileStep[]
 		pipeline.clear()
 		return await runPipelineFromProjectFiles(projectFiles, steps, pipeline)

@@ -2,110 +2,17 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { useDropzone } from '@data-wrangling-components/react'
 import type {
 	BaseFile,
-	FileCollection,
 	FileWithPath,
 } from '@data-wrangling-components/utilities'
-import { FileType } from '@data-wrangling-components/utilities'
-import type { Handler, Handler1 } from '@showwhy/types'
+import type { Handler } from '@showwhy/types'
 import type { Dispatch, SetStateAction } from 'react'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback } from 'react'
 
 import type { DropFilesCount, ProjectFile } from '~types'
-import { createDefaultTable } from '~utils'
 
-import { useOnDropRejected } from './dropzone'
 import { useAddFilesToCollection } from './fileCollection'
-import { useSupportedFileTypes } from './supportedFileTypes'
-
-export function useDrop(
-	onFileLoad: Handler1<ProjectFile>,
-	onLoadStart?: Handler,
-): (files: BaseFile[], delimiter?: string) => void {
-	return useCallback(
-		(files: BaseFile[], delimiter?: string) => {
-			onLoadStart && onLoadStart()
-			files.forEach((file: BaseFile) => {
-				const name = file.name
-				const reader = new FileReader()
-				reader.onabort = () => console.log('file reading was aborted')
-				reader.onerror = () => console.log('file reading has failed')
-				reader.onload = () => {
-					const content = reader.result
-						? reader.result.toString().replace(/ï»¿/g, '')
-						: ''
-					const table = createDefaultTable(
-						content,
-						delimiter || name.includes('.tsv') ? '\t' : ',',
-					)
-					onFileLoad({
-						content,
-						name,
-						table,
-					})
-				}
-				reader.readAsBinaryString(file)
-			})
-		},
-		[onFileLoad, onLoadStart],
-	)
-}
-
-export function useHandleDropzone(
-	onError?: (message: string | null) => void, //TODO: as Handler1?
-	onLoad?: Handler1<ProjectFile>,
-): {
-	loading: boolean
-	filesCount: DropFilesCount
-	isDragActive: boolean
-	getRootProps: (props: any) => any
-	getInputProps: (props: any) => any
-} {
-	const [loading, setLoading] = useState<boolean>(false)
-	const fileTypesAllowed = useSupportedFileTypes()
-	const [filesCount, setFilesCount] = useState<DropFilesCount>({
-		total: 0,
-		completed: 0,
-	})
-
-	const resetCount = useResetCount(setFilesCount)
-
-	const onFileLoadComplete = useOnFileLoadCompleted(
-		setFilesCount,
-		setLoading,
-		onLoad,
-	)
-
-	useEffect(() => {
-		if (filesCount.total === filesCount.completed) {
-			setLoading(false)
-		}
-	}, [setLoading, filesCount])
-
-	const onLoadStart = useOnLoadStart(setLoading, onError)
-	const onDropFilesAccepted = useOnDropDatasetFilesAccepted(setFilesCount)
-	const onDropFilesRejected = useOnDropRejected(onError, resetCount)
-	const handleDrop = useDrop(onFileLoadComplete, onLoadStart)
-
-	const { getRootProps, getInputProps, isDragActive } = useDropzone({
-		onDrop: (fileCollection: FileCollection) =>
-			handleDrop(fileCollection.list(FileType.table)),
-		onDropAccepted: (fileCollection: FileCollection) =>
-			onDropFilesAccepted(fileCollection.list(FileType.table)),
-		onDropRejected: onDropFilesRejected,
-		acceptedFileTypes: fileTypesAllowed,
-	})
-
-	return {
-		loading,
-		filesCount,
-		getRootProps,
-		getInputProps,
-		isDragActive,
-	}
-}
 
 export function useOnLoadStart(setLoading: any, onError: any): Handler {
 	return useCallback(() => {

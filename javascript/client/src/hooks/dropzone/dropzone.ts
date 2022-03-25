@@ -5,12 +5,12 @@
 
 import type { FileCollection } from '@data-wrangling-components/utilities'
 import { FileType, isZipFile } from '@data-wrangling-components/utilities'
-import type { Handler } from '@showwhy/types'
+import type { Handler, Handler1 } from '@showwhy/types'
 import { useCallback, useMemo, useState } from 'react'
 
 import {
 	useAcceptedFileTypes,
-	useDrop,
+	useCreateColumnTable,
 	useOnDropDatasetFilesAccepted,
 	useOnDropRejected,
 	useOnDropZipFilesAccepted,
@@ -24,8 +24,13 @@ import type { DropFilesCount, ProjectFile } from '~types'
 export function useHandleOnDrop(
 	onFileLoadCompleted: (file: ProjectFile) => void,
 	onLoadStart?: Handler,
+	onProgress?: Handler1<number>,
 ): (files: FileCollection) => void {
-	const onDrop = useDrop(onFileLoadCompleted, onLoadStart)
+	const onDrop = useCreateColumnTable(
+		onFileLoadCompleted,
+		onLoadStart,
+		onProgress,
+	)
 	return useCallback(
 		(fileCollection: FileCollection) => {
 			if (!fileCollection.list().length) return
@@ -78,8 +83,10 @@ export function useGlobalDropzone(
 	fileCount: DropFilesCount
 	loading: boolean
 	acceptedFileTypes: string[]
+	progress?: number
 } {
 	const [loading, setLoading] = useState<boolean>(false)
+	const [progress, setProgress] = useState<number | undefined>()
 	const [fileCount, setFileCount] = useState<DropFilesCount>({
 		total: 0,
 		completed: 0,
@@ -92,7 +99,7 @@ export function useGlobalDropzone(
 		onLoad,
 	)
 	const acceptedFileTypes = useAccepted()
-	const onDrop = useHandleOnDrop(onFileLoadCompleted, onLoadStart)
+	const onDrop = useHandleOnDrop(onFileLoadCompleted, onLoadStart, setProgress)
 	const onDropAccepted = useOnDropAccepted(onError, setFileCount)
 	const onDropRejected = useOnDropRejected(onError, resetCount)
 
@@ -103,5 +110,6 @@ export function useGlobalDropzone(
 		fileCount,
 		loading,
 		acceptedFileTypes,
+		progress,
 	}
 }

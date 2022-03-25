@@ -32,7 +32,6 @@ export function useOnUpdateTables(): (tables: TableContainer[]) => void {
 					const fp = {
 						...t,
 						delimiter: guessDelimiter(t.name || t.id),
-						content: t.table?.toCSV() || '',
 					} as ProjectFile
 					addProjectFile(fp)
 				})
