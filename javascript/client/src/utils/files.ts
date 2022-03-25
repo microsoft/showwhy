@@ -31,8 +31,8 @@ export function createTextFile(name: string, content: string): File {
 }
 
 export function createFormData(file: ColumnTable, name: string): FormData {
-	const content = file.toCSV()
 	const formData = new FormData()
+	const content = file.toCSV()
 	const _file = createTextFile(name, content)
 	formData.append(`file`, _file)
 	return formData
@@ -133,7 +133,13 @@ export async function fetchRemoteTables(
 }
 
 /**
- *
+ * Reads files and return a columnTable when finished
+ * If the file is > 350MB, reads it in chunks.
+ * Get's the first row as columnNames
+ * Reads the file every 3MB, then breaks it by the last line break
+ * Adds the rest of the line for the next iteration
+ * Creates a ColumnTable and concatenate it with the previous in every iteration
+ * returns a promise with the ColumnTable created when it's done
  * @param file
  * @param delimiter
  * @returns
