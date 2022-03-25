@@ -53,23 +53,15 @@ export const TableComponent: React.FC<{
 	)
 	return (
 		<Container>
-			{items.length ? (
-				<GenericTableComponent
-					items={items}
-					headers={{
-						data: headersData,
-					}}
-					props={{ customColumnsWidth }}
-				/>
-			) : (
-				<EmptyP>Add a new factor to start</EmptyP>
-			)}
+			<GenericTableComponent
+				items={items}
+				headers={{
+					data: headersData,
+				}}
+				props={{ customColumnsWidth }}
+			/>
 		</Container>
 	)
 })
-
-const EmptyP = styled.p`
-	text-align: center;
-`
 
 const Container = styled.div``

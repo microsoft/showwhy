@@ -882,33 +882,36 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@data-wrangling-components/core@npm:^5.2.0":
-  version: 5.2.0
-  resolution: "@data-wrangling-components/core@npm:5.2.0"
+"@data-wrangling-components/core@npm:^5.3.0":
+  version: 5.3.0
+  resolution: "@data-wrangling-components/core@npm:5.3.0"
   dependencies:
     lodash-es: ^4.17.21
+    rxjs: ^7.5.5
+    toposort: ^2.0.2
+    uuid: ^8.3.2
   peerDependencies:
     "@types/node": "*"
     arquero: ^4.8.7
   peerDependenciesMeta:
     "@types/node":
       optional: true
-  checksum: 8916b34fd6e2e3ae524315d00599520e058ea2e8082201c67d159fb31a54cfd93f7a8bfee2ba3f0ee223c30715e3d7239a66198aa182ebed044ed1c20eb1fa4b
+  checksum: a9b7e7231a223c5db852fa2a47b79593be47104a70635a59d952443dd06ce6d710bbe2192ae81869e32bbbc606b1e851027d43669a46e34bcda194c185a5661c
   languageName: node
   linkType: hard
 
-"@data-wrangling-components/guidance@npm:^0.1.8":
-  version: 0.1.8
-  resolution: "@data-wrangling-components/guidance@npm:0.1.8"
-  checksum: bd12cfb93203757affcbf60db28a4fee35bb1dc670fc27a4b446632db23139e630ebc931dee48f365e55a55a400bd30c2a74b073db5e7fda994fa721cc88d4a8
+"@data-wrangling-components/guidance@npm:^0.1.9":
+  version: 0.1.9
+  resolution: "@data-wrangling-components/guidance@npm:0.1.9"
+  checksum: e00498714b77531e99e7d6820e7e726f58595c05cfd7e44a95c63e0eb323cff99a5ef2566315a19f812e5bfc7836a0905dd55f9dcc42bf7cce56322d321cbc0a
   languageName: node
   linkType: hard
 
-"@data-wrangling-components/react@npm:^4.0.0":
-  version: 4.0.0
-  resolution: "@data-wrangling-components/react@npm:4.0.0"
+"@data-wrangling-components/react@npm:^4.1.1":
+  version: 4.1.1
+  resolution: "@data-wrangling-components/react@npm:4.1.1"
   dependencies:
-    "@data-wrangling-components/guidance": ^0.1.8
+    "@data-wrangling-components/guidance": ^0.1.9
     "@essex/hooks": ^4.0.6
     "@essex/themed-components": ^2.1.3
     core-js: ^3.21.1
@@ -937,18 +940,18 @@ __metadata:
     react: ^17.0.2
     react-dom: ^17.0.2
     styled-components: ^5.3.0
-  checksum: f5c807f8ec3807b34acabf8add77cd2236c5c9b24bdee7524c909f1758a0526addf5d74a30e0a45d275391f2def6d1dac898a0cd94e73095bc4986244b34a679
+  checksum: 1a77f545947691d3167500f51cecb4f64436526f17dd8488a25c2b8167c53adfab00e3fd2b9e2caf69b2650125b0fc41a8e7be980e93a7de56f9c20a86e697b7
   languageName: node
   linkType: hard
 
-"@data-wrangling-components/utilities@npm:^1.7.1":
-  version: 1.7.1
-  resolution: "@data-wrangling-components/utilities@npm:1.7.1"
+"@data-wrangling-components/utilities@npm:^1.8.0":
+  version: 1.8.0
+  resolution: "@data-wrangling-components/utilities@npm:1.8.0"
   dependencies:
     "@zip.js/zip.js": ^2.4.6
   peerDependencies:
     arquero: ^4.8.7
-  checksum: 8a69961a9badb26c3515aaebf7a0ea41fd094282e664ba3b718b12f644986ea226de65992f7ef5feedfe5a483cb71a95f84c329b18dabf0ef2f2fbcda844675b
+  checksum: 7d12ff709da17bdf16fbadbb8ec405d438fd073c14fe7260c6c504c05b9d957c49674ecb1a614190444d1ffa817c69767ace2c310b6a5ea8f6ee3a88de489e5a
   languageName: node
   linkType: hard
 
@@ -2014,9 +2017,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/client@workspace:javascript/client"
   dependencies:
-    "@data-wrangling-components/core": ^5.2.0
-    "@data-wrangling-components/react": ^4.0.0
-    "@data-wrangling-components/utilities": ^1.7.1
+    "@data-wrangling-components/core": ^5.3.0
+    "@data-wrangling-components/react": ^4.1.1
+    "@data-wrangling-components/utilities": ^1.8.0
     "@essex/boolean-expression-component": ^1.0.3
     "@essex/hooks": ^4.0.5
     "@essex/jest-config": ^21.0.5
@@ -10435,6 +10438,13 @@ __metadata:
     topomerge: bin/topomerge
     topoquantize: bin/topoquantize
   checksum: 8c029a4f18324ace0b8b55dd90edbd40c9e3c6de18bafbb5da37ca20ebf20e26fbd4420891acb3c2c264e214185f7557871f5651a9eee517028663be98d836de
+  languageName: node
+  linkType: hard
+
+"toposort@npm:^2.0.2":
+  version: 2.0.2
+  resolution: "toposort@npm:2.0.2"
+  checksum: d64c74b570391c9432873f48e231b439ee56bc49f7cb9780b505cfdf5cb832f808d0bae072515d93834dd6bceca5bb34448b5b4b408335e4d4716eaf68195dcb
   languageName: node
   linkType: hard
 

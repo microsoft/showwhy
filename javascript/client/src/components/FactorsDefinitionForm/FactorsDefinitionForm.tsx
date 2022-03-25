@@ -5,6 +5,7 @@
 
 import type {
 	CausalFactor,
+	ElementDefinition,
 	Experiment,
 	Maybe,
 	OptionalId,
@@ -17,12 +18,12 @@ import type { PageType } from '~types'
 import { useFactorsDefinitionForm } from './hooks'
 
 export const FactorsDefinitionForm: React.FC<{
-	factor?: CausalFactor
+	factor?: CausalFactor | ElementDefinition
 	showLevel?: Maybe<boolean>
 	defineQuestion?: Experiment
 	pageType: PageType
-	onAdd?: (factor: OptionalId<CausalFactor>) => void
-	onChange?: (f: Partial<CausalFactor>) => void
+	onAdd?: (factor: OptionalId<CausalFactor | ElementDefinition>) => void
+	onChange?: (f: Partial<CausalFactor | ElementDefinition>) => void
 }> = memo(function FactorsDefinitionForm({
 	factor,
 	defineQuestion,
@@ -37,6 +38,7 @@ export const FactorsDefinitionForm: React.FC<{
 		onChange,
 		onAdd,
 		pageType,
+		showLevel,
 	})
 
 	return (

@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { Checkbox, DefaultButton, TextField } from '@fluentui/react'
-import type { CausalFactor, Handler } from '@showwhy/types'
+import type { CausalFactor, ElementDefinition, Handler } from '@showwhy/types'
 import { useMemo } from 'react'
 import styled from 'styled-components'
 
@@ -39,6 +39,7 @@ export function useVariableField(
 	variable: string,
 	add: Handler,
 	setVariable: (v: string) => void,
+	factor?: CausalFactor,
 ): JSX.Element {
 	return useMemo(() => {
 		const handler = handleKeyPress(add)
@@ -48,10 +49,11 @@ export function useVariableField(
 				value={variable}
 				placeholder="Type a variable"
 				data-pw="factors-form-variable-name"
-				onKeyPress={handler}
+				onKeyPress={!factor ? handler : undefined}
+				onBlur={!factor ? () => add() : undefined}
 			/>
 		)
-	}, [variable, setVariable, add])
+	}, [variable, setVariable, add, factor])
 }
 
 export function useDescriptionBox(
@@ -72,7 +74,8 @@ export function useDescriptionBox(
 					multiline={(description?.length || 0) > 70}
 					resizable={false}
 					data-pw="factors-form-description"
-					onKeyPress={handler}
+					onKeyPress={!factor ? handler : undefined}
+					onBlur={!factor ? () => add() : undefined}
 				/>
 				{!factor ? (
 					<ButtonContainer>
@@ -90,7 +93,9 @@ export function useDescriptionBox(
 	}, [description, setDescription, variable, add, factor])
 }
 
-export function useHasLevel(factor?: CausalFactor): boolean {
+export function useHasLevel(
+	factor?: CausalFactor | ElementDefinition,
+): boolean {
 	return useMemo(() => !!factor?.hasOwnProperty('level'), [factor])
 }
 
@@ -98,15 +103,18 @@ const DetailsContainer = styled.div`
 	display: grid;
 	grid-template-columns: 85% 15%;
 	justify-content: center;
-	gap: 0.5rem;
+	gap: 1rem;
+	padding: 0 0.5rem;
 `
 
 const Field = styled(TextField)`
 	width: 100%;
-	margin: 0px 8px;
+	margin: 0;
+	padding: 0 0.5rem;
 `
 const VariableField = styled(TextField)`
-	margin: 0px 8px;
+	margin: 0;
+	padding: 0 0.5rem;
 `
 
 const AddButton = styled(DefaultButton)``
