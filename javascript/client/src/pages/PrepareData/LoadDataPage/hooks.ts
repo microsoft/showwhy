@@ -6,13 +6,13 @@
 import type { FileCollection } from '@data-wrangling-components/utilities'
 import { guessDelimiter } from '@data-wrangling-components/utilities'
 import type { IDropdownOption } from '@fluentui/react'
-import type { Handler, Handler1, Maybe } from '@showwhy/types'
+import type { AsyncHandler1, Handler, Handler1, Maybe } from '@showwhy/types'
 import { useBoolean } from 'ahooks'
 import { useCallback, useEffect, useState } from 'react'
 import type { SetterOrUpdater } from 'recoil'
 import { v4 as uuidv4 } from 'uuid'
 
-import { useGlobalDropzone, useOnDropAccepted } from '~hooks'
+import { useGlobalDropzone, useOnDropAccepted, useRunPipeline } from '~hooks'
 import {
 	useAddProjectFile,
 	useProjectFiles,
@@ -35,6 +35,7 @@ export function useBusinessLogic(): {
 	setSelectedFile: SetterOrUpdater<Maybe<ProjectFile>>
 	toggleShowConfirm: Handler
 	toggleLoadedCorrectly: Handler
+	toggleAutoType: AsyncHandler1<boolean>
 	handleDismissError: Handler
 	handleDelimiterChange: (e: unknown, option: Maybe<IDropdownOption>) => void
 	handleOnDropAccepted: (f: FileCollection) => void
@@ -51,6 +52,7 @@ export function useBusinessLogic(): {
 	const [errorMessage, setErrorMessage] = useState<string | null>()
 	const [selectedDelimiter, setSelectedDelimiter] = useState<Maybe<string>>()
 	const [showConfirm, { toggle: toggleShowConfirm }] = useBoolean(false)
+	// const [autoType, { toggle: toggleAutoType }] = useBoolean(false)
 
 	const handleDismissError = useCallback(() => {
 		setErrorMessage('')
@@ -68,6 +70,13 @@ export function useBusinessLogic(): {
 	useDefaultSelectedFile(selectedFile, projectFiles, setSelectedFile)
 
 	const toggleLoadedCorrectly = useToggleLoadedCorrectly(
+		selectedFile,
+		projectFiles,
+		setProjectFiles,
+		setSelectedFile,
+	)
+
+	const toggleAutoType = useToggleAutoType(
 		selectedFile,
 		projectFiles,
 		setProjectFiles,
@@ -145,6 +154,7 @@ export function useBusinessLogic(): {
 		setSelectedFile,
 		toggleShowConfirm,
 		toggleLoadedCorrectly,
+		toggleAutoType,
 		handleDelimiterChange,
 		onRenameTable,
 		loading,
@@ -178,6 +188,38 @@ function useToggleLoadedCorrectly(
 			setSelectedFile(file)
 		},
 		[selectedFile, projectFiles, setProjectFiles, setSelectedFile],
+	)
+}
+
+function useToggleAutoType(
+	selectedFile: Maybe<ProjectFile>,
+	projectFiles: ProjectFile[],
+	setProjectFiles: SetterOrUpdater<ProjectFile[]>,
+	setSelectedFile: SetterOrUpdater<Maybe<ProjectFile>>,
+) {
+	const runPipeline = useRunPipeline()
+	return useCallback(
+		async (autoType: boolean) => {
+			const table = createDefaultTable(
+				selectedFile?.content || '',
+				selectedFile?.delimiter,
+				autoType,
+			)
+			let file = {
+				...selectedFile,
+				table,
+				content: table.toCSV(),
+				autoType,
+			} as ProjectFile
+			if (file.stepPostLoad) {
+				file = await runPipeline(file)
+			}
+			const index = projectFiles.findIndex(f => f.id === file.id)
+			const files = replaceItemAtIndex(projectFiles, index, file)
+			setProjectFiles(files)
+			setSelectedFile(file)
+		},
+		[selectedFile, projectFiles, setProjectFiles, setSelectedFile, runPipeline],
 	)
 }
 

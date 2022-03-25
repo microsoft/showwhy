@@ -128,7 +128,8 @@
                 "source": "https://www.frontiersin.org/articles/10.3389/fpubh.2020.587937/full",
                 "citation": "Li, Yun, et al. (2020). Individual-level fatality prediction of COVID-19 patients using AI methods. Frontiers in Public Health 8 (2020): 566."
             },
-            "primary": true
+            "primary": true,
+            "autoType": true
         }
     ],
     "defaultResult": {

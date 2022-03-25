@@ -206,13 +206,28 @@ function preProcessTables(
 			!!postLoad?.length &&
 			postLoad.find(p => p?.steps && p?.steps[0]?.input === table.name)
 		if (stepPostLoad && stepPostLoad.steps) {
-			const result = await runPipeline(
-				tables,
-				stepPostLoad.steps,
-				store,
-				pipeline,
-				tableFiles,
-			)
+			let result
+			let file: ProjectFile = {} as ProjectFile
+			try {
+				result = await runPipeline(
+					tables,
+					stepPostLoad.steps,
+					store,
+					pipeline,
+					tableFiles,
+				)
+			} catch (error) {
+				console.log('Error@RunPipeline', error)
+				file = {
+					...file,
+					stepPostLoad: stepPostLoad.steps,
+				}
+				result = await (!isZipUrl(table.url)
+					? fetchTable(table)
+					: loadTable(table, tableFiles))
+				console.log('result', result)
+				result = { table: result }
+			}
 
 			const resultTable = result?.table?.derive(
 				{
@@ -221,11 +236,13 @@ function preProcessTables(
 				{ before: all() },
 			) as ColumnTable
 
-			const file: ProjectFile = {
+			file = {
+				...file,
 				content: resultTable.toCSV(),
 				name: table.name,
 				id: table.name,
 				table: resultTable,
+				autoType: !!table.autoType,
 			}
 			return file
 		} else {
@@ -245,6 +262,7 @@ function preProcessTables(
 				content: result.toCSV(),
 				name: table.name,
 				table: result,
+				autoType: !!table.autoType,
 			}
 			return file
 		}

@@ -29,8 +29,9 @@ import { isZipUrl } from '~utils'
 export function createDefaultTable(
 	content: string,
 	delimiter = ',',
+	autoType = false,
 ): ColumnTable {
-	return fromCSV(content, { delimiter, autoMax: 1000000 }).derive(
+	return fromCSV(content, { delimiter, autoMax: 1000000, autoType }).derive(
 		{
 			index: op.row_number(),
 		},
@@ -45,7 +46,7 @@ export async function loadTable(
 	const file = tables?.find(t => t.name === table.name) as File
 	const text = await getTextFromFile(file as BaseFile)
 	const delimiter = table.delimiter || guessDelimiter(table.name)
-	return createDefaultTable(text, delimiter)
+	return createDefaultTable(text, delimiter, table.autoType)
 }
 
 export async function fetchTable(
@@ -55,7 +56,7 @@ export async function fetchTable(
 		.then(res => res.text())
 		.then(text => {
 			const delimiter = table.delimiter || guessDelimiter(table.url)
-			return createDefaultTable(text, delimiter)
+			return createDefaultTable(text, delimiter, table.autoType)
 		})
 }
 

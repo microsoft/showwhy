@@ -15,4 +15,5 @@ export interface DataTableFileDefinition extends FileDefinition {
 	 * TODO: support non-delimited files such as JSON
 	 */
 	delimiter?: string
+	autoType?: boolean
 }
