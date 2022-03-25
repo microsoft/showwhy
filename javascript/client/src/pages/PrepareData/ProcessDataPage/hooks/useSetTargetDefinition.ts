@@ -35,7 +35,7 @@ export function useSetTargetDefinition(
 				(x: ElementDefinition) => x.id === selectedDefinitionId,
 			)
 				? PageType.Population
-				: exposure.definition.find(
+				: exposure?.definition.find(
 						(x: ElementDefinition) => x.id === selectedDefinitionId,
 				  )
 				? PageType.Exposure
