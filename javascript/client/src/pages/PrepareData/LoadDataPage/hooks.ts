@@ -43,6 +43,7 @@ export function useBusinessLogic(): {
 	onDrop: (f: FileCollection) => void
 	onDropAccepted: (f: FileCollection) => void
 	onDropRejected: (msg: string) => void
+	progress?: number
 } {
 	const setSelectedFile = useSetSelectedFile()
 	const selectedFile = useSelectedFile()
@@ -123,6 +124,7 @@ export function useBusinessLogic(): {
 		loading,
 		fileCount,
 		acceptedFileTypes,
+		progress,
 	} = useGlobalDropzone(setErrorMessage, handleLoadFile)
 
 	const onRenameTable = useCallback(
@@ -155,6 +157,7 @@ export function useBusinessLogic(): {
 		onDrop,
 		onDropAccepted,
 		onDropRejected,
+		progress,
 	}
 }
 

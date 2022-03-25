@@ -10,11 +10,12 @@ import type ColumnTable from 'arquero/dist/types/table/column-table'
 import { useCallback } from 'react'
 
 import type { ProjectFile } from '~types'
-import { readFile } from '~utils'
+import { percentage, readFile } from '~utils'
 
 export function useCreateColumnTable(
 	onFileLoad: Handler1<ProjectFile>,
 	onLoadStart?: Handler,
+	onProgress?: Handler1<number>,
 ): (files: BaseFile[], delimiter?: string) => void {
 	const onFinishReading = useCallback(
 		(table: ColumnTable, name: string) => {
@@ -32,15 +33,23 @@ export function useCreateColumnTable(
 		[onFileLoad],
 	)
 
+	const progressPercentage = useCallback(
+		(processed: number, total: number) => {
+			const filePercentage = Math.round(percentage(processed, total))
+			onProgress && onProgress(filePercentage)
+		},
+		[onProgress],
+	)
+
 	return useCallback(
 		(files: BaseFile[], delimiter?: string) => {
 			onLoadStart && onLoadStart()
 			files.forEach(async (file: BaseFile) => {
-				const table = await readFile(file, delimiter)
+				const table = await readFile(file, delimiter, progressPercentage)
 				const name = file.name
 				onFinishReading(table, name)
 			})
 		},
-		[onLoadStart, onFinishReading],
+		[onLoadStart, onFinishReading, progressPercentage],
 	)
 }

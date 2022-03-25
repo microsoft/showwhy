@@ -147,6 +147,7 @@ export async function fetchRemoteTables(
 export function readFile(
 	file: BaseFile | File,
 	delimiter?: string,
+	onProgress?: (processed: number, total: number) => void,
 ): Promise<ColumnTable> {
 	const _delimeter = delimiter || guessDelimiter(file.name)
 	const isBigFile = file.size > MAX_FILE_SIZE
@@ -158,6 +159,7 @@ export function readFile(
 	let table: ColumnTable | undefined = undefined
 
 	reader.onload = () => {
+		isBigFile && onProgress && onProgress(index, file.size)
 		console.debug('file reading started')
 		const content = reader.result
 			? reader.result.toString().replace(/ï»¿/g, '')
