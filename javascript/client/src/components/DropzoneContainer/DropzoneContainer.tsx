@@ -26,6 +26,7 @@ export const DropzoneContainer: FC<{
 	onDropRejected?: (message: string, files?: Maybe<FileRejection[]>) => void
 	acceptedFileTypes: string[]
 	dropzoneOptions?: DropzoneOptions
+	progress?: number
 }> = memo(function DropzoneContainer({
 	loading,
 	filesCount,
@@ -36,6 +37,7 @@ export const DropzoneContainer: FC<{
 	onDropRejected,
 	acceptedFileTypes,
 	dropzoneOptions = {},
+	progress,
 }) {
 	const contentText = useContentText(text, hasSelectedFiles)
 
@@ -54,7 +56,8 @@ export const DropzoneContainer: FC<{
 					<>
 						<Spinner />
 						<Text>
-							Loading ({filesCount.completed}/{filesCount.total})
+							Loading ({filesCount.completed}/{filesCount.total}
+							{!!progress && ` [${progress}%]`})
 						</Text>
 					</>
 				) : (

@@ -38,6 +38,7 @@ export const LoadDataPage: React.FC = memo(function LoadDataPage() {
 		onDropAccepted,
 		onDropRejected,
 		onRenameTable,
+		progress,
 	} = useBusinessLogic()
 
 	return (
@@ -62,6 +63,7 @@ export const LoadDataPage: React.FC = memo(function LoadDataPage() {
 					<SupportedFileTypes fileTypesAllowed={acceptedFileTypes} />
 					<DropzoneContainer
 						loading={loading}
+						progress={progress}
 						filesCount={fileCount}
 						text={
 							!!selectedFile

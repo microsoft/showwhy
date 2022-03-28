@@ -9,15 +9,20 @@ import type {
 } from '@data-wrangling-components/utilities'
 import {
 	createBaseFile,
+	createReader,
 	FileType,
 	FileWithPath,
+	guessDelimiter,
 } from '@data-wrangling-components/utilities'
 import type { Maybe } from '@showwhy/types'
 import type ColumnTable from 'arquero/dist/types/table/column-table'
 
 import type { DataTableFileDefinition, RunHistory, ZipData } from '~types'
 
-import { fetchTable } from './arquero'
+import { createDefaultTable, fetchTable } from './arquero'
+
+const CHUNK_SIZE = 31457280 //1024 * 1024 * 30
+const MAX_FILE_SIZE = 350000000 //350MB
 
 export function createTextFile(name: string, content: string): File {
 	const type = { type: `text/${name.split('.').pop()}` }
@@ -125,4 +130,100 @@ export async function fetchRemoteTables(
 		tableFiles.push(new FileWithPath(file, table.name, ''))
 	}
 	return tableFiles
+}
+
+/**
+ * Reads files and return a columnTable when finished
+ * If the file is > 350MB, reads it in chunks.
+ * Get's the first row as columnNames
+ * Reads the file every 3MB, then breaks it by the last line break
+ * Adds the rest of the line for the next iteration
+ * Creates a ColumnTable and concatenate it with the previous in every iteration
+ * returns a promise with the ColumnTable created when it's done
+ * @param file
+ * @param delimiter
+ * @returns
+ */
+export function readFile(
+	file: BaseFile | File,
+	delimiter?: string,
+	autoType = false,
+	onProgress?: (processed: number, total: number) => void,
+): Promise<ColumnTable> {
+	const _delimiter = delimiter || guessDelimiter(file.name)
+	const isBigFile = file.size > MAX_FILE_SIZE
+	const reader = createReader()
+	let index = 0
+	const size = CHUNK_SIZE
+	let columnNames: string[] = []
+	let error = ''
+	let table: ColumnTable | undefined = undefined
+
+	reader.onload = () => {
+		isBigFile && onProgress && onProgress(index, file.size)
+		console.debug('file reading started')
+		const content = reader.result
+			? reader.result.toString().replace(/ï»¿/g, '')
+			: ''
+
+		let lineBreak = content
+		let columnsIndex = 0
+		if (isBigFile) {
+			/**
+			 * stores columnNames
+			 */
+			if (index === 0) {
+				columnsIndex = content.indexOf('\n')
+				const columns = content.slice(0, columnsIndex)
+				columnNames = columns.split(',')
+				/**
+				 * include \n into account
+				 */
+				columnsIndex++
+			}
+
+			lineBreak =
+				content.length < size
+					? content
+					: content.slice(columnsIndex, content.lastIndexOf('\n') + 1)
+			const lineBreakExcess = content.length - lineBreak.length - columnsIndex
+
+			index = index + size - lineBreakExcess
+		}
+		try {
+			const result = createDefaultTable(
+				lineBreak,
+				_delimiter,
+				columnNames,
+				autoType,
+			)
+			if (!table) {
+				table = result
+			} else {
+				table = table?.concat(result)
+			}
+		} catch (e: any) {
+			error = e
+		}
+	}
+
+	if (isBigFile) {
+		reader.readAsBinaryString(file.slice(index, index + size))
+	} else {
+		reader.readAsBinaryString(file)
+	}
+
+	return new Promise(resolve => {
+		reader.onloadend = () => {
+			if (error) {
+				console.log('file reading has failed')
+			}
+			if (isBigFile && index < file.size) {
+				reader.readAsBinaryString(file.slice(index, index + size))
+			} else {
+				console.debug('file reading ended')
+				return resolve(table as ColumnTable)
+			}
+		}
+	})
 }

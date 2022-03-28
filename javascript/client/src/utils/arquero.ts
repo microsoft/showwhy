@@ -8,16 +8,12 @@ import type {
 	TableContainer,
 	TableStore,
 } from '@data-wrangling-components/core'
-import type { BaseFile } from '@data-wrangling-components/utilities'
-import {
-	getTextFromFile,
-	guessDelimiter,
-} from '@data-wrangling-components/utilities'
-import { all, fromCSV, op } from 'arquero'
+import { guessDelimiter } from '@data-wrangling-components/utilities'
+import { fromCSV } from 'arquero'
 import type ColumnTable from 'arquero/dist/types/table/column-table'
 
 import type { DataTableFileDefinition, ProjectFile } from '~types'
-import { isZipUrl } from '~utils'
+import { isZipUrl, readFile } from '~utils'
 /**
  * Creates a default data table by parsing csv/tsv content.
  * This adds an incremented index column to the front to ensure all tables
@@ -29,14 +25,16 @@ import { isZipUrl } from '~utils'
 export function createDefaultTable(
 	content: string,
 	delimiter = ',',
+	columnNames?: string[],
 	autoType = false,
 ): ColumnTable {
-	return fromCSV(content, { delimiter, autoMax: 1000000, autoType }).derive(
-		{
-			index: op.row_number(),
-		},
-		{ before: all() },
-	)
+	return fromCSV(content, {
+		delimiter,
+		header: !columnNames?.length,
+		names: columnNames,
+		autoMax: 10000,
+		autoType,
+	})
 }
 
 export async function loadTable(
@@ -44,9 +42,7 @@ export async function loadTable(
 	tables?: File[],
 ): Promise<ColumnTable> {
 	const file = tables?.find(t => t.name === table.name) as File
-	const text = await getTextFromFile(file as BaseFile)
-	const delimiter = table.delimiter || guessDelimiter(table.name)
-	return createDefaultTable(text, delimiter, table.autoType)
+	return readFile(file, undefined, table.autoType)
 }
 
 export async function fetchTable(
@@ -56,7 +52,7 @@ export async function fetchTable(
 		.then(res => res.text())
 		.then(text => {
 			const delimiter = table.delimiter || guessDelimiter(table.url)
-			return createDefaultTable(text, delimiter, table.autoType)
+			return createDefaultTable(text, delimiter, undefined, table.autoType)
 		})
 }
 

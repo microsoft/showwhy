@@ -225,7 +225,6 @@ function preProcessTables(
 				result = await (!isZipUrl(table.url)
 					? fetchTable(table)
 					: loadTable(table, tableFiles))
-				console.log('result', result)
 				result = { table: result }
 			}
 
@@ -238,7 +237,6 @@ function preProcessTables(
 
 			file = {
 				...file,
-				content: resultTable.toCSV(),
 				name: table.name,
 				id: table.name,
 				table: resultTable,
@@ -259,7 +257,6 @@ function preProcessTables(
 
 			const file: ProjectFile = {
 				id: table.name,
-				content: result.toCSV(),
 				name: table.name,
 				table: result,
 				autoType: !!table.autoType,
@@ -274,7 +271,7 @@ async function processDataTables(
 	tps?: Specification[],
 	projectFiles?: ProjectFile[],
 ): Promise<TableContainer | undefined> {
-	if (tps !== undefined && projectFiles?.length) {
+	if (tps !== undefined && tps[0]?.steps?.length && projectFiles?.length) {
 		const steps = tps[0]?.steps as FileStep[]
 		pipeline.clear()
 		return await runPipelineFromProjectFiles(projectFiles, steps, pipeline)
