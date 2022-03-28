@@ -26,12 +26,6 @@ import { createDefaultTable, fetchTable } from './arquero'
 const CHUNK_SIZE = 31457280 //1024 * 1024 * 30
 const MAX_FILE_SIZE = 350000000 //350MB
 
-export function createTextFile(name: string, content: string): File {
-	const type = { type: `text/${name.split('.').pop()}` }
-	const blob = new Blob([content], type)
-	return new File([blob], name, type)
-}
-
 export async function createZipFormData(
 	file: ColumnTable,
 	name: string,
