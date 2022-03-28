@@ -5,7 +5,8 @@
 
 import type {
 	BaseFile,
-	FileCollection} from '@data-wrangling-components/utilities';
+	FileCollection,
+} from '@data-wrangling-components/utilities'
 import {
 	createBaseFile,
 	createFile,
@@ -37,7 +38,7 @@ export async function createZipFormData(
 ): Promise<FormData> {
 	const formData = new FormData()
 	const content = file.toCSV()
-	const type = { type: `text/${name.split('.').pop()}` }
+	const type = { type: `text/csv` }
 	const blob = new Blob([content], type)
 	const fileContent = createFile(blob, { name: name })
 	const zip = await toZip([fileContent])

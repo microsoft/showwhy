@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { Step } from '@data-wrangling-components/core'
+import type { Step, TableContainer } from '@data-wrangling-components/core'
 import type { IDetailsColumnProps, IRenderFunction } from '@fluentui/react'
 import type {
 	CausalFactor,
@@ -18,6 +18,7 @@ import { useCallback, useMemo } from 'react'
 import { useAllVariables, useCausalEffects } from '~hooks'
 import {
 	useCausalFactors,
+	useSetOutputTablePrep,
 	useSetTablesPrepSpecification,
 	useTablesPrepSpecification,
 } from '~state'
@@ -43,6 +44,7 @@ export function useBusinessLogic(
 	allElements: FactorsOrDefinitions
 	isElementComplete: (element: CausalFactor | ElementDefinition) => boolean
 	onResetVariable: (columnName: string) => void
+	onUpdateOutput: (table: TableContainer<unknown>) => void
 } {
 	const prepSpecification = useTablesPrepSpecification()
 	const setStepsTablePrep = useSetTablesPrepSpecification()
@@ -50,12 +52,20 @@ export function useBusinessLogic(
 	const defineQuestion = useExperiment()
 	const setDefineQuestion = useSetExperiment()
 	const allElements = useAllVariables(causalFactors, defineQuestion)
+	const setOutputTable = useSetOutputTablePrep()
 
 	const causalEffects = useCausalEffects(CausalModelLevel.Maximum)
 	const onSelectVariable = useOnSelectVariable(
 		causalFactors,
 		defineQuestion,
 		setDefineQuestion,
+	)
+
+	const onUpdateOutput = useCallback(
+		(table: TableContainer) => {
+			setOutputTable(table.table)
+		},
+		[setOutputTable],
 	)
 
 	const onAddVariable = useCallback(
@@ -128,5 +138,6 @@ export function useBusinessLogic(
 		allElements,
 		isElementComplete,
 		onResetVariable,
+		onUpdateOutput,
 	}
 }
