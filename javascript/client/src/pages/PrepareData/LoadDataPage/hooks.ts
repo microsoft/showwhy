@@ -12,7 +12,7 @@ import { useCallback, useEffect, useState } from 'react'
 import type { SetterOrUpdater } from 'recoil'
 import { v4 as uuidv4 } from 'uuid'
 
-import { useGlobalDropzone, useOnDropAccepted, useRunPipeline } from '~hooks'
+import { useGlobalDropzone, useOnDropAccepted } from '~hooks'
 import {
 	useAddProjectFile,
 	useProjectFiles,
@@ -53,7 +53,6 @@ export function useBusinessLogic(): {
 	const [errorMessage, setErrorMessage] = useState<string | null>()
 	const [selectedDelimiter, setSelectedDelimiter] = useState<Maybe<string>>()
 	const [showConfirm, { toggle: toggleShowConfirm }] = useBoolean(false)
-	// const [autoType, { toggle: toggleAutoType }] = useBoolean(false)
 
 	const handleDismissError = useCallback(() => {
 		setErrorMessage('')
@@ -200,29 +199,25 @@ function useToggleAutoType(
 	setProjectFiles: SetterOrUpdater<ProjectFile[]>,
 	setSelectedFile: SetterOrUpdater<Maybe<ProjectFile>>,
 ) {
-	const runPipeline = useRunPipeline()
 	return useCallback(
 		async (autoType: boolean) => {
 			const table = createDefaultTable(
-				selectedFile?.content || '',
+				selectedFile?.table?.toCSV() || '',
 				selectedFile?.delimiter,
 				undefined,
 				autoType,
 			)
-			let file = {
+			const file = {
 				...selectedFile,
 				table,
 				autoType,
 			} as ProjectFile
-			if (file.stepPostLoad) {
-				file = await runPipeline(file)
-			}
 			const index = projectFiles.findIndex(f => f.id === file.id)
 			const files = replaceItemAtIndex(projectFiles, index, file)
 			setProjectFiles(files)
 			setSelectedFile(file)
 		},
-		[selectedFile, projectFiles, setProjectFiles, setSelectedFile, runPipeline],
+		[selectedFile, projectFiles, setProjectFiles, setSelectedFile],
 	)
 }
 

@@ -3,7 +3,6 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { Step } from '@data-wrangling-components/core'
 import type ColumnTable from 'arquero/dist/types/table/column-table'
 
 export interface ProjectFile {
@@ -13,7 +12,6 @@ export interface ProjectFile {
 	id?: string
 	loadedCorrectly?: boolean
 	fileId?: string //why id and fileId?
-	stepPostLoad?: Step[]
 	delimiter?: string
 	autoType?: boolean
 }
