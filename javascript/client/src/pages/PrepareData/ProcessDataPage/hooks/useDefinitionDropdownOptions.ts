@@ -50,6 +50,16 @@ export function useDefinitionDropdownOptions(
 		const { population, exposure, outcome } = defineQuestion
 		const all: IContextualMenuItem[] = [
 			{
+				key: 'subject-identifier',
+				text: 'Set as subject identifier',
+				title: 'Set as subject identifier',
+				data: {
+					button: true,
+					type: CommandActionType.SubjectIdentifier,
+					bottomDivider: true,
+				},
+			},
+			{
 				key: 'reset-action',
 				text: 'Reset',
 				title: 'Reset',

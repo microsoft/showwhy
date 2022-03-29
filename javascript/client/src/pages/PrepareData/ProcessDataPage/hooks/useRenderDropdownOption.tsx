@@ -39,6 +39,7 @@ function useRenderMenuList(
 	selectedVariableByColumn: (
 		columnName: string,
 	) => Maybe<ElementDefinition | CausalFactor>,
+	subjectIdentifier: Maybe<string>,
 ): (
 	menuListProps: IContextualMenuListProps,
 	columnName: string,
@@ -55,8 +56,15 @@ function useRenderMenuList(
 			const variableButton = dropdownOptions.find(
 				x => x.data?.type === CommandActionType.AddVariable,
 			)
+			const identifierButton = dropdownOptions.find(
+				x => x.data?.type === CommandActionType.SubjectIdentifier,
+			)
 			const hasVariable = !selectedVariableByColumn(columnName)?.variable
 			items = items.filter(x => !x.data?.button)
+			if (identifierButton) {
+				identifierButton.checked = subjectIdentifier === columnName
+				items.push(identifierButton)
+			}
 			if (resetButton) {
 				resetButton.disabled = hasVariable
 				items.push(resetButton)
@@ -74,7 +82,7 @@ function useRenderMenuList(
 				</>
 			)
 		},
-		[dropdownOptions, selectedVariableByColumn],
+		[dropdownOptions, selectedVariableByColumn, subjectIdentifier],
 	)
 }
 
@@ -83,6 +91,8 @@ export function useRenderDropdown(
 	onSelect: (option: Maybe<IContextualMenuItem>, columnName: string) => void,
 	onResetVariable: (columnName: string) => void,
 	onAddVariable: (columnName: string) => void,
+	onSelectIdentifier: (columnName: string) => void,
+	subjectIdentifier: Maybe<string>,
 	dropdownOptions: IContextualMenuItem[],
 ): (columnName: string) => JSX.Element {
 	const selectedOptions = useSelectedOptions(allElements)
@@ -91,6 +101,7 @@ export function useRenderDropdown(
 	const renderMenuList = useRenderMenuList(
 		dropdownOptions,
 		selectedVariableByColumn,
+		subjectIdentifier,
 	)
 
 	return useCallback(
@@ -127,12 +138,16 @@ export function useRenderDropdown(
 						? onResetVariable(columnName)
 						: option.data?.type === CommandActionType.AddVariable
 						? onAddVariable(columnName)
+						: option.data?.type === CommandActionType.SubjectIdentifier
+						? onSelectIdentifier(columnName)
 						: onSelect(option, columnName),
 				buttonStyles,
 			}
 
-			const variable =
-				selectedVariableByColumn(columnName)?.variable || 'Assign variable'
+			const variable = `${
+				selectedVariableByColumn(columnName)?.variable ?? 'Options'
+			} ${subjectIdentifier === columnName ? ' (Identifier)' : ''}`
+
 			return (
 				<Container id={columnName} title={variable}>
 					<ColumnarMenu text={variable} {...menuProps} />

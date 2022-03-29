@@ -13,13 +13,16 @@ import type {
 	Handler1,
 } from '@showwhy/types'
 import { CausalModelLevel } from '@showwhy/types'
+import type ColumnTable from 'arquero/dist/types/table/column-table'
 import { useCallback, useMemo } from 'react'
 
 import { useAllVariables, useCausalEffects } from '~hooks'
 import {
 	useCausalFactors,
 	useSetOutputTablePrep,
+	useSetSubjectIdentifier,
 	useSetTablesPrepSpecification,
+	useSubjectIdentifier,
 	useTablesPrepSpecification,
 } from '~state'
 import { useExperiment, useSetExperiment } from '~state/experiment'
@@ -52,6 +55,8 @@ export function useBusinessLogic(
 	const defineQuestion = useExperiment()
 	const setDefineQuestion = useSetExperiment()
 	const allElements = useAllVariables(causalFactors, defineQuestion)
+	const setSubjectIdentifier = useSetSubjectIdentifier()
+	const subjectIdentifier = useSubjectIdentifier()
 	const setOutputTable = useSetOutputTablePrep()
 
 	const causalEffects = useCausalEffects(CausalModelLevel.Maximum)
@@ -124,6 +129,8 @@ export function useBusinessLogic(
 		onSelectVariable,
 		onResetVariable,
 		onAddVariable,
+		setSubjectIdentifier,
+		subjectIdentifier,
 		dropdownOptions,
 	)
 
