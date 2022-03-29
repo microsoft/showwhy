@@ -81,9 +81,9 @@ export function useSaveProject(): AsyncHandler {
 	])
 }
 
-function useOutputTable(): Maybe<FileWithPath> {
+function useOutputTable(): () => Maybe<FileWithPath> {
 	const outputTablePrep = useOutputTablePrep()
-	return useMemo(() => {
+	return useCallback(() => {
 		if (outputTablePrep) {
 			return createFileWithPath(new Blob([outputTablePrep.toCSV()]), {
 				name: 'output_table.csv',
@@ -195,7 +195,7 @@ function useDownload(
 	const runHistoryFile = useRunHistoryFile()
 	return useCallback(
 		async (workspace: Partial<Workspace>) => {
-			const tables = getTables(outputTable)
+			const tables = getTables(outputTable())
 			/* eslint-disable @essex/adjacent-await */
 			const csv = await csvResult
 			const notebook = await notebookResult
@@ -210,7 +210,7 @@ function useDownload(
 				new Blob([JSON.stringify(workspace, null, 4)]),
 				{ name: 'workspace_config.json' },
 			)
-			const files = [file, outputTable].filter(t => !!t) as FileWithPath[]
+			const files = [file, outputTable()].filter(t => !!t) as FileWithPath[]
 			if (csv?.file) {
 				files.push(csv.file)
 			}

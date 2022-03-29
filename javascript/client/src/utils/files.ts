@@ -9,10 +9,12 @@ import type {
 } from '@data-wrangling-components/utilities'
 import {
 	createBaseFile,
+	createFile,
 	createReader,
 	FileType,
 	FileWithPath,
 	guessDelimiter,
+	toZip,
 } from '@data-wrangling-components/utilities'
 import type { Maybe } from '@showwhy/types'
 import type ColumnTable from 'arquero/dist/types/table/column-table'
@@ -24,17 +26,17 @@ import { createDefaultTable, fetchTable } from './arquero'
 const CHUNK_SIZE = 31457280 //1024 * 1024 * 30
 const MAX_FILE_SIZE = 350000000 //350MB
 
-export function createTextFile(name: string, content: string): File {
-	const type = { type: `text/${name.split('.').pop()}` }
-	const blob = new Blob([content], type)
-	return new File([blob], name, type)
-}
-
-export function createFormData(file: ColumnTable, name: string): FormData {
+export async function createZipFormData(
+	file: ColumnTable,
+	name: string,
+): Promise<FormData> {
 	const formData = new FormData()
 	const content = file.toCSV()
-	const _file = createTextFile(name, content)
-	formData.append(`file`, _file)
+	const type = { type: `text/csv` }
+	const blob = new Blob([content], type)
+	const fileContent = createFile(blob, { name: name })
+	const zip = await toZip([fileContent])
+	formData.append(`file`, zip)
 	return formData
 }
 

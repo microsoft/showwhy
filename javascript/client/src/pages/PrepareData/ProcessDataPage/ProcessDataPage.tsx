@@ -33,6 +33,7 @@ export const ProcessDataPage: FC = memo(function ProcessDataPage() {
 		allElements,
 		isElementComplete,
 		onResetVariable,
+		onUpdateOutput,
 	} = useBusinessLogic(toggleShowCallout, setSelectedColumn)
 
 	return (
@@ -57,6 +58,7 @@ export const ProcessDataPage: FC = memo(function ProcessDataPage() {
 			<PrepareDataFull
 				steps={steps}
 				onUpdateSteps={onChangeSteps}
+				onOutputTable={onUpdateOutput}
 				tables={tables}
 				outputHeaderCommandBar={[commandBar]}
 			/>
