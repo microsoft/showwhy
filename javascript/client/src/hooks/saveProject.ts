@@ -110,6 +110,7 @@ function useTables(fileCollection: FileCollection) {
 					url: `zip://${file.name}`,
 					name: file.name,
 					primary: isPrimary,
+					autoType: !!project?.autoType,
 				}
 				if (project?.delimiter) {
 					definition.delimiter = project.delimiter

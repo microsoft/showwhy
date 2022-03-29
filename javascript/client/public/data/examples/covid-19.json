@@ -128,7 +128,8 @@
                 "source": "https://www.frontiersin.org/articles/10.3389/fpubh.2020.587937/full",
                 "citation": "Li, Yun, et al. (2020). Individual-level fatality prediction of COVID-19 patients using AI methods. Frontiers in Public Health 8 (2020): 566."
             },
-            "primary": true
+            "primary": true,
+            "autoType": true
         }
     ],
     "defaultResult": {
@@ -805,9 +806,19 @@
             },
             {
                 "type": "verb",
-                "verb": "binarize",
+                "verb": "convert",
                 "input": "preload-table-48",
                 "output": "preload-table-49",
+                "args": {
+                    "columns": ["Combined"],
+                    "type": "float"
+                }
+            },
+            {
+                "type": "verb",
+                "verb": "binarize",
+                "input": "preload-table-49",
+                "output": "preload-table-50",
                 "args": {
                     "column": "Combined",
                     "to": "diabetes_hypertension",
@@ -823,8 +834,8 @@
             {
                 "type": "verb",
                 "verb": "select",
-                "input": "preload-table-49",
-                "output": "preload-table-50",
+                "input": "preload-table-50",
+                "output": "preload-table-51",
                 "args": {
                     "columns": {
                         "age": "age",
@@ -839,8 +850,8 @@
             {
                 "type": "verb",
                 "verb": "fill",
-                "input": "preload-table-50",
-                "output": "preload-table-51",
+                "input": "preload-table-51",
+                "output": "preload-table-52",
                 "args": {
                     "to": "subject_inclusion",
                     "value": "1"

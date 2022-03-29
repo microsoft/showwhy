@@ -221,10 +221,11 @@ function preProcessTables(
 				{ before: all() },
 			) as ColumnTable
 
-			const file: ProjectFile = {
+			const file = {
 				name: table.name,
 				id: table.name,
 				table: resultTable,
+				autoType: !!table.autoType,
 			}
 			return file
 		} else {
@@ -243,6 +244,7 @@ function preProcessTables(
 				id: table.name,
 				name: table.name,
 				table: result,
+				autoType: !!table.autoType,
 			}
 			return file
 		}

@@ -6,7 +6,7 @@
 import type { FileCollection } from '@data-wrangling-components/utilities'
 import { guessDelimiter } from '@data-wrangling-components/utilities'
 import type { IDropdownOption } from '@fluentui/react'
-import type { Handler, Handler1, Maybe } from '@showwhy/types'
+import type { AsyncHandler1, Handler, Handler1, Maybe } from '@showwhy/types'
 import { useBoolean } from 'ahooks'
 import { useCallback, useEffect, useState } from 'react'
 import type { SetterOrUpdater } from 'recoil'
@@ -35,6 +35,7 @@ export function useBusinessLogic(): {
 	setSelectedFile: SetterOrUpdater<Maybe<ProjectFile>>
 	toggleShowConfirm: Handler
 	toggleLoadedCorrectly: Handler
+	toggleAutoType: AsyncHandler1<boolean>
 	handleDismissError: Handler
 	handleDelimiterChange: (e: unknown, option: Maybe<IDropdownOption>) => void
 	handleOnDropAccepted: (f: FileCollection) => void
@@ -69,6 +70,13 @@ export function useBusinessLogic(): {
 	useDefaultSelectedFile(selectedFile, projectFiles, setSelectedFile)
 
 	const toggleLoadedCorrectly = useToggleLoadedCorrectly(
+		selectedFile,
+		projectFiles,
+		setProjectFiles,
+		setSelectedFile,
+	)
+
+	const toggleAutoType = useToggleAutoType(
 		selectedFile,
 		projectFiles,
 		setProjectFiles,
@@ -147,6 +155,7 @@ export function useBusinessLogic(): {
 		setSelectedFile,
 		toggleShowConfirm,
 		toggleLoadedCorrectly,
+		toggleAutoType,
 		handleDelimiterChange,
 		onRenameTable,
 		loading,
@@ -174,6 +183,34 @@ function useToggleLoadedCorrectly(
 				...selectedFile,
 				loadedCorrectly: !stateNow,
 				delimiter,
+			} as ProjectFile
+			const index = projectFiles.findIndex(f => f.id === file.id)
+			const files = replaceItemAtIndex(projectFiles, index, file)
+			setProjectFiles(files)
+			setSelectedFile(file)
+		},
+		[selectedFile, projectFiles, setProjectFiles, setSelectedFile],
+	)
+}
+
+function useToggleAutoType(
+	selectedFile: Maybe<ProjectFile>,
+	projectFiles: ProjectFile[],
+	setProjectFiles: SetterOrUpdater<ProjectFile[]>,
+	setSelectedFile: SetterOrUpdater<Maybe<ProjectFile>>,
+) {
+	return useCallback(
+		async (autoType: boolean) => {
+			const table = createDefaultTable(
+				selectedFile?.table?.toCSV() || '',
+				selectedFile?.delimiter,
+				undefined,
+				autoType,
+			)
+			const file = {
+				...selectedFile,
+				table,
+				autoType,
 			} as ProjectFile
 			const index = projectFiles.findIndex(f => f.id === file.id)
 			const files = replaceItemAtIndex(projectFiles, index, file)
