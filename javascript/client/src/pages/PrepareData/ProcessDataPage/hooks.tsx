@@ -13,7 +13,6 @@ import type {
 	Handler1,
 } from '@showwhy/types'
 import { CausalModelLevel } from '@showwhy/types'
-import type ColumnTable from 'arquero/dist/types/table/column-table'
 import { useCallback, useMemo } from 'react'
 
 import { useAllVariables, useCausalEffects } from '~hooks'
