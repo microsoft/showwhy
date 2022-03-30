@@ -3,12 +3,11 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import type { Handler, Maybe } from '@showwhy/types'
-import { useCallback, useMemo } from 'react'
+import { useMemo } from 'react'
 
 import { useAllSteps, useCurrentStep } from '~hooks'
-import { useSetStepStatus, useStepStatus } from '~state'
-import type { WorkflowStep } from '~types'
-import { StepStatus } from '~types'
+import { useStepStatus } from '~state'
+import type { StepStatus,WorkflowStep  } from '~types'
 
 export type ToggleStepStatusHandler = Handler
 export interface ProcessStepInfo {
@@ -16,7 +15,6 @@ export interface ProcessStepInfo {
 	stepStatus: Maybe<StepStatus>
 	previousStepUrl: string
 	nextStepUrl: string
-	onToggleStepStatus: ToggleStepStatusHandler
 }
 
 export function useProcessStepInfo(): ProcessStepInfo {
@@ -26,14 +24,12 @@ export function useProcessStepInfo(): ProcessStepInfo {
 	const currentStepIndex = useCurrentStepIndex(allSteps, step)
 	const previousStepUrl = usePreviousStepUrl(allSteps, currentStepIndex)
 	const nextStepUrl = useNextStepUrl(allSteps, currentStepIndex)
-	const onToggleStepStatus = useToggleStepStatus(step, stepStatus)
 
 	return {
 		step,
 		stepStatus,
 		previousStepUrl,
 		nextStepUrl,
-		onToggleStepStatus,
 	}
 }
 
@@ -44,18 +40,6 @@ function useCurrentStepIndex(
 	return useMemo(() => {
 		return allSteps.findIndex(s => s.url === currentStep?.url) || 0
 	}, [allSteps, currentStep])
-}
-
-function useToggleStepStatus(
-	step: Maybe<WorkflowStep>,
-	stepStatus: Maybe<StepStatus>,
-): Handler {
-	const setStepStatus = useSetStepStatus(step?.url)
-	return useCallback(() => {
-		setStepStatus(
-			stepStatus === StepStatus.Done ? StepStatus.ToDo : StepStatus.Done,
-		)
-	}, [setStepStatus, stepStatus])
 }
 
 function usePreviousStepUrl(

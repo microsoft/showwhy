@@ -7,7 +7,7 @@ import { memo, useCallback } from 'react'
 import { NavLink } from 'react-router-dom'
 import styled from 'styled-components'
 
-import { useStepStatus } from '~state'
+import { useProcessStepStatus } from '~hooks'
 import type { WorkflowStep } from '~types'
 
 import { StepStatusDetail } from '.'
@@ -16,29 +16,32 @@ export const StepItem: React.FC<{
 	stepDetail: WorkflowStep
 	subStep?: Maybe<boolean>
 }> = memo(function StepItem({ stepDetail, subStep = false }) {
-	const stepStatus = useStepStatus(stepDetail.url)
+	const { stepStatus, onToggleStepStatus } = useProcessStepStatus(stepDetail)
 
 	const getStepStatus = useCallback(
 		(stepDetail: WorkflowStep) => {
 			return stepDetail.showStatus ? (
-				<StepStatusDetail status={stepStatus} />
+				<StepStatusDetail
+					toggleStatus={onToggleStepStatus}
+					status={stepStatus}
+				/>
 			) : null
 		},
-		[stepStatus],
+		[stepStatus, onToggleStepStatus],
 	)
 
 	return (
 		<CollapsibleContainer subStep={subStep}>
-			<StepLink
-				activeClassName="active"
-				key={stepDetail.url}
-				to={stepDetail.url}
-			>
-				<StepDetailsContainer>
+			<StepContainer>
+				<StepLink
+					activeClassName="active"
+					key={stepDetail.url}
+					to={stepDetail.url}
+				>
 					<StepName>{stepDetail.title}</StepName>
-					{getStepStatus(stepDetail)}
-				</StepDetailsContainer>
-			</StepLink>
+				</StepLink>
+				{getStepStatus(stepDetail)}
+			</StepContainer>
 		</CollapsibleContainer>
 	)
 })
@@ -49,8 +52,14 @@ const CollapsibleContainer = styled.div<{ subStep: Maybe<boolean> }>`
 	padding-left: ${props => (props.subStep ? '8px' : '0px')};
 `
 
+const StepContainer = styled.div`
+	display: flex;
+	justify-content: space-between;
+`
+
 const StepLink = styled(NavLink)`
 	text-decoration: unset;
+	align-self: center;
 	color: black;
 	&.active {
 		font-weight: bold;
@@ -59,11 +68,6 @@ const StepLink = styled(NavLink)`
 	&:hover {
 		text-decoration: underline;
 	}
-`
-
-const StepDetailsContainer = styled.div`
-	display: flex;
-	justify-content: space-between;
 `
 
 const StepName = styled.span`

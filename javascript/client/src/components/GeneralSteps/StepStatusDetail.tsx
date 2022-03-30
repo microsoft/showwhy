@@ -2,8 +2,8 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { Spinner, SpinnerSize } from '@fluentui/react'
-import type { Maybe } from '@showwhy/types'
+import { IconButton, Spinner, SpinnerSize } from '@fluentui/react'
+import type { Handler, Maybe } from '@showwhy/types'
 import { memo, useCallback } from 'react'
 import styled from 'styled-components'
 
@@ -11,24 +11,42 @@ import { StepStatus } from '~types'
 
 export const StepStatusDetail: React.FC<{
 	status: Maybe<StepStatus>
-}> = memo(function StepStatusDetail({ status }) {
+	toggleStatus: Handler
+}> = memo(function StepStatusDetail({ status, toggleStatus }) {
 	const getStepStatus = useCallback(() => {
 		switch (status) {
 			case StepStatus.Done:
-				return <Status color="success">Done</Status>
+				return (
+					<Status color="success">
+						<IconButton onClick={toggleStatus} iconProps={iconProps.done} />
+					</Status>
+				)
 			case StepStatus.Error:
-				return <Status color="error">Error</Status>
+				return (
+					<Status color="error">
+						<IconButton iconProps={iconProps.error} />
+					</Status>
+				)
 			case StepStatus.Loading:
 				return <Spinner size={SpinnerSize.xSmall} />
 			default:
-				return <Status color="warning">To do</Status>
+				return (
+					<Status color="warning">
+						<IconButton onClick={toggleStatus} iconProps={iconProps.todo} />
+					</Status>
+				)
 		}
-	}, [status])
+	}, [status, toggleStatus])
 
 	return <>{getStepStatus()}</>
 })
 
 const Status = styled.span<{ color: string }>`
 	color: ${({ theme, color }) => theme.application()[color]};
-	padding: 4px 8px;
 `
+
+const iconProps = {
+	done: { iconName: 'SkypeCircleCheck' },
+	todo: { iconName: 'CircleRing' },
+	error: { iconName: 'StatusCircleExclamation' },
+}
