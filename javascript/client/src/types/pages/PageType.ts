@@ -13,7 +13,5 @@ export enum PageType {
 	Outcome = 'outcome',
 	Control = 'control',
 	CauseExposure = 'cause-exposure',
-	CausedByExposure = 'caused-by-exposure',
 	CauseOutcome = 'cause-outcome',
-	CausedByOutcome = 'caused-by-outcome',
 }

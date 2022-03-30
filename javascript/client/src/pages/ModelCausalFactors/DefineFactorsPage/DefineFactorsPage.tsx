@@ -18,10 +18,7 @@ export const DefineFactorsPage: React.FC = memo(function DefineFactorsPage() {
 	return (
 		<Container>
 			<Container>
-				<FieldTitle data-pw="title">
-					Factors assumed to {pageName.includes('caused') ? 'be ' : null}{' '}
-					{pageName}
-				</FieldTitle>
+				<FieldTitle data-pw="title">Factors assumed to {pageName}</FieldTitle>
 				<FactorsTable causeType={causeType} headers={tableHeader} />
 			</Container>
 			<ButtonContainer>

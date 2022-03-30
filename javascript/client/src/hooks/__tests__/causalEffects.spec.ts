@@ -40,14 +40,11 @@ describe('causalEffectsHooks', () => {
 			exposureDeterminants: [],
 			generalExposure: 'Hurricane',
 			generalOutcome: '',
-			excludedFactors: ['Hurricane 2'],
-			excludedMessage:
-				'1 potential control was excluded based on ambiguous causal directions: Hurricane 2.',
 		}
 
 		const { result } = renderHook(
 			() => {
-				return useCausalEffects(question, ['Hurricane 2'], {
+				return useCausalEffects(question, {
 					confounders: [],
 					exposureDeterminants: [],
 					outcomeDeterminants: [],

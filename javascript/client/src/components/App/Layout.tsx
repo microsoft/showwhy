@@ -11,12 +11,8 @@ import { StepControls, StepSelector } from '~components/GeneralSteps'
 import { Guidance } from '~components/Guidance'
 import { MessageContainer } from '~components/MessageContainer'
 import { StepTitle } from '~components/StepTitle'
-import {
-	useExampleProjects,
-	useGetStepUrls,
-	useUploadZipMenuOption,
-} from '~hooks'
-import { useExperiment, useSelectedProject, useSetStepStatuses } from '~state'
+import { useExampleProjects, useUploadZipMenuOption } from '~hooks'
+import { useExperiment, useSelectedProject } from '~state'
 import { StyledSpinner } from '~styles'
 import { Pages } from '~types'
 
@@ -27,21 +23,16 @@ const noChildPadding = [Pages.ProcessData]
 
 export const Layout: React.FC = memo(function Layout({ children }) {
 	const [error, setError] = useState<Maybe<string>>()
-	const handleGetStepUrls = useGetStepUrls()
-	const handleSetAllStepStatus = useSetStepStatuses()
 	const defineQuestion = useExperiment()
 	const exampleProjects = useExampleProjects()
 	const uploadZipMenuOption = useUploadZipMenuOption(setError)
 	const project = useSelectedProject()
 	const onClickProject = useOnClickProject()
-	const { step, stepStatus, onToggleStepStatus, previousStepUrl, nextStepUrl } =
-		useProcessStepInfo()
+	const { step, previousStepUrl, nextStepUrl } = useProcessStepInfo()
 
 	return (
 		<Container>
 			<AppHeader
-				onGetStepUrls={handleGetStepUrls}
-				onSetAllStepStatus={handleSetAllStepStatus}
 				defineQuestion={defineQuestion}
 				onClickProject={onClickProject}
 				exampleProjects={exampleProjects}
@@ -78,13 +69,7 @@ export const Layout: React.FC = memo(function Layout({ children }) {
 							</Suspense>
 						</ChildrenContainer>
 					</ControlsContainer>
-					<StepControls
-						step={step}
-						stepStatus={stepStatus}
-						nextUrl={nextStepUrl}
-						previousUrl={previousStepUrl}
-						toggleStatus={onToggleStepStatus}
-					/>
+					<StepControls nextUrl={nextStepUrl} previousUrl={previousStepUrl} />
 				</Content>
 			</PagesContainer>
 		</Container>
