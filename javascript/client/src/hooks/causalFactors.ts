@@ -21,32 +21,6 @@ import { v4 } from 'uuid'
 import { useCausalFactors, useSetCausalFactors } from '~state/causalFactors'
 import { replaceItemAtIndex } from '~utils/arrays'
 
-export function useExcludedFactors(): string[] {
-	return useExcludedFactorsTestable(useCausalFactors())
-}
-
-export function useExcludedFactorsTestable(
-	causalFactors: CausalFactor[],
-): string[] {
-	return useMemo((): string[] => {
-		return causalFactors
-			.filter((factor: CausalFactor) => {
-				const factorCauses = factor.causes?.filter(x => x.causes) || []
-				if (factorCauses.length > 1) {
-					const has = factorCauses.some(
-						x =>
-							/^caused/.test(x.type) &&
-							factorCauses.some(a => /^cause(Exposure|Outcome)/.test(a.type)),
-					)
-
-					return has ? factor : false
-				}
-				return false
-			})
-			?.map(factor => factor.variable)
-	}, [causalFactors])
-}
-
 function shouldIncludeInDegree(
 	degree: BeliefDegree,
 	causalLevel: CausalModelLevel,
@@ -94,7 +68,6 @@ export function useAlternativeModels(
 		causalLevel,
 		shouldUseVariable,
 		useCausalFactors(),
-		useExcludedFactors(),
 	)
 }
 
@@ -102,54 +75,51 @@ export function useAlternativeModelsTestable(
 	causalLevel: CausalModelLevel,
 	shouldUseVariable: boolean,
 	causalFactors: CausalFactor[],
-	excludedFactors: string[],
 ): AlternativeModels {
 	return useMemo(() => {
 		const confoundersArray: string[] = []
 		const outcomeArray: string[] = []
 		const exposureArray: string[] = []
 
-		causalFactors
-			.filter(c => !excludedFactors.includes(c.variable))
-			.forEach((factor: CausalFactor) => {
-				let variable = factor.column || ''
-				if (shouldUseVariable) {
-					variable = factor.variable
-				}
-				const causes = factor.causes || []
-				const causeExposure = causes.find(
-					c => c.type === CausalFactorType.CauseExposure,
-				)
-				const causeOutcome = causes.find(
-					c => c.type === CausalFactorType.CauseOutcome,
-				)
+		causalFactors.forEach((factor: CausalFactor) => {
+			let variable = factor.column || ''
+			if (shouldUseVariable) {
+				variable = factor.variable
+			}
+			const causes = factor.causes || []
+			const causeExposure = causes.find(
+				c => c.type === CausalFactorType.CauseExposure,
+			)
+			const causeOutcome = causes.find(
+				c => c.type === CausalFactorType.CauseOutcome,
+			)
 
-				if (causeExposure?.causes && causeOutcome?.causes) {
-					const degree = causeExposure?.degree
-					if (degree && shouldIncludeInDegree(degree, causalLevel)) {
-						confoundersArray.push(variable)
-					}
+			if (causeExposure?.causes && causeOutcome?.causes) {
+				const degree = causeExposure?.degree
+				if (degree && shouldIncludeInDegree(degree, causalLevel)) {
+					confoundersArray.push(variable)
 				}
+			}
 
-				if (causeOutcome?.causes && !causeExposure?.causes) {
-					const degree = causeOutcome?.degree
-					if (degree && shouldIncludeInDegree(degree, causalLevel)) {
-						outcomeArray.push(variable)
-					}
+			if (causeOutcome?.causes && !causeExposure?.causes) {
+				const degree = causeOutcome?.degree
+				if (degree && shouldIncludeInDegree(degree, causalLevel)) {
+					outcomeArray.push(variable)
 				}
-				if (causeExposure?.causes && !causeOutcome?.causes) {
-					const degree = causeExposure?.degree
-					if (degree && shouldIncludeInDegree(degree, causalLevel)) {
-						exposureArray.push(variable)
-					}
+			}
+			if (causeExposure?.causes && !causeOutcome?.causes) {
+				const degree = causeExposure?.degree
+				if (degree && shouldIncludeInDegree(degree, causalLevel)) {
+					exposureArray.push(variable)
 				}
-			})
+			}
+		})
 		return {
 			confounders: confoundersArray,
 			outcomeDeterminants: outcomeArray,
 			exposureDeterminants: exposureArray,
 		}
-	}, [causalFactors, excludedFactors, causalLevel, shouldUseVariable])
+	}, [causalFactors, causalLevel, shouldUseVariable])
 }
 
 export function useAddOrEditFactor(): (

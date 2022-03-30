@@ -76,30 +76,12 @@ export const stepsList = [
 			},
 			{
 				id: uuidv4(),
-				title: 'Factors caused by exposure',
-				status: StepStatus.ToDo,
-				url: `${Pages.DefineFactors}/${PageType.CausedByExposure}`,
-				showStatus: true,
-				getMarkdown: async () =>
-					import('../markdown/model-causal-factors/CausedByExposure.md?raw'),
-			},
-			{
-				id: uuidv4(),
 				title: 'Factors causing outcome',
 				status: StepStatus.ToDo,
 				url: `${Pages.DefineFactors}/${PageType.CauseOutcome}`,
 				showStatus: true,
 				getMarkdown: async () =>
 					import('../markdown/model-causal-factors/CausingOutcome.md?raw'),
-			},
-			{
-				id: uuidv4(),
-				title: 'Factors caused by outcome',
-				status: StepStatus.ToDo,
-				url: `${Pages.DefineFactors}/${PageType.CausedByOutcome}`,
-				showStatus: true,
-				getMarkdown: async () =>
-					import('../markdown/model-causal-factors/CausedByOutcome.md?raw'),
 			},
 			{
 				id: uuidv4(),

@@ -41,30 +41,4 @@ test.describe('Define Factors Page', () => {
 		const elements = await po.defineFactorsPage.countElements()
 		await expect(elements).toEqual(2)
 	})
-
-	test('Add factors caused by exposure', async () => {
-		await po.defineFactorsPage.open('caused-by-exposure')
-		await po.defineFactorsPage.waitForLoad()
-		await po.defineFactorsPage.goToAddNewFactor()
-		await po.modelCausalFactorsPage.addElement({ variable: 'Primary variable' })
-		await po.modelCausalFactorsPage.addElement({
-			variable: 'Secondary variable',
-		})
-		await po.modelCausalFactorsPage.goToBackToPage()
-		const elements = await po.defineFactorsPage.countElements()
-		await expect(elements).toEqual(2)
-	})
-
-	test('Add factors caused by outcome', async () => {
-		await po.defineFactorsPage.open('caused-by-outcome')
-		await po.defineFactorsPage.waitForLoad()
-		await po.defineFactorsPage.goToAddNewFactor()
-		await po.modelCausalFactorsPage.addElement({ variable: 'Primary variable' })
-		await po.modelCausalFactorsPage.addElement({
-			variable: 'Secondary variable',
-		})
-		await po.modelCausalFactorsPage.goToBackToPage()
-		const elements = await po.defineFactorsPage.countElements()
-		await expect(elements).toEqual(2)
-	})
 })

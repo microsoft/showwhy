@@ -5,7 +5,5 @@
 
 export enum CausalFactorType {
 	CauseExposure = 'causeExposure',
-	CausedByExposure = 'causedByExposure',
 	CauseOutcome = 'causeOutcome',
-	CausedByOutcome = 'causedByOutcome',
 }
