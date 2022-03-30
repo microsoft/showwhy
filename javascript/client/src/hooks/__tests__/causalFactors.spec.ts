@@ -18,7 +18,6 @@ import {
 	useAddOrEditFactorTestable as useAddOrEditFactor,
 	useAlternativeModelsTestable as useAlternativeModels,
 	useDeleteCausalFactorTestable as useDeleteCausalFactor,
-	useExcludedFactorsTestable as useExcludedFactors,
 } from '../causalFactors'
 
 const causalFactors: CausalFactor[] = [
@@ -33,12 +32,6 @@ const causalFactors: CausalFactor[] = [
 				degree: BeliefDegree.Moderate,
 				reasoning: '',
 				type: CausalFactorType.CauseOutcome,
-			},
-			{
-				causes: true,
-				degree: BeliefDegree.Strong,
-				reasoning: '',
-				type: CausalFactorType.CausedByExposure,
 			},
 		],
 	},
@@ -109,15 +102,6 @@ const newItem: CausalFactor = {
 }
 
 describe('causalFactorsHooks', () => {
-	it('useExcludedFactors', () => {
-		const expected = [causalFactors[0]!.variable]
-		const { result } = renderHook(() => useExcludedFactors(causalFactors), {
-			wrapper: RecoilRoot,
-		})
-		const response = result.current
-		expect(response).toEqual(expected)
-	})
-
 	it('useDeleteCausalFactor', () => {
 		const setCausalFactors = jest.fn()
 		const expected = [...causalFactors.slice(1)]
@@ -137,13 +121,14 @@ describe('causalFactorsHooks', () => {
 			const expected = {
 				confounders: [causalFactors[3]!.variable],
 				exposureDeterminants: [],
-				outcomeDeterminants: [causalFactors[1]!.variable],
+				outcomeDeterminants: [
+					causalFactors[0]!.variable,
+					causalFactors[1]!.variable,
+				],
 			}
 			const { result } = renderHook(
 				() =>
-					useAlternativeModels(CausalModelLevel.Maximum, true, causalFactors, [
-						'Population',
-					]),
+					useAlternativeModels(CausalModelLevel.Maximum, true, causalFactors),
 				{
 					wrapper: RecoilRoot,
 				},
@@ -160,9 +145,7 @@ describe('causalFactorsHooks', () => {
 			}
 			const { result } = renderHook(
 				() =>
-					useAlternativeModels(CausalModelLevel.Minimum, true, causalFactors, [
-						'Population',
-					]),
+					useAlternativeModels(CausalModelLevel.Minimum, true, causalFactors),
 				{
 					wrapper: RecoilRoot,
 				},
@@ -175,7 +158,10 @@ describe('causalFactorsHooks', () => {
 			const expected = {
 				confounders: [causalFactors[3]!.variable],
 				exposureDeterminants: [],
-				outcomeDeterminants: [causalFactors[1]!.variable],
+				outcomeDeterminants: [
+					causalFactors[0]!.variable,
+					causalFactors[1]!.variable,
+				],
 			}
 			const { result } = renderHook(
 				() =>
@@ -183,7 +169,6 @@ describe('causalFactorsHooks', () => {
 						CausalModelLevel.Intermediate,
 						true,
 						causalFactors,
-						['Population'],
 					),
 				{
 					wrapper: RecoilRoot,
@@ -197,13 +182,14 @@ describe('causalFactorsHooks', () => {
 			const expected = {
 				confounders: [causalFactors[3]!.variable],
 				exposureDeterminants: [],
-				outcomeDeterminants: [causalFactors[1]!.variable],
+				outcomeDeterminants: [
+					causalFactors[0]!.variable,
+					causalFactors[1]!.variable,
+				],
 			}
 			const { result } = renderHook(
 				() =>
-					useAlternativeModels(CausalModelLevel.Maximum, true, causalFactors, [
-						'Population',
-					]),
+					useAlternativeModels(CausalModelLevel.Maximum, true, causalFactors),
 				{
 					wrapper: RecoilRoot,
 				},

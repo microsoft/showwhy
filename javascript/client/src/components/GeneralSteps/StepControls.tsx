@@ -2,40 +2,20 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { DefaultButton, Icon, PrimaryButton } from '@fluentui/react'
-import type { Handler, Maybe } from '@showwhy/types'
+import { DefaultButton, PrimaryButton } from '@fluentui/react'
 import { memo } from 'react'
 import styled from 'styled-components'
 
 import { useGoToPage } from '~hooks'
-import type { WorkflowStep } from '~types'
-import { StepStatus } from '~types'
 
 export const StepControls: React.FC<{
-	step?: WorkflowStep
-	stepStatus?: StepStatus
-	toggleStatus: Handler
 	previousUrl: string
 	nextUrl: string
-}> = memo(function StepControls({
-	step,
-	stepStatus,
-	toggleStatus,
-	previousUrl,
-	nextUrl,
-}) {
+}> = memo(function StepControls({ previousUrl, nextUrl }) {
 	const handleNavigatePrev = useGoToPage(previousUrl)
 	const handleNavigateNext = useGoToPage(nextUrl)
 	return (
 		<Container>
-			<MarkDoneButton
-				done={stepStatus === StepStatus.Done}
-				disabled={!step?.showStatus}
-				onClick={toggleStatus}
-			>
-				<Icon iconName="CheckMark"></Icon>Mark as
-				{stepStatus === StepStatus.Done ? ' to do' : ' done'}
-			</MarkDoneButton>
 			<PreviousButton onClick={handleNavigatePrev} disabled={!previousUrl}>
 				Previous step
 			</PreviousButton>
@@ -62,17 +42,6 @@ const PreviousButton = styled(DefaultButton)`
 	margin: 0px 8px;
 	width: 100%;
 `
-
-const MarkDoneButton = styled(DefaultButton)<{ done: Maybe<boolean> }>`
-	margin: 0px 8px;
-	width: 50%;
-
-	&:not([disabled]) {
-		color: ${({ theme, done }) =>
-			!done ? theme.application().accent : theme.application().warning};
-	}
-`
-
 const NextButton = styled(PrimaryButton)`
 	margin: 0px 8px;
 	width: 100%;

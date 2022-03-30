@@ -9,31 +9,24 @@ import styled from 'styled-components'
 
 import { CausalQuestion } from '~components/CausalQuestion'
 import { Container } from '~styles'
-import type { FileDefinition, StepStatus } from '~types'
+import type { FileDefinition } from '~types'
 
 import { ProjectsSelector } from './ProjectsSelector'
 import { SaveProject } from './SaveProject'
-import { Settings } from './Settings'
 import { UnderstandProcessButton } from './UnderstandProcessButton'
 
-type GetStepUrlsHandler = (urls?: string[], exclude?: any) => string[]
-type SetAllStepStatusHandler = (urls: string[], status: StepStatus) => void
 type ClickProjectHandler = Handler1<FileDefinition>
 
 export const AppHeader: React.FC<{
 	defineQuestion: Experiment
 	exampleProjects: FileDefinition[]
 	uploadZipMenuOption?: IContextualMenuItem
-	onGetStepUrls: GetStepUrlsHandler
-	onSetAllStepStatus: SetAllStepStatusHandler
 	onClickProject: ClickProjectHandler
 }> = memo(function AppHeader({
 	defineQuestion,
 	exampleProjects,
 	uploadZipMenuOption,
-	onGetStepUrls,
 	onClickProject,
-	onSetAllStepStatus,
 }) {
 	return (
 		<AppHeaderContainer>
@@ -44,10 +37,6 @@ export const AppHeader: React.FC<{
 				<CausalQuestion defineQuestion={defineQuestion} />
 			</Container>
 			<UserInformationContainer>
-				<Settings
-					onGetStepUrls={onGetStepUrls}
-					onSetAllStepStatus={onSetAllStepStatus}
-				/>
 				<ProjectsSelector
 					onClickProject={onClickProject}
 					exampleProjects={exampleProjects}
