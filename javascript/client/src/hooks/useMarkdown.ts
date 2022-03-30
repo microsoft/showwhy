@@ -6,9 +6,9 @@
 import type { Maybe } from '@showwhy/types'
 import { useEffect, useState } from 'react'
 
-import type { ProcessHelp, Step } from '~types'
+import type { ProcessHelp, WorkflowStep } from '~types'
 
-export function useMarkdown(item: Maybe<Step | ProcessHelp>): string {
+export function useMarkdown(item: Maybe<WorkflowStep | ProcessHelp>): string {
 	const [markdown, setMarkdown] = useState('')
 
 	useEffect(() => {

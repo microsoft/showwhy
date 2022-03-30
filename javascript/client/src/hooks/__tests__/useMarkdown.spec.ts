@@ -5,13 +5,13 @@
 
 import { renderHook } from '@testing-library/react-hooks'
 
-import type { Step } from '~types'
+import type { WorkflowStep } from '~types'
 
 import { useMarkdown } from '../useMarkdown'
 
 describe('useMarkdown hook', () => {
 	it('should return empty string for step without getMarkdown', () => {
-		const step = {} as Step
+		const step = {} as WorkflowStep
 		const { result } = renderHook(() => useMarkdown(step))
 		expect(result.current).toBe('')
 	})
@@ -23,7 +23,7 @@ describe('useMarkdown hook', () => {
 					resolve({ default: 'markdown1' })
 				})
 			},
-		} as Step
+		} as WorkflowStep
 		const { result, waitForNextUpdate } = renderHook(() => useMarkdown(step))
 		await waitForNextUpdate()
 		expect(result.current).toBe('markdown1')

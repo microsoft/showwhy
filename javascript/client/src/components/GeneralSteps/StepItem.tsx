@@ -8,18 +8,18 @@ import { NavLink } from 'react-router-dom'
 import styled from 'styled-components'
 
 import { useStepStatus } from '~state'
-import type { Step } from '~types'
+import type { WorkflowStep } from '~types'
 
 import { StepStatusDetail } from '.'
 
 export const StepItem: React.FC<{
-	stepDetail: Step
+	stepDetail: WorkflowStep
 	subStep?: Maybe<boolean>
 }> = memo(function StepItem({ stepDetail, subStep = false }) {
 	const stepStatus = useStepStatus(stepDetail.url)
 
 	const getStepStatus = useCallback(
-		(stepDetail: Step) => {
+		(stepDetail: WorkflowStep) => {
 			return stepDetail.showStatus ? (
 				<StepStatusDetail status={stepStatus} />
 			) : null
