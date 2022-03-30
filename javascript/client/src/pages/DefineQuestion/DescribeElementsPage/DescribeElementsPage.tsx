@@ -46,7 +46,7 @@ export const DescribeElementsPage: React.FC = memo(
 					<FieldTitle>Hypothesis</FieldTitle>
 					<ChoiceGroup
 						onChange={setHypothesis}
-						selectedKey={defineQuestion.hypothesis}
+						selectedKey={defineQuestion.hypothesis || Hypothesis.Change}
 						label="Exposure causes outcome to:"
 						options={hypothesisOptions}
 					/>
