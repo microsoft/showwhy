@@ -3,11 +3,11 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { Step } from './Step'
+import type { WorkflowStep } from './WorkflowStep'
 
 export interface StepList {
 	id: string
 	name: string
-	steps: Step[]
+	steps: WorkflowStep[]
 	subSteps?: StepList[]
 }

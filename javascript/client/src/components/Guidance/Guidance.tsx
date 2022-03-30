@@ -11,12 +11,12 @@ import styled from 'styled-components'
 
 import { StepTitle } from '~components/StepTitle'
 import { useMarkdown } from '~hooks'
-import type { Step } from '~types'
+import type { WorkflowStep } from '~types'
 
 import { useGuidance } from '../../state'
 
 export const Guidance: React.FC<{
-	step?: Step
+	step?: WorkflowStep
 }> = memo(function Instructions({ step }) {
 	const [isGuidanceVisible, toggleGuidance] = useGuidance()
 	const tooltipId = useId('tooltip')

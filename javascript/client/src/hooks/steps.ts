@@ -9,15 +9,15 @@ import { useLocation } from 'react-router-dom'
 // HACK to pass unit tests
 import { useSelectedProject } from '~state/project'
 import { useStepStatus } from '~state/stepStatus'
-import type { Step, Workflow } from '~types'
+import type { Workflow, WorkflowStep } from '~types'
 import { StepStatus } from '~types'
 
-export function useFindStepsByPathname(pathNames: string[]): Step[] {
+export function useFindStepsByPathname(pathNames: string[]): WorkflowStep[] {
 	const steps = useSelectedProject().steps
 	return steps.flatMap(x => x.steps.filter(a => pathNames.includes(a.url)))
 }
 
-export function useCurrentStep(): Maybe<Step> {
+export function useCurrentStep(): Maybe<WorkflowStep> {
 	const project = useSelectedProject()
 	const location = useLocation()
 	return useCurrentStepTestable(project, location.pathname)
@@ -26,7 +26,7 @@ export function useCurrentStep(): Maybe<Step> {
 export function useCurrentStepTestable(
 	project: Workflow,
 	pathname: string,
-): Maybe<Step> {
+): Maybe<WorkflowStep> {
 	return useMemo(() => {
 		return project.steps
 			.flatMap(x => x.steps.find(a => a.url === pathname))
@@ -34,12 +34,12 @@ export function useCurrentStepTestable(
 	}, [project, pathname])
 }
 
-export function useAllSteps(): Step[] {
+export function useAllSteps(): WorkflowStep[] {
 	const steps = useSelectedProject().steps
 	return steps.flatMap(x => x.steps)
 }
 
-export function useStepsShowStatus(): Step[] {
+export function useStepsShowStatus(): WorkflowStep[] {
 	const steps = useAllSteps()
 	return steps.filter(s => s.showStatus)
 }

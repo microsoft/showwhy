@@ -7,12 +7,12 @@ import { useCallback, useMemo } from 'react'
 
 import { useAllSteps, useCurrentStep } from '~hooks'
 import { useSetStepStatus, useStepStatus } from '~state'
-import type { Step } from '~types'
+import type { WorkflowStep } from '~types'
 import { StepStatus } from '~types'
 
 export type ToggleStepStatusHandler = Handler
 export interface ProcessStepInfo {
-	step: Maybe<Step>
+	step: Maybe<WorkflowStep>
 	stepStatus: Maybe<StepStatus>
 	previousStepUrl: string
 	nextStepUrl: string
@@ -38,8 +38,8 @@ export function useProcessStepInfo(): ProcessStepInfo {
 }
 
 function useCurrentStepIndex(
-	allSteps: Step[],
-	currentStep: Maybe<Step>,
+	allSteps: WorkflowStep[],
+	currentStep: Maybe<WorkflowStep>,
 ): number {
 	return useMemo(() => {
 		return allSteps.findIndex(s => s.url === currentStep?.url) || 0
@@ -47,7 +47,7 @@ function useCurrentStepIndex(
 }
 
 function useToggleStepStatus(
-	step: Maybe<Step>,
+	step: Maybe<WorkflowStep>,
 	stepStatus: Maybe<StepStatus>,
 ): Handler {
 	const setStepStatus = useSetStepStatus(step?.url)
@@ -59,7 +59,7 @@ function useToggleStepStatus(
 }
 
 function usePreviousStepUrl(
-	allSteps: Step[],
+	allSteps: WorkflowStep[],
 	currentStepIndex: number,
 ): string {
 	return useMemo(() => {
@@ -71,7 +71,10 @@ function usePreviousStepUrl(
 	}, [currentStepIndex, allSteps])
 }
 
-function useNextStepUrl(allSteps: Step[], currentStepIndex: number): string {
+function useNextStepUrl(
+	allSteps: WorkflowStep[],
+	currentStepIndex: number,
+): string {
 	return useMemo(() => {
 		if (currentStepIndex < allSteps.length - 1) {
 			return allSteps[currentStepIndex + 1]!.url

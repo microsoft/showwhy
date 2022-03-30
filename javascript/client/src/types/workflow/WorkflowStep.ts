@@ -5,7 +5,7 @@
 
 import type { StepStatus } from './StepStatus'
 
-export interface Step {
+export interface WorkflowStep {
 	id: string
 	title: string
 	guidance?: string

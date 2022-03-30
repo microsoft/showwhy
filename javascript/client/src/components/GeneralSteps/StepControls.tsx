@@ -8,11 +8,11 @@ import { memo } from 'react'
 import styled from 'styled-components'
 
 import { useGoToPage } from '~hooks'
-import type { Step } from '~types'
+import type { WorkflowStep } from '~types'
 import { StepStatus } from '~types'
 
 export const StepControls: React.FC<{
-	step?: Step
+	step?: WorkflowStep
 	stepStatus?: StepStatus
 	toggleStatus: Handler
 	previousUrl: string
