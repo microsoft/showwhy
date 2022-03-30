@@ -3,6 +3,7 @@
         "causalModel": "Maximum",
         "type": "Propensity Score Stratification"
     },
+    "subjectIdentifier": "index",
     "confidenceInterval": true,
     "causalFactors": [
         {

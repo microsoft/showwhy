@@ -5,6 +5,7 @@
 import { PrimaryButton } from '@fluentui/react'
 import { memo } from 'react'
 import { Link } from 'react-router-dom'
+import { useMicrodataInfoMessage } from 'src/pages/PrepareData/ProcessDataPage/hooks/useMicrodataInfoMessage'
 import styled from 'styled-components'
 
 import { Container, ContainerFlexRow, ContainerTextCenter } from '~styles'
@@ -18,6 +19,8 @@ import { SpecificationsList } from './SpecificationsList'
 export const EstimateCausalEffects: React.FC = memo(
 	function EstimateCausalEffects() {
 		const InfoMessage = useInfoMessage()
+		const MicrodataMessage = useMicrodataInfoMessage()
+
 		const {
 			isProcessing,
 			totalEstimatorsCount,
@@ -38,6 +41,7 @@ export const EstimateCausalEffects: React.FC = memo(
 		return (
 			<Container>
 				{InfoMessage}
+				{MicrodataMessage}
 				<SpecificationsList
 					hasConfidenceInterval={hasConfidenceInterval}
 					estimators={estimators}

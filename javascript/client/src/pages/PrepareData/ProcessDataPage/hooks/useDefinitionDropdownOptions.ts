@@ -61,8 +61,8 @@ export function useDefinitionDropdownOptions(
 			},
 			{
 				key: 'reset-action',
-				text: 'Reset',
-				title: 'Reset',
+				text: 'Reset variable selection',
+				title: 'Reset variable selection',
 				data: {
 					button: true,
 					type: CommandActionType.Reset,

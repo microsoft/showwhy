@@ -13,12 +13,10 @@ import { AddVariableFields } from './AddVariableFields'
 import { CompletedElements } from './CompletedElements'
 import { useBusinessLogic } from './hooks'
 import { useAddVariable } from './hooks/useAddVariable'
-import { useMicrodataInfoMessage } from './hooks/useMicrodataInfoMessage'
 import { useTables } from './hooks/useTables'
 
 export const ProcessDataPage: FC = memo(function ProcessDataPage() {
 	const tables = useTables()
-	const microdataMessage = useMicrodataInfoMessage()
 	const {
 		showCallout,
 		toggleShowCallout,
@@ -57,7 +55,6 @@ export const ProcessDataPage: FC = memo(function ProcessDataPage() {
 					onResetVariable={onResetVariable}
 				/>
 			) : null}
-			{microdataMessage}
 			<PrepareDataFull
 				steps={steps}
 				onUpdateSteps={onChangeSteps}
