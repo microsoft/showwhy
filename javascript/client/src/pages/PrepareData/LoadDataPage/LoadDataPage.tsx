@@ -28,6 +28,7 @@ export const LoadDataPage: React.FC = memo(function LoadDataPage() {
 		setSelectedFile,
 		toggleShowConfirm,
 		toggleLoadedCorrectly,
+		toggleAutoType,
 		handleDelimiterChange,
 		handleDismissError,
 		loading,
@@ -94,22 +95,31 @@ export const LoadDataPage: React.FC = memo(function LoadDataPage() {
 						/>
 					</TableContainer>
 					<DataLoadIndicator>
-						<FlexContainer>
-							<Toggle
-								label="Data loaded correctly"
-								onText="Yes"
-								checked={selectedFile?.loadedCorrectly || false}
-								offText="No"
-								onChange={() => toggleLoadedCorrectly()}
-							/>
-							{!selectedFile.loadedCorrectly ? (
-								<DelimiterDropdown
-									selectedKey={selectedDelimiter}
-									onChange={handleDelimiterChange}
-									styles={{ root: { width: '9em' } }}
+						<ToggleWrapper>
+							<FlexContainer>
+								<Toggle
+									label="Data loaded correctly"
+									onText="Yes"
+									checked={selectedFile?.loadedCorrectly || false}
+									offText="No"
+									onChange={() => toggleLoadedCorrectly()}
 								/>
-							) : null}
-						</FlexContainer>
+								{!selectedFile.loadedCorrectly ? (
+									<DelimiterDropdown
+										selectedKey={selectedDelimiter}
+										onChange={handleDelimiterChange}
+										styles={{ root: { width: '9em' } }}
+									/>
+								) : null}
+							</FlexContainer>
+							<Toggle
+								label="Auto Type"
+								onText="On"
+								checked={!!selectedFile?.autoType}
+								offText="Off"
+								onChange={() => toggleAutoType(!selectedFile?.autoType)}
+							/>
+						</ToggleWrapper>
 						<DeleteButton
 							title="Delete current dataset"
 							onClick={() => toggleShowConfirm()}
@@ -154,3 +164,5 @@ const FlexContainer = styled.div`
 	width: 18rem;
 	justify-content: space-between;
 `
+
+const ToggleWrapper = styled.div``

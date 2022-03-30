@@ -149,9 +149,10 @@ export async function fetchRemoteTables(
 export function readFile(
 	file: BaseFile | File,
 	delimiter?: string,
+	autoType = false,
 	onProgress?: (processed: number, total: number) => void,
 ): Promise<ColumnTable> {
-	const _delimeter = delimiter || guessDelimiter(file.name)
+	const _delimiter = delimiter || guessDelimiter(file.name)
 	const isBigFile = file.size > MAX_FILE_SIZE
 	const reader = createReader()
 	let index = 0
@@ -192,7 +193,12 @@ export function readFile(
 			index = index + size - lineBreakExcess
 		}
 		try {
-			const result = createDefaultTable(lineBreak, _delimeter, columnNames)
+			const result = createDefaultTable(
+				lineBreak,
+				_delimiter,
+				columnNames,
+				autoType,
+			)
 			if (!table) {
 				table = result
 			} else {

@@ -26,12 +26,14 @@ export function createDefaultTable(
 	content: string,
 	delimiter = ',',
 	columnNames?: string[],
+	autoType = false,
 ): ColumnTable {
 	return fromCSV(content, {
 		delimiter,
 		header: !columnNames?.length,
 		names: columnNames,
 		autoMax: 10000,
+		autoType,
 	})
 }
 
@@ -40,7 +42,7 @@ export async function loadTable(
 	tables?: File[],
 ): Promise<ColumnTable> {
 	const file = tables?.find(t => t.name === table.name) as File
-	return readFile(file)
+	return readFile(file, undefined, table.autoType)
 }
 
 export async function fetchTable(
@@ -50,7 +52,7 @@ export async function fetchTable(
 		.then(res => res.text())
 		.then(text => {
 			const delimiter = table.delimiter || guessDelimiter(table.url)
-			return createDefaultTable(text, delimiter)
+			return createDefaultTable(text, delimiter, undefined, table.autoType)
 		})
 }
 

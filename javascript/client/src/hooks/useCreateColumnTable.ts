@@ -42,10 +42,15 @@ export function useCreateColumnTable(
 	)
 
 	return useCallback(
-		(files: BaseFile[], delimiter?: string) => {
+		(files: BaseFile[], delimiter?: string, autoType = false) => {
 			onLoadStart && onLoadStart()
 			files.forEach(async (file: BaseFile) => {
-				const table = await readFile(file, delimiter, progressPercentage)
+				const table = await readFile(
+					file,
+					delimiter,
+					autoType,
+					progressPercentage,
+				)
 				const name = file.name
 				onFinishReading(table, name)
 			})
