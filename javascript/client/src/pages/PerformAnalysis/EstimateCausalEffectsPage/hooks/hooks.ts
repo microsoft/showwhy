@@ -58,6 +58,7 @@ export function useBusinessLogic(): {
 	runEstimate: AsyncHandler
 	setRunAsDefault: (run: RunHistory) => void
 	loadingSpecCount: boolean
+	loadingFile: boolean
 	hasConfidenceInterval: boolean
 	refutationOptions: RefutationOption[]
 	isCanceled: boolean
@@ -71,6 +72,10 @@ export function useBusinessLogic(): {
 	const [
 		loadingSpecCount,
 		{ setTrue: trueLoadingSpecCount, setFalse: falseLoadingSpecCount },
+	] = useBoolean(false)
+	const [
+		loadingFile,
+		{ setTrue: trueLoadingFile, setFalse: falseLoadingFile },
 	] = useBoolean(false)
 	const [isCanceled, setIsCanceled] = useState<boolean>(false)
 	const [errors, setErrors] = useState<string>('')
@@ -135,7 +140,7 @@ export function useBusinessLogic(): {
 
 	const runEstimate = useCallback(async () => {
 		setIsCanceled(false)
-		saveNewRunHistory()
+		trueLoadingFile()
 		let output = projectFiles[0]?.table as ColumnTable
 		if (outputTablePrep) {
 			output = outputTablePrep
@@ -145,6 +150,16 @@ export function useBusinessLogic(): {
 			output = output?.select(allColumns)
 		}
 		const files = await uploadOutputFile(output)
+			.catch(err => {
+				setErrors(
+					err.message || 'Unknown error, please contact the system admin.',
+				)
+			})
+			.finally(() => {
+				falseLoadingFile()
+			})
+		if (!files) return
+		saveNewRunHistory()
 		const loadNode = buildLoadNode(
 			files.uploaded_files[OUTPUT_FILE_NAME]!,
 			OUTPUT_FILE_NAME,
@@ -162,6 +177,9 @@ export function useBusinessLogic(): {
 		outputTablePrep,
 		allColumns,
 		projectFiles,
+		setErrors,
+		trueLoadingFile,
+		falseLoadingFile,
 	])
 
 	const cancelRun = useCallback(() => {
@@ -181,6 +199,7 @@ export function useBusinessLogic(): {
 		runEstimate,
 		setRunAsDefault,
 		loadingSpecCount,
+		loadingFile,
 		hasConfidenceInterval,
 		refutationOptions,
 		isCanceled,

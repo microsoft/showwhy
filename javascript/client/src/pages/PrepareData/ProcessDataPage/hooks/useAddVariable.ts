@@ -25,6 +25,8 @@ import {
 	useExperiment,
 	useSetCausalFactors,
 	useSetExperiment,
+	useSetSubjectIdentifier,
+	useSubjectIdentifier,
 } from '~state'
 import { isCausalFactorType } from '~utils'
 
@@ -40,6 +42,8 @@ export function useAddVariable(): {
 
 	const defineQuestion = useExperiment()
 	const setDefineQuestion = useSetExperiment()
+	const subjectIdentifier = useSubjectIdentifier()
+	const setSubjectIdentifier = useSetSubjectIdentifier()
 	const saveDefinition = useSaveDefinition(defineQuestion, setDefineQuestion)
 	const causalFactors = useCausalFactors()
 	const setCausalFactors = useSetCausalFactors()
@@ -47,6 +51,7 @@ export function useAddVariable(): {
 
 	const onAdd = useCallback(
 		(variable: string, type: DefinitionType, degree?: BeliefDegree) => {
+			if (subjectIdentifier === selectedColumn) setSubjectIdentifier(undefined)
 			if (isCausalFactorType(type) && degree) {
 				const object = {
 					id: uuiv4(),
@@ -76,6 +81,8 @@ export function useAddVariable(): {
 			toggleShowCallout,
 			addFactor,
 			defineQuestion,
+			subjectIdentifier,
+			setSubjectIdentifier,
 		],
 	)
 	return {

@@ -3,6 +3,7 @@
         "causalModel": "Maximum",
         "type": "Linear Doubly Robust Learner"
     },
+    "subjectIdentifier": "index",
     "confidenceInterval": true,
     "causalFactors": [
         {

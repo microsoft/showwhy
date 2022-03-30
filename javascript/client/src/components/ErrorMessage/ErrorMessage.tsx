@@ -6,6 +6,8 @@ import { Icon } from '@fluentui/react'
 import { memo } from 'react'
 import styled from 'styled-components'
 
+import { ShortenMessage } from './ShortenMessage'
+
 export const ErrorMessage: React.FC<{
 	message?: string
 	styles?: React.CSSProperties
@@ -16,9 +18,14 @@ export const ErrorMessage: React.FC<{
 }) {
 	return (
 		<Container style={styles}>
-			<Error>
+			<Error title={message}>
 				<Icon iconName="IncidentTriangle" />
-				{children ?? message}
+				{children}
+				{!children && message.length > 100 ? (
+					<ShortenMessage message={message} />
+				) : (
+					message
+				)}
 			</Error>
 		</Container>
 	)

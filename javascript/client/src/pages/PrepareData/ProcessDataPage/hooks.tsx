@@ -19,7 +19,9 @@ import { useAllVariables, useCausalEffects } from '~hooks'
 import {
 	useCausalFactors,
 	useSetOutputTablePrep,
+	useSetSubjectIdentifier,
 	useSetTablesPrepSpecification,
+	useSubjectIdentifier,
 	useTablesPrepSpecification,
 } from '~state'
 import { useExperiment, useSetExperiment } from '~state/experiment'
@@ -52,13 +54,17 @@ export function useBusinessLogic(
 	const defineQuestion = useExperiment()
 	const setDefineQuestion = useSetExperiment()
 	const allElements = useAllVariables(causalFactors, defineQuestion)
+	const setSubjectIdentifier = useSetSubjectIdentifier()
+	const subjectIdentifier = useSubjectIdentifier()
 	const setOutputTable = useSetOutputTablePrep()
 
 	const causalEffects = useCausalEffects(CausalModelLevel.Maximum)
 	const onSelectVariable = useOnSelectVariable(
 		causalFactors,
 		defineQuestion,
+		subjectIdentifier,
 		setDefineQuestion,
+		setSubjectIdentifier,
 	)
 
 	const onUpdateOutput = useCallback(
@@ -124,6 +130,8 @@ export function useBusinessLogic(
 		onSelectVariable,
 		onResetVariable,
 		onAddVariable,
+		setSubjectIdentifier,
+		subjectIdentifier,
 		dropdownOptions,
 	)
 

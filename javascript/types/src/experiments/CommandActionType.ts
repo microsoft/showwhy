@@ -6,4 +6,5 @@
 export enum CommandActionType {
 	Reset = 'reset',
 	AddVariable = 'add variable',
+	SubjectIdentifier = 'set as subject identifier',
 }
