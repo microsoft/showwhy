@@ -16,7 +16,9 @@ import { useSetTargetCausalFactor, useSetTargetDefinition } from './index'
 export function useOnSelectVariable(
 	causalFactors: CausalFactor[],
 	defineQuestion: Experiment,
+	subjectIdentifier: string | undefined,
 	setDefineQuestion: SetterOrUpdater<Experiment>,
+	setSubjectIdentifier: SetterOrUpdater<string | undefined>,
 ): (option: Maybe<IContextualMenuItem>, columnName: string) => void {
 	const onSaveCausalFactor = useAddOrEditFactor()
 	const setCausalFactor = useSetTargetCausalFactor(
@@ -28,12 +30,15 @@ export function useOnSelectVariable(
 
 	return useCallback(
 		(option: Maybe<IContextualMenuItem>, columnName: string) => {
+			if (subjectIdentifier === columnName) {
+				setSubjectIdentifier(undefined)
+			}
 			if (isCausalFactorType(option?.data.type)) {
 				setCausalFactor(option?.key as string, columnName)
 			} else {
 				setDefinition(option?.key as string, columnName)
 			}
 		},
-		[setCausalFactor, setDefinition],
+		[setCausalFactor, setDefinition, subjectIdentifier, setSubjectIdentifier],
 	)
 }

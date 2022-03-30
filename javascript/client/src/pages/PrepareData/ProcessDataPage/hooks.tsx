@@ -62,7 +62,9 @@ export function useBusinessLogic(
 	const onSelectVariable = useOnSelectVariable(
 		causalFactors,
 		defineQuestion,
+		subjectIdentifier,
 		setDefineQuestion,
+		setSubjectIdentifier,
 	)
 
 	const onUpdateOutput = useCallback(

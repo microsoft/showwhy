@@ -60,9 +60,10 @@ function useRenderMenuList(
 				x => x.data?.type === CommandActionType.SubjectIdentifier,
 			)
 			const hasVariable = !selectedVariableByColumn(columnName)?.variable
+			const isIdentifier = subjectIdentifier === columnName
 			items = items.filter(x => !x.data?.button)
 			if (identifierButton) {
-				identifierButton.checked = subjectIdentifier === columnName
+				identifierButton.disabled = !hasVariable
 				items.push(identifierButton)
 			}
 			if (resetButton) {
@@ -70,7 +71,7 @@ function useRenderMenuList(
 				items.push(resetButton)
 			}
 			if (variableButton) {
-				variableButton.disabled = !hasVariable
+				variableButton.disabled = !hasVariable || isIdentifier
 				items.push(variableButton)
 			}
 			return (
