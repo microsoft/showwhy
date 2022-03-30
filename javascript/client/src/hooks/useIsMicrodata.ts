@@ -10,9 +10,9 @@ import { useCallback } from 'react'
 
 export function useIsMicrodata(): (
 	table: ColumnTable,
-	column: string,
+	column?: string,
 ) => boolean {
-	return useCallback((table: ColumnTable, column: string) => {
+	return useCallback((table: ColumnTable, column?: string) => {
 		const rows = table.numRows()
 		const unique = aq.agg(table, op.distinct(column))
 		return rows === unique

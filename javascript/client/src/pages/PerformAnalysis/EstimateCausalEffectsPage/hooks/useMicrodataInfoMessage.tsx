@@ -17,19 +17,29 @@ export function useMicrodataInfoMessage(): JSX.Element | null {
 	const [showInfoMessage, setShowInfoMessage] = useState<boolean>(false)
 
 	return useMemo(() => {
-		if (!outputTable || !subjectIndentifier) {
+		if (!outputTable) {
 			return null
 		}
-		const missing = !isMicrodata(outputTable, subjectIndentifier)
+		const missing =
+			!isMicrodata(outputTable, subjectIndentifier) || !subjectIndentifier
 		setShowInfoMessage(missing)
 
 		return showInfoMessage ? (
 			<MessageContainer styles={{ marginTop: '1rem' }}>
-				<span>
-					Data contains more than one record per subject. Go back to{' '}
-					<Link to="/prepare/data">Process Data Page</Link> and ensure they only
-					have one.
-				</span>
+				{!subjectIndentifier ? (
+					<span>
+						You must assign a subject identifier column so we can check that
+						there&apos;s only one record per subject. Go back to{' '}
+						<Link to="/prepare/data">Process Data Page</Link> and ensure a
+						column is selected.
+					</span>
+				) : (
+					<span>
+						Data contains more than one record per subject. Go back to{' '}
+						<Link to="/prepare/data">Process Data Page</Link> and ensure they
+						only have one.
+					</span>
+				)}
 			</MessageContainer>
 		) : null
 	}, [
