@@ -5,6 +5,7 @@
 
 import { Link } from '@fluentui/react'
 import { useMemo, useState } from 'react'
+
 import { MessageContainer } from '~components/MessageContainer'
 import { useIsMicrodata } from '~hooks'
 import { useOutputTablePrep, useSubjectIdentifier } from '~state'
@@ -30,5 +31,11 @@ export function useMicrodataInfoMessage(): JSX.Element | null {
 				</span>
 			</MessageContainer>
 		) : null
-	}, [setShowInfoMessage, showInfoMessage, outputTable, subjectIndentifier])
+	}, [
+		setShowInfoMessage,
+		showInfoMessage,
+		outputTable,
+		subjectIndentifier,
+		isMicrodata,
+	])
 }

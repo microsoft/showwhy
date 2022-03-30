@@ -5,14 +5,16 @@
 import { PrimaryButton } from '@fluentui/react'
 import { memo } from 'react'
 import { Link } from 'react-router-dom'
-import { useMicrodataInfoMessage } from 'src/pages/PrepareData/ProcessDataPage/hooks/useMicrodataInfoMessage'
 import styled from 'styled-components'
 
 import { Container, ContainerFlexRow, ContainerTextCenter } from '~styles'
 import { Pages } from '~types'
 
-import { useBusinessLogic } from './hooks'
-import { useInfoMessage } from './InfoMessage'
+import {
+	useBusinessLogic,
+	useInfoMessage,
+	useMicrodataInfoMessage,
+} from './hooks'
 import { RunHistoryList } from './RunHistoryList'
 import { SpecificationsList } from './SpecificationsList'
 

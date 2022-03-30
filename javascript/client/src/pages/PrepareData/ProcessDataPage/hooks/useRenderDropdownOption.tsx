@@ -163,6 +163,8 @@ export function useRenderDropdown(
 			selectedOptions,
 			selectedVariableByColumn,
 			onAddVariable,
+			onSelectIdentifier,
+			subjectIdentifier,
 		],
 	)
 }
