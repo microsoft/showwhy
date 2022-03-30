@@ -7,7 +7,7 @@ import { useMemo } from 'react'
 
 import { useAllSteps, useCurrentStep } from '~hooks'
 import { useStepStatus } from '~state'
-import type { StepStatus,WorkflowStep  } from '~types'
+import type { StepStatus, WorkflowStep } from '~types'
 
 export type ToggleStepStatusHandler = Handler
 export interface ProcessStepInfo {
