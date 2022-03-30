@@ -26,8 +26,9 @@ export function useMicrodataInfoMessage(): JSX.Element | null {
 		return showInfoMessage ? (
 			<MessageContainer styles={{ marginTop: '1rem' }}>
 				<span>
-					Looks like you table is not a microdata. Go back to{' '}
-					<Link to="/prepare/data">Process Data Page</Link> to fix this.
+					Data contains more than one record per subject. Go back to{' '}
+					<Link to="/prepare/data">Process Data Page</Link> and ensure they only
+					have one.
 				</span>
 			</MessageContainer>
 		) : null

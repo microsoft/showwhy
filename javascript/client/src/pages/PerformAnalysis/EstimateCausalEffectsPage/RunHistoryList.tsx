@@ -18,6 +18,7 @@ import { elapsedTime } from '~utils'
 export const RunHistoryList: React.FC<{
 	setRunAsDefault: (run: RunHistory) => void
 	loadingSpecCount: boolean
+	loadingFile: boolean
 	specCount?: number
 	cancelRun?: Handler
 	runHistory: RunHistory[]
@@ -26,6 +27,7 @@ export const RunHistoryList: React.FC<{
 }> = memo(function RunHistoryList({
 	specCount = 0,
 	loadingSpecCount,
+	loadingFile,
 	runHistory,
 	errors,
 	setRunAsDefault,
@@ -128,6 +130,8 @@ export const RunHistoryList: React.FC<{
 							<Td>
 								{loadingSpecCount ? (
 									<Text>Loading specifications count...</Text>
+								) : loadingFile ? (
+									<Text>Uploading files...</Text>
 								) : errors ? (
 									<Text>{!!errors && <ErrorMessage message={errors} />}</Text>
 								) : (

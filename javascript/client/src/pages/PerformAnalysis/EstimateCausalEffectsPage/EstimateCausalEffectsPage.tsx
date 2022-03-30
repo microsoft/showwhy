@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { PrimaryButton } from '@fluentui/react'
-import { memo } from 'react'
+import { memo, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
@@ -35,10 +35,15 @@ export const EstimateCausalEffects: React.FC = memo(
 			runEstimate,
 			setRunAsDefault,
 			loadingSpecCount,
+			loadingFile,
 			hasConfidenceInterval,
 			refutationOptions,
 			isCanceled,
 		} = useBusinessLogic()
+
+		const hasErrorMessage = useMemo((): boolean => {
+			return !!(InfoMessage || MicrodataMessage)
+		}, [InfoMessage, MicrodataMessage])
 
 		return (
 			<Container>
@@ -52,7 +57,12 @@ export const EstimateCausalEffects: React.FC = memo(
 				/>
 				<ContainerFlexRow justifyContent="center">
 					<Button
-						disabled={isProcessing || !totalEstimatorsCount || !specCount}
+						disabled={
+							isProcessing ||
+							!totalEstimatorsCount ||
+							!specCount ||
+							hasErrorMessage
+						}
 						onClick={runEstimate}
 						data-pw="run-estimate-button"
 					>
@@ -72,6 +82,7 @@ export const EstimateCausalEffects: React.FC = memo(
 				<RunHistoryList
 					loadingSpecCount={loadingSpecCount}
 					specCount={specCount}
+					loadingFile={loadingFile}
 					setRunAsDefault={setRunAsDefault}
 					cancelRun={cancelRun}
 					runHistory={runHistory}
