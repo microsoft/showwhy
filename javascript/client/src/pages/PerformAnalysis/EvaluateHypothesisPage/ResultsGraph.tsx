@@ -8,7 +8,7 @@ import { RefutationType } from '@showwhy/types'
 import { memo } from 'react'
 import styled from 'styled-components'
 
-import { TabbedScatterplot } from '~components/TabbedScatterplot'
+import { PivotScatterplot } from '~components/PivotScatterplot'
 import { Bold, Container, Text, Value } from '~styles'
 import type {
 	DecisionFeature,
@@ -66,7 +66,7 @@ export const ResultsGraph: React.FC<{
 					</Text>
 				)}
 			</P>
-			<TabbedScatterplot
+			<PivotScatterplot
 				data={specificationData}
 				config={specificationCurveConfig}
 				width={vegaWindowDimensions.width}

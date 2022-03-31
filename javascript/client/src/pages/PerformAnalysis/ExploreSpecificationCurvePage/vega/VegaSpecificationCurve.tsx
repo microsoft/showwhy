@@ -6,7 +6,7 @@ import type { Maybe } from '@showwhy/types'
 import { memo, useCallback, useState } from 'react'
 import styled from 'styled-components'
 
-import { TabbedScatterplot } from '~components/TabbedScatterplot'
+import { PivotScatterplot } from '~components/PivotScatterplot'
 import type {
 	DecisionFeature,
 	Specification,
@@ -88,7 +88,7 @@ export const VegaSpecificationCurve: React.FC<{
 	)
 	return (
 		<Container data-pw="specification-curve">
-			<TabbedScatterplot
+			<PivotScatterplot
 				data={data}
 				config={config}
 				width={width}

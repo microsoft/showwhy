@@ -15,14 +15,14 @@ import type {
 	SpecificationCurveConfig,
 } from '~types'
 
-interface TabbedPivotItem {
+interface PivotItemChart {
 	pivotName: string
 	chartTitle: string
 	dataValueName: string
 	showStats?: boolean
 }
 
-export const TabbedScatterplot: FC<{
+export const PivotScatterplot: FC<{
 	data: Specification[]
 	config: SpecificationCurveConfig
 	width: number
@@ -34,7 +34,7 @@ export const TabbedScatterplot: FC<{
 	selected?: number
 	outcome?: string
 	totalSpecs?: number
-}> = memo(function TabbedScatterplot({
+}> = memo(function PivotScatterplot({
 	data,
 	config,
 	width,
@@ -49,7 +49,7 @@ export const TabbedScatterplot: FC<{
 }) {
 	const theme = useThematic()
 
-	const pivotItems = useMemo((): TabbedPivotItem[] => {
+	const pivotItems = useMemo((): PivotItemChart[] => {
 		return [
 			{
 				pivotName: 'Outcome',
@@ -62,7 +62,7 @@ export const TabbedScatterplot: FC<{
 				chartTitle: 'Population size by specification',
 				dataValueName: 'populationSize',
 			},
-		] as TabbedPivotItem[]
+		] as PivotItemChart[]
 	}, [outcome])
 
 	return (
@@ -73,9 +73,9 @@ export const TabbedScatterplot: FC<{
 					paddingTop: 10,
 				},
 			}}
-			aria-label="Graphs Tabbed Items"
+			aria-label="Graphs Pivotted Items"
 		>
-			{pivotItems.map((p: TabbedPivotItem) => {
+			{pivotItems.map((p: PivotItemChart) => {
 				return (
 					<PivotItem key={p.pivotName} headerText={p.pivotName}>
 						<EffectScatterplot
