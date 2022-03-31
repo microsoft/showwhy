@@ -37,7 +37,7 @@ export function useVegaWindowDimensionsTestable(
 	windowSize: Dimensions,
 ): Dimensions {
 	return useMemo(() => {
-		let percentage = DETAILS_WIDTH_PERCENTAGE_MAX * 2
+		let percentage = DETAILS_WIDTH_PERCENTAGE_MAX * 2.1
 		if (windowSize.width < 1200) {
 			percentage = DETAILS_WIDTH_PERCENTAGE_MIN * 3.5
 		}
