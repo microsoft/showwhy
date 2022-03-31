@@ -6,7 +6,7 @@ import { Pivot, PivotItem } from '@fluentui/react'
 import type { Handler1, Maybe } from '@showwhy/types'
 import { useThematic } from '@thematic/react'
 import type { FC } from 'react'
-import { memo } from 'react'
+import { memo, useMemo } from 'react'
 import { EffectScatterplot } from 'src/pages/PerformAnalysis/ExploreSpecificationCurvePage/vega'
 
 import type {
@@ -14,6 +14,13 @@ import type {
 	Specification,
 	SpecificationCurveConfig,
 } from '~types'
+
+interface TabbedPivotItem {
+	pivotName: string
+	chartTitle: string
+	dataValueName: string
+	showStats?: boolean
+}
 
 export const TabbedScatterplot: FC<{
 	data: Specification[]
@@ -27,7 +34,6 @@ export const TabbedScatterplot: FC<{
 	selected?: number
 	outcome?: string
 	totalSpecs?: number
-	showStats?: boolean
 }> = memo(function TabbedScatterplot({
 	data,
 	config,
@@ -40,9 +46,25 @@ export const TabbedScatterplot: FC<{
 	outcome,
 	totalSpecs,
 	onMouseClick,
-	showStats,
 }) {
 	const theme = useThematic()
+
+	const pivotItems = useMemo((): TabbedPivotItem[] => {
+		return [
+			{
+				pivotName: 'Outcome',
+				chartTitle: `Estimated change in ${outcome} by specification`,
+				dataValueName: 'estimatedEffect',
+				showStats: true,
+			},
+			{
+				pivotName: 'Population',
+				chartTitle: 'Population size by specification',
+				dataValueName: 'populationSize',
+			},
+		] as TabbedPivotItem[]
+	}, [outcome])
+
 	return (
 		<Pivot
 			styles={{
@@ -51,42 +73,29 @@ export const TabbedScatterplot: FC<{
 					paddingTop: 10,
 				},
 			}}
-			aria-label="Basic Pivot Example"
+			aria-label="Graphs Tabbed Items"
 		>
-			<PivotItem headerText="Outcome">
-				<EffectScatterplot
-					data={data}
-					config={config}
-					width={width}
-					height={height}
-					onMouseOver={onMouseOver}
-					onMouseClick={onMouseClick}
-					hovered={hovered}
-					selected={selected}
-					failedRefutationIds={failedRefutationIds}
-					chartTitle={`Estimated change in ${outcome} by specification`}
-					dataValueName="estimatedEffect"
-					totalSpecs={totalSpecs}
-					showStats={showStats}
-				/>
-			</PivotItem>
-			<PivotItem headerText="Population">
-				<EffectScatterplot
-					data={data}
-					config={config}
-					width={width}
-					height={height}
-					onMouseOver={onMouseOver}
-					onMouseClick={onMouseClick}
-					hovered={hovered}
-					selected={selected}
-					failedRefutationIds={failedRefutationIds}
-					chartTitle={'Population size by specification'}
-					dataValueName="populationSize"
-					totalSpecs={totalSpecs}
-					showStats={showStats}
-				/>
-			</PivotItem>
+			{pivotItems.map((p: TabbedPivotItem) => {
+				return (
+					<PivotItem key={p.pivotName} headerText={p.pivotName}>
+						<EffectScatterplot
+							data={data}
+							config={config}
+							width={width}
+							height={height}
+							onMouseOver={onMouseOver}
+							onMouseClick={onMouseClick}
+							hovered={hovered}
+							selected={selected}
+							failedRefutationIds={failedRefutationIds}
+							chartTitle={p.chartTitle}
+							dataValueName={p.dataValueName}
+							totalSpecs={totalSpecs}
+							showStats={p.showStats}
+						/>
+					</PivotItem>
+				)
+			})}
 		</Pivot>
 	)
 })

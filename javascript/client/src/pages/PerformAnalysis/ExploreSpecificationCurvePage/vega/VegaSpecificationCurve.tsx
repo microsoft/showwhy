@@ -100,7 +100,6 @@ export const VegaSpecificationCurve: React.FC<{
 				selected={selected}
 				failedRefutationIds={failedRefutationIds}
 				totalSpecs={totalSpecs}
-				showStats
 			/>
 
 			<AnalyticDecisionsDotPlot
