@@ -10,7 +10,7 @@ import { v4 } from 'uuid'
 import type { RunHistory } from '~types'
 
 import { SESSION_ID_KEY } from './constants'
-import { createAndReturnStorageItem } from './sessionStorage'
+import { getStorageItem } from './sessionStorage'
 
 export function initialRunHistory(
 	specCount: number,
@@ -32,7 +32,7 @@ export function initialRunHistory(
 				start: new Date(),
 			},
 		},
-		sessionId: createAndReturnStorageItem(SESSION_ID_KEY, v4()),
+		sessionId: getStorageItem(SESSION_ID_KEY),
 		hasConfidenceInterval,
 		refutationType,
 	} as RunHistory

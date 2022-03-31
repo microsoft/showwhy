@@ -17,6 +17,7 @@ import type {
 } from '@showwhy/types'
 import type ColumnTable from 'arquero/dist/types/table/column-table'
 import { useCallback, useEffect, useState } from 'react'
+import { v4 as uuidv4 } from 'uuid'
 
 import {
 	useAllColumns,
@@ -42,7 +43,12 @@ import {
 	useSpecCount,
 } from '~state'
 import type { RunHistory } from '~types'
-import { createZipFormData, initialRunHistory } from '~utils'
+import {
+	createZipFormData,
+	initialRunHistory,
+	SESSION_ID_KEY,
+	setStorageItem,
+} from '~utils'
 
 const OUTPUT_FILE_NAME = 'output'
 
@@ -141,6 +147,7 @@ export function useBusinessLogic(): {
 	const runEstimate = useCallback(async () => {
 		setIsCanceled(false)
 		trueLoadingFile()
+		setStorageItem(SESSION_ID_KEY, uuidv4())
 		let output = projectFiles[0]?.table as ColumnTable
 		if (outputTablePrep) {
 			output = outputTablePrep
