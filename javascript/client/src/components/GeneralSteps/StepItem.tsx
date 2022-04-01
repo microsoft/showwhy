@@ -38,7 +38,7 @@ export const StepItem: React.FC<{
 					key={stepDetail.url}
 					to={stepDetail.url}
 				>
-					<StepName>{stepDetail.title}</StepName>
+					{stepDetail.title}
 				</StepLink>
 				{getStepStatus(stepDetail)}
 			</StepContainer>
@@ -61,6 +61,8 @@ const StepLink = styled(NavLink)`
 	text-decoration: unset;
 	align-self: center;
 	color: black;
+	padding: 4px 6px 4px 8px;
+
 	&.active {
 		font-weight: bold;
 	}
@@ -68,8 +70,4 @@ const StepLink = styled(NavLink)`
 	&:hover {
 		text-decoration: underline;
 	}
-`
-
-const StepName = styled.span`
-	padding: 4px 8px;
 `
