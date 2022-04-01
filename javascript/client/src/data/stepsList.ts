@@ -8,48 +8,6 @@ import type { StepList } from '~types'
 import { Pages, PageType, StepStatus } from '~types'
 
 export const stepsList = [
-	// {
-	// 	id: uuidv4(),
-	// 	name: 'Define question',
-	// 	steps: [
-	// 		{
-	// 			id: uuidv4(),
-	// 			title: 'Describe elements',
-	// 			status: StepStatus.ToDo,
-	// 			url: `${Pages.DefineElements}`,
-	// 			showStatus: true,
-	// 			getMarkdown: async () =>
-	// 				import('../markdown/define-question/Elements.md?raw'),
-	// 		},
-	// 		{
-	// 			id: uuidv4(),
-	// 			title: 'Define population',
-	// 			status: StepStatus.ToDo,
-	// 			url: `${Pages.Define}/${PageType.Population}`,
-	// 			showStatus: true,
-	// 			getMarkdown: async () =>
-	// 				import('../markdown/define-question/Population.md?raw'),
-	// 		},
-	// 		{
-	// 			id: uuidv4(),
-	// 			title: 'Define exposure',
-	// 			status: StepStatus.ToDo,
-	// 			url: `${Pages.Define}/${PageType.Exposure}`,
-	// 			showStatus: true,
-	// 			getMarkdown: async () =>
-	// 				import('../markdown/define-question/Exposure.md?raw'),
-	// 		},
-	// 		{
-	// 			id: uuidv4(),
-	// 			title: 'Define outcome',
-	// 			status: StepStatus.ToDo,
-	// 			url: `${Pages.Define}/${PageType.Outcome}`,
-	// 			showStatus: true,
-	// 			getMarkdown: async () =>
-	// 				import('../markdown/define-question/Outcome.md?raw'),
-	// 		},
-	// 	],
-	// },
 	{
 		id: uuidv4(),
 		name: 'Model domain',
@@ -73,33 +31,6 @@ export const stepsList = [
 				getMarkdown: async () =>
 					import('../markdown/define-question/Population.md?raw'),
 			},
-			// {
-			// 	id: uuidv4(),
-			// 	title: 'Define population',
-			// 	status: StepStatus.ToDo,
-			// 	url: `${Pages.Define}/${PageType.Population}`,
-			// 	showStatus: true,
-			// 	getMarkdown: async () =>
-			// 		import('../markdown/define-question/Population.md?raw'),
-			// },
-			// {
-			// 	id: uuidv4(),
-			// 	title: 'Define exposure',
-			// 	status: StepStatus.ToDo,
-			// 	url: `${Pages.Define}/${PageType.Exposure}`,
-			// 	showStatus: true,
-			// 	getMarkdown: async () =>
-			// 		import('../markdown/define-question/Exposure.md?raw'),
-			// },
-			// {
-			// 	id: uuidv4(),
-			// 	title: 'Define outcome',
-			// 	status: StepStatus.ToDo,
-			// 	url: `${Pages.Define}/${PageType.Outcome}`,
-			// 	showStatus: true,
-			// 	getMarkdown: async () =>
-			// 		import('../markdown/define-question/Outcome.md?raw'),
-			// },
 			{
 				id: uuidv4(),
 				title: 'Consider causal factors',

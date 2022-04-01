@@ -14,13 +14,6 @@ const DescribeElementsPage = lazy(
 		),
 )
 
-const DefinePage = lazy(
-	() =>
-		/* webpackChunkName: "DefinePage" */ import(
-			'../../pages/ModelDomain/DefineModelDomainPage'
-		),
-)
-
 const ConsiderAlternativeDefinitionsPage = lazy(
 	() =>
 		/* webpackChunkName: "ConsiderAlternativeDefinitionsPage" */ import(
@@ -112,7 +105,6 @@ export const Routes: React.FC = memo(function Routes() {
 				component={ConsiderAlternativeDefinitionsPage}
 			/>
 			<Route path={Pages.Confirm} component={ConfirmPage} />
-			<Route path={Pages.Define} component={DefinePage} />
 			<Route path={Pages.LoadData} component={LoadDataPage} />
 			<Route path={Pages.ProcessData} component={ProcessDataPage} />
 			<Route path={Pages.ConfirmData} component={ConfirmDataPage} />
