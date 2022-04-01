@@ -11,4 +11,5 @@ export interface ElementDefinition {
 	variable: string
 	column?: string
 	level: CausalityLevel
+	type?: string
 }

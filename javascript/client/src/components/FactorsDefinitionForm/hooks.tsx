@@ -20,6 +20,7 @@ import { noop } from '~utils'
 
 import {
 	useCheckbox,
+	useDefinitionTypeDropdown,
 	useDescriptionBox,
 	useHasLevel,
 	useVariableField,
@@ -37,6 +38,7 @@ export function useFactorsDefinitionForm({
 	showLevel,
 	onAdd = noop,
 	onChange = noop,
+	onDefinitionTypeChange = noop,
 }: {
 	pageType: PageType
 	experiment?: Experiment
@@ -44,10 +46,12 @@ export function useFactorsDefinitionForm({
 	showLevel?: boolean
 	onAdd?: OnAddHandler
 	onChange?: OnChangeHandler
+	onDefinitionTypeChange?: (type: string) => void
 }): {
 	level: JSX.Element
 	variable: JSX.Element
 	description: JSX.Element
+	definitionType: JSX.Element
 } {
 	const [description, setDescription] = useState<string>('')
 	const [variable, setVariable] = useState<string>('')
@@ -98,6 +102,10 @@ export function useFactorsDefinitionForm({
 
 	const checkbox = useCheckbox(isPrimary, setIsPrimary)
 	const variableField = useVariableField(variable, add, setVariable, factor)
+	const definitionTypeDropdown = useDefinitionTypeDropdown(
+		pageType,
+		onDefinitionTypeChange,
+	)
 	const descriptionBox = useDescriptionBox(
 		description,
 		setDescription,
@@ -110,6 +118,7 @@ export function useFactorsDefinitionForm({
 		level: checkbox,
 		variable: variableField,
 		description: descriptionBox,
+		definitionType: definitionTypeDropdown,
 	}
 }
 

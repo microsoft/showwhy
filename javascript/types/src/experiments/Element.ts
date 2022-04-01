@@ -10,4 +10,5 @@ export interface Element {
 	definition: ElementDefinition[]
 	dataset?: string
 	variable?: string
+	// type?: string
 }

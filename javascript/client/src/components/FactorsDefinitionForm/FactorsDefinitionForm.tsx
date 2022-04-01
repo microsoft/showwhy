@@ -20,30 +20,37 @@ import { useFactorsDefinitionForm } from './hooks'
 export const FactorsDefinitionForm: React.FC<{
 	factor?: CausalFactor | ElementDefinition
 	showLevel?: Maybe<boolean>
+	showType?: Maybe<boolean>
 	defineQuestion?: Experiment
 	pageType: PageType
 	onAdd?: (factor: OptionalId<CausalFactor | ElementDefinition>) => void
 	onChange?: (f: Partial<CausalFactor | ElementDefinition>) => void
+	onDefinitionTypeChange?: (type: string) => void
 }> = memo(function FactorsDefinitionForm({
 	factor,
 	defineQuestion,
 	onAdd,
 	onChange,
 	showLevel = true,
+	showType = false,
 	pageType,
+	onDefinitionTypeChange,
 }) {
-	const { level, description, variable } = useFactorsDefinitionForm({
-		factor,
-		experiment: defineQuestion,
-		onChange,
-		onAdd,
-		pageType,
-		showLevel,
-	})
+	const { level, description, variable, definitionType } =
+		useFactorsDefinitionForm({
+			factor,
+			experiment: defineQuestion,
+			onChange,
+			onAdd,
+			pageType,
+			showLevel,
+			onDefinitionTypeChange,
+		})
 
 	return (
 		<Container showLevel={!!showLevel} data-pw="factors-form">
 			{showLevel ? <div data-pw="factors-form-is-primary">{level}</div> : null}
+			{showType ? definitionType : null}
 			{variable}
 			{description}
 		</Container>

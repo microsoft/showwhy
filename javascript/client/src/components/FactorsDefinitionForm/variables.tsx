@@ -2,10 +2,17 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { Checkbox, DefaultButton, TextField } from '@fluentui/react'
+import {
+	Checkbox,
+	DefaultButton,
+	TextField,
+	Dropdown,
+	IDropdownOption,
+} from '@fluentui/react'
 import type { CausalFactor, ElementDefinition, Handler } from '@showwhy/types'
 import { useMemo } from 'react'
 import styled from 'styled-components'
+import { PageType } from '../../types'
 
 function handleKeyPress(fn: Handler) {
 	return (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -97,6 +104,26 @@ export function useHasLevel(
 	factor?: CausalFactor | ElementDefinition,
 ): boolean {
 	return useMemo(() => !!factor?.hasOwnProperty('level'), [factor])
+}
+
+export function useDefinitionTypeDropdown(
+	definitionType: string,
+	onChange: (item: string) => void,
+): JSX.Element {
+	const options: IDropdownOption[] = [
+		{ key: 'population', text: 'Population' },
+		{ key: 'exposure', text: 'Exposure' },
+		{ key: 'outcome', text: 'Outcome' },
+	]
+	return (
+		<Dropdown
+			selectedKey={definitionType || undefined}
+			// eslint-disable-next-line react/jsx-no-bind
+			onChange={(e, i) => onChange(i?.key as string)}
+			placeholder="Select a definition type"
+			options={options}
+		/>
+	)
 }
 
 const DetailsContainer = styled.div`

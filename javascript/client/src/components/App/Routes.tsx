@@ -10,35 +10,42 @@ import { Pages } from '~types'
 const DescribeElementsPage = lazy(
 	() =>
 		/* webpackChunkName: "DescribeElementsPage" */ import(
-			'../../pages/DefineQuestion/DescribeElementsPage'
+			'../../pages/ModelDomain/DescribeElementsPage'
 		),
 )
 
 const DefinePage = lazy(
 	() =>
 		/* webpackChunkName: "DefinePage" */ import(
-			'../../pages/DefineQuestion/DefineModelDomainPage'
+			'../../pages/ModelDomain/DefineModelDomainPage'
+		),
+)
+
+const ConsiderAlternativeDefinitionsPage = lazy(
+	() =>
+		/* webpackChunkName: "ConsiderAlternativeDefinitionsPage" */ import(
+			'../../pages/ModelDomain/ConsiderAlternativeDefinitionsPage'
 		),
 )
 
 const ConsiderCausalFactorsPage = lazy(
 	() =>
 		/* webpackChunkName: "ConsiderCausalFactorsPage" */ import(
-			'../../pages/ModelCausalFactors/ConsiderCausalFactorsPage'
+			'../../pages/ModelDomain/ConsiderCausalFactorsPage'
 		),
 )
 
 const DefineFactorsPage = lazy(
 	() =>
 		/* webpackChunkName: "DefineFactorsPage" */ import(
-			'../../pages/ModelCausalFactors/DefineFactorsPage'
+			'../../pages/ModelDomain/DefineFactorsPage'
 		),
 )
 
 const ConfirmPage = lazy(
 	() =>
 		/* webpackChunkName: "ConfirmAlternativeModelsPage" */ import(
-			'../../pages/ModelCausalFactors/ConfirmAlternativeModelsPage'
+			'../../pages/ModelDomain/ConfirmAlternativeModelsPage'
 		),
 )
 
@@ -100,6 +107,10 @@ export const Routes: React.FC = memo(function Routes() {
 				component={ConsiderCausalFactorsPage}
 			/>
 			<Route path={Pages.DefineFactors} component={DefineFactorsPage} />
+			<Route
+				path={Pages.Alternative}
+				component={ConsiderAlternativeDefinitionsPage}
+			/>
 			<Route path={Pages.Confirm} component={ConfirmPage} />
 			<Route path={Pages.Define} component={DefinePage} />
 			<Route path={Pages.LoadData} component={LoadDataPage} />

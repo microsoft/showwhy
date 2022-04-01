@@ -7,6 +7,7 @@ import type { Element } from './Element.js'
 import type { Hypothesis } from './Hypothesis.js'
 
 export interface Experiment {
+	// elements?: Element[]
 	population: Element
 	exposure: Element
 	outcome: Element
