@@ -6,6 +6,7 @@ import type { Maybe } from '@showwhy/types'
 import { memo, useCallback, useState } from 'react'
 import styled from 'styled-components'
 
+import { PivotScatterplot } from '~components/PivotScatterplot'
 import type {
 	DecisionFeature,
 	Specification,
@@ -14,7 +15,6 @@ import type {
 import { addOrRemoveArrayElement } from '~utils'
 
 import { AnalyticDecisionsDotPlot } from './AnalyticDecisionsDotPlot'
-import { OutcomeEffectScatterplot } from './OutcomeEffectScatterplot'
 
 export const MIN_SPEC_ADDITIONAL_PADDING = 5
 
@@ -88,19 +88,20 @@ export const VegaSpecificationCurve: React.FC<{
 	)
 	return (
 		<Container data-pw="specification-curve">
-			<OutcomeEffectScatterplot
+			<PivotScatterplot
 				data={data}
 				config={config}
 				width={width}
+				outcome={outcome}
 				height={height * 0.25}
 				onMouseOver={onMouseOver}
 				onMouseClick={handleDatumClick}
 				hovered={hovered}
 				selected={selected}
 				failedRefutationIds={failedRefutationIds}
-				outcome={outcome}
 				totalSpecs={totalSpecs}
 			/>
+
 			<AnalyticDecisionsDotPlot
 				data={data}
 				config={config}

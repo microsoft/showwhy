@@ -36,6 +36,7 @@ export const EstimatedEffectOptions: React.FC<{
 
 const ToggleComponent = styled(Toggle)`
 	margin-right: 24px;
+	margin-bottom: unset;
 	label {
 		font-size: 13px;
 	}

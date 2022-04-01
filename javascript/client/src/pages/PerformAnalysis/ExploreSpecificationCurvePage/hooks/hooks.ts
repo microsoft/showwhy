@@ -71,6 +71,7 @@ function row2spec(d: any): Specification {
 			: +d.refuter_random_common_cause,
 		refuterBootstrap: isNull(d.refuter_bootstrap) ? null : +d.refuter_bootstrap,
 		populationType: d.population_type,
+		populationSize: d.population_size,
 		treatmentType: d.treatment_type,
 		outcomeType: d.outcome_type,
 		c95Upper: d.upper_bound,

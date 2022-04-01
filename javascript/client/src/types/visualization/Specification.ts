@@ -26,6 +26,7 @@ export interface Specification {
 	refuterDataSubset: number | null
 	refuterRandomCommonCause: number | null
 	refuterBootstrap: number | null
+	populationSize: number
 	populationType: string
 	treatmentType: string
 	outcomeType: string

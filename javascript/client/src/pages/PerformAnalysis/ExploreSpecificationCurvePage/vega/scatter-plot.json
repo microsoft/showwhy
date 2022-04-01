@@ -75,7 +75,14 @@
 			"transform": [
 				{
 					"type": "aggregate",
-					"fields": ["estimatedEffect", "estimatedEffect"],
+					"fields": [
+						{
+							"signal": "dataValueName"
+						},
+						{
+							"signal": "dataValueName"
+						}
+					],
 					"ops": ["mean", "median"],
 					"as": ["mean", "median"]
 				}
@@ -87,10 +94,13 @@
 			"name": "hoveredId"
 		},
 		{
+			"name": "dataValueName"
+		},
+		{
 			"name": "selectedId"
 		},
 		{
-			"name": "outcome"
+			"name": "chartTitle"
 		},
 		{
 			"name": "showMedian"
@@ -139,7 +149,12 @@
 				"fields": [
 					{ "data": "specifications", "field": "c95Lower" },
 					{ "data": "specifications", "field": "c95Upper" },
-					{ "data": "marked", "field": "estimatedEffect" }
+					{
+						"data": "marked",
+						"field": {
+							"signal": "dataValueName"
+						}
+					}
 				]
 			},
 			"range": { "signal": "[height-8, 12]" }
@@ -175,7 +190,7 @@
 				"title": {
 					"update": {
 						"text": {
-							"signal": "'Estimated change in ' + outcome + ' by specification'"
+							"signal": "chartTitle"
 						}
 					}
 				}
@@ -267,7 +282,9 @@
 					},
 					"y": {
 						"scale": "y",
-						"field": "estimatedEffect"
+						"field": {
+							"signal": "dataValueName"
+						}
 					},
 					"size": { "value": 25 },
 					"fill": {
@@ -290,7 +307,9 @@
 					},
 					"y": {
 						"scale": "y",
-						"field": "estimatedEffect"
+						"field": {
+							"signal": "dataValueName"
+						}
 					},
 					"size": { "value": 35 }
 				}
@@ -309,9 +328,9 @@
 						"field": "id"
 					},
 					"y": {
-						"signal": "datum.c95Upper ? scale('y', datum.c95Upper) - 5 : scale('y', datum.estimatedEffect) -8"
+						"signal": "datum.c95Upper ? scale('y', datum.c95Upper) - 5 : scale('y', datum[dataValueName]) -8"
 					},
-					"text": { "signal": "(round(datum.estimatedEffect * 1000) / 1000)" },
+					"text": { "signal": "(round(datum[dataValueName] * 1000) / 1000)" },
 					"align": { "value": "center" }
 				}
 			}
@@ -398,6 +417,9 @@
 							"x2": { "value": 20 },
 							"strokeWidth": {
 								"value": 1
+							},
+							"strokeOpacity": {
+								"signal": "showMedian ? 1 : 0"
 							}
 						}
 					}
@@ -409,13 +431,14 @@
 					"encode": {
 						"update": {
 							"text": {
-								"signal": "'Median effect (' + (round(datum.median * 1000) / 1000) + ')'"
+								"signal": "!showMedian ? '' :'Median effect (' + (round(datum.median * 1000) / 1000) + ')'"
 							},
 							"x": { "value": 24 },
 							"baseline": { "value": "middle" },
 							"fontSize": { "value": 12 }
 						}
-					}
+					},
+					"opacity": 0
 				}
 			]
 		},
@@ -437,9 +460,11 @@
 						"update": {
 							"x": { "value": 0 },
 							"x2": { "value": 20 },
-
 							"strokeWidth": {
 								"value": 1
+							},
+							"strokeOpacity": {
+								"signal": "showMean ? 1 : 0"
 							}
 						}
 					}
@@ -451,7 +476,7 @@
 					"encode": {
 						"update": {
 							"text": {
-								"signal": "'Mean effect (' + (round(datum.mean * 1000) / 1000) + ')'"
+								"signal": "!showMean ? '' : 'Mean effect (' + (round(datum.mean * 1000) / 1000) + ')'"
 							},
 							"x": { "value": 24 },
 							"baseline": { "value": "middle" },
