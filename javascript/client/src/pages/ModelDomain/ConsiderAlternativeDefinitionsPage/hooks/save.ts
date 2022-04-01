@@ -13,17 +13,15 @@ import { useCallback } from 'react'
 import { wait, withRandomId } from '~utils'
 
 export function useSaveDefinitions(
-	pageType: string,
 	defineQuestion: Experiment,
 	setDefineQuestion: (question: Experiment) => void,
 ): AsyncHandler1<ElementDefinition[]> {
 	return useCallback(
 		async (definitions: ElementDefinition | ElementDefinition[]) => {
-			// definitions = defineQuestion[pageType]?.definition || []
 			if (!definitions) {
 				return
 			}
-			let list = [...((defineQuestion as any)[pageType]?.definition || [])]
+			let list = [...((defineQuestion as any)?.definitions || [])]
 			if (!Array.isArray(definitions)) {
 				list = [...list, withRandomId(definitions)]
 			} else {
@@ -32,15 +30,11 @@ export function useSaveDefinitions(
 
 			const question: Experiment = {
 				...defineQuestion,
-				[pageType]: {
-					...(defineQuestion as any)[pageType],
-					definition: list,
-				},
+				definitions: list,
 			}
-			console.log('Question to save', question)
 			setDefineQuestion(question)
 			await wait(500)
 		},
-		[setDefineQuestion, defineQuestion, pageType],
+		[setDefineQuestion, defineQuestion],
 	)
 }

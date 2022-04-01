@@ -4,6 +4,7 @@
  */
 
 import type { CausalityLevel } from '../causality/index.js'
+import type { DefinitionType } from './DefinitionType.js'
 
 export interface ElementDefinition {
 	id: string
@@ -11,5 +12,5 @@ export interface ElementDefinition {
 	variable: string
 	column?: string
 	level: CausalityLevel
-	type?: string
+	type?: DefinitionType
 }

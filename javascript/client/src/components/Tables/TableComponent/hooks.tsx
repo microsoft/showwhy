@@ -5,6 +5,7 @@
 
 import { Checkbox } from '@fluentui/react'
 import type {
+	DefinitionType,
 	ElementDefinition,
 	Handler,
 	Handler1,
@@ -28,7 +29,7 @@ export function useTableComponent(
 	headers: HeaderData[],
 	definitionToEdit: Maybe<ElementDefinition>,
 	factorToEdit: Maybe<ElementDefinition>,
-	pageType: PageType,
+	type: PageType | DefinitionType,
 	onDelete?: Maybe<Handler1<ElementDefinition>>,
 	onSave?: Maybe<Handler1<ElementDefinition>>,
 	onEdit?: Maybe<Handler1<ElementDefinition>>,
@@ -46,7 +47,7 @@ export function useTableComponent(
 	const { level, description, variable } = useFactorsDefinitionForm({
 		factor: (definitionToEdit || factorToEdit) as ElementDefinition,
 		onChange,
-		pageType,
+		type,
 	})
 	const headersData = useHeadersData(
 		headers,

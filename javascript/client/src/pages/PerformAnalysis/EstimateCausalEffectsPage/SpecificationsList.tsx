@@ -2,18 +2,24 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import type { Estimator, Experiment, RefutationOption } from '@showwhy/types'
+import type {
+	ElementDefinition,
+	Estimator,
+	Maybe,
+	RefutationOption,
+} from '@showwhy/types'
+import { DefinitionType } from '@showwhy/types'
 import { memo } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
 import { RefutationOptionsCallout } from '~components/RefutationOptionsCallout'
 import { Bold, Container, Text, Title } from '~styles'
-import { pluralize } from '~utils'
+import { getDefinitionsByType, pluralize } from '~utils'
 
 interface SpecificationsListProp {
 	estimators: Estimator[]
-	definitions: Experiment
+	definitions: Maybe<ElementDefinition[]>
 	hasConfidenceInterval: boolean
 	refutationOptions: RefutationOption[]
 }
@@ -22,11 +28,23 @@ const causalModels = ['Maximum', 'Minimum']
 export const SpecificationsList: React.FC<SpecificationsListProp> = memo(
 	function SpecificationsList({
 		estimators,
-		definitions,
+		definitions = [],
 		hasConfidenceInterval,
 		refutationOptions,
 	}) {
 		const totalEstimatorsCount = estimators.length
+		const population = getDefinitionsByType(
+			DefinitionType.Population,
+			definitions,
+		).length
+		const exposure = getDefinitionsByType(
+			DefinitionType.Exposure,
+			definitions,
+		).length
+		const outcome = getDefinitionsByType(
+			DefinitionType.Outcome,
+			definitions,
+		).length
 
 		return (
 			<Container>
@@ -34,11 +52,10 @@ export const SpecificationsList: React.FC<SpecificationsListProp> = memo(
 
 				<List>
 					<ListItem data-pw="specification-population">
-						{definitions?.population?.definition ? (
+						{population ? (
 							<Text>
-								<Bold>{definitions.population.definition.length}</Bold>{' '}
-								population definition
-								{pluralize(definitions?.population?.definition.length)}
+								<Bold>{population}</Bold> population definition
+								{pluralize(population)}
 							</Text>
 						) : (
 							<Link to="/define/population">Define population</Link>
@@ -46,11 +63,10 @@ export const SpecificationsList: React.FC<SpecificationsListProp> = memo(
 						​
 					</ListItem>
 					<ListItem data-pw="specification-exposure">
-						{definitions?.exposure?.definition ? (
+						{exposure ? (
 							<Text>
-								<Bold>{definitions.exposure.definition.length}</Bold> exposure
-								definition
-								{pluralize(definitions?.exposure?.definition.length)}
+								<Bold>{exposure}</Bold> exposure definition
+								{pluralize(exposure)}
 							</Text>
 						) : (
 							<Link to="/define/exposure">Define exposure</Link>
@@ -58,11 +74,10 @@ export const SpecificationsList: React.FC<SpecificationsListProp> = memo(
 						​
 					</ListItem>
 					<ListItem data-pw="specification-outcome">
-						{definitions?.outcome?.definition ? (
+						{outcome ? (
 							<Text>
-								<Bold>{definitions.outcome.definition.length}</Bold> outcome
-								definition
-								{pluralize(definitions?.outcome?.definition.length)}
+								<Bold>{outcome}</Bold> outcome definition
+								{pluralize(outcome)}
 							</Text>
 						) : (
 							<Link to="/define/outcome">Define outcome</Link>

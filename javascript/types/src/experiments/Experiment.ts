@@ -4,10 +4,11 @@
  */
 
 import type { Element } from './Element.js'
+import type { ElementDefinition } from './ElementDefinition.js'
 import type { Hypothesis } from './Hypothesis.js'
 
 export interface Experiment {
-	// elements?: Element[]
+	definitions?: ElementDefinition[]
 	population: Element
 	exposure: Element
 	outcome: Element

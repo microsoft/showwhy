@@ -52,7 +52,7 @@ export const EstimateCausalEffects: React.FC = memo(
 				<SpecificationsList
 					hasConfidenceInterval={hasConfidenceInterval}
 					estimators={estimators}
-					definitions={definitions}
+					definitions={definitions?.definitions}
 					refutationOptions={refutationOptions}
 				/>
 				<ContainerFlexRow justifyContent="center">

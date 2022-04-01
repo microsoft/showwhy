@@ -51,14 +51,14 @@ export const ConsiderCausalFactorsPage: React.FC = memo(
 							setIsEditing(false)
 							setFactor(undefined)
 						}}
-						pageType={pageType}
+						type={pageType}
 					/>
 				</Container>
 				<FactorsDefinitionForm
 					factor={!isEditing ? factor : undefined}
 					onAdd={addFactor}
 					showLevel={false}
-					pageType={pageType}
+					type={pageType}
 					onChange={setNewFactor}
 				/>
 				{page ? (

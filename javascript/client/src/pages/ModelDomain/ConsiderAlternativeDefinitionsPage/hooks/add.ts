@@ -3,11 +3,12 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { ElementDefinition, Maybe, Setter } from '@showwhy/types'
-import { CausalityLevel } from '@showwhy/types'
+import type { ElementDefinition } from '@showwhy/types'
 import { useCallback } from 'react'
 
 import { withRandomId } from '~utils'
+
+import { updatedDefinitionList } from './updateDefinitions'
 
 export function useAddDefinition(
 	saveDefinitions: (definitions: ElementDefinition[]) => void,
@@ -18,24 +19,10 @@ export function useAddDefinition(
 			if (!definition.variable?.length) {
 				return
 			}
-			const newDefs = updatedDefinitionList(defs, withRandomId(definition))
-			saveDefinitions(newDefs)
+			definition = withRandomId(definition)
+			const newDefs = updatedDefinitionList(defs, definition)
+			saveDefinitions([...newDefs, definition])
 		},
 		[saveDefinitions, defs],
 	)
-}
-
-function updatedDefinitionList(
-	defs: Maybe<ElementDefinition[]>,
-	newDef: ElementDefinition,
-) {
-	const isNewDefinitionPrimary = newDef.level === CausalityLevel.Primary
-	let result = defs ? [...defs] : []
-
-	// If the new definition is a primary cause, mark other elements as secondary causes
-	if (isNewDefinitionPrimary) {
-		result = result.map(d => ({ ...d, level: CausalityLevel.Secondary }))
-	}
-	result.push(newDef)
-	return result
 }

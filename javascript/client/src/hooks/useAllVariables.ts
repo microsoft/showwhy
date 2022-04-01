@@ -15,11 +15,7 @@ export function useAllVariables(
 	defineQuestion: Experiment,
 ): FactorsOrDefinitions {
 	return useMemo((): FactorsOrDefinitions => {
-		const { population, exposure, outcome } = defineQuestion
-		return causalFactors.concat(
-			...(population?.definition || []),
-			...(exposure?.definition || []),
-			...(outcome?.definition || []),
-		)
+		const definitions = [...(defineQuestion?.definitions || [])]
+		return causalFactors.concat(definitions)
 	}, [causalFactors, defineQuestion])
 }

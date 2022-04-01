@@ -3,38 +3,27 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { ElementDefinition, Maybe, Setter } from '@showwhy/types'
-import { CausalityLevel } from '@showwhy/types'
+import type { ElementDefinition } from '@showwhy/types'
 import { useCallback } from 'react'
 
+import { updatedDefinitionList } from './updateDefinitions'
+
 export function useEditDefinition(
-	setDefinitionToEdit: Setter<Maybe<ElementDefinition>>,
 	saveDefinitions: (definitions: ElementDefinition[]) => void,
 	definitions: ElementDefinition[],
 ): (definition: ElementDefinition) => void {
 	return useCallback(
 		(definition: ElementDefinition) => {
-			const isPrimary = definition.level === CausalityLevel.Primary
-			const newDefinitions =
-				definitions?.map(def => {
-					if (isPrimary) {
-						def = {
-							...def,
-							level: CausalityLevel.Secondary,
-						}
-					}
-					if (def.id === definition.id) {
-						def = {
-							...def,
-							...definition,
-						}
-					}
-					return def
-				}) || []
+			let newDefinitions = updatedDefinitionList(definitions, definition)
+			newDefinitions = newDefinitions.map(d => {
+				if (d.id === definition.id) {
+					return { ...d, ...definition }
+				}
+				return d
+			})
 			saveDefinitions(newDefinitions)
 			return newDefinitions
-			setDefinitionToEdit(undefined)
 		},
-		[setDefinitionToEdit, saveDefinitions],
+		[saveDefinitions, definitions],
 	)
 }

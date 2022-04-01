@@ -5,9 +5,11 @@
 
 import type {
 	CausalFactor,
+	DefinitionType,
 	ElementDefinition,
 	Experiment,
 	Handler,
+	Maybe,
 	OptionalId,
 	Setter,
 } from '@showwhy/types'
@@ -34,19 +36,19 @@ type OnChangeHandler = (f: Partial<CausalFactor | ElementDefinition>) => void
 export function useFactorsDefinitionForm({
 	experiment,
 	factor,
-	pageType,
+	type,
 	showLevel,
 	onAdd = noop,
 	onChange = noop,
 	onDefinitionTypeChange = noop,
 }: {
-	pageType: PageType
+	type?: DefinitionType | PageType
 	experiment?: Experiment
 	factor?: CausalFactor | ElementDefinition
 	showLevel?: boolean
 	onAdd?: OnAddHandler
 	onChange?: OnChangeHandler
-	onDefinitionTypeChange?: (type: string) => void
+	onDefinitionTypeChange?: (type: DefinitionType) => void
 }): {
 	level: JSX.Element
 	variable: JSX.Element
@@ -60,17 +62,17 @@ export function useFactorsDefinitionForm({
 	const location = useLocation()
 
 	const resetFields = useResetFields(setDescription, setVariable, setIsPrimary)
-	const add = useAdd(variable, description, isPrimary, onAdd, resetFields)
+	const add = useAdd(variable, description, isPrimary, type, onAdd, resetFields)
 
 	useEffect(
 		function resetFormOnExperimentChange() {
 			resetFields()
-			if (experiment) {
-				setVariable((experiment as any)[pageType]?.variable ?? '')
-				setIsPrimary(!(experiment as any)[pageType]?.definition?.length)
+			if (experiment && type) {
+				setVariable((experiment as any)[type]?.variable ?? '')
+				setIsPrimary(!(experiment as any)[type]?.definition?.length)
 			}
 		},
-		[pageType, location, experiment, resetFields],
+		[type, location, experiment, resetFields],
 	)
 
 	useEffect(
@@ -103,7 +105,7 @@ export function useFactorsDefinitionForm({
 	const checkbox = useCheckbox(isPrimary, setIsPrimary)
 	const variableField = useVariableField(variable, add, setVariable, factor)
 	const definitionTypeDropdown = useDefinitionTypeDropdown(
-		pageType,
+		type as DefinitionType,
 		onDefinitionTypeChange,
 	)
 	const descriptionBox = useDescriptionBox(
@@ -138,6 +140,7 @@ function useAdd(
 	variable: string,
 	description: string,
 	isPrimary: boolean,
+	type: Maybe<DefinitionType>,
 	onAdd: OnAddHandler,
 	resetFields: Handler,
 ): Handler {
@@ -146,9 +149,10 @@ function useAdd(
 		const newFactor = {
 			variable,
 			description,
+			type,
 			level: isPrimary ? CausalityLevel.Primary : CausalityLevel.Secondary,
 		}
 		onAdd(newFactor)
 		resetFields()
-	}, [resetFields, variable, isPrimary, description, onAdd])
+	}, [resetFields, variable, isPrimary, description, onAdd, type])
 }

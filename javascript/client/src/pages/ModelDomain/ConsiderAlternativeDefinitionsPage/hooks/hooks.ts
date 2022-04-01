@@ -4,16 +4,17 @@
  */
 
 import type {
+	DefinitionType,
 	ElementDefinition,
 	Experiment,
 	Maybe,
 	Setter,
 } from '@showwhy/types'
-import { useEffect, useMemo, useState, useCallback } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 import { usePageType } from '~hooks'
 import { useExperiment, useSetExperiment } from '~state'
-import type { Item, PageType } from '~types'
+import type { Item } from '~types'
 
 import { useAddDefinition } from './add'
 import { useEditDefinition } from './edit'
@@ -25,43 +26,32 @@ export function useBusinessLogic(): {
 	descriptionInterest: string
 	itemList: Item[]
 	definitionToEdit: Maybe<ElementDefinition>
-	pageType: PageType
+	type?: DefinitionType
 	defineQuestion: Experiment
 	addDefinition: (def: ElementDefinition) => void
 	removeDefinition: (def: ElementDefinition) => void
 	editDefinition: (def: ElementDefinition) => void
 	setDefinitionToEdit: Setter<Maybe<ElementDefinition>>
-	handleDefinitionTypeChange: (value: string) => void
+	setDefinitionType: (value: DefinitionType) => void
 } {
 	const defineQuestion = useExperiment()
-	const [definitionType, setDefinitionType] = useState<string>()
+	const [definitionType, setDefinitionType] = useState<DefinitionType>()
 	const pageType = usePageType()
 	const setDefineQuestion = useSetExperiment()
 	const [definitionToEdit, setDefinitionToEdit] = useState<ElementDefinition>()
 
-	const def = useMemo(() => {
+	const definitions = useMemo(() => {
 		console.log('Original defineQuestion', defineQuestion)
-		const types = Object.keys(defineQuestion)
-		let definitions: ElementDefinition[] = []
-		types.forEach(type => {
-			const def = defineQuestion[type]?.definition?.map(definition => ({
-				...definition,
-				type,
-			}))
-			if (def?.length) {
-				definitions = [...definitions, ...def]
-			}
-		})
-		console.log('Memoized definitions', definitions)
-		return definitions
+		console.log('Memoized definitions', defineQuestion.definitions)
+		return defineQuestion.definitions || []
 	}, [defineQuestion])
 
 	// TODO: refactor this to output label for all types
 	const labelInterest = useMemo<string>(() => {
 		const types = Object.keys(defineQuestion)
 		for (const type of types) {
-			if (defineQuestion[type]?.label) {
-				return defineQuestion[type].label
+			if ((defineQuestion as any)[type]?.label) {
+				return (defineQuestion as any)[type].label
 			}
 		}
 		return ''
@@ -73,36 +63,15 @@ export function useBusinessLogic(): {
 		[defineQuestion, pageType],
 	)
 
-	const saveDefinitions = useSaveDefinitions(
-		definitionType,
-		defineQuestion,
-		setDefineQuestion,
-	)
+	const saveDefinitions = useSaveDefinitions(defineQuestion, setDefineQuestion)
 
-	const addDefinition = useAddDefinition(
-		saveDefinitions,
-		def.filter(x => x.type === definitionType),
-	)
+	const addDefinition = useAddDefinition(saveDefinitions, definitions)
 
-	const removeDefinition = useRemoveDefinition(
-		saveDefinitions,
-		def.filter(x => x.type === definitionType),
-	)
+	const removeDefinition = useRemoveDefinition(saveDefinitions, definitions)
 
-	const editDefinition = useEditDefinition(
-		setDefinitionToEdit,
-		saveDefinitions,
-		def.filter(x => x.type === definitionType),
-	)
+	const editDefinition = useEditDefinition(saveDefinitions, definitions)
 
-	const handleDefinitionTypeChange = useCallback(
-		(val: string) => {
-			setDefinitionType(val)
-		},
-		[setDefinitionType],
-	)
-
-	const itemList = useItemList(def)
+	const itemList = useItemList(definitions)
 
 	useEffect(() => {
 		setDefinitionToEdit(undefined)
@@ -113,13 +82,13 @@ export function useBusinessLogic(): {
 		descriptionInterest,
 		itemList,
 		definitionToEdit,
-		pageType: definitionType,
+		type: definitionType,
 		defineQuestion,
 		addDefinition,
 		removeDefinition,
 		editDefinition,
 		setDefinitionToEdit,
-		handleDefinitionTypeChange,
+		setDefinitionType,
 	}
 }
 

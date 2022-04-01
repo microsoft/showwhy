@@ -2,14 +2,14 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import type { ElementDefinition } from '@showwhy/types'
+import type { DefinitionType, ElementDefinition } from '@showwhy/types'
 import { memo } from 'react'
 import styled from 'styled-components'
 
 import { FactorsDefinitionForm } from '~components/FactorsDefinitionForm'
 import { TableComponent } from '~components/Tables/TableComponent'
 import { Container } from '~styles'
-// import type { HeaderData } from '~types'
+import type { HeaderData } from '~types'
 
 import { useBusinessLogic } from './hooks'
 
@@ -27,13 +27,13 @@ export const ConsiderAlternativeDefinitionsPage: React.FC = memo(
 			definitionToEdit,
 			descriptionInterest,
 			itemList,
-			pageType,
+			type,
 			defineQuestion,
 			addDefinition,
 			editDefinition,
 			removeDefinition,
 			setDefinitionToEdit,
-			handleDefinitionTypeChange,
+			setDefinitionType,
 		} = useBusinessLogic()
 
 		return (
@@ -58,16 +58,16 @@ export const ConsiderAlternativeDefinitionsPage: React.FC = memo(
 							onEdit={setDefinitionToEdit}
 							onCancel={() => setDefinitionToEdit(undefined)}
 							onSave={editDefinition}
-							pageType={pageType}
+							type={type as DefinitionType}
 						/>
 						<FactorsDefinitionForm
 							onAdd={definition =>
 								addDefinition(definition as ElementDefinition)
 							}
 							defineQuestion={defineQuestion}
-							pageType={pageType}
+							type={type}
 							showType={true}
-							onDefinitionTypeChange={handleDefinitionTypeChange}
+							onDefinitionTypeChange={setDefinitionType}
 						/>
 					</TableContainer>
 				</FormContainer>

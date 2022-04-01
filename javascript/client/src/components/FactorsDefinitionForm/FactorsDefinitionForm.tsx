@@ -5,6 +5,7 @@
 
 import type {
 	CausalFactor,
+	DefinitionType,
 	ElementDefinition,
 	Experiment,
 	Maybe,
@@ -22,10 +23,10 @@ export const FactorsDefinitionForm: React.FC<{
 	showLevel?: Maybe<boolean>
 	showType?: Maybe<boolean>
 	defineQuestion?: Experiment
-	pageType: PageType
+	type?: DefinitionType | PageType
 	onAdd?: (factor: OptionalId<CausalFactor | ElementDefinition>) => void
 	onChange?: (f: Partial<CausalFactor | ElementDefinition>) => void
-	onDefinitionTypeChange?: (type: string) => void
+	onDefinitionTypeChange?: (type: DefinitionType) => void
 }> = memo(function FactorsDefinitionForm({
 	factor,
 	defineQuestion,
@@ -33,7 +34,7 @@ export const FactorsDefinitionForm: React.FC<{
 	onChange,
 	showLevel = true,
 	showType = false,
-	pageType,
+	type,
 	onDefinitionTypeChange,
 }) {
 	const { level, description, variable, definitionType } =
@@ -42,7 +43,7 @@ export const FactorsDefinitionForm: React.FC<{
 			experiment: defineQuestion,
 			onChange,
 			onAdd,
-			pageType,
+			type,
 			showLevel,
 			onDefinitionTypeChange,
 		})

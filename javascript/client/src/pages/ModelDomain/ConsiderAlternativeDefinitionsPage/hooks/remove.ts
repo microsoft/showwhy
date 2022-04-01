@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { ElementDefinition, Setter } from '@showwhy/types'
+import type { ElementDefinition } from '@showwhy/types'
 import { useCallback } from 'react'
 
 export function useRemoveDefinition(
@@ -13,12 +13,7 @@ export function useRemoveDefinition(
 	return useCallback(
 		(definition: ElementDefinition) => {
 			const newDefinitions =
-				definitions?.filter(def =>
-					definition.id
-						? def.id !== definition.id
-						: def.variable !== definition.variable &&
-						  def.level !== definition.level,
-				) || []
+				definitions?.filter(def => def.id !== definition.id) || []
 			saveDefinitions(newDefinitions)
 			return newDefinitions
 		},

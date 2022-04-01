@@ -5,6 +5,7 @@
 import type { IComboBoxOption } from '@fluentui/react'
 import type {
 	CausalFactor,
+	DefinitionType,
 	ElementDefinition,
 	FlatCausalFactor,
 	Handler,
@@ -23,7 +24,7 @@ export const TableComponent: React.FC<{
 	columns: FlatCausalFactor[] | ElementDefinition[] | Item[]
 	definitionToEdit?: ElementDefinition
 	factorToEdit?: CausalFactor
-	pageType: PageType
+	type: PageType | DefinitionType
 	variables?: IComboBoxOption[]
 	onDelete?: Handler1<ElementDefinition>
 	onEdit?: Handler1<ElementDefinition>
@@ -34,7 +35,7 @@ export const TableComponent: React.FC<{
 	columns,
 	definitionToEdit,
 	factorToEdit,
-	pageType,
+	type,
 	onDelete,
 	onEdit,
 	onCancel,
@@ -45,7 +46,7 @@ export const TableComponent: React.FC<{
 		headers,
 		definitionToEdit,
 		factorToEdit,
-		pageType,
+		type,
 		onDelete,
 		onSave,
 		onEdit,

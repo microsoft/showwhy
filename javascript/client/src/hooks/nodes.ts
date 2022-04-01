@@ -2,7 +2,10 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-
+/*!
+ * Copyright (c) Microsoft. All rights reserved.
+ * Licensed under the MIT license. See LICENSE file in the project.
+ */
 import {
 	buildAlternativeModels,
 	buildEstimators,
@@ -11,8 +14,10 @@ import {
 	buildSpecs,
 } from '@showwhy/builders'
 import type { GraphNodeData, Maybe, NodeRequest } from '@showwhy/types'
-import { GraphNodeType } from '@showwhy/types'
+import { DefinitionType, GraphNodeType } from '@showwhy/types'
 import { useCallback, useMemo } from 'react'
+
+import { getDefinitionsByType } from '~utils'
 
 import { useNodeProperties } from './nodeProperties'
 
@@ -40,9 +45,15 @@ function useGetNodeProperties(): (fileName: string) => Partial<GraphNodeData> {
 
 	return useCallback(
 		(fileName: string) => {
-			const population = definitions?.population?.definition || []
-			const exposure = definitions?.exposure?.definition || []
-			const outcome = definitions?.outcome?.definition || []
+			const population = getDefinitionsByType(
+				DefinitionType.Population,
+				definitions,
+			)
+			const exposure = getDefinitionsByType(
+				DefinitionType.Exposure,
+				definitions,
+			)
+			const outcome = getDefinitionsByType(DefinitionType.Outcome, definitions)
 			const [dataframeName] = fileName.split('.')
 
 			const properties = {
