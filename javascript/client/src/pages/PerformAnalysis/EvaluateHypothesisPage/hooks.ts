@@ -47,10 +47,9 @@ export function useBusinessLogic(): {
 	activeValues: number[]
 	significanceTestResult: Maybe<SignificanceTest>
 	significanceFailed: boolean
-	activeTaskIds: string[]
 	refutationType: RefutationType
 	isCanceled: boolean
-	runSignificance: (taskIds: string[]) => void
+	runSignificance: Handler
 	cancelRun: Handler
 } {
 	const defineQuestion = useExperiment()
@@ -62,8 +61,8 @@ export function useBusinessLogic(): {
 	const specificationCurveConfig = useSpecificationCurveConfig()
 	const refutation = useRefutationType()
 	const defaultDataset = useDefaultDatasetResult()
-	const run = useRunSignificanceTest()
 	const defaultRun = useDefaultRun()
+	const run = useRunSignificanceTest(defaultRun?.id)
 	const { failedRefutationIds } = useSpecificationCurve()
 	const [isCanceled, setIsCanceled] = useState<boolean>(false)
 	const refutationLength = useRefutationLength()
@@ -108,13 +107,10 @@ export function useBusinessLogic(): {
 		run().cancel()
 	}, [run, setIsCanceled])
 
-	const runSignificance = useCallback(
-		(taskIds: string[]) => {
-			const nodes = buildSignificanceTestsNode(taskIds)
-			run().execute(nodes, OrchestratorType.ConfidenceInterval)
-		},
-		[run],
-	)
+	const runSignificance = useCallback(() => {
+		const nodes = buildSignificanceTestsNode(activeTaskIds)
+		run().execute(nodes, OrchestratorType.ConfidenceInterval)
+	}, [run, activeTaskIds])
 
 	const significanceFailed = useMemo((): boolean => {
 		return (
@@ -134,7 +130,6 @@ export function useBusinessLogic(): {
 		activeValues,
 		significanceTestResult,
 		significanceFailed,
-		activeTaskIds,
 		refutationType,
 		isCanceled,
 		runSignificance,

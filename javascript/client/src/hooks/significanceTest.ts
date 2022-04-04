@@ -18,18 +18,18 @@ import { api } from '~resources'
 import { useSetSignificanceTest, useSignificanceTest } from '~state'
 import { getConfidenceInterval, percentage } from '~utils'
 
-export function useRunSignificanceTest(): any {
-	const defaultRun = useDefaultRun()
-	const updateSignificanceTest = useUpdateSignificanceTests(defaultRun?.id)
+export function useRunSignificanceTest(runId: Maybe<string>): () => any {
+	const updateSignificanceTest = useUpdateSignificanceTests(runId)
 
 	const onUpdate = useCallback(
 		(status: SignificanceTestResponse) => {
 			if (isStatus(status.runtimeStatus, NodeResponseStatus.Terminated)) {
 				return updateSignificanceTest()
 			}
-			if (!defaultRun) return undefined
+
+			if (!runId) return null
 			const result = {
-				runId: defaultRun.id,
+				runId,
 				simulation_completed: status.simulation_completed || 0,
 				test_results: status.test_results,
 				total_simulations: status.total_simulations || 0,
@@ -41,22 +41,26 @@ export function useRunSignificanceTest(): any {
 			}
 			updateSignificanceTest(result)
 		},
-		[defaultRun, updateSignificanceTest],
+		[updateSignificanceTest, runId],
 	)
 
 	const onStart = useCallback(
 		(nodeResponse: NodeResponse) => {
-			const initialRun = getConfidenceInterval(
-				defaultRun?.id as string,
-				nodeResponse,
-			)
+			const initialRun = getConfidenceInterval(runId as string, nodeResponse)
 			updateSignificanceTest(initialRun)
 		},
-		[updateSignificanceTest, defaultRun],
+		[updateSignificanceTest, runId],
 	)
 
 	const run = useCallback((): any => {
-		return getConfidenceOrchestrator(api, onStart, onUpdate)
+		return getConfidenceOrchestrator(
+			api,
+			onStart,
+			onUpdate,
+			undefined,
+			undefined,
+			true,
+		)
 	}, [onStart, onUpdate])
 
 	return run
