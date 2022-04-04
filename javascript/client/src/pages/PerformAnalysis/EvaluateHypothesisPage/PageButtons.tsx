@@ -14,13 +14,13 @@ import type { RunHistory } from '~types'
 export const PageButtons: React.FC<{
 	activeTaskIds: string[]
 	defaultRun: Maybe<RunHistory>
-	significanceTestsResult: Maybe<SignificanceTest>
+	significanceTestResult: Maybe<SignificanceTest>
 	significanceFailed: boolean
 	runSignificance: (taskIds: string[]) => void
 }> = memo(function PageButtons({
 	activeTaskIds,
 	defaultRun,
-	significanceTestsResult,
+	significanceTestResult,
 	significanceFailed,
 	runSignificance,
 }) {
@@ -29,8 +29,8 @@ export const PageButtons: React.FC<{
 			<ContainerFlexColumn>
 				<ButtonWithMargin
 					disabled={
-						(!!significanceTestsResult &&
-							significanceTestsResult &&
+						(!!significanceTestResult &&
+							significanceTestResult &&
 							!significanceFailed) ||
 						!defaultRun
 					}

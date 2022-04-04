@@ -31,6 +31,7 @@ import {
 	useSetProjectFiles,
 	useSetRefutationType,
 	useSetRunHistory,
+	useSetSignificanceTest,
 	useSetStepStatuses,
 	useSetSubjectIdentifier,
 	useSetTablesPrepSpecification,
@@ -70,6 +71,7 @@ export function useLoadProject(
 	const setAllStepStatus = useSetStepStatuses()
 	const updateCollection = useUpdateCollection()
 	const updateRunHistory = useUpdateRunHistory()
+	const setSignificanceTests = useSetSignificanceTest()
 	const setTablePrepSpec = useSetTablesPrepSpecification()
 	const setOutputTablePrep = useSetOutputTablePrep()
 	const store = useStore()
@@ -104,6 +106,7 @@ export function useLoadProject(
 				results,
 				notebooks = [],
 				runHistory = [],
+				significanceTests = [],
 			} = zip as ZipData
 
 			const {
@@ -161,6 +164,7 @@ export function useLoadProject(
 			setAllStepStatus(completed, StepStatus.Done)
 			updateCollection(workspace, tables, notebooks)
 			updateRunHistory(runHistory)
+			setSignificanceTests(significanceTests)
 			setConfigJson(workspace)
 		},
 		[
@@ -183,6 +187,7 @@ export function useLoadProject(
 			pipeline,
 			store,
 			setConfigJson,
+			setSignificanceTests,
 		],
 	)
 }

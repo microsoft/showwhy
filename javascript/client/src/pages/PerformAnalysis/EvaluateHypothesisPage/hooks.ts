@@ -17,11 +17,12 @@ import { NodeResponseStatus } from '@showwhy/types'
 import { useCallback, useMemo, useState } from 'react'
 
 import {
+	useActualSignificanceTest,
 	useAlternativeModels,
 	useCausalEffects,
 	useDefaultRun,
 	useRefutationLength,
-	useRunConfidenceInterval,
+	useRunSignificanceTest,
 	useSpecificationCurve,
 } from '~hooks'
 import {
@@ -29,7 +30,6 @@ import {
 	useExperiment,
 	usePrimarySpecificationConfig,
 	useRefutationType,
-	useSignificanceTests,
 	useSpecificationCurveConfig,
 } from '~state'
 import type { DefaultDatasetResult, RunHistory, Specification } from '~types'
@@ -45,7 +45,7 @@ export function useBusinessLogic(): {
 	refutationLength: number
 	defineQuestion: Experiment
 	activeValues: number[]
-	significanceTestsResult: Maybe<SignificanceTest>
+	significanceTestResult: Maybe<SignificanceTest>
 	significanceFailed: boolean
 	activeTaskIds: string[]
 	refutationType: RefutationType
@@ -62,12 +62,12 @@ export function useBusinessLogic(): {
 	const specificationCurveConfig = useSpecificationCurveConfig()
 	const refutation = useRefutationType()
 	const defaultDataset = useDefaultDatasetResult()
-	const run = useRunConfidenceInterval()
+	const run = useRunSignificanceTest()
 	const defaultRun = useDefaultRun()
 	const { failedRefutationIds } = useSpecificationCurve()
 	const [isCanceled, setIsCanceled] = useState<boolean>(false)
 	const refutationLength = useRefutationLength()
-	const significanceTestsResult = useSignificanceTests(defaultRun?.id as string)
+	const significanceTestResult = useActualSignificanceTest()
 
 	const refutationType = useMemo((): RefutationType => {
 		if (defaultRun && defaultRun?.refutationType) {
@@ -118,10 +118,10 @@ export function useBusinessLogic(): {
 
 	const significanceFailed = useMemo((): boolean => {
 		return (
-			significanceTestsResult?.status?.toLowerCase() ===
+			significanceTestResult?.status?.toLowerCase() ===
 			NodeResponseStatus.Failed
 		)
-	}, [significanceTestsResult])
+	}, [significanceTestResult])
 
 	return {
 		alternativeModels,
@@ -132,7 +132,7 @@ export function useBusinessLogic(): {
 		refutationLength,
 		defineQuestion,
 		activeValues,
-		significanceTestsResult,
+		significanceTestResult,
 		significanceFailed,
 		activeTaskIds,
 		refutationType,

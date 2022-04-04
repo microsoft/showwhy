@@ -16,7 +16,7 @@ import {
 	guessDelimiter,
 	toZip,
 } from '@data-wrangling-components/utilities'
-import type { Maybe } from '@showwhy/types'
+import type { Maybe, SignificanceTest } from '@showwhy/types'
 import type ColumnTable from 'arquero/dist/types/table/column-table'
 
 import type { DataTableFileDefinition, RunHistory, ZipData } from '~types'
@@ -61,6 +61,7 @@ export async function groupFilesByType(
 	const resultsRegExp = /result(.+).(c|t)sv/gi
 	const configRegExp = /config(.*).json$/gi
 	const runHistoryRegExp = /run(.*)history(.*).json$/gi
+	const significanceTestRegExp = /significance(.*)tests(.*).json$/gi
 	const isResult = (filename: string) => resultsRegExp.test(filename)
 	const tableFiles: BaseFile[] = fileCollection.list(FileType.table)
 
@@ -117,6 +118,14 @@ export async function groupFilesByType(
 		const json = await runHistoryFile.toJson()
 		filesByType['runHistory'] = json as RunHistory[]
 		defaultResult = json['defaultResult']
+	}
+	const significanceTestsFile = jsonFiles.find(f =>
+		significanceTestRegExp.test(f.name),
+	)
+	if (significanceTestsFile) {
+		const json = await significanceTestsFile.toJson()
+		filesByType['significanceTests'] = json as SignificanceTest[]
+		defaultResult = json['significanceTests']
 	}
 	return filesByType
 }
