@@ -2,6 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import { Pivot as FUIPivot, PivotItem } from '@fluentui/react'
 import type { DefinitionType, ElementDefinition } from '@showwhy/types'
 import { memo } from 'react'
 import styled from 'styled-components'
@@ -23,31 +24,32 @@ const tableHeadersList: HeaderData[] = [
 export const ConsiderAlternativeDefinitionsPage: React.FC = memo(
 	function ConsiderAlternativeDefinitionsPage() {
 		const {
-			labelInterest,
 			definitionToEdit,
-			descriptionInterest,
 			itemList,
 			type,
 			defineQuestion,
+			pivotData,
 			addDefinition,
 			editDefinition,
 			removeDefinition,
 			setDefinitionToEdit,
-			setDefinitionType,
+			setDefinition,
 		} = useBusinessLogic()
 
 		return (
 			<Container>
-				{/* <Container>
-					<Div>
-						<FieldTitle data-pw="title">{pageType}: &nbsp;</FieldTitle>
-						<DetailsText>{labelInterest}</DetailsText>
-					</Div>
-					<DetailsText>{descriptionInterest}</DetailsText>
-				</Container> */}
+				{pivotData.length ?
+					<Pivot aria-label="Alternative Definitions Interest labels and description">
+						{pivotData.map((item) => (
+							<PivotItem key={item.title} headerText={item.title}>
+								<DetailsText>{item.label}</DetailsText>
+								<DetailsText>{item.description}</DetailsText>
+							</PivotItem>
+						))}
+					</Pivot>
+				: null}
 
 				<FormContainer>
-					{/* <DefinitionTitle>Alternative {pageType} definitions</DefinitionTitle> */}
 					<DefinitionTitle>Alternative definitions</DefinitionTitle>
 					<TableContainer>
 						<TableComponent
@@ -67,7 +69,7 @@ export const ConsiderAlternativeDefinitionsPage: React.FC = memo(
 							defineQuestion={defineQuestion}
 							type={type}
 							showType={true}
-							onDefinitionTypeChange={setDefinitionType}
+							onChange={setDefinition}
 						/>
 					</TableContainer>
 				</FormContainer>
@@ -83,17 +85,11 @@ const TableContainer = styled.div`
 const DetailsText = styled.span`
 	display: flex;
 	flex-direction: column;
-	margin-top: 1.1rem;
+	margin-top: 0.5rem;
 `
 
-const Div = styled.div`
-	display: flex;
-	align-items: center;
-`
-
-const FieldTitle = styled.h4`
-	margin-bottom: unset;
-	text-transform: capitalize;
+const Pivot = styled(FUIPivot)`
+	margin: 0 0 1.5rem;
 `
 
 const DefinitionTitle = styled.h4``

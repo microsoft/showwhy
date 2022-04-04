@@ -57,7 +57,6 @@ export function useVariableField(
 				placeholder="Type a variable"
 				data-pw="factors-form-variable-name"
 				onKeyPress={!factor ? handler : undefined}
-				onBlur={!factor ? () => add() : undefined}
 			/>
 		)
 	}, [variable, setVariable, add, factor])
@@ -82,28 +81,30 @@ export function useDescriptionBox(
 					resizable={false}
 					data-pw="factors-form-description"
 					onKeyPress={!factor ? handler : undefined}
-					onBlur={!factor ? () => add() : undefined}
 				/>
-				{!factor ? (
-					<ButtonContainer>
-						<AddButton
-							disabled={!variable?.length}
-							onClick={add}
-							data-pw="factors-form-add-button"
-						>
-							Add
-						</AddButton>
-					</ButtonContainer>
-				) : null}
 			</DetailsContainer>
 		)
 	}, [description, setDescription, variable, add, factor])
 }
 
-export function useHasLevel(
-	factor?: CausalFactor | ElementDefinition,
-): boolean {
-	return useMemo(() => !!factor?.hasOwnProperty('level'), [factor])
+export function useAddButton(
+	add: Handler,
+	variable: string,
+	factor?: CausalFactor,
+): JSX.Element | null {
+	return (
+		!factor ? (
+			<ButtonContainer>
+				<AddButton
+					disabled={!variable?.length}
+					onClick={add}
+					data-pw="factors-form-add-button"
+				>
+					Add
+				</AddButton>
+			</ButtonContainer>
+		) : null
+	)
 }
 
 export function useDefinitionTypeDropdown(
@@ -112,29 +113,32 @@ export function useDefinitionTypeDropdown(
 ): JSX.Element {
 	const options: IDropdownOption[] = [
 		{ key: DefinitionType.Population, text: 'Population' },
-		{ key: DefinitionType.Population, text: 'Exposure' },
+		{ key: DefinitionType.Exposure, text: 'Exposure' },
 		{ key: DefinitionType.Outcome, text: 'Outcome' },
 	]
+
 	return (
-		<Dropdown
-			selectedKey={definitionType || undefined}
-			// eslint-disable-next-line react/jsx-no-bind
-			onChange={
-				onChange ? (e, i) => onChange(i?.key as DefinitionType) : undefined
-			}
-			placeholder="Select a definition type"
-			options={options}
-		/>
+		<DropdownWrapper>
+			<Dropdown
+				selectedKey={definitionType || undefined}
+				// eslint-disable-next-line react/jsx-no-bind
+				onChange={
+					onChange ? (e, i) => onChange(i?.key as DefinitionType) : undefined
+				}
+				placeholder="Select a type"
+				options={options}
+			/>
+		</DropdownWrapper>
 	)
 }
 
-const DetailsContainer = styled.div`
-	display: grid;
-	grid-template-columns: 85% 15%;
-	justify-content: center;
-	gap: 1rem;
-	padding: 0 0.5rem;
-`
+export function useHasLevel(
+	factor?: CausalFactor | ElementDefinition,
+): boolean {
+	return useMemo(() => !!factor?.hasOwnProperty('level'), [factor])
+}
+
+const DetailsContainer = styled.div``
 
 const Field = styled(TextField)`
 	width: 100%;
@@ -151,4 +155,8 @@ const AddButton = styled(DefaultButton)``
 const ButtonContainer = styled.div`
 	text-align: center;
 	padding-right: 8px;
+`
+
+const DropdownWrapper = styled.div`
+	padding: 0 0.5rem
 `

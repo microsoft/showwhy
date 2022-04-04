@@ -21,6 +21,7 @@ import type { PageType } from '~types'
 import { noop } from '~utils'
 
 import {
+	useAddButton,
 	useCheckbox,
 	useDefinitionTypeDropdown,
 	useDescriptionBox,
@@ -40,7 +41,6 @@ export function useFactorsDefinitionForm({
 	showLevel,
 	onAdd = noop,
 	onChange = noop,
-	onDefinitionTypeChange = noop,
 }: {
 	type?: DefinitionType | PageType
 	experiment?: Experiment
@@ -48,21 +48,22 @@ export function useFactorsDefinitionForm({
 	showLevel?: boolean
 	onAdd?: OnAddHandler
 	onChange?: OnChangeHandler
-	onDefinitionTypeChange?: (type: DefinitionType) => void
 }): {
 	level: JSX.Element
 	variable: JSX.Element
 	description: JSX.Element
 	definitionType: JSX.Element
+	addButton: JSX.Element | null
 } {
 	const [description, setDescription] = useState<string>('')
 	const [variable, setVariable] = useState<string>('')
 	const [isPrimary, setIsPrimary] = useState<boolean>(false)
+	const [definitionType, setDefinitionType] = useState<Maybe<DefinitionType>>()
 	const hasLevel = useHasLevel(factor) || showLevel
 	const location = useLocation()
 
-	const resetFields = useResetFields(setDescription, setVariable, setIsPrimary)
-	const add = useAdd(variable, description, isPrimary, type, onAdd, resetFields)
+	const resetFields = useResetFields(setDescription, setVariable, setIsPrimary, setDefinitionType)
+	const add = useAdd(variable, description, isPrimary, type as DefinitionType, onAdd, resetFields)
 
 	useEffect(
 		function resetFormOnExperimentChange() {
@@ -80,6 +81,7 @@ export function useFactorsDefinitionForm({
 			if (factor) {
 				setVariable(factor.variable)
 				setDescription(factor.description || '')
+				setDefinitionType(factor.type)
 				hasLevel && setIsPrimary(factor.level === CausalityLevel.Primary)
 			}
 		},
@@ -92,6 +94,7 @@ export function useFactorsDefinitionForm({
 				...factor,
 				variable,
 				description,
+				type: definitionType
 			}
 			hasLevel &&
 				(edited.level = isPrimary
@@ -99,15 +102,16 @@ export function useFactorsDefinitionForm({
 					: CausalityLevel.Secondary)
 			onChange(edited)
 		},
-		[variable, isPrimary, description, factor, hasLevel, onChange],
+		[variable, isPrimary, description, definitionType, factor, hasLevel, onChange],
 	)
 
 	const checkbox = useCheckbox(isPrimary, setIsPrimary)
 	const variableField = useVariableField(variable, add, setVariable, factor)
 	const definitionTypeDropdown = useDefinitionTypeDropdown(
-		type as DefinitionType,
-		onDefinitionTypeChange,
+		definitionType as DefinitionType,
+		setDefinitionType,
 	)
+	const addButton = useAddButton(add, variable, factor)
 	const descriptionBox = useDescriptionBox(
 		description,
 		setDescription,
@@ -121,6 +125,7 @@ export function useFactorsDefinitionForm({
 		variable: variableField,
 		description: descriptionBox,
 		definitionType: definitionTypeDropdown,
+		addButton,
 	}
 }
 
@@ -128,11 +133,13 @@ function useResetFields(
 	setDescription: Setter<string>,
 	setVariable: Setter<string>,
 	setIsPrimary: Setter<boolean>,
+	setDefinitionType: Setter<Maybe<DefinitionType>>,
 ): Handler {
 	return useCallback(() => {
 		setDescription('')
 		setVariable('')
 		setIsPrimary(false)
+		setDefinitionType(undefined)
 	}, [setDescription, setIsPrimary, setVariable])
 }
 

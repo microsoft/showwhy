@@ -4,15 +4,15 @@
  */
 
 import type {
-	DefinitionType,
 	ElementDefinition,
 	Experiment,
 	Maybe,
 	Setter,
 } from '@showwhy/types'
+import { DefinitionType } from '@showwhy/types'
 import { useEffect, useMemo, useState } from 'react'
 
-import { usePageType } from '~hooks'
+import { useAddOnLeavePage } from '~hooks'
 import { useExperiment, useSetExperiment } from '~state'
 import type { Item } from '~types'
 
@@ -21,47 +21,34 @@ import { useEditDefinition } from './edit'
 import { useRemoveDefinition } from './remove'
 import { useSaveDefinitions } from './save'
 
+interface PivotData {
+	title: string
+	label: string
+	description: string
+}
+
 export function useBusinessLogic(): {
-	labelInterest: string
-	descriptionInterest: string
 	itemList: Item[]
 	definitionToEdit: Maybe<ElementDefinition>
 	type?: DefinitionType
 	defineQuestion: Experiment
+	pivotData: PivotData[]
 	addDefinition: (def: ElementDefinition) => void
 	removeDefinition: (def: ElementDefinition) => void
 	editDefinition: (def: ElementDefinition) => void
 	setDefinitionToEdit: Setter<Maybe<ElementDefinition>>
-	setDefinitionType: (value: DefinitionType) => void
+	setDefinition: (def: Partial<ElementDefinition>) => void
 } {
 	const defineQuestion = useExperiment()
-	const [definitionType, setDefinitionType] = useState<DefinitionType>()
-	const pageType = usePageType()
 	const setDefineQuestion = useSetExperiment()
 	const [definitionToEdit, setDefinitionToEdit] = useState<ElementDefinition>()
+	const [definition, setDefinition] = useState<Partial<ElementDefinition>>()
 
 	const definitions = useMemo(() => {
-		console.log('Original defineQuestion', defineQuestion)
-		console.log('Memoized definitions', defineQuestion.definitions)
 		return defineQuestion.definitions || []
 	}, [defineQuestion])
 
-	// TODO: refactor this to output label for all types
-	const labelInterest = useMemo<string>(() => {
-		const types = Object.keys(defineQuestion)
-		for (const type of types) {
-			if ((defineQuestion as any)[type]?.label) {
-				return (defineQuestion as any)[type].label
-			}
-		}
-		return ''
-	}, [defineQuestion])
-
-	// TODO: refactor this to output description for all types
-	const descriptionInterest = useMemo<string>(
-		() => (defineQuestion as any)[pageType]?.description || '',
-		[defineQuestion, pageType],
-	)
+	const pivotData: PivotData[] = usePivotData(defineQuestion)
 
 	const saveDefinitions = useSaveDefinitions(defineQuestion, setDefineQuestion)
 
@@ -75,20 +62,20 @@ export function useBusinessLogic(): {
 
 	useEffect(() => {
 		setDefinitionToEdit(undefined)
-	}, [defineQuestion, definitionType, setDefinitionToEdit])
+	}, [defineQuestion, setDefinitionToEdit])
+	useAddOnLeavePage<ElementDefinition>(definition as ElementDefinition, addDefinition)
 
 	return {
-		labelInterest,
-		descriptionInterest,
 		itemList,
 		definitionToEdit,
-		type: definitionType,
+		type: definition?.type,
 		defineQuestion,
+		pivotData,
 		addDefinition,
 		removeDefinition,
 		editDefinition,
 		setDefinitionToEdit,
-		setDefinitionType,
+		setDefinition
 	}
 }
 
@@ -100,4 +87,19 @@ function useItemList(definitions: ElementDefinition[] = []): Item[] {
 			return newObj
 		})
 	}, [definitions])
+}
+
+function usePivotData(defineQuestion: Experiment): PivotData[] {
+	return useMemo(() => {
+		const types = Object.keys(DefinitionType)
+		const pivotData = types.reduce((acc: PivotData[], curr: string) => {
+			const type = curr.toLowerCase()
+			if (defineQuestion.hasOwnProperty(type)) {
+				const { label = '', description = '' } = (defineQuestion as any)[type]
+				return [...acc, {title: curr, label, description }]
+			}
+			return acc
+		}, [])
+		return pivotData
+	}, [defineQuestion])
 }

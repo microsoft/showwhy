@@ -44,7 +44,7 @@ export function useTableComponent(
 	const [editedFactor, setEditedFactor] = useState<Maybe<ElementDefinition>>()
 	const setter = definitionToEdit ? setEditedDefinition : setEditedFactor
 	const onChange = useOnChange(setter, definitionToEdit || factorToEdit)
-	const { level, description, variable } = useFactorsDefinitionForm({
+	const { level, description, variable, definitionType } = useFactorsDefinitionForm({
 		factor: (definitionToEdit || factorToEdit) as ElementDefinition,
 		onChange,
 		type,
@@ -64,6 +64,7 @@ export function useTableComponent(
 			if (definitionToEdit?.id === item.id) {
 				obj = {
 					level,
+					type: definitionType,
 					description,
 					variable,
 					actions: {
@@ -163,11 +164,12 @@ function useCustomColumnsWidth(headersData: HeaderData[]) {
 		const hasLevel = props.includes('level')
 		const colWidth = [
 			{ fieldName: 'variable', width: `${hasLevel ? '25' : '30'}%` },
-			{ fieldName: 'description', width: `${hasLevel ? '50' : '60'}%` },
+			{ fieldName: 'type', width: '13%' },
+			{ fieldName: 'description', width: `${hasLevel ? '40' : '60'}%` },
 			{ fieldName: 'actions', width: '10%' },
 		]
 		if (hasLevel) {
-			colWidth.push({ fieldName: 'level', width: '15%' })
+			colWidth.push({ fieldName: 'level', width: '12%' })
 		}
 		return colWidth
 	}, [headersData])

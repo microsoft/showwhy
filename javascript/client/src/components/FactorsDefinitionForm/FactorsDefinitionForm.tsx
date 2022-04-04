@@ -26,7 +26,6 @@ export const FactorsDefinitionForm: React.FC<{
 	type?: DefinitionType | PageType
 	onAdd?: (factor: OptionalId<CausalFactor | ElementDefinition>) => void
 	onChange?: (f: Partial<CausalFactor | ElementDefinition>) => void
-	onDefinitionTypeChange?: (type: DefinitionType) => void
 }> = memo(function FactorsDefinitionForm({
 	factor,
 	defineQuestion,
@@ -35,9 +34,8 @@ export const FactorsDefinitionForm: React.FC<{
 	showLevel = true,
 	showType = false,
 	type,
-	onDefinitionTypeChange,
 }) {
-	const { level, description, variable, definitionType } =
+	const { level, description, variable, definitionType, addButton } =
 		useFactorsDefinitionForm({
 			factor,
 			experiment: defineQuestion,
@@ -45,7 +43,6 @@ export const FactorsDefinitionForm: React.FC<{
 			onAdd,
 			type,
 			showLevel,
-			onDefinitionTypeChange,
 		})
 
 	return (
@@ -54,6 +51,7 @@ export const FactorsDefinitionForm: React.FC<{
 			{showType ? definitionType : null}
 			{variable}
 			{description}
+			{addButton}
 		</Container>
 	)
 })
@@ -61,7 +59,7 @@ export const FactorsDefinitionForm: React.FC<{
 const Container = styled.form<{ showLevel: Maybe<boolean> }>`
 	display: grid;
 	grid-template-columns: ${({ showLevel }) =>
-		showLevel ? '15% 25% 60%' : '30% 70%'};
+		showLevel ? '12% 13% 25% 40% 10%' : '30% 60% 10%'};
 	align-items: center;
 	padding: 0.5rem 0.2rem;
 	border-radius: 0 0 3px 3px;
