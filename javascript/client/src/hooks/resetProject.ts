@@ -24,6 +24,7 @@ import {
 	useResetRunHistory,
 	useResetSelectedFile,
 	useResetSelectedProject,
+	useResetSignificanceTest,
 	useResetSpecCount,
 	useResetSpecificationCurveConfig,
 	useResetSubjectIdentifier,
@@ -52,6 +53,7 @@ export function useResetProject(): Handler {
 	const resetNodeResponse = useResetNodeResponse()
 	const resetSelectedProject = useResetSelectedProject()
 	const resetSpecCount = useResetSpecCount()
+	const resetSignificanteTest = useResetSignificanceTest()
 
 	return useCallback(() => {
 		resetProjectFiles()
@@ -75,6 +77,7 @@ export function useResetProject(): Handler {
 		resetNodeResponse()
 		resetSelectedProject()
 		resetSpecCount()
+		resetSignificanteTest()
 	}, [
 		resetProjectFiles,
 		resetSelectedFile,
@@ -97,5 +100,6 @@ export function useResetProject(): Handler {
 		resetNodeResponse,
 		resetSelectedProject,
 		resetSpecCount,
+		resetSignificanteTest,
 	])
 }

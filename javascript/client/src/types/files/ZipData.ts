@@ -4,6 +4,7 @@
  */
 
 import type { BaseFile, Json } from '@data-wrangling-components/utilities'
+import type { SignificanceTest } from '@showwhy/types'
 
 import type { RunHistory } from '~types'
 
@@ -17,4 +18,5 @@ export interface ZipData {
 	}
 	name?: string
 	runHistory?: RunHistory[]
+	significanceTests?: SignificanceTest[]
 }

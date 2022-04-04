@@ -3,48 +3,63 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { DefaultButton } from '@fluentui/react'
-import type { Maybe, SignificanceTest } from '@showwhy/types'
-import { memo } from 'react'
+import { isStatus } from '@showwhy/api-client'
+import type {
+	Handler,
+	Maybe,
+	SignificanceTest} from '@showwhy/types';
+import {
+	NodeResponseStatus
+} from '@showwhy/types'
+import { memo, useMemo } from 'react'
 import styled from 'styled-components'
 
 import { ErrorMessage } from '~components/ErrorMessage'
-import { ContainerFlexColumn, ContainerFlexRow } from '~styles'
 import type { RunHistory } from '~types'
 
 export const PageButtons: React.FC<{
-	activeTaskIds: string[]
 	defaultRun: Maybe<RunHistory>
-	significanceTestsResult: Maybe<SignificanceTest>
+	significanceTestResult: Maybe<SignificanceTest>
 	significanceFailed: boolean
-	runSignificance: (taskIds: string[]) => void
+	runSignificance: Handler
 }> = memo(function PageButtons({
-	activeTaskIds,
 	defaultRun,
-	significanceTestsResult,
+	significanceTestResult,
 	significanceFailed,
 	runSignificance,
 }) {
+	const showButton = useMemo((): any => {
+		return (
+			!significanceTestResult ||
+			(significanceTestResult.status &&
+				isStatus(significanceTestResult?.status, NodeResponseStatus.Failed))
+		)
+	}, [significanceTestResult])
+
+	debugger
 	return (
-		<ContainerFlexRow marginBottom justifyContent="space-between">
-			<ContainerFlexColumn>
+		<Container>
+			{showButton && (
 				<ButtonWithMargin
-					disabled={
-						(!!significanceTestsResult &&
-							significanceTestsResult &&
-							!significanceFailed) ||
-						!defaultRun
-					}
-					onClick={() => runSignificance(activeTaskIds)}
+					disabled={!defaultRun}
+					onClick={runSignificance}
 					data-pw="run-significance-test-button"
 				>
 					Run significance test
 				</ButtonWithMargin>
-				{significanceFailed && <ErrorMessage></ErrorMessage>}
-			</ContainerFlexColumn>
-		</ContainerFlexRow>
+			)}
+
+			{significanceFailed && <ErrorMessage></ErrorMessage>}
+		</Container>
 	)
 })
 
 const ButtonWithMargin = styled(DefaultButton)`
 	margin-bottom: 4px;
+`
+
+const Container = styled.div`
+	column-gap: 10px;
+	display: flex;
+	margin-top: 1em;
 `

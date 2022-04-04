@@ -31,6 +31,7 @@ import {
 	useProjectFiles,
 	useRefutationType,
 	useRunHistory,
+	useSignificanceTest,
 	useSubjectIdentifier,
 	useTablesPrepSpecification,
 } from '~state'
@@ -185,6 +186,22 @@ function useRunHistoryFile(): Maybe<FileWithPath> {
 	}, [rh])
 }
 
+function useSignificanceTestFile(): Maybe<FileWithPath> {
+	const significanceTest = useSignificanceTest()
+	return useMemo(() => {
+		if (significanceTest?.length) {
+			const file = createFileWithPath(
+				new Blob([JSON.stringify(significanceTest, null, 4)]),
+				{
+					name: 'significance_tests.json',
+				},
+			)
+			return file
+		}
+		return undefined
+	}, [significanceTest])
+}
+
 function useDownload(
 	fileCollection: FileCollection,
 	defineQuestion: Experiment,
@@ -194,6 +211,8 @@ function useDownload(
 	const getTables = useTables(fileCollection)
 	const notebookResult = useResult(DownloadType.jupyter)
 	const runHistoryFile = useRunHistoryFile()
+	const significanceTestsFile = useSignificanceTestFile()
+
 	return useCallback(
 		async (workspace: Partial<Workspace>) => {
 			const tables = getTables(outputTable())
@@ -221,6 +240,9 @@ function useDownload(
 			if (runHistoryFile) {
 				files.push(runHistoryFile)
 			}
+			if (significanceTestsFile) {
+				files.push(significanceTestsFile)
+			}
 			const copy = fileCollection.copy()
 			const { exposure, outcome } = defineQuestion
 			let zipName = copy.name
@@ -242,6 +264,7 @@ function useDownload(
 			outputTable,
 			notebookResult,
 			runHistoryFile,
+			significanceTestsFile,
 		],
 	)
 }

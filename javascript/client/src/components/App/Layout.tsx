@@ -100,7 +100,7 @@ const ChildrenContainer = styled.div<{ noPadding: boolean; url?: string }>`
 	padding: ${({ noPadding }) => (noPadding ? '0' : '0 16px')};
 	height: 95%;
 	overflow-y: auto;
-	margin-bottom: ${({ url }) => (url === '/prepare/data' ? 4 : 6)}rem;
+	margin-bottom: ${({ url }) => (url === '/prepare/data' ? 4 : 5)}rem;
 `
 
 const ControlsContainer = styled.div`
