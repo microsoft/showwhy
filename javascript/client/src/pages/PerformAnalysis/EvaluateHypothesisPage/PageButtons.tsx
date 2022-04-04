@@ -3,8 +3,14 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { DefaultButton } from '@fluentui/react'
-import { isProcessingStatus } from '@showwhy/api-client'
-import type { Handler, Maybe, SignificanceTest } from '@showwhy/types'
+import { isStatus } from '@showwhy/api-client'
+import type {
+	Handler,
+	Maybe,
+	SignificanceTest} from '@showwhy/types';
+import {
+	NodeResponseStatus
+} from '@showwhy/types'
 import { memo, useMemo } from 'react'
 import styled from 'styled-components'
 
@@ -26,7 +32,7 @@ export const PageButtons: React.FC<{
 		return (
 			!significanceTestResult ||
 			(significanceTestResult.status &&
-				!isProcessingStatus(significanceTestResult?.status))
+				isStatus(significanceTestResult?.status, NodeResponseStatus.Failed))
 		)
 	}, [significanceTestResult])
 
