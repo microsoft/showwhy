@@ -18,7 +18,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 
 import type { PageType } from '~types'
-import { noop } from '~utils'
+import { getDefinitionsByType, noop } from '~utils'
 
 import {
 	useAddButton,
@@ -62,18 +62,26 @@ export function useFactorsDefinitionForm({
 	const hasLevel = useHasLevel(factor) || showLevel
 	const location = useLocation()
 
-	const resetFields = useResetFields(setDescription, setVariable, setIsPrimary, setDefinitionType)
-	const add = useAdd(variable, description, isPrimary, type as DefinitionType, onAdd, resetFields)
+	const resetFields = useResetFields(setDescription, setVariable, setIsPrimary)
+	const add = useAdd(
+		variable,
+		description,
+		isPrimary,
+		definitionType as DefinitionType,
+		onAdd,
+		resetFields,
+	)
 
 	useEffect(
 		function resetFormOnExperimentChange() {
 			resetFields()
-			if (experiment && type) {
-				setVariable((experiment as any)[type]?.variable ?? '')
-				setIsPrimary(!(experiment as any)[type]?.definition?.length)
+			if (experiment && definitionType) {
+				setIsPrimary(
+					!getDefinitionsByType(definitionType, experiment?.definitions).length,
+				)
 			}
 		},
-		[type, location, experiment, resetFields],
+		[definitionType, location, experiment, resetFields],
 	)
 
 	useEffect(
@@ -94,7 +102,7 @@ export function useFactorsDefinitionForm({
 				...factor,
 				variable,
 				description,
-				type: definitionType
+				type: definitionType,
 			}
 			hasLevel &&
 				(edited.level = isPrimary
@@ -102,7 +110,15 @@ export function useFactorsDefinitionForm({
 					: CausalityLevel.Secondary)
 			onChange(edited)
 		},
-		[variable, isPrimary, description, definitionType, factor, hasLevel, onChange],
+		[
+			variable,
+			isPrimary,
+			description,
+			definitionType,
+			factor,
+			hasLevel,
+			onChange,
+		],
 	)
 
 	const checkbox = useCheckbox(isPrimary, setIsPrimary)
@@ -115,7 +131,6 @@ export function useFactorsDefinitionForm({
 	const descriptionBox = useDescriptionBox(
 		description,
 		setDescription,
-		variable,
 		add,
 		factor,
 	)
@@ -133,13 +148,11 @@ function useResetFields(
 	setDescription: Setter<string>,
 	setVariable: Setter<string>,
 	setIsPrimary: Setter<boolean>,
-	setDefinitionType: Setter<Maybe<DefinitionType>>,
 ): Handler {
 	return useCallback(() => {
 		setDescription('')
 		setVariable('')
 		setIsPrimary(false)
-		setDefinitionType(undefined)
 	}, [setDescription, setIsPrimary, setVariable])
 }
 

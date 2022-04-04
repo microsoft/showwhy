@@ -65,7 +65,6 @@ export function useVariableField(
 export function useDescriptionBox(
 	description: string,
 	setDescription: (value: string) => void,
-	variable: string,
 	add: Handler,
 	factor?: CausalFactor,
 ): JSX.Element {
@@ -84,7 +83,7 @@ export function useDescriptionBox(
 				/>
 			</DetailsContainer>
 		)
-	}, [description, setDescription, variable, add, factor])
+	}, [description, setDescription, add, factor])
 }
 
 export function useAddButton(
@@ -92,19 +91,17 @@ export function useAddButton(
 	variable: string,
 	factor?: CausalFactor,
 ): JSX.Element | null {
-	return (
-		!factor ? (
-			<ButtonContainer>
-				<AddButton
-					disabled={!variable?.length}
-					onClick={add}
-					data-pw="factors-form-add-button"
-				>
-					Add
-				</AddButton>
-			</ButtonContainer>
-		) : null
-	)
+	return !factor ? (
+		<ButtonContainer>
+			<AddButton
+				disabled={!variable?.length}
+				onClick={add}
+				data-pw="factors-form-add-button"
+			>
+				Add
+			</AddButton>
+		</ButtonContainer>
+	) : null
 }
 
 export function useDefinitionTypeDropdown(
@@ -158,5 +155,5 @@ const ButtonContainer = styled.div`
 `
 
 const DropdownWrapper = styled.div`
-	padding: 0 0.5rem
+	padding: 0 0.5rem;
 `

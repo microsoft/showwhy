@@ -44,11 +44,12 @@ export function useTableComponent(
 	const [editedFactor, setEditedFactor] = useState<Maybe<ElementDefinition>>()
 	const setter = definitionToEdit ? setEditedDefinition : setEditedFactor
 	const onChange = useOnChange(setter, definitionToEdit || factorToEdit)
-	const { level, description, variable, definitionType } = useFactorsDefinitionForm({
-		factor: (definitionToEdit || factorToEdit) as ElementDefinition,
-		onChange,
-		type,
-	})
+	const { level, description, variable, definitionType } =
+		useFactorsDefinitionForm({
+			factor: (definitionToEdit || factorToEdit) as ElementDefinition,
+			onChange,
+			type,
+		})
 	const headersData = useHeadersData(
 		headers,
 		Boolean(onDelete || onEdit || onCancel || onSave),
@@ -122,6 +123,7 @@ export function useTableComponent(
 		onEdit,
 		onSave,
 		variable,
+		definitionType,
 	])
 
 	return {
