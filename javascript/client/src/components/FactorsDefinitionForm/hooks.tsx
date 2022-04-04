@@ -17,7 +17,6 @@ import { CausalityLevel } from '@showwhy/types'
 import { useCallback, useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 
-import type { PageType } from '~types'
 import { getDefinitionsByType, noop } from '~utils'
 
 import {
@@ -37,12 +36,10 @@ type OnChangeHandler = (f: Partial<CausalFactor | ElementDefinition>) => void
 export function useFactorsDefinitionForm({
 	experiment,
 	factor,
-	type,
 	showLevel,
 	onAdd = noop,
 	onChange = noop,
 }: {
-	type?: DefinitionType | PageType
 	experiment?: Experiment
 	factor?: CausalFactor | ElementDefinition
 	showLevel?: boolean

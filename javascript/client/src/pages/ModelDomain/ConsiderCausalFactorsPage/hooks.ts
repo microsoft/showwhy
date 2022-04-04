@@ -13,9 +13,8 @@ import type {
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 
-import { useAddOnLeavePage, useAddOrEditFactor, usePageType } from '~hooks'
+import { useAddOnLeavePage, useAddOrEditFactor } from '~hooks'
 import { useCausalFactors, useSetCausalFactors } from '~state'
-import type { PageType } from '~types'
 import { noop } from '~utils'
 
 interface PathData {
@@ -28,7 +27,6 @@ export function useBusinessLogic(): {
 	isEditing: boolean
 	flatFactorsList: FlatCausalFactor[]
 	page: Maybe<string>
-	pageType: PageType
 	addFactor: (factor: OptionalId<CausalFactor>) => void
 	editFactor: (factor: CausalFactor) => void
 	deleteFactor: (factor: CausalFactor) => void
@@ -38,7 +36,6 @@ export function useBusinessLogic(): {
 	goToFactorsPage: Handler
 } {
 	const causalFactors = useCausalFactors()
-	const pageType = usePageType()
 	const [factor, setFactor] = useState<CausalFactor>()
 	const [newFactor, setNewFactor] = useState<Partial<CausalFactor>>()
 	const [isEditing, setIsEditing] = useState(false)
@@ -62,7 +59,6 @@ export function useBusinessLogic(): {
 		setIsEditing,
 		goToFactorsPage,
 		page: factorsPathData?.page,
-		pageType,
 	}
 }
 

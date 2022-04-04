@@ -33,7 +33,6 @@ export const ConsiderCausalFactorsPage: React.FC = memo(
 			setIsEditing,
 			goToFactorsPage,
 			page,
-			pageType,
 		} = useBusinessLogic()
 
 		return (
@@ -51,14 +50,12 @@ export const ConsiderCausalFactorsPage: React.FC = memo(
 							setIsEditing(false)
 							setFactor(undefined)
 						}}
-						type={pageType}
 					/>
 				</Container>
 				<FactorsDefinitionForm
 					factor={!isEditing ? factor : undefined}
 					onAdd={addFactor}
 					showLevel={false}
-					type={pageType}
 					onChange={setNewFactor}
 				/>
 				{page ? (

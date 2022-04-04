@@ -120,7 +120,7 @@ export function useDefinitionTypeDropdown(
 				selectedKey={definitionType || undefined}
 				// eslint-disable-next-line react/jsx-no-bind
 				onChange={
-					onChange ? (e, i) => onChange(i?.key as DefinitionType) : undefined
+					onChange ? (_, i) => onChange(i?.key as DefinitionType) : undefined
 				}
 				placeholder="Select a type"
 				options={options}

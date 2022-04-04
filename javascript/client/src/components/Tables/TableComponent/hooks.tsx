@@ -5,7 +5,6 @@
 
 import { Checkbox } from '@fluentui/react'
 import type {
-	DefinitionType,
 	ElementDefinition,
 	Handler,
 	Handler1,
@@ -16,7 +15,7 @@ import { CausalityLevel } from '@showwhy/types'
 import { useCallback, useMemo, useState } from 'react'
 
 import { useFactorsDefinitionForm } from '~components/FactorsDefinitionForm'
-import type { HeaderData, PageType } from '~types'
+import type { HeaderData } from '~types'
 
 const actionsHeader: HeaderData = {
 	fieldName: 'actions',
@@ -29,7 +28,6 @@ export function useTableComponent(
 	headers: HeaderData[],
 	definitionToEdit: Maybe<ElementDefinition>,
 	factorToEdit: Maybe<ElementDefinition>,
-	type: PageType | DefinitionType,
 	onDelete?: Maybe<Handler1<ElementDefinition>>,
 	onSave?: Maybe<Handler1<ElementDefinition>>,
 	onEdit?: Maybe<Handler1<ElementDefinition>>,
@@ -48,7 +46,6 @@ export function useTableComponent(
 		useFactorsDefinitionForm({
 			factor: (definitionToEdit || factorToEdit) as ElementDefinition,
 			onChange,
-			type,
 		})
 	const headersData = useHeadersData(
 		headers,

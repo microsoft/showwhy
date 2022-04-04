@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { Pivot as FUIPivot, PivotItem } from '@fluentui/react'
-import type { DefinitionType, ElementDefinition } from '@showwhy/types'
+import type { ElementDefinition } from '@showwhy/types'
 import { memo } from 'react'
 import styled from 'styled-components'
 
@@ -26,7 +26,6 @@ export const ConsiderAlternativeDefinitionsPage: React.FC = memo(
 		const {
 			definitionToEdit,
 			itemList,
-			type,
 			defineQuestion,
 			pivotData,
 			addDefinition,
@@ -38,16 +37,16 @@ export const ConsiderAlternativeDefinitionsPage: React.FC = memo(
 
 		return (
 			<Container>
-				{pivotData.length ?
+				{pivotData.length ? (
 					<Pivot aria-label="Alternative Definitions Interest labels and description">
-						{pivotData.map((item) => (
+						{pivotData.map(item => (
 							<PivotItem key={item.title} headerText={item.title}>
 								<DetailsText>{item.label}</DetailsText>
 								<DetailsText>{item.description}</DetailsText>
 							</PivotItem>
 						))}
 					</Pivot>
-				: null}
+				) : null}
 
 				<FormContainer>
 					<DefinitionTitle>Alternative definitions</DefinitionTitle>
@@ -60,14 +59,12 @@ export const ConsiderAlternativeDefinitionsPage: React.FC = memo(
 							onEdit={setDefinitionToEdit}
 							onCancel={() => setDefinitionToEdit(undefined)}
 							onSave={editDefinition}
-							type={type as DefinitionType}
 						/>
 						<FactorsDefinitionForm
 							onAdd={definition =>
 								addDefinition(definition as ElementDefinition)
 							}
 							defineQuestion={defineQuestion}
-							type={type}
 							showType={true}
 							onChange={setDefinition}
 						/>

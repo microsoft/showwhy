@@ -30,7 +30,6 @@ interface PivotData {
 export function useBusinessLogic(): {
 	itemList: Item[]
 	definitionToEdit: Maybe<ElementDefinition>
-	type?: DefinitionType
 	defineQuestion: Experiment
 	pivotData: PivotData[]
 	addDefinition: (def: ElementDefinition) => void
@@ -63,19 +62,21 @@ export function useBusinessLogic(): {
 	useEffect(() => {
 		setDefinitionToEdit(undefined)
 	}, [defineQuestion, setDefinitionToEdit])
-	useAddOnLeavePage<ElementDefinition>(definition as ElementDefinition, addDefinition)
+	useAddOnLeavePage<ElementDefinition>(
+		definition as ElementDefinition,
+		addDefinition,
+	)
 
 	return {
 		itemList,
 		definitionToEdit,
-		type: definition?.type,
 		defineQuestion,
 		pivotData,
 		addDefinition,
 		removeDefinition,
 		editDefinition,
 		setDefinitionToEdit,
-		setDefinition
+		setDefinition,
 	}
 }
 
@@ -96,7 +97,7 @@ function usePivotData(defineQuestion: Experiment): PivotData[] {
 			const type = curr.toLowerCase()
 			if (defineQuestion.hasOwnProperty(type)) {
 				const { label = '', description = '' } = (defineQuestion as any)[type]
-				return [...acc, {title: curr, label, description }]
+				return [...acc, { title: curr, label, description }]
 			}
 			return acc
 		}, [])
