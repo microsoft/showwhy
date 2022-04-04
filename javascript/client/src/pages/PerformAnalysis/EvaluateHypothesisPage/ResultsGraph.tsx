@@ -6,16 +6,16 @@ import type { Dimensions } from '@essex/hooks'
 import type { Experiment, Maybe } from '@showwhy/types';
 import { DefinitionType , RefutationType } from '@showwhy/types'
 import { memo } from 'react'
+import styled from 'styled-components'
 
-import { Bold, Container, Paragraph, Text, Value } from '~styles'
+import { PivotScatterplot } from '~components/PivotScatterplot'
+import { Bold, Container, Text, Value } from '~styles'
 import type {
 	DecisionFeature,
 	Specification,
 	SpecificationCurveConfig,
 } from '~types'
 import { getDefinitionsByType, median as calcMedian } from '~utils'
-
-import { OutcomeEffectScatterplot } from '../ExploreSpecificationCurvePage/vega'
 
 export const ResultsGraph: React.FC<{
 	specificationData: Specification[]
@@ -45,7 +45,7 @@ export const ResultsGraph: React.FC<{
 
 	return (
 		<Container>
-			<Paragraph>
+			<P>
 				<Value>{activeValues.length}</Value>
 				of {specificationData.length} specifications were included in the final
 				curve. The median effect estimated from these specifications is{' '}
@@ -65,17 +65,20 @@ export const ResultsGraph: React.FC<{
 						significance test.
 					</Text>
 				)}
-			</Paragraph>
-			<OutcomeEffectScatterplot
+			</P>
+			<PivotScatterplot
 				data={specificationData}
 				config={specificationCurveConfig}
 				width={vegaWindowDimensions.width}
 				height={vegaWindowDimensions.height * 0.25}
 				onMouseOver={onMouseOver}
 				hovered={hovered}
-				title="Specification"
 				failedRefutationIds={failedRefutationIds}
 			/>
 		</Container>
 	)
 })
+
+const P = styled.p`
+	margin-bottom: unset;
+`

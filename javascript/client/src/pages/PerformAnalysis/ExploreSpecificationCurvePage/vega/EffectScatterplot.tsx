@@ -5,6 +5,7 @@
 import { RefutationResultString } from '@showwhy/types'
 import { SelectionState } from '@thematic/core'
 import { useThematic } from '@thematic/react'
+import upperFirst from 'lodash/upperFirst'
 import { memo, useMemo } from 'react'
 import styled from 'styled-components'
 
@@ -17,21 +18,23 @@ import { MIN_SPEC_ADDITIONAL_PADDING } from './VegaSpecificationCurve'
 
 const templateString = JSON.stringify(template)
 
-export const OutcomeEffectScatterplot: React.FC<{
+export const EffectScatterplot: React.FC<{
 	data: Specification[]
 	config: SpecificationCurveConfig
 	width: number
 	height: number
+	dataValueName: string
 	onConfigChange?: (config: SpecificationCurveConfig) => void
 	onMouseClick?: (datum?: Specification) => void
 	onMouseOver?: (datum?: Specification) => void
 	hovered?: number
 	selected?: number
 	title?: string
-	outcome?: string
+	chartTitle?: string
 	failedRefutationIds: number[]
 	totalSpecs?: number
-}> = memo(function OutcomeEffectScatterplot({
+	showStats?: boolean
+}> = memo(function EffectScatterplot({
 	data,
 	config,
 	width,
@@ -42,23 +45,32 @@ export const OutcomeEffectScatterplot: React.FC<{
 	selected,
 	title,
 	failedRefutationIds,
-	outcome,
+	chartTitle,
+	dataValueName,
 	totalSpecs = data.length,
+	showStats,
 }) {
-	const spec = useOverlay(data, width, totalSpecs, title, outcome)
+	const spec = useOverlay(
+		data,
+		width,
+		totalSpecs,
+		dataValueName,
+		title,
+		chartTitle,
+	)
 
 	const signals = useMemo(
 		() => ({
 			hoveredId: hovered,
 			selectedId: selected,
-			showMedian: config.medianLine,
-			showMean: config.meanLine,
+			showMedian: showStats && config.medianLine,
+			showMean: showStats && config.meanLine,
 			showConfidenceInterval: config.confidenceIntervalTicks,
 			inactiveFeatures: config.inactiveFeatures,
 			inactiveSpecifications:
 				config.inactiveSpecifications?.concat(failedRefutationIds),
 		}),
-		[hovered, selected, config, failedRefutationIds],
+		[hovered, selected, config, failedRefutationIds, showStats],
 	)
 
 	return (
@@ -79,8 +91,9 @@ function useOverlay(
 	data: Specification[],
 	width: number,
 	totalSpecs: number,
+	dataValueName: string,
 	title?: string,
-	outcome?: string,
+	chartTitle?: string,
 ) {
 	const theme = useThematic()
 	const refutationLegend = Object.keys(RefutationResultString).map(
@@ -111,12 +124,11 @@ function useOverlay(
 		const pathspec = {
 			"$.data[?(@.name == 'specifications')].values": data,
 			"$.scales[?(@.name == 'refutationLegend')].domain": refutationLegend,
-			"$.signals[?(@.name == 'outcome')].value": (
-				outcome ??
-				data[0]?.outcome ??
-				''
-			).toLowerCase(),
+			"$.signals[?(@.name == 'chartTitle')].value": upperFirst(
+				(chartTitle ?? '').toLowerCase(),
+			),
 			"$.signals[?(@.name == 'refutationColors')].value": refutationColors,
+			"$.signals[?(@.name == 'dataValueName')].value": dataValueName,
 			"$.axes[?(@.scale == 'x')].title": title,
 			"$.axes[?(@.scale == 'x')].labels": title && title.length > 0,
 			"$.scales[?(@.name == 'x')].padding": padding,
@@ -133,7 +145,7 @@ function useOverlay(
 		}
 		const overlay = parseJsonPathSpec(spec, pathspec)
 		return mergeSpec(spec, overlay)
-	}, [theme, data, title, outcome, refutationLegend, padding])
+	}, [theme, data, title, chartTitle, refutationLegend, padding, dataValueName])
 }
 
 const Container = styled.div`

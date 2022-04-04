@@ -14,7 +14,7 @@ import { Paragraph, Text } from '~styles'
 import type { Specification } from '~types'
 import { pluralize } from '~utils'
 
-import { ConfidenceIntervalDetails } from './ConfidenceIntervalDetails'
+import { EstimateDetails } from './EstimateDetails'
 
 export const SpecificationDescription: React.FC<{
 	specification?: Specification
@@ -45,14 +45,11 @@ export const SpecificationDescription: React.FC<{
 						<Value>{specification.population}</Value>
 						is
 						<Effect>{round(specification.estimatedEffect, 3)}</Effect>
-						{specification?.c95Lower && specification?.c95Upper ? (
-							<ConfidenceIntervalDetails
-								c95Lower={specification?.c95Lower}
-								c95Upper={specification?.c95Upper}
-							/>
-						) : (
-							'. '
-						)}
+						<EstimateDetails
+							c95Lower={specification?.c95Lower}
+							c95Upper={specification?.c95Upper}
+							populationSize={specification?.populationSize}
+						/>
 						{refutationNumbers === '0/0' ? (
 							<Text>
 								This estimate has not been validated against refutation tests.
