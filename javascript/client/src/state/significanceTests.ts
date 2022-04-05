@@ -3,26 +3,28 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { Maybe, SignificanceTest } from '@showwhy/types'
-import type { SetterOrUpdater } from 'recoil'
-import { atomFamily, useRecoilValue, useSetRecoilState } from 'recoil'
+import type { SignificanceTest } from '@showwhy/types'
+import type { Resetter, SetterOrUpdater } from 'recoil'
+import {
+	atom,
+	useRecoilValue,
+	useResetRecoilState,
+	useSetRecoilState,
+} from 'recoil'
 
-export const significanceTestsState = atomFamily<
-	Maybe<SignificanceTest>,
-	Maybe<string>
->({
-	key: 'significance-tests-store',
-	default: undefined,
+export const significanceTestState = atom<SignificanceTest[]>({
+	key: 'significance-test-store',
+	default: [],
 })
 
-export function useSetSignificanceTests(
-	key: Maybe<string>,
-): SetterOrUpdater<Maybe<SignificanceTest>> {
-	return useSetRecoilState(significanceTestsState(key))
+export function useSetSignificanceTest(): SetterOrUpdater<SignificanceTest[]> {
+	return useSetRecoilState(significanceTestState)
 }
 
-export function useSignificanceTests(
-	key: Maybe<string>,
-): Maybe<SignificanceTest> {
-	return useRecoilValue(significanceTestsState(key))
+export function useSignificanceTest(): SignificanceTest[] {
+	return useRecoilValue(significanceTestState)
+}
+
+export function useResetSignificanceTest(): Resetter {
+	return useResetRecoilState(significanceTestState)
 }

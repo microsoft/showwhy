@@ -17,11 +17,12 @@ import { NodeResponseStatus } from '@showwhy/types'
 import { useCallback, useMemo, useState } from 'react'
 
 import {
+	useActualSignificanceTest,
 	useAlternativeModels,
 	useCausalEffects,
 	useDefaultRun,
 	useRefutationLength,
-	useRunConfidenceInterval,
+	useRunSignificanceTest,
 	useSpecificationCurve,
 } from '~hooks'
 import {
@@ -29,7 +30,6 @@ import {
 	useExperiment,
 	usePrimarySpecificationConfig,
 	useRefutationType,
-	useSignificanceTests,
 	useSpecificationCurveConfig,
 } from '~state'
 import type { DefaultDatasetResult, RunHistory, Specification } from '~types'
@@ -45,12 +45,11 @@ export function useBusinessLogic(): {
 	refutationLength: number
 	defineQuestion: Experiment
 	activeValues: number[]
-	significanceTestsResult: Maybe<SignificanceTest>
+	significanceTestResult: Maybe<SignificanceTest>
 	significanceFailed: boolean
-	activeTaskIds: string[]
 	refutationType: RefutationType
 	isCanceled: boolean
-	runSignificance: (taskIds: string[]) => void
+	runSignificance: Handler
 	cancelRun: Handler
 } {
 	const defineQuestion = useExperiment()
@@ -62,12 +61,12 @@ export function useBusinessLogic(): {
 	const specificationCurveConfig = useSpecificationCurveConfig()
 	const refutation = useRefutationType()
 	const defaultDataset = useDefaultDatasetResult()
-	const run = useRunConfidenceInterval()
 	const defaultRun = useDefaultRun()
+	const run = useRunSignificanceTest(defaultRun?.id)
 	const { failedRefutationIds } = useSpecificationCurve()
 	const [isCanceled, setIsCanceled] = useState<boolean>(false)
 	const refutationLength = useRefutationLength()
-	const significanceTestsResult = useSignificanceTests(defaultRun?.id as string)
+	const significanceTestResult = useActualSignificanceTest()
 
 	const refutationType = useMemo((): RefutationType => {
 		if (defaultRun && defaultRun?.refutationType) {
@@ -108,20 +107,17 @@ export function useBusinessLogic(): {
 		run().cancel()
 	}, [run, setIsCanceled])
 
-	const runSignificance = useCallback(
-		(taskIds: string[]) => {
-			const nodes = buildSignificanceTestsNode(taskIds)
-			run().execute(nodes, OrchestratorType.ConfidenceInterval)
-		},
-		[run],
-	)
+	const runSignificance = useCallback(() => {
+		const nodes = buildSignificanceTestsNode(activeTaskIds)
+		run().execute(nodes, OrchestratorType.ConfidenceInterval)
+	}, [run, activeTaskIds])
 
 	const significanceFailed = useMemo((): boolean => {
 		return (
-			significanceTestsResult?.status?.toLowerCase() ===
+			significanceTestResult?.status?.toLowerCase() ===
 			NodeResponseStatus.Failed
 		)
-	}, [significanceTestsResult])
+	}, [significanceTestResult])
 
 	return {
 		alternativeModels,
@@ -132,9 +128,8 @@ export function useBusinessLogic(): {
 		refutationLength,
 		defineQuestion,
 		activeValues,
-		significanceTestsResult,
+		significanceTestResult,
 		significanceFailed,
-		activeTaskIds,
 		refutationType,
 		isCanceled,
 		runSignificance,

@@ -17,6 +17,10 @@ import { OrchestratorType } from './OrchestratorType.js'
 const orchestrators: Partial<Record<OrchestratorType, Orchestrator<unknown>>> =
 	{}
 
+function deleteOrchestrator(type: OrchestratorType) {
+	orchestrators[type] = undefined
+}
+
 function getOrchestrator<UpdateStatus>(
 	type: OrchestratorType,
 	apiInteractor: FetchApiInteractor,
@@ -67,9 +71,14 @@ export function getConfidenceOrchestrator<UpdateStatus>(
 	onUpdate?: Maybe<OrchestatorOnUpdateHandler<UpdateStatus>>,
 	onComplete?: Maybe<OrchestratorHandler>,
 	onCancel?: Maybe<OrchestratorHandler>,
+	replace?: Maybe<boolean>,
 ): Orchestrator<UpdateStatus> {
+	const type = OrchestratorType.ConfidenceInterval
+	if (replace) {
+		deleteOrchestrator(type)
+	}
 	return getOrchestrator(
-		OrchestratorType.ConfidenceInterval,
+		type,
 		apiInteractor,
 		onStart,
 		onUpdate,

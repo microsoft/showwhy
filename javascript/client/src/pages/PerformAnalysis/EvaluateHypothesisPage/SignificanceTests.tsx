@@ -17,24 +17,24 @@ import {
 } from '../../../locales/en-US/perform-analysis'
 
 export const SignificanceTests: React.FC<{
-	significanceTestsResult: Maybe<SignificanceTest>
+	significanceTestResult: Maybe<SignificanceTest>
 	cancelRun: Handler
 	isCanceled: boolean
 }> = memo(function SignificanceTests({
-	significanceTestsResult,
+	significanceTestResult,
 	cancelRun,
 	isCanceled,
 }) {
 	return (
 		<>
-			{significanceTestsResult?.status?.toLowerCase() ===
+			{significanceTestResult?.status?.toLowerCase() ===
 				NodeResponseStatus.Completed && (
 				<Paragraph color="accent">
 					Results of the significance test show that there is
 					<Value>
 						<LinkCallout
 							title={`${
-								significanceTestsResult?.test_results?.significance ===
+								significanceTestResult?.test_results?.significance ===
 								Significance.NotSignificant
 									? 'no '
 									: 'a '
@@ -46,21 +46,21 @@ export const SignificanceTests: React.FC<{
 						</LinkCallout>
 					</Value>
 					between the observed median effect and that of the null distribution (
-					{significanceTestsResult?.test_results?.p_value}).
+					{significanceTestResult?.test_results?.p_value}).
 				</Paragraph>
 			)}
 
-			{significanceTestsResult &&
+			{significanceTestResult &&
 				isProcessingStatus(
-					significanceTestsResult.status as NodeResponseStatus,
+					significanceTestResult.status as NodeResponseStatus,
 				) && (
 					<ProgressBar
 						description={
 							isCanceled ? 'This could take a few seconds.' : undefined
 						}
-						label={`Significance test: Simulations ${significanceTestsResult?.simulation_completed}/${significanceTestsResult?.total_simulations}`}
-						percentage={significanceTestsResult?.percentage as number}
-						startTime={significanceTestsResult?.startTime as Date}
+						label={`Significance test: Simulations ${significanceTestResult?.simulation_completed}/${significanceTestResult?.total_simulations}`}
+						percentage={significanceTestResult?.percentage as number}
+						startTime={significanceTestResult?.startTime as Date}
 						onCancel={() => (!isCanceled ? cancelRun() : undefined)}
 					/>
 				)}

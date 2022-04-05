@@ -16,7 +16,7 @@ import { addOrRemoveArrayElement } from '~utils'
 
 import { AnalyticDecisionsDotPlot } from './AnalyticDecisionsDotPlot'
 
-export const MIN_SPEC_ADDITIONAL_PADDING = 5
+export const MIN_SPEC_ADDITIONAL_PADDING = 2
 
 export const VegaSpecificationCurve: React.FC<{
 	data: Specification[]

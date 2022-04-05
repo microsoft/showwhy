@@ -4,12 +4,8 @@
  */
 
 import type { Dimensions } from '@essex/hooks'
-import type { Experiment, Handler, Maybe } from '@showwhy/types'
-import {
-	CausalityLevel,
-	DefinitionType,
-	NodeResponseStatus,
-} from '@showwhy/types'
+import type { Experiment, Handler, Handler1, Maybe } from '@showwhy/types';
+import { CausalityLevel, DefinitionType , NodeResponseStatus } from '@showwhy/types'
 import type { Theme } from '@thematic/core'
 import { useThematic } from '@thematic/react'
 import { useCallback, useMemo, useState } from 'react'
@@ -25,7 +21,6 @@ import {
 	useExperiment,
 	useHoverState,
 	useRunHistory,
-	useSetSignificanceTests,
 	useSetSpecificationCurveConfig,
 	useSpecCount,
 	useSpecificationCurveConfig,
@@ -38,6 +33,7 @@ import type {
 } from '~types'
 
 import { useLoadSpecificationData } from '../pages/PerformAnalysis/ExploreSpecificationCurvePage/hooks'
+import { useUpdateSignificanceTests } from './significanceTest'
 
 export function useSpecificationCurve(): {
 	activeProcessing: Maybe<RunHistory>
@@ -99,6 +95,7 @@ export function useSpecificationCurve(): {
 	const onToggleRejectEstimate = useOnToggleRejectEstimateHandler(
 		selectedSpecification,
 		isSpecificationOn,
+		onSpecificationsChange,
 	)
 
 	return {
@@ -202,17 +199,17 @@ function useHandleConfidenceIntervalTicksChange(
  * When a specification selection change, we reset the significance test because it changes
  * based on active specifications
  */
-function useOnSpecificationsChange() {
+//TODO: DO THEY????
+function useOnSpecificationsChange(): Handler1<SpecificationCurveConfig> {
 	const setConfig = useSetSpecificationCurveConfig()
 	const defaultRun = useDefaultRun()
-
-	const setSignificanceTest = useSetSignificanceTests(defaultRun?.id as string)
+	const updateSignificanceTest = useUpdateSignificanceTests(defaultRun?.id)
 	return useCallback(
 		(config: SpecificationCurveConfig) => {
 			setConfig(config)
-			setSignificanceTest(undefined)
+			updateSignificanceTest()
 		},
-		[setConfig, setSignificanceTest],
+		[setConfig, updateSignificanceTest],
 	)
 }
 
@@ -286,9 +283,9 @@ function useIsSpecificationOn(
 function useOnToggleRejectEstimateHandler(
 	selectedSpecification: Maybe<Specification>,
 	isSpecificationOn: boolean,
+	onSpecificationsChange: Handler1<SpecificationCurveConfig>,
 ) {
 	const config = useSpecificationCurveConfig()
-	const setConfig = useSetSpecificationCurveConfig()
 
 	return useCallback(() => {
 		const { inactiveSpecifications = [] } = config
@@ -300,10 +297,10 @@ function useOnToggleRejectEstimateHandler(
 			if (isSpecificationOn) {
 				newInactive.push(selectedSpecification.id)
 			}
-			setConfig({
+			onSpecificationsChange({
 				...config,
 				inactiveSpecifications: newInactive,
 			})
 		}
-	}, [selectedSpecification, config, setConfig, isSpecificationOn])
+	}, [selectedSpecification, config, onSpecificationsChange, isSpecificationOn])
 }

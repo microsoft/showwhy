@@ -29,8 +29,7 @@ export const EvaluateHypothesisPage: React.FC = memo(
 			refutationLength,
 			defineQuestion,
 			activeValues,
-			significanceTestsResult,
-			activeTaskIds,
+			significanceTestResult,
 			significanceFailed,
 			runSignificance,
 			cancelRun,
@@ -88,11 +87,10 @@ export const EvaluateHypothesisPage: React.FC = memo(
 						activeValues={activeValues}
 					/>
 				</Container>
-				<Container marginTop>
+				<Container>
 					<PageButtons
-						activeTaskIds={activeTaskIds}
 						defaultRun={defaultRun}
-						significanceTestsResult={significanceTestsResult}
+						significanceTestResult={significanceTestResult}
 						significanceFailed={significanceFailed}
 						runSignificance={runSignificance}
 					/>
@@ -100,7 +98,7 @@ export const EvaluateHypothesisPage: React.FC = memo(
 					<SignificanceTests
 						cancelRun={cancelRun}
 						isCanceled={isCanceled}
-						significanceTestsResult={significanceTestsResult}
+						significanceTestResult={significanceTestResult}
 					/>
 				</Container>
 			</ContainerFlexColumn>
