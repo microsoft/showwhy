@@ -7,7 +7,7 @@ import { memo, useCallback } from 'react'
 import { NavLink } from 'react-router-dom'
 import styled from 'styled-components'
 
-import { useProcessStepStatus } from '~hooks'
+import { useWorkflowStepStatus } from '~hooks'
 import type { WorkflowStep } from '~types'
 
 import { StepStatusDetail } from '.'
@@ -16,18 +16,19 @@ export const StepItem: React.FC<{
 	stepDetail: WorkflowStep
 	subStep?: Maybe<boolean>
 }> = memo(function StepItem({ stepDetail, subStep = false }) {
-	const { stepStatus, onToggleStepStatus } = useProcessStepStatus(stepDetail)
+	const { stepStatus, onToggleWorkflowStatus } =
+		useWorkflowStepStatus(stepDetail)
 
 	const getStepStatus = useCallback(
 		(stepDetail: WorkflowStep) => {
 			return stepDetail.showStatus ? (
 				<StepStatusDetail
-					toggleStatus={onToggleStepStatus}
+					toggleStatus={onToggleWorkflowStatus}
 					status={stepStatus}
 				/>
 			) : null
 		},
-		[stepStatus, onToggleStepStatus],
+		[stepStatus, onToggleWorkflowStatus],
 	)
 
 	return (
