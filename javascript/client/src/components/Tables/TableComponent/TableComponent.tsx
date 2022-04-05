@@ -5,6 +5,7 @@
 import type { IComboBoxOption } from '@fluentui/react'
 import type {
 	CausalFactor,
+	DefinitionType,
 	ElementDefinition,
 	FlatCausalFactor,
 	Handler,
@@ -28,6 +29,7 @@ export const TableComponent: React.FC<{
 	onEdit?: Handler1<ElementDefinition>
 	onCancel?: Handler
 	onSave?: Handler1<ElementDefinition>
+	definitionType?: DefinitionType
 }> = memo(function TableComponent({
 	headers,
 	columns,
@@ -37,6 +39,7 @@ export const TableComponent: React.FC<{
 	onEdit,
 	onCancel,
 	onSave,
+	definitionType,
 }) {
 	const { items, customColumnsWidth, headersData } = useTableComponent(
 		columns as CausalFactor[],
@@ -47,6 +50,7 @@ export const TableComponent: React.FC<{
 		onSave,
 		onEdit,
 		onCancel,
+		definitionType,
 	)
 	return (
 		<Container>

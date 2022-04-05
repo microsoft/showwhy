@@ -10,25 +10,24 @@ import type {
 	Setter,
 } from '@showwhy/types'
 import { DefinitionType } from '@showwhy/types'
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 
-import { useAddOnLeavePage } from '~hooks'
-import { useExperiment, useSetExperiment } from '~state'
+import { useExperiment } from '~state'
 import type { Item } from '~types'
 
 import { useAddDefinition } from './add'
 import { useEditDefinition } from './edit'
 import { useRemoveDefinition } from './remove'
-import { useSaveDefinitions } from './save'
 
 interface PivotData {
+	key: string
 	title: string
 	label: string
 	description: string
+	items: Item[]
 }
 
 export function useBusinessLogic(): {
-	itemList: Item[]
 	definitionToEdit: Maybe<ElementDefinition>
 	defineQuestion: Experiment
 	pivotData: PivotData[]
@@ -36,12 +35,15 @@ export function useBusinessLogic(): {
 	removeDefinition: (def: ElementDefinition) => void
 	editDefinition: (def: ElementDefinition) => void
 	setDefinitionToEdit: Setter<Maybe<ElementDefinition>>
-	setDefinition: (def: Partial<ElementDefinition>) => void
+	definitionType: DefinitionType
+	handleOnLinkClick: (item: any) => void
 } {
 	const defineQuestion = useExperiment()
-	const setDefineQuestion = useSetExperiment()
+
 	const [definitionToEdit, setDefinitionToEdit] = useState<ElementDefinition>()
-	const [definition, setDefinition] = useState<Partial<ElementDefinition>>()
+	const [definitionType, setDefinitionType] = useState<DefinitionType>(
+		DefinitionType.Population,
+	)
 
 	const definitions = useMemo(() => {
 		return defineQuestion.definitions || []
@@ -49,34 +51,37 @@ export function useBusinessLogic(): {
 
 	const pivotData: PivotData[] = usePivotData(defineQuestion)
 
-	const saveDefinitions = useSaveDefinitions(defineQuestion, setDefineQuestion)
+	const addDefinition = useAddDefinition()
 
-	const addDefinition = useAddDefinition(saveDefinitions, definitions)
+	const removeDefinition = useRemoveDefinition(definitions)
 
-	const removeDefinition = useRemoveDefinition(saveDefinitions, definitions)
+	const editDefinition = useEditDefinition(definitions)
 
-	const editDefinition = useEditDefinition(saveDefinitions, definitions)
-
-	const itemList = useItemList(definitions)
+	const handleOnLinkClick = useCallback(
+		(item: any) => {
+			const regex = /[^a-zA-Z]/g
+			const type = item.key?.replace(regex, '')
+			if (type) {
+				setDefinitionType(type)
+			}
+		},
+		[setDefinitionType],
+	)
 
 	useEffect(() => {
 		setDefinitionToEdit(undefined)
 	}, [defineQuestion, setDefinitionToEdit])
-	useAddOnLeavePage<ElementDefinition>(
-		definition as ElementDefinition,
-		addDefinition,
-	)
 
 	return {
-		itemList,
 		definitionToEdit,
 		defineQuestion,
 		pivotData,
+		definitionType,
 		addDefinition,
 		removeDefinition,
 		editDefinition,
 		setDefinitionToEdit,
-		setDefinition,
+		handleOnLinkClick,
 	}
 }
 
@@ -91,16 +96,27 @@ function useItemList(definitions: ElementDefinition[] = []): Item[] {
 }
 
 function usePivotData(defineQuestion: Experiment): PivotData[] {
+	const itemList = useItemList(defineQuestion?.definitions)
 	return useMemo(() => {
-		const types = Object.keys(DefinitionType)
+		const types = Object.keys(DefinitionType).filter(
+			k => !k.includes('Cause') && !k.includes('Confounders'),
+		)
 		const pivotData = types.reduce((acc: PivotData[], curr: string) => {
 			const type = curr.toLowerCase()
-			if (defineQuestion.hasOwnProperty(type)) {
-				const { label = '', description = '' } = (defineQuestion as any)[type]
-				return [...acc, { title: curr, label, description }]
-			}
+			const { label = '', description = '' } =
+				(defineQuestion as any)[type] || {}
+			acc = [
+				...acc,
+				{
+					title: curr,
+					label,
+					description,
+					key: type,
+					items: itemList.filter(i => i['type'] === type),
+				},
+			]
 			return acc
 		}, [])
 		return pivotData
-	}, [defineQuestion])
+	}, [defineQuestion, itemList])
 }

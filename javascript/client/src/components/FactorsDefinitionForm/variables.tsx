@@ -2,15 +2,8 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import type { IDropdownOption } from '@fluentui/react'
-import { Checkbox, DefaultButton, Dropdown, TextField } from '@fluentui/react'
-import type {
-	CausalFactor,
-	ElementDefinition,
-	Handler,
-	Maybe,
-} from '@showwhy/types'
-import { DefinitionType } from '@showwhy/types'
+import { Checkbox, DefaultButton, TextField } from '@fluentui/react'
+import type { CausalFactor, ElementDefinition, Handler } from '@showwhy/types'
 import { useMemo } from 'react'
 import styled from 'styled-components'
 
@@ -22,6 +15,16 @@ function handleKeyPress(fn: Handler) {
 			event.key.toLowerCase() === enter ||
 			event.keyCode === 13
 		) {
+			fn()
+		}
+	}
+}
+
+function handleVariableOnBlur(fn: Handler) {
+	return (event: React.FocusEvent<HTMLInputElement>) => {
+		const { relatedTarget } = event
+		const pw = relatedTarget?.getAttribute('data-pw')
+		if (pw !== 'factors-form-description') {
 			fn()
 		}
 	}
@@ -50,6 +53,7 @@ export function useVariableField(
 ): JSX.Element {
 	return useMemo(() => {
 		const handler = handleKeyPress(add)
+		const handleOnBlur = handleVariableOnBlur(add)
 		return (
 			<VariableField
 				onChange={(_, value) => setVariable(value ?? '')}
@@ -57,6 +61,7 @@ export function useVariableField(
 				placeholder="Type a variable"
 				data-pw="factors-form-variable-name"
 				onKeyPress={!factor ? handler : undefined}
+				onBlur={!factor ? handleOnBlur : undefined}
 			/>
 		)
 	}, [variable, setVariable, add, factor])
@@ -80,6 +85,7 @@ export function useDescriptionBox(
 					resizable={false}
 					data-pw="factors-form-description"
 					onKeyPress={!factor ? handler : undefined}
+					onBlur={!factor ? () => add() : undefined}
 				/>
 			</DetailsContainer>
 		)
@@ -102,32 +108,6 @@ export function useAddButton(
 			</AddButton>
 		</ButtonContainer>
 	) : null
-}
-
-export function useDefinitionTypeDropdown(
-	definitionType?: Maybe<DefinitionType>,
-	onChange?: (item: DefinitionType) => void,
-): JSX.Element {
-	const options: IDropdownOption[] = [
-		{ key: DefinitionType.Population, text: 'Population' },
-		{ key: DefinitionType.Exposure, text: 'Exposure' },
-		{ key: DefinitionType.Outcome, text: 'Outcome' },
-	]
-
-	return (
-		<DropdownWrapper>
-			<Dropdown
-				selectedKey={definitionType || undefined}
-				// eslint-disable-next-line react/jsx-no-bind
-				onChange={
-					onChange ? (_, i) => onChange(i?.key as DefinitionType) : undefined
-				}
-				placeholder="Select a type"
-				options={options}
-				data-pw="factors-form-type"
-			/>
-		</DropdownWrapper>
-	)
 }
 
 export function useHasLevel(
@@ -153,8 +133,4 @@ const AddButton = styled(DefaultButton)``
 const ButtonContainer = styled.div`
 	text-align: center;
 	padding-right: 8px;
-`
-
-const DropdownWrapper = styled.div`
-	padding: 0 0.5rem;
 `

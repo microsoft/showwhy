@@ -6,16 +6,18 @@
 import type { ElementDefinition } from '@showwhy/types'
 import { useCallback } from 'react'
 
+import { useExperiment } from '~state'
 import { withRandomId } from '~utils'
 
+import { useSaveDefinitions } from './save'
 import { updatedDefinitionList } from './updateDefinitions'
 
-export function useAddDefinition(
-	saveDefinitions: (definitions: ElementDefinition[]) => void,
-	defs?: ElementDefinition[],
-): (definition: ElementDefinition) => void {
+export function useAddDefinition(): (definition: ElementDefinition) => void {
+	const saveDefinitions = useSaveDefinitions()
+	const defineQuestion = useExperiment()
 	return useCallback(
 		(definition: ElementDefinition) => {
+			const defs = [...(defineQuestion?.definitions || [])]
 			if (!definition.variable?.length) {
 				return
 			}
@@ -23,6 +25,6 @@ export function useAddDefinition(
 			const newDefs = updatedDefinitionList(defs, definition)
 			saveDefinitions([...newDefs, definition])
 		},
-		[saveDefinitions, defs],
+		[saveDefinitions, defineQuestion],
 	)
 }

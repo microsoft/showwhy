@@ -10,12 +10,12 @@ import type {
 } from '@showwhy/types'
 import { useCallback } from 'react'
 
+import { useExperiment, useSetExperiment } from '~state'
 import { wait, withRandomId } from '~utils'
 
-export function useSaveDefinitions(
-	defineQuestion: Experiment,
-	setDefineQuestion: (question: Experiment) => void,
-): AsyncHandler1<ElementDefinition[]> {
+export function useSaveDefinitions(): AsyncHandler1<ElementDefinition[]> {
+	const defineQuestion = useExperiment()
+	const setDefineQuestion = useSetExperiment()
 	return useCallback(
 		async (definitions: ElementDefinition | ElementDefinition[]) => {
 			if (!definitions) {

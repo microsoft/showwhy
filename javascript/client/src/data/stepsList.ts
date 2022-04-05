@@ -23,7 +23,7 @@ export const stepsList = [
 			},
 			{
 				id: uuidv4(),
-				title: 'Alternative Definitions',
+				title: 'Alternative definitions',
 				status: StepStatus.ToDo,
 				url: `${Pages.Alternative}`,
 				showStatus: true,

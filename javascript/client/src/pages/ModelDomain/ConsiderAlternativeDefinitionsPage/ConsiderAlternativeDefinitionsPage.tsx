@@ -16,7 +16,6 @@ import { useBusinessLogic } from './hooks'
 
 const tableHeadersList: HeaderData[] = [
 	{ fieldName: 'level', value: 'Level' },
-	{ fieldName: 'type', value: 'Type' },
 	{ fieldName: 'variable', value: 'Definition' },
 	{ fieldName: 'description', value: 'Description' },
 ]
@@ -25,53 +24,58 @@ export const ConsiderAlternativeDefinitionsPage: React.FC = memo(
 	function ConsiderAlternativeDefinitionsPage() {
 		const {
 			definitionToEdit,
-			itemList,
 			defineQuestion,
 			pivotData,
+			definitionType,
 			addDefinition,
 			editDefinition,
 			removeDefinition,
 			setDefinitionToEdit,
-			setDefinition,
+			handleOnLinkClick,
 		} = useBusinessLogic()
 
 		return (
 			<Container>
-				{pivotData.length ? (
-					<Pivot aria-label="Alternative Definitions Interest labels and description">
-						{pivotData.map(item => (
-							<PivotItem key={item.title} headerText={item.title}>
-								<DetailsText>{item.label}</DetailsText>
-								<DetailsText>{item.description}</DetailsText>
-							</PivotItem>
-						))}
-					</Pivot>
-				) : null}
+				<Pivot
+					onLinkClick={handleOnLinkClick}
+					aria-label="Alternative Definitions Interest labels and description"
+				>
+					{pivotData.map(item => (
+						<PivotItem
+							className={`pivot-${item.key}`}
+							key={item.key}
+							headerText={item.title}
+						>
+							<DetailsText>{item.label}</DetailsText>
+							<DetailsText>{item.description}</DetailsText>
 
-				<FormContainer>
-					<DefinitionTitle data-pw="title">
-						Alternative definitions
-					</DefinitionTitle>
-					<TableContainer>
-						<TableComponent
-							headers={tableHeadersList}
-							columns={itemList}
-							definitionToEdit={definitionToEdit}
-							onDelete={removeDefinition}
-							onEdit={setDefinitionToEdit}
-							onCancel={() => setDefinitionToEdit(undefined)}
-							onSave={editDefinition}
-						/>
-						<FactorsDefinitionForm
-							onAdd={definition =>
-								addDefinition(definition as ElementDefinition)
-							}
-							defineQuestion={defineQuestion}
-							showType={true}
-							onChange={setDefinition}
-						/>
-					</TableContainer>
-				</FormContainer>
+							<FormContainer>
+								<DefinitionTitle data-pw="title">
+									Alternative definitions
+								</DefinitionTitle>
+								<TableContainer>
+									<TableComponent
+										headers={tableHeadersList}
+										columns={item.items}
+										definitionToEdit={definitionToEdit}
+										onDelete={removeDefinition}
+										onEdit={setDefinitionToEdit}
+										onCancel={() => setDefinitionToEdit(undefined)}
+										onSave={editDefinition}
+										definitionType={definitionType}
+									/>
+									<FactorsDefinitionForm
+										onAdd={definition =>
+											addDefinition(definition as ElementDefinition)
+										}
+										defineQuestion={defineQuestion}
+										definitionType={definitionType}
+									/>
+								</TableContainer>
+							</FormContainer>
+						</PivotItem>
+					))}
+				</Pivot>
 			</Container>
 		)
 	},

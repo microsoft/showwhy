@@ -6,12 +6,13 @@
 import type { ElementDefinition } from '@showwhy/types'
 import { useCallback } from 'react'
 
+import { useSaveDefinitions } from './save'
 import { updatedDefinitionList } from './updateDefinitions'
 
 export function useEditDefinition(
-	saveDefinitions: (definitions: ElementDefinition[]) => void,
 	definitions: ElementDefinition[],
 ): (definition: ElementDefinition) => void {
+	const saveDefinitions = useSaveDefinitions()
 	return useCallback(
 		(definition: ElementDefinition) => {
 			let newDefinitions = updatedDefinitionList(definitions, definition)

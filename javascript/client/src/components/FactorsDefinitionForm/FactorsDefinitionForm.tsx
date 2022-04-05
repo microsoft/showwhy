@@ -5,6 +5,7 @@
 
 import type {
 	CausalFactor,
+	DefinitionType,
 	ElementDefinition,
 	Experiment,
 	Maybe,
@@ -18,31 +19,30 @@ import { useFactorsDefinitionForm } from './hooks'
 export const FactorsDefinitionForm: React.FC<{
 	factor?: CausalFactor | ElementDefinition
 	showLevel?: Maybe<boolean>
-	showType?: Maybe<boolean>
 	defineQuestion?: Experiment
+	definitionType?: DefinitionType
 	onAdd?: (factor: OptionalId<CausalFactor | ElementDefinition>) => void
 	onChange?: (f: Partial<CausalFactor | ElementDefinition>) => void
 }> = memo(function FactorsDefinitionForm({
 	factor,
 	defineQuestion,
+	definitionType,
 	onAdd,
 	onChange,
 	showLevel = true,
-	showType = false,
 }) {
-	const { level, description, variable, definitionType, addButton } =
-		useFactorsDefinitionForm({
-			factor,
-			experiment: defineQuestion,
-			onChange,
-			onAdd,
-			showLevel,
-		})
+	const { level, description, variable, addButton } = useFactorsDefinitionForm({
+		factor,
+		experiment: defineQuestion,
+		definitionType: definitionType as DefinitionType,
+		onChange,
+		onAdd,
+		showLevel,
+	})
 
 	return (
 		<Container showLevel={!!showLevel} data-pw="factors-form">
 			{showLevel ? <div data-pw="factors-form-is-primary">{level}</div> : null}
-			{showType ? definitionType : null}
 			{variable}
 			{description}
 			{addButton}
@@ -53,7 +53,7 @@ export const FactorsDefinitionForm: React.FC<{
 const Container = styled.form<{ showLevel: Maybe<boolean> }>`
 	display: grid;
 	grid-template-columns: ${({ showLevel }) =>
-		showLevel ? '12% 13% 25% 40% 10%' : '30% 60% 10%'};
+		showLevel ? '15% 35% 40% 10%' : '30% 60% 10%'};
 	align-items: center;
 	padding: 0.5rem 0.2rem;
 	border-radius: 0 0 3px 3px;

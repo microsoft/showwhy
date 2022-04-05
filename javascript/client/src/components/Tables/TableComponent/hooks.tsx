@@ -5,6 +5,7 @@
 
 import { Checkbox } from '@fluentui/react'
 import type {
+	DefinitionType,
 	ElementDefinition,
 	Handler,
 	Handler1,
@@ -32,6 +33,7 @@ export function useTableComponent(
 	onSave?: Maybe<Handler1<ElementDefinition>>,
 	onEdit?: Maybe<Handler1<ElementDefinition>>,
 	onCancel?: Maybe<Handler>,
+	definitionType?: DefinitionType,
 ): {
 	items: any
 	headersData: any[]
@@ -42,11 +44,11 @@ export function useTableComponent(
 	const [editedFactor, setEditedFactor] = useState<Maybe<ElementDefinition>>()
 	const setter = definitionToEdit ? setEditedDefinition : setEditedFactor
 	const onChange = useOnChange(setter, definitionToEdit || factorToEdit)
-	const { level, description, variable, definitionType } =
-		useFactorsDefinitionForm({
-			factor: (definitionToEdit || factorToEdit) as ElementDefinition,
-			onChange,
-		})
+	const { level, description, variable } = useFactorsDefinitionForm({
+		factor: (definitionToEdit || factorToEdit) as ElementDefinition,
+		onChange,
+		definitionType: definitionType as DefinitionType,
+	})
 	const headersData = useHeadersData(
 		headers,
 		Boolean(onDelete || onEdit || onCancel || onSave),
@@ -162,13 +164,12 @@ function useCustomColumnsWidth(headersData: HeaderData[]) {
 		const props = headersData.map(h => h.fieldName)
 		const hasLevel = props.includes('level')
 		const colWidth = [
-			{ fieldName: 'variable', width: `${hasLevel ? '25' : '30'}%` },
-			{ fieldName: 'type', width: '13%' },
+			{ fieldName: 'variable', width: `${hasLevel ? '35' : '30'}%` },
 			{ fieldName: 'description', width: `${hasLevel ? '40' : '60'}%` },
 			{ fieldName: 'actions', width: '10%' },
 		]
 		if (hasLevel) {
-			colWidth.push({ fieldName: 'level', width: '12%' })
+			colWidth.push({ fieldName: 'level', width: '15%' })
 		}
 		return colWidth
 	}, [headersData])

@@ -13,7 +13,7 @@ import type {
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 
-import { useAddOnLeavePage, useAddOrEditFactor } from '~hooks'
+import { useAddOrEditFactor } from '~hooks'
 import { useCausalFactors, useSetCausalFactors } from '~state'
 import { noop } from '~utils'
 
@@ -31,13 +31,11 @@ export function useBusinessLogic(): {
 	editFactor: (factor: CausalFactor) => void
 	deleteFactor: (factor: CausalFactor) => void
 	setFactor: (factor: Maybe<CausalFactor>) => void
-	setNewFactor: (factor: Partial<CausalFactor>) => void
 	setIsEditing: (value: boolean) => void
 	goToFactorsPage: Handler
 } {
 	const causalFactors = useCausalFactors()
 	const [factor, setFactor] = useState<CausalFactor>()
-	const [newFactor, setNewFactor] = useState<Partial<CausalFactor>>()
 	const [isEditing, setIsEditing] = useState(false)
 
 	const deleteFactor = useDeleteFactor()
@@ -45,7 +43,6 @@ export function useBusinessLogic(): {
 	const addFactor = useAddFactor(isEditing, setIsEditing, setFactor)
 	const flatFactorsList = useFlatFactorsList(causalFactors)
 	const [goToFactorsPage, factorsPathData] = useFactorsNavigation()
-	useAddOnLeavePage<CausalFactor>(newFactor as CausalFactor, addFactor)
 
 	return {
 		factor,
@@ -55,7 +52,6 @@ export function useBusinessLogic(): {
 		editFactor,
 		deleteFactor,
 		setFactor,
-		setNewFactor,
 		setIsEditing,
 		goToFactorsPage,
 		page: factorsPathData?.page,

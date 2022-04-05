@@ -22,7 +22,6 @@ import { getDefinitionsByType, noop } from '~utils'
 import {
 	useAddButton,
 	useCheckbox,
-	useDefinitionTypeDropdown,
 	useDescriptionBox,
 	useHasLevel,
 	useVariableField,
@@ -37,25 +36,25 @@ export function useFactorsDefinitionForm({
 	experiment,
 	factor,
 	showLevel,
+	definitionType,
 	onAdd = noop,
 	onChange = noop,
 }: {
 	experiment?: Experiment
 	factor?: CausalFactor | ElementDefinition
 	showLevel?: boolean
+	definitionType: DefinitionType
 	onAdd?: OnAddHandler
 	onChange?: OnChangeHandler
 }): {
 	level: JSX.Element
 	variable: JSX.Element
 	description: JSX.Element
-	definitionType: JSX.Element
 	addButton: JSX.Element | null
 } {
 	const [description, setDescription] = useState<string>('')
 	const [variable, setVariable] = useState<string>('')
 	const [isPrimary, setIsPrimary] = useState<boolean>(false)
-	const [definitionType, setDefinitionType] = useState<Maybe<DefinitionType>>()
 	const hasLevel = useHasLevel(factor) || showLevel
 	const location = useLocation()
 
@@ -64,7 +63,7 @@ export function useFactorsDefinitionForm({
 		variable,
 		description,
 		isPrimary,
-		definitionType as DefinitionType,
+		definitionType,
 		onAdd,
 		resetFields,
 	)
@@ -86,7 +85,6 @@ export function useFactorsDefinitionForm({
 			if (factor) {
 				setVariable(factor.variable)
 				setDescription(factor.description || '')
-				setDefinitionType(factor.type)
 				hasLevel && setIsPrimary(factor.level === CausalityLevel.Primary)
 			}
 		},
@@ -120,10 +118,6 @@ export function useFactorsDefinitionForm({
 
 	const checkbox = useCheckbox(isPrimary, setIsPrimary)
 	const variableField = useVariableField(variable, add, setVariable, factor)
-	const definitionTypeDropdown = useDefinitionTypeDropdown(
-		definitionType as DefinitionType,
-		setDefinitionType,
-	)
 	const addButton = useAddButton(add, variable, factor)
 	const descriptionBox = useDescriptionBox(
 		description,
@@ -136,7 +130,6 @@ export function useFactorsDefinitionForm({
 		level: checkbox,
 		variable: variableField,
 		description: descriptionBox,
-		definitionType: definitionTypeDropdown,
 		addButton,
 	}
 }
