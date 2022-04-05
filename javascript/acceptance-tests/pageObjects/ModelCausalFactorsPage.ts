@@ -21,7 +21,7 @@ interface Field {
 	description?: string
 }
 
-export class ModelDomainPage extends Page {
+export class ModelCausalFactorsPage extends Page {
 	protected PAGE_PATH: string = `#/define/causalFactors`
 
 	public async waitForLoad(): Promise<void> {

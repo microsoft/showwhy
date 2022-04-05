@@ -14,16 +14,16 @@ test.describe('Model Causal Factors Page', () => {
 		const ctx = await browser.newContext()
 		page = await ctx.newPage()
 		po = createPageObjects(page)
-		await po.ModelDomainPage.open()
-		await po.ModelDomainPage.waitForLoad()
+		await po.modelCausalFactorsPage.open()
+		await po.modelCausalFactorsPage.waitForLoad()
 	})
 
 	test('Add causal factors', async () => {
-		await po.ModelDomainPage.addElement({ variable: 'Primary variable' })
-		await po.ModelDomainPage.addElement({
+		await po.modelCausalFactorsPage.addElement({ variable: 'Primary variable' })
+		await po.modelCausalFactorsPage.addElement({
 			variable: 'Secondary variable',
 		})
-		const elements = await po.ModelDomainPage.countElements()
+		const elements = await po.modelCausalFactorsPage.countElements()
 		await expect(elements).toEqual(2)
 	})
 })

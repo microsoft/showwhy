@@ -8,7 +8,7 @@ import { Page } from '@playwright/test'
 import { Header } from './Header'
 import { DescribeElementsPage } from './DescribeElementsPage'
 import { DefineModelPage } from './DefineModelPage'
-import { ModelDomainPage } from './ModelDomainPage'
+import { ModelCausalFactorsPage } from './ModelCausalFactorsPage'
 import { DefineFactorsPage } from './DefineFactorsPage'
 import { LoadDataTablesPage } from './LoadDataTablesPage'
 import { SelectCausalEstimatorsPage } from './SelectCausalEstimatorsPage'
@@ -20,7 +20,7 @@ export interface PageObjects {
 	header: Header
 	describeElementsPage: DescribeElementsPage
 	defineModelPage: DefineModelPage
-	ModelDomainPage: ModelDomainPage
+	modelCausalFactorsPage: ModelCausalFactorsPage
 	defineFactorsPage: DefineFactorsPage
 	loadDataTablesPage: LoadDataTablesPage
 	selectCausalEstimatorsPage: SelectCausalEstimatorsPage
@@ -33,7 +33,7 @@ export function createPageObjects(page: Page): PageObjects {
 	const header = new Header(page)
 	const describeElementsPage = new DescribeElementsPage(page)
 	const defineModelPage = new DefineModelPage(page)
-	const ModelDomainPage = new ModelDomainPage(page)
+	const modelCausalFactorsPage = new ModelCausalFactorsPage(page)
 	const defineFactorsPage = new DefineFactorsPage(page)
 	const loadDataTablesPage = new LoadDataTablesPage(page)
 	const selectCausalEstimatorsPage = new SelectCausalEstimatorsPage(page)
@@ -45,7 +45,7 @@ export function createPageObjects(page: Page): PageObjects {
 		header,
 		describeElementsPage,
 		defineModelPage,
-		ModelDomainPage,
+		modelCausalFactorsPage,
 		defineFactorsPage,
 		loadDataTablesPage,
 		selectCausalEstimatorsPage,

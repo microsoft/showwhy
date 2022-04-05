@@ -20,11 +20,11 @@ test.describe('Define Factors Page', () => {
 		await po.defineFactorsPage.open('cause-exposure')
 		await po.defineFactorsPage.waitForLoad()
 		await po.defineFactorsPage.goToAddNewFactor()
-		await po.ModelDomainPage.addElement({ variable: 'Primary variable' })
-		await po.ModelDomainPage.addElement({
+		await po.modelCausalFactorsPage.addElement({ variable: 'Primary variable' })
+		await po.modelCausalFactorsPage.addElement({
 			variable: 'Secondary variable',
 		})
-		await po.ModelDomainPage.goToBackToPage()
+		await po.modelCausalFactorsPage.goToBackToPage()
 		const elements = await po.defineFactorsPage.countElements()
 		await expect(elements).toEqual(2)
 	})
@@ -33,11 +33,11 @@ test.describe('Define Factors Page', () => {
 		await po.defineFactorsPage.open('cause-outcome')
 		await po.defineFactorsPage.waitForLoad()
 		await po.defineFactorsPage.goToAddNewFactor()
-		await po.ModelDomainPage.addElement({ variable: 'Primary variable' })
-		await po.ModelDomainPage.addElement({
+		await po.modelCausalFactorsPage.addElement({ variable: 'Primary variable' })
+		await po.modelCausalFactorsPage.addElement({
 			variable: 'Secondary variable',
 		})
-		await po.ModelDomainPage.goToBackToPage()
+		await po.modelCausalFactorsPage.goToBackToPage()
 		const elements = await po.defineFactorsPage.countElements()
 		await expect(elements).toEqual(2)
 	})

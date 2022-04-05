@@ -49,7 +49,9 @@ export const ConsiderAlternativeDefinitionsPage: React.FC = memo(
 				) : null}
 
 				<FormContainer>
-					<DefinitionTitle>Alternative definitions</DefinitionTitle>
+					<DefinitionTitle data-pw="title">
+						Alternative definitions
+					</DefinitionTitle>
 					<TableContainer>
 						<TableComponent
 							headers={tableHeadersList}

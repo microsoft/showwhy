@@ -124,6 +124,7 @@ export function useDefinitionTypeDropdown(
 				}
 				placeholder="Select a type"
 				options={options}
+				data-pw="factors-form-type"
 			/>
 		</DropdownWrapper>
 	)
