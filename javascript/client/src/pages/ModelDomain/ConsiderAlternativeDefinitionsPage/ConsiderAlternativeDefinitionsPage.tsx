@@ -16,7 +16,7 @@ import { useBusinessLogic } from './hooks'
 
 const tableHeadersList: HeaderData[] = [
 	{ fieldName: 'level', value: 'Level' },
-	{ fieldName: 'variable', value: 'Definition' },
+	{ fieldName: 'variable', value: 'Label' },
 	{ fieldName: 'description', value: 'Description' },
 ]
 
@@ -36,6 +36,9 @@ export const ConsiderAlternativeDefinitionsPage: React.FC = memo(
 
 		return (
 			<Container>
+				<DefinitionTitle data-pw="title">
+					Alternative definitions
+				</DefinitionTitle>
 				<Pivot
 					onLinkClick={handleOnLinkClick}
 					aria-label="Alternative Definitions Interest labels and description"
@@ -50,9 +53,6 @@ export const ConsiderAlternativeDefinitionsPage: React.FC = memo(
 							<DetailsText>{item.description}</DetailsText>
 
 							<FormContainer>
-								<DefinitionTitle data-pw="title">
-									Alternative definitions
-								</DefinitionTitle>
 								<TableContainer>
 									<TableComponent
 										headers={tableHeadersList}

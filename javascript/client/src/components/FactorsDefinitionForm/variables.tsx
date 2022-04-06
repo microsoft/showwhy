@@ -58,7 +58,7 @@ export function useVariableField(
 			<VariableField
 				onChange={(_, value) => setVariable(value ?? '')}
 				value={variable}
-				placeholder="Type a variable"
+				placeholder="Enter label"
 				data-pw="factors-form-variable-name"
 				onKeyPress={!factor ? handler : undefined}
 				onBlur={!factor ? handleOnBlur : undefined}

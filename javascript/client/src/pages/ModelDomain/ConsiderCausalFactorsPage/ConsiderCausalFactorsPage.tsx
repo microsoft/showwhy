@@ -15,7 +15,7 @@ import type { HeaderData } from '~types'
 import { useBusinessLogic } from './hooks'
 
 const tableHeaders: HeaderData[] = [
-	{ fieldName: 'variable', value: 'Factor', width: '15%' },
+	{ fieldName: 'variable', value: 'Label', width: '15%' },
 	{ fieldName: 'description', value: 'Description' },
 ]
 
