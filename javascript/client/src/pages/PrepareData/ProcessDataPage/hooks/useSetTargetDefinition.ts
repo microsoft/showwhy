@@ -11,7 +11,7 @@ import { PageType } from '~types'
 export function useSetTargetDefinition(
 	saveDefinition: (definition: ElementDefinition, type: PageType) => void,
 	defineQuestionData: Experiment,
-): (selectedDefinitionId: string, column: string) => void {
+): (selectedDefinitionId: string, column: string) => boolean {
 	return useCallback(
 		(selectedDefinitionId: string, column: string) => {
 			const { population, exposure, outcome } = defineQuestionData
@@ -42,6 +42,7 @@ export function useSetTargetDefinition(
 				: PageType.Outcome
 
 			saveDefinition(newDefinition, type)
+			return !!newDefinition.column
 		},
 		[saveDefinition, defineQuestionData],
 	)

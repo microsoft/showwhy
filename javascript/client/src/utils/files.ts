@@ -31,7 +31,7 @@ export async function createZipFormData(
 	name: string,
 ): Promise<FormData> {
 	const formData = new FormData()
-	const content = file.toCSV()
+	const content = file.toCSV().replaceAll(',\n', ',null\n')
 	const type = { type: `text/csv` }
 	const blob = new Blob([content], type)
 	const fileContent = createFile(blob, { name: name })

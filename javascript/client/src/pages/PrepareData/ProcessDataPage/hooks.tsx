@@ -13,9 +13,13 @@ import type {
 	Handler1,
 } from '@showwhy/types'
 import { CausalModelLevel } from '@showwhy/types'
-import { useCallback, useMemo } from 'react'
+import { useCallback, useEffect, useMemo } from 'react'
 
-import { useAllVariables, useCausalEffects } from '~hooks'
+import {
+	useAllVariables,
+	useAutomaticWorkflowStatus,
+	useCausalEffects,
+} from '~hooks'
 import {
 	useCausalFactors,
 	useSetOutputTablePrep,
@@ -57,14 +61,34 @@ export function useBusinessLogic(
 	const setSubjectIdentifier = useSetSubjectIdentifier()
 	const subjectIdentifier = useSubjectIdentifier()
 	const setOutputTable = useSetOutputTablePrep()
-
 	const causalEffects = useCausalEffects(CausalModelLevel.Maximum)
+	const { setDone, setTodo } = useAutomaticWorkflowStatus()
+
+	const completedElements = useMemo((): number => {
+		return allElements.find((x: CausalFactor | ElementDefinition) => x)
+			? allElements?.filter((x: CausalFactor | ElementDefinition) => x.column)
+					.length
+			: 0
+	}, [allElements])
+
+	const isStepDone = useCallback(
+		(hasVariable: boolean) => {
+			const done =
+				hasVariable &&
+				allElements.length === completedElements &&
+				!!subjectIdentifier
+			done ? setDone() : setTodo()
+		},
+		[allElements, completedElements, setDone, setTodo, subjectIdentifier],
+	)
+
 	const onSelectVariable = useOnSelectVariable(
 		causalFactors,
 		defineQuestion,
 		subjectIdentifier,
 		setDefineQuestion,
 		setSubjectIdentifier,
+		isStepDone,
 	)
 
 	const onUpdateOutput = useCallback(
@@ -107,13 +131,6 @@ export function useBusinessLogic(
 	const steps = useMemo((): any => {
 		return prepSpecification !== undefined ? prepSpecification[0]?.steps : []
 	}, [prepSpecification])
-
-	const completedElements = useMemo((): number => {
-		return allElements.find((x: CausalFactor | ElementDefinition) => x)
-			? allElements?.filter((x: CausalFactor | ElementDefinition) => x.column)
-					.length
-			: 0
-	}, [allElements])
 
 	const isElementComplete = useCallback(
 		(element: CausalFactor | ElementDefinition) => {

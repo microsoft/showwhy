@@ -112,8 +112,12 @@ def __estimate_effect(
         population_data = all_data[all_data[population_id] == 1]
 
     treatment_var = treatment_spec["variable"]
-    population_data[treatment_var] = population_data[treatment_var].astype(bool)
     outcome_var = outcome_spec["variable"]
+    confounders = model_spec["confounders"]
+    effect_modifiers = model_spec["effect_modifiers"]
+    population_data = population_data[[treatment_var] + [outcome_var] + confounders + effect_modifiers]
+    population_data = population_data.dropna()
+    population_data[treatment_var] = population_data[treatment_var].astype(bool)
     causal_graph = copy.deepcopy(model_spec["causal_graph"])
     logging.info(
         f"population: {population_spec['label']}, "
