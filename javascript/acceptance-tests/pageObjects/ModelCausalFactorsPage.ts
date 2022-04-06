@@ -22,7 +22,7 @@ interface Field {
 }
 
 export class ModelCausalFactorsPage extends Page {
-	protected PAGE_PATH: string = `#/define/causalFactors`
+	protected PAGE_PATH: string = `#/consider/causalFactors`
 
 	public async waitForLoad(): Promise<void> {
 		await super.waitForLoad()

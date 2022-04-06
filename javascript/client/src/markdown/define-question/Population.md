@@ -1,7 +1,3 @@
-There are likely multiple ways to define a population of subjects matching your description, for example based on different kinds of observable, measurable, or otherwise knowable attributes.​
+Consider alternative ways of defining each of the population, exposure, and outcome variables. This can help you to understand the sensitivity of your causal estimates to the particular way in which you operationalize the causal question. You must also specify a primary definition that best represents each variable for the purpose of analysis.
 
-Consider the variety of ways in which you might be able to operationalize your population description with one or more alternative definitions. You must specify a primary definition that best represents your population for the purpose of analysis, but you may also specify any number of secondary definitions that follow the same spirit as the high-level description.​
-
-Enter labels and descriptions for your primary and secondary population definitions in the table to the right. Later in the process, you’ll work towards loading data and deriving variables that map onto these definitions.​
-
-At any point, you can return to this step to view your progress towards population definition.
+Add these alternative definitions in the table to the right. Later in the process, you’ll work towards loading data and deriving variables that map onto these definitions.

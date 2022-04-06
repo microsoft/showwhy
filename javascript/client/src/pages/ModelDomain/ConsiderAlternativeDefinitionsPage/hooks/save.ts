@@ -10,19 +10,18 @@ import type {
 } from '@showwhy/types'
 import { useCallback } from 'react'
 
+import { useExperiment, useSetExperiment } from '~state'
 import { wait, withRandomId } from '~utils'
 
-export function useSaveDefinitions(
-	pageType: string,
-	defineQuestion: Experiment,
-	setDefineQuestion: (question: Experiment) => void,
-): AsyncHandler1<ElementDefinition[]> {
+export function useSaveDefinitions(): AsyncHandler1<ElementDefinition[]> {
+	const defineQuestion = useExperiment()
+	const setDefineQuestion = useSetExperiment()
 	return useCallback(
 		async (definitions: ElementDefinition | ElementDefinition[]) => {
 			if (!definitions) {
 				return
 			}
-			let list = [...((defineQuestion as any)[pageType]?.definition || [])]
+			let list = [...((defineQuestion as any)?.definitions || [])]
 			if (!Array.isArray(definitions)) {
 				list = [...list, withRandomId(definitions)]
 			} else {
@@ -31,14 +30,11 @@ export function useSaveDefinitions(
 
 			const question: Experiment = {
 				...defineQuestion,
-				[pageType]: {
-					...(defineQuestion as any)[pageType],
-					definition: list,
-				},
+				definitions: list,
 			}
 			setDefineQuestion(question)
 			await wait(500)
 		},
-		[setDefineQuestion, defineQuestion, pageType],
+		[setDefineQuestion, defineQuestion],
 	)
 }

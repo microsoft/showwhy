@@ -5,6 +5,7 @@
 
 import { Page } from './Page'
 import { dataAttr } from '../util'
+import { capitalize } from 'lodash'
 
 const selectors: Record<string, string> = {
 	title: dataAttr('title'),
@@ -13,19 +14,25 @@ const selectors: Record<string, string> = {
 	variableField: dataAttr('factors-form-variable-name'),
 	isPrimaryCheckbox: `${dataAttr('factors-form-is-primary')} input`,
 	description: dataAttr('factors-form-description'),
+	type: dataAttr('factors-form-type'),
 	addButton: dataAttr('factors-form-add-button'),
 }
+
+const typeSelector = (type: string) =>
+	`.ms-Dropdown-items button[role="option"]:has-text("${capitalize(type)}")`
+
+const tabSelector = (type: string) =>
+	`button[role="tab"]:has-text("${capitalize(type)}")`
 
 interface Field {
 	isPrimary?: boolean
 	variable: string
 	description?: string
+	type: string
 }
 
 export class DefineModelPage extends Page {
-	public open(type: string) {
-		return super.open(`#/define/${type.toLowerCase()}`)
-	}
+	protected PAGE_PATH: string = '#/define/alternative'
 
 	public async waitForLoad(): Promise<void> {
 		await super.waitForLoad()
@@ -34,7 +41,9 @@ export class DefineModelPage extends Page {
 	}
 
 	public async addElement(data: Field): Promise<void> {
-		const { isPrimary, variable, description } = data
+		const { isPrimary, variable, description, type } = data
+
+		await this.page.locator(tabSelector(type)).click()
 
 		if (isPrimary) {
 			await this.page.click(selectors.isPrimaryCheckbox)

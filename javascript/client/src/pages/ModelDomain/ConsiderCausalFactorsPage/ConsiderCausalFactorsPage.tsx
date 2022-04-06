@@ -15,7 +15,7 @@ import type { HeaderData } from '~types'
 import { useBusinessLogic } from './hooks'
 
 const tableHeaders: HeaderData[] = [
-	{ fieldName: 'variable', value: 'Factor', width: '15%' },
+	{ fieldName: 'variable', value: 'Label', width: '15%' },
 	{ fieldName: 'description', value: 'Description' },
 ]
 
@@ -29,11 +29,9 @@ export const ConsiderCausalFactorsPage: React.FC = memo(
 			editFactor,
 			deleteFactor,
 			setFactor,
-			setNewFactor,
 			setIsEditing,
 			goToFactorsPage,
 			page,
-			pageType,
 		} = useBusinessLogic()
 
 		return (
@@ -51,15 +49,12 @@ export const ConsiderCausalFactorsPage: React.FC = memo(
 							setIsEditing(false)
 							setFactor(undefined)
 						}}
-						pageType={pageType}
 					/>
 				</Container>
 				<FactorsDefinitionForm
 					factor={!isEditing ? factor : undefined}
 					onAdd={addFactor}
 					showLevel={false}
-					pageType={pageType}
-					onChange={setNewFactor}
 				/>
 				{page ? (
 					<ButtonContainer>

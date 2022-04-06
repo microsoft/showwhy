@@ -15,6 +15,7 @@ import upperFirst from 'lodash/upperFirst'
 import { useMemo } from 'react'
 
 import type { CausalEffectsProps } from '~hooks'
+import { getDefinitionsByType } from '~utils'
 
 const buildDropdownOption = (
 	all: ElementDefinition[],
@@ -47,7 +48,18 @@ export function useDefinitionDropdownOptions(
 	causalEffects: CausalEffectsProps,
 ): IContextualMenuItem[] {
 	return useMemo((): IContextualMenuItem[] => {
-		const { population, exposure, outcome } = defineQuestion
+		const population = getDefinitionsByType(
+			DefinitionType.Population,
+			defineQuestion?.definitions,
+		)
+		const exposure = getDefinitionsByType(
+			DefinitionType.Exposure,
+			defineQuestion?.definitions,
+		)
+		const outcome = getDefinitionsByType(
+			DefinitionType.Outcome,
+			defineQuestion?.definitions,
+		)
 		const all: IContextualMenuItem[] = [
 			{
 				key: 'subject-identifier',
@@ -90,21 +102,14 @@ export function useDefinitionDropdownOptions(
 			causalEffects.confounders.includes(x.variable),
 		)
 
-		population &&
-			population.definition &&
-			all.push(
-				buildDropdownOption(population.definition, DefinitionType.Population),
-			)
+		population.length &&
+			all.push(buildDropdownOption(population, DefinitionType.Population))
 
-		exposure &&
-			exposure.definition &&
-			all.push(
-				buildDropdownOption(exposure.definition, DefinitionType.Exposure),
-			)
+		exposure.length &&
+			all.push(buildDropdownOption(exposure, DefinitionType.Exposure))
 
-		outcome &&
-			outcome.definition &&
-			all.push(buildDropdownOption(outcome.definition, DefinitionType.Outcome))
+		outcome.length &&
+			all.push(buildDropdownOption(outcome, DefinitionType.Outcome))
 
 		exposureDeterminant &&
 			all.push(

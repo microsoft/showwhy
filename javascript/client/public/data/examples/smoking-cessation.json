@@ -173,62 +173,64 @@
         }
     ],
     "defineQuestion": {
+        "definitions": [
+            {
+                "level": "Primary",
+                "variable": "Quit smoking",
+                "description": "A binary variable indicating whether the participant quitted smoking prior to the follow-up visit in 1982",
+                "column": "quit_smoking",
+                "type": "exposure"
+            },
+            {
+                "level": "Secondary",
+                "variable": "Reduced smoking by 25%",
+                "description": "A binary variable indicating whether the participant reduced their smoking by at least 25% prior to the follow-up visit in 1982. Smoking intensity was measured as the number of cigarettes smoked per day.",
+                "column": "smoke_reduction_25pct",
+                "type": "exposure"
+            },
+            {
+                "level": "Secondary",
+                "variable": "Reduced smoking by 50%",
+                "description": "A binary variable indicating whether the participant reduced their smoking by at least 50% prior to the follow-up visit in 1982. Smoking intensity was measured as the number of cigarettes smoked per day.",
+                "column": "smoke_reduction_50pct",
+                "type": "exposure"
+            },
+            {
+                "level": "Secondary",
+                "variable": "Reduced smoking by 75%",
+                "description": "A binary variable indicating whether the participant reduced their smoking by at least 25% prior to the follow-up visit in 1982. Smoking intensity was measured as the number of cigarettes smoked per day.",
+                "column": "smoke_reduction_75pct",
+                "type": "exposure"
+            },
+            {
+                "level": "Primary",
+                "variable": "Cigarette smokers",
+                "description": "Participants who reported smoking in 1971. Participants must have their body weight recorded at both baseline and follow-up visits.",
+                "column": "subject_inclusion",
+                "type": "population"
+            },
+            {
+                "level": "Primary",
+                "variable": "Body Weight Change (kg)",
+                "description": "Change in participant's body weight between 1971 and 1982, measured in kilograms",
+                "column": "weight_change",
+                "type": "outcome"
+            }
+        ],
         "exposure": {
             "label": "Smoking Reduction",
             "description": "Participants of the NHEFS longitudinal study who reported a reduction in cigarette smoking intensity prior to the follow-up visit in 1982.",
-            "dataset": "NHEFS dataset",
-            "definition": [
-                {
-                    "level": "Primary",
-                    "variable": "Quit smoking",
-                    "description": "A binary variable indicating whether the participant quitted smoking prior to the follow-up visit in 1982",
-                    "column": "quit_smoking"
-                },
-                {
-                    "level": "Secondary",
-                    "variable": "Reduced smoking by 25%",
-                    "description": "A binary variable indicating whether the participant reduced their smoking by at least 25% prior to the follow-up visit in 1982. Smoking intensity was measured as the number of cigarettes smoked per day.",
-                    "column": "smoke_reduction_25pct"
-                },
-                {
-                    "level": "Secondary",
-                    "variable": "Reduced smoking by 50%",
-                    "description": "A binary variable indicating whether the participant reduced their smoking by at least 50% prior to the follow-up visit in 1982. Smoking intensity was measured as the number of cigarettes smoked per day.",
-                    "column": "smoke_reduction_50pct"
-                },
-                {
-                    "level": "Secondary",
-                    "variable": "Reduced smoking by 75%",
-                    "description": "A binary variable indicating whether the participant reduced their smoking by at least 25% prior to the follow-up visit in 1982. Smoking intensity was measured as the number of cigarettes smoked per day.",
-                    "column": "smoke_reduction_75pct"
-                }
-            ]
+            "dataset": "NHEFS dataset"
         },
         "population": {
             "label": "Cigarette Smokers",
             "description": "Participants of the National Health Epidemiologic Follow-up Study (NHEFS) who reported smoking cigarettes at the beginning of the study in 1971. Study participants had a baseline visit in a 1971 and a follow-up visit in 1982, during which they reported their demographics, smoking status, body weight and other health indicators.",
-            "dataset": "NHEFS dataset",
-            "definition": [
-                {
-                    "level": "Primary",
-                    "variable": "Cigarette smokers",
-                    "description": "Participants who reported smoking in 1971. Participants must have their body weight recorded at both baseline and follow-up visits.",
-                    "column": "subject_inclusion"
-                }
-            ]
+            "dataset": "NHEFS dataset"
         },
         "outcome": {
             "label": "Body Weight Change (kg)",
             "description": "Change in the participant's body weight between the baseline visit in 1971 and the follow-up visit in 1982",
-            "dataset": "NHEFS dataset",
-            "definition": [
-                {
-                    "level": "Primary",
-                    "variable": "Body Weight Change (kg)",
-                    "description": "Change in participant's body weight between 1971 and 1982, measured in kilograms",
-                    "column": "weight_change"
-                }
-            ]
+            "dataset": "NHEFS dataset"
         },
         "hypothesis": "Increase"
     },

@@ -4,8 +4,8 @@
  */
 
 import type { Dimensions } from '@essex/hooks'
-import type { Experiment, Handler, Handler1, Maybe } from '@showwhy/types'
-import { CausalityLevel, NodeResponseStatus } from '@showwhy/types'
+import type { Experiment, Handler, Handler1, Maybe } from '@showwhy/types';
+import { CausalityLevel, DefinitionType , NodeResponseStatus } from '@showwhy/types'
 import type { Theme } from '@thematic/core'
 import { useThematic } from '@thematic/react'
 import { useCallback, useMemo, useState } from 'react'
@@ -127,8 +127,10 @@ export function useSpecificationCurve(): {
 function useOutcome(defineQuestion: Experiment) {
 	return useMemo(
 		() =>
-			defineQuestion.outcome?.definition.find(
-				d => d.level === CausalityLevel.Primary,
+			defineQuestion?.definitions?.find(
+				d =>
+					d.type === DefinitionType.Outcome &&
+					d.level === CausalityLevel.Primary,
 			)?.variable,
 		[defineQuestion],
 	)

@@ -10,11 +10,11 @@ import { Pages, PageType, StepStatus } from '~types'
 export const stepsList = [
 	{
 		id: uuidv4(),
-		name: 'Define question',
+		name: 'Model domain',
 		steps: [
 			{
 				id: uuidv4(),
-				title: 'Describe elements',
+				title: 'Define causal question',
 				status: StepStatus.ToDo,
 				url: `${Pages.DefineElements}`,
 				showStatus: true,
@@ -23,40 +23,16 @@ export const stepsList = [
 			},
 			{
 				id: uuidv4(),
-				title: 'Define population',
+				title: 'Consider alternative definitions',
 				status: StepStatus.ToDo,
-				url: `${Pages.Define}/${PageType.Population}`,
+				url: `${Pages.Alternative}`,
 				showStatus: true,
 				getMarkdown: async () =>
 					import('../markdown/define-question/Population.md?raw'),
 			},
 			{
 				id: uuidv4(),
-				title: 'Define exposure',
-				status: StepStatus.ToDo,
-				url: `${Pages.Define}/${PageType.Exposure}`,
-				showStatus: true,
-				getMarkdown: async () =>
-					import('../markdown/define-question/Exposure.md?raw'),
-			},
-			{
-				id: uuidv4(),
-				title: 'Define outcome',
-				status: StepStatus.ToDo,
-				url: `${Pages.Define}/${PageType.Outcome}`,
-				showStatus: true,
-				getMarkdown: async () =>
-					import('../markdown/define-question/Outcome.md?raw'),
-			},
-		],
-	},
-	{
-		id: uuidv4(),
-		name: 'Model causal factors',
-		steps: [
-			{
-				id: uuidv4(),
-				title: 'Consider causal factors',
+				title: 'Consider related variables',
 				status: StepStatus.ToDo,
 				url: `${Pages.ConsiderCausalFactors}`,
 				showStatus: true,
@@ -85,7 +61,7 @@ export const stepsList = [
 			},
 			{
 				id: uuidv4(),
-				title: 'Confirm alternative models',
+				title: 'Confirm domain models',
 				status: StepStatus.ToDo,
 				url: `${Pages.Confirm}`,
 				showStatus: true,
@@ -102,7 +78,7 @@ export const stepsList = [
 		steps: [
 			{
 				id: uuidv4(),
-				title: 'Load data tables',
+				title: 'Load data files',
 				status: StepStatus.ToDo,
 				url: `${Pages.LoadData}`,
 				showStatus: true,
@@ -110,7 +86,7 @@ export const stepsList = [
 			},
 			{
 				id: uuidv4(),
-				title: 'Process data',
+				title: 'Derive data variables',
 				status: StepStatus.ToDo,
 				url: Pages.ProcessData,
 				showStatus: true,
