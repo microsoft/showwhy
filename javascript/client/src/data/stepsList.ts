@@ -14,7 +14,7 @@ export const stepsList = [
 		steps: [
 			{
 				id: uuidv4(),
-				title: 'Describe elements',
+				title: 'Define causal question',
 				status: StepStatus.ToDo,
 				url: `${Pages.DefineElements}`,
 				showStatus: true,
@@ -23,17 +23,16 @@ export const stepsList = [
 			},
 			{
 				id: uuidv4(),
-				title: 'Alternative definitions',
+				title: 'Consider alternative definitions',
 				status: StepStatus.ToDo,
 				url: `${Pages.Alternative}`,
 				showStatus: true,
-				// TODO: MARKDOWN!
 				getMarkdown: async () =>
 					import('../markdown/define-question/Population.md?raw'),
 			},
 			{
 				id: uuidv4(),
-				title: 'Consider causal factors',
+				title: 'Consider related variables',
 				status: StepStatus.ToDo,
 				url: `${Pages.ConsiderCausalFactors}`,
 				showStatus: true,
@@ -62,7 +61,7 @@ export const stepsList = [
 			},
 			{
 				id: uuidv4(),
-				title: 'Confirm alternative models',
+				title: 'Confirm domain models',
 				status: StepStatus.ToDo,
 				url: `${Pages.Confirm}`,
 				showStatus: true,
@@ -79,7 +78,7 @@ export const stepsList = [
 		steps: [
 			{
 				id: uuidv4(),
-				title: 'Load data tables',
+				title: 'Load data files',
 				status: StepStatus.ToDo,
 				url: `${Pages.LoadData}`,
 				showStatus: true,
@@ -87,7 +86,7 @@ export const stepsList = [
 			},
 			{
 				id: uuidv4(),
-				title: 'Process data',
+				title: 'Derive data variables',
 				status: StepStatus.ToDo,
 				url: Pages.ProcessData,
 				showStatus: true,

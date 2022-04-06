@@ -10,7 +10,7 @@ import { memo } from 'react'
 import styled from 'styled-components'
 
 import { CausalEffects } from '~components/CausalEffects'
-import { Container } from '~styles'
+import { Container, Title } from '~styles'
 
 import { useBusinessLogic } from './hooks'
 
@@ -44,6 +44,7 @@ export const ConfirmAlternativeModelsPage: React.FC = memo(
 
 		return (
 			<Container>
+				<Title>Domain models</Title>
 				<Container>
 					<Choice
 						options={causalModelOptions}
@@ -57,7 +58,7 @@ export const ConfirmAlternativeModelsPage: React.FC = memo(
 									CausalModelLevel.Maximum,
 							})
 						}}
-						label="Select the default causal model"
+						label="Select the primary causal model"
 					/>
 				</Container>
 				<CausalEffects {...causalEffects} />

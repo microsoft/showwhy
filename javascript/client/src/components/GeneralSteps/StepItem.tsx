@@ -61,7 +61,7 @@ const StepLink = styled(NavLink)`
 	text-decoration: unset;
 	align-self: center;
 	color: black;
-	padding: 4px 6px 4px 8px;
+	padding: 4px 0px 4px 8px;
 
 	&.active {
 		font-weight: bold;

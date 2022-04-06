@@ -1,5 +1,6 @@
-We can refine the casual question in terms of three key concepts, all of which need to be defined in terms of variables either present in or derived from data: Does &lt;exposure&gt; cause &lt;outcome&gt; for &lt;population&gt;?
+ShowWhy guides you through the process of answering a causal question based on three key variables: For &lt;population&gt;, does &lt;exposure&gt; cause &lt;outcome&gt;?
 
-For now, enter your initial labels and descriptions for each of the elements of your causal question in the boxes to the right. The labels will also be reflected in the header bar above, serving as a persistent reminder of the focus of the project. You can come back to edit these at any time before executing your planned analysis.​ You can also use the Datasets fields to capture the names of potential data sources for defining each element of the causal question.
+We can think about such variables at two different levels – as _domain variables_ that describe the real-world phenomena of interest, and as _data variables_ derived from real-world observations.
+Causal inference results will not be valid unless all relevant domain variables are captured and represented as data variables.
 
-At this stage, you should also indicate the hypothesized direction of the causal effect – do you expect the exposure to cause the outcome to change in an unknown direction, or in a specific direction (i.e., to strictly increase or decrease)?
+Here, we focus on the key domain variables and how they might be operationalized as data variables, given access to appropriate datasets.
