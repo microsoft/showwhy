@@ -41,7 +41,7 @@ test.describe('Define Model Page', () => {
 			type: 'exposure',
 		})
 		const elements = await po.defineModelPage.countElements()
-		await expect(elements).toEqual(4)
+		await expect(elements).toEqual(2)
 	})
 
 	test('Define outcome', async () => {
@@ -54,6 +54,6 @@ test.describe('Define Model Page', () => {
 			type: 'outcome',
 		})
 		const elements = await po.defineModelPage.countElements()
-		await expect(elements).toEqual(6)
+		await expect(elements).toEqual(2)
 	})
 })

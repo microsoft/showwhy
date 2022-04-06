@@ -21,6 +21,9 @@ const selectors: Record<string, string> = {
 const typeSelector = (type: string) =>
 	`.ms-Dropdown-items button[role="option"]:has-text("${capitalize(type)}")`
 
+const tabSelector = (type: string) =>
+	`button[role="tab"]:has-text("${capitalize(type)}")`
+
 interface Field {
 	isPrimary?: boolean
 	variable: string
@@ -40,13 +43,10 @@ export class DefineModelPage extends Page {
 	public async addElement(data: Field): Promise<void> {
 		const { isPrimary, variable, description, type } = data
 
+		await this.page.locator(tabSelector(type)).click()
+
 		if (isPrimary) {
 			await this.page.click(selectors.isPrimaryCheckbox)
-		}
-
-		if (type) {
-			await this.page.click(selectors.type)
-			await this.page.locator(typeSelector(type)).click()
 		}
 
 		if (variable) {
