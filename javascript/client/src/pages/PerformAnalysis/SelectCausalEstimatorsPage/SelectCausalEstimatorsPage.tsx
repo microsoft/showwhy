@@ -51,12 +51,6 @@ const Container = styled.article`
 
 const Section = styled.section``
 
-const Title = styled.h2`
-	font-weight: 500;
-	font-size: 1.3rem;
-	margin: 0.5rem;
-`
-
 const CardsContainer = styled.div`
 	display: grid;
 	grid-template-columns: 1fr 1fr;
