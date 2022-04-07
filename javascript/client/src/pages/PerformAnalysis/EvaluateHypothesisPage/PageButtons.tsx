@@ -36,7 +36,6 @@ export const PageButtons: React.FC<{
 		)
 	}, [significanceTestResult])
 
-	debugger
 	return (
 		<Container>
 			{showButton && (
