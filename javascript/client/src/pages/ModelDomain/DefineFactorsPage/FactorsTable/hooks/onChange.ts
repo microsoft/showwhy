@@ -4,39 +4,48 @@
  */
 
 import type { IComboBoxOption } from '@fluentui/react'
-import type { Cause, FlatCausalFactor, Handler } from '@showwhy/types'
-import { BeliefDegree } from '@showwhy/types'
+import type {
+	Cause,
+	FlatCausalFactor,
+	Handler,
+	BeliefDegree,
+} from '@showwhy/types'
+// import type { BeliefDegree } from '@showwhy/types'
 import { useCallback } from 'react'
+
+// export function useOnChangeCauses(
+// 	flatFactorsList: FlatCausalFactor[],
+// 	saveNewFactors: (id: string, value: Cause) => void,
+// ): (id: string, checked: boolean) => void {
+// 	return useCallback(
+// 		(id: string, checked: boolean) => {
+// 			const newValue =
+// 				(flatFactorsList.find(x => x.id === id) as Cause) || ({} as Cause)
+// 			newValue.causes = checked
+// 			if (checked && !newValue.degree) {
+// 				newValue.degree = BeliefDegree.Strong
+// 			} else if (!checked) {
+// 				newValue.degree = null
+// 			}
+// 			saveNewFactors(id, newValue)
+// 		},
+// 		[flatFactorsList, saveNewFactors],
+// 	)
+// }
 
 export function useOnChangeCauses(
 	flatFactorsList: FlatCausalFactor[],
 	saveNewFactors: (id: string, value: Cause) => void,
-): (id: string, checked: boolean) => void {
+): (
+	selected: IComboBoxOption,
+	type: 'exposure' | 'outcome',
+	id?: string,
+) => void {
 	return useCallback(
-		(id: string, checked: boolean) => {
-			const newValue =
-				(flatFactorsList.find(x => x.id === id) as Cause) || ({} as Cause)
-			newValue.causes = checked
-			if (checked && !newValue.degree) {
-				newValue.degree = BeliefDegree.Strong
-			} else if (!checked) {
-				newValue.degree = null
-			}
-			saveNewFactors(id, newValue)
-		},
-		[flatFactorsList, saveNewFactors],
-	)
-}
-
-export function useOnChangeDegree(
-	flatFactorsList: FlatCausalFactor[],
-	saveNewFactors: (id: string, value: Cause) => void,
-): (selected: IComboBoxOption, id?: string) => void {
-	return useCallback(
-		(selected: IComboBoxOption, id?: string) => {
+		(selected: IComboBoxOption, type: 'exposure' | 'outcome', id?: string) => {
+			console.log('On change causes', type)
 			const newValue = flatFactorsList.find(x => x.id === id) as Cause
-			newValue.degree = selected.key as BeliefDegree
-			newValue.causes = true
+			;(newValue as any)[type] = selected.key as BeliefDegree
 			saveNewFactors(id as string, newValue)
 		},
 		[flatFactorsList, saveNewFactors],

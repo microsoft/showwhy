@@ -10,39 +10,21 @@
             "description": "Patient's age group derived from the Wolfram dataset",
             "variable": "Patient Age",
             "column": "age_group",
-            "causes": [
-                {
-                    "causes": true,
-                    "degree": 100,
-                    "type": "causeOutcome",
-                    "reasoning": "Older adults are likely to have higher mortality rates than younger adults"
-                },
-                {
-                    "causes": true,
-                    "degree": 100,
-                    "type": "causeExposure",
-                    "reasoning": "Older adults are more likely to experience chronic diseases than younger adults"
-                }
-            ]
+            "causes": {
+                "exposure": 100,
+                "outcome": 100,
+                "reasoning": "Exposure: Older adults are more likely to experience chronic diseases than younger adults\nOutcome: Older adults are likely to have higher mortality rates than younger adults"
+            }
         },
         {
             "description": "Patient gender recorded in the Wolfram dataset",
             "variable": "Patient Gender",
             "column": "gender",
-            "causes": [
-                {
-                    "causes": true,
-                    "degree": 50,
-                    "type": "causeOutcome",
-                    "reasoning": "There might be differences in risk of mortality between men and women"
-                },
-                {
-                    "causes": true,
-                    "degree": 50,
-                    "type": "causeExposure",
-                    "reasoning": "Women tend to be more affected by long-term and chronic illness"
-                }
-            ]
+            "causes": {
+                "exposure": 50,
+                "outcome": 50,
+                "reasoning": "Exposure: Women tend to be more affected by long-term and chronic illness\nOutcome: There might be differences in risk of mortality between men and women"
+            }
         }
     ],
     "defineQuestion": {

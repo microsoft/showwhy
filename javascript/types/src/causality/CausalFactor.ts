@@ -5,5 +5,5 @@
 import type { ElementDefinition } from '../experiments/index.js'
 import type { Cause } from './Cause.js'
 export interface CausalFactor extends ElementDefinition {
-	causes?: Cause[]
+	causes?: Cause
 }

@@ -11,15 +11,21 @@ import { Container } from '~styles'
 import { FactorsTable } from './FactorsTable'
 import { useBusinessLogic } from './hooks'
 
+const tableHeader = [
+	{ fieldName: 'variable', value: 'Label' },
+	{ fieldName: 'exposure', value: 'Causes Exposure' },
+	{ fieldName: 'outcome', value: 'Causes Outcome' },
+	{ fieldName: 'reasoning', value: 'Reasoning' },
+]
+
 export const DefineFactorsPage: React.FC = memo(function DefineFactorsPage() {
-	const { pageName, causeType, tableHeader, goToConsiderCausalFactors } =
-		useBusinessLogic()
+	const { pageName, goToConsiderCausalFactors } = useBusinessLogic()
 
 	return (
 		<Container>
 			<Container>
 				<FieldTitle data-pw="title">Factors assumed to {pageName}</FieldTitle>
-				<FactorsTable causeType={causeType} headers={tableHeader} />
+				<FactorsTable headers={tableHeader} />
 			</Container>
 			<ButtonContainer>
 				<ButtonAdd

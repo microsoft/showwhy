@@ -4,11 +4,7 @@
  */
 
 import { useBoolean } from '@fluentui/react-hooks'
-import type {
-	CausalFactor,
-	CausalFactorType,
-	FlatCausalFactor,
-} from '@showwhy/types'
+import type { CausalFactor, FlatCausalFactor } from '@showwhy/types'
 import { useCallback, useMemo, useState } from 'react'
 
 import { useDegreeComboBox } from '~hooks'
@@ -16,14 +12,10 @@ import { useCausalFactors, useSetCausalFactors } from '~state'
 import type { Item } from '~types'
 
 import { useFlatFactorsList, useSaveFactors } from './factors'
-import { useCheckbox, useTextField } from './inputs'
-import {
-	useOnChangeCauses,
-	useOnChangeDegree,
-	useOnChangeReasoning,
-} from './onChange'
+import { useTextField } from './inputs'
+import { useOnChangeCauses, useOnChangeReasoning } from './onChange'
 
-export function useFactorsTable(causeType: CausalFactorType): {
+export function useFactorsTable(): {
 	flatFactorsList: FlatCausalFactor[]
 	itemList: Item[]
 } {
@@ -40,16 +32,10 @@ export function useFactorsTable(causeType: CausalFactorType): {
 		[setValues, setCausalFactors],
 	)
 
-	const flatFactorsList = useFlatFactorsList(causalFactors, causeType, values)
-	const saveNewFactors = useSaveFactors(
-		causalFactors,
-		causeType,
-		setValues,
-		save,
-	)
+	const flatFactorsList = useFlatFactorsList(causalFactors, values)
+	const saveNewFactors = useSaveFactors(causalFactors, setValues, save)
 
 	const onChangeCauses = useOnChangeCauses(flatFactorsList, saveNewFactors)
-	const onChangeDegree = useOnChangeDegree(flatFactorsList, saveNewFactors)
 	const onChangeReasoning = useOnChangeReasoning(
 		flatFactorsList,
 		toggleMultiline,
@@ -57,20 +43,20 @@ export function useFactorsTable(causeType: CausalFactorType): {
 		multiline,
 	)
 
-	const checkbox = useCheckbox(onChangeCauses)
-	const comboBox = useDegreeComboBox(onChangeDegree)
+	const comboBoxExposure = useDegreeComboBox(onChangeCauses)
+	const comboBoxOutcome = useDegreeComboBox(onChangeCauses)
 	const textField = useTextField(onChangeReasoning)
 
 	const itemList = useMemo((): Item[] => {
 		return flatFactorsList.map((factor: FlatCausalFactor) => {
 			return {
 				variable: factor.variable,
-				causes: checkbox(factor),
-				degree: comboBox(factor.degree, factor.id),
+				exposure: comboBoxExposure(factor.exposure, 'exposure', factor.id),
+				outcome: comboBoxOutcome(factor.outcome, 'outcome', factor.id),
 				reasoning: textField(factor),
 			}
 		})
-	}, [flatFactorsList, checkbox, comboBox, textField])
+	}, [flatFactorsList, comboBoxOutcome, comboBoxExposure, textField])
 
 	return {
 		flatFactorsList,

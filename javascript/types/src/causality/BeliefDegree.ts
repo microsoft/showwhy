@@ -4,6 +4,7 @@
  */
 
 export enum BeliefDegree {
+	None = -100,
 	Weak = 0,
 	Moderate = 50,
 	Strong = 100,

@@ -4,11 +4,9 @@
  */
 
 import type { BeliefDegree } from './BeliefDegree.js'
-import type { CausalFactorType } from './CausalFactorType.js'
 
 export interface Cause {
-	causes: boolean
-	degree: BeliefDegree | null
+	exposure: BeliefDegree | null
+	outcome: BeliefDegree | null
 	reasoning: string
-	type: CausalFactorType
 }
