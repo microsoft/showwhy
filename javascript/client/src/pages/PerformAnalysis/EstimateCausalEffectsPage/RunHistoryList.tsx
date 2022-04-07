@@ -91,9 +91,7 @@ export const RunHistoryList: React.FC<{
 										<ContainerFlexColumn>
 											{!run.id && '-/' + specCount}
 											{run.status?.estimated_effect_completed &&
-												`${run.status?.estimated_effect_completed} [${
-													run.status?.percentage
-												}%] available${
+												`${run.status?.estimated_effect_completed} available${
 													run.status.time?.end
 														? `, took ${elapsedTime(
 																run.status.time?.start,
@@ -135,7 +133,7 @@ export const RunHistoryList: React.FC<{
 								) : errors ? (
 									<Text>{!!errors && <ErrorMessage message={errors} />}</Text>
 								) : (
-									<Text>{'-/' + specCount} [0%] available</Text>
+									<Text>{'-/' + specCount} available</Text>
 								)}
 							</Td>
 							<Td>-</Td>
