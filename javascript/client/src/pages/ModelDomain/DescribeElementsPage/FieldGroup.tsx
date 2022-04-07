@@ -8,7 +8,7 @@ import { upperFirst } from 'lodash'
 import { memo } from 'react'
 import styled from 'styled-components'
 
-import { Container, ContainerFlexRow } from '~styles'
+import { Container, ContainerFlexRow, Title } from '~styles'
 
 export const FieldGroup: React.FC<{
 	type: string
@@ -17,7 +17,7 @@ export const FieldGroup: React.FC<{
 }> = memo(function FieldGroup({ type, question, onChange }) {
 	return (
 		<Container data-pw="field-group">
-			<FieldTitle data-pw="field-group-title">{upperFirst(type)}</FieldTitle>
+			<Title data-pw="field-group-title">{upperFirst(type)}</Title>
 			<ContainerFlexRow justifyContent="space-between">
 				<HalfField
 					value={question?.label}
@@ -50,10 +50,6 @@ export const FieldGroup: React.FC<{
 		</Container>
 	)
 })
-
-const FieldTitle = styled.h4`
-	margin-bottom: unset;
-`
 
 const HalfField = styled(TextField)`
 	width: 49%;

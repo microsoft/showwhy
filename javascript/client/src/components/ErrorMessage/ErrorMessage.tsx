@@ -10,12 +10,17 @@ import { ShortenMessage } from './ShortenMessage'
 
 export const ErrorMessage: React.FC<{
 	message?: string
+	log?: string
 	styles?: React.CSSProperties
 }> = memo(function ErrorMessage({
 	message = 'Undefined error, please try again.',
+	log = 'Undefined error, please try again.',
 	children,
 	styles,
 }) {
+	if (log) {
+		console.error('ErrorMessage:', log)
+	}
 	return (
 		<Container style={styles}>
 			<Error title={message}>

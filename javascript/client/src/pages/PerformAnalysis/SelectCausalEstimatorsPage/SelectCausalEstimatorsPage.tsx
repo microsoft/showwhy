@@ -5,6 +5,8 @@
 import { memo } from 'react'
 import styled from 'styled-components'
 
+import { Title } from '~styles'
+
 import { EstimatorCard } from './EstimatorCard'
 import { useBusinessLogic } from './hooks'
 import { RefutationTests } from './RefutationTests'
@@ -45,8 +47,3 @@ const Container = styled.article`
 
 const Section = styled.section``
 
-const Title = styled.h2`
-	font-weight: 500;
-	font-size: 1.3rem;
-	margin: 0.5rem;
-`
