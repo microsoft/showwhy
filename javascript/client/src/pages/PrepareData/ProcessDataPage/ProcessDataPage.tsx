@@ -34,6 +34,8 @@ export const ProcessDataPage: FC = memo(function ProcessDataPage() {
 		isElementComplete,
 		onResetVariable,
 		onUpdateOutput,
+		subjectIdentifier,
+		onSetSubjectIdentifier,
 	} = useBusinessLogic(toggleShowCallout, setSelectedColumn)
 
 	return (
@@ -53,6 +55,8 @@ export const ProcessDataPage: FC = memo(function ProcessDataPage() {
 					allElements={allElements}
 					isElementComplete={isElementComplete}
 					onResetVariable={onResetVariable}
+					subjectIdentifier={subjectIdentifier}
+					onSetSubjectIdentifier={onSetSubjectIdentifier}
 				/>
 			) : null}
 			<PrepareDataFull
