@@ -25,9 +25,9 @@
 		"test:cov": "jest --coverage"
 	},
 	"dependencies": {
-		"@data-wrangling-components/core": "^5.3.0",
-		"@data-wrangling-components/react": "^4.1.2",
-		"@data-wrangling-components/utilities": "^1.8.1",
+		"@data-wrangling-components/core": "^6.0.0",
+		"@data-wrangling-components/react": "^5.0.0",
+		"@data-wrangling-components/utilities": "^1.8.2",
 		"@essex/boolean-expression-component": "^1.0.3",
 		"@essex/hooks": "^4.0.5",
 		"@essex/thematic-lineup": "^2.0.4",
