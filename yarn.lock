@@ -867,10 +867,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@data-wrangling-components/core@npm:^6.0.0":
-  version: 6.0.0
-  resolution: "@data-wrangling-components/core@npm:6.0.0"
+"@data-wrangling-components/core@npm:^6.1.0":
+  version: 6.1.0
+  resolution: "@data-wrangling-components/core@npm:6.1.0"
   dependencies:
+    d3-time-format: ^4.1.0
     lodash-es: ^4.17.21
     rxjs: ^7.5.5
     toposort: ^2.0.2
@@ -881,7 +882,7 @@ __metadata:
   peerDependenciesMeta:
     "@types/node":
       optional: true
-  checksum: 19733f29c82f493ecbe13a5c56f596321ed2a2a3240bc9ae03f2e32c8c0d1fc7a682c15e3d3cd3f3504b20653faaf16a6bafdda80604dcc82e0a3102afa54800
+  checksum: 9beeb568c8a725edd9ccc58d8312eea2ccf30b452463148a9eb0b06afb1f924f10c60dfe6787117ed5b8ea766b567e7749b876127a13863f18c3e236493321f2
   languageName: node
   linkType: hard
 
@@ -892,9 +893,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@data-wrangling-components/react@npm:^5.0.1":
-  version: 5.0.1
-  resolution: "@data-wrangling-components/react@npm:5.0.1"
+"@data-wrangling-components/react@npm:^5.1.0":
+  version: 5.1.0
+  resolution: "@data-wrangling-components/react@npm:5.1.0"
   dependencies:
     "@data-wrangling-components/guidance": ^0.1.11
     "@essex/hooks": ^4.0.6
@@ -925,7 +926,7 @@ __metadata:
     react: ^17.0.2
     react-dom: ^17.0.2
     styled-components: ^5.3.0
-  checksum: b3b0bbd555db7c7b3d16fe36831e2415f0f20027da77c93e73f48bf61cf76cbc4f247755e19d35b38e92048feba8cfd1cd98236d2443d446a765f0867c0273e8
+  checksum: e37a491871d3bdb0157efb5b306b83126b3ada8f2fa67a30f5a64284f80b37f62c4ffe01dea5bbcfdb2ce49127cad75f3a2b4ef4211c8d2fbb9572bd2ec41542
   languageName: node
   linkType: hard
 
@@ -2080,8 +2081,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/client@workspace:javascript/client"
   dependencies:
-    "@data-wrangling-components/core": ^6.0.0
-    "@data-wrangling-components/react": ^5.0.1
+    "@data-wrangling-components/core": ^6.1.0
+    "@data-wrangling-components/react": ^5.1.0
     "@data-wrangling-components/utilities": ^1.8.2
     "@essex/boolean-expression-component": ^1.0.3
     "@essex/hooks": ^4.0.5
@@ -4856,7 +4857,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"d3-time-format@npm:2 - 4":
+"d3-time-format@npm:2 - 4, d3-time-format@npm:^4.1.0":
   version: 4.1.0
   resolution: "d3-time-format@npm:4.1.0"
   dependencies:
