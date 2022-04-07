@@ -9,7 +9,7 @@ import styled from 'styled-components'
 
 import { FactorsDefinitionForm } from '~components/FactorsDefinitionForm'
 import { TableComponent } from '~components/Tables/TableComponent'
-import { Container } from '~styles'
+import { Container, Title } from '~styles'
 import type { HeaderData } from '~types'
 
 import { useBusinessLogic } from './hooks'
@@ -36,9 +36,9 @@ export const ConsiderAlternativeDefinitionsPage: React.FC = memo(
 
 		return (
 			<Container>
-				<DefinitionTitle data-pw="title">
+				<Title data-pw="title">
 					Alternative definitions
-				</DefinitionTitle>
+				</Title>
 				<Pivot
 					onLinkClick={handleOnLinkClick}
 					aria-label="Alternative Definitions Interest labels and description"
@@ -94,8 +94,6 @@ const DetailsText = styled.span`
 const Pivot = styled(FUIPivot)`
 	margin: 0 0 1.5rem;
 `
-
-const DefinitionTitle = styled.h4``
 
 const FormContainer = styled.div`
 	margin-top: 16px;

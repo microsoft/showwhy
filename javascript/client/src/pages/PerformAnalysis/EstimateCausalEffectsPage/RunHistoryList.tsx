@@ -100,7 +100,12 @@ export const RunHistoryList: React.FC<{
 														: ''
 												}`}
 											{run.status?.error && (
-												<ErrorMessage message={run.status?.error} />
+												<ErrorMessage
+													message={
+														'Undefined error. Please, execute the run again.'
+													}
+													log={run.status?.error}
+												/>
 											)}
 										</ContainerFlexColumn>
 									)}
@@ -131,7 +136,7 @@ export const RunHistoryList: React.FC<{
 								) : loadingFile ? (
 									<Text>Preparing server...</Text>
 								) : errors ? (
-									<Text>{!!errors && <ErrorMessage message={errors} />}</Text>
+									<Text>{!!errors && <ErrorMessage log={errors} />}</Text>
 								) : (
 									<Text>{'-/' + specCount} available</Text>
 								)}

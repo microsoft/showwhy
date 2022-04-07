@@ -9,7 +9,7 @@ import styled from 'styled-components'
 
 import { FactorsDefinitionForm } from '~components/FactorsDefinitionForm'
 import { TableComponent } from '~components/Tables/TableComponent'
-import { Container } from '~styles'
+import { Container, Title } from '~styles'
 import type { HeaderData } from '~types'
 
 import { useBusinessLogic } from './hooks'
@@ -37,7 +37,7 @@ export const ConsiderCausalFactorsPage: React.FC = memo(
 		return (
 			<Container>
 				<Container>
-					<FieldTitle data-pw="title">Possible causal factors</FieldTitle>
+					<Title data-pw="title">Possible causal factors</Title>
 					<TableComponent
 						headers={tableHeaders}
 						columns={flatFactorsList}
@@ -67,10 +67,6 @@ export const ConsiderCausalFactorsPage: React.FC = memo(
 		)
 	},
 )
-
-const FieldTitle = styled.h3`
-	margin-bottom: unset;
-`
 
 const ButtonContainer = styled.div`
 	text-align: center;

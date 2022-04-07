@@ -43,7 +43,7 @@ export const PageButtons: React.FC<{
 				</ButtonWithMargin>
 			)}
 
-			{significanceFailed && <ErrorMessage></ErrorMessage>}
+			{significanceFailed && <ErrorMessage />}
 		</Container>
 	)
 })

@@ -64,7 +64,10 @@ export const ExploreSpecificationCurvePage: React.FC = memo(
 								Specification curve analysis of causal effect estimates
 							</Title>
 							{!activeProcessing && defaultRun && defaultRun.status.error && (
-								<ErrorMessage>{defaultRun.status.error}</ErrorMessage>
+								<ErrorMessage
+									message={'Undefined error. Please, execute the run again.'}
+									log={defaultRun.status.error}
+								/>
 							)}
 							{activeProcessing && (
 								<RunProgressIndicator theme={theme} run={activeProcessing} />

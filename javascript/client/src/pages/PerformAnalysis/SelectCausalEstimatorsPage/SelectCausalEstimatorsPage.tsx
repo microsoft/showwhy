@@ -6,6 +6,7 @@ import { memo } from 'react'
 import styled from 'styled-components'
 
 import { RadioButtonCard } from '~components/CardComponent/RadioButtonCard'
+import { Title } from '~styles'
 
 import { EstimatorCard } from './EstimatorCard'
 import { useBusinessLogic } from './hooks'
