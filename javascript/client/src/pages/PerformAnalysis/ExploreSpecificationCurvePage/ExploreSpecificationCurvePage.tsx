@@ -47,7 +47,7 @@ export const ExploreSpecificationCurvePage: React.FC = memo(
 		if (!data.length && !defaultRun) {
 			return (
 				<EmptyDataPageWarning
-					text="To see the specification curve, run an estimate here: "
+					text="To see the summary of the estimates, run and wait a run estimate here: "
 					linkText="Estimate causal effects"
 					page={Pages.EstimateCausalEffects}
 					marginTop
