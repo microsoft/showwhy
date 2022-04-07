@@ -150,7 +150,7 @@ export function useRenderDropdown(
 
 			const variable = `${
 				subjectIdentifier === columnName
-					? ' Subject Identifier'
+					? ' Subject identifier'
 					: selectedVariableByColumn(columnName)?.variable ?? 'Options'
 			}`
 

@@ -48,10 +48,10 @@ export const CompletedElements: FC<Props> = memo(function CompletedElements({
 	const list = useMemo((): any => {
 		const all: ListElement[] = [
 			{
-				variable: `Subject Identifier${
+				variable: `Subject identifier${
 					subjectIdentifier ? `: ${subjectIdentifier}` : ''
 				}`,
-				key: 'Subject Identifier',
+				key: 'Subject identifier',
 				isComplete: !!subjectIdentifier,
 				icon: !!subjectIdentifier ? 'SkypeCircleCheck' : 'SkypeCircleMinus',
 				onClick: () => onSetSubjectIdentifier(subjectIdentifier),
