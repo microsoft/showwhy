@@ -2,31 +2,44 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import type { Handler, PrimarySpecificationConfig } from '@showwhy/types'
+import type { PrimarySpecificationConfig } from '@showwhy/types'
+import { CausalModelLevel } from '@showwhy/types'
+import { useCallback } from 'react'
 import { useXarrow } from 'react-xarrows'
-import type { SetterOrUpdater } from 'recoil'
 
 import { useCausalEffects } from '~hooks'
 import {
 	usePrimarySpecificationConfig,
 	useSetPrimarySpecificationConfig,
 } from '~state'
+import type { RadioButtonChoice } from '~types'
 
 export function useBusinessLogic(): {
 	causalEffects: ReturnType<typeof useCausalEffects>
-	onXarrowChange: Handler
-	setPrimarySpecificationConfig: SetterOrUpdater<PrimarySpecificationConfig>
 	primarySpecificationConfig: PrimarySpecificationConfig
+	onDefaultChange: (option?: RadioButtonChoice) => void
 } {
 	const updateXarrow = useXarrow()
 	const setPrimarySpecificationConfig = useSetPrimarySpecificationConfig()
 	const primarySpecificationConfig = usePrimarySpecificationConfig()
 	const causalEffects = useCausalEffects(primarySpecificationConfig.causalModel)
 
+	const onDefaultChange = useCallback(
+		(option?: RadioButtonChoice) => {
+			updateXarrow()
+			setPrimarySpecificationConfig({
+				...primarySpecificationConfig,
+				causalModel:
+					(option && (option?.key as CausalModelLevel)) ||
+					CausalModelLevel.Maximum,
+			})
+		},
+		[updateXarrow, setPrimarySpecificationConfig, primarySpecificationConfig],
+	)
+
 	return {
 		causalEffects,
-		onXarrowChange: updateXarrow,
-		setPrimarySpecificationConfig,
+		onDefaultChange,
 		primarySpecificationConfig,
 	}
 }
