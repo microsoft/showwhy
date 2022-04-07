@@ -56,7 +56,7 @@ export const RunHistoryList: React.FC<{
 							<ColumnName>Estimates available</ColumnName>
 						</Th>
 						<Th>
-							<ColumnName>Active</ColumnName>
+							<ColumnName>Explore</ColumnName>
 						</Th>
 					</Tr>
 				</TableHead>
@@ -131,7 +131,7 @@ export const RunHistoryList: React.FC<{
 								{loadingSpecCount ? (
 									<Text>Loading specifications count...</Text>
 								) : loadingFile ? (
-									<Text>Uploading files...</Text>
+									<Text>Preparing server...</Text>
 								) : errors ? (
 									<Text>{!!errors && <ErrorMessage message={errors} />}</Text>
 								) : (

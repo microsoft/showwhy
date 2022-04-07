@@ -8,10 +8,11 @@ import type {
 	CausalFactor,
 	ElementDefinition,
 	FactorsOrDefinitions,
+	Handler1,
 	Maybe,
 } from '@showwhy/types'
 import type { FC } from 'react'
-import { memo } from 'react'
+import { memo, useMemo } from 'react'
 import styled from 'styled-components'
 
 interface Props {
@@ -20,6 +21,8 @@ interface Props {
 	allElements: FactorsOrDefinitions
 	isElementComplete: (element: CausalFactor | ElementDefinition) => boolean
 	onResetVariable: (columnName: string) => void
+	subjectIdentifier: Maybe<string>
+	onSetSubjectIdentifier: Handler1<Maybe<string>>
 }
 
 interface ListElement {
@@ -36,21 +39,47 @@ export const CompletedElements: FC<Props> = memo(function CompletedElements({
 	allElements,
 	isElementComplete,
 	onResetVariable,
+	subjectIdentifier,
+	onSetSubjectIdentifier,
 }) {
 	const [isVisible, { toggle }] = useBoolean(false)
 	const buttonId = useId('callout-button')
-	const all: ListElement[] = allElements.map(element => {
-		const isComplete = isElementComplete(element)
-		return {
-			variable: element.variable,
-			key: element.id,
-			isComplete,
-			icon: isComplete ? 'SkypeCircleCheck' : 'SkypeCircleMinus',
-			onClick: isComplete
-				? () => onResetVariable(element.column || '')
-				: undefined,
-		}
-	})
+
+	const list = useMemo((): any => {
+		const all: ListElement[] = [
+			{
+				variable: `Subject Identifier${
+					subjectIdentifier ? `: ${subjectIdentifier}` : ''
+				}`,
+				key: 'Subject Identifier',
+				isComplete: !!subjectIdentifier,
+				icon: !!subjectIdentifier ? 'SkypeCircleCheck' : 'SkypeCircleMinus',
+				onClick: () => onSetSubjectIdentifier(subjectIdentifier),
+			},
+		]
+
+		allElements.forEach(element => {
+			const isComplete = isElementComplete(element)
+			const _element = {
+				variable: element.variable,
+				key: element.id,
+				isComplete,
+				icon: isComplete ? 'SkypeCircleCheck' : 'SkypeCircleMinus',
+				onClick: isComplete
+					? () => onResetVariable(element.column || '')
+					: undefined,
+			}
+			all.push(_element)
+		})
+		return all
+	}, [
+		subjectIdentifier,
+		allElements,
+		onResetVariable,
+		onSetSubjectIdentifier,
+		isElementComplete,
+	])
+
 	return (
 		<Container>
 			<DefaultButton id={buttonId} onClick={toggle}>
@@ -67,7 +96,7 @@ export const CompletedElements: FC<Props> = memo(function CompletedElements({
 					setInitialFocus
 					styles={CalloutStyles}
 				>
-					<List list={all} />
+					<List list={list} />
 				</Callout>
 			) : null}
 		</Container>
