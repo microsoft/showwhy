@@ -156,7 +156,6 @@ export function useBusinessLogic(): {
 		if (allColumns) {
 			output = output?.select(allColumns)
 		}
-		debugger
 		const files = await uploadOutputFile(output)
 			.catch(err => {
 				setErrors(
