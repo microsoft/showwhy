@@ -50,8 +50,8 @@ export const EvaluateHypothesisPage: React.FC = memo(
 			return (
 				<EmptyDataPageWarning
 					text="To see the summary of the estimates, run and wait a run estimate here: "
-					linkText="Estimate causal effects"
-					page={Pages.EstimateCausalEffects}
+					linkText="Specification curve page"
+					page={Pages.SpecificationCurvePage}
 					marginTop
 				/>
 			)

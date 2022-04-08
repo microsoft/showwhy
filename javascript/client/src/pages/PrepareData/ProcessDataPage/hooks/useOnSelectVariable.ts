@@ -4,7 +4,7 @@
  */
 
 import type { IContextualMenuItem } from '@fluentui/react'
-import type { CausalFactor, Experiment, Maybe } from '@showwhy/types'
+import type { CausalFactor, Experiment, Handler1, Maybe } from '@showwhy/types'
 import { useCallback } from 'react'
 import type { SetterOrUpdater } from 'recoil'
 
@@ -19,6 +19,7 @@ export function useOnSelectVariable(
 	subjectIdentifier: string | undefined,
 	setDefineQuestion: SetterOrUpdater<Experiment>,
 	setSubjectIdentifier: SetterOrUpdater<string | undefined>,
+	onSelect: Handler1<boolean>,
 ): (option: Maybe<IContextualMenuItem>, columnName: string) => void {
 	const onSaveCausalFactor = useAddOrEditFactor()
 	const setCausalFactor = useSetTargetCausalFactor(
@@ -30,15 +31,25 @@ export function useOnSelectVariable(
 
 	return useCallback(
 		(option: Maybe<IContextualMenuItem>, columnName: string) => {
+			let hasVariable = false
+
+			if (isCausalFactorType(option?.data.type)) {
+				hasVariable = setCausalFactor(option?.key as string, columnName)
+			} else {
+				hasVariable = setDefinition(option?.key as string, columnName)
+			}
 			if (subjectIdentifier === columnName) {
 				setSubjectIdentifier(undefined)
+				hasVariable = false
 			}
-			if (isCausalFactorType(option?.data.type)) {
-				setCausalFactor(option?.key as string, columnName)
-			} else {
-				setDefinition(option?.key as string, columnName)
-			}
+			onSelect(hasVariable)
 		},
-		[setCausalFactor, setDefinition, subjectIdentifier, setSubjectIdentifier],
+		[
+			setCausalFactor,
+			setDefinition,
+			subjectIdentifier,
+			setSubjectIdentifier,
+			onSelect,
+		],
 	)
 }

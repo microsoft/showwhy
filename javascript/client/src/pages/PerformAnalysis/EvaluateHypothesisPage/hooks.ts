@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { OrchestratorType } from '@showwhy/api-client'
+import { isStatus, OrchestratorType } from '@showwhy/api-client'
 import { buildSignificanceTestsNode } from '@showwhy/builders'
 import type {
 	AlternativeModels,
@@ -14,11 +14,12 @@ import type {
 	SignificanceTest,
 } from '@showwhy/types'
 import { NodeResponseStatus } from '@showwhy/types'
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 
 import {
 	useActualSignificanceTest,
 	useAlternativeModels,
+	useAutomaticWorkflowStatus,
 	useCausalEffects,
 	useDefaultRun,
 	useRefutationOptions,
@@ -64,6 +65,14 @@ export function useBusinessLogic(): {
 	const [isCanceled, setIsCanceled] = useState<boolean>(false)
 	const significanceTestResult = useActualSignificanceTest()
 	const refutationOptions = useRefutationOptions()
+
+	const { setDone, setTodo } = useAutomaticWorkflowStatus()
+
+	useEffect(() => {
+		!isStatus(significanceTestResult?.status, NodeResponseStatus.Completed)
+			? setTodo()
+			: setDone()
+	}, [significanceTestResult, setDone, setTodo])
 
 	// const runFullRefutation = useCallback(async () => {
 	// 	setFullRefutation()

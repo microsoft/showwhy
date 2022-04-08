@@ -9,10 +9,9 @@ import { useCallback } from 'react'
 export function useSetTargetDefinition(
 	saveDefinition: (definition: ElementDefinition | ElementDefinition) => void,
 	defineQuestionData: Experiment,
-): (selectedDefinitionId: string, column: string) => void {
+): (selectedDefinitionId: string, column: string) => boolean {
 	return useCallback(
 		(selectedDefinitionId: string, column: string) => {
-			// const { population, exposure, outcome } = defineQuestionData
 			const all: ElementDefinition[] = [
 				...(defineQuestionData?.definitions || []),
 			]
@@ -27,6 +26,7 @@ export function useSetTargetDefinition(
 			}
 
 			saveDefinition(newDefinition)
+			return !!newDefinition.column
 		},
 		[saveDefinition, defineQuestionData],
 	)

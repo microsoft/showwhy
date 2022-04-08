@@ -3,12 +3,14 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { PrimaryButton } from '@fluentui/react'
-import { memo, useMemo } from 'react'
+import { isStatus } from '@showwhy/api-client'
+import { NodeResponseStatus } from '@showwhy/types'
+import { memo, useEffect, useMemo } from 'react'
 import styled from 'styled-components'
 
 import { ErrorMessage } from '~components/ErrorMessage'
 import { RunProgressIndicator } from '~components/RunProgressIndicator'
-import { useSpecificationCurve } from '~hooks'
+import { useAutomaticWorkflowStatus, useSpecificationCurve } from '~hooks'
 import { ContainerFlexColumn, ContainerFlexRow, Title } from '~styles'
 
 import {
@@ -24,6 +26,7 @@ export const ExploreSpecificationCurvePage: React.FC = memo(
 	function SpecificationCurve() {
 		const InfoMessage = useInfoMessage()
 		const MicrodataMessage = useMicrodataInfoMessage()
+		const { setDone, setTodo } = useAutomaticWorkflowStatus()
 
 		const {
 			isProcessing,
@@ -65,6 +68,12 @@ export const ExploreSpecificationCurvePage: React.FC = memo(
 			onToggleRejectEstimate,
 			totalSpecs,
 		} = useSpecificationCurve()
+
+		useEffect(() => {
+			!isStatus(defaultRun?.status?.status, NodeResponseStatus.Completed)
+				? setTodo()
+				: setDone()
+		}, [defaultRun, setDone, setTodo])
 
 		return (
 			<ContainerFlexRow>

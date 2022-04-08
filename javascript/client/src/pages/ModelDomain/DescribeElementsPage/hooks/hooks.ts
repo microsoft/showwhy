@@ -9,6 +9,8 @@ import { useCallback } from 'react'
 
 import { useExperiment, useSetExperiment } from '~state'
 
+import { useSetDonePage } from './useSetDonePage'
+
 export function useBusinessLogic(): {
 	defineQuestion: Experiment
 	onInputChange: (value: Maybe<string>, type: string, field: string) => void
@@ -17,6 +19,7 @@ export function useBusinessLogic(): {
 	const defineQuestion = useExperiment()
 	const onInputChange = useOnInputChange()
 	const setHypothesis = useSetHypothesis()
+	useSetDonePage()
 	return {
 		defineQuestion,
 		onInputChange,

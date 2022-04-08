@@ -9,20 +9,20 @@ import { useSetStepStatus, useStepStatus } from '~state'
 import type { WorkflowStep } from '~types'
 import { StepStatus } from '~types'
 
-export function useProcessStepStatus(step: WorkflowStep): {
+export function useWorkflowStepStatus(step: WorkflowStep): {
 	stepStatus: Maybe<StepStatus>
-	onToggleStepStatus: Handler
+	onToggleWorkflowStatus: Handler
 } {
 	const stepStatus = useStepStatus(step?.url)
-	const onToggleStepStatus = useToggleStepStatus(step, stepStatus)
+	const onToggleWorkflowStatus = useToggleWorkflowStatus(step, stepStatus)
 
 	return {
 		stepStatus,
-		onToggleStepStatus,
+		onToggleWorkflowStatus,
 	}
 }
 
-function useToggleStepStatus(
+function useToggleWorkflowStatus(
 	step: Maybe<WorkflowStep>,
 	stepStatus: Maybe<StepStatus>,
 ): Handler {
