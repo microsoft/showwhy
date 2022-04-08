@@ -117,15 +117,15 @@ export const stepsList = [
 				getMarkdown: async () =>
 					import('../markdown/perform-analysis/Estimators.md?raw'),
 			},
-			{
-				id: uuidv4(),
-				title: 'Estimate causal effects',
-				status: StepStatus.ToDo,
-				url: Pages.EstimateCausalEffects,
-				showStatus: true,
-				getMarkdown: async () =>
-					import('../markdown/perform-analysis/CausalEffects.md?raw'),
-			},
+			// {
+			// 	id: uuidv4(),
+			// 	title: 'Estimate causal effects',
+			// 	status: StepStatus.ToDo,
+			// 	url: Pages.EstimateCausalEffects,
+			// 	showStatus: true,
+			// 	getMarkdown: async () =>
+			// 		import('../markdown/perform-analysis/CausalEffects.md?raw'),
+			// },
 			{
 				id: uuidv4(),
 				title: 'Explore specification curve',

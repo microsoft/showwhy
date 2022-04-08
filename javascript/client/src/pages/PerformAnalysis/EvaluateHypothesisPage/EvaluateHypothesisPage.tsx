@@ -12,8 +12,6 @@ import { useSpecificationCurve } from '~hooks'
 import { Container, ContainerFlexColumn } from '~styles'
 import { Pages } from '~types'
 
-import { AnalysisSpecifications } from './AnalysisSpecifications'
-import { CausalDetails } from './CausalDetails'
 import { useBusinessLogic } from './hooks'
 import { PageButtons } from './PageButtons'
 import { ResultsGraph } from './ResultsGraph'
@@ -26,7 +24,6 @@ export const EvaluateHypothesisPage: React.FC = memo(
 			defaultRun,
 			causalEffects,
 			specificationData,
-			refutationLength,
 			defineQuestion,
 			activeValues,
 			significanceTestResult,
@@ -34,7 +31,7 @@ export const EvaluateHypothesisPage: React.FC = memo(
 			runSignificance,
 			cancelRun,
 			isCanceled,
-			refutationType,
+			refutationOptions,
 		} = useBusinessLogic()
 
 		const {
@@ -53,8 +50,8 @@ export const EvaluateHypothesisPage: React.FC = memo(
 			return (
 				<EmptyDataPageWarning
 					text="To see the summary of the estimates, run and wait a run estimate here: "
-					linkText="Estimate causal effects"
-					page={Pages.EstimateCausalEffects}
+					linkText="Specification curve page"
+					page={Pages.SpecificationCurvePage}
 					marginTop
 				/>
 			)
@@ -64,19 +61,29 @@ export const EvaluateHypothesisPage: React.FC = memo(
 			<ContainerFlexColumn data-pw="evaluate-hypothesis-content">
 				<Container>
 					<CausalQuestion defineQuestion={defineQuestion} />
+					<Container>
+						<PageButtons
+							defaultRun={defaultRun}
+							significanceTestResult={significanceTestResult}
+							significanceFailed={significanceFailed}
+							runSignificance={runSignificance}
+						/>
+
+						<SignificanceTests
+							activeValues={activeValues}
+							defineQuestion={defineQuestion}
+							cancelRun={cancelRun}
+							isCanceled={isCanceled}
+							significanceTestResult={significanceTestResult}
+						/>
+					</Container>
 				</Container>
 				<Container>
-					<CausalDetails alternativeModels={alternativeModels} />
 					<CausalEffects size={CausalEffectSize.Small} {...causalEffects} />
 				</Container>
 				<Container marginTop>
-					<AnalysisSpecifications
-						refutationType={refutationType}
-						refutationLength={refutationLength}
-						specificationLength={specificationData.length}
-					/>
 					<ResultsGraph
-						refutationType={refutationType}
+						alternativeModels={alternativeModels}
 						specificationData={specificationData}
 						defineQuestion={defineQuestion}
 						specificationCurveConfig={config}
@@ -84,21 +91,7 @@ export const EvaluateHypothesisPage: React.FC = memo(
 						onMouseOver={onMouseOver}
 						hovered={hovered}
 						failedRefutationIds={failedRefutationIds}
-						activeValues={activeValues}
-					/>
-				</Container>
-				<Container>
-					<PageButtons
-						defaultRun={defaultRun}
-						significanceTestResult={significanceTestResult}
-						significanceFailed={significanceFailed}
-						runSignificance={runSignificance}
-					/>
-
-					<SignificanceTests
-						cancelRun={cancelRun}
-						isCanceled={isCanceled}
-						significanceTestResult={significanceTestResult}
+						refutationOptions={refutationOptions}
 					/>
 				</Container>
 			</ContainerFlexColumn>

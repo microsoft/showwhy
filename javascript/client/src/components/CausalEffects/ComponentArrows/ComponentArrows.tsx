@@ -27,7 +27,7 @@ export const ComponentArrows: React.FC<{
 	return (
 		<Container size={size}>
 			<ControlsContainer>
-				<ControlsTitle size={size}>Controls</ControlsTitle>
+				<ControlsTitle>Controls</ControlsTitle>
 				<DottedContainer size={size}>
 					<BoxCausalModel
 						size={size}
@@ -44,7 +44,7 @@ export const ComponentArrows: React.FC<{
 				</DottedContainer>
 			</ControlsContainer>
 
-			<ControlsContainer>
+			<Box>
 				<ControlsBoxContainer size={size}>
 					<BoxCausalModel
 						size={size}
@@ -59,17 +59,15 @@ export const ComponentArrows: React.FC<{
 						list={[outcome]}
 					/>
 				</ControlsBoxContainer>
-			</ControlsContainer>
+			</Box>
 
 			{getArrows()}
 		</Container>
 	)
 })
 
-const ControlsTitle = styled.h2<{ size: CausalEffectSize }>`
+const ControlsTitle = styled.h4`
 	margin: unset;
-	font-size: ${({ size }) =>
-		size === CausalEffectSize.Small ? '15px' : '24px'};
 `
 
 const Container = styled.div<{ size: CausalEffectSize }>`
@@ -83,9 +81,13 @@ const Container = styled.div<{ size: CausalEffectSize }>`
 		size === CausalEffectSize.Small ? '0em' : '2em'};
 `
 
-const ControlsContainer = styled.div`
+const Box = styled.div`
 	grid-column: 1/-1;
 	text-align: center;
+`
+
+const ControlsContainer = styled(Box)`
+	border: 1px dotted black;
 `
 
 const ControlsBoxContainer = styled.div<{ size: CausalEffectSize }>`
@@ -96,6 +98,4 @@ const ControlsBoxContainer = styled.div<{ size: CausalEffectSize }>`
 	padding: 16px;
 `
 
-const DottedContainer = styled(ControlsBoxContainer)`
-	border: 1px dotted black;
-`
+const DottedContainer = styled(ControlsBoxContainer)``

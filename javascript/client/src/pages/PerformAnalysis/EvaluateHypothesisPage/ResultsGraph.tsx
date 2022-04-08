@@ -3,82 +3,80 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import type { Dimensions } from '@essex/hooks'
-import type { Experiment, Maybe } from '@showwhy/types'
-import { DefinitionType, RefutationType } from '@showwhy/types'
+import type {
+	AlternativeModels,
+	Experiment,
+	Maybe,
+	RefutationOption,
+} from '@showwhy/types'
+import { DefinitionType } from '@showwhy/types'
 import { memo } from 'react'
 import styled from 'styled-components'
 
 import { PivotScatterplot } from '~components/PivotScatterplot'
-import { Bold, Container, Text, Value } from '~styles'
+import { Container } from '~styles'
 import type {
 	DecisionFeature,
 	Specification,
 	SpecificationCurveConfig,
 } from '~types'
-import { getDefinitionsByType, median as calcMedian } from '~utils'
+import { getDefinitionsByType, pluralize } from '~utils'
 
 export const ResultsGraph: React.FC<{
 	specificationData: Specification[]
-	activeValues: number[]
 	defineQuestion: Experiment
 	specificationCurveConfig: SpecificationCurveConfig
 	vegaWindowDimensions: Dimensions
 	onMouseOver: (item: Maybe<Specification | DecisionFeature>) => void
 	hovered: Maybe<number>
 	failedRefutationIds: number[]
-	refutationType: RefutationType
+	alternativeModels: AlternativeModels
+	refutationOptions: RefutationOption[]
 }> = memo(function ResultsGraph({
 	specificationData,
-	activeValues,
 	defineQuestion,
 	specificationCurveConfig,
 	vegaWindowDimensions,
 	onMouseOver,
 	hovered,
 	failedRefutationIds,
-	refutationType,
+	alternativeModels,
+	refutationOptions,
 }) {
-	const median = parseFloat(calcMedian(activeValues).toFixed(3))
-	const exposure = defineQuestion?.exposure?.label || '<exposure>'
-	const outcome = defineQuestion?.outcome?.label || '<outcome>'
-	const hypothesis = defineQuestion?.hypothesis || '<hypothesis>'
+	const populationDefinitions = getDefinitionsByType(
+		DefinitionType.Population,
+		defineQuestion?.definitions,
+	)
+	const exposureDefinitions = getDefinitionsByType(
+		DefinitionType.Population,
+		defineQuestion?.definitions,
+	)
 
 	return (
 		<Container>
+			<Title>Analysis summary</Title>
 			<P>
-				<Value>{activeValues.length}</Value>
-				of {specificationData.length} specifications were included in the final
-				curve. The median effect estimated from these specifications is{' '}
-				<Value>{median}.</Value> This means that the exposure to {exposure}{' '}
-				causes the {outcome} to {hypothesis} by
-				<Value>{median}.</Value>
-				This was calculated using
-				<Value>
-					{
-						getDefinitionsByType(
-							DefinitionType.Population,
-							defineQuestion?.definitions,
-						).length
-					}
-				</Value>
-				population and
-				<Value>
-					{
-						getDefinitionsByType(
-							DefinitionType.Exposure,
-							defineQuestion?.definitions,
-						).length
-					}
-				</Value>
-				exposure definitions.
-				{refutationType === RefutationType.QuickRefutation && (
-					<Text>
-						{' '}
-						Consider running the analysis with the
-						<Bold> Full Refutation</Bold> mode before proceeding to the
-						significance test.
-					</Text>
-				)}
+				The model includes {alternativeModels.confounders.length} confounder
+				{pluralize(alternativeModels.confounders.length)} that may affect both
+				exposure and outcome ({alternativeModels.confounders.join(', ')}),{' '}
+				{refutationOptions.length} refutation test
+				{pluralize(refutationOptions.length)} (
+				{refutationOptions.map(o => o.label).join(', ')}
+				), {populationDefinitions.length}population definition
+				{pluralize(populationDefinitions.length)} (
+				{populationDefinitions.map(x => x.variable).join(', ')}){' '}
+				{alternativeModels.outcomeDeterminants.length > 0 ? ', ' : ' and '}
+				{exposureDefinitions.length} exposure definition
+				{pluralize(exposureDefinitions.length)} (
+				{exposureDefinitions.map(x => x.variable).join(', ')})
+				{alternativeModels.outcomeDeterminants.length > 0
+					? ` and ${
+							alternativeModels.outcomeDeterminants.length
+					  } other variables that may affect outcome only (${alternativeModels.outcomeDeterminants.join(
+							', ',
+					  )})`
+					: ''}
+				.
 			</P>
 			<PivotScatterplot
 				data={specificationData}
@@ -95,4 +93,8 @@ export const ResultsGraph: React.FC<{
 
 const P = styled.p`
 	margin-bottom: unset;
+`
+
+const Title = styled.h4`
+	margin: unset;
 `
