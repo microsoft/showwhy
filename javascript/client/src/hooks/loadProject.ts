@@ -230,7 +230,7 @@ function preProcessTables(
 				name: table.name,
 				id: table.name,
 				table: resultTable,
-				autoType: !!table.autoType,
+				autoType: true,
 			}
 			return file
 		} else {
@@ -249,7 +249,7 @@ function preProcessTables(
 				id: table.name,
 				name: table.name,
 				table: result,
-				autoType: !!table.autoType,
+				autoType: true,
 			}
 			return file
 		}
