@@ -66,13 +66,12 @@ export function useBusinessLogic(
 	const subjectIdentifier = useSubjectIdentifier()
 	const setOutputTable = useSetOutputTablePrep()
 
-	const onSetSubjectIdentifier = useOnSetSubjectIdentifier(
-		subjectIdentifier,
-		setSubjectIdentifier,
-	)
-
 	const causalEffects = useCausalEffects(CausalModelLevel.Maximum)
 	const { setDone, setTodo } = useAutomaticWorkflowStatus()
+
+	const allElementsLength = useMemo((): any => {
+		return allElements.length + 1
+	}, [allElements])
 
 	const completedElements = useMemo((): number => {
 		const initial = !!subjectIdentifier ? 1 : 0
@@ -85,12 +84,17 @@ export function useBusinessLogic(
 	const isStepDone = useCallback(
 		(hasVariable: boolean) => {
 			const done =
-				hasVariable &&
-				allElements.length === completedElements &&
-				!!subjectIdentifier
+				allElementsLength ===
+				(hasVariable ? completedElements + 1 : completedElements - 1)
 			done ? setDone() : setTodo()
 		},
-		[allElements, completedElements, setDone, setTodo, subjectIdentifier],
+		[allElementsLength, completedElements, setDone, setTodo],
+	)
+
+	const onSetSubjectIdentifier = useOnSetSubjectIdentifier(
+		subjectIdentifier,
+		setSubjectIdentifier,
+		isStepDone,
 	)
 
 	const onSelectVariable = useOnSelectVariable(
@@ -169,7 +173,7 @@ export function useBusinessLogic(
 		onChangeSteps,
 		steps,
 		commandBar,
-		elements: allElements.length + 1, //subjectIdentifier
+		elements: allElementsLength, //subjectIdentifier
 		completedElements,
 		allElements,
 		isElementComplete,
