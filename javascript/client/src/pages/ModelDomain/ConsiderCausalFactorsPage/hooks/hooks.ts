@@ -17,6 +17,8 @@ import { useAddOrEditFactor } from '~hooks'
 import { useCausalFactors, useSetCausalFactors } from '~state'
 import { noop } from '~utils'
 
+import { useSetDonePage } from './useSetPageDone'
+
 interface PathData {
 	path: Maybe<string>
 	page: Maybe<string>
@@ -43,6 +45,7 @@ export function useBusinessLogic(): {
 	const addFactor = useAddFactor(isEditing, setIsEditing, setFactor)
 	const flatFactorsList = useFlatFactorsList(causalFactors)
 	const [goToFactorsPage, factorsPathData] = useFactorsNavigation()
+	useSetDonePage()
 
 	return {
 		factor,

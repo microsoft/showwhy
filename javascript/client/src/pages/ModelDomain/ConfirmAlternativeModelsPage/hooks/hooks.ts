@@ -12,6 +12,8 @@ import {
 	useSetPrimarySpecificationConfig,
 } from '~state'
 
+import { useSetDonePage } from './useSetPageDone'
+
 export function useBusinessLogic(): {
 	causalEffects: ReturnType<typeof useCausalEffects>
 	onXarrowChange: Handler
@@ -22,6 +24,7 @@ export function useBusinessLogic(): {
 	const setPrimarySpecificationConfig = useSetPrimarySpecificationConfig()
 	const primarySpecificationConfig = usePrimarySpecificationConfig()
 	const causalEffects = useCausalEffects(primarySpecificationConfig.causalModel)
+	useSetDonePage()
 
 	return {
 		causalEffects,

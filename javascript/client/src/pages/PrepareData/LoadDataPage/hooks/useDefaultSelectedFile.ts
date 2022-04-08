@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { Handler, Maybe } from '@showwhy/types'
+import type { Maybe } from '@showwhy/types'
 import { useEffect } from 'react'
 import type { SetterOrUpdater } from 'recoil'
 
@@ -13,7 +13,7 @@ export function useDefaultSelectedFile(
 	current: Maybe<ProjectFile>,
 	files: ProjectFile[],
 	setSelectedFile: SetterOrUpdater<Maybe<ProjectFile>>,
-): Handler {
+): void {
 	useEffect(() => {
 		if (!current) {
 			const [file] = files
