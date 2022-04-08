@@ -3,15 +3,15 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { RefutationChoice } from '@showwhy/types'
 import { RefutationType } from '@showwhy/types'
 import { useMemo } from 'react'
 
 import { useSetFullRefutation, useSetQuickRefutation } from '~hooks'
 import { useRefutationType } from '~state'
+import type { RadioButtonChoice } from '~types'
 
 export function useRefutations(): {
-	refutationOptions: RefutationChoice[]
+	refutationOptions: RadioButtonChoice[]
 } {
 	const refutation = useRefutationType()
 	const setQuickRefutation = useSetQuickRefutation()
