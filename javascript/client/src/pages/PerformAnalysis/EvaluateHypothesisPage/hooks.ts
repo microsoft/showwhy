@@ -72,7 +72,7 @@ export function useBusinessLogic(): {
 	const { setDone, setTodo } = useAutomaticWorkflowStatus()
 
 	useEffect(() => {
-		!!significanceTestResult ? setDone() : setTodo()
+		!significanceTestResult?.simulation_completed ? setTodo() : setDone()
 	}, [significanceTestResult, setDone, setTodo])
 
 	const refutationType = useMemo((): RefutationType => {
