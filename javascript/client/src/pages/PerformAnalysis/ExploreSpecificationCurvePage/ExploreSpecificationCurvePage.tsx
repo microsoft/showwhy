@@ -2,15 +2,19 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { memo } from 'react'
+import { PrimaryButton } from '@fluentui/react'
+import { memo, useMemo } from 'react'
 import styled from 'styled-components'
 
-import { EmptyDataPageWarning } from '~components/EmptyDataPageWarning'
 import { ErrorMessage } from '~components/ErrorMessage'
 import { RunProgressIndicator } from '~components/RunProgressIndicator'
-import { useRefutationOptions, useSpecificationCurve } from '~hooks'
+import { useSpecificationCurve } from '~hooks'
 import { ContainerFlexColumn, ContainerFlexRow, Title } from '~styles'
-import { Pages } from '~types'
+import {
+	useInfoMessage,
+	useMicrodataInfoMessage,
+	useBusinessLogic,
+} from '../EstimateCausalEffectsPage/hooks'
 
 import { EstimatedEffectOptions } from './EstimatedEffectOptions'
 import { SpecificationDescription } from './SpecificationDescription'
@@ -18,7 +22,25 @@ import { VegaSpecificationCurve } from './vega/VegaSpecificationCurve'
 
 export const ExploreSpecificationCurvePage: React.FC = memo(
 	function SpecificationCurve() {
-		const refutationOptions = useRefutationOptions()
+		const InfoMessage = useInfoMessage()
+		const MicrodataMessage = useMicrodataInfoMessage()
+
+		const {
+			isProcessing,
+			totalEstimatorsCount,
+			runEstimate,
+			refutationOptions,
+			cancelRun,
+			isCanceled,
+			errors,
+			loadingSpecCount,
+			specCount,
+		} = useBusinessLogic()
+
+		const hasErrorMessage = useMemo((): boolean => {
+			return !!(InfoMessage || MicrodataMessage)
+		}, [InfoMessage, MicrodataMessage])
+
 		const {
 			data,
 			defaultRun,
@@ -44,17 +66,6 @@ export const ExploreSpecificationCurvePage: React.FC = memo(
 			totalSpecs,
 		} = useSpecificationCurve()
 
-		if (!data.length && !defaultRun) {
-			return (
-				<EmptyDataPageWarning
-					text="To see the summary of the estimates, run and wait a run estimate here: "
-					linkText="Estimate causal effects"
-					page={Pages.EstimateCausalEffects}
-					marginTop
-				/>
-			)
-		}
-
 		return (
 			<ContainerFlexRow>
 				<Main>
@@ -63,6 +74,32 @@ export const ExploreSpecificationCurvePage: React.FC = memo(
 							<Title>
 								Specification curve analysis of causal effect estimates
 							</Title>
+							{InfoMessage}
+							{MicrodataMessage}
+							{!isProcessing && (
+								<Container>
+									<PrimaryButton
+										disabled={
+											loadingSpecCount ||
+											!totalEstimatorsCount ||
+											!specCount ||
+											hasErrorMessage
+										}
+										onClick={runEstimate}
+										data-pw="run-estimate-button"
+									>
+										Run now
+									</PrimaryButton>
+									{!loadingSpecCount ? (
+										<Text>{specCount || 0} specifications to analyze</Text>
+									) : (
+										loadingSpecCount && (
+											<Text>Loading specifications count...</Text>
+										)
+									)}
+									{!!errors && <ErrorMessage log={errors} />}
+								</Container>
+							)}
 							{!activeProcessing && defaultRun && defaultRun.status.error && (
 								<ErrorMessage
 									message={'Undefined error. Please, execute the run again.'}
@@ -70,7 +107,20 @@ export const ExploreSpecificationCurvePage: React.FC = memo(
 								/>
 							)}
 							{activeProcessing && (
-								<RunProgressIndicator theme={theme} run={activeProcessing} />
+								<RunProgressIndicator
+									run={activeProcessing}
+									theme={theme}
+									cancelRun={!isCanceled && cancelRun ? cancelRun : undefined}
+									props={
+										isCanceled
+											? {
+													description:
+														'Canceling run... This could take a few seconds.',
+													percentComplete: undefined,
+											  }
+											: undefined
+									}
+								/>
 							)}
 						</EstimatesContainer>
 						<ContainerFlexColumn marginTop>
@@ -126,3 +176,9 @@ const EstimatesContainer = styled.div`
 const Main = styled.div`
 	flex: 4;
 `
+
+const Text = styled.span`
+	margin-left: 10px;
+`
+
+const Container = styled.div``

@@ -1,3 +1,5 @@
+ShowWhy creates many alternative specifications of the desired causal analysis using all combinations of variable definitions, causal models, and selected estimators. Select “Run now” to initiate server-side estimation.
+
 Analysis results are displayed in the form of a [_specification curve_](https://www.nature.com/articles/s41562-020-0912-z). Each dot in the top panel represents the estimated effect of the exposure on the outcome for a given specification, represented below as the combination of a population definition, an exposure definition, a causal model, and a statistical estimator.
 
 Positive or negative effects indicate that the exposure causes the outcome to increase or decrease respectively. You can select each dot to view the specification definitions behind the estimate and decide to either accept or reject the estimate. Specifications that do not pass the refutation tests are rejected automatically.

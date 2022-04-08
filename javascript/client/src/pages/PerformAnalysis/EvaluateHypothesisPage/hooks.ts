@@ -10,7 +10,7 @@ import type {
 	Experiment,
 	Handler,
 	Maybe,
-	RefutationType,
+	RefutationOption,
 	SignificanceTest,
 } from '@showwhy/types'
 import { NodeResponseStatus } from '@showwhy/types'
@@ -21,7 +21,7 @@ import {
 	useAlternativeModels,
 	useCausalEffects,
 	useDefaultRun,
-	useRefutationLength,
+	useRefutationOptions,
 	useRunSignificanceTest,
 	useSpecificationCurve,
 } from '~hooks'
@@ -29,7 +29,6 @@ import {
 	useDefaultDatasetResult,
 	useExperiment,
 	usePrimarySpecificationConfig,
-	useRefutationType,
 	useSpecificationCurveConfig,
 } from '~state'
 import type { DefaultDatasetResult, RunHistory, Specification } from '~types'
@@ -42,15 +41,14 @@ export function useBusinessLogic(): {
 	causalEffects: ReturnType<typeof useCausalEffects>
 	specificationData: Specification[]
 	defaultDataset: DefaultDatasetResult | null
-	refutationLength: number
 	defineQuestion: Experiment
 	activeValues: number[]
 	significanceTestResult: Maybe<SignificanceTest>
 	significanceFailed: boolean
-	refutationType: RefutationType
 	isCanceled: boolean
 	runSignificance: Handler
 	cancelRun: Handler
+	refutationOptions: RefutationOption[]
 } {
 	const defineQuestion = useExperiment()
 	const primarySpecificationConfig = usePrimarySpecificationConfig()
@@ -59,21 +57,13 @@ export function useBusinessLogic(): {
 	const alternativeModels = useAlternativeModels(causalModel)
 	const specificationData = useLoadSpecificationData()
 	const specificationCurveConfig = useSpecificationCurveConfig()
-	const refutation = useRefutationType()
 	const defaultDataset = useDefaultDatasetResult()
 	const defaultRun = useDefaultRun()
 	const run = useRunSignificanceTest(defaultRun?.id)
 	const { failedRefutationIds } = useSpecificationCurve()
 	const [isCanceled, setIsCanceled] = useState<boolean>(false)
-	const refutationLength = useRefutationLength()
 	const significanceTestResult = useActualSignificanceTest()
-
-	const refutationType = useMemo((): RefutationType => {
-		if (defaultRun && defaultRun?.refutationType) {
-			return defaultRun?.refutationType
-		}
-		return refutation
-	}, [defaultRun, refutation])
+	const refutationOptions = useRefutationOptions()
 
 	// const runFullRefutation = useCallback(async () => {
 	// 	setFullRefutation()
@@ -125,14 +115,13 @@ export function useBusinessLogic(): {
 		causalEffects,
 		specificationData,
 		defaultDataset,
-		refutationLength,
 		defineQuestion,
 		activeValues,
 		significanceTestResult,
 		significanceFailed,
-		refutationType,
 		isCanceled,
 		runSignificance,
 		cancelRun,
+		refutationOptions,
 	}
 }
