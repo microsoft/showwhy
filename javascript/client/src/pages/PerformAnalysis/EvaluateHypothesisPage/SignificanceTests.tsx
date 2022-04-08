@@ -43,7 +43,7 @@ export const SignificanceTests: React.FC<{
 		<>
 			{significanceTestResult?.status?.toLowerCase() ===
 				NodeResponseStatus.Completed && (
-				<Paragraph color="accent">
+				<Paragraph noMarginTop color="accent">
 					Taking all valid specifications of the causal analysis into account,
 					the answer is
 					<Value>
