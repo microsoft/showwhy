@@ -5,11 +5,11 @@
 import { memo } from 'react'
 import styled from 'styled-components'
 
+import { RadioButtonCard } from '~components/CardComponent/RadioButtonCard'
 import { Title } from '~styles'
 
 import { EstimatorCard } from './EstimatorCard'
 import { useBusinessLogic } from './hooks'
-import { RefutationTests } from './RefutationTests'
 
 export const SelectCausalEstimatorsPage: React.FC = memo(
 	function SelectCausalEstimatorsPage() {
@@ -32,7 +32,11 @@ export const SelectCausalEstimatorsPage: React.FC = memo(
 				</Section>
 				<Section>
 					<Title>Refutation Tests</Title>
-					<RefutationTests options={refutationOptions} />
+					<CardsContainer>
+						{refutationOptions.map(option => (
+							<RadioButtonCard key={option.key} option={option} />
+						))}
+					</CardsContainer>
 				</Section>
 			</Container>
 		)
@@ -46,3 +50,9 @@ const Container = styled.article`
 `
 
 const Section = styled.section``
+
+const CardsContainer = styled.div`
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 1rem;
+`

@@ -3,78 +3,78 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { IChoiceGroupOption } from '@fluentui/react'
-import { ChoiceGroup } from '@fluentui/react'
 import { CausalModelLevel } from '@showwhy/types'
 import { memo } from 'react'
 import styled from 'styled-components'
 
+import { RadioButtonCard } from '~components/CardComponent/RadioButtonCard'
 import { CausalEffects } from '~components/CausalEffects'
 import { Container, Title } from '~styles'
+import type { RadioButtonChoice } from '~types'
 
 import { useBusinessLogic } from './hooks'
 
-const causalModelOptions: IChoiceGroupOption[] = [
-	{
-		key: CausalModelLevel.Maximum,
-		text: CausalModelLevel[CausalModelLevel.Maximum],
-	},
-	{
-		key: CausalModelLevel.Intermediate,
-		text: CausalModelLevel[CausalModelLevel.Intermediate],
-	},
-	{
-		key: CausalModelLevel.Minimum,
-		text: CausalModelLevel[CausalModelLevel.Minimum],
-	},
-	{
-		key: CausalModelLevel.Unadjusted,
-		text: CausalModelLevel[CausalModelLevel.Unadjusted],
-	},
-]
-
 export const ConfirmAlternativeModelsPage: React.FC = memo(
 	function ConfirmAlternativeModels() {
-		const {
-			causalEffects,
-			onXarrowChange,
-			setPrimarySpecificationConfig,
-			primarySpecificationConfig,
-		} = useBusinessLogic()
+		const { causalEffects, onDefaultChange, primarySpecificationConfig } =
+			useBusinessLogic()
+
+		const causalModelOptions: RadioButtonChoice[] = [
+			{
+				key: CausalModelLevel.Maximum,
+				title: CausalModelLevel.Maximum,
+				isSelected:
+					primarySpecificationConfig.causalModel === CausalModelLevel.Maximum,
+				description:
+					'Includes all edges with strong, moderate, or weak causal effects',
+				onChange: onDefaultChange,
+			},
+			{
+				key: CausalModelLevel.Intermediate,
+				title: CausalModelLevel.Intermediate,
+				isSelected:
+					primarySpecificationConfig.causalModel ===
+					CausalModelLevel.Intermediate,
+				description:
+					'Includes all edges with a strong or moderate  causal effects',
+				onChange: onDefaultChange,
+			},
+			{
+				key: CausalModelLevel.Minimum,
+				title: CausalModelLevel.Minimum,
+				isSelected:
+					primarySpecificationConfig.causalModel === CausalModelLevel.Minimum,
+				description: 'Includes all edges with strong causal effects only',
+				onChange: onDefaultChange,
+			},
+			{
+				key: CausalModelLevel.Unadjusted,
+				title: CausalModelLevel.Unadjusted,
+				isSelected:
+					primarySpecificationConfig.causalModel ===
+					CausalModelLevel.Unadjusted,
+				description: 'Includes only the causal edge from exposure to outcome',
+				onChange: onDefaultChange,
+			},
+		]
 
 		return (
 			<Container>
 				<Title>Domain models</Title>
-				<Container>
-					<Choice
-						options={causalModelOptions}
-						selectedKey={primarySpecificationConfig.causalModel}
-						onChange={(_, objValue) => {
-							onXarrowChange()
-							setPrimarySpecificationConfig({
-								...primarySpecificationConfig,
-								causalModel:
-									(objValue && (objValue?.key as CausalModelLevel)) ||
-									CausalModelLevel.Maximum,
-							})
-						}}
-						label="Select the primary causal model"
-					/>
-				</Container>
 				<CausalEffects {...causalEffects} />
+				<h4>Select the primary causal model</h4>
+				<CardsContainer>
+					{causalModelOptions.map(option => (
+						<RadioButtonCard key={option.key} option={option} />
+					))}
+				</CardsContainer>
 			</Container>
 		)
 	},
 )
 
-const Choice = styled(ChoiceGroup)`
-	div {
-		display: flex;
-		justify-content: space-around;
-	}
-
-	.ms-ChoiceField {
-		margin: 0 8px 0 8px;
-	}
-	margin: 8px 0 16px 0;
+const CardsContainer = styled.div`
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr;
+	gap: 1rem;
 `
