@@ -23,7 +23,6 @@ export const Guidance: React.FC<{
 	const markdown = useMarkdown(step)
 	const ref = useRef(null)
 	const dimensions = useDimensions(ref)
-	console.log('dimensions', dimensions)
 
 	return (
 		<Container>
