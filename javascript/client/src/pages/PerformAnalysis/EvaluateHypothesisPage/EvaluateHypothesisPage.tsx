@@ -9,9 +9,10 @@ import { CausalEffects } from '~components/CausalEffects'
 import { CausalQuestion } from '~components/CausalQuestion'
 import { EmptyDataPageWarning } from '~components/EmptyDataPageWarning'
 import { useSpecificationCurve } from '~hooks'
-import { Container, ContainerFlexColumn } from '~styles'
+import { Container, ContainerFlexColumn, Title } from '~styles'
 import { Pages } from '~types'
 
+import { AnalysisSummary } from './AnalysisSummary'
 import { useBusinessLogic } from './hooks'
 import { PageButtons } from './PageButtons'
 import { ResultsGraph } from './ResultsGraph'
@@ -40,6 +41,7 @@ export const EvaluateHypothesisPage: React.FC = memo(
 			hovered,
 			failedRefutationIds,
 			vegaWindowDimensions,
+			outcome,
 		} = useSpecificationCurve()
 
 		if (
@@ -77,23 +79,30 @@ export const EvaluateHypothesisPage: React.FC = memo(
 							significanceTestResult={significanceTestResult}
 						/>
 					</Container>
+					<Container marginTop>
+						<AnalysisSummary
+							defineQuestion={defineQuestion}
+							refutationOptions={refutationOptions}
+							alternativeModels={alternativeModels}
+						/>
+					</Container>
 				</Container>
+				<Title>Domain model </Title>
 				<Container>
 					<CausalEffects size={CausalEffectSize.Small} {...causalEffects} />
 				</Container>
-				<Container marginTop>
-					<ResultsGraph
-						alternativeModels={alternativeModels}
-						specificationData={specificationData}
-						defineQuestion={defineQuestion}
-						specificationCurveConfig={config}
-						vegaWindowDimensions={vegaWindowDimensions}
-						onMouseOver={onMouseOver}
-						hovered={hovered}
-						failedRefutationIds={failedRefutationIds}
-						refutationOptions={refutationOptions}
-					/>
-				</Container>
+				<Title noMarginBottom noMarginTop>
+					Effect size estimates
+				</Title>
+				<ResultsGraph
+					specificationData={specificationData}
+					specificationCurveConfig={config}
+					vegaWindowDimensions={vegaWindowDimensions}
+					onMouseOver={onMouseOver}
+					hovered={hovered}
+					outcome={outcome}
+					failedRefutationIds={failedRefutationIds}
+				/>
 			</ContainerFlexColumn>
 		)
 	},
