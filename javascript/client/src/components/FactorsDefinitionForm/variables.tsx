@@ -20,6 +20,16 @@ function handleKeyPress(fn: Handler) {
 	}
 }
 
+function handleVariableOnBlur(fn: Handler) {
+	return (event: React.FocusEvent<HTMLInputElement>) => {
+		const { relatedTarget } = event
+		const pw = relatedTarget?.getAttribute('data-pw')
+		if (pw !== 'factors-form-description') {
+			fn()
+		}
+	}
+}
+
 export function useCheckbox(
 	isPrimary: boolean,
 	setIsPrimary: (value: boolean) => void,
@@ -43,14 +53,15 @@ export function useVariableField(
 ): JSX.Element {
 	return useMemo(() => {
 		const handler = handleKeyPress(add)
+		const handleOnBlur = handleVariableOnBlur(add)
 		return (
 			<VariableField
 				onChange={(_, value) => setVariable(value ?? '')}
 				value={variable}
-				placeholder="Type a variable"
+				placeholder="Enter label"
 				data-pw="factors-form-variable-name"
 				onKeyPress={!factor ? handler : undefined}
-				onBlur={!factor ? () => add() : undefined}
+				onBlur={!factor ? handleOnBlur : undefined}
 			/>
 		)
 	}, [variable, setVariable, add, factor])
@@ -59,7 +70,6 @@ export function useVariableField(
 export function useDescriptionBox(
 	description: string,
 	setDescription: (value: string) => void,
-	variable: string,
 	add: Handler,
 	factor?: CausalFactor,
 ): JSX.Element {
@@ -77,20 +87,27 @@ export function useDescriptionBox(
 					onKeyPress={!factor ? handler : undefined}
 					onBlur={!factor ? () => add() : undefined}
 				/>
-				{!factor ? (
-					<ButtonContainer>
-						<AddButton
-							disabled={!variable?.length}
-							onClick={add}
-							data-pw="factors-form-add-button"
-						>
-							Add
-						</AddButton>
-					</ButtonContainer>
-				) : null}
 			</DetailsContainer>
 		)
-	}, [description, setDescription, variable, add, factor])
+	}, [description, setDescription, add, factor])
+}
+
+export function useAddButton(
+	add: Handler,
+	variable: string,
+	factor?: CausalFactor,
+): JSX.Element | null {
+	return !factor ? (
+		<ButtonContainer>
+			<AddButton
+				disabled={!variable?.length}
+				onClick={add}
+				data-pw="factors-form-add-button"
+			>
+				Add
+			</AddButton>
+		</ButtonContainer>
+	) : null
 }
 
 export function useHasLevel(
@@ -99,13 +116,7 @@ export function useHasLevel(
 	return useMemo(() => !!factor?.hasOwnProperty('level'), [factor])
 }
 
-const DetailsContainer = styled.div`
-	display: grid;
-	grid-template-columns: 85% 15%;
-	justify-content: center;
-	gap: 1rem;
-	padding: 0 0.5rem;
-`
+const DetailsContainer = styled.div``
 
 const Field = styled(TextField)`
 	width: 100%;

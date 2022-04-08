@@ -1,5 +1,3 @@
-After selecting the estimation methods, we are now ready to create a set of potential analysis specifications by combining our alternative definitions of population, exposure, outcome, causal model, and estimator.
+ShowWhy creates many alternative specifications of the desired causal analysis using all combinations of variable definitions, causal models, and selected estimators.
 
-Select “Run now” to initiate the estimation process. As estimates become available, they will be incorporated into the visualization of the effect distribution that you can view in the next page.
-
-The high-level question for this project becomes fixed when you first run your analysis, and ShowWhy maintains a log of what changed across all runs. This will help you to demonstrate the confirmatory nature of analysis – that your question, model, and data were rigorously prepared before results were computed.
+Select “Run now” to initiate server-side estimation. As estimates become available, they will be incorporated into the [_specification curve_]([https://www.nature.com/articles/s41562-020-0912-z) visualization of the effect size distribution shown on the next page

@@ -14,31 +14,45 @@ test.describe('Define Model Page', () => {
 		const ctx = await browser.newContext()
 		page = await ctx.newPage()
 		po = createPageObjects(page)
+		await po.defineModelPage.open()
+		await po.defineModelPage.waitForLoad()
 	})
 
 	test('Define population', async () => {
-		await po.defineModelPage.open('population')
-		await po.defineModelPage.waitForLoad()
-		await po.defineModelPage.addElement({ variable: 'Primary variable' })
-		await po.defineModelPage.addElement({ variable: 'Secondary variable' })
+		await po.defineModelPage.addElement({
+			variable: 'Primary variable',
+			type: 'population',
+		})
+		await po.defineModelPage.addElement({
+			variable: 'Secondary variable',
+			type: 'population',
+		})
 		const elements = await po.defineModelPage.countElements()
 		await expect(elements).toEqual(2)
 	})
 
 	test('Define exposure', async () => {
-		await po.defineModelPage.open('exposure')
-		await po.defineModelPage.waitForLoad()
-		await po.defineModelPage.addElement({ variable: 'Primary variable' })
-		await po.defineModelPage.addElement({ variable: 'Secondary variable' })
+		await po.defineModelPage.addElement({
+			variable: 'Primary variable',
+			type: 'exposure',
+		})
+		await po.defineModelPage.addElement({
+			variable: 'Secondary variable',
+			type: 'exposure',
+		})
 		const elements = await po.defineModelPage.countElements()
 		await expect(elements).toEqual(2)
 	})
 
 	test('Define outcome', async () => {
-		await po.defineModelPage.open('outcome')
-		await po.defineModelPage.waitForLoad()
-		await po.defineModelPage.addElement({ variable: 'Primary variable' })
-		await po.defineModelPage.addElement({ variable: 'Secondary variable' })
+		await po.defineModelPage.addElement({
+			variable: 'Primary variable',
+			type: 'outcome',
+		})
+		await po.defineModelPage.addElement({
+			variable: 'Secondary variable',
+			type: 'outcome',
+		})
 		const elements = await po.defineModelPage.countElements()
 		await expect(elements).toEqual(2)
 	})

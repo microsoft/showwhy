@@ -5,6 +5,7 @@
 import type { IComboBoxOption } from '@fluentui/react'
 import type {
 	CausalFactor,
+	DefinitionType,
 	ElementDefinition,
 	FlatCausalFactor,
 	Handler,
@@ -14,7 +15,7 @@ import { memo } from 'react'
 import styled from 'styled-components'
 
 import { GenericTableComponent } from '~components/Tables/GenericTableComponent'
-import type { HeaderData, Item, PageType } from '~types'
+import type { HeaderData, Item } from '~types'
 
 import { useTableComponent } from './hooks'
 
@@ -23,33 +24,33 @@ export const TableComponent: React.FC<{
 	columns: FlatCausalFactor[] | ElementDefinition[] | Item[]
 	definitionToEdit?: ElementDefinition
 	factorToEdit?: CausalFactor
-	pageType: PageType
 	variables?: IComboBoxOption[]
 	onDelete?: Handler1<ElementDefinition>
 	onEdit?: Handler1<ElementDefinition>
 	onCancel?: Handler
 	onSave?: Handler1<ElementDefinition>
+	definitionType?: DefinitionType
 }> = memo(function TableComponent({
 	headers,
 	columns,
 	definitionToEdit,
 	factorToEdit,
-	pageType,
 	onDelete,
 	onEdit,
 	onCancel,
 	onSave,
+	definitionType,
 }) {
 	const { items, customColumnsWidth, headersData } = useTableComponent(
 		columns as CausalFactor[],
 		headers,
 		definitionToEdit,
 		factorToEdit,
-		pageType,
 		onDelete,
 		onSave,
 		onEdit,
 		onCancel,
+		definitionType,
 	)
 	return (
 		<Container>

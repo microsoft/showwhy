@@ -4,11 +4,7 @@
  */
 
 import { createDefaultCommandBar } from '@data-wrangling-components/react'
-import type {
-	ICommandBarItemProps,
-	ICommandBarProps,
-	IDetailsColumnProps,
-} from '@fluentui/react'
+import type { ICommandBarItemProps, IDetailsColumnProps } from '@fluentui/react'
 import { useCallback } from 'react'
 
 export function useCommandBar(
@@ -24,9 +20,10 @@ export function useCommandBar(
 					onRender: () => renderDropdown(columnName),
 				},
 			]
-			return createDefaultCommandBar(items, {
-				style: { width: 200, paddingBottom: 13 },
-			} as ICommandBarProps)
+			return createDefaultCommandBar({
+				items,
+				styles: { root: { width: 200, paddingBottom: 13 } },
+			})
 		},
 		[renderDropdown],
 	)

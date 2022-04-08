@@ -5,8 +5,8 @@
 
 import type {
 	AlternativeModels,
+	ElementDefinition,
 	Estimator,
-	Experiment,
 	RefutationType,
 } from '@showwhy/types'
 import { CausalModelLevel } from '@showwhy/types'
@@ -22,7 +22,7 @@ import {
 
 export function useNodeProperties(): {
 	fileName?: string
-	definitions: Experiment
+	definitions: ElementDefinition[]
 	estimators: Estimator[]
 	refutationType: RefutationType
 	confidenceInterval: boolean
@@ -31,7 +31,7 @@ export function useNodeProperties(): {
 	intermediateLevel: AlternativeModels
 	unadjustedModel: AlternativeModels
 } {
-	const definitions = useExperiment()
+	const experiment = useExperiment()
 	const estimators = useEstimators()
 	const refutationType = useRefutationType()
 	const confidenceInterval = useConfidenceInterval()
@@ -47,7 +47,7 @@ export function useNodeProperties(): {
 	)
 	return useMemo(() => {
 		return {
-			definitions,
+			definitions: experiment?.definitions || [],
 			estimators,
 			refutationType,
 			confidenceInterval,
@@ -57,7 +57,7 @@ export function useNodeProperties(): {
 			unadjustedModel,
 		}
 	}, [
-		definitions,
+		experiment,
 		estimators,
 		refutationType,
 		confidenceInterval,

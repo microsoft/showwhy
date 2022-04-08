@@ -29,10 +29,9 @@ test.describe('Describe Elements Page', () => {
 		await po.describeElementsPage.enterFieldGroupData(
 			generateFieldData('Outcome'),
 		)
-		await po.describeElementsPage.selectHypothesis('Change')
-
+		await po.describeElementsPage.selectHypothesis('Increase')
 		const expected =
-			'For Population label, does Exposure label cause Outcome label to Change?'
+			'For Population label, does Exposure label cause Outcome label to Increase?'
 		const question = await po.header.getQuestion()
 		expect(question).toHaveText(expected)
 	})

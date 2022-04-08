@@ -1,8 +1,7 @@
-We now use the loaded datasets to derive the data variables that will provide concrete data for the causal factors that you have defined in your causal model. The result of this step is a single data table that serves as the input to the effect estimation stage. The final table should contain one row per subject, with data columns binding to the following variables:
+Use the loaded datasets to derive data variables for your domain model. The result of this stage must be a single data table containing one row per subject and one column per data variable. Column data types must also match their assigned variables:
 
-1. Population columns: Each alternative population definition should be associated with a binary data column indicating whether (1) or not (0) the subject is a member of the population.
-2. Exposure columns: Each alternative exposure definition should be associated with a binary data column indicating whether (1) or not (0) the subject was exposed to the exposure.
-3. Outcome columns: Each alternative outcome definition should be associated with a binary or a numerical data column indicating the outcome of the exposure experienced by the subject.
-4. Control columns: Each confounder or outcome determinant should be associated with a binary or a numerical data column.
+1. Population and Exposure variables must be _binary_ columns indicating whether (1) or not (0) the subject is a member of the population / was exposed to the exposure.
+2. Outcome variables must be either _binary_ or _numerical_ columns indicating the outcome experienced by the subject.
+3. Control variables can be either _binary_, _numerical_, or _categorial_ columns indicating the attributes associated with the subject.
 
-You can apply various processing steps on your loaded datasets before binding the derived data columns to the pre-defined causal factors and reviewing the final output table.
+Null values for any variable type will result in the corresponding subject being removed from the population for any analyses based on that variable definition.

@@ -11,9 +11,10 @@ import type {
 	FactorsOrDefinitions,
 	Handler,
 	Handler1,
+	Maybe,
 } from '@showwhy/types'
 import { CausalModelLevel } from '@showwhy/types'
-import { useCallback, useEffect, useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 
 import {
 	useAllVariables,
@@ -36,6 +37,7 @@ import {
 	useOnResetVariable,
 } from './hooks/index'
 import { useOnSelectVariable } from './hooks/useOnSelectVariable'
+import { useOnSetSubjectIdentifier } from './hooks/useOnSetSubjectIdentifier'
 import { useRenderDropdown } from './hooks/useRenderDropdownOption'
 
 export function useBusinessLogic(
@@ -51,6 +53,8 @@ export function useBusinessLogic(
 	isElementComplete: (element: CausalFactor | ElementDefinition) => boolean
 	onResetVariable: (columnName: string) => void
 	onUpdateOutput: (table: TableContainer<unknown>) => void
+	subjectIdentifier: Maybe<string>
+	onSetSubjectIdentifier: Handler1<Maybe<string>>
 } {
 	const prepSpecification = useTablesPrepSpecification()
 	const setStepsTablePrep = useSetTablesPrepSpecification()
@@ -61,15 +65,22 @@ export function useBusinessLogic(
 	const setSubjectIdentifier = useSetSubjectIdentifier()
 	const subjectIdentifier = useSubjectIdentifier()
 	const setOutputTable = useSetOutputTablePrep()
+
+	const onSetSubjectIdentifier = useOnSetSubjectIdentifier(
+		subjectIdentifier,
+		setSubjectIdentifier,
+	)
+
 	const causalEffects = useCausalEffects(CausalModelLevel.Maximum)
 	const { setDone, setTodo } = useAutomaticWorkflowStatus()
 
 	const completedElements = useMemo((): number => {
+		const initial = !!subjectIdentifier ? 1 : 0
 		return allElements.find((x: CausalFactor | ElementDefinition) => x)
 			? allElements?.filter((x: CausalFactor | ElementDefinition) => x.column)
-					.length
-			: 0
-	}, [allElements])
+					.length + initial
+			: initial
+	}, [allElements, subjectIdentifier])
 
 	const isStepDone = useCallback(
 		(hasVariable: boolean) => {
@@ -147,7 +158,7 @@ export function useBusinessLogic(
 		onSelectVariable,
 		onResetVariable,
 		onAddVariable,
-		setSubjectIdentifier,
+		onSetSubjectIdentifier,
 		subjectIdentifier,
 		dropdownOptions,
 	)
@@ -158,11 +169,13 @@ export function useBusinessLogic(
 		onChangeSteps,
 		steps,
 		commandBar,
-		elements: allElements.length,
+		elements: allElements.length + 1, //subjectIdentifier
 		completedElements,
 		allElements,
 		isElementComplete,
 		onResetVariable,
 		onUpdateOutput,
+		subjectIdentifier,
+		onSetSubjectIdentifier,
 	}
 }

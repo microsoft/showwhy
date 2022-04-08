@@ -9,13 +9,13 @@ import styled from 'styled-components'
 
 import { FactorsDefinitionForm } from '~components/FactorsDefinitionForm'
 import { TableComponent } from '~components/Tables/TableComponent'
-import { Container } from '~styles'
+import { Container, Title } from '~styles'
 import type { HeaderData } from '~types'
 
 import { useBusinessLogic } from './hooks'
 
 const tableHeaders: HeaderData[] = [
-	{ fieldName: 'variable', value: 'Factor', width: '15%' },
+	{ fieldName: 'variable', value: 'Label', width: '15%' },
 	{ fieldName: 'description', value: 'Description' },
 ]
 
@@ -29,17 +29,15 @@ export const ConsiderCausalFactorsPage: React.FC = memo(
 			editFactor,
 			deleteFactor,
 			setFactor,
-			setNewFactor,
 			setIsEditing,
 			goToFactorsPage,
 			page,
-			pageType,
 		} = useBusinessLogic()
 
 		return (
 			<Container>
 				<Container>
-					<FieldTitle data-pw="title">Possible causal factors</FieldTitle>
+					<Title data-pw="title">Possible causal factors</Title>
 					<TableComponent
 						headers={tableHeaders}
 						columns={flatFactorsList}
@@ -51,15 +49,12 @@ export const ConsiderCausalFactorsPage: React.FC = memo(
 							setIsEditing(false)
 							setFactor(undefined)
 						}}
-						pageType={pageType}
 					/>
 				</Container>
 				<FactorsDefinitionForm
 					factor={!isEditing ? factor : undefined}
 					onAdd={addFactor}
 					showLevel={false}
-					pageType={pageType}
-					onChange={setNewFactor}
 				/>
 				{page ? (
 					<ButtonContainer>
@@ -72,10 +67,6 @@ export const ConsiderCausalFactorsPage: React.FC = memo(
 		)
 	},
 )
-
-const FieldTitle = styled.h3`
-	margin-bottom: unset;
-`
 
 const ButtonContainer = styled.div`
 	text-align: center;

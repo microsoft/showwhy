@@ -5,9 +5,11 @@
 
 import type {
 	CausalFactor,
+	DefinitionType,
 	ElementDefinition,
 	Experiment,
 	Handler,
+	Maybe,
 	OptionalId,
 	Setter,
 } from '@showwhy/types'
@@ -15,10 +17,10 @@ import { CausalityLevel } from '@showwhy/types'
 import { useCallback, useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 
-import type { PageType } from '~types'
-import { noop } from '~utils'
+import { getDefinitionsByType, noop } from '~utils'
 
 import {
+	useAddButton,
 	useCheckbox,
 	useDescriptionBox,
 	useHasLevel,
@@ -33,21 +35,22 @@ type OnChangeHandler = (f: Partial<CausalFactor | ElementDefinition>) => void
 export function useFactorsDefinitionForm({
 	experiment,
 	factor,
-	pageType,
 	showLevel,
+	definitionType,
 	onAdd = noop,
 	onChange = noop,
 }: {
-	pageType: PageType
 	experiment?: Experiment
 	factor?: CausalFactor | ElementDefinition
 	showLevel?: boolean
+	definitionType: DefinitionType
 	onAdd?: OnAddHandler
 	onChange?: OnChangeHandler
 }): {
 	level: JSX.Element
 	variable: JSX.Element
 	description: JSX.Element
+	addButton: JSX.Element | null
 } {
 	const [description, setDescription] = useState<string>('')
 	const [variable, setVariable] = useState<string>('')
@@ -56,17 +59,25 @@ export function useFactorsDefinitionForm({
 	const location = useLocation()
 
 	const resetFields = useResetFields(setDescription, setVariable, setIsPrimary)
-	const add = useAdd(variable, description, isPrimary, onAdd, resetFields)
+	const add = useAdd(
+		variable,
+		description,
+		isPrimary,
+		definitionType,
+		onAdd,
+		resetFields,
+	)
 
 	useEffect(
 		function resetFormOnExperimentChange() {
 			resetFields()
-			if (experiment) {
-				setVariable((experiment as any)[pageType]?.variable ?? '')
-				setIsPrimary(!(experiment as any)[pageType]?.definition?.length)
+			if (experiment && definitionType) {
+				setIsPrimary(
+					!getDefinitionsByType(definitionType, experiment?.definitions).length,
+				)
 			}
 		},
-		[pageType, location, experiment, resetFields],
+		[definitionType, location, experiment, resetFields],
 	)
 
 	useEffect(
@@ -86,6 +97,7 @@ export function useFactorsDefinitionForm({
 				...factor,
 				variable,
 				description,
+				type: definitionType,
 			}
 			hasLevel &&
 				(edited.level = isPrimary
@@ -93,15 +105,23 @@ export function useFactorsDefinitionForm({
 					: CausalityLevel.Secondary)
 			onChange(edited)
 		},
-		[variable, isPrimary, description, factor, hasLevel, onChange],
+		[
+			variable,
+			isPrimary,
+			description,
+			definitionType,
+			factor,
+			hasLevel,
+			onChange,
+		],
 	)
 
 	const checkbox = useCheckbox(isPrimary, setIsPrimary)
 	const variableField = useVariableField(variable, add, setVariable, factor)
+	const addButton = useAddButton(add, variable, factor)
 	const descriptionBox = useDescriptionBox(
 		description,
 		setDescription,
-		variable,
 		add,
 		factor,
 	)
@@ -110,6 +130,7 @@ export function useFactorsDefinitionForm({
 		level: checkbox,
 		variable: variableField,
 		description: descriptionBox,
+		addButton,
 	}
 }
 
@@ -129,6 +150,7 @@ function useAdd(
 	variable: string,
 	description: string,
 	isPrimary: boolean,
+	type: Maybe<DefinitionType>,
 	onAdd: OnAddHandler,
 	resetFields: Handler,
 ): Handler {
@@ -137,9 +159,10 @@ function useAdd(
 		const newFactor = {
 			variable,
 			description,
+			type,
 			level: isPrimary ? CausalityLevel.Primary : CausalityLevel.Secondary,
 		}
 		onAdd(newFactor)
 		resetFields()
-	}, [resetFields, variable, isPrimary, description, onAdd])
+	}, [resetFields, variable, isPrimary, description, onAdd, type])
 }

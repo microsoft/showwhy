@@ -65,13 +65,16 @@ export function useAddVariable(): {
 				const newElement: ElementDefinition = {
 					variable: variable,
 					description: '',
-					level: (defineQuestion as any)[type]?.definition?.length
+					level: (defineQuestion as any)?.definitions.some(
+						(d: ElementDefinition) => d.type === type,
+					)
 						? CausalityLevel.Secondary
 						: CausalityLevel.Primary,
 					id: uuiv4(),
 					column: selectedColumn,
+					type,
 				}
-				saveDefinition(newElement, type)
+				saveDefinition(newElement)
 			}
 			toggleShowCallout()
 		},

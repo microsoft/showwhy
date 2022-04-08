@@ -47,7 +47,7 @@ export const ExploreSpecificationCurvePage: React.FC = memo(
 		if (!data.length && !defaultRun) {
 			return (
 				<EmptyDataPageWarning
-					text="To see the specification curve, run an estimate here: "
+					text="To see the summary of the estimates, run and wait a run estimate here: "
 					linkText="Estimate causal effects"
 					page={Pages.EstimateCausalEffects}
 					marginTop
@@ -64,7 +64,10 @@ export const ExploreSpecificationCurvePage: React.FC = memo(
 								Specification curve analysis of causal effect estimates
 							</Title>
 							{!activeProcessing && defaultRun && defaultRun.status.error && (
-								<ErrorMessage>{defaultRun.status.error}</ErrorMessage>
+								<ErrorMessage
+									message={'Undefined error. Please, execute the run again.'}
+									log={defaultRun.status.error}
+								/>
 							)}
 							{activeProcessing && (
 								<RunProgressIndicator theme={theme} run={activeProcessing} />

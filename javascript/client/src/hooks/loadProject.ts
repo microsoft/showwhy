@@ -11,7 +11,7 @@ import type {
 } from '@data-wrangling-components/core'
 import { usePipeline, useStore } from '@data-wrangling-components/react'
 import type { BaseFile } from '@data-wrangling-components/utilities'
-import type { CausalFactor, Element, Experiment, Maybe } from '@showwhy/types'
+import type { CausalFactor, Experiment, Maybe } from '@showwhy/types'
 import { all, op } from 'arquero'
 import type ColumnTable from 'arquero/dist/types/table/column-table'
 import { useCallback } from 'react'
@@ -274,15 +274,9 @@ function prepCausalFactors(factors?: Partial<CausalFactor>[]): CausalFactor[] {
 }
 
 function prepDefineQuestion(define?: Partial<Experiment>): Experiment {
-	const prepped = { ...define }
-	if (prepped.exposure) {
-		prepped.exposure = prepElement(prepped.exposure)
-	}
-	if (prepped.population) {
-		prepped.population = prepElement(prepped.population)
-	}
-	if (prepped.outcome) {
-		prepped.outcome = prepElement(prepped.outcome)
+	const prepped = {
+		...define,
+		definitions: define?.definitions?.map(withRandomId),
 	}
 
 	return prepped as Experiment
@@ -290,13 +284,6 @@ function prepDefineQuestion(define?: Partial<Experiment>): Experiment {
 
 function prepTablesSpec(specifications?: Specification[]): Specification[] {
 	return specifications as Specification[]
-}
-
-function prepElement(element: Element): Element {
-	return {
-		...element,
-		definition: element.definition?.map(withRandomId),
-	}
 }
 
 function useUpdateCollection(): (

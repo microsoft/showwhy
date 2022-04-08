@@ -5,6 +5,7 @@
 
 import { Checkbox } from '@fluentui/react'
 import type {
+	DefinitionType,
 	ElementDefinition,
 	Handler,
 	Handler1,
@@ -15,7 +16,7 @@ import { CausalityLevel } from '@showwhy/types'
 import { useCallback, useMemo, useState } from 'react'
 
 import { useFactorsDefinitionForm } from '~components/FactorsDefinitionForm'
-import type { HeaderData, PageType } from '~types'
+import type { HeaderData } from '~types'
 
 const actionsHeader: HeaderData = {
 	fieldName: 'actions',
@@ -28,11 +29,11 @@ export function useTableComponent(
 	headers: HeaderData[],
 	definitionToEdit: Maybe<ElementDefinition>,
 	factorToEdit: Maybe<ElementDefinition>,
-	pageType: PageType,
 	onDelete?: Maybe<Handler1<ElementDefinition>>,
 	onSave?: Maybe<Handler1<ElementDefinition>>,
 	onEdit?: Maybe<Handler1<ElementDefinition>>,
 	onCancel?: Maybe<Handler>,
+	definitionType?: DefinitionType,
 ): {
 	items: any
 	headersData: any[]
@@ -46,7 +47,7 @@ export function useTableComponent(
 	const { level, description, variable } = useFactorsDefinitionForm({
 		factor: (definitionToEdit || factorToEdit) as ElementDefinition,
 		onChange,
-		pageType,
+		definitionType: definitionType as DefinitionType,
 	})
 	const headersData = useHeadersData(
 		headers,
@@ -63,6 +64,7 @@ export function useTableComponent(
 			if (definitionToEdit?.id === item.id) {
 				obj = {
 					level,
+					type: definitionType,
 					description,
 					variable,
 					actions: {
@@ -120,6 +122,7 @@ export function useTableComponent(
 		onEdit,
 		onSave,
 		variable,
+		definitionType,
 	])
 
 	return {
@@ -161,8 +164,8 @@ function useCustomColumnsWidth(headersData: HeaderData[]) {
 		const props = headersData.map(h => h.fieldName)
 		const hasLevel = props.includes('level')
 		const colWidth = [
-			{ fieldName: 'variable', width: `${hasLevel ? '25' : '30'}%` },
-			{ fieldName: 'description', width: `${hasLevel ? '50' : '60'}%` },
+			{ fieldName: 'variable', width: `${hasLevel ? '35' : '30'}%` },
+			{ fieldName: 'description', width: `${hasLevel ? '40' : '60'}%` },
 			{ fieldName: 'actions', width: '10%' },
 		]
 		if (hasLevel) {
