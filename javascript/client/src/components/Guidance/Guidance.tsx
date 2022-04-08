@@ -11,9 +11,8 @@ import styled from 'styled-components'
 
 import { StepTitle } from '~components/StepTitle'
 import { useMarkdown } from '~hooks'
+import { useGuidance } from '~state'
 import type { WorkflowStep } from '~types'
-
-import { useGuidance } from '../../state'
 
 export const Guidance: React.FC<{
 	step?: WorkflowStep
@@ -23,7 +22,7 @@ export const Guidance: React.FC<{
 	const markdown = useMarkdown(step)
 
 	return (
-		<>
+		<Container>
 			<TitleContainer>
 				<StepTitle title="Guidance" />
 				<TooltipHost
@@ -48,17 +47,21 @@ export const Guidance: React.FC<{
 					dangerouslySetInnerHTML={{ __html: step?.guidance || '' }}
 				/>
 			)}
-		</>
+		</Container>
 	)
 })
+
+const Container = styled.div`
+	height: 100%
+`
 
 const GuidanceText = styled.div<{
 	isVisible: Maybe<boolean>
 }>`
 	padding: 0px 16px;
 	transition: height 1.5s ease;
-	height: ${({ isVisible }) => (isVisible ? '100%' : 0)};
-	overflow: hidden;
+	height: ${({ isVisible }) => (isVisible ? 'calc(100% - 40px)' : 0)};
+	overflow: hidden auto;
 `
 
 const TitleContainer = styled.div`
