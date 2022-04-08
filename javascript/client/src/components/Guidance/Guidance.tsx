@@ -2,11 +2,12 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import { useDimensions } from '@essex/hooks'
 import { IconButton, TooltipHost } from '@fluentui/react'
 import { useId } from '@fluentui/react-hooks'
 import type { Maybe } from '@showwhy/types'
 import Markdown from 'markdown-to-jsx'
-import { memo } from 'react'
+import { memo, useRef } from 'react'
 import styled from 'styled-components'
 
 import { StepTitle } from '~components/StepTitle'
@@ -20,6 +21,9 @@ export const Guidance: React.FC<{
 	const [isGuidanceVisible, toggleGuidance] = useGuidance()
 	const tooltipId = useId('tooltip')
 	const markdown = useMarkdown(step)
+	const ref = useRef(null)
+	const dimensions = useDimensions(ref)
+	console.log('dimensions', dimensions)
 
 	return (
 		<Container>
@@ -38,11 +42,13 @@ export const Guidance: React.FC<{
 				</TooltipHost>
 			</TitleContainer>
 			{markdown ? (
-				<GuidanceText isVisible={isGuidanceVisible}>
+				<GuidanceText ref={ref} h={dimensions?.height || 0} isVisible={isGuidanceVisible}>
 					<Markdown>{markdown}</Markdown>
 				</GuidanceText>
 			) : (
 				<GuidanceText
+					ref={ref} 
+					h={dimensions?.height || 0}
 					isVisible={isGuidanceVisible}
 					dangerouslySetInnerHTML={{ __html: step?.guidance || '' }}
 				/>
@@ -57,10 +63,11 @@ const Container = styled.div`
 
 const GuidanceText = styled.div<{
 	isVisible: Maybe<boolean>
+	h: number
 }>`
 	padding: 0px 16px;
 	transition: height 1.5s ease;
-	height: ${({ isVisible }) => (isVisible ? 'calc(100% - 40px)' : 0)};
+	height: ${({ isVisible, h }) => (isVisible ? `calc(${h > 300 ? '100%' : '100% - 40px' })` : 0)};
 	overflow: hidden auto;
 `
 
