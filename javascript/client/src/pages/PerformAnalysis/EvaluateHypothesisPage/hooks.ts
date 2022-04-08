@@ -14,11 +14,12 @@ import type {
 	SignificanceTest,
 } from '@showwhy/types'
 import { NodeResponseStatus } from '@showwhy/types'
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 
 import {
 	useActualSignificanceTest,
 	useAlternativeModels,
+	useAutomaticWorkflowStatus,
 	useCausalEffects,
 	useDefaultRun,
 	useRefutationLength,
@@ -67,6 +68,12 @@ export function useBusinessLogic(): {
 	const [isCanceled, setIsCanceled] = useState<boolean>(false)
 	const refutationLength = useRefutationLength()
 	const significanceTestResult = useActualSignificanceTest()
+
+	const { setDone, setTodo } = useAutomaticWorkflowStatus()
+
+	useEffect(() => {
+		!!significanceTestResult ? setDone() : setTodo()
+	}, [significanceTestResult, setDone, setTodo])
 
 	const refutationType = useMemo((): RefutationType => {
 		if (defaultRun && defaultRun?.refutationType) {
