@@ -9,9 +9,8 @@ import { dataAttr } from '../util'
 
 const selectors: Record<string, string> = {
 	estimator: `${dataAttr('estimator')} i`,
-	refuter: dataAttr('radio-option'),
+	refuter: `${dataAttr('refuter-count')} input`,
 	selectedEstimator: dataAttr('selected-estimator'),
-	selectedRefuter: dataAttr('selected-radio-option'),
 	estimatorGroupSelector: dataAttr('estimator-group-selector'),
 }
 
@@ -30,9 +29,8 @@ export class SelectCausalEstimatorsPage extends Page {
 	public async getSelectedEstimators(): Promise<Locator> {
 		return this.page.locator(selectors.selectedEstimator)
 	}
-
-	public async getSelectedRefuter(): Promise<Locator> {
-		return this.page.locator(selectors.selectedRefuter)
+	public async getRefuterCount(): Promise<Locator> {
+		return this.page.locator(selectors.refuter)
 	}
 
 	public async countSelectedEstimators(): Promise<number> {
@@ -48,7 +46,7 @@ export class SelectCausalEstimatorsPage extends Page {
 		await this.page.locator(selectors.estimator).first().click()
 	}
 
-	public async clickOnRefuter(): Promise<void> {
-		return this.page.locator(selectors.refuter).first().click()
+	public async fillRefuter(value: string): Promise<void> {
+		await this.page.fill(selectors.refuter, value)
 	}
 }

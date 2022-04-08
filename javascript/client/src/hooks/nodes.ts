@@ -35,7 +35,7 @@ function useGetNodeProperties(): (fileName: string) => Partial<GraphNodeData> {
 	const {
 		definitions,
 		estimators,
-		refutationType,
+		refutationCount,
 		confidenceInterval,
 		maximumLevel,
 		minimumModel,
@@ -65,7 +65,7 @@ function useGetNodeProperties(): (fileName: string) => Partial<GraphNodeData> {
 					unadjustedModel,
 				),
 				estimator_specs: buildEstimators([...estimators]),
-				refuter_specs: buildRefutationSpecs(refutationType),
+				refuter_specs: buildRefutationSpecs(refutationCount),
 				confidence_interval: confidenceInterval,
 			}
 			return properties
@@ -73,7 +73,7 @@ function useGetNodeProperties(): (fileName: string) => Partial<GraphNodeData> {
 		[
 			definitions,
 			estimators,
-			refutationType,
+			refutationCount,
 			confidenceInterval,
 			maximumLevel,
 			minimumModel,

@@ -3,7 +3,6 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { RefutationType } from '@showwhy/types'
 import { NodeResponseStatus } from '@showwhy/types'
 import { v4 } from 'uuid'
 
@@ -15,7 +14,7 @@ import { getStorageItem } from './sessionStorage'
 export function initialRunHistory(
 	specCount: number,
 	hasConfidenceInterval: boolean,
-	refutationType: RefutationType,
+	refutationCount: number,
 	runHistoryLength: number,
 ): RunHistory {
 	return {
@@ -34,7 +33,7 @@ export function initialRunHistory(
 		},
 		sessionId: getStorageItem(SESSION_ID_KEY),
 		hasConfidenceInterval,
-		refutationType,
+		refutationCount,
 	} as RunHistory
 }
 

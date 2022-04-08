@@ -7,7 +7,6 @@ import type {
 	AlternativeModels,
 	ElementDefinition,
 	Estimator,
-	RefutationType,
 } from '@showwhy/types'
 import { CausalModelLevel } from '@showwhy/types'
 import { useMemo } from 'react'
@@ -17,14 +16,14 @@ import {
 	useConfidenceInterval,
 	useEstimators,
 	useExperiment,
-	useRefutationType,
+	useRefutationCount,
 } from '~state'
 
 export function useNodeProperties(): {
 	fileName?: string
 	definitions: ElementDefinition[]
 	estimators: Estimator[]
-	refutationType: RefutationType
+	refutationCount: number
 	confidenceInterval: boolean
 	maximumLevel: AlternativeModels
 	minimumModel: AlternativeModels
@@ -33,7 +32,7 @@ export function useNodeProperties(): {
 } {
 	const experiment = useExperiment()
 	const estimators = useEstimators()
-	const refutationType = useRefutationType()
+	const refutationCount = useRefutationCount()
 	const confidenceInterval = useConfidenceInterval()
 	const maximumLevel = useAlternativeModels(CausalModelLevel.Maximum, false)
 	const intermediateLevel = useAlternativeModels(
@@ -49,7 +48,7 @@ export function useNodeProperties(): {
 		return {
 			definitions: experiment?.definitions || [],
 			estimators,
-			refutationType,
+			refutationCount,
 			confidenceInterval,
 			maximumLevel,
 			minimumModel,
@@ -59,7 +58,7 @@ export function useNodeProperties(): {
 	}, [
 		experiment,
 		estimators,
-		refutationType,
+		refutationCount,
 		confidenceInterval,
 		maximumLevel,
 		minimumModel,

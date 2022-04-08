@@ -248,7 +248,7 @@
             "type": "Linear Regression"
         }
     ],
-    "refutations": "Quick Refutation",
+    "refutations": 10,
     "tableColumns": [
         {
             "name": "age",
