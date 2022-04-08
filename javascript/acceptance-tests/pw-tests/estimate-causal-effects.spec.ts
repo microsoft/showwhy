@@ -7,7 +7,6 @@ import { test, expect, Page } from '@playwright/test'
 import { createPageObjects, PageObjects } from '../pageObjects'
 
 test.describe('Estimate Causal Effects', () => {
-	test.skip()
 	let page: Page
 	let po: PageObjects
 
@@ -15,17 +14,17 @@ test.describe('Estimate Causal Effects', () => {
 		const ctx = await browser.newContext()
 		page = await ctx.newPage()
 		po = createPageObjects(page)
-		await po.estimateCausalEffectsPage.open()
-		await po.header.uploadZip()
-		await po.estimateCausalEffectsPage.waitForLoad()
+		// await po.estimateCausalEffectsPage.open()
+		// await po.header.uploadZip()
+		// await po.estimateCausalEffectsPage.waitForLoad()
 	})
 
-	test('Count current runs', async () => {
+	test.skip('Count current runs', async () => {
 		const count = await po.estimateCausalEffectsPage.countRuns()
 		await expect(count).toEqual(1)
 	})
 
-	test('Load specifications', async () => {
+	test.skip('Load specifications', async () => {
 		const population = await po.estimateCausalEffectsPage.getPopulationSpec()
 		const exposure = await po.estimateCausalEffectsPage.getExposureSpec()
 		const outcome = await po.estimateCausalEffectsPage.getOutcomeSpec()
