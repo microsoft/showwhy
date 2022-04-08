@@ -16,13 +16,12 @@ import { useGuidance } from '~state'
 import type { WorkflowStep } from '~types'
 
 export const Guidance: React.FC<{
-	step?: WorkflowStep
-}> = memo(function Instructions({ step }) {
+	step?: WorkflowStep,
+	maxHeight?: string
+}> = memo(function Instructions({ step, maxHeight = '100%' }) {
 	const [isGuidanceVisible, toggleGuidance] = useGuidance()
 	const tooltipId = useId('tooltip')
 	const markdown = useMarkdown(step)
-	const ref = useRef(null)
-	const dimensions = useDimensions(ref)
 
 	return (
 		<Container>
@@ -41,13 +40,12 @@ export const Guidance: React.FC<{
 				</TooltipHost>
 			</TitleContainer>
 			{markdown ? (
-				<GuidanceText ref={ref} h={dimensions?.height || 0} isVisible={isGuidanceVisible}>
+				<GuidanceText h={maxHeight} isVisible={isGuidanceVisible}>
 					<Markdown>{markdown}</Markdown>
 				</GuidanceText>
 			) : (
 				<GuidanceText
-					ref={ref} 
-					h={dimensions?.height || 0}
+					h={maxHeight}
 					isVisible={isGuidanceVisible}
 					dangerouslySetInnerHTML={{ __html: step?.guidance || '' }}
 				/>
@@ -56,17 +54,15 @@ export const Guidance: React.FC<{
 	)
 })
 
-const Container = styled.div`
-	height: 100%
-`
+const Container = styled.div``
 
 const GuidanceText = styled.div<{
 	isVisible: Maybe<boolean>
-	h: number
+	h: string
 }>`
 	padding: 0px 16px;
 	transition: height 1.5s ease;
-	height: ${({ isVisible, h }) => (isVisible ? `calc(${h > 300 ? '100%' : '100% - 40px' })` : 0)};
+	height: ${({ isVisible, h }) => (isVisible ? `calc(${ `${h} - 50px` })` : 0)};
 	overflow: hidden auto;
 `
 
