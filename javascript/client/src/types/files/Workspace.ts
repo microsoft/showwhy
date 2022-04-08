@@ -27,7 +27,7 @@ export interface Workspace {
 	causalFactors?: CausalFactor[]
 	defineQuestion?: Experiment
 	estimators?: Estimator[]
-	refutations?: RefutationType
+	refutations?: number
 	defaultResult?: DefaultDatasetResult
 	// TODO: this should be integrated as a flag on each page's data
 	todoPages?: string[]

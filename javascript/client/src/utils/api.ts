@@ -15,7 +15,7 @@ import { getStorageItem } from './sessionStorage'
 export function initialRunHistory(
 	specCount: number,
 	hasConfidenceInterval: boolean,
-	refutationType: RefutationType,
+	refutationCount: number,
 	runHistoryLength: number,
 ): RunHistory {
 	return {
@@ -34,7 +34,7 @@ export function initialRunHistory(
 		},
 		sessionId: getStorageItem(SESSION_ID_KEY),
 		hasConfidenceInterval,
-		refutationType,
+		refutationCount,
 	} as RunHistory
 }
 

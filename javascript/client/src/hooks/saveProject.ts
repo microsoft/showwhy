@@ -29,7 +29,7 @@ import {
 	useOutputTablePrep,
 	usePrimarySpecificationConfig,
 	useProjectFiles,
-	useRefutationType,
+	useRefutationCount,
 	useRunHistory,
 	useSignificanceTest,
 	useSubjectIdentifier,
@@ -47,7 +47,7 @@ export function useSaveProject(): AsyncHandler {
 	const subjectIdentifier = useSubjectIdentifier()
 	const defineQuestion = useExperiment()
 	const estimators = useEstimators()
-	const refutations = useRefutationType()
+	const refutations = useRefutationCount()
 	const tablesPrep = useTablesPrepSpecification()
 	const todoPages = useGetStepUrlsByStatus()({ exclude: true })
 	const download = useDownload(fileCollection, defineQuestion)

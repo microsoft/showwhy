@@ -10,7 +10,7 @@ export interface RunHistory {
 	runNumber: number
 	id: string
 	isActive: boolean
-	refutationType: RefutationType
+	refutationCount: number
 	hasConfidenceInterval: boolean
 	result?: []
 	status: RunStatus
