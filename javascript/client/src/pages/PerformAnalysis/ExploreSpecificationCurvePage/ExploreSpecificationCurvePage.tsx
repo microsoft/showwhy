@@ -10,12 +10,12 @@ import { ErrorMessage } from '~components/ErrorMessage'
 import { RunProgressIndicator } from '~components/RunProgressIndicator'
 import { useSpecificationCurve } from '~hooks'
 import { ContainerFlexColumn, ContainerFlexRow, Title } from '~styles'
+
 import {
+	useBusinessLogic,
 	useInfoMessage,
 	useMicrodataInfoMessage,
-	useBusinessLogic,
 } from '../EstimateCausalEffectsPage/hooks'
-
 import { EstimatedEffectOptions } from './EstimatedEffectOptions'
 import { SpecificationDescription } from './SpecificationDescription'
 import { VegaSpecificationCurve } from './vega/VegaSpecificationCurve'
