@@ -2,10 +2,10 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import { SpinButton } from '@fluentui/react'
 import { memo } from 'react'
 import styled from 'styled-components'
 
-import { RadioButtonCard } from '~components/CardComponent/RadioButtonCard'
 import { Title } from '~styles'
 
 import { EstimatorCard } from './EstimatorCard'
@@ -13,13 +13,14 @@ import { useBusinessLogic } from './hooks'
 
 export const SelectCausalEstimatorsPage: React.FC = memo(
 	function SelectCausalEstimatorsPage() {
-		const { estimatorCardList, refutationOptions } = useBusinessLogic()
+		const { estimator, refutationCount, onRefutationCountChange } =
+			useBusinessLogic()
 
 		return (
 			<Container>
 				<Section>
 					<Title>Estimator definitions</Title>
-					{estimatorCardList?.map(card => (
+					{estimator.estimatorCardList?.map(card => (
 						<EstimatorCard
 							key={card.key}
 							title={card.title}
@@ -31,11 +32,18 @@ export const SelectCausalEstimatorsPage: React.FC = memo(
 					))}
 				</Section>
 				<Section>
-					<Title>Refutation Tests</Title>
+					<Title noMarginBottom>Refutation Tests</Title>
 					<CardsContainer>
-						{refutationOptions.map(option => (
-							<RadioButtonCard key={option.key} option={option} />
-						))}
+						<SpinButton
+							label="Number of simulations"
+							defaultValue={refutationCount.toString()}
+							min={1}
+							step={1}
+							data-pw="refuter-count"
+							onChange={onRefutationCountChange}
+							incrementButtonAriaLabel="Increase value by 1"
+							decrementButtonAriaLabel="Decrease value by 1"
+						/>
 					</CardsContainer>
 				</Section>
 			</Container>
@@ -52,7 +60,5 @@ const Container = styled.article`
 const Section = styled.section``
 
 const CardsContainer = styled.div`
-	display: grid;
-	grid-template-columns: 1fr 1fr;
-	gap: 1rem;
+	width: 200px;
 `

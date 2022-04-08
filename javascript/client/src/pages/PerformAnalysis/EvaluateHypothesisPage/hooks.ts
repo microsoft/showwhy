@@ -74,13 +74,6 @@ export function useBusinessLogic(): {
 			: setDone()
 	}, [significanceTestResult, setDone, setTodo])
 
-	// const runFullRefutation = useCallback(async () => {
-	// 	setFullRefutation()
-	// 	await wait(300)
-	// 	await sendData()
-	// 	history.push(Pages.EstimateCausalEffects)
-	// }, [sendData, setFullRefutation, history])
-
 	const activeValues = useMemo<number[]>(() => {
 		return specificationData
 			.filter(

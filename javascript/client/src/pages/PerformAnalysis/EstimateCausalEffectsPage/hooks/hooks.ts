@@ -37,7 +37,7 @@ import {
 	useExperiment,
 	useOutputTablePrep,
 	useProjectFiles,
-	useRefutationType,
+	useRefutationCount,
 	useRunHistory,
 	useSetSpecCount,
 	useSpecCount,
@@ -90,7 +90,7 @@ export function useBusinessLogic(): {
 	const specCount = useSpecCount()
 	const setSpecCount = useSetSpecCount()
 	const refutationOptions = useRefutationOptions()
-	const refutationType = useRefutationType()
+	const refutationCount = useRefutationCount()
 	const run = useRunEstimate()
 	const estimateNode = useEstimateNode(OUTPUT_FILE_NAME)
 	const isProcessing = useIsDefaultRunProcessing()
@@ -132,7 +132,7 @@ export function useBusinessLogic(): {
 		const initialRun = initialRunHistory(
 			specCount as number,
 			hasConfidenceInterval,
-			refutationType,
+			refutationCount,
 			runHistory.length,
 		)
 		updateRunHistory(initialRun)
@@ -140,7 +140,7 @@ export function useBusinessLogic(): {
 		updateRunHistory,
 		specCount,
 		hasConfidenceInterval,
-		refutationType,
+		refutationCount,
 		runHistory.length,
 	])
 

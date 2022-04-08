@@ -8,7 +8,6 @@ import type {
 	Estimator,
 	Experiment,
 	PrimarySpecificationConfig,
-	RefutationType,
 } from '@showwhy/types'
 
 import type { DefaultDatasetResult } from '~types'

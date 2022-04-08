@@ -115,7 +115,7 @@
             "type": "Linear Regression"
         }
     ],
-    "refutations": "Quick Refutation",
+    "refutations": 10,
     "todoPages": [
         "/perform/effects",
         "/perform/estimate-distribution",
