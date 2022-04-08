@@ -7,6 +7,7 @@ import { test, expect, Page } from '@playwright/test'
 import { createPageObjects, PageObjects } from '../pageObjects'
 
 test.describe('Estimate Causal Effects', () => {
+	test.skip()
 	let page: Page
 	let po: PageObjects
 
