@@ -4,7 +4,6 @@
  */
 
 import type { Dimensions } from '@essex/hooks'
-import { isStatus } from '@showwhy/api-client'
 import type { Experiment, Handler, Handler1, Maybe } from '@showwhy/types'
 import {
 	CausalityLevel,
@@ -13,10 +12,9 @@ import {
 } from '@showwhy/types'
 import type { Theme } from '@thematic/core'
 import { useThematic } from '@thematic/react'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 
 import {
-	useAutomaticWorkflowStatus,
 	useDefaultRun,
 	useFailedRefutationIds,
 	useOnMouseOver,
@@ -103,14 +101,6 @@ export function useSpecificationCurve(): {
 		isSpecificationOn,
 		onSpecificationsChange,
 	)
-
-	const { setDone, setTodo } = useAutomaticWorkflowStatus()
-
-	useEffect(() => {
-		!isStatus(defaultRun?.status?.status, NodeResponseStatus.Completed)
-			? setTodo()
-			: setDone()
-	}, [defaultRun, setDone, setTodo])
 
 	return {
 		activeProcessing,

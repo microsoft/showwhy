@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { OrchestratorType } from '@showwhy/api-client'
+import { isStatus, OrchestratorType } from '@showwhy/api-client'
 import { buildSignificanceTestsNode } from '@showwhy/builders'
 import type {
 	AlternativeModels,
@@ -72,7 +72,9 @@ export function useBusinessLogic(): {
 	const { setDone, setTodo } = useAutomaticWorkflowStatus()
 
 	useEffect(() => {
-		!significanceTestResult?.simulation_completed ? setTodo() : setDone()
+		!isStatus(significanceTestResult?.status, NodeResponseStatus.Completed)
+			? setTodo()
+			: setDone()
 	}, [significanceTestResult, setDone, setTodo])
 
 	const refutationType = useMemo((): RefutationType => {
