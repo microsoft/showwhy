@@ -47,55 +47,64 @@ export const StepSelector: React.FC<{
 	return (
 		<Container>
 			<StepTitle title="Workflow" />
-			<CollapsiblePanelContainer>
-				{panels.map((step: StepList) => (
-					<CollapsiblePanel
-						expandedState={openedPanels.includes(step.name)}
-						onHeaderClick={() => onHeaderClick(step.name)}
-						key={step.id}
-						title={step.name}
-						onRenderHeader={() => renderHeader(step.name)}
-					>
-						{step.subSteps?.length
-							? step.subSteps?.map((subStep, index) => {
-									return (
-										<CollapsibleSubPanelContainer key={subStep.id}>
-											<CollapsiblePanel
-												first={index === 0}
-												expandedState={openedPanels.includes(subStep.name)}
-												onHeaderClick={() => onHeaderClick(subStep.name)}
-												onRenderHeader={() =>
-													subPanelRenderHeader(subStep.name)
-												}
-											>
-												{subStep.steps.map(stepDetail => (
-													<StepItem
-														key={stepDetail.url}
-														stepDetail={stepDetail}
-													/>
-												))}
-											</CollapsiblePanel>
-										</CollapsibleSubPanelContainer>
-									)
-							  })
-							: null}
-						{step.steps
-							? step.steps.map(stepDetail => (
-									<StepItem
-										subStep={!!step.subSteps?.length}
-										key={stepDetail.url}
-										stepDetail={stepDetail}
-									/>
-							  ))
-							: null}
-					</CollapsiblePanel>
-				))}
-			</CollapsiblePanelContainer>
+			<PanelWrapper>
+				<CollapsiblePanelContainer>
+					{panels.map((step: StepList) => (
+						<CollapsiblePanel
+							expandedState={openedPanels.includes(step.name)}
+							onHeaderClick={() => onHeaderClick(step.name)}
+							key={step.id}
+							title={step.name}
+							onRenderHeader={() => renderHeader(step.name)}
+						>
+							{step.subSteps?.length
+								? step.subSteps?.map((subStep, index) => {
+										return (
+											<CollapsibleSubPanelContainer key={subStep.id}>
+												<CollapsiblePanel
+													first={index === 0}
+													expandedState={openedPanels.includes(subStep.name)}
+													onHeaderClick={() => onHeaderClick(subStep.name)}
+													onRenderHeader={() =>
+														subPanelRenderHeader(subStep.name)
+													}
+												>
+													{subStep.steps.map(stepDetail => (
+														<StepItem
+															key={stepDetail.url}
+															stepDetail={stepDetail}
+														/>
+													))}
+												</CollapsiblePanel>
+											</CollapsibleSubPanelContainer>
+										)
+									})
+								: null}
+							{step.steps
+								? step.steps.map(stepDetail => (
+										<StepItem
+											subStep={!!step.subSteps?.length}
+											key={stepDetail.url}
+											stepDetail={stepDetail}
+										/>
+									))
+								: null}
+						</CollapsiblePanel>
+					))}
+				</CollapsiblePanelContainer>
+			</PanelWrapper>
 		</Container>
 	)
 })
 
-const Container = styled.div``
+const Container = styled.div`
+	height: 100%;
+`
+
+const PanelWrapper = styled.div`
+	height: 95%;
+	overflow: hidden auto;
+`
 
 const CollapsibleSubPanelContainer = styled.div`
 	padding-left: 16px;

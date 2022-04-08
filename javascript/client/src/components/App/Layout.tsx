@@ -87,13 +87,12 @@ const Nav = styled.div`
 	display: flex;
 	flex-direction: column;
 	gap: 1rem;
-	margin-bottom: 2rem;
-	overflow: hidden auto;
 	border-right: 1px solid ${({ theme }) => theme.application().lowContrast()};
-`
-
-const StepsContainer = styled.div`
+	`
+	
+	const StepsContainer = styled.div`
 	position: relative;
+	max-height: 80%;
 `
 
 const ChildrenContainer = styled.div<{ noPadding: boolean; url?: string }>`
@@ -113,6 +112,7 @@ const ControlsContainer = styled.div`
 const GuidanceContainer = styled.div`
 	border-right: 1px solid ${({ theme }) => theme.application().lowContrast()};
 	width: 100%;
+	min-height: 20%;
 `
 
 const Container = styled.div`
