@@ -207,6 +207,8 @@ function preProcessTables(
 	const { tables, postLoad } = workspace
 
 	return tables.map(async table => {
+		// Turning autoType on by default for demo
+		table.autoType = true
 		const stepPostLoad =
 			!!postLoad?.length &&
 			postLoad.find(p => p?.steps && p?.steps[0]?.input === table.name)
