@@ -7,6 +7,7 @@ import { isStatus, OrchestratorType } from '@showwhy/api-client'
 import { buildSignificanceTestsNode } from '@showwhy/builders'
 import type {
 	AlternativeModels,
+	Estimator,
 	Experiment,
 	Handler,
 	Maybe,
@@ -28,6 +29,7 @@ import {
 } from '~hooks'
 import {
 	useDefaultDatasetResult,
+	useEstimators,
 	useExperiment,
 	usePrimarySpecificationConfig,
 	useSpecificationCurveConfig,
@@ -50,6 +52,7 @@ export function useBusinessLogic(): {
 	runSignificance: Handler
 	cancelRun: Handler
 	refutationOptions: RefutationOption[]
+	estimators: Estimator[]
 } {
 	const defineQuestion = useExperiment()
 	const primarySpecificationConfig = usePrimarySpecificationConfig()
@@ -65,6 +68,7 @@ export function useBusinessLogic(): {
 	const [isCanceled, setIsCanceled] = useState<boolean>(false)
 	const significanceTestResult = useActualSignificanceTest()
 	const refutationOptions = useRefutationOptions()
+	const estimators = useEstimators()
 
 	const { setDone, setTodo } = useAutomaticWorkflowStatus()
 
@@ -125,5 +129,6 @@ export function useBusinessLogic(): {
 		runSignificance,
 		cancelRun,
 		refutationOptions,
+		estimators,
 	}
 }

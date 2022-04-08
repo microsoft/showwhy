@@ -12,17 +12,19 @@ export const LinkCallout: React.FC<{
 	title?: string
 	id?: string
 	detailsTitle?: string
+	noUnderline?: boolean
 }> = memo(function LinkCallout({
 	title,
 	children,
 	id = 'callout-link',
 	detailsTitle,
+	noUnderline,
 }) {
 	const [isVisible, { toggle: handleToggleVisible }] = useBoolean(false)
 
 	return (
 		<>
-			<Text id={id} onClick={handleToggleVisible}>
+			<Text noUnderline={noUnderline} id={id} onClick={handleToggleVisible}>
 				{title}
 			</Text>
 			<BaseCallout show={isVisible} toggleShow={handleToggleVisible} id={id}>
@@ -34,8 +36,8 @@ export const LinkCallout: React.FC<{
 	)
 })
 
-const Text = styled.span`
-	text-decoration: underline;
+const Text = styled.span<{ noUnderline?: boolean }>`
+	text-decoration: ${({ noUnderline }) => (noUnderline ? 'none' : 'underline')};
 	cursor: pointer;
 	color: ${({ theme }) => theme.application().accent};
 	margin: 0;

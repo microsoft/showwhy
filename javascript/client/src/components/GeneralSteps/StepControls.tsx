@@ -12,7 +12,7 @@ export const StepControls: React.FC<{
 	previousUrl: string
 	nextUrl: string
 }> = memo(function StepControls({ previousUrl, nextUrl }) {
-	const handleNavigatePrev = useGoToPage(previousUrl)
+	const handleNavigatePrev = useGoToPage(previousUrl, undefined, true)
 	const handleNavigateNext = useGoToPage(nextUrl)
 	return (
 		<Container>

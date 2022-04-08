@@ -11,8 +11,8 @@ import type { Pages } from '~types'
 
 export const EmptyDataPageWarning: React.FC<{
 	text: string
-	linkText: string
-	page: Pages
+	linkText?: string
+	page?: Pages
 	marginTop?: Maybe<boolean>
 }> = memo(function EmptyDataPageWarning({
 	text,
@@ -24,9 +24,11 @@ export const EmptyDataPageWarning: React.FC<{
 		<ContainerTextCenter marginTop={marginTop}>
 			<Text>{text}</Text>
 
-			<Link rel="noopener" to={page}>
-				{linkText}
-			</Link>
+			{page && linkText && (
+				<Link rel="noopener" to={page}>
+					{linkText}
+				</Link>
+			)}
 		</ContainerTextCenter>
 	)
 })

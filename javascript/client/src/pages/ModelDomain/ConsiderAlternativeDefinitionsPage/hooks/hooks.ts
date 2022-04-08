@@ -10,9 +10,10 @@ import type {
 	Setter,
 } from '@showwhy/types'
 import { DefinitionType } from '@showwhy/types'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
-import { useExperiment } from '~state'
+import { useHandleOnLinkClick } from '~hooks'
+import { useDefinitionType, useExperiment } from '~state'
 import type { Item } from '~types'
 
 import { useAddDefinition } from './add'
@@ -40,11 +41,8 @@ export function useBusinessLogic(): {
 	handleOnLinkClick: (item: any) => void
 } {
 	const defineQuestion = useExperiment()
-
+	const definitionType = useDefinitionType()
 	const [definitionToEdit, setDefinitionToEdit] = useState<ElementDefinition>()
-	const [definitionType, setDefinitionType] = useState<DefinitionType>(
-		DefinitionType.Population,
-	)
 
 	const definitions = useMemo(() => {
 		return defineQuestion.definitions || []
@@ -58,16 +56,7 @@ export function useBusinessLogic(): {
 
 	const editDefinition = useEditDefinition(definitions)
 
-	const handleOnLinkClick = useCallback(
-		(item: any) => {
-			const regex = /[^a-zA-Z]/g
-			const type = item.key?.replace(regex, '')
-			if (type) {
-				setDefinitionType(type)
-			}
-		},
-		[setDefinitionType],
-	)
+	const handleOnLinkClick = useHandleOnLinkClick()
 
 	useEffect(() => {
 		setDefinitionToEdit(undefined)

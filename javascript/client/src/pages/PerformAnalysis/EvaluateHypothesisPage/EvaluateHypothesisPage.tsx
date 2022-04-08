@@ -10,7 +10,6 @@ import { CausalQuestion } from '~components/CausalQuestion'
 import { EmptyDataPageWarning } from '~components/EmptyDataPageWarning'
 import { useSpecificationCurve } from '~hooks'
 import { Container, ContainerFlexColumn, Title } from '~styles'
-import { Pages } from '~types'
 
 import { AnalysisSummary } from './AnalysisSummary'
 import { useBusinessLogic } from './hooks'
@@ -33,6 +32,7 @@ export const EvaluateHypothesisPage: React.FC = memo(
 			cancelRun,
 			isCanceled,
 			refutationOptions,
+			estimators,
 		} = useBusinessLogic()
 
 		const {
@@ -51,9 +51,7 @@ export const EvaluateHypothesisPage: React.FC = memo(
 		) {
 			return (
 				<EmptyDataPageWarning
-					text="To see the summary of the estimates, run and wait a run estimate here: "
-					linkText="Specification curve page"
-					page={Pages.SpecificationCurvePage}
+					text="To test the statistical significance of your estimates, wait for the server run on the previous page to complete"
 					marginTop
 				/>
 			)
@@ -81,6 +79,8 @@ export const EvaluateHypothesisPage: React.FC = memo(
 					</Container>
 					<Container marginTop>
 						<AnalysisSummary
+							activeValues={activeValues}
+							estimators={estimators}
 							defineQuestion={defineQuestion}
 							refutationOptions={refutationOptions}
 							alternativeModels={alternativeModels}
