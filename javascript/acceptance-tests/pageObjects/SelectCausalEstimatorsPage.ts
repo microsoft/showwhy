@@ -9,7 +9,7 @@ import { dataAttr } from '../util'
 
 const selectors: Record<string, string> = {
 	estimator: `${dataAttr('estimator')} i`,
-	refuter: dataAttr('refuter-count'),
+	refuter: `${dataAttr('refuter-count')} input`,
 	selectedEstimator: dataAttr('selected-estimator'),
 	estimatorGroupSelector: dataAttr('estimator-group-selector'),
 }
