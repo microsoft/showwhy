@@ -10,7 +10,7 @@ import { dataAttr } from '../util'
 const selectors: Record<string, string> = {
 	estimator: `${dataAttr('estimator')} i`,
 	refuter: dataAttr('radio-option'),
-	selectedEstimator: dataAttr('selected-radio-option'),
+	selectedEstimator: dataAttr('selected-estimator'),
 	selectedRefuter: dataAttr('selected-radio-option'),
 	estimatorGroupSelector: dataAttr('estimator-group-selector'),
 }
