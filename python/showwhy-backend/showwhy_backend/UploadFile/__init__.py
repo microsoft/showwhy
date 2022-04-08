@@ -5,6 +5,7 @@
 
 import base64
 import json
+import logging
 import os
 import tempfile
 import uuid
@@ -28,7 +29,15 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     storage.create_container()
 
     data = req.get_body()
-    data = str(data).replace("'", "").split(",")[1]
+    logging.info(f"Raw data content: [{data}]")
+    data = (
+        str(data)
+        .split("base64,")[1]
+        .split("-")[0]
+        .replace("'", "")
+        .replace("\\r\\n", "")
+    )
+    logging.info(f"base64 data from content: [{data}]")
     file_path = os.path.join(tempfile.gettempdir(), f"{str(uuid.uuid4())}.zip")
     with open(file_path, "wb") as file:
         file.write(base64.b64decode(data))
