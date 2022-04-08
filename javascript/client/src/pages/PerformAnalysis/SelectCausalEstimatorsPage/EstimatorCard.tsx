@@ -52,7 +52,6 @@ export const EstimatorCard: React.FC<{
 							return (
 								<CheckBoxWrapper
 									key={item.type}
-									isChecked={item.isChecked}
 									data-pw={item.isChecked ? 'selected-estimator' : 'estimator'}
 								>
 									<Checkbox checked={item.isChecked} onChange={item.onChange} />
@@ -97,12 +96,12 @@ const CheckBoxContainer = styled.div`
 	padding-bottom: 10px;
 `
 
-const CheckBoxWrapper = styled.div<{ isChecked: boolean }>`
+const CheckBoxWrapper = styled.div`
 	display: flex;
 	flex-direction: row;
 	align-items: center;
 	justify-content: flex-start;
-	padding: ${({ isChecked }) => (!isChecked ? '0.4rem 0' : '0')};
+	height: 32px;
 `
 
 const Description = styled.div`

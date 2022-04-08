@@ -133,9 +133,6 @@
             "autoType": true
         }
     ],
-    "defaultResult": {
-        "url": "data/pre-processed-results/covid-19.csv"
-    },
     "postLoad": [{
         "steps": [
             {

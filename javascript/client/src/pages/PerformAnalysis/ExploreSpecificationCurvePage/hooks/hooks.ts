@@ -16,18 +16,22 @@ export function useLoadSpecificationData(): Specification[] {
 	const defaultDatasetResult = useDefaultDatasetResult()
 
 	useEffect(() => {
-		if (defaultRun && defaultRun.result?.length) {
-			const result = defaultRun.result.map((x: any, index) => {
-				const n = { ...x, Specification_ID: index + 1 }
-				return row2spec(n)
-			}) as Specification[]
-			const newResult = result
-				?.sort(function (a, b) {
-					return a?.estimatedEffect - b?.estimatedEffect
-				})
-				.map((x, index) => ({ ...x, id: index + 1 }))
+		if (defaultRun) {
+			if (!defaultRun.result?.length) {
+				setData([])
+			} else {
+				const result = defaultRun.result.map((x: any, index) => {
+					const n = { ...x, Specification_ID: index + 1 }
+					return row2spec(n)
+				}) as Specification[]
+				const newResult = result
+					?.sort(function (a, b) {
+						return a?.estimatedEffect - b?.estimatedEffect
+					})
+					.map((x, index) => ({ ...x, id: index + 1 }))
 
-			setData(newResult)
+				setData(newResult)
+			}
 		} else if (!defaultRun) {
 			if (defaultDatasetResult) {
 				const f = async () => {

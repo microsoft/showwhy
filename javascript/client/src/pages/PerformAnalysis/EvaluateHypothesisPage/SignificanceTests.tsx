@@ -64,8 +64,11 @@ export const SignificanceTests: React.FC<{
 					that exposure to {exposure}
 					causes {outcome} {median > 0 ? ' increase ' : ' decrease '}
 					by {Math.abs(median)}. The likelihood of observing a median effect at
-					least this strong in the absence of an actual causal relationship is
-					X% ({significanceTestResult?.test_results?.p_value}).
+					least this strong in the absence of an actual causal relationship is{' '}
+					{+(significanceTestResult?.test_results?.p_value?.substring(2) || 0) *
+						100}
+					%(
+					{significanceTestResult?.test_results?.p_value}).
 				</Paragraph>
 			)}
 
