@@ -2,12 +2,12 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { useDimensions } from '@essex/hooks'
+
 import { IconButton, TooltipHost } from '@fluentui/react'
 import { useId } from '@fluentui/react-hooks'
 import type { Maybe } from '@showwhy/types'
 import Markdown from 'markdown-to-jsx'
-import { memo, useRef } from 'react'
+import { memo } from 'react'
 import styled from 'styled-components'
 
 import { StepTitle } from '~components/StepTitle'

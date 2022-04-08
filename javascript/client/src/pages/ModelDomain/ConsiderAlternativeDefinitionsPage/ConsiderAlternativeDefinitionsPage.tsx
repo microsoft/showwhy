@@ -42,11 +42,7 @@ export const ConsiderAlternativeDefinitionsPage: React.FC = memo(
 					aria-label="Alternative Definitions Interest labels and description"
 				>
 					{pivotData.map(item => (
-						<PivotItem
-							className={`pivot-${item.key}`}
-							key={item.key}
-							headerText={item.title}
-						>
+						<PivotItem key={item.key} headerText={item.title}>
 							<DetailsText>{item.label}</DetailsText>
 							<DetailsText>{item.description}</DetailsText>
 
