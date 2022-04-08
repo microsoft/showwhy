@@ -2,19 +2,16 @@
 # Copyright (c) Microsoft. All rights reserved.
 # Licensed under the MIT license. See LICENSE file in the project.
 #
-
 import copy
 import itertools
 import logging
 import time
 import warnings
-
 from typing import Dict, List, Tuple
-
 import dowhy
 import numpy as np
 import pandas as pd
-
+from sklearn import preprocessing
 from showwhy_inference.causal_graph import CausalGraph
 from showwhy_inference.estimator import CausalEstimator
 from showwhy_inference.inference_config import (
@@ -22,17 +19,12 @@ from showwhy_inference.inference_config import (
     INCLUDE_SENSITIVITY_REFUTERS,
     SENSITIVITY_REFUTERS,
 )
-
-
 warnings.simplefilter("ignore")
-
-
 def is_valid_spec(spec: List) -> bool:
     """
     Helper function to filter out obviously invalid specs
     """
     _, treatment_spec, outcome_spec, model_spec, estimator_spec = spec
-
     if (
         (treatment_spec["variable"] != model_spec["treatment"])
         or (outcome_spec["variable"] != model_spec["outcome"])
@@ -45,8 +37,6 @@ def is_valid_spec(spec: List) -> bool:
         return False
     else:
         return True
-
-
 def generate_all_specs(
     population_specs, treatment_specs, outcome_specs, model_specs, estimator_specs
 ):
@@ -54,17 +44,12 @@ def generate_all_specs(
     Generate all combinations of population, treatment,
     outcome, causal model and estimator
     """
-
     causal_graph = CausalGraph(treatment_specs, outcome_specs, model_specs)
     model_specs = causal_graph.create_gml_model_specs()
-
     specs = itertools.product(
         population_specs, treatment_specs, outcome_specs, model_specs, estimator_specs
     )
-
     return [spec for spec in specs if is_valid_spec(spec)]
-
-
 def estimate_specification(spec: Tuple, context: Dict) -> Dict:
     start_time = time.time()
     causal_model, identified_estimand, estimate, population_size = __estimate_effect(
@@ -90,8 +75,6 @@ def estimate_specification(spec: Tuple, context: Dict) -> Dict:
     }
     logging.info(f"Estimated effect: {result_dict}")
     return result_dict
-
-
 def __estimate_effect(
     population_spec: Dict,
     treatment_spec: Dict,
@@ -110,14 +93,20 @@ def __estimate_effect(
         population_data = all_data
     else:
         population_data = all_data[all_data[population_id] == 1]
-
     treatment_var = treatment_spec["variable"]
     outcome_var = outcome_spec["variable"]
     confounders = model_spec["confounders"]
     effect_modifiers = model_spec["effect_modifiers"]
-    population_data = population_data[[treatment_var] + [outcome_var] + confounders + effect_modifiers]
+    causal_variables = [treatment_var] + [outcome_var] + confounders + effect_modifiers
+    population_data = population_data[causal_variables]
     population_data = population_data.dropna()
+    # fix data types
     population_data[treatment_var] = population_data[treatment_var].astype(bool)
+    # encode string columns
+    le = preprocessing.LabelEncoder()
+    for var in causal_variables:
+        if population_data[var].dtype == object and isinstance(population_data.iloc[0][var], str):
+            population_data[var] = le.fit_transform(population_data[var])
     causal_graph = copy.deepcopy(model_spec["causal_graph"])
     logging.info(
         f"population: {population_spec['label']}, "
@@ -126,7 +115,6 @@ def __estimate_effect(
         f"causal model: {model_spec['label']}, "
         f"estimator: {estimator_spec['method_name']}"
     )
-
     causal_model = dowhy.CausalModel(
         data=population_data,
         treatment=treatment_var,
@@ -134,13 +122,11 @@ def __estimate_effect(
         graph=causal_graph.replace("\n", " "),
         identify_vars=True,
     )
-
     # identify estimands and check if estimate using backdoor criterion is possible
     identified_estimand = causal_model.identify_effect(proceed_when_unidentifiable=True)
     if identified_estimand.estimands["backdoor"] is not None:
         try:
             estimator = CausalEstimator()
-
             # tune first stage models
             if (
                 "propensity" in estimator_spec["method_name"]
@@ -159,7 +145,6 @@ def __estimate_effect(
                 )
             estimator_config = estimator.config_estimator(copy.deepcopy(estimator_spec))
             logging.info(f"Estimator config: {estimator_config}")
-
             estimate = causal_model.estimate_effect(
                 identified_estimand,
                 method_name=estimator_config["method_name"],
@@ -172,8 +157,6 @@ def __estimate_effect(
     else:
         logging.info("Backdoor estimate is not possible")
         return None, None, None, population_data.shape[0]
-
-
 def join_results(results: List) -> pd.DataFrame:
     """
     Join estimate, confidence interval, refutation and SHAP results
@@ -181,7 +164,6 @@ def join_results(results: List) -> pd.DataFrame:
     results_df = pd.DataFrame.from_dict(results)
     results_df = results_df[~results_df["estimated_effect"].isnull()]
     results_df = results_df.sort_values(by="estimated_effect")
-
     columns = [
         column
         for column in results_df.columns
@@ -192,34 +174,25 @@ def join_results(results: List) -> pd.DataFrame:
         and str(column) != "upper_bound"
         and str(column) != "refutation_results"
     ]
-
     available_refuters = {
         column: np.sum
         for column in results_df.columns
         if column.startswith("refuter") or column.endswith("bound")
     }
-
     for column in results_df.columns:
         if column not in columns:
             results_df[column] = results_df[column].fillna(0)
-
     results_df = results_df.groupby(columns, sort=False).agg(
         {"estimated_effect": np.mean, "time": np.mean, **available_refuters}
     )
-
     # calculate final refutation result
     results_df["refutation_result"] = results_df.apply(
         lambda result: check_refutation_result(result), axis=1
     )
-
     results_df = results_df.reset_index().sort_values(by="estimated_effect")
-
     results_df.index = np.arange(1, len(results_df) + 1)
     results_df.index = results_df.index.set_names(["SpecificationID"])
-
     return results_df
-
-
 def check_refutation_result(result: dict) -> int:
     """
     Helper function to output a single value representing

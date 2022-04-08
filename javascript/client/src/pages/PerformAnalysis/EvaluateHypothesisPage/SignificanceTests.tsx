@@ -55,20 +55,21 @@ export const SignificanceTests: React.FC<{
 									: 'YES'
 							}.`}
 							detailsTitle="Statistical Significance Test"
+							noUnderline
 						>
 							<Paragraph>{confidenceIntervalCalloutLine1}</Paragraph>
 							<Paragraph>{confidenceIntervalCalloutLine2}</Paragraph>
 						</LinkCallout>
 					</Value>
 					The median effect size of the resulting estimates is {median}, meaning
-					that exposure to {exposure}
-					causes {outcome} {median > 0 ? ' increase ' : ' decrease '}
+					that exposure to {exposure} causes {outcome} to
+					{median > 0 ? ' increase ' : ' decrease '}
 					by {Math.abs(median)}. The likelihood of observing a median effect at
-					least this strong in the absence of an actual causal relationship is{' '}
+					least this strong in the absence of an actual causal relationship is
+					{' <'}
 					{+(significanceTestResult?.test_results?.p_value?.substring(2) || 0) *
 						100}
-					%(
-					{significanceTestResult?.test_results?.p_value}).
+					% ({significanceTestResult?.test_results?.p_value}).
 				</Paragraph>
 			)}
 
