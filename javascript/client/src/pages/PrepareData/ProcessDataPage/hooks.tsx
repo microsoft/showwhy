@@ -16,7 +16,11 @@ import type {
 import { CausalModelLevel } from '@showwhy/types'
 import { useCallback, useMemo } from 'react'
 
-import { useAllVariables, useCausalEffects } from '~hooks'
+import {
+	useAllVariables,
+	useAutomaticWorkflowStatus,
+	useCausalEffects,
+} from '~hooks'
 import {
 	useCausalFactors,
 	useSetOutputTablePrep,
@@ -62,18 +66,44 @@ export function useBusinessLogic(
 	const subjectIdentifier = useSubjectIdentifier()
 	const setOutputTable = useSetOutputTablePrep()
 
+	const causalEffects = useCausalEffects(CausalModelLevel.Maximum)
+	const { setDone, setTodo } = useAutomaticWorkflowStatus()
+
+	const allElementsLength = useMemo((): any => {
+		return allElements.length + 1
+	}, [allElements])
+
+	const completedElements = useMemo((): number => {
+		const initial = !!subjectIdentifier ? 1 : 0
+		return allElements.find((x: CausalFactor | ElementDefinition) => x)
+			? allElements?.filter((x: CausalFactor | ElementDefinition) => x.column)
+					.length + initial
+			: initial
+	}, [allElements, subjectIdentifier])
+
+	const isStepDone = useCallback(
+		(hasVariable: boolean) => {
+			const done =
+				allElementsLength ===
+				(hasVariable ? completedElements + 1 : completedElements - 1)
+			done ? setDone() : setTodo()
+		},
+		[allElementsLength, completedElements, setDone, setTodo],
+	)
+
 	const onSetSubjectIdentifier = useOnSetSubjectIdentifier(
 		subjectIdentifier,
 		setSubjectIdentifier,
+		isStepDone,
 	)
 
-	const causalEffects = useCausalEffects(CausalModelLevel.Maximum)
 	const onSelectVariable = useOnSelectVariable(
 		causalFactors,
 		defineQuestion,
 		subjectIdentifier,
 		setDefineQuestion,
 		setSubjectIdentifier,
+		isStepDone,
 	)
 
 	const onUpdateOutput = useCallback(
@@ -117,14 +147,6 @@ export function useBusinessLogic(
 		return prepSpecification !== undefined ? prepSpecification[0]?.steps : []
 	}, [prepSpecification])
 
-	const completedElements = useMemo((): number => {
-		const initial = !!subjectIdentifier ? 1 : 0
-		return allElements.find((x: CausalFactor | ElementDefinition) => x)
-			? allElements?.filter((x: CausalFactor | ElementDefinition) => x.column)
-					.length + initial
-			: initial
-	}, [allElements, subjectIdentifier])
-
 	const isElementComplete = useCallback(
 		(element: CausalFactor | ElementDefinition) => {
 			const found = allElements?.find(
@@ -151,7 +173,7 @@ export function useBusinessLogic(
 		onChangeSteps,
 		steps,
 		commandBar,
-		elements: allElements.length + 1, //subjectIdentifier
+		elements: allElementsLength, //subjectIdentifier
 		completedElements,
 		allElements,
 		isElementComplete,

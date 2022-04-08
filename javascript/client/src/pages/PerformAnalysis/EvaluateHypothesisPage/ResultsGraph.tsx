@@ -3,8 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import type { Dimensions } from '@essex/hooks'
-import type { Experiment, Maybe } from '@showwhy/types';
-import { DefinitionType , RefutationType } from '@showwhy/types'
+import type { Experiment, Maybe } from '@showwhy/types'
+import { DefinitionType, RefutationType } from '@showwhy/types'
 import { memo } from 'react'
 import styled from 'styled-components'
 
@@ -53,9 +53,23 @@ export const ResultsGraph: React.FC<{
 				causes the {outcome} to {hypothesis} by
 				<Value>{median}.</Value>
 				This was calculated using
-				<Value>{getDefinitionsByType(DefinitionType.Population, defineQuestion?.definitions).length}</Value>
+				<Value>
+					{
+						getDefinitionsByType(
+							DefinitionType.Population,
+							defineQuestion?.definitions,
+						).length
+					}
+				</Value>
 				population and
-				<Value>{getDefinitionsByType(DefinitionType.Exposure, defineQuestion?.definitions).length}</Value>
+				<Value>
+					{
+						getDefinitionsByType(
+							DefinitionType.Exposure,
+							defineQuestion?.definitions,
+						).length
+					}
+				</Value>
 				exposure definitions.
 				{refutationType === RefutationType.QuickRefutation && (
 					<Text>

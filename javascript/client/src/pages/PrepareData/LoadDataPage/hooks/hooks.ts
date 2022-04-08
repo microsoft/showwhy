@@ -6,22 +6,30 @@
 import type { FileCollection } from '@data-wrangling-components/utilities'
 import { guessDelimiter } from '@data-wrangling-components/utilities'
 import type { IDropdownOption } from '@fluentui/react'
-import type { AsyncHandler1, Handler, Handler1, Maybe } from '@showwhy/types'
+import type { AsyncHandler1, Handler, Maybe } from '@showwhy/types'
 import { useBoolean } from 'ahooks'
 import { useCallback, useEffect, useState } from 'react'
 import type { SetterOrUpdater } from 'recoil'
-import { v4 as uuidv4 } from 'uuid'
 
-import { useGlobalDropzone, useOnDropAccepted } from '~hooks'
 import {
-	useAddProjectFile,
+	useAutomaticWorkflowStatus,
+	useGlobalDropzone,
+	useOnDropAccepted,
+} from '~hooks'
+import {
 	useProjectFiles,
 	useSelectedFile,
 	useSetProjectFiles,
 	useSetSelectedFile,
 } from '~state'
 import type { DropFilesCount, ProjectFile } from '~types'
-import { createDefaultTable, replaceItemAtIndex, wait } from '~utils'
+import { createDefaultTable, replaceItemAtIndex } from '~utils'
+
+import { useDefaultSelectedFile } from './useDefaultSelectedFile'
+import { useHandleLoadFile } from './useHandleLoadFile'
+import { useOnConfirmDelete } from './useOnConfirmDelete'
+import { useToggleAutoType } from './useToggleAutoType'
+import { useToggleLoadedCorrectly } from './useToggleLoadedCorrectly'
 
 export function useBusinessLogic(): {
 	showConfirm: boolean
@@ -34,7 +42,7 @@ export function useBusinessLogic(): {
 	acceptedFileTypes: string[]
 	setSelectedFile: SetterOrUpdater<Maybe<ProjectFile>>
 	toggleShowConfirm: Handler
-	toggleLoadedCorrectly: Handler
+	toggleLoadedCorrectly: (delimiter?: string) => void
 	toggleAutoType: AsyncHandler1<boolean>
 	handleDismissError: Handler
 	handleDelimiterChange: (e: unknown, option: Maybe<IDropdownOption>) => void
@@ -53,6 +61,7 @@ export function useBusinessLogic(): {
 	const [errorMessage, setErrorMessage] = useState<string | null>()
 	const [selectedDelimiter, setSelectedDelimiter] = useState<Maybe<string>>()
 	const [showConfirm, { toggle: toggleShowConfirm }] = useBoolean(false)
+	const { setTodo, setDone } = useAutomaticWorkflowStatus()
 
 	const handleDismissError = useCallback(() => {
 		setErrorMessage('')
@@ -89,6 +98,7 @@ export function useBusinessLogic(): {
 		setProjectFiles,
 		toggleShowConfirm,
 		setSelectedFile,
+		setTodo,
 	)
 
 	const updateProjectFiles = useCallback(
@@ -123,7 +133,7 @@ export function useBusinessLogic(): {
 		],
 	)
 
-	const handleLoadFile = useHandleLoadFile(setErrorMessage)
+	const handleLoadFile = useHandleLoadFile(setErrorMessage, setDone)
 
 	const {
 		onDrop,
@@ -168,113 +178,4 @@ export function useBusinessLogic(): {
 		onDropRejected,
 		progress,
 	}
-}
-
-function useToggleLoadedCorrectly(
-	selectedFile: Maybe<ProjectFile>,
-	projectFiles: ProjectFile[],
-	setProjectFiles: SetterOrUpdater<ProjectFile[]>,
-	setSelectedFile: SetterOrUpdater<Maybe<ProjectFile>>,
-) {
-	return useCallback(
-		(delimiter?: string) => {
-			const stateNow = selectedFile?.loadedCorrectly || false
-			const file = {
-				...selectedFile,
-				loadedCorrectly: !stateNow,
-				delimiter,
-			} as ProjectFile
-			const index = projectFiles.findIndex(f => f.id === file.id)
-			const files = replaceItemAtIndex(projectFiles, index, file)
-			setProjectFiles(files)
-			setSelectedFile(file)
-		},
-		[selectedFile, projectFiles, setProjectFiles, setSelectedFile],
-	)
-}
-
-function useToggleAutoType(
-	selectedFile: Maybe<ProjectFile>,
-	projectFiles: ProjectFile[],
-	setProjectFiles: SetterOrUpdater<ProjectFile[]>,
-	setSelectedFile: SetterOrUpdater<Maybe<ProjectFile>>,
-) {
-	return useCallback(
-		async (autoType: boolean) => {
-			const table = createDefaultTable(
-				selectedFile?.table?.toCSV() || '',
-				selectedFile?.delimiter,
-				undefined,
-				autoType,
-			)
-			const file = {
-				...selectedFile,
-				table,
-				autoType,
-			} as ProjectFile
-			const index = projectFiles.findIndex(f => f.id === file.id)
-			const files = replaceItemAtIndex(projectFiles, index, file)
-			setProjectFiles(files)
-			setSelectedFile(file)
-		},
-		[selectedFile, projectFiles, setProjectFiles, setSelectedFile],
-	)
-}
-
-function useDefaultSelectedFile(
-	current: Maybe<ProjectFile>,
-	files: ProjectFile[],
-	setSelectedFile: SetterOrUpdater<Maybe<ProjectFile>>,
-) {
-	useEffect(() => {
-		if (!current) {
-			const [file] = files
-			if (file && file.loadedCorrectly === undefined) {
-				file.loadedCorrectly = true
-			}
-			setSelectedFile(file)
-		}
-	}, [files, current, setSelectedFile])
-}
-
-function useOnConfirmDelete(
-	projectFiles: ProjectFile[],
-	selectedFile: Maybe<ProjectFile>,
-	setProjectFiles: SetterOrUpdater<ProjectFile[]>,
-	toggleShowConfirm: (value?: boolean) => void,
-	setSelectedFile: SetterOrUpdater<Maybe<ProjectFile>>,
-) {
-	return useCallback(() => {
-		const filteredFiles = projectFiles.filter(p => p.id !== selectedFile?.id)
-		setProjectFiles(filteredFiles)
-		setSelectedFile(undefined)
-		toggleShowConfirm()
-	}, [
-		projectFiles,
-		selectedFile,
-		setProjectFiles,
-		toggleShowConfirm,
-		setSelectedFile,
-	])
-}
-
-function useHandleLoadFile(setErrorMessage: Handler1<string>) {
-	const projectFiles = useProjectFiles()
-	const addFile = useAddProjectFile()
-	const setSelectedFile = useSetSelectedFile()
-	return useCallback(
-		async (file: ProjectFile) => {
-			if (projectFiles.find(s => s.name === file.name)) {
-				setErrorMessage('File already uploaded')
-			} else {
-				const fileId = uuidv4()
-				file.id = fileId
-				file.loadedCorrectly = true
-				addFile(file)
-				await wait(500)
-				setSelectedFile(file)
-			}
-		},
-		[addFile, projectFiles, setErrorMessage, setSelectedFile],
-	)
 }

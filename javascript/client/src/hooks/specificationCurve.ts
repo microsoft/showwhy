@@ -4,8 +4,12 @@
  */
 
 import type { Dimensions } from '@essex/hooks'
-import type { Experiment, Handler, Handler1, Maybe } from '@showwhy/types';
-import { CausalityLevel, DefinitionType , NodeResponseStatus } from '@showwhy/types'
+import type { Experiment, Handler, Handler1, Maybe } from '@showwhy/types'
+import {
+	CausalityLevel,
+	DefinitionType,
+	NodeResponseStatus,
+} from '@showwhy/types'
 import type { Theme } from '@thematic/core'
 import { useThematic } from '@thematic/react'
 import { useCallback, useMemo, useState } from 'react'

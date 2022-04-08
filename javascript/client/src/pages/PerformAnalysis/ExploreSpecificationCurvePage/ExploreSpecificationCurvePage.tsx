@@ -2,13 +2,19 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { memo } from 'react'
+import { isStatus } from '@showwhy/api-client'
+import { NodeResponseStatus } from '@showwhy/types'
+import { memo, useEffect } from 'react'
 import styled from 'styled-components'
 
 import { EmptyDataPageWarning } from '~components/EmptyDataPageWarning'
 import { ErrorMessage } from '~components/ErrorMessage'
 import { RunProgressIndicator } from '~components/RunProgressIndicator'
-import { useRefutationOptions, useSpecificationCurve } from '~hooks'
+import {
+	useAutomaticWorkflowStatus,
+	useRefutationOptions,
+	useSpecificationCurve,
+} from '~hooks'
 import { ContainerFlexColumn, ContainerFlexRow, Title } from '~styles'
 import { Pages } from '~types'
 
@@ -19,6 +25,8 @@ import { VegaSpecificationCurve } from './vega/VegaSpecificationCurve'
 export const ExploreSpecificationCurvePage: React.FC = memo(
 	function SpecificationCurve() {
 		const refutationOptions = useRefutationOptions()
+		const { setDone, setTodo } = useAutomaticWorkflowStatus()
+
 		const {
 			data,
 			defaultRun,
@@ -43,6 +51,12 @@ export const ExploreSpecificationCurvePage: React.FC = memo(
 			onToggleRejectEstimate,
 			totalSpecs,
 		} = useSpecificationCurve()
+
+		useEffect(() => {
+			!isStatus(defaultRun?.status?.status, NodeResponseStatus.Completed)
+				? setTodo()
+				: setDone()
+		}, [defaultRun, setDone, setTodo])
 
 		if (!data.length && !defaultRun) {
 			return (

@@ -174,7 +174,9 @@ function useCSVResult() {
 }
 
 function useRunHistoryFile(): Maybe<FileWithPath> {
-	const rh = useRunHistory().filter(r => isStatus(r?.status?.status, NodeResponseStatus.Completed))
+	const rh = useRunHistory().filter(r =>
+		isStatus(r?.status?.status, NodeResponseStatus.Completed),
+	)
 	return useMemo(() => {
 		if (rh?.length) {
 			const file = createFileWithPath(new Blob([JSON.stringify(rh, null, 4)]), {

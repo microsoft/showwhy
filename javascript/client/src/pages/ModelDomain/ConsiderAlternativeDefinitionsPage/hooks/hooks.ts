@@ -18,6 +18,7 @@ import type { Item } from '~types'
 import { useAddDefinition } from './add'
 import { useEditDefinition } from './edit'
 import { useRemoveDefinition } from './remove'
+import { useSetDonePage } from './useSetPageDone'
 
 interface PivotData {
 	key: string
@@ -71,6 +72,7 @@ export function useBusinessLogic(): {
 	useEffect(() => {
 		setDefinitionToEdit(undefined)
 	}, [defineQuestion, setDefinitionToEdit])
+	useSetDonePage()
 
 	return {
 		definitionToEdit,

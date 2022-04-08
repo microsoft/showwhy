@@ -36,9 +36,7 @@ export const ConsiderAlternativeDefinitionsPage: React.FC = memo(
 
 		return (
 			<Container>
-				<Title data-pw="title">
-					Alternative definitions
-				</Title>
+				<Title data-pw="title">Alternative definitions</Title>
 				<Pivot
 					onLinkClick={handleOnLinkClick}
 					aria-label="Alternative Definitions Interest labels and description"

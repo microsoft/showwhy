@@ -9,7 +9,7 @@ import { useCallback } from 'react'
 export function useSetTargetCausalFactor(
 	saveCausalFactor: (causalFactor: CausalFactor) => void,
 	causalFactors: CausalFactor[],
-): (selectedDefinitionId: string, column: string) => void {
+): (selectedDefinitionId: string, column: string) => boolean {
 	return useCallback(
 		(selectedDefinitionId: string, column: string) => {
 			const selectedCausal = {
@@ -22,6 +22,7 @@ export function useSetTargetCausalFactor(
 			}
 
 			saveCausalFactor(selectedCausal)
+			return !!selectedCausal.column
 		},
 		[causalFactors, saveCausalFactor],
 	)
