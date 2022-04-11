@@ -26,28 +26,22 @@ const causalFactors: CausalFactor[] = [
 		description: '',
 		variable: 'Population',
 		level: CausalityLevel.Primary,
-		causes: [
-			{
-				causes: true,
-				degree: BeliefDegree.Moderate,
-				reasoning: '',
-				type: CausalFactorType.CauseOutcome,
-			},
-		],
+		causes: {
+			causeOutcome: BeliefDegree.Moderate,
+			causeExposure: BeliefDegree.None,
+			reasoning: '',
+		},
 	},
 	{
 		id: v4(),
 		description: '',
 		level: CausalityLevel.Primary,
 		variable: 'Min_Pressure',
-		causes: [
-			{
-				causes: true,
-				degree: BeliefDegree.Strong,
-				reasoning: '',
-				type: CausalFactorType.CauseOutcome,
-			},
-		],
+		causes: {
+			causeOutcome: BeliefDegree.Strong,
+			causeExposure: BeliefDegree.None,
+			reasoning: '',
+		},
 	},
 	{
 		id: v4(),
@@ -55,34 +49,22 @@ const causalFactors: CausalFactor[] = [
 
 		level: CausalityLevel.Primary,
 		variable: 'Max_Pressure',
-		causes: [
-			{
-				causes: true,
-				degree: BeliefDegree.Weak,
-				reasoning: '',
-				type: CausalFactorType.CauseOutcome,
-			},
-		],
+		causes: {
+			causeOutcome: BeliefDegree.Weak,
+			causeExposure: BeliefDegree.None,
+			reasoning: '',
+		},
 	},
 	{
 		id: v4(),
 		description: '',
 		variable: 'Pressure',
 		level: CausalityLevel.Primary,
-		causes: [
-			{
-				causes: true,
-				degree: BeliefDegree.Moderate,
-				reasoning: '',
-				type: CausalFactorType.CauseExposure,
-			},
-			{
-				causes: true,
-				degree: BeliefDegree.Moderate,
-				reasoning: '',
-				type: CausalFactorType.CauseOutcome,
-			},
-		],
+		causes: {
+			causeOutcome: BeliefDegree.Moderate,
+			causeExposure: BeliefDegree.Moderate,
+			reasoning: '',
+		},
 	},
 ]
 const newItem: CausalFactor = {
@@ -91,14 +73,11 @@ const newItem: CausalFactor = {
 	variable: 'Category',
 
 	level: CausalityLevel.Primary,
-	causes: [
-		{
-			causes: true,
-			degree: BeliefDegree.Strong,
-			reasoning: '',
-			type: CausalFactorType.CauseOutcome,
-		},
-	],
+	causes: {
+		causeOutcome: BeliefDegree.Strong,
+		causeExposure: BeliefDegree.None,
+		reasoning: '',
+	},
 }
 
 describe('causalFactorsHooks', () => {
