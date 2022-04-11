@@ -2,7 +2,10 @@ name: ShowWhy Python CI
 pool:
   vmImage: ubuntu-latest
 
-  trigger:
+variables:
+  Codeql.Enabled: true
+
+trigger:
   batch: true
   branches:
     include:
@@ -10,7 +13,7 @@ pool:
       - dev
   paths:
     include:
-      - python/*
+      - python
 
 pr:
   branches:
@@ -19,7 +22,7 @@ pr:
       - release/*
   paths:
     include:
-      - python/*
+      - python
 
 stages:
   - stage: Compliance
