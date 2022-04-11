@@ -2,6 +2,9 @@ name: ShowWhy CI
 pool:
   vmImage: ubuntu-latest
 
+variables:
+  Codeql.Enabled: true
+
 trigger:
   batch: true
   branches:
