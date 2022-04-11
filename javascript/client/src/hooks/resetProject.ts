@@ -20,7 +20,7 @@ import {
 	useResetOutputTablePrep,
 	useResetPrimarySpecificationConfig,
 	useResetProjectFiles,
-	useResetRefutationType,
+	useResetRefutationCount,
 	useResetRunHistory,
 	useResetSelectedFile,
 	useResetSelectedProject,
@@ -33,7 +33,7 @@ import {
 
 export function useResetProject(): Handler {
 	const resetCausalFactors = useResetCausalFactors()
-	const resetRefutationTests = useResetRefutationType()
+	const resetRefutationCount = useResetRefutationCount()
 	const resetEstimators = useResetEstimators()
 	const resetDefineQuestion = useResetExperiment()
 	const resetOriginalTables = useResetOriginalTables()
@@ -60,7 +60,7 @@ export function useResetProject(): Handler {
 		resetSelectedFile()
 		resetOriginalTables()
 		resetCausalFactors()
-		resetRefutationTests()
+		resetRefutationCount()
 		resetEstimators()
 		resetDefineQuestion()
 		resetHoverState()
@@ -83,7 +83,7 @@ export function useResetProject(): Handler {
 		resetSelectedFile,
 		resetOriginalTables,
 		resetCausalFactors,
-		resetRefutationTests,
+		resetRefutationCount,
 		resetEstimators,
 		resetDefineQuestion,
 		resetHoverState,

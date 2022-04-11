@@ -248,7 +248,7 @@
             "type": "Linear Regression"
         }
     ],
-    "refutations": "Quick Refutation",
+    "refutations": 10,
     "tableColumns": [
         {
             "name": "age",
@@ -404,9 +404,6 @@
             "primary": true
         }
     ],
-    "defaultResult": {
-        "url": "data/pre-processed-results/smoking-cessation.csv"
-    },
     "postLoad": [{
         "tableName": "nhefs.csv",
         "steps": [

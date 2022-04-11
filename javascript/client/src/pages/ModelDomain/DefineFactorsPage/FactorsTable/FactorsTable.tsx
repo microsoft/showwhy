@@ -18,21 +18,21 @@ export const FactorsTable: React.FC<{
 
 	return (
 		<Container>
-			{/* {flatFactorsList.length ? ( */}
-			<GenericTableComponent
-				items={itemList}
-				headers={{ data: headers }}
-				props={{
-					customColumnsWidth: [
-						{ fieldName: 'variable', width: '12rem' },
-						{ fieldName: 'exposure', width: '10rem' },
-						{ fieldName: 'outcome', width: '10rem' },
-					],
-				}}
-			/>
-			{/* ) : (
+			{flatFactorsList.length ? (
+				<GenericTableComponent
+					items={itemList}
+					headers={{ data: headers }}
+					props={{
+						customColumnsWidth: [
+							{ fieldName: 'variable', width: '12rem' },
+							{ fieldName: 'exposure', width: '10rem' },
+							{ fieldName: 'outcome', width: '10rem' },
+						],
+					}}
+				/>
+			) : (
 				<EmptyFactorsText>Add a new factor to start</EmptyFactorsText>
-			)} */}
+			)}
 		</Container>
 	)
 })

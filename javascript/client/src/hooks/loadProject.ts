@@ -29,7 +29,7 @@ import {
 	useSetOutputTablePrep,
 	useSetPrimarySpecificationConfig,
 	useSetProjectFiles,
-	useSetRefutationType,
+	useSetRefutationCount,
 	useSetRunHistory,
 	useSetSignificanceTest,
 	useSetStepStatuses,
@@ -63,7 +63,7 @@ export function useLoadProject(
 	const setSubjectIdentifier = useSetSubjectIdentifier()
 	const setDefineQuestion = useSetExperiment()
 	const setOrUpdateEst = useSetEstimators()
-	const setRefutationType = useSetRefutationType()
+	const setRefutationCount = useSetRefutationCount()
 	const setFiles = useSetProjectFiles()
 	const setConfidenceInterval = useSetConfidenceInterval()
 	const setDefaultDatasetResult = useSetDefaultDatasetResult()
@@ -135,7 +135,7 @@ export function useLoadProject(
 
 			primarySpecification &&
 				setPrimarySpecificationConfig(primarySpecification)
-			refutations && setRefutationType(refutations)
+			refutations && setRefutationCount(refutations)
 
 			setCausalFactors(cfs)
 			setDefineQuestion(df)
@@ -174,7 +174,7 @@ export function useLoadProject(
 			setCausalFactors,
 			setDefineQuestion,
 			setOrUpdateEst,
-			setRefutationType,
+			setRefutationCount,
 			setSubjectIdentifier,
 			setAllStepStatus,
 			getStepUrls,
@@ -207,6 +207,8 @@ function preProcessTables(
 	const { tables, postLoad } = workspace
 
 	return tables.map(async table => {
+		// Turning autoType on by default for demo
+		table.autoType = true
 		const stepPostLoad =
 			!!postLoad?.length &&
 			postLoad.find(p => p?.steps && p?.steps[0]?.input === table.name)

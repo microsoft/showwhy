@@ -3,15 +3,10 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { Handler, RefutationOption } from '@showwhy/types'
-import {
-	RefutationResult,
-	RefutationTestMethod,
-	RefutationType,
-} from '@showwhy/types'
-import { useCallback, useMemo } from 'react'
+import type { RefutationOption } from '@showwhy/types'
+import { RefutationResult, RefutationTestMethod } from '@showwhy/types'
+import { useMemo } from 'react'
 
-import { useSetRefutationType } from '~state'
 import type { Specification } from '~types'
 
 export const REFUTATIONS: RefutationOption[] = [
@@ -69,20 +64,4 @@ export function useFailedRefutationIds(data: Specification[]): number[] {
 				.map(a => a.id) || []
 		)
 	}, [data])
-}
-
-export function useSetQuickRefutation(): Handler {
-	const setRefutations = useSetRefutationType()
-
-	return useCallback(() => {
-		setRefutations(RefutationType.QuickRefutation)
-	}, [setRefutations])
-}
-
-export function useSetFullRefutation(): Handler {
-	const setRefutations = useSetRefutationType()
-
-	return useCallback(() => {
-		setRefutations(RefutationType.FullRefutation)
-	}, [setRefutations])
 }

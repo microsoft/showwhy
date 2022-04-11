@@ -9,11 +9,9 @@ import { CausalEffects } from '~components/CausalEffects'
 import { CausalQuestion } from '~components/CausalQuestion'
 import { EmptyDataPageWarning } from '~components/EmptyDataPageWarning'
 import { useSpecificationCurve } from '~hooks'
-import { Container, ContainerFlexColumn } from '~styles'
-import { Pages } from '~types'
+import { Container, ContainerFlexColumn, Title } from '~styles'
 
-import { AnalysisSpecifications } from './AnalysisSpecifications'
-import { CausalDetails } from './CausalDetails'
+import { AnalysisSummary } from './AnalysisSummary'
 import { useBusinessLogic } from './hooks'
 import { PageButtons } from './PageButtons'
 import { ResultsGraph } from './ResultsGraph'
@@ -26,7 +24,6 @@ export const EvaluateHypothesisPage: React.FC = memo(
 			defaultRun,
 			causalEffects,
 			specificationData,
-			refutationLength,
 			defineQuestion,
 			activeValues,
 			significanceTestResult,
@@ -34,7 +31,8 @@ export const EvaluateHypothesisPage: React.FC = memo(
 			runSignificance,
 			cancelRun,
 			isCanceled,
-			refutationType,
+			refutationOptions,
+			estimators,
 		} = useBusinessLogic()
 
 		const {
@@ -43,6 +41,7 @@ export const EvaluateHypothesisPage: React.FC = memo(
 			hovered,
 			failedRefutationIds,
 			vegaWindowDimensions,
+			outcome,
 		} = useSpecificationCurve()
 
 		if (
@@ -52,9 +51,7 @@ export const EvaluateHypothesisPage: React.FC = memo(
 		) {
 			return (
 				<EmptyDataPageWarning
-					text="To see the summary of the estimates, run and wait a run estimate here: "
-					linkText="Estimate causal effects"
-					page={Pages.EstimateCausalEffects}
+					text="To test the statistical significance of your estimates, wait for the server run on the previous page to complete"
 					marginTop
 				/>
 			)
@@ -64,43 +61,48 @@ export const EvaluateHypothesisPage: React.FC = memo(
 			<ContainerFlexColumn data-pw="evaluate-hypothesis-content">
 				<Container>
 					<CausalQuestion defineQuestion={defineQuestion} />
+					<Container>
+						<PageButtons
+							defaultRun={defaultRun}
+							significanceTestResult={significanceTestResult}
+							significanceFailed={significanceFailed}
+							runSignificance={runSignificance}
+						/>
+
+						<SignificanceTests
+							activeValues={activeValues}
+							defineQuestion={defineQuestion}
+							cancelRun={cancelRun}
+							isCanceled={isCanceled}
+							significanceTestResult={significanceTestResult}
+						/>
+					</Container>
+					<Container marginTop>
+						<AnalysisSummary
+							activeValues={activeValues}
+							estimators={estimators}
+							defineQuestion={defineQuestion}
+							refutationOptions={refutationOptions}
+							alternativeModels={alternativeModels}
+						/>
+					</Container>
 				</Container>
+				<Title>Domain model </Title>
 				<Container>
-					<CausalDetails alternativeModels={alternativeModels} />
 					<CausalEffects size={CausalEffectSize.Small} {...causalEffects} />
 				</Container>
-				<Container marginTop>
-					<AnalysisSpecifications
-						refutationType={refutationType}
-						refutationLength={refutationLength}
-						specificationLength={specificationData.length}
-					/>
-					<ResultsGraph
-						refutationType={refutationType}
-						specificationData={specificationData}
-						defineQuestion={defineQuestion}
-						specificationCurveConfig={config}
-						vegaWindowDimensions={vegaWindowDimensions}
-						onMouseOver={onMouseOver}
-						hovered={hovered}
-						failedRefutationIds={failedRefutationIds}
-						activeValues={activeValues}
-					/>
-				</Container>
-				<Container>
-					<PageButtons
-						defaultRun={defaultRun}
-						significanceTestResult={significanceTestResult}
-						significanceFailed={significanceFailed}
-						runSignificance={runSignificance}
-					/>
-
-					<SignificanceTests
-						cancelRun={cancelRun}
-						isCanceled={isCanceled}
-						significanceTestResult={significanceTestResult}
-					/>
-				</Container>
+				<Title noMarginBottom noMarginTop>
+					Effect size estimates
+				</Title>
+				<ResultsGraph
+					specificationData={specificationData}
+					specificationCurveConfig={config}
+					vegaWindowDimensions={vegaWindowDimensions}
+					onMouseOver={onMouseOver}
+					hovered={hovered}
+					outcome={outcome}
+					failedRefutationIds={failedRefutationIds}
+				/>
 			</ContainerFlexColumn>
 		)
 	},

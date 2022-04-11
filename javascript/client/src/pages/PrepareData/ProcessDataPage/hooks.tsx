@@ -11,11 +11,16 @@ import type {
 	FactorsOrDefinitions,
 	Handler,
 	Handler1,
+	Maybe,
 } from '@showwhy/types'
 import { CausalModelLevel } from '@showwhy/types'
 import { useCallback, useMemo } from 'react'
 
-import { useAllVariables, useCausalEffects } from '~hooks'
+import {
+	useAllVariables,
+	useAutomaticWorkflowStatus,
+	useCausalEffects,
+} from '~hooks'
 import {
 	useCausalFactors,
 	useSetOutputTablePrep,
@@ -32,6 +37,7 @@ import {
 	useOnResetVariable,
 } from './hooks/index'
 import { useOnSelectVariable } from './hooks/useOnSelectVariable'
+import { useOnSetSubjectIdentifier } from './hooks/useOnSetSubjectIdentifier'
 import { useRenderDropdown } from './hooks/useRenderDropdownOption'
 
 export function useBusinessLogic(
@@ -47,6 +53,8 @@ export function useBusinessLogic(
 	isElementComplete: (element: CausalFactor | ElementDefinition) => boolean
 	onResetVariable: (columnName: string) => void
 	onUpdateOutput: (table: TableContainer<unknown>) => void
+	subjectIdentifier: Maybe<string>
+	onSetSubjectIdentifier: Handler1<Maybe<string>>
 } {
 	const prepSpecification = useTablesPrepSpecification()
 	const setStepsTablePrep = useSetTablesPrepSpecification()
@@ -59,12 +67,43 @@ export function useBusinessLogic(
 	const setOutputTable = useSetOutputTablePrep()
 
 	const causalEffects = useCausalEffects(CausalModelLevel.Maximum)
+	const { setDone, setTodo } = useAutomaticWorkflowStatus()
+
+	const allElementsLength = useMemo((): any => {
+		return allElements.length + 1
+	}, [allElements])
+
+	const completedElements = useMemo((): number => {
+		const initial = !!subjectIdentifier ? 1 : 0
+		return allElements.find((x: CausalFactor | ElementDefinition) => x)
+			? allElements?.filter((x: CausalFactor | ElementDefinition) => x.column)
+					.length + initial
+			: initial
+	}, [allElements, subjectIdentifier])
+
+	const isStepDone = useCallback(
+		(hasVariable: boolean) => {
+			const done =
+				allElementsLength ===
+				(hasVariable ? completedElements + 1 : completedElements - 1)
+			done ? setDone() : setTodo()
+		},
+		[allElementsLength, completedElements, setDone, setTodo],
+	)
+
+	const onSetSubjectIdentifier = useOnSetSubjectIdentifier(
+		subjectIdentifier,
+		setSubjectIdentifier,
+		isStepDone,
+	)
+
 	const onSelectVariable = useOnSelectVariable(
 		causalFactors,
 		defineQuestion,
 		subjectIdentifier,
 		setDefineQuestion,
 		setSubjectIdentifier,
+		isStepDone,
 	)
 
 	const onUpdateOutput = useCallback(
@@ -108,13 +147,6 @@ export function useBusinessLogic(
 		return prepSpecification !== undefined ? prepSpecification[0]?.steps : []
 	}, [prepSpecification])
 
-	const completedElements = useMemo((): number => {
-		return allElements.find((x: CausalFactor | ElementDefinition) => x)
-			? allElements?.filter((x: CausalFactor | ElementDefinition) => x.column)
-					.length
-			: 0
-	}, [allElements])
-
 	const isElementComplete = useCallback(
 		(element: CausalFactor | ElementDefinition) => {
 			const found = allElements?.find(
@@ -130,7 +162,7 @@ export function useBusinessLogic(
 		onSelectVariable,
 		onResetVariable,
 		onAddVariable,
-		setSubjectIdentifier,
+		onSetSubjectIdentifier,
 		subjectIdentifier,
 		dropdownOptions,
 	)
@@ -141,11 +173,13 @@ export function useBusinessLogic(
 		onChangeSteps,
 		steps,
 		commandBar,
-		elements: allElements.length,
+		elements: allElementsLength, //subjectIdentifier
 		completedElements,
 		allElements,
 		isElementComplete,
 		onResetVariable,
 		onUpdateOutput,
+		subjectIdentifier,
+		onSetSubjectIdentifier,
 	}
 }

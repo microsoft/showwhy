@@ -3,33 +3,35 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { OrchestratorType } from '@showwhy/api-client'
+import { isStatus, OrchestratorType } from '@showwhy/api-client'
 import { buildSignificanceTestsNode } from '@showwhy/builders'
 import type {
 	AlternativeModels,
+	Estimator,
 	Experiment,
 	Handler,
 	Maybe,
-	RefutationType,
+	RefutationOption,
 	SignificanceTest,
 } from '@showwhy/types'
 import { NodeResponseStatus } from '@showwhy/types'
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 
 import {
 	useActualSignificanceTest,
 	useAlternativeModels,
+	useAutomaticWorkflowStatus,
 	useCausalEffects,
 	useDefaultRun,
-	useRefutationLength,
+	useRefutationOptions,
 	useRunSignificanceTest,
 	useSpecificationCurve,
 } from '~hooks'
 import {
 	useDefaultDatasetResult,
+	useEstimators,
 	useExperiment,
 	usePrimarySpecificationConfig,
-	useRefutationType,
 	useSpecificationCurveConfig,
 } from '~state'
 import type { DefaultDatasetResult, RunHistory, Specification } from '~types'
@@ -42,15 +44,15 @@ export function useBusinessLogic(): {
 	causalEffects: ReturnType<typeof useCausalEffects>
 	specificationData: Specification[]
 	defaultDataset: DefaultDatasetResult | null
-	refutationLength: number
 	defineQuestion: Experiment
 	activeValues: number[]
 	significanceTestResult: Maybe<SignificanceTest>
 	significanceFailed: boolean
-	refutationType: RefutationType
 	isCanceled: boolean
 	runSignificance: Handler
 	cancelRun: Handler
+	refutationOptions: RefutationOption[]
+	estimators: Estimator[]
 } {
 	const defineQuestion = useExperiment()
 	const primarySpecificationConfig = usePrimarySpecificationConfig()
@@ -59,28 +61,22 @@ export function useBusinessLogic(): {
 	const alternativeModels = useAlternativeModels(causalModel)
 	const specificationData = useLoadSpecificationData()
 	const specificationCurveConfig = useSpecificationCurveConfig()
-	const refutation = useRefutationType()
 	const defaultDataset = useDefaultDatasetResult()
 	const defaultRun = useDefaultRun()
 	const run = useRunSignificanceTest(defaultRun?.id)
 	const { failedRefutationIds } = useSpecificationCurve()
 	const [isCanceled, setIsCanceled] = useState<boolean>(false)
-	const refutationLength = useRefutationLength()
 	const significanceTestResult = useActualSignificanceTest()
+	const refutationOptions = useRefutationOptions()
+	const estimators = useEstimators()
 
-	const refutationType = useMemo((): RefutationType => {
-		if (defaultRun && defaultRun?.refutationType) {
-			return defaultRun?.refutationType
-		}
-		return refutation
-	}, [defaultRun, refutation])
+	const { setDone, setTodo } = useAutomaticWorkflowStatus()
 
-	// const runFullRefutation = useCallback(async () => {
-	// 	setFullRefutation()
-	// 	await wait(300)
-	// 	await sendData()
-	// 	history.push(Pages.EstimateCausalEffects)
-	// }, [sendData, setFullRefutation, history])
+	useEffect(() => {
+		!isStatus(significanceTestResult?.status, NodeResponseStatus.Completed)
+			? setTodo()
+			: setDone()
+	}, [significanceTestResult, setDone, setTodo])
 
 	const activeValues = useMemo<number[]>(() => {
 		return specificationData
@@ -125,14 +121,14 @@ export function useBusinessLogic(): {
 		causalEffects,
 		specificationData,
 		defaultDataset,
-		refutationLength,
 		defineQuestion,
 		activeValues,
 		significanceTestResult,
 		significanceFailed,
-		refutationType,
 		isCanceled,
 		runSignificance,
 		cancelRun,
+		refutationOptions,
+		estimators,
 	}
 }

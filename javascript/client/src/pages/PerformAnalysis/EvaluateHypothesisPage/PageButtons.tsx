@@ -4,13 +4,8 @@
  */
 import { DefaultButton } from '@fluentui/react'
 import { isStatus } from '@showwhy/api-client'
-import type {
-	Handler,
-	Maybe,
-	SignificanceTest} from '@showwhy/types';
-import {
-	NodeResponseStatus
-} from '@showwhy/types'
+import type { Handler, Maybe, SignificanceTest } from '@showwhy/types'
+import { NodeResponseStatus } from '@showwhy/types'
 import { memo, useMemo } from 'react'
 import styled from 'styled-components'
 
@@ -36,7 +31,6 @@ export const PageButtons: React.FC<{
 		)
 	}, [significanceTestResult])
 
-	debugger
 	return (
 		<Container>
 			{showButton && (
@@ -49,7 +43,7 @@ export const PageButtons: React.FC<{
 				</ButtonWithMargin>
 			)}
 
-			{significanceFailed && <ErrorMessage></ErrorMessage>}
+			{significanceFailed && <ErrorMessage />}
 		</Container>
 	)
 })

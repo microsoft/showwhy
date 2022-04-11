@@ -64,6 +64,9 @@ function useRenderMenuList(
 			items = items.filter(x => !x.data?.button)
 			if (identifierButton) {
 				identifierButton.disabled = !hasVariable
+				identifierButton.text = `${
+					isIdentifier ? 'Unset' : 'Set'
+				} as subject identifier`
 				items.push(identifierButton)
 			}
 			if (resetButton) {
@@ -146,8 +149,10 @@ export function useRenderDropdown(
 			}
 
 			const variable = `${
-				selectedVariableByColumn(columnName)?.variable ?? 'Options'
-			} ${subjectIdentifier === columnName ? ' (Identifier)' : ''}`
+				subjectIdentifier === columnName
+					? ' Subject identifier'
+					: selectedVariableByColumn(columnName)?.variable ?? 'Options'
+			}`
 
 			return (
 				<Container id={columnName} title={variable}>

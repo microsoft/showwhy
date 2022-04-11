@@ -92,7 +92,6 @@ function findRunError(
 			? error?.traceback || error?.error
 			: (response?.output as string) ||
 			  'Undefined error. Please, execute the run again.'
-		console.log('Traceback:', errorMessage)
 		return errorMessage
 	}
 	return undefined

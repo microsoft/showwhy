@@ -9,12 +9,15 @@ import { useMemo } from 'react'
 import { useGoToPage, usePageType } from '~hooks'
 import { Pages } from '~types'
 
+import { useSetDonePage } from './useSetPageDone'
+
 export function useBusinessLogic(): {
 	pageName: string
 	goToConsiderCausalFactors: Handler
 } {
 	const { pageName } = usePageComponents()
 	const goToConsiderCausalFactors = useGoToConsiderCausalFactors()
+	useSetDonePage(causeType)
 
 	return {
 		pageName,

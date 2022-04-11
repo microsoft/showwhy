@@ -56,7 +56,7 @@ export const RunHistoryList: React.FC<{
 							<ColumnName>Estimates available</ColumnName>
 						</Th>
 						<Th>
-							<ColumnName>Active</ColumnName>
+							<ColumnName>Explore</ColumnName>
 						</Th>
 					</Tr>
 				</TableHead>
@@ -91,9 +91,7 @@ export const RunHistoryList: React.FC<{
 										<ContainerFlexColumn>
 											{!run.id && '-/' + specCount}
 											{run.status?.estimated_effect_completed &&
-												`${run.status?.estimated_effect_completed} [${
-													run.status?.percentage
-												}%] available${
+												`${run.status?.estimated_effect_completed} available${
 													run.status.time?.end
 														? `, took ${elapsedTime(
 																run.status.time?.start,
@@ -102,7 +100,12 @@ export const RunHistoryList: React.FC<{
 														: ''
 												}`}
 											{run.status?.error && (
-												<ErrorMessage message={run.status?.error} />
+												<ErrorMessage
+													message={
+														'Undefined error. Please, execute the run again.'
+													}
+													log={run.status?.error}
+												/>
 											)}
 										</ContainerFlexColumn>
 									)}
@@ -131,11 +134,11 @@ export const RunHistoryList: React.FC<{
 								{loadingSpecCount ? (
 									<Text>Loading specifications count...</Text>
 								) : loadingFile ? (
-									<Text>Uploading files...</Text>
+									<Text>Preparing server...</Text>
 								) : errors ? (
-									<Text>{!!errors && <ErrorMessage message={errors} />}</Text>
+									<Text>{!!errors && <ErrorMessage log={errors} />}</Text>
 								) : (
-									<Text>{'-/' + specCount} [0%] available</Text>
+									<Text>{'-/' + specCount} available</Text>
 								)}
 							</Td>
 							<Td>-</Td>

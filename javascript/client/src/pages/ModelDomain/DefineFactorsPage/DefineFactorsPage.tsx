@@ -6,7 +6,7 @@ import { DefaultButton } from '@fluentui/react'
 import { memo } from 'react'
 import styled from 'styled-components'
 
-import { Container } from '~styles'
+import { Container, Title } from '~styles'
 
 import { FactorsTable } from './FactorsTable'
 import { useBusinessLogic } from './hooks'
@@ -24,8 +24,8 @@ export const DefineFactorsPage: React.FC = memo(function DefineFactorsPage() {
 	return (
 		<Container>
 			<Container>
-				<FieldTitle data-pw="title">Factors assumed to {pageName}</FieldTitle>
 				<FactorsTable headers={tableHeader} />
+				<Title data-pw="title">Factors assumed to {pageName}</Title>
 			</Container>
 			<ButtonContainer>
 				<ButtonAdd
@@ -41,10 +41,6 @@ export const DefineFactorsPage: React.FC = memo(function DefineFactorsPage() {
 
 const ButtonContainer = styled.div`
 	text-align: center;
-`
-
-const FieldTitle = styled.h3`
-	margin-bottom: unset;
 `
 
 const ButtonAdd = styled(DefaultButton)`

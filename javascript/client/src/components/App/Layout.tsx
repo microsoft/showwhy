@@ -2,9 +2,10 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import { useDimensions } from '@essex/hooks'
 import { MessageBarType } from '@fluentui/react'
 import type { Maybe } from '@showwhy/types'
-import { memo, Suspense, useState } from 'react'
+import { memo, Suspense, useMemo, useRef, useState } from 'react'
 import styled from 'styled-components'
 
 import { StepControls, StepSelector } from '~components/GeneralSteps'
@@ -29,6 +30,16 @@ export const Layout: React.FC = memo(function Layout({ children }) {
 	const project = useSelectedProject()
 	const onClickProject = useOnClickProject()
 	const { step, previousStepUrl, nextStepUrl } = useProcessStepInfo()
+	const navRef = useRef(null)
+	const stepsRef = useRef(null)
+	const navDimensions = useDimensions(navRef)
+	const stepDimensions = useDimensions(stepsRef)
+	const guidanceHeight = useMemo((): string => {
+		if (navDimensions?.height && stepDimensions?.height) {
+			return `${navDimensions.height - stepDimensions?.height}px`
+		}
+		return '100%'
+	}, [navDimensions, stepDimensions])
 
 	return (
 		<Container>
@@ -39,12 +50,12 @@ export const Layout: React.FC = memo(function Layout({ children }) {
 				uploadZipMenuOption={uploadZipMenuOption}
 			/>
 			<PagesContainer>
-				<Nav>
-					<StepsContainer>
+				<Nav ref={navRef}>
+					<StepsContainer ref={stepsRef}>
 						<StepSelector project={project} />
 					</StepsContainer>
-					<GuidanceContainer>
-						<Guidance step={step} />
+					<GuidanceContainer h={guidanceHeight}>
+						<Guidance step={step} maxHeight={guidanceHeight} />
 					</GuidanceContainer>
 				</Nav>
 
@@ -84,16 +95,16 @@ const PagesContainer = styled.div`
 const Nav = styled.div`
 	max-width: 17vw;
 	min-width: 12vw;
-	display: flex;
-	flex-direction: column;
-	gap: 1rem;
-	margin-bottom: 2rem;
-	overflow: hidden auto;
+	display: block;
 	border-right: 1px solid ${({ theme }) => theme.application().lowContrast()};
+	max-height: 94vh;
+	overflow: hidden;
 `
-
-const StepsContainer = styled.div`
+	
+	const StepsContainer = styled.div`
 	position: relative;
+	max-height: 80%;
+	margin-bottom: 1rem;
 `
 
 const ChildrenContainer = styled.div<{ noPadding: boolean; url?: string }>`
@@ -110,9 +121,10 @@ const ControlsContainer = styled.div`
 	justify-content: flex-start;
 `
 
-const GuidanceContainer = styled.div`
+const GuidanceContainer = styled.div<{h: string}>`
 	border-right: 1px solid ${({ theme }) => theme.application().lowContrast()};
 	width: 100%;
+	height: ${({h}) => h};
 `
 
 const Container = styled.div`

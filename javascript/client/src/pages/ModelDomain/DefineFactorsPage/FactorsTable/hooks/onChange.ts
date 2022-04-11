@@ -5,10 +5,10 @@
 
 import type { IComboBoxOption } from '@fluentui/react'
 import type {
+	BeliefDegree,
 	Cause,
 	FlatCausalFactor,
 	Handler,
-	BeliefDegree,
 } from '@showwhy/types'
 // import type { BeliefDegree } from '@showwhy/types'
 import { useCallback } from 'react'

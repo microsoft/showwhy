@@ -112,7 +112,8 @@ def compute_null_effect(inference_results):
             new_effects.append(estimate.value)
         logging.info(f"New effects under the null: {np.nanmedian(new_effects)}")
         return np.nanmedian(new_effects)
-    except Exception:
+    except Exception as ex:
+        logging.info(f"Exception in compute new effect {str(ex)}")
         return None
 
 

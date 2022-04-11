@@ -32,8 +32,8 @@ test.describe('Select Causal Estimators', () => {
 	})
 
 	test('Change refuter', async () => {
-		await po.selectCausalEstimatorsPage.clickOnRefuter()
-		const refuter = await po.selectCausalEstimatorsPage.getSelectedRefuter()
-		await expect(refuter).toContainText('Full refutation')
+		await po.selectCausalEstimatorsPage.fillRefuter('10')
+		const refuter = await po.selectCausalEstimatorsPage.getRefuterCount()
+		await expect(refuter).toHaveValue('10')
 	})
 })

@@ -97,7 +97,7 @@
             "type": "Linear Regression"
         }
     ],
-    "refutations": "Quick Refutation",
+    "refutations": 10,
     "todoPages": [
         "/perform/effects",
         "/perform/estimate-distribution",
@@ -115,9 +115,6 @@
             "autoType": true
         }
     ],
-    "defaultResult": {
-        "url": "data/pre-processed-results/covid-19.csv"
-    },
     "postLoad": [{
         "steps": [
             {
