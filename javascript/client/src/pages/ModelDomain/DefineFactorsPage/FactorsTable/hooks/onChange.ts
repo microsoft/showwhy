@@ -6,8 +6,8 @@
 import type { IComboBoxOption } from '@fluentui/react'
 import type {
 	BeliefDegree,
-	Cause,
 	CausalFactorType,
+	Cause,
 	FlatCausalFactor,
 	Handler,
 } from '@showwhy/types'

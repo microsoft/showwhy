@@ -5,7 +5,7 @@
 import { v4 as uuidv4 } from 'uuid'
 
 import type { StepList } from '~types'
-import { Pages, PageType, StepStatus } from '~types'
+import { Pages, StepStatus } from '~types'
 
 export const stepsList = [
 	{

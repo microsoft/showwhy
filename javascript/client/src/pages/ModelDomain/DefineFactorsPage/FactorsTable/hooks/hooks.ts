@@ -4,12 +4,8 @@
  */
 
 import { useBoolean } from '@fluentui/react-hooks'
-import {
-	CausalFactor,
-	CausalFactorType,
-	DefinitionType,
-	FlatCausalFactor,
-} from '@showwhy/types'
+import type { CausalFactor, FlatCausalFactor } from '@showwhy/types'
+import { CausalFactorType } from '@showwhy/types'
 import { useCallback, useMemo, useState } from 'react'
 
 import { useDegreeComboBox } from '~hooks'
@@ -53,7 +49,7 @@ export function useFactorsTable(): {
 	const textField = useTextField(onChangeReasoning)
 
 	const itemList = useMemo((): Item[] => {
-		return flatFactorsList.map((factor: FlatCausalFactor) => {
+		return flatFactorsList.map((factor: FlatCausalFactor, index: number) => {
 			return {
 				variable: factor.variable,
 				[CausalFactorType.CauseExposure]: comboBoxExposure(
@@ -67,6 +63,7 @@ export function useFactorsTable(): {
 					factor.id,
 				),
 				reasoning: textField(factor),
+				dataPw: `factor-${index}`,
 			}
 		})
 	}, [flatFactorsList, comboBoxOutcome, comboBoxExposure, textField])

@@ -3,13 +3,13 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import {
+import type {
 	CausalFactor,
-	CausalFactorType,
 	Cause,
 	FlatCausalFactor,
 	Setter,
 } from '@showwhy/types'
+import { CausalFactorType } from '@showwhy/types'
 import { useCallback, useMemo } from 'react'
 
 import { replaceItemAtIndex } from '~utils'
