@@ -6,7 +6,7 @@
 import type { BeliefDegree } from './BeliefDegree.js'
 
 export interface Cause {
-	exposure: BeliefDegree | null
-	outcome: BeliefDegree | null
+	causeExposure: BeliefDegree | null
+	causeOutcome: BeliefDegree | null
 	reasoning: string
 }

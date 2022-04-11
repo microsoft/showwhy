@@ -37,7 +37,7 @@ export const ConsiderCausalFactorsPage: React.FC = memo(
 		return (
 			<Container>
 				<Container>
-					<Title data-pw="title">Possible causal factors</Title>
+					<Title data-pw="title">Relevant variables</Title>
 					<TableComponent
 						headers={tableHeaders}
 						columns={flatFactorsList}

@@ -3,6 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import { CausalFactorType } from '@showwhy/types'
 import { memo } from 'react'
 import styled from 'styled-components'
 
@@ -25,8 +26,8 @@ export const FactorsTable: React.FC<{
 					props={{
 						customColumnsWidth: [
 							{ fieldName: 'variable', width: '12rem' },
-							{ fieldName: 'exposure', width: '10rem' },
-							{ fieldName: 'outcome', width: '10rem' },
+							{ fieldName: CausalFactorType.CauseExposure, width: '10rem' },
+							{ fieldName: CausalFactorType.CauseOutcome, width: '10rem' },
 						],
 					}}
 				/>

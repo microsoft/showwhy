@@ -7,6 +7,7 @@ import type { IComboBoxOption } from '@fluentui/react'
 import type {
 	BeliefDegree,
 	Cause,
+	CausalFactorType,
 	FlatCausalFactor,
 	Handler,
 } from '@showwhy/types'
@@ -36,14 +37,9 @@ import { useCallback } from 'react'
 export function useOnChangeCauses(
 	flatFactorsList: FlatCausalFactor[],
 	saveNewFactors: (id: string, value: Cause) => void,
-): (
-	selected: IComboBoxOption,
-	type: 'exposure' | 'outcome',
-	id?: string,
-) => void {
+): (selected: IComboBoxOption, type: CausalFactorType, id?: string) => void {
 	return useCallback(
-		(selected: IComboBoxOption, type: 'exposure' | 'outcome', id?: string) => {
-			console.log('On change causes', type)
+		(selected: IComboBoxOption, type: CausalFactorType, id?: string) => {
 			const newValue = flatFactorsList.find(x => x.id === id) as Cause
 			;(newValue as any)[type] = selected.key as BeliefDegree
 			saveNewFactors(id as string, newValue)

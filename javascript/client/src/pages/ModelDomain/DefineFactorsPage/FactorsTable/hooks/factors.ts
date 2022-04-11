@@ -3,8 +3,9 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type {
+import {
 	CausalFactor,
+	CausalFactorType,
 	Cause,
 	FlatCausalFactor,
 	Setter,
@@ -21,14 +22,16 @@ export function useFlatFactorsList(
 		return causalFactors.map((factor: CausalFactor) => {
 			const equal =
 				values?.find(existing => existing.id === factor.id)?.causes ||
-				factor.causes
+				factor.causes ||
+				({} as FlatCausalFactor)
 
-			console.log('FlatCF', causalFactors, equal)
 			return {
 				variable: factor.variable,
-				exposure: equal?.exposure ?? null,
-				outcome: equal?.outcome ?? null,
-				reasoning: equal?.reasoning || '',
+				[CausalFactorType.CauseExposure]:
+					equal[CausalFactorType.CauseExposure] ?? null,
+				[CausalFactorType.CauseOutcome]:
+					equal[CausalFactorType.CauseOutcome] ?? null,
+				reasoning: equal.reasoning || '',
 				id: factor.id,
 				description: factor.description,
 			}
@@ -49,8 +52,10 @@ export function useSaveFactors(
 
 			const causes = {
 				...(oldCauses || {}),
-				exposure: newValue.exposure ?? null,
-				outcome: newValue.outcome ?? null,
+				[CausalFactorType.CauseExposure]:
+					newValue[CausalFactorType.CauseExposure] ?? null,
+				[CausalFactorType.CauseOutcome]:
+					newValue[CausalFactorType.CauseOutcome] ?? null,
 				reasoning: newValue.reasoning,
 			} as Cause
 			const factorObject = {

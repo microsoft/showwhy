@@ -17,7 +17,7 @@ export function useBusinessLogic(): {
 } {
 	const { pageName } = usePageComponents()
 	const goToConsiderCausalFactors = useGoToConsiderCausalFactors()
-	useSetDonePage(causeType)
+	useSetDonePage()
 
 	return {
 		pageName,
@@ -39,6 +39,5 @@ function usePageComponents(): {
 }
 
 function useGoToConsiderCausalFactors(): Handler {
-	const pageType = usePageType()
-	return useGoToPage(Pages.ConsiderCausalFactors, pageType)
+	return useGoToPage(Pages.ConsiderCausalFactors, Pages.ConsiderCausalFactors)
 }

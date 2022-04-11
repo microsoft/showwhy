@@ -16,7 +16,7 @@ export const stepsList = [
 				id: uuidv4(),
 				title: 'Define causal question',
 				status: StepStatus.ToDo,
-				url: `${Pages.DefineElements}`,
+				url: Pages.DefineElements,
 				showStatus: true,
 				getMarkdown: async () =>
 					import('../markdown/define-question/Elements.md?raw'),
@@ -25,16 +25,16 @@ export const stepsList = [
 				id: uuidv4(),
 				title: 'Consider alternative definitions',
 				status: StepStatus.ToDo,
-				url: `${Pages.Alternative}`,
+				url: Pages.Alternative,
 				showStatus: true,
 				getMarkdown: async () =>
 					import('../markdown/define-question/Population.md?raw'),
 			},
 			{
 				id: uuidv4(),
-				title: 'Consider related variables',
+				title: 'Consider relevant variables',
 				status: StepStatus.ToDo,
-				url: `${Pages.ConsiderCausalFactors}`,
+				url: Pages.ConsiderCausalFactors,
 				showStatus: true,
 				getMarkdown: async () =>
 					import(
@@ -43,10 +43,10 @@ export const stepsList = [
 			},
 			{
 				id: uuidv4(),
-				title: 'Factors causing exposure',
+				title: 'Consider variable relationships',
 				status: StepStatus.ToDo,
 				showStatus: true,
-				url: `${Pages.DefineFactors}/${PageType.CauseExposure}`,
+				url: Pages.DefineFactors,
 				getMarkdown: async () =>
 					import('../markdown/model-causal-factors/CausingExposure.md?raw'),
 			},

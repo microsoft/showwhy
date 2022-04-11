@@ -48,7 +48,7 @@ export const AddVariableFields: FC<{
 			{type && isCausalFactorType(type) && (
 				<>
 					<Label>Degree of belief</Label>
-					{Combobox(degree)}
+					{Combobox(degree, type)}
 				</>
 			)}
 			<ButtonContainer>

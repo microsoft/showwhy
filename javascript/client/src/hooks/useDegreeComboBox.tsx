@@ -4,7 +4,7 @@
  */
 import type { IComboBoxOption } from '@fluentui/react'
 import { ComboBox } from '@fluentui/react'
-import { BeliefDegree } from '@showwhy/types'
+import { BeliefDegree, CausalFactorType } from '@showwhy/types'
 import { useCallback } from 'react'
 
 const beliefOptions: IComboBoxOption[] = [
@@ -17,12 +17,12 @@ const beliefOptions: IComboBoxOption[] = [
 export function useDegreeComboBox(
 	onChangeDegree: (
 		value: IComboBoxOption,
-		type: 'exposure' | 'outcome',
+		type: CausalFactorType,
 		id?: string,
 	) => void,
-): (degree: number, type: 'exposure' | 'outcome', id?: string) => JSX.Element {
+): (degree: number, type: CausalFactorType, id?: string) => JSX.Element {
 	return useCallback(
-		(degree: number, type: 'exposure' | 'outcome', id?: string) => {
+		(degree: number, type: CausalFactorType, id?: string) => {
 			return (
 				<ComboBox
 					selectedKey={degree}

@@ -5,8 +5,8 @@
 
 export enum Pages {
 	DefineElements = '/define/elements',
-	ConsiderCausalFactors = '/consider/causalFactors',
-	DefineFactors = '/define-factors',
+	ConsiderCausalFactors = '/consider/relevant-variables',
+	DefineFactors = '/consider/variable-relationships',
 	Confirm = '/define/confirm',
 	Define = '/define',
 	Alternative = '/define/alternative',

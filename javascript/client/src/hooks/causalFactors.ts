@@ -3,9 +3,11 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type {
+import {
 	AlternativeModels,
 	CausalFactor,
+	CausalFactorType,
+	Cause,
 	OptionalId,
 } from '@showwhy/types'
 import { BeliefDegree, CausalModelLevel } from '@showwhy/types'
@@ -82,10 +84,10 @@ export function useAlternativeModelsTestable(
 			if (shouldUseVariable) {
 				variable = factor.variable
 			}
-			const { causes } = factor || {}
+			const { causes = {} as Cause } = factor || {}
 
-			const degreeExposure = causes?.exposure ?? -1
-			const degreeOutcome = causes?.outcome ?? -1
+			const degreeExposure = causes[CausalFactorType.CauseExposure] ?? -1
+			const degreeOutcome = causes[CausalFactorType.CauseOutcome] ?? -1
 			if (degreeExposure > 0 && degreeOutcome > 0) {
 				if (shouldIncludeInDegree(degreeExposure, causalLevel)) {
 					confoundersArray.push(variable)
