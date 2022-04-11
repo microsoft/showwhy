@@ -4,7 +4,8 @@
  */
 import type { IComboBoxOption } from '@fluentui/react'
 import { ComboBox } from '@fluentui/react'
-import { BeliefDegree, CausalFactorType } from '@showwhy/types'
+import type { CausalFactorType } from '@showwhy/types'
+import { BeliefDegree } from '@showwhy/types'
 import { useCallback } from 'react'
 
 const beliefOptions: IComboBoxOption[] = [
@@ -28,6 +29,7 @@ export function useDegreeComboBox(
 					selectedKey={degree}
 					onChange={(_, value) => value && onChangeDegree(value, type, id)}
 					options={beliefOptions}
+					data-pw={type}
 				/>
 			)
 		},
