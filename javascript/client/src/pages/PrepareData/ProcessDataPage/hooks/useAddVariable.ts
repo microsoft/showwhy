@@ -97,24 +97,26 @@ export function useAddVariable(): {
 	}
 }
 
-function createCausesObject(degree: BeliefDegree, type: CausalFactorType) {
-	return {
-		causes: true,
-		degree: degree,
-		type: type,
-		reasoning: '',
-	}
-}
 function buildCauses(degree: BeliefDegree, type: DefinitionType) {
+	const causes = {
+		reasoning: ''
+	}
 	switch (type) {
 		case DefinitionType.Confounders:
-			return [
-				createCausesObject(degree, CausalFactorType.CauseExposure),
-				createCausesObject(degree, CausalFactorType.CauseOutcome),
-			]
+			return {
+				...causes,
+				[CausalFactorType.CauseExposure]: degree,
+				[CausalFactorType.CauseOutcome]: degree,
+			}
 		case DefinitionType.CauseExposure:
-			return [createCausesObject(degree, CausalFactorType.CauseExposure)]
+			return {
+				...causes,
+				[CausalFactorType.CauseExposure]: degree,
+			}
 		case DefinitionType.CauseOutcome:
-			return [createCausesObject(degree, CausalFactorType.CauseOutcome)]
+			return {
+				...causes,
+				[CausalFactorType.CauseOutcome]: degree,
+			}
 	}
 }

@@ -50,15 +50,6 @@ export const stepsList = [
 				getMarkdown: async () =>
 					import('../markdown/model-causal-factors/CausingExposure.md?raw'),
 			},
-			// {
-			// 	id: uuidv4(),
-			// 	title: 'Factors causing outcome',
-			// 	status: StepStatus.ToDo,
-			// 	url: `${Pages.DefineFactors}/${PageType.CauseOutcome}`,
-			// 	showStatus: true,
-			// 	getMarkdown: async () =>
-			// 		import('../markdown/model-causal-factors/CausingOutcome.md?raw'),
-			// },
 			{
 				id: uuidv4(),
 				title: 'Confirm domain models',
