@@ -19,8 +19,8 @@ const tableHeaders: HeaderData[] = [
 	{ fieldName: 'description', value: 'Description' },
 ]
 
-export const ConsiderCausalFactorsPage: React.FC = memo(
-	function ConsiderCausalFactorsPage() {
+export const ConsiderRelevantVariablesPage: React.FC = memo(
+	function ConsiderRelevantVariablesPage() {
 		const {
 			factor,
 			isEditing,

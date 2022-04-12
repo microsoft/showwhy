@@ -19,26 +19,28 @@ const tableHeader = [
 	{ fieldName: 'reasoning', value: 'Reasoning' },
 ]
 
-export const DefineFactorsPage: React.FC = memo(function DefineFactorsPage() {
-	const { goToConsiderCausalFactors } = useBusinessLogic()
+export const ConsiderVariableRelationshipsPage: React.FC = memo(
+	function ConsiderVariableRelationshipsPage() {
+		const { goToRelevantVariables } = useBusinessLogic()
 
-	return (
-		<Container>
+		return (
 			<Container>
-				<Title data-pw="title">Variable relationships</Title>
-				<FactorsTable headers={tableHeader} />
+				<Container>
+					<Title data-pw="title">Variable relationships</Title>
+					<FactorsTable headers={tableHeader} />
+				</Container>
+				<ButtonContainer>
+					<ButtonAdd
+						onClick={goToRelevantVariables}
+						data-pw="add-new-factor-button"
+					>
+						Add new factor
+					</ButtonAdd>
+				</ButtonContainer>
 			</Container>
-			<ButtonContainer>
-				<ButtonAdd
-					onClick={goToConsiderCausalFactors}
-					data-pw="add-new-factor-button"
-				>
-					Add new factor
-				</ButtonAdd>
-			</ButtonContainer>
-		</Container>
-	)
-})
+		)
+	},
+)
 
 const ButtonContainer = styled.div`
 	text-align: center;

@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import type { Maybe } from '@showwhy/types'
-import { memo, useCallback } from 'react'
+import { memo } from 'react'
 import { NavLink } from 'react-router-dom'
 import styled from 'styled-components'
 
@@ -19,18 +19,6 @@ export const StepItem: React.FC<{
 	const { stepStatus, onToggleWorkflowStatus } =
 		useWorkflowStepStatus(stepDetail)
 
-	const getStepStatus = useCallback(
-		(stepDetail: WorkflowStep) => {
-			return stepDetail.showStatus ? (
-				<StepStatusDetail
-					toggleStatus={onToggleWorkflowStatus}
-					status={stepStatus}
-				/>
-			) : null
-		},
-		[stepStatus, onToggleWorkflowStatus],
-	)
-
 	return (
 		<CollapsibleContainer subStep={subStep}>
 			<StepContainer>
@@ -41,7 +29,10 @@ export const StepItem: React.FC<{
 				>
 					{stepDetail.title}
 				</StepLink>
-				{getStepStatus(stepDetail)}
+				<StepStatusDetail
+					toggleStatus={onToggleWorkflowStatus}
+					status={stepStatus}
+				/>
 			</StepContainer>
 		</CollapsibleContainer>
 	)

@@ -4,12 +4,12 @@
  */
 
 export enum Pages {
-	DefineElements = '/define/elements',
-	ConsiderCausalFactors = '/consider/relevant-variables',
-	DefineFactors = '/consider/variable-relationships',
-	Confirm = '/define/confirm',
+	CausalQuestion = '/model/causal-question',
+	AlternativeDefinitions = '/model/alternative',
+	RelevantVariables = '/model/relevant-variables',
+	VariablesRelationships = '/model/variable-relationships',
+	ConfirmDomain = '/model/confirm-domain',
 	Define = '/define',
-	Alternative = '/define/alternative',
 	LoadData = '/prepare/load',
 	ProcessData = '/prepare/data',
 	ConfirmData = '/prepare/confirm',

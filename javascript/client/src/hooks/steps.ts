@@ -39,11 +39,6 @@ export function useAllSteps(): WorkflowStep[] {
 	return steps.flatMap(x => x.steps)
 }
 
-export function useStepsShowStatus(): WorkflowStep[] {
-	const steps = useAllSteps()
-	return steps.filter(s => s.showStatus)
-}
-
 /**
  * Callback to get a list of raw step ids from their urls
  * Exclude param toggles between getting the step ids directly
@@ -51,7 +46,7 @@ export function useStepsShowStatus(): WorkflowStep[] {
  * @returns
  */
 export function useGetStepUrls(): (urls?: string[], exclude?: any) => string[] {
-	const allSteps = useStepsShowStatus().map(x => x.url)
+	const allSteps = useAllSteps().map(x => x.url)
 	return useCallback(
 		(urls: string[] = [], exclude = false) => {
 			if (exclude) {
@@ -68,7 +63,7 @@ export function useGetStepUrlsByStatus(): (options?: {
 	exclude?: boolean
 }) => string[] {
 	const stepStatus = useStepStatus
-	const allSteps = useStepsShowStatus().map(step => {
+	const allSteps = useAllSteps().map(step => {
 		return {
 			url: step.url,
 			status: stepStatus(step.url),

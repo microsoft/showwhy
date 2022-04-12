@@ -14,8 +14,8 @@ import type { RadioButtonChoice } from '~types'
 
 import { useBusinessLogic } from './hooks'
 
-export const ConfirmAlternativeModelsPage: React.FC = memo(
-	function ConfirmAlternativeModels() {
+export const ConfirmDomainModelsPage: React.FC = memo(
+	function ConfirmDomainModelsPage() {
 		const { causalEffects, onDefaultChange, primarySpecificationConfig } =
 			useBusinessLogic()
 

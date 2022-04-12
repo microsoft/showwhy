@@ -13,15 +13,18 @@ import { useSetDonePage } from './useSetPageDone'
 
 export function useBusinessLogic(): {
 	pageName: string
-	goToConsiderCausalFactors: Handler
+	goToRelevantVariables: Handler
 } {
 	const { pageName } = usePageComponents()
-	const goToConsiderCausalFactors = useGoToConsiderCausalFactors()
+	const goToRelevantVariables = useGoToPage(
+		Pages.RelevantVariables,
+		Pages.RelevantVariables,
+	)
 	useSetDonePage()
 
 	return {
 		pageName,
-		goToConsiderCausalFactors,
+		goToRelevantVariables,
 	}
 }
 
@@ -36,8 +39,4 @@ function usePageComponents(): {
 	}, [pageType])
 
 	return { pageName }
-}
-
-function useGoToConsiderCausalFactors(): Handler {
-	return useGoToPage(Pages.ConsiderCausalFactors, Pages.ConsiderCausalFactors)
 }

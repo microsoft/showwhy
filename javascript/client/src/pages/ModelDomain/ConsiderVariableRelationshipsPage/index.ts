@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-export * from './DescribeElementsPage'
+export * from './ConsiderVariableRelationshipsPage'
 
 // for react.lazy support
-export { DescribeElementsPage as default } from './DescribeElementsPage'
+export { ConsiderVariableRelationshipsPage as default } from './ConsiderVariableRelationshipsPage'

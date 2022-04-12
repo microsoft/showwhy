@@ -122,12 +122,15 @@ function useFactorsNavigation(): [Handler, PathData] {
 		history.location.state && setHistoryState(history.location.state as string)
 	}, [history.location.state, setHistoryState])
 
-	const goToFactorsPage = useCallback(() => {
-		history.push(Pages.DefineFactors)
+	const goToVariableRelationships = useCallback(() => {
+		history.push(Pages.VariablesRelationships)
 		setHistoryState(undefined)
 	}, [setHistoryState, history])
 
-	return [factorsPathData?.path ? goToFactorsPage : noop, factorsPathData]
+	return [
+		factorsPathData?.path ? goToVariableRelationships : noop,
+		factorsPathData,
+	]
 }
 
 function useFactorsPathData(historyState: Maybe<string>): PathData {

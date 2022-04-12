@@ -16,50 +16,45 @@ export const stepsList = [
 				id: uuidv4(),
 				title: 'Define causal question',
 				status: StepStatus.ToDo,
-				url: Pages.DefineElements,
-				showStatus: true,
+				url: Pages.CausalQuestion,
 				getMarkdown: async () =>
-					import('../markdown/define-question/Elements.md?raw'),
+					import('../markdown/model-domain/DefineCausalQuestion.md?raw'),
 			},
 			{
 				id: uuidv4(),
 				title: 'Consider alternative definitions',
 				status: StepStatus.ToDo,
-				url: Pages.Alternative,
-				showStatus: true,
+				url: Pages.AlternativeDefinitions,
 				getMarkdown: async () =>
-					import('../markdown/define-question/Population.md?raw'),
+					import(
+						'../markdown/model-domain/ConsiderAlternativeDefinitions.md?raw'
+					),
 			},
 			{
 				id: uuidv4(),
 				title: 'Consider relevant variables',
 				status: StepStatus.ToDo,
-				url: Pages.ConsiderCausalFactors,
-				showStatus: true,
+				url: Pages.RelevantVariables,
 				getMarkdown: async () =>
-					import(
-						'../markdown/model-causal-factors/ConsiderCausalFactors.md?raw'
-					),
+					import('../markdown/model-domain/RelevantVariables.md?raw'),
 			},
 			{
 				id: uuidv4(),
 				title: 'Consider variable relationships',
 				status: StepStatus.ToDo,
-				showStatus: true,
-				url: Pages.DefineFactors,
+				url: Pages.VariablesRelationships,
 				getMarkdown: async () =>
-					import('../markdown/model-causal-factors/CausingExposure.md?raw'),
+					import(
+						'../markdown/model-domain/ConsiderVariableRelationships.md?raw'
+					),
 			},
 			{
 				id: uuidv4(),
 				title: 'Confirm domain models',
 				status: StepStatus.ToDo,
-				url: `${Pages.Confirm}`,
-				showStatus: true,
+				url: `${Pages.ConfirmDomain}`,
 				getMarkdown: async () =>
-					import(
-						'../markdown/model-causal-factors/ConfirmAlternativeModels.md?raw'
-					),
+					import('../markdown/model-domain/ConfirmDomainModels.md?raw'),
 			},
 		],
 	},
@@ -72,7 +67,6 @@ export const stepsList = [
 				title: 'Load data files',
 				status: StepStatus.ToDo,
 				url: `${Pages.LoadData}`,
-				showStatus: true,
 				getMarkdown: async () => import('../markdown/prepare-data/Load.md?raw'),
 			},
 			{
@@ -80,7 +74,6 @@ export const stepsList = [
 				title: 'Derive data variables',
 				status: StepStatus.ToDo,
 				url: Pages.ProcessData,
-				showStatus: true,
 				getMarkdown: async () =>
 					import('../markdown/prepare-data/Process.md?raw'),
 			},
@@ -89,7 +82,6 @@ export const stepsList = [
 			// 	title: 'Confirm data',
 			// 	status: StepStatus.ToDo,
 			// 	url: Pages.ConfirmData,
-			// 	showStatus: true,
 			// 	getMarkdown: async () =>
 			// 		import('../markdown/prepare-data/Confirm.md?raw'),
 			// },
@@ -104,25 +96,14 @@ export const stepsList = [
 				title: 'Select causal estimators',
 				status: StepStatus.ToDo,
 				url: Pages.SelectCausalEstimators,
-				showStatus: true,
 				getMarkdown: async () =>
 					import('../markdown/perform-analysis/Estimators.md?raw'),
 			},
-			// {
-			// 	id: uuidv4(),
-			// 	title: 'Estimate causal effects',
-			// 	status: StepStatus.ToDo,
-			// 	url: Pages.EstimateCausalEffects,
-			// 	showStatus: true,
-			// 	getMarkdown: async () =>
-			// 		import('../markdown/perform-analysis/CausalEffects.md?raw'),
-			// },
 			{
 				id: uuidv4(),
 				title: 'Explore specification curve',
 				status: StepStatus.ToDo,
 				url: Pages.SpecificationCurvePage,
-				showStatus: true,
 				getMarkdown: async () =>
 					import('../markdown/perform-analysis/SpecificationCurve.md?raw'),
 			},
@@ -131,7 +112,6 @@ export const stepsList = [
 				title: 'Evaluate hypothesis',
 				status: StepStatus.ToDo,
 				url: Pages.EvaluateHypothesisPage,
-				showStatus: true,
 				getMarkdown: async () =>
 					import('../markdown/perform-analysis/Hypothesis.md?raw'),
 			},

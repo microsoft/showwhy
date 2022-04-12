@@ -7,10 +7,10 @@ import { Redirect, Route, Switch } from 'react-router-dom'
 
 import { Pages } from '~types'
 
-const DescribeElementsPage = lazy(
+const DefineCausalQuestionPage = lazy(
 	() =>
-		/* webpackChunkName: "DescribeElementsPage" */ import(
-			'../../pages/ModelDomain/DescribeElementsPage'
+		/* webpackChunkName: "DefineCausalQuestion" */ import(
+			'../../pages/ModelDomain/DefineCausalQuestion'
 		),
 )
 
@@ -21,24 +21,24 @@ const ConsiderAlternativeDefinitionsPage = lazy(
 		),
 )
 
-const ConsiderCausalFactorsPage = lazy(
+const ConsiderRelevantVariablesPage = lazy(
 	() =>
-		/* webpackChunkName: "ConsiderCausalFactorsPage" */ import(
-			'../../pages/ModelDomain/ConsiderCausalFactorsPage'
+		/* webpackChunkName: "ConsiderRelevantVariablesPage" */ import(
+			'../../pages/ModelDomain/ConsiderRelevantVariablesPage'
 		),
 )
 
-const DefineFactorsPage = lazy(
+const ConsiderVariableRelationshipsPage = lazy(
 	() =>
-		/* webpackChunkName: "DefineFactorsPage" */ import(
-			'../../pages/ModelDomain/DefineFactorsPage'
+		/* webpackChunkName: "ConsiderVariableRelationshipsPage" */ import(
+			'../../pages/ModelDomain/ConsiderVariableRelationshipsPage'
 		),
 )
 
-const ConfirmPage = lazy(
+const ConfirmDomainModelsPage = lazy(
 	() =>
-		/* webpackChunkName: "ConfirmAlternativeModelsPage" */ import(
-			'../../pages/ModelDomain/ConfirmAlternativeModelsPage'
+		/* webpackChunkName: "ConfirmDomainModelsPage" */ import(
+			'../../pages/ModelDomain/ConfirmDomainModelsPage'
 		),
 )
 
@@ -93,18 +93,21 @@ const EvaluateHypothesisPage = lazy(
 export const Routes: React.FC = memo(function Routes() {
 	return (
 		<Switch>
-			<Redirect exact from="/" to={Pages.DefineElements} />
-			<Route path={Pages.DefineElements} component={DescribeElementsPage} />
+			<Redirect exact from="/" to={Pages.CausalQuestion} />
+			<Route path={Pages.CausalQuestion} component={DefineCausalQuestionPage} />
 			<Route
-				path={Pages.ConsiderCausalFactors}
-				component={ConsiderCausalFactorsPage}
+				path={Pages.RelevantVariables}
+				component={ConsiderRelevantVariablesPage}
 			/>
-			<Route path={Pages.DefineFactors} component={DefineFactorsPage} />
 			<Route
-				path={Pages.Alternative}
+				path={Pages.VariablesRelationships}
+				component={ConsiderVariableRelationshipsPage}
+			/>
+			<Route
+				path={Pages.AlternativeDefinitions}
 				component={ConsiderAlternativeDefinitionsPage}
 			/>
-			<Route path={Pages.Confirm} component={ConfirmPage} />
+			<Route path={Pages.ConfirmDomain} component={ConfirmDomainModelsPage} />
 			<Route path={Pages.LoadData} component={LoadDataPage} />
 			<Route path={Pages.ProcessData} component={ProcessDataPage} />
 			<Route path={Pages.ConfirmData} component={ConfirmDataPage} />
