@@ -4,7 +4,8 @@
  */
 import type { IComboBoxOption, IDropdownOption } from '@fluentui/react'
 import { ComboBox, DefaultButton, Label, TextField } from '@fluentui/react'
-import { BeliefDegree, CausalFactorType, DefinitionType } from '@showwhy/types'
+import type { CausalFactorType} from '@showwhy/types';
+import { BeliefDegree, DefinitionType } from '@showwhy/types'
 import upperFirst from 'lodash/upperFirst'
 import type { FC } from 'react'
 import { memo, useCallback, useState } from 'react'
