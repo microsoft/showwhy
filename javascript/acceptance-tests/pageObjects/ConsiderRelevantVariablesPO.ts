@@ -21,8 +21,8 @@ interface Field {
 	description?: string
 }
 
-export class ModelCausalFactorsPage extends Page {
-	protected PAGE_PATH: string = `#/consider/relevant-variables`
+export class ConsiderRelevantVariablesPO extends Page {
+	protected PAGE_PATH: string = `#/model/relevant-variables`
 
 	public async waitForLoad(): Promise<void> {
 		await super.waitForLoad()

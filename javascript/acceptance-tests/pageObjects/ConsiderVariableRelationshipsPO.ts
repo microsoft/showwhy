@@ -23,8 +23,8 @@ const causesDropdownSelector = (type: string, index: number) =>
 const optionSelector = (type: string) =>
 	`button[role="option"]:has-text("${type}")`
 
-export class DefineFactorsPage extends Page {
-	protected PAGE_PATH: string = `#/consider/variable-relationships`
+export class ConsiderVariableRelationshipsPO extends Page {
+	protected PAGE_PATH: string = `#/model/variable-relationships`
 
 	public async waitForLoad(): Promise<void> {
 		await super.waitForLoad()

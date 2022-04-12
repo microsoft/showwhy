@@ -7,7 +7,7 @@ import { Locator } from '@playwright/test'
 import { Page } from './Page'
 import { dataAttr } from '../util'
 
-type fn = (n: number) => string
+type fn = (n?: number) => string
 
 const selectors: Record<string, string> = {
 	graph: dataAttr('specification-curve'),

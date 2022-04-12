@@ -16,13 +16,13 @@ describe('stepsHooks', () => {
 	it('useCurrentStep', () => {
 		const expected = stepsList
 			.flatMap(x => x.steps)
-			.find(x => x.url === Pages.EstimateCausalEffects)
+			.find(x => x.url === Pages.AlternativeDefinitions)
 
 		const { result } = renderHook(
 			() =>
 				steps.useCurrentStepTestable(
 					{ steps: stepsList } as any as Workflow,
-					Pages.EstimateCausalEffects,
+					Pages.AlternativeDefinitions,
 				),
 			{
 				wrapper: RecoilRoot,

@@ -18,9 +18,6 @@ const selectors: Record<string, string> = {
 	addButton: dataAttr('factors-form-add-button'),
 }
 
-const typeSelector = (type: string) =>
-	`.ms-Dropdown-items button[role="option"]:has-text("${capitalize(type)}")`
-
 const tabSelector = (type: string) =>
 	`button[role="tab"]:has-text("${capitalize(type)}")`
 
@@ -31,8 +28,8 @@ interface Field {
 	type: string
 }
 
-export class DefineModelPage extends Page {
-	protected PAGE_PATH: string = '#/define/alternative'
+export class ConsiderAlternativeDefinitionsPO extends Page {
+	protected PAGE_PATH: string = '#/model/alternative'
 
 	public async waitForLoad(): Promise<void> {
 		await super.waitForLoad()
