@@ -3,4 +3,9 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-export * from './hooks'
+import type { Maybe } from '@showwhy/types'
+
+export interface PathData {
+	path: Maybe<string>
+	page: Maybe<string>
+}

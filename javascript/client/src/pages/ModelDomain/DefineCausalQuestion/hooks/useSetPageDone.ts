@@ -8,7 +8,7 @@ import { useEffect } from 'react'
 import { useAutomaticWorkflowStatus } from '~hooks'
 import { useExperiment } from '~state'
 
-export function useSetDonePage(): void {
+export function useSetPageDone(): void {
 	const experiment = useExperiment()
 	const { exposure, population, outcome } = experiment || {}
 	const autoWorkflowStatus = useAutomaticWorkflowStatus()

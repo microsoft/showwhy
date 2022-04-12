@@ -11,8 +11,8 @@ import styled from 'styled-components'
 
 import { Container } from '~styles'
 
+import { useBusinessLogic } from './DefineCausalQuestion.hooks'
 import { FieldGroup } from './FieldGroup'
-import { useBusinessLogic } from './hooks'
 
 const hypothesisOptions: IChoiceGroupOption[] = [
 	{ key: Hypothesis.Change, text: Hypothesis.Change },

@@ -12,7 +12,7 @@ import { TableComponent } from '~components/Tables/TableComponent'
 import { Container, Title } from '~styles'
 import type { HeaderData } from '~types'
 
-import { useBusinessLogic } from './hooks'
+import { useBusinessLogic } from './ConsiderRelevantVariablesPage.hooks'
 
 const tableHeaders: HeaderData[] = [
 	{ fieldName: 'variable', value: 'Label', width: '15%' },

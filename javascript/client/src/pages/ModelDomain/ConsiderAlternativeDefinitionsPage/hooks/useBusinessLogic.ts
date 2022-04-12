@@ -16,10 +16,10 @@ import { useHandleOnLinkClick } from '~hooks'
 import { useDefinitionType, useExperiment } from '~state'
 import type { Item } from '~types'
 
-import { useAddDefinition } from './add'
-import { useEditDefinition } from './edit'
-import { useRemoveDefinition } from './remove'
-import { useSetDonePage } from './useSetPageDone'
+import { useAddDefinition } from './useAddDefinition'
+import { useEditDefinition } from './useEditDefinition'
+import { useRemoveDefinition } from './useRemoveDefinition'
+import { useSetPageDone } from './useSetPageDone'
 
 interface PivotData {
 	key: string
@@ -61,7 +61,7 @@ export function useBusinessLogic(): {
 	useEffect(() => {
 		setDefinitionToEdit(undefined)
 	}, [defineQuestion, setDefinitionToEdit])
-	useSetDonePage()
+	useSetPageDone()
 
 	return {
 		definitionToEdit,

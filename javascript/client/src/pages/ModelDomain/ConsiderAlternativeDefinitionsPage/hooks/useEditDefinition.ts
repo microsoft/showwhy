@@ -6,8 +6,8 @@
 import type { ElementDefinition } from '@showwhy/types'
 import { useCallback } from 'react'
 
-import { useSaveDefinitions } from './save'
-import { updatedDefinitionList } from './updateDefinitions'
+import { updateListTypes } from '../ConsiderAlternativeDefinitionsPage.utils'
+import { useSaveDefinitions } from './useSaveDefinition'
 
 export function useEditDefinition(
 	definitions: ElementDefinition[],
@@ -15,7 +15,7 @@ export function useEditDefinition(
 	const saveDefinitions = useSaveDefinitions()
 	return useCallback(
 		(definition: ElementDefinition) => {
-			let newDefinitions = updatedDefinitionList(definitions, definition)
+			let newDefinitions = updateListTypes(definitions, definition.type)
 			newDefinitions = newDefinitions.map(d => {
 				if (d.id === definition.id) {
 					return { ...d, ...definition }

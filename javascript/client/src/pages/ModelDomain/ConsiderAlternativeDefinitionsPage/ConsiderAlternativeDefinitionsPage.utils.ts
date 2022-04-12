@@ -3,17 +3,18 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { ElementDefinition, Maybe } from '@showwhy/types'
+import type { DefinitionType, ElementDefinition, Maybe } from '@showwhy/types'
 import { CausalityLevel } from '@showwhy/types'
 
-export function updatedDefinitionList(
-	defs: Maybe<ElementDefinition[]>,
-	newDef: ElementDefinition,
+export function updateListTypes(
+	definitions: Maybe<ElementDefinition[]>,
+	type: Maybe<DefinitionType>,
 ): ElementDefinition[] {
-	const isPrimary = defs?.find(
-		d => d.type === newDef.type && d.level === CausalityLevel.Primary,
+	const isPrimary = definitions?.find(
+		d => d.type === type && d.level === CausalityLevel.Primary,
 	)
-	let result = defs ? [...defs] : []
+
+	let result = definitions ? [...definitions] : []
 	if (isPrimary) {
 		result = result.map(d => {
 			if (d.id === isPrimary.id) {

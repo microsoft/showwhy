@@ -9,27 +9,11 @@ import { useMemo } from 'react'
 import { useGoToPage, usePageType } from '~hooks'
 import { Pages } from '~types'
 
-import { useSetDonePage } from './useSetPageDone'
+import { useSetPageDone } from './useSetPageDone'
 
 export function useBusinessLogic(): {
 	pageName: string
 	goToRelevantVariables: Handler
-} {
-	const { pageName } = usePageComponents()
-	const goToRelevantVariables = useGoToPage(
-		Pages.RelevantVariables,
-		Pages.RelevantVariables,
-	)
-	useSetDonePage()
-
-	return {
-		pageName,
-		goToRelevantVariables,
-	}
-}
-
-function usePageComponents(): {
-	pageName: string
 } {
 	const pageType = usePageType()
 
@@ -38,5 +22,14 @@ function usePageComponents(): {
 		return pop.join(' ')
 	}, [pageType])
 
-	return { pageName }
+	const goToRelevantVariables = useGoToPage(
+		Pages.RelevantVariables,
+		Pages.RelevantVariables,
+	)
+	useSetPageDone()
+
+	return {
+		pageName,
+		goToRelevantVariables,
+	}
 }

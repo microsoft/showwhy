@@ -9,20 +9,20 @@ import { useCallback } from 'react'
 import { useExperiment } from '~state'
 import { withRandomId } from '~utils'
 
-import { useSaveDefinitions } from './save'
-import { updatedDefinitionList } from './updateDefinitions'
+import { updateListTypes } from '../ConsiderAlternativeDefinitionsPage.utils'
+import { useSaveDefinitions } from './useSaveDefinition'
 
 export function useAddDefinition(): (definition: ElementDefinition) => void {
 	const saveDefinitions = useSaveDefinitions()
 	const defineQuestion = useExperiment()
 	return useCallback(
 		(definition: ElementDefinition) => {
-			const defs = [...(defineQuestion?.definitions || [])]
+			const definitions = [...(defineQuestion?.definitions || [])]
 			if (!definition.variable?.length) {
 				return
 			}
 			definition = withRandomId(definition)
-			const newDefs = updatedDefinitionList(defs, definition)
+			const newDefs = updateListTypes(definitions, definition.type)
 			saveDefinitions([...newDefs, definition])
 		},
 		[saveDefinitions, defineQuestion],

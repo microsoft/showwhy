@@ -10,7 +10,7 @@ import { useAutomaticWorkflowStatus } from '~hooks'
 import { useExperiment } from '~state'
 import { getDefinitionsByType } from '~utils'
 
-export function useSetDonePage(): void {
+export function useSetPageDone(): void {
 	const experiment = useExperiment()
 	const { definitions } = experiment || {}
 	const population = getDefinitionsByType(

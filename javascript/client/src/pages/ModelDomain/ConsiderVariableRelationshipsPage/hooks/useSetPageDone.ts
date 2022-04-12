@@ -8,7 +8,7 @@ import { useEffect } from 'react'
 import { useAutomaticWorkflowStatus } from '~hooks'
 import { useCausalFactors } from '~state'
 
-export function useSetDonePage(): void {
+export function useSetPageDone(): void {
 	const causalFactors = useCausalFactors()
 	const causes = causalFactors.flatMap(f => f.causes)
 	const autoWorkflowStatus = useAutomaticWorkflowStatus()
