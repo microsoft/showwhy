@@ -4,7 +4,7 @@
  */
 import type { IComboBoxOption, IDropdownOption } from '@fluentui/react'
 import { ComboBox, DefaultButton, Label, TextField } from '@fluentui/react'
-import type { CausalFactorType} from '@showwhy/types';
+import type { CausalFactorType } from '@showwhy/types'
 import { BeliefDegree, DefinitionType } from '@showwhy/types'
 import upperFirst from 'lodash/upperFirst'
 import type { FC } from 'react'
@@ -49,7 +49,7 @@ export const AddVariableFields: FC<{
 			{type && isCausalFactorType(type) && (
 				<>
 					<Label>Degree of belief</Label>
-					{Combobox(degree, (type as unknown) as CausalFactorType)}
+					{Combobox(degree, type as unknown as CausalFactorType)}
 				</>
 			)}
 			<ButtonContainer>

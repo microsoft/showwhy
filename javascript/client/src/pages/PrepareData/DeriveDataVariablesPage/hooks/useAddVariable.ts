@@ -99,7 +99,7 @@ export function useAddVariable(): {
 
 function buildCauses(degree: BeliefDegree, type: DefinitionType) {
 	const causes = {
-		reasoning: ''
+		reasoning: '',
 	}
 	switch (type) {
 		case DefinitionType.Confounders:

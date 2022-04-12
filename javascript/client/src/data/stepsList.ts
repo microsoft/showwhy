@@ -73,9 +73,9 @@ export const stepsList = [
 				id: uuidv4(),
 				title: 'Derive data variables',
 				status: StepStatus.ToDo,
-				url: Pages.ProcessData,
+				url: Pages.DeriveDataVariables,
 				getMarkdown: async () =>
-					import('../markdown/prepare-data/Process.md?raw'),
+					import('../markdown/prepare-data/DeriveDataVariables.md?raw'),
 			},
 			// {
 			// 	id: uuidv4(),

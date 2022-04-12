@@ -49,10 +49,10 @@ const LoadDataPage = lazy(
 		),
 )
 
-const ProcessDataPage = lazy(
+const DeriveDataVariablesPage = lazy(
 	() =>
-		/* webpackChunkName: "ProcessDataPage" */ import(
-			'../../pages/PrepareData/ProcessDataPage'
+		/* webpackChunkName: "DeriveDataVariablesPage" */ import(
+			'../../pages/PrepareData/DeriveDataVariablesPage'
 		),
 )
 
@@ -109,7 +109,10 @@ export const Routes: React.FC = memo(function Routes() {
 			/>
 			<Route path={Pages.ConfirmDomain} component={ConfirmDomainModelsPage} />
 			<Route path={Pages.LoadData} component={LoadDataPage} />
-			<Route path={Pages.ProcessData} component={ProcessDataPage} />
+			<Route
+				path={Pages.DeriveDataVariables}
+				component={DeriveDataVariablesPage}
+			/>
 			<Route path={Pages.ConfirmData} component={ConfirmDataPage} />
 			<Route
 				path={Pages.SelectCausalEstimators}

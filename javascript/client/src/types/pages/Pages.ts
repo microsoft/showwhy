@@ -11,7 +11,7 @@ export enum Pages {
 	ConfirmDomain = '/model/confirm-domain',
 	Define = '/define',
 	LoadData = '/prepare/load',
-	ProcessData = '/prepare/data',
+	DeriveDataVariables = '/prepare/data-variables',
 	ConfirmData = '/prepare/confirm',
 	EstimateCausalEffects = '/perform/effects',
 	SelectCausalEstimators = '/perform/estimators',
