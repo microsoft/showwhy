@@ -12,7 +12,7 @@ import { CausalEffects } from '~components/CausalEffects'
 import { Container, Title } from '~styles'
 import type { RadioButtonChoice } from '~types'
 
-import { useBusinessLogic } from './hooks'
+import { useBusinessLogic } from './ConfirmDomainModelsPage.hooks'
 
 export const ConfirmDomainModelsPage: React.FC = memo(
 	function ConfirmDomainModelsPage() {

@@ -8,7 +8,7 @@ import { useEffect } from 'react'
 import { useAutomaticWorkflowStatus, useCausalEffects } from '~hooks'
 import { usePrimarySpecificationConfig } from '~state'
 
-export function useSetDonePage(): void {
+export function useSetPageDone(): void {
 	const primarySpecificationConfig = usePrimarySpecificationConfig()
 	const causalEffects = useCausalEffects(primarySpecificationConfig.causalModel)
 	const { confounders, outcomeDeterminants, exposureDeterminants } =

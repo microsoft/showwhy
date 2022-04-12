@@ -14,7 +14,7 @@ import {
 } from '~state'
 import type { RadioButtonChoice } from '~types'
 
-import { useSetDonePage } from './useSetPageDone'
+import { useSetPageDone } from './useSetPageDone'
 
 export function useBusinessLogic(): {
 	causalEffects: ReturnType<typeof useCausalEffects>
@@ -25,7 +25,7 @@ export function useBusinessLogic(): {
 	const setPrimarySpecificationConfig = useSetPrimarySpecificationConfig()
 	const primarySpecificationConfig = usePrimarySpecificationConfig()
 	const causalEffects = useCausalEffects(primarySpecificationConfig.causalModel)
-	useSetDonePage()
+	useSetPageDone()
 
 	const onDefaultChange = useCallback(
 		(option?: RadioButtonChoice) => {
