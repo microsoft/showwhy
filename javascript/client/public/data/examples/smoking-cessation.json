@@ -314,8 +314,7 @@
         }
     ],
     "todoPages": [
-        "/perform/effects",
-        "/perform/estimate-distribution",
+        "/perform/specification-curve",
         "/perform/evaluate"
     ],
     "tables": [

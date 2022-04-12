@@ -9,12 +9,10 @@ export enum Pages {
 	RelevantVariables = '/model/relevant-variables',
 	VariablesRelationships = '/model/variable-relationships',
 	ConfirmDomain = '/model/confirm-domain',
-	Define = '/define',
 	LoadData = '/prepare/load',
 	DeriveDataVariables = '/prepare/data-variables',
 	ConfirmData = '/prepare/confirm',
 	SelectCausalEstimators = '/perform/estimators',
-	RefutationTests = '/perform/refutation',
 	SpecificationCurvePage = '/perform/specification-curve',
 	EvaluateHypothesisPage = '/perform/evaluate',
 }
