@@ -6,7 +6,7 @@
 import type { ElementDefinition } from '@showwhy/types'
 import { useCallback } from 'react'
 
-import { useSaveDefinitions } from './useSaveDefinition'
+import { useSaveDefinitions } from '../ConsiderAlternativeDefinitionsPage.hooks'
 
 export function useRemoveDefinition(
 	definitions: ElementDefinition[],

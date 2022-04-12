@@ -35,10 +35,10 @@ import {
 	useCommandBar,
 	useDefinitionDropdownOptions,
 	useOnResetVariable,
-} from './hooks/index'
-import { useOnSelectVariable } from './hooks/useOnSelectVariable'
-import { useOnSetSubjectIdentifier } from './hooks/useOnSetSubjectIdentifier'
-import { useRenderDropdown } from './hooks/useRenderDropdownOption'
+	useOnSelectVariable,
+	useOnSetSubjectIdentifier,
+	useRenderDropdown,
+} from '../DeriveDataVariablesPage.hooks'
 
 export function useBusinessLogic(
 	toggleShowCallout: Handler,

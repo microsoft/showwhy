@@ -9,7 +9,7 @@ import { useMemo } from 'react'
 import { useGoToPage, usePageType } from '~hooks'
 import { Pages } from '~types'
 
-import { useSetPageDone } from './useSetPageDone'
+import { useSetPageDone } from '../ConsiderVariableRelationshipsPage.hooks'
 
 export function useBusinessLogic(): {
 	pageName: string

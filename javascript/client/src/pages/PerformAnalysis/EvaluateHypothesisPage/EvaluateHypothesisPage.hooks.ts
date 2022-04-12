@@ -36,7 +36,7 @@ import {
 } from '~state'
 import type { DefaultDatasetResult, RunHistory, Specification } from '~types'
 
-import { useLoadSpecificationData } from '../EstimateCausalEffectsPage/hooks'
+import { useLoadSpecificationData } from '../EstimateCausalEffectsPage/EstimateCausalEffectPage.hooks'
 
 export function useBusinessLogic(): {
 	alternativeModels: AlternativeModels

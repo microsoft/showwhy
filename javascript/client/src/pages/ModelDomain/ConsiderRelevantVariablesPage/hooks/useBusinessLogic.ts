@@ -14,11 +14,13 @@ import { useMemo, useState } from 'react'
 
 import { useCausalFactors } from '~state'
 
-import { useAddFactor } from './useAddFactor'
-import { useDeleteFactor } from './useDeleteFactor'
-import { useEditFactor } from './useEditFactor'
-import { useFactorsNavigation } from './useFactorsNavigation'
-import { useSetPageDone } from './useSetPageDone'
+import {
+	useAddFactor,
+	useDeleteFactor,
+	useEditFactor,
+	useFactorsNavigation,
+	useSetPageDone,
+} from '../ConsiderRelevantVariablesPage.hooks'
 
 export function useBusinessLogic(): {
 	factor: Maybe<CausalFactor>

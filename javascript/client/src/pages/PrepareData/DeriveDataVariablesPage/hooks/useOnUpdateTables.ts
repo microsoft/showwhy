@@ -11,9 +11,9 @@ import {
 } from '@data-wrangling-components/utilities'
 import { useCallback } from 'react'
 
-import { useAddFilesToCollection } from '../../../../hooks'
-import { useAddProjectFile } from '../../../../state'
-import type { ProjectFile } from '../../../../types'
+import { useAddFilesToCollection } from '~hooks'
+import { useAddProjectFile } from '~state'
+import type { ProjectFile } from '~types'
 
 export function useOnUpdateTables(): (tables: TableContainer[]) => void {
 	const addProjectFile = useAddProjectFile()

@@ -9,18 +9,18 @@ import styled from 'styled-components'
 import { Title } from '~styles'
 
 import { EstimatorCard } from './EstimatorCard'
-import { useBusinessLogic } from './hooks'
+import { useBusinessLogic } from './SelectCausalEstimatorsPage.hooks'
 
 export const SelectCausalEstimatorsPage: React.FC = memo(
 	function SelectCausalEstimatorsPage() {
-		const { estimator, refutationCount, onRefutationCountChange } =
+		const { estimatorOptions, refutationCount, onRefutationCountChange } =
 			useBusinessLogic()
 
 		return (
 			<Container>
 				<Section>
 					<Title>Estimator definitions</Title>
-					{estimator.estimatorCardList?.map(card => (
+					{estimatorOptions.map(card => (
 						<EstimatorCard
 							key={card.key}
 							title={card.title}

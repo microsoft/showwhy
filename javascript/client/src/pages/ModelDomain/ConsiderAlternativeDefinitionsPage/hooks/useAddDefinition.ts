@@ -9,8 +9,8 @@ import { useCallback } from 'react'
 import { useExperiment } from '~state'
 import { withRandomId } from '~utils'
 
+import { useSaveDefinitions } from '../ConsiderAlternativeDefinitionsPage.hooks'
 import { updateListTypes } from '../ConsiderAlternativeDefinitionsPage.utils'
-import { useSaveDefinitions } from './useSaveDefinition'
 
 export function useAddDefinition(): (definition: ElementDefinition) => void {
 	const saveDefinitions = useSaveDefinitions()

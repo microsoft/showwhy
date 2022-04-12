@@ -14,7 +14,7 @@ import { MessageContainer } from '~components/MessageContainer'
 import { SelectedTableDisplay } from '~components/Tables/SelectedTableDisplay'
 import { ContainerFlexRow } from '~styles'
 
-import { useBusinessLogic } from './hooks'
+import { useBusinessLogic } from './LoadDataPage.hooks'
 import { SupportedFileTypes } from './SupportedFileTypes'
 
 export const LoadDataPage: React.FC = memo(function LoadDataPage() {

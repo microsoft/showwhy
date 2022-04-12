@@ -4,6 +4,7 @@
  */
 
 import type { IChoiceGroupOption } from '@fluentui/react'
+import type { Handler, Maybe } from '@showwhy/types'
 import { EstimatorGroup, EstimatorType } from '@showwhy/types'
 
 export const estimatorGroups: IChoiceGroupOption[] = [
@@ -18,7 +19,7 @@ export const estimatorGroups: IChoiceGroupOption[] = [
 ]
 
 // Lower value, higher rank
-const estimatorRanking = [
+export const estimatorRanking = [
 	{
 		key: EstimatorType.LinearDoubleMachineLearning,
 		value: 1,
@@ -53,18 +54,26 @@ const estimatorRanking = [
 	},
 ]
 
-const defaultEstimatorRanking = estimatorRanking.reduce((acc, curr) => {
-	acc[curr.key] = curr.value
-	return acc
-}, {} as { [key: string]: number })
+export enum BatchUpdateAction {
+	Delete = 'delete',
+	Add = 'add',
+}
 
-export function getEstimatorByRanking(
-	estimators: EstimatorType[],
-): EstimatorType {
-	const ranking = estimators.map(
-		estimator => defaultEstimatorRanking[estimator],
-	) as number[]
-	const min = Math.min(...ranking)
-	const index = ranking.indexOf(min)
-	return estimators[index] as EstimatorType
+interface EstimatorOption {
+	description: string
+	onChange: () => void
+	isChecked: boolean
+	isDefault: boolean
+	onDefaultChange: Maybe<Handler>
+	group: EstimatorGroup
+	type: EstimatorType
+}
+
+export interface EstimatorCardOption {
+	key: string
+	title: string
+	description: string
+	onCardClick: Handler
+	isCardChecked: boolean
+	list: EstimatorOption[]
 }

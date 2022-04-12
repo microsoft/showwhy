@@ -6,8 +6,8 @@
 import type { ElementDefinition } from '@showwhy/types'
 import { useCallback } from 'react'
 
+import { useSaveDefinitions } from '../ConsiderAlternativeDefinitionsPage.hooks'
 import { updateListTypes } from '../ConsiderAlternativeDefinitionsPage.utils'
-import { useSaveDefinitions } from './useSaveDefinition'
 
 export function useEditDefinition(
 	definitions: ElementDefinition[],

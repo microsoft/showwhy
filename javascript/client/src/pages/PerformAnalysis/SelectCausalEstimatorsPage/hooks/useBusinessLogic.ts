@@ -12,14 +12,16 @@ import {
 	useSetRefutationCount,
 } from '~state'
 
-import { useEstimatorHook } from './estimators'
+import { useEstimatorOptions } from '../SelectCausalEstimatorsPage.hooks'
+import type { EstimatorCardOption } from '../SelectCausalEstimatorsPage.types'
 
 export function useBusinessLogic(): {
-	estimator: ReturnType<typeof useEstimatorHook>
+	estimatorOptions: EstimatorCardOption[]
 	refutationCount: number
 	onRefutationCountChange: (_: any, count?: string) => void
 } {
 	const estimators = useEstimators()
+	const estimatorOptions = useEstimatorOptions()
 	const refutationCount = useRefutationCount()
 	const setRefutationCount = useSetRefutationCount()
 	const { setDone, setTodo } = useAutomaticWorkflowStatus()
@@ -36,7 +38,7 @@ export function useBusinessLogic(): {
 	}, [estimators, setDone, setTodo])
 
 	return {
-		estimator: useEstimatorHook(),
+		estimatorOptions,
 		refutationCount,
 		onRefutationCountChange,
 	}

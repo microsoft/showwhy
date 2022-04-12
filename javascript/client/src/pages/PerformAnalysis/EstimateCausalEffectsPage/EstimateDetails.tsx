@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { round } from 'lodash'
+import round from 'lodash/round'
 import { memo } from 'react'
 
 import { Text } from '~styles'

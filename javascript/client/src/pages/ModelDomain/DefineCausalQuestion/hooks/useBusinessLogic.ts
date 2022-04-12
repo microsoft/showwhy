@@ -8,9 +8,11 @@ import type { Experiment, Maybe } from '@showwhy/types'
 
 import { useExperiment } from '~state'
 
-import { useOnInputChange } from './useOnInputChange'
-import { useSetHypothesis } from './useSetHypothesis'
-import { useSetPageDone } from './useSetPageDone'
+import {
+	useOnInputChange,
+	useSetHypothesis,
+	useSetPageDone,
+} from '../DefineCausalQuestion.hooks'
 
 export function useBusinessLogic(): {
 	defineQuestion: Experiment
@@ -21,6 +23,7 @@ export function useBusinessLogic(): {
 	const onInputChange = useOnInputChange()
 	const setHypothesis = useSetHypothesis()
 	useSetPageDone()
+
 	return {
 		defineQuestion,
 		onInputChange,

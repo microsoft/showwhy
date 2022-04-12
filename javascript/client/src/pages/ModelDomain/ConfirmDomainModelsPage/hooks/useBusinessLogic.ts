@@ -14,7 +14,7 @@ import {
 } from '~state'
 import type { RadioButtonChoice } from '~types'
 
-import { useSetPageDone } from './useSetPageDone'
+import { useSetPageDone } from '../ConfirmDomainModelsPage.hooks'
 
 export function useBusinessLogic(): {
 	causalEffects: ReturnType<typeof useCausalEffects>

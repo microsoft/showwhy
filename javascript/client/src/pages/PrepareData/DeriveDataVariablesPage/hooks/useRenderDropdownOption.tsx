@@ -22,7 +22,7 @@ import {
 	useSelectedOptionByColumn,
 	useSelectedOptionByColumnAndVariable,
 	useSelectedOptions,
-} from './useSelectedOption'
+} from '../DeriveDataVariablesPage.hooks'
 
 const buttonStyles = {
 	root: {

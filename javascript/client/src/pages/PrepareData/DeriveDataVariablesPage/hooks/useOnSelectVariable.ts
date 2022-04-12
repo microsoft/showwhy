@@ -11,7 +11,10 @@ import type { SetterOrUpdater } from 'recoil'
 import { useAddOrEditFactor, useSaveDefinition } from '~hooks'
 import { isCausalFactorType } from '~utils'
 
-import { useSetTargetCausalFactor, useSetTargetDefinition } from './index'
+import {
+	useSetTargetCausalFactor,
+	useSetTargetDefinition,
+} from '../DeriveDataVariablesPage.hooks'
 
 export function useOnSelectVariable(
 	causalFactors: CausalFactor[],

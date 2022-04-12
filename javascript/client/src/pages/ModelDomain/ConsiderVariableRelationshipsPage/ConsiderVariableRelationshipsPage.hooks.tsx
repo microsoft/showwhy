@@ -4,3 +4,4 @@
  */
 
 export * from './hooks/useBusinessLogic'
+export * from './hooks/useSetPageDone'

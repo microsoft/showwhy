@@ -4,3 +4,6 @@
  */
 
 export * from './hooks/useBusinessLogic'
+export * from './hooks/useOnInputChange'
+export * from './hooks/useSetHypothesis'
+export * from './hooks/useSetPageDone'

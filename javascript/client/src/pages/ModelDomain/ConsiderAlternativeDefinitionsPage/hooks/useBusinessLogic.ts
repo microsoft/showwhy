@@ -16,10 +16,12 @@ import { useHandleOnLinkClick } from '~hooks'
 import { useDefinitionType, useExperiment } from '~state'
 import type { Item } from '~types'
 
-import { useAddDefinition } from './useAddDefinition'
-import { useEditDefinition } from './useEditDefinition'
-import { useRemoveDefinition } from './useRemoveDefinition'
-import { useSetPageDone } from './useSetPageDone'
+import {
+	useAddDefinition,
+	useEditDefinition,
+	useRemoveDefinition,
+	useSetPageDone,
+} from '../ConsiderAlternativeDefinitionsPage.hooks'
 
 interface PivotData {
 	key: string
