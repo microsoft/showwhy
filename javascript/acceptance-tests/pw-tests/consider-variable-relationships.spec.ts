@@ -6,7 +6,7 @@
 import { test, expect, Page } from '@playwright/test'
 import { createPageObjects, PageObjects } from '../pageObjects'
 
-test.describe('Define Factors Page', () => {
+test.describe('Consider Variable Relationships Page', () => {
 	let page: Page
 	let po: PageObjects
 
@@ -14,26 +14,28 @@ test.describe('Define Factors Page', () => {
 		const ctx = await browser.newContext()
 		page = await ctx.newPage()
 		po = createPageObjects(page)
-		await po.defineFactorsPage.open()
-		await po.defineFactorsPage.waitForLoad()
+		await po.considerVariableRelationships.open()
+		await po.considerVariableRelationships.waitForLoad()
 	})
 
 	test('Add factors causing exposure and outcome', async () => {
-		await po.defineFactorsPage.goToAddNewFactor()
-		await po.modelCausalFactorsPage.addElement({ variable: 'Primary variable' })
-		await po.modelCausalFactorsPage.addElement({
+		await po.considerVariableRelationships.goToAddNewFactor()
+		await po.considerRelevantVariables.addElement({
+			variable: 'Primary variable',
+		})
+		await po.considerRelevantVariables.addElement({
 			variable: 'Secondary variable',
 		})
-		await po.modelCausalFactorsPage.goToBackToPage()
-		await po.defineFactorsPage.selectCauses(0, {
+		await po.considerRelevantVariables.goToBackToPage()
+		await po.considerVariableRelationships.selectCauses(0, {
 			causeExposure: 'No',
 			causeOutcome: 'Moderately',
 		})
-		await po.defineFactorsPage.selectCauses(1, {
+		await po.considerVariableRelationships.selectCauses(1, {
 			causeExposure: 'Weakly',
 			causeOutcome: 'Strongly',
 		})
-		const elements = await po.defineFactorsPage.countElements()
+		const elements = await po.considerVariableRelationships.countElements()
 		await expect(elements).toEqual(2)
 	})
 })

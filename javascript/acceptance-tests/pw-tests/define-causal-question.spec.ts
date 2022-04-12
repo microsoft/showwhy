@@ -7,7 +7,7 @@ import { test, expect, Page } from '@playwright/test'
 import { createPageObjects, PageObjects } from '../pageObjects'
 import { generateFieldData } from '../util'
 
-test.describe('Describe Elements Page', () => {
+test.describe('Define Causal Question Page', () => {
 	let page: Page
 	let po: PageObjects
 
@@ -15,21 +15,21 @@ test.describe('Describe Elements Page', () => {
 		const ctx = await browser.newContext()
 		page = await ctx.newPage()
 		po = createPageObjects(page)
-		await po.describeElementsPage.open()
-		await po.describeElementsPage.waitForLoad()
+		await po.defineCausalQuestion.open()
+		await po.defineCausalQuestion.waitForLoad()
 	})
 
 	test('Describe all elements', async () => {
-		await po.describeElementsPage.enterFieldGroupData(
+		await po.defineCausalQuestion.enterFieldGroupData(
 			generateFieldData('Population'),
 		)
-		await po.describeElementsPage.enterFieldGroupData(
+		await po.defineCausalQuestion.enterFieldGroupData(
 			generateFieldData('Exposure'),
 		)
-		await po.describeElementsPage.enterFieldGroupData(
+		await po.defineCausalQuestion.enterFieldGroupData(
 			generateFieldData('Outcome'),
 		)
-		await po.describeElementsPage.selectHypothesis('Increase')
+		await po.defineCausalQuestion.selectHypothesis('Increase')
 		const expected =
 			'For Population label, does Exposure label cause Outcome label to Increase?'
 		const question = await po.header.getQuestion()

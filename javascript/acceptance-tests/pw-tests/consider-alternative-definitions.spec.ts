@@ -6,7 +6,7 @@
 import { test, expect, Page } from '@playwright/test'
 import { createPageObjects, PageObjects } from '../pageObjects'
 
-test.describe('Define Model Page', () => {
+test.describe('Consider Alternative Definitions Page', () => {
 	let page: Page
 	let po: PageObjects
 
@@ -14,46 +14,46 @@ test.describe('Define Model Page', () => {
 		const ctx = await browser.newContext()
 		page = await ctx.newPage()
 		po = createPageObjects(page)
-		await po.defineModelPage.open()
-		await po.defineModelPage.waitForLoad()
+		await po.considerAlternativeDefinitions.open()
+		await po.considerAlternativeDefinitions.waitForLoad()
 	})
 
 	test('Define population', async () => {
-		await po.defineModelPage.addElement({
+		await po.considerAlternativeDefinitions.addElement({
 			variable: 'Primary variable',
 			type: 'population',
 		})
-		await po.defineModelPage.addElement({
+		await po.considerAlternativeDefinitions.addElement({
 			variable: 'Secondary variable',
 			type: 'population',
 		})
-		const elements = await po.defineModelPage.countElements()
+		const elements = await po.considerAlternativeDefinitions.countElements()
 		await expect(elements).toEqual(2)
 	})
 
 	test('Define exposure', async () => {
-		await po.defineModelPage.addElement({
+		await po.considerAlternativeDefinitions.addElement({
 			variable: 'Primary variable',
 			type: 'exposure',
 		})
-		await po.defineModelPage.addElement({
+		await po.considerAlternativeDefinitions.addElement({
 			variable: 'Secondary variable',
 			type: 'exposure',
 		})
-		const elements = await po.defineModelPage.countElements()
+		const elements = await po.considerAlternativeDefinitions.countElements()
 		await expect(elements).toEqual(2)
 	})
 
 	test('Define outcome', async () => {
-		await po.defineModelPage.addElement({
+		await po.considerAlternativeDefinitions.addElement({
 			variable: 'Primary variable',
 			type: 'outcome',
 		})
-		await po.defineModelPage.addElement({
+		await po.considerAlternativeDefinitions.addElement({
 			variable: 'Secondary variable',
 			type: 'outcome',
 		})
-		const elements = await po.defineModelPage.countElements()
+		const elements = await po.considerAlternativeDefinitions.countElements()
 		await expect(elements).toEqual(2)
 	})
 })

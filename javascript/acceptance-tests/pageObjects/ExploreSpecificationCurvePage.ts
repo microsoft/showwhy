@@ -18,7 +18,7 @@ const selectors: Record<string, string> = {
 const specificationSelector: fn = (n = 72) => `path:nth-child(${n})`
 
 export class ExploreSpecificationCurvePage extends Page {
-	protected PAGE_PATH: string = '#/perform/estimate-distribution'
+	protected PAGE_PATH: string = '#/perform/specification-curve'
 
 	public async waitForLoad(): Promise<void> {
 		await super.waitForLoad()

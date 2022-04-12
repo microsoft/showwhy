@@ -6,7 +6,7 @@
 import { Page } from '@playwright/test'
 
 import { Header } from './Header'
-import { modelCausalQuestionPO } from './modelCausalQuestionPO'
+import { DefineCausalQuestionPO } from './DefineCausalQuestionPO'
 import { ConsiderAlternativeDefinitionsPO } from './ConsiderAlternativeDefinitionsPO'
 import { ConsiderRelevantVariablesPO } from './ConsiderRelevantVariablesPO'
 import { ConsiderVariableRelationshipsPO } from './ConsiderVariableRelationshipsPO'
@@ -17,7 +17,7 @@ import { EvaluateHypothesisPage } from './EvaluateHypothesisPage'
 
 export interface PageObjects {
 	header: Header
-	modelCausalQuestion: modelCausalQuestionPO
+	defineCausalQuestion: DefineCausalQuestionPO
 	considerAlternativeDefinitions: ConsiderAlternativeDefinitionsPO
 	considerRelevantVariables: ConsiderRelevantVariablesPO
 	considerVariableRelationships: ConsiderVariableRelationshipsPO
@@ -29,7 +29,7 @@ export interface PageObjects {
 
 export function createPageObjects(page: Page): PageObjects {
 	const header = new Header(page)
-	const modelCausalQuestion = new modelCausalQuestionPO(page)
+	const defineCausalQuestion = new DefineCausalQuestionPO(page)
 	const considerAlternativeDefinitions = new ConsiderAlternativeDefinitionsPO(
 		page,
 	)
@@ -44,7 +44,7 @@ export function createPageObjects(page: Page): PageObjects {
 
 	return {
 		header,
-		modelCausalQuestion,
+		defineCausalQuestion,
 		considerAlternativeDefinitions,
 		considerRelevantVariables,
 		considerVariableRelationships,

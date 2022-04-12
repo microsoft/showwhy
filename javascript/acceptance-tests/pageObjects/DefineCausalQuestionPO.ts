@@ -27,8 +27,8 @@ interface Field {
 	description?: string
 }
 
-export class modelCausalQuestionPO extends Page {
-	protected PAGE_PATH: string = '#/model/elements'
+export class DefineCausalQuestionPO extends Page {
+	protected PAGE_PATH: string = '#/model/causal-question'
 
 	public async waitForLoad(): Promise<void> {
 		await super.waitForLoad()
