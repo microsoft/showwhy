@@ -10,22 +10,25 @@ import styled from 'styled-components'
 
 import { ErrorMessage } from '~components/ErrorMessage'
 import { RunProgressIndicator } from '~components/RunProgressIndicator'
-import { useAutomaticWorkflowStatus, useSpecificationCurve } from '~hooks'
+import {
+	useAutomaticWorkflowStatus,
+	useMicrodataInfoMessage,
+	useSpecificationCurve,
+	useSubjectIdentifierMissingMessage,
+	useVariablesMissingMessage,
+} from '~hooks'
 import { ContainerFlexColumn, ContainerFlexRow, Title } from '~styles'
 
-import {
-	useBusinessLogic,
-	useInfoMessage,
-	useMicrodataInfoMessage,
-} from '../EstimateCausalEffectsPage/hooks'
 import { EstimatedEffectOptions } from './EstimatedEffectOptions'
+import { useEstimateLogic } from './hooks'
 import { SpecificationDescription } from './SpecificationDescription'
 import { VegaSpecificationCurve } from './vega/VegaSpecificationCurve'
 
 export const ExploreSpecificationCurvePage: React.FC = memo(
 	function SpecificationCurve() {
-		const InfoMessage = useInfoMessage()
 		const MicrodataMessage = useMicrodataInfoMessage()
+		const VariablesMissingMessage = useVariablesMissingMessage()
+		const IdentifierMessage = useSubjectIdentifierMissingMessage()
 		const { setDone, setTodo } = useAutomaticWorkflowStatus()
 
 		const {
@@ -38,11 +41,16 @@ export const ExploreSpecificationCurvePage: React.FC = memo(
 			errors,
 			loadingSpecCount,
 			specCount,
-		} = useBusinessLogic()
+			loadingFile,
+		} = useEstimateLogic()
 
 		const hasErrorMessage = useMemo((): boolean => {
-			return !!(InfoMessage || MicrodataMessage)
-		}, [InfoMessage, MicrodataMessage])
+			return !!(
+				VariablesMissingMessage ||
+				MicrodataMessage ||
+				IdentifierMessage
+			)
+		}, [VariablesMissingMessage, MicrodataMessage, IdentifierMessage])
 
 		const {
 			data,
@@ -83,8 +91,9 @@ export const ExploreSpecificationCurvePage: React.FC = memo(
 							<Title>
 								Specification curve analysis of causal effect estimates
 							</Title>
-							{InfoMessage}
+							{VariablesMissingMessage}
 							{MicrodataMessage}
+							{IdentifierMessage}
 							{!isProcessing && (
 								<Container>
 									<PrimaryButton
@@ -92,12 +101,13 @@ export const ExploreSpecificationCurvePage: React.FC = memo(
 											loadingSpecCount ||
 											!totalEstimatorsCount ||
 											!specCount ||
-											hasErrorMessage
+											hasErrorMessage ||
+											loadingFile
 										}
 										onClick={runEstimate}
 										data-pw="run-estimate-button"
 									>
-										Run now
+										{loadingFile ? 'Loading...' : 'Run now'}
 									</PrimaryButton>
 									{!loadingSpecCount ? (
 										<Text>{specCount || 0} specifications to analyze</Text>

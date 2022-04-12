@@ -3,28 +3,30 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import { Link } from 'react-router-dom'
 
 import { MessageContainer } from '~components/MessageContainer'
 import { useAllVariables } from '~hooks'
 import { useCausalFactors, useExperiment } from '~state'
+import { Pages } from '~types'
 
-export function useInfoMessage(): JSX.Element | null {
+export function useVariablesMissingMessage(): JSX.Element | null {
 	const definitions = useExperiment()
 	const causalFactors = useCausalFactors()
 	const allVariables = useAllVariables(causalFactors, definitions)
-	const [showInfoMessage, setShowInfoMessage] = useState<boolean>(false)
+
 	return useMemo(() => {
-		const missing = allVariables.some(v => !v.column)
-		setShowInfoMessage(missing)
-		return showInfoMessage ? (
-			<MessageContainer styles={{ marginTop: '1rem' }}>
+		return allVariables.some(v => !v.column) ? (
+			<MessageContainer styles={{ marginBottom: '1rem' }}>
 				<span>
-					Looks like some variables were not assigned, go back to the{' '}
-					<Link to="/prepare/data">Process Data Page</Link> to fix this.
+					Looks like some variables were not assigned, go back to
+					<Link to={Pages.DeriveDataVariables}>
+						Derive data variables page
+					</Link>{' '}
+					to fix this.
 				</span>
 			</MessageContainer>
 		) : null
-	}, [setShowInfoMessage, showInfoMessage, allVariables])
+	}, [allVariables])
 }

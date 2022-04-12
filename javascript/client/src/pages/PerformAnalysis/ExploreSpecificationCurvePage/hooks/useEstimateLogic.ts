@@ -8,8 +8,6 @@ import { OrchestratorType } from '@showwhy/api-client'
 import { buildLoadNode } from '@showwhy/builders'
 import type {
 	AsyncHandler,
-	Estimator,
-	Experiment,
 	Handler,
 	Maybe,
 	NodeRequest,
@@ -25,7 +23,6 @@ import {
 	useIsDefaultRunProcessing,
 	useRefutationOptions,
 	useRunEstimate,
-	useSetRunAsDefault,
 	useUpdateAndDisableRunHistory,
 	useWakeLock,
 } from '~hooks'
@@ -42,7 +39,6 @@ import {
 	useSetSpecCount,
 	useSpecCount,
 } from '~state'
-import type { RunHistory } from '~types'
 import {
 	createZipFormData,
 	initialRunHistory,
@@ -52,22 +48,17 @@ import {
 
 const OUTPUT_FILE_NAME = 'output'
 
-export function useBusinessLogic(): {
+export function useEstimateLogic(): {
 	isProcessing: boolean
 	totalEstimatorsCount: number
 	specCount: Maybe<number>
-	estimators: Estimator[]
-	definitions: Experiment
-	runHistory: RunHistory[]
 	errors: Maybe<string>
 	cancelRun: Handler
 	runEstimate: AsyncHandler
-	setRunAsDefault: (run: RunHistory) => void
 	loadingSpecCount: boolean
-	loadingFile: boolean
-	hasConfidenceInterval: boolean
 	refutationOptions: RefutationOption[]
 	isCanceled: boolean
+	loadingFile: boolean
 } {
 	const definitions = useExperiment()
 	const updateRunHistory = useUpdateAndDisableRunHistory()
@@ -86,7 +77,6 @@ export function useBusinessLogic(): {
 	const [isCanceled, setIsCanceled] = useState<boolean>(false)
 	const [errors, setErrors] = useState<string>('')
 	const runHistory = useRunHistory()
-	const setRunAsDefault = useSetRunAsDefault()
 	const specCount = useSpecCount()
 	const setSpecCount = useSetSpecCount()
 	const refutationOptions = useRefutationOptions()
@@ -198,17 +188,12 @@ export function useBusinessLogic(): {
 		isProcessing,
 		totalEstimatorsCount,
 		specCount,
-		estimators,
-		definitions,
-		runHistory,
 		errors,
 		cancelRun,
 		runEstimate,
-		setRunAsDefault,
 		loadingSpecCount,
-		loadingFile,
-		hasConfidenceInterval,
 		refutationOptions,
 		isCanceled,
+		loadingFile,
 	}
 }
