@@ -15,6 +15,7 @@ import { useHistory } from 'react-router-dom'
 
 import { useAddOrEditFactor } from '~hooks'
 import { useCausalFactors, useSetCausalFactors } from '~state'
+import { Pages } from '~types'
 import { noop } from '~utils'
 
 import { useSetDonePage } from './useSetPageDone'
@@ -122,9 +123,9 @@ function useFactorsNavigation(): [Handler, PathData] {
 	}, [history.location.state, setHistoryState])
 
 	const goToFactorsPage = useCallback(() => {
-		history.push(`/define-factors/${factorsPathData.path}`)
+		history.push(Pages.DefineFactors)
 		setHistoryState(undefined)
-	}, [factorsPathData, setHistoryState, history])
+	}, [setHistoryState, history])
 
 	return [factorsPathData?.path ? goToFactorsPage : noop, factorsPathData]
 }
@@ -133,7 +134,7 @@ function useFactorsPathData(historyState: Maybe<string>): PathData {
 	return useMemo((): PathData => {
 		return {
 			path: historyState,
-			page: historyState?.replace(/-/g, ' '),
+			page: historyState?.replace(/[/-]/g, ' '),
 		}
 	}, [historyState])
 }

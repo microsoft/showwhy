@@ -6,17 +6,25 @@
 import { dataAttr } from '../util'
 import { Page } from './Page'
 
+interface CausesDropdown {
+	causeExposure: string
+	causeOutcome: string
+}
+
 const selectors: Record<string, string> = {
 	title: dataAttr('title'),
 	form: dataAttr('factors-form'),
-	element: dataAttr('generic-table-row'),
+	element: 'tbody tr',
 	addNewFactorButton: dataAttr('add-new-factor-button'),
 }
 
+const causesDropdownSelector = (type: string, index: number) =>
+	`${dataAttr(`factor-${index}`)} ${dataAttr(type)}`
+const optionSelector = (type: string) =>
+	`button[role="option"]:has-text("${type}")`
+
 export class DefineFactorsPage extends Page {
-	public open(type: string) {
-		return super.open(`#/define-factors/${type}`)
-	}
+	protected PAGE_PATH: string = `#/consider/variable-relationships`
 
 	public async waitForLoad(): Promise<void> {
 		await super.waitForLoad()
@@ -24,6 +32,14 @@ export class DefineFactorsPage extends Page {
 		await this.page.waitForSelector(selectors.addNewFactorButton, {
 			state: 'visible',
 		})
+	}
+
+	public async selectCauses(index = 0, data: CausesDropdown): Promise<void> {
+		const { causeExposure, causeOutcome } = data
+		await this.page.click(causesDropdownSelector('causeExposure', index))
+		await this.page.click(optionSelector(causeExposure))
+		await this.page.click(causesDropdownSelector('causeOutcome', index))
+		await this.page.click(optionSelector(causeOutcome))
 	}
 
 	public async goToAddNewFactor(): Promise<void> {

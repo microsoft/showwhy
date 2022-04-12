@@ -29,7 +29,6 @@ export function useOnResetVariable(
 					x.sectionProps?.items.find(a => a.key === id),
 				)
 				.find(o => o)
-			console.log(option, columnName)
 			onSelectVariable(option, columnName)
 		},
 		[onSelectVariable, definitionDropdown, allElements],

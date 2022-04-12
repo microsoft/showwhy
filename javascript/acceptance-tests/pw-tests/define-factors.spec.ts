@@ -14,30 +14,25 @@ test.describe('Define Factors Page', () => {
 		const ctx = await browser.newContext()
 		page = await ctx.newPage()
 		po = createPageObjects(page)
+		await po.defineFactorsPage.open()
+		await po.defineFactorsPage.waitForLoad()
 	})
 
-	test('Add factors causing exposure', async () => {
-		await po.defineFactorsPage.open('cause-exposure')
-		await po.defineFactorsPage.waitForLoad()
+	test('Add factors causing exposure and outcome', async () => {
 		await po.defineFactorsPage.goToAddNewFactor()
 		await po.modelCausalFactorsPage.addElement({ variable: 'Primary variable' })
 		await po.modelCausalFactorsPage.addElement({
 			variable: 'Secondary variable',
 		})
 		await po.modelCausalFactorsPage.goToBackToPage()
-		const elements = await po.defineFactorsPage.countElements()
-		await expect(elements).toEqual(2)
-	})
-
-	test('Add factors causing outcome', async () => {
-		await po.defineFactorsPage.open('cause-outcome')
-		await po.defineFactorsPage.waitForLoad()
-		await po.defineFactorsPage.goToAddNewFactor()
-		await po.modelCausalFactorsPage.addElement({ variable: 'Primary variable' })
-		await po.modelCausalFactorsPage.addElement({
-			variable: 'Secondary variable',
+		await po.defineFactorsPage.selectCauses(0, {
+			causeExposure: 'No',
+			causeOutcome: 'Moderately',
 		})
-		await po.modelCausalFactorsPage.goToBackToPage()
+		await po.defineFactorsPage.selectCauses(1, {
+			causeExposure: 'Weakly',
+			causeOutcome: 'Strongly',
+		})
 		const elements = await po.defineFactorsPage.countElements()
 		await expect(elements).toEqual(2)
 	})

@@ -7,8 +7,8 @@ export interface FlatCausalFactor {
 	id: string
 	description: string
 	variable?: string
-	causes: boolean
-	degree: number
+	causeExposure: number
+	causeOutcome: number
 	reasoning: string
 	type: string
 }

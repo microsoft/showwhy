@@ -5,43 +5,42 @@
 
 import type {
 	CausalFactor,
-	CausalFactorType,
 	Cause,
 	FlatCausalFactor,
 	Setter,
 } from '@showwhy/types'
+import { CausalFactorType } from '@showwhy/types'
 import { useCallback, useMemo } from 'react'
 
 import { replaceItemAtIndex } from '~utils'
 
 export function useFlatFactorsList(
 	causalFactors: CausalFactor[],
-	causeType: CausalFactorType,
 	values?: CausalFactor[],
 ): FlatCausalFactor[] {
 	return useMemo((): FlatCausalFactor[] => {
 		return causalFactors.map((factor: CausalFactor) => {
 			const equal =
-				values
-					?.find(existing => existing.id === factor.id)
-					?.causes?.find(c => c.type === causeType) ||
-				(factor.causes && factor.causes.find(c => c.type === causeType))
+				values?.find(existing => existing.id === factor.id)?.causes ||
+				factor.causes ||
+				({} as FlatCausalFactor)
 
 			return {
 				variable: factor.variable,
-				causes: equal?.causes || false,
-				degree: equal?.degree ?? null,
-				reasoning: equal?.reasoning || '',
+				[CausalFactorType.CauseExposure]:
+					equal[CausalFactorType.CauseExposure] ?? null,
+				[CausalFactorType.CauseOutcome]:
+					equal[CausalFactorType.CauseOutcome] ?? null,
+				reasoning: equal.reasoning || '',
 				id: factor.id,
 				description: factor.description,
 			}
 		}) as FlatCausalFactor[]
-	}, [causalFactors, values, causeType])
+	}, [causalFactors, values])
 }
 
 export function useSaveFactors(
 	causalFactors: CausalFactor[],
-	causeType: CausalFactorType,
 	setValues: Setter<CausalFactor[]>,
 	save: (factors: CausalFactor[]) => void,
 ): (id: string, value: Cause) => void {
@@ -49,18 +48,16 @@ export function useSaveFactors(
 		(id: string, newValue: Cause) => {
 			const index = causalFactors.findIndex(v => v.id === id)
 			const oldFactor = causalFactors.find(x => x.id === id)
-			const oldCauses = oldFactor?.causes?.filter(
-				x => x.type !== causeType,
-			) as Cause[]
-			const causes = [
-				...(oldCauses || []),
-				{
-					causes: newValue.causes,
-					degree: newValue.degree ?? null,
-					reasoning: newValue.reasoning,
-					type: causeType,
-				} as Cause,
-			]
+			const oldCauses = oldFactor?.causes
+
+			const causes = {
+				...(oldCauses || {}),
+				[CausalFactorType.CauseExposure]:
+					newValue[CausalFactorType.CauseExposure] ?? null,
+				[CausalFactorType.CauseOutcome]:
+					newValue[CausalFactorType.CauseOutcome] ?? null,
+				reasoning: newValue.reasoning,
+			} as Cause
 			const factorObject = {
 				...oldFactor,
 				causes,
@@ -74,6 +71,6 @@ export function useSaveFactors(
 			setValues(newFactorsList)
 			save(newFactorsList)
 		},
-		[causalFactors, setValues, causeType, save],
+		[causalFactors, setValues, save],
 	)
 }

@@ -6,6 +6,7 @@
 import type {
 	AlternativeModels,
 	CausalFactor,
+	Cause,
 	OptionalId,
 } from '@showwhy/types'
 import {
@@ -86,30 +87,23 @@ export function useAlternativeModelsTestable(
 			if (shouldUseVariable) {
 				variable = factor.variable
 			}
-			const causes = factor.causes || []
-			const causeExposure = causes.find(
-				c => c.type === CausalFactorType.CauseExposure,
-			)
-			const causeOutcome = causes.find(
-				c => c.type === CausalFactorType.CauseOutcome,
-			)
+			const { causes = {} as Cause } = factor || {}
 
-			if (causeExposure?.causes && causeOutcome?.causes) {
-				const degree = causeExposure?.degree
-				if (degree && shouldIncludeInDegree(degree, causalLevel)) {
+			const degreeExposure = causes[CausalFactorType.CauseExposure] ?? -1
+			const degreeOutcome = causes[CausalFactorType.CauseOutcome] ?? -1
+			if (degreeExposure > 0 && degreeOutcome > 0) {
+				if (shouldIncludeInDegree(degreeExposure, causalLevel)) {
 					confoundersArray.push(variable)
 				}
 			}
 
-			if (causeOutcome?.causes && !causeExposure?.causes) {
-				const degree = causeOutcome?.degree
-				if (degree && shouldIncludeInDegree(degree, causalLevel)) {
+			if (degreeOutcome > 0 && degreeExposure === BeliefDegree.None) {
+				if (shouldIncludeInDegree(degreeOutcome, causalLevel)) {
 					outcomeArray.push(variable)
 				}
 			}
-			if (causeExposure?.causes && !causeOutcome?.causes) {
-				const degree = causeExposure?.degree
-				if (degree && shouldIncludeInDegree(degree, causalLevel)) {
+			if (degreeExposure > 0 && degreeOutcome === BeliefDegree.None) {
+				if (shouldIncludeInDegree(degreeExposure, causalLevel)) {
 					exposureArray.push(variable)
 				}
 			}
