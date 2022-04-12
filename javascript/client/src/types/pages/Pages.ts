@@ -4,19 +4,15 @@
  */
 
 export enum Pages {
-	DefineElements = '/define/elements',
-	ConsiderCausalFactors = '/consider/relevant-variables',
-	DefineFactors = '/consider/variable-relationships',
-	Confirm = '/define/confirm',
-	Define = '/define',
-	Alternative = '/define/alternative',
+	CausalQuestion = '/model/causal-question',
+	AlternativeDefinitions = '/model/alternative',
+	RelevantVariables = '/model/relevant-variables',
+	VariablesRelationships = '/model/variable-relationships',
+	ConfirmDomain = '/model/confirm-domain',
 	LoadData = '/prepare/load',
-	ProcessData = '/prepare/data',
+	DeriveDataVariables = '/prepare/data-variables',
 	ConfirmData = '/prepare/confirm',
-	EstimateCausalEffects = '/perform/effects',
 	SelectCausalEstimators = '/perform/estimators',
-	RefutationTests = '/perform/refutation',
-	SpecificationCurvePage = '/perform/estimate-distribution',
+	EstimateCausalEffects = '/perform/causal-effects',
 	EvaluateHypothesisPage = '/perform/evaluate',
-	ReportsPage = '/reports/graph',
 }

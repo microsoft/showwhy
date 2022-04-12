@@ -20,7 +20,7 @@ import { Pages } from '~types'
 import { AppHeader } from '../AppHeader'
 import { useOnClickProject, useProcessStepInfo } from './hooks'
 
-const noChildPadding = [Pages.ProcessData]
+const noChildPadding = [Pages.DeriveDataVariables]
 
 export const Layout: React.FC = memo(function Layout({ children }) {
 	const [error, setError] = useState<Maybe<string>>()
@@ -100,8 +100,8 @@ const Nav = styled.div`
 	max-height: 94vh;
 	overflow: hidden;
 `
-	
-	const StepsContainer = styled.div`
+
+const StepsContainer = styled.div`
 	position: relative;
 	max-height: 80%;
 	margin-bottom: 1rem;
@@ -111,7 +111,7 @@ const ChildrenContainer = styled.div<{ noPadding: boolean; url?: string }>`
 	padding: ${({ noPadding }) => (noPadding ? '0' : '0 16px')};
 	height: 95%;
 	overflow-y: auto;
-	margin-bottom: ${({ url }) => (url === '/prepare/data' ? 4 : 5)}rem;
+	margin-bottom: ${({ url }) => (url === Pages.DeriveDataVariables ? 4 : 5)}rem;
 `
 
 const ControlsContainer = styled.div`
@@ -121,10 +121,10 @@ const ControlsContainer = styled.div`
 	justify-content: flex-start;
 `
 
-const GuidanceContainer = styled.div<{h: string}>`
+const GuidanceContainer = styled.div<{ h: string }>`
 	border-right: 1px solid ${({ theme }) => theme.application().lowContrast()};
 	width: 100%;
-	height: ${({h}) => h};
+	height: ${({ h }) => h};
 `
 
 const Container = styled.div`

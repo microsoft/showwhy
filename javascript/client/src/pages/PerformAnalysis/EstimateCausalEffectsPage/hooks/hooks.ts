@@ -2,213 +2,156 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import { csv } from 'd3-fetch'
+import isNull from 'lodash/isNull'
+import { useEffect, useMemo, useState } from 'react'
 
-import { useBoolean } from '@fluentui/react-hooks'
-import { OrchestratorType } from '@showwhy/api-client'
-import { buildLoadNode } from '@showwhy/builders'
-import type {
-	AsyncHandler,
-	Estimator,
-	Experiment,
-	Handler,
-	Maybe,
-	NodeRequest,
-	RefutationOption,
-} from '@showwhy/types'
-import type ColumnTable from 'arquero/dist/types/table/column-table'
-import { useCallback, useEffect, useState } from 'react'
-import { v4 as uuidv4 } from 'uuid'
+import { useDefaultRun } from '~hooks'
+import { useDefaultDatasetResult } from '~state'
+import type { Specification, SpecificationCurveConfig } from '~types'
 
-import {
-	useAllColumns,
-	useEstimateNode,
-	useIsDefaultRunProcessing,
-	useRefutationOptions,
-	useRunEstimate,
-	useSetRunAsDefault,
-	useUpdateAndDisableRunHistory,
-	useWakeLock,
-} from '~hooks'
-import { api } from '~resources'
-import {
-	useCausalFactors,
-	useConfidenceInterval,
-	useEstimators,
-	useExperiment,
-	useOutputTablePrep,
-	useProjectFiles,
-	useRefutationCount,
-	useRunHistory,
-	useSetSpecCount,
-	useSpecCount,
-} from '~state'
-import type { RunHistory } from '~types'
-import {
-	createZipFormData,
-	initialRunHistory,
-	SESSION_ID_KEY,
-	setStorageItem,
-} from '~utils'
-
-const OUTPUT_FILE_NAME = 'output'
-
-export function useBusinessLogic(): {
-	isProcessing: boolean
-	totalEstimatorsCount: number
-	specCount: Maybe<number>
-	estimators: Estimator[]
-	definitions: Experiment
-	runHistory: RunHistory[]
-	errors: Maybe<string>
-	cancelRun: Handler
-	runEstimate: AsyncHandler
-	setRunAsDefault: (run: RunHistory) => void
-	loadingSpecCount: boolean
-	loadingFile: boolean
-	hasConfidenceInterval: boolean
-	refutationOptions: RefutationOption[]
-	isCanceled: boolean
-} {
-	const definitions = useExperiment()
-	const updateRunHistory = useUpdateAndDisableRunHistory()
-	const outputTablePrep = useOutputTablePrep()
-	const projectFiles = useProjectFiles()
-	const estimators = useEstimators()
-	const hasConfidenceInterval = useConfidenceInterval()
-	const [
-		loadingSpecCount,
-		{ setTrue: trueLoadingSpecCount, setFalse: falseLoadingSpecCount },
-	] = useBoolean(false)
-	const [
-		loadingFile,
-		{ setTrue: trueLoadingFile, setFalse: falseLoadingFile },
-	] = useBoolean(false)
-	const [isCanceled, setIsCanceled] = useState<boolean>(false)
-	const [errors, setErrors] = useState<string>('')
-	const runHistory = useRunHistory()
-	const setRunAsDefault = useSetRunAsDefault()
-	const specCount = useSpecCount()
-	const setSpecCount = useSetSpecCount()
-	const refutationOptions = useRefutationOptions()
-	const refutationCount = useRefutationCount()
-	const run = useRunEstimate()
-	const estimateNode = useEstimateNode(OUTPUT_FILE_NAME)
-	const isProcessing = useIsDefaultRunProcessing()
-	const totalEstimatorsCount = estimators.length
-	const causalFactors = useCausalFactors()
-	const allColumns = useAllColumns(causalFactors, definitions)
-	useWakeLock()
+export function useLoadSpecificationData(): Specification[] {
+	const [data, setData] = useState<Specification[]>([])
+	const defaultRun = useDefaultRun()
+	const defaultDatasetResult = useDefaultDatasetResult()
 
 	useEffect(() => {
-		if (!estimateNode || isProcessing) return
-		trueLoadingSpecCount()
-		setErrors('')
-		api
-			.numberExecutions(estimateNode)
-			.then(res => {
-				setSpecCount(res.total_executions)
-			})
-			.catch(err => {
-				setErrors(
-					err.message || 'Unknown error, please contact the system admin.',
-				)
-			})
-			.finally(() => falseLoadingSpecCount())
-	}, [
-		isProcessing,
-		setSpecCount,
-		estimateNode,
-		setErrors,
-		falseLoadingSpecCount,
-		trueLoadingSpecCount,
-	])
+		if (defaultRun) {
+			if (!defaultRun.result?.length) {
+				setData([])
+			} else {
+				const result = defaultRun.result.map((x: any, index) => {
+					const n = { ...x, Specification_ID: index + 1 }
+					return row2spec(n)
+				}) as Specification[]
+				const newResult = result
+					?.sort(function (a, b) {
+						return a?.estimatedEffect - b?.estimatedEffect
+					})
+					.map((x, index) => ({ ...x, id: index + 1 }))
 
-	const uploadOutputFile = useCallback(async (file: ColumnTable) => {
-		const filesData = await createZipFormData(file, OUTPUT_FILE_NAME)
-		return api.uploadFiles(filesData)
-	}, [])
-
-	const saveNewRunHistory = useCallback(() => {
-		const initialRun = initialRunHistory(
-			specCount as number,
-			hasConfidenceInterval,
-			refutationCount,
-			runHistory.length,
-		)
-		updateRunHistory(initialRun)
-	}, [
-		updateRunHistory,
-		specCount,
-		hasConfidenceInterval,
-		refutationCount,
-		runHistory.length,
-	])
-
-	const runEstimate = useCallback(async () => {
-		setIsCanceled(false)
-		trueLoadingFile()
-		setStorageItem(SESSION_ID_KEY, uuidv4())
-		let output = projectFiles[0]?.table as ColumnTable
-		if (outputTablePrep) {
-			output = outputTablePrep
+				setData(newResult)
+			}
+		} else if (!defaultRun) {
+			if (defaultDatasetResult) {
+				const f = async () => {
+					try {
+						const result = await csv(defaultDatasetResult?.url, row2spec)
+						setData(result.map((x, index) => ({ ...x, id: index + 1 })))
+					} catch (err) {
+						setData([])
+					}
+				}
+				f()
+			}
 		}
+	}, [setData, defaultRun, defaultDatasetResult])
+	return data
+}
 
-		if (allColumns) {
-			output = output?.select(allColumns)
-		}
-		const files = await uploadOutputFile(output)
-			.catch(err => {
-				setErrors(
-					err.message || 'Unknown error, please contact the system admin.',
-				)
-			})
-			.finally(() => {
-				falseLoadingFile()
-			})
-		if (!files) return
-		saveNewRunHistory()
-		const loadNode = buildLoadNode(
-			files.uploaded_files[OUTPUT_FILE_NAME]!,
-			OUTPUT_FILE_NAME,
-		)
-		const nodes = {
-			nodes: [...loadNode.nodes, ...(estimateNode as NodeRequest).nodes],
-		}
-		await run().execute(nodes, OrchestratorType.Estimator)
-	}, [
-		run,
-		estimateNode,
-		setIsCanceled,
-		saveNewRunHistory,
-		uploadOutputFile,
-		outputTablePrep,
-		allColumns,
-		projectFiles,
-		setErrors,
-		trueLoadingFile,
-		falseLoadingFile,
-	])
-
-	const cancelRun = useCallback(() => {
-		setIsCanceled(true)
-		run().cancel()
-	}, [setIsCanceled, run])
-
+// eslint-disable-next-line
+function row2spec(d: any): Specification {
 	return {
-		isProcessing,
-		totalEstimatorsCount,
-		specCount,
-		estimators,
-		definitions,
-		runHistory,
-		errors,
-		cancelRun,
-		runEstimate,
-		setRunAsDefault,
-		loadingSpecCount,
-		loadingFile,
-		hasConfidenceInterval,
-		refutationOptions,
-		isCanceled,
+		id: +d.Specification_ID,
+		population: d.population_name,
+		treatment: d.treatment,
+		outcome: d.outcome,
+		causalModel: d.causal_model,
+		estimator: d.estimator,
+		estimatorConfig: d.estimator_config,
+		estimatedEffect: +d.estimated_effect,
+		causalModelSHAP: +d.shap_causal_model,
+		estimatorSHAP: +d.shap_estimator,
+		populationSHAP: +d.shap_population_name,
+		treatmentSHAP: +d.shap_treatment,
+		refuterPlaceboTreatment: isNull(d.refuter_placebo_treatment)
+			? null
+			: +d.refuter_placebo_treatment,
+		refuterDataSubset: isNull(d.refuter_data_subset)
+			? null
+			: +d.refuter_data_subset,
+		refuterRandomCommonCause: isNull(d.refuter_random_common_cause)
+			? null
+			: +d.refuter_random_common_cause,
+		refuterBootstrap: isNull(d.refuter_bootstrap) ? null : +d.refuter_bootstrap,
+		populationType: d.population_type,
+		populationSize: d.population_size,
+		treatmentType: d.treatment_type,
+		outcomeType: d.outcome_type,
+		c95Upper: d.upper_bound,
+		c95Lower: d.lower_bound,
+		refutationResult: d.refutation_result,
+		taskId: d.task_id,
 	}
+}
+
+export function useDefaultCurveConfig(): SpecificationCurveConfig {
+	return useMemo(
+		() => ({
+			medianLine: true,
+			meanLine: true,
+			shapTicks: false,
+			inactiveFeatures: [],
+			inactiveSpecifications: [],
+		}),
+		[],
+	)
+}
+
+// these functions hard-code data columns in the current model
+// it is possible we may want more flexibility/configurability/discoverability
+// in the future
+const FEATURE_COLUMNS = ['causalModel', 'estimator', 'population', 'treatment']
+
+const SHAP_COLUMNS = [
+	'causalModelSHAP',
+	'estimatorSHAP',
+	'populationSHAP',
+	'treatmentSHAP',
+]
+
+/**
+ * Returns the standard columns to plot for specification features.
+ * @returns
+ */
+export function useSpecificationFeatureColumns(): string[] {
+	return FEATURE_COLUMNS
+}
+
+/**
+ * Returns the standard columns to plot for SHAP model influence of features.
+ * @returns
+ */
+export function useSpecificationSHAPColumns(): string[] {
+	return SHAP_COLUMNS
+}
+
+/**
+ * Returns a list of the unique feature values for the standard columns.
+ * In other words, this is a list of rows for the dot plot.
+ * @param data
+ */
+export function useUniqueFeatures(data: Specification[]): string[] {
+	const columns = useSpecificationFeatureColumns()
+	return useMemo(() => {
+		const unique = new Set<{
+			column: string
+			value: string
+			sort: string
+		}>()
+		data.forEach(row => {
+			columns.forEach(col => {
+				const val = (row as any)[col]
+				unique.add({
+					column: col,
+					value: `${val}`,
+					sort: `${col} - ${val}`,
+				})
+			})
+		})
+		const sorted = Array.from(unique.values()).sort((a, b) =>
+			a.sort.localeCompare(b.sort),
+		)
+		return Array.from(new Set(sorted.map(item => item.value)))
+	}, [data, columns])
 }

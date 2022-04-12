@@ -12,6 +12,5 @@ export interface WorkflowStep {
 	getMarkdown?: () => Promise<{ default: string }>
 	status: StepStatus
 	url: string
-	showStatus?: boolean
 	subStepName?: string
 }

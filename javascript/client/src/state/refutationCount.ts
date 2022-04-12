@@ -13,7 +13,7 @@ import {
 
 export const refutationCountState = atom<number>({
 	key: 'refutation-count',
-	default: 1,
+	default: 5,
 })
 
 export function useRefutationCount(): number {

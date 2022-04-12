@@ -7,7 +7,7 @@ import type { Handler1, Maybe } from '@showwhy/types'
 import { useThematic } from '@thematic/react'
 import type { FC } from 'react'
 import { memo, useMemo } from 'react'
-import { EffectScatterplot } from 'src/pages/PerformAnalysis/ExploreSpecificationCurvePage/vega'
+import { EffectScatterplot } from 'src/pages/PerformAnalysis/EstimateCausalEffectsPage/vega'
 
 import type {
 	DecisionFeature,

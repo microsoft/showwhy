@@ -8,6 +8,7 @@ import { useCallback } from 'react'
 import { useHistory } from 'react-router-dom'
 
 import { useSetDefinitionType } from '~state'
+import { Pages } from '~types'
 
 import { useHandleTabNavigation } from './tabsNavigation'
 
@@ -20,7 +21,7 @@ export function useGoToPage(
 	const handleTabNavigation = useHandleTabNavigation()
 	const setDefinitionType = useSetDefinitionType()
 	return useCallback(() => {
-		if (history.location.pathname === '/define/alternative' && !isPrev) {
+		if (history.location.pathname === Pages.AlternativeDefinitions && !isPrev) {
 			const tab = handleTabNavigation()
 			if (tab !== 'END') {
 				return

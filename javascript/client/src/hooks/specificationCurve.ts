@@ -36,7 +36,7 @@ import type {
 	SpecificationCurveConfig,
 } from '~types'
 
-import { useLoadSpecificationData } from '../pages/PerformAnalysis/ExploreSpecificationCurvePage/hooks'
+import { useLoadSpecificationData } from '../pages/PerformAnalysis/EstimateCausalEffectsPage/hooks'
 import { useUpdateSignificanceTests } from './significanceTest'
 
 export function useSpecificationCurve(): {
