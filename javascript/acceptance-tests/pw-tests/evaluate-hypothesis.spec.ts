@@ -29,8 +29,8 @@ test.describe('Evaluate Hypothesis', () => {
 	// TODO: uncomment when there's backend support for running significance tests of projects loaded from zip
 	// test('Evaluate hypothesis', async () => {
 	// 	test.setTimeout(45000)
-	// 	await po.evaluateHypothesisPage.clickOnTestButton()
-	// 	const isRunning = await po.evaluateHypothesisPage.isRunning()
+	// 	await po.evaluateHypothesisPagePage.clickOnTestButton()
+	// 	const isRunning = await po.evaluateHypothesisPagePage.isRunning()
 	// 	await expect(isRunning).toBeTruthy()
 	// })
 })

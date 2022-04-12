@@ -14,46 +14,46 @@ test.describe('Consider Alternative Definitions Page', () => {
 		const ctx = await browser.newContext()
 		page = await ctx.newPage()
 		po = createPageObjects(page)
-		await po.considerAlternativeDefinitions.open()
-		await po.considerAlternativeDefinitions.waitForLoad()
+		await po.considerAlternativeDefinitionsPage.open()
+		await po.considerAlternativeDefinitionsPage.waitForLoad()
 	})
 
 	test('Define population', async () => {
-		await po.considerAlternativeDefinitions.addElement({
+		await po.considerAlternativeDefinitionsPage.addElement({
 			variable: 'Primary variable',
 			type: 'population',
 		})
-		await po.considerAlternativeDefinitions.addElement({
+		await po.considerAlternativeDefinitionsPage.addElement({
 			variable: 'Secondary variable',
 			type: 'population',
 		})
-		const elements = await po.considerAlternativeDefinitions.countElements()
+		const elements = await po.considerAlternativeDefinitionsPage.countElements()
 		await expect(elements).toEqual(2)
 	})
 
 	test('Define exposure', async () => {
-		await po.considerAlternativeDefinitions.addElement({
+		await po.considerAlternativeDefinitionsPage.addElement({
 			variable: 'Primary variable',
 			type: 'exposure',
 		})
-		await po.considerAlternativeDefinitions.addElement({
+		await po.considerAlternativeDefinitionsPage.addElement({
 			variable: 'Secondary variable',
 			type: 'exposure',
 		})
-		const elements = await po.considerAlternativeDefinitions.countElements()
+		const elements = await po.considerAlternativeDefinitionsPage.countElements()
 		await expect(elements).toEqual(2)
 	})
 
 	test('Define outcome', async () => {
-		await po.considerAlternativeDefinitions.addElement({
+		await po.considerAlternativeDefinitionsPage.addElement({
 			variable: 'Primary variable',
 			type: 'outcome',
 		})
-		await po.considerAlternativeDefinitions.addElement({
+		await po.considerAlternativeDefinitionsPage.addElement({
 			variable: 'Secondary variable',
 			type: 'outcome',
 		})
-		const elements = await po.considerAlternativeDefinitions.countElements()
+		const elements = await po.considerAlternativeDefinitionsPage.countElements()
 		await expect(elements).toEqual(2)
 	})
 })

@@ -17,40 +17,39 @@ import { EvaluateHypothesisPO } from './EvaluateHypothesisPO'
 
 export interface PageObjects {
 	header: Header
-	defineCausalQuestion: DefineCausalQuestionPO
-	considerAlternativeDefinitions: ConsiderAlternativeDefinitionsPO
-	considerRelevantVariables: ConsiderRelevantVariablesPO
-	considerVariableRelationships: ConsiderVariableRelationshipsPO
-	loadDataTables: LoadDataTablesPO
+	defineCausalQuestionPage: DefineCausalQuestionPO
+	considerAlternativeDefinitionsPage: ConsiderAlternativeDefinitionsPO
+	considerRelevantVariablesPage: ConsiderRelevantVariablesPO
+	considerVariableRelationshipsPage: ConsiderVariableRelationshipsPO
+	loadDataTablesPage: LoadDataTablesPO
 	selectCausalEstimatorsPage: SelectCausalEstimatorsPO
-	estimateCausalEffect: EstimateCausalEffectPO
-	evaluateHypothesis: EvaluateHypothesisPO
+	estimateCausalEffectPage: EstimateCausalEffectPO
+	evaluateHypothesisPage: EvaluateHypothesisPO
 }
 
 export function createPageObjects(page: Page): PageObjects {
 	const header = new Header(page)
-	const defineCausalQuestion = new DefineCausalQuestionPO(page)
-	const considerAlternativeDefinitions = new ConsiderAlternativeDefinitionsPO(
+	const defineCausalQuestionPage = new DefineCausalQuestionPO(page)
+	const considerAlternativeDefinitionsPage =
+		new ConsiderAlternativeDefinitionsPO(page)
+	const considerRelevantVariablesPage = new ConsiderRelevantVariablesPO(page)
+	const considerVariableRelationshipsPage = new ConsiderVariableRelationshipsPO(
 		page,
 	)
-	const considerRelevantVariables = new ConsiderRelevantVariablesPO(page)
-	const considerVariableRelationships = new ConsiderVariableRelationshipsPO(
-		page,
-	)
-	const loadDataTables = new LoadDataTablesPO(page)
-	const selectCausalEstimators = new SelectCausalEstimatorsPO(page)
-	const estimateCausalEffect = new EstimateCausalEffectPO(page)
-	const evaluateHypothesis = new EvaluateHypothesisPO(page)
+	const loadDataTablesPage = new LoadDataTablesPO(page)
+	const selectCausalEstimatorsPage = new SelectCausalEstimatorsPO(page)
+	const estimateCausalEffectPage = new EstimateCausalEffectPO(page)
+	const evaluateHypothesisPage = new EvaluateHypothesisPO(page)
 
 	return {
 		header,
-		defineCausalQuestion,
-		considerAlternativeDefinitions,
-		considerRelevantVariables,
-		considerVariableRelationships,
-		loadDataTables,
-		selectCausalEstimators,
-		estimateCausalEffect,
-		evaluateHypothesis,
+		defineCausalQuestionPage,
+		considerAlternativeDefinitionsPage,
+		considerRelevantVariablesPage,
+		considerVariableRelationshipsPage,
+		loadDataTablesPage,
+		selectCausalEstimatorsPage,
+		estimateCausalEffectPage,
+		evaluateHypothesisPage,
 	}
 }

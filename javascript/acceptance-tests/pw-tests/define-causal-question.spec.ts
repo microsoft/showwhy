@@ -15,21 +15,21 @@ test.describe('Define Causal Question Page', () => {
 		const ctx = await browser.newContext()
 		page = await ctx.newPage()
 		po = createPageObjects(page)
-		await po.defineCausalQuestion.open()
-		await po.defineCausalQuestion.waitForLoad()
+		await po.defineCausalQuestionPage.open()
+		await po.defineCausalQuestionPage.waitForLoad()
 	})
 
 	test('Describe all elements', async () => {
-		await po.defineCausalQuestion.enterFieldGroupData(
+		await po.defineCausalQuestionPage.enterFieldGroupData(
 			generateFieldData('Population'),
 		)
-		await po.defineCausalQuestion.enterFieldGroupData(
+		await po.defineCausalQuestionPage.enterFieldGroupData(
 			generateFieldData('Exposure'),
 		)
-		await po.defineCausalQuestion.enterFieldGroupData(
+		await po.defineCausalQuestionPage.enterFieldGroupData(
 			generateFieldData('Outcome'),
 		)
-		await po.defineCausalQuestion.selectHypothesis('Increase')
+		await po.defineCausalQuestionPage.selectHypothesis('Increase')
 		const expected =
 			'For Population label, does Exposure label cause Outcome label to Increase?'
 		const question = await po.header.getQuestion()

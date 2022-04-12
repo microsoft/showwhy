@@ -14,28 +14,28 @@ test.describe('Consider Variable Relationships Page', () => {
 		const ctx = await browser.newContext()
 		page = await ctx.newPage()
 		po = createPageObjects(page)
-		await po.considerVariableRelationships.open()
-		await po.considerVariableRelationships.waitForLoad()
+		await po.considerVariableRelationshipsPage.open()
+		await po.considerVariableRelationshipsPage.waitForLoad()
 	})
 
 	test('Add factors causing exposure and outcome', async () => {
-		await po.considerVariableRelationships.goToAddNewFactor()
-		await po.considerRelevantVariables.addElement({
+		await po.considerVariableRelationshipsPage.goToAddNewFactor()
+		await po.considerRelevantVariablesPage.addElement({
 			variable: 'Primary variable',
 		})
-		await po.considerRelevantVariables.addElement({
+		await po.considerRelevantVariablesPage.addElement({
 			variable: 'Secondary variable',
 		})
-		await po.considerRelevantVariables.goToBackToPage()
-		await po.considerVariableRelationships.selectCauses(0, {
+		await po.considerRelevantVariablesPage.goToBackToPage()
+		await po.considerVariableRelationshipsPage.selectCauses(0, {
 			causeExposure: 'No',
 			causeOutcome: 'Moderately',
 		})
-		await po.considerVariableRelationships.selectCauses(1, {
+		await po.considerVariableRelationshipsPage.selectCauses(1, {
 			causeExposure: 'Weakly',
 			causeOutcome: 'Strongly',
 		})
-		const elements = await po.considerVariableRelationships.countElements()
+		const elements = await po.considerVariableRelationshipsPage.countElements()
 		await expect(elements).toEqual(2)
 	})
 })
