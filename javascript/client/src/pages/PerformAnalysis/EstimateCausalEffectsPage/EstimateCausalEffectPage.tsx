@@ -24,8 +24,8 @@ import { useEstimateLogic } from './hooks'
 import { SpecificationDescription } from './SpecificationDescription'
 import { VegaSpecificationCurve } from './vega/VegaSpecificationCurve'
 
-export const ExploreSpecificationCurvePage: React.FC = memo(
-	function SpecificationCurve() {
+export const EstimateCausalEffectPage: React.FC = memo(
+	function EstimateCausalEffectPage() {
 		const MicrodataMessage = useMicrodataInfoMessage()
 		const VariablesMissingMessage = useVariablesMissingMessage()
 		const IdentifierMessage = useSubjectIdentifierMissingMessage()
@@ -88,9 +88,7 @@ export const ExploreSpecificationCurvePage: React.FC = memo(
 				<Main>
 					<ContainerFlexRow justifyContent="space-between">
 						<EstimatesContainer>
-							<Title>
-								Specification curve analysis of causal effect estimates
-							</Title>
+							<Title>Estimate causal effects</Title>
 							{VariablesMissingMessage}
 							{MicrodataMessage}
 							{IdentifierMessage}

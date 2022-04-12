@@ -2,8 +2,6 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import type { Handler } from '@showwhy/types'
-import { useCallback } from 'react'
 import type { Resetter, SetterOrUpdater } from 'recoil'
 import {
 	atom,
@@ -23,13 +21,6 @@ export function useConfidenceInterval(): boolean {
 
 export function useSetConfidenceInterval(): SetterOrUpdater<boolean> {
 	return useSetRecoilState(confidenceIntervalState)
-}
-
-export function useToggleConfidenceInterval(): Handler {
-	const set = useSetRecoilState(confidenceIntervalState)
-	return useCallback(() => {
-		set(prev => !prev)
-	}, [set])
 }
 
 export function useResetConfidenceInterval(): Resetter {

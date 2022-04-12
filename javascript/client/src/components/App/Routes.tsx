@@ -70,10 +70,10 @@ const SelectCausalEstimatorsPage = lazy(
 		),
 )
 
-const ExploreSpecificationCurvePage = lazy(
+const EstimateCausalEffectsPage = lazy(
 	() =>
-		/* webpackChunkName: "ExploreSpecificationCurvePage" */ import(
-			'../../pages/PerformAnalysis/ExploreSpecificationCurvePage'
+		/* webpackChunkName: "EstimateCausalEffectsPage" */ import(
+			'../../pages/PerformAnalysis/EstimateCausalEffectsPage'
 		),
 )
 
@@ -113,8 +113,8 @@ export const Routes: React.FC = memo(function Routes() {
 				component={SelectCausalEstimatorsPage}
 			/>
 			<Route
-				path={Pages.SpecificationCurvePage}
-				component={ExploreSpecificationCurvePage}
+				path={Pages.EstimateCausalEffects}
+				component={EstimateCausalEffectsPage}
 			/>
 			<Route
 				path={Pages.EvaluateHypothesisPage}

@@ -6,7 +6,7 @@
 import { test, expect, Page } from '@playwright/test'
 import { createPageObjects, PageObjects } from '../pageObjects'
 
-test.describe('Explore Specification Curve', () => {
+test.describe('Estimate Causal Effect Page', () => {
 	let page: Page
 	let po: PageObjects
 
@@ -14,17 +14,17 @@ test.describe('Explore Specification Curve', () => {
 		const ctx = await browser.newContext()
 		page = await ctx.newPage()
 		po = createPageObjects(page)
-		await po.exploreSpecificationCurvePage.open()
+		await po.estimateCausalEffect.open()
 		await po.header.uploadZip()
-		await po.exploreSpecificationCurvePage.waitForLoad()
+		await po.estimateCausalEffect.waitForLoad()
 	})
 
 	test('Click on graph specification', async () => {
-		await po.exploreSpecificationCurvePage.clickOnGraphSpecification()
-		const isTextVisible = await po.exploreSpecificationCurvePage.isTextVisible()
+		await po.estimateCausalEffect.clickOnGraphSpecification()
+		const isTextVisible = await po.estimateCausalEffect.isTextVisible()
 		await expect(isTextVisible).toBeTruthy()
-		await po.exploreSpecificationCurvePage.clickToggleButton()
-		const button = await po.exploreSpecificationCurvePage.getToggleButton()
+		await po.estimateCausalEffect.clickToggleButton()
+		const button = await po.estimateCausalEffect.getToggleButton()
 		await expect(button).toContainText('Accept estimate')
 	})
 })

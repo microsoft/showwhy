@@ -101,11 +101,11 @@ export const stepsList = [
 			},
 			{
 				id: uuidv4(),
-				title: 'Explore specification curve',
+				title: 'Estimate causal effects',
 				status: StepStatus.ToDo,
-				url: Pages.SpecificationCurvePage,
+				url: Pages.EstimateCausalEffects,
 				getMarkdown: async () =>
-					import('../markdown/perform-analysis/SpecificationCurve.md?raw'),
+					import('../markdown/perform-analysis/EstimateCausalEffects.md?raw'),
 			},
 			{
 				id: uuidv4(),

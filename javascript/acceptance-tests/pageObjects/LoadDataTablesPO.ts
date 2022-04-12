@@ -13,7 +13,7 @@ const selectors: Record<string, string> = {
 	table: dataAttr('table'),
 }
 
-export class LoadDataTablesPage extends Page {
+export class LoadDataTablesPO extends Page {
 	protected PAGE_PATH: string = '#/prepare/load'
 
 	public async waitForLoad(): Promise<void> {

@@ -14,7 +14,7 @@ const selectors: Record<string, string> = {
 	estimatorGroupSelector: dataAttr('estimator-group-selector'),
 }
 
-export class SelectCausalEstimatorsPage extends Page {
+export class SelectCausalEstimatorsPO extends Page {
 	protected PAGE_PATH: string = '#/perform/estimators'
 
 	public async waitForLoad(): Promise<void> {

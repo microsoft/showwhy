@@ -12,7 +12,7 @@ const selectors: Record<string, string> = {
 	runTestButton: dataAttr('run-significance-test-button'),
 }
 
-export class EvaluateHypothesisPage extends Page {
+export class EvaluateHypothesisPO extends Page {
 	protected PAGE_PATH: string = '#/perform/evaluate'
 
 	public async waitForLoad(): Promise<void> {

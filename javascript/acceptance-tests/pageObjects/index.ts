@@ -10,10 +10,10 @@ import { DefineCausalQuestionPO } from './DefineCausalQuestionPO'
 import { ConsiderAlternativeDefinitionsPO } from './ConsiderAlternativeDefinitionsPO'
 import { ConsiderRelevantVariablesPO } from './ConsiderRelevantVariablesPO'
 import { ConsiderVariableRelationshipsPO } from './ConsiderVariableRelationshipsPO'
-import { LoadDataTablesPage } from './LoadDataTablesPage'
-import { SelectCausalEstimatorsPage } from './SelectCausalEstimatorsPage'
-import { ExploreSpecificationCurvePage } from './ExploreSpecificationCurvePage'
-import { EvaluateHypothesisPage } from './EvaluateHypothesisPage'
+import { LoadDataTablesPO } from './LoadDataTablesPO'
+import { SelectCausalEstimatorsPO } from './SelectCausalEstimatorsPO'
+import { EstimateCausalEffectPO } from './EstimateCausalEffectPO'
+import { EvaluateHypothesisPO } from './EvaluateHypothesisPO'
 
 export interface PageObjects {
 	header: Header
@@ -21,10 +21,10 @@ export interface PageObjects {
 	considerAlternativeDefinitions: ConsiderAlternativeDefinitionsPO
 	considerRelevantVariables: ConsiderRelevantVariablesPO
 	considerVariableRelationships: ConsiderVariableRelationshipsPO
-	loadDataTablesPage: LoadDataTablesPage
-	selectCausalEstimatorsPage: SelectCausalEstimatorsPage
-	exploreSpecificationCurvePage: ExploreSpecificationCurvePage
-	evaluateHypothesisPage: EvaluateHypothesisPage
+	loadDataTables: LoadDataTablesPO
+	selectCausalEstimatorsPage: SelectCausalEstimatorsPO
+	estimateCausalEffect: EstimateCausalEffectPO
+	evaluateHypothesis: EvaluateHypothesisPO
 }
 
 export function createPageObjects(page: Page): PageObjects {
@@ -37,10 +37,10 @@ export function createPageObjects(page: Page): PageObjects {
 	const considerVariableRelationships = new ConsiderVariableRelationshipsPO(
 		page,
 	)
-	const loadDataTablesPage = new LoadDataTablesPage(page)
-	const selectCausalEstimatorsPage = new SelectCausalEstimatorsPage(page)
-	const exploreSpecificationCurvePage = new ExploreSpecificationCurvePage(page)
-	const evaluateHypothesisPage = new EvaluateHypothesisPage(page)
+	const loadDataTables = new LoadDataTablesPO(page)
+	const selectCausalEstimators = new SelectCausalEstimatorsPO(page)
+	const estimateCausalEffect = new EstimateCausalEffectPO(page)
+	const evaluateHypothesis = new EvaluateHypothesisPO(page)
 
 	return {
 		header,
@@ -48,9 +48,9 @@ export function createPageObjects(page: Page): PageObjects {
 		considerAlternativeDefinitions,
 		considerRelevantVariables,
 		considerVariableRelationships,
-		loadDataTablesPage,
-		selectCausalEstimatorsPage,
-		exploreSpecificationCurvePage,
-		evaluateHypothesisPage,
+		loadDataTables,
+		selectCausalEstimators,
+		estimateCausalEffect,
+		evaluateHypothesis,
 	}
 }

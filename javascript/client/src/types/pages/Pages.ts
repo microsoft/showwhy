@@ -13,6 +13,6 @@ export enum Pages {
 	DeriveDataVariables = '/prepare/data-variables',
 	ConfirmData = '/prepare/confirm',
 	SelectCausalEstimators = '/perform/estimators',
-	SpecificationCurvePage = '/perform/specification-curve',
+	EstimateCausalEffects = '/perform/causal-effects',
 	EvaluateHypothesisPage = '/perform/evaluate',
 }

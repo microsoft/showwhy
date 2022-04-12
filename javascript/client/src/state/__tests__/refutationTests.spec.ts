@@ -10,7 +10,7 @@ import { refutationCountState, useRefutationCount } from '../refutationCount'
 describe('refutationTypeState', () => {
 	describe('useRefutationCount', () => {
 		it('should return the default value', () => {
-			const expected = 1
+			const expected = 5
 			const { result } = renderHook(() => useRefutationCount(), {
 				wrapper: RecoilRoot,
 			})
