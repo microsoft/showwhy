@@ -6,7 +6,8 @@
 import { useInterval } from '@essex/hooks'
 import type { Maybe } from '@showwhy/types'
 import { useMemo, useState } from 'react'
-import { elapsedTime } from './ProgressBar.utils'
+
+import { elapsedTime } from './ProgressBar.utils.js'
 
 export function useTimeElapsed(startTime: Maybe<Date>): string {
 	const [date, setDate] = useState(new Date())

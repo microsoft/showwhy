@@ -3,4 +3,4 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-export * from './ErrorMessage'
+export * from './ErrorMessage.js'

@@ -12,9 +12,9 @@ import type { FC } from 'react'
 import { memo, useCallback, useState } from 'react'
 import styled from 'styled-components'
 
-import { UnderstandProcessItem } from './UnderstandProcessItem'
-import type { WorkflowHelp } from './UnderstandProcessModal.types'
-import { useMarkdown } from '../hooks'
+import { UnderstandProcessItem } from './UnderstandProcessItem.js'
+import type { WorkflowHelp } from './UnderstandProcessModal.types.js'
+import { useMarkdown } from '../hooks.js'
 
 export const UnderstandProcessModal: FC<{
 	isModalOpen: boolean

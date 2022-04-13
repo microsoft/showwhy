@@ -2258,7 +2258,7 @@ __metadata:
     "@thematic/core": ^1.3.0
     "@thematic/d3": ^1.3.0
     "@thematic/fluent": ^3.0.6
-    "@thematic/react": ^1.3.0
+    "@thematic/react": ^2.0.6
     "@types/jest": ^27.4.1
     "@types/react": ^17.0.39
     "@types/styled-components": ^5.1.24
@@ -2865,28 +2865,6 @@ __metadata:
     react:
       optional: false
   checksum: fc7aff04581bfecceccc866267c1e8a537e3e41ad8902fc68f90724949037aaab01b9676403ba0f6b086d4c15e1d84d02f246046f3ee0b1ffd5f5819d1ea73fa
-  languageName: node
-  linkType: hard
-
-"@thematic/react@npm:^1.3.0":
-  version: 1.3.3
-  resolution: "@thematic/react@npm:1.3.3"
-  dependencies:
-    "@thematic/color": 1.3.3
-    "@thematic/core": 1.3.3
-    core-js: ^3.20.2
-  peerDependencies:
-    "@types/node": "*"
-    "@types/react": ">= 17"
-    react: ">= 17"
-  peerDependenciesMeta:
-    "@types/node":
-      optional: true
-    "@types/react":
-      optional: true
-    react:
-      optional: false
-  checksum: 6448ded0ef14054376940e96312e47d1268f34f9c6a3d75246271a62be349f57e19d53ee2809d19d0d6667ac31669f0beefaef3c01f5aff08921b56b1f37b18f
   languageName: node
   linkType: hard
 

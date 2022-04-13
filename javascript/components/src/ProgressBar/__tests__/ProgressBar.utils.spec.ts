@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { elapsedTime } from '../ProgressBar.utils'
+import { elapsedTime } from '../ProgressBar.utils.js'
 
 describe('Utils Functions', () => {
 	it('elapsedTime', () => {

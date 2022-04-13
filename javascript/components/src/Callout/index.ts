@@ -3,6 +3,6 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-export * from './BaseCallout'
-export * from './InfoCallout'
-export * from './LinkCallout'
+export * from './BaseCallout.js'
+export * from './InfoCallout.js'
+export * from './LinkCallout.js'

@@ -6,8 +6,8 @@ import type { Maybe, ProjectFile } from '@showwhy/types'
 import { memo } from 'react'
 import styled from 'styled-components'
 
-import { ContainerFlexRow } from '../styles'
-import { Dataset } from './Dataset'
+import { ContainerFlexRow } from '../styles.js'
+import { Dataset } from './Dataset.js'
 
 export const DatasetsList: React.FC<{
 	onFileSelected: (projectFile: ProjectFile) => void

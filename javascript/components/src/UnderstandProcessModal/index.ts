@@ -3,5 +3,5 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-export * from './UnderstandProcessModal'
-export * from './UnderstandProcessModal.types'
+export * from './UnderstandProcessModal.js'
+export * from './UnderstandProcessModal.types.js'

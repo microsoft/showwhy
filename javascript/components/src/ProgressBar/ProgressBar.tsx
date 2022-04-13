@@ -8,8 +8,8 @@ import { memo } from 'react'
 import styled from 'styled-components'
 
 import { ActionButtons } from '@showwhy/components'
-import { useTimeElapsed } from './ProgressBar.hooks'
-import { Text } from '../styles'
+import { useTimeElapsed } from './ProgressBar.hooks.js'
+import { Text } from '../styles.js'
 
 export const ProgressBar: React.FC<{
 	percentage: number

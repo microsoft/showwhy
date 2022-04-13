@@ -3,4 +3,4 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-export * from './StepTitle'
+export * from './StepTitle.js'

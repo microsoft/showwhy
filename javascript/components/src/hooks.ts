@@ -3,4 +3,4 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-export * from './hooks/useMarkdown'
+export * from './hooks/useMarkdown.js'

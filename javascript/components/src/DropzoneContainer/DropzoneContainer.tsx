@@ -13,7 +13,7 @@ import type { Maybe } from '@showwhy/types'
 import type { FC } from 'react'
 import { memo, useMemo } from 'react'
 import styled from 'styled-components'
-import type { DropFilesCount } from './DropzoneContainer.types'
+import type { DropFilesCount } from './DropzoneContainer.types.js'
 
 export const DropzoneContainer: FC<{
 	loading: Maybe<boolean>

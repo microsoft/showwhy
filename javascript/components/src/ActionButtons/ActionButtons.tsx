@@ -6,8 +6,8 @@ import { IIconProps, IconButton } from '@fluentui/react'
 import { InfoCallout } from '@showwhy/components'
 import { memo, useMemo } from 'react'
 import styled from 'styled-components'
-import { DEFAULT_FAVORITE_PROPS } from './ActionButtons.constants'
-import type { ActionButtonsProps } from './ActionButtons.types'
+import { DEFAULT_FAVORITE_PROPS } from './ActionButtons.constants.js'
+import type { ActionButtonsProps } from './ActionButtons.types.js'
 
 export const ActionButtons: React.FC<ActionButtonsProps> = memo(
 	function ActionButtons({
