@@ -11,6 +11,7 @@ import styled from 'styled-components'
 import { ActionButtons } from '~components/ActionButtons'
 import type { HeaderData, Item, TableFooter, TableProps } from '~types'
 import { sortByField } from '~utils'
+
 import { useDefaultTableSample } from './GenericTableComponent.hooks'
 
 interface GenericHeader {

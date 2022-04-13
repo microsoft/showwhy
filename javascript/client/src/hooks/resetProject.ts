@@ -15,7 +15,6 @@ import {
 	useResetExperiment,
 	useResetFileCollection,
 	useResetHoverState,
-	useResetNodeResponse,
 	useResetOutputTablePrep,
 	useResetPrimarySpecificationConfig,
 	useResetProjectFiles,
@@ -48,7 +47,6 @@ export function useResetProject(): Handler {
 	const resetConfidenceInterval = useResetConfidenceInterval()
 	const resetDefaultDatasetResult = useResetDefaultDatasetResult()
 	const resetFileCollection = useResetFileCollection()
-	const resetNodeResponse = useResetNodeResponse()
 	const resetSelectedProject = useResetSelectedProject()
 	const resetSpecCount = useResetSpecCount()
 	const resetSignificanteTest = useResetSignificanceTest()
@@ -71,7 +69,6 @@ export function useResetProject(): Handler {
 		resetConfidenceInterval()
 		resetDefaultDatasetResult()
 		resetFileCollection()
-		resetNodeResponse()
 		resetSelectedProject()
 		resetSpecCount()
 		resetSignificanteTest()
@@ -93,7 +90,6 @@ export function useResetProject(): Handler {
 		resetConfidenceInterval,
 		resetDefaultDatasetResult,
 		resetFileCollection,
-		resetNodeResponse,
 		resetSelectedProject,
 		resetSpecCount,
 		resetSignificanteTest,

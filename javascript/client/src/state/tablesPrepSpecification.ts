@@ -26,27 +26,6 @@ export function useSetTablesPrepSpecification(): SetterOrUpdater<
 	return useSetRecoilState(stepsTablesPrepSpecification)
 }
 
-//step doesn't have an id. What is the identifier
-// export function useSetOrUpdateStepsOutputTablePrep(): (
-// 	step: Step,
-// ) => void {
-// 	const useSetStepsOutputTablePrep = useSetRecoilState(stepsOutputTablePrepState)
-// 	return useCallback(
-// 		(step: Step) => {
-// 			useSetStepsOutputTablePrep(prev => {
-// 				const exists = prev.find(i => i.id === Step.id)
-// 				return !exists
-// 					? [...prev, Step]
-// 					: [
-// 							...prev.filter(i => i.id !== Step.id),
-// 							Step,
-// 					  ]
-// 			})
-// 		},
-// 		[useSetStepsOutputTablePrep],
-// 	)
-// }
-
 export function useResetTablesPrepSpecification(): Resetter {
 	return useResetRecoilState(stepsTablesPrepSpecification)
 }
