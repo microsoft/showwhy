@@ -9,8 +9,8 @@ import styled from 'styled-components'
 
 import { Container, Title } from '~styles'
 
+import { useBusinessLogic } from './ConsiderVariableRelationshipsPage.hooks'
 import { FactorsTable } from './FactorsTable'
-import { useBusinessLogic } from './hooks'
 
 const tableHeader = [
 	{ fieldName: 'variable', value: 'Label' },

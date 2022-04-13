@@ -19,8 +19,8 @@ import {
 } from '~hooks'
 import { ContainerFlexColumn, ContainerFlexRow, Title } from '~styles'
 
+import { useEstimateLogic } from './EstimateCausalEffectPage.hooks'
 import { EstimatedEffectOptions } from './EstimatedEffectOptions'
-import { useEstimateLogic } from './hooks'
 import { SpecificationDescription } from './SpecificationDescription'
 import { VegaSpecificationCurve } from './vega/VegaSpecificationCurve'
 

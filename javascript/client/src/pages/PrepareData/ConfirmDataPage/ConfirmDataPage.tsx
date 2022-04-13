@@ -10,7 +10,7 @@ import type { FC } from 'react'
 import { memo } from 'react'
 import styled from 'styled-components'
 
-import { useBusinessLogic } from './hooks'
+import { useBusinessLogic } from './ConfirmDataPage.hooks'
 
 export const ConfirmDataPage: FC = memo(function ConfirmDataPage() {
 	const { output } = useBusinessLogic()

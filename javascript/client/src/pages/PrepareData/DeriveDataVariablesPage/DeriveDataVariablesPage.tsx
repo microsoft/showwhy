@@ -11,9 +11,11 @@ import { BaseCallout } from '~components/Callout'
 
 import { AddVariableFields } from './AddVariableFields'
 import { CompletedElements } from './CompletedElements'
-import { useBusinessLogic } from './hooks'
-import { useAddVariable } from './hooks/useAddVariable'
-import { useTables } from './hooks/useTables'
+import {
+	useAddVariable,
+	useBusinessLogic,
+	useTables,
+} from './DeriveDataVariablesPage.hooks'
 
 export const DeriveDataVariablesPage: FC = memo(
 	function DeriveDataVariablesPage() {

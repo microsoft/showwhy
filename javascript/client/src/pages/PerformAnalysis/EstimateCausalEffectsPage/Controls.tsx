@@ -9,7 +9,7 @@ import styled from 'styled-components'
 import type { Specification, SpecificationCurveConfig } from '~types'
 import { addOrRemoveArrayElement } from '~utils'
 
-import { useUniqueFeatures } from './hooks'
+import { useUniqueFeatures } from './EstimateCausalEffectPage.hooks'
 
 export const Controls: React.FC<{
 	data: Specification[]

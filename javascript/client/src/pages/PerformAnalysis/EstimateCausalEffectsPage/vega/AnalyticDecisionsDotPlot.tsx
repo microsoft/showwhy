@@ -16,7 +16,7 @@ import type {
 	SpecificationCurveConfig,
 } from '~types'
 
-import { useSpecificationSHAPColumns } from '../hooks'
+import { useSpecificationSHAPColumns } from '../EstimateCausalEffectPage.hooks'
 import { VegaHost } from '../VegaHost'
 import template from './dot-plot.json'
 import { mergeSpec, parseJsonPathSpec } from './util'

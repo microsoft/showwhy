@@ -12,7 +12,7 @@ import { useSpecificationCurve } from '~hooks'
 import { Container, ContainerFlexColumn, Title } from '~styles'
 
 import { AnalysisSummary } from './AnalysisSummary'
-import { useBusinessLogic } from './hooks'
+import { useBusinessLogic } from './EvaluateHypothesisPage.hooks'
 import { PageButtons } from './PageButtons'
 import { ResultsGraph } from './ResultsGraph'
 import { SignificanceTests } from './SignificanceTests'
