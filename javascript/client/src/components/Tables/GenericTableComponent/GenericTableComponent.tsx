@@ -9,9 +9,10 @@ import { memo, useCallback, useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
 
 import { ActionButtons } from '~components/ActionButtons'
-import { useDefaultTableSample } from '~hooks'
 import type { HeaderData, Item, TableFooter, TableProps } from '~types'
 import { sortByField } from '~utils'
+
+import { useDefaultTableSample } from './GenericTableComponent.hooks'
 
 interface GenericHeader {
 	data: HeaderData[]

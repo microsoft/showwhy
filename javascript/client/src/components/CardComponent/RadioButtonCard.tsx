@@ -6,8 +6,8 @@ import { FontIcon } from '@fluentui/react'
 import { memo } from 'react'
 import styled from 'styled-components'
 
-import { CardComponent } from '~components/CardComponent'
-import type { RadioButtonChoice } from '~types'
+import type { RadioButtonChoice } from './index'
+import { CardComponent } from './index'
 
 export const RadioButtonCard: React.FC<{
 	option: RadioButtonChoice

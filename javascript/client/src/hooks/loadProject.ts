@@ -5,7 +5,7 @@
 import type {
 	Pipeline,
 	Specification,
-	Step as FileStep,
+	Step,
 	TableContainer,
 	TableStore,
 } from '@data-wrangling-components/core'
@@ -264,7 +264,7 @@ async function processDataTables(
 	projectFiles?: ProjectFile[],
 ): Promise<TableContainer | undefined> {
 	if (tps !== undefined && tps[0]?.steps?.length && projectFiles?.length) {
-		const steps = tps[0]?.steps as FileStep[]
+		const steps = tps[0]?.steps as Step[]
 		pipeline.clear()
 		return await runPipelineFromProjectFiles(projectFiles, steps, pipeline)
 	}

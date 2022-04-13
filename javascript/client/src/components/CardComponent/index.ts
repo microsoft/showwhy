@@ -4,4 +4,6 @@
  */
 
 export * from './Card'
+export * from './CardComponent.types'
+export * from './RadioButtonCard'
 export * from './SelectableCard'
