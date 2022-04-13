@@ -4,6 +4,7 @@
  */
 
 import type { GetMarkdownFn } from '@showwhy/types'
+
 import type { StepStatus } from './StepStatus'
 
 export interface WorkflowStep {

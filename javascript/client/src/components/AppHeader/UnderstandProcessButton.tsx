@@ -3,11 +3,13 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { useBoolean } from '@fluentui/react-hooks'
-import { UnderstandProcessModal, WorkflowHelp } from '@showwhy/components'
+import type { WorkflowHelp } from '@showwhy/components'
+import { UnderstandProcessModal } from '@showwhy/components'
 import type { FC } from 'react'
 import { memo } from 'react'
 
 import { Container } from '~styles'
+
 import { OptionsButton } from './OptionsButton'
 
 export const UnderstandProcessButton: FC<{ items: WorkflowHelp[] }> = memo(

@@ -5,7 +5,8 @@
 
 import type { WorkflowStep } from '@showwhy/types'
 import { renderHook } from '@testing-library/react-hooks'
-import { useMarkdown } from '../useMarkdown'
+
+import { useMarkdown } from '../useMarkdown.js'
 
 describe('useMarkdown hook', () => {
 	it('should return empty string for step without getMarkdown', () => {

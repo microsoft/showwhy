@@ -3,7 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { RadioButtonCard, RadioButtonChoice } from '@showwhy/components'
+import type { RadioButtonChoice } from '@showwhy/components'
+import { RadioButtonCard } from '@showwhy/components'
 import { CausalModelLevel } from '@showwhy/types'
 import { memo } from 'react'
 import styled from 'styled-components'

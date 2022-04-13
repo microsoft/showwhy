@@ -26,7 +26,6 @@ const actionsHeader: HeaderData = {
 
 export function useTableComponent(
 	columns: ElementDefinition[],
-	headers: HeaderData[],
 	definitionToEdit: Maybe<ElementDefinition>,
 	factorToEdit: Maybe<ElementDefinition>,
 	onDelete?: Maybe<Handler1<ElementDefinition>>,
@@ -36,8 +35,6 @@ export function useTableComponent(
 	definitionType?: DefinitionType,
 ): {
 	items: any
-	headersData: any[]
-	customColumnsWidth: { fieldName: string; width: string }[]
 } {
 	const [editedDefinition, setEditedDefinition] =
 		useState<Maybe<ElementDefinition>>()
@@ -49,12 +46,6 @@ export function useTableComponent(
 		onChange,
 		definitionType: definitionType as DefinitionType,
 	})
-	const headersData = useHeadersData(
-		headers,
-		Boolean(onDelete || onEdit || onCancel || onSave),
-	)
-	const customColumnsWidth = useCustomColumnsWidth(headersData)
-
 	const items = useMemo(() => {
 		return columns.map(item => {
 			const copy = { ...item, id: undefined }
@@ -127,8 +118,6 @@ export function useTableComponent(
 
 	return {
 		items,
-		headersData,
-		customColumnsWidth,
 	}
 }
 
@@ -148,29 +137,4 @@ function useOnChange(
 		},
 		[set, valueToEdit],
 	)
-}
-
-function useHeadersData(
-	headers: HeaderData[],
-	hasHandlers: boolean,
-): HeaderData[] {
-	return useMemo(() => {
-		return hasHandlers ? [...headers, actionsHeader] : headers
-	}, [headers, hasHandlers])
-}
-
-function useCustomColumnsWidth(headersData: HeaderData[]) {
-	return useMemo(() => {
-		const props = headersData.map(h => h.fieldName)
-		const hasLevel = props.includes('level')
-		const colWidth = [
-			{ fieldName: 'variable', width: `${hasLevel ? '35' : '30'}%` },
-			{ fieldName: 'description', width: `${hasLevel ? '40' : '60'}%` },
-			{ fieldName: 'actions', width: '10%' },
-		]
-		if (hasLevel) {
-			colWidth.push({ fieldName: 'level', width: '15%' })
-		}
-		return colWidth
-	}, [headersData])
 }

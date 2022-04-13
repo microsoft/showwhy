@@ -2,16 +2,16 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import { CausalQuestion } from '@showwhy/components'
 import { CausalEffectSize, NodeResponseStatus } from '@showwhy/types'
 import { memo } from 'react'
 
 import { CausalEffects } from '~components/CausalEffects'
-import { CausalQuestion } from '@showwhy/components'
-import { EmptyDataPageWarning } from '~components/EmptyDataPageWarning'
 import { useSpecificationCurve } from '~hooks'
 import { Container, ContainerFlexColumn, Title } from '~styles'
 
 import { AnalysisSummary } from './AnalysisSummary'
+import { EmptyDataPageWarning } from './EmptyDataPageWarning'
 import { useBusinessLogic } from './EvaluateHypothesisPage.hooks'
 import { PageButtons } from './PageButtons'
 import { ResultsGraph } from './ResultsGraph'

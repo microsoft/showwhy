@@ -4,7 +4,8 @@
  */
 import { Callout } from '@fluentui/react'
 import type { Handler } from '@showwhy/types'
-import { memo, FC } from 'react'
+import type { FC } from 'react'
+import { memo } from 'react'
 import styled from 'styled-components'
 
 export const BaseCallout: FC<{

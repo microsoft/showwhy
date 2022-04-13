@@ -3,14 +3,13 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { Pivot as FUIPivot, PivotItem } from '@fluentui/react'
+import type { HeaderData } from '@showwhy/components'
 import type { ElementDefinition } from '@showwhy/types'
 import { memo } from 'react'
 import styled from 'styled-components'
 
 import { FactorsDefinitionForm } from '~components/FactorsDefinitionForm'
-import { TableComponent } from '~components/Tables/TableComponent'
 import { Container, Title } from '~styles'
-import type { HeaderData } from '~types'
 
 import { useBusinessLogic } from './ConsiderAlternativeDefinitionsPage.hooks'
 
@@ -48,7 +47,7 @@ export const ConsiderAlternativeDefinitionsPage: React.FC = memo(
 
 							<FormContainer>
 								<TableContainer>
-									<TableComponent
+									{/* <TableComponent
 										headers={tableHeadersList}
 										columns={item.items}
 										definitionToEdit={definitionToEdit}
@@ -57,7 +56,21 @@ export const ConsiderAlternativeDefinitionsPage: React.FC = memo(
 										onCancel={() => setDefinitionToEdit(undefined)}
 										onSave={editDefinition}
 										definitionType={definitionType}
-									/>
+									/> */}
+									{/* <Container>
+			<GenericTable
+				items={items}
+				header={{
+					data: headersData,
+				}}
+				props={{ 						customColumnsWidth: [
+							{ fieldName: 'variable', width: '35%' },
+							{ fieldName: 'description', width: '40%' },
+							{ fieldName: 'actions', width: '10%' },
+							{ fieldName: 'level', width: '15%' }
+						] }}
+			/>
+		</Container> */}
 									<FactorsDefinitionForm
 										onAdd={definition =>
 											addDefinition(definition as ElementDefinition)

@@ -4,23 +4,29 @@
  */
 import { FontIcon, IconButton } from '@fluentui/react'
 import { useBoolean } from '@fluentui/react-hooks'
+import { ActionButtons } from '@showwhy/components'
 import type { Handler, Maybe } from '@showwhy/types'
 import { memo, useCallback, useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
 
-import { ActionButtons } from '@showwhy/components'
-import type { HeaderData, Item, TableFooter, TableProps } from '~types'
-import { sortByField } from '~utils'
+import type {
+	HeaderData,
+	Item,
+	TableFooter,
+	TableHeader,
+	TableProps,
+} from './GenericTable.types.js'
+import { sortByField } from './GenericTable.utils.js'
+import { useDefaultTableSample } from './hooks/useDefaultTableSample.js'
 
-import { useDefaultTableSample } from './GenericTableComponent.hooks'
-
-interface GenericHeader {
-	data: HeaderData[]
-	props?: any
+const actionsHeader: HeaderData = {
+	fieldName: 'actions',
+	value: 'Actions',
+	width: '15%',
 }
 
-export const GenericTableComponent: React.FC<{
-	headers?: GenericHeader
+export const GenericTable: React.FC<{
+	header?: TableHeader
 	props?: TableProps
 	tableTitle?: string | React.ReactNode
 	onColumnClick?: (column: string) => void
@@ -28,9 +34,9 @@ export const GenericTableComponent: React.FC<{
 	selectedColumn?: string
 	isCompactMode?: Maybe<boolean>
 	footer?: TableFooter
-}> = memo(function GenericTableComponent({
+}> = memo(function GenericTable({
 	items,
-	headers = {
+	header = {
 		data: [],
 		props: {},
 	},
@@ -48,6 +54,12 @@ export const GenericTableComponent: React.FC<{
 	const [sortAscending, { toggle: toggleAscending }] = useBoolean(true)
 	const [sortedItems, setSortedItems] = useState<Item[]>([])
 	const [selectedRow, setSelectedRow] = useState('')
+
+	const headers = useMemo((): TableHeader => {
+		return items.some(x => x.actions)
+			? ({ ...header, data: [...header.data, actionsHeader] } as TableHeader)
+			: header
+	}, [items, header])
 
 	const colSpan = useMemo((): number => {
 		if (tableTitle) {

@@ -4,7 +4,7 @@
  */
 import { useDimensions } from '@essex/hooks'
 import { MessageBarType } from '@fluentui/react'
-import { StepTitle, MessageContainer } from '@showwhy/components'
+import { MessageContainer, StepTitle } from '@showwhy/components'
 import type { Maybe } from '@showwhy/types'
 import { memo, Suspense, useMemo, useRef, useState } from 'react'
 import { understandProcessSteps } from 'src/data/understandProcess'

@@ -10,6 +10,7 @@ import type { Maybe, WorkflowStep } from '@showwhy/types'
 import Markdown from 'markdown-to-jsx'
 import { memo } from 'react'
 import styled from 'styled-components'
+
 import { useGuidance } from '~state'
 
 export const Guidance: React.FC<{

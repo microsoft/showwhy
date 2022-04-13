@@ -2,13 +2,14 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { ArqueroTableHeader } from '@data-wrangling-components/react'
+import {
+	ArqueroDetailsList,
+	ArqueroTableHeader,
+} from '@data-wrangling-components/react'
 import { memo } from 'react'
 import styled from 'styled-components'
 
 import type { ProjectFile } from '~types'
-
-import { ArqueroDetailsTable } from '../ArqueroDetailsTable'
 
 export const SelectedTableDisplay: React.FC<{
 	selectedFile?: ProjectFile
@@ -31,7 +32,13 @@ export const SelectedTableDisplay: React.FC<{
 						// onRenameTable={onRenameTable}//disabled while DWC is not prepared for that
 					/>
 					<DatasetContainer>
-						<ArqueroDetailsTable table={selectedFile?.table} />
+						<ArqueroDetailsList
+							isSortable
+							isHeadersFixed
+							isStriped
+							showColumnBorders
+							table={selectedFile?.table}
+						/>
 					</DatasetContainer>
 				</SelectedFile>
 			) : (

@@ -3,11 +3,12 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import type { IContextualMenuItem } from '@fluentui/react'
+import type { WorkflowHelp } from '@showwhy/components'
+import { CausalQuestion } from '@showwhy/components'
 import type { Experiment, Handler1 } from '@showwhy/types'
 import { memo } from 'react'
 import styled from 'styled-components'
 
-import { CausalQuestion, WorkflowHelp } from '@showwhy/components'
 import { Container } from '~styles'
 import type { FileDefinition } from '~types'
 

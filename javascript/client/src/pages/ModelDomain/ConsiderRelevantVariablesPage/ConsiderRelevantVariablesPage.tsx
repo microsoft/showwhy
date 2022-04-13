@@ -4,11 +4,11 @@
  */
 
 import { DefaultButton } from '@fluentui/react'
+// import { GenericTable } from '@showwhy/components'
 import { memo } from 'react'
 import styled from 'styled-components'
 
 import { FactorsDefinitionForm } from '~components/FactorsDefinitionForm'
-import { TableComponent } from '~components/Tables/TableComponent'
 import { Container, Title } from '~styles'
 import type { HeaderData } from '~types'
 
@@ -24,7 +24,7 @@ export const ConsiderRelevantVariablesPage: React.FC = memo(
 		const {
 			factor,
 			isEditing,
-			flatFactorsList,
+			items,
 			addFactor,
 			editFactor,
 			deleteFactor,
@@ -38,18 +38,21 @@ export const ConsiderRelevantVariablesPage: React.FC = memo(
 			<Container>
 				<Container>
 					<Title data-pw="title">Relevant variables</Title>
-					<TableComponent
-						headers={tableHeaders}
-						columns={flatFactorsList}
-						onDelete={deleteFactor}
-						onEdit={editFactor}
-						onSave={addFactor}
-						factorToEdit={factor}
-						onCancel={() => {
-							setIsEditing(false)
-							setFactor(undefined)
-						}}
-					/>
+					<Container>
+						{/* <GenericTable
+							items={items}
+							header={{
+								data: tableHeaders,
+							}}
+							props={{
+								customColumnsWidth: [
+									{ fieldName: 'label', width: '30%' },
+									{ fieldName: 'description', width: '60%' },
+									{ fieldName: 'actions', width: '10%' },
+								],
+							}}
+						/> */}
+					</Container>
 				</Container>
 				<FactorsDefinitionForm
 					factor={!isEditing ? factor : undefined}

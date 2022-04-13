@@ -3,8 +3,10 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import type { HeaderData } from '@showwhy/components'
 import type {
 	CausalFactor,
+	ElementDefinition,
 	FlatCausalFactor,
 	Handler,
 	Maybe,
@@ -14,6 +16,7 @@ import { useMemo, useState } from 'react'
 
 import { useCausalFactors } from '~state'
 
+import { useTableComponent } from '../../ConsiderAlternativeDefinitionsPage/ConsiderAlternativeDefinitionsPage.hooks'
 import {
 	useAddFactor,
 	useDeleteFactor,
@@ -22,10 +25,14 @@ import {
 	useSetPageDone,
 } from '../ConsiderRelevantVariablesPage.hooks'
 
+const tableHeaders: HeaderData[] = [
+	{ fieldName: 'variable', value: 'Label', width: '15%' },
+	{ fieldName: 'description', value: 'Description' },
+]
+
 export function useBusinessLogic(): {
 	factor: Maybe<CausalFactor>
 	isEditing: boolean
-	flatFactorsList: FlatCausalFactor[]
 	page: Maybe<string>
 	addFactor: (factor: OptionalId<CausalFactor>) => void
 	editFactor: (factor: CausalFactor) => void
@@ -33,6 +40,7 @@ export function useBusinessLogic(): {
 	setFactor: (factor: Maybe<CausalFactor>) => void
 	setIsEditing: (value: boolean) => void
 	goToFactorsPage: Handler
+	items: any
 } {
 	const causalFactors = useCausalFactors()
 	const [factor, setFactor] = useState<CausalFactor>()
@@ -44,11 +52,23 @@ export function useBusinessLogic(): {
 	const flatFactorsList = useFlatFactorsList(causalFactors)
 	const [goToFactorsPage, factorsPathData] = useFactorsNavigation()
 	useSetPageDone()
+	const { items } = useTableComponent(
+		flatFactorsList,
+		undefined,
+		factor,
+		deleteFactor,
+		addFactor,
+		editFactor,
+		() => {
+			setIsEditing(false)
+			setFactor(undefined)
+		},
+	)
 
 	return {
+		items,
 		factor,
 		isEditing,
-		flatFactorsList,
 		addFactor,
 		editFactor,
 		deleteFactor,
@@ -59,14 +79,16 @@ export function useBusinessLogic(): {
 	}
 }
 
-function useFlatFactorsList(causalFactors: CausalFactor[]): FlatCausalFactor[] {
-	return useMemo((): FlatCausalFactor[] => {
+function useFlatFactorsList(
+	causalFactors: CausalFactor[],
+): ElementDefinition[] {
+	return useMemo((): ElementDefinition[] => {
 		return causalFactors.map((x: CausalFactor) => {
 			return {
 				id: x.id,
 				variable: x.variable,
 				description: x.description,
 			}
-		}) as FlatCausalFactor[]
+		}) as ElementDefinition[]
 	}, [causalFactors])
 }

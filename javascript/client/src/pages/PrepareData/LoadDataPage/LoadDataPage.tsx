@@ -9,20 +9,20 @@ import {
 	MessageBarType,
 	Toggle,
 } from '@fluentui/react'
+import {
+	DatasetsList,
+	DropzoneContainer,
+	MessageContainer,
+} from '@showwhy/components'
 import { memo } from 'react'
 import styled from 'styled-components'
 
-import {
-	DropzoneContainer,
-	MessageContainer,
-	DatasetsList,
-} from '@showwhy/components'
-import { SelectedTableDisplay } from '~components/Tables/SelectedTableDisplay'
 import { ContainerFlexRow } from '~styles'
 
 import { useBusinessLogic } from './LoadDataPage.hooks'
-import { SupportedFileTypes } from './SupportedFileTypes'
 import { delimiterOptions } from './LoadDataPage.types'
+import { SelectedTableDisplay } from './SelectedTableDisplay'
+import { SupportedFileTypes } from './SupportedFileTypes'
 
 export const LoadDataPage: React.FC = memo(function LoadDataPage() {
 	const {
