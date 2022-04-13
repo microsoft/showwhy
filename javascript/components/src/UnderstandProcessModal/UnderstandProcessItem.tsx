@@ -9,9 +9,8 @@ import { memo } from 'react'
 import styled from 'styled-components'
 
 import { Text } from '../styles.js'
-import type { WorkflowHelp } from './UnderstandProcessModal.types.js'
-
 import { UnderstandProcessLink } from './UnderstandProcessLink.js'
+import type { WorkflowHelp } from './UnderstandProcessModal.types.js'
 
 export const UnderstandProcessItem: FC<{
 	markdown: string

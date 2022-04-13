@@ -11,7 +11,7 @@
 	"scripts": {
 		"clean": "essex clean",
 		"build": "essex build --skipExportCheck",
-		"test": "NODE_OPTIONS=--experimental-vm-modules yarn node $(yarn bin jest) --no-cache"
+		"test": "NODE_OPTIONS=--experimental-vm-modules yarn node $(yarn bin jest) --runInBand --no-cache"
 	},
 	"dependencies": {
 		"@data-wrangling-components/core": "^6.1.0",

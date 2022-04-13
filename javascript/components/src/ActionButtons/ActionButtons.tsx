@@ -2,10 +2,12 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { IIconProps, IconButton } from '@fluentui/react'
+import type { IIconProps } from '@fluentui/react'
+import { IconButton } from '@fluentui/react'
 import { InfoCallout } from '@showwhy/components'
 import { memo, useMemo } from 'react'
 import styled from 'styled-components'
+
 import { DEFAULT_FAVORITE_PROPS } from './ActionButtons.constants.js'
 import type { ActionButtonsProps } from './ActionButtons.types.js'
 
