@@ -6,10 +6,10 @@ import {
 	CollapsiblePanel,
 	CollapsiblePanelContainer,
 } from '@essex/themed-components'
+import { StepTitle } from '@showwhy/components'
 import { memo, useCallback, useState } from 'react'
 import styled from 'styled-components'
 
-import { StepTitle } from '~components/StepTitle'
 import type { StepList, Workflow } from '~types'
 
 import { StepItem } from '../StepItem'
@@ -78,7 +78,7 @@ export const StepSelector: React.FC<{
 												</CollapsiblePanel>
 											</CollapsibleSubPanelContainer>
 										)
-									})
+								  })
 								: null}
 							{step.steps
 								? step.steps.map(stepDetail => (
@@ -87,7 +87,7 @@ export const StepSelector: React.FC<{
 											key={stepDetail.url}
 											stepDetail={stepDetail}
 										/>
-									))
+								  ))
 								: null}
 						</CollapsiblePanel>
 					))}

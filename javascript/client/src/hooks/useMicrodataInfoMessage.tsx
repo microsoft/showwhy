@@ -6,7 +6,7 @@
 import { useMemo } from 'react'
 import { Link } from 'react-router-dom'
 
-import { MessageContainer } from '~components/MessageContainer'
+import { MessageContainer } from '@showwhy/components'
 import { useIsMicrodata } from '~hooks'
 import { useOutputTablePrep, useSubjectIdentifier } from '~state'
 import { Pages } from '~types'

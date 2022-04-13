@@ -8,7 +8,7 @@ import { NodeResponseStatus } from '@showwhy/types'
 import { memo, useEffect, useMemo } from 'react'
 import styled from 'styled-components'
 
-import { ErrorMessage } from '~components/ErrorMessage'
+import { ErrorMessage } from '@showwhy/components'
 import { RunProgressIndicator } from '~components/RunProgressIndicator'
 import {
 	useAutomaticWorkflowStatus,

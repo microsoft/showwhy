@@ -950,10 +950,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@emotion/is-prop-valid@npm:^1.1.0":
+  version: 1.1.2
+  resolution: "@emotion/is-prop-valid@npm:1.1.2"
+  dependencies:
+    "@emotion/memoize": ^0.7.4
+  checksum: 58b1f2d429a589f8f5bc2c33a8732cbb7bbcb17131a103511ef9a94ac754d7eeb53d627f947da480cd977f9d419fd92e244991680292f3287204159652745707
+  languageName: node
+  linkType: hard
+
 "@emotion/memoize@npm:0.7.4":
   version: 0.7.4
   resolution: "@emotion/memoize@npm:0.7.4"
   checksum: 4e3920d4ec95995657a37beb43d3f4b7d89fed6caa2b173a4c04d10482d089d5c3ea50bbc96618d918b020f26ed6e9c4026bbd45433566576c1f7b056c3271dc
+  languageName: node
+  linkType: hard
+
+"@emotion/memoize@npm:^0.7.4":
+  version: 0.7.5
+  resolution: "@emotion/memoize@npm:0.7.5"
+  checksum: 83da8d4a7649a92c72f960817692bc6be13cc13e107b9f7e878d63766525ed4402881bfeb3cda61145c050281e7e260f114a0a2870515527346f2ef896b915b3
   languageName: node
   linkType: hard
 
@@ -1106,6 +1122,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@essex/jest-config@npm:^21.0.8":
+  version: 21.0.8
+  resolution: "@essex/jest-config@npm:21.0.8"
+  dependencies:
+    "@essex/swc-opts": ^20.0.10
+    "@swc/core": 1.2.155
+    "@swc/jest": ^0.2.20
+    "@types/jest": ^27.4.1
+    identity-obj-proxy: ^3.0.0
+    lodash: ^4.17.21
+  peerDependencies:
+    jest: ">= 26.4"
+  peerDependenciesMeta:
+    jest:
+      optional: true
+  checksum: c4f4916ae88e7ee8fdb6311f477d15c23bc237b0ef5ef870eb7002b70b3d111100f0380bcf67ca7aa4fd5bb0f5c99cdab1384e9fdbf0493f2e5a33dc6db07e6e
+  languageName: node
+  linkType: hard
+
 "@essex/prettier-config@npm:^18.0.2":
   version: 18.0.2
   resolution: "@essex/prettier-config@npm:18.0.2"
@@ -1186,6 +1221,17 @@ __metadata:
     cross-spawn: ^7.0.3
     debug: ^4.3.3
   checksum: 5e2841df36ce18e9289a49f9c1fd2d18b32735481b60e8ce16cae0409a8d619300d4bda8e90a77ffe8b1ecbd0a2535cda1cb9623c5d0c13fac11d5edb9efe1a4
+  languageName: node
+  linkType: hard
+
+"@essex/swc-opts@npm:^20.0.10":
+  version: 20.0.10
+  resolution: "@essex/swc-opts@npm:20.0.10"
+  dependencies:
+    "@swc/core": 1.2.155
+    lodash: ^4.17.21
+    tslib: ^2.3.1
+  checksum: 276d72d99d4228265d8e80c93248ddbcb3b75dc8bd74f8c8978fff8bea2c5c793a7b9e5ed9060e49047350e68f2fe2b20b20406d0d1752423db8ba2b51721150
   languageName: node
   linkType: hard
 
@@ -1358,6 +1404,18 @@ __metadata:
     "@fluentui/set-version": ^8.2.0
     tslib: ^2.1.0
   checksum: ba0f29a4649c2b9a409cb5df975a15c942c501e91da27d49e9dc94600471bd73fe6bd6513794b2a4543eee60436da6de3ad8ee825b6220f00f92ec3ba1153e48
+  languageName: node
+  linkType: hard
+
+"@fluentui/font-icons-mdl2@npm:^8.1.6":
+  version: 8.3.0
+  resolution: "@fluentui/font-icons-mdl2@npm:8.3.0"
+  dependencies:
+    "@fluentui/set-version": ^8.2.0
+    "@fluentui/style-utilities": ^8.6.5
+    "@fluentui/utilities": ^8.8.1
+    tslib: ^2.1.0
+  checksum: ec754986faa960242cd36cb68c3276c27cadbafa013a11995badbdf7ab1b92a8420374e0797abab357e302b68f54d813857fa908bf763f083ddc8209815f2681
   languageName: node
   linkType: hard
 
@@ -1565,6 +1623,23 @@ __metadata:
     react: ">=16.8.0 <17.0.0"
     react-dom: ">=16.8.0 <17.0.0"
   checksum: a9c9f92812dc9f0ee7a3d4065942e6d70a085df0e8ad42ec57b1cc36cb13ac86ba6a27c066d23ad9ccc05fede9af76bc057982939f02262c7269525e5868960b
+  languageName: node
+  linkType: hard
+
+"@fluentui/theme@npm:^1.7.5":
+  version: 1.7.5
+  resolution: "@fluentui/theme@npm:1.7.5"
+  dependencies:
+    "@uifabric/merge-styles": ^7.19.2
+    "@uifabric/set-version": ^7.0.24
+    "@uifabric/utilities": ^7.34.0
+    tslib: ^1.10.0
+  peerDependencies:
+    "@types/react": ">=16.8.0 <17.0.0"
+    "@types/react-dom": ">=16.8.0 <17.0.0"
+    react: ">=16.8.0 <17.0.0"
+    react-dom: ">=16.8.0 <17.0.0"
+  checksum: 7505ff9eebefa1a41484a5d32a4e06894fd95114454df8b11e1ecfd4432d99b5a0790745ce77764c66c7a585389a09b458a71374012866249e57ff821a4c869b
   languageName: node
   linkType: hard
 
@@ -2099,6 +2174,7 @@ __metadata:
     "@jest/globals": ^27.5.1
     "@showwhy/api-client": "workspace:^"
     "@showwhy/builders": "workspace:^"
+    "@showwhy/components": "workspace:^"
     "@showwhy/types": "workspace:^"
     "@testing-library/react": ^12.1.3
     "@testing-library/react-hooks": ^7.0.2
@@ -2161,6 +2237,41 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@showwhy/components@workspace:^, @showwhy/components@workspace:javascript/components":
+  version: 0.0.0-use.local
+  resolution: "@showwhy/components@workspace:javascript/components"
+  dependencies:
+    "@data-wrangling-components/core": ^6.1.0
+    "@data-wrangling-components/react": ^5.1.3
+    "@data-wrangling-components/utilities": ^1.8.2
+    "@essex/hooks": ^4.0.6
+    "@essex/jest-config": ^21.0.8
+    "@essex/scripts": ^20.4.7
+    "@essex/themed-components": ^2.2.0
+    "@essex/tsconfig-base": ^1.0.2
+    "@fluentui/font-icons-mdl2": ^8.1.6
+    "@fluentui/react": ^8.63.0
+    "@fluentui/react-hooks": ^8.5.0
+    "@fluentui/utilities": ^8.6.0
+    "@showwhy/types": "workspace:^"
+    "@testing-library/react-hooks": ^8.0.0
+    "@thematic/core": ^1.3.0
+    "@thematic/d3": ^1.3.0
+    "@thematic/fluent": ^3.0.6
+    "@thematic/react": ^1.3.0
+    "@types/jest": ^27.4.1
+    "@types/react": ^17.0.39
+    "@types/styled-components": ^5.1.24
+    "@uifabric/icons": ^7.5.23
+    arquero: ^4.8.7
+    jest: ^27.5.1
+    markdown-to-jsx: ^7.1.6
+    react: ^17.0.2
+    react-dom: ^17.0.2
+    styled-components: ^5.3.0
+  languageName: unknown
+  linkType: soft
+
 "@showwhy/project@workspace:.":
   version: 0.0.0-use.local
   resolution: "@showwhy/project@workspace:."
@@ -2185,6 +2296,7 @@ __metadata:
     "@essex/scripts": ^20.4.7
     "@essex/tsconfig-base": ^1.0.2
     "@types/react": ^17.0.39
+    arquero: ^4.8.8
   languageName: unknown
   linkType: soft
 
@@ -2236,9 +2348,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@swc/core-android-arm-eabi@npm:1.2.155":
+  version: 1.2.155
+  resolution: "@swc/core-android-arm-eabi@npm:1.2.155"
+  conditions: os=android & cpu=arm
+  languageName: node
+  linkType: hard
+
 "@swc/core-android-arm64@npm:1.2.151":
   version: 1.2.151
   resolution: "@swc/core-android-arm64@npm:1.2.151"
+  conditions: os=android & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"@swc/core-android-arm64@npm:1.2.155":
+  version: 1.2.155
+  resolution: "@swc/core-android-arm64@npm:1.2.155"
   conditions: os=android & cpu=arm64
   languageName: node
   linkType: hard
@@ -2250,9 +2376,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@swc/core-darwin-arm64@npm:1.2.155":
+  version: 1.2.155
+  resolution: "@swc/core-darwin-arm64@npm:1.2.155"
+  conditions: os=darwin & cpu=arm64
+  languageName: node
+  linkType: hard
+
 "@swc/core-darwin-x64@npm:1.2.151":
   version: 1.2.151
   resolution: "@swc/core-darwin-x64@npm:1.2.151"
+  conditions: os=darwin & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@swc/core-darwin-x64@npm:1.2.155":
+  version: 1.2.155
+  resolution: "@swc/core-darwin-x64@npm:1.2.155"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
@@ -2264,9 +2404,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@swc/core-freebsd-x64@npm:1.2.155":
+  version: 1.2.155
+  resolution: "@swc/core-freebsd-x64@npm:1.2.155"
+  conditions: os=freebsd & cpu=x64
+  languageName: node
+  linkType: hard
+
 "@swc/core-linux-arm-gnueabihf@npm:1.2.151":
   version: 1.2.151
   resolution: "@swc/core-linux-arm-gnueabihf@npm:1.2.151"
+  conditions: os=linux & cpu=arm
+  languageName: node
+  linkType: hard
+
+"@swc/core-linux-arm-gnueabihf@npm:1.2.155":
+  version: 1.2.155
+  resolution: "@swc/core-linux-arm-gnueabihf@npm:1.2.155"
   conditions: os=linux & cpu=arm
   languageName: node
   linkType: hard
@@ -2278,9 +2432,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@swc/core-linux-arm64-gnu@npm:1.2.155":
+  version: 1.2.155
+  resolution: "@swc/core-linux-arm64-gnu@npm:1.2.155"
+  conditions: os=linux & cpu=arm64
+  languageName: node
+  linkType: hard
+
 "@swc/core-linux-arm64-musl@npm:1.2.151":
   version: 1.2.151
   resolution: "@swc/core-linux-arm64-musl@npm:1.2.151"
+  conditions: os=linux & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"@swc/core-linux-arm64-musl@npm:1.2.155":
+  version: 1.2.155
+  resolution: "@swc/core-linux-arm64-musl@npm:1.2.155"
   conditions: os=linux & cpu=arm64
   languageName: node
   linkType: hard
@@ -2292,9 +2460,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@swc/core-linux-x64-gnu@npm:1.2.155":
+  version: 1.2.155
+  resolution: "@swc/core-linux-x64-gnu@npm:1.2.155"
+  conditions: os=linux & cpu=x64
+  languageName: node
+  linkType: hard
+
 "@swc/core-linux-x64-musl@npm:1.2.151":
   version: 1.2.151
   resolution: "@swc/core-linux-x64-musl@npm:1.2.151"
+  conditions: os=linux & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@swc/core-linux-x64-musl@npm:1.2.155":
+  version: 1.2.155
+  resolution: "@swc/core-linux-x64-musl@npm:1.2.155"
   conditions: os=linux & cpu=x64
   languageName: node
   linkType: hard
@@ -2306,6 +2488,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@swc/core-win32-arm64-msvc@npm:1.2.155":
+  version: 1.2.155
+  resolution: "@swc/core-win32-arm64-msvc@npm:1.2.155"
+  conditions: os=win32 & cpu=arm64
+  languageName: node
+  linkType: hard
+
 "@swc/core-win32-ia32-msvc@npm:1.2.151":
   version: 1.2.151
   resolution: "@swc/core-win32-ia32-msvc@npm:1.2.151"
@@ -2313,9 +2502,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@swc/core-win32-ia32-msvc@npm:1.2.155":
+  version: 1.2.155
+  resolution: "@swc/core-win32-ia32-msvc@npm:1.2.155"
+  conditions: os=win32 & cpu=ia32
+  languageName: node
+  linkType: hard
+
 "@swc/core-win32-x64-msvc@npm:1.2.151":
   version: 1.2.151
   resolution: "@swc/core-win32-x64-msvc@npm:1.2.151"
+  conditions: os=win32 & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@swc/core-win32-x64-msvc@npm:1.2.155":
+  version: 1.2.155
+  resolution: "@swc/core-win32-x64-msvc@npm:1.2.155"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
@@ -2370,6 +2573,56 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@swc/core@npm:1.2.155":
+  version: 1.2.155
+  resolution: "@swc/core@npm:1.2.155"
+  dependencies:
+    "@swc/core-android-arm-eabi": 1.2.155
+    "@swc/core-android-arm64": 1.2.155
+    "@swc/core-darwin-arm64": 1.2.155
+    "@swc/core-darwin-x64": 1.2.155
+    "@swc/core-freebsd-x64": 1.2.155
+    "@swc/core-linux-arm-gnueabihf": 1.2.155
+    "@swc/core-linux-arm64-gnu": 1.2.155
+    "@swc/core-linux-arm64-musl": 1.2.155
+    "@swc/core-linux-x64-gnu": 1.2.155
+    "@swc/core-linux-x64-musl": 1.2.155
+    "@swc/core-win32-arm64-msvc": 1.2.155
+    "@swc/core-win32-ia32-msvc": 1.2.155
+    "@swc/core-win32-x64-msvc": 1.2.155
+  dependenciesMeta:
+    "@swc/core-android-arm-eabi":
+      optional: true
+    "@swc/core-android-arm64":
+      optional: true
+    "@swc/core-darwin-arm64":
+      optional: true
+    "@swc/core-darwin-x64":
+      optional: true
+    "@swc/core-freebsd-x64":
+      optional: true
+    "@swc/core-linux-arm-gnueabihf":
+      optional: true
+    "@swc/core-linux-arm64-gnu":
+      optional: true
+    "@swc/core-linux-arm64-musl":
+      optional: true
+    "@swc/core-linux-x64-gnu":
+      optional: true
+    "@swc/core-linux-x64-musl":
+      optional: true
+    "@swc/core-win32-arm64-msvc":
+      optional: true
+    "@swc/core-win32-ia32-msvc":
+      optional: true
+    "@swc/core-win32-x64-msvc":
+      optional: true
+  bin:
+    swcx: run_swcx.js
+  checksum: 52ff426baba488edcb562a7eaaad0042ee06c94197b0d95ce388375c0c8b5367b0e5851017f544607322fd5f8b2454dd7622d8b97af2aa7adc44efa222c5f605
+  languageName: node
+  linkType: hard
+
 "@swc/jest@npm:^0.2.20":
   version: 0.2.20
   resolution: "@swc/jest@npm:0.2.20"
@@ -2419,6 +2672,28 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@testing-library/react-hooks@npm:^8.0.0":
+  version: 8.0.0
+  resolution: "@testing-library/react-hooks@npm:8.0.0"
+  dependencies:
+    "@babel/runtime": ^7.12.5
+    react-error-boundary: ^3.1.0
+  peerDependencies:
+    "@types/react": ^16.9.0 || ^17.0.0
+    react: ^16.9.0 || ^17.0.0
+    react-dom: ^16.9.0 || ^17.0.0
+    react-test-renderer: ^16.9.0 || ^17.0.0
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+    react-dom:
+      optional: true
+    react-test-renderer:
+      optional: true
+  checksum: f45bd06601bf1d00e375c3d945b0e54b4d997b18402c45711deada7e8c4a8f569fe283973e6786c9ecd55e4bd01a43bd42546a2924453065880abf4b13dbafdb
+  languageName: node
+  linkType: hard
+
 "@testing-library/react@npm:^12.1.3":
   version: 12.1.3
   resolution: "@testing-library/react@npm:12.1.3"
@@ -2430,6 +2705,26 @@ __metadata:
     react: "*"
     react-dom: "*"
   checksum: 2f059e93dc3f161c4d15910d1fa80cd4f5cfb6eff8a733939a72ac720c2499b74761e8980c02983a6e49153b776e82bd770a1c3e66e05c4429db0e01612f7d0a
+  languageName: node
+  linkType: hard
+
+"@thematic/color@npm:1.3.3":
+  version: 1.3.3
+  resolution: "@thematic/color@npm:1.3.3"
+  dependencies:
+    chroma-js: ^2.1.2
+    color-blind: ^0.1.1
+    core-js: ^3.20.2
+    hsluv: ^0.1.0
+  peerDependencies:
+    "@types/chroma-js": "*"
+    "@types/node": "*"
+  peerDependenciesMeta:
+    "@types/chroma-js":
+      optional: true
+    "@types/node":
+      optional: true
+  checksum: b4e839563b542401108529a73393b991f0e68c6f3a1c26f67126fa9506266338b83d33a91aa2a06a6bafba93f14e9fd046941bc18f8f514359397228fa04c778
   languageName: node
   linkType: hard
 
@@ -2452,6 +2747,32 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@thematic/core@npm:1.3.3, @thematic/core@npm:^1.3.0":
+  version: 1.3.3
+  resolution: "@thematic/core@npm:1.3.3"
+  dependencies:
+    "@thematic/color": 1.3.3
+    core-js: ^3.20.2
+    d3-scale: ^3.3.0
+    lodash: ^4.17.21
+    murmurhash-js: ^1.0.0
+  peerDependencies:
+    "@types/d3-scale": ">= 2"
+    "@types/lodash": ">= 4"
+    "@types/node": "*"
+  peerDependenciesMeta:
+    "@types/d3-scale":
+      optional: true
+    "@types/lodash":
+      optional: true
+    "@types/murmurhash-js":
+      optional: true
+    "@types/node":
+      optional: true
+  checksum: b8caf847b65edd31b8d20254f7f4378cf58148034473dd5925ca8392902699b0a4dd1257c5994037fef62d25be98a331395c115a32fe49f03e355ba118c668a1
+  languageName: node
+  linkType: hard
+
 "@thematic/core@npm:^2.0.6":
   version: 2.0.6
   resolution: "@thematic/core@npm:2.0.6"
@@ -2469,6 +2790,29 @@ __metadata:
     "@types/node":
       optional: true
   checksum: d5740d03293a5b5d0ca80fb960a81ceed789164bed1a127f8b0f9f670114007b5f3b9cc1c66fb9ce7dd97e7cab843f055f24a433054352c93b097de5acbb3f99
+  languageName: node
+  linkType: hard
+
+"@thematic/d3@npm:^1.3.0":
+  version: 1.3.3
+  resolution: "@thematic/d3@npm:1.3.3"
+  dependencies:
+    "@thematic/core": 1.3.3
+    core-js: ^3.20.2
+    d3-axis: ^1.0.12
+    d3-selection: ^1.4.2
+  peerDependencies:
+    "@types/d3-axis": ">= 1"
+    "@types/d3-selection": ">= 1"
+    "@types/node": "*"
+  peerDependenciesMeta:
+    "@types/d3-axis":
+      optional: true
+    "@types/d3-selection":
+      optional: true
+    "@types/node":
+      optional: true
+  checksum: 3d3b0065ca193f3b5b024921e492850549c14b467f592e02215feef988177638def04c765798940937e14bf7705f8b9d136f625af491ebfe098e399eb59ed1c8
   languageName: node
   linkType: hard
 
@@ -2521,6 +2865,28 @@ __metadata:
     react:
       optional: false
   checksum: fc7aff04581bfecceccc866267c1e8a537e3e41ad8902fc68f90724949037aaab01b9676403ba0f6b086d4c15e1d84d02f246046f3ee0b1ffd5f5819d1ea73fa
+  languageName: node
+  linkType: hard
+
+"@thematic/react@npm:^1.3.0":
+  version: 1.3.3
+  resolution: "@thematic/react@npm:1.3.3"
+  dependencies:
+    "@thematic/color": 1.3.3
+    "@thematic/core": 1.3.3
+    core-js: ^3.20.2
+  peerDependencies:
+    "@types/node": "*"
+    "@types/react": ">= 17"
+    react: ">= 17"
+  peerDependenciesMeta:
+    "@types/node":
+      optional: true
+    "@types/react":
+      optional: true
+    react:
+      optional: false
+  checksum: 6448ded0ef14054376940e96312e47d1268f34f9c6a3d75246271a62be349f57e19d53ee2809d19d0d6667ac31669f0beefaef3c01f5aff08921b56b1f37b18f
   languageName: node
   linkType: hard
 
@@ -3194,6 +3560,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@uifabric/icons@npm:^7.5.23":
+  version: 7.6.3
+  resolution: "@uifabric/icons@npm:7.6.3"
+  dependencies:
+    "@uifabric/set-version": ^7.0.24
+    "@uifabric/styling": ^7.20.1
+    tslib: ^1.10.0
+  checksum: d5c1aa83f352c57be8a768d9913752d05b2ea9df9d5188785c896f37bfbe2f4ad81f4267b9c494cfc8dbc5fdb2d6c58b356fe80e8ba76b4fb8467be55a395f7a
+  languageName: node
+  linkType: hard
+
 "@uifabric/icons@npm:^7.6.2":
   version: 7.6.2
   resolution: "@uifabric/icons@npm:7.6.2"
@@ -3238,6 +3615,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@uifabric/styling@npm:^7.20.1":
+  version: 7.20.1
+  resolution: "@uifabric/styling@npm:7.20.1"
+  dependencies:
+    "@fluentui/theme": ^1.7.5
+    "@microsoft/load-themed-styles": ^1.10.26
+    "@uifabric/merge-styles": ^7.19.2
+    "@uifabric/set-version": ^7.0.24
+    "@uifabric/utilities": ^7.34.0
+    tslib: ^1.10.0
+  checksum: 12002535107be26d3ca53feefed290e68d8316d8dd61fa4d65871e3af18b404879a89291f796931d36cf2e945877b1053cff025b7b2241f99f615bb5bd95c925
+  languageName: node
+  linkType: hard
+
 "@uifabric/utilities@npm:^7.33.5":
   version: 7.33.5
   resolution: "@uifabric/utilities@npm:7.33.5"
@@ -3253,6 +3644,24 @@ __metadata:
     react: ">=16.8.0 <17.0.0"
     react-dom: ">=16.8.0 <17.0.0"
   checksum: 794774c549b25d1cc9f5ab9d380f6801606da8c0472a8362c19497032314d85fef3bc0cd7f0ac192d92a7cfb0ead7d3f1dca361e768e77a6834623401173ee43
+  languageName: node
+  linkType: hard
+
+"@uifabric/utilities@npm:^7.34.0":
+  version: 7.34.0
+  resolution: "@uifabric/utilities@npm:7.34.0"
+  dependencies:
+    "@fluentui/dom-utilities": ^1.1.2
+    "@uifabric/merge-styles": ^7.19.2
+    "@uifabric/set-version": ^7.0.24
+    prop-types: ^15.7.2
+    tslib: ^1.10.0
+  peerDependencies:
+    "@types/react": ">=16.8.0 <17.0.0"
+    "@types/react-dom": ">=16.8.0 <17.0.0"
+    react: ">=16.8.0 <17.0.0"
+    react-dom: ">=16.8.0 <17.0.0"
+  checksum: fd472bc052c2dfeec751126e980b5248ba158dcf4edaa0085e12d82d9b7dedf51ff512ea70e4f511d2810345cafbf23fb2c7789229ede869918d78026c5b4795
   languageName: node
   linkType: hard
 
@@ -3595,7 +4004,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"arquero@npm:^4.8.8":
+"arquero@npm:^4.8.7, arquero@npm:^4.8.8":
   version: 4.8.8
   resolution: "arquero@npm:4.8.8"
   dependencies:
@@ -4154,7 +4563,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chroma-js@npm:^2.4.2":
+"chroma-js@npm:^2.1.2, chroma-js@npm:^2.4.2":
   version: 2.4.2
   resolution: "chroma-js@npm:2.4.2"
   checksum: cf9884c02d406286e4370599bcd1afbf089384407df46b3a69edfedcba7bb99e8f959a5cfdbfec750b305c441c06ca40cd1f70ba3a6c2ce739ac09a92520ddae
@@ -4427,7 +4836,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"core-js@npm:^3.21.1":
+"core-js@npm:^3.20.2, core-js@npm:^3.21.1":
   version: 3.21.1
   resolution: "core-js@npm:3.21.1"
   checksum: d68eddd831340ad5b24ac29c72fda022a43b17f194c4278b6b875a843283d316502cb4abd07f28631d6ebc4387f66aa06e2b1b3c8fd7e08096a751b5c63f6889
@@ -10208,6 +10617,28 @@ __metadata:
   version: 3.1.1
   resolution: "strip-json-comments@npm:3.1.1"
   checksum: 492f73e27268f9b1c122733f28ecb0e7e8d8a531a6662efbd08e22cccb3f9475e90a1b82cab06a392f6afae6d2de636f977e231296400d0ec5304ba70f166443
+  languageName: node
+  linkType: hard
+
+"styled-components@npm:^5.3.0":
+  version: 5.3.5
+  resolution: "styled-components@npm:5.3.5"
+  dependencies:
+    "@babel/helper-module-imports": ^7.0.0
+    "@babel/traverse": ^7.4.5
+    "@emotion/is-prop-valid": ^1.1.0
+    "@emotion/stylis": ^0.8.4
+    "@emotion/unitless": ^0.7.4
+    babel-plugin-styled-components: ">= 1.12.0"
+    css-to-react-native: ^3.0.0
+    hoist-non-react-statics: ^3.0.0
+    shallowequal: ^1.1.0
+    supports-color: ^5.5.0
+  peerDependencies:
+    react: ">= 16.8.0"
+    react-dom: ">= 16.8.0"
+    react-is: ">= 16.8.0"
+  checksum: 05a664dfe423c2906959a0f3f47f9b1ad630e493eb2e06deea0dc0906af33ba5ca17277b98948a6c9642e73894d6533391aebf45576489f5afe920c974e9f8eb
   languageName: node
   linkType: hard
 

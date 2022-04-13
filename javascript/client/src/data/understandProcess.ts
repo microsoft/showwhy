@@ -2,9 +2,8 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import type { WorkflowHelp } from '@showwhy/components'
 import { v4 as uuidv4 } from 'uuid'
-
-import type { ProcessHelp } from '~types'
 
 import {
 	howLinks,
@@ -45,4 +44,4 @@ export const understandProcessSteps = [
 		getMarkdown: async () =>
 			import('../markdown/understand-process/How.md?raw'),
 	},
-] as ProcessHelp[]
+] as WorkflowHelp[]

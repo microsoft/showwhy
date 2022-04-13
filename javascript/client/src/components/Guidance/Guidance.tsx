@@ -5,23 +5,20 @@
 
 import { IconButton, TooltipHost } from '@fluentui/react'
 import { useId } from '@fluentui/react-hooks'
-import type { Maybe } from '@showwhy/types'
+import { StepTitle, useMarkdown } from '@showwhy/components'
+import type { Maybe, WorkflowStep } from '@showwhy/types'
 import Markdown from 'markdown-to-jsx'
 import { memo } from 'react'
 import styled from 'styled-components'
-
-import { StepTitle } from '~components/StepTitle'
-import { useMarkdown } from '~hooks'
 import { useGuidance } from '~state'
-import type { WorkflowStep } from '~types'
 
 export const Guidance: React.FC<{
-	step?: WorkflowStep,
+	step?: WorkflowStep
 	maxHeight?: string
 }> = memo(function Instructions({ step, maxHeight = '100%' }) {
 	const [isGuidanceVisible, toggleGuidance] = useGuidance()
 	const tooltipId = useId('tooltip')
-	const markdown = useMarkdown(step)
+	const markdown = useMarkdown(step?.getMarkdown)
 
 	return (
 		<Container>
@@ -62,7 +59,7 @@ const GuidanceText = styled.div<{
 }>`
 	padding: 0px 16px;
 	transition: height 1.5s ease;
-	height: ${({ isVisible, h }) => (isVisible ? `calc(${ `${h} - 50px` })` : 0)};
+	height: ${({ isVisible, h }) => (isVisible ? `calc(${`${h} - 50px`})` : 0)};
 	overflow: hidden auto;
 `
 

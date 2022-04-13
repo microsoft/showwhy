@@ -2,20 +2,27 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { DefaultButton, MessageBarType, Toggle } from '@fluentui/react'
+import { DialogConfirm } from '@essex/themed-components'
+import {
+	DefaultButton,
+	Dropdown,
+	MessageBarType,
+	Toggle,
+} from '@fluentui/react'
 import { memo } from 'react'
 import styled from 'styled-components'
 
-import { DatasetsList } from '~components/DatasetsList'
-import { DelimiterDropdown } from '~components/DelimiterDropdown'
-import { DialogConfirm } from '~components/DialogConfirm'
-import { DropzoneContainer } from '~components/DropzoneContainer'
-import { MessageContainer } from '~components/MessageContainer'
+import {
+	DropzoneContainer,
+	MessageContainer,
+	DatasetsList,
+} from '@showwhy/components'
 import { SelectedTableDisplay } from '~components/Tables/SelectedTableDisplay'
 import { ContainerFlexRow } from '~styles'
 
 import { useBusinessLogic } from './LoadDataPage.hooks'
 import { SupportedFileTypes } from './SupportedFileTypes'
+import { delimiterOptions } from './LoadDataPage.types'
 
 export const LoadDataPage: React.FC = memo(function LoadDataPage() {
 	const {
@@ -105,7 +112,9 @@ export const LoadDataPage: React.FC = memo(function LoadDataPage() {
 									onChange={() => toggleLoadedCorrectly()}
 								/>
 								{!selectedFile.loadedCorrectly ? (
-									<DelimiterDropdown
+									<Dropdown
+										options={delimiterOptions}
+										label="delimiter"
 										selectedKey={selectedDelimiter}
 										onChange={handleDelimiterChange}
 										styles={{ root: { width: '9em' } }}

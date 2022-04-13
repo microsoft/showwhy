@@ -6,7 +6,7 @@ import { CausalEffectSize, NodeResponseStatus } from '@showwhy/types'
 import { memo } from 'react'
 
 import { CausalEffects } from '~components/CausalEffects'
-import { CausalQuestion } from '~components/CausalQuestion'
+import { CausalQuestion } from '@showwhy/components'
 import { EmptyDataPageWarning } from '~components/EmptyDataPageWarning'
 import { useSpecificationCurve } from '~hooks'
 import { Container, ContainerFlexColumn, Title } from '~styles'

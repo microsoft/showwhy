@@ -4,7 +4,7 @@
  */
 import type { Handler } from '@showwhy/types'
 
-import type { ActionButtonsProps } from '~components/ActionButtons'
+import type { ActionButtonsProps } from '@showwhy/components'
 
 export interface Item {
 	onClick?: Handler

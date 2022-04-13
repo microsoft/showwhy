@@ -9,7 +9,7 @@ import { NodeResponseStatus } from '@showwhy/types'
 import { memo, useMemo } from 'react'
 import styled from 'styled-components'
 
-import { ErrorMessage } from '~components/ErrorMessage'
+import { ErrorMessage } from '@showwhy/components'
 import type { RunHistory } from '~types'
 
 export const PageButtons: React.FC<{

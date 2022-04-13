@@ -4,21 +4,22 @@
  */
 import { useDimensions } from '@essex/hooks'
 import { MessageBarType } from '@fluentui/react'
+import { StepTitle, MessageContainer } from '@showwhy/components'
 import type { Maybe } from '@showwhy/types'
 import { memo, Suspense, useMemo, useRef, useState } from 'react'
+import { understandProcessSteps } from 'src/data/understandProcess'
 import styled from 'styled-components'
 
 import { StepControls, StepSelector } from '~components/GeneralSteps'
 import { Guidance } from '~components/Guidance'
-import { MessageContainer } from '~components/MessageContainer'
-import { StepTitle } from '~components/StepTitle'
-import { useExampleProjects, useUploadZipMenuOption } from '~hooks'
+import { useUploadZipMenuOption } from '~hooks'
 import { useExperiment, useSelectedProject } from '~state'
 import { StyledSpinner } from '~styles'
 import { Pages } from '~types'
 
 import { AppHeader } from '../AppHeader'
-import { useOnClickProject, useProcessStepInfo } from './hooks'
+import { useOnClickProject, useProcessStepInfo } from './App.hooks'
+import { useExampleProjects } from './hooks/useExampleProjects'
 
 const noChildPadding = [Pages.DeriveDataVariables]
 
@@ -48,6 +49,7 @@ export const Layout: React.FC = memo(function Layout({ children }) {
 				onClickProject={onClickProject}
 				exampleProjects={exampleProjects}
 				uploadZipMenuOption={uploadZipMenuOption}
+				helpItems={understandProcessSteps}
 			/>
 			<PagesContainer>
 				<Nav ref={navRef}>

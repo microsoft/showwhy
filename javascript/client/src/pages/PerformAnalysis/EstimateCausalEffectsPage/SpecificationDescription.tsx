@@ -9,12 +9,12 @@ import { round } from 'lodash'
 import { memo } from 'react'
 import styled from 'styled-components'
 
-import { RefutationOptionsCallout } from '~components/RefutationOptionsCallout'
 import { Paragraph, Text } from '~styles'
 import type { Specification } from '~types'
 import { pluralize } from '~utils'
 
 import { EstimateDetails } from './EstimateDetails'
+import { RefutationOptionsCallout } from './RefutationOptionsCallout'
 
 export const SpecificationDescription: React.FC<{
 	specification?: Specification

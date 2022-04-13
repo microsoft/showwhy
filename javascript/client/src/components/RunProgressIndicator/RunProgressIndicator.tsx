@@ -9,7 +9,7 @@ import { memo, useMemo } from 'react'
 import Xarrow from 'react-xarrows'
 import styled from 'styled-components'
 
-import { ProgressBar } from '~components/ProgressBar'
+import { ProgressBar } from '@showwhy/components'
 import { Container } from '~styles'
 import type { RunHistory } from '~types'
 

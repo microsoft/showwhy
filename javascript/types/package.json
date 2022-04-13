@@ -15,5 +15,8 @@
 		"@essex/scripts": "^20.4.7",
 		"@essex/tsconfig-base": "^1.0.2",
 		"@types/react": "^17.0.39"
+	},
+	"dependencies": {
+		"arquero": "^4.8.8"
 	}
 }

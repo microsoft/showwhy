@@ -5,6 +5,7 @@
 
 import type { FileCollection } from '@data-wrangling-components/utilities'
 import { FileType, isZipFile } from '@data-wrangling-components/utilities'
+import type { DropFilesCount } from '@showwhy/components'
 import type { Handler, Handler1 } from '@showwhy/types'
 import { useCallback, useMemo, useState } from 'react'
 
@@ -19,7 +20,7 @@ import {
 	useResetCount,
 	useSupportedFileTypes,
 } from '~hooks'
-import type { DropFilesCount, ProjectFile } from '~types'
+import type { ProjectFile } from '~types'
 
 export function useHandleOnDrop(
 	onFileLoadCompleted: (file: ProjectFile) => void,

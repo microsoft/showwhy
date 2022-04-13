@@ -3,12 +3,11 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import { RadioButtonCard, RadioButtonChoice } from '@showwhy/components'
 import { CausalModelLevel } from '@showwhy/types'
 import { memo } from 'react'
 import styled from 'styled-components'
 
-import type { RadioButtonChoice } from '~components/CardComponent'
-import { RadioButtonCard } from '~components/CardComponent'
 import { CausalEffects } from '~components/CausalEffects'
 import { Container, Title } from '~styles'
 

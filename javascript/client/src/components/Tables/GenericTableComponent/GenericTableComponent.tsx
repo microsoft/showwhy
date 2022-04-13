@@ -8,7 +8,7 @@ import type { Handler, Maybe } from '@showwhy/types'
 import { memo, useCallback, useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
 
-import { ActionButtons } from '~components/ActionButtons'
+import { ActionButtons } from '@showwhy/components'
 import type { HeaderData, Item, TableFooter, TableProps } from '~types'
 import { sortByField } from '~utils'
 

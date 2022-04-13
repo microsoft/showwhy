@@ -3,11 +3,10 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { PrepareDataFull } from '@data-wrangling-components/react'
+import { BaseCallout } from '@showwhy/components'
 import type { FC } from 'react'
 import { memo } from 'react'
 import styled from 'styled-components'
-
-import { BaseCallout } from '~components/Callout'
 
 import { AddVariableFields } from './AddVariableFields'
 import { CompletedElements } from './CompletedElements'

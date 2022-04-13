@@ -7,7 +7,7 @@ import type { Experiment, Handler1 } from '@showwhy/types'
 import { memo } from 'react'
 import styled from 'styled-components'
 
-import { CausalQuestion } from '~components/CausalQuestion'
+import { CausalQuestion, WorkflowHelp } from '@showwhy/components'
 import { Container } from '~styles'
 import type { FileDefinition } from '~types'
 
@@ -22,11 +22,13 @@ export const AppHeader: React.FC<{
 	exampleProjects: FileDefinition[]
 	uploadZipMenuOption?: IContextualMenuItem
 	onClickProject: ClickProjectHandler
+	helpItems: WorkflowHelp[]
 }> = memo(function AppHeader({
 	defineQuestion,
 	exampleProjects,
 	uploadZipMenuOption,
 	onClickProject,
+	helpItems,
 }) {
 	return (
 		<AppHeaderContainer>
@@ -43,7 +45,7 @@ export const AppHeader: React.FC<{
 					loadProjectOption={uploadZipMenuOption}
 				/>
 				<SaveProject />
-				<UnderstandProcessButton />
+				<UnderstandProcessButton items={helpItems} />
 			</UserInformationContainer>
 		</AppHeaderContainer>
 	)
