@@ -7,10 +7,9 @@ import { CausalModelLevel } from '@showwhy/types'
 import { memo } from 'react'
 import styled from 'styled-components'
 
-import { RadioButtonCard } from '~components/CardComponent/RadioButtonCard'
+import { RadioButtonCard, RadioButtonChoice } from '~components/CardComponent'
 import { CausalEffects } from '~components/CausalEffects'
 import { Container, Title } from '~styles'
-import type { RadioButtonChoice } from '~types'
 
 import { useBusinessLogic } from './ConfirmDomainModelsPage.hooks'
 

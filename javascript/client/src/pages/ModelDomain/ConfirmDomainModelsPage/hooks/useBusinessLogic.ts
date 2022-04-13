@@ -6,13 +6,13 @@ import type { PrimarySpecificationConfig } from '@showwhy/types'
 import { CausalModelLevel } from '@showwhy/types'
 import { useCallback } from 'react'
 import { useXarrow } from 'react-xarrows'
+import type { RadioButtonChoice } from '~components/CardComponent'
 
 import { useCausalEffects } from '~hooks'
 import {
 	usePrimarySpecificationConfig,
 	useSetPrimarySpecificationConfig,
 } from '~state'
-import type { RadioButtonChoice } from '~types'
 
 import { useSetPageDone } from '../ConfirmDomainModelsPage.hooks'
 

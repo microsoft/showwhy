@@ -16,7 +16,6 @@ import {
 	useResetFileCollection,
 	useResetHoverState,
 	useResetNodeResponse,
-	useResetOriginalTables,
 	useResetOutputTablePrep,
 	useResetPrimarySpecificationConfig,
 	useResetProjectFiles,
@@ -36,7 +35,6 @@ export function useResetProject(): Handler {
 	const resetRefutationCount = useResetRefutationCount()
 	const resetEstimators = useResetEstimators()
 	const resetDefineQuestion = useResetExperiment()
-	const resetOriginalTables = useResetOriginalTables()
 	const resetProjectFiles = useResetProjectFiles()
 	const resetSelectedFile = useResetSelectedFile()
 	const resetRunHistory = useResetRunHistory()
@@ -58,7 +56,6 @@ export function useResetProject(): Handler {
 	return useCallback(() => {
 		resetProjectFiles()
 		resetSelectedFile()
-		resetOriginalTables()
 		resetCausalFactors()
 		resetRefutationCount()
 		resetEstimators()
@@ -81,7 +78,6 @@ export function useResetProject(): Handler {
 	}, [
 		resetProjectFiles,
 		resetSelectedFile,
-		resetOriginalTables,
 		resetCausalFactors,
 		resetRefutationCount,
 		resetEstimators,
