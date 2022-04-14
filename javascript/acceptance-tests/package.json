@@ -10,8 +10,7 @@
 		"pwall": "yarn pw --browser=all",
 		"install:playwright_deps": "playwright install-deps && yarn playwright install",
 		"acceptance:test": "start-server-and-test 'yarn start:static' 'http-get://localhost:3000/' pw",
-		"acceptance:test-localhost": "yarn build:only && start-server-and-test 'yarn start:static' 'http-get://localhost:3000/' pw",
-		"test": "yarn acceptance:test-localhost"
+		"acceptance:test-localhost": "yarn build:only && start-server-and-test 'yarn start:static' 'http-get://localhost:3000/' pw"
 	},
 	"devDependencies": {
 		"@playwright/test": "^1.21.0",
