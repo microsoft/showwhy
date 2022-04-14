@@ -3,16 +3,16 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import type { Dimensions } from '@essex/hooks'
-import type { Maybe } from '@showwhy/types'
+import type {
+	DecisionFeature,
+	Maybe,
+	Specification,
+	SpecificationCurveConfig,
+} from '@showwhy/types'
 import { memo } from 'react'
 
 import { PivotScatterplot } from '~components/PivotScatterplot'
 import { Container } from '~styles'
-import type {
-	DecisionFeature,
-	Specification,
-	SpecificationCurveConfig,
-} from '~types'
 
 export const ResultsGraph: React.FC<{
 	specificationData: Specification[]

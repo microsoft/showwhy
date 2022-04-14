@@ -3,9 +3,9 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { sortByField } from '../comparators'
+import { sortByField } from '../GenericTable.utils'
 
-describe('Compartor Functions', () => {
+describe('Generic Table Utils', () => {
 	it('sortByField', () => {
 		const elements = [{ name: 'Bob' }, { name: 'Anne' }, { name: 'Carol' }]
 		const expected = [{ name: 'Anne' }, { name: 'Bob' }, { name: 'Carol' }]

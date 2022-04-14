@@ -3,10 +3,10 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { Checkbox, Label } from '@fluentui/react'
+import type { Specification, SpecificationCurveConfig } from '@showwhy/types'
 import { memo, useCallback, useMemo } from 'react'
 import styled from 'styled-components'
 
-import type { Specification, SpecificationCurveConfig } from '~types'
 import { addOrRemoveArrayElement } from '~utils'
 
 import { useUniqueFeatures } from './EstimateCausalEffectPage.hooks'

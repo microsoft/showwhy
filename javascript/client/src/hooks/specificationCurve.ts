@@ -4,12 +4,20 @@
  */
 
 import type { Dimensions } from '@essex/hooks'
-import type { Experiment, Handler, Handler1, Maybe ,
-	RunHistory} from '@showwhy/types'
+import type {
+	DecisionFeature,
+	Experiment,
+	Handler,
+	Handler1,
+	Maybe,
+	RunHistory,
+	Specification,
+	SpecificationCurveConfig,
+} from '@showwhy/types'
 import {
 	CausalityLevel,
 	DefinitionType,
-	NodeResponseStatus
+	NodeResponseStatus,
 } from '@showwhy/types'
 import type { Theme } from '@thematic/core'
 import { useThematic } from '@thematic/react'
@@ -30,11 +38,6 @@ import {
 	useSpecCount,
 	useSpecificationCurveConfig,
 } from '~state'
-import type {
-	DecisionFeature,
-	Specification,
-	SpecificationCurveConfig,
-} from '~types'
 
 import { useLoadSpecificationData } from '../pages/PerformAnalysis/EstimateCausalEffectsPage/EstimateCausalEffectPage.hooks'
 import { useUpdateSignificanceTests } from './significanceTest'
@@ -273,15 +276,14 @@ function useRefutationNumbers(
 function useIsSpecificationOn(
 	selectedSpecification: Maybe<Specification>,
 ): boolean {
-	const config = useSpecificationCurveConfig()
+	const { inactiveSpecifications } = useSpecificationCurveConfig()
+
 	return useMemo(() => {
-		if (!selectedSpecification || !config.inactiveSpecifications) {
+		if (!selectedSpecification || !inactiveSpecifications) {
 			return false
 		}
-		return !config.inactiveSpecifications.find(
-			x => x === selectedSpecification?.id,
-		)
-	}, [config, selectedSpecification])
+		return !inactiveSpecifications.find(x => x === selectedSpecification?.id)
+	}, [inactiveSpecifications, selectedSpecification])
 }
 
 function useOnToggleRejectEstimateHandler(

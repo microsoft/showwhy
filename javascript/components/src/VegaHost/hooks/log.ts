@@ -5,7 +5,7 @@
 import { useEffect } from 'react'
 import type { View } from 'vega'
 
-import type { LogLevel } from '../types'
+import type { LogLevel } from '../types.js'
 
 export function useLogLevel(view: View, logLevel: LogLevel): void {
 	useEffect(() => {

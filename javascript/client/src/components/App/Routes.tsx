@@ -5,7 +5,7 @@
 import { lazy, memo } from 'react'
 import { Redirect, Route, Switch } from 'react-router-dom'
 
-import { Pages } from '~types'
+import { Pages } from '~components/App'
 
 const DefineCausalQuestionPage = lazy(
 	() =>

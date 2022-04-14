@@ -14,6 +14,7 @@ import type {
 	RefutationOption,
 	RunHistory,
 	SignificanceTest,
+	Specification,
 } from '@showwhy/types'
 import { NodeResponseStatus } from '@showwhy/types'
 import { useCallback, useEffect, useMemo, useState } from 'react'
@@ -35,7 +36,7 @@ import {
 	usePrimarySpecificationConfig,
 	useSpecificationCurveConfig,
 } from '~state'
-import type { DefaultDatasetResult, Specification } from '~types'
+import type { DefaultDatasetResult } from '~types'
 
 import { useLoadSpecificationData } from '../EstimateCausalEffectsPage/EstimateCausalEffectPage.hooks'
 

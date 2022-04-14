@@ -27,8 +27,8 @@ import {
 	useOnCreateView,
 	useSignalListeners,
 	useSignals,
-} from './hooks'
-import { LogLevel } from './types'
+} from './hooks/index.js'
+import { LogLevel } from './types.js'
 
 export const VegaHost: React.FC<{
 	spec: Spec

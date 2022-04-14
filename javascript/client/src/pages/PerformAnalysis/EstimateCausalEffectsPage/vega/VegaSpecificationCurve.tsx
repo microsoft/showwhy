@@ -2,16 +2,16 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import type { Maybe } from '@showwhy/types'
+import type {
+	DecisionFeature,
+	Maybe,
+	Specification,
+	SpecificationCurveConfig,
+} from '@showwhy/types'
 import { memo, useCallback, useState } from 'react'
 import styled from 'styled-components'
 
 import { PivotScatterplot } from '~components/PivotScatterplot'
-import type {
-	DecisionFeature,
-	Specification,
-	SpecificationCurveConfig,
-} from '~types'
 import { addOrRemoveArrayElement } from '~utils'
 
 import { AnalyticDecisionsDotPlot } from './AnalyticDecisionsDotPlot'

@@ -7,8 +7,8 @@ import { MessageContainer } from '@showwhy/components'
 import { useMemo } from 'react'
 import { Link } from 'react-router-dom'
 
+import { Pages } from '~components/App'
 import { useOutputTablePrep, useSubjectIdentifier } from '~state'
-import { Pages } from '~types'
 
 export function useSubjectIdentifierMissingMessage(): JSX.Element | null {
 	const outputTable = useOutputTablePrep()

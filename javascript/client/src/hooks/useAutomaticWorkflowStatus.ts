@@ -4,10 +4,10 @@
  */
 
 import type { Handler } from '@showwhy/types'
+import { StepStatus } from '@showwhy/types'
 import { useCallback } from 'react'
 
 import { useSetStepStatus } from '~state'
-import { StepStatus } from '~types'
 
 import { useCurrentStep } from './steps'
 

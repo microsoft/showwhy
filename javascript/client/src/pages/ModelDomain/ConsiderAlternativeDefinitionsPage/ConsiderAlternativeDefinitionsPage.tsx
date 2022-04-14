@@ -7,8 +7,8 @@ import type { ElementDefinition } from '@showwhy/types'
 // import type { HeaderData } from '@showwhy/components'
 import { memo } from 'react'
 import styled from 'styled-components'
-import { FactorsDefinitionForm } from '~components/FactorsDefinitionForm'
 
+import { FactorsDefinitionForm } from '~components/FactorsDefinitionForm'
 import { Container, Title } from '~styles'
 
 import { useBusinessLogic } from './ConsiderAlternativeDefinitionsPage.hooks'

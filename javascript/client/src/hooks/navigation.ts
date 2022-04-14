@@ -7,8 +7,8 @@ import { DefinitionType } from '@showwhy/types'
 import { useCallback } from 'react'
 import { useHistory } from 'react-router-dom'
 
+import { Pages } from '~components/App'
 import { useSetDefinitionType } from '~state'
-import { Pages } from '~types'
 
 import { useHandleTabNavigation } from './tabsNavigation'
 

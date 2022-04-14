@@ -3,9 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import type { Specification } from '@showwhy/types'
 import isNull from 'lodash/isNull'
-
-import type { Specification } from '~types'
 
 //TODO: change this SpecificationName (mistaken with the one from dwc)
 // eslint-disable-next-line

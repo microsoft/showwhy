@@ -4,13 +4,12 @@
  */
 
 import { DefaultButton } from '@fluentui/react'
-import { GenericTable } from '@showwhy/components'
+import { GenericTable, HeaderData } from '@showwhy/components'
 import { memo } from 'react'
 import styled from 'styled-components'
 
 import { FactorsDefinitionForm } from '~components/FactorsDefinitionForm'
 import { Container, Title } from '~styles'
-import type { HeaderData } from '~types'
 
 import { useBusinessLogic } from './ConsiderRelevantVariablesPage.hooks'
 

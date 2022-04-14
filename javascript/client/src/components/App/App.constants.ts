@@ -16,3 +16,16 @@ export enum Pages {
 	EstimateCausalEffects = '/perform/causal-effects',
 	EvaluateHypothesisPage = '/perform/evaluate',
 }
+
+export enum PageType {
+	Why = 'why',
+	Who = 'who',
+	When = 'when',
+	How = 'how',
+	Population = 'population',
+	Exposure = 'exposure',
+	Outcome = 'outcome',
+	Control = 'control',
+	CauseExposure = 'cause-exposure',
+	CauseOutcome = 'cause-outcome',
+}

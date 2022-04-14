@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { Maybe } from '@showwhy/types'
+import type { Maybe, SpecificationCurveConfig } from '@showwhy/types'
 import type { Resetter, SetterOrUpdater } from 'recoil'
 import {
 	atom,
@@ -11,8 +11,6 @@ import {
 	useResetRecoilState,
 	useSetRecoilState,
 } from 'recoil'
-
-import type { SpecificationCurveConfig } from '~types'
 
 export const defaultConfig = {
 	medianLine: true,

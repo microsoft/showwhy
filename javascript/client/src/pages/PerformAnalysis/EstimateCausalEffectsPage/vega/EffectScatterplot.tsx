@@ -2,16 +2,18 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { RefutationResultString } from '@showwhy/types'
+import { VegaHost } from '@showwhy/components'
+import {
+	RefutationResultString,
+	Specification,
+	SpecificationCurveConfig,
+} from '@showwhy/types'
 import { SelectionState } from '@thematic/core'
 import { useThematic } from '@thematic/react'
 import upperFirst from 'lodash/upperFirst'
 import { memo, useMemo } from 'react'
 import styled from 'styled-components'
 
-import type { Specification, SpecificationCurveConfig } from '~types'
-
-import { VegaHost } from '@showwhy/components'
 import template from './scatter-plot.json'
 import { mergeSpec, parseJsonPathSpec } from './util'
 import { MIN_SPEC_ADDITIONAL_PADDING } from './VegaSpecificationCurve'

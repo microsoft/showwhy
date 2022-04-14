@@ -16,7 +16,7 @@ import {
 	guessDelimiter,
 	toZip,
 } from '@data-wrangling-components/utilities'
-import type { Maybe, RunHistory,SignificanceTest } from '@showwhy/types'
+import type { Maybe, RunHistory, SignificanceTest } from '@showwhy/types'
 import type ColumnTable from 'arquero/dist/types/table/column-table'
 
 import type { DataTableFileDefinition, ZipData } from '~types'
@@ -25,6 +25,10 @@ import { createDefaultTable, fetchTable } from './arquero'
 
 const CHUNK_SIZE = 31457280 //1024 * 1024 * 30
 const MAX_FILE_SIZE = 350000000 //350MB
+
+function isUrl(url: string): boolean {
+	return /^https?:\/\//.test(url.toLowerCase())
+}
 
 export async function createZipFormData(
 	file: ColumnTable,
@@ -42,10 +46,6 @@ export async function createZipFormData(
 
 export function isZipUrl(url: string): boolean {
 	return url.toLowerCase().startsWith(FileType.zip)
-}
-
-export function isUrl(url: string): boolean {
-	return /^https?:\/\//.test(url.toLowerCase())
 }
 
 export function isDataUrl(url: string): boolean {

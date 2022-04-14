@@ -4,13 +4,13 @@
  */
 
 import { useBoolean } from '@fluentui/react-hooks'
+import type { Item } from '@showwhy/components'
 import type { CausalFactor, FlatCausalFactor } from '@showwhy/types'
 import { CausalFactorType } from '@showwhy/types'
 import { useCallback, useMemo, useState } from 'react'
 
 import { useDegreeComboBox } from '~hooks'
 import { useCausalFactors, useSetCausalFactors } from '~state'
-import type { Item } from '~types'
 
 import { useFlatFactorsList, useSaveFactors } from './factors'
 import { useTextField } from './inputs'

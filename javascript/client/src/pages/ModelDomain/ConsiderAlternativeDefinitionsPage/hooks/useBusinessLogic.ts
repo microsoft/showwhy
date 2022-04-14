@@ -3,6 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import type { Item } from '@showwhy/components'
 import type {
 	ElementDefinition,
 	Experiment,
@@ -14,7 +15,6 @@ import { useEffect, useMemo, useState } from 'react'
 
 import { useHandleOnLinkClick } from '~hooks'
 import { useDefinitionType, useExperiment } from '~state'
-import type { Item } from '~types'
 
 import {
 	useAddDefinition,

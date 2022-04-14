@@ -2,9 +2,8 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import type { Specification } from '@showwhy/types'
 import { useMemo } from 'react'
-
-import type { Specification } from '~types'
 
 import { useSpecificationFeatureColumns } from '../EstimateCausalEffectPage.hooks'
 

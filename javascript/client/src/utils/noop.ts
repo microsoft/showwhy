@@ -5,6 +5,3 @@
 export function noop(): void {
 	/* do nothing */
 }
-
-export const emptyList: any[] = Object.freeze([]) as any as any[]
-export const emptyStr = ''

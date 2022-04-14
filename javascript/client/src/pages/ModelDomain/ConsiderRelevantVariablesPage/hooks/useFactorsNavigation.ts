@@ -7,7 +7,7 @@ import type { Handler, Maybe } from '@showwhy/types'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 
-import { Pages } from '~types'
+import { Pages } from '~components/App'
 import { noop } from '~utils'
 
 import type { PathData } from '../ConsiderRelevantVariablesPage.types'
