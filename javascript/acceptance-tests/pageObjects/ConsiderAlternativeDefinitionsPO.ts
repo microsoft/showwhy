@@ -12,8 +12,8 @@ const selectors: Record<string, string> = {
 	form: dataAttr('definitions-form'),
 	definitionElement: dataAttr('definition-element'),
 	variableField: dataAttr('definitions-form-variable-name'),
-	isPrimaryCheckbox: `${dataAttr('factors-form-is-primary')} input`,
-	description: dataAttr('factors-form-description'),
+	isPrimaryCheckbox: `${dataAttr('definitions-form-is-primary')} input`,
+	description: dataAttr('definitions-form-description'),
 	addButton: dataAttr('definitions-form-add-button'),
 }
 

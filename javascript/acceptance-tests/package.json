@@ -14,7 +14,7 @@
 		"test": "yarn acceptance:test-localhost"
 	},
 	"devDependencies": {
-		"@playwright/test": "^1.20.2",
+		"@playwright/test": "^1.21.0",
 		"@tsconfig/node14": "^1.0.1",
 		"@types/config": "^0.0.41",
 		"@types/lodash": "^4.14.179",
