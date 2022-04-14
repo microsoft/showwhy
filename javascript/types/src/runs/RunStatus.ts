@@ -3,9 +3,12 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { NodeResponseStatus } from '@showwhy/types'
+import type { NodeResponseStatus } from '../api/index.js'
 
-import type { RunTime } from './RunTime'
+interface RunTime {
+	start: Date
+	end?: Date
+}
 
 export interface RunStatus {
 	percentage: number

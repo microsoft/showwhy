@@ -4,11 +4,12 @@
  */
 
 import type { Dimensions } from '@essex/hooks'
-import type { Experiment, Handler, Handler1, Maybe } from '@showwhy/types'
+import type { Experiment, Handler, Handler1, Maybe ,
+	RunHistory} from '@showwhy/types'
 import {
 	CausalityLevel,
 	DefinitionType,
-	NodeResponseStatus,
+	NodeResponseStatus
 } from '@showwhy/types'
 import type { Theme } from '@thematic/core'
 import { useThematic } from '@thematic/react'
@@ -31,7 +32,6 @@ import {
 } from '~state'
 import type {
 	DecisionFeature,
-	RunHistory,
 	Specification,
 	SpecificationCurveConfig,
 } from '~types'

@@ -2,37 +2,14 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+
 import type { IContextualMenuItem, IContextualMenuProps } from '@fluentui/react'
 import type { Maybe } from '@showwhy/types'
-import { memo, useMemo } from 'react'
+import { useMemo } from 'react'
 
-import { Container } from '~styles'
 import type { FileDefinition } from '~types'
 
-import { OptionsButton } from './OptionsButton'
-
-export const ProjectsSelector: React.FC<{
-	exampleProjects: FileDefinition[]
-	loadProjectOption?: IContextualMenuItem
-	onClickProject: (example: FileDefinition) => void
-}> = memo(function ProjectsSelector({
-	onClickProject,
-	exampleProjects,
-	loadProjectOption,
-}) {
-	const menuProps = useMenuProps(
-		exampleProjects,
-		loadProjectOption,
-		onClickProject,
-	)
-	return (
-		<Container data-pw="load">
-			<OptionsButton text="Load" menuProps={menuProps} />
-		</Container>
-	)
-})
-
-function useMenuProps(
+export function useLoadMenu(
 	exampleProjects: FileDefinition[],
 	loadProjectOption: Maybe<IContextualMenuItem>,
 	onClickProject: (example: FileDefinition) => void,

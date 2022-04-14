@@ -8,8 +8,8 @@ import type { Handler } from '@showwhy/types'
 import { memo } from 'react'
 import styled from 'styled-components'
 
-import { Text } from '../styles.js'
-import { useTimeElapsed } from './ProgressBar.hooks.js'
+import { Text } from '../styles'
+import { useTimeElapsed } from './ProgressBar.hooks'
 
 export const ProgressBar: React.FC<{
 	percentage: number

@@ -16,10 +16,10 @@ import {
 	guessDelimiter,
 	toZip,
 } from '@data-wrangling-components/utilities'
-import type { Maybe, SignificanceTest } from '@showwhy/types'
+import type { Maybe, RunHistory,SignificanceTest } from '@showwhy/types'
 import type ColumnTable from 'arquero/dist/types/table/column-table'
 
-import type { DataTableFileDefinition, RunHistory, ZipData } from '~types'
+import type { DataTableFileDefinition, ZipData } from '~types'
 
 import { createDefaultTable, fetchTable } from './arquero'
 

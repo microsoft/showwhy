@@ -6,18 +6,22 @@
 import { IconButton, TooltipHost } from '@fluentui/react'
 import { useId } from '@fluentui/react-hooks'
 import { StepTitle, useMarkdown } from '@showwhy/components'
-import type { Maybe, WorkflowStep } from '@showwhy/types'
+import type { Handler, Maybe, WorkflowStep } from '@showwhy/types'
 import Markdown from 'markdown-to-jsx'
 import { memo } from 'react'
 import styled from 'styled-components'
 
-import { useGuidance } from '~state'
-
 export const Guidance: React.FC<{
+	isGuidanceVisible: boolean
+	toggleGuidance: Handler
 	step?: WorkflowStep
 	maxHeight?: string
-}> = memo(function Instructions({ step, maxHeight = '100%' }) {
-	const [isGuidanceVisible, toggleGuidance] = useGuidance()
+}> = memo(function Instructions({
+	isGuidanceVisible,
+	toggleGuidance,
+	step,
+	maxHeight = '100%',
+}) {
 	const tooltipId = useId('tooltip')
 	const markdown = useMarkdown(step?.getMarkdown)
 

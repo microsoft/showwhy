@@ -11,7 +11,7 @@ import styled from 'styled-components'
 
 import type { Specification, SpecificationCurveConfig } from '~types'
 
-import { VegaHost } from '../VegaHost'
+import { VegaHost } from '@showwhy/components'
 import template from './scatter-plot.json'
 import { mergeSpec, parseJsonPathSpec } from './util'
 import { MIN_SPEC_ADDITIONAL_PADDING } from './VegaSpecificationCurve'

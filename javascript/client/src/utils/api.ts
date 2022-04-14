@@ -3,10 +3,9 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import type { RunHistory } from '@showwhy/types';
 import { NodeResponseStatus } from '@showwhy/types'
 import { v4 } from 'uuid'
-
-import type { RunHistory } from '~types'
 
 import { SESSION_ID_KEY } from './constants'
 import { getStorageItem } from './sessionStorage'

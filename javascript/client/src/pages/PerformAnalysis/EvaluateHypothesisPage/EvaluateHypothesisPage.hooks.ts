@@ -12,6 +12,7 @@ import type {
 	Handler,
 	Maybe,
 	RefutationOption,
+	RunHistory,
 	SignificanceTest,
 } from '@showwhy/types'
 import { NodeResponseStatus } from '@showwhy/types'
@@ -34,7 +35,7 @@ import {
 	usePrimarySpecificationConfig,
 	useSpecificationCurveConfig,
 } from '~state'
-import type { DefaultDatasetResult, RunHistory, Specification } from '~types'
+import type { DefaultDatasetResult, Specification } from '~types'
 
 import { useLoadSpecificationData } from '../EstimateCausalEffectsPage/EstimateCausalEffectPage.hooks'
 

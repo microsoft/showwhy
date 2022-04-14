@@ -6,8 +6,8 @@ import type { FC } from 'react'
 import { memo } from 'react'
 import styled from 'styled-components'
 
-import { Container } from '../styles.js'
-import type { WorkflowHelpLink } from './UnderstandProcessModal.types.js'
+import { Container } from '../styles'
+import type { WorkflowHelpLink } from './UnderstandProcessModal.types'
 
 export const UnderstandProcessLink: FC<{ link: WorkflowHelpLink }> = memo(
 	function UnderstandProcessLink({ link }) {

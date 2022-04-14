@@ -4,9 +4,7 @@
  */
 
 import type { BaseFile, Json } from '@data-wrangling-components/utilities'
-import type { SignificanceTest } from '@showwhy/types'
-
-import type { RunHistory } from '~types'
+import type { RunHistory,SignificanceTest } from '@showwhy/types'
 
 export interface ZipData {
 	json?: Json

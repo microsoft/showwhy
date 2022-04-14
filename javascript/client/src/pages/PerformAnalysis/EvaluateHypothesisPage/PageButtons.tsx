@@ -5,12 +5,10 @@
 import { DefaultButton } from '@fluentui/react'
 import { isStatus } from '@showwhy/api-client'
 import { ErrorMessage } from '@showwhy/components'
-import type { Handler, Maybe, SignificanceTest } from '@showwhy/types'
+import type { Handler, Maybe, RunHistory,SignificanceTest  } from '@showwhy/types'
 import { NodeResponseStatus } from '@showwhy/types'
 import { memo, useMemo } from 'react'
 import styled from 'styled-components'
-
-import type { RunHistory } from '~types'
 
 export const PageButtons: React.FC<{
 	defaultRun: Maybe<RunHistory>

@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-// import { GenericTable } from '@showwhy/components'
+import { GenericTable } from '@showwhy/components'
 import { CausalFactorType } from '@showwhy/types'
 import { memo } from 'react'
 import styled from 'styled-components'
@@ -20,19 +20,18 @@ export const FactorsTable: React.FC<{
 	return (
 		<Container>
 			{flatFactorsList.length ? (
-				<span>A</span>
+				<GenericTable
+					items={itemList}
+					header={{ data: headers }}
+					props={{
+						customColumnsWidth: [
+							{ fieldName: 'label', width: '12rem' },
+							{ fieldName: CausalFactorType.CauseExposure, width: '10rem' },
+							{ fieldName: CausalFactorType.CauseOutcome, width: '10rem' },
+						],
+					}}
+				/>
 			) : (
-				// <GenericTable
-				// 	items={itemList}
-				// 	header={{ data: headers }}
-				// 	props={{
-				// 		customColumnsWidth: [
-				// 			{ fieldName: 'label', width: '12rem' },
-				// 			{ fieldName: CausalFactorType.CauseExposure, width: '10rem' },
-				// 			{ fieldName: CausalFactorType.CauseOutcome, width: '10rem' },
-				// 		],
-				// 	}}
-				// />
 				<EmptyFactorsText>Add a new factor to start</EmptyFactorsText>
 			)}
 		</Container>

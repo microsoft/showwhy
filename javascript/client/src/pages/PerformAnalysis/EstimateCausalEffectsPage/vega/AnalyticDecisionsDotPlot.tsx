@@ -17,7 +17,7 @@ import type {
 } from '~types'
 
 import { useSpecificationSHAPColumns } from '../EstimateCausalEffectPage.hooks'
-import { VegaHost } from '../VegaHost'
+import { VegaHost } from '@showwhy/components'
 import template from './dot-plot.json'
 import { mergeSpec, parseJsonPathSpec } from './util'
 import { MIN_SPEC_ADDITIONAL_PADDING } from './VegaSpecificationCurve'

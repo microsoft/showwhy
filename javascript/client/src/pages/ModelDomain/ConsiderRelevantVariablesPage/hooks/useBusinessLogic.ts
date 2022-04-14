@@ -3,11 +3,9 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { HeaderData } from '@showwhy/components'
 import type {
 	CausalFactor,
 	ElementDefinition,
-	FlatCausalFactor,
 	Handler,
 	Maybe,
 	OptionalId,
@@ -25,20 +23,11 @@ import {
 	useSetPageDone,
 } from '../ConsiderRelevantVariablesPage.hooks'
 
-const tableHeaders: HeaderData[] = [
-	{ fieldName: 'variable', value: 'Label', width: '15%' },
-	{ fieldName: 'description', value: 'Description' },
-]
-
 export function useBusinessLogic(): {
 	factor: Maybe<CausalFactor>
 	isEditing: boolean
 	page: Maybe<string>
 	addFactor: (factor: OptionalId<CausalFactor>) => void
-	editFactor: (factor: CausalFactor) => void
-	deleteFactor: (factor: CausalFactor) => void
-	setFactor: (factor: Maybe<CausalFactor>) => void
-	setIsEditing: (value: boolean) => void
 	goToFactorsPage: Handler
 	items: any
 } {
@@ -70,10 +59,6 @@ export function useBusinessLogic(): {
 		factor,
 		isEditing,
 		addFactor,
-		editFactor,
-		deleteFactor,
-		setFactor,
-		setIsEditing,
 		goToFactorsPage,
 		page: factorsPathData?.page,
 	}

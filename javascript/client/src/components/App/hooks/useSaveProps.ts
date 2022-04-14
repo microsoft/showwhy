@@ -2,9 +2,10 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+
 import type { IContextualMenuProps } from '@fluentui/react'
 import { NodeResponseStatus } from '@showwhy/types'
-import { memo, useCallback, useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 
 import {
 	useDefaultRun,
@@ -12,22 +13,9 @@ import {
 	useIsCollectionEmpty,
 	useSaveProject,
 } from '~hooks'
-import { Container } from '~styles'
 import { FileType } from '~types'
 
-import { OptionsButton } from './OptionsButton'
-
-export const SaveProject: React.FC = memo(function SaveProject() {
-	const saveProps = useSaveProps()
-
-	return (
-		<Container data-pw="save">
-			<OptionsButton text="Save" menuProps={saveProps} />
-		</Container>
-	)
-})
-
-function useSaveProps(): IContextualMenuProps {
+export function useSaveProps(): IContextualMenuProps {
 	const downloadResult = useDownloadResult()
 	const defaultRun = useDefaultRun()
 	const isCollectionEmpty = useIsCollectionEmpty()

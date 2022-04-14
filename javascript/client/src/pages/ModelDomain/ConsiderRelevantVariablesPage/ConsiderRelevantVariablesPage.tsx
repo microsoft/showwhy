@@ -4,7 +4,7 @@
  */
 
 import { DefaultButton } from '@fluentui/react'
-// import { GenericTable } from '@showwhy/components'
+import { GenericTable } from '@showwhy/components'
 import { memo } from 'react'
 import styled from 'styled-components'
 
@@ -21,25 +21,15 @@ const tableHeaders: HeaderData[] = [
 
 export const ConsiderRelevantVariablesPage: React.FC = memo(
 	function ConsiderRelevantVariablesPage() {
-		const {
-			factor,
-			isEditing,
-			items,
-			addFactor,
-			editFactor,
-			deleteFactor,
-			setFactor,
-			setIsEditing,
-			goToFactorsPage,
-			page,
-		} = useBusinessLogic()
+		const { factor, isEditing, items, addFactor, goToFactorsPage, page } =
+			useBusinessLogic()
 
 		return (
 			<Container>
 				<Container>
 					<Title data-pw="title">Relevant variables</Title>
 					<Container>
-						{/* <GenericTable
+						<GenericTable
 							items={items}
 							header={{
 								data: tableHeaders,
@@ -51,7 +41,7 @@ export const ConsiderRelevantVariablesPage: React.FC = memo(
 									{ fieldName: 'actions', width: '10%' },
 								],
 							}}
-						/> */}
+						/>
 					</Container>
 				</Container>
 				<FactorsDefinitionForm

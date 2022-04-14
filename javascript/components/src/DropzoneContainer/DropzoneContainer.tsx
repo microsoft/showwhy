@@ -14,7 +14,7 @@ import type { FC } from 'react'
 import { memo, useMemo } from 'react'
 import styled from 'styled-components'
 
-import type { DropFilesCount } from './DropzoneContainer.types.js'
+import type { DropFilesCount } from './DropzoneContainer.types'
 
 export const DropzoneContainer: FC<{
 	loading: Maybe<boolean>

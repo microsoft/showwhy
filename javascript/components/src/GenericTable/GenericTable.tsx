@@ -15,9 +15,9 @@ import type {
 	TableFooter,
 	TableHeader,
 	TableProps,
-} from './GenericTable.types.js'
-import { sortByField } from './GenericTable.utils.js'
-import { useDefaultTableSample } from './hooks/useDefaultTableSample.js'
+} from './GenericTable.types'
+import { sortByField } from './GenericTable.utils'
+import { useDefaultTableSample } from './hooks/useDefaultTableSample'
 
 const actionsHeader: HeaderData = {
 	fieldName: 'actions',

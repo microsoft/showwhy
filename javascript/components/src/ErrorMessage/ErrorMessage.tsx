@@ -6,7 +6,7 @@ import { Icon } from '@fluentui/react'
 import { memo } from 'react'
 import styled from 'styled-components'
 
-import { ShortenMessage } from './ShortenMessage.js'
+import { ShortenMessage } from './ShortenMessage'
 
 export const ErrorMessage: React.FC<{
 	message?: string

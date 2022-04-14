@@ -8,8 +8,8 @@ import { InfoCallout } from '@showwhy/components'
 import { memo, useMemo } from 'react'
 import styled from 'styled-components'
 
-import { DEFAULT_FAVORITE_PROPS } from './ActionButtons.constants.js'
-import type { ActionButtonsProps } from './ActionButtons.types.js'
+import { DEFAULT_FAVORITE_PROPS } from './ActionButtons.constants'
+import type { ActionButtonsProps } from './ActionButtons.types'
 
 export const ActionButtons: React.FC<ActionButtonsProps> = memo(
 	function ActionButtons({

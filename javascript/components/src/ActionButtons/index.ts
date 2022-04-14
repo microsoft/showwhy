@@ -3,5 +3,5 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-export * from './ActionButtons.js'
-export * from './ActionButtons.types.js'
+export * from './ActionButtons'
+export * from './ActionButtons.types'

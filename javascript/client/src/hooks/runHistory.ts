@@ -9,6 +9,8 @@ import type {
 	NodeResponse,
 	NodeResponseStatus,
 	PartialResults,
+	RunHistory,
+	RunStatus,
 } from '@showwhy/types'
 import { useCallback, useMemo } from 'react'
 
@@ -17,7 +19,6 @@ import {
 	useRunHistory,
 	useSetRunHistory,
 } from '~state'
-import type { RunHistory, RunStatus } from '~types'
 import { disableAllRuns, SESSION_ID_KEY, setStorageItem } from '~utils'
 
 export function useSetRunAsDefault(): (run: RunHistory) => void {

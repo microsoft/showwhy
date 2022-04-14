@@ -3,10 +3,9 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { CausalQuestion } from '@showwhy/components'
-import { CausalEffectSize, NodeResponseStatus } from '@showwhy/types'
+import { NodeResponseStatus } from '@showwhy/types'
 import { memo } from 'react'
 
-import { CausalEffects } from '~components/CausalEffects'
 import { useSpecificationCurve } from '~hooks'
 import { Container, ContainerFlexColumn, Title } from '~styles'
 
@@ -22,7 +21,7 @@ export const EvaluateHypothesisPage: React.FC = memo(
 		const {
 			alternativeModels,
 			defaultRun,
-			causalEffects,
+			// causalEffects,
 			specificationData,
 			defineQuestion,
 			activeValues,
@@ -89,7 +88,9 @@ export const EvaluateHypothesisPage: React.FC = memo(
 				</Container>
 				<Title>Domain model </Title>
 				<Container>
-					<CausalEffects size={CausalEffectSize.Small} {...causalEffects} />
+					<Container>
+						{/* <ComponentArrows size={CausalEffectSize.Small} {...causalEffects} /> */}
+					</Container>
 				</Container>
 				<Title noMarginBottom noMarginTop>
 					Effect size estimates
