@@ -2,7 +2,11 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { CausalQuestion } from '@showwhy/components'
+import {
+	CausalEffectsArrows,
+	CausalEffectSize,
+	CausalQuestion,
+} from '@showwhy/components'
 import { NodeResponseStatus } from '@showwhy/types'
 import { memo } from 'react'
 
@@ -21,7 +25,7 @@ export const EvaluateHypothesisPage: React.FC = memo(
 		const {
 			alternativeModels,
 			defaultRun,
-			// causalEffects,
+			causalEffects,
 			specificationData,
 			defineQuestion,
 			activeValues,
@@ -89,7 +93,10 @@ export const EvaluateHypothesisPage: React.FC = memo(
 				<Title>Domain model </Title>
 				<Container>
 					<Container>
-						{/* <ComponentArrows size={CausalEffectSize.Small} {...causalEffects} /> */}
+						<CausalEffectsArrows
+							size={CausalEffectSize.Small}
+							{...causalEffects}
+						/>
 					</Container>
 				</Container>
 				<Title noMarginBottom noMarginTop>

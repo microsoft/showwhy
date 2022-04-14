@@ -24,7 +24,6 @@ import {
 } from '../ConsiderRelevantVariablesPage.hooks'
 
 export function useBusinessLogic(): {
-	factor: Maybe<CausalFactor>
 	isEditing: boolean
 	page: Maybe<string>
 	addFactor: (factor: OptionalId<CausalFactor>) => void
@@ -56,7 +55,6 @@ export function useBusinessLogic(): {
 
 	return {
 		items,
-		factor,
 		isEditing,
 		addFactor,
 		goToFactorsPage,

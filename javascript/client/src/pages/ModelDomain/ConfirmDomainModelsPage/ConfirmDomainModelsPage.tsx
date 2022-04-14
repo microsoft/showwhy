@@ -4,12 +4,11 @@
  */
 
 import type { RadioButtonChoice } from '@showwhy/components'
-import { RadioButtonCard } from '@showwhy/components'
+import { CausalEffectsArrows, RadioButtonCard } from '@showwhy/components'
 import { CausalModelLevel } from '@showwhy/types'
 import { memo } from 'react'
 import styled from 'styled-components'
 
-import { CausalEffects } from '~components/CausalEffects'
 import { Container, Title } from '~styles'
 
 import { useBusinessLogic } from './ConfirmDomainModelsPage.hooks'
@@ -61,7 +60,7 @@ export const ConfirmDomainModelsPage: React.FC = memo(
 		return (
 			<Container>
 				<Title>Domain models</Title>
-				<CausalEffects {...causalEffects} />
+				<CausalEffectsArrows {...causalEffects} />
 				<h4>Select the primary causal model</h4>
 				<CardsContainer>
 					{causalModelOptions.map(option => (

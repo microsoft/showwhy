@@ -6,9 +6,9 @@
 import type { Handler } from '@showwhy/types'
 import { useMemo } from 'react'
 
-import { Pages } from '~components/App'
 import { useGoToPage, usePageType } from '~hooks'
 
+import { Pages } from '../../../../constants'
 import { useSetPageDone } from '../ConsiderVariableRelationshipsPage.hooks'
 
 export function useBusinessLogic(): {

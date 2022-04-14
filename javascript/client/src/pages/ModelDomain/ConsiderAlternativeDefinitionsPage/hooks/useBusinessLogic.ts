@@ -15,6 +15,7 @@ import { useEffect, useMemo, useState } from 'react'
 
 import { useHandleOnLinkClick } from '~hooks'
 import { useDefinitionType, useExperiment } from '~state'
+import { getDefinitionsByType } from '~utils'
 
 import {
 	useAddDefinition,
@@ -41,10 +42,16 @@ export function useBusinessLogic(): {
 	setDefinitionToEdit: Setter<Maybe<ElementDefinition>>
 	definitionType: DefinitionType
 	handleOnLinkClick: (item: any) => void
+	shouldHavePrimary: boolean
+	definitions: ElementDefinition[]
 } {
 	const defineQuestion = useExperiment()
 	const definitionType = useDefinitionType()
 	const [definitionToEdit, setDefinitionToEdit] = useState<ElementDefinition>()
+	const shouldHavePrimary = !getDefinitionsByType(
+		definitionType,
+		defineQuestion?.definitions,
+	).length
 
 	const definitions = useMemo(() => {
 		return defineQuestion.definitions || []
@@ -75,6 +82,8 @@ export function useBusinessLogic(): {
 		editDefinition,
 		setDefinitionToEdit,
 		handleOnLinkClick,
+		shouldHavePrimary,
+		definitions,
 	}
 }
 

@@ -7,8 +7,7 @@ import type { Workflow } from '@showwhy/types'
 import { renderHook } from '@testing-library/react-hooks'
 import { RecoilRoot } from 'recoil'
 
-import { Pages } from '~components/App'
-
+import { Pages } from '../../constants'
 import { stepsList } from '../../data/stepsList'
 import * as steps from '../steps'
 

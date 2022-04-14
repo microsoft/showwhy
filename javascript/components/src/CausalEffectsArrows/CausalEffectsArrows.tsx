@@ -2,26 +2,31 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { CausalEffectSize } from '@showwhy/types'
 import { memo } from 'react'
 import styled from 'styled-components'
 
-import { useGetArrows } from './arrows'
-import { BoxCausalModel } from './BoxCausalModel'
-import { box1, box2, box3, box4 } from './constants'
+import { useGetArrows } from './arrows.js'
+import { BoxCausalModel } from './BoxCausalModel.js'
+import {
+	box1,
+	box2,
+	box3,
+	box4,
+	CausalEffectSize,
+} from './CausalEffectsArrows.constants.js'
 
-export const ComponentArrows: React.FC<{
+export const CausalEffectsArrows: React.FC<{
 	confounders: string[]
 	outcomeDeterminants: string[]
-	exposure: string
-	outcome: string
-	size: CausalEffectSize
-}> = memo(function ComponentArrows({
+	generalExposure: string
+	generalOutcome: string
+	size?: CausalEffectSize
+}> = memo(function CausalEffectsArrows({
 	confounders,
 	outcomeDeterminants,
-	exposure,
-	outcome,
-	size,
+	generalExposure,
+	generalOutcome,
+	size = CausalEffectSize.Medium,
 }) {
 	const getArrows = useGetArrows(size)
 	return (
@@ -50,13 +55,13 @@ export const ComponentArrows: React.FC<{
 						size={size}
 						id={box3.id}
 						title="Exposure"
-						list={[exposure]}
+						list={[generalExposure]}
 					/>
 					<BoxCausalModel
 						size={size}
 						id={box4.id}
 						title="Outcome"
-						list={[outcome]}
+						list={[generalOutcome]}
 					/>
 				</ControlsBoxContainer>
 			</Box>

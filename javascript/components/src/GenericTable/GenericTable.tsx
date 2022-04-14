@@ -10,7 +10,6 @@ import { memo, useCallback, useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
 
 import type {
-	HeaderData,
 	Item,
 	TableFooter,
 	TableHeader,
@@ -19,14 +18,8 @@ import type {
 import { sortByField } from './GenericTable.utils.js'
 import { useDefaultTableSample } from './hooks/useDefaultTableSample.js'
 
-const actionsHeader: HeaderData = {
-	fieldName: 'actions',
-	value: 'Actions',
-	width: '15%',
-}
-
 export const GenericTable: React.FC<{
-	header?: TableHeader
+	headers?: TableHeader
 	props?: TableProps
 	tableTitle?: string | React.ReactNode
 	onColumnClick?: (column: string) => void
@@ -36,7 +29,7 @@ export const GenericTable: React.FC<{
 	footer?: TableFooter
 }> = memo(function GenericTable({
 	items,
-	header = {
+	headers = {
 		data: [],
 		props: {},
 	},
@@ -54,12 +47,6 @@ export const GenericTable: React.FC<{
 	const [sortAscending, { toggle: toggleAscending }] = useBoolean(true)
 	const [sortedItems, setSortedItems] = useState<Item[]>([])
 	const [selectedRow, setSelectedRow] = useState('')
-
-	const headers = useMemo((): TableHeader => {
-		return items.some(x => x.actions)
-			? ({ ...header, data: [...header.data, actionsHeader] } as TableHeader)
-			: header
-	}, [items, header])
 
 	const colSpan = useMemo((): number => {
 		if (tableTitle) {

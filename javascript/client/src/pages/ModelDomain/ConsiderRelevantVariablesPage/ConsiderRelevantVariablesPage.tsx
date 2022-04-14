@@ -4,24 +4,25 @@
  */
 
 import { DefaultButton } from '@fluentui/react'
-import { GenericTable, HeaderData } from '@showwhy/components'
+import type { HeaderData } from '@showwhy/components'
+import { GenericTable } from '@showwhy/components'
 import { memo } from 'react'
 import styled from 'styled-components'
 
-import { FactorsDefinitionForm } from '~components/FactorsDefinitionForm'
 import { Container, Title } from '~styles'
 
 import { useBusinessLogic } from './ConsiderRelevantVariablesPage.hooks'
+import { RelevantVariablesForm } from './RelevantVariablesForm'
 
 const tableHeaders: HeaderData[] = [
-	{ fieldName: 'variable', value: 'Label', width: '15%' },
+	{ fieldName: 'variable', value: 'Label' },
 	{ fieldName: 'description', value: 'Description' },
+	{ fieldName: 'actions', value: 'Actions' },
 ]
 
 export const ConsiderRelevantVariablesPage: React.FC = memo(
 	function ConsiderRelevantVariablesPage() {
-		const { factor, isEditing, items, addFactor, goToFactorsPage, page } =
-			useBusinessLogic()
+		const { items, addFactor, goToFactorsPage, page } = useBusinessLogic()
 
 		return (
 			<Container>
@@ -30,7 +31,7 @@ export const ConsiderRelevantVariablesPage: React.FC = memo(
 					<Container>
 						<GenericTable
 							items={items}
-							header={{
+							headers={{
 								data: tableHeaders,
 							}}
 							props={{
@@ -43,11 +44,7 @@ export const ConsiderRelevantVariablesPage: React.FC = memo(
 						/>
 					</Container>
 				</Container>
-				<FactorsDefinitionForm
-					factor={!isEditing ? factor : undefined}
-					onAdd={addFactor}
-					showLevel={false}
-				/>
+				<RelevantVariablesForm onAdd={addFactor}></RelevantVariablesForm>
 				{page ? (
 					<ButtonContainer>
 						<DefaultButton onClick={goToFactorsPage} data-pw="go-back-button">

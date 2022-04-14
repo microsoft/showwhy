@@ -19,6 +19,7 @@ import type {
 import { NodeResponseStatus } from '@showwhy/types'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 
+import type { CausalEffectsProps } from '~hooks'
 import {
 	useActualSignificanceTest,
 	useAlternativeModels,
@@ -43,7 +44,7 @@ import { useLoadSpecificationData } from '../EstimateCausalEffectsPage/EstimateC
 export function useBusinessLogic(): {
 	alternativeModels: AlternativeModels
 	defaultRun: Maybe<RunHistory>
-	causalEffects: ReturnType<typeof useCausalEffects>
+	causalEffects: CausalEffectsProps
 	specificationData: Specification[]
 	defaultDataset: DefaultDatasetResult | null
 	defineQuestion: Experiment

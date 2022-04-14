@@ -22,7 +22,7 @@ export const FactorsTable: React.FC<{
 			{flatFactorsList.length ? (
 				<GenericTable
 					items={itemList}
-					header={{ data: headers }}
+					headers={{ data: headers }}
 					props={{
 						customColumnsWidth: [
 							{ fieldName: 'label', width: '12rem' },

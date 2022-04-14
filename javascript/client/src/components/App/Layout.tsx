@@ -15,7 +15,7 @@ import { memo, Suspense, useMemo, useRef, useState } from 'react'
 import { understandProcessSteps } from 'src/data/understandProcess'
 import styled from 'styled-components'
 
-import { Pages } from '~components/App'
+import { Pages } from '../../constants'
 import { StepControls, StepSelector } from '~components/GeneralSteps'
 import { useUploadZipMenuOption } from '~hooks'
 import { useExperiment, useGuidance, useSelectedProject } from '~state'

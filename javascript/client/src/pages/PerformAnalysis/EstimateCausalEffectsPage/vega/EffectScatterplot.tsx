@@ -3,11 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { VegaHost } from '@showwhy/components'
-import {
-	RefutationResultString,
-	Specification,
-	SpecificationCurveConfig,
-} from '@showwhy/types'
+import type { Specification, SpecificationCurveConfig } from '@showwhy/types'
+import { RefutationResultString } from '@showwhy/types'
 import { SelectionState } from '@thematic/core'
 import { useThematic } from '@thematic/react'
 import upperFirst from 'lodash/upperFirst'

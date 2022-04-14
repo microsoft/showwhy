@@ -9,13 +9,12 @@ import { capitalize } from 'lodash'
 
 const selectors: Record<string, string> = {
 	title: dataAttr('title'),
-	form: dataAttr('factors-form'),
+	form: dataAttr('definitions-form'),
 	definitionElement: dataAttr('definition-element'),
-	variableField: dataAttr('factors-form-variable-name'),
+	variableField: dataAttr('definitions-form-variable-name'),
 	isPrimaryCheckbox: `${dataAttr('factors-form-is-primary')} input`,
 	description: dataAttr('factors-form-description'),
-	type: dataAttr('factors-form-type'),
-	addButton: dataAttr('factors-form-add-button'),
+	addButton: dataAttr('definitions-form-add-button'),
 }
 
 const tabSelector = (type: string) =>

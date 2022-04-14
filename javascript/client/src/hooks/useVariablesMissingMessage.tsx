@@ -7,9 +7,10 @@ import { MessageContainer } from '@showwhy/components'
 import { useMemo } from 'react'
 import { Link } from 'react-router-dom'
 
-import { Pages } from '~components/App'
 import { useAllVariables } from '~hooks'
 import { useCausalFactors, useExperiment } from '~state'
+
+import { Pages } from '../constants'
 
 export function useVariablesMissingMessage(): JSX.Element | null {
 	const definitions = useExperiment()

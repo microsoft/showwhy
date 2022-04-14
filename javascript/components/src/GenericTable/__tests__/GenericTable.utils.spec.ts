@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { sortByField } from '../GenericTable.utils'
+import { sortByField } from '../GenericTable.utils.js'
 
 describe('Generic Table Utils', () => {
 	it('sortByField', () => {

@@ -15,7 +15,7 @@ import type {
 import { CausalityLevel } from '@showwhy/types'
 import { useCallback, useMemo, useState } from 'react'
 
-import { useFactorsDefinitionForm } from '~components/FactorsDefinitionForm'
+import { useFactorsDefinitionForm } from './useFactorsDefinitionForm'
 
 export function useTableComponent(
 	columns: ElementDefinition[],
