@@ -6,10 +6,10 @@ import { useBoolean } from '@fluentui/react-hooks'
 import type { FC } from 'react'
 import { memo } from 'react'
 
-import { Container } from '../styles'
-import type { WorkflowHelp } from '../UnderstandProcessModal';
-import { UnderstandProcessModal } from '../UnderstandProcessModal'
-import { OptionsButton } from './OptionsButton'
+import { Container } from '../styles.js'
+import type { WorkflowHelp } from '../UnderstandProcessModal/index.js'
+import { UnderstandProcessModal } from '../UnderstandProcessModal/index.js'
+import { OptionsButton } from './OptionsButton.js'
 
 export const UnderstandProcessButton: FC<{ items: WorkflowHelp[] }> = memo(
 	function UnderstandProcessButton({ items }) {

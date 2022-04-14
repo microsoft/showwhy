@@ -29,6 +29,7 @@
 		"@thematic/d3": "^2.0.6",
 		"@thematic/fluent": "^3.0.6",
 		"@thematic/react": "^2.0.6",
+		"@thematic/vega": "^2.0.6",
 		"@uifabric/icons": "^7.5.23",
 		"arquero": "^4.8.7",
 		"lodash": "^4.17.21",

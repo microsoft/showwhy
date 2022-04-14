@@ -10,7 +10,7 @@ import { memo, useMemo } from 'react'
 import Xarrow from 'react-xarrows'
 import styled from 'styled-components'
 
-import { Container } from '../styles'
+import { Container } from '../styles.js'
 
 interface LabelProps {
 	id: string

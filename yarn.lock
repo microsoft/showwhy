@@ -2260,6 +2260,7 @@ __metadata:
     "@thematic/d3": ^2.0.6
     "@thematic/fluent": ^3.0.6
     "@thematic/react": ^2.0.6
+    "@thematic/vega": ^2.0.6
     "@types/jest": ^27.4.1
     "@types/lodash": ^4.14.179
     "@types/react": ^17.0.39

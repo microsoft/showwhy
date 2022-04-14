@@ -7,7 +7,7 @@ import { useBoolean } from '@fluentui/react-hooks'
 import { memo } from 'react'
 import styled from 'styled-components'
 
-import { BaseCallout } from './BaseCallout'
+import { BaseCallout } from './BaseCallout.js'
 
 export const InfoCallout: React.FC<{
 	title?: string

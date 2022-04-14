@@ -7,12 +7,12 @@ import type { Experiment } from '@showwhy/types'
 import { memo } from 'react'
 import styled from 'styled-components'
 
-import { CausalQuestion } from '../CausalQuestion'
-import { Container } from '../styles'
-import type { WorkflowHelp } from '../UnderstandProcessModal'
-import { ProjectsSelector } from './ProjectsSelector'
-import { SaveProject } from './SaveProject'
-import { UnderstandProcessButton } from './UnderstandProcessButton'
+import { CausalQuestion } from '../CausalQuestion/index.js'
+import { Container } from '../styles.js'
+import type { WorkflowHelp } from '../UnderstandProcessModal/index.js'
+import { ProjectsSelector } from './ProjectsSelector.js'
+import { SaveProject } from './SaveProject.js'
+import { UnderstandProcessButton } from './UnderstandProcessButton.js'
 
 export const AppHeader: React.FC<{
 	defineQuestion: Experiment

@@ -5,8 +5,8 @@
 import type { IContextualMenuProps } from '@fluentui/react'
 import { memo } from 'react'
 
-import { Container } from '../styles'
-import { OptionsButton } from './OptionsButton'
+import { Container } from '../styles.js'
+import { OptionsButton } from './OptionsButton.js'
 
 export const ProjectsSelector: React.FC<{
 	loadMenu: IContextualMenuProps
