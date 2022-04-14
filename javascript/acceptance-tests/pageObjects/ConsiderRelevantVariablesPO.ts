@@ -10,7 +10,7 @@ const selectors: Record<string, string> = {
 	title: dataAttr('title'),
 	form: dataAttr('variables-form'),
 	element: dataAttr('generic-table-row'),
-	variableField: dataAttr('variables-form-name'),
+	variableField: dataAttr('variables-form-variable-name'),
 	description: dataAttr('variables-form-description'),
 	addButton: dataAttr('variables-form-add-button'),
 	goBackButton: dataAttr('go-back-button'),

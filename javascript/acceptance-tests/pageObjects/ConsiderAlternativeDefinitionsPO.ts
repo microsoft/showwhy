@@ -10,7 +10,7 @@ import { capitalize } from 'lodash'
 const selectors: Record<string, string> = {
 	title: dataAttr('title'),
 	form: dataAttr('definitions-form'),
-	definitionElement: dataAttr('definition-element'),
+	definitionElement: dataAttr('generic-table-row'),
 	variableField: dataAttr('definitions-form-variable-name'),
 	isPrimaryCheckbox: `${dataAttr('definitions-form-is-primary')} input`,
 	description: dataAttr('definitions-form-description'),
