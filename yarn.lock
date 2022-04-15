@@ -950,10 +950,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@emotion/is-prop-valid@npm:^1.1.0":
+  version: 1.1.2
+  resolution: "@emotion/is-prop-valid@npm:1.1.2"
+  dependencies:
+    "@emotion/memoize": ^0.7.4
+  checksum: 58b1f2d429a589f8f5bc2c33a8732cbb7bbcb17131a103511ef9a94ac754d7eeb53d627f947da480cd977f9d419fd92e244991680292f3287204159652745707
+  languageName: node
+  linkType: hard
+
 "@emotion/memoize@npm:0.7.4":
   version: 0.7.4
   resolution: "@emotion/memoize@npm:0.7.4"
   checksum: 4e3920d4ec95995657a37beb43d3f4b7d89fed6caa2b173a4c04d10482d089d5c3ea50bbc96618d918b020f26ed6e9c4026bbd45433566576c1f7b056c3271dc
+  languageName: node
+  linkType: hard
+
+"@emotion/memoize@npm:^0.7.4":
+  version: 0.7.5
+  resolution: "@emotion/memoize@npm:0.7.5"
+  checksum: 83da8d4a7649a92c72f960817692bc6be13cc13e107b9f7e878d63766525ed4402881bfeb3cda61145c050281e7e260f114a0a2870515527346f2ef896b915b3
   languageName: node
   linkType: hard
 
@@ -1391,6 +1407,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fluentui/font-icons-mdl2@npm:^8.1.6":
+  version: 8.3.0
+  resolution: "@fluentui/font-icons-mdl2@npm:8.3.0"
+  dependencies:
+    "@fluentui/set-version": ^8.2.0
+    "@fluentui/style-utilities": ^8.6.5
+    "@fluentui/utilities": ^8.8.1
+    tslib: ^2.1.0
+  checksum: ec754986faa960242cd36cb68c3276c27cadbafa013a11995badbdf7ab1b92a8420374e0797abab357e302b68f54d813857fa908bf763f083ddc8209815f2681
+  languageName: node
+  linkType: hard
+
 "@fluentui/font-icons-mdl2@npm:^8.2.0":
   version: 8.2.0
   resolution: "@fluentui/font-icons-mdl2@npm:8.2.0"
@@ -1595,6 +1623,23 @@ __metadata:
     react: ">=16.8.0 <17.0.0"
     react-dom: ">=16.8.0 <17.0.0"
   checksum: a9c9f92812dc9f0ee7a3d4065942e6d70a085df0e8ad42ec57b1cc36cb13ac86ba6a27c066d23ad9ccc05fede9af76bc057982939f02262c7269525e5868960b
+  languageName: node
+  linkType: hard
+
+"@fluentui/theme@npm:^1.7.5":
+  version: 1.7.5
+  resolution: "@fluentui/theme@npm:1.7.5"
+  dependencies:
+    "@uifabric/merge-styles": ^7.19.2
+    "@uifabric/set-version": ^7.0.24
+    "@uifabric/utilities": ^7.34.0
+    tslib: ^1.10.0
+  peerDependencies:
+    "@types/react": ">=16.8.0 <17.0.0"
+    "@types/react-dom": ">=16.8.0 <17.0.0"
+    react: ">=16.8.0 <17.0.0"
+    react-dom: ">=16.8.0 <17.0.0"
+  checksum: 7505ff9eebefa1a41484a5d32a4e06894fd95114454df8b11e1ecfd4432d99b5a0790745ce77764c66c7a585389a09b458a71374012866249e57ff821a4c869b
   languageName: node
   linkType: hard
 
@@ -2196,20 +2241,39 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/components@workspace:javascript/components"
   dependencies:
+    "@data-wrangling-components/core": ^6.1.0
+    "@data-wrangling-components/react": ^5.1.3
+    "@data-wrangling-components/utilities": ^1.8.2
+    "@essex/hooks": ^4.0.6
     "@essex/jest-config": ^21.0.8
     "@essex/scripts": ^20.4.7
+    "@essex/themed-components": ^2.2.0
     "@essex/tsconfig-base": ^1.0.2
+    "@fluentui/font-icons-mdl2": ^8.1.6
+    "@fluentui/react": ^8.63.0
+    "@fluentui/react-hooks": ^8.5.0
+    "@fluentui/utilities": ^8.6.0
     "@showwhy/types": "workspace:^"
     "@testing-library/react-hooks": ^8.0.0
+    "@thematic/color": ^2.0.6
+    "@thematic/core": ^2.0.6
+    "@thematic/d3": ^2.0.6
+    "@thematic/fluent": ^3.0.6
+    "@thematic/react": ^2.0.6
+    "@thematic/vega": ^2.0.6
     "@types/jest": ^27.4.1
     "@types/lodash": ^4.14.179
     "@types/react": ^17.0.39
     "@types/styled-components": ^5.1.24
+    "@uifabric/icons": ^7.5.23
     arquero: ^4.8.7
     jest: ^27.5.1
     lodash: ^4.17.21
     markdown-to-jsx: ^7.1.6
+    react: ^17.0.2
+    react-dom: ^17.0.2
     react-xarrows: ^2.0.2
+    styled-components: ^5.3.0
     vega: ^5.22.1
   peerDependencies:
     "@data-wrangling-components/core": ^6.1.0
@@ -3431,6 +3495,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@uifabric/icons@npm:^7.5.23":
+  version: 7.7.0
+  resolution: "@uifabric/icons@npm:7.7.0"
+  dependencies:
+    "@uifabric/set-version": ^7.0.24
+    "@uifabric/styling": ^7.20.1
+    "@uifabric/utilities": ^7.34.0
+    tslib: ^1.10.0
+  checksum: f1d255a1edf10cb3dc4e4d7724d88269c78f36282a980de22f8bc07f749d226d20689e804e2fecb2a48de06fd888c79567e5d17394e8aea3edeb214eeca112d0
+  languageName: node
+  linkType: hard
+
 "@uifabric/icons@npm:^7.6.2":
   version: 7.6.2
   resolution: "@uifabric/icons@npm:7.6.2"
@@ -3475,6 +3551,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@uifabric/styling@npm:^7.20.1":
+  version: 7.20.1
+  resolution: "@uifabric/styling@npm:7.20.1"
+  dependencies:
+    "@fluentui/theme": ^1.7.5
+    "@microsoft/load-themed-styles": ^1.10.26
+    "@uifabric/merge-styles": ^7.19.2
+    "@uifabric/set-version": ^7.0.24
+    "@uifabric/utilities": ^7.34.0
+    tslib: ^1.10.0
+  checksum: 12002535107be26d3ca53feefed290e68d8316d8dd61fa4d65871e3af18b404879a89291f796931d36cf2e945877b1053cff025b7b2241f99f615bb5bd95c925
+  languageName: node
+  linkType: hard
+
 "@uifabric/utilities@npm:^7.33.5":
   version: 7.33.5
   resolution: "@uifabric/utilities@npm:7.33.5"
@@ -3490,6 +3580,24 @@ __metadata:
     react: ">=16.8.0 <17.0.0"
     react-dom: ">=16.8.0 <17.0.0"
   checksum: 794774c549b25d1cc9f5ab9d380f6801606da8c0472a8362c19497032314d85fef3bc0cd7f0ac192d92a7cfb0ead7d3f1dca361e768e77a6834623401173ee43
+  languageName: node
+  linkType: hard
+
+"@uifabric/utilities@npm:^7.34.0":
+  version: 7.34.0
+  resolution: "@uifabric/utilities@npm:7.34.0"
+  dependencies:
+    "@fluentui/dom-utilities": ^1.1.2
+    "@uifabric/merge-styles": ^7.19.2
+    "@uifabric/set-version": ^7.0.24
+    prop-types: ^15.7.2
+    tslib: ^1.10.0
+  peerDependencies:
+    "@types/react": ">=16.8.0 <17.0.0"
+    "@types/react-dom": ">=16.8.0 <17.0.0"
+    react: ">=16.8.0 <17.0.0"
+    react-dom: ">=16.8.0 <17.0.0"
+  checksum: fd472bc052c2dfeec751126e980b5248ba158dcf4edaa0085e12d82d9b7dedf51ff512ea70e4f511d2810345cafbf23fb2c7789229ede869918d78026c5b4795
   languageName: node
   linkType: hard
 
@@ -10537,6 +10645,28 @@ __metadata:
   version: 3.1.1
   resolution: "strip-json-comments@npm:3.1.1"
   checksum: 492f73e27268f9b1c122733f28ecb0e7e8d8a531a6662efbd08e22cccb3f9475e90a1b82cab06a392f6afae6d2de636f977e231296400d0ec5304ba70f166443
+  languageName: node
+  linkType: hard
+
+"styled-components@npm:^5.3.0":
+  version: 5.3.5
+  resolution: "styled-components@npm:5.3.5"
+  dependencies:
+    "@babel/helper-module-imports": ^7.0.0
+    "@babel/traverse": ^7.4.5
+    "@emotion/is-prop-valid": ^1.1.0
+    "@emotion/stylis": ^0.8.4
+    "@emotion/unitless": ^0.7.4
+    babel-plugin-styled-components: ">= 1.12.0"
+    css-to-react-native: ^3.0.0
+    hoist-non-react-statics: ^3.0.0
+    shallowequal: ^1.1.0
+    supports-color: ^5.5.0
+  peerDependencies:
+    react: ">= 16.8.0"
+    react-dom: ">= 16.8.0"
+    react-is: ">= 16.8.0"
+  checksum: 05a664dfe423c2906959a0f3f47f9b1ad630e493eb2e06deea0dc0906af33ba5ca17277b98948a6c9642e73894d6533391aebf45576489f5afe920c974e9f8eb
   languageName: node
   linkType: hard
 
