@@ -2,9 +2,6 @@ name: ShowWhy Python CI
 pool:
   vmImage: ubuntu-latest
 
-variables:
-  Codeql.Enabled: true
-
 trigger:
   batch: true
   branches:
