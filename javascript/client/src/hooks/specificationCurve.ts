@@ -4,7 +4,16 @@
  */
 
 import type { Dimensions } from '@essex/hooks'
-import type { Experiment, Handler, Handler1, Maybe } from '@showwhy/types'
+import type {
+	DecisionFeature,
+	Experiment,
+	Handler,
+	Handler1,
+	Maybe,
+	RunHistory,
+	Specification,
+	SpecificationCurveConfig,
+} from '@showwhy/types'
 import {
 	CausalityLevel,
 	DefinitionType,
@@ -29,12 +38,6 @@ import {
 	useSpecCount,
 	useSpecificationCurveConfig,
 } from '~state'
-import type {
-	DecisionFeature,
-	RunHistory,
-	Specification,
-	SpecificationCurveConfig,
-} from '~types'
 
 import { useLoadSpecificationData } from '../pages/PerformAnalysis/EstimateCausalEffectsPage/EstimateCausalEffectPage.hooks'
 import { useUpdateSignificanceTests } from './significanceTest'
@@ -273,15 +276,14 @@ function useRefutationNumbers(
 function useIsSpecificationOn(
 	selectedSpecification: Maybe<Specification>,
 ): boolean {
-	const config = useSpecificationCurveConfig()
+	const { inactiveSpecifications } = useSpecificationCurveConfig()
+
 	return useMemo(() => {
-		if (!selectedSpecification || !config.inactiveSpecifications) {
+		if (!selectedSpecification || !inactiveSpecifications) {
 			return false
 		}
-		return !config.inactiveSpecifications.find(
-			x => x === selectedSpecification?.id,
-		)
-	}, [config, selectedSpecification])
+		return !inactiveSpecifications.find(x => x === selectedSpecification?.id)
+	}, [inactiveSpecifications, selectedSpecification])
 }
 
 function useOnToggleRejectEstimateHandler(

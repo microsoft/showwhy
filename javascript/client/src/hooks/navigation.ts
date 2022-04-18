@@ -8,8 +8,8 @@ import { useCallback } from 'react'
 import { useHistory } from 'react-router-dom'
 
 import { useSetDefinitionType } from '~state'
-import { Pages } from '~types'
 
+import { Pages } from '../constants'
 import { useHandleTabNavigation } from './tabsNavigation'
 
 export function useGoToPage(

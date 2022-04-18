@@ -3,12 +3,11 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import type { Workflow } from '@showwhy/types'
 import { renderHook } from '@testing-library/react-hooks'
 import { RecoilRoot } from 'recoil'
 
-import type { Workflow } from '~types'
-import { Pages } from '~types'
-
+import { Pages } from '../../constants'
 import { stepsList } from '../../data/stepsList'
 import * as steps from '../steps'
 

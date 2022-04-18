@@ -3,7 +3,6 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 export * from './BeliefDegree.js'
-export * from './CausalEffectSize.js'
 export * from './CausalFactor.js'
 export * from './CausalFactorType.js'
 export * from './CausalityLevel.js'

@@ -2,14 +2,11 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import type { Handler, Maybe } from '@showwhy/types'
+import type { Maybe, StepStatus, WorkflowStep } from '@showwhy/types'
 import { useMemo } from 'react'
 
 import { useAllSteps, useCurrentStep } from '~hooks'
 import { useStepStatus } from '~state'
-import type { StepStatus, WorkflowStep } from '~types'
-
-export type ToggleStepStatusHandler = Handler
 export interface ProcessStepInfo {
 	step: Maybe<WorkflowStep>
 	stepStatus: Maybe<StepStatus>

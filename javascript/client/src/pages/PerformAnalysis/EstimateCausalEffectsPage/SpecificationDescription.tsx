@@ -3,18 +3,17 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { DefaultButton } from '@fluentui/react'
-import type { Handler, RefutationOption } from '@showwhy/types'
+import type { Handler, RefutationOption, Specification } from '@showwhy/types'
 import { RefutationTestMethodString } from '@showwhy/types'
 import { round } from 'lodash'
 import { memo } from 'react'
 import styled from 'styled-components'
 
-import { RefutationOptionsCallout } from '~components/RefutationOptionsCallout'
 import { Paragraph, Text } from '~styles'
-import type { Specification } from '~types'
 import { pluralize } from '~utils'
 
 import { EstimateDetails } from './EstimateDetails'
+import { RefutationOptionsCallout } from './RefutationOptionsCallout'
 
 export const SpecificationDescription: React.FC<{
 	specification?: Specification

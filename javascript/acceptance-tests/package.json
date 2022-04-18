@@ -13,7 +13,7 @@
 		"acceptance:test-localhost": "yarn build:only && start-server-and-test 'yarn start:static' 'http-get://localhost:3000/' pw"
 	},
 	"devDependencies": {
-		"@playwright/test": "^1.20.2",
+		"@playwright/test": "^1.21.0",
 		"@tsconfig/node14": "^1.0.1",
 		"@types/config": "^0.0.41",
 		"@types/lodash": "^4.14.179",

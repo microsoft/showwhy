@@ -2,12 +2,12 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import type { Specification } from '@showwhy/types'
 import { csv } from 'd3-fetch'
 import { useEffect, useState } from 'react'
 
 import { useDefaultRun } from '~hooks'
 import { useDefaultDatasetResult } from '~state'
-import type { Specification } from '~types'
 
 import { row2spec } from '../EstimateCausalEffectPage.utils'
 

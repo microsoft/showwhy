@@ -4,12 +4,11 @@
  */
 import { PrimaryButton } from '@fluentui/react'
 import { isStatus } from '@showwhy/api-client'
+import { ErrorMessage, RunProgressIndicator } from '@showwhy/components'
 import { NodeResponseStatus } from '@showwhy/types'
 import { memo, useEffect, useMemo } from 'react'
 import styled from 'styled-components'
 
-import { ErrorMessage } from '~components/ErrorMessage'
-import { RunProgressIndicator } from '~components/RunProgressIndicator'
 import {
 	useAutomaticWorkflowStatus,
 	useMicrodataInfoMessage,

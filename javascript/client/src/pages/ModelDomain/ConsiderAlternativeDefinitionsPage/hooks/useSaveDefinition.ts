@@ -3,6 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import { wait } from '@showwhy/api-client'
 import type {
 	AsyncHandler1,
 	ElementDefinition,
@@ -11,7 +12,7 @@ import type {
 import { useCallback } from 'react'
 
 import { useExperiment, useSetExperiment } from '~state'
-import { wait, withRandomId } from '~utils'
+import { withRandomId } from '~utils'
 
 export function useSaveDefinitions(): AsyncHandler1<ElementDefinition[]> {
 	const defineQuestion = useExperiment()

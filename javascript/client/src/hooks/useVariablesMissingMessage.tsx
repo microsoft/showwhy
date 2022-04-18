@@ -3,13 +3,14 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import { MessageContainer } from '@showwhy/components'
 import { useMemo } from 'react'
 import { Link } from 'react-router-dom'
 
-import { MessageContainer } from '~components/MessageContainer'
 import { useAllVariables } from '~hooks'
 import { useCausalFactors, useExperiment } from '~state'
-import { Pages } from '~types'
+
+import { Pages } from '../constants'
 
 export function useVariablesMissingMessage(): JSX.Element | null {
 	const definitions = useExperiment()

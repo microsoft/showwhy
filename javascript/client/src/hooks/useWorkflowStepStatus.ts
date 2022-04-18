@@ -2,12 +2,11 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import type { Handler, Maybe } from '@showwhy/types'
+import type { Handler, Maybe, WorkflowStep } from '@showwhy/types'
+import { StepStatus } from '@showwhy/types'
 import { useCallback } from 'react'
 
 import { useSetStepStatus, useStepStatus } from '~state'
-import type { WorkflowStep } from '~types'
-import { StepStatus } from '~types'
 
 export function useWorkflowStepStatus(step: WorkflowStep): {
 	stepStatus: Maybe<StepStatus>

@@ -2,10 +2,11 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import type { StepList } from '@showwhy/types'
+import { StepStatus } from '@showwhy/types'
 import { v4 as uuidv4 } from 'uuid'
 
-import type { StepList } from '~types'
-import { Pages, StepStatus } from '~types'
+import { Pages } from '../constants'
 
 export const stepsList = [
 	{

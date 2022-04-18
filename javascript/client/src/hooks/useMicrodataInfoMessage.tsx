@@ -3,13 +3,14 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import { MessageContainer } from '@showwhy/components'
 import { useMemo } from 'react'
 import { Link } from 'react-router-dom'
 
-import { MessageContainer } from '~components/MessageContainer'
 import { useIsMicrodata } from '~hooks'
 import { useOutputTablePrep, useSubjectIdentifier } from '~state'
-import { Pages } from '~types'
+
+import { Pages } from '../constants'
 
 export function useMicrodataInfoMessage(): JSX.Element | null {
 	const outputTable = useOutputTablePrep()

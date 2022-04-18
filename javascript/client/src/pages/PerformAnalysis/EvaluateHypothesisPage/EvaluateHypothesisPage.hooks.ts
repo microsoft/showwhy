@@ -12,11 +12,14 @@ import type {
 	Handler,
 	Maybe,
 	RefutationOption,
+	RunHistory,
 	SignificanceTest,
+	Specification,
 } from '@showwhy/types'
 import { NodeResponseStatus } from '@showwhy/types'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 
+import type { CausalEffectsProps } from '~hooks'
 import {
 	useActualSignificanceTest,
 	useAlternativeModels,
@@ -34,14 +37,14 @@ import {
 	usePrimarySpecificationConfig,
 	useSpecificationCurveConfig,
 } from '~state'
-import type { DefaultDatasetResult, RunHistory, Specification } from '~types'
+import type { DefaultDatasetResult } from '~types'
 
 import { useLoadSpecificationData } from '../EstimateCausalEffectsPage/EstimateCausalEffectPage.hooks'
 
 export function useBusinessLogic(): {
 	alternativeModels: AlternativeModels
 	defaultRun: Maybe<RunHistory>
-	causalEffects: ReturnType<typeof useCausalEffects>
+	causalEffects: CausalEffectsProps
 	specificationData: Specification[]
 	defaultDataset: DefaultDatasetResult | null
 	defineQuestion: Experiment

@@ -4,58 +4,47 @@
  */
 
 import { DefaultButton } from '@fluentui/react'
+import type { HeaderData } from '@showwhy/components'
+import { GenericTable } from '@showwhy/components'
 import { memo } from 'react'
 import styled from 'styled-components'
 
-import { FactorsDefinitionForm } from '~components/FactorsDefinitionForm'
-import { TableComponent } from '~components/Tables/TableComponent'
 import { Container, Title } from '~styles'
-import type { HeaderData } from '~types'
 
 import { useBusinessLogic } from './ConsiderRelevantVariablesPage.hooks'
+import { RelevantVariablesForm } from './RelevantVariablesForm'
 
 const tableHeaders: HeaderData[] = [
-	{ fieldName: 'variable', value: 'Label', width: '15%' },
+	{ fieldName: 'variable', value: 'Label' },
 	{ fieldName: 'description', value: 'Description' },
+	{ fieldName: 'actions', value: 'Actions' },
 ]
 
 export const ConsiderRelevantVariablesPage: React.FC = memo(
 	function ConsiderRelevantVariablesPage() {
-		const {
-			factor,
-			isEditing,
-			flatFactorsList,
-			addFactor,
-			editFactor,
-			deleteFactor,
-			setFactor,
-			setIsEditing,
-			goToFactorsPage,
-			page,
-		} = useBusinessLogic()
+		const { items, addFactor, goToFactorsPage, page } = useBusinessLogic()
 
 		return (
 			<Container>
 				<Container>
 					<Title data-pw="title">Relevant variables</Title>
-					<TableComponent
-						headers={tableHeaders}
-						columns={flatFactorsList}
-						onDelete={deleteFactor}
-						onEdit={editFactor}
-						onSave={addFactor}
-						factorToEdit={factor}
-						onCancel={() => {
-							setIsEditing(false)
-							setFactor(undefined)
-						}}
-					/>
+					<Container>
+						<GenericTable
+							items={items}
+							headers={{
+								data: tableHeaders,
+							}}
+							props={{
+								customColumnsWidth: [
+									{ fieldName: 'label', width: '30%' },
+									{ fieldName: 'description', width: '60%' },
+									{ fieldName: 'actions', width: '10%' },
+								],
+							}}
+						/>
+					</Container>
 				</Container>
-				<FactorsDefinitionForm
-					factor={!isEditing ? factor : undefined}
-					onAdd={addFactor}
-					showLevel={false}
-				/>
+				<RelevantVariablesForm onAdd={addFactor}></RelevantVariablesForm>
 				{page ? (
 					<ButtonContainer>
 						<DefaultButton onClick={goToFactorsPage} data-pw="go-back-button">

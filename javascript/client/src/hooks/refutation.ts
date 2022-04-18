@@ -3,11 +3,9 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { RefutationOption } from '@showwhy/types'
+import type { RefutationOption, Specification } from '@showwhy/types'
 import { RefutationResult, RefutationTestMethod } from '@showwhy/types'
 import { useMemo } from 'react'
-
-import type { Specification } from '~types'
 
 export const REFUTATIONS: RefutationOption[] = [
 	{

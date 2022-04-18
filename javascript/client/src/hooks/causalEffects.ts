@@ -23,7 +23,7 @@ export interface CausalEffectsProps {
 
 export function useCausalEffects(
 	causalLevel: CausalModelLevel,
-): ReturnType<typeof useCausalEffectsTestable> {
+): CausalEffectsProps {
 	return useCausalEffectsTestable(
 		useExperiment(),
 		useAlternativeModels(causalLevel),

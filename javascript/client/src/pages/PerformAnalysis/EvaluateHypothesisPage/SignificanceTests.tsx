@@ -3,6 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { isProcessingStatus } from '@showwhy/api-client'
+import { LinkCallout, ProgressBar } from '@showwhy/components'
 import type {
 	Experiment,
 	Handler,
@@ -12,8 +13,6 @@ import type {
 import { NodeResponseStatus, Significance } from '@showwhy/types'
 import { memo } from 'react'
 
-import { LinkCallout } from '~components/Callout'
-import { ProgressBar } from '~components/ProgressBar'
 import { Paragraph, Value } from '~styles'
 import { median as calcMedian } from '~utils'
 

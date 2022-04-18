@@ -38,6 +38,7 @@
 		"@fluentui/utilities": "^8.6.0",
 		"@showwhy/api-client": "workspace:^",
 		"@showwhy/builders": "workspace:^",
+		"@showwhy/components": "workspace:^",
 		"@showwhy/types": "workspace:^",
 		"@thematic/color": "^2.0.6",
 		"@thematic/core": "^2.0.6",
@@ -103,6 +104,6 @@
 		"jest": "^27.5.1",
 		"regenerator-runtime": "^0.13.9",
 		"typescript": "^4.6.2",
-		"vite": "^2.8.6"
+		"vite": "^2.9.5"
 	}
 }

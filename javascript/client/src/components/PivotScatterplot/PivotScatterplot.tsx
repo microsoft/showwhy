@@ -3,17 +3,17 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { Pivot, PivotItem } from '@fluentui/react'
-import type { Handler1, Maybe } from '@showwhy/types'
+import type {
+	DecisionFeature,
+	Handler1,
+	Maybe,
+	Specification,
+	SpecificationCurveConfig,
+} from '@showwhy/types'
 import { useThematic } from '@thematic/react'
 import type { FC } from 'react'
 import { memo, useMemo } from 'react'
 import { EffectScatterplot } from 'src/pages/PerformAnalysis/EstimateCausalEffectsPage/vega'
-
-import type {
-	DecisionFeature,
-	Specification,
-	SpecificationCurveConfig,
-} from '~types'
 
 interface PivotItemChart {
 	pivotName: string

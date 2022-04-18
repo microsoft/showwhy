@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { Maybe } from '@showwhy/types'
+import type { Maybe, StepStatus } from '@showwhy/types'
 import type { SetterOrUpdater } from 'recoil'
 import {
 	atomFamily,
@@ -11,8 +11,6 @@ import {
 	useRecoilValue,
 	useSetRecoilState,
 } from 'recoil'
-
-import type { StepStatus } from '~types'
 
 export const stepStatusState = atomFamily<Maybe<StepStatus>, Maybe<string>>({
 	key: 'step-status-store',

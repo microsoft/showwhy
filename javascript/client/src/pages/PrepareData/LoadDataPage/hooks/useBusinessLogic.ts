@@ -6,6 +6,7 @@
 import type { FileCollection } from '@data-wrangling-components/utilities'
 import { guessDelimiter } from '@data-wrangling-components/utilities'
 import type { IDropdownOption } from '@fluentui/react'
+import type { DropFilesCount } from '@showwhy/components'
 import type { AsyncHandler1, Handler, Maybe } from '@showwhy/types'
 import { useBoolean } from 'ahooks'
 import { useCallback, useEffect, useState } from 'react'
@@ -22,7 +23,7 @@ import {
 	useSetProjectFiles,
 	useSetSelectedFile,
 } from '~state'
-import type { DropFilesCount, ProjectFile } from '~types'
+import type { ProjectFile } from '~types'
 import { createDefaultTable, replaceItemAtIndex } from '~utils'
 
 import { useDefaultSelectedFile } from './useDefaultSelectedFile'

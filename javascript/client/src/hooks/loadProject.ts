@@ -11,7 +11,13 @@ import type {
 } from '@data-wrangling-components/core'
 import { usePipeline, useStore } from '@data-wrangling-components/react'
 import type { BaseFile } from '@data-wrangling-components/utilities'
-import type { CausalFactor, Experiment, Maybe } from '@showwhy/types'
+import type {
+	CausalFactor,
+	Experiment,
+	Maybe,
+	RunHistory,
+} from '@showwhy/types'
+import { StepStatus } from '@showwhy/types'
 import { all, op } from 'arquero'
 import type ColumnTable from 'arquero/dist/types/table/column-table'
 import { useCallback } from 'react'
@@ -40,11 +46,10 @@ import type {
 	DataTableFileDefinition,
 	FileDefinition,
 	ProjectFile,
-	RunHistory,
 	Workspace,
 	ZipData,
 } from '~types'
-import { ProjectSource, StepStatus } from '~types'
+import { ProjectSource } from '~types'
 import {
 	fetchRemoteTables,
 	fetchTable,

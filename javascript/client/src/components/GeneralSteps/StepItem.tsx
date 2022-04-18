@@ -2,13 +2,12 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import type { Maybe } from '@showwhy/types'
+import type { Maybe, WorkflowStep } from '@showwhy/types'
 import { memo } from 'react'
 import { NavLink } from 'react-router-dom'
 import styled from 'styled-components'
 
 import { useWorkflowStepStatus } from '~hooks'
-import type { WorkflowStep } from '~types'
 
 import { StepStatusDetail } from '.'
 

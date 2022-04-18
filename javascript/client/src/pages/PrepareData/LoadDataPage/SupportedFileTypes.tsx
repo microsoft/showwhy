@@ -2,10 +2,9 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import { InfoCallout } from '@showwhy/components'
 import { memo } from 'react'
 import styled from 'styled-components'
-
-import { InfoCallout } from '~components/Callout'
 
 export const SupportedFileTypes: React.FC<{
 	fileTypesAllowed: string[]

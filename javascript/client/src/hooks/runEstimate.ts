@@ -5,7 +5,11 @@
 
 import type { Orchestrator } from '@showwhy/api-client'
 import { getEstimatorOrchestrator } from '@showwhy/api-client'
-import type { EstimateEffectStatusResponse, NodeResponse } from '@showwhy/types'
+import type {
+	EstimateEffectStatusResponse,
+	NodeResponse,
+	RunStatus,
+} from '@showwhy/types'
 import { useCallback } from 'react'
 
 import {
@@ -15,7 +19,6 @@ import {
 } from '~hooks'
 import { api } from '~resources'
 import { useConfidenceInterval } from '~state'
-import type { RunStatus } from '~types'
 import { getRunStatus } from '~utils'
 
 export function useRunEstimate(): () => Orchestrator<EstimateEffectStatusResponse> {

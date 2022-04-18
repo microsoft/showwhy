@@ -4,25 +4,32 @@
  */
 import { useDimensions } from '@essex/hooks'
 import { MessageBarType } from '@fluentui/react'
+import {
+	AppHeader,
+	Guidance,
+	MessageContainer,
+	StepTitle,
+} from '@showwhy/components'
 import type { Maybe } from '@showwhy/types'
 import { memo, Suspense, useMemo, useRef, useState } from 'react'
+import { understandProcessSteps } from 'src/data/understandProcess'
 import styled from 'styled-components'
 
 import { StepControls, StepSelector } from '~components/GeneralSteps'
-import { Guidance } from '~components/Guidance'
-import { MessageContainer } from '~components/MessageContainer'
-import { StepTitle } from '~components/StepTitle'
-import { useExampleProjects, useUploadZipMenuOption } from '~hooks'
-import { useExperiment, useSelectedProject } from '~state'
+import { useUploadZipMenuOption } from '~hooks'
+import { useExperiment, useGuidance, useSelectedProject } from '~state'
 import { StyledSpinner } from '~styles'
-import { Pages } from '~types'
 
-import { AppHeader } from '../AppHeader'
-import { useOnClickProject, useProcessStepInfo } from './hooks'
+import { Pages } from '../../constants'
+import { useOnClickProject, useProcessStepInfo } from './App.hooks'
+import { useExampleProjects } from './hooks/useExampleProjects'
+import { useLoadMenu } from './hooks/useLoadMenu'
+import { useSaveProps } from './hooks/useSaveProps'
 
 const noChildPadding = [Pages.DeriveDataVariables]
 
 export const Layout: React.FC = memo(function Layout({ children }) {
+	const [isGuidanceVisible, toggleGuidance] = useGuidance()
 	const [error, setError] = useState<Maybe<string>>()
 	const defineQuestion = useExperiment()
 	const exampleProjects = useExampleProjects()
@@ -33,6 +40,12 @@ export const Layout: React.FC = memo(function Layout({ children }) {
 	const navRef = useRef(null)
 	const stepsRef = useRef(null)
 	const navDimensions = useDimensions(navRef)
+	const saveProps = useSaveProps()
+	const loadMenu = useLoadMenu(
+		exampleProjects,
+		uploadZipMenuOption,
+		onClickProject,
+	)
 	const stepDimensions = useDimensions(stepsRef)
 	const guidanceHeight = useMemo((): string => {
 		if (navDimensions?.height && stepDimensions?.height) {
@@ -44,10 +57,10 @@ export const Layout: React.FC = memo(function Layout({ children }) {
 	return (
 		<Container>
 			<AppHeader
+				loadMenu={loadMenu}
+				saveProps={saveProps}
 				defineQuestion={defineQuestion}
-				onClickProject={onClickProject}
-				exampleProjects={exampleProjects}
-				uploadZipMenuOption={uploadZipMenuOption}
+				helpItems={understandProcessSteps}
 			/>
 			<PagesContainer>
 				<Nav ref={navRef}>
@@ -55,7 +68,12 @@ export const Layout: React.FC = memo(function Layout({ children }) {
 						<StepSelector project={project} />
 					</StepsContainer>
 					<GuidanceContainer h={guidanceHeight}>
-						<Guidance step={step} maxHeight={guidanceHeight} />
+						<Guidance
+							isGuidanceVisible={isGuidanceVisible}
+							toggleGuidance={toggleGuidance}
+							step={step}
+							maxHeight={guidanceHeight}
+						/>
 					</GuidanceContainer>
 				</Nav>
 

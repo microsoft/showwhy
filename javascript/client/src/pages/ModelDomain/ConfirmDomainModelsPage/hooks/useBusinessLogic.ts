@@ -2,12 +2,13 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import type { RadioButtonChoice } from '@showwhy/components'
 import type { PrimarySpecificationConfig } from '@showwhy/types'
 import { CausalModelLevel } from '@showwhy/types'
 import { useCallback } from 'react'
 import { useXarrow } from 'react-xarrows'
 
-import type { RadioButtonChoice } from '~components/CardComponent'
+import type { CausalEffectsProps } from '~hooks'
 import { useCausalEffects } from '~hooks'
 import {
 	usePrimarySpecificationConfig,
@@ -17,7 +18,7 @@ import {
 import { useSetPageDone } from '../ConfirmDomainModelsPage.hooks'
 
 export function useBusinessLogic(): {
-	causalEffects: ReturnType<typeof useCausalEffects>
+	causalEffects: CausalEffectsProps
 	primarySpecificationConfig: PrimarySpecificationConfig
 	onDefaultChange: (option?: RadioButtonChoice) => void
 } {

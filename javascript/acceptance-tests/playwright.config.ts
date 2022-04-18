@@ -11,7 +11,7 @@ const pwConfig: PlaywrightTestConfig = {
 	testMatch: '**/pw-tests/*.spec.ts',
 	workers: config.get('workers') ?? undefined,
 	timeout: config.get('timeout') ?? undefined,
-	retries: config.get('retries') ?? 2,
+	retries: config.get('retries') ?? 1,
 	use: {
 		ignoreHTTPSErrors: true,
 		headless: config.get('headless'),

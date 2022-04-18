@@ -6,11 +6,12 @@ import type {
 	BaseFile,
 	FileWithPath,
 } from '@data-wrangling-components/utilities'
+import type { DropFilesCount } from '@showwhy/components'
 import type { Handler } from '@showwhy/types'
 import type { Dispatch, SetStateAction } from 'react'
 import { useCallback } from 'react'
 
-import type { DropFilesCount, ProjectFile } from '~types'
+import type { ProjectFile } from '~types'
 
 import { useAddFilesToCollection } from './fileCollection'
 

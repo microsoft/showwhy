@@ -2,6 +2,12 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import { VegaHost } from '@showwhy/components'
+import type {
+	DecisionFeature,
+	Specification,
+	SpecificationCurveConfig,
+} from '@showwhy/types'
 import { CausalityLevel } from '@showwhy/types'
 import { SelectionState } from '@thematic/core'
 import { useThematic } from '@thematic/react'
@@ -10,14 +16,8 @@ import { memo, useMemo } from 'react'
 import styled from 'styled-components'
 
 import { usePrimarySpecificationConfig } from '~state'
-import type {
-	DecisionFeature,
-	Specification,
-	SpecificationCurveConfig,
-} from '~types'
 
 import { useSpecificationSHAPColumns } from '../EstimateCausalEffectPage.hooks'
-import { VegaHost } from '../VegaHost'
 import template from './dot-plot.json'
 import { mergeSpec, parseJsonPathSpec } from './util'
 import { MIN_SPEC_ADDITIONAL_PADDING } from './VegaSpecificationCurve'

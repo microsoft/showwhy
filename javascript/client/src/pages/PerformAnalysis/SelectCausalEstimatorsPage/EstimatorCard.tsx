@@ -3,13 +3,10 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { Checkbox, FontIcon, Stack } from '@fluentui/react'
+import { ActionButtons, CardComponent, LinkCallout } from '@showwhy/components'
 import type { Estimator, Handler, Maybe } from '@showwhy/types'
 import { memo } from 'react'
 import styled from 'styled-components'
-
-import { ActionButtons } from '~components/ActionButtons'
-import { LinkCallout } from '~components/Callout'
-import { CardComponent } from '~components/CardComponent'
 
 interface ExtendedEstimator extends Estimator {
 	description: string
