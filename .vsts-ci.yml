@@ -77,7 +77,7 @@ stages:
             displayName: Publish Jest test results
             inputs:
               testResultsFormat: 'JUnit'
-              testResultsFiles: '**/test_results/jest-junit.xml'
+              testResultsFiles: '**/test-results/jest-junit.xml'
               mergeTestResults: true
 
   - stage: DeploymentDev
