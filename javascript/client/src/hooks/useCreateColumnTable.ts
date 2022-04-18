@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { BaseFile } from '@data-wrangling-components/utilities'
+import { BaseFile, guessDelimiter } from '@data-wrangling-components/utilities'
 import type { Handler, Handler1 } from '@showwhy/types'
 import { all, op } from 'arquero'
 import type ColumnTable from 'arquero/dist/types/table/column-table'
@@ -18,7 +18,7 @@ export function useCreateColumnTable(
 	onProgress?: Handler1<number>,
 ): (files: BaseFile[], delimiter?: string) => void {
 	const onFinishReading = useCallback(
-		(table: ColumnTable, name: string) => {
+		(table: ColumnTable, name: string, delimiter: string) => {
 			const _table = table.derive(
 				{
 					index: op.row_number(),
@@ -28,6 +28,7 @@ export function useCreateColumnTable(
 			onFileLoad({
 				table: _table,
 				name: name,
+				delimiter,
 			})
 		},
 		[onFileLoad],
@@ -45,14 +46,15 @@ export function useCreateColumnTable(
 		(files: BaseFile[], delimiter?: string, autoType = false) => {
 			onLoadStart && onLoadStart()
 			files.forEach(async (file: BaseFile) => {
+				const _delimiter = delimiter || guessDelimiter(file.name)
 				const table = await readFile(
 					file,
-					delimiter,
+					_delimiter,
 					autoType,
 					progressPercentage,
 				)
 				const name = file.name
-				onFinishReading(table, name)
+				onFinishReading(table, name, _delimiter)
 			})
 		},
 		[onLoadStart, onFinishReading, progressPercentage],

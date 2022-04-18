@@ -14,12 +14,7 @@ import type { ProjectFile } from '~types'
 export const SelectedTableDisplay: React.FC<{
 	selectedFile?: ProjectFile
 	projectFiles: ProjectFile[]
-	onRenameTable: (name: string) => void
-}> = memo(function SelectedTableDisplay({
-	selectedFile,
-	projectFiles,
-	// onRenameTable,
-}) {
+}> = memo(function SelectedTableDisplay({ selectedFile, projectFiles }) {
 	return (
 		<Container data-pw="table">
 			{selectedFile ? (
@@ -29,7 +24,6 @@ export const SelectedTableDisplay: React.FC<{
 						name={selectedFile?.alias ?? selectedFile?.name}
 						showRowCount
 						showColumnCount
-						// onRenameTable={onRenameTable}//disabled while DWC is not prepared for that
 					/>
 					<DatasetContainer>
 						<ArqueroDetailsList

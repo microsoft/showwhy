@@ -5,11 +5,13 @@
 import { renderHook } from '@testing-library/react-hooks'
 import { RecoilRoot } from 'recoil'
 
-import { FILE_TYPES, useSupportedFileTypes } from '../supportedFileTypes'
-it('supportedFileTypes', () => {
-	const expected = FILE_TYPES
+import { LOAD_FILE_TYPES, LOAD_ZIP_TYPES } from '../../LoadDataPage.constants'
+import { useAcceptedLoadFileTypes } from '../useAcceptedLoadFileTypes'
 
-	const { result } = renderHook(() => useSupportedFileTypes(), {
+it('supportedFileTypes', () => {
+	const expected = [...LOAD_FILE_TYPES, ...LOAD_ZIP_TYPES]
+
+	const { result } = renderHook(() => useAcceptedLoadFileTypes(), {
 		wrapper: RecoilRoot,
 	})
 	const response = result.current

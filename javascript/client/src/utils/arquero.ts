@@ -42,7 +42,8 @@ export async function loadTable(
 	tables?: File[],
 ): Promise<ColumnTable> {
 	const file = tables?.find(t => t.name === table.name) as File
-	return readFile(file, undefined, table.autoType)
+	const delimiter = table.delimiter || guessDelimiter(file.name)
+	return readFile(file, delimiter, table.autoType)
 }
 
 export async function fetchTable(
