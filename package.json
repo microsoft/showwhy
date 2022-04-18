@@ -15,7 +15,7 @@
 		"postinstall": "husky install",
 		"clean": "yarn workspaces foreach -pv run clean",
 		"build": "yarn workspaces foreach -pivt run build",
-		"test_packages": "yarn workspaces foreach -pvt run test",
+		"test_packages": "yarn workspaces foreach -pvt run test --reporters=default --reporters=jest-junit",
 		"start": "yarn workspaces foreach -piv run start",
 		"deploy": "yarn workspaces foreach -piv run deploy",
 		"lint": "essex lint --fix --strict",

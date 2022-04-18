@@ -2215,10 +2215,10 @@ __metadata:
     history: ^5.3.0
     http-server: ^14.1.0
     jest: ^27.5.1
+    jest-junit: ^13.1.0
     jsonpath-plus: ^6.0.1
     lineupjs: 3.3.1
     lodash: ^4.17.21
-    markdown-to-jsx: ^7.1.6
     react: ^17.0.2
     react-animate-height: ^2.0.23
     react-dom: ^17.0.2
@@ -2268,6 +2268,7 @@ __metadata:
     "@uifabric/icons": ^7.5.23
     arquero: ^4.8.7
     jest: ^27.5.1
+    jest-junit: ^13.1.0
     lodash: ^4.17.21
     markdown-to-jsx: ^7.1.6
     react: ^17.0.2
@@ -7677,6 +7678,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"jest-junit@npm:^13.1.0":
+  version: 13.1.0
+  resolution: "jest-junit@npm:13.1.0"
+  dependencies:
+    mkdirp: ^1.0.4
+    strip-ansi: ^6.0.1
+    uuid: ^8.3.2
+    xml: ^1.0.1
+  checksum: a12ec522012cf9d0e97d4c665d8ca05b97dc3d25ef3cd0dbba2b095da4b68e1cabac9751a2718a9593b55c620a2b980e0b6c7dd7d33dfc4b73193bc67b9c9ae0
+  languageName: node
+  linkType: hard
+
 "jest-leak-detector@npm:^27.5.1":
   version: 27.5.1
   resolution: "jest-leak-detector@npm:27.5.1"
@@ -12221,6 +12234,13 @@ __metadata:
     sax: ">=0.6.0"
     xmlbuilder: ~11.0.0
   checksum: ca0cf2dfbf6deeaae878a891c8fbc0db6fd04398087084edf143cdc83d0509ad0fe199b890f62f39c4415cf60268a27a6aed0d343f0658f8779bd7add690fa98
+  languageName: node
+  linkType: hard
+
+"xml@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "xml@npm:1.0.1"
+  checksum: 11b5545ef3f8fec3fa29ce251f50ad7b6c97c103ed4d851306ec23366f5fa4699dd6a942262df52313a0cd1840ab26256da253c023bad3309d8ce46fe6020ca0
   languageName: node
   linkType: hard
 

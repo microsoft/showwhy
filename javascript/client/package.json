@@ -20,7 +20,7 @@
 		"start:client": "yarn start",
 		"start:static": "http-server -p 3000 dist",
 		"archive": "essex zip --baseDir dist deploy.zip '**/*'",
-		"test": "NODE_OPTIONS=--experimental-vm-modules yarn node $(yarn bin jest) --no-cache",
+		"test": "NODE_OPTIONS=--experimental-vm-modules yarn node $(yarn bin jest) --no-cache --reporters=default --reporters=jest-junit",
 		"test:jest": "yarn test",
 		"test:cov": "jest --coverage"
 	},
@@ -61,7 +61,6 @@
 		"jsonpath-plus": "^6.0.1",
 		"lineupjs": "3.3.1",
 		"lodash": "^4.17.21",
-		"markdown-to-jsx": "^7.1.6",
 		"react": "^17.0.2",
 		"react-animate-height": "^2.0.23",
 		"react-dom": "^17.0.2",
@@ -102,8 +101,14 @@
 		"babel-plugin-transform-import-meta": "^2.1.1",
 		"http-server": "^14.1.0",
 		"jest": "^27.5.1",
+		"jest-junit": "^13.1.0",
 		"regenerator-runtime": "^0.13.9",
 		"typescript": "^4.6.2",
 		"vite": "^2.9.5"
+	},
+	"jest-junit": {
+		"suiteName": "@showwhy/client",
+		"outputDirectory": "./test-results",
+		"outputName": "jest-junit.xml"
 	}
 }

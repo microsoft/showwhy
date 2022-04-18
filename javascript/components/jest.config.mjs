@@ -9,5 +9,6 @@ const configuration = {
 	testEnvironment: 'jsdom',
 	extensionsToTreatAsEsm: ['.ts', '.tsx'],
 	setupFilesAfterEnv: ['<rootDir>/jest.setup.mjs'],
+	reporters: ['default', 'jest-junit'],
 }
 export default configuration

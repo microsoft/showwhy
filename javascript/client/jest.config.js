@@ -24,5 +24,6 @@ const configuration = {
 		'~styles': ['<rootDir>/src/styles/index.ts'],
 	},
 	setupFilesAfterEnv: ['<rootDir>/jest.setup.mjs'],
+	reporters: ['default', 'jest-junit'],
 }
 module.exports = configuration

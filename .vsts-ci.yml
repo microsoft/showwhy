@@ -2,9 +2,6 @@ name: ShowWhy CI
 pool:
   vmImage: ubuntu-latest
 
-variables:
-  Codeql.Enabled: true
-
 trigger:
   batch: true
   branches:
@@ -75,6 +72,13 @@ stages:
               script: yarn ci
             env:
               CI: true
+          #Publish results of tests
+          - task: PublishTestResults@2
+            displayName: Publish Jest test results
+            inputs:
+              testResultsFormat: 'JUnit'
+              testResultsFiles: '**/test_results/jest-junit.xml'
+              mergeTestResults: true
 
   - stage: DeploymentDev
     displayName: Deployment (Dev)

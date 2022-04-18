@@ -47,6 +47,7 @@
 		"@types/styled-components": "^5.1.24",
 		"@uifabric/icons": "^7.5.23",
 		"jest": "^27.5.1",
+		"jest-junit": "^13.1.0",
 		"react": "^17.0.2",
 		"react-dom": "^17.0.2",
 		"styled-components": "^5.3.0"
@@ -71,5 +72,10 @@
 		"react": "^17.0.2",
 		"react-dom": "^17.0.2",
 		"styled-components": "^5.3.0"
+	},
+	"jest-junit": {
+		"suiteName": "@showwhy/components",
+		"outputDirectory": "./test-results",
+		"outputName": "jest-junit.xml"
 	}
 }
