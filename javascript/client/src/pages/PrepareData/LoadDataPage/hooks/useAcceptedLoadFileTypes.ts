@@ -4,6 +4,7 @@
  */
 
 import { useMemo } from 'react'
+
 import { LOAD_FILE_TYPES, LOAD_ZIP_TYPES } from '../LoadDataPage.constants'
 
 export function useAcceptedLoadFileTypes(): string[] {

@@ -5,11 +5,12 @@
 
 import {
 	type FileCollection,
-	isZipFile,
 	FileType,
+	isZipFile,
 } from '@data-wrangling-components/utilities'
-import type { ProjectFile, Handler1, Handler } from '@showwhy/types'
+import type { Handler,Handler1, ProjectFile } from '@showwhy/types'
 import { useCallback } from 'react'
+
 import { useCreateColumnTable } from '~hooks'
 
 export function useHandleOnDrop(

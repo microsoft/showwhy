@@ -16,29 +16,30 @@ import {
 	DropzoneContainer,
 	MessageContainer,
 } from '@showwhy/components'
+import type { Maybe, ProjectFile } from '@showwhy/types'
 import { memo, useCallback, useState } from 'react'
 import styled from 'styled-components'
-import { useAutomaticWorkflowStatus } from '~hooks'
 
-import { ContainerFlexRow } from '~styles'
-import { useAcceptedLoadFileTypes } from './hooks/useAcceptedLoadFileTypes'
-import { delimiterOptions } from './LoadDataPage.types'
-import { SelectedTableDisplay } from './SelectedTableDisplay'
-import { SupportedFileTypes } from './SupportedFileTypes'
+import { useAutomaticWorkflowStatus } from '~hooks'
 import {
 	useProjectFiles,
 	useSelectedFile,
 	useSetProjectFiles,
 	useSetSelectedFile,
 } from '~state'
-import type { Maybe, ProjectFile } from '@showwhy/types'
+import { ContainerFlexRow } from '~styles'
 import { replaceItemAtIndex } from '~utils'
-import { useOnConfirmDelete } from './hooks/useOnConfirmDelete'
-import { useHandleLoadFile } from './hooks/useHandleLoadFile'
+
+import { useAcceptedLoadFileTypes } from './hooks/useAcceptedLoadFileTypes'
 import { useGlobalDropzone } from './hooks/useGlobalDropzone'
-import { useToggleLoadedCorrectly } from './hooks/useToggleLoadedCorrectly'
-import { useToggleAutoType } from './hooks/useToggleAutoType'
 import { useHandleDelimiterChange } from './hooks/useHandleDelimiterChange'
+import { useHandleLoadFile } from './hooks/useHandleLoadFile'
+import { useOnConfirmDelete } from './hooks/useOnConfirmDelete'
+import { useToggleAutoType } from './hooks/useToggleAutoType'
+import { useToggleLoadedCorrectly } from './hooks/useToggleLoadedCorrectly'
+import { delimiterOptions } from './LoadDataPage.types'
+import { SelectedTableDisplay } from './SelectedTableDisplay'
+import { SupportedFileTypes } from './SupportedFileTypes'
 
 export const LoadDataPage: React.FC = memo(function LoadDataPage() {
 	const acceptedFileTypes = useAcceptedLoadFileTypes()

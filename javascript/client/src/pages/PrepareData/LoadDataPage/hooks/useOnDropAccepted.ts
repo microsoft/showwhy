@@ -5,12 +5,14 @@
 
 import {
 	type FileCollection,
-	isZipFile,
 	FileType,
+	isZipFile,
 } from '@data-wrangling-components/utilities'
 import type { DropFilesCount } from '@showwhy/components'
 import { useCallback } from 'react'
+
 import { useOnDropZipFilesAccepted } from '~hooks'
+
 import { useOnDropDatasetFilesAccepted } from './useOnDropDatasetFilesAccepted'
 
 export function useOnDropAccepted(
