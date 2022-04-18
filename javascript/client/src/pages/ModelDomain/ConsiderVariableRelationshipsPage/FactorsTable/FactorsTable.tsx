@@ -3,33 +3,30 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { GenericTable } from '@showwhy/components'
-import { CausalFactorType } from '@showwhy/types'
+import { DetailsList, DetailsListLayoutMode, SelectionMode } from '@fluentui/react'
 import { memo } from 'react'
 import styled from 'styled-components'
 
 import { Container } from '~styles'
+import { getColumns } from './columns'
 
 import { useFactorsTable } from './hooks'
+import { onRenderRow } from './onRenderRow'
 
-export const FactorsTable: React.FC<{
-	headers: { fieldName: string; value: string | React.ReactNode }[]
-}> = memo(function FactorsTable({ headers }) {
+export const FactorsTable: React.FC = memo(function FactorsTable() {
 	const { flatFactorsList, itemList } = useFactorsTable()
+	const columns = getColumns()
 
 	return (
 		<Container>
 			{flatFactorsList.length ? (
-				<GenericTable
+				<DetailsList
+					compact={true}
+					selectionMode={SelectionMode.none}
+					layoutMode={DetailsListLayoutMode.justified}
 					items={itemList}
-					headers={{ data: headers }}
-					props={{
-						customColumnsWidth: [
-							{ fieldName: 'label', width: '12rem' },
-							{ fieldName: CausalFactorType.CauseExposure, width: '10rem' },
-							{ fieldName: CausalFactorType.CauseOutcome, width: '10rem' },
-						],
-					}}
+					columns={columns}
+					onRenderRow={onRenderRow}
 				/>
 			) : (
 				<EmptyFactorsText>Add a new factor to start</EmptyFactorsText>
