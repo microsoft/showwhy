@@ -4,18 +4,25 @@
  */
 
 import { DetailsList, DetailsListLayoutMode, SelectionMode } from '@fluentui/react'
+import { CausalFactorType } from '@showwhy/types'
 import { memo } from 'react'
 import styled from 'styled-components'
 
 import { Container } from '~styles'
-import { getColumns } from './columns'
+import { getColumns, onRenderRow } from '~utils'
 
 import { useFactorsTable } from './hooks'
-import { onRenderRow } from './onRenderRow'
+
+const headers = [
+	{ fieldName: 'variable', name: 'Label', width: 300 },
+	{ fieldName: CausalFactorType.CauseExposure, name: 'Causes Exposure', width: 150 },
+	{ fieldName: CausalFactorType.CauseOutcome, name: 'Causes Outcome', width: 150 },
+	{ fieldName: 'reasoning', name: 'Reasoning', width: 500 },
+]
 
 export const FactorsTable: React.FC = memo(function FactorsTable() {
 	const { flatFactorsList, itemList } = useFactorsTable()
-	const columns = getColumns()
+	const columns = getColumns(headers)
 
 	return (
 		<Container>
