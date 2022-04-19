@@ -5,6 +5,7 @@
 
 import type { Handler } from '@showwhy/types'
 import { useCallback } from 'react'
+
 import {
 	useResetCausalFactors,
 	useResetConfidenceInterval,

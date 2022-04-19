@@ -19,11 +19,13 @@ import {
 import type { Maybe } from '@showwhy/types'
 import { memo, useEffect, useState } from 'react'
 import styled from 'styled-components'
+
 import {
 	useAutomaticWorkflowStatus,
 	useDropzone,
 	useFileManagement,
 } from '~hooks'
+
 import { useAcceptedLoadFileTypes } from './hooks/useAcceptedLoadFileTypes'
 import { useHandleDelimiterChange } from './hooks/useHandleDelimiterChange'
 import { useOnConfirmDelete } from './hooks/useOnConfirmDelete'

@@ -5,6 +5,7 @@
 
 import type { FileWithPath } from '@data-wrangling-components/utilities'
 import { useCallback, useMemo } from 'react'
+
 import { useFileCollection, useSetFileCollection } from '~state'
 
 export const useIsCollectionEmpty = (): boolean => {

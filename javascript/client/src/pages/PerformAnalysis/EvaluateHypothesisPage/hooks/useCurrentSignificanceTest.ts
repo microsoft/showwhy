@@ -5,6 +5,7 @@
 
 import type { Maybe, SignificanceTest } from '@showwhy/types'
 import { useMemo } from 'react'
+
 import { useDefaultRun } from '~hooks'
 import { useSignificanceTest } from '~state'
 

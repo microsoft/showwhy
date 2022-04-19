@@ -4,6 +4,7 @@
  */
 
 import { useMemo } from 'react'
+
 import { useAllVariables, useIsMicrodata } from '~hooks'
 import {
 	useCausalFactors,

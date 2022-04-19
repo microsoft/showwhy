@@ -9,6 +9,7 @@ import type {
 	Maybe,
 } from '@showwhy/types'
 import { useCallback, useEffect, useState } from 'react'
+
 import {
 	useConfidenceInterval,
 	usePrimarySpecificationConfig,
@@ -16,6 +17,7 @@ import {
 	useSetEstimators,
 	useSetPrimarySpecificationConfig,
 } from '~state'
+
 import type { EstimatorCardOption } from '../SelectCausalEstimatorsPage.types'
 import { getEstimatorByRanking } from '../SelectCausalEstimatorsPage.utils'
 import { useBatchUpdate } from './useBatchUpdate'

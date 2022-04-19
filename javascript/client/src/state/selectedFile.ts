@@ -5,7 +5,9 @@
 import type { Maybe } from '@showwhy/types'
 import type { SetterOrUpdater } from 'recoil'
 import { atom, useRecoilState } from 'recoil'
+
 import type { ProjectFile } from '~types'
+
 import { filesState, filesStateChanged } from './files'
 
 const selectedFileState = atom<Maybe<ProjectFile>>({

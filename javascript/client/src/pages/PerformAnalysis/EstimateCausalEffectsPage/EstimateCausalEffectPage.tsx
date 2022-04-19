@@ -8,8 +8,10 @@ import { ErrorMessage, RunProgressIndicator } from '@showwhy/components'
 import { NodeResponseStatus } from '@showwhy/types'
 import { memo, useEffect } from 'react'
 import styled from 'styled-components'
+
 import { useAutomaticWorkflowStatus, useSpecificationCurve } from '~hooks'
 import { ContainerFlexColumn, ContainerFlexRow, Title } from '~styles'
+
 import {
 	IdentifierMessage,
 	MicrodataMessage,

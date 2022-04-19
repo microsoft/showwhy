@@ -4,8 +4,8 @@
  */
 
 import {
-	getEstimatorOrchestrator,
 	type Orchestrator,
+	getEstimatorOrchestrator,
 } from '@showwhy/api-client'
 import type {
 	EstimateEffectStatusResponse,
@@ -13,6 +13,7 @@ import type {
 	RunStatus,
 } from '@showwhy/types'
 import { useCallback } from 'react'
+
 import {
 	useRefutationLength,
 	useUpdateActiveRunHistory,
@@ -20,6 +21,7 @@ import {
 } from '~hooks'
 import { api } from '~resources'
 import { useConfidenceInterval } from '~state'
+
 import { getRunStatus } from '../EstimateCausalEffectPage.utils'
 
 export function useRunEstimate(): () => Orchestrator<EstimateEffectStatusResponse> {

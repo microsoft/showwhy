@@ -4,6 +4,7 @@
  */
 
 import type { Estimator } from '@showwhy/types'
+
 import { ESTIMATORS } from '../SelectCausalEstimatorsPage.constants'
 
 export function useEstimatorsList(): Estimator[] {

@@ -5,6 +5,7 @@
 import { SpinButton } from '@fluentui/react'
 import { memo, useCallback, useEffect } from 'react'
 import styled from 'styled-components'
+
 import { useAutomaticWorkflowStatus } from '~hooks'
 import {
 	useEstimators,
@@ -12,6 +13,7 @@ import {
 	useSetRefutationCount,
 } from '~state'
 import { Title } from '~styles'
+
 import { EstimatorCard } from './EstimatorCard'
 import { useEstimatorOptions } from './hooks/useEstimatorOptions'
 

@@ -6,8 +6,10 @@ import { DefaultButton } from '@fluentui/react'
 import { memo } from 'react'
 import { Pages } from 'src/constants'
 import styled from 'styled-components'
+
 import { useGoToPage } from '~hooks'
 import { Container, Title } from '~styles'
+
 import { tableHeader } from './ConsiderVariableRelationshipsPage.constants'
 import { FactorsTable } from './FactorsTable'
 import { useSetPageDone } from './hooks/useSetPageDone'

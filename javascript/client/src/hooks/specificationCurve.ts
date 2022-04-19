@@ -22,6 +22,7 @@ import {
 import type { Theme } from '@thematic/core'
 import { useThematic } from '@thematic/react'
 import { useCallback, useMemo, useState } from 'react'
+
 import {
 	useDefaultRun,
 	useFailedRefutationIds,
@@ -37,6 +38,7 @@ import {
 	useSpecCount,
 	useSpecificationCurveConfig,
 } from '~state'
+
 import { useLoadSpecificationData } from '../pages/PerformAnalysis/EstimateCausalEffectsPage/EstimateCausalEffectPage.hooks'
 
 export function useSpecificationCurve(): {

@@ -11,6 +11,7 @@ import type {
 	Maybe,
 } from '@showwhy/types'
 import { useMemo } from 'react'
+
 import { estimatorGroups } from '../SelectCausalEstimatorsPage.constants'
 import type { EstimatorCardOption } from '../SelectCausalEstimatorsPage.types'
 import { getShortDescriptionByType } from '../SelectCausalEstimatorsPage.utils'
