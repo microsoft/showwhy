@@ -22,3 +22,5 @@ export * from './RunProgressIndicator/index.js'
 export * from './StepTitle/index.js'
 export * from './UnderstandProcessModal/index.js'
 export * from './VegaHost/index.js'
+
+export * from './styles.js'

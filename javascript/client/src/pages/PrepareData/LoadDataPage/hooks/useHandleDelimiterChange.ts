@@ -5,18 +5,19 @@
 
 import type { IDropdownOption } from '@fluentui/react'
 import type { Maybe, ProjectFile } from '@showwhy/types'
+import type { FormEvent } from 'react'
 import { useCallback } from 'react'
 
 import { createDefaultTable } from '~utils'
 
 export function useHandleDelimiterChange(
-	selectedFile: Maybe<ProjectFile>,
 	setSelectedDelimiter: (a: string) => void,
-	updateProjectFiles: (file: ProjectFile) => void,
+	selectedFile: Maybe<ProjectFile>,
+	doUpdateFiles: (file: ProjectFile) => void,
 	toggleLoadedCorrectly: (delimiter?: string | undefined) => void,
-) {
+): (_e: FormEvent<HTMLDivElement>, option: Maybe<IDropdownOption>) => void {
 	return useCallback(
-		(_e, option: Maybe<IDropdownOption>): void => {
+		(_e: FormEvent<HTMLDivElement>, option: Maybe<IDropdownOption>): void => {
 			const delimiter = `${option?.key}`
 			if (selectedFile && selectedFile.id) {
 				const table = createDefaultTable(selectedFile.table.toCSV(), delimiter)
@@ -24,16 +25,11 @@ export function useHandleDelimiterChange(
 					...selectedFile,
 					table,
 				} as ProjectFile
-				updateProjectFiles(file)
+				doUpdateFiles(file)
 				toggleLoadedCorrectly(delimiter)
 			}
 			setSelectedDelimiter(delimiter)
 		},
-		[
-			setSelectedDelimiter,
-			selectedFile,
-			updateProjectFiles,
-			toggleLoadedCorrectly,
-		],
+		[setSelectedDelimiter, selectedFile, doUpdateFiles, toggleLoadedCorrectly],
 	)
 }

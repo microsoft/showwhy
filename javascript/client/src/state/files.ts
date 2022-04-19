@@ -3,7 +3,6 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { useCallback } from 'react'
 import type { Resetter, SetterOrUpdater } from 'recoil'
 import {
 	atom,
@@ -28,30 +27,6 @@ export const filesState = atom<ProjectFile[]>({
 
 export function useProjectFiles(): ProjectFile[] {
 	return useRecoilValue(filesState)
-}
-
-/**
- * Returned callback allows the addition of new files to the project list.
- * @returns
- */
-export function useAddProjectFile(): (file: ProjectFile) => void {
-	const setFiles = useSetRecoilState(filesState)
-	return useCallback(
-		(file: ProjectFile) => {
-			setFiles(prev => [...prev, file])
-		},
-		[setFiles],
-	)
-}
-
-export function useRemoveProjectFile(): (fileId: string) => void {
-	const setFiles = useSetRecoilState(filesState)
-	return useCallback(
-		(fileId: string) => {
-			setFiles(prev => prev.filter(f => f.id !== fileId))
-		},
-		[setFiles],
-	)
 }
 
 export function useSetProjectFiles(): SetterOrUpdater<ProjectFile[]> {

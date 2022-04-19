@@ -6,38 +6,32 @@ import { DialogConfirm } from '@essex/themed-components'
 import {
 	DefaultButton,
 	Dropdown,
-	IDropdownOption,
 	MessageBarType,
 	Toggle,
 } from '@fluentui/react'
 import { useBoolean } from '@fluentui/react-hooks'
 import {
+	ContainerFlexRow,
 	DatasetsList,
 	DropzoneContainer,
 	MessageContainer,
 } from '@showwhy/components'
-import type { Maybe, ProjectFile } from '@showwhy/types'
-import { memo, useCallback, useState } from 'react'
+import type { Maybe } from '@showwhy/types'
+import { memo, useEffect, useState } from 'react'
 import styled from 'styled-components'
 
-import { useAutomaticWorkflowStatus } from '~hooks'
 import {
-	useProjectFiles,
-	useSelectedFile,
-	useSetProjectFiles,
-	useSetSelectedFile,
-} from '~state'
-import { ContainerFlexRow } from '~styles'
-import { replaceItemAtIndex } from '~utils'
+	useAutomaticWorkflowStatus,
+	useDropzone,
+	useFileManagement,
+} from '~hooks'
 
 import { useAcceptedLoadFileTypes } from './hooks/useAcceptedLoadFileTypes'
-import { useGlobalDropzone } from './hooks/useGlobalDropzone'
 import { useHandleDelimiterChange } from './hooks/useHandleDelimiterChange'
-import { useHandleLoadFile } from './hooks/useHandleLoadFile'
 import { useOnConfirmDelete } from './hooks/useOnConfirmDelete'
 import { useToggleAutoType } from './hooks/useToggleAutoType'
 import { useToggleLoadedCorrectly } from './hooks/useToggleLoadedCorrectly'
-import { delimiterOptions } from './LoadDataPage.types'
+import { delimiterOptions } from './LoadDataPage.constants'
 import { SelectedTableDisplay } from './SelectedTableDisplay'
 import { SupportedFileTypes } from './SupportedFileTypes'
 
@@ -45,56 +39,39 @@ export const LoadDataPage: React.FC = memo(function LoadDataPage() {
 	const acceptedFileTypes = useAcceptedLoadFileTypes()
 	const [showConfirm, { toggle: toggleShowConfirm }] = useBoolean(false)
 	const { setTodo, setDone } = useAutomaticWorkflowStatus()
-	const selectedFile = useSelectedFile()
-	const setSelectedFile = useSetSelectedFile()
-	const projectFiles = useProjectFiles()
-	const setProjectFiles = useSetProjectFiles()
 	const [errorMessage, setErrorMessage] = useState<string | null>()
+	const {
+		doRemoveFile,
+		doUpdateFiles,
+		projectFiles,
+		selectedFile,
+		setSelectedFile,
+		doAddFile,
+	} = useFileManagement(setErrorMessage)
+
+	useEffect(() => {
+		!!projectFiles.length ? setDone() : setTodo()
+	}, [projectFiles, setDone, setTodo])
+
 	const [selectedDelimiter, setSelectedDelimiter] = useState<Maybe<string>>(
 		selectedFile?.delimiter,
 	)
 
 	const toggleLoadedCorrectly = useToggleLoadedCorrectly(
+		doUpdateFiles,
 		selectedFile,
-		projectFiles,
-		setProjectFiles,
-		setSelectedFile,
 	)
 
-	const toggleAutoType = useToggleAutoType(
-		selectedFile,
-		projectFiles,
-		setProjectFiles,
-		setSelectedFile,
-	)
+	const toggleAutoType = useToggleAutoType(doUpdateFiles, selectedFile)
 
-	const onConfirmDelete = useOnConfirmDelete(
-		projectFiles,
-		selectedFile,
-		setProjectFiles,
-		toggleShowConfirm,
-		setSelectedFile,
-		setTodo,
-	)
-
-	const updateProjectFiles = useCallback(
-		(file: ProjectFile) => {
-			const index = projectFiles.findIndex(f => f.id === file.id)
-			const files = replaceItemAtIndex(projectFiles, index, file)
-			setSelectedFile(file)
-			setProjectFiles(files)
-		},
-		[projectFiles, setSelectedFile, setProjectFiles],
-	)
+	const onConfirmDelete = useOnConfirmDelete(doRemoveFile, toggleShowConfirm)
 
 	const handleDelimiterChange = useHandleDelimiterChange(
-		selectedFile,
 		setSelectedDelimiter,
-		updateProjectFiles,
+		selectedFile,
+		doUpdateFiles,
 		toggleLoadedCorrectly,
 	)
-
-	const handleLoadFile = useHandleLoadFile(setErrorMessage, setDone)
 
 	const {
 		onDrop,
@@ -103,7 +80,7 @@ export const LoadDataPage: React.FC = memo(function LoadDataPage() {
 		loading,
 		fileCount,
 		progress,
-	} = useGlobalDropzone(setErrorMessage, handleLoadFile)
+	} = useDropzone(setErrorMessage, doAddFile)
 
 	return (
 		<Container>
@@ -163,7 +140,7 @@ export const LoadDataPage: React.FC = memo(function LoadDataPage() {
 								<Toggle
 									label="Data loaded correctly"
 									onText="Yes"
-									checked={selectedFile?.loadedCorrectly || false}
+									checked={!!selectedFile?.loadedCorrectly}
 									offText="No"
 									onChange={() => toggleLoadedCorrectly()}
 								/>

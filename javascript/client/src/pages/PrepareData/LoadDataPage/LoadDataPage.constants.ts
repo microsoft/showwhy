@@ -4,6 +4,14 @@
  */
 
 import { FileType } from '@data-wrangling-components/utilities'
+import type { IDropdownOption } from '@fluentui/react'
+
+export const delimiterOptions: IDropdownOption[] = [
+	{ key: '\t', text: 'Tab' },
+	{ key: ';', text: 'Semicolon' },
+	{ key: ',', text: 'Comma' },
+	{ key: ' ', text: 'Space' },
+]
 
 export const LOAD_FILE_TYPES: string[] = [
 	`.${FileType.csv}`,

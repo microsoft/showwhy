@@ -3,32 +3,15 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { Handler, Maybe } from '@showwhy/types'
+import type { Handler } from '@showwhy/types'
 import { useCallback } from 'react'
-import type { SetterOrUpdater } from 'recoil'
-
-import type { ProjectFile } from '~types'
 
 export function useOnConfirmDelete(
-	projectFiles: ProjectFile[],
-	selectedFile: Maybe<ProjectFile>,
-	setProjectFiles: SetterOrUpdater<ProjectFile[]>,
+	doRemoveFile: Handler,
 	toggleShowConfirm: (value?: boolean) => void,
-	setSelectedFile: SetterOrUpdater<Maybe<ProjectFile>>,
-	onDelete: Handler,
 ): Handler {
 	return useCallback(() => {
-		const filteredFiles = projectFiles.filter(p => p.id !== selectedFile?.id)
-		setProjectFiles(filteredFiles)
-		setSelectedFile(undefined)
-		filteredFiles.length === 0 && onDelete()
+		doRemoveFile()
 		toggleShowConfirm()
-	}, [
-		projectFiles,
-		selectedFile,
-		setProjectFiles,
-		toggleShowConfirm,
-		setSelectedFile,
-		onDelete,
-	])
+	}, [toggleShowConfirm, doRemoveFile])
 }
