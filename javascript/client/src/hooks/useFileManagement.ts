@@ -10,10 +10,6 @@ import { v4 as uuidv4 } from 'uuid'
 import { useProjectFiles, useSelectedFile, useSetProjectFiles } from '~state'
 import { replaceItemAtIndex } from '~utils'
 
-/**
- * Manage the list of files and tables in the app.
- * Provides a function to clear everything as well.
- */
 export function useFileManagement(setErrorMessage?: Handler1<string>): {
 	projectFiles: ProjectFile[]
 	doRemoveFile: Handler
