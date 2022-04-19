@@ -3,15 +3,16 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { Orchestrator } from '@showwhy/api-client'
-import { getEstimatorOrchestrator } from '@showwhy/api-client'
+import {
+	getEstimatorOrchestrator,
+	type Orchestrator,
+} from '@showwhy/api-client'
 import type {
 	EstimateEffectStatusResponse,
 	NodeResponse,
 	RunStatus,
 } from '@showwhy/types'
 import { useCallback } from 'react'
-
 import {
 	useRefutationLength,
 	useUpdateActiveRunHistory,
@@ -19,7 +20,7 @@ import {
 } from '~hooks'
 import { api } from '~resources'
 import { useConfidenceInterval } from '~state'
-import { getRunStatus } from '~utils'
+import { getRunStatus } from '../EstimateCausalEffectPage.utils'
 
 export function useRunEstimate(): () => Orchestrator<EstimateEffectStatusResponse> {
 	const updateActive = useUpdateActiveRunHistory()

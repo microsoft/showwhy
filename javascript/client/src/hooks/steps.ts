@@ -6,15 +6,8 @@ import type { Maybe, Workflow, WorkflowStep } from '@showwhy/types'
 import { StepStatus } from '@showwhy/types'
 import { useCallback, useMemo } from 'react'
 import { useLocation } from 'react-router-dom'
-
-// HACK to pass unit tests
 import { useSelectedProject } from '~state/project'
 import { useStepStatus } from '~state/stepStatus'
-
-export function useFindStepsByPathname(pathNames: string[]): WorkflowStep[] {
-	const steps = useSelectedProject().steps
-	return steps.flatMap(x => x.steps.filter(a => pathNames.includes(a.url)))
-}
 
 export function useCurrentStep(): Maybe<WorkflowStep> {
 	const project = useSelectedProject()

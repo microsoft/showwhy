@@ -3,25 +3,22 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { DefaultButton } from '@fluentui/react'
-import { CausalFactorType } from '@showwhy/types'
 import { memo } from 'react'
+import { Pages } from 'src/constants'
 import styled from 'styled-components'
-
+import { useGoToPage } from '~hooks'
 import { Container, Title } from '~styles'
-
-import { useBusinessLogic } from './ConsiderVariableRelationshipsPage.hooks'
+import { tableHeader } from './ConsiderVariableRelationshipsPage.constants'
 import { FactorsTable } from './FactorsTable'
-
-const tableHeader = [
-	{ fieldName: 'variable', value: 'Label' },
-	{ fieldName: CausalFactorType.CauseExposure, value: 'Causes Exposure' },
-	{ fieldName: CausalFactorType.CauseOutcome, value: 'Causes Outcome' },
-	{ fieldName: 'reasoning', value: 'Reasoning' },
-]
+import { useSetPageDone } from './hooks/useSetPageDone'
 
 export const ConsiderVariableRelationshipsPage: React.FC = memo(
 	function ConsiderVariableRelationshipsPage() {
-		const { goToRelevantVariables } = useBusinessLogic()
+		const goToRelevantVariables = useGoToPage(
+			Pages.RelevantVariables,
+			Pages.RelevantVariables,
+		)
+		useSetPageDone()
 
 		return (
 			<Container>

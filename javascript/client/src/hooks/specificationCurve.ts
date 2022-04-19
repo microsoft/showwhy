@@ -22,7 +22,6 @@ import {
 import type { Theme } from '@thematic/core'
 import { useThematic } from '@thematic/react'
 import { useCallback, useMemo, useState } from 'react'
-
 import {
 	useDefaultRun,
 	useFailedRefutationIds,
@@ -38,9 +37,7 @@ import {
 	useSpecCount,
 	useSpecificationCurveConfig,
 } from '~state'
-
 import { useLoadSpecificationData } from '../pages/PerformAnalysis/EstimateCausalEffectsPage/EstimateCausalEffectPage.hooks'
-import { useUpdateSignificanceTests } from './significanceTest'
 
 export function useSpecificationCurve(): {
 	activeProcessing: Maybe<RunHistory>
@@ -209,14 +206,14 @@ function useHandleConfidenceIntervalTicksChange(
 //TODO: DO THEY????
 function useOnSpecificationsChange(): Handler1<SpecificationCurveConfig> {
 	const setConfig = useSetSpecificationCurveConfig()
-	const defaultRun = useDefaultRun()
-	const updateSignificanceTest = useUpdateSignificanceTests(defaultRun?.id)
+	// const defaultRun = useDefaultRun()
+	// const updateSignificanceTest = useUpdateSignificanceTests(defaultRun?.id)
 	return useCallback(
 		(config: SpecificationCurveConfig) => {
 			setConfig(config)
-			updateSignificanceTest()
+			// updateSignificanceTest()
 		},
-		[setConfig, updateSignificanceTest],
+		[setConfig],
 	)
 }
 

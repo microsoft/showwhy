@@ -6,28 +6,23 @@ import { PrimaryButton } from '@fluentui/react'
 import { isStatus } from '@showwhy/api-client'
 import { ErrorMessage, RunProgressIndicator } from '@showwhy/components'
 import { NodeResponseStatus } from '@showwhy/types'
-import { memo, useEffect, useMemo } from 'react'
+import { memo, useEffect } from 'react'
 import styled from 'styled-components'
-
-import {
-	useAutomaticWorkflowStatus,
-	useMicrodataInfoMessage,
-	useSpecificationCurve,
-	useSubjectIdentifierMissingMessage,
-	useVariablesMissingMessage,
-} from '~hooks'
+import { useAutomaticWorkflowStatus, useSpecificationCurve } from '~hooks'
 import { ContainerFlexColumn, ContainerFlexRow, Title } from '~styles'
-
+import {
+	IdentifierMessage,
+	MicrodataMessage,
+	VariablesMessage,
+} from './ErrorMessages'
 import { useEstimateLogic } from './EstimateCausalEffectPage.hooks'
 import { EstimatedEffectOptions } from './EstimatedEffectOptions'
+import { useErrors } from './hooks/useErrors'
 import { SpecificationDescription } from './SpecificationDescription'
 import { VegaSpecificationCurve } from './vega/VegaSpecificationCurve'
 
 export const EstimateCausalEffectPage: React.FC = memo(
 	function EstimateCausalEffectPage() {
-		const MicrodataMessage = useMicrodataInfoMessage()
-		const VariablesMissingMessage = useVariablesMissingMessage()
-		const IdentifierMessage = useSubjectIdentifierMissingMessage()
 		const { setDone, setTodo } = useAutomaticWorkflowStatus()
 
 		const {
@@ -43,13 +38,8 @@ export const EstimateCausalEffectPage: React.FC = memo(
 			loadingFile,
 		} = useEstimateLogic()
 
-		const hasErrorMessage = useMemo((): boolean => {
-			return !!(
-				VariablesMissingMessage ||
-				MicrodataMessage ||
-				IdentifierMessage
-			)
-		}, [VariablesMissingMessage, MicrodataMessage, IdentifierMessage])
+		const { isMicrodata, isMissingVariable, hasIdentifier, hasAnyError } =
+			useErrors()
 
 		const {
 			data,
@@ -88,9 +78,9 @@ export const EstimateCausalEffectPage: React.FC = memo(
 					<ContainerFlexRow justifyContent="space-between">
 						<EstimatesContainer>
 							<Title>Estimate causal effects</Title>
-							{VariablesMissingMessage}
-							{MicrodataMessage}
-							{IdentifierMessage}
+							{isMissingVariable && <VariablesMessage />}
+							{!hasIdentifier && <IdentifierMessage />}
+							{!isMicrodata && hasIdentifier && <MicrodataMessage />}
 							{!isProcessing && (
 								<Container>
 									<PrimaryButton
@@ -98,7 +88,7 @@ export const EstimateCausalEffectPage: React.FC = memo(
 											loadingSpecCount ||
 											!totalEstimatorsCount ||
 											!specCount ||
-											hasErrorMessage ||
+											hasAnyError ||
 											loadingFile
 										}
 										onClick={runEstimate}

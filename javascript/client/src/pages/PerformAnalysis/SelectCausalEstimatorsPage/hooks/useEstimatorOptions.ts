@@ -9,40 +9,30 @@ import type {
 	Maybe,
 } from '@showwhy/types'
 import { useCallback, useEffect, useState } from 'react'
-
-import {
-	useEstimatorShortDescription,
-	useEstimatorsList,
-	useToggleConfidenceInterval,
-} from '~hooks'
 import {
 	useConfidenceInterval,
-	useEstimators,
 	usePrimarySpecificationConfig,
 	useSetConfidenceInterval,
 	useSetEstimators,
 	useSetPrimarySpecificationConfig,
 } from '~state'
-
-import {
-	useBatchUpdate,
-	useEstimatorCardList,
-	useOnDefaultChange,
-	useOnEstimatorTypeChange,
-	useVerifyEstimatorGroups,
-} from '../SelectCausalEstimatorsPage.hooks'
 import type { EstimatorCardOption } from '../SelectCausalEstimatorsPage.types'
 import { getEstimatorByRanking } from '../SelectCausalEstimatorsPage.utils'
+import { useBatchUpdate } from './useBatchUpdate'
+import { useEstimatorCardList } from './useEstimatorCardList'
+import { useEstimatorsList } from './useEstimatorsList'
+import { useOnDefaultChange } from './useOnDefaultChange'
+import { useOnEstimatorTypeChange } from './useOnEstimatorTypeChange'
+import { useVerifyEstimatorGroups } from './useVerifyEstimatorGroups'
 
-export function useEstimatorOptions(): EstimatorCardOption[] {
-	const estimators = useEstimators()
+export function useEstimatorOptions(
+	estimators: Estimator[],
+): EstimatorCardOption[] {
 	const setEstimators = useSetEstimators()
 	const estimatorsList = useEstimatorsList()
-	const estimatorShortDescription = useEstimatorShortDescription()
 	const primarySpecificationConfig = usePrimarySpecificationConfig()
 	const setPrimarySpecificationConfig = useSetPrimarySpecificationConfig()
 	const setConfidenceInterval = useSetConfidenceInterval()
-	const toggleConfidenceInterval = useToggleConfidenceInterval()
 	const confidenceInterval = useConfidenceInterval()
 
 	const [selectedEstimatorGroups, setSelectedEstimatorGroups] = useState<
@@ -97,6 +87,12 @@ export function useEstimatorOptions(): EstimatorCardOption[] {
 		}
 	}, [estimators, setConfidenceInterval])
 
+	const toggleConfidenceInterval = useCallback(() => {
+		if (estimators?.length) {
+			setConfidenceInterval(prev => !prev)
+		}
+	}, [estimators, setConfidenceInterval])
+
 	const estimatorCardList = useEstimatorCardList(
 		estimatorsList,
 		defaultEstimator,
@@ -105,7 +101,6 @@ export function useEstimatorOptions(): EstimatorCardOption[] {
 		onDefaultChange,
 		onEstimatorTypeChange,
 		onEstimatorsCheckboxChange,
-		estimatorShortDescription,
 		confidenceInterval,
 		toggleConfidenceInterval,
 	)

@@ -21,13 +21,11 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 
 import type { CausalEffectsProps } from '~hooks'
 import {
-	useActualSignificanceTest,
 	useAlternativeModels,
 	useAutomaticWorkflowStatus,
 	useCausalEffects,
 	useDefaultRun,
 	useRefutationOptions,
-	useRunSignificanceTest,
 	useSpecificationCurve,
 } from '~hooks'
 import {
@@ -40,6 +38,8 @@ import {
 import type { DefaultDatasetResult } from '~types'
 
 import { useLoadSpecificationData } from '../EstimateCausalEffectsPage/EstimateCausalEffectPage.hooks'
+import { useCurrentSignificanceTest } from './hooks/useCurrentSignificanceTest'
+import { useRunSignificanceTest } from './hooks/useRunSignificanceTest'
 
 export function useBusinessLogic(): {
 	alternativeModels: AlternativeModels
@@ -69,7 +69,7 @@ export function useBusinessLogic(): {
 	const run = useRunSignificanceTest(defaultRun?.id)
 	const { failedRefutationIds } = useSpecificationCurve()
 	const [isCanceled, setIsCanceled] = useState<boolean>(false)
-	const significanceTestResult = useActualSignificanceTest()
+	const significanceTestResult = useCurrentSignificanceTest()
 	const refutationOptions = useRefutationOptions()
 	const estimators = useEstimators()
 

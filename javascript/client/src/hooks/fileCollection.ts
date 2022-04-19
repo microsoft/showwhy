@@ -3,13 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type {
-	FileCollection,
-	FileWithPath,
-} from '@data-wrangling-components/utilities'
-import type { AsyncHandler1 } from '@showwhy/types'
+import type { FileWithPath } from '@data-wrangling-components/utilities'
 import { useCallback, useMemo } from 'react'
-
 import { useFileCollection, useSetFileCollection } from '~state'
 
 export const useIsCollectionEmpty = (): boolean => {
@@ -19,29 +14,18 @@ export const useIsCollectionEmpty = (): boolean => {
 	}, [fileCollection])
 }
 
-export function useAddFilesToCollection(): AsyncHandler1<FileWithPath[]> {
+export function useAddFilesToCollection(): (
+	files: FileWithPath[],
+	name?: string,
+) => Promise<void> {
 	const setFileCollection = useSetFileCollection()
 	const fileCollection = useFileCollection().copy()
 	return useCallback(
-		async (files: FileWithPath[]) => {
+		async (files: FileWithPath[], name?: string) => {
 			await fileCollection.add(files)
+			fileCollection.name = name || fileCollection.name || 'File Collection'
 			setFileCollection(fileCollection)
 		},
 		[fileCollection, setFileCollection],
-	)
-}
-
-export function useUpdateFileCollection(): AsyncHandler1<FileCollection> {
-	const setFileCollection = useSetFileCollection()
-	const fc = useFileCollection().copy()
-	return useCallback(
-		async (fileCollection: FileCollection) => {
-			if (!fc.name) {
-				fc.name = fileCollection.name
-			}
-			await fc.add([...(fileCollection.list() as FileWithPath[])])
-			setFileCollection(fc)
-		},
-		[fc, setFileCollection],
 	)
 }

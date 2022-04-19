@@ -7,5 +7,4 @@ export interface Element {
 	label: string
 	description: string
 	dataset?: string
-	variable?: string
 }

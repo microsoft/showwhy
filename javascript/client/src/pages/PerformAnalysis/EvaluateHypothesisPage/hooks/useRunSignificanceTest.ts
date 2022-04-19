@@ -11,12 +11,10 @@ import type {
 	SignificanceTestResponse,
 } from '@showwhy/types'
 import { NodeResponseStatus } from '@showwhy/types'
-import { useCallback, useMemo } from 'react'
-
-import { useDefaultRun } from '~hooks'
+import { useCallback } from 'react'
 import { api } from '~resources'
-import { useSetSignificanceTest, useSignificanceTest } from '~state'
-import { getConfidenceInterval, percentage } from '~utils'
+import { useSetSignificanceTest } from '~state'
+import { percentage } from '~utils'
 
 export function useRunSignificanceTest(runId: Maybe<string>): () => any {
 	const updateSignificanceTest = useUpdateSignificanceTests(runId)
@@ -92,12 +90,17 @@ export function useUpdateSignificanceTests(
 	)
 }
 
-export function useActualSignificanceTest(): Maybe<SignificanceTest> {
-	const defaultRun = useDefaultRun()
-	const significanceTest = useSignificanceTest()
-
-	return useMemo(() => {
-		if (!defaultRun) return undefined
-		return significanceTest.find(x => x.runId === defaultRun.id)
-	}, [defaultRun, significanceTest])
+function getConfidenceInterval(
+	runId: string,
+	nodeResponse: NodeResponse,
+): SignificanceTest {
+	return {
+		runId,
+		percentage: 0,
+		total_simulations: 100,
+		simulation_completed: 0,
+		status: NodeResponseStatus.Pending,
+		startTime: new Date(),
+		nodeResponse,
+	}
 }

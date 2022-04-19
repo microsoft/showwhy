@@ -11,9 +11,9 @@ import type {
 	Maybe,
 } from '@showwhy/types'
 import { useMemo } from 'react'
-
+import { estimatorGroups } from '../SelectCausalEstimatorsPage.constants'
 import type { EstimatorCardOption } from '../SelectCausalEstimatorsPage.types'
-import { estimatorGroups } from '../SelectCausalEstimatorsPage.types'
+import { getShortDescriptionByType } from '../SelectCausalEstimatorsPage.utils'
 
 export function useEstimatorCardList(
 	estimatorsList: Estimator[],
@@ -23,7 +23,6 @@ export function useEstimatorCardList(
 	onDefaultChange: (type: EstimatorType) => void,
 	onEstimatorTypeChange: (group: EstimatorGroup) => void,
 	onEstimatorsCheckboxChange: (estimator: Estimator) => void,
-	estimatorShortDescription: (type: string) => string,
 	confidenceInterval: boolean,
 	onConfidenceIntervalsChange: Handler,
 ): EstimatorCardOption[] {
@@ -33,7 +32,7 @@ export function useEstimatorCardList(
 			return {
 				key,
 				title: `${key} models`,
-				description: estimatorShortDescription(key),
+				description: getShortDescriptionByType(key),
 				onCardClick: () => onEstimatorTypeChange(key as EstimatorGroup),
 				isCardChecked: selectedEstimatorGroups.includes(key as EstimatorGroup),
 				list: estimatorsList
@@ -42,7 +41,7 @@ export function useEstimatorCardList(
 						const isChecked = estimators.map(e => e.type).includes(e.type)
 						return {
 							...e,
-							description: estimatorShortDescription(e.type),
+							description: getShortDescriptionByType(e.type),
 							onChange: () => onEstimatorsCheckboxChange(e),
 							isChecked,
 							isDefault: e.type === defaultEstimator,
@@ -72,7 +71,6 @@ export function useEstimatorCardList(
 		onDefaultChange,
 		onEstimatorTypeChange,
 		onEstimatorsCheckboxChange,
-		estimatorShortDescription,
 		confidenceInterval,
 		onConfidenceIntervalsChange,
 	])

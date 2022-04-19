@@ -16,13 +16,10 @@ import type {
 import type ColumnTable from 'arquero/dist/types/table/column-table'
 import { useCallback, useEffect, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
-
 import {
-	useAllColumns,
 	useEstimateNode,
 	useIsDefaultRunProcessing,
 	useRefutationOptions,
-	useRunEstimate,
 	useUpdateAndDisableRunHistory,
 	useWakeLock,
 } from '~hooks'
@@ -45,6 +42,8 @@ import {
 	SESSION_ID_KEY,
 	setStorageItem,
 } from '~utils'
+import { useAllColumns } from './useAllColumns'
+import { useRunEstimate } from './useRunEstimate'
 
 const OUTPUT_FILE_NAME = 'output'
 

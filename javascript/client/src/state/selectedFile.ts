@@ -5,9 +5,7 @@
 import type { Maybe } from '@showwhy/types'
 import type { SetterOrUpdater } from 'recoil'
 import { atom, useRecoilState } from 'recoil'
-
 import type { ProjectFile } from '~types'
-
 import { filesState, filesStateChanged } from './files'
 
 const selectedFileState = atom<Maybe<ProjectFile>>({
@@ -17,6 +15,7 @@ const selectedFileState = atom<Maybe<ProjectFile>>({
 	effects: [
 		({ setSelf, getPromise }) => {
 			const subscription = filesStateChanged.subscribe(async () => {
+				debugger
 				const [files, actual] = await Promise.all([
 					getPromise(filesState),
 					getPromise(selectedFileState),

@@ -21,17 +21,18 @@ import { StepStatus } from '@showwhy/types'
 import { all, op } from 'arquero'
 import type ColumnTable from 'arquero/dist/types/table/column-table'
 import { useCallback } from 'react'
-
-import { useGetStepUrls, useSetRunAsDefault } from '~hooks'
 import {
-	useFileCollection,
+	useAddFilesToCollection,
+	useGetStepUrls,
+	useSetRunAsDefault,
+} from '~hooks'
+import {
 	useSetCausalFactors,
 	useSetConfidenceInterval,
 	useSetConfigJson,
 	useSetDefaultDatasetResult,
 	useSetEstimators,
 	useSetExperiment,
-	useSetFileCollection,
 	useSetOutputTablePrep,
 	useSetPrimarySpecificationConfig,
 	useSetProjectFiles,
@@ -67,7 +68,7 @@ export function useLoadProject(
 	const setCausalFactors = useSetCausalFactors()
 	const setSubjectIdentifier = useSetSubjectIdentifier()
 	const setDefineQuestion = useSetExperiment()
-	const setOrUpdateEst = useSetEstimators()
+	const setEstimators = useSetEstimators()
 	const setRefutationCount = useSetRefutationCount()
 	const setFiles = useSetProjectFiles()
 	const setConfidenceInterval = useSetConfidenceInterval()
@@ -144,7 +145,7 @@ export function useLoadProject(
 
 			setCausalFactors(cfs)
 			setDefineQuestion(df)
-			setOrUpdateEst(est)
+			setEstimators(est)
 			setSubjectIdentifier(subjectIdentifier)
 			setTablePrepSpec(tps)
 			setDefaultDatasetResult(defaultDatasetResult)
@@ -178,7 +179,7 @@ export function useLoadProject(
 			setPrimarySpecificationConfig,
 			setCausalFactors,
 			setDefineQuestion,
-			setOrUpdateEst,
+			setEstimators,
 			setRefutationCount,
 			setSubjectIdentifier,
 			setAllStepStatus,
@@ -298,13 +299,13 @@ function useUpdateCollection(): (
 	tableFiles: BaseFile[],
 	notebooks: BaseFile[],
 ) => Promise<void> {
-	const setCollection = useSetFileCollection()
-	const fileCollection = useFileCollection().copy()
+	const addToCollection = useAddFilesToCollection()
+
 	return useCallback(
 		async (workspace: Workspace, tableFiles = [], notebooks = []) => {
 			const { name, tables = [], defaultResult } = workspace
 			const fetched = await fetchRemoteTables(tables)
-			await fileCollection.add([...fetched, ...tableFiles, ...notebooks])
+			await addToCollection([...fetched, ...tableFiles, ...notebooks], name)
 			if (defaultResult) {
 				const resultTable: DataTableFileDefinition = {
 					...(defaultResult || {}),
@@ -312,13 +313,11 @@ function useUpdateCollection(): (
 				}
 				const fetched = await fetchRemoteTables([resultTable])
 				if (fetched.length) {
-					await fileCollection.add(fetched)
+					await addToCollection(fetched)
 				}
 			}
-			fileCollection.name = name || 'File Collection'
-			setCollection(fileCollection)
 		},
-		[fileCollection, setCollection],
+		[addToCollection],
 	)
 }
 
