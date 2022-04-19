@@ -3,38 +3,26 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { DetailsList, DetailsListLayoutMode, SelectionMode } from '@fluentui/react'
-import { CausalFactorType } from '@showwhy/types'
-import { memo } from 'react'
+import { useDimensions } from '@essex/hooks'
+import { DetailsList } from '@showwhy/components'
+import { memo, useRef } from 'react'
 import styled from 'styled-components'
 
 import { Container } from '~styles'
-import { getColumns, onRenderRow } from '~utils'
 
-import { useFactorsTable } from './hooks'
-
-const headers = [
-	{ fieldName: 'variable', name: 'Label', width: 300 },
-	{ fieldName: CausalFactorType.CauseExposure, name: 'Causes Exposure', width: 150 },
-	{ fieldName: CausalFactorType.CauseOutcome, name: 'Causes Outcome', width: 150 },
-	{ fieldName: 'reasoning', name: 'Reasoning', width: 500 },
-]
+import { useFactorsTable, useHeaders } from './hooks'
 
 export const FactorsTable: React.FC = memo(function FactorsTable() {
 	const { flatFactorsList, itemList } = useFactorsTable()
-	const columns = getColumns(headers)
+	const ref = useRef(null)
+	const dimensions = useDimensions(ref)
+	const { width = 0 } = dimensions || {}
+	const headers = useHeaders(width)
 
 	return (
-		<Container>
+		<Container ref={ref}>
 			{flatFactorsList.length ? (
-				<DetailsList
-					compact={true}
-					selectionMode={SelectionMode.none}
-					layoutMode={DetailsListLayoutMode.justified}
-					items={itemList}
-					columns={columns}
-					onRenderRow={onRenderRow}
-				/>
+				<DetailsList headers={headers} items={itemList} />
 			) : (
 				<EmptyFactorsText>Add a new factor to start</EmptyFactorsText>
 			)}
