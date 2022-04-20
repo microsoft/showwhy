@@ -7,10 +7,7 @@ import { Container, Title } from '@showwhy/components'
 import { memo } from 'react'
 import { Pages } from 'src/constants'
 import styled from 'styled-components'
-
 import { useGoToPage } from '~hooks'
-
-import { tableHeader } from './ConsiderVariableRelationshipsPage.constants'
 import { FactorsTable } from './FactorsTable'
 import { useSetPageDone } from './hooks/useSetPageDone'
 
@@ -26,7 +23,7 @@ export const ConsiderVariableRelationshipsPage: React.FC = memo(
 			<Container>
 				<Container>
 					<Title data-pw="title">Variable relationships</Title>
-					<FactorsTable headers={tableHeader} />
+					<FactorsTable />
 				</Container>
 				<ButtonContainer>
 					<ButtonAdd

@@ -12,10 +12,12 @@ export const StyleContext: React.FC = memo(function StyleContext({ children }) {
 	const fluentTheme = useMemo(() => loadFluentTheme(theme), [theme])
 	return (
 		<>
-			<GlobalStyle />
 			<ThematicFluentProvider theme={theme}>
 				<ApplicationStyles />
-				<ThemeProvider theme={fluentTheme}>{children}</ThemeProvider>
+				<ThemeProvider theme={fluentTheme}>
+					<GlobalStyle />
+					{children}
+				</ThemeProvider>
 			</ThematicFluentProvider>
 		</>
 	)
@@ -50,5 +52,9 @@ const GlobalStyle = createGlobalStyle`
 			border-radius: 10px;
 			border: 2px solid #f1f1f1;
 		}
+	}
+
+	:root {
+		--faint: ${({ theme }) => (theme as any).application().faint};
 	}
 `

@@ -3,43 +3,31 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import { useDimensions } from '@essex/hooks'
 import { DefaultButton } from '@fluentui/react'
-import type { HeaderData } from '@showwhy/components'
-import { Container, GenericTable, Title } from '@showwhy/components'
-import { memo } from 'react'
+import { Container, DetailsList, Title } from '@showwhy/components'
+import { memo, useRef } from 'react'
 import styled from 'styled-components'
-
-import { useBusinessLogic } from './ConsiderRelevantVariablesPage.hooks'
+import {
+	useBusinessLogic,
+	useHeaders,
+} from './ConsiderRelevantVariablesPage.hooks'
 import { RelevantVariablesForm } from './RelevantVariablesForm'
-
-const tableHeaders: HeaderData[] = [
-	{ fieldName: 'variable', value: 'Label' },
-	{ fieldName: 'description', value: 'Description' },
-	{ fieldName: 'actions', value: 'Actions' },
-]
 
 export const ConsiderRelevantVariablesPage: React.FC = memo(
 	function ConsiderRelevantVariablesPage() {
 		const { items, addFactor, goToFactorsPage, page } = useBusinessLogic()
+		const ref = useRef(null)
+		const dimensions = useDimensions(ref)
+		const { width = 0 } = dimensions || {}
+		const headers = useHeaders(width)
 
 		return (
 			<Container>
 				<Container>
 					<Title data-pw="title">Relevant variables</Title>
-					<Container>
-						<GenericTable
-							items={items}
-							headers={{
-								data: tableHeaders,
-							}}
-							props={{
-								customColumnsWidth: [
-									{ fieldName: 'label', width: '30%' },
-									{ fieldName: 'description', width: '60%' },
-									{ fieldName: 'actions', width: '10%' },
-								],
-							}}
-						/>
+					<Container ref={ref}>
+						<DetailsList items={items} headers={headers} />
 					</Container>
 				</Container>
 				<RelevantVariablesForm onAdd={addFactor}></RelevantVariablesForm>

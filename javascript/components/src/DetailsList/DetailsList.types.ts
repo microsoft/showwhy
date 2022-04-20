@@ -3,8 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-const TABLE_SAMPLE = 100
+import type { IColumn } from '@fluentui/react'
 
-export function useDefaultTableSample(): number {
-	return TABLE_SAMPLE
+export interface Header extends Partial<IColumn> {
+	width: number
 }

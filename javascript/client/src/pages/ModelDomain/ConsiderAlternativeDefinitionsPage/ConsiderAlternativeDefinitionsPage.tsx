@@ -44,7 +44,7 @@ export const ConsiderAlternativeDefinitionsPage: React.FC = memo(
 								addDefinition={addDefinition}
 								definitionType={definitionType}
 								shouldHavePrimary={shouldHavePrimary}
-							></PivotType>
+							/>
 						</PivotItem>
 					))}
 				</Pivot>

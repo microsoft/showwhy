@@ -3,5 +3,5 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-export * from './GenericTable.js'
-export * from './GenericTable.types.js'
+export * from './DetailsList.js'
+export * from './DetailsList.types.js'
