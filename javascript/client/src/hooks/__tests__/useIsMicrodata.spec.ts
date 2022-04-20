@@ -23,15 +23,15 @@ describe('useIsMicrodata', () => {
 		expect(result.current).toBe(false)
 	})
 
-	it('microdata returns false without a table', () => {
+	it('microdata returns true without a table', () => {
 		const identifier = 'colA'
 		const { result } = renderHook(() => useIsMicrodata(undefined, identifier))
-		expect(result.current).toBe(false)
+		expect(result.current).toBe(true)
 	})
 
-	it('microdata returns false without a identifier', () => {
+	it('microdata returns true without a identifier', () => {
 		const _table = table({ colA: ['a', 'b', 'c'] })
 		const { result } = renderHook(() => useIsMicrodata(_table, undefined))
-		expect(result.current).toBe(false)
+		expect(result.current).toBe(true)
 	})
 })

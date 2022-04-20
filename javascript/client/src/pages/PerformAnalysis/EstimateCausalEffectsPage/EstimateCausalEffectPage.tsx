@@ -56,7 +56,7 @@ export const EstimateCausalEffectPage: React.FC = memo(
 			loadingFile,
 		} = useEstimateLogic(isProcessing)
 
-		const { isMicrodata, isMissingVariable, hasIdentifier, hasAnyError } =
+		const { isMicrodata, isMissingVariable, isMissingIdentifier, hasAnyError } =
 			useDataErrors()
 
 		const {
@@ -97,8 +97,8 @@ export const EstimateCausalEffectPage: React.FC = memo(
 						<EstimatesContainer>
 							<Title>Estimate causal effects</Title>
 							{isMissingVariable && <VariablesMessage />}
-							{!hasIdentifier && <IdentifierMessage />}
-							{!isMicrodata && hasIdentifier && <MicrodataMessage />}
+							{isMissingIdentifier && <IdentifierMessage />}
+							{!isMicrodata && <MicrodataMessage />}
 							{!isProcessing && (
 								<Container>
 									<PrimaryButton

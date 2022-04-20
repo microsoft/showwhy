@@ -16,7 +16,7 @@ import {
 export function useDataErrors(): {
 	isMicrodata: boolean
 	isMissingVariable: boolean
-	hasIdentifier: boolean
+	isMissingIdentifier: boolean
 	hasAnyError: boolean
 } {
 	const outputTable = useOutputTablePrep()
@@ -29,14 +29,16 @@ export function useDataErrors(): {
 
 	const hasAnyError = useMemo((): any => {
 		return (
-			!isMicrodata || allVariables.some(v => !v.column) || !subjectIndentifier
+			!isMicrodata ||
+			allVariables.some(v => !v.column) ||
+			(outputTable && !subjectIndentifier)
 		)
-	}, [isMicrodata, allVariables, subjectIndentifier])
+	}, [isMicrodata, allVariables, outputTable, subjectIndentifier])
 
 	return {
 		isMicrodata,
 		isMissingVariable: allVariables.some(v => !v.column),
-		hasIdentifier: !!subjectIndentifier,
+		isMissingIdentifier: !subjectIndentifier && !!outputTable,
 		hasAnyError,
 	}
 }
