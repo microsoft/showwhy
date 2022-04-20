@@ -21,13 +21,13 @@ export const AnalysisSummary: FC<{
 	alternativeModels: AlternativeModels
 	refutationOptions: RefutationOption[]
 	estimators: Estimator[]
-	activeValues: number[]
+	activeEstimatedEffects: number[]
 }> = memo(function AnalysisSummary({
 	defineQuestion,
 	alternativeModels,
 	refutationOptions,
 	estimators,
-	activeValues,
+	activeEstimatedEffects,
 }) {
 	const populationDefinitions = getDefinitionsByType(
 		DefinitionType.Population,
@@ -58,8 +58,9 @@ export const AnalysisSummary: FC<{
 				subject to {refutationOptions.length} refutation test
 				{pluralize(refutationOptions.length)} (
 				{refutationOptions.map(o => o.label).join(', ')}
-				). {activeValues.length} estimate{pluralize(activeValues.length)}
-				{activeValues.length > 1 ? ' were ' : ' was '}
+				). {activeEstimatedEffects.length} estimate
+				{pluralize(activeEstimatedEffects.length)}
+				{activeEstimatedEffects.length > 1 ? ' were ' : ' was '}
 				retained for the final significance test.
 			</P>
 		</>

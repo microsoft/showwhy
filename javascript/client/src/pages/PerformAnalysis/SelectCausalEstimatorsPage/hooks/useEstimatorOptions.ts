@@ -19,11 +19,13 @@ import {
 } from '~state'
 
 import type { EstimatorCardOption } from '../SelectCausalEstimatorsPage.types'
-import { getEstimatorByRanking } from '../SelectCausalEstimatorsPage.utils'
+import {
+	changeDefaultEstimator,
+	getEstimatorByRanking,
+} from '../SelectCausalEstimatorsPage.utils'
 import { useBatchUpdate } from './useBatchUpdate'
 import { useEstimatorCardList } from './useEstimatorCardList'
 import { useEstimatorsList } from './useEstimatorsList'
-import { useOnDefaultChange } from './useOnDefaultChange'
 import { useOnEstimatorTypeChange } from './useOnEstimatorTypeChange'
 import { useVerifyEstimatorGroups } from './useVerifyEstimatorGroups'
 
@@ -67,10 +69,6 @@ export function useEstimatorOptions(
 		batchUpdateSelectedEstimators,
 		setSelectedEstimatorGroups,
 	)
-	const onDefaultChange = useOnDefaultChange(
-		setDefaultEstimator,
-		setPrimarySpecificationConfig,
-	)
 
 	const verifyDefault = useCallback(() => {
 		if (!estimators.length) return
@@ -79,9 +77,18 @@ export function useEstimatorOptions(
 			const newDefaultEstimator = getEstimatorByRanking(
 				estimators.map(e => e.type),
 			)
-			onDefaultChange(newDefaultEstimator)
+			changeDefaultEstimator(
+				setDefaultEstimator,
+				setPrimarySpecificationConfig,
+				newDefaultEstimator,
+			)
 		}
-	}, [estimators, defaultEstimator, onDefaultChange])
+	}, [
+		estimators,
+		defaultEstimator,
+		setDefaultEstimator,
+		setPrimarySpecificationConfig,
+	])
 
 	const verifyConfidenceIntervals = useCallback(() => {
 		if (!estimators?.length) {
@@ -100,9 +107,10 @@ export function useEstimatorOptions(
 		defaultEstimator,
 		estimators,
 		selectedEstimatorGroups,
-		onDefaultChange,
 		onEstimatorTypeChange,
 		onEstimatorsCheckboxChange,
+		setDefaultEstimator,
+		setPrimarySpecificationConfig,
 		confidenceInterval,
 		toggleConfidenceInterval,
 	)

@@ -15,11 +15,12 @@ import { useCallback, useMemo, useState } from 'react'
 
 import { useDefaultRun, useWakeLock } from '~hooks'
 import {
+	useSetSignificanceTest,
 	useSetSpecificationCurveConfig,
 	useSpecificationCurveConfig,
 } from '~state'
+import { updateSignificanceTests } from '~utils'
 
-import { useUpdateSignificanceTests } from '../../EvaluateHypothesisPage/hooks/useRunSignificanceTest'
 import { useLoadSpecificationData } from './useLoadSpecificationData'
 
 export function useSpecificationCurve(): {
@@ -134,13 +135,13 @@ function useHandleConfidenceIntervalTicksChange(
 function useOnSpecificationsChange(): Handler1<SpecificationCurveConfig> {
 	const setConfig = useSetSpecificationCurveConfig()
 	const defaultRun = useDefaultRun()
-	const updateSignificanceTest = useUpdateSignificanceTests(defaultRun?.id)
+	const setSignificanceTest = useSetSignificanceTest()
 	return useCallback(
 		(config: SpecificationCurveConfig) => {
 			setConfig(config)
-			updateSignificanceTest()
+			updateSignificanceTests(setSignificanceTest, defaultRun?.id)
 		},
-		[setConfig, updateSignificanceTest],
+		[setConfig, setSignificanceTest, defaultRun],
 	)
 }
 

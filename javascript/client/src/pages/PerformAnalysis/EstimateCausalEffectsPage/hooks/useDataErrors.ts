@@ -29,7 +29,7 @@ export function useDataErrors(): {
 
 	const hasAnyError = useMemo((): any => {
 		return (
-			isMicrodata || allVariables.some(v => !v.column) || !!subjectIndentifier
+			!isMicrodata || allVariables.some(v => !v.column) || !subjectIndentifier
 		)
 	}, [isMicrodata, allVariables, subjectIndentifier])
 

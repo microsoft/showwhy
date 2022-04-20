@@ -21,6 +21,7 @@ import {
 	useDefaultRun,
 	useIsDefaultRunProcessing,
 	useRefutationOptions,
+	useSpecificationCurveData,
 } from '~hooks'
 import { useEstimators } from '~state'
 
@@ -33,7 +34,6 @@ import { EstimatedEffectConfig } from './EstimatedEffectConfig'
 import { useDataErrors } from './hooks/useDataErrors'
 import { useEstimateLogic } from './hooks/useEstimateLogic'
 import { useSpecificationCurve } from './hooks/useSpecificationCurve'
-import { useSpecificationCurveData } from './hooks/useSpecificationCurveData'
 import { SpecificationDescription } from './SpecificationDescription'
 import { VegaSpecificationCurve } from './vega/VegaSpecificationCurve'
 
@@ -104,7 +104,7 @@ export const EstimateCausalEffectPage: React.FC = memo(
 									<PrimaryButton
 										disabled={
 											loadingSpecCount ||
-											!estimators.length ||
+											estimators.length === 0 ||
 											!specCount ||
 											hasAnyError ||
 											loadingFile

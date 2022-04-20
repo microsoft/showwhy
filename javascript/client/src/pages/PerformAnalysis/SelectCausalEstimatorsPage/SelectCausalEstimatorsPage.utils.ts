@@ -3,7 +3,9 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import type { Maybe, PrimarySpecificationConfig, Setter } from '@showwhy/types'
 import { EstimatorGroup, EstimatorType } from '@showwhy/types'
+import type { SetterOrUpdater } from 'recoil'
 
 import {
 	estimatorRanking,
@@ -24,6 +26,18 @@ export function getEstimatorByRanking(
 	const min = Math.min(...ranking)
 	const index = ranking.indexOf(min)
 	return estimators[index] as EstimatorType
+}
+
+export function changeDefaultEstimator(
+	setDefaultEstimator: Setter<Maybe<EstimatorType>>,
+	setPrimarySpecificationConfig: SetterOrUpdater<PrimarySpecificationConfig>,
+	type: EstimatorType,
+): void {
+	setDefaultEstimator(type)
+	setPrimarySpecificationConfig(prev => ({
+		...prev,
+		type,
+	}))
 }
 
 export const getShortDescriptionByType = (type: string): string => {

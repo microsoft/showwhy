@@ -15,7 +15,7 @@ import type {
 import { useCallback } from 'react'
 
 import {
-	useRefutationLength,
+	useRefutationOptions,
 	useUpdateActiveRunHistory,
 	useUpdateNodeResponseActiveRunHistory,
 } from '~hooks'
@@ -28,7 +28,7 @@ export function useRunEstimate(): () => Orchestrator<EstimateEffectStatusRespons
 	const updateActive = useUpdateActiveRunHistory()
 	const updateNodeResponse = useUpdateNodeResponseActiveRunHistory()
 	const hasConfidenceInterval = useConfidenceInterval()
-	const refutersLength = useRefutationLength()
+	const refutersLength = useRefutationOptions().length
 
 	const onUpdate = useCallback(
 		(status: EstimateEffectStatusResponse) => {

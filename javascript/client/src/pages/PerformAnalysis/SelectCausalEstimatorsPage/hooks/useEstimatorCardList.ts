@@ -9,21 +9,28 @@ import type {
 	EstimatorType,
 	Handler,
 	Maybe,
+	PrimarySpecificationConfig,
+	Setter,
 } from '@showwhy/types'
 import { useMemo } from 'react'
+import type { SetterOrUpdater } from 'recoil'
 
 import { estimatorGroups } from '../SelectCausalEstimatorsPage.constants'
 import type { EstimatorCardOption } from '../SelectCausalEstimatorsPage.types'
-import { getShortDescriptionByType } from '../SelectCausalEstimatorsPage.utils'
+import {
+	changeDefaultEstimator,
+	getShortDescriptionByType,
+} from '../SelectCausalEstimatorsPage.utils'
 
 export function useEstimatorCardList(
 	estimatorsList: Estimator[],
 	defaultEstimator: Maybe<EstimatorType>,
 	estimators: Estimator[],
 	selectedEstimatorGroups: EstimatorGroup[],
-	onDefaultChange: (type: EstimatorType) => void,
 	onEstimatorTypeChange: (group: EstimatorGroup) => void,
 	onEstimatorsCheckboxChange: (estimator: Estimator) => void,
+	setDefaultEstimator: Setter<Maybe<EstimatorType>>,
+	setPrimarySpecificationConfig: SetterOrUpdater<PrimarySpecificationConfig>,
 	confidenceInterval: boolean,
 	onConfidenceIntervalsChange: Handler,
 ): EstimatorCardOption[] {
@@ -48,7 +55,12 @@ export function useEstimatorCardList(
 							isDefault: e.type === defaultEstimator,
 							onDefaultChange:
 								selectedEstimatorGroups.includes(e.group) && isChecked
-									? () => onDefaultChange(e.type)
+									? () =>
+											changeDefaultEstimator(
+												setDefaultEstimator,
+												setPrimarySpecificationConfig,
+												e.type,
+											)
 									: undefined,
 						}
 					}),
@@ -69,10 +81,11 @@ export function useEstimatorCardList(
 		defaultEstimator,
 		estimators,
 		selectedEstimatorGroups,
-		onDefaultChange,
 		onEstimatorTypeChange,
 		onEstimatorsCheckboxChange,
 		confidenceInterval,
 		onConfidenceIntervalsChange,
+		setDefaultEstimator,
+		setPrimarySpecificationConfig,
 	])
 }

@@ -9,27 +9,26 @@ import type {
 	Maybe,
 	RunHistory,
 	Specification,
-	SpecificationCurveConfig} from '@showwhy/types';
+	SpecificationCurveConfig,
+} from '@showwhy/types'
 import {
 	CausalityLevel,
 	DefinitionType,
-	NodeResponseStatus
+	NodeResponseStatus,
+	RefutationResult,
 } from '@showwhy/types'
-import { useMemo } from 'react'
+import { csv } from 'd3-fetch'
+import { useEffect, useMemo, useState } from 'react'
 
+import { useDefaultRun, useOnMouseOver, useVegaWindowDimensions } from '~hooks'
 import {
-	useFailedRefutationIds,
-	useOnMouseOver,
-	useVegaWindowDimensions,
-} from '~hooks'
-import {
+	useDefaultDatasetResult,
 	useExperiment,
 	useHoverState,
 	useRunHistory,
 	useSpecificationCurveConfig,
 } from '~state'
-
-import { useLoadSpecificationData } from './useLoadSpecificationData'
+import { row2spec } from '~utils'
 
 export function useSpecificationCurveData(): {
 	config: SpecificationCurveConfig
@@ -64,6 +63,45 @@ export function useSpecificationCurveData(): {
 	}
 }
 
+export function useLoadSpecificationData(): Specification[] {
+	const [data, setData] = useState<Specification[]>([])
+	const defaultRun = useDefaultRun()
+	const defaultDatasetResult = useDefaultDatasetResult()
+
+	useEffect(() => {
+		if (defaultRun) {
+			if (!defaultRun.result?.length) {
+				setData([])
+			} else {
+				const result = defaultRun.result.map((x: any, index) => {
+					const n = { ...x, Specification_ID: index + 1 }
+					return row2spec(n)
+				}) as Specification[]
+				const newResult = result
+					?.sort(function (a, b) {
+						return a?.estimatedEffect - b?.estimatedEffect
+					})
+					.map((x, index) => ({ ...x, id: index + 1 }))
+
+				setData(newResult)
+			}
+		} else if (!defaultRun) {
+			if (defaultDatasetResult) {
+				const f = async () => {
+					try {
+						const result = await csv(defaultDatasetResult?.url, row2spec)
+						setData(result.map((x, index) => ({ ...x, id: index + 1 })))
+					} catch (err) {
+						setData([])
+					}
+				}
+				f()
+			}
+		}
+	}, [setData, defaultRun, defaultDatasetResult])
+	return data
+}
+
 function useOutcome(defineQuestion: Experiment) {
 	return useMemo(
 		() =>
@@ -85,4 +123,14 @@ function useActiveProcessing(runHistory: RunHistory[]): Maybe<RunHistory> {
 				x.status?.status.toLowerCase() === NodeResponseStatus.Running,
 		)
 	}, [runHistory])
+}
+
+export function useFailedRefutationIds(data: Specification[]): number[] {
+	return useMemo((): number[] => {
+		return (
+			data
+				.filter(x => +x.refutationResult === RefutationResult.FailedCritical)
+				.map(a => a.id) || []
+		)
+	}, [data])
 }

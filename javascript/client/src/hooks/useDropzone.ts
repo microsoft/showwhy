@@ -15,7 +15,7 @@ import type { Dispatch, SetStateAction } from 'react'
 import { useCallback, useState } from 'react'
 
 import { useAddFilesToCollection } from './fileCollection'
-import { useOnDropZipFilesAccepted } from './uploadZip'
+import { useOnDropZipFilesAccepted } from './handleZip'
 import { useCreateColumnTable } from './useCreateColumnTable'
 
 export function useDropzone(

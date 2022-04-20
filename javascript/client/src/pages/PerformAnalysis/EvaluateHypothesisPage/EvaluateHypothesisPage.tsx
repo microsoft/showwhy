@@ -13,31 +13,42 @@ import {
 import { NodeResponseStatus } from '@showwhy/types'
 import { memo } from 'react'
 
-import { useSpecificationCurveData } from '../EstimateCausalEffectsPage/EstimateCausalEffectPage.hooks'
+import {
+	useAlternativeModels,
+	useCausalEffects,
+	useDefaultRun,
+	useLoadSpecificationData,
+	useRefutationOptions,
+	useSpecificationCurveData,
+} from '~hooks'
+import {
+	useEstimators,
+	useExperiment,
+	usePrimarySpecificationConfig,
+} from '~state'
+
 import { AnalysisSummary } from './AnalysisSummary'
 import { EmptyDataPageWarning } from './EmptyDataPageWarning'
-import { useBusinessLogic } from './EvaluateHypothesisPage.hooks'
+import { useSignificanceTestData } from './hooks/useSignificanceTestData'
+import { useSignificanceTestManagement } from './hooks/useSignificanceTestManagement'
 import { PageButtons } from './PageButtons'
 import { ResultsGraph } from './ResultsGraph'
 import { SignificanceTests } from './SignificanceTests'
 
 export const EvaluateHypothesisPage: React.FC = memo(
 	function EvaluateHypothesisPage() {
-		const {
-			alternativeModels,
-			defaultRun,
-			causalEffects,
-			specificationData,
-			defineQuestion,
-			activeValues,
-			significanceTestResult,
-			significanceFailed,
-			runSignificance,
-			cancelRun,
-			isCanceled,
-			refutationOptions,
-			estimators,
-		} = useBusinessLogic()
+		const defineQuestion = useExperiment()
+		const refutationOptions = useRefutationOptions()
+		const estimators = useEstimators()
+		const defaultRun = useDefaultRun()
+		const primarySpecificationConfig = usePrimarySpecificationConfig()
+		const causalEffects = useCausalEffects(
+			primarySpecificationConfig.causalModel,
+		)
+		const alternativeModels = useAlternativeModels(
+			primarySpecificationConfig.causalModel,
+		)
+		const specificationData = useLoadSpecificationData()
 
 		const {
 			config,
@@ -47,6 +58,16 @@ export const EvaluateHypothesisPage: React.FC = memo(
 			vegaWindowDimensions,
 			outcome,
 		} = useSpecificationCurveData()
+
+		const { significanceTestResult, significanceFailed } =
+			useSignificanceTestData()
+
+		const { runSignificance, cancelRun, isCanceled, activeEstimatedEffects } =
+			useSignificanceTestManagement(
+				failedRefutationIds,
+				specificationData,
+				config,
+			)
 
 		if (
 			!specificationData.length ||
@@ -67,14 +88,13 @@ export const EvaluateHypothesisPage: React.FC = memo(
 					<CausalQuestion defineQuestion={defineQuestion} />
 					<Container>
 						<PageButtons
-							defaultRun={defaultRun}
 							significanceTestResult={significanceTestResult}
 							significanceFailed={significanceFailed}
 							runSignificance={runSignificance}
 						/>
 
 						<SignificanceTests
-							activeValues={activeValues}
+							activeEstimatedEffects={activeEstimatedEffects}
 							defineQuestion={defineQuestion}
 							cancelRun={cancelRun}
 							isCanceled={isCanceled}
@@ -83,7 +103,7 @@ export const EvaluateHypothesisPage: React.FC = memo(
 					</Container>
 					<Container marginTop>
 						<AnalysisSummary
-							activeValues={activeValues}
+							activeEstimatedEffects={activeEstimatedEffects}
 							estimators={estimators}
 							defineQuestion={defineQuestion}
 							refutationOptions={refutationOptions}

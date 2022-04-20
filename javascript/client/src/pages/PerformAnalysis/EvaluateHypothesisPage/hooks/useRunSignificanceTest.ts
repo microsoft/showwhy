@@ -15,15 +15,15 @@ import { useCallback } from 'react'
 
 import { api } from '~resources'
 import { useSetSignificanceTest } from '~state'
-import { percentage } from '~utils'
+import { percentage, updateSignificanceTests } from '~utils'
 
 export function useRunSignificanceTest(runId: Maybe<string>): () => any {
-	const updateSignificanceTest = useUpdateSignificanceTests(runId)
+	const setSignificanceTest = useSetSignificanceTest()
 
 	const onUpdate = useCallback(
 		(status: SignificanceTestResponse) => {
 			if (isStatus(status.runtimeStatus, NodeResponseStatus.Terminated)) {
-				return updateSignificanceTest()
+				return updateSignificanceTests(setSignificanceTest, runId)
 			}
 
 			if (!runId) return null
@@ -38,17 +38,17 @@ export function useRunSignificanceTest(runId: Maybe<string>): () => any {
 					status.total_simulations || 1,
 				),
 			}
-			updateSignificanceTest(result)
+			updateSignificanceTests(setSignificanceTest, runId, result)
 		},
-		[updateSignificanceTest, runId],
+		[runId, setSignificanceTest],
 	)
 
 	const onStart = useCallback(
 		(nodeResponse: NodeResponse) => {
 			const initialRun = getConfidenceInterval(runId as string, nodeResponse)
-			updateSignificanceTest(initialRun)
+			updateSignificanceTests(setSignificanceTest, runId, initialRun)
 		},
-		[updateSignificanceTest, runId],
+		[runId, setSignificanceTest],
 	)
 
 	const run = useCallback((): any => {
@@ -63,32 +63,6 @@ export function useRunSignificanceTest(runId: Maybe<string>): () => any {
 	}, [onStart, onUpdate])
 
 	return run
-}
-
-export function useUpdateSignificanceTests(
-	runId?: string,
-): (significanceTest?: SignificanceTest) => void {
-	const updateSignificanceTest = useSetSignificanceTest()
-
-	return useCallback(
-		(significanceTest?: SignificanceTest) => {
-			updateSignificanceTest(prev => {
-				const oldOnes = prev.filter(p => p.runId !== runId)
-				if (!significanceTest) return oldOnes
-
-				const existing = prev.find(
-					p => p.runId === significanceTest.runId,
-				) as SignificanceTest
-
-				const newOne = {
-					...existing,
-					...significanceTest,
-				}
-				return [...oldOnes, newOne] as SignificanceTest[]
-			})
-		},
-		[updateSignificanceTest, runId],
-	)
 }
 
 function getConfidenceInterval(
