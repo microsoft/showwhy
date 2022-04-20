@@ -3,18 +3,20 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import type { Dimensions } from '@essex/hooks'
-import {
-	CausalityLevel,
+import type {
 	DecisionFeature,
-	DefinitionType,
 	Experiment,
 	Maybe,
-	NodeResponseStatus,
 	RunHistory,
 	Specification,
-	SpecificationCurveConfig,
+	SpecificationCurveConfig} from '@showwhy/types';
+import {
+	CausalityLevel,
+	DefinitionType,
+	NodeResponseStatus
 } from '@showwhy/types'
 import { useMemo } from 'react'
+
 import {
 	useFailedRefutationIds,
 	useOnMouseOver,
@@ -26,6 +28,7 @@ import {
 	useRunHistory,
 	useSpecificationCurveConfig,
 } from '~state'
+
 import { useLoadSpecificationData } from './useLoadSpecificationData'
 
 export function useSpecificationCurveData(): {

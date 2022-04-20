@@ -12,11 +12,13 @@ import type {
 } from '@showwhy/types'
 import { NodeResponseStatus } from '@showwhy/types'
 import { useCallback, useMemo, useState } from 'react'
+
 import { useDefaultRun, useWakeLock } from '~hooks'
 import {
 	useSetSpecificationCurveConfig,
 	useSpecificationCurveConfig,
 } from '~state'
+
 import { useUpdateSignificanceTests } from '../../EvaluateHypothesisPage/hooks/useRunSignificanceTest'
 import { useLoadSpecificationData } from './useLoadSpecificationData'
 
