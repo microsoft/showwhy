@@ -3,32 +3,17 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { useHandleOnUploadClick } from '@data-wrangling-components/react'
 import type {
 	BaseFile,
 	FileCollection,
 } from '@data-wrangling-components/utilities'
 import { FileType } from '@data-wrangling-components/utilities'
-import type { IContextualMenuItem } from '@fluentui/react'
 import type { AsyncHandler1 } from '@showwhy/types'
-import { useCallback, useMemo } from 'react'
-
+import { useCallback } from 'react'
 import type { FileDefinition } from '~types'
 import { ProjectSource } from '~types'
 import { groupFilesByType, isZipUrl } from '~utils'
-
 import { useLoadProject } from './loadProject'
-
-const uploadZipButtonId = 'uploadZip'
-const acceptedFileTypes = [`.${FileType.zip}`]
-
-export function useAcceptedFileTypes(): string[] {
-	return acceptedFileTypes
-}
-
-export function useUploadZipButtonId(): string {
-	return uploadZipButtonId
-}
 
 async function validateProjectFiles(
 	fileCollection: FileCollection,
@@ -94,21 +79,4 @@ export function useOnDropZipFilesAccepted(
 		},
 		[handleDrop, onError],
 	)
-}
-
-export function useUploadZipMenuOption(
-	onError?: (msg: string) => void,
-): IContextualMenuItem {
-	const id = useUploadZipButtonId()
-	const handleFiles = useHandleFiles(onError)
-	const handleClick = useHandleOnUploadClick(acceptedFileTypes, handleFiles)
-	return useMemo(() => {
-		return {
-			'data-pw': id,
-			key: id,
-			text: 'Open project',
-			iconProps: { iconName: 'Upload' },
-			onClick: handleClick,
-		}
-	}, [id, handleClick])
 }
