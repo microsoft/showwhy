@@ -7,6 +7,7 @@ import { useHandleOnUploadClick } from '@data-wrangling-components/react'
 import { FileType } from '@data-wrangling-components/utilities'
 import type { IContextualMenuItem } from '@fluentui/react'
 import { useMemo } from 'react'
+
 import { useHandleFiles } from '~hooks'
 
 const UPLOAD_ZIP_BUTTON_ID = 'uploadZip'

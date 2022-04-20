@@ -15,8 +15,10 @@ import type { Maybe } from '@showwhy/types'
 import { memo, Suspense, useMemo, useRef, useState } from 'react'
 import { understandProcessSteps } from 'src/data/understandProcess'
 import styled from 'styled-components'
+
 import { StepControls, StepSelector } from '~components/GeneralSteps'
 import { useExperiment, useGuidance, useSelectedProject } from '~state'
+
 import { Pages } from '../../constants'
 import { useExampleProjects } from './hooks/useExampleProjects'
 import { useLoadMenu } from './hooks/useLoadMenu'

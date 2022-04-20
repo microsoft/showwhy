@@ -10,9 +10,11 @@ import type {
 import { FileType } from '@data-wrangling-components/utilities'
 import type { AsyncHandler1 } from '@showwhy/types'
 import { useCallback } from 'react'
+
 import type { FileDefinition } from '~types'
 import { ProjectSource } from '~types'
 import { groupFilesByType, isZipUrl } from '~utils'
+
 import { useLoadProject } from './loadProject'
 
 async function validateProjectFiles(
