@@ -5,18 +5,16 @@
 import { DefaultButton } from '@fluentui/react'
 import { isStatus } from '@showwhy/api-client'
 import { ErrorMessage } from '@showwhy/components'
-import type { Handler, Maybe, RunHistory,SignificanceTest  } from '@showwhy/types'
+import type { Handler, Maybe, SignificanceTest } from '@showwhy/types'
 import { NodeResponseStatus } from '@showwhy/types'
 import { memo, useMemo } from 'react'
 import styled from 'styled-components'
 
 export const PageButtons: React.FC<{
-	defaultRun: Maybe<RunHistory>
 	significanceTestResult: Maybe<SignificanceTest>
 	significanceFailed: boolean
 	runSignificance: Handler
 }> = memo(function PageButtons({
-	defaultRun,
 	significanceTestResult,
 	significanceFailed,
 	runSignificance,
@@ -33,7 +31,6 @@ export const PageButtons: React.FC<{
 		<Container>
 			{showButton && (
 				<ButtonWithMargin
-					disabled={!defaultRun}
 					onClick={runSignificance}
 					data-pw="run-significance-test-button"
 				>

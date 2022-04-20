@@ -8,8 +8,7 @@ import { useEffect, useState } from 'react'
 
 import { useDefaultRun } from '~hooks'
 import { useDefaultDatasetResult } from '~state'
-
-import { row2spec } from '../EstimateCausalEffectPage.utils'
+import { row2spec } from '~utils'
 
 export function useLoadSpecificationData(): Specification[] {
 	const [data, setData] = useState<Specification[]>([])

@@ -2,7 +2,11 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { VegaHost } from '@showwhy/components'
+import {
+	MIN_SPEC_ADDITIONAL_PADDING,
+	parseJsonPathSpecMerged,
+	VegaHost,
+} from '@showwhy/components'
 import type {
 	DecisionFeature,
 	Specification,
@@ -17,10 +21,8 @@ import styled from 'styled-components'
 
 import { usePrimarySpecificationConfig } from '~state'
 
-import { useSpecificationSHAPColumns } from '../EstimateCausalEffectPage.hooks'
+import { useSpecificationSHAPColumns } from '../hooks/useColumns'
 import template from './dot-plot.json'
-import { mergeSpec, parseJsonPathSpec } from './util'
-import { MIN_SPEC_ADDITIONAL_PADDING } from './VegaSpecificationCurve'
 
 const templateString = JSON.stringify(template)
 
@@ -99,8 +101,7 @@ export const AnalyticDecisionsDotPlot: React.FC<{
 				primarySpecificationId,
 		}
 
-		const overlay = parseJsonPathSpec(rawSpec, pathspec)
-		return mergeSpec(rawSpec, overlay)
+		return parseJsonPathSpecMerged(rawSpec, pathspec)
 	}, [theme, data, primarySpecificationConfig, shap, shapColor, padding])
 
 	const signals = useMemo(

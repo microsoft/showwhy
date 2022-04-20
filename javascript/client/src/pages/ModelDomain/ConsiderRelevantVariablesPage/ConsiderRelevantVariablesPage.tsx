@@ -5,11 +5,9 @@
 
 import { useDimensions } from '@essex/hooks'
 import { DefaultButton } from '@fluentui/react'
-import { DetailsList } from '@showwhy/components'
+import { Container, DetailsList, Title } from '@showwhy/components'
 import { memo, useRef } from 'react'
 import styled from 'styled-components'
-
-import { Container, Title } from '~styles'
 
 import {
 	useBusinessLogic,

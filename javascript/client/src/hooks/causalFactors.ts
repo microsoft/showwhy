@@ -18,7 +18,7 @@ import { useCallback, useMemo } from 'react'
 import type { SetterOrUpdater } from 'recoil'
 import { v4 } from 'uuid'
 
-// HACK to pass the unit tests
+// HACK TO PASS UNIT TESTS
 import { useCausalFactors, useSetCausalFactors } from '~state/causalFactors'
 import { replaceItemAtIndex } from '~utils/arrays'
 
@@ -36,15 +36,6 @@ function shouldIncludeInDegree(
 	}
 
 	return false
-}
-
-export function useDeleteCausalFactor(): (
-	newCausalFactor: CausalFactor,
-) => void {
-	return useDeleteCausalFactorTestable(
-		useCausalFactors(),
-		useSetCausalFactors(),
-	)
 }
 
 export function useDeleteCausalFactorTestable(

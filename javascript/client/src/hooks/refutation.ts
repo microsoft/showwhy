@@ -3,11 +3,10 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { RefutationOption, Specification } from '@showwhy/types'
-import { RefutationResult, RefutationTestMethod } from '@showwhy/types'
-import { useMemo } from 'react'
+import type { RefutationOption } from '@showwhy/types'
+import { RefutationTestMethod } from '@showwhy/types'
 
-export const REFUTATIONS: RefutationOption[] = [
+const REFUTATIONS: RefutationOption[] = [
 	{
 		method_name: RefutationTestMethod.PlaceboTreatmentRefuter,
 		label: 'Replace exposure with placebo',
@@ -48,18 +47,4 @@ export const REFUTATIONS: RefutationOption[] = [
 
 export function useRefutationOptions(): RefutationOption[] {
 	return REFUTATIONS
-}
-
-export function useRefutationLength(): number {
-	return REFUTATIONS.length
-}
-
-export function useFailedRefutationIds(data: Specification[]): number[] {
-	return useMemo((): number[] => {
-		return (
-			data
-				.filter(x => +x.refutationResult === RefutationResult.FailedCritical)
-				.map(a => a.id) || []
-		)
-	}, [data])
 }

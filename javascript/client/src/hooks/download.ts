@@ -9,7 +9,7 @@ import { useCallback } from 'react'
 import { api } from '~resources'
 import { DownloadType, FileType } from '~types'
 
-export function useReturnResult(): AsyncHandler1<
+function useReturnResult(): AsyncHandler1<
 	string,
 	Maybe<{ blob: Blob; url: string }>
 > {

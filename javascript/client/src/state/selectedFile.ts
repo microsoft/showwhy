@@ -17,6 +17,7 @@ const selectedFileState = atom<Maybe<ProjectFile>>({
 	effects: [
 		({ setSelf, getPromise }) => {
 			const subscription = filesStateChanged.subscribe(async () => {
+				debugger
 				const [files, actual] = await Promise.all([
 					getPromise(filesState),
 					getPromise(selectedFileState),

@@ -6,7 +6,7 @@
 import {
 	FEATURE_COLUMNS,
 	SHAP_COLUMNS,
-} from '../EstimateCausalEffectPage.types'
+} from '../EstimateCausalEffectPage.constants'
 
 /**
  * Returns the standard columns to plot for specification features.

@@ -10,7 +10,7 @@ import { useCausalFactors } from '~state'
 
 export function useSetPageDone(): void {
 	const causalFactors = useCausalFactors()
-	const causes = causalFactors.flatMap(f => f.causes)
+	const causes = causalFactors.filter(f => f.causes)
 	const autoWorkflowStatus = useAutomaticWorkflowStatus()
 
 	useEffect(() => {

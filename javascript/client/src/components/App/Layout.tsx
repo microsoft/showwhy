@@ -9,6 +9,7 @@ import {
 	Guidance,
 	MessageContainer,
 	StepTitle,
+	StyledSpinner,
 } from '@showwhy/components'
 import type { Maybe } from '@showwhy/types'
 import { memo, Suspense, useMemo, useRef, useState } from 'react'
@@ -16,15 +17,15 @@ import { understandProcessSteps } from 'src/data/understandProcess'
 import styled from 'styled-components'
 
 import { StepControls, StepSelector } from '~components/GeneralSteps'
-import { useUploadZipMenuOption } from '~hooks'
 import { useExperiment, useGuidance, useSelectedProject } from '~state'
-import { StyledSpinner } from '~styles'
 
 import { Pages } from '../../constants'
-import { useOnClickProject, useProcessStepInfo } from './App.hooks'
 import { useExampleProjects } from './hooks/useExampleProjects'
 import { useLoadMenu } from './hooks/useLoadMenu'
+import { useOnClickProject } from './hooks/useOnClickProject'
+import { useProcessStepInfo } from './hooks/useProcessStepInfo'
 import { useSaveProps } from './hooks/useSaveProps'
+import { useUploadZipMenuOption } from './hooks/useUploadZipMenuOption'
 
 const noChildPadding = [Pages.DeriveDataVariables]
 

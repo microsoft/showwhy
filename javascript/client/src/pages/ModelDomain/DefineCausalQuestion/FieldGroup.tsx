@@ -3,12 +3,11 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { TextField } from '@fluentui/react'
+import { Container, ContainerFlexRow, Title } from '@showwhy/components'
 import type { Element, Maybe } from '@showwhy/types'
 import { upperFirst } from 'lodash'
 import { memo } from 'react'
 import styled from 'styled-components'
-
-import { Container, ContainerFlexRow, Title } from '~styles'
 
 export const FieldGroup: React.FC<{
 	type: string

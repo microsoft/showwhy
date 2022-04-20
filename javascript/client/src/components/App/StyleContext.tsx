@@ -55,6 +55,6 @@ const GlobalStyle = createGlobalStyle`
 	}
 
 	:root {
-		--faint: ${({theme}) => (theme as any).application().faint};
+		--faint: ${({ theme }) => (theme as any).application().faint};
 	}
 `

@@ -4,11 +4,9 @@
  */
 
 import { useDimensions } from '@essex/hooks'
-import { DetailsList } from '@showwhy/components'
+import { Container, DetailsList } from '@showwhy/components'
 import { memo, useRef } from 'react'
 import styled from 'styled-components'
-
-import { Container } from '~styles'
 
 import { useFactorsTable, useHeaders } from './hooks'
 

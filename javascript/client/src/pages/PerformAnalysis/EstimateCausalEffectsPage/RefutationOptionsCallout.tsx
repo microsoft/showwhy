@@ -2,11 +2,9 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { LinkCallout } from '@showwhy/components'
+import { LinkCallout, Text } from '@showwhy/components'
 import type { Maybe, RefutationOption } from '@showwhy/types'
 import { memo } from 'react'
-
-import { Text } from '~styles'
 
 export const RefutationOptionsCallout: React.FC<{
 	title: string

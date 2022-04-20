@@ -3,18 +3,38 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { SpinButton } from '@fluentui/react'
-import { memo } from 'react'
+import { Title } from '@showwhy/components'
+import { memo, useCallback, useEffect } from 'react'
 import styled from 'styled-components'
 
-import { Title } from '~styles'
+import { useAutomaticWorkflowStatus } from '~hooks'
+import {
+	useEstimators,
+	useRefutationCount,
+	useSetRefutationCount,
+} from '~state'
 
 import { EstimatorCard } from './EstimatorCard'
-import { useBusinessLogic } from './SelectCausalEstimatorsPage.hooks'
+import { useEstimatorOptions } from './hooks/useEstimatorOptions'
 
 export const SelectCausalEstimatorsPage: React.FC = memo(
 	function SelectCausalEstimatorsPage() {
-		const { estimatorOptions, refutationCount, onRefutationCountChange } =
-			useBusinessLogic()
+		const estimators = useEstimators()
+		const estimatorOptions = useEstimatorOptions(estimators)
+		const refutationCount = useRefutationCount()
+		const setRefutationCount = useSetRefutationCount()
+		const { setDone, setTodo } = useAutomaticWorkflowStatus()
+
+		const onRefutationCountChange = useCallback(
+			(_: any, count?: string) => {
+				setRefutationCount(+(count || '1'))
+			},
+			[setRefutationCount],
+		)
+
+		useEffect(() => {
+			estimators.length ? setDone() : setTodo()
+		}, [estimators, setDone, setTodo])
 
 		return (
 			<Container>

@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { isProcessingStatus } from '@showwhy/api-client'
-import { LinkCallout, ProgressBar } from '@showwhy/components'
+import { LinkCallout, Paragraph, ProgressBar, Value } from '@showwhy/components'
 import type {
 	Experiment,
 	Handler,
@@ -13,7 +13,6 @@ import type {
 import { NodeResponseStatus, Significance } from '@showwhy/types'
 import { memo } from 'react'
 
-import { Paragraph, Value } from '~styles'
 import { median as calcMedian } from '~utils'
 
 import {
@@ -26,15 +25,15 @@ export const SignificanceTests: React.FC<{
 	cancelRun: Handler
 	isCanceled: boolean
 	defineQuestion: Experiment
-	activeValues: number[]
+	activeEstimatedEffects: number[]
 }> = memo(function SignificanceTests({
 	significanceTestResult,
 	cancelRun,
 	isCanceled,
 	defineQuestion,
-	activeValues,
+	activeEstimatedEffects,
 }) {
-	const median = parseFloat(calcMedian(activeValues).toFixed(3))
+	const median = parseFloat(calcMedian(activeEstimatedEffects).toFixed(3))
 	const exposure = defineQuestion?.exposure?.label || '<exposure>'
 	const outcome = defineQuestion?.outcome?.label || '<outcome>'
 

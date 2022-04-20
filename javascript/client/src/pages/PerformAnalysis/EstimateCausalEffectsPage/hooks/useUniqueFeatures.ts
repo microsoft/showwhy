@@ -5,7 +5,7 @@
 import type { Specification } from '@showwhy/types'
 import { useMemo } from 'react'
 
-import { useSpecificationFeatureColumns } from '../EstimateCausalEffectPage.hooks'
+import { useSpecificationFeatureColumns } from './useColumns'
 
 /**
  * Returns a list of the unique feature values for the standard columns.

@@ -9,21 +9,28 @@ import type {
 	EstimatorType,
 	Handler,
 	Maybe,
+	PrimarySpecificationConfig,
+	Setter,
 } from '@showwhy/types'
 import { useMemo } from 'react'
+import type { SetterOrUpdater } from 'recoil'
 
+import { estimatorGroups } from '../SelectCausalEstimatorsPage.constants'
 import type { EstimatorCardOption } from '../SelectCausalEstimatorsPage.types'
-import { estimatorGroups } from '../SelectCausalEstimatorsPage.types'
+import {
+	changeDefaultEstimator,
+	getShortDescriptionByType,
+} from '../SelectCausalEstimatorsPage.utils'
 
 export function useEstimatorCardList(
 	estimatorsList: Estimator[],
 	defaultEstimator: Maybe<EstimatorType>,
 	estimators: Estimator[],
 	selectedEstimatorGroups: EstimatorGroup[],
-	onDefaultChange: (type: EstimatorType) => void,
 	onEstimatorTypeChange: (group: EstimatorGroup) => void,
 	onEstimatorsCheckboxChange: (estimator: Estimator) => void,
-	estimatorShortDescription: (type: string) => string,
+	setDefaultEstimator: Setter<Maybe<EstimatorType>>,
+	setPrimarySpecificationConfig: SetterOrUpdater<PrimarySpecificationConfig>,
 	confidenceInterval: boolean,
 	onConfidenceIntervalsChange: Handler,
 ): EstimatorCardOption[] {
@@ -33,7 +40,7 @@ export function useEstimatorCardList(
 			return {
 				key,
 				title: `${key} models`,
-				description: estimatorShortDescription(key),
+				description: getShortDescriptionByType(key),
 				onCardClick: () => onEstimatorTypeChange(key as EstimatorGroup),
 				isCardChecked: selectedEstimatorGroups.includes(key as EstimatorGroup),
 				list: estimatorsList
@@ -42,13 +49,18 @@ export function useEstimatorCardList(
 						const isChecked = estimators.map(e => e.type).includes(e.type)
 						return {
 							...e,
-							description: estimatorShortDescription(e.type),
+							description: getShortDescriptionByType(e.type),
 							onChange: () => onEstimatorsCheckboxChange(e),
 							isChecked,
 							isDefault: e.type === defaultEstimator,
 							onDefaultChange:
 								selectedEstimatorGroups.includes(e.group) && isChecked
-									? () => onDefaultChange(e.type)
+									? () =>
+											changeDefaultEstimator(
+												setDefaultEstimator,
+												setPrimarySpecificationConfig,
+												e.type,
+											)
 									: undefined,
 						}
 					}),
@@ -69,11 +81,11 @@ export function useEstimatorCardList(
 		defaultEstimator,
 		estimators,
 		selectedEstimatorGroups,
-		onDefaultChange,
 		onEstimatorTypeChange,
 		onEstimatorsCheckboxChange,
-		estimatorShortDescription,
 		confidenceInterval,
 		onConfidenceIntervalsChange,
+		setDefaultEstimator,
+		setPrimarySpecificationConfig,
 	])
 }

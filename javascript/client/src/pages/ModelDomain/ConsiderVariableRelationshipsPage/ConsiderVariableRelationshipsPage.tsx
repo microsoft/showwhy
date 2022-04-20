@@ -3,17 +3,23 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { DefaultButton } from '@fluentui/react'
+import { Container, Title } from '@showwhy/components'
 import { memo } from 'react'
+import { Pages } from 'src/constants'
 import styled from 'styled-components'
 
-import { Container, Title } from '~styles'
+import { useGoToPage } from '~hooks'
 
-import { useBusinessLogic } from './ConsiderVariableRelationshipsPage.hooks'
 import { FactorsTable } from './FactorsTable'
+import { useSetPageDone } from './hooks/useSetPageDone'
 
 export const ConsiderVariableRelationshipsPage: React.FC = memo(
 	function ConsiderVariableRelationshipsPage() {
-		const { goToRelevantVariables } = useBusinessLogic()
+		const goToRelevantVariables = useGoToPage(
+			Pages.RelevantVariables,
+			'consider variable relationships',
+		)
+		useSetPageDone()
 
 		return (
 			<Container>
