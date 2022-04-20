@@ -7,14 +7,16 @@ import { Container, Title } from '@showwhy/components'
 import { memo } from 'react'
 import { Pages } from 'src/constants'
 import styled from 'styled-components'
+
 import { useGoToPage } from '~hooks'
+
 import { FactorsTable } from './FactorsTable'
 import { useSetPageDone } from './hooks/useSetPageDone'
 
 export const ConsiderVariableRelationshipsPage: React.FC = memo(
 	function ConsiderVariableRelationshipsPage() {
 		const goToRelevantVariables = useGoToPage(
-			Pages.RelevantVariables,
+			'consider variable relationships',
 			Pages.RelevantVariables,
 		)
 		useSetPageDone()

@@ -7,6 +7,7 @@ import { useDimensions } from '@essex/hooks'
 import { Container, DetailsList } from '@showwhy/components'
 import { memo, useRef } from 'react'
 import styled from 'styled-components'
+
 import { useFactorsTable, useHeaders } from './hooks'
 
 export const FactorsTable: React.FC = memo(function FactorsTable() {
