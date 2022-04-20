@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { test, expect, Page } from '@playwright/test'
+import { expect, Page, test } from '@playwright/test'
 import { createPageObjects, PageObjects } from '../pageObjects'
 
 test.describe('Consider Variable Relationships Page', () => {

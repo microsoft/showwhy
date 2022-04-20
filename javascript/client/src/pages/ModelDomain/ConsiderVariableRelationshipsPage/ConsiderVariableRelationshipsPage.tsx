@@ -16,8 +16,8 @@ import { useSetPageDone } from './hooks/useSetPageDone'
 export const ConsiderVariableRelationshipsPage: React.FC = memo(
 	function ConsiderVariableRelationshipsPage() {
 		const goToRelevantVariables = useGoToPage(
-			'consider variable relationships',
 			Pages.RelevantVariables,
+			'consider variable relationships',
 		)
 		useSetPageDone()
 
