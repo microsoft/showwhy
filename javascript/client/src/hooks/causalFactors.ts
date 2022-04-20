@@ -17,10 +17,9 @@ import {
 import { useCallback, useMemo } from 'react'
 import type { SetterOrUpdater } from 'recoil'
 import { v4 } from 'uuid'
-
 // HACK TO PASS UNIT TESTS
 import { useCausalFactors, useSetCausalFactors } from '~state/causalFactors'
-import { replaceItemAtIndex } from '~utils'
+import { replaceItemAtIndex } from '~utils/arrays'
 
 function shouldIncludeInDegree(
 	degree: BeliefDegree,
