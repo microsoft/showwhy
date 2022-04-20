@@ -3,7 +3,6 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { Item } from '@showwhy/components'
 import type {
 	ElementDefinition,
 	Experiment,
@@ -29,7 +28,7 @@ interface PivotData {
 	title: string
 	label: string
 	description: string
-	items: Item[]
+	items: Record<string, any>[]
 }
 
 export function useBusinessLogic(): {
@@ -87,7 +86,9 @@ export function useBusinessLogic(): {
 	}
 }
 
-function useItemList(definitions: ElementDefinition[] = []): Item[] {
+function useItemList(
+	definitions: ElementDefinition[] = [],
+): Record<string, any>[] {
 	return useMemo(() => {
 		return definitions?.map(x => {
 			const newObj = { ...x, dataPw: 'definition-element' }

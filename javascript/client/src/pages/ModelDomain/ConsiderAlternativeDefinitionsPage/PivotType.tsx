@@ -3,7 +3,6 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { useDimensions } from '@essex/hooks'
-import type { Item } from '@showwhy/components'
 import { DetailsList } from '@showwhy/components'
 import type {
 	DefinitionType,
@@ -26,7 +25,7 @@ interface PivotData {
 	title: string
 	label: string
 	description: string
-	items: Item[]
+	items: Record<string, any>[]
 }
 
 export const PivotType: FC<{

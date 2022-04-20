@@ -14,7 +14,6 @@ import { useMemo, useState } from 'react'
 
 import { useCausalFactors } from '~state'
 
-import { useTableComponent } from '../../ConsiderAlternativeDefinitionsPage/ConsiderAlternativeDefinitionsPage.hooks'
 import {
 	useAddFactor,
 	useDeleteFactor,
@@ -22,6 +21,7 @@ import {
 	useFactorsNavigation,
 	useSetPageDone,
 } from '../ConsiderRelevantVariablesPage.hooks'
+import { useFactorItems } from './useFactorItems'
 
 export function useBusinessLogic(): {
 	isEditing: boolean
@@ -40,9 +40,8 @@ export function useBusinessLogic(): {
 	const flatFactorsList = useFlatFactorsList(causalFactors)
 	const [goToFactorsPage, factorsPathData] = useFactorsNavigation()
 	useSetPageDone()
-	const { items } = useTableComponent(
+	const { items } = useFactorItems(
 		flatFactorsList,
-		undefined,
 		factor,
 		deleteFactor,
 		addFactor,

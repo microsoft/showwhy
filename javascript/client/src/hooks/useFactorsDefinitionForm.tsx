@@ -5,7 +5,6 @@
 
 import type {
 	CausalFactor,
-	DefinitionType,
 	ElementDefinition,
 	Experiment,
 	Handler,
@@ -13,7 +12,7 @@ import type {
 	OptionalId,
 	Setter,
 } from '@showwhy/types'
-import { CausalityLevel } from '@showwhy/types'
+import { CausalityLevel, DefinitionType } from '@showwhy/types'
 import { useCallback, useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 
@@ -36,14 +35,14 @@ export function useFactorsDefinitionForm({
 	experiment,
 	factor,
 	showLevel,
-	definitionType,
+	definitionType = DefinitionType.Population,
 	onAdd = noop,
 	onChange = noop,
 }: {
 	experiment?: Experiment
 	factor?: CausalFactor | ElementDefinition
 	showLevel?: boolean
-	definitionType: DefinitionType
+	definitionType?: DefinitionType
 	onAdd?: OnAddHandler
 	onChange?: OnChangeHandler
 }): {

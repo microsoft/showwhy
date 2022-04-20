@@ -5,7 +5,6 @@
 
 import { ActionButtons } from '@showwhy/components'
 import type {
-	DefinitionType,
 	ElementDefinition,
 	Handler,
 	Handler1,
@@ -16,26 +15,24 @@ import { useCallback, useMemo, useState } from 'react'
 import { useFactorsDefinitionForm, useOnChange } from '~hooks'
 import { getDefault } from '~utils'
 
-export function useDefinitionItems(
-	definitions: ElementDefinition[],
-	definitionToEdit: Maybe<ElementDefinition>,
-	definitionType: DefinitionType,
+export function useFactorItems(
+	rows: ElementDefinition[],
+	factorToEdit: Maybe<ElementDefinition>,
 	onDelete?: Maybe<Handler1<ElementDefinition>>,
 	onSave?: Maybe<Handler1<ElementDefinition>>,
 	onEdit?: Maybe<Handler1<ElementDefinition>>,
 	onCancel?: Maybe<Handler>,
-): { items: Record<string, any>[] } {
+): {
+	items: Record<string, any>
+} {
 	const [edited, setEdited] = useState<Maybe<ElementDefinition>>()
-	const onChange = useOnChange(setEdited, definitionToEdit)
+	const onChange = useOnChange(setEdited, factorToEdit)
 	const { level, description, variable } = useFactorsDefinitionForm({
-		factor: definitionToEdit,
+		factor: factorToEdit,
 		onChange,
-		definitionType,
 	})
-
 	const getEditableRow = useGetEditableRow(
-		definitionToEdit,
-		definitionType,
+		factorToEdit,
 		level,
 		description,
 		variable,
@@ -43,13 +40,13 @@ export function useDefinitionItems(
 		onCancel,
 	)
 	const items = useMemo(() => {
-		return definitions.map(item => {
-			if (item.id === definitionToEdit?.id) {
+		return rows.map(item => {
+			if (factorToEdit?.id === item.id) {
 				return getEditableRow(edited)
 			}
 			return getDefault(item, onEdit, onDelete)
 		})
-	}, [getEditableRow, definitions, definitionToEdit, edited, onDelete, onEdit])
+	}, [rows, factorToEdit, edited, onDelete, onEdit, getEditableRow])
 
 	return {
 		items,
@@ -57,8 +54,7 @@ export function useDefinitionItems(
 }
 
 function useGetEditableRow(
-	definitionToEdit: Maybe<ElementDefinition>,
-	type: DefinitionType,
+	factorToEdit: Maybe<ElementDefinition>,
 	level: JSX.Element,
 	description: JSX.Element,
 	variable: JSX.Element,
@@ -69,19 +65,18 @@ function useGetEditableRow(
 		(edited: Maybe<ElementDefinition>) => {
 			return {
 				level,
-				type,
 				description,
 				variable,
 				actions: (
 					<ActionButtons
 						onCancel={onCancel}
 						onSave={
-							onSave && definitionToEdit && edited
+							onSave && factorToEdit
 								? () =>
 										onSave({
-											...definitionToEdit,
+											...factorToEdit,
 											...edited,
-										} as ElementDefinition)
+										})
 								: undefined
 						}
 						disableSave={!edited?.variable}
@@ -89,6 +84,6 @@ function useGetEditableRow(
 				),
 			}
 		},
-		[definitionToEdit, type, level, description, variable, onSave, onCancel],
+		[factorToEdit, level, description, variable, onSave, onCancel],
 	)
 }
