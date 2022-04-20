@@ -20,7 +20,6 @@ import {
 	useResetProjectFiles,
 	useResetRefutationCount,
 	useResetRunHistory,
-	useResetSelectedFile,
 	useResetSelectedProject,
 	useResetSignificanceTest,
 	useResetSpecCount,
@@ -35,7 +34,6 @@ export function useResetProject(): Handler {
 	const resetEstimators = useResetEstimators()
 	const resetDefineQuestion = useResetExperiment()
 	const resetProjectFiles = useResetProjectFiles()
-	const resetSelectedFile = useResetSelectedFile()
 	const resetRunHistory = useResetRunHistory()
 	const resetSpecificationCurveConfig = useResetSpecificationCurveConfig()
 	const resetPrimarySpecificationConfig = useResetPrimarySpecificationConfig()
@@ -53,7 +51,6 @@ export function useResetProject(): Handler {
 
 	return useCallback(() => {
 		resetProjectFiles()
-		resetSelectedFile()
 		resetCausalFactors()
 		resetRefutationCount()
 		resetEstimators()
@@ -74,7 +71,6 @@ export function useResetProject(): Handler {
 		resetSignificanteTest()
 	}, [
 		resetProjectFiles,
-		resetSelectedFile,
 		resetCausalFactors,
 		resetRefutationCount,
 		resetEstimators,

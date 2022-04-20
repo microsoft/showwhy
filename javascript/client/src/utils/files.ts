@@ -13,7 +13,6 @@ import {
 	createReader,
 	FileType,
 	FileWithPath,
-	guessDelimiter,
 	toZip,
 } from '@data-wrangling-components/utilities'
 import type { Maybe, RunHistory, SignificanceTest } from '@showwhy/types'
@@ -157,11 +156,10 @@ export async function fetchRemoteTables(
  */
 export function readFile(
 	file: BaseFile | File,
-	delimiter?: string,
+	delimiter: string,
 	autoType = false,
 	onProgress?: (processed: number, total: number) => void,
 ): Promise<ColumnTable> {
-	const _delimiter = delimiter || guessDelimiter(file.name)
 	const isBigFile = file.size > MAX_FILE_SIZE
 	const reader = createReader()
 	let index = 0
@@ -204,7 +202,7 @@ export function readFile(
 		try {
 			const result = createDefaultTable(
 				lineBreak,
-				_delimiter,
+				delimiter,
 				columnNames,
 				autoType,
 			)

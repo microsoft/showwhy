@@ -3,6 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import { FileType } from '@data-wrangling-components/utilities'
 import type { IDropdownOption } from '@fluentui/react'
 
 export const delimiterOptions: IDropdownOption[] = [
@@ -11,3 +12,9 @@ export const delimiterOptions: IDropdownOption[] = [
 	{ key: ',', text: 'Comma' },
 	{ key: ' ', text: 'Space' },
 ]
+
+export const LOAD_FILE_TYPES: string[] = [
+	`.${FileType.csv}`,
+	`.${FileType.tsv}`,
+]
+export const LOAD_ZIP_TYPES: string[] = [`.${FileType.zip}`]

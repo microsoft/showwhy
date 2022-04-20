@@ -9,44 +9,78 @@ import {
 	MessageBarType,
 	Toggle,
 } from '@fluentui/react'
+import { useBoolean } from '@fluentui/react-hooks'
 import {
+	ContainerFlexRow,
 	DatasetsList,
 	DropzoneContainer,
 	MessageContainer,
 } from '@showwhy/components'
-import { memo } from 'react'
+import type { Maybe } from '@showwhy/types'
+import { memo, useEffect, useState } from 'react'
 import styled from 'styled-components'
 
-import { ContainerFlexRow } from '~styles'
+import {
+	useAutomaticWorkflowStatus,
+	useDropzone,
+	useFileManagement,
+} from '~hooks'
 
-import { useBusinessLogic } from './LoadDataPage.hooks'
-import { delimiterOptions } from './LoadDataPage.types'
+import { useAcceptedLoadFileTypes } from './hooks/useAcceptedLoadFileTypes'
+import { useHandleDelimiterChange } from './hooks/useHandleDelimiterChange'
+import { useOnConfirmDelete } from './hooks/useOnConfirmDelete'
+import { useToggleAutoType } from './hooks/useToggleAutoType'
+import { useToggleLoadedCorrectly } from './hooks/useToggleLoadedCorrectly'
+import { delimiterOptions } from './LoadDataPage.constants'
 import { SelectedTableDisplay } from './SelectedTableDisplay'
 import { SupportedFileTypes } from './SupportedFileTypes'
 
 export const LoadDataPage: React.FC = memo(function LoadDataPage() {
+	const acceptedFileTypes = useAcceptedLoadFileTypes()
+	const [showConfirm, { toggle: toggleShowConfirm }] = useBoolean(false)
+	const { setTodo, setDone } = useAutomaticWorkflowStatus()
+	const [errorMessage, setErrorMessage] = useState<string | null>()
 	const {
-		showConfirm,
-		errorMessage,
-		selectedFile,
-		selectedDelimiter,
+		doRemoveFile,
+		doUpdateFiles,
 		projectFiles,
-		onConfirmDelete,
+		selectedFile,
 		setSelectedFile,
-		toggleShowConfirm,
+		doAddFile,
+	} = useFileManagement(setErrorMessage)
+
+	useEffect(() => {
+		!!projectFiles.length ? setDone() : setTodo()
+	}, [projectFiles, setDone, setTodo])
+
+	const [selectedDelimiter, setSelectedDelimiter] = useState<Maybe<string>>(
+		selectedFile?.delimiter,
+	)
+
+	const toggleLoadedCorrectly = useToggleLoadedCorrectly(
+		doUpdateFiles,
+		selectedFile,
+	)
+
+	const toggleAutoType = useToggleAutoType(doUpdateFiles, selectedFile)
+
+	const onConfirmDelete = useOnConfirmDelete(doRemoveFile, toggleShowConfirm)
+
+	const handleDelimiterChange = useHandleDelimiterChange(
+		setSelectedDelimiter,
+		selectedFile,
+		doUpdateFiles,
 		toggleLoadedCorrectly,
-		toggleAutoType,
-		handleDelimiterChange,
-		handleDismissError,
-		loading,
-		fileCount,
-		acceptedFileTypes,
+	)
+
+	const {
 		onDrop,
 		onDropAccepted,
 		onDropRejected,
-		onRenameTable,
+		loading,
+		fileCount,
 		progress,
-	} = useBusinessLogic()
+	} = useDropzone(setErrorMessage, doAddFile)
 
 	return (
 		<Container>
@@ -59,7 +93,7 @@ export const LoadDataPage: React.FC = memo(function LoadDataPage() {
 			{errorMessage ? (
 				<MessageContainer
 					type={MessageBarType.error}
-					onDismiss={handleDismissError}
+					onDismiss={() => setErrorMessage('')}
 					styles={{ marginTop: '10px', padding: '4px' }}
 				>
 					{errorMessage}
@@ -98,7 +132,6 @@ export const LoadDataPage: React.FC = memo(function LoadDataPage() {
 						<SelectedTableDisplay
 							selectedFile={selectedFile}
 							projectFiles={projectFiles}
-							onRenameTable={onRenameTable}
 						/>
 					</TableContainer>
 					<DataLoadIndicator>
@@ -107,7 +140,7 @@ export const LoadDataPage: React.FC = memo(function LoadDataPage() {
 								<Toggle
 									label="Data loaded correctly"
 									onText="Yes"
-									checked={selectedFile?.loadedCorrectly || false}
+									checked={!!selectedFile?.loadedCorrectly}
 									offText="No"
 									onChange={() => toggleLoadedCorrectly()}
 								/>
@@ -131,7 +164,7 @@ export const LoadDataPage: React.FC = memo(function LoadDataPage() {
 						</ToggleWrapper>
 						<DeleteButton
 							title="Delete current dataset"
-							onClick={() => toggleShowConfirm()}
+							onClick={toggleShowConfirm}
 						>
 							Delete dataset
 						</DeleteButton>
