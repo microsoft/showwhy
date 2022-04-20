@@ -3,10 +3,9 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { Pivot as FUIPivot, PivotItem } from '@fluentui/react'
+import { Container, Title } from '@showwhy/components'
 import { memo } from 'react'
 import styled from 'styled-components'
-
-import { Container, Title } from '~styles'
 
 import { useBusinessLogic } from './ConsiderAlternativeDefinitionsPage.hooks'
 import { PivotType } from './PivotType'

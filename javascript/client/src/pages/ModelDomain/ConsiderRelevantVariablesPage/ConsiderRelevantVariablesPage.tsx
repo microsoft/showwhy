@@ -5,11 +5,9 @@
 
 import { DefaultButton } from '@fluentui/react'
 import type { HeaderData } from '@showwhy/components'
-import { GenericTable } from '@showwhy/components'
+import { Container, GenericTable, Title } from '@showwhy/components'
 import { memo } from 'react'
 import styled from 'styled-components'
-
-import { Container, Title } from '~styles'
 
 import { useBusinessLogic } from './ConsiderRelevantVariablesPage.hooks'
 import { RelevantVariablesForm } from './RelevantVariablesForm'

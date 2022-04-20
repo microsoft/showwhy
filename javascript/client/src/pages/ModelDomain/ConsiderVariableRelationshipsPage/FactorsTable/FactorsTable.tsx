@@ -3,12 +3,10 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { GenericTable } from '@showwhy/components'
+import { Container, GenericTable } from '@showwhy/components'
 import { CausalFactorType } from '@showwhy/types'
 import { memo } from 'react'
 import styled from 'styled-components'
-
-import { Container } from '~styles'
 
 import { useFactorsTable } from './hooks'
 

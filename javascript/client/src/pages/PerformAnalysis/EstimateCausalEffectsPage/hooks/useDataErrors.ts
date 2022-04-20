@@ -13,7 +13,7 @@ import {
 	useSubjectIdentifier,
 } from '~state'
 
-export function useErrors(): {
+export function useDataErrors(): {
 	isMicrodata: boolean
 	isMissingVariable: boolean
 	hasIdentifier: boolean

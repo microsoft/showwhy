@@ -2,6 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import { Title } from '@showwhy/components'
 import type { Estimator } from '@showwhy/types'
 import {
 	type AlternativeModels,
@@ -13,7 +14,6 @@ import type { FC } from 'react'
 import { memo } from 'react'
 import styled from 'styled-components'
 
-import { Title } from '~styles'
 import { getDefinitionsByType, pluralize } from '~utils'
 
 export const AnalysisSummary: FC<{

@@ -4,68 +4,82 @@
  */
 import { PrimaryButton } from '@fluentui/react'
 import { isStatus } from '@showwhy/api-client'
-import { ErrorMessage, RunProgressIndicator } from '@showwhy/components'
+import {
+	ContainerFlexColumn,
+	ContainerFlexRow,
+	ErrorMessage,
+	RunProgressIndicator,
+	Title,
+} from '@showwhy/components'
 import { NodeResponseStatus } from '@showwhy/types'
+import { useThematic } from '@thematic/react'
 import { memo, useEffect } from 'react'
 import styled from 'styled-components'
-
-import { useAutomaticWorkflowStatus, useSpecificationCurve } from '~hooks'
-import { ContainerFlexColumn, ContainerFlexRow, Title } from '~styles'
-
+import {
+	useAutomaticWorkflowStatus,
+	useDefaultRun,
+	useIsDefaultRunProcessing,
+	useRefutationOptions,
+} from '~hooks'
+import { useEstimators } from '~state'
 import {
 	IdentifierMessage,
 	MicrodataMessage,
 	VariablesMessage,
 } from './ErrorMessages'
-import { useEstimateLogic } from './EstimateCausalEffectPage.hooks'
-import { EstimatedEffectOptions } from './EstimatedEffectOptions'
-import { useErrors } from './hooks/useErrors'
+import { EstimatedEffectConfig } from './EstimatedEffectConfig'
+import { useDataErrors } from './hooks/useDataErrors'
+import { useEstimateLogic } from './hooks/useEstimateLogic'
+import { useSpecificationCurve } from './hooks/useSpecificationCurve'
+import { useSpecificationCurveData } from './hooks/useSpecificationCurveData'
 import { SpecificationDescription } from './SpecificationDescription'
 import { VegaSpecificationCurve } from './vega/VegaSpecificationCurve'
 
 export const EstimateCausalEffectPage: React.FC = memo(
 	function EstimateCausalEffectPage() {
 		const { setDone, setTodo } = useAutomaticWorkflowStatus()
+		const theme = useThematic()
+		const isProcessing = useIsDefaultRunProcessing()
+		const estimators = useEstimators()
+		const refutationOptions = useRefutationOptions()
+		const defaultRun = useDefaultRun()
 
 		const {
-			isProcessing,
-			totalEstimatorsCount,
 			runEstimate,
-			refutationOptions,
 			cancelRun,
 			isCanceled,
 			errors,
 			loadingSpecCount,
 			specCount,
 			loadingFile,
-		} = useEstimateLogic()
+		} = useEstimateLogic(isProcessing)
 
 		const { isMicrodata, isMissingVariable, hasIdentifier, hasAnyError } =
-			useErrors()
+			useDataErrors()
 
 		const {
 			data,
-			defaultRun,
-			activeProcessing,
-			selectedSpecification,
-			setSelectedSpecification,
 			config,
-			onSpecificationsChange,
 			onMouseOver,
 			hovered,
+			failedRefutationIds,
+			vegaWindowDimensions,
+			outcome,
+			activeProcessing,
+		} = useSpecificationCurveData()
+
+		const {
+			selectedSpecification,
+			setSelectedSpecification,
+			onSpecificationsChange,
 			handleShapTicksChange,
 			handleConfidenceIntervalTicksChange,
 			isShapDisabled,
 			isConfidenceIntervalDisabled,
-			failedRefutationIds,
-			vegaWindowDimensions,
-			theme,
-			outcome,
 			isSpecificationOn,
 			refutationNumbers,
 			failedRefutations,
 			onToggleRejectEstimate,
-			totalSpecs,
 		} = useSpecificationCurve()
 
 		useEffect(() => {
@@ -88,7 +102,7 @@ export const EstimateCausalEffectPage: React.FC = memo(
 									<PrimaryButton
 										disabled={
 											loadingSpecCount ||
-											!totalEstimatorsCount ||
+											!estimators.length ||
 											!specCount ||
 											hasAnyError ||
 											loadingFile
@@ -132,21 +146,14 @@ export const EstimateCausalEffectPage: React.FC = memo(
 							)}
 						</EstimatesContainer>
 						<ContainerFlexColumn marginTop>
-							<EstimatedEffectOptions
-								label="Confidence interval"
-								title="Enable confidence interval ticks"
-								disabledTitle="Confidence interval ticks are not enabled for this run"
-								checked={config.confidenceIntervalTicks}
-								disabled={isConfidenceIntervalDisabled}
-								onChange={handleConfidenceIntervalTicksChange}
-							/>
-							<EstimatedEffectOptions
-								disabled={isShapDisabled}
-								label="Element contribution"
-								title="Enable shap ticks"
-								disabledTitle="Shap ticks are not available while active run is processing"
-								checked={config.shapTicks}
-								onChange={handleShapTicksChange}
+							<EstimatedEffectConfig
+								config={config}
+								handleConfidenceIntervalTicksChange={
+									handleConfidenceIntervalTicksChange
+								}
+								handleShapTicksChange={handleShapTicksChange}
+								isConfidenceIntervalDisabled={isConfidenceIntervalDisabled}
+								isShapDisabled={isShapDisabled}
 							/>
 						</ContainerFlexColumn>
 					</ContainerFlexRow>
@@ -161,7 +168,7 @@ export const EstimateCausalEffectPage: React.FC = memo(
 						hovered={hovered}
 						outcome={outcome}
 						failedRefutationIds={failedRefutationIds}
-						totalSpecs={totalSpecs}
+						totalSpecs={specCount}
 					/>
 					<SpecificationDescription
 						refutationOptions={refutationOptions}

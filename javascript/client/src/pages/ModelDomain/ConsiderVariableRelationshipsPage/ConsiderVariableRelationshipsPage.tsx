@@ -3,12 +3,12 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { DefaultButton } from '@fluentui/react'
+import { Container, Title } from '@showwhy/components'
 import { memo } from 'react'
 import { Pages } from 'src/constants'
 import styled from 'styled-components'
 
 import { useGoToPage } from '~hooks'
-import { Container, Title } from '~styles'
 
 import { tableHeader } from './ConsiderVariableRelationshipsPage.constants'
 import { FactorsTable } from './FactorsTable'

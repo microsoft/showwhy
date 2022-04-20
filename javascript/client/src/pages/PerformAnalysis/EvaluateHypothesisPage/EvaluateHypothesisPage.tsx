@@ -6,13 +6,14 @@ import {
 	CausalEffectsArrows,
 	CausalEffectSize,
 	CausalQuestion,
+	Container,
+	ContainerFlexColumn,
+	Title,
 } from '@showwhy/components'
 import { NodeResponseStatus } from '@showwhy/types'
 import { memo } from 'react'
 
-import { useSpecificationCurve } from '~hooks'
-import { Container, ContainerFlexColumn, Title } from '~styles'
-
+import { useSpecificationCurveData } from '../EstimateCausalEffectsPage/EstimateCausalEffectPage.hooks'
 import { AnalysisSummary } from './AnalysisSummary'
 import { EmptyDataPageWarning } from './EmptyDataPageWarning'
 import { useBusinessLogic } from './EvaluateHypothesisPage.hooks'
@@ -45,7 +46,7 @@ export const EvaluateHypothesisPage: React.FC = memo(
 			failedRefutationIds,
 			vegaWindowDimensions,
 			outcome,
-		} = useSpecificationCurve()
+		} = useSpecificationCurveData()
 
 		if (
 			!specificationData.length ||

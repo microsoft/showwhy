@@ -3,90 +3,48 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { Dimensions } from '@essex/hooks'
 import type {
-	DecisionFeature,
-	Experiment,
 	Handler,
 	Handler1,
 	Maybe,
-	RunHistory,
 	Specification,
 	SpecificationCurveConfig,
 } from '@showwhy/types'
-import {
-	CausalityLevel,
-	DefinitionType,
-	NodeResponseStatus,
-} from '@showwhy/types'
-import type { Theme } from '@thematic/core'
-import { useThematic } from '@thematic/react'
+import { NodeResponseStatus } from '@showwhy/types'
 import { useCallback, useMemo, useState } from 'react'
-
+import { useDefaultRun, useWakeLock } from '~hooks'
 import {
-	useDefaultRun,
-	useFailedRefutationIds,
-	useOnMouseOver,
-	useVegaWindowDimensions,
-	useWakeLock,
-} from '~hooks'
-import {
-	useExperiment,
-	useHoverState,
-	useRunHistory,
 	useSetSpecificationCurveConfig,
-	useSpecCount,
 	useSpecificationCurveConfig,
 } from '~state'
-
-import { useLoadSpecificationData } from '../pages/PerformAnalysis/EstimateCausalEffectsPage/EstimateCausalEffectPage.hooks'
+import { useUpdateSignificanceTests } from '../../EvaluateHypothesisPage/hooks/useRunSignificanceTest'
+import { useLoadSpecificationData } from './useLoadSpecificationData'
 
 export function useSpecificationCurve(): {
-	activeProcessing: Maybe<RunHistory>
-	config: SpecificationCurveConfig
-	data: Specification[]
-	defaultRun: Maybe<RunHistory>
-	failedRefutationIds: number[]
 	failedRefutations: string[]
 	handleConfidenceIntervalTicksChange: (checked: boolean) => void
 	handleShapTicksChange: (checked: boolean) => void
-	hovered: Maybe<number>
 	isConfidenceIntervalDisabled: boolean
 	isShapDisabled: boolean
 	isSpecificationOn: boolean
-	onMouseOver: (item: Maybe<Specification | DecisionFeature>) => void
 	onSpecificationsChange: (config: SpecificationCurveConfig) => void
 	onToggleRejectEstimate: Handler
-	outcome: Maybe<string>
 	refutationNumbers: string
 	selectedSpecification: Maybe<Specification>
 	setSelectedSpecification: (s: Maybe<Specification>) => void
-	theme: Theme
-	vegaWindowDimensions: Dimensions
-	totalSpecs?: number
 } {
-	const data = useLoadSpecificationData()
-	const config = useSpecificationCurveConfig()
-	const runHistory = useRunHistory()
-	const hovered = useHoverState()
-	const defaultRun = useDefaultRun()
-	const onMouseOver = useOnMouseOver()
-	const failedRefutationIds = useFailedRefutationIds(data)
-	const vegaWindowDimensions = useVegaWindowDimensions()
-	const theme = useThematic()
-	const defineQuestion = useExperiment()
-	const outcome = useOutcome(defineQuestion)
-	const totalSpecs = useSpecCount()
 	useWakeLock()
-	const activeProcessing = useActiveProcessing(runHistory)
+	const data = useLoadSpecificationData()
 	const [selectedSpecification, setSelectedSpecification] =
 		useState<Maybe<Specification>>()
+
 	const isShapDisabled = useIsShapDisabled()
-	const isConfidenceIntervalDisabled = useIsConfidenceIntervalDisabled(data)
 	const handleShapTicksChange = useHandleShapTicksChange(isShapDisabled)
+	const isConfidenceIntervalDisabled = useIsConfidenceIntervalDisabled(data)
 	const handleConfidenceIntervalTicksChange =
 		useHandleConfidenceIntervalTicksChange(isConfidenceIntervalDisabled)
 	const onSpecificationsChange = useOnSpecificationsChange()
+
 	const refutationKeys = useRefutationKeys(selectedSpecification)
 	const failedRefutations = useFailedRefutations(
 		selectedSpecification,
@@ -105,52 +63,18 @@ export function useSpecificationCurve(): {
 	)
 
 	return {
-		activeProcessing,
-		config,
-		data,
-		defaultRun,
-		failedRefutationIds,
 		failedRefutations,
 		handleConfidenceIntervalTicksChange,
 		handleShapTicksChange,
-		hovered,
 		isConfidenceIntervalDisabled,
 		isShapDisabled,
 		isSpecificationOn,
-		onMouseOver,
 		onSpecificationsChange,
 		onToggleRejectEstimate,
-		outcome,
 		refutationNumbers,
 		selectedSpecification,
 		setSelectedSpecification,
-		theme,
-		vegaWindowDimensions,
-		totalSpecs,
 	}
-}
-
-function useOutcome(defineQuestion: Experiment) {
-	return useMemo(
-		() =>
-			defineQuestion?.definitions?.find(
-				d =>
-					d.type === DefinitionType.Outcome &&
-					d.level === CausalityLevel.Primary,
-			)?.variable,
-		[defineQuestion],
-	)
-}
-
-function useActiveProcessing(runHistory: RunHistory[]): Maybe<RunHistory> {
-	return useMemo(() => {
-		return runHistory.find(
-			x =>
-				x.status?.status.toLowerCase() === NodeResponseStatus.Pending ||
-				x.status?.status.toLowerCase() === NodeResponseStatus.Processing ||
-				x.status?.status.toLowerCase() === NodeResponseStatus.Running,
-		)
-	}, [runHistory])
 }
 
 function useIsShapDisabled(): boolean {
@@ -205,17 +129,16 @@ function useHandleConfidenceIntervalTicksChange(
  * When a specification selection change, we reset the significance test because it changes
  * based on active specifications
  */
-//TODO: DO THEY????
 function useOnSpecificationsChange(): Handler1<SpecificationCurveConfig> {
 	const setConfig = useSetSpecificationCurveConfig()
-	// const defaultRun = useDefaultRun()
-	// const updateSignificanceTest = useUpdateSignificanceTests(defaultRun?.id)
+	const defaultRun = useDefaultRun()
+	const updateSignificanceTest = useUpdateSignificanceTests(defaultRun?.id)
 	return useCallback(
 		(config: SpecificationCurveConfig) => {
 			setConfig(config)
-			// updateSignificanceTest()
+			updateSignificanceTest()
 		},
-		[setConfig],
+		[setConfig, updateSignificanceTest],
 	)
 }
 

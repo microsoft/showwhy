@@ -17,7 +17,7 @@ import styled from 'styled-components'
 
 import { usePrimarySpecificationConfig } from '~state'
 
-import { useSpecificationSHAPColumns } from '../EstimateCausalEffectPage.hooks'
+import { useSpecificationSHAPColumns } from '../hooks/useColumns'
 import template from './dot-plot.json'
 import { mergeSpec, parseJsonPathSpec } from './util'
 import { MIN_SPEC_ADDITIONAL_PADDING } from './VegaSpecificationCurve'

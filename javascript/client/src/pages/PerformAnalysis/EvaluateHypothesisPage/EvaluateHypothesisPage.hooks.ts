@@ -26,7 +26,6 @@ import {
 	useCausalEffects,
 	useDefaultRun,
 	useRefutationOptions,
-	useSpecificationCurve,
 } from '~hooks'
 import {
 	useDefaultDatasetResult,
@@ -37,7 +36,8 @@ import {
 } from '~state'
 import type { DefaultDatasetResult } from '~types'
 
-import { useLoadSpecificationData } from '../EstimateCausalEffectsPage/EstimateCausalEffectPage.hooks'
+import { useSpecificationCurveData } from '../EstimateCausalEffectsPage/EstimateCausalEffectPage.hooks'
+import { useLoadSpecificationData } from '../EstimateCausalEffectsPage/hooks/useLoadSpecificationData'
 import { useCurrentSignificanceTest } from './hooks/useCurrentSignificanceTest'
 import { useRunSignificanceTest } from './hooks/useRunSignificanceTest'
 
@@ -67,7 +67,7 @@ export function useBusinessLogic(): {
 	const defaultDataset = useDefaultDatasetResult()
 	const defaultRun = useDefaultRun()
 	const run = useRunSignificanceTest(defaultRun?.id)
-	const { failedRefutationIds } = useSpecificationCurve()
+	const { failedRefutationIds } = useSpecificationCurveData()
 	const [isCanceled, setIsCanceled] = useState<boolean>(false)
 	const significanceTestResult = useCurrentSignificanceTest()
 	const refutationOptions = useRefutationOptions()

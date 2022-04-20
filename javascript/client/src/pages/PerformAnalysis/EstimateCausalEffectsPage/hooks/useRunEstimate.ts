@@ -27,7 +27,6 @@ import { getRunStatus } from '../EstimateCausalEffectPage.utils'
 export function useRunEstimate(): () => Orchestrator<EstimateEffectStatusResponse> {
 	const updateActive = useUpdateActiveRunHistory()
 	const updateNodeResponse = useUpdateNodeResponseActiveRunHistory()
-
 	const hasConfidenceInterval = useConfidenceInterval()
 	const refutersLength = useRefutationLength()
 

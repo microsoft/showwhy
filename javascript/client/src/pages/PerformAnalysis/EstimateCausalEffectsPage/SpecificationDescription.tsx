@@ -3,13 +3,13 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { DefaultButton } from '@fluentui/react'
+import { Paragraph, Text } from '@showwhy/components'
 import type { Handler, RefutationOption, Specification } from '@showwhy/types'
 import { RefutationTestMethodString } from '@showwhy/types'
 import { round } from 'lodash'
 import { memo } from 'react'
 import styled from 'styled-components'
 
-import { Paragraph, Text } from '~styles'
 import { pluralize } from '~utils'
 
 import { EstimateDetails } from './EstimateDetails'

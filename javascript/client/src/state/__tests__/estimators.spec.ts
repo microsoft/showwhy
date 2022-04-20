@@ -7,9 +7,8 @@ import { renderHook } from '@testing-library/react-hooks'
 import { useEffect } from 'react'
 import { RecoilRoot, snapshot_UNSTABLE } from 'recoil'
 
-import { useSetEstimators } from '~state'
+import { estimatorState, useEstimators, useSetEstimators } from '../estimators'
 
-import { estimatorState, useEstimators } from '../estimators'
 const estimator = [
 	{
 		group: EstimatorGroup.Exposure,
@@ -29,8 +28,9 @@ describe('estimatorState', () => {
 
 	describe('useSetEstimators', () => {
 		it('should change the estimators state', () => {
+			const expected = estimator
 			const snapshot = snapshot_UNSTABLE(({ set }) =>
-				set(estimatorState, estimator),
+				set(estimatorState, expected),
 			)
 				.getLoadable(estimatorState)
 				.valueOrThrow()

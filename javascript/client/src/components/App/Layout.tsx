@@ -9,6 +9,7 @@ import {
 	Guidance,
 	MessageContainer,
 	StepTitle,
+	StyledSpinner,
 } from '@showwhy/components'
 import type { Maybe } from '@showwhy/types'
 import { memo, Suspense, useMemo, useRef, useState } from 'react'
@@ -18,7 +19,6 @@ import styled from 'styled-components'
 import { StepControls, StepSelector } from '~components/GeneralSteps'
 import { useUploadZipMenuOption } from '~hooks'
 import { useExperiment, useGuidance, useSelectedProject } from '~state'
-import { StyledSpinner } from '~styles'
 
 import { Pages } from '../../constants'
 import { useOnClickProject, useProcessStepInfo } from './App.hooks'

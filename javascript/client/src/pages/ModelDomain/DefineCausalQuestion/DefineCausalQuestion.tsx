@@ -5,11 +5,10 @@
 
 import type { IChoiceGroupOption } from '@fluentui/react'
 import { ChoiceGroup } from '@fluentui/react'
+import { Container } from '@showwhy/components'
 import { Hypothesis } from '@showwhy/types'
 import { memo } from 'react'
 import styled from 'styled-components'
-
-import { Container } from '~styles'
 
 import { useBusinessLogic } from './DefineCausalQuestion.hooks'
 import { FieldGroup } from './FieldGroup'

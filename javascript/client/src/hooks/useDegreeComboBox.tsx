@@ -4,8 +4,7 @@
  */
 import type { IComboBoxOption } from '@fluentui/react'
 import { ComboBox } from '@fluentui/react'
-import type { CausalFactorType } from '@showwhy/types'
-import { BeliefDegree } from '@showwhy/types'
+import { type CausalFactorType, BeliefDegree } from '@showwhy/types'
 import { useCallback } from 'react'
 
 const beliefOptions: IComboBoxOption[] = [

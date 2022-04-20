@@ -3,6 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { SpinButton } from '@fluentui/react'
+import { Title } from '@showwhy/components'
 import { memo, useCallback, useEffect } from 'react'
 import styled from 'styled-components'
 
@@ -12,7 +13,6 @@ import {
 	useRefutationCount,
 	useSetRefutationCount,
 } from '~state'
-import { Title } from '~styles'
 
 import { EstimatorCard } from './EstimatorCard'
 import { useEstimatorOptions } from './hooks/useEstimatorOptions'

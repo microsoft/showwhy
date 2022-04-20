@@ -5,21 +5,28 @@
 
 import { isProcessingStatus } from '@showwhy/api-client'
 import type {
+	Handler,
 	Maybe,
 	NodeResponse,
-	NodeResponseStatus,
 	PartialResults,
 	RunHistory,
 	RunStatus,
 } from '@showwhy/types'
+import { NodeResponseStatus } from '@showwhy/types'
 import { useCallback, useMemo } from 'react'
+import { v4 } from 'uuid'
 
 import {
+	getStorageItem,
+	SESSION_ID_KEY,
+	setStorageItem,
+	useConfidenceInterval,
+	useRefutationCount,
 	useResetSpecificationCurveConfig,
 	useRunHistory,
 	useSetRunHistory,
+	useSpecCount,
 } from '~state'
-import { disableAllRuns, SESSION_ID_KEY, setStorageItem } from '~utils'
 
 export function useSetRunAsDefault(): (run: RunHistory) => void {
 	const setRunHistory = useSetRunHistory()
@@ -57,6 +64,30 @@ export function useIsDefaultRunProcessing(): boolean {
 	return useMemo(() => {
 		return isProcessingStatus(defaultRun?.status?.status as NodeResponseStatus)
 	}, [defaultRun])
+}
+
+export function useSaveNewRun(): Handler {
+	const updateRunHistory = useUpdateAndDisableRunHistory()
+	const hasConfidenceInterval = useConfidenceInterval()
+	const runHistory = useRunHistory()
+	const specCount = useSpecCount()
+	const refutationCount = useRefutationCount()
+
+	return useCallback(() => {
+		const initialRun = initialRunHistory(
+			specCount as number,
+			hasConfidenceInterval,
+			refutationCount,
+			runHistory.length,
+		)
+		updateRunHistory(initialRun)
+	}, [
+		updateRunHistory,
+		specCount,
+		hasConfidenceInterval,
+		refutationCount,
+		runHistory.length,
+	])
 }
 
 export function useUpdateNodeResponseActiveRunHistory(): (
@@ -129,4 +160,36 @@ export function useUpdateAndDisableRunHistory(): (
 		},
 		[setRunHistory],
 	)
+}
+
+export function disableAllRuns(runHistory: RunHistory[]): RunHistory[] {
+	return runHistory.map(run => {
+		return { ...run, isActive: false }
+	})
+}
+
+function initialRunHistory(
+	specCount: number,
+	hasConfidenceInterval: boolean,
+	refutationCount: number,
+	runHistoryLength: number,
+): RunHistory {
+	return {
+		id: v4(),
+		runNumber: runHistoryLength + 1,
+		isActive: true,
+		status: {
+			status: NodeResponseStatus.Running,
+			estimated_effect_completed: `0/${specCount}`,
+			confidence_interval_completed: `0/${specCount}`,
+			refute_completed: `0/${specCount}`,
+			percentage: 0,
+			time: {
+				start: new Date(),
+			},
+		},
+		sessionId: getStorageItem(SESSION_ID_KEY),
+		hasConfidenceInterval,
+		refutationCount,
+	} as RunHistory
 }

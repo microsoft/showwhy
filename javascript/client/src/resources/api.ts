@@ -4,7 +4,8 @@
  */
 import { FetchApiInteractor } from '@showwhy/api-client'
 
-import { getStorageItem, SESSION_ID_KEY } from '../utils'
+import { getStorageItem, SESSION_ID_KEY } from '~state'
+
 import { getEnv } from './environment'
 
 const env = getEnv()
