@@ -2074,7 +2074,6 @@ __metadata:
     http-server: ^14.1.0
     jest: ^27.5.1
     jest-junit: ^13.1.0
-    jsonpath-plus: ^6.0.1
     lineupjs: 3.3.1
     lodash: ^4.17.21
     react: ^17.0.2
@@ -2127,6 +2126,7 @@ __metadata:
     arquero: ^4.8.8
     jest: ^27.5.1
     jest-junit: ^13.1.0
+    jsonpath-plus: ^6.0.1
     lodash: ^4.17.21
     markdown-to-jsx: ^7.1.7
     react: ^17.0.2

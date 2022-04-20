@@ -17,7 +17,7 @@ import { merge, set } from 'lodash'
  * @param overlay
  */
 // eslint-disable-next-line
-export function mergeSpec(input: any, overlay: any): any {
+function mergeSpec(input: any, overlay: any): any {
 	// TODO: investigate using vega merge util?
 	return merge(input, overlay)
 }
@@ -44,7 +44,7 @@ export interface PathSpec {
 // TODO: the matchable part does not appear to enforce nesting limitations
 // e.g., if two marks arrays exist, you can match marks in the nested array without a selector for the parent
 // eslint-disable-next-line
-export function parseJsonPathSpec(input: any, pathSpec: PathSpec): any {
+export function parseJsonPathSpecMerged(input: any, pathSpec: PathSpec): any {
 	// eslint-disable-next-line
 	const output: any = {}
 
@@ -112,5 +112,5 @@ export function parseJsonPathSpec(input: any, pathSpec: PathSpec): any {
 		set(output, path, value)
 	})
 
-	return output
+	return mergeSpec(input, output)
 }

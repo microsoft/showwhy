@@ -2,7 +2,11 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { VegaHost } from '@showwhy/components'
+import {
+	MIN_SPEC_ADDITIONAL_PADDING,
+	parseJsonPathSpecMerged,
+	VegaHost,
+} from '@showwhy/components'
 import type { Specification, SpecificationCurveConfig } from '@showwhy/types'
 import { RefutationResultString } from '@showwhy/types'
 import { SelectionState } from '@thematic/core'
@@ -11,18 +15,13 @@ import upperFirst from 'lodash/upperFirst'
 import { memo, useMemo } from 'react'
 import styled from 'styled-components'
 
-import template from './scatter-plot.json'
-import { mergeSpec, parseJsonPathSpec } from './util'
-import { MIN_SPEC_ADDITIONAL_PADDING } from './VegaSpecificationCurve'
-
-const templateString = JSON.stringify(template)
-
 export const EffectScatterplot: React.FC<{
 	data: Specification[]
 	config: SpecificationCurveConfig
 	width: number
 	height: number
 	dataValueName: string
+	templateString: string
 	onConfigChange?: (config: SpecificationCurveConfig) => void
 	onMouseClick?: (datum?: Specification) => void
 	onMouseOver?: (datum?: Specification) => void
@@ -34,6 +33,7 @@ export const EffectScatterplot: React.FC<{
 	totalSpecs?: number
 	showStats?: boolean
 }> = memo(function EffectScatterplot({
+	templateString,
 	data,
 	config,
 	width,
@@ -54,6 +54,7 @@ export const EffectScatterplot: React.FC<{
 		width,
 		totalSpecs,
 		dataValueName,
+		templateString,
 		title,
 		chartTitle,
 	)
@@ -91,6 +92,7 @@ function useOverlay(
 	width: number,
 	totalSpecs: number,
 	dataValueName: string,
+	templateString: string,
 	title?: string,
 	chartTitle?: string,
 ) {
@@ -142,9 +144,17 @@ function useOverlay(
 			"$.marks[?(@.name == 'meanLegend')].marks[?(@.name == 'meanLegendLine')].encode.update.stroke.value":
 				mean,
 		}
-		const overlay = parseJsonPathSpec(spec, pathspec)
-		return mergeSpec(spec, overlay)
-	}, [theme, data, title, chartTitle, refutationLegend, padding, dataValueName])
+		return parseJsonPathSpecMerged(spec, pathspec)
+	}, [
+		theme,
+		data,
+		title,
+		chartTitle,
+		refutationLegend,
+		padding,
+		dataValueName,
+		templateString,
+	])
 }
 
 const Container = styled.div`

@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import type { Dimensions } from '@essex/hooks'
-import { Container } from '@showwhy/components'
+import { Container, PivotScatterplot } from '@showwhy/components'
 import type {
 	DecisionFeature,
 	Maybe,
@@ -12,8 +12,10 @@ import type {
 } from '@showwhy/types'
 import { memo } from 'react'
 
-import { PivotScatterplot } from '~components/PivotScatterplot'
+// eslint-disable-next-line
+import template from '~data/effect-scatterplot.json'
 
+const templateString = JSON.stringify(template)
 export const ResultsGraph: React.FC<{
 	specificationData: Specification[]
 	specificationCurveConfig: SpecificationCurveConfig
@@ -34,6 +36,7 @@ export const ResultsGraph: React.FC<{
 	return (
 		<Container>
 			<PivotScatterplot
+				templateString={templateString}
 				data={specificationData}
 				config={specificationCurveConfig}
 				width={vegaWindowDimensions.width}

@@ -2,6 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import { PivotScatterplot } from '@showwhy/components'
 import type {
 	DecisionFeature,
 	Maybe,
@@ -11,12 +12,13 @@ import type {
 import { memo, useCallback, useState } from 'react'
 import styled from 'styled-components'
 
-import { PivotScatterplot } from '~components/PivotScatterplot'
+// eslint-disable-next-line
+import template from '~data/effect-scatterplot.json'
 import { addOrRemoveArrayElement } from '~utils'
 
 import { AnalyticDecisionsDotPlot } from './AnalyticDecisionsDotPlot'
 
-export const MIN_SPEC_ADDITIONAL_PADDING = 2
+const templateString = JSON.stringify(template)
 
 export const VegaSpecificationCurve: React.FC<{
 	data: Specification[]
@@ -89,6 +91,7 @@ export const VegaSpecificationCurve: React.FC<{
 	return (
 		<Container data-pw="specification-curve">
 			<PivotScatterplot
+				templateString={templateString}
 				data={data}
 				config={config}
 				width={width}

@@ -3,6 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { Pivot, PivotItem } from '@fluentui/react'
+import { EffectScatterplot } from '@showwhy/components'
 import type {
 	DecisionFeature,
 	Handler1,
@@ -13,7 +14,6 @@ import type {
 import { useThematic } from '@thematic/react'
 import type { FC } from 'react'
 import { memo, useMemo } from 'react'
-import { EffectScatterplot } from 'src/pages/PerformAnalysis/EstimateCausalEffectsPage/vega'
 
 interface PivotItemChart {
 	pivotName: string
@@ -23,6 +23,7 @@ interface PivotItemChart {
 }
 
 export const PivotScatterplot: FC<{
+	templateString: string
 	data: Specification[]
 	config: SpecificationCurveConfig
 	width: number
@@ -35,6 +36,7 @@ export const PivotScatterplot: FC<{
 	outcome?: string
 	totalSpecs?: number
 }> = memo(function PivotScatterplot({
+	templateString,
 	data,
 	config,
 	width,
@@ -79,6 +81,7 @@ export const PivotScatterplot: FC<{
 				return (
 					<PivotItem key={p.pivotName} headerText={p.pivotName}>
 						<EffectScatterplot
+							templateString={templateString}
 							data={data}
 							config={config}
 							width={width}
