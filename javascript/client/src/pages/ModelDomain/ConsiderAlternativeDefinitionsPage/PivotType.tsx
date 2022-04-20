@@ -2,8 +2,8 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import type { HeaderData, Item } from '@showwhy/components'
-import { GenericTable } from '@showwhy/components'
+import { useDimensions } from '@essex/hooks'
+import { DetailsList } from '@showwhy/components'
 import type {
 	DefinitionType,
 	ElementDefinition,
@@ -11,25 +11,21 @@ import type {
 	Maybe,
 } from '@showwhy/types'
 import type { FC } from 'react'
-import { memo } from 'react'
+import { memo, useRef } from 'react'
 import styled from 'styled-components'
 
 import { AlternativeDefinitionsForm } from './AlternativeDefinitionsForm'
-import { useTableComponent } from './ConsiderAlternativeDefinitionsPage.hooks'
-
-const tableHeadersList: HeaderData[] = [
-	{ fieldName: 'level', value: 'Level' },
-	{ fieldName: 'variable', value: 'Label' },
-	{ fieldName: 'description', value: 'Description' },
-	{ fieldName: 'actions', value: 'Actions' },
-]
+import {
+	useDefinitionItems,
+	useHeaders,
+} from './ConsiderAlternativeDefinitionsPage.hooks'
 
 interface PivotData {
 	key: string
 	title: string
 	label: string
 	description: string
-	items: Item[]
+	items: Record<string, any>[]
 }
 
 export const PivotType: FC<{
@@ -53,33 +49,25 @@ export const PivotType: FC<{
 	setDefinitionToEdit,
 	removeDefinition,
 }) {
-	const { items } = useTableComponent(
+	const { items } = useDefinitionItems(
 		definitions.filter(d => d.type === definitionType),
 		definitionToEdit,
-		undefined,
+		definitionType,
 		removeDefinition,
 		editDefinition,
 		setDefinitionToEdit,
 		() => setDefinitionToEdit(undefined),
-		definitionType,
 	)
+	const ref = useRef(null)
+	const dimensions = useDimensions(ref)
+	const { width = 0 } = dimensions || {}
+	const headers = useHeaders(width)
 
 	return (
-		<Container>
+		<Container ref={ref}>
 			<DetailsText>{item.label}</DetailsText>
 			<DetailsText>{item.description}</DetailsText>
-			<GenericTable
-				headers={{ data: tableHeadersList }}
-				items={items}
-				props={{
-					customColumnsWidth: [
-						{ fieldName: 'level', width: '15%' },
-						{ fieldName: 'variable', width: '35%' },
-						{ fieldName: 'description', width: `40%` },
-						{ fieldName: 'actions', width: '10%' },
-					],
-				}}
-			></GenericTable>
+			<DetailsList headers={headers} items={items} />
 			<Container>
 				<TableContainer>
 					<AlternativeDefinitionsForm

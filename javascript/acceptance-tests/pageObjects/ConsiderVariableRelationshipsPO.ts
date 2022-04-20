@@ -14,7 +14,7 @@ interface CausesDropdown {
 const selectors: Record<string, string> = {
 	title: dataAttr('title'),
 	form: dataAttr('factors-form'),
-	element: 'tbody tr',
+	row: '.ms-DetailsRow',
 	addNewFactorButton: dataAttr('add-new-factor-button'),
 }
 
@@ -47,7 +47,7 @@ export class ConsiderVariableRelationshipsPO extends Page {
 	}
 
 	public async countElements(): Promise<number> {
-		await this.page.waitForSelector(selectors.element, { state: 'visible' })
-		return this.page.locator(selectors.element).count()
+		await this.page.waitForSelector(selectors.row, { state: 'visible' })
+		return this.page.locator(selectors.row).count()
 	}
 }

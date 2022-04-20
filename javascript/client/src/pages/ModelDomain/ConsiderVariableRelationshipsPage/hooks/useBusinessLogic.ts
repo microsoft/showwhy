@@ -24,7 +24,7 @@ export function useBusinessLogic(): {
 
 	const goToRelevantVariables = useGoToPage(
 		Pages.RelevantVariables,
-		Pages.RelevantVariables,
+		'consider variable relationships',
 	)
 	useSetPageDone()
 

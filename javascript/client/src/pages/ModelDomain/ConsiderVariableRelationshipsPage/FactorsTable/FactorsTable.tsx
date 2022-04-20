@@ -3,34 +3,26 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { GenericTable } from '@showwhy/components'
-import { CausalFactorType } from '@showwhy/types'
-import { memo } from 'react'
+import { useDimensions } from '@essex/hooks'
+import { DetailsList } from '@showwhy/components'
+import { memo, useRef } from 'react'
 import styled from 'styled-components'
 
 import { Container } from '~styles'
 
-import { useFactorsTable } from './hooks'
+import { useFactorsTable, useHeaders } from './hooks'
 
-export const FactorsTable: React.FC<{
-	headers: { fieldName: string; value: string | React.ReactNode }[]
-}> = memo(function FactorsTable({ headers }) {
+export const FactorsTable: React.FC = memo(function FactorsTable() {
 	const { flatFactorsList, itemList } = useFactorsTable()
+	const ref = useRef(null)
+	const dimensions = useDimensions(ref)
+	const { width = 0 } = dimensions || {}
+	const headers = useHeaders(width)
 
 	return (
-		<Container>
+		<Container ref={ref}>
 			{flatFactorsList.length ? (
-				<GenericTable
-					items={itemList}
-					headers={{ data: headers }}
-					props={{
-						customColumnsWidth: [
-							{ fieldName: 'label', width: '12rem' },
-							{ fieldName: CausalFactorType.CauseExposure, width: '10rem' },
-							{ fieldName: CausalFactorType.CauseOutcome, width: '10rem' },
-						],
-					}}
-				/>
+				<DetailsList headers={headers} items={itemList} />
 			) : (
 				<EmptyFactorsText>Add a new factor to start</EmptyFactorsText>
 			)}
