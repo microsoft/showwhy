@@ -5,7 +5,7 @@
 import type { Dimensions } from '@essex/hooks'
 import type {
 	DecisionFeature,
-	Experiment,
+	ElementDefinition,
 	Maybe,
 	RunHistory,
 	Specification,
@@ -23,7 +23,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { useDefaultRun, useOnMouseOver, useVegaWindowDimensions } from '~hooks'
 import {
 	useDefaultDatasetResult,
-	useExperiment,
+	useDefinitions,
 	useHoverState,
 	useRunHistory,
 	useSpecificationCurveConfig,
@@ -45,8 +45,8 @@ export function useSpecificationCurveData(): {
 	const config = useSpecificationCurveConfig()
 	const hovered = useHoverState()
 	const onMouseOver = useOnMouseOver()
-	const defineQuestion = useExperiment()
-	const outcome = useOutcome(defineQuestion)
+	const definitions = useDefinitions()
+	const outcome = useOutcome(definitions)
 	const vegaWindowDimensions = useVegaWindowDimensions()
 	const runHistory = useRunHistory()
 	const activeProcessing = useActiveProcessing(runHistory)
@@ -102,15 +102,15 @@ export function useLoadSpecificationData(): Specification[] {
 	return data
 }
 
-function useOutcome(defineQuestion: Experiment) {
+function useOutcome(definitions: ElementDefinition[]) {
 	return useMemo(
 		() =>
-			defineQuestion?.definitions?.find(
+			definitions.find(
 				d =>
 					d.type === DefinitionType.Outcome &&
 					d.level === CausalityLevel.Primary,
 			)?.variable,
-		[defineQuestion],
+		[definitions],
 	)
 }
 

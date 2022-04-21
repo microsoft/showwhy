@@ -27,37 +27,37 @@
             }
         }
     ],
+    "definitions": [
+        {
+            "level": "Primary",
+            "variable": "Experienced chronic disease",
+            "description": "A binary variable indicating whether the patient reported having a chronic disease",
+            "column": "chronic_disease",
+            "type": "exposure"
+        },
+        {
+            "level": "Secondary",
+            "variable": "Experienced diabetes & hypertension chronic disease",
+            "description": "COVID-19 patients recorded in the Wolfram dataset. Records must include complete information on the patient's age, gender, chronic disease status, and survival status",
+            "column": "diabetes_hypertension",
+            "type": "exposure"
+        },
+        {
+            "level": "Primary",
+            "variable": "Confirmed COVID-19 cases",
+            "description": "COVID-19 patients recorded in the Wolfram dataset. Records must include complete information on the patient's age, gender, chronic disease status, and survival status",
+            "column": "subject_inclusion",
+            "type": "population"
+        },
+        {
+            "level": "Primary",
+            "variable": "Mortality",
+            "description": "Binary variable indicating whether the patient died after contracting COVID-19",
+            "column": "death",
+            "type": "outcome"
+        }
+    ],
     "defineQuestion": {
-        "definitions": [
-            {
-                "level": "Primary",
-                "variable": "Experienced chronic disease",
-                "description": "A binary variable indicating whether the patient reported having a chronic disease",
-                "column": "chronic_disease",
-                "type": "exposure"
-            },
-            {
-                "level": "Secondary",
-                "variable": "Experienced diabetes & hypertension chronic disease",
-                "description": "COVID-19 patients recorded in the Wolfram dataset. Records must include complete information on the patient's age, gender, chronic disease status, and survival status",
-                "column": "diabetes_hypertension",
-                "type": "exposure"
-            },
-            {
-                "level": "Primary",
-                "variable": "Confirmed COVID-19 cases",
-                "description": "COVID-19 patients recorded in the Wolfram dataset. Records must include complete information on the patient's age, gender, chronic disease status, and survival status",
-                "column": "subject_inclusion",
-                "type": "population"
-            },
-            {
-                "level": "Primary",
-                "variable": "Mortality",
-                "description": "Binary variable indicating whether the patient died after contracting COVID-19",
-                "column": "death",
-                "type": "outcome"
-            }
-        ],
         "exposure": {
             "label": "Chronic Disease",
             "description": "Patient presented in the Wolfram dataset who reported having a chronic disease prior to contracting COVID-19",

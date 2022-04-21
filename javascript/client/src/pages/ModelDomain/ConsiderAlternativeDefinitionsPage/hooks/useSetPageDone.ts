@@ -7,12 +7,11 @@ import { DefinitionType } from '@showwhy/types'
 import { useEffect } from 'react'
 
 import { useAutomaticWorkflowStatus } from '~hooks'
-import { useExperiment } from '~state'
+import { useDefinitions } from '~state'
 import { getDefinitionsByType } from '~utils'
 
 export function useSetPageDone(): void {
-	const experiment = useExperiment()
-	const { definitions } = experiment || {}
+	const definitions = useDefinitions()
 	const population = getDefinitionsByType(
 		DefinitionType.Population,
 		definitions,

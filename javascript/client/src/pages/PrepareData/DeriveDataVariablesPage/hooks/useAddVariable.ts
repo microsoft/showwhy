@@ -19,9 +19,9 @@ import { v4 as uuiv4 } from 'uuid'
 import { useAddOrEditFactorTestable, useSaveDefinition } from '~hooks'
 import {
 	useCausalFactors,
-	useExperiment,
+	useDefinitions,
 	useSetCausalFactors,
-	useSetExperiment,
+	useSetDefinitions,
 	useSetSubjectIdentifier,
 	useSubjectIdentifier,
 } from '~state'
@@ -41,11 +41,11 @@ export function useAddVariable(): {
 	const [showCallout, { toggle: toggleShowCallout }] = useBoolean(false)
 	const [selectedColumn, setSelectedColumn] = useState('')
 
-	const defineQuestion = useExperiment()
-	const setDefineQuestion = useSetExperiment()
+	const definitions = useDefinitions()
+	const setDefinitions = useSetDefinitions()
 	const subjectIdentifier = useSubjectIdentifier()
 	const setSubjectIdentifier = useSetSubjectIdentifier()
-	const saveDefinition = useSaveDefinition(defineQuestion, setDefineQuestion)
+	const saveDefinition = useSaveDefinition(definitions, setDefinitions)
 	const causalFactors = useCausalFactors()
 	const setCausalFactors = useSetCausalFactors()
 	const addFactor = useAddOrEditFactorTestable(causalFactors, setCausalFactors)
@@ -74,9 +74,7 @@ export function useAddVariable(): {
 				const newElement: ElementDefinition = {
 					variable,
 					description: '',
-					level: (defineQuestion as any)?.definitions.some(
-						(d: ElementDefinition) => d.type === type,
-					)
+					level: definitions.some((d: ElementDefinition) => d.type === type)
 						? CausalityLevel.Secondary
 						: CausalityLevel.Primary,
 					id: uuiv4(),
@@ -92,7 +90,7 @@ export function useAddVariable(): {
 			saveDefinition,
 			toggleShowCallout,
 			addFactor,
-			defineQuestion,
+			definitions,
 			subjectIdentifier,
 			setSubjectIdentifier,
 		],

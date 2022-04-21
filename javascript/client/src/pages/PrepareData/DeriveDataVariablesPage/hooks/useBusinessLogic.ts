@@ -23,13 +23,14 @@ import {
 } from '~hooks'
 import {
 	useCausalFactors,
+	useDefinitions,
+	useSetDefinitions,
 	useSetOutputTablePrep,
 	useSetSubjectIdentifier,
 	useSetTablesPrepSpecification,
 	useSubjectIdentifier,
 	useTablesPrepSpecification,
 } from '~state'
-import { useExperiment, useSetExperiment } from '~state/experiment'
 
 import {
 	useCommandBar,
@@ -59,9 +60,9 @@ export function useBusinessLogic(
 	const prepSpecification = useTablesPrepSpecification()
 	const setStepsTablePrep = useSetTablesPrepSpecification()
 	const causalFactors = useCausalFactors()
-	const defineQuestion = useExperiment()
-	const setDefineQuestion = useSetExperiment()
-	const allElements = useAllVariables(causalFactors, defineQuestion)
+	const definitions = useDefinitions()
+	const setDefinitions = useSetDefinitions()
+	const allElements = useAllVariables(causalFactors, definitions)
 	const setSubjectIdentifier = useSetSubjectIdentifier()
 	const subjectIdentifier = useSubjectIdentifier()
 	const setOutputTable = useSetOutputTablePrep()
@@ -98,9 +99,9 @@ export function useBusinessLogic(
 
 	const onSelectVariable = useOnSelectVariable(
 		causalFactors,
-		defineQuestion,
+		definitions,
 		subjectIdentifier,
-		setDefineQuestion,
+		setDefinitions,
 		setSubjectIdentifier,
 		isStepDone,
 	)
@@ -121,7 +122,7 @@ export function useBusinessLogic(
 	)
 
 	const dropdownOptions = useDefinitionDropdownOptions(
-		defineQuestion,
+		definitions,
 		causalFactors,
 		causalEffects,
 	)

@@ -13,7 +13,7 @@ import { usePipeline, useStore } from '@data-wrangling-components/react'
 import type { BaseFile } from '@data-wrangling-components/utilities'
 import type {
 	CausalFactor,
-	Experiment,
+	ElementDefinition,
 	Maybe,
 	RunHistory,
 } from '@showwhy/types'
@@ -32,6 +32,7 @@ import {
 	useSetConfidenceInterval,
 	useSetConfigJson,
 	useSetDefaultDatasetResult,
+	useSetDefinitions,
 	useSetEstimators,
 	useSetExperiment,
 	useSetOutputTablePrep,
@@ -68,6 +69,7 @@ export function useLoadProject(
 	const setPrimarySpecificationConfig = useSetPrimarySpecificationConfig()
 	const setCausalFactors = useSetCausalFactors()
 	const setSubjectIdentifier = useSetSubjectIdentifier()
+	const setDefinitions = useSetDefinitions()
 	const setDefineQuestion = useSetExperiment()
 	const setEstimators = useSetEstimators()
 	const setRefutationCount = useSetRefutationCount()
@@ -119,6 +121,7 @@ export function useLoadProject(
 			const {
 				primarySpecification,
 				causalFactors,
+				definitions,
 				defineQuestion,
 				estimators,
 				refutations,
@@ -135,7 +138,7 @@ export function useLoadProject(
 			// prep everything as needed to ensure partials from the JSON
 			// have required fields
 			const cfs = prepCausalFactors(causalFactors)
-			const df = prepDefineQuestion(defineQuestion)
+			const df = prepDefinitions(definitions)
 			const est = estimators || []
 			const tps = prepTablesSpec(tablesPrep)
 			const defaultDatasetResult = defaultResult || null
@@ -145,7 +148,8 @@ export function useLoadProject(
 			refutations && setRefutationCount(refutations)
 
 			setCausalFactors(cfs)
-			setDefineQuestion(df)
+			setDefinitions(df)
+			setDefineQuestion(defineQuestion)
 			setEstimators(est)
 			setSubjectIdentifier(subjectIdentifier)
 			setTablePrepSpec(tps)
@@ -195,6 +199,7 @@ export function useLoadProject(
 			store,
 			setConfigJson,
 			setSignificanceTests,
+			setDefinitions,
 		],
 	)
 }
@@ -282,13 +287,10 @@ function prepCausalFactors(factors?: Partial<CausalFactor>[]): CausalFactor[] {
 	return (factors || []).map(withRandomId) as CausalFactor[]
 }
 
-function prepDefineQuestion(define?: Partial<Experiment>): Experiment {
-	const prepped = {
-		...define,
-		definitions: define?.definitions?.map(withRandomId),
-	}
-
-	return prepped as Experiment
+function prepDefinitions(
+	definitions: ElementDefinition[],
+): ElementDefinition[] {
+	return definitions.map(withRandomId)
 }
 
 function prepTablesSpec(specifications?: Specification[]): Specification[] {

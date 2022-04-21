@@ -22,6 +22,7 @@ import {
 	useSpecificationCurveData,
 } from '~hooks'
 import {
+	useDefinitions,
 	useEstimators,
 	useExperiment,
 	usePrimarySpecificationConfig,
@@ -37,6 +38,7 @@ import { SignificanceTests } from './SignificanceTests'
 
 export const EvaluateHypothesisPage: React.FC = memo(
 	function EvaluateHypothesisPage() {
+		const definitions = useDefinitions()
 		const defineQuestion = useExperiment()
 		const refutationOptions = useRefutationOptions()
 		const estimators = useEstimators()
@@ -105,7 +107,7 @@ export const EvaluateHypothesisPage: React.FC = memo(
 						<AnalysisSummary
 							activeEstimatedEffects={activeEstimatedEffects}
 							estimators={estimators}
-							defineQuestion={defineQuestion}
+							definitions={definitions}
 							refutationOptions={refutationOptions}
 							alternativeModels={alternativeModels}
 						/>

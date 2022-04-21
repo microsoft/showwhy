@@ -5,11 +5,7 @@
 
 import type { IContextualMenuItem } from '@fluentui/react'
 import { ContextualMenuItemType } from '@fluentui/react'
-import type {
-	CausalFactor,
-	ElementDefinition,
-	Experiment,
-} from '@showwhy/types'
+import type { CausalFactor, ElementDefinition } from '@showwhy/types'
 import {
 	CausalFactorType,
 	CommandActionType,
@@ -47,23 +43,17 @@ const buildDropdownOption = (
 }
 
 export function useDefinitionDropdownOptions(
-	defineQuestion: Experiment,
+	definitions: ElementDefinition[],
 	causalFactors: CausalFactor[],
 	causalEffects: CausalEffectsProps,
 ): IContextualMenuItem[] {
 	return useMemo((): IContextualMenuItem[] => {
 		const population = getDefinitionsByType(
 			DefinitionType.Population,
-			defineQuestion?.definitions,
+			definitions,
 		)
-		const exposure = getDefinitionsByType(
-			DefinitionType.Exposure,
-			defineQuestion?.definitions,
-		)
-		const outcome = getDefinitionsByType(
-			DefinitionType.Outcome,
-			defineQuestion?.definitions,
-		)
+		const exposure = getDefinitionsByType(DefinitionType.Exposure, definitions)
+		const outcome = getDefinitionsByType(DefinitionType.Outcome, definitions)
 		const all: IContextualMenuItem[] = [
 			{
 				key: 'subject-identifier',
@@ -131,5 +121,5 @@ export function useDefinitionDropdownOptions(
 		confounders &&
 			all.push(buildDropdownOption(confounders, CausalFactorType.Confounders))
 		return all
-	}, [defineQuestion, causalFactors, causalEffects])
+	}, [definitions, causalFactors, causalEffects])
 }

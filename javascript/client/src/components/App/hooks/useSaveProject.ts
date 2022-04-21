@@ -23,6 +23,7 @@ import {
 	useConfidenceInterval,
 	useConfigJson,
 	useDefaultDatasetResult,
+	useDefinitions,
 	useEstimators,
 	useExperiment,
 	useFileCollection,
@@ -46,6 +47,7 @@ export function useSaveProject(): AsyncHandler {
 	const causalFactors = useCausalFactors()
 	const subjectIdentifier = useSubjectIdentifier()
 	const defineQuestion = useExperiment()
+	const definitions = useDefinitions()
 	const estimators = useEstimators()
 	const refutations = useRefutationCount()
 	const tablesPrep = useTablesPrepSpecification()
@@ -58,6 +60,7 @@ export function useSaveProject(): AsyncHandler {
 			primarySpecification,
 			confidenceInterval,
 			causalFactors,
+			definitions,
 			defineQuestion,
 			estimators,
 			refutations,
@@ -71,6 +74,7 @@ export function useSaveProject(): AsyncHandler {
 		confidenceInterval,
 		primarySpecification,
 		causalFactors,
+		definitions,
 		defineQuestion,
 		estimators,
 		refutations,

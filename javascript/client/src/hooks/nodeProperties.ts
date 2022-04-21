@@ -14,8 +14,8 @@ import { useMemo } from 'react'
 import { useAlternativeModels } from '~hooks'
 import {
 	useConfidenceInterval,
+	useDefinitions,
 	useEstimators,
-	useExperiment,
 	useRefutationCount,
 } from '~state'
 
@@ -30,7 +30,7 @@ export function useNodeProperties(): {
 	intermediateLevel: AlternativeModels
 	unadjustedModel: AlternativeModels
 } {
-	const experiment = useExperiment()
+	const definitions = useDefinitions()
 	const estimators = useEstimators()
 	const refutationCount = useRefutationCount()
 	const confidenceInterval = useConfidenceInterval()
@@ -46,7 +46,7 @@ export function useNodeProperties(): {
 	)
 	return useMemo(() => {
 		return {
-			definitions: experiment?.definitions || [],
+			definitions,
 			estimators,
 			refutationCount,
 			confidenceInterval,
@@ -56,7 +56,7 @@ export function useNodeProperties(): {
 			unadjustedModel,
 		}
 	}, [
-		experiment,
+		definitions,
 		estimators,
 		refutationCount,
 		confidenceInterval,

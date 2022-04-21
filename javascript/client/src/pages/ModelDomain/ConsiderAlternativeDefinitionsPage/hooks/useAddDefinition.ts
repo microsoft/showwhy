@@ -4,27 +4,32 @@
  */
 
 import type { ElementDefinition } from '@showwhy/types'
+import { CausalityLevel } from '@showwhy/types'
 import { useCallback } from 'react'
 
-import { useExperiment } from '~state'
 import { withRandomId } from '~utils'
 
 import { useSaveDefinitions } from '../ConsiderAlternativeDefinitionsPage.hooks'
 import { updateListTypes } from '../ConsiderAlternativeDefinitionsPage.utils'
 
-export function useAddDefinition(): (definition: ElementDefinition) => void {
+export function useAddDefinition(
+	definitions: ElementDefinition[],
+): (definition: ElementDefinition) => void {
 	const saveDefinitions = useSaveDefinitions()
-	const defineQuestion = useExperiment()
 	return useCallback(
 		(definition: ElementDefinition) => {
-			const definitions = [...(defineQuestion?.definitions || [])]
 			if (!definition.variable?.length) {
 				return
 			}
 			definition = withRandomId(definition)
-			const newDefs = updateListTypes(definitions, definition.type)
-			saveDefinitions([...newDefs, definition])
+			let list = []
+			if (definition.level === CausalityLevel.Primary) {
+				list = [...updateListTypes(definitions, definition.type), definition]
+			} else {
+				list = [...definitions, definition]
+			}
+			saveDefinitions(list)
 		},
-		[saveDefinitions, defineQuestion],
+		[saveDefinitions, definitions],
 	)
 }

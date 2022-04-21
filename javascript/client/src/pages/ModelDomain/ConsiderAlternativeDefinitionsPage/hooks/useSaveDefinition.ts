@@ -4,38 +4,30 @@
  */
 
 import { wait } from '@showwhy/api-client'
-import type {
-	AsyncHandler1,
-	ElementDefinition,
-	Experiment,
-} from '@showwhy/types'
+import type { AsyncHandler1, ElementDefinition } from '@showwhy/types'
 import { useCallback } from 'react'
 
-import { useExperiment, useSetExperiment } from '~state'
+import { useDefinitions, useSetDefinitions } from '~state'
 import { withRandomId } from '~utils'
 
 export function useSaveDefinitions(): AsyncHandler1<ElementDefinition[]> {
-	const defineQuestion = useExperiment()
-	const setDefineQuestion = useSetExperiment()
+	const definitions = useDefinitions()
+	const setDefinitions = useSetDefinitions()
 	return useCallback(
-		async (definitions: ElementDefinition | ElementDefinition[]) => {
-			if (!definitions) {
+		async (definition: ElementDefinition | ElementDefinition[]) => {
+			if (!definition) {
 				return
 			}
-			let list = [...((defineQuestion as any)?.definitions || [])]
-			if (!Array.isArray(definitions)) {
-				list = [...list, withRandomId(definitions)]
-			} else {
-				list = [...definitions]
+			let list = [...definitions]
+			if (!Array.isArray(definition)) {
+				list = [...list, withRandomId(definition)]
+			} else if (definition.length) {
+				list = [...definition]
 			}
 
-			const question: Experiment = {
-				...defineQuestion,
-				definitions: list,
-			}
-			setDefineQuestion(question)
+			setDefinitions(list)
 			await wait(500)
 		},
-		[setDefineQuestion, defineQuestion],
+		[setDefinitions, definitions],
 	)
 }

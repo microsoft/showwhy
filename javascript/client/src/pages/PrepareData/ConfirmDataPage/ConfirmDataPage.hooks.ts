@@ -8,13 +8,13 @@ import type ColumnTable from 'arquero/dist/types/table/column-table'
 import { useMemo } from 'react'
 
 import { useAllVariables } from '~hooks'
-import { useCausalFactors, useExperiment, useOutputTablePrep } from '~state'
+import { useCausalFactors, useDefinitions, useOutputTablePrep } from '~state'
 
 export function useBusinessLogic(): { output: Maybe<ColumnTable> } {
 	const outputTablePrep = useOutputTablePrep()
 	const causalFactors = useCausalFactors()
-	const defineQuestion = useExperiment()
-	const allVariables = useAllVariables(causalFactors, defineQuestion)
+	const definitions = useDefinitions()
+	const allVariables = useAllVariables(causalFactors, definitions)
 
 	const columns = useMemo((): string[] => {
 		const columnNames = outputTablePrep?.columnNames()

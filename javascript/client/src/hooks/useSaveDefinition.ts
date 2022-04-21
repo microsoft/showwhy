@@ -3,25 +3,21 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type {
-	CausalFactor,
-	ElementDefinition,
-	Experiment,
-} from '@showwhy/types'
+import type { CausalFactor, ElementDefinition } from '@showwhy/types'
 import { useCallback } from 'react'
 import type { SetterOrUpdater } from 'recoil'
 
 import { replaceItemAtIndex } from '~utils/arrays'
 
 export function useSaveDefinition(
-	experiment: Experiment,
-	setExperiment: SetterOrUpdater<Experiment>,
+	definitions: ElementDefinition[],
+	setDefinitions: SetterOrUpdater<ElementDefinition[]>,
 ): (newDefinition: CausalFactor | ElementDefinition) => void {
 	return useCallback(
 		(newDefinition: CausalFactor | ElementDefinition) => {
-			let newDefinitionList = [...(experiment?.definitions || [])]
+			let newDefinitionList = [...definitions]
 
-			const index = (experiment as any)?.definitions?.findIndex(
+			const index = definitions?.findIndex(
 				(x: ElementDefinition) => x.id === newDefinition?.id,
 			)
 			if (index > -1) {
@@ -33,12 +29,8 @@ export function useSaveDefinition(
 			} else {
 				newDefinitionList.push(newDefinition)
 			}
-			const newExperiment = {
-				...experiment,
-				definitions: newDefinitionList,
-			}
-			setExperiment(newExperiment)
+			setDefinitions(newDefinitionList)
 		},
-		[experiment, setExperiment],
+		[definitions, setDefinitions],
 	)
 }

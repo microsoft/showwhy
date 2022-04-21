@@ -11,6 +11,7 @@ import {
 	useResetConfidenceInterval,
 	useResetConfigJson,
 	useResetDefaultDatasetResult,
+	useResetDefinitions,
 	useResetEstimators,
 	useResetExperiment,
 	useResetFileCollection,
@@ -48,6 +49,7 @@ export function useResetProject(): Handler {
 	const resetSelectedProject = useResetSelectedProject()
 	const resetSpecCount = useResetSpecCount()
 	const resetSignificanteTest = useResetSignificanceTest()
+	const resetDefinitions = useResetDefinitions()
 
 	return useCallback(() => {
 		resetProjectFiles()
@@ -69,6 +71,7 @@ export function useResetProject(): Handler {
 		resetSelectedProject()
 		resetSpecCount()
 		resetSignificanteTest()
+		resetDefinitions()
 	}, [
 		resetProjectFiles,
 		resetCausalFactors,
@@ -89,5 +92,6 @@ export function useResetProject(): Handler {
 		resetSelectedProject,
 		resetSpecCount,
 		resetSignificanteTest,
+		resetDefinitions,
 	])
 }

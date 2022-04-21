@@ -13,7 +13,7 @@ import { DefinitionType } from '@showwhy/types'
 import { useEffect, useMemo, useState } from 'react'
 
 import { useHandleOnLinkClick } from '~hooks'
-import { useDefinitionType, useExperiment } from '~state'
+import { useDefinitions, useDefinitionType, useExperiment } from '~state'
 import { getDefinitionsByType } from '~utils'
 
 import {
@@ -44,21 +44,16 @@ export function useBusinessLogic(): {
 	shouldHavePrimary: boolean
 	definitions: ElementDefinition[]
 } {
+	const definitions = useDefinitions()
 	const defineQuestion = useExperiment()
 	const definitionType = useDefinitionType()
 	const [definitionToEdit, setDefinitionToEdit] = useState<ElementDefinition>()
-	const shouldHavePrimary = !getDefinitionsByType(
-		definitionType,
-		defineQuestion?.definitions,
-	).length
+	const shouldHavePrimary = !getDefinitionsByType(definitionType, definitions)
+		.length
 
-	const definitions = useMemo(() => {
-		return defineQuestion.definitions || []
-	}, [defineQuestion])
+	const pivotData: PivotData[] = usePivotData(defineQuestion, definitions)
 
-	const pivotData: PivotData[] = usePivotData(defineQuestion)
-
-	const addDefinition = useAddDefinition()
+	const addDefinition = useAddDefinition(definitions)
 
 	const removeDefinition = useRemoveDefinition(definitions)
 
@@ -68,7 +63,7 @@ export function useBusinessLogic(): {
 
 	useEffect(() => {
 		setDefinitionToEdit(undefined)
-	}, [defineQuestion, setDefinitionToEdit])
+	}, [definitions, setDefinitionToEdit])
 	useSetPageDone()
 
 	return {
@@ -98,12 +93,13 @@ function useItemList(
 	}, [definitions])
 }
 
-function usePivotData(defineQuestion: Experiment): PivotData[] {
-	const itemList = useItemList(defineQuestion?.definitions)
+function usePivotData(
+	defineQuestion: Experiment,
+	definitions: ElementDefinition[],
+): PivotData[] {
+	const itemList = useItemList(definitions)
 	return useMemo(() => {
-		const types = Object.keys(DefinitionType).filter(
-			k => !k.includes('Cause') && !k.includes('Confounders'),
-		)
+		const types = Object.keys(DefinitionType)
 		const pivotData = types.reduce((acc: PivotData[], curr: string) => {
 			const type = curr.toLowerCase()
 			const { label = '', description = '' } =
