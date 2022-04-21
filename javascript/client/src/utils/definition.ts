@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { DefinitionType, ElementDefinition } from '@showwhy/types'
+import type { Definition, DefinitionType } from '@showwhy/types'
 import { CausalFactorType } from '@showwhy/types'
 
 const causalFactorTypes = [
@@ -18,7 +18,7 @@ export function isCausalFactorType(type: CausalFactorType): boolean {
 
 export function getDefinitionsByType(
 	type: DefinitionType,
-	definitions: ElementDefinition[] = [],
-): ElementDefinition[] {
+	definitions: Definition[] = [],
+): Definition[] {
 	return definitions.filter(x => x.type === type)
 }

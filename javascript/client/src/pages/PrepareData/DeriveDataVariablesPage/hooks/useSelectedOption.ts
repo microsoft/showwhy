@@ -5,7 +5,7 @@
 
 import type {
 	CausalFactor,
-	ElementDefinition,
+	Definition,
 	FactorsOrDefinitions,
 	Maybe,
 } from '@showwhy/types'
@@ -16,21 +16,18 @@ export function useSelectedOptions(
 ): string[] {
 	return useMemo((): string[] => {
 		return allElements
-			.filter((x: ElementDefinition | CausalFactor) => x.column)
+			.filter((x: Definition | CausalFactor) => x.column)
 			.map(x => x.variable)
 	}, [allElements])
 }
 
 export function useSelectedOptionByColumnAndVariable(
 	allElements: FactorsOrDefinitions,
-): (
-	text: string,
-	columnName: string,
-) => Maybe<ElementDefinition | CausalFactor> {
+): (text: string, columnName: string) => Maybe<Definition | CausalFactor> {
 	return useCallback(
 		(text: string, columnName: string) => {
 			return allElements.find(
-				(x: ElementDefinition | CausalFactor) =>
+				(x: Definition | CausalFactor) =>
 					x.variable === text && x.column === columnName,
 			)
 		},
@@ -40,11 +37,11 @@ export function useSelectedOptionByColumnAndVariable(
 
 export function useSelectedOptionByColumn(
 	allElements: FactorsOrDefinitions,
-): (columnName: string) => Maybe<ElementDefinition | CausalFactor> {
+): (columnName: string) => Maybe<Definition | CausalFactor> {
 	return useCallback(
 		(columnName: string) => {
 			return allElements.find(
-				(x: ElementDefinition | CausalFactor) => x.column === columnName,
+				(x: Definition | CausalFactor) => x.column === columnName,
 			)
 		},
 		[allElements],

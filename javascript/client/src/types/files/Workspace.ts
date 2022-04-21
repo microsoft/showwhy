@@ -5,7 +5,7 @@
 import type { Specification } from '@data-wrangling-components/core'
 import type {
 	CausalFactor,
-	ElementDefinition,
+	Definition,
 	Estimator,
 	Experiment,
 	PrimarySpecificationConfig,
@@ -25,7 +25,7 @@ export interface Workspace {
 	tables: DataTableFileDefinition[]
 	primarySpecification?: PrimarySpecificationConfig
 	causalFactors?: CausalFactor[]
-	definitions?: ElementDefinition[]
+	definitions?: Definition[]
 	defineQuestion?: Experiment
 	estimators?: Estimator[]
 	refutations?: number

@@ -3,16 +3,16 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { ElementDefinition, Maybe, Setter } from '@showwhy/types'
+import type { Definition, Maybe, Setter } from '@showwhy/types'
 import { CausalityLevel } from '@showwhy/types'
 import { useCallback } from 'react'
 
 export function useOnChange(
-	set: Setter<Maybe<ElementDefinition>>,
+	set: Setter<Maybe<Definition>>,
 	valueToEdit: Maybe<{ id: string }>,
-): (value: Partial<ElementDefinition>) => void {
+): (value: Partial<Definition>) => void {
 	return useCallback(
-		(value: Partial<ElementDefinition>) => {
+		(value: Partial<Definition>) => {
 			set({
 				...value,
 				description: value.description ?? '',

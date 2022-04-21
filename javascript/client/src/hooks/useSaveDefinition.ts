@@ -3,22 +3,22 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { CausalFactor, ElementDefinition } from '@showwhy/types'
+import type { CausalFactor, Definition } from '@showwhy/types'
 import { useCallback } from 'react'
 import type { SetterOrUpdater } from 'recoil'
 
 import { replaceItemAtIndex } from '~utils/arrays'
 
 export function useSaveDefinition(
-	definitions: ElementDefinition[],
-	setDefinitions: SetterOrUpdater<ElementDefinition[]>,
-): (newDefinition: CausalFactor | ElementDefinition) => void {
+	definitions: Definition[],
+	setDefinitions: SetterOrUpdater<Definition[]>,
+): (newDefinition: CausalFactor | Definition) => void {
 	return useCallback(
-		(newDefinition: CausalFactor | ElementDefinition) => {
+		(newDefinition: CausalFactor | Definition) => {
 			let newDefinitionList = [...definitions]
 
 			const index = definitions?.findIndex(
-				(x: ElementDefinition) => x.id === newDefinition?.id,
+				(x: Definition) => x.id === newDefinition?.id,
 			)
 			if (index > -1) {
 				newDefinitionList = replaceItemAtIndex(

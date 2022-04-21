@@ -5,7 +5,7 @@
 
 import type {
 	CausalFactor,
-	ElementDefinition,
+	Definition,
 	Handler,
 	Maybe,
 	OptionalId,
@@ -61,16 +61,14 @@ export function useBusinessLogic(): {
 	}
 }
 
-function useFlatFactorsList(
-	causalFactors: CausalFactor[],
-): ElementDefinition[] {
-	return useMemo((): ElementDefinition[] => {
+function useFlatFactorsList(causalFactors: CausalFactor[]): Definition[] {
+	return useMemo((): Definition[] => {
 		return causalFactors.map((x: CausalFactor) => {
 			return {
 				id: x.id,
 				variable: x.variable,
 				description: x.description,
 			}
-		}) as ElementDefinition[]
+		}) as Definition[]
 	}, [causalFactors])
 }

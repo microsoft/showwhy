@@ -3,11 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type {
-	AlternativeModels,
-	ElementDefinition,
-	Estimator,
-} from '@showwhy/types'
+import type { AlternativeModels, Definition, Estimator } from '@showwhy/types'
 import { CausalModelLevel } from '@showwhy/types'
 import { useMemo } from 'react'
 
@@ -21,7 +17,7 @@ import {
 
 export function useNodeProperties(): {
 	fileName?: string
-	definitions: ElementDefinition[]
+	definitions: Definition[]
 	estimators: Estimator[]
 	refutationCount: number
 	confidenceInterval: boolean

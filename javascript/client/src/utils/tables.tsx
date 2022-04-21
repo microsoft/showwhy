@@ -5,12 +5,12 @@
 
 import { Checkbox } from '@fluentui/react'
 import { ActionButtons } from '@showwhy/components'
-import type { ElementDefinition, Handler1, Maybe } from '@showwhy/types'
+import type { Definition, Handler1, Maybe } from '@showwhy/types'
 
 export function getDefault(
-	item: ElementDefinition,
-	onEdit?: Maybe<Handler1<ElementDefinition>>,
-	onDelete?: Maybe<Handler1<ElementDefinition>>,
+	item: Definition,
+	onEdit?: Maybe<Handler1<Definition>>,
+	onDelete?: Maybe<Handler1<Definition>>,
 ): Record<string, any> {
 	const props = Object.keys(item).filter(p => p !== 'id')
 	const obj: Record<string, any> = {}

@@ -5,7 +5,7 @@
 
 import type {
 	CausalFactor,
-	ElementDefinition,
+	Definition,
 	Handler,
 	Maybe,
 	OptionalId,
@@ -25,10 +25,8 @@ import {
 	useVariableField,
 } from './variables'
 
-type OnAddHandler = (
-	factor: OptionalId<CausalFactor | ElementDefinition>,
-) => void
-type OnChangeHandler = (f: Partial<CausalFactor | ElementDefinition>) => void
+type OnAddHandler = (factor: OptionalId<CausalFactor | Definition>) => void
+type OnChangeHandler = (f: Partial<CausalFactor | Definition>) => void
 
 export function useFactorsDefinitionForm({
 	definitions,
@@ -38,8 +36,8 @@ export function useFactorsDefinitionForm({
 	onAdd = noop,
 	onChange = noop,
 }: {
-	definitions?: ElementDefinition[]
-	factor?: CausalFactor | ElementDefinition
+	definitions?: Definition[]
+	factor?: CausalFactor | Definition
 	showLevel?: boolean
 	definitionType?: DefinitionType
 	onAdd?: OnAddHandler
@@ -89,7 +87,7 @@ export function useFactorsDefinitionForm({
 
 	useEffect(
 		function syncEditedFactor() {
-			const edited: Partial<CausalFactor | ElementDefinition> = {
+			const edited: Partial<CausalFactor | Definition> = {
 				...factor,
 				variable,
 				description,

@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { Title } from '@showwhy/components'
-import type { ElementDefinition, Estimator } from '@showwhy/types'
+import type { Definition, Estimator } from '@showwhy/types'
 import {
 	type AlternativeModels,
 	type RefutationOption,
@@ -16,7 +16,7 @@ import styled from 'styled-components'
 import { getDefinitionsByType, pluralize } from '~utils'
 
 export const AnalysisSummary: FC<{
-	definitions: ElementDefinition[]
+	definitions: Definition[]
 	alternativeModels: AlternativeModels
 	refutationOptions: RefutationOption[]
 	estimators: Estimator[]

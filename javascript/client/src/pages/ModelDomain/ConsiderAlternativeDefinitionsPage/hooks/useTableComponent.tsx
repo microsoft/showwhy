@@ -5,8 +5,8 @@
 
 import { Checkbox } from '@fluentui/react'
 import type {
+	Definition,
 	DefinitionType,
-	ElementDefinition,
 	Handler,
 	Handler1,
 	Maybe,
@@ -18,24 +18,23 @@ import { useCallback, useMemo, useState } from 'react'
 import { useFactorsDefinitionForm } from '~hooks'
 
 export function useTableComponent(
-	columns: ElementDefinition[],
-	definitionToEdit: Maybe<ElementDefinition>,
-	factorToEdit: Maybe<ElementDefinition>,
-	onDelete?: Maybe<Handler1<ElementDefinition>>,
-	onSave?: Maybe<Handler1<ElementDefinition>>,
-	onEdit?: Maybe<Handler1<ElementDefinition>>,
+	columns: Definition[],
+	definitionToEdit: Maybe<Definition>,
+	factorToEdit: Maybe<Definition>,
+	onDelete?: Maybe<Handler1<Definition>>,
+	onSave?: Maybe<Handler1<Definition>>,
+	onEdit?: Maybe<Handler1<Definition>>,
 	onCancel?: Maybe<Handler>,
 	definitionType?: DefinitionType,
 ): {
 	items: any
 } {
-	const [editedDefinition, setEditedDefinition] =
-		useState<Maybe<ElementDefinition>>()
-	const [editedFactor, setEditedFactor] = useState<Maybe<ElementDefinition>>()
+	const [editedDefinition, setEditedDefinition] = useState<Maybe<Definition>>()
+	const [editedFactor, setEditedFactor] = useState<Maybe<Definition>>()
 	const setter = definitionToEdit ? setEditedDefinition : setEditedFactor
 	const onChange = useOnChange(setter, definitionToEdit || factorToEdit)
 	const { level, description, variable } = useFactorsDefinitionForm({
-		factor: (definitionToEdit || factorToEdit) as ElementDefinition,
+		factor: (definitionToEdit || factorToEdit) as Definition,
 		onChange,
 		definitionType: definitionType as DefinitionType,
 	})
@@ -59,7 +58,7 @@ export function useTableComponent(
 										onSave({
 											...definitionToEdit,
 											...editedDefinition,
-										} as ElementDefinition)
+										} as Definition)
 								: null,
 						disableSave: !editedDefinition?.variable,
 					},
@@ -115,11 +114,11 @@ export function useTableComponent(
 }
 
 function useOnChange(
-	set: Setter<Maybe<ElementDefinition>>,
+	set: Setter<Maybe<Definition>>,
 	valueToEdit: Maybe<{ id: string }>,
 ) {
 	return useCallback(
-		(value: Partial<ElementDefinition>) => {
+		(value: Partial<Definition>) => {
 			set({
 				...value,
 				description: value.description ?? '',

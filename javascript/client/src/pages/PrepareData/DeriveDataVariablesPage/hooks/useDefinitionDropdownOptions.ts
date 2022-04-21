@@ -5,7 +5,7 @@
 
 import type { IContextualMenuItem } from '@fluentui/react'
 import { ContextualMenuItemType } from '@fluentui/react'
-import type { CausalFactor, ElementDefinition } from '@showwhy/types'
+import type { CausalFactor, Definition } from '@showwhy/types'
 import {
 	CausalFactorType,
 	CommandActionType,
@@ -18,7 +18,7 @@ import type { CausalEffectsProps } from '~hooks'
 import { getDefinitionsByType } from '~utils'
 
 const buildDropdownOption = (
-	all: ElementDefinition[],
+	all: Definition[],
 	type: DefinitionType | CausalFactorType,
 ): IContextualMenuItem => {
 	const options: IContextualMenuItem = {
@@ -43,7 +43,7 @@ const buildDropdownOption = (
 }
 
 export function useDefinitionDropdownOptions(
-	definitions: ElementDefinition[],
+	definitions: Definition[],
 	causalFactors: CausalFactor[],
 	causalEffects: CausalEffectsProps,
 ): IContextualMenuItem[] {

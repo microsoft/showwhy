@@ -5,7 +5,7 @@
 import type { Dimensions } from '@essex/hooks'
 import type {
 	DecisionFeature,
-	ElementDefinition,
+	Definition,
 	Maybe,
 	RunHistory,
 	Specification,
@@ -102,7 +102,7 @@ export function useLoadSpecificationData(): Specification[] {
 	return data
 }
 
-function useOutcome(definitions: ElementDefinition[]) {
+function useOutcome(definitions: Definition[]) {
 	return useMemo(
 		() =>
 			definitions.find(

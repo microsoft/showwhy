@@ -4,12 +4,7 @@
  */
 
 import type { IContextualMenuItem } from '@fluentui/react'
-import type {
-	CausalFactor,
-	ElementDefinition,
-	Handler1,
-	Maybe,
-} from '@showwhy/types'
+import type { CausalFactor, Definition, Handler1, Maybe } from '@showwhy/types'
 import { useCallback } from 'react'
 import type { SetterOrUpdater } from 'recoil'
 
@@ -23,9 +18,9 @@ import {
 
 export function useOnSelectVariable(
 	causalFactors: CausalFactor[],
-	definitions: ElementDefinition[],
+	definitions: Definition[],
 	subjectIdentifier: string | undefined,
-	setDefinitions: SetterOrUpdater<ElementDefinition[]>,
+	setDefinitions: SetterOrUpdater<Definition[]>,
 	setSubjectIdentifier: SetterOrUpdater<string | undefined>,
 	onSelect: Handler1<boolean>,
 ): (option: Maybe<IContextualMenuItem>, columnName: string) => void {

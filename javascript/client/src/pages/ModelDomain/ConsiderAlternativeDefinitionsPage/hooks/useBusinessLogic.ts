@@ -3,12 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type {
-	ElementDefinition,
-	Experiment,
-	Maybe,
-	Setter,
-} from '@showwhy/types'
+import type { Definition, Experiment, Maybe, Setter } from '@showwhy/types'
 import { DefinitionType } from '@showwhy/types'
 import { useEffect, useMemo, useState } from 'react'
 
@@ -32,22 +27,22 @@ interface PivotData {
 }
 
 export function useBusinessLogic(): {
-	definitionToEdit: Maybe<ElementDefinition>
+	definitionToEdit: Maybe<Definition>
 	defineQuestion: Experiment
 	pivotData: PivotData[]
-	addDefinition: (def: ElementDefinition) => void
-	removeDefinition: (def: ElementDefinition) => void
-	editDefinition: (def: ElementDefinition) => void
-	setDefinitionToEdit: Setter<Maybe<ElementDefinition>>
+	addDefinition: (def: Definition) => void
+	removeDefinition: (def: Definition) => void
+	editDefinition: (def: Definition) => void
+	setDefinitionToEdit: Setter<Maybe<Definition>>
 	definitionType: DefinitionType
 	handleOnLinkClick: (item: any) => void
 	shouldHavePrimary: boolean
-	definitions: ElementDefinition[]
+	definitions: Definition[]
 } {
 	const definitions = useDefinitions()
 	const defineQuestion = useExperiment()
 	const definitionType = useDefinitionType()
-	const [definitionToEdit, setDefinitionToEdit] = useState<ElementDefinition>()
+	const [definitionToEdit, setDefinitionToEdit] = useState<Definition>()
 	const shouldHavePrimary = !getDefinitionsByType(definitionType, definitions)
 		.length
 
@@ -81,9 +76,7 @@ export function useBusinessLogic(): {
 	}
 }
 
-function useItemList(
-	definitions: ElementDefinition[] = [],
-): Record<string, any>[] {
+function useItemList(definitions: Definition[] = []): Record<string, any>[] {
 	return useMemo(() => {
 		return definitions?.map(x => {
 			const newObj = { ...x, dataPw: 'definition-element' }
@@ -95,7 +88,7 @@ function useItemList(
 
 function usePivotData(
 	defineQuestion: Experiment,
-	definitions: ElementDefinition[],
+	definitions: Definition[],
 ): PivotData[] {
 	const itemList = useItemList(definitions)
 	return useMemo(() => {

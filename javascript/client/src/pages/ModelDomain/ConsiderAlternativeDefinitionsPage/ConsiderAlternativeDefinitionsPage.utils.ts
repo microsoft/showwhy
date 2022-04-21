@@ -3,13 +3,13 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { DefinitionType, ElementDefinition, Maybe } from '@showwhy/types'
+import type { Definition, DefinitionType, Maybe } from '@showwhy/types'
 import { CausalityLevel } from '@showwhy/types'
 
 export function updateListTypes(
-	definitions: Maybe<ElementDefinition[]>,
+	definitions: Maybe<Definition[]>,
 	type: Maybe<DefinitionType>,
-): ElementDefinition[] {
+): Definition[] {
 	const isPrimary = definitions?.find(
 		d => d.type === type && d.level === CausalityLevel.Primary,
 	)

@@ -4,11 +4,7 @@
  */
 
 import type { IContextualMenuItem } from '@fluentui/react'
-import type {
-	ElementDefinition,
-	FactorsOrDefinitions,
-	Maybe,
-} from '@showwhy/types'
+import type { Definition, FactorsOrDefinitions, Maybe } from '@showwhy/types'
 import { useCallback } from 'react'
 
 export function useOnResetVariable(
@@ -22,7 +18,7 @@ export function useOnResetVariable(
 	return useCallback(
 		(columnName: string) => {
 			const id = allElements.find(
-				(a: ElementDefinition) => a.column === columnName,
+				(a: Definition) => a.column === columnName,
 			)?.id
 			const option = definitionDropdown
 				.flatMap((x: IContextualMenuItem) =>

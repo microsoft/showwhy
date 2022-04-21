@@ -4,17 +4,17 @@
  */
 
 import { wait } from '@showwhy/api-client'
-import type { AsyncHandler1, ElementDefinition } from '@showwhy/types'
+import type { AsyncHandler1, Definition } from '@showwhy/types'
 import { useCallback } from 'react'
 
 import { useDefinitions, useSetDefinitions } from '~state'
 import { withRandomId } from '~utils'
 
-export function useSaveDefinitions(): AsyncHandler1<ElementDefinition[]> {
+export function useSaveDefinitions(): AsyncHandler1<Definition[]> {
 	const definitions = useDefinitions()
 	const setDefinitions = useSetDefinitions()
 	return useCallback(
-		async (definition: ElementDefinition | ElementDefinition[]) => {
+		async (definition: Definition | Definition[]) => {
 			if (!definition) {
 				return
 			}

@@ -7,8 +7,8 @@ import { useBoolean } from '@fluentui/react-hooks'
 import type {
 	BeliefDegree,
 	CausalFactor,
+	Definition,
 	DefinitionType,
-	ElementDefinition,
 	Handler,
 	Handler1,
 } from '@showwhy/types'
@@ -71,10 +71,10 @@ export function useAddVariable(): {
 				} as CausalFactor
 				addFactor(object)
 			} else if (variable) {
-				const newElement: ElementDefinition = {
+				const newElement: Definition = {
 					variable,
 					description: '',
-					level: definitions.some((d: ElementDefinition) => d.type === type)
+					level: definitions.some((d: Definition) => d.type === type)
 						? CausalityLevel.Secondary
 						: CausalityLevel.Primary,
 					id: uuiv4(),

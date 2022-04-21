@@ -6,7 +6,7 @@
 import type { CausalityLevel } from '../causality/index.js'
 import type { DefinitionType } from './DefinitionType.js'
 
-export interface ElementDefinition {
+export interface Definition {
 	id: string
 	description: string
 	variable: string

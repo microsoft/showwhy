@@ -7,7 +7,7 @@ import type { Step, TableContainer } from '@data-wrangling-components/core'
 import type { IDetailsColumnProps, IRenderFunction } from '@fluentui/react'
 import type {
 	CausalFactor,
-	ElementDefinition,
+	Definition,
 	FactorsOrDefinitions,
 	Handler,
 	Handler1,
@@ -51,7 +51,7 @@ export function useBusinessLogic(
 	elements: number
 	completedElements: number
 	allElements: FactorsOrDefinitions
-	isElementComplete: (element: CausalFactor | ElementDefinition) => boolean
+	isElementComplete: (element: CausalFactor | Definition) => boolean
 	onResetVariable: (columnName: string) => void
 	onUpdateOutput: (table: TableContainer<unknown>) => void
 	subjectIdentifier: Maybe<string>
@@ -75,9 +75,9 @@ export function useBusinessLogic(
 
 	const completedElements = useMemo((): number => {
 		const initial = !!subjectIdentifier ? 1 : 0
-		return allElements.find((x: CausalFactor | ElementDefinition) => x)
-			? allElements?.filter((x: CausalFactor | ElementDefinition) => x.column)
-					.length + initial
+		return allElements.find((x: CausalFactor | Definition) => x)
+			? allElements?.filter((x: CausalFactor | Definition) => x.column).length +
+					initial
 			: initial
 	}, [allElements, subjectIdentifier])
 
@@ -148,9 +148,9 @@ export function useBusinessLogic(
 	}, [prepSpecification])
 
 	const isElementComplete = useCallback(
-		(element: CausalFactor | ElementDefinition) => {
+		(element: CausalFactor | Definition) => {
 			const found = allElements?.find(
-				(x: CausalFactor | ElementDefinition) => x.id === element.id,
+				(x: CausalFactor | Definition) => x.id === element.id,
 			)
 			return !!found?.column
 		},

@@ -3,14 +3,14 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { ElementDefinition } from '@showwhy/types'
+import type { Definition } from '@showwhy/types'
 import { CausalityLevel, DefinitionType } from '@showwhy/types'
 
 import { updateListTypes } from '../ConsiderAlternativeDefinitionsPage.utils'
 
 describe('Consider Alternative Models Utils', () => {
 	test('updateListTypes return list with same type as secondary level', () => {
-		const expected: ElementDefinition[] = [
+		const expected: Definition[] = [
 			{
 				id: 'one',
 				level: CausalityLevel.Secondary,
@@ -27,7 +27,7 @@ describe('Consider Alternative Models Utils', () => {
 			},
 		]
 
-		const newList: ElementDefinition[] = [
+		const newList: Definition[] = [
 			{
 				id: 'one',
 				level: CausalityLevel.Primary,

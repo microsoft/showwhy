@@ -5,14 +5,14 @@
 
 import type {
 	CausalFactor,
-	ElementDefinition,
+	Definition,
 	FactorsOrDefinitions,
 } from '@showwhy/types'
 import { useMemo } from 'react'
 
 export function useAllVariables(
 	causalFactors: CausalFactor[],
-	definitions: ElementDefinition[],
+	definitions: Definition[],
 ): FactorsOrDefinitions {
 	return useMemo((): FactorsOrDefinitions => {
 		return causalFactors.concat([...definitions])

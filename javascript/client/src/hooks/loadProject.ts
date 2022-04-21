@@ -13,7 +13,7 @@ import { usePipeline, useStore } from '@data-wrangling-components/react'
 import type { BaseFile } from '@data-wrangling-components/utilities'
 import type {
 	CausalFactor,
-	ElementDefinition,
+	Definition,
 	Maybe,
 	RunHistory,
 } from '@showwhy/types'
@@ -287,9 +287,7 @@ function prepCausalFactors(factors?: Partial<CausalFactor>[]): CausalFactor[] {
 	return (factors || []).map(withRandomId) as CausalFactor[]
 }
 
-function prepDefinitions(
-	definitions: ElementDefinition[],
-): ElementDefinition[] {
+function prepDefinitions(definitions: Definition[]): Definition[] {
 	return definitions.map(withRandomId)
 }
 
