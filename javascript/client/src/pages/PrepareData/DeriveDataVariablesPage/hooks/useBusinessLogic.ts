@@ -65,7 +65,6 @@ export function useBusinessLogic(
 	const setSubjectIdentifier = useSetSubjectIdentifier()
 	const subjectIdentifier = useSubjectIdentifier()
 	const setOutputTable = useSetOutputTablePrep()
-
 	const causalEffects = useCausalEffects(CausalModelLevel.Maximum)
 	const { setDone, setTodo } = useAutomaticWorkflowStatus()
 

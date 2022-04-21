@@ -3,16 +3,16 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { ElementDefinition } from '@showwhy/types'
-import { DefinitionType } from '@showwhy/types'
+import type { DefinitionType, ElementDefinition } from '@showwhy/types'
+import { CausalFactorType } from '@showwhy/types'
 
 const causalFactorTypes = [
-	DefinitionType.Confounders,
-	DefinitionType.CauseExposure,
-	DefinitionType.CauseOutcome,
+	CausalFactorType.Confounders,
+	CausalFactorType.CauseExposure,
+	CausalFactorType.CauseOutcome,
 ]
 
-export function isCausalFactorType(type: DefinitionType): boolean {
+export function isCausalFactorType(type: CausalFactorType): boolean {
 	return causalFactorTypes.includes(type)
 }
 

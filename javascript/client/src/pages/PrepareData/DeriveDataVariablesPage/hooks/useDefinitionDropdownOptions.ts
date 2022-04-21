@@ -10,7 +10,11 @@ import type {
 	ElementDefinition,
 	Experiment,
 } from '@showwhy/types'
-import { CommandActionType, DefinitionType } from '@showwhy/types'
+import {
+	CausalFactorType,
+	CommandActionType,
+	DefinitionType,
+} from '@showwhy/types'
 import upperFirst from 'lodash/upperFirst'
 import { useMemo } from 'react'
 
@@ -19,7 +23,7 @@ import { getDefinitionsByType } from '~utils'
 
 const buildDropdownOption = (
 	all: ElementDefinition[],
-	type: DefinitionType,
+	type: DefinitionType | CausalFactorType,
 ): IContextualMenuItem => {
 	const options: IContextualMenuItem = {
 		key: type,
@@ -113,16 +117,19 @@ export function useDefinitionDropdownOptions(
 
 		exposureDeterminant &&
 			all.push(
-				buildDropdownOption(exposureDeterminant, DefinitionType.CauseExposure),
+				buildDropdownOption(
+					exposureDeterminant,
+					CausalFactorType.CauseExposure,
+				),
 			)
 
 		outcomeDeterminant &&
 			all.push(
-				buildDropdownOption(outcomeDeterminant, DefinitionType.CauseOutcome),
+				buildDropdownOption(outcomeDeterminant, CausalFactorType.CauseOutcome),
 			)
 
 		confounders &&
-			all.push(buildDropdownOption(confounders, DefinitionType.Confounders))
+			all.push(buildDropdownOption(confounders, CausalFactorType.Confounders))
 		return all
 	}, [defineQuestion, causalFactors, causalEffects])
 }

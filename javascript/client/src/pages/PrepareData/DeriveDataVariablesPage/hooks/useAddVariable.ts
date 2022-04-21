@@ -7,15 +7,12 @@ import { useBoolean } from '@fluentui/react-hooks'
 import type {
 	BeliefDegree,
 	CausalFactor,
+	DefinitionType,
 	ElementDefinition,
 	Handler,
 	Handler1,
 } from '@showwhy/types'
-import {
-	CausalFactorType,
-	CausalityLevel,
-	DefinitionType,
-} from '@showwhy/types'
+import { CausalFactorType, CausalityLevel } from '@showwhy/types'
 import { useCallback, useState } from 'react'
 import { v4 as uuiv4 } from 'uuid'
 
@@ -35,7 +32,11 @@ export function useAddVariable(): {
 	toggleShowCallout: Handler
 	selectedColumn: string
 	setSelectedColumn: Handler1<string>
-	onAdd: (variable: string, type: DefinitionType, degree?: BeliefDegree) => void
+	onAdd: (
+		variable: string,
+		type: DefinitionType | CausalFactorType,
+		degree?: BeliefDegree,
+	) => void
 } {
 	const [showCallout, { toggle: toggleShowCallout }] = useBoolean(false)
 	const [selectedColumn, setSelectedColumn] = useState('')
@@ -50,20 +51,28 @@ export function useAddVariable(): {
 	const addFactor = useAddOrEditFactorTestable(causalFactors, setCausalFactors)
 
 	const onAdd = useCallback(
-		(variable: string, type: DefinitionType, degree?: BeliefDegree) => {
+		(
+			variable: string,
+			type: DefinitionType | CausalFactorType,
+			degree?: BeliefDegree,
+		) => {
 			if (subjectIdentifier === selectedColumn) setSubjectIdentifier(undefined)
-			if (isCausalFactorType(type) && degree) {
+			if (
+				variable &&
+				isCausalFactorType(type as CausalFactorType) &&
+				degree !== undefined
+			) {
 				const object = {
 					id: uuiv4(),
 					description: '',
-					variable: variable,
+					variable,
 					column: selectedColumn,
-					causes: buildCauses(degree, type),
+					causes: buildCauses(degree, type as CausalFactorType),
 				} as CausalFactor
 				addFactor(object)
-			} else {
+			} else if (variable) {
 				const newElement: ElementDefinition = {
-					variable: variable,
+					variable,
 					description: '',
 					level: (defineQuestion as any)?.definitions.some(
 						(d: ElementDefinition) => d.type === type,
@@ -72,7 +81,7 @@ export function useAddVariable(): {
 						: CausalityLevel.Primary,
 					id: uuiv4(),
 					column: selectedColumn,
-					type,
+					type: type as DefinitionType,
 				}
 				saveDefinition(newElement)
 			}
@@ -97,23 +106,23 @@ export function useAddVariable(): {
 	}
 }
 
-function buildCauses(degree: BeliefDegree, type: DefinitionType) {
+function buildCauses(degree: BeliefDegree, type: CausalFactorType) {
 	const causes = {
 		reasoning: '',
 	}
 	switch (type) {
-		case DefinitionType.Confounders:
+		case CausalFactorType.Confounders:
 			return {
 				...causes,
 				[CausalFactorType.CauseExposure]: degree,
 				[CausalFactorType.CauseOutcome]: degree,
 			}
-		case DefinitionType.CauseExposure:
+		case CausalFactorType.CauseExposure:
 			return {
 				...causes,
 				[CausalFactorType.CauseExposure]: degree,
 			}
-		case DefinitionType.CauseOutcome:
+		case CausalFactorType.CauseOutcome:
 			return {
 				...causes,
 				[CausalFactorType.CauseOutcome]: degree,
