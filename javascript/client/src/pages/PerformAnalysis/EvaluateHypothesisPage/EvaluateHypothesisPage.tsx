@@ -24,8 +24,8 @@ import {
 import {
 	useDefinitions,
 	useEstimators,
-	useExperiment,
 	usePrimarySpecificationConfig,
+	useQuestion,
 } from '~state'
 
 import { AnalysisSummary } from './AnalysisSummary'
@@ -39,7 +39,7 @@ import { SignificanceTests } from './SignificanceTests'
 export const EvaluateHypothesisPage: React.FC = memo(
 	function EvaluateHypothesisPage() {
 		const definitions = useDefinitions()
-		const defineQuestion = useExperiment()
+		const question = useQuestion()
 		const refutationOptions = useRefutationOptions()
 		const estimators = useEstimators()
 		const defaultRun = useDefaultRun()
@@ -87,7 +87,7 @@ export const EvaluateHypothesisPage: React.FC = memo(
 		return (
 			<ContainerFlexColumn data-pw="evaluate-hypothesis-content">
 				<Container>
-					<CausalQuestion defineQuestion={defineQuestion} />
+					<CausalQuestion question={question} />
 					<Container>
 						<PageButtons
 							significanceTestResult={significanceTestResult}
@@ -97,7 +97,7 @@ export const EvaluateHypothesisPage: React.FC = memo(
 
 						<SignificanceTests
 							activeEstimatedEffects={activeEstimatedEffects}
-							defineQuestion={defineQuestion}
+							question={question}
 							cancelRun={cancelRun}
 							isCanceled={isCanceled}
 							significanceTestResult={significanceTestResult}

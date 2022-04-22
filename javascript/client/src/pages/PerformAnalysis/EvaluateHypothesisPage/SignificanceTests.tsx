@@ -4,12 +4,7 @@
  */
 import { isProcessingStatus } from '@showwhy/api-client'
 import { LinkCallout, Paragraph, ProgressBar, Value } from '@showwhy/components'
-import type {
-	Experiment,
-	Handler,
-	Maybe,
-	SignificanceTest,
-} from '@showwhy/types'
+import type { Handler, Maybe, Question, SignificanceTest } from '@showwhy/types'
 import { NodeResponseStatus, Significance } from '@showwhy/types'
 import { memo } from 'react'
 
@@ -24,18 +19,18 @@ export const SignificanceTests: React.FC<{
 	significanceTestResult: Maybe<SignificanceTest>
 	cancelRun: Handler
 	isCanceled: boolean
-	defineQuestion: Experiment
+	question: Question
 	activeEstimatedEffects: number[]
 }> = memo(function SignificanceTests({
 	significanceTestResult,
 	cancelRun,
 	isCanceled,
-	defineQuestion,
+	question,
 	activeEstimatedEffects,
 }) {
 	const median = parseFloat(calcMedian(activeEstimatedEffects).toFixed(3))
-	const exposure = defineQuestion?.exposure?.label || '<exposure>'
-	const outcome = defineQuestion?.outcome?.label || '<outcome>'
+	const exposure = question?.exposure?.label || '<exposure>'
+	const outcome = question?.outcome?.label || '<outcome>'
 
 	return (
 		<>

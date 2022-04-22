@@ -141,7 +141,7 @@
             "type": "outcome"
         }
     ],
-    "defineQuestion": {
+    "question": {
         "exposure": {
             "label": "Smoking Reduction",
             "description": "Participants of the NHEFS longitudinal study who reported a reduction in cigarette smoking intensity prior to the follow-up visit in 1982.",

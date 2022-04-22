@@ -7,8 +7,8 @@ import type {
 	CausalFactor,
 	Definition,
 	Estimator,
-	Experiment,
 	PrimarySpecificationConfig,
+	Question,
 } from '@showwhy/types'
 
 import type { DefaultDatasetResult } from '~types'
@@ -26,7 +26,7 @@ export interface Workspace {
 	primarySpecification?: PrimarySpecificationConfig
 	causalFactors?: CausalFactor[]
 	definitions?: Definition[]
-	defineQuestion?: Experiment
+	question?: Question
 	estimators?: Estimator[]
 	refutations?: number
 	defaultResult?: DefaultDatasetResult

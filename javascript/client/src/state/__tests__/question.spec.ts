@@ -3,16 +3,16 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { Experiment } from '@showwhy/types'
+import type { Question } from '@showwhy/types'
 import { renderHook } from '@testing-library/react-hooks'
 import { useEffect } from 'react'
 import { RecoilRoot } from 'recoil'
 
-import { useExperiment, useSetExperiment } from '../experiment'
+import { useQuestion, useSetQuestion } from '../question'
 
-describe('useExperiment', () => {
+describe('useQuestion', () => {
 	it('should return empty object as default value', () => {
-		const { result } = renderHook(() => useExperiment(), {
+		const { result } = renderHook(() => useQuestion(), {
 			wrapper: RecoilRoot,
 		})
 
@@ -20,28 +20,28 @@ describe('useExperiment', () => {
 	})
 
 	it('should return the updated state', () => {
-		const define = {
+		const expected = {
 			population: {
 				label: 'label test',
 				description: 'description test',
 			},
-		} as Experiment
+		} as Question
 
 		const { result } = renderHook(
 			() => {
-				const setDefineQuestion = useSetExperiment()
-				const defineQuestion = useExperiment()
+				const setQuestion = useSetQuestion()
+				const question = useQuestion()
 				useEffect(() => {
-					setDefineQuestion(define)
-				}, [setDefineQuestion])
+					setQuestion(expected)
+				}, [setQuestion])
 
-				return defineQuestion
+				return question
 			},
 			{
 				wrapper: RecoilRoot,
 			},
 		)
 
-		expect(result.current).toEqual(define)
+		expect(result.current).toEqual(expected)
 	})
 })

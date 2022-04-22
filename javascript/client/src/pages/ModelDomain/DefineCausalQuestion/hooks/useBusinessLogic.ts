@@ -4,9 +4,9 @@
  */
 
 import type { IChoiceGroupOption } from '@fluentui/react'
-import type { Experiment, Maybe } from '@showwhy/types'
+import type { Maybe, Question } from '@showwhy/types'
 
-import { useExperiment } from '~state'
+import { useQuestion } from '~state'
 
 import {
 	useOnInputChange,
@@ -15,17 +15,17 @@ import {
 } from '../DefineCausalQuestion.hooks'
 
 export function useBusinessLogic(): {
-	defineQuestion: Experiment
+	question: Question
 	onInputChange: (value: Maybe<string>, type: string, field: string) => void
 	setHypothesis: (e: any, option: Maybe<IChoiceGroupOption>) => void
 } {
-	const defineQuestion = useExperiment()
+	const question = useQuestion()
 	const onInputChange = useOnInputChange()
 	const setHypothesis = useSetHypothesis()
 	useSetPageDone()
 
 	return {
-		defineQuestion,
+		question,
 		onInputChange,
 		setHypothesis,
 	}

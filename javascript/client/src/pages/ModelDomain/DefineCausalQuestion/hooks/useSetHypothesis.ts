@@ -4,25 +4,25 @@
  */
 
 import type { IChoiceGroupOption } from '@fluentui/react'
-import type { Experiment, Hypothesis, Maybe } from '@showwhy/types'
+import type { Hypothesis, Maybe, Question } from '@showwhy/types'
 import { useCallback } from 'react'
 
-import { useExperiment, useSetExperiment } from '~state'
+import { useQuestion, useSetQuestion } from '~state'
 
 export function useSetHypothesis(): (
 	e: any,
 	option: Maybe<IChoiceGroupOption>,
 ) => void {
-	const defineQuestion = useExperiment()
-	const setDefineQuestion = useSetExperiment()
+	const question = useQuestion()
+	const setQuestion = useSetQuestion()
 	return useCallback(
 		(_e, option) => {
 			if (option) {
-				const newQuestion: Experiment = { ...defineQuestion }
+				const newQuestion: Question = { ...question }
 				newQuestion.hypothesis = option.key as Hypothesis
-				setDefineQuestion(newQuestion)
+				setQuestion(newQuestion)
 			}
 		},
-		[defineQuestion, setDefineQuestion],
+		[question, setQuestion],
 	)
 }

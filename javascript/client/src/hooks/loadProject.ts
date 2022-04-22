@@ -34,10 +34,10 @@ import {
 	useSetDefaultDatasetResult,
 	useSetDefinitions,
 	useSetEstimators,
-	useSetExperiment,
 	useSetOutputTablePrep,
 	useSetPrimarySpecificationConfig,
 	useSetProjectFiles,
+	useSetQuestion,
 	useSetRefutationCount,
 	useSetRunHistory,
 	useSetSignificanceTest,
@@ -70,7 +70,7 @@ export function useLoadProject(
 	const setCausalFactors = useSetCausalFactors()
 	const setSubjectIdentifier = useSetSubjectIdentifier()
 	const setDefinitions = useSetDefinitions()
-	const setDefineQuestion = useSetExperiment()
+	const setQuestion = useSetQuestion()
 	const setEstimators = useSetEstimators()
 	const setRefutationCount = useSetRefutationCount()
 	const setFiles = useSetProjectFiles()
@@ -122,7 +122,7 @@ export function useLoadProject(
 				primarySpecification,
 				causalFactors,
 				definitions,
-				defineQuestion,
+				question,
 				estimators,
 				refutations,
 				subjectIdentifier,
@@ -149,7 +149,7 @@ export function useLoadProject(
 
 			setCausalFactors(cfs)
 			setDefinitions(df)
-			setDefineQuestion(defineQuestion)
+			setQuestion(question)
 			setEstimators(est)
 			setSubjectIdentifier(subjectIdentifier)
 			setTablePrepSpec(tps)
@@ -183,7 +183,7 @@ export function useLoadProject(
 			setFiles,
 			setPrimarySpecificationConfig,
 			setCausalFactors,
-			setDefineQuestion,
+			setQuestion,
 			setEstimators,
 			setRefutationCount,
 			setSubjectIdentifier,

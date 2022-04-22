@@ -17,7 +17,7 @@ import { understandProcessSteps } from 'src/data/understandProcess'
 import styled from 'styled-components'
 
 import { StepControls, StepSelector } from '~components/GeneralSteps'
-import { useExperiment, useGuidance, useSelectedProject } from '~state'
+import { useGuidance, useQuestion, useSelectedProject } from '~state'
 
 import { Pages } from '../../constants'
 import { useExampleProjects } from './hooks/useExampleProjects'
@@ -32,7 +32,7 @@ const noChildPadding = [Pages.DeriveDataVariables]
 export const Layout: React.FC = memo(function Layout({ children }) {
 	const [isGuidanceVisible, toggleGuidance] = useGuidance()
 	const [error, setError] = useState<Maybe<string>>()
-	const defineQuestion = useExperiment()
+	const question = useQuestion()
 	const exampleProjects = useExampleProjects()
 	const uploadZipMenuOption = useUploadZipMenuOption(setError)
 	const project = useSelectedProject()
@@ -60,7 +60,7 @@ export const Layout: React.FC = memo(function Layout({ children }) {
 			<AppHeader
 				loadMenu={loadMenu}
 				saveProps={saveProps}
-				defineQuestion={defineQuestion}
+				question={question}
 				helpItems={understandProcessSteps}
 			/>
 			<PagesContainer>

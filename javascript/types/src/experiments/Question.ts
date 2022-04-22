@@ -6,7 +6,7 @@
 import type { Element } from './Element.js'
 import type { Hypothesis } from './Hypothesis.js'
 
-export interface Experiment {
+export interface Question {
 	population: Element
 	exposure: Element
 	outcome: Element

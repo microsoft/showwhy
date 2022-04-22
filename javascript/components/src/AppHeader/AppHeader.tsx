@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import type { IContextualMenuProps } from '@fluentui/react'
-import type { Experiment } from '@showwhy/types'
+import type { Question } from '@showwhy/types'
 import { memo } from 'react'
 import styled from 'styled-components'
 
@@ -15,23 +15,18 @@ import { SaveProject } from './SaveProject.js'
 import { UnderstandProcessButton } from './UnderstandProcessButton.js'
 
 export const AppHeader: React.FC<{
-	defineQuestion: Experiment
+	question: Question
 	loadMenu: IContextualMenuProps
 	helpItems: WorkflowHelp[]
 	saveProps: IContextualMenuProps
-}> = memo(function AppHeader({
-	defineQuestion,
-	loadMenu,
-	helpItems,
-	saveProps,
-}) {
+}> = memo(function AppHeader({ question, loadMenu, helpItems, saveProps }) {
 	return (
 		<AppHeaderContainer>
 			<TitleContainer>
 				<Title data-pw="main-title">ShowWhy</Title>
 			</TitleContainer>
 			<Container>
-				<CausalQuestion defineQuestion={defineQuestion} />
+				<CausalQuestion question={question} />
 			</Container>
 			<UserInformationContainer>
 				<ProjectsSelector loadMenu={loadMenu} />

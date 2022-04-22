@@ -3,12 +3,12 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { Definition, Experiment, Maybe, Setter } from '@showwhy/types'
+import type { Definition, Maybe, Question, Setter } from '@showwhy/types'
 import { DefinitionType } from '@showwhy/types'
 import { useEffect, useMemo, useState } from 'react'
 
 import { useHandleOnLinkClick } from '~hooks'
-import { useDefinitions, useDefinitionType, useExperiment } from '~state'
+import { useDefinitions, useDefinitionType, useQuestion } from '~state'
 import { getDefinitionsByType } from '~utils'
 
 import {
@@ -28,7 +28,7 @@ interface PivotData {
 
 export function useBusinessLogic(): {
 	definitionToEdit: Maybe<Definition>
-	defineQuestion: Experiment
+	question: Question
 	pivotData: PivotData[]
 	addDefinition: (def: Definition) => void
 	removeDefinition: (def: Definition) => void
@@ -40,13 +40,13 @@ export function useBusinessLogic(): {
 	definitions: Definition[]
 } {
 	const definitions = useDefinitions()
-	const defineQuestion = useExperiment()
+	const question = useQuestion()
 	const definitionType = useDefinitionType()
 	const [definitionToEdit, setDefinitionToEdit] = useState<Definition>()
 	const shouldHavePrimary = !getDefinitionsByType(definitionType, definitions)
 		.length
 
-	const pivotData: PivotData[] = usePivotData(defineQuestion, definitions)
+	const pivotData: PivotData[] = usePivotData(question, definitions)
 
 	const addDefinition = useAddDefinition(definitions)
 
@@ -63,7 +63,7 @@ export function useBusinessLogic(): {
 
 	return {
 		definitionToEdit,
-		defineQuestion,
+		question,
 		pivotData,
 		definitionType,
 		addDefinition,
@@ -87,7 +87,7 @@ function useItemList(definitions: Definition[] = []): Record<string, any>[] {
 }
 
 function usePivotData(
-	defineQuestion: Experiment,
+	question: Question,
 	definitions: Definition[],
 ): PivotData[] {
 	const itemList = useItemList(definitions)
@@ -95,8 +95,7 @@ function usePivotData(
 		const types = Object.keys(DefinitionType)
 		const pivotData = types.reduce((acc: PivotData[], curr: string) => {
 			const type = curr.toLowerCase()
-			const { label = '', description = '' } =
-				(defineQuestion as any)[type] || {}
+			const { label = '', description = '' } = (question as any)[type] || {}
 			acc = [
 				...acc,
 				{
@@ -110,5 +109,5 @@ function usePivotData(
 			return acc
 		}, [])
 		return pivotData
-	}, [defineQuestion, itemList])
+	}, [question, itemList])
 }

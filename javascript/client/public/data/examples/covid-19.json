@@ -57,7 +57,7 @@
             "type": "outcome"
         }
     ],
-    "defineQuestion": {
+    "question": {
         "exposure": {
             "label": "Chronic Disease",
             "description": "Patient presented in the Wolfram dataset who reported having a chronic disease prior to contracting COVID-19",
