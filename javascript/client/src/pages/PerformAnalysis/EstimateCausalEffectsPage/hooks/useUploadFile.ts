@@ -15,7 +15,7 @@ import { useCallback } from 'react'
 import { api } from '~resources'
 import {
 	useCausalFactors,
-	useExperiment,
+	useDefinitions,
 	useOutputTablePrep,
 	useProjectFiles,
 } from '~state'
@@ -30,7 +30,7 @@ export function useUploadFile(
 ): () => Promise<Maybe<UploadFilesResponse>> {
 	const projectFiles = useProjectFiles()
 	const outputTablePrep = useOutputTablePrep()
-	const definitions = useExperiment()
+	const definitions = useDefinitions()
 	const causalFactors = useCausalFactors()
 	const allColumns = useAllColumns(causalFactors, definitions)
 

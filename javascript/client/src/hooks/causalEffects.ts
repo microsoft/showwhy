@@ -5,11 +5,11 @@
 import type {
 	AlternativeModels,
 	CausalModelLevel,
-	Experiment,
+	Question,
 } from '@showwhy/types'
 import { useMemo } from 'react'
 
-import { useExperiment } from '~state/experiment'
+import { useQuestion } from '~state/question'
 
 import { useAlternativeModels } from './causalFactors'
 
@@ -25,13 +25,13 @@ export function useCausalEffects(
 	causalLevel: CausalModelLevel,
 ): CausalEffectsProps {
 	return useCausalEffectsTestable(
-		useExperiment(),
+		useQuestion(),
 		useAlternativeModels(causalLevel),
 	)
 }
 
 export function useCausalEffectsTestable(
-	question: Experiment,
+	question: Question,
 	{ confounders, outcomeDeterminants, exposureDeterminants }: AlternativeModels,
 ): CausalEffectsProps {
 	const generalExposure = useMemo(

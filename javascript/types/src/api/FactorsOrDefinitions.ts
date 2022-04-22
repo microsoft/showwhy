@@ -4,6 +4,6 @@
  */
 
 import type { CausalFactor } from '../causality/index.js'
-import type { ElementDefinition } from '../experiments/index.js'
+import type { Definition } from '../experiments/index.js'
 
-export type FactorsOrDefinitions = CausalFactor[] | ElementDefinition[]
+export type FactorsOrDefinitions = CausalFactor[] | Definition[]

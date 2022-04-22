@@ -5,9 +5,10 @@
 import type { Specification } from '@data-wrangling-components/core'
 import type {
 	CausalFactor,
+	Definition,
 	Estimator,
-	Experiment,
 	PrimarySpecificationConfig,
+	Question,
 } from '@showwhy/types'
 
 import type { DefaultDatasetResult } from '~types'
@@ -24,7 +25,8 @@ export interface Workspace {
 	tables: DataTableFileDefinition[]
 	primarySpecification?: PrimarySpecificationConfig
 	causalFactors?: CausalFactor[]
-	defineQuestion?: Experiment
+	definitions?: Definition[]
+	question?: Question
 	estimators?: Estimator[]
 	refutations?: number
 	defaultResult?: DefaultDatasetResult

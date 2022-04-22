@@ -5,8 +5,7 @@
 
 import type {
 	CausalFactor,
-	ElementDefinition,
-	Experiment,
+	Definition,
 	Handler,
 	Maybe,
 	OptionalId,
@@ -26,21 +25,19 @@ import {
 	useVariableField,
 } from './variables'
 
-type OnAddHandler = (
-	factor: OptionalId<CausalFactor | ElementDefinition>,
-) => void
-type OnChangeHandler = (f: Partial<CausalFactor | ElementDefinition>) => void
+type OnAddHandler = (factor: OptionalId<CausalFactor | Definition>) => void
+type OnChangeHandler = (f: Partial<CausalFactor | Definition>) => void
 
 export function useFactorsDefinitionForm({
-	experiment,
+	definitions,
 	factor,
 	showLevel,
 	definitionType = DefinitionType.Population,
 	onAdd = noop,
 	onChange = noop,
 }: {
-	experiment?: Experiment
-	factor?: CausalFactor | ElementDefinition
+	definitions?: Definition[]
+	factor?: CausalFactor | Definition
 	showLevel?: boolean
 	definitionType?: DefinitionType
 	onAdd?: OnAddHandler
@@ -70,13 +67,11 @@ export function useFactorsDefinitionForm({
 	useEffect(
 		function resetFormOnExperimentChange() {
 			resetFields()
-			if (experiment && definitionType) {
-				setIsPrimary(
-					!getDefinitionsByType(definitionType, experiment?.definitions).length,
-				)
+			if (definitions?.length && definitionType) {
+				setIsPrimary(!getDefinitionsByType(definitionType, definitions).length)
 			}
 		},
-		[definitionType, location, experiment, resetFields],
+		[definitionType, location, definitions, resetFields],
 	)
 
 	useEffect(
@@ -92,7 +87,7 @@ export function useFactorsDefinitionForm({
 
 	useEffect(
 		function syncEditedFactor() {
-			const edited: Partial<CausalFactor | ElementDefinition> = {
+			const edited: Partial<CausalFactor | Definition> = {
 				...factor,
 				variable,
 				description,

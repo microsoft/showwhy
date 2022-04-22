@@ -13,7 +13,7 @@ import { usePipeline, useStore } from '@data-wrangling-components/react'
 import type { BaseFile } from '@data-wrangling-components/utilities'
 import type {
 	CausalFactor,
-	Experiment,
+	Definition,
 	Maybe,
 	RunHistory,
 } from '@showwhy/types'
@@ -32,11 +32,12 @@ import {
 	useSetConfidenceInterval,
 	useSetConfigJson,
 	useSetDefaultDatasetResult,
+	useSetDefinitions,
 	useSetEstimators,
-	useSetExperiment,
 	useSetOutputTablePrep,
 	useSetPrimarySpecificationConfig,
 	useSetProjectFiles,
+	useSetQuestion,
 	useSetRefutationCount,
 	useSetRunHistory,
 	useSetSignificanceTest,
@@ -68,7 +69,8 @@ export function useLoadProject(
 	const setPrimarySpecificationConfig = useSetPrimarySpecificationConfig()
 	const setCausalFactors = useSetCausalFactors()
 	const setSubjectIdentifier = useSetSubjectIdentifier()
-	const setDefineQuestion = useSetExperiment()
+	const setDefinitions = useSetDefinitions()
+	const setQuestion = useSetQuestion()
 	const setEstimators = useSetEstimators()
 	const setRefutationCount = useSetRefutationCount()
 	const setFiles = useSetProjectFiles()
@@ -119,7 +121,8 @@ export function useLoadProject(
 			const {
 				primarySpecification,
 				causalFactors,
-				defineQuestion,
+				definitions,
+				question,
 				estimators,
 				refutations,
 				subjectIdentifier,
@@ -135,7 +138,7 @@ export function useLoadProject(
 			// prep everything as needed to ensure partials from the JSON
 			// have required fields
 			const cfs = prepCausalFactors(causalFactors)
-			const df = prepDefineQuestion(defineQuestion)
+			const df = prepDefinitions(definitions)
 			const est = estimators || []
 			const tps = prepTablesSpec(tablesPrep)
 			const defaultDatasetResult = defaultResult || null
@@ -145,7 +148,8 @@ export function useLoadProject(
 			refutations && setRefutationCount(refutations)
 
 			setCausalFactors(cfs)
-			setDefineQuestion(df)
+			setDefinitions(df)
+			setQuestion(question)
 			setEstimators(est)
 			setSubjectIdentifier(subjectIdentifier)
 			setTablePrepSpec(tps)
@@ -179,7 +183,7 @@ export function useLoadProject(
 			setFiles,
 			setPrimarySpecificationConfig,
 			setCausalFactors,
-			setDefineQuestion,
+			setQuestion,
 			setEstimators,
 			setRefutationCount,
 			setSubjectIdentifier,
@@ -195,6 +199,7 @@ export function useLoadProject(
 			store,
 			setConfigJson,
 			setSignificanceTests,
+			setDefinitions,
 		],
 	)
 }
@@ -282,13 +287,8 @@ function prepCausalFactors(factors?: Partial<CausalFactor>[]): CausalFactor[] {
 	return (factors || []).map(withRandomId) as CausalFactor[]
 }
 
-function prepDefineQuestion(define?: Partial<Experiment>): Experiment {
-	const prepped = {
-		...define,
-		definitions: define?.definitions?.map(withRandomId),
-	}
-
-	return prepped as Experiment
+function prepDefinitions(definitions: Definition[]): Definition[] {
+	return definitions.map(withRandomId)
 }
 
 function prepTablesSpec(specifications?: Specification[]): Specification[] {

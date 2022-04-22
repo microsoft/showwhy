@@ -3,25 +3,21 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type {
-	AlternativeModels,
-	ElementDefinition,
-	Estimator,
-} from '@showwhy/types'
+import type { AlternativeModels, Definition, Estimator } from '@showwhy/types'
 import { CausalModelLevel } from '@showwhy/types'
 import { useMemo } from 'react'
 
 import { useAlternativeModels } from '~hooks'
 import {
 	useConfidenceInterval,
+	useDefinitions,
 	useEstimators,
-	useExperiment,
 	useRefutationCount,
 } from '~state'
 
 export function useNodeProperties(): {
 	fileName?: string
-	definitions: ElementDefinition[]
+	definitions: Definition[]
 	estimators: Estimator[]
 	refutationCount: number
 	confidenceInterval: boolean
@@ -30,7 +26,7 @@ export function useNodeProperties(): {
 	intermediateLevel: AlternativeModels
 	unadjustedModel: AlternativeModels
 } {
-	const experiment = useExperiment()
+	const definitions = useDefinitions()
 	const estimators = useEstimators()
 	const refutationCount = useRefutationCount()
 	const confidenceInterval = useConfidenceInterval()
@@ -46,7 +42,7 @@ export function useNodeProperties(): {
 	)
 	return useMemo(() => {
 		return {
-			definitions: experiment?.definitions || [],
+			definitions,
 			estimators,
 			refutationCount,
 			confidenceInterval,
@@ -56,7 +52,7 @@ export function useNodeProperties(): {
 			unadjustedModel,
 		}
 	}, [
-		experiment,
+		definitions,
 		estimators,
 		refutationCount,
 		confidenceInterval,

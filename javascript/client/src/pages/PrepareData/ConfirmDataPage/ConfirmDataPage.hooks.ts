@@ -3,23 +3,23 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { CausalFactor, ElementDefinition, Maybe } from '@showwhy/types'
+import type { CausalFactor, Definition, Maybe } from '@showwhy/types'
 import type ColumnTable from 'arquero/dist/types/table/column-table'
 import { useMemo } from 'react'
 
 import { useAllVariables } from '~hooks'
-import { useCausalFactors, useExperiment, useOutputTablePrep } from '~state'
+import { useCausalFactors, useDefinitions, useOutputTablePrep } from '~state'
 
 export function useBusinessLogic(): { output: Maybe<ColumnTable> } {
 	const outputTablePrep = useOutputTablePrep()
 	const causalFactors = useCausalFactors()
-	const defineQuestion = useExperiment()
-	const allVariables = useAllVariables(causalFactors, defineQuestion)
+	const definitions = useDefinitions()
+	const allVariables = useAllVariables(causalFactors, definitions)
 
 	const columns = useMemo((): string[] => {
 		const columnNames = outputTablePrep?.columnNames()
 		const selectedColumns = allVariables.map(
-			(v: CausalFactor | ElementDefinition) => v.column,
+			(v: CausalFactor | Definition) => v.column,
 		)
 		return selectedColumns.filter(
 			(col: string | undefined) => col && columnNames?.includes(col),

@@ -11,13 +11,14 @@ import {
 	useResetConfidenceInterval,
 	useResetConfigJson,
 	useResetDefaultDatasetResult,
+	useResetDefinitions,
 	useResetEstimators,
-	useResetExperiment,
 	useResetFileCollection,
 	useResetHoverState,
 	useResetOutputTablePrep,
 	useResetPrimarySpecificationConfig,
 	useResetProjectFiles,
+	useResetQuestion,
 	useResetRefutationCount,
 	useResetRunHistory,
 	useResetSelectedProject,
@@ -32,7 +33,7 @@ export function useResetProject(): Handler {
 	const resetCausalFactors = useResetCausalFactors()
 	const resetRefutationCount = useResetRefutationCount()
 	const resetEstimators = useResetEstimators()
-	const resetDefineQuestion = useResetExperiment()
+	const resetQuestion = useResetQuestion()
 	const resetProjectFiles = useResetProjectFiles()
 	const resetRunHistory = useResetRunHistory()
 	const resetSpecificationCurveConfig = useResetSpecificationCurveConfig()
@@ -48,13 +49,14 @@ export function useResetProject(): Handler {
 	const resetSelectedProject = useResetSelectedProject()
 	const resetSpecCount = useResetSpecCount()
 	const resetSignificanteTest = useResetSignificanceTest()
+	const resetDefinitions = useResetDefinitions()
 
 	return useCallback(() => {
 		resetProjectFiles()
 		resetCausalFactors()
 		resetRefutationCount()
 		resetEstimators()
-		resetDefineQuestion()
+		resetQuestion()
 		resetHoverState()
 		resetRunHistory()
 		resetSpecificationCurveConfig()
@@ -69,12 +71,13 @@ export function useResetProject(): Handler {
 		resetSelectedProject()
 		resetSpecCount()
 		resetSignificanteTest()
+		resetDefinitions()
 	}, [
 		resetProjectFiles,
 		resetCausalFactors,
 		resetRefutationCount,
 		resetEstimators,
-		resetDefineQuestion,
+		resetQuestion,
 		resetHoverState,
 		resetRunHistory,
 		resetSpecificationCurveConfig,
@@ -89,5 +92,6 @@ export function useResetProject(): Handler {
 		resetSelectedProject,
 		resetSpecCount,
 		resetSignificanteTest,
+		resetDefinitions,
 	])
 }

@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { Experiment } from '@showwhy/types'
+import type { Question } from '@showwhy/types'
 import { CausalityLevel } from '@showwhy/types'
 import { renderHook } from '@testing-library/react-hooks'
 import { RecoilRoot } from 'recoil'
@@ -30,7 +30,7 @@ const question = {
 			},
 		],
 	},
-} as any as Experiment
+} as any as Question
 
 describe('causalEffectsHooks', () => {
 	it('returns useCausalEffects', () => {

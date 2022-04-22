@@ -5,8 +5,8 @@
 
 import { ActionButtons } from '@showwhy/components'
 import type {
+	Definition,
 	DefinitionType,
-	ElementDefinition,
 	Handler,
 	Handler1,
 	Maybe,
@@ -17,15 +17,15 @@ import { useFactorsDefinitionForm, useOnChange } from '~hooks'
 import { getDefault } from '~utils'
 
 export function useDefinitionItems(
-	definitions: ElementDefinition[],
-	definitionToEdit: Maybe<ElementDefinition>,
+	definitions: Definition[],
+	definitionToEdit: Maybe<Definition>,
 	definitionType: DefinitionType,
-	onDelete?: Maybe<Handler1<ElementDefinition>>,
-	onSave?: Maybe<Handler1<ElementDefinition>>,
-	onEdit?: Maybe<Handler1<ElementDefinition>>,
+	onDelete?: Maybe<Handler1<Definition>>,
+	onSave?: Maybe<Handler1<Definition>>,
+	onEdit?: Maybe<Handler1<Definition>>,
 	onCancel?: Maybe<Handler>,
 ): { items: Record<string, any>[] } {
-	const [edited, setEdited] = useState<Maybe<ElementDefinition>>()
+	const [edited, setEdited] = useState<Maybe<Definition>>()
 	const onChange = useOnChange(setEdited, definitionToEdit)
 	const { level, description, variable } = useFactorsDefinitionForm({
 		factor: definitionToEdit,
@@ -57,16 +57,16 @@ export function useDefinitionItems(
 }
 
 function useGetEditableRow(
-	definitionToEdit: Maybe<ElementDefinition>,
+	definitionToEdit: Maybe<Definition>,
 	type: DefinitionType,
 	level: JSX.Element,
 	description: JSX.Element,
 	variable: JSX.Element,
-	onSave?: Maybe<Handler1<ElementDefinition>>,
+	onSave?: Maybe<Handler1<Definition>>,
 	onCancel?: Maybe<Handler>,
-): (edited: Maybe<ElementDefinition>) => Record<string, any> {
+): (edited: Maybe<Definition>) => Record<string, any> {
 	return useCallback(
-		(edited: Maybe<ElementDefinition>) => {
+		(edited: Maybe<Definition>) => {
 			return {
 				level,
 				type,
@@ -81,7 +81,7 @@ function useGetEditableRow(
 										onSave({
 											...definitionToEdit,
 											...edited,
-										} as ElementDefinition)
+										} as Definition)
 								: undefined
 						}
 						disableSave={!edited?.variable}

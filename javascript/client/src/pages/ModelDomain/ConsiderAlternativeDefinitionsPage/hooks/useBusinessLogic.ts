@@ -3,17 +3,12 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type {
-	ElementDefinition,
-	Experiment,
-	Maybe,
-	Setter,
-} from '@showwhy/types'
+import type { Definition, Maybe, Question, Setter } from '@showwhy/types'
 import { DefinitionType } from '@showwhy/types'
 import { useEffect, useMemo, useState } from 'react'
 
 import { useHandleOnLinkClick } from '~hooks'
-import { useDefinitionType, useExperiment } from '~state'
+import { useDefinitions, useDefinitionType, useQuestion } from '~state'
 import { getDefinitionsByType } from '~utils'
 
 import {
@@ -32,33 +27,28 @@ interface PivotData {
 }
 
 export function useBusinessLogic(): {
-	definitionToEdit: Maybe<ElementDefinition>
-	defineQuestion: Experiment
+	definitionToEdit: Maybe<Definition>
+	question: Question
 	pivotData: PivotData[]
-	addDefinition: (def: ElementDefinition) => void
-	removeDefinition: (def: ElementDefinition) => void
-	editDefinition: (def: ElementDefinition) => void
-	setDefinitionToEdit: Setter<Maybe<ElementDefinition>>
+	addDefinition: (def: Definition) => void
+	removeDefinition: (def: Definition) => void
+	editDefinition: (def: Definition) => void
+	setDefinitionToEdit: Setter<Maybe<Definition>>
 	definitionType: DefinitionType
 	handleOnLinkClick: (item: any) => void
 	shouldHavePrimary: boolean
-	definitions: ElementDefinition[]
+	definitions: Definition[]
 } {
-	const defineQuestion = useExperiment()
+	const definitions = useDefinitions()
+	const question = useQuestion()
 	const definitionType = useDefinitionType()
-	const [definitionToEdit, setDefinitionToEdit] = useState<ElementDefinition>()
-	const shouldHavePrimary = !getDefinitionsByType(
-		definitionType,
-		defineQuestion?.definitions,
-	).length
+	const [definitionToEdit, setDefinitionToEdit] = useState<Definition>()
+	const shouldHavePrimary = !getDefinitionsByType(definitionType, definitions)
+		.length
 
-	const definitions = useMemo(() => {
-		return defineQuestion.definitions || []
-	}, [defineQuestion])
+	const pivotData: PivotData[] = usePivotData(question, definitions)
 
-	const pivotData: PivotData[] = usePivotData(defineQuestion)
-
-	const addDefinition = useAddDefinition()
+	const addDefinition = useAddDefinition(definitions)
 
 	const removeDefinition = useRemoveDefinition(definitions)
 
@@ -68,12 +58,12 @@ export function useBusinessLogic(): {
 
 	useEffect(() => {
 		setDefinitionToEdit(undefined)
-	}, [defineQuestion, setDefinitionToEdit])
+	}, [definitions, setDefinitionToEdit])
 	useSetPageDone()
 
 	return {
 		definitionToEdit,
-		defineQuestion,
+		question,
 		pivotData,
 		definitionType,
 		addDefinition,
@@ -86,9 +76,7 @@ export function useBusinessLogic(): {
 	}
 }
 
-function useItemList(
-	definitions: ElementDefinition[] = [],
-): Record<string, any>[] {
+function useItemList(definitions: Definition[] = []): Record<string, any>[] {
 	return useMemo(() => {
 		return definitions?.map(x => {
 			const newObj = { ...x, dataPw: 'definition-element' }
@@ -98,16 +86,16 @@ function useItemList(
 	}, [definitions])
 }
 
-function usePivotData(defineQuestion: Experiment): PivotData[] {
-	const itemList = useItemList(defineQuestion?.definitions)
+function usePivotData(
+	question: Question,
+	definitions: Definition[],
+): PivotData[] {
+	const itemList = useItemList(definitions)
 	return useMemo(() => {
-		const types = Object.keys(DefinitionType).filter(
-			k => !k.includes('Cause') && !k.includes('Confounders'),
-		)
+		const types = Object.keys(DefinitionType)
 		const pivotData = types.reduce((acc: PivotData[], curr: string) => {
 			const type = curr.toLowerCase()
-			const { label = '', description = '' } =
-				(defineQuestion as any)[type] || {}
+			const { label = '', description = '' } = (question as any)[type] || {}
 			acc = [
 				...acc,
 				{
@@ -121,5 +109,5 @@ function usePivotData(defineQuestion: Experiment): PivotData[] {
 			return acc
 		}, [])
 		return pivotData
-	}, [defineQuestion, itemList])
+	}, [question, itemList])
 }

@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { Checkbox, DefaultButton, TextField } from '@fluentui/react'
-import type { CausalFactor, ElementDefinition, Handler } from '@showwhy/types'
+import type { CausalFactor, Definition, Handler } from '@showwhy/types'
 import { useMemo } from 'react'
 import styled from 'styled-components'
 
@@ -110,9 +110,7 @@ export function useAddButton(
 	) : null
 }
 
-export function useHasLevel(
-	factor?: CausalFactor | ElementDefinition,
-): boolean {
+export function useHasLevel(factor?: CausalFactor | Definition): boolean {
 	return useMemo(() => !!factor?.hasOwnProperty('level'), [factor])
 }
 

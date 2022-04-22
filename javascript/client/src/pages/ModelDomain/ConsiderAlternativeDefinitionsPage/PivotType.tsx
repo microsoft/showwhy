@@ -5,8 +5,8 @@
 import { useDimensions } from '@essex/hooks'
 import { DetailsList } from '@showwhy/components'
 import type {
+	Definition,
 	DefinitionType,
-	ElementDefinition,
 	Handler1,
 	Maybe,
 } from '@showwhy/types'
@@ -30,14 +30,14 @@ interface PivotData {
 
 export const PivotType: FC<{
 	item: PivotData
-	definitionToEdit: Maybe<ElementDefinition>
+	definitionToEdit: Maybe<Definition>
 	shouldHavePrimary: boolean
 	definitionType: DefinitionType
-	addDefinition: Handler1<ElementDefinition>
-	editDefinition: Handler1<ElementDefinition>
-	removeDefinition: Handler1<ElementDefinition>
-	setDefinitionToEdit: Handler1<Maybe<ElementDefinition>>
-	definitions: ElementDefinition[]
+	addDefinition: Handler1<Definition>
+	editDefinition: Handler1<Definition>
+	removeDefinition: Handler1<Definition>
+	setDefinitionToEdit: Handler1<Maybe<Definition>>
+	definitions: Definition[]
 }> = memo(function PivotType({
 	item,
 	shouldHavePrimary,

@@ -21,23 +21,23 @@ const hypothesisOptions: IChoiceGroupOption[] = [
 
 export const DefineCausalQuestion: React.FC = memo(
 	function DefineCausalQuestion() {
-		const { defineQuestion, onInputChange, setHypothesis } = useBusinessLogic()
+		const { question, onInputChange, setHypothesis } = useBusinessLogic()
 
 		return (
 			<Container>
 				<FieldGroup
 					type="population"
-					question={defineQuestion.population}
+					question={question.population}
 					onChange={onInputChange}
 				/>
 				<FieldGroup
 					type="exposure"
-					question={defineQuestion.exposure}
+					question={question.exposure}
 					onChange={onInputChange}
 				/>
 				<FieldGroup
 					type="outcome"
-					question={defineQuestion.outcome}
+					question={question.outcome}
 					onChange={onInputChange}
 				/>
 
@@ -45,7 +45,7 @@ export const DefineCausalQuestion: React.FC = memo(
 					<FieldTitle>Hypothesis</FieldTitle>
 					<ChoiceGroup
 						onChange={setHypothesis}
-						selectedKey={defineQuestion.hypothesis || Hypothesis.Change}
+						selectedKey={question.hypothesis || Hypothesis.Change}
 						label="Exposure causes outcome to:"
 						options={hypothesisOptions}
 					/>

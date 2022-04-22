@@ -10,7 +10,7 @@ import type {
 } from '@fluentui/react'
 import type {
 	CausalFactor,
-	ElementDefinition,
+	Definition,
 	FactorsOrDefinitions,
 	Maybe,
 } from '@showwhy/types'
@@ -38,7 +38,7 @@ function useRenderMenuList(
 	dropdownOptions: IContextualMenuItem[],
 	selectedVariableByColumn: (
 		columnName: string,
-	) => Maybe<ElementDefinition | CausalFactor>,
+	) => Maybe<Definition | CausalFactor>,
 	subjectIdentifier: Maybe<string>,
 ): (
 	menuListProps: IContextualMenuListProps,

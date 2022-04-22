@@ -13,7 +13,7 @@ import {
 	FileType,
 } from '@data-wrangling-components/utilities'
 import { isStatus } from '@showwhy/api-client'
-import type { AsyncHandler, Experiment, Maybe } from '@showwhy/types'
+import type { AsyncHandler, Maybe, Question } from '@showwhy/types'
 import { NodeResponseStatus } from '@showwhy/types'
 import { useCallback, useMemo } from 'react'
 
@@ -23,12 +23,13 @@ import {
 	useConfidenceInterval,
 	useConfigJson,
 	useDefaultDatasetResult,
+	useDefinitions,
 	useEstimators,
-	useExperiment,
 	useFileCollection,
 	useOutputTablePrep,
 	usePrimarySpecificationConfig,
 	useProjectFiles,
+	useQuestion,
 	useRefutationCount,
 	useRunHistory,
 	useSignificanceTest,
@@ -45,12 +46,13 @@ export function useSaveProject(): AsyncHandler {
 	const primarySpecification = usePrimarySpecificationConfig()
 	const causalFactors = useCausalFactors()
 	const subjectIdentifier = useSubjectIdentifier()
-	const defineQuestion = useExperiment()
+	const question = useQuestion()
+	const definitions = useDefinitions()
 	const estimators = useEstimators()
 	const refutations = useRefutationCount()
 	const tablesPrep = useTablesPrepSpecification()
 	const todoPages = useGetStepUrlsByStatus()({ exclude: true })
-	const download = useDownload(fileCollection, defineQuestion)
+	const download = useDownload(fileCollection, question)
 	const oldConfig = useConfigJson()
 
 	return useCallback(async () => {
@@ -58,7 +60,8 @@ export function useSaveProject(): AsyncHandler {
 			primarySpecification,
 			confidenceInterval,
 			causalFactors,
-			defineQuestion,
+			definitions,
+			question,
 			estimators,
 			refutations,
 			todoPages,
@@ -71,7 +74,8 @@ export function useSaveProject(): AsyncHandler {
 		confidenceInterval,
 		primarySpecification,
 		causalFactors,
-		defineQuestion,
+		definitions,
+		question,
 		estimators,
 		refutations,
 		todoPages,
@@ -204,10 +208,7 @@ function useSignificanceTestFile(): Maybe<FileWithPath> {
 	}, [significanceTest])
 }
 
-function useDownload(
-	fileCollection: FileCollection,
-	defineQuestion: Experiment,
-) {
+function useDownload(fileCollection: FileCollection, question: Question) {
 	const csvResult = useCSVResult()
 	const outputTable = useOutputTable()
 	const getTables = useTables(fileCollection)
@@ -246,7 +247,7 @@ function useDownload(
 				files.push(significanceTestsFile)
 			}
 			const copy = fileCollection.copy()
-			const { exposure, outcome } = defineQuestion
+			const { exposure, outcome } = question
 			let zipName = copy.name
 			if (exposure?.label && outcome?.label) {
 				const formatLabel = (label: string) => label.trim().replace(/\s/g, '_')
@@ -260,7 +261,7 @@ function useDownload(
 		},
 		[
 			fileCollection,
-			defineQuestion,
+			question,
 			csvResult,
 			getTables,
 			outputTable,

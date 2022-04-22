@@ -3,11 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { Checkbox, DefaultButton, TextField } from '@fluentui/react'
-import type {
-	DefinitionType,
-	ElementDefinition,
-	Handler1,
-} from '@showwhy/types'
+import type { Definition, DefinitionType, Handler1 } from '@showwhy/types'
 import { CausalityLevel } from '@showwhy/types'
 import type { FC } from 'react'
 import { memo, useCallback, useState } from 'react'
@@ -16,7 +12,7 @@ import styled from 'styled-components'
 import { useHandleKeyPress, useHandleOnBlur } from '~hooks'
 
 export const AlternativeDefinitionsForm: FC<{
-	onAdd: Handler1<ElementDefinition>
+	onAdd: Handler1<Definition>
 	definitionType: DefinitionType
 	shouldHavePrimary: boolean
 }> = memo(function AlternativeDefinitionsForm({
@@ -34,7 +30,7 @@ export const AlternativeDefinitionsForm: FC<{
 			description,
 			type: definitionType,
 			level: isPrimary ? CausalityLevel.Primary : CausalityLevel.Secondary,
-		} as ElementDefinition)
+		} as Definition)
 		setLabel('')
 		setDescription('')
 		setIsPrimary(false)

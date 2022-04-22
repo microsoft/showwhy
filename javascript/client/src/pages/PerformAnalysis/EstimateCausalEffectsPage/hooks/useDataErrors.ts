@@ -8,7 +8,7 @@ import { useMemo } from 'react'
 import { useAllVariables, useIsMicrodata } from '~hooks'
 import {
 	useCausalFactors,
-	useExperiment,
+	useDefinitions,
 	useOutputTablePrep,
 	useSubjectIdentifier,
 } from '~state'
@@ -23,7 +23,7 @@ export function useDataErrors(): {
 	const subjectIndentifier = useSubjectIdentifier()
 	const isMicrodata = useIsMicrodata(outputTable, subjectIndentifier)
 
-	const definitions = useExperiment()
+	const definitions = useDefinitions()
 	const causalFactors = useCausalFactors()
 	const allVariables = useAllVariables(causalFactors, definitions)
 

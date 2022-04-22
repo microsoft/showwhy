@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { Experiment } from '@showwhy/types'
+import type { Question } from '@showwhy/types'
 import type { Resetter, SetterOrUpdater } from 'recoil'
 import {
 	atom,
@@ -12,19 +12,19 @@ import {
 	useSetRecoilState,
 } from 'recoil'
 
-const experimentState = atom<Experiment>({
+const experimentState = atom<Question>({
 	key: 'describe-elements',
-	default: {} as Experiment,
+	default: {} as Question,
 })
 
-export function useExperiment(): Experiment {
+export function useQuestion(): Question {
 	return useRecoilValue(experimentState)
 }
 
-export function useSetExperiment(): SetterOrUpdater<Experiment> {
+export function useSetQuestion(): SetterOrUpdater<Question> {
 	return useSetRecoilState(experimentState)
 }
 
-export function useResetExperiment(): Resetter {
+export function useResetQuestion(): Resetter {
 	return useResetRecoilState(experimentState)
 }

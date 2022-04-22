@@ -3,22 +3,20 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { ElementDefinition, Experiment } from '@showwhy/types'
+import type { Definition } from '@showwhy/types'
 import { useCallback } from 'react'
 
 export function useSetTargetDefinition(
-	saveDefinition: (definition: ElementDefinition | ElementDefinition) => void,
-	defineQuestionData: Experiment,
+	saveDefinition: (definition: Definition | Definition) => void,
+	definitions: Definition[],
 ): (selectedDefinitionId: string, column: string) => boolean {
 	return useCallback(
 		(selectedDefinitionId: string, column: string) => {
-			const all: ElementDefinition[] = [
-				...(defineQuestionData?.definitions || []),
-			]
+			const all: Definition[] = [...definitions]
 
 			const newDefinition = {
 				...all?.find(x => x.id === selectedDefinitionId),
-			} as ElementDefinition
+			} as Definition
 
 			if (newDefinition) {
 				newDefinition.column =
@@ -28,6 +26,6 @@ export function useSetTargetDefinition(
 			saveDefinition(newDefinition)
 			return !!newDefinition.column
 		},
-		[saveDefinition, defineQuestionData],
+		[saveDefinition, definitions],
 	)
 }

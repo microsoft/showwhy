@@ -4,8 +4,7 @@
  */
 import type { IComboBoxOption, IDropdownOption } from '@fluentui/react'
 import { ComboBox, DefaultButton, Label, TextField } from '@fluentui/react'
-import type { CausalFactorType } from '@showwhy/types'
-import { BeliefDegree, DefinitionType } from '@showwhy/types'
+import { BeliefDegree, CausalFactorType, DefinitionType } from '@showwhy/types'
 import upperFirst from 'lodash/upperFirst'
 import type { FC } from 'react'
 import { memo, useCallback, useState } from 'react'
@@ -16,13 +15,19 @@ import { isCausalFactorType } from '~utils'
 
 export const AddVariableFields: FC<{
 	columnName: string
-	onAdd: (variable: string, type: DefinitionType, degree?: BeliefDegree) => void
+	onAdd: (
+		variable: string,
+		type: DefinitionType | CausalFactorType,
+		degree?: BeliefDegree,
+	) => void
 }> = memo(function AddVariableFields({ columnName, onAdd }) {
-	const options: IDropdownOption[] = Object.entries(DefinitionType).map(op => {
+	const definitions = Object.entries(DefinitionType)
+	const factors = Object.entries(CausalFactorType)
+	const options: IDropdownOption[] = [...definitions, ...factors].map(op => {
 		return { key: op[1], text: upperFirst(op[1]) }
 	})
 	const [variable, setVariable] = useState(columnName)
-	const [type, setType] = useState<DefinitionType>()
+	const [type, setType] = useState<DefinitionType | CausalFactorType>()
 	const [degree, setDegree] = useState<number>(BeliefDegree.Strong)
 
 	const onChangeDegree = useCallback(
@@ -46,7 +51,7 @@ export const AddVariableFields: FC<{
 				options={options}
 				onChange={(_, value) => setType(value?.key as DefinitionType)}
 			/>
-			{type && isCausalFactorType(type) && (
+			{type && isCausalFactorType(type as CausalFactorType) && (
 				<>
 					<Label>Degree of belief</Label>
 					{Combobox(degree, type as unknown as CausalFactorType)}

@@ -7,7 +7,4 @@ export enum DefinitionType {
 	Population = 'population',
 	Exposure = 'exposure',
 	Outcome = 'outcome',
-	CauseExposure = 'causeExposure',
-	CauseOutcome = 'causeOutcome',
-	Confounders = 'confounder',
 }

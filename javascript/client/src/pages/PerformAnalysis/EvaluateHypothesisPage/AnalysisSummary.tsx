@@ -3,10 +3,9 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { Title } from '@showwhy/components'
-import type { Estimator } from '@showwhy/types'
+import type { Definition, Estimator } from '@showwhy/types'
 import {
 	type AlternativeModels,
-	type Experiment,
 	type RefutationOption,
 	DefinitionType,
 } from '@showwhy/types'
@@ -17,13 +16,13 @@ import styled from 'styled-components'
 import { getDefinitionsByType, pluralize } from '~utils'
 
 export const AnalysisSummary: FC<{
-	defineQuestion: Experiment
+	definitions: Definition[]
 	alternativeModels: AlternativeModels
 	refutationOptions: RefutationOption[]
 	estimators: Estimator[]
 	activeEstimatedEffects: number[]
 }> = memo(function AnalysisSummary({
-	defineQuestion,
+	definitions,
 	alternativeModels,
 	refutationOptions,
 	estimators,
@@ -31,11 +30,11 @@ export const AnalysisSummary: FC<{
 }) {
 	const populationDefinitions = getDefinitionsByType(
 		DefinitionType.Population,
-		defineQuestion?.definitions,
+		definitions,
 	)
 	const exposureDefinitions = getDefinitionsByType(
 		DefinitionType.Population,
-		defineQuestion?.definitions,
+		definitions,
 	)
 
 	return (

@@ -5,12 +5,12 @@
 
 import type { IContextualMenuItem } from '@fluentui/react'
 import { ContextualMenuItemType } from '@fluentui/react'
-import type {
-	CausalFactor,
-	ElementDefinition,
-	Experiment,
+import type { CausalFactor, Definition } from '@showwhy/types'
+import {
+	CausalFactorType,
+	CommandActionType,
+	DefinitionType,
 } from '@showwhy/types'
-import { CommandActionType, DefinitionType } from '@showwhy/types'
 import upperFirst from 'lodash/upperFirst'
 import { useMemo } from 'react'
 
@@ -18,8 +18,8 @@ import type { CausalEffectsProps } from '~hooks'
 import { getDefinitionsByType } from '~utils'
 
 const buildDropdownOption = (
-	all: ElementDefinition[],
-	type: DefinitionType,
+	all: Definition[],
+	type: DefinitionType | CausalFactorType,
 ): IContextualMenuItem => {
 	const options: IContextualMenuItem = {
 		key: type,
@@ -43,23 +43,17 @@ const buildDropdownOption = (
 }
 
 export function useDefinitionDropdownOptions(
-	defineQuestion: Experiment,
+	definitions: Definition[],
 	causalFactors: CausalFactor[],
 	causalEffects: CausalEffectsProps,
 ): IContextualMenuItem[] {
 	return useMemo((): IContextualMenuItem[] => {
 		const population = getDefinitionsByType(
 			DefinitionType.Population,
-			defineQuestion?.definitions,
+			definitions,
 		)
-		const exposure = getDefinitionsByType(
-			DefinitionType.Exposure,
-			defineQuestion?.definitions,
-		)
-		const outcome = getDefinitionsByType(
-			DefinitionType.Outcome,
-			defineQuestion?.definitions,
-		)
+		const exposure = getDefinitionsByType(DefinitionType.Exposure, definitions)
+		const outcome = getDefinitionsByType(DefinitionType.Outcome, definitions)
 		const all: IContextualMenuItem[] = [
 			{
 				key: 'subject-identifier',
@@ -113,16 +107,19 @@ export function useDefinitionDropdownOptions(
 
 		exposureDeterminant &&
 			all.push(
-				buildDropdownOption(exposureDeterminant, DefinitionType.CauseExposure),
+				buildDropdownOption(
+					exposureDeterminant,
+					CausalFactorType.CauseExposure,
+				),
 			)
 
 		outcomeDeterminant &&
 			all.push(
-				buildDropdownOption(outcomeDeterminant, DefinitionType.CauseOutcome),
+				buildDropdownOption(outcomeDeterminant, CausalFactorType.CauseOutcome),
 			)
 
 		confounders &&
-			all.push(buildDropdownOption(confounders, DefinitionType.Confounders))
+			all.push(buildDropdownOption(confounders, CausalFactorType.Confounders))
 		return all
-	}, [defineQuestion, causalFactors, causalEffects])
+	}, [definitions, causalFactors, causalEffects])
 }

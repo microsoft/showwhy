@@ -2,15 +2,15 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import type { ElementDefinition } from '@showwhy/types'
+import type { Definition } from '@showwhy/types'
 
 import type { PopulationSpec, Spec } from './types'
 
 export function buildSpecs(
 	dataframeName: string,
-	population: ElementDefinition[],
-	exposure: ElementDefinition[],
-	outcome: ElementDefinition[],
+	population: Definition[],
+	exposure: Definition[],
+	outcome: Definition[],
 ): {
 	population_specs: PopulationSpec[]
 	treatment_specs: Spec[]

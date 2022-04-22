@@ -6,7 +6,7 @@ import { Callout, DefaultButton, DirectionalHint, Icon } from '@fluentui/react'
 import { useBoolean, useId } from '@fluentui/react-hooks'
 import type {
 	CausalFactor,
-	ElementDefinition,
+	Definition,
 	FactorsOrDefinitions,
 	Handler1,
 	Maybe,
@@ -19,7 +19,7 @@ interface Props {
 	completedElements: number
 	elements: number
 	allElements: FactorsOrDefinitions
-	isElementComplete: (element: CausalFactor | ElementDefinition) => boolean
+	isElementComplete: (element: CausalFactor | Definition) => boolean
 	onResetVariable: (columnName: string) => void
 	subjectIdentifier: Maybe<string>
 	onSetSubjectIdentifier: Handler1<Maybe<string>>
