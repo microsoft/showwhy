@@ -3,7 +3,6 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { FileType } from '@data-wrangling-components/utilities'
 import type { IDropdownOption } from '@fluentui/react'
 
 export const delimiterOptions: IDropdownOption[] = [
