@@ -5,7 +5,6 @@
 
 import type { Handler } from '@showwhy/types'
 import { StepStatus } from '@showwhy/types'
-import { useCallback } from 'react'
 
 import { useSetStepStatus } from '~state'
 
@@ -18,16 +17,8 @@ export function useAutomaticWorkflowStatus(): {
 	const currentStep = useCurrentStep()
 	const setStepStatus = useSetStepStatus(currentStep?.url)
 
-	const setDone = useCallback(() => {
-		setStepStatus(StepStatus.Done)
-	}, [setStepStatus])
-
-	const setTodo = useCallback(() => {
-		setStepStatus(StepStatus.ToDo)
-	}, [setStepStatus])
-
 	return {
-		setDone,
-		setTodo,
+		setDone: () => setStepStatus(StepStatus.Done),
+		setTodo: () => setStepStatus(StepStatus.ToDo),
 	}
 }

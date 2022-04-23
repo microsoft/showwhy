@@ -20,13 +20,10 @@ import type { Maybe } from '@showwhy/types'
 import { memo, useEffect, useState } from 'react'
 import styled from 'styled-components'
 
-import {
-	useAutomaticWorkflowStatus,
-	useDropzone,
-	useFileManagement,
-} from '~hooks'
+import { useAutomaticWorkflowStatus } from '~hooks'
 
-import { useAcceptedLoadFileTypes } from './hooks/useAcceptedLoadFileTypes'
+import { useDropzone } from './hooks/useDropzone'
+import { useFileManagement } from './hooks/useFileManagement'
 import { useHandleDelimiterChange } from './hooks/useHandleDelimiterChange'
 import { useOnConfirmDelete } from './hooks/useOnConfirmDelete'
 import { useToggleAutoType } from './hooks/useToggleAutoType'
@@ -36,7 +33,6 @@ import { SelectedTableDisplay } from './SelectedTableDisplay'
 import { SupportedFileTypes } from './SupportedFileTypes'
 
 export const LoadDataPage: React.FC = memo(function LoadDataPage() {
-	const acceptedFileTypes = useAcceptedLoadFileTypes()
 	const [showConfirm, { toggle: toggleShowConfirm }] = useBoolean(false)
 	const { setTodo, setDone } = useAutomaticWorkflowStatus()
 	const [errorMessage, setErrorMessage] = useState<string | null>()
@@ -46,7 +42,9 @@ export const LoadDataPage: React.FC = memo(function LoadDataPage() {
 		projectFiles,
 		selectedFile,
 		setSelectedFile,
-		doAddFile,
+		onFileLoad,
+		onZipFileLoad,
+		acceptedFileTypes,
 	} = useFileManagement(setErrorMessage)
 
 	useEffect(() => {
@@ -80,7 +78,7 @@ export const LoadDataPage: React.FC = memo(function LoadDataPage() {
 		loading,
 		fileCount,
 		progress,
-	} = useDropzone(setErrorMessage, doAddFile)
+	} = useDropzone(setErrorMessage, onFileLoad, onZipFileLoad)
 
 	return (
 		<Container>

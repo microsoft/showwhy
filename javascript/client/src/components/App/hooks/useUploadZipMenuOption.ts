@@ -10,15 +10,13 @@ import { useMemo } from 'react'
 
 import { useHandleFiles } from '~hooks'
 
-const UPLOAD_ZIP_BUTTON_ID = 'uploadZip'
-const acceptedFileTypes = [`.${FileType.zip}`]
+const id = 'uploadZip'
 
 export function useUploadZipMenuOption(
-	onError?: (msg: string) => void,
+	onError: (msg: string) => void,
 ): IContextualMenuItem {
-	const id = UPLOAD_ZIP_BUTTON_ID
 	const handleFiles = useHandleFiles(onError)
-	const handleClick = useHandleOnUploadClick(acceptedFileTypes, handleFiles)
+	const handleClick = useHandleOnUploadClick([`.${FileType.zip}`], handleFiles)
 	return useMemo(() => {
 		return {
 			'data-pw': id,
@@ -27,5 +25,5 @@ export function useUploadZipMenuOption(
 			iconProps: { iconName: 'Upload' },
 			onClick: handleClick,
 		}
-	}, [id, handleClick])
+	}, [handleClick])
 }

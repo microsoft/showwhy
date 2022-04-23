@@ -5,39 +5,38 @@
 import { IconButton, Spinner, SpinnerSize } from '@fluentui/react'
 import type { Handler, Maybe } from '@showwhy/types'
 import { StepStatus } from '@showwhy/types'
-import { memo, useCallback } from 'react'
+import { memo } from 'react'
+import { Case, Default, Switch } from 'react-if'
 import styled from 'styled-components'
 
 export const StepStatusDetail: React.FC<{
 	status: Maybe<StepStatus>
 	toggleStatus: Handler
 }> = memo(function StepStatusDetail({ status, toggleStatus }) {
-	const getStepStatus = useCallback(() => {
-		switch (status) {
-			case StepStatus.Done:
-				return (
+	return (
+		<>
+			<Switch>
+				<Case condition={status === StepStatus.Done}>
 					<Status color="success">
 						<IconButton onClick={toggleStatus} iconProps={iconProps.done} />
 					</Status>
-				)
-			case StepStatus.Error:
-				return (
+				</Case>
+				<Case condition={status === StepStatus.Error}>
 					<Status color="error">
 						<IconButton iconProps={iconProps.error} />
 					</Status>
-				)
-			case StepStatus.Loading:
-				return <Spinner size={SpinnerSize.xSmall} />
-			default:
-				return (
+				</Case>
+				<Case condition={status === StepStatus.Loading}>
+					<Spinner size={SpinnerSize.xSmall} />
+				</Case>
+				<Default>
 					<Status color="warning">
 						<IconButton onClick={toggleStatus} iconProps={iconProps.todo} />
 					</Status>
-				)
-		}
-	}, [status, toggleStatus])
-
-	return <>{getStepStatus()}</>
+				</Default>
+			</Switch>
+		</>
+	)
 })
 
 const Status = styled.span<{ color: string }>`

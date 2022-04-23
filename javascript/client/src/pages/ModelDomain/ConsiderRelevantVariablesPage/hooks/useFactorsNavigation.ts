@@ -4,7 +4,7 @@
  */
 
 import type { Handler, Maybe } from '@showwhy/types'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 
 import { noop } from '~utils'
@@ -15,27 +15,30 @@ import type { PathData } from '../ConsiderRelevantVariablesPage.types'
 export function useFactorsNavigation(): [Handler, PathData] {
 	const history = useHistory()
 	const [historyState, setHistoryState] = useState<string>()
-	const factorsPathData = useFactorsPathData(historyState)
+	const factorsPathData = getFactorsPathData(historyState)
 	useEffect(() => {
 		history.location.state && setHistoryState(history.location.state as string)
 	}, [history.location.state, setHistoryState])
 
-	const goToVariableRelationships = useCallback(() => {
-		history.push(Pages.VariablesRelationships)
-		setHistoryState(undefined)
-	}, [setHistoryState, history])
-
 	return [
-		factorsPathData?.path ? goToVariableRelationships : noop,
+		factorsPathData?.path
+			? () => goToVariableRelationships(history, setHistoryState)
+			: noop,
 		factorsPathData,
 	]
 }
 
-function useFactorsPathData(historyState: Maybe<string>): PathData {
-	return useMemo((): PathData => {
-		return {
-			path: historyState,
-			page: historyState?.replace(/[/-]/g, ' '),
-		}
-	}, [historyState])
+function getFactorsPathData(historyState: Maybe<string>): PathData {
+	return {
+		path: historyState,
+		page: historyState?.replace(/[/-]/g, ' '),
+	}
+}
+
+function goToVariableRelationships(
+	history: any,
+	setHistoryState: (value?: string) => void,
+): void {
+	history.push(Pages.VariablesRelationships)
+	setHistoryState(undefined)
 }

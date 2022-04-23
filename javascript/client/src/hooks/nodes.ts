@@ -2,10 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-/*!
- * Copyright (c) Microsoft. All rights reserved.
- * Licensed under the MIT license. See LICENSE file in the project.
- */
+
 import {
 	buildAlternativeModels,
 	buildEstimators,
@@ -22,13 +19,13 @@ import { getDefinitionsByType } from '~utils'
 import { useNodeProperties } from './nodeProperties'
 
 export function useEstimateNode(fileName?: string): Maybe<NodeRequest> {
-	const buildEstimateEffectNode = useBuildEstimateEffectNode()
+	const getNodeProperties = useGetNodeProperties()
 	return useMemo(() => {
 		if (!fileName) {
 			return undefined
 		}
-		return buildEstimateEffectNode(fileName)
-	}, [fileName, buildEstimateEffectNode])
+		return buildEstimateEffectNode(getNodeProperties(fileName))
+	}, [fileName, getNodeProperties])
 }
 
 function useGetNodeProperties(): (fileName: string) => Partial<GraphNodeData> {
@@ -83,18 +80,14 @@ function useGetNodeProperties(): (fileName: string) => Partial<GraphNodeData> {
 	)
 }
 
-function useBuildEstimateEffectNode(): (fileName: string) => NodeRequest {
-	const getNodeProperties = useGetNodeProperties()
-	return useCallback(
-		(fileName: string) => {
-			const nodeReq = buildNodes([
-				{
-					type: GraphNodeType.EstimateEffects,
-					...getNodeProperties(fileName),
-				},
-			])
-			return nodeReq
+function buildEstimateEffectNode(
+	nodeProperties: Partial<GraphNodeData>,
+): NodeRequest {
+	const nodeReq = buildNodes([
+		{
+			type: GraphNodeType.EstimateEffects,
+			...nodeProperties,
 		},
-		[getNodeProperties],
-	)
+	])
+	return nodeReq
 }

@@ -8,7 +8,7 @@ import {
 } from '@essex/themed-components'
 import { StepTitle } from '@showwhy/components'
 import type { StepList, Workflow } from '@showwhy/types'
-import { memo, useCallback, useState } from 'react'
+import { memo, useState } from 'react'
 import styled from 'styled-components'
 
 import { StepItem } from '../StepItem'
@@ -34,14 +34,6 @@ export const StepSelector: React.FC<{
 		onHeaderClick,
 		onParentOpen,
 	)
-
-	const renderHeader = useCallback((title: string) => {
-		return <CollapseHeader>{title}</CollapseHeader>
-	}, [])
-
-	const subPanelRenderHeader = useCallback((title: string) => {
-		return <CollapseSubPanelHeader>{title}</CollapseSubPanelHeader>
-	}, [])
 
 	return (
 		<Container>
@@ -95,6 +87,14 @@ export const StepSelector: React.FC<{
 		</Container>
 	)
 })
+
+function renderHeader(title: string): JSX.Element {
+	return <CollapseHeader>{title}</CollapseHeader>
+}
+
+function subPanelRenderHeader(title: string): JSX.Element {
+	return <CollapseSubPanelHeader>{title}</CollapseSubPanelHeader>
+}
 
 const Container = styled.div`
 	height: 100%;

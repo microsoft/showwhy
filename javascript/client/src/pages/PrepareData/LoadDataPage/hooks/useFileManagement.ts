@@ -3,20 +3,31 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import type { FileCollection } from '@data-wrangling-components/utilities'
+import { FileType } from '@data-wrangling-components/utilities'
 import type { Handler, Handler1, ProjectFile } from '@showwhy/types'
 import { useCallback } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 
+import { useHandleFiles } from '~hooks'
 import { useProjectFiles, useSelectedFile, useSetProjectFiles } from '~state'
 import { replaceItemAtIndex } from '~utils'
 
-export function useFileManagement(setErrorMessage?: Handler1<string>): {
+const acceptedFileTypes: string[] = [
+	`.${FileType.csv}`,
+	`.${FileType.tsv}`,
+	`.${FileType.zip}`,
+]
+
+export function useFileManagement(setErrorMessage: Handler1<string>): {
 	projectFiles: ProjectFile[]
 	doRemoveFile: Handler
 	doUpdateFiles: (file: ProjectFile) => void
-	doAddFile: (file: ProjectFile) => void
+	onFileLoad: (file: ProjectFile) => void
 	selectedFile: ProjectFile | undefined
 	setSelectedFile: Handler1<ProjectFile>
+	onZipFileLoad: (fileCollection: FileCollection) => void
+	acceptedFileTypes: string[]
 } {
 	const projectFiles = useProjectFiles()
 	const setProjectFiles = useSetProjectFiles()
@@ -32,7 +43,7 @@ export function useFileManagement(setErrorMessage?: Handler1<string>): {
 		[projectFiles, setSelectedFile, setProjectFiles],
 	)
 
-	const doAddFile = useCallback(
+	const onFileLoad = useCallback(
 		async (file: ProjectFile) => {
 			if (projectFiles.find(s => s.name === file.name)) {
 				setErrorMessage && setErrorMessage('File already uploaded')
@@ -52,12 +63,16 @@ export function useFileManagement(setErrorMessage?: Handler1<string>): {
 		setProjectFiles(filteredFiles)
 	}, [selectedFile, setProjectFiles, projectFiles])
 
+	const onZipFileLoad = useHandleFiles(setErrorMessage)
+
 	return {
 		projectFiles,
 		doRemoveFile,
-		doAddFile,
+		onFileLoad,
 		doUpdateFiles,
 		selectedFile,
 		setSelectedFile,
+		onZipFileLoad,
+		acceptedFileTypes,
 	}
 }

@@ -6,13 +6,17 @@
 import type { Definition } from '@showwhy/types'
 import { useCallback } from 'react'
 
-import { useSaveDefinitions } from '../ConsiderAlternativeDefinitionsPage.hooks'
-import { updateListTypes } from '../ConsiderAlternativeDefinitionsPage.utils'
+import { useSetDefinitions } from '~state'
+
+import {
+	saveDefinitions,
+	updateListTypes,
+} from '../ConsiderAlternativeDefinitionsPage.utils'
 
 export function useEditDefinition(
 	definitions: Definition[],
 ): (definition: Definition) => void {
-	const saveDefinitions = useSaveDefinitions()
+	const setDefinitions = useSetDefinitions()
 	return useCallback(
 		(definition: Definition) => {
 			let newDefinitions = updateListTypes(definitions, definition.type)
@@ -22,9 +26,9 @@ export function useEditDefinition(
 				}
 				return d
 			})
-			saveDefinitions(newDefinitions)
+			saveDefinitions(newDefinitions, definitions, setDefinitions)
 			return newDefinitions
 		},
-		[saveDefinitions, definitions],
+		[definitions, setDefinitions],
 	)
 }

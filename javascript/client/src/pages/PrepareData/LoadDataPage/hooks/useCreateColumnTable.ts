@@ -15,8 +15,8 @@ import { percentage, readFile } from '~utils'
 
 export function useCreateColumnTable(
 	onFileLoad: Handler1<ProjectFile>,
-	onLoadStart?: Handler,
-	onProgress?: Handler1<number>,
+	onLoadStart: Handler,
+	onProgress: Handler1<number>,
 ): (files: BaseFile[], delimiter?: string) => void {
 	const onFinishReading = useCallback(
 		(table: ColumnTable, name: string, delimiter: string) => {
@@ -35,29 +35,27 @@ export function useCreateColumnTable(
 		[onFileLoad],
 	)
 
-	const progressPercentage = useCallback(
-		(processed: number, total: number) => {
-			const filePercentage = Math.round(percentage(processed, total))
-			onProgress && onProgress(filePercentage)
-		},
-		[onProgress],
-	)
-
 	return useCallback(
 		(files: BaseFile[], delimiter?: string, autoType = false) => {
 			onLoadStart && onLoadStart()
 			files.forEach(async (file: BaseFile) => {
+				const handleProgressPercentage = (processed: number, total: number) => {
+					if (onProgress) {
+						const filePercentage = Math.round(percentage(processed, total))
+						onProgress(filePercentage)
+					}
+				}
 				const _delimiter = delimiter || guessDelimiter(file.name)
 				const table = await readFile(
 					file,
 					_delimiter,
 					autoType,
-					progressPercentage,
+					handleProgressPercentage,
 				)
 				const name = file.name
 				onFinishReading(table, name, _delimiter)
 			})
 		},
-		[onLoadStart, onFinishReading, progressPercentage],
+		[onLoadStart, onFinishReading, onProgress],
 	)
 }

@@ -12,9 +12,3 @@ export const delimiterOptions: IDropdownOption[] = [
 	{ key: ',', text: 'Comma' },
 	{ key: ' ', text: 'Space' },
 ]
-
-export const LOAD_FILE_TYPES: string[] = [
-	`.${FileType.csv}`,
-	`.${FileType.tsv}`,
-]
-export const LOAD_ZIP_TYPES: string[] = [`.${FileType.zip}`]

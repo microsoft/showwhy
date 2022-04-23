@@ -9,7 +9,6 @@ import type {
 } from '@data-wrangling-components/utilities'
 import { FileType } from '@data-wrangling-components/utilities'
 import type { AsyncHandler1 } from '@showwhy/types'
-import { useCallback } from 'react'
 
 import type { FileDefinition } from '~types'
 import { ProjectSource } from '~types'
@@ -47,7 +46,7 @@ async function validateProjectFiles(
 }
 
 export function useHandleFiles(
-	onError?: (msg: string) => void,
+	onError: (msg: string) => void,
 ): AsyncHandler1<FileCollection> {
 	const loadProject = useLoadProject(ProjectSource.zip)
 	return async function handleFiles(fileCollection: FileCollection) {
@@ -58,27 +57,7 @@ export function useHandleFiles(
 			const files = await groupFilesByType(fileCollection)
 			loadProject(undefined, files)
 		} catch (e) {
-			if (onError) {
-				onError((e as Error).message)
-			} else {
-				throw e
-			}
+			onError((e as Error).message)
 		}
 	}
-}
-
-export function useOnDropZipFilesAccepted(
-	onError?: (msg: string) => void,
-): AsyncHandler1<FileCollection> {
-	const handleDrop = useHandleFiles()
-	return useCallback(
-		async (fileCollection: FileCollection) => {
-			try {
-				await handleDrop(fileCollection)
-			} catch (e) {
-				onError && onError((e as Error).message)
-			}
-		},
-		[handleDrop, onError],
-	)
 }

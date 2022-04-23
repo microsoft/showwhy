@@ -17,7 +17,7 @@ import type { AsyncHandler, Maybe, Question } from '@showwhy/types'
 import { NodeResponseStatus } from '@showwhy/types'
 import { useCallback, useMemo } from 'react'
 
-import { useGetResult, useGetStepUrlsByStatus } from '~hooks'
+import { useGetStepUrlsByStatus } from '~hooks'
 import {
 	useCausalFactors,
 	useConfidenceInterval,
@@ -39,6 +39,8 @@ import {
 import type { DataTableFileDefinition, Workspace } from '~types'
 import { DownloadType } from '~types'
 import { isDataUrl } from '~utils'
+
+import { getResult } from '../App.util'
 
 export function useSaveProject(): AsyncHandler {
 	const fileCollection = useFileCollection()
@@ -128,7 +130,6 @@ function useTables(fileCollection: FileCollection) {
 }
 
 function useResult(type?: DownloadType): Promise<Maybe<FileWithPath>> {
-	const getResult = useGetResult()
 	const runHistory = useRunHistory()
 	return useMemo(async () => {
 		const completed = runHistory.find(
@@ -148,7 +149,7 @@ function useResult(type?: DownloadType): Promise<Maybe<FileWithPath>> {
 			}
 		}
 		return undefined
-	}, [getResult, runHistory, type])
+	}, [runHistory, type])
 }
 
 function useCSVResult() {

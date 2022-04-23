@@ -10,16 +10,15 @@ import type {
 	Setter,
 } from '@showwhy/types'
 import { useCallback } from 'react'
+import type { SetterOrUpdater } from 'recoil'
 
 import { BatchUpdateAction } from '../SelectCausalEstimatorsPage.types'
+import { batchUpdate } from '../SelectCausalEstimatorsPage.utils'
 
 export function useOnEstimatorTypeChange(
 	estimatorsList: Estimator[],
 	selectedEstimatorGroups: EstimatorGroup[],
-	batchUpdateSelectedEstimators: (
-		estimators: Estimator[],
-		action: BatchUpdateAction,
-	) => void,
+	setEstimators: SetterOrUpdater<Estimator[]>,
 	setSelectedEstimatorGroups: Setter<EstimatorGroup[]>,
 ): Handler1<EstimatorGroup> {
 	return useCallback(
@@ -27,9 +26,10 @@ export function useOnEstimatorTypeChange(
 			const action: BatchUpdateAction = selectedEstimatorGroups.includes(group)
 				? BatchUpdateAction.Delete
 				: BatchUpdateAction.Add
-			batchUpdateSelectedEstimators(
-				estimatorsList.filter(e => e.group === group),
+			batchUpdate(
 				action,
+				estimatorsList.filter(e => e.group === group),
+				setEstimators,
 			)
 			setSelectedEstimatorGroups(prev =>
 				prev.includes(group) ? prev.filter(e => e !== group) : [...prev, group],
@@ -38,7 +38,7 @@ export function useOnEstimatorTypeChange(
 		[
 			estimatorsList,
 			selectedEstimatorGroups,
-			batchUpdateSelectedEstimators,
+			setEstimators,
 			setSelectedEstimatorGroups,
 		],
 	)

@@ -13,7 +13,7 @@ import { useCallback } from 'react'
 
 export function useHandleKeyPress(
 	fn: Handler,
-	key: string,
+	key = 'enter',
 ): Handler1<React.KeyboardEvent<HTMLInputElement>> {
 	return useCallback(
 		(event: React.KeyboardEvent<HTMLInputElement>) => {

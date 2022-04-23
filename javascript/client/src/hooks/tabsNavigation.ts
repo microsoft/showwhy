@@ -23,28 +23,25 @@ export function useHandleOnLinkClick(): (item: any) => void {
 	)
 }
 
-export function useGoToNextTab(): () => string {
+function goToNextTab(currentTab: string): string {
 	const tabs: string[] = Object.keys(DefinitionType).filter(
 		k => !k.includes('Cause') && !k.includes('Confounders'),
 	)
-	const currentTab = capitalize(useDefinitionType())
-	return useCallback(() => {
-		const nextIndex = tabs.indexOf(currentTab) + 1
-		let nextTab = currentTab
-		if (nextIndex >= 0 && nextIndex < tabs.length) {
-			nextTab = tabs[nextIndex] as string
-		} else if (nextIndex >= tabs.length) {
-			nextTab = 'END'
-		}
-		return nextTab
-	}, [currentTab, tabs])
+	const nextIndex = tabs.indexOf(currentTab) + 1
+	let nextTab = currentTab
+	if (nextIndex >= 0 && nextIndex < tabs.length) {
+		nextTab = tabs[nextIndex] as string
+	} else if (nextIndex >= tabs.length) {
+		nextTab = 'END'
+	}
+	return nextTab
 }
 
 export function useHandleTabNavigation(): () => string {
-	const goToNextTab = useGoToNextTab()
 	const handleOnLinkClick = useHandleOnLinkClick()
+	const currentTab = capitalize(useDefinitionType())
 	return useCallback(() => {
-		const nextTab = goToNextTab()
+		const nextTab = goToNextTab(currentTab)
 		if (nextTab !== 'END') {
 			const tab: HTMLButtonElement | null = document.querySelector(
 				`button[role="tab"][name="${nextTab}"]`,
@@ -53,5 +50,5 @@ export function useHandleTabNavigation(): () => string {
 			handleOnLinkClick({ key: nextTab.toLowerCase() })
 		}
 		return nextTab
-	}, [handleOnLinkClick, goToNextTab])
+	}, [handleOnLinkClick, currentTab])
 }

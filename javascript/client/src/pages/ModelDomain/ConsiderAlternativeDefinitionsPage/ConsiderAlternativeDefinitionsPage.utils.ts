@@ -3,8 +3,11 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import { wait } from '@showwhy/api-client'
 import type { Definition, DefinitionType, Maybe } from '@showwhy/types'
 import { CausalityLevel } from '@showwhy/types'
+
+import { withRandomId } from '~utils/ids'
 
 export function updateListTypes(
 	definitions: Maybe<Definition[]>,
@@ -24,4 +27,22 @@ export function updateListTypes(
 		})
 	}
 	return result
+}
+
+export async function saveDefinitions(
+	definition: Definition | Definition[],
+	definitions: Definition[],
+	setDefinitions: (definitions: Definition[]) => void,
+): Promise<void> {
+	if (!definition) {
+		return
+	}
+	let list = [...definitions]
+	if (!Array.isArray(definition)) {
+		list = [...list, withRandomId(definition)]
+	} else if (definition.length) {
+		list = [...definition]
+	}
+	setDefinitions(list)
+	await wait(500)
 }

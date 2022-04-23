@@ -6,7 +6,7 @@
 import { renderHook } from '@testing-library/react-hooks'
 import { table } from 'arquero'
 
-import { useIsMicrodata } from '../useIsMicrodata'
+import { useIsMicrodata } from '../../pages/PerformAnalysis/EstimateCausalEffectsPage/hooks/useIsMicrodata'
 
 describe('useIsMicrodata', () => {
 	it('microdata returns true', () => {

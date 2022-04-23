@@ -7,28 +7,8 @@ import type { CausalFactor, Definition, Handler } from '@showwhy/types'
 import { useMemo } from 'react'
 import styled from 'styled-components'
 
-function handleKeyPress(fn: Handler) {
-	return (event: React.KeyboardEvent<HTMLInputElement>) => {
-		const enter = 'enter'
-		if (
-			event.code.toLowerCase() === enter ||
-			event.key.toLowerCase() === enter ||
-			event.keyCode === 13
-		) {
-			fn()
-		}
-	}
-}
-
-function handleVariableOnBlur(fn: Handler) {
-	return (event: React.FocusEvent<HTMLInputElement>) => {
-		const { relatedTarget } = event
-		const pw = relatedTarget?.getAttribute('data-pw')
-		if (pw !== 'factors-form-description') {
-			fn()
-		}
-	}
-}
+import { useHandleKeyPress } from './useHandleKeyPress'
+import { useHandleOnBlur } from './useHandleOnBlur'
 
 export function useCheckbox(
 	isPrimary: boolean,
@@ -51,9 +31,9 @@ export function useVariableField(
 	setVariable: (v: string) => void,
 	factor?: CausalFactor,
 ): JSX.Element {
+	const handleOnBlur = useHandleOnBlur(add, 'factors-form-description')
+	const handler = useHandleKeyPress(add)
 	return useMemo(() => {
-		const handler = handleKeyPress(add)
-		const handleOnBlur = handleVariableOnBlur(add)
 		return (
 			<VariableField
 				onChange={(_, value) => setVariable(value ?? '')}
@@ -64,7 +44,7 @@ export function useVariableField(
 				onBlur={!factor ? handleOnBlur : undefined}
 			/>
 		)
-	}, [variable, setVariable, add, factor])
+	}, [variable, setVariable, factor, handleOnBlur, handler])
 }
 
 export function useDescriptionBox(
@@ -73,8 +53,8 @@ export function useDescriptionBox(
 	add: Handler,
 	factor?: CausalFactor,
 ): JSX.Element {
+	const handler = useHandleKeyPress(add)
 	return useMemo(() => {
-		const handler = handleKeyPress(add)
 		return (
 			<DetailsContainer>
 				<Field
@@ -89,7 +69,7 @@ export function useDescriptionBox(
 				/>
 			</DetailsContainer>
 		)
-	}, [description, setDescription, add, factor])
+	}, [description, setDescription, add, factor, handler])
 }
 
 export function useAddButton(

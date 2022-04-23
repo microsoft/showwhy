@@ -23,7 +23,6 @@ import {
 	changeDefaultEstimator,
 	getEstimatorByRanking,
 } from '../SelectCausalEstimatorsPage.utils'
-import { useBatchUpdate } from './useBatchUpdate'
 import { useEstimatorCardList } from './useEstimatorCardList'
 import { useEstimatorsList } from './useEstimatorsList'
 import { useOnEstimatorTypeChange } from './useOnEstimatorTypeChange'
@@ -57,7 +56,6 @@ export function useEstimatorOptions(
 		[setEstimators],
 	)
 
-	const batchUpdateSelectedEstimators = useBatchUpdate(setEstimators)
 	const verifyEstimatorGroups = useVerifyEstimatorGroups(
 		estimatorsList,
 		estimators,
@@ -66,7 +64,7 @@ export function useEstimatorOptions(
 	const onEstimatorTypeChange = useOnEstimatorTypeChange(
 		estimatorsList,
 		selectedEstimatorGroups,
-		batchUpdateSelectedEstimators,
+		setEstimators,
 		setSelectedEstimatorGroups,
 	)
 

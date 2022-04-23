@@ -7,15 +7,18 @@ import type { Definition } from '@showwhy/types'
 import { CausalityLevel } from '@showwhy/types'
 import { useCallback } from 'react'
 
+import { useSetDefinitions } from '~state'
 import { withRandomId } from '~utils'
 
-import { useSaveDefinitions } from '../ConsiderAlternativeDefinitionsPage.hooks'
-import { updateListTypes } from '../ConsiderAlternativeDefinitionsPage.utils'
+import {
+	saveDefinitions,
+	updateListTypes,
+} from '../ConsiderAlternativeDefinitionsPage.utils'
 
 export function useAddDefinition(
 	definitions: Definition[],
 ): (definition: Definition) => void {
-	const saveDefinitions = useSaveDefinitions()
+	const setDefinitions = useSetDefinitions()
 	return useCallback(
 		(definition: Definition) => {
 			if (!definition.variable?.length) {
@@ -28,8 +31,8 @@ export function useAddDefinition(
 			} else {
 				list = [...definitions, definition]
 			}
-			saveDefinitions(list)
+			saveDefinitions(list, definitions, setDefinitions)
 		},
-		[saveDefinitions, definitions],
+		[definitions, setDefinitions],
 	)
 }

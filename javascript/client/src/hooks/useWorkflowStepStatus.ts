@@ -4,7 +4,6 @@
  */
 import type { Handler, Maybe, WorkflowStep } from '@showwhy/types'
 import { StepStatus } from '@showwhy/types'
-import { useCallback } from 'react'
 
 import { useSetStepStatus, useStepStatus } from '~state'
 
@@ -13,22 +12,20 @@ export function useWorkflowStepStatus(step: WorkflowStep): {
 	onToggleWorkflowStatus: Handler
 } {
 	const stepStatus = useStepStatus(step?.url)
-	const onToggleWorkflowStatus = useToggleWorkflowStatus(step, stepStatus)
+	const setStepStatus = useSetStepStatus(step?.url)
 
 	return {
 		stepStatus,
-		onToggleWorkflowStatus,
+		onToggleWorkflowStatus: () =>
+			toggleWorkflowStatus(stepStatus, setStepStatus),
 	}
 }
 
-function useToggleWorkflowStatus(
-	step: Maybe<WorkflowStep>,
+function toggleWorkflowStatus(
 	stepStatus: Maybe<StepStatus>,
-): Handler {
-	const setStepStatus = useSetStepStatus(step?.url)
-	return useCallback(() => {
-		setStepStatus(
-			stepStatus === StepStatus.Done ? StepStatus.ToDo : StepStatus.Done,
-		)
-	}, [setStepStatus, stepStatus])
+	setStepStatus: (stepStatus: StepStatus) => void,
+) {
+	setStepStatus(
+		stepStatus === StepStatus.Done ? StepStatus.ToDo : StepStatus.Done,
+	)
 }

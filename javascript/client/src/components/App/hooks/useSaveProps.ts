@@ -5,25 +5,18 @@
 
 import type { IContextualMenuProps } from '@fluentui/react'
 import { NodeResponseStatus } from '@showwhy/types'
-import { useCallback, useMemo } from 'react'
+import { useMemo } from 'react'
 
-import { useDefaultRun, useDownloadResult, useIsCollectionEmpty } from '~hooks'
+import { useDefaultRun, useIsCollectionEmpty } from '~hooks'
 import { FileType } from '~types'
 
+import { downloadResult } from '../App.util'
 import { useSaveProject } from './useSaveProject'
 
 export function useSaveProps(): IContextualMenuProps {
-	const downloadResult = useDownloadResult()
 	const defaultRun = useDefaultRun()
 	const isCollectionEmpty = useIsCollectionEmpty()
 	const saveProject = useSaveProject()
-
-	const onDownload = useCallback(
-		(type: FileType) => {
-			downloadResult(type)
-		},
-		[downloadResult],
-	)
 
 	return useMemo<IContextualMenuProps>(() => {
 		const disabled =
@@ -53,17 +46,17 @@ export function useSaveProps(): IContextualMenuProps {
 					key: 'jupyter',
 					text: 'Jupyter Notebook',
 					disabled,
-					onClick: () => onDownload(FileType.jupyter),
+					onClick: () => downloadResult(FileType.jupyter),
 					'data-pw': 'save-jupyter',
 				},
 				{
 					key: 'csv',
 					text: 'Result CSV',
 					disabled,
-					onClick: () => onDownload(FileType.csv),
+					onClick: () => downloadResult(FileType.csv),
 					'data-pw': 'save-csv',
 				},
 			],
 		}
-	}, [defaultRun, onDownload, saveProject, isCollectionEmpty])
+	}, [defaultRun, saveProject, isCollectionEmpty])
 }

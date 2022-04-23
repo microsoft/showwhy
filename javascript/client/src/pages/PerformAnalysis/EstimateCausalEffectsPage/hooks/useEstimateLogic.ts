@@ -7,7 +7,7 @@ import { useBoolean } from '@fluentui/react-hooks'
 import { OrchestratorType } from '@showwhy/api-client'
 import { buildLoadNode } from '@showwhy/builders'
 import type { AsyncHandler, Handler, Maybe, NodeRequest } from '@showwhy/types'
-import { useCallback, useState } from 'react'
+import { useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 
 import { useEstimateNode, useSaveNewRun, useWakeLock } from '~hooks'
@@ -46,7 +46,7 @@ export function useEstimateLogic(isProcessing: boolean): {
 	)
 	useWakeLock()
 
-	const runEstimate = useCallback(async () => {
+	async function runEstimate() {
 		setIsCanceled(false)
 		trueLoadingFile()
 		setStorageItem(SESSION_ID_KEY, uuidv4())
@@ -62,19 +62,12 @@ export function useEstimateLogic(isProcessing: boolean): {
 			nodes: [...loadNode.nodes, ...(estimateNode as NodeRequest).nodes],
 		}
 		await run().execute(nodes, OrchestratorType.Estimator)
-	}, [
-		run,
-		estimateNode,
-		setIsCanceled,
-		saveNewRun,
-		uploadFile,
-		trueLoadingFile,
-	])
+	}
 
-	const cancelRun = useCallback(() => {
+	async function cancelRun() {
 		setIsCanceled(true)
 		run().cancel()
-	}, [setIsCanceled, run])
+	}
 
 	return {
 		specCount,

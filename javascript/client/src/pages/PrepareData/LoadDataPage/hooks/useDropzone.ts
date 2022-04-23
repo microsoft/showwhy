@@ -3,24 +3,21 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type {
-	BaseFile,
-	FileCollection,
-	FileWithPath,
-} from '@data-wrangling-components/utilities'
+import type { FileCollection } from '@data-wrangling-components/utilities'
 import { FileType, isZipFile } from '@data-wrangling-components/utilities'
 import type { DropFilesCount } from '@showwhy/components'
 import type { Handler, Handler1, ProjectFile } from '@showwhy/types'
 import type { Dispatch, SetStateAction } from 'react'
 import { useCallback, useState } from 'react'
 
-import { useAddFilesToCollection } from './fileCollection'
-import { useOnDropZipFilesAccepted } from './handleZip'
+import { useAddFilesToCollection } from '~hooks'
+
 import { useCreateColumnTable } from './useCreateColumnTable'
 
 export function useDropzone(
-	onError?: (msg: string) => void,
-	onLoad?: (file: ProjectFile) => void,
+	onError: (msg: string) => void,
+	onLoad: (file: ProjectFile) => void,
+	onZipFileLoad: (files: FileCollection) => void,
 ): {
 	onDrop: (f: FileCollection) => void
 	onDropAccepted: (f: FileCollection) => void
@@ -35,16 +32,15 @@ export function useDropzone(
 		total: 0,
 		completed: 0,
 	})
-	const resetCount = useResetFilesCount(setFileCount)
-	const onLoadStart = useOnLoadStart(setLoading, onError)
+	const onLoadStart = useLoadStart(setLoading, onError)
 	const onFileLoadCompleted = useOnLoadCompleted(
 		setFileCount,
 		setLoading,
 		onLoad,
 	)
 	const onDrop = useHandleOnDrop(onFileLoadCompleted, onLoadStart, setProgress)
-	const onDropAccepted = useOnDropAccepted(onError, setFileCount)
-	const onDropRejected = useOnDropRejected(onError, resetCount)
+	const onDropAccepted = useOnDropAccepted(onZipFileLoad, onError, setFileCount)
+	const onDropRejected = useOnDropRejected(onError, setFileCount)
 
 	return {
 		onDrop,
@@ -56,11 +52,11 @@ export function useDropzone(
 	}
 }
 
-function useOnLoadStart(setLoading: any, onError: any): Handler {
+function useLoadStart(setLoading: any, onError: any): () => void {
 	return useCallback(() => {
 		setLoading(true)
 		onError && onError(null)
-	}, [setLoading, onError])
+	}, [onError, setLoading])
 }
 
 function useOnLoadCompleted(
@@ -83,54 +79,55 @@ function useOnLoadCompleted(
 	)
 }
 
-function useResetFilesCount(
-	setFilesCount: (count: DropFilesCount) => void,
-): Handler {
-	return useCallback(() => {
-		setFilesCount({
-			total: 0,
-			completed: 0,
-		})
-	}, [setFilesCount])
-}
-
 function useOnDropRejected(
-	onError?: (text: string) => void,
-	cb?: Handler,
+	onError: (text: string) => void,
+	setFilesCount: (count: DropFilesCount) => void,
 ): (message: string) => void {
 	return useCallback(
 		(message: string) => {
-			onError && onError(message)
-			cb && cb()
+			onError(message)
+			setFilesCount({
+				total: 0,
+				completed: 0,
+			})
 		},
-		[onError, cb],
+		[onError, setFilesCount],
 	)
 }
 
 function useOnDropAccepted(
-	onError?: (msg: string) => void,
-	setFileCount?: (fileCount: DropFilesCount) => void,
+	onDrop: (files: FileCollection) => void,
+	onError: (msg: string) => void,
+	setFileCount: (fileCount: DropFilesCount) => void,
 ): (files: FileCollection) => void {
-	const onDropZipFilesAccepted = useOnDropZipFilesAccepted(onError)
-	const onDropDatasetFilesAccepted = useOnDropDatasetFilesAccepted(setFileCount)
+	const addFilesToCollection = useAddFilesToCollection()
 	return useCallback(
-		(fileCollection: FileCollection) => {
+		async (fileCollection: FileCollection) => {
 			const isZip = isZipFile(fileCollection.name)
 			const hasJson = !!fileCollection.list(FileType.json).length
 			if (isZip || hasJson) {
-				onDropZipFilesAccepted(fileCollection)
+				try {
+					await onDrop(fileCollection)
+				} catch (e) {
+					onError((e as Error).message)
+				}
 			} else {
-				onDropDatasetFilesAccepted(fileCollection.list(FileType.table))
+				const files = fileCollection.list(FileType.table)
+				await addFilesToCollection(files)
+				setFileCount({
+					total: files.length,
+					completed: 0,
+				})
 			}
 		},
-		[onDropZipFilesAccepted, onDropDatasetFilesAccepted],
+		[onDrop, onError, setFileCount, addFilesToCollection],
 	)
 }
 
 function useHandleOnDrop(
 	onFileLoadCompleted: (file: ProjectFile) => void,
-	onLoadStart?: Handler,
-	onProgress?: Handler1<number>,
+	onLoadStart: Handler,
+	onProgress: Handler1<number>,
 ): (files: FileCollection) => void {
 	const onDrop = useCreateColumnTable(
 		onFileLoadCompleted,
@@ -147,22 +144,5 @@ function useHandleOnDrop(
 			}
 		},
 		[onDrop],
-	)
-}
-
-function useOnDropDatasetFilesAccepted(
-	setFilesCount?: (count: DropFilesCount) => void,
-): (files: BaseFile[]) => void {
-	const addFilesToCollection = useAddFilesToCollection()
-	return useCallback(
-		async (files: BaseFile[]) => {
-			await addFilesToCollection(files as FileWithPath[])
-			setFilesCount &&
-				setFilesCount({
-					total: files.length,
-					completed: 0,
-				})
-		},
-		[setFilesCount, addFilesToCollection],
 	)
 }

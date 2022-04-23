@@ -16,7 +16,6 @@ import { v4 } from 'uuid'
 import {
 	useAddOrEditFactorTestable as useAddOrEditFactor,
 	useAlternativeModelsTestable as useAlternativeModels,
-	useDeleteCausalFactorTestable as useDeleteCausalFactor,
 } from '../causalFactors'
 
 const causalFactors: CausalFactor[] = [
@@ -80,20 +79,6 @@ const newItem: CausalFactor = {
 }
 
 describe('causalFactorsHooks', () => {
-	it('useDeleteCausalFactor', () => {
-		const setCausalFactors = jest.fn()
-		const expected = [...causalFactors.slice(1)]
-		const { result } = renderHook(
-			() => useDeleteCausalFactor(causalFactors, setCausalFactors),
-			{
-				wrapper: RecoilRoot,
-			},
-		)
-		const response = result.current
-		response(causalFactors[0]!)
-		expect(setCausalFactors).toHaveBeenCalledWith(expected)
-	})
-
 	describe('useAlternativeModels', () => {
 		it('Maximum Model', () => {
 			const expected = {

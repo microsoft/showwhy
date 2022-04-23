@@ -5,13 +5,15 @@
 
 import { useMemo } from 'react'
 
-import { useAllVariables, useIsMicrodata } from '~hooks'
+import { useAllVariables } from '~hooks'
 import {
 	useCausalFactors,
 	useDefinitions,
 	useOutputTablePrep,
 	useSubjectIdentifier,
 } from '~state'
+
+import { useIsMicrodata } from './useIsMicrodata'
 
 export function useDataErrors(): {
 	isMicrodata: boolean

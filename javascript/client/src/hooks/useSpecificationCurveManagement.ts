@@ -18,14 +18,15 @@ import {
 	RefutationResult,
 } from '@showwhy/types'
 import { csv } from 'd3-fetch'
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 
-import { useDefaultRun, useOnMouseOver, useVegaWindowDimensions } from '~hooks'
+import { useDefaultRun, useVegaWindowDimensions } from '~hooks'
 import {
 	useDefaultDatasetResult,
 	useDefinitions,
 	useHoverState,
 	useRunHistory,
+	useSetHoverState,
 	useSpecificationCurveConfig,
 } from '~state'
 import { row2spec } from '~utils'
@@ -133,4 +134,16 @@ export function useFailedRefutationIds(data: Specification[]): number[] {
 				.map(a => a.id) || []
 		)
 	}, [data])
+}
+
+function useOnMouseOver(): (
+	item: Maybe<Specification | DecisionFeature>,
+) => void {
+	const setHovered = useSetHoverState()
+	return useCallback(
+		(item: Maybe<Specification | DecisionFeature>) => {
+			setHovered(item?.id)
+		},
+		[setHovered],
+	)
 }

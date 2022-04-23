@@ -3,7 +3,12 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { Maybe, PrimarySpecificationConfig, Setter } from '@showwhy/types'
+import type {
+	Estimator,
+	Maybe,
+	PrimarySpecificationConfig,
+	Setter,
+} from '@showwhy/types'
 import { EstimatorGroup, EstimatorType } from '@showwhy/types'
 import type { SetterOrUpdater } from 'recoil'
 
@@ -11,6 +16,7 @@ import {
 	estimatorRanking,
 	ESTIMATORS_SHORT_DESCRIPTION,
 } from './SelectCausalEstimatorsPage.constants'
+import { BatchUpdateAction } from './SelectCausalEstimatorsPage.types'
 
 const defaultEstimatorRanking = estimatorRanking.reduce((acc, curr) => {
 	acc[curr.key] = curr.value
@@ -64,5 +70,31 @@ export const getShortDescriptionByType = (type: string): string => {
 			return ESTIMATORS_SHORT_DESCRIPTION.outcome
 		default:
 			return ``
+	}
+}
+
+export function batchUpdate(
+	action: BatchUpdateAction,
+	estimators: Estimator[],
+	setEstimators: SetterOrUpdater<Estimator[]>,
+): void {
+	switch (action) {
+		case BatchUpdateAction.Add:
+			setEstimators(prev => [
+				...prev,
+				...estimators.filter(
+					estimator => !prev.map(e => e.type).includes(estimator.type),
+				),
+			])
+			break
+		case BatchUpdateAction.Delete:
+			setEstimators(prev =>
+				prev.filter(
+					estimator => !estimators.map(e => e.type).includes(estimator.type),
+				),
+			)
+			break
+		default:
+			return
 	}
 }
