@@ -4,10 +4,8 @@
  */
 
 import type { IContextualMenuItem, IContextualMenuProps } from '@fluentui/react'
-import type { Maybe } from '@showwhy/types'
+import type { FileDefinition, Maybe } from '@showwhy/types'
 import { useMemo } from 'react'
-
-import type { FileDefinition } from '~types'
 
 export function useLoadMenu(
 	exampleProjects: FileDefinition[],

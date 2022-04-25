@@ -2,6 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import type { DefaultDatasetResult } from '@showwhy/types'
 import type { Resetter, SetterOrUpdater } from 'recoil'
 import {
 	atom,
@@ -9,8 +10,6 @@ import {
 	useResetRecoilState,
 	useSetRecoilState,
 } from 'recoil'
-
-import type { DefaultDatasetResult } from '~types'
 
 export const defaultDatasetResultState = atom<DefaultDatasetResult | null>({
 	key: 'default-dataset-result',

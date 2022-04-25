@@ -8,10 +8,9 @@ import type {
 	FileCollection,
 } from '@data-wrangling-components/utilities'
 import { FileType } from '@data-wrangling-components/utilities'
-import type { AsyncHandler1 } from '@showwhy/types'
+import type { AsyncHandler1, FileDefinition } from '@showwhy/types'
+import { ProjectSource } from '@showwhy/types'
 
-import type { FileDefinition } from '~types'
-import { ProjectSource } from '~types'
 import { groupFilesByType, isZipUrl } from '~utils'
 
 import { useLoadProject } from './loadProject'

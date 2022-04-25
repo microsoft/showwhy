@@ -3,10 +3,14 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { AsyncHandler1, Handler1, Maybe } from '@showwhy/types'
+import type {
+	AsyncHandler1,
+	Handler1,
+	Maybe,
+	ProjectFile,
+} from '@showwhy/types'
 import { useCallback } from 'react'
 
-import type { ProjectFile } from '~types'
 import { createDefaultTable } from '~utils'
 
 export function useToggleAutoType(

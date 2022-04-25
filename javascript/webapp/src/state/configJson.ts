@@ -3,6 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import type { Workspace } from '@showwhy/types'
 import type { Resetter, SetterOrUpdater } from 'recoil'
 import {
 	atom,
@@ -10,8 +11,6 @@ import {
 	useResetRecoilState,
 	useSetRecoilState,
 } from 'recoil'
-
-import type { Workspace } from '~types'
 
 const configJsonState = atom<Partial<Workspace>>({
 	key: 'config-json-store',
