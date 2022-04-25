@@ -8,7 +8,7 @@ In other words, ShowWhy enables emulation of randomized controlled trials that p
 
 ## Packages
 
-- [client](packages/client)
+- [webapp](packages/webapp)
 - [showwhy-backend](python/showwhy-backend)
 - [showwhy-inference](python/showwhy-inference)
 

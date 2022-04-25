@@ -10,7 +10,7 @@ trigger:
       - dev
   paths:
     include:
-      - javascript/client
+      - javascript/webapp
 
 pr:
   branches:
@@ -19,7 +19,7 @@ pr:
       - release/*
   paths:
     include:
-      - javascript/client
+      - javascript/webapp
 
 stages:
   - stage: Compliance
@@ -105,7 +105,7 @@ stages:
           - task: DeleteFiles@1
             displayName: Delete .env file
             inputs:
-              SourceFolder: '$(System.DefaultWorkingDirectory)/javascript/client'
+              SourceFolder: '$(System.DefaultWorkingDirectory)/javascript/webapp'
               Contents: '.env'
               RemoveDotFiles: true
 
@@ -130,7 +130,7 @@ stages:
               appType: 'webApp'
               ConnectedServiceName: '$(subscription)'
               WebAppName: 'showwhy-dev-ui'
-              packageForLinux: '$(System.DefaultWorkingDirectory)/javascript/client/deploy.zip'
+              packageForLinux: '$(System.DefaultWorkingDirectory)/javascript/webapp/deploy.zip'
 
   - stage: DeploymentInteg
     displayName: Deployment (Integ)
@@ -157,7 +157,7 @@ stages:
           - task: DeleteFiles@1
             displayName: Delete .env file
             inputs:
-              SourceFolder: '$(System.DefaultWorkingDirectory)/javascript/client'
+              SourceFolder: '$(System.DefaultWorkingDirectory)/javascript/webapp'
               Contents: '.env'
               RemoveDotFiles: true
 
@@ -182,4 +182,4 @@ stages:
               appType: 'webApp'
               ConnectedServiceName: '$(subscription)'
               WebAppName: 'showwhy-ui'
-              packageForLinux: '$(System.DefaultWorkingDirectory)/javascript/client/deploy.zip'
+              packageForLinux: '$(System.DefaultWorkingDirectory)/javascript/webapp/deploy.zip'
