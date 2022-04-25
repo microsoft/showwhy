@@ -11,7 +11,6 @@ export interface ProjectFile {
 	table: ColumnTable
 	id?: string
 	loadedCorrectly?: boolean
-	fileId?: string //why id and fileId?
 	delimiter?: string
 	autoType?: boolean
 }

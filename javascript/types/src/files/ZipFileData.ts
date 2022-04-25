@@ -6,7 +6,7 @@
 import type { BaseFile, Json } from '@data-wrangling-components/utilities'
 import type { RunHistory, SignificanceTest } from '@showwhy/types'
 
-export interface ZipData {
+export interface ZipFileData {
 	json?: Json
 	tables?: BaseFile[]
 	notebooks?: BaseFile[]

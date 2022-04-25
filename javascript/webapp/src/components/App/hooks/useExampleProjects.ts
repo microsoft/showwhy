@@ -2,9 +2,8 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import type { FileDefinition } from '@showwhy/types'
 import { useEffect, useState } from 'react'
-
-import type { FileDefinition } from '~types'
 
 export function useExampleProjects(): FileDefinition[] {
 	const [examples, setExamples] = useState<FileDefinition[]>([])

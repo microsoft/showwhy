@@ -13,8 +13,14 @@ import {
 	FileType,
 } from '@data-wrangling-components/utilities'
 import { isStatus } from '@showwhy/api-client'
-import type { AsyncHandler, Maybe, Question } from '@showwhy/types'
-import { NodeResponseStatus } from '@showwhy/types'
+import type {
+	AsyncHandler,
+	DataTableFileDefinition,
+	Maybe,
+	Question,
+	Workspace,
+} from '@showwhy/types'
+import { DownloadType, NodeResponseStatus } from '@showwhy/types'
 import { useCallback, useMemo } from 'react'
 
 import { useGetStepUrlsByStatus } from '~hooks'
@@ -36,8 +42,6 @@ import {
 	useSubjectIdentifier,
 	useTablesPrepSpecification,
 } from '~state'
-import type { DataTableFileDefinition, Workspace } from '~types'
-import { DownloadType } from '~types'
 import { isDataUrl } from '~utils'
 
 import { getResult } from '../App.util'

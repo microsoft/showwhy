@@ -9,10 +9,10 @@ import type {
 	TableStore,
 } from '@data-wrangling-components/core'
 import { guessDelimiter } from '@data-wrangling-components/utilities'
+import type { DataTableFileDefinition, ProjectFile } from '@showwhy/types'
 import { fromCSV } from 'arquero'
 import type ColumnTable from 'arquero/dist/types/table/column-table'
 
-import type { DataTableFileDefinition, ProjectFile } from '~types'
 import { isZipUrl, readFile } from '~utils'
 /**
  * Creates a default data table by parsing csv/tsv content.

@@ -13,11 +13,16 @@ import { usePipeline, useStore } from '@data-wrangling-components/react'
 import type { BaseFile } from '@data-wrangling-components/utilities'
 import type {
 	CausalFactor,
+	DataTableFileDefinition,
 	Definition,
+	FileDefinition,
 	Maybe,
+	ProjectFile,
 	RunHistory,
+	Workspace,
+	ZipFileData,
 } from '@showwhy/types'
-import { StepStatus } from '@showwhy/types'
+import { ProjectSource, StepStatus } from '@showwhy/types'
 import { all, op } from 'arquero'
 import type ColumnTable from 'arquero/dist/types/table/column-table'
 import { useCallback } from 'react'
@@ -45,14 +50,6 @@ import {
 	useSetSubjectIdentifier,
 	useSetTablesPrepSpecification,
 } from '~state'
-import type {
-	DataTableFileDefinition,
-	FileDefinition,
-	ProjectFile,
-	Workspace,
-	ZipData,
-} from '~types'
-import { ProjectSource } from '~types'
 import {
 	fetchRemoteTables,
 	fetchTable,
@@ -65,7 +62,10 @@ import {
 
 export function useLoadProject(
 	source = ProjectSource.url,
-): (definition?: Maybe<FileDefinition>, zip?: Maybe<ZipData>) => Promise<void> {
+): (
+	definition?: Maybe<FileDefinition>,
+	zip?: Maybe<ZipFileData>,
+) => Promise<void> {
 	const setPrimarySpecificationConfig = useSetPrimarySpecificationConfig()
 	const setCausalFactors = useSetCausalFactors()
 	const setSubjectIdentifier = useSetSubjectIdentifier()
@@ -88,7 +88,7 @@ export function useLoadProject(
 	const setConfigJson = useSetConfigJson()
 
 	return useCallback(
-		async (definition?: FileDefinition, zip: ZipData = {}) => {
+		async (definition?: FileDefinition, zip: ZipFileData = {}) => {
 			if (!definition && !zip) {
 				throw new Error('Must provide either a definition or .zip file')
 			}
@@ -96,7 +96,7 @@ export function useLoadProject(
 			let workspace: any
 
 			if (source === ProjectSource.zip) {
-				const { json, name } = zip as ZipData
+				const { json, name } = zip as ZipFileData
 				workspace = {
 					...json,
 					name,
@@ -116,7 +116,7 @@ export function useLoadProject(
 				notebooks = [],
 				runHistory = [],
 				significanceTests = [],
-			} = zip as ZipData
+			} = zip as ZipFileData
 
 			const {
 				primarySpecification,

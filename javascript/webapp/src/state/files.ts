@@ -3,6 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import type { ProjectFile } from '@showwhy/types'
 import type { Resetter, SetterOrUpdater } from 'recoil'
 import {
 	atom,
@@ -11,8 +12,6 @@ import {
 	useSetRecoilState,
 } from 'recoil'
 import { Subject } from 'rxjs'
-
-import type { ProjectFile } from '~types'
 
 import { observableEffect } from './effects/observableEffect'
 
