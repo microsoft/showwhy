@@ -12,7 +12,7 @@
 		"@typescript-eslint/no-non-null-assertion": 0
 	},
 	"overrides": [{
-		"files": "javascript/client/src/**/*",
+		"files": "javascript/webapp/src/**/*",
 		"rules": {
 			// not working w/ Vite yet
 			"import/extensions": ["error", "never"],

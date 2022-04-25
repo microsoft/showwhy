@@ -6,8 +6,8 @@ lib/
 coverage/
 test-results/
 
-# exclude any csv from client public data folder
-javascript/client/public/data/*/*.csv
+# exclude any csv from webapp public data folder
+javascript/webapp/public/data/*/*.csv
 
 # Classic node deps
 node_modules/

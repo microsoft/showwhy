@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { MessageContainer } from '@showwhy/components'
-import type { FC} from 'react';
+import type { FC } from 'react'
 import { memo } from 'react'
 import { Link } from 'react-router-dom'
 import { Pages } from 'src/constants'

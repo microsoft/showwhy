@@ -1,5 +1,5 @@
 {
-	"name": "@showwhy/client",
+	"name": "@showwhy/webapp",
 	"version": "0.0.1",
 	"main": "src/index.ts",
 	"publishConfig": {
@@ -105,7 +105,7 @@
 		"vite": "^2.9.5"
 	},
 	"jest-junit": {
-		"suiteName": "@showwhy/client",
+		"suiteName": "@showwhy/webapp",
 		"outputDirectory": "./test-results",
 		"outputName": "jest-junit.xml"
 	}

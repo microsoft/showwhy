@@ -4,7 +4,7 @@
  */
 
 import type { IChoiceGroupOption } from '@fluentui/react'
-import type { Estimator} from '@showwhy/types';
+import type { Estimator } from '@showwhy/types'
 import { EstimatorGroup, EstimatorType } from '@showwhy/types'
 
 export const estimatorGroups: IChoiceGroupOption[] = [
