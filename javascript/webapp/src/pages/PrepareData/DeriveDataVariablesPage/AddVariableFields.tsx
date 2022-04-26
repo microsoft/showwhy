@@ -4,13 +4,13 @@
  */
 import type { IComboBoxOption, IDropdownOption } from '@fluentui/react'
 import { ComboBox, DefaultButton, Label, TextField } from '@fluentui/react'
+import { DegreeComboBox } from '@showwhy/components'
 import { BeliefDegree, CausalFactorType, DefinitionType } from '@showwhy/types'
 import upperFirst from 'lodash/upperFirst'
 import type { FC } from 'react'
 import { memo, useCallback, useState } from 'react'
 import styled from 'styled-components'
 
-import { useDegreeComboBox } from '~hooks'
 import { isCausalFactorType } from '~utils'
 
 export const AddVariableFields: FC<{
@@ -36,7 +36,6 @@ export const AddVariableFields: FC<{
 		},
 		[setDegree],
 	)
-	const Combobox = useDegreeComboBox(onChangeDegree)
 
 	return (
 		<Container>
@@ -54,7 +53,11 @@ export const AddVariableFields: FC<{
 			{type && isCausalFactorType(type as CausalFactorType) && (
 				<>
 					<Label>Degree of belief</Label>
-					{Combobox(degree, type as unknown as CausalFactorType)}
+					<DegreeComboBox
+						onChangeDegree={onChangeDegree}
+						degree={degree}
+						type={type as CausalFactorType}
+					/>
 				</>
 			)}
 			<ButtonContainer>

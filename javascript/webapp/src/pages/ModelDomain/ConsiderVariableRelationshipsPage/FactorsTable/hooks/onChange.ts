@@ -11,28 +11,7 @@ import type {
 	FlatCausalFactor,
 	Handler,
 } from '@showwhy/types'
-// import type { BeliefDegree } from '@showwhy/types'
 import { useCallback } from 'react'
-
-// export function useOnChangeCauses(
-// 	flatFactorsList: FlatCausalFactor[],
-// 	saveNewFactors: (id: string, value: Cause) => void,
-// ): (id: string, checked: boolean) => void {
-// 	return useCallback(
-// 		(id: string, checked: boolean) => {
-// 			const newValue =
-// 				(flatFactorsList.find(x => x.id === id) as Cause) || ({} as Cause)
-// 			newValue.causes = checked
-// 			if (checked && !newValue.degree) {
-// 				newValue.degree = BeliefDegree.Strong
-// 			} else if (!checked) {
-// 				newValue.degree = null
-// 			}
-// 			saveNewFactors(id, newValue)
-// 		},
-// 		[flatFactorsList, saveNewFactors],
-// 	)
-// }
 
 export function useOnChangeCauses(
 	flatFactorsList: FlatCausalFactor[],
