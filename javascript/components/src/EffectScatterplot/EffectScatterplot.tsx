@@ -29,7 +29,7 @@ export const EffectScatterplot: React.FC<{
 	selected?: number
 	title?: string
 	chartTitle?: string
-	failedRefutationIds: number[]
+	failedRefutationIds: string[]
 	totalSpecs?: number
 	showStats?: boolean
 }> = memo(function EffectScatterplot({
@@ -61,8 +61,8 @@ export const EffectScatterplot: React.FC<{
 
 	const signals = useMemo(
 		() => ({
-			hoveredId: hovered,
-			selectedId: selected,
+			hoveredIndex: hovered,
+			selectedIndex: selected,
 			showMedian: showStats && config.medianLine,
 			showMean: showStats && config.meanLine,
 			showConfidenceInterval: config.confidenceIntervalTicks,

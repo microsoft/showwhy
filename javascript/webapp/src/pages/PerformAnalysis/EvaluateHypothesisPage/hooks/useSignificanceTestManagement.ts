@@ -17,7 +17,7 @@ import { useDefaultRun } from '~hooks'
 import { useRunSignificanceTest } from './useRunSignificanceTest'
 
 export function useSignificanceTestManagement(
-	failedRefutationIds: number[],
+	failedRefutationIds: string[],
 	specificationData: Specification[],
 	specificationCurveConfig: SpecificationCurveConfig,
 ): {
@@ -39,7 +39,7 @@ export function useSignificanceTestManagement(
 	}, [specificationData, specificationCurveConfig, failedRefutationIds])
 
 	const activeTaskIds = useMemo((): string[] => {
-		return activeSpecifications.map(x => x.taskId)
+		return activeSpecifications.map(x => x.id)
 	}, [activeSpecifications])
 
 	const activeEstimatedEffects = useMemo(() => {

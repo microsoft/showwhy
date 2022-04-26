@@ -5,7 +5,6 @@
 import type { Dimensions } from '@essex/hooks'
 import { Container, PivotScatterplot } from '@showwhy/components'
 import type {
-	DecisionFeature,
 	Maybe,
 	Specification,
 	SpecificationCurveConfig,
@@ -20,9 +19,9 @@ export const ResultsGraph: React.FC<{
 	specificationData: Specification[]
 	specificationCurveConfig: SpecificationCurveConfig
 	vegaWindowDimensions: Dimensions
-	onMouseOver: (item: Maybe<Specification | DecisionFeature>) => void
+	onMouseOver: (item: Maybe<Specification>) => void
 	hovered: Maybe<number>
-	failedRefutationIds: number[]
+	failedRefutationIds: string[]
 	outcome?: string
 }> = memo(function ResultsGraph({
 	specificationData,

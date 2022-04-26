@@ -37,7 +37,7 @@
 			"transform": [
 				{
 					"type": "filter",
-					"expr": "datum.id === hoveredId"
+					"expr": "datum.index === hoveredIndex"
 				}
 			]
 		},
@@ -74,10 +74,10 @@
 	],
 	"signals": [
 		{
-			"name": "hoveredId"
+			"name": "hoveredIndex"
 		},
 		{
-			"name": "selectedId"
+			"name": "selectedIndex"
 		},
 		{
 			"name": "showShap"
@@ -108,7 +108,7 @@
 			"nice": false,
 			"domain": {
 				"data": "features",
-				"field": "id"
+				"field": "index"
 			},
 			"zero": false,
 			"range": [
@@ -242,7 +242,7 @@
 				"update": {
 					"xc": {
 						"scale": "x",
-						"signal": "selectedId"
+						"signal": "selectedIndex"
 					},
 					"width": {
 						"value": 10
@@ -251,7 +251,7 @@
 						"signal": "height"
 					},
 					"fillOpacity": {
-						"signal": "selectedId ? 0.2 : 0"
+						"signal": "selectedIndex ? 0.2 : 0"
 					}
 				}
 			}
@@ -263,7 +263,7 @@
 				"update": {
 					"xc": {
 						"scale": "x",
-						"signal": "hoveredId"
+						"signal": "hoveredIndex"
 					},
 					"width": {
 						"value": 10
@@ -272,7 +272,7 @@
 						"signal": "height"
 					},
 					"fillOpacity": {
-						"signal": "hoveredId ? 0.1 : 0"
+						"signal": "hoveredIndex ? 0.1 : 0"
 					}
 				}
 			}
@@ -287,7 +287,7 @@
 				"update": {
 					"xc": {
 						"scale": "x",
-						"field": "id"
+						"field": "index"
 					},
 					"width": {
 						"value": 15
@@ -311,7 +311,7 @@
 				"update": {
 					"xc": {
 						"scale": "x",
-						"field": "id"
+						"field": "index"
 					},
 					"y": {
 						"signal": "scale('y',datum.key) - (datum.value < 0 ? -2.5 : (scale('shapSize', datum.value) + 2.5))"
@@ -350,7 +350,7 @@
 					},
 					"xc": {
 						"scale": "x",
-						"field": "id"
+						"field": "index"
 					},
 					"y": {
 						"signal": "scale('y',datum.key) - (datum.value < 0 ? -scale('shapSize', datum.value) - 4.5 : (scale('shapSize', datum.value) + 4.5))"
@@ -368,7 +368,7 @@
 				"update": {
 					"x": {
 						"scale": "x",
-						"field": "id"
+						"field": "index"
 					},
 					"y": {
 						"scale": "y",
@@ -397,7 +397,7 @@
 				"update": {
 					"x": {
 						"scale": "x",
-						"field": "id"
+						"field": "index"
 					},
 					"fill": {
 						"scale": "colorBold",
@@ -423,7 +423,7 @@
 				"update": {
 					"x": {
 						"scale": "x",
-						"field": "id"
+						"field": "index"
 					},
 					"y": {
 						"scale": "y",
@@ -445,7 +445,7 @@
 				"update": {
 					"x": {
 						"scale": "x",
-						"field": "id"
+						"field": "index"
 					},
 					"y": {
 						"signal": "height"
@@ -454,7 +454,7 @@
 						"value": 11.5
 					},
 					"text": {
-						"signal": "datum.id"
+						"signal": "datum.index"
 					},
 					"align": {
 						"value": "center"

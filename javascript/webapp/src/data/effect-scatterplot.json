@@ -20,7 +20,7 @@
 				},
 				{
 					"type": "aggregate",
-					"groupby": ["id"]
+					"groupby": ["index"]
 				}
 			]
 		},
@@ -31,8 +31,8 @@
 				{
 					"type": "lookup",
 					"from": "inactiveCounts",
-					"key": "id",
-					"fields": ["id"],
+					"key": "index",
+					"fields": ["index"],
 					"values": ["count"],
 					"as": ["inactiveFeatureCount"],
 					"default": 0
@@ -45,7 +45,7 @@
 			"transform": [
 				{
 					"type": "filter",
-					"expr": "datum.id === hoveredId"
+					"expr": "datum.index === hoveredIndex"
 				}
 			]
 		},
@@ -91,13 +91,13 @@
 	],
 	"signals": [
 		{
-			"name": "hoveredId"
+			"name": "hoveredIndex"
 		},
 		{
 			"name": "dataValueName"
 		},
 		{
-			"name": "selectedId"
+			"name": "selectedIndex"
 		},
 		{
 			"name": "chartTitle"
@@ -132,7 +132,7 @@
 			"zero": false,
 			"domain": {
 				"data": "marked",
-				"field": "id"
+				"field": "index"
 			},
 			"range": [
 				0,
@@ -209,10 +209,10 @@
 			"type": "rect",
 			"encode": {
 				"update": {
-					"xc": { "scale": "x", "signal": "selectedId" },
+					"xc": { "scale": "x", "signal": "selectedIndex" },
 					"width": { "value": 10 },
 					"height": { "signal": "height" },
-					"fillOpacity": { "signal": "selectedId ? 0.2 : 0" }
+					"fillOpacity": { "signal": "selectedIndex ? 0.2 : 0" }
 				}
 			}
 		},
@@ -222,7 +222,7 @@
 			"from": { "data": "specifications" },
 			"encode": {
 				"enter": {
-					"x": { "scale": "x", "field": "id" },
+					"x": { "scale": "x", "field": "index" },
 					"y": { "scale": "y", "field": "c95Upper" },
 					"y2": { "scale": "y", "field": "c95Lower" }
 				},
@@ -241,10 +241,10 @@
 			"type": "rect",
 			"encode": {
 				"update": {
-					"xc": { "scale": "x", "signal": "hoveredId" },
+					"xc": { "scale": "x", "signal": "hoveredIndex" },
 					"width": { "value": 10 },
 					"height": { "signal": "height" },
-					"fillOpacity": { "signal": "hoveredId ? 0.1 : 0" }
+					"fillOpacity": { "signal": "hoveredIndex ? 0.1 : 0" }
 				}
 			}
 		},
@@ -258,7 +258,7 @@
 				"update": {
 					"xc": {
 						"scale": "x",
-						"field": "id"
+						"field": "index"
 					},
 					"width": {
 						"value": 15
@@ -278,7 +278,7 @@
 				"update": {
 					"x": {
 						"scale": "x",
-						"field": "id"
+						"field": "index"
 					},
 					"y": {
 						"scale": "y",
@@ -303,7 +303,7 @@
 				"update": {
 					"x": {
 						"scale": "x",
-						"field": "id"
+						"field": "index"
 					},
 					"y": {
 						"scale": "y",
@@ -325,7 +325,7 @@
 				"update": {
 					"x": {
 						"scale": "x",
-						"field": "id"
+						"field": "index"
 					},
 					"y": {
 						"signal": "datum.c95Upper ? scale('y', datum.c95Upper) - 5 : scale('y', datum[dataValueName]) -8"

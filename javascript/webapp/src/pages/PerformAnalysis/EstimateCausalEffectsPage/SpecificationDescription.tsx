@@ -36,7 +36,7 @@ export const SpecificationDescription: React.FC<{
 				<>
 					<Paragraph noMarginTop data-pw="selected-specification-text">
 						Specification
-						<Value>{specification.id}</Value>uses a
+						<Value>{specification.index}</Value>uses a
 						<Value>{specification.causalModel}</Value>
 						causal model and a<Value>{specification.estimator}</Value>
 						estimator. The estimated effect of exposure

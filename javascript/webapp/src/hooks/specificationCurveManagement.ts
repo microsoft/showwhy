@@ -4,7 +4,6 @@
  */
 import type { Dimensions } from '@essex/hooks'
 import type {
-	DecisionFeature,
 	Definition,
 	Maybe,
 	RunHistory,
@@ -12,7 +11,6 @@ import type {
 	SpecificationCurveConfig,
 } from '@showwhy/types'
 import {
-	CausalityLevel,
 	DefinitionType,
 	NodeResponseStatus,
 	RefutationResult,
@@ -33,10 +31,10 @@ import { row2spec } from '~utils'
 
 export function useSpecificationCurveData(): {
 	config: SpecificationCurveConfig
-	failedRefutationIds: number[]
+	failedRefutationIds: string[]
 	hovered: Maybe<number>
-	onMouseOver: (item: Maybe<Specification | DecisionFeature>) => void
-	outcome: Maybe<string>
+	onMouseOver: (item: Maybe<Specification>) => void
+	outcomes: Definition[]
 	vegaWindowDimensions: Dimensions
 	activeProcessing: Maybe<RunHistory>
 	data: Specification[]
@@ -47,7 +45,7 @@ export function useSpecificationCurveData(): {
 	const hovered = useHoverState()
 	const onMouseOver = useOnMouseOver()
 	const definitions = useDefinitions()
-	const outcome = useOutcome(definitions)
+	const outcomes = useOutcomes(definitions)
 	const vegaWindowDimensions = useVegaWindowDimensions()
 	const runHistory = useRunHistory()
 	const activeProcessing = useActiveProcessing(runHistory)
@@ -57,7 +55,7 @@ export function useSpecificationCurveData(): {
 		failedRefutationIds,
 		hovered,
 		onMouseOver,
-		outcome,
+		outcomes,
 		vegaWindowDimensions,
 		activeProcessing,
 		data,
@@ -75,14 +73,14 @@ export function useLoadSpecificationData(): Specification[] {
 				setData([])
 			} else {
 				const result = defaultRun.result.map((x: any, index) => {
-					const n = { ...x, Specification_ID: index + 1 }
+					const n = { ...x, index: index + 1 }
 					return row2spec(n)
 				}) as Specification[]
 				const newResult = result
 					?.sort(function (a, b) {
 						return a?.estimatedEffect - b?.estimatedEffect
 					})
-					.map((x, index) => ({ ...x, id: index + 1 }))
+					.map((x, index) => ({ ...x, index: index + 1 }))
 
 				setData(newResult)
 			}
@@ -91,7 +89,7 @@ export function useLoadSpecificationData(): Specification[] {
 				const f = async () => {
 					try {
 						const result = await csv(defaultDatasetResult?.url, row2spec)
-						setData(result.map((x, index) => ({ ...x, id: index + 1 })))
+						setData(result.map((x, index) => ({ ...x, index: index + 1 })))
 					} catch (err) {
 						setData([])
 					}
@@ -103,14 +101,9 @@ export function useLoadSpecificationData(): Specification[] {
 	return data
 }
 
-function useOutcome(definitions: Definition[]) {
+function useOutcomes(definitions: Definition[]): Definition[] {
 	return useMemo(
-		() =>
-			definitions.find(
-				d =>
-					d.type === DefinitionType.Outcome &&
-					d.level === CausalityLevel.Primary,
-			)?.variable,
+		() => definitions.filter(d => d.type === DefinitionType.Outcome),
 		[definitions],
 	)
 }
@@ -126,8 +119,8 @@ function useActiveProcessing(runHistory: RunHistory[]): Maybe<RunHistory> {
 	}, [runHistory])
 }
 
-export function useFailedRefutationIds(data: Specification[]): number[] {
-	return useMemo((): number[] => {
+export function useFailedRefutationIds(data: Specification[]): string[] {
+	return useMemo((): string[] => {
 		return (
 			data
 				.filter(x => +x.refutationResult === RefutationResult.FailedCritical)
@@ -136,13 +129,11 @@ export function useFailedRefutationIds(data: Specification[]): number[] {
 	}, [data])
 }
 
-function useOnMouseOver(): (
-	item: Maybe<Specification | DecisionFeature>,
-) => void {
+function useOnMouseOver(): (item: Maybe<Specification>) => void {
 	const setHovered = useSetHoverState()
 	return useCallback(
-		(item: Maybe<Specification | DecisionFeature>) => {
-			setHovered(item?.id)
+		(item: Maybe<Specification>) => {
+			setHovered(item?.index)
 		},
 		[setHovered],
 	)

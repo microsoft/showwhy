@@ -7,11 +7,7 @@ import {
 	parseJsonPathSpecMerged,
 	VegaHost,
 } from '@showwhy/components'
-import type {
-	DecisionFeature,
-	Specification,
-	SpecificationCurveConfig,
-} from '@showwhy/types'
+import type { Specification, SpecificationCurveConfig } from '@showwhy/types'
 import { CausalityLevel } from '@showwhy/types'
 import { SelectionState } from '@thematic/core'
 import { useThematic } from '@thematic/react'
@@ -33,7 +29,7 @@ export const AnalyticDecisionsDotPlot: React.FC<{
 	// TODO: override height based on number of unique decision rows x desired row height
 	height: number
 	onMouseClick?: (datum?: Specification) => void
-	onMouseOver?: (datum?: DecisionFeature) => void
+	onMouseOver?: (datum?: Specification) => void
 	onAxisClick?: (axis: string, datum: any) => void
 	hovered?: number
 	selected?: number
@@ -106,8 +102,8 @@ export const AnalyticDecisionsDotPlot: React.FC<{
 
 	const signals = useMemo(
 		() => ({
-			hoveredId: hovered,
-			selectedId: selected,
+			hoveredIndex: hovered,
+			selectedIndex: selected,
 			showShap: config.shapTicks,
 			inactiveFeatures: config.inactiveFeatures,
 			inactiveSpecifications: config.inactiveSpecifications,
@@ -145,7 +141,8 @@ function useTransformShap(data: Specification[]) {
 	// TODO: fold this in vega
 	return useMemo(() => {
 		const output: {
-			id: number
+			index: number
+			id: string
 			key: string
 			value: number
 		}[] = []
@@ -155,6 +152,7 @@ function useTransformShap(data: Specification[]) {
 				const key = (row as any)[nonSHAP]
 				const value = (row as any)[column]
 				output.push({
+					index: row.index,
 					id: row.id,
 					key,
 					value,

@@ -5,7 +5,6 @@
 import { Pivot, PivotItem } from '@fluentui/react'
 import { EffectScatterplot } from '@showwhy/components'
 import type {
-	DecisionFeature,
 	Handler1,
 	Maybe,
 	Specification,
@@ -29,8 +28,8 @@ export const PivotScatterplot: FC<{
 	width: number
 	height: number
 	hovered: Maybe<number>
-	failedRefutationIds: number[]
-	onMouseOver?: Handler1<Maybe<Specification | DecisionFeature>>
+	failedRefutationIds: string[]
+	onMouseOver?: Handler1<Maybe<Specification>>
 	onMouseClick?: Handler1<Maybe<Specification>>
 	selected?: number
 	outcome?: string
@@ -54,7 +53,7 @@ export const PivotScatterplot: FC<{
 	const pivotItems = useMemo((): PivotItemChart[] => {
 		return [
 			{
-				pivotName: 'Outcome',
+				pivotName: 'Estimated effects',
 				chartTitle: `Estimated change in ${outcome} by specification`,
 				dataValueName: 'estimatedEffect',
 				showStats: true,
@@ -82,7 +81,7 @@ export const PivotScatterplot: FC<{
 					<PivotItem key={p.pivotName} headerText={p.pivotName}>
 						<EffectScatterplot
 							templateString={templateString}
-							data={data}
+							data={data.map((x, i) => ({ ...x, index: i + 1 }))}
 							config={config}
 							width={width}
 							height={height}

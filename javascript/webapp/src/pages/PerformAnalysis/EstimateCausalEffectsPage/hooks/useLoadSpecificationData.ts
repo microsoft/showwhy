@@ -21,14 +21,14 @@ export function useLoadSpecificationData(): Specification[] {
 				setData([])
 			} else {
 				const result = defaultRun.result.map((x: any, index) => {
-					const n = { ...x, Specification_ID: index + 1 }
+					const n = { ...x, index: index + 1 }
 					return row2spec(n)
 				}) as Specification[]
 				const newResult = result
 					?.sort(function (a, b) {
 						return a?.estimatedEffect - b?.estimatedEffect
 					})
-					.map((x, index) => ({ ...x, id: index + 1 }))
+					.map((x, index) => ({ ...x, index: index + 1 }))
 
 				setData(newResult)
 			}
@@ -37,7 +37,7 @@ export function useLoadSpecificationData(): Specification[] {
 				const f = async () => {
 					try {
 						const result = await csv(defaultDatasetResult?.url, row2spec)
-						setData(result.map((x, index) => ({ ...x, id: index + 1 })))
+						setData(result.map((x, index) => ({ ...x, index: index + 1 })))
 					} catch (err) {
 						setData([])
 					}

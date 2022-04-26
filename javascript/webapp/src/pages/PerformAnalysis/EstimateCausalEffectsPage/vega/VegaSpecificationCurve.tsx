@@ -4,7 +4,6 @@
  */
 import { PivotScatterplot } from '@showwhy/components'
 import type {
-	DecisionFeature,
 	Maybe,
 	Specification,
 	SpecificationCurveConfig,
@@ -27,9 +26,9 @@ export const VegaSpecificationCurve: React.FC<{
 	height: number
 	onConfigChange: any
 	onSpecificationSelect: (datum: Maybe<Specification>) => void
-	onMouseOver: (item: Maybe<Specification | DecisionFeature>) => void
+	onMouseOver: (item: Maybe<Specification>) => void
 	hovered: Maybe<number>
-	failedRefutationIds: number[]
+	failedRefutationIds: string[]
 	outcome?: string
 	totalSpecs?: number
 }> = memo(function VegaSpecificationCurve({
@@ -49,12 +48,12 @@ export const VegaSpecificationCurve: React.FC<{
 	// this will also greatly simplify the hover coordination
 	const [selected, setSelected] = useState<Maybe<number>>()
 	const handleDatumClick = useCallback(
-		(item: Maybe<Specification | DecisionFeature>) => {
-			if (item && item.id === selected) {
+		(item: Maybe<Specification>) => {
+			if (item && item.index === selected) {
 				setSelected(undefined)
 				onSpecificationSelect(undefined)
 			} else {
-				setSelected(item?.id)
+				setSelected(item?.index)
 				onSpecificationSelect(data.find(d => d.id === item?.id))
 			}
 		},

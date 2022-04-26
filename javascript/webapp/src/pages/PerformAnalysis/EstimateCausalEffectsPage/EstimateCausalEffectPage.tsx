@@ -35,7 +35,7 @@ import { useDataErrors } from './hooks/useDataErrors'
 import { useEstimateLogic } from './hooks/useEstimateLogic'
 import { useSpecificationCurve } from './hooks/useSpecificationCurve'
 import { SpecificationDescription } from './SpecificationDescription'
-import { VegaSpecificationCurve } from './vega/VegaSpecificationCurve'
+import { SpecificationGraphs } from './SpecificationGraphs'
 
 export const EstimateCausalEffectPage: React.FC = memo(
 	function EstimateCausalEffectPage() {
@@ -66,7 +66,7 @@ export const EstimateCausalEffectPage: React.FC = memo(
 			hovered,
 			failedRefutationIds,
 			vegaWindowDimensions,
-			outcome,
+			outcomes,
 			activeProcessing,
 		} = useSpecificationCurveData()
 
@@ -159,18 +159,17 @@ export const EstimateCausalEffectPage: React.FC = memo(
 							/>
 						</ContainerFlexColumn>
 					</ContainerFlexRow>
-					<VegaSpecificationCurve
+					<SpecificationGraphs
 						data={data}
 						config={config}
-						width={vegaWindowDimensions.width}
-						height={vegaWindowDimensions.height}
-						onConfigChange={onSpecificationsChange}
-						onSpecificationSelect={setSelectedSpecification}
+						vegaWindowDimensions={vegaWindowDimensions}
+						onSpecificationsChange={onSpecificationsChange}
+						setSelectedSpecification={setSelectedSpecification}
 						onMouseOver={onMouseOver}
 						hovered={hovered}
-						outcome={outcome}
+						outcomes={outcomes}
 						failedRefutationIds={failedRefutationIds}
-						totalSpecs={specCount}
+						specCount={specCount}
 					/>
 					<SpecificationDescription
 						refutationOptions={refutationOptions}

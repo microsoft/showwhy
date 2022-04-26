@@ -58,7 +58,7 @@ export const EvaluateHypothesisPage: React.FC = memo(
 			hovered,
 			failedRefutationIds,
 			vegaWindowDimensions,
-			outcome,
+			outcomes,
 		} = useSpecificationCurveData()
 
 		const { significanceTestResult, significanceFailed } =
@@ -131,7 +131,7 @@ export const EvaluateHypothesisPage: React.FC = memo(
 					vegaWindowDimensions={vegaWindowDimensions}
 					onMouseOver={onMouseOver}
 					hovered={hovered}
-					outcome={outcome}
+					outcome={(outcomes && outcomes[0]?.variable) || ''}
 					failedRefutationIds={failedRefutationIds}
 				/>
 			</ContainerFlexColumn>

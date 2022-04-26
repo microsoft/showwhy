@@ -9,7 +9,8 @@ import isNull from 'lodash/isNull'
 // eslint-disable-next-line
 export function row2spec(d: any): Specification {
 	return {
-		id: +d.Specification_ID,
+		index: +d.Specification_ID,
+		id: d.task_id,
 		population: d.population_name,
 		treatment: d.treatment,
 		outcome: d.outcome,
@@ -38,6 +39,5 @@ export function row2spec(d: any): Specification {
 		c95Upper: d.upper_bound,
 		c95Lower: d.lower_bound,
 		refutationResult: d.refutation_result,
-		taskId: d.task_id,
 	}
 }
