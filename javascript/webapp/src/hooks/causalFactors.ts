@@ -65,25 +65,35 @@ export function useAlternativeModelsTestable(
 			}
 			const { causes = {} as Cause } = factor || {}
 
-			const degreeExposure = causes[CausalFactorType.CauseExposure] ?? -1
-			const degreeOutcome = causes[CausalFactorType.CauseOutcome] ?? -1
+			const degreeExposure =
+				causes[CausalFactorType.CauseExposure] ?? BeliefDegree.None
+			const degreeOutcome =
+				causes[CausalFactorType.CauseOutcome] ?? BeliefDegree.None
+
 			if (degreeExposure > 0 && degreeOutcome > 0) {
 				if (shouldIncludeInDegree(degreeExposure, causalLevel)) {
 					confoundersArray.push(variable)
 				}
 			}
 
-			if (degreeOutcome > 0 && degreeExposure === BeliefDegree.None) {
+			if (
+				degreeOutcome > 0 &&
+				(!degreeExposure || degreeExposure === BeliefDegree.None)
+			) {
 				if (shouldIncludeInDegree(degreeOutcome, causalLevel)) {
 					outcomeArray.push(variable)
 				}
 			}
-			if (degreeExposure > 0 && degreeOutcome === BeliefDegree.None) {
+			if (
+				degreeExposure > 0 &&
+				(!degreeOutcome || degreeOutcome === BeliefDegree.None)
+			) {
 				if (shouldIncludeInDegree(degreeExposure, causalLevel)) {
 					exposureArray.push(variable)
 				}
 			}
 		})
+
 		return {
 			confounders: confoundersArray,
 			outcomeDeterminants: outcomeArray,

@@ -39,6 +39,7 @@
 		"../types/src/workspace/FileDefinition.ts",
 		"../types/src/workspace/ProjectSource.ts",
 		"../types/src/files/DownloadType.ts",
-		"../types/src/files/ZipFileData.ts"
+		"../types/src/files/ZipFileData.ts",
+		"../components/src/DegreeComboBox/DegreeComboBox.tsx"
 	]
 }
