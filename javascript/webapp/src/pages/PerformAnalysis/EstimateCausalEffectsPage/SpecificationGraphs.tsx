@@ -3,15 +3,17 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import type { Dimensions } from '@essex/hooks'
-import { Pivot, PivotItem } from '@fluentui/react'
+import type { IDropdownOption } from '@fluentui/react';
+import { Dropdown } from '@fluentui/react'
 import type {
-	Definition,
+	Handler1,
 	Maybe,
 	Specification,
 	SpecificationCurveConfig,
 } from '@showwhy/types'
 import type { FC } from 'react'
-import { memo, useCallback } from 'react'
+import { memo } from 'react'
+import styled from 'styled-components'
 
 import { VegaSpecificationCurve } from './vega/VegaSpecificationCurve'
 
@@ -25,7 +27,9 @@ export const SpecificationGraphs: FC<{
 	hovered: Maybe<number>
 	failedRefutationIds: string[]
 	specCount: Maybe<number>
-	outcomes: Definition[]
+	outcomeOptions: IDropdownOption[]
+	selectedOutcome: string
+	setSelectedOutcome: Handler1<string>
 }> = memo(function SpecificationGraphs({
 	data,
 	config,
@@ -36,12 +40,23 @@ export const SpecificationGraphs: FC<{
 	hovered,
 	failedRefutationIds,
 	specCount,
-	outcomes,
+	outcomeOptions,
+	selectedOutcome,
+	setSelectedOutcome,
 }) {
-	const returnVega = useCallback(
-		(outcome: string) => (
+	return (
+		<>
+			<DropdownContainer>
+				<Dropdown
+					defaultSelectedKey={selectedOutcome}
+					label="Outcome"
+					disabled={outcomeOptions.length <= 2}
+					options={outcomeOptions}
+					onChange={(_, val) => setSelectedOutcome(val?.key as string)}
+				/>
+			</DropdownContainer>
 			<VegaSpecificationCurve
-				data={returnOutcomeSpecifications(outcome, data)}
+				data={returnOutcomeSpecifications(selectedOutcome, data)}
 				config={config}
 				width={vegaWindowDimensions.width}
 				height={vegaWindowDimensions.height}
@@ -49,42 +64,17 @@ export const SpecificationGraphs: FC<{
 				onSpecificationSelect={setSelectedSpecification}
 				onMouseOver={onMouseOver}
 				hovered={hovered}
-				outcome={outcome}
+				outcome={selectedOutcome}
 				failedRefutationIds={failedRefutationIds}
 				totalSpecs={specCount}
 			/>
-		),
-		[
-			data,
-			config,
-			vegaWindowDimensions,
-			onSpecificationsChange,
-			setSelectedSpecification,
-			onMouseOver,
-			hovered,
-			failedRefutationIds,
-			specCount,
-		],
-	)
-
-	return (
-		<>
-			{outcomes.length > 1 ? (
-				<Pivot onLinkClick={() => setSelectedSpecification(undefined)}>
-					{outcomes?.map(x => {
-						return (
-							<PivotItem key={x.id} headerText={x.variable}>
-								{returnVega(x.variable)}
-							</PivotItem>
-						)
-					})}
-				</Pivot>
-			) : (
-				returnVega(outcomes[0]?.variable || '<outcome>')
-			)}
 		</>
 	)
 })
+
+const DropdownContainer = styled.div`
+	width: 300px;
+`
 
 function returnOutcomeSpecifications(outcome: string, data: Specification[]) {
 	return data

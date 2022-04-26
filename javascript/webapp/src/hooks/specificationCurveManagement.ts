@@ -3,17 +3,20 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import type { Dimensions } from '@essex/hooks'
+import type { IDropdownOption } from '@fluentui/react';
+import { DropdownMenuItemType } from '@fluentui/react'
 import type {
 	Definition,
+	Handler1,
 	Maybe,
 	RunHistory,
 	Specification,
-	SpecificationCurveConfig,
-} from '@showwhy/types'
+	SpecificationCurveConfig} from '@showwhy/types';
 import {
+	CausalityLevel,
 	DefinitionType,
 	NodeResponseStatus,
-	RefutationResult,
+	RefutationResult
 } from '@showwhy/types'
 import { csv } from 'd3-fetch'
 import { useCallback, useEffect, useMemo, useState } from 'react'
@@ -34,31 +37,42 @@ export function useSpecificationCurveData(): {
 	failedRefutationIds: string[]
 	hovered: Maybe<number>
 	onMouseOver: (item: Maybe<Specification>) => void
-	outcomes: Definition[]
+	outcomeOptions: IDropdownOption[]
 	vegaWindowDimensions: Dimensions
 	activeProcessing: Maybe<RunHistory>
 	data: Specification[]
+	selectedOutcome: string
+	setSelectedOutcome: Handler1<string>
 } {
+	const [selectedOutcome, setSelectedOutcome] = useState<string>('')
 	const data = useLoadSpecificationData()
 	const failedRefutationIds = useFailedRefutationIds(data)
 	const config = useSpecificationCurveConfig()
 	const hovered = useHoverState()
 	const onMouseOver = useOnMouseOver()
 	const definitions = useDefinitions()
-	const outcomes = useOutcomes(definitions)
+	const outcomeOptions = returnOutcomeOptions(definitions)
 	const vegaWindowDimensions = useVegaWindowDimensions()
 	const runHistory = useRunHistory()
 	const activeProcessing = useActiveProcessing(runHistory)
+
+	useEffect(() => {
+		if (!selectedOutcome.length && outcomeOptions.length >= 2) {
+			setSelectedOutcome(outcomeOptions[1]?.key as string)
+		}
+	}, [outcomeOptions, selectedOutcome, setSelectedOutcome])
 
 	return {
 		config,
 		failedRefutationIds,
 		hovered,
 		onMouseOver,
-		outcomes,
+		outcomeOptions,
+		selectedOutcome,
 		vegaWindowDimensions,
 		activeProcessing,
 		data,
+		setSelectedOutcome,
 	}
 }
 
@@ -101,11 +115,35 @@ export function useLoadSpecificationData(): Specification[] {
 	return data
 }
 
-function useOutcomes(definitions: Definition[]): Definition[] {
-	return useMemo(
-		() => definitions.filter(d => d.type === DefinitionType.Outcome),
-		[definitions],
-	)
+function returnOutcomeOptions(definitions: Definition[]): IDropdownOption[] {
+	const outcomes = definitions.filter(d => d.type === DefinitionType.Outcome)
+	const primary = outcomes.filter(d => d.level === CausalityLevel.Primary)
+	const secondary = outcomes.filter(d => d.level === CausalityLevel.Secondary)
+	const options: IDropdownOption[] = [
+		{
+			key: 'primaryHeader',
+			text: 'Primary',
+			itemType: DropdownMenuItemType.Header,
+		},
+	]
+
+	primary.forEach(d => {
+		options.push({ key: d.variable, text: d.variable })
+	})
+
+	if (secondary.length) {
+		options.push({
+			key: 'secondaryKey',
+			text: 'Secondary',
+			itemType: DropdownMenuItemType.Header,
+		})
+
+		secondary.forEach(d => {
+			options.push({ key: d.variable, text: d.variable })
+		})
+	}
+
+	return options
 }
 
 function useActiveProcessing(runHistory: RunHistory[]): Maybe<RunHistory> {

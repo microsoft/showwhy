@@ -53,13 +53,13 @@ export const PivotScatterplot: FC<{
 	const pivotItems = useMemo((): PivotItemChart[] => {
 		return [
 			{
-				pivotName: 'Estimated effects',
+				pivotName: 'Effect size',
 				chartTitle: `Estimated change in ${outcome} by specification`,
 				dataValueName: 'estimatedEffect',
 				showStats: true,
 			},
 			{
-				pivotName: 'Population',
+				pivotName: 'Population size',
 				chartTitle: 'Population size by specification',
 				dataValueName: 'populationSize',
 			},

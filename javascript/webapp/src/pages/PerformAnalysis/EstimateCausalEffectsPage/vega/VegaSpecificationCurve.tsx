@@ -94,7 +94,7 @@ export const VegaSpecificationCurve: React.FC<{
 				data={data}
 				config={config}
 				width={width}
-				outcome={outcome}
+				outcome={outcome || '<outcome>'}
 				height={height * 0.25}
 				onMouseOver={onMouseOver}
 				onMouseClick={handleDatumClick}

@@ -66,8 +66,10 @@ export const EstimateCausalEffectPage: React.FC = memo(
 			hovered,
 			failedRefutationIds,
 			vegaWindowDimensions,
-			outcomes,
+			outcomeOptions,
 			activeProcessing,
+			selectedOutcome,
+			setSelectedOutcome,
 		} = useSpecificationCurveData()
 
 		const {
@@ -167,9 +169,11 @@ export const EstimateCausalEffectPage: React.FC = memo(
 						setSelectedSpecification={setSelectedSpecification}
 						onMouseOver={onMouseOver}
 						hovered={hovered}
-						outcomes={outcomes}
+						outcomeOptions={outcomeOptions}
 						failedRefutationIds={failedRefutationIds}
 						specCount={specCount}
+						selectedOutcome={selectedOutcome}
+						setSelectedOutcome={setSelectedOutcome}
 					/>
 					<SpecificationDescription
 						refutationOptions={refutationOptions}

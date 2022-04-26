@@ -2,6 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import { Dropdown } from '@fluentui/react'
 import {
 	CausalEffectsArrows,
 	CausalEffectSize,
@@ -12,6 +13,7 @@ import {
 } from '@showwhy/components'
 import { NodeResponseStatus } from '@showwhy/types'
 import { memo } from 'react'
+import styled from 'styled-components'
 
 import {
 	useAlternativeModels,
@@ -58,7 +60,9 @@ export const EvaluateHypothesisPage: React.FC = memo(
 			hovered,
 			failedRefutationIds,
 			vegaWindowDimensions,
-			outcomes,
+			outcomeOptions,
+			selectedOutcome,
+			setSelectedOutcome,
 		} = useSpecificationCurveData()
 
 		const { significanceTestResult, significanceFailed } =
@@ -88,6 +92,17 @@ export const EvaluateHypothesisPage: React.FC = memo(
 			<ContainerFlexColumn data-pw="evaluate-hypothesis-content">
 				<Container>
 					<CausalQuestion question={question} />
+					{outcomeOptions.length > 1 && (
+						<DropdownContainer>
+							<Dropdown
+								label="Outcome"
+								disabled={outcomeOptions.length <= 2}
+								selectedKey={selectedOutcome}
+								onChange={(_, val) => setSelectedOutcome(val?.key as string)}
+								options={outcomeOptions}
+							/>
+						</DropdownContainer>
+					)}
 					<Container>
 						<PageButtons
 							significanceTestResult={significanceTestResult}
@@ -126,15 +141,21 @@ export const EvaluateHypothesisPage: React.FC = memo(
 					Effect size estimates
 				</Title>
 				<ResultsGraph
-					specificationData={specificationData}
+					specificationData={specificationData.filter(
+						x => x.outcome === selectedOutcome,
+					)}
 					specificationCurveConfig={config}
 					vegaWindowDimensions={vegaWindowDimensions}
 					onMouseOver={onMouseOver}
 					hovered={hovered}
-					outcome={(outcomes && outcomes[0]?.variable) || ''}
+					outcome={selectedOutcome}
 					failedRefutationIds={failedRefutationIds}
 				/>
 			</ContainerFlexColumn>
 		)
 	},
 )
+
+const DropdownContainer = styled.div`
+	width: 200px;
+`
