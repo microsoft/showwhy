@@ -31,7 +31,6 @@ export const DegreeComboBox: FC<Props> = memo(function DegreeComboBox({
 	type,
 	id,
 }) {
-	console.log('DegreeComboBox is being called')
 	return (
 		<ComboBox
 			selectedKey={degree}

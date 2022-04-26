@@ -8,19 +8,77 @@ import { ContextualMenuItemType } from '@fluentui/react'
 import type { CausalFactor, Definition } from '@showwhy/types'
 import {
 	CausalFactorType,
+	CausalModelLevel,
 	CommandActionType,
 	DefinitionType,
 } from '@showwhy/types'
 import upperFirst from 'lodash/upperFirst'
 import { useMemo } from 'react'
 
-import type { CausalEffectsProps } from '~hooks'
+import { useCausalEffects } from '~hooks'
 import { getDefinitionsByType } from '~utils'
 
-const buildDropdownOption = (
+export function useDefinitionDropdownOptions(
+	definitions: Definition[],
+	causalFactors: CausalFactor[],
+): IContextualMenuItem[] {
+	const causalEffects = useCausalEffects(CausalModelLevel.Maximum)
+	return useMemo((): IContextualMenuItem[] => {
+		const menuItems: IContextualMenuItem[] = [...baseMenuItems]
+		const population = getDefinitionsByType(
+			DefinitionType.Population,
+			definitions,
+		)
+		const exposure = getDefinitionsByType(DefinitionType.Exposure, definitions)
+		const outcome = getDefinitionsByType(DefinitionType.Outcome, definitions)
+		const exposureDeterminant = getCausalFactorsByType(
+			causalFactors,
+			causalEffects.exposureDeterminants,
+		)
+		const outcomeDeterminant = getCausalFactorsByType(
+			causalFactors,
+			causalEffects.outcomeDeterminants,
+		)
+		const confounders = getCausalFactorsByType(
+			causalFactors,
+			causalEffects.confounders,
+		)
+
+		population.length &&
+			menuItems.push(buildDropdownOption(population, DefinitionType.Population))
+
+		exposure.length &&
+			menuItems.push(buildDropdownOption(exposure, DefinitionType.Exposure))
+
+		outcome.length &&
+			menuItems.push(buildDropdownOption(outcome, DefinitionType.Outcome))
+
+		exposureDeterminant &&
+			menuItems.push(
+				buildDropdownOption(
+					exposureDeterminant,
+					CausalFactorType.CauseExposure,
+				),
+			)
+
+		outcomeDeterminant &&
+			menuItems.push(
+				buildDropdownOption(outcomeDeterminant, CausalFactorType.CauseOutcome),
+			)
+
+		confounders &&
+			menuItems.push(
+				buildDropdownOption(confounders, CausalFactorType.Confounders),
+			)
+
+		return menuItems
+	}, [definitions, causalFactors, causalEffects])
+}
+
+function buildDropdownOption(
 	all: Definition[],
 	type: DefinitionType | CausalFactorType,
-): IContextualMenuItem => {
+): IContextualMenuItem {
 	const options: IContextualMenuItem = {
 		key: type,
 		itemType: ContextualMenuItemType.Section,
@@ -42,84 +100,41 @@ const buildDropdownOption = (
 	return options
 }
 
-export function useDefinitionDropdownOptions(
-	definitions: Definition[],
+function getCausalFactorsByType(
 	causalFactors: CausalFactor[],
-	causalEffects: CausalEffectsProps,
-): IContextualMenuItem[] {
-	return useMemo((): IContextualMenuItem[] => {
-		const population = getDefinitionsByType(
-			DefinitionType.Population,
-			definitions,
-		)
-		const exposure = getDefinitionsByType(DefinitionType.Exposure, definitions)
-		const outcome = getDefinitionsByType(DefinitionType.Outcome, definitions)
-		const all: IContextualMenuItem[] = [
-			{
-				key: 'subject-identifier',
-				text: 'Set as subject identifier',
-				title: 'Set as subject identifier',
-				data: {
-					button: true,
-					type: CommandActionType.SubjectIdentifier,
-					bottomDivider: true,
-				},
-			},
-			{
-				key: 'reset-action',
-				text: 'Reset variable selection',
-				title: 'Reset variable selection',
-				data: {
-					button: true,
-					type: CommandActionType.Reset,
-				},
-			},
-			{
-				key: 'variable-action',
-				text: 'Add variable',
-				title: 'Add variable',
-				data: {
-					button: true,
-					type: CommandActionType.AddVariable,
-					bottomDivider: true,
-				},
-			},
-		]
-
-		const exposureDeterminant = causalFactors.filter(x =>
-			causalEffects.exposureDeterminants.includes(x.variable),
-		)
-		const outcomeDeterminant = causalFactors.filter(x =>
-			causalEffects.outcomeDeterminants.includes(x.variable),
-		)
-		const confounders = causalFactors.filter(x =>
-			causalEffects.confounders.includes(x.variable),
-		)
-
-		population.length &&
-			all.push(buildDropdownOption(population, DefinitionType.Population))
-
-		exposure.length &&
-			all.push(buildDropdownOption(exposure, DefinitionType.Exposure))
-
-		outcome.length &&
-			all.push(buildDropdownOption(outcome, DefinitionType.Outcome))
-
-		exposureDeterminant &&
-			all.push(
-				buildDropdownOption(
-					exposureDeterminant,
-					CausalFactorType.CauseExposure,
-				),
-			)
-
-		outcomeDeterminant &&
-			all.push(
-				buildDropdownOption(outcomeDeterminant, CausalFactorType.CauseOutcome),
-			)
-
-		confounders &&
-			all.push(buildDropdownOption(confounders, CausalFactorType.Confounders))
-		return all
-	}, [definitions, causalFactors, causalEffects])
+	list: string[],
+): CausalFactor[] {
+	return causalFactors.filter(x => list.includes(x.variable))
 }
+
+const baseMenuItems: IContextualMenuItem[] = [
+	{
+		key: 'subject-identifier',
+		text: 'Set as subject identifier',
+		title: 'Set as subject identifier',
+		data: {
+			button: true,
+			type: CommandActionType.SubjectIdentifier,
+			bottomDivider: true,
+		},
+	},
+	{
+		key: 'reset-action',
+		text: 'Reset variable selection',
+		title: 'Reset variable selection',
+		data: {
+			button: true,
+			type: CommandActionType.Reset,
+		},
+	},
+	{
+		key: 'variable-action',
+		text: 'Add variable',
+		title: 'Add variable',
+		data: {
+			button: true,
+			type: CommandActionType.AddVariable,
+			bottomDivider: true,
+		},
+	},
+]

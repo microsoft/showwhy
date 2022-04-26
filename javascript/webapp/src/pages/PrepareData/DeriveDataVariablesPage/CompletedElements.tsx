@@ -17,9 +17,7 @@ import styled from 'styled-components'
 
 interface Props {
 	completedElements: number
-	elements: number
 	allElements: FactorsOrDefinitions
-	isElementComplete: (element: CausalFactor | Definition) => boolean
 	onResetVariable: (columnName: string) => void
 	subjectIdentifier: Maybe<string>
 	onSetSubjectIdentifier: Handler1<Maybe<string>>
@@ -35,50 +33,23 @@ interface ListElement {
 
 export const CompletedElements: FC<Props> = memo(function CompletedElements({
 	completedElements,
-	elements,
 	allElements,
-	isElementComplete,
 	onResetVariable,
 	subjectIdentifier,
 	onSetSubjectIdentifier,
 }) {
 	const [isVisible, { toggle }] = useBoolean(false)
 	const buttonId = useId('callout-button')
+	const elements = useMemo((): any => {
+		return allElements.length + 1
+	}, [allElements])
 
-	const list = useMemo((): any => {
-		const all: ListElement[] = [
-			{
-				variable: `Subject identifier${
-					subjectIdentifier ? `: ${subjectIdentifier}` : ''
-				}`,
-				key: 'Subject identifier',
-				isComplete: !!subjectIdentifier,
-				icon: !!subjectIdentifier ? 'SkypeCircleCheck' : 'SkypeCircleMinus',
-				onClick: () => onSetSubjectIdentifier(subjectIdentifier),
-			},
-		]
-
-		allElements.forEach(element => {
-			const isComplete = isElementComplete(element)
-			const _element = {
-				variable: element.variable,
-				key: element.id,
-				isComplete,
-				icon: isComplete ? 'SkypeCircleCheck' : 'SkypeCircleMinus',
-				onClick: isComplete
-					? () => onResetVariable(element.column || '')
-					: undefined,
-			}
-			all.push(_element)
-		})
-		return all
-	}, [
+	const list = useList(
 		subjectIdentifier,
 		allElements,
 		onResetVariable,
 		onSetSubjectIdentifier,
-		isElementComplete,
-	])
+	)
 
 	return (
 		<Container>
@@ -118,6 +89,52 @@ const List: FC<{ list: ListElement[] }> = memo(function ListItem({ list }) {
 		</Ul>
 	) : null
 })
+
+function useList(
+	subjectIdentifier: Maybe<string>,
+	allElements: FactorsOrDefinitions,
+	onResetVariable: (columnName: string) => void,
+	onSetSubjectIdentifier: Handler1<Maybe<string>>,
+) {
+	return useMemo((): any => {
+		const all: ListElement[] = [
+			{
+				variable: `Subject identifier${
+					subjectIdentifier ? `: ${subjectIdentifier}` : ''
+				}`,
+				key: 'Subject identifier',
+				isComplete: !!subjectIdentifier,
+				icon: !!subjectIdentifier ? 'SkypeCircleCheck' : 'SkypeCircleMinus',
+				onClick: () => onSetSubjectIdentifier(subjectIdentifier),
+			},
+		]
+
+		allElements.forEach(element => {
+			const isComplete = isElementComplete(element, allElements)
+			const _element = {
+				variable: element.variable,
+				key: element.id,
+				isComplete,
+				icon: isComplete ? 'SkypeCircleCheck' : 'SkypeCircleMinus',
+				onClick: isComplete
+					? () => onResetVariable(element.column || '')
+					: undefined,
+			}
+			all.push(_element)
+		})
+		return all
+	}, [subjectIdentifier, allElements, onResetVariable, onSetSubjectIdentifier])
+}
+
+function isElementComplete(
+	element: CausalFactor | Definition,
+	allElements: FactorsOrDefinitions,
+) {
+	const found = allElements?.find(
+		(x: CausalFactor | Definition) => x.id === element.id,
+	)
+	return !!found?.column
+}
 
 const CalloutStyles = {
 	calloutMain: {

@@ -3,7 +3,6 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { useBoolean } from '@fluentui/react-hooks'
 import type {
 	BeliefDegree,
 	CausalFactor,
@@ -13,19 +12,19 @@ import type {
 	Handler1,
 } from '@showwhy/types'
 import { CausalFactorType, CausalityLevel } from '@showwhy/types'
-import { useCallback, useState } from 'react'
+import { useCallback } from 'react'
 import { v4 as uuiv4 } from 'uuid'
 
-import { useAddOrEditFactorTestable, useSaveDefinition } from '~hooks'
+import { useAddOrEditFactor, useSaveDefinition } from '~hooks'
 import {
-	useCausalFactors,
 	useDefinitions,
-	useSetCausalFactors,
 	useSetDefinitions,
 	useSetSubjectIdentifier,
 	useSubjectIdentifier,
 } from '~state'
 import { isCausalFactorType } from '~utils'
+
+import { useCallout, useSelectedColumn } from '../DeriveDataVariablesPage.state'
 
 export function useAddVariable(): {
 	showCallout: boolean
@@ -38,17 +37,15 @@ export function useAddVariable(): {
 		degree?: BeliefDegree,
 	) => void
 } {
-	const [showCallout, { toggle: toggleShowCallout }] = useBoolean(false)
-	const [selectedColumn, setSelectedColumn] = useState('')
+	const [isCalloutVisible, toggleCallout] = useCallout()
+	const [selectedColumn, setSelectedColumn] = useSelectedColumn()
 
 	const definitions = useDefinitions()
 	const setDefinitions = useSetDefinitions()
 	const subjectIdentifier = useSubjectIdentifier()
 	const setSubjectIdentifier = useSetSubjectIdentifier()
 	const saveDefinition = useSaveDefinition(definitions, setDefinitions)
-	const causalFactors = useCausalFactors()
-	const setCausalFactors = useSetCausalFactors()
-	const addFactor = useAddOrEditFactorTestable(causalFactors, setCausalFactors)
+	const addFactor = useAddOrEditFactor()
 
 	const onAdd = useCallback(
 		(
@@ -83,21 +80,22 @@ export function useAddVariable(): {
 				}
 				saveDefinition(newElement)
 			}
-			toggleShowCallout()
+			toggleCallout()
 		},
 		[
 			selectedColumn,
 			saveDefinition,
-			toggleShowCallout,
+			toggleCallout,
 			addFactor,
 			definitions,
 			subjectIdentifier,
 			setSubjectIdentifier,
 		],
 	)
+
 	return {
-		showCallout,
-		toggleShowCallout,
+		showCallout: isCalloutVisible,
+		toggleShowCallout: toggleCallout,
 		selectedColumn,
 		setSelectedColumn,
 		onAdd,
