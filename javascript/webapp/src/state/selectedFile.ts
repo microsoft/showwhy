@@ -2,11 +2,9 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import type { Maybe } from '@showwhy/types'
+import type { Maybe, ProjectFile } from '@showwhy/types'
 import type { SetterOrUpdater } from 'recoil'
 import { atom, useRecoilState } from 'recoil'
-
-import type { ProjectFile } from '~types'
 
 import { filesState, filesStateChanged } from './files'
 

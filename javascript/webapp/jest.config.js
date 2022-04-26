@@ -16,7 +16,6 @@ const configuration = {
 		'~components/(.*)*': ['<rootDir>/src/components/$1'],
 		'~state/(.*)': ['<rootDir>/src/state/$1'],
 		'~state': ['<rootDir>/src/state/index.ts'],
-		'~types': ['<rootDir>/src/types/index.ts'],
 		'~utils/(.*)': ['<rootDir>/src/utils/$1'],
 		'~utils': ['<rootDir>/src/utils/index.ts'],
 		'~hooks': ['<rootDir>/src/hooks/index.ts'],

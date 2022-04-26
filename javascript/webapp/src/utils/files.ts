@@ -15,10 +15,14 @@ import {
 	FileWithPath,
 	toZip,
 } from '@data-wrangling-components/utilities'
-import type { Maybe, RunHistory, SignificanceTest } from '@showwhy/types'
+import type {
+	DataTableFileDefinition,
+	Maybe,
+	RunHistory,
+	SignificanceTest,
+	ZipFileData,
+} from '@showwhy/types'
 import type ColumnTable from 'arquero/dist/types/table/column-table'
-
-import type { DataTableFileDefinition, ZipData } from '~types'
 
 import { createDefaultTable, fetchTable } from './arquero'
 
@@ -53,8 +57,8 @@ export function isDataUrl(url: string): boolean {
 
 export async function groupFilesByType(
 	fileCollection: FileCollection,
-): Promise<ZipData> {
-	const filesByType: ZipData = {
+): Promise<ZipFileData> {
+	const filesByType: ZipFileData = {
 		name: fileCollection.name || 'FileCollection',
 	}
 	const resultsRegExp = /result(.+).(c|t)sv/gi

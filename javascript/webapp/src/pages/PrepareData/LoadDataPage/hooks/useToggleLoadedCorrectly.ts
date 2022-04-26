@@ -3,10 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { Handler1, Maybe } from '@showwhy/types'
+import type { Handler1, Maybe, ProjectFile } from '@showwhy/types'
 import { useCallback } from 'react'
-
-import type { ProjectFile } from '~types'
 
 export function useToggleLoadedCorrectly(
 	doUpdateFiles: Handler1<ProjectFile>,

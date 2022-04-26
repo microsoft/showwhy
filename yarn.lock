@@ -2095,6 +2095,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/types@workspace:javascript/types"
   dependencies:
+    "@data-wrangling-components/core": ^6.1.0
+    "@data-wrangling-components/utilities": ^1.8.2
     "@essex/scripts": ^20.4.7
     "@essex/tsconfig-base": ^1.0.2
     "@types/react": ^17.0.39

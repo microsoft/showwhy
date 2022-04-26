@@ -3,12 +3,12 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import { FileType } from '@data-wrangling-components/utilities'
 import type { IContextualMenuProps } from '@fluentui/react'
 import { NodeResponseStatus } from '@showwhy/types'
 import { useMemo } from 'react'
 
 import { useDefaultRun, useIsCollectionEmpty } from '~hooks'
-import { FileType } from '~types'
 
 import { downloadResult } from '../App.util'
 import { useSaveProject } from './useSaveProject'
@@ -46,7 +46,7 @@ export function useSaveProps(): IContextualMenuProps {
 					key: 'jupyter',
 					text: 'Jupyter Notebook',
 					disabled,
-					onClick: () => downloadResult(FileType.jupyter),
+					onClick: () => downloadResult(FileType.ipynb),
 					'data-pw': 'save-jupyter',
 				},
 				{
