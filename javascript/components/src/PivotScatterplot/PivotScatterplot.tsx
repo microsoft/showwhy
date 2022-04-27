@@ -49,7 +49,6 @@ export const PivotScatterplot: FC<{
 	onMouseClick,
 }) {
 	const theme = useThematic()
-	console.log('data piv', data)
 	const pivotItems = useMemo((): PivotItemChart[] => {
 		return [
 			{

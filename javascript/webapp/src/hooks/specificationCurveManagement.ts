@@ -91,50 +91,14 @@ export function useLoadSpecificationData(): Specification[] {
 					return row2spec(x)
 				}) as Specification[]
 
-				const group = groupBy(result, function (item: Specification) {
-					return [item.treatment, item.causalModel, item.estimator]
-				})
-
-				let newResult = group
-					.map((x, index) => {
-						return x.map((a: any) => {
-							return {
-								...a,
-								id: String.fromCharCode(97 + index).toUpperCase(),
-							}
-						})
-					})
-					.flat(2)
-
-				newResult = newResult.sort(function (a, b) {
-					return a?.estimatedEffect - b?.estimatedEffect
-				})
-				setData(newResult)
+				setData(buildOutcomeGroups(result))
 			}
 		} else if (!defaultRun) {
 			if (defaultDatasetResult) {
 				const f = async () => {
 					try {
 						const result = await csv(defaultDatasetResult?.url, row2spec)
-						const group = groupBy(result, function (item: Specification) {
-							return [item.treatment, item.causalModel, item.estimator]
-						})
-
-						let newResult = group
-							.map((x, index) => {
-								return x.map((a: any) => {
-									return {
-										...a,
-										id: String.fromCharCode(97 + index).toUpperCase(),
-									}
-								})
-							})
-							.flat(2)
-
-						newResult = newResult.sort(function (a, b) {
-							return a?.estimatedEffect - b?.estimatedEffect
-						})
-						setData(newResult)
+						setData(buildOutcomeGroups(result))
 					} catch (err) {
 						setData([])
 					}
@@ -146,16 +110,46 @@ export function useLoadSpecificationData(): Specification[] {
 	return data
 }
 
-function groupBy(array: any, f: any) {
+function buildOutcomeGroups(specifications: Specification[]) {
+	const grouped = groupBySpecification(specifications)
+
+	return grouped.sort(function (a, b) {
+		return a?.estimatedEffect - b?.estimatedEffect
+	})
+}
+function returnKeys(item: Specification) {
+	return [item.treatment, item.causalModel, item.estimator]
+}
+
+function returnGroupLetter(number: number) {
+	return String.fromCharCode(97 + number).toUpperCase()
+}
+
+function insertGroupsToObjects(groups: any) {
+	return Object.keys(groups).map((outcomeGroup: any, groupNumber: number) => {
+		return groups[outcomeGroup].map(
+			(specification: any, specificationNumber: number) => {
+				return {
+					...specification,
+					id: returnGroupLetter(specificationNumber) + groupNumber,
+				}
+			},
+		)
+	})
+}
+
+function groupBySpecification(array: Specification[]) {
 	const groups: any = {}
-	array.forEach(function (o: any) {
-		const group = JSON.stringify(f(o))
-		groups[group] = groups[group] || []
-		groups[group].push(o)
-	})
-	return Object.keys(groups).map(function (group) {
-		return groups[group]
-	})
+	array
+		.sort((a: Specification, b: Specification) => {
+			return a?.outcome < b?.outcome ? 0 : 1
+		})
+		.forEach((s: Specification) => {
+			const group = JSON.stringify(returnKeys(s))
+			groups[group] = groups[group] || []
+			groups[group].push(s)
+		})
+	return insertGroupsToObjects(groups).flat()
 }
 
 function returnOutcomeOptions(definitions: Definition[]): IDropdownOption[] {
