@@ -7,7 +7,7 @@ import type { RefutationResult } from '@showwhy/types'
 
 export interface Specification {
 	id: string
-	index: number
+	taskId: string
 	population: string
 	treatment: string
 	outcome: string

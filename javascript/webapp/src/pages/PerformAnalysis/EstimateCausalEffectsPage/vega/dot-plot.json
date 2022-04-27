@@ -18,12 +18,6 @@
 					"type": "formula",
 					"expr": "datum.group + ':' + datum.feature",
 					"as": "sort"
-				},
-				{
-					"type": "collect",
-					"sort": {
-						"field": "sort"
-					}
 				}
 			]
 		},
@@ -37,7 +31,7 @@
 			"transform": [
 				{
 					"type": "filter",
-					"expr": "datum.index === hoveredIndex"
+					"expr": "datum.id === hoveredId"
 				}
 			]
 		},
@@ -74,10 +68,10 @@
 	],
 	"signals": [
 		{
-			"name": "hoveredIndex"
+			"name": "hoveredId"
 		},
 		{
-			"name": "selectedIndex"
+			"name": "selectedId"
 		},
 		{
 			"name": "showShap"
@@ -104,13 +98,11 @@
 	"scales": [
 		{
 			"name": "x",
-			"type": "linear",
-			"nice": false,
+			"type": "point",
 			"domain": {
 				"data": "features",
-				"field": "index"
+				"field": "id"
 			},
-			"zero": false,
 			"range": [
 				0,
 				{
@@ -178,13 +170,9 @@
 	"axes": [
 		{
 			"scale": "x",
-			"domain": true,
-			"ticks": false,
 			"orient": "bottom",
 			"titlePadding": 5,
-			"title": "Specification (Primary specification in bold)",
-			"labels": true,
-			"tickMinStep": 1
+			"title": "Specification (Primary specification in bold)"
 		},
 		{
 			"scale": "yAxis",
@@ -242,7 +230,7 @@
 				"update": {
 					"xc": {
 						"scale": "x",
-						"signal": "selectedIndex"
+						"signal": "selectedId"
 					},
 					"width": {
 						"value": 10
@@ -251,7 +239,7 @@
 						"signal": "height"
 					},
 					"fillOpacity": {
-						"signal": "selectedIndex ? 0.2 : 0"
+						"signal": "selectedId ? 0.2 : 0"
 					}
 				}
 			}
@@ -263,7 +251,7 @@
 				"update": {
 					"xc": {
 						"scale": "x",
-						"signal": "hoveredIndex"
+						"signal": "hoveredId"
 					},
 					"width": {
 						"value": 10
@@ -272,7 +260,7 @@
 						"signal": "height"
 					},
 					"fillOpacity": {
-						"signal": "hoveredIndex ? 0.1 : 0"
+						"signal": "hoveredId ? 0.1 : 0"
 					}
 				}
 			}
@@ -287,7 +275,7 @@
 				"update": {
 					"xc": {
 						"scale": "x",
-						"field": "index"
+						"field": "id"
 					},
 					"width": {
 						"value": 15
@@ -311,7 +299,7 @@
 				"update": {
 					"xc": {
 						"scale": "x",
-						"field": "index"
+						"field": "id"
 					},
 					"y": {
 						"signal": "scale('y',datum.key) - (datum.value < 0 ? -2.5 : (scale('shapSize', datum.value) + 2.5))"
@@ -350,7 +338,7 @@
 					},
 					"xc": {
 						"scale": "x",
-						"field": "index"
+						"field": "id"
 					},
 					"y": {
 						"signal": "scale('y',datum.key) - (datum.value < 0 ? -scale('shapSize', datum.value) - 4.5 : (scale('shapSize', datum.value) + 4.5))"
@@ -368,7 +356,7 @@
 				"update": {
 					"x": {
 						"scale": "x",
-						"field": "index"
+						"field": "id"
 					},
 					"y": {
 						"scale": "y",
@@ -397,7 +385,7 @@
 				"update": {
 					"x": {
 						"scale": "x",
-						"field": "index"
+						"field": "id"
 					},
 					"fill": {
 						"scale": "colorBold",
@@ -423,7 +411,7 @@
 				"update": {
 					"x": {
 						"scale": "x",
-						"field": "index"
+						"field": "id"
 					},
 					"y": {
 						"scale": "y",
@@ -445,7 +433,7 @@
 				"update": {
 					"x": {
 						"scale": "x",
-						"field": "index"
+						"field": "id"
 					},
 					"y": {
 						"signal": "height"
@@ -454,7 +442,7 @@
 						"value": 11.5
 					},
 					"text": {
-						"signal": "datum.index"
+						"signal": "datum.id"
 					},
 					"align": {
 						"value": "center"

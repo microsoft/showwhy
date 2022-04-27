@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import type { Dimensions } from '@essex/hooks'
-import type { IDropdownOption } from '@fluentui/react';
+import type { IDropdownOption } from '@fluentui/react'
 import { Dropdown } from '@fluentui/react'
 import type {
 	Handler1,
@@ -14,7 +14,6 @@ import type {
 import type { FC } from 'react'
 import { memo } from 'react'
 import styled from 'styled-components'
-
 import { VegaSpecificationCurve } from './vega/VegaSpecificationCurve'
 
 export const SpecificationGraphs: FC<{
@@ -24,7 +23,7 @@ export const SpecificationGraphs: FC<{
 	onSpecificationsChange: (config: SpecificationCurveConfig) => void
 	setSelectedSpecification: (item: Maybe<Specification>) => void
 	onMouseOver: (item: Maybe<Specification>) => void
-	hovered: Maybe<number>
+	hovered: Maybe<string>
 	failedRefutationIds: string[]
 	specCount: Maybe<number>
 	outcomeOptions: IDropdownOption[]
@@ -77,7 +76,5 @@ const DropdownContainer = styled.div`
 `
 
 function returnOutcomeSpecifications(outcome: string, data: Specification[]) {
-	return data
-		.filter(s => s.outcome === outcome)
-		.map((x, i) => ({ ...x, index: i + 1 }))
+	return data.filter(s => s.outcome === outcome)
 }

@@ -10,7 +10,6 @@ import type {
 	SpecificationCurveConfig,
 } from '@showwhy/types'
 import { memo } from 'react'
-
 // eslint-disable-next-line
 import template from '~data/effect-scatterplot.json'
 
@@ -20,7 +19,7 @@ export const ResultsGraph: React.FC<{
 	specificationCurveConfig: SpecificationCurveConfig
 	vegaWindowDimensions: Dimensions
 	onMouseOver: (item: Maybe<Specification>) => void
-	hovered: Maybe<number>
+	hovered: Maybe<string>
 	failedRefutationIds: string[]
 	outcome?: string
 }> = memo(function ResultsGraph({

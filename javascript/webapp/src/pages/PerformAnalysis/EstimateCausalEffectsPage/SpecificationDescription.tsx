@@ -9,9 +9,7 @@ import { RefutationTestMethodString } from '@showwhy/types'
 import { round } from 'lodash'
 import { memo } from 'react'
 import styled from 'styled-components'
-
 import { pluralize } from '~utils'
-
 import { EstimateDetails } from './EstimateDetails'
 import { RefutationOptionsCallout } from './RefutationOptionsCallout'
 
@@ -36,12 +34,13 @@ export const SpecificationDescription: React.FC<{
 				<>
 					<Paragraph noMarginTop data-pw="selected-specification-text">
 						Specification
-						<Value>{specification.index}</Value>uses a
+						<Value>{specification.id}</Value>uses a
 						<Value>{specification.causalModel}</Value>
 						causal model and a<Value>{specification.estimator}</Value>
 						estimator. The estimated effect of exposure
 						<Value>{specification.treatment}</Value> for population
-						<Value>{specification.population}</Value>
+						<Value>{specification.population}</Value> and outcome
+						<Value>{specification.outcome}</Value>
 						is
 						<Effect>{round(specification.estimatedEffect, 3)}</Effect>
 						<EstimateDetails

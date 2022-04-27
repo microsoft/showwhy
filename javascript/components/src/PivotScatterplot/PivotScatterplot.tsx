@@ -27,11 +27,11 @@ export const PivotScatterplot: FC<{
 	config: SpecificationCurveConfig
 	width: number
 	height: number
-	hovered: Maybe<number>
+	hovered: Maybe<string>
 	failedRefutationIds: string[]
 	onMouseOver?: Handler1<Maybe<Specification>>
 	onMouseClick?: Handler1<Maybe<Specification>>
-	selected?: number
+	selected?: string
 	outcome?: string
 	totalSpecs?: number
 }> = memo(function PivotScatterplot({
@@ -49,7 +49,7 @@ export const PivotScatterplot: FC<{
 	onMouseClick,
 }) {
 	const theme = useThematic()
-
+	console.log('data piv', data)
 	const pivotItems = useMemo((): PivotItemChart[] => {
 		return [
 			{
@@ -81,7 +81,7 @@ export const PivotScatterplot: FC<{
 					<PivotItem key={p.pivotName} headerText={p.pivotName}>
 						<EffectScatterplot
 							templateString={templateString}
-							data={data.map((x, i) => ({ ...x, index: i + 1 }))}
+							data={data}
 							config={config}
 							width={width}
 							height={height}

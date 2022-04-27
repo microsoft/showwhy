@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import type { Dimensions } from '@essex/hooks'
-import type { IDropdownOption } from '@fluentui/react';
+import type { IDropdownOption } from '@fluentui/react'
 import { DropdownMenuItemType } from '@fluentui/react'
 import type {
 	Definition,
@@ -11,16 +11,16 @@ import type {
 	Maybe,
 	RunHistory,
 	Specification,
-	SpecificationCurveConfig} from '@showwhy/types';
+	SpecificationCurveConfig,
+} from '@showwhy/types'
 import {
 	CausalityLevel,
 	DefinitionType,
 	NodeResponseStatus,
-	RefutationResult
+	RefutationResult,
 } from '@showwhy/types'
 import { csv } from 'd3-fetch'
 import { useCallback, useEffect, useMemo, useState } from 'react'
-
 import { useDefaultRun, useVegaWindowDimensions } from '~hooks'
 import {
 	useDefaultDatasetResult,
@@ -35,7 +35,7 @@ import { row2spec } from '~utils'
 export function useSpecificationCurveData(): {
 	config: SpecificationCurveConfig
 	failedRefutationIds: string[]
-	hovered: Maybe<number>
+	hovered: Maybe<string>
 	onMouseOver: (item: Maybe<Specification>) => void
 	outcomeOptions: IDropdownOption[]
 	vegaWindowDimensions: Dimensions
@@ -55,6 +55,7 @@ export function useSpecificationCurveData(): {
 	const vegaWindowDimensions = useVegaWindowDimensions()
 	const runHistory = useRunHistory()
 	const activeProcessing = useActiveProcessing(runHistory)
+	console.log('data', data)
 
 	useEffect(() => {
 		if (!selectedOutcome.length && outcomeOptions.length >= 2) {
@@ -86,24 +87,58 @@ export function useLoadSpecificationData(): Specification[] {
 			if (!defaultRun.result?.length) {
 				setData([])
 			} else {
-				const result = defaultRun.result.map((x: any, index) => {
-					const n = { ...x, index: index + 1 }
-					return row2spec(n)
+				const result = defaultRun.result.map((x: any) => {
+					return row2spec(x)
 				}) as Specification[]
-				const newResult = result
-					?.sort(function (a, b) {
-						return a?.estimatedEffect - b?.estimatedEffect
-					})
-					.map((x, index) => ({ ...x, index: index + 1 }))
 
+				const group = groupBy(result, function (item: Specification) {
+					return [item.treatment, item.causalModel, item.estimator]
+				})
+
+				let newResult = group
+					.map((x, index) => {
+						return x.map((a: any) => {
+							return {
+								...a,
+								id: String.fromCharCode(97 + index).toUpperCase(),
+							}
+						})
+					})
+					.flat(2)
+				console.log('1', newResult)
+
+				newResult = newResult.sort(function (a, b) {
+					return a?.estimatedEffect - b?.estimatedEffect
+				})
+				console.log('2', newResult)
 				setData(newResult)
+				console.log('ue aqui sim')
 			}
 		} else if (!defaultRun) {
+			console.log('ue aqui nao')
 			if (defaultDatasetResult) {
 				const f = async () => {
 					try {
 						const result = await csv(defaultDatasetResult?.url, row2spec)
-						setData(result.map((x, index) => ({ ...x, index: index + 1 })))
+						const group = groupBy(result, function (item: Specification) {
+							return [item.treatment, item.causalModel, item.estimator]
+						})
+
+						let newResult = group
+							.map((x, index) => {
+								return x.map((a: any) => {
+									return {
+										...a,
+										id: String.fromCharCode(97 + index).toUpperCase(),
+									}
+								})
+							})
+							.flat(2)
+
+						newResult = newResult.sort(function (a, b) {
+							return a?.estimatedEffect - b?.estimatedEffect
+						})
+						setData(newResult)
 					} catch (err) {
 						setData([])
 					}
@@ -113,6 +148,18 @@ export function useLoadSpecificationData(): Specification[] {
 		}
 	}, [setData, defaultRun, defaultDatasetResult])
 	return data
+}
+
+function groupBy(array: any, f: any) {
+	let groups: any = {}
+	array.forEach(function (o: any) {
+		var group = JSON.stringify(f(o))
+		groups[group] = groups[group] || []
+		groups[group].push(o)
+	})
+	return Object.keys(groups).map(function (group) {
+		return groups[group]
+	})
 }
 
 function returnOutcomeOptions(definitions: Definition[]): IDropdownOption[] {
@@ -171,7 +218,7 @@ function useOnMouseOver(): (item: Maybe<Specification>) => void {
 	const setHovered = useSetHoverState()
 	return useCallback(
 		(item: Maybe<Specification>) => {
-			setHovered(item?.index)
+			setHovered(item?.id)
 		},
 		[setHovered],
 	)

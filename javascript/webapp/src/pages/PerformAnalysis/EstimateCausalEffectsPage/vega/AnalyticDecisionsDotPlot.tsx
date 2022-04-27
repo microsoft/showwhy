@@ -14,9 +14,7 @@ import { useThematic } from '@thematic/react'
 import { max, min } from 'lodash'
 import { memo, useMemo } from 'react'
 import styled from 'styled-components'
-
 import { usePrimarySpecificationConfig } from '~state'
-
 import { useSpecificationSHAPColumns } from '../hooks/useColumns'
 import template from './dot-plot.json'
 
@@ -31,8 +29,8 @@ export const AnalyticDecisionsDotPlot: React.FC<{
 	onMouseClick?: (datum?: Specification) => void
 	onMouseOver?: (datum?: Specification) => void
 	onAxisClick?: (axis: string, datum: any) => void
-	hovered?: number
-	selected?: number
+	hovered?: string
+	selected?: string
 	totalSpecs?: number
 }> = memo(function AnalyticDecisionsDotPlot({
 	data,
@@ -102,8 +100,8 @@ export const AnalyticDecisionsDotPlot: React.FC<{
 
 	const signals = useMemo(
 		() => ({
-			hoveredIndex: hovered,
-			selectedIndex: selected,
+			hoveredId: hovered,
+			selectedId: selected,
 			showShap: config.shapTicks,
 			inactiveFeatures: config.inactiveFeatures,
 			inactiveSpecifications: config.inactiveSpecifications,
@@ -141,7 +139,6 @@ function useTransformShap(data: Specification[]) {
 	// TODO: fold this in vega
 	return useMemo(() => {
 		const output: {
-			index: number
 			id: string
 			key: string
 			value: number
@@ -152,7 +149,6 @@ function useTransformShap(data: Specification[]) {
 				const key = (row as any)[nonSHAP]
 				const value = (row as any)[column]
 				output.push({
-					index: row.index,
 					id: row.id,
 					key,
 					value,

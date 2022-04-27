@@ -10,11 +10,9 @@ import type {
 } from '@showwhy/types'
 import { memo, useCallback, useState } from 'react'
 import styled from 'styled-components'
-
 // eslint-disable-next-line
 import template from '~data/effect-scatterplot.json'
 import { addOrRemoveArrayElement } from '~utils'
-
 import { AnalyticDecisionsDotPlot } from './AnalyticDecisionsDotPlot'
 
 const templateString = JSON.stringify(template)
@@ -27,7 +25,7 @@ export const VegaSpecificationCurve: React.FC<{
 	onConfigChange: any
 	onSpecificationSelect: (datum: Maybe<Specification>) => void
 	onMouseOver: (item: Maybe<Specification>) => void
-	hovered: Maybe<number>
+	hovered: Maybe<string>
 	failedRefutationIds: string[]
 	outcome?: string
 	totalSpecs?: number
@@ -46,14 +44,14 @@ export const VegaSpecificationCurve: React.FC<{
 }) {
 	// TODO: these two charts should be combinable into a single vega spec
 	// this will also greatly simplify the hover coordination
-	const [selected, setSelected] = useState<Maybe<number>>()
+	const [selected, setSelected] = useState<Maybe<string>>()
 	const handleDatumClick = useCallback(
 		(item: Maybe<Specification>) => {
-			if (item && item.index === selected) {
+			if (item && item.id === selected) {
 				setSelected(undefined)
 				onSpecificationSelect(undefined)
 			} else {
-				setSelected(item?.index)
+				setSelected(item?.id)
 				onSpecificationSelect(data.find(d => d.id === item?.id))
 			}
 		},

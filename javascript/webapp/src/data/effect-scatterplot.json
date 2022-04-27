@@ -20,7 +20,7 @@
 				},
 				{
 					"type": "aggregate",
-					"groupby": ["index"]
+					"groupby": ["id"]
 				}
 			]
 		},
@@ -31,8 +31,8 @@
 				{
 					"type": "lookup",
 					"from": "inactiveCounts",
-					"key": "index",
-					"fields": ["index"],
+					"key": "id",
+					"fields": ["id"],
 					"values": ["count"],
 					"as": ["inactiveFeatureCount"],
 					"default": 0
@@ -45,7 +45,7 @@
 			"transform": [
 				{
 					"type": "filter",
-					"expr": "datum.index === hoveredIndex"
+					"expr": "datum.id === hoveredId"
 				}
 			]
 		},
@@ -91,13 +91,13 @@
 	],
 	"signals": [
 		{
-			"name": "hoveredIndex"
+			"name": "hoveredId"
 		},
 		{
 			"name": "dataValueName"
 		},
 		{
-			"name": "selectedIndex"
+			"name": "selectedId"
 		},
 		{
 			"name": "chartTitle"
@@ -127,12 +127,10 @@
 	"scales": [
 		{
 			"name": "x",
-			"type": "linear",
-			"nice": false,
-			"zero": false,
+			"type": "point",
 			"domain": {
 				"data": "marked",
-				"field": "index"
+				"field": "id"
 			},
 			"range": [
 				0,
@@ -209,10 +207,10 @@
 			"type": "rect",
 			"encode": {
 				"update": {
-					"xc": { "scale": "x", "signal": "selectedIndex" },
+					"xc": { "scale": "x", "signal": "selectedId" },
 					"width": { "value": 10 },
 					"height": { "signal": "height" },
-					"fillOpacity": { "signal": "selectedIndex ? 0.2 : 0" }
+					"fillOpacity": { "signal": "selectedId ? 0.2 : 0" }
 				}
 			}
 		},
@@ -222,7 +220,7 @@
 			"from": { "data": "specifications" },
 			"encode": {
 				"enter": {
-					"x": { "scale": "x", "field": "index" },
+					"x": { "scale": "x", "field": "id" },
 					"y": { "scale": "y", "field": "c95Upper" },
 					"y2": { "scale": "y", "field": "c95Lower" }
 				},
@@ -241,10 +239,10 @@
 			"type": "rect",
 			"encode": {
 				"update": {
-					"xc": { "scale": "x", "signal": "hoveredIndex" },
+					"xc": { "scale": "x", "signal": "hoveredId" },
 					"width": { "value": 10 },
 					"height": { "signal": "height" },
-					"fillOpacity": { "signal": "hoveredIndex ? 0.1 : 0" }
+					"fillOpacity": { "signal": "hoveredId ? 0.1 : 0" }
 				}
 			}
 		},
@@ -258,7 +256,7 @@
 				"update": {
 					"xc": {
 						"scale": "x",
-						"field": "index"
+						"field": "id"
 					},
 					"width": {
 						"value": 15
@@ -278,7 +276,7 @@
 				"update": {
 					"x": {
 						"scale": "x",
-						"field": "index"
+						"field": "id"
 					},
 					"y": {
 						"scale": "y",
@@ -303,7 +301,7 @@
 				"update": {
 					"x": {
 						"scale": "x",
-						"field": "index"
+						"field": "id"
 					},
 					"y": {
 						"scale": "y",
@@ -325,7 +323,7 @@
 				"update": {
 					"x": {
 						"scale": "x",
-						"field": "index"
+						"field": "id"
 					},
 					"y": {
 						"signal": "datum.c95Upper ? scale('y', datum.c95Upper) - 5 : scale('y', datum[dataValueName]) -8"

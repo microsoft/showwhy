@@ -25,8 +25,8 @@ export const EffectScatterplot: React.FC<{
 	onConfigChange?: (config: SpecificationCurveConfig) => void
 	onMouseClick?: (datum?: Specification) => void
 	onMouseOver?: (datum?: Specification) => void
-	hovered?: number
-	selected?: number
+	hovered?: string
+	selected?: string
 	title?: string
 	chartTitle?: string
 	failedRefutationIds: string[]
@@ -61,8 +61,8 @@ export const EffectScatterplot: React.FC<{
 
 	const signals = useMemo(
 		() => ({
-			hoveredIndex: hovered,
-			selectedIndex: selected,
+			hoveredId: hovered,
+			selectedId: selected,
 			showMedian: showStats && config.medianLine,
 			showMean: showStats && config.meanLine,
 			showConfidenceInterval: config.confidenceIntervalTicks,
