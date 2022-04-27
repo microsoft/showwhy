@@ -131,7 +131,7 @@ function insertGroupsToObjects(groups: any) {
 			(specification: any, specificationNumber: number) => {
 				return {
 					...specification,
-					id: returnGroupLetter(specificationNumber) + groupNumber,
+					id: returnGroupLetter(specificationNumber) + groupNumber + 1, //So it doesn't start in 0
 				}
 			},
 		)

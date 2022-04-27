@@ -170,8 +170,11 @@
 	"axes": [
 		{
 			"scale": "x",
+			"domain": true,
+			"ticks": false,
 			"orient": "bottom",
 			"titlePadding": 5,
+			"labels": true,
 			"title": "Specification (Primary specification in bold)"
 		},
 		{
