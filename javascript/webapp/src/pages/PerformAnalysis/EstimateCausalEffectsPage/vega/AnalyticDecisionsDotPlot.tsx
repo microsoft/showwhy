@@ -7,11 +7,7 @@ import {
 	parseJsonPathSpecMerged,
 	VegaHost,
 } from '@showwhy/components'
-import type {
-	DecisionFeature,
-	Specification,
-	SpecificationCurveConfig,
-} from '@showwhy/types'
+import type { Specification, SpecificationCurveConfig } from '@showwhy/types'
 import { CausalityLevel } from '@showwhy/types'
 import { SelectionState } from '@thematic/core'
 import { useThematic } from '@thematic/react'
@@ -33,10 +29,10 @@ export const AnalyticDecisionsDotPlot: React.FC<{
 	// TODO: override height based on number of unique decision rows x desired row height
 	height: number
 	onMouseClick?: (datum?: Specification) => void
-	onMouseOver?: (datum?: DecisionFeature) => void
+	onMouseOver?: (datum?: Specification) => void
 	onAxisClick?: (axis: string, datum: any) => void
-	hovered?: number
-	selected?: number
+	hovered?: string
+	selected?: string
 	totalSpecs?: number
 }> = memo(function AnalyticDecisionsDotPlot({
 	data,
@@ -145,7 +141,7 @@ function useTransformShap(data: Specification[]) {
 	// TODO: fold this in vega
 	return useMemo(() => {
 		const output: {
-			id: number
+			id: string
 			key: string
 			value: number
 		}[] = []

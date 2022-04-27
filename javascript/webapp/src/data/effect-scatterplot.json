@@ -16,7 +16,7 @@
 				},
 				{
 					"type": "filter",
-					"expr": "indexof(inactiveSpecifications,datum.id) >= 0"
+					"expr": "indexof(inactiveSpecifications,datum.id) >= 0 || indexof(inactiveSpecifications,datum.taskId) >= 0"
 				},
 				{
 					"type": "aggregate",
@@ -127,9 +127,7 @@
 	"scales": [
 		{
 			"name": "x",
-			"type": "linear",
-			"nice": false,
-			"zero": false,
+			"type": "point",
 			"domain": {
 				"data": "marked",
 				"field": "id"
@@ -231,7 +229,7 @@
 						"signal": "refutationColors[+datum.refutationResult + 1]"
 					},
 					"strokeOpacity": {
-						"signal": "showConfidenceInterval ? (indexof(inactiveFeatures,datum.key) < 0 && indexof(inactiveSpecifications, datum.id) < 0) ? 1 : 0.1 : 0"
+						"signal": "showConfidenceInterval ? (indexof(inactiveFeatures,datum.key) < 0 && (indexof(inactiveSpecifications, datum.id) < 0 || indexof(inactiveSpecifications, datum.taskId) < 0)) ? 1 : 0.1 : 0"
 					}
 				}
 			}

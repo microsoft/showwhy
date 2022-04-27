@@ -5,7 +5,6 @@
 import { Pivot, PivotItem } from '@fluentui/react'
 import { EffectScatterplot } from '@showwhy/components'
 import type {
-	DecisionFeature,
 	Handler1,
 	Maybe,
 	Specification,
@@ -28,11 +27,11 @@ export const PivotScatterplot: FC<{
 	config: SpecificationCurveConfig
 	width: number
 	height: number
-	hovered: Maybe<number>
-	failedRefutationIds: number[]
-	onMouseOver?: Handler1<Maybe<Specification | DecisionFeature>>
+	hovered: Maybe<string>
+	failedRefutationTaskIds: string[]
+	onMouseOver?: Handler1<Maybe<Specification>>
 	onMouseClick?: Handler1<Maybe<Specification>>
-	selected?: number
+	selected?: string
 	outcome?: string
 	totalSpecs?: number
 }> = memo(function PivotScatterplot({
@@ -43,24 +42,23 @@ export const PivotScatterplot: FC<{
 	height,
 	onMouseOver,
 	hovered,
-	failedRefutationIds,
+	failedRefutationTaskIds,
 	selected,
 	outcome,
 	totalSpecs,
 	onMouseClick,
 }) {
 	const theme = useThematic()
-
 	const pivotItems = useMemo((): PivotItemChart[] => {
 		return [
 			{
-				pivotName: 'Outcome',
+				pivotName: 'Effect size',
 				chartTitle: `Estimated change in ${outcome} by specification`,
 				dataValueName: 'estimatedEffect',
 				showStats: true,
 			},
 			{
-				pivotName: 'Population',
+				pivotName: 'Population size',
 				chartTitle: 'Population size by specification',
 				dataValueName: 'populationSize',
 			},
@@ -90,7 +88,7 @@ export const PivotScatterplot: FC<{
 							onMouseClick={onMouseClick}
 							hovered={hovered}
 							selected={selected}
-							failedRefutationIds={failedRefutationIds}
+							failedRefutationTaskIds={failedRefutationTaskIds}
 							chartTitle={p.chartTitle}
 							dataValueName={p.dataValueName}
 							totalSpecs={totalSpecs}

@@ -15,5 +15,5 @@ export interface SpecificationCurveConfig {
 	/**
 	 * This is the list of decision features that have been excluded by the user
 	 */
-	inactiveSpecifications?: number[]
+	inactiveSpecifications?: string[]
 }

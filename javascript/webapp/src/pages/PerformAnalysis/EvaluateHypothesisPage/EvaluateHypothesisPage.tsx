@@ -32,9 +32,9 @@ import { AnalysisSummary } from './AnalysisSummary'
 import { EmptyDataPageWarning } from './EmptyDataPageWarning'
 import { useSignificanceTestData } from './hooks/useSignificanceTestData'
 import { useSignificanceTestManagement } from './hooks/useSignificanceTestManagement'
-import { PageButtons } from './PageButtons'
 import { ResultsGraph } from './ResultsGraph'
-import { SignificanceTests } from './SignificanceTests'
+import { RunManagement } from './RunManagement'
+import { SignificanceTestResult } from './SignificanceTestResult'
 
 export const EvaluateHypothesisPage: React.FC = memo(
 	function EvaluateHypothesisPage() {
@@ -56,19 +56,22 @@ export const EvaluateHypothesisPage: React.FC = memo(
 			config,
 			onMouseOver,
 			hovered,
-			failedRefutationIds,
+			failedRefutationTaskIds,
 			vegaWindowDimensions,
-			outcome,
+			outcomeOptions,
+			selectedOutcome,
+			setSelectedOutcome,
 		} = useSpecificationCurveData()
 
 		const { significanceTestResult, significanceFailed } =
-			useSignificanceTestData()
+			useSignificanceTestData(selectedOutcome)
 
 		const { runSignificance, cancelRun, isCanceled, activeEstimatedEffects } =
 			useSignificanceTestManagement(
-				failedRefutationIds,
+				failedRefutationTaskIds,
 				specificationData,
 				config,
+				selectedOutcome,
 			)
 
 		if (
@@ -89,17 +92,19 @@ export const EvaluateHypothesisPage: React.FC = memo(
 				<Container>
 					<CausalQuestion question={question} />
 					<Container>
-						<PageButtons
+						<RunManagement
 							significanceTestResult={significanceTestResult}
 							significanceFailed={significanceFailed}
 							runSignificance={runSignificance}
+							outcomeOptions={outcomeOptions}
+							selectedOutcome={selectedOutcome}
+							setSelectedOutcome={setSelectedOutcome}
+							isCanceled={isCanceled}
+							cancelRun={cancelRun}
 						/>
-
-						<SignificanceTests
+						<SignificanceTestResult
 							activeEstimatedEffects={activeEstimatedEffects}
 							question={question}
-							cancelRun={cancelRun}
-							isCanceled={isCanceled}
 							significanceTestResult={significanceTestResult}
 						/>
 					</Container>
@@ -126,13 +131,15 @@ export const EvaluateHypothesisPage: React.FC = memo(
 					Effect size estimates
 				</Title>
 				<ResultsGraph
-					specificationData={specificationData}
+					specificationData={specificationData.filter(
+						x => x.outcome === selectedOutcome,
+					)}
 					specificationCurveConfig={config}
 					vegaWindowDimensions={vegaWindowDimensions}
 					onMouseOver={onMouseOver}
 					hovered={hovered}
-					outcome={outcome}
-					failedRefutationIds={failedRefutationIds}
+					outcome={selectedOutcome}
+					failedRefutationTaskIds={failedRefutationTaskIds}
 				/>
 			</ContainerFlexColumn>
 		)

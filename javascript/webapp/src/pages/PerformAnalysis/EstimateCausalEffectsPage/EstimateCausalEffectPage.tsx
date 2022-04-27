@@ -35,7 +35,7 @@ import { useDataErrors } from './hooks/useDataErrors'
 import { useEstimateLogic } from './hooks/useEstimateLogic'
 import { useSpecificationCurve } from './hooks/useSpecificationCurve'
 import { SpecificationDescription } from './SpecificationDescription'
-import { VegaSpecificationCurve } from './vega/VegaSpecificationCurve'
+import { SpecificationGraphs } from './SpecificationGraphs'
 
 export const EstimateCausalEffectPage: React.FC = memo(
 	function EstimateCausalEffectPage() {
@@ -64,10 +64,12 @@ export const EstimateCausalEffectPage: React.FC = memo(
 			config,
 			onMouseOver,
 			hovered,
-			failedRefutationIds,
+			failedRefutationTaskIds,
 			vegaWindowDimensions,
-			outcome,
+			outcomeOptions,
 			activeProcessing,
+			selectedOutcome,
+			setSelectedOutcome,
 		} = useSpecificationCurveData()
 
 		const {
@@ -149,6 +151,7 @@ export const EstimateCausalEffectPage: React.FC = memo(
 						</EstimatesContainer>
 						<ContainerFlexColumn marginTop>
 							<EstimatedEffectConfig
+								defaultRun={defaultRun}
 								config={config}
 								handleConfidenceIntervalTicksChange={
 									handleConfidenceIntervalTicksChange
@@ -159,18 +162,19 @@ export const EstimateCausalEffectPage: React.FC = memo(
 							/>
 						</ContainerFlexColumn>
 					</ContainerFlexRow>
-					<VegaSpecificationCurve
+					<SpecificationGraphs
 						data={data}
 						config={config}
-						width={vegaWindowDimensions.width}
-						height={vegaWindowDimensions.height}
-						onConfigChange={onSpecificationsChange}
-						onSpecificationSelect={setSelectedSpecification}
+						vegaWindowDimensions={vegaWindowDimensions}
+						onSpecificationsChange={onSpecificationsChange}
+						setSelectedSpecification={setSelectedSpecification}
 						onMouseOver={onMouseOver}
 						hovered={hovered}
-						outcome={outcome}
-						failedRefutationIds={failedRefutationIds}
-						totalSpecs={specCount}
+						outcomeOptions={outcomeOptions}
+						failedRefutationTaskIds={failedRefutationTaskIds}
+						specCount={specCount}
+						selectedOutcome={selectedOutcome}
+						setSelectedOutcome={setSelectedOutcome}
 					/>
 					<SpecificationDescription
 						refutationOptions={refutationOptions}
@@ -186,10 +190,6 @@ export const EstimateCausalEffectPage: React.FC = memo(
 	},
 )
 
-const EstimatesContainer = styled.div`
-	width: 80%;
-`
-
 const Main = styled.div`
 	flex: 4;
 `
@@ -199,3 +199,8 @@ const Text = styled.span`
 `
 
 const Container = styled.div``
+
+const EstimatesContainer = styled.div`
+	flex: 1;
+	margin-right: 20px;
+`

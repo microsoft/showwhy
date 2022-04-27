@@ -11,8 +11,8 @@ import type {
 	Question,
 } from '@showwhy/types'
 
-import type { DataTableFileDefinition } from './DataTableDefinition'
-import type { DefaultDatasetResult } from './DefaultDatasetResult'
+import type { DataTableFileDefinition } from './DataTableDefinition.js'
+import type { DefaultDatasetResult } from './DefaultDatasetResult.js'
 
 /**
  * This contains a collection of step data and file definitions for a saveable

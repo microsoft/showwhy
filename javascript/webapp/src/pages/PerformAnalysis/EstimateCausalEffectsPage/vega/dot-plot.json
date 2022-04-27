@@ -18,12 +18,6 @@
 					"type": "formula",
 					"expr": "datum.group + ':' + datum.feature",
 					"as": "sort"
-				},
-				{
-					"type": "collect",
-					"sort": {
-						"field": "sort"
-					}
 				}
 			]
 		},
@@ -104,13 +98,11 @@
 	"scales": [
 		{
 			"name": "x",
-			"type": "linear",
-			"nice": false,
+			"type": "point",
 			"domain": {
 				"data": "features",
 				"field": "id"
 			},
-			"zero": false,
 			"range": [
 				0,
 				{
@@ -182,9 +174,8 @@
 			"ticks": false,
 			"orient": "bottom",
 			"titlePadding": 5,
-			"title": "Specification (Primary specification in bold)",
 			"labels": true,
-			"tickMinStep": 1
+			"title": "Specification (Primary specification in bold)"
 		},
 		{
 			"scale": "yAxis",
