@@ -28,7 +28,7 @@ export const PivotScatterplot: FC<{
 	width: number
 	height: number
 	hovered: Maybe<string>
-	failedRefutationIds: string[]
+	failedRefutationTaskIds: string[]
 	onMouseOver?: Handler1<Maybe<Specification>>
 	onMouseClick?: Handler1<Maybe<Specification>>
 	selected?: string
@@ -42,7 +42,7 @@ export const PivotScatterplot: FC<{
 	height,
 	onMouseOver,
 	hovered,
-	failedRefutationIds,
+	failedRefutationTaskIds,
 	selected,
 	outcome,
 	totalSpecs,
@@ -89,7 +89,7 @@ export const PivotScatterplot: FC<{
 							onMouseClick={onMouseClick}
 							hovered={hovered}
 							selected={selected}
-							failedRefutationIds={failedRefutationIds}
+							failedRefutationTaskIds={failedRefutationTaskIds}
 							chartTitle={p.chartTitle}
 							dataValueName={p.dataValueName}
 							totalSpecs={totalSpecs}

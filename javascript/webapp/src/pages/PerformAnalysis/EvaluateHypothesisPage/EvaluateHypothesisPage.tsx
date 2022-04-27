@@ -14,7 +14,6 @@ import {
 import { NodeResponseStatus } from '@showwhy/types'
 import { memo } from 'react'
 import styled from 'styled-components'
-
 import {
 	useAlternativeModels,
 	useCausalEffects,
@@ -29,7 +28,6 @@ import {
 	usePrimarySpecificationConfig,
 	useQuestion,
 } from '~state'
-
 import { AnalysisSummary } from './AnalysisSummary'
 import { EmptyDataPageWarning } from './EmptyDataPageWarning'
 import { useSignificanceTestData } from './hooks/useSignificanceTestData'
@@ -58,7 +56,7 @@ export const EvaluateHypothesisPage: React.FC = memo(
 			config,
 			onMouseOver,
 			hovered,
-			failedRefutationIds,
+			failedRefutationTaskIds,
 			vegaWindowDimensions,
 			outcomeOptions,
 			selectedOutcome,
@@ -70,7 +68,7 @@ export const EvaluateHypothesisPage: React.FC = memo(
 
 		const { runSignificance, cancelRun, isCanceled, activeEstimatedEffects } =
 			useSignificanceTestManagement(
-				failedRefutationIds,
+				failedRefutationTaskIds,
 				specificationData,
 				config,
 			)
@@ -149,7 +147,7 @@ export const EvaluateHypothesisPage: React.FC = memo(
 					onMouseOver={onMouseOver}
 					hovered={hovered}
 					outcome={selectedOutcome}
-					failedRefutationIds={failedRefutationIds}
+					failedRefutationTaskIds={failedRefutationTaskIds}
 				/>
 			</ContainerFlexColumn>
 		)

@@ -11,13 +11,11 @@ import type {
 	SpecificationCurveConfig,
 } from '@showwhy/types'
 import { useCallback, useMemo, useState } from 'react'
-
 import { useDefaultRun } from '~hooks'
-
 import { useRunSignificanceTest } from './useRunSignificanceTest'
 
 export function useSignificanceTestManagement(
-	failedRefutationIds: string[],
+	failedRefutationTaskIds: string[],
 	specificationData: Specification[],
 	specificationCurveConfig: SpecificationCurveConfig,
 ): {
@@ -34,12 +32,12 @@ export function useSignificanceTestManagement(
 		return specificationData.filter(
 			x =>
 				!specificationCurveConfig?.inactiveSpecifications?.includes(x.id) &&
-				!failedRefutationIds.includes(x.id),
+				!failedRefutationTaskIds.includes(x.taskId),
 		)
-	}, [specificationData, specificationCurveConfig, failedRefutationIds])
+	}, [specificationData, specificationCurveConfig, failedRefutationTaskIds])
 
 	const activeTaskIds = useMemo((): string[] => {
-		return activeSpecifications.map(x => x.id)
+		return activeSpecifications.map(x => x.taskId)
 	}, [activeSpecifications])
 
 	const activeEstimatedEffects = useMemo(() => {

@@ -29,7 +29,7 @@ export const EffectScatterplot: React.FC<{
 	selected?: string
 	title?: string
 	chartTitle?: string
-	failedRefutationIds: string[]
+	failedRefutationTaskIds: string[]
 	totalSpecs?: number
 	showStats?: boolean
 }> = memo(function EffectScatterplot({
@@ -43,7 +43,7 @@ export const EffectScatterplot: React.FC<{
 	hovered,
 	selected,
 	title,
-	failedRefutationIds,
+	failedRefutationTaskIds,
 	chartTitle,
 	dataValueName,
 	totalSpecs = data.length,
@@ -67,10 +67,11 @@ export const EffectScatterplot: React.FC<{
 			showMean: showStats && config.meanLine,
 			showConfidenceInterval: config.confidenceIntervalTicks,
 			inactiveFeatures: config.inactiveFeatures,
-			inactiveSpecifications:
-				config.inactiveSpecifications?.concat(failedRefutationIds),
+			inactiveSpecifications: config.inactiveSpecifications?.concat(
+				failedRefutationTaskIds,
+			),
 		}),
-		[hovered, selected, config, failedRefutationIds, showStats],
+		[hovered, selected, config, failedRefutationTaskIds, showStats],
 	)
 
 	return (

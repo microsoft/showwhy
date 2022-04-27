@@ -10,11 +10,9 @@ import type {
 } from '@showwhy/types'
 import { memo, useCallback, useState } from 'react'
 import styled from 'styled-components'
-
 // eslint-disable-next-line
 import template from '~data/effect-scatterplot.json'
 import { addOrRemoveArrayElement } from '~utils'
-
 import { AnalyticDecisionsDotPlot } from './AnalyticDecisionsDotPlot'
 
 const templateString = JSON.stringify(template)
@@ -28,7 +26,7 @@ export const VegaSpecificationCurve: React.FC<{
 	onSpecificationSelect: (datum: Maybe<Specification>) => void
 	onMouseOver: (item: Maybe<Specification>) => void
 	hovered: Maybe<string>
-	failedRefutationIds: string[]
+	failedRefutationTaskIds: string[]
 	outcome?: string
 	totalSpecs?: number
 }> = memo(function VegaSpecificationCurve({
@@ -40,7 +38,7 @@ export const VegaSpecificationCurve: React.FC<{
 	onSpecificationSelect,
 	onMouseOver,
 	hovered,
-	failedRefutationIds,
+	failedRefutationTaskIds,
 	outcome,
 	totalSpecs,
 }) {
@@ -100,7 +98,7 @@ export const VegaSpecificationCurve: React.FC<{
 				onMouseClick={handleDatumClick}
 				hovered={hovered}
 				selected={selected}
-				failedRefutationIds={failedRefutationIds}
+				failedRefutationTaskIds={failedRefutationTaskIds}
 				totalSpecs={totalSpecs}
 			/>
 

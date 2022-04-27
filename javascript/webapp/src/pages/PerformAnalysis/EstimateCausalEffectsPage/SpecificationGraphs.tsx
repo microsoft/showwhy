@@ -14,7 +14,6 @@ import type {
 import type { FC } from 'react'
 import { memo } from 'react'
 import styled from 'styled-components'
-
 import { VegaSpecificationCurve } from './vega/VegaSpecificationCurve'
 
 export const SpecificationGraphs: FC<{
@@ -25,7 +24,7 @@ export const SpecificationGraphs: FC<{
 	setSelectedSpecification: (item: Maybe<Specification>) => void
 	onMouseOver: (item: Maybe<Specification>) => void
 	hovered: Maybe<string>
-	failedRefutationIds: string[]
+	failedRefutationTaskIds: string[]
 	specCount: Maybe<number>
 	outcomeOptions: IDropdownOption[]
 	selectedOutcome: string
@@ -38,7 +37,7 @@ export const SpecificationGraphs: FC<{
 	setSelectedSpecification,
 	onMouseOver,
 	hovered,
-	failedRefutationIds,
+	failedRefutationTaskIds,
 	specCount,
 	outcomeOptions,
 	selectedOutcome,
@@ -65,7 +64,7 @@ export const SpecificationGraphs: FC<{
 				onMouseOver={onMouseOver}
 				hovered={hovered}
 				outcome={selectedOutcome}
-				failedRefutationIds={failedRefutationIds}
+				failedRefutationTaskIds={failedRefutationTaskIds}
 				totalSpecs={specCount}
 			/>
 		</>

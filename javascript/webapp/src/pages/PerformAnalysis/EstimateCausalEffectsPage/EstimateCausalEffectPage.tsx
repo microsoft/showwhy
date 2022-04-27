@@ -15,7 +15,6 @@ import { NodeResponseStatus } from '@showwhy/types'
 import { useThematic } from '@thematic/react'
 import { memo, useEffect } from 'react'
 import styled from 'styled-components'
-
 import {
 	useAutomaticWorkflowStatus,
 	useDefaultRun,
@@ -24,7 +23,6 @@ import {
 	useSpecificationCurveData,
 } from '~hooks'
 import { useEstimators } from '~state'
-
 import {
 	IdentifierMessage,
 	MicrodataMessage,
@@ -64,7 +62,7 @@ export const EstimateCausalEffectPage: React.FC = memo(
 			config,
 			onMouseOver,
 			hovered,
-			failedRefutationIds,
+			failedRefutationTaskIds,
 			vegaWindowDimensions,
 			outcomeOptions,
 			activeProcessing,
@@ -170,7 +168,7 @@ export const EstimateCausalEffectPage: React.FC = memo(
 						onMouseOver={onMouseOver}
 						hovered={hovered}
 						outcomeOptions={outcomeOptions}
-						failedRefutationIds={failedRefutationIds}
+						failedRefutationTaskIds={failedRefutationTaskIds}
 						specCount={specCount}
 						selectedOutcome={selectedOutcome}
 						setSelectedOutcome={setSelectedOutcome}

@@ -21,7 +21,6 @@ import {
 } from '@showwhy/types'
 import { csv } from 'd3-fetch'
 import { useCallback, useEffect, useMemo, useState } from 'react'
-
 import { useDefaultRun, useVegaWindowDimensions } from '~hooks'
 import {
 	useDefaultDatasetResult,
@@ -35,7 +34,7 @@ import { row2spec } from '~utils'
 
 export function useSpecificationCurveData(): {
 	config: SpecificationCurveConfig
-	failedRefutationIds: string[]
+	failedRefutationTaskIds: string[]
 	hovered: Maybe<string>
 	onMouseOver: (item: Maybe<Specification>) => void
 	outcomeOptions: IDropdownOption[]
@@ -47,7 +46,7 @@ export function useSpecificationCurveData(): {
 } {
 	const [selectedOutcome, setSelectedOutcome] = useState<string>('')
 	const data = useLoadSpecificationData()
-	const failedRefutationIds = useFailedRefutationIds(data)
+	const failedRefutationTaskIds = usefailedRefutationTaskIds(data)
 	const config = useSpecificationCurveConfig()
 	const hovered = useHoverState()
 	const onMouseOver = useOnMouseOver()
@@ -66,7 +65,7 @@ export function useSpecificationCurveData(): {
 
 	return {
 		config,
-		failedRefutationIds,
+		failedRefutationTaskIds,
 		hovered,
 		onMouseOver,
 		outcomeOptions,
@@ -205,12 +204,12 @@ function useActiveProcessing(runHistory: RunHistory[]): Maybe<RunHistory> {
 	}, [runHistory])
 }
 
-export function useFailedRefutationIds(data: Specification[]): string[] {
+export function usefailedRefutationTaskIds(data: Specification[]): string[] {
 	return useMemo((): string[] => {
 		return (
 			data
 				.filter(x => +x.refutationResult === RefutationResult.FailedCritical)
-				.map(a => a.id) || []
+				.map(a => a.taskId) || []
 		)
 	}, [data])
 }
