@@ -3,8 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import type { Dimensions } from '@essex/hooks'
-import type { IDropdownOption } from '@fluentui/react'
-import { DropdownMenuItemType } from '@fluentui/react'
+import { type IDropdownOption, DropdownMenuItemType } from '@fluentui/react'
 import type {
 	Definition,
 	Handler1,
@@ -22,7 +21,6 @@ import {
 import { csv } from 'd3-fetch'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 
-import { useDefaultRun, useVegaWindowDimensions } from '~hooks'
 import {
 	useDefaultDatasetResult,
 	useDefinitions,
@@ -31,7 +29,13 @@ import {
 	useSetHoverState,
 	useSpecificationCurveConfig,
 } from '~state'
-import { row2spec } from '~utils'
+import {
+	buildOutcomeGroups,
+	row2spec,
+} from '~utils/specificationCurveManagement'
+
+import { useDefaultRun } from './runHistory'
+import { useVegaWindowDimensions } from './window'
 
 export function useSpecificationCurveData(): {
 	config: SpecificationCurveConfig
@@ -108,44 +112,6 @@ export function useLoadSpecificationData(): Specification[] {
 		}
 	}, [setData, defaultRun, defaultDatasetResult])
 	return data
-}
-
-function buildOutcomeGroups(specifications: Specification[]) {
-	const grouped = groupBySpecification(specifications)
-
-	return grouped.sort(function (a, b) {
-		return a?.estimatedEffect - b?.estimatedEffect
-	})
-}
-function returnKeys(item: Specification) {
-	return [item.treatment, item.causalModel, item.estimator]
-}
-
-function returnGroupLetter(number: number) {
-	return String.fromCharCode(97 + number).toUpperCase()
-}
-
-function insertGroupsToObjects(groups: any) {
-	return Object.keys(groups).map((outcomeGroup: any, groupNumber: number) => {
-		return groups[outcomeGroup].map(
-			(specification: any, specificationNumber: number) => {
-				return {
-					...specification,
-					id: returnGroupLetter(specificationNumber) + (groupNumber + 1), //So it doesn't start in 0
-				}
-			},
-		)
-	})
-}
-
-function groupBySpecification(array: Specification[]) {
-	const groups: any = {}
-	array.forEach((s: Specification) => {
-		const group = JSON.stringify(returnKeys(s))
-		groups[group] = groups[group] || []
-		groups[group].push(s)
-	})
-	return insertGroupsToObjects(groups).flat()
 }
 
 function returnOutcomeOptions(definitions: Definition[]): IDropdownOption[] {

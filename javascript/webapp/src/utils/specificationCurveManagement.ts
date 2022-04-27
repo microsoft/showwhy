@@ -41,3 +41,46 @@ export function row2spec(d: any): Specification {
 		refutationResult: d.refutation_result,
 	}
 }
+
+export function buildOutcomeGroups(
+	specifications: Specification[],
+): Specification[] {
+	const grouped = groupBySpecification(specifications)
+
+	return grouped.sort(function (a, b) {
+		return a?.estimatedEffect - b?.estimatedEffect
+	})
+}
+function returnKeys(item: Specification) {
+	return [item.treatment, item.causalModel, item.estimator]
+}
+
+function returnGroupLetter(number: number) {
+	return String.fromCharCode(97 + number).toUpperCase()
+}
+
+function insertGroupsToObjects(groups: any) {
+	return Object.keys(groups).map((outcomeGroup: any, groupNumber: number) => {
+		return groups[outcomeGroup]
+			.sort((a: Specification, b: Specification) => {
+				//order by primary first?
+				return a?.outcome.localeCompare(b?.outcome)
+			})
+			.map((specification: any, specificationNumber: number) => {
+				return {
+					...specification,
+					id: returnGroupLetter(specificationNumber) + (groupNumber + 1), //So it doesn't start in 0
+				}
+			})
+	})
+}
+
+function groupBySpecification(array: Specification[]): Specification[] {
+	const groups: any = {}
+	array.forEach((s: Specification) => {
+		const group = JSON.stringify(returnKeys(s))
+		groups[group] = groups[group] || []
+		groups[group].push(s)
+	})
+	return insertGroupsToObjects(groups).flat()
+}

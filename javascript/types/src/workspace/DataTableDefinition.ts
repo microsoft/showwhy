@@ -3,8 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { DataTableMetadata } from './DataTableMetadata'
-import type { FileDefinition } from './FileDefinition'
+import type { DataTableMetadata } from './DataTableMetadata.js'
+import type { FileDefinition } from './FileDefinition.js'
 
 export interface DataTableFileDefinition extends FileDefinition {
 	primary?: boolean

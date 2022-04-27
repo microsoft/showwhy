@@ -11,10 +11,10 @@
 			"~resources/*": ["./src/resources/*"],
 			"~state": ["./src/state/index.ts"],
 			"~state/*": ["./src/state/*"],
-			"~utils": ["src/utils/index.ts"],
-			"~utils/*": ["src/utils/*"],
-			"~data/*": ["src/data/*"],
-			"~hooks": ["src/hooks/index.ts"]
+			"~utils": ["./src/utils/index.ts"],
+			"~utils/*": ["./src/utils/*"],
+			"~data/*": ["./src/data/*"],
+			"~hooks": ["./src/hooks/index.ts"]
 		},
 		"lib": ["ESNext", "DOM", "DOM.Iterable", "ES2020.BigInt"],
 		"outDir": "lib",
