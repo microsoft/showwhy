@@ -13,6 +13,7 @@ export interface SignificanceTest {
 	status?: NodeResponseStatus
 	total_simulations?: number
 	simulation_completed?: number
+	outcome: string
 	test_results?: TestResults
 	startTime?: Date
 	percentage?: number

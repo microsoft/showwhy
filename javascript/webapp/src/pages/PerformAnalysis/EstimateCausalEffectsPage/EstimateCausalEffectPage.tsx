@@ -15,6 +15,7 @@ import { NodeResponseStatus } from '@showwhy/types'
 import { useThematic } from '@thematic/react'
 import { memo, useEffect } from 'react'
 import styled from 'styled-components'
+
 import {
 	useAutomaticWorkflowStatus,
 	useDefaultRun,
@@ -23,6 +24,7 @@ import {
 	useSpecificationCurveData,
 } from '~hooks'
 import { useEstimators } from '~state'
+
 import {
 	IdentifierMessage,
 	MicrodataMessage,
@@ -187,10 +189,6 @@ export const EstimateCausalEffectPage: React.FC = memo(
 	},
 )
 
-const EstimatesContainer = styled.div`
-	width: 80%;
-`
-
 const Main = styled.div`
 	flex: 4;
 `
@@ -200,3 +198,8 @@ const Text = styled.span`
 `
 
 const Container = styled.div``
+
+const EstimatesContainer = styled.div`
+	flex: 1;
+	margin-right: 20px;
+`

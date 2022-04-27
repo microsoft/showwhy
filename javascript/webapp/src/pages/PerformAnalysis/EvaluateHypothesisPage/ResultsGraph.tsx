@@ -10,6 +10,7 @@ import type {
 	SpecificationCurveConfig,
 } from '@showwhy/types'
 import { memo } from 'react'
+
 // eslint-disable-next-line
 import template from '~data/effect-scatterplot.json'
 

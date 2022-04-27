@@ -11,9 +11,10 @@ import type {
 	Specification,
 	SpecificationCurveConfig,
 } from '@showwhy/types'
-import type { FC } from 'react'
-import { memo } from 'react'
+import type { FC} from 'react';
+import { memo, useCallback } from 'react'
 import styled from 'styled-components'
+
 import { VegaSpecificationCurve } from './vega/VegaSpecificationCurve'
 
 export const SpecificationGraphs: FC<{
@@ -43,6 +44,13 @@ export const SpecificationGraphs: FC<{
 	selectedOutcome,
 	setSelectedOutcome,
 }) {
+	const changeOutcome = useCallback(
+		(_: any, val?: IDropdownOption<any>) => {
+			setSelectedOutcome(val?.key as string)
+			setSelectedSpecification(undefined)
+		},
+		[setSelectedOutcome, setSelectedSpecification],
+	)
 	return (
 		<>
 			<DropdownContainer>
@@ -51,7 +59,7 @@ export const SpecificationGraphs: FC<{
 					label="Outcome"
 					disabled={outcomeOptions.length <= 2}
 					options={outcomeOptions}
-					onChange={(_, val) => setSelectedOutcome(val?.key as string)}
+					onChange={changeOutcome}
 				/>
 			</DropdownContainer>
 			<VegaSpecificationCurve

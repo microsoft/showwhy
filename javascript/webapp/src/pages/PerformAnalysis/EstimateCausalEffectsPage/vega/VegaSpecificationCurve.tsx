@@ -10,9 +10,11 @@ import type {
 } from '@showwhy/types'
 import { memo, useCallback, useState } from 'react'
 import styled from 'styled-components'
+
 // eslint-disable-next-line
 import template from '~data/effect-scatterplot.json'
 import { addOrRemoveArrayElement } from '~utils'
+
 import { AnalyticDecisionsDotPlot } from './AnalyticDecisionsDotPlot'
 
 const templateString = JSON.stringify(template)

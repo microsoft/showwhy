@@ -12,11 +12,11 @@ import { useAutomaticWorkflowStatus } from '~hooks'
 
 import { useCurrentSignificanceTest } from './useCurrentSignificanceTest'
 
-export function useSignificanceTestData(): {
+export function useSignificanceTestData(selectedOutcome: string): {
 	significanceTestResult: Maybe<SignificanceTest>
 	significanceFailed: boolean
 } {
-	const significanceTestResult = useCurrentSignificanceTest()
+	const significanceTestResult = useCurrentSignificanceTest(selectedOutcome)
 	const { setDone, setTodo } = useAutomaticWorkflowStatus()
 
 	useEffect(() => {

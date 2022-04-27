@@ -9,12 +9,16 @@ import { useMemo } from 'react'
 import { useDefaultRun } from '~hooks'
 import { useSignificanceTest } from '~state'
 
-export function useCurrentSignificanceTest(): Maybe<SignificanceTest> {
+export function useCurrentSignificanceTest(
+	selectedOutcome: string,
+): Maybe<SignificanceTest> {
 	const defaultRun = useDefaultRun()
 	const significanceTest = useSignificanceTest()
 
 	return useMemo(() => {
 		if (!defaultRun) return undefined
-		return significanceTest.find(x => x.runId === defaultRun.id)
-	}, [defaultRun, significanceTest])
+		return significanceTest.find(
+			x => x.runId === defaultRun.id && x.outcome === selectedOutcome,
+		)
+	}, [defaultRun, significanceTest, selectedOutcome])
 }

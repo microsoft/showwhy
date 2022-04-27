@@ -23,7 +23,7 @@ export const EstimatedEffectConfig: FC<{
 	handleShapTicksChange,
 }) {
 	return (
-		<ContainerFlexColumn marginTop>
+		<ContainerFlexColumn style={{ width: 'maxContent' }} marginTop>
 			<ToggleComponent
 				inlineLabel
 				label="Confidence interval"
@@ -39,6 +39,7 @@ export const EstimatedEffectConfig: FC<{
 				}
 			/>
 			<ToggleComponent
+				inlineLabel
 				disabled={isShapDisabled}
 				label="Element contribution"
 				title={

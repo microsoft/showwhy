@@ -2,7 +2,6 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { Dropdown } from '@fluentui/react'
 import {
 	CausalEffectsArrows,
 	CausalEffectSize,
@@ -13,7 +12,7 @@ import {
 } from '@showwhy/components'
 import { NodeResponseStatus } from '@showwhy/types'
 import { memo } from 'react'
-import styled from 'styled-components'
+
 import {
 	useAlternativeModels,
 	useCausalEffects,
@@ -28,13 +27,14 @@ import {
 	usePrimarySpecificationConfig,
 	useQuestion,
 } from '~state'
+
 import { AnalysisSummary } from './AnalysisSummary'
 import { EmptyDataPageWarning } from './EmptyDataPageWarning'
 import { useSignificanceTestData } from './hooks/useSignificanceTestData'
 import { useSignificanceTestManagement } from './hooks/useSignificanceTestManagement'
-import { PageButtons } from './PageButtons'
 import { ResultsGraph } from './ResultsGraph'
-import { SignificanceTests } from './SignificanceTests'
+import { RunManagement } from './RunManagement'
+import { SignificanceTestResult } from './SignificanceTestResult'
 
 export const EvaluateHypothesisPage: React.FC = memo(
 	function EvaluateHypothesisPage() {
@@ -64,13 +64,14 @@ export const EvaluateHypothesisPage: React.FC = memo(
 		} = useSpecificationCurveData()
 
 		const { significanceTestResult, significanceFailed } =
-			useSignificanceTestData()
+			useSignificanceTestData(selectedOutcome)
 
 		const { runSignificance, cancelRun, isCanceled, activeEstimatedEffects } =
 			useSignificanceTestManagement(
 				failedRefutationTaskIds,
 				specificationData,
 				config,
+				selectedOutcome,
 			)
 
 		if (
@@ -90,29 +91,20 @@ export const EvaluateHypothesisPage: React.FC = memo(
 			<ContainerFlexColumn data-pw="evaluate-hypothesis-content">
 				<Container>
 					<CausalQuestion question={question} />
-					{outcomeOptions.length > 1 && (
-						<DropdownContainer>
-							<Dropdown
-								label="Outcome"
-								disabled={outcomeOptions.length <= 2}
-								selectedKey={selectedOutcome}
-								onChange={(_, val) => setSelectedOutcome(val?.key as string)}
-								options={outcomeOptions}
-							/>
-						</DropdownContainer>
-					)}
 					<Container>
-						<PageButtons
+						<RunManagement
 							significanceTestResult={significanceTestResult}
 							significanceFailed={significanceFailed}
 							runSignificance={runSignificance}
+							outcomeOptions={outcomeOptions}
+							selectedOutcome={selectedOutcome}
+							setSelectedOutcome={setSelectedOutcome}
+							isCanceled={isCanceled}
+							cancelRun={cancelRun}
 						/>
-
-						<SignificanceTests
+						<SignificanceTestResult
 							activeEstimatedEffects={activeEstimatedEffects}
 							question={question}
-							cancelRun={cancelRun}
-							isCanceled={isCanceled}
 							significanceTestResult={significanceTestResult}
 						/>
 					</Container>
@@ -153,7 +145,3 @@ export const EvaluateHypothesisPage: React.FC = memo(
 		)
 	},
 )
-
-const DropdownContainer = styled.div`
-	width: 200px;
-`

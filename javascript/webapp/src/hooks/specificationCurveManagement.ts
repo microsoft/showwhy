@@ -21,6 +21,7 @@ import {
 } from '@showwhy/types'
 import { csv } from 'd3-fetch'
 import { useCallback, useEffect, useMemo, useState } from 'react'
+
 import { useDefaultRun, useVegaWindowDimensions } from '~hooks'
 import {
 	useDefaultDatasetResult,
@@ -46,7 +47,7 @@ export function useSpecificationCurveData(): {
 } {
 	const [selectedOutcome, setSelectedOutcome] = useState<string>('')
 	const data = useLoadSpecificationData()
-	const failedRefutationTaskIds = usefailedRefutationTaskIds(data)
+	const failedRefutationTaskIds = useFailedRefutationTaskIds(data)
 	const config = useSpecificationCurveConfig()
 	const hovered = useHoverState()
 	const onMouseOver = useOnMouseOver()
@@ -55,7 +56,6 @@ export function useSpecificationCurveData(): {
 	const vegaWindowDimensions = useVegaWindowDimensions()
 	const runHistory = useRunHistory()
 	const activeProcessing = useActiveProcessing(runHistory)
-	console.log('data', data)
 
 	useEffect(() => {
 		if (!selectedOutcome.length && outcomeOptions.length >= 2) {
@@ -105,17 +105,13 @@ export function useLoadSpecificationData(): Specification[] {
 						})
 					})
 					.flat(2)
-				console.log('1', newResult)
 
 				newResult = newResult.sort(function (a, b) {
 					return a?.estimatedEffect - b?.estimatedEffect
 				})
-				console.log('2', newResult)
 				setData(newResult)
-				console.log('ue aqui sim')
 			}
 		} else if (!defaultRun) {
-			console.log('ue aqui nao')
 			if (defaultDatasetResult) {
 				const f = async () => {
 					try {
@@ -204,7 +200,7 @@ function useActiveProcessing(runHistory: RunHistory[]): Maybe<RunHistory> {
 	}, [runHistory])
 }
 
-export function usefailedRefutationTaskIds(data: Specification[]): string[] {
+export function useFailedRefutationTaskIds(data: Specification[]): string[] {
 	return useMemo((): string[] => {
 		return (
 			data
