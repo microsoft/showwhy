@@ -9,7 +9,9 @@ import { RefutationTestMethodString } from '@showwhy/types'
 import { round } from 'lodash'
 import { memo } from 'react'
 import styled from 'styled-components'
+
 import { pluralize } from '~utils'
+
 import { EstimateDetails } from './EstimateDetails'
 import { RefutationOptionsCallout } from './RefutationOptionsCallout'
 

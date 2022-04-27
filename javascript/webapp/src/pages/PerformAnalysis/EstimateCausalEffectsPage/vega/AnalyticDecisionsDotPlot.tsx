@@ -14,7 +14,9 @@ import { useThematic } from '@thematic/react'
 import { max, min } from 'lodash'
 import { memo, useMemo } from 'react'
 import styled from 'styled-components'
+
 import { usePrimarySpecificationConfig } from '~state'
+
 import { useSpecificationSHAPColumns } from '../hooks/useColumns'
 import template from './dot-plot.json'
 

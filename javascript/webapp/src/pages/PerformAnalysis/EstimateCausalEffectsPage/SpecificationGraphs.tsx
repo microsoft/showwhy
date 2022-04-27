@@ -14,6 +14,7 @@ import type {
 import type { FC } from 'react'
 import { memo } from 'react'
 import styled from 'styled-components'
+
 import { VegaSpecificationCurve } from './vega/VegaSpecificationCurve'
 
 export const SpecificationGraphs: FC<{

@@ -21,6 +21,7 @@ import {
 } from '@showwhy/types'
 import { csv } from 'd3-fetch'
 import { useCallback, useEffect, useMemo, useState } from 'react'
+
 import { useDefaultRun, useVegaWindowDimensions } from '~hooks'
 import {
 	useDefaultDatasetResult,
@@ -151,9 +152,9 @@ export function useLoadSpecificationData(): Specification[] {
 }
 
 function groupBy(array: any, f: any) {
-	let groups: any = {}
+	const groups: any = {}
 	array.forEach(function (o: any) {
-		var group = JSON.stringify(f(o))
+		const group = JSON.stringify(f(o))
 		groups[group] = groups[group] || []
 		groups[group].push(o)
 	})
