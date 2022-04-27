@@ -4,23 +4,43 @@
  */
 import type { IComboBoxOption, IDropdownOption } from '@fluentui/react'
 import { ComboBox, DefaultButton, Label, TextField } from '@fluentui/react'
+import { BaseCallout, DegreeComboBox } from '@showwhy/components'
 import { BeliefDegree, CausalFactorType, DefinitionType } from '@showwhy/types'
 import upperFirst from 'lodash/upperFirst'
 import type { FC } from 'react'
 import { memo, useCallback, useState } from 'react'
 import styled from 'styled-components'
 
-import { useDegreeComboBox } from '~hooks'
 import { isCausalFactorType } from '~utils'
 
-export const AddVariableFields: FC<{
+import { useAddVariable } from './DeriveDataVariablesPage.hooks'
+
+export const AddVariableFields: FC = memo(function AddVariableFields() {
+	const { showCallout, toggleShowCallout, selectedColumn, onAdd } =
+		useAddVariable()
+
+	return (
+		<BaseCallout
+			id={selectedColumn}
+			show={showCallout}
+			toggleShow={toggleShowCallout}
+			title="Assign new variable"
+		>
+			<Fields onAdd={onAdd} columnName={selectedColumn} />
+		</BaseCallout>
+	)
+})
+
+interface FieldProps {
 	columnName: string
 	onAdd: (
 		variable: string,
 		type: DefinitionType | CausalFactorType,
 		degree?: BeliefDegree,
 	) => void
-}> = memo(function AddVariableFields({ columnName, onAdd }) {
+}
+
+const Fields: FC<FieldProps> = memo(function Fields({ columnName, onAdd }) {
 	const definitions = Object.entries(DefinitionType)
 	const factors = Object.entries(CausalFactorType)
 	const options: IDropdownOption[] = [...definitions, ...factors].map(op => {
@@ -36,8 +56,6 @@ export const AddVariableFields: FC<{
 		},
 		[setDegree],
 	)
-	const Combobox = useDegreeComboBox(onChangeDegree)
-
 	return (
 		<Container>
 			<TextField
@@ -54,7 +72,11 @@ export const AddVariableFields: FC<{
 			{type && isCausalFactorType(type as CausalFactorType) && (
 				<>
 					<Label>Degree of belief</Label>
-					{Combobox(degree, type as unknown as CausalFactorType)}
+					<DegreeComboBox
+						onChangeDegree={onChangeDegree}
+						degree={degree}
+						type={type as CausalFactorType}
+					/>
 				</>
 			)}
 			<ButtonContainer>

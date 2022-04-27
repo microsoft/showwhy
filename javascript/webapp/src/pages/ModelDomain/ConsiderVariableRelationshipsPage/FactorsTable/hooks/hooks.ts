@@ -5,14 +5,12 @@
 
 import { useBoolean } from '@fluentui/react-hooks'
 import type { CausalFactor, FlatCausalFactor } from '@showwhy/types'
-import { CausalFactorType } from '@showwhy/types'
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useState } from 'react'
 
-import { useDegreeComboBox } from '~hooks'
 import { useCausalFactors, useSetCausalFactors } from '~state'
 
 import { useFlatFactorsList, useSaveFactors } from './factors'
-import { useTextField } from './inputs'
+import { useItems } from './items'
 import { useOnChangeCauses, useOnChangeReasoning } from './onChange'
 
 export function useFactorsTable(): {
@@ -43,29 +41,7 @@ export function useFactorsTable(): {
 		multiline,
 	)
 
-	const comboBoxExposure = useDegreeComboBox(onChangeCauses)
-	const comboBoxOutcome = useDegreeComboBox(onChangeCauses)
-	const textField = useTextField(onChangeReasoning)
-
-	const itemList = useMemo((): Record<string, any>[] => {
-		return flatFactorsList.map((factor: FlatCausalFactor, index: number) => {
-			return {
-				variable: factor.variable,
-				[CausalFactorType.CauseExposure]: comboBoxExposure(
-					factor[CausalFactorType.CauseExposure],
-					CausalFactorType.CauseExposure,
-					factor.id,
-				),
-				[CausalFactorType.CauseOutcome]: comboBoxOutcome(
-					factor[CausalFactorType.CauseOutcome],
-					CausalFactorType.CauseOutcome,
-					factor.id,
-				),
-				reasoning: textField(factor),
-				dataPw: `factor-${index}`,
-			}
-		})
-	}, [flatFactorsList, comboBoxOutcome, comboBoxExposure, textField])
+	const itemList = useItems(flatFactorsList, onChangeCauses, onChangeReasoning)
 
 	return {
 		flatFactorsList,
