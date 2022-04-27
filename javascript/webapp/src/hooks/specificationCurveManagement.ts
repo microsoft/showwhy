@@ -140,15 +140,11 @@ function insertGroupsToObjects(groups: any) {
 
 function groupBySpecification(array: Specification[]) {
 	const groups: any = {}
-	array
-		.sort((a: Specification, b: Specification) => {
-			return a?.outcome < b?.outcome ? 0 : 1
-		})
-		.forEach((s: Specification) => {
-			const group = JSON.stringify(returnKeys(s))
-			groups[group] = groups[group] || []
-			groups[group].push(s)
-		})
+	array.forEach((s: Specification) => {
+		const group = JSON.stringify(returnKeys(s))
+		groups[group] = groups[group] || []
+		groups[group].push(s)
+	})
 	return insertGroupsToObjects(groups).flat()
 }
 
