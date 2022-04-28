@@ -4,7 +4,12 @@
  */
 import { Toggle } from '@fluentui/react'
 import { ContainerFlexColumn } from '@showwhy/components'
-import type { Handler1, SpecificationCurveConfig } from '@showwhy/types'
+import type {
+	Handler1,
+	Maybe,
+	RunHistory,
+	SpecificationCurveConfig,
+} from '@showwhy/types'
 import type { FC } from 'react'
 import { memo } from 'react'
 import styled from 'styled-components'
@@ -15,15 +20,17 @@ export const EstimatedEffectConfig: FC<{
 	config: SpecificationCurveConfig
 	handleConfidenceIntervalTicksChange: Handler1<boolean>
 	handleShapTicksChange: Handler1<boolean>
+	defaultRun: Maybe<RunHistory>
 }> = memo(function EstimatedEffectConfig({
 	isConfidenceIntervalDisabled,
 	isShapDisabled,
 	config,
 	handleConfidenceIntervalTicksChange,
 	handleShapTicksChange,
+	defaultRun,
 }) {
 	return (
-		<ContainerFlexColumn marginTop>
+		<ContainerFlexColumn style={{ width: 'maxContent' }} marginTop>
 			<ToggleComponent
 				inlineLabel
 				label="Confidence interval"
@@ -33,13 +40,14 @@ export const EstimatedEffectConfig: FC<{
 						: 'Enable confidence interval ticks'
 				}
 				checked={config.confidenceIntervalTicks}
-				disabled={isConfidenceIntervalDisabled}
+				disabled={isConfidenceIntervalDisabled || !defaultRun}
 				onChange={(_, checked) =>
 					handleConfidenceIntervalTicksChange(!!checked)
 				}
 			/>
 			<ToggleComponent
-				disabled={isShapDisabled}
+				inlineLabel
+				disabled={isShapDisabled || !defaultRun}
 				label="Element contribution"
 				title={
 					isShapDisabled

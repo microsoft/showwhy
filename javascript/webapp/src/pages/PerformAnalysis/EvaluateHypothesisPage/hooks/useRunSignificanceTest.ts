@@ -17,18 +17,22 @@ import { api } from '~resources'
 import { useSetSignificanceTest } from '~state'
 import { percentage, updateSignificanceTests } from '~utils'
 
-export function useRunSignificanceTest(runId: Maybe<string>): () => any {
+export function useRunSignificanceTest(
+	runId: Maybe<string>,
+	outcome: string,
+): () => any {
 	const setSignificanceTest = useSetSignificanceTest()
 
 	const onUpdate = useCallback(
 		(status: SignificanceTestResponse) => {
 			if (isStatus(status.runtimeStatus, NodeResponseStatus.Terminated)) {
-				return updateSignificanceTests(setSignificanceTest, runId)
+				return updateSignificanceTests(setSignificanceTest, runId, outcome)
 			}
 
 			if (!runId) return null
 			const result = {
 				runId,
+				outcome,
 				simulation_completed: status.simulation_completed || 0,
 				test_results: status.test_results,
 				total_simulations: status.total_simulations || 0,
@@ -38,17 +42,21 @@ export function useRunSignificanceTest(runId: Maybe<string>): () => any {
 					status.total_simulations || 1,
 				),
 			}
-			updateSignificanceTests(setSignificanceTest, runId, result)
+			updateSignificanceTests(setSignificanceTest, runId, outcome, result)
 		},
-		[runId, setSignificanceTest],
+		[runId, setSignificanceTest, outcome],
 	)
 
 	const onStart = useCallback(
 		(nodeResponse: NodeResponse) => {
-			const initialRun = getConfidenceInterval(runId as string, nodeResponse)
-			updateSignificanceTests(setSignificanceTest, runId, initialRun)
+			const initialRun = getSignificanceTest(
+				runId as string,
+				nodeResponse,
+				outcome,
+			)
+			updateSignificanceTests(setSignificanceTest, runId, outcome, initialRun)
 		},
-		[runId, setSignificanceTest],
+		[runId, setSignificanceTest, outcome],
 	)
 
 	const run = useCallback((): any => {
@@ -65,12 +73,14 @@ export function useRunSignificanceTest(runId: Maybe<string>): () => any {
 	return run
 }
 
-function getConfidenceInterval(
+function getSignificanceTest(
 	runId: string,
 	nodeResponse: NodeResponse,
+	outcome: string,
 ): SignificanceTest {
 	return {
 		runId,
+		outcome,
 		percentage: 0,
 		total_simulations: 100,
 		simulation_completed: 0,

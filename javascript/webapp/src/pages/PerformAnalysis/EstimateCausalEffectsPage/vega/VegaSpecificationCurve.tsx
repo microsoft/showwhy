@@ -4,7 +4,6 @@
  */
 import { PivotScatterplot } from '@showwhy/components'
 import type {
-	DecisionFeature,
 	Maybe,
 	Specification,
 	SpecificationCurveConfig,
@@ -27,9 +26,9 @@ export const VegaSpecificationCurve: React.FC<{
 	height: number
 	onConfigChange: any
 	onSpecificationSelect: (datum: Maybe<Specification>) => void
-	onMouseOver: (item: Maybe<Specification | DecisionFeature>) => void
-	hovered: Maybe<number>
-	failedRefutationIds: number[]
+	onMouseOver: (item: Maybe<Specification>) => void
+	hovered: Maybe<string>
+	failedRefutationTaskIds: string[]
 	outcome?: string
 	totalSpecs?: number
 }> = memo(function VegaSpecificationCurve({
@@ -41,15 +40,15 @@ export const VegaSpecificationCurve: React.FC<{
 	onSpecificationSelect,
 	onMouseOver,
 	hovered,
-	failedRefutationIds,
+	failedRefutationTaskIds,
 	outcome,
 	totalSpecs,
 }) {
 	// TODO: these two charts should be combinable into a single vega spec
 	// this will also greatly simplify the hover coordination
-	const [selected, setSelected] = useState<Maybe<number>>()
+	const [selected, setSelected] = useState<Maybe<string>>()
 	const handleDatumClick = useCallback(
-		(item: Maybe<Specification | DecisionFeature>) => {
+		(item: Maybe<Specification>) => {
 			if (item && item.id === selected) {
 				setSelected(undefined)
 				onSpecificationSelect(undefined)
@@ -95,13 +94,13 @@ export const VegaSpecificationCurve: React.FC<{
 				data={data}
 				config={config}
 				width={width}
-				outcome={outcome}
+				outcome={outcome || '<outcome>'}
 				height={height * 0.25}
 				onMouseOver={onMouseOver}
 				onMouseClick={handleDatumClick}
 				hovered={hovered}
 				selected={selected}
-				failedRefutationIds={failedRefutationIds}
+				failedRefutationTaskIds={failedRefutationTaskIds}
 				totalSpecs={totalSpecs}
 			/>
 

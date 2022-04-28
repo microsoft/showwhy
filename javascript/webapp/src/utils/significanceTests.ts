@@ -9,14 +9,15 @@ import type { SetterOrUpdater } from 'recoil'
 export function updateSignificanceTests(
 	setSignificanceTest: SetterOrUpdater<SignificanceTest[]>,
 	runId?: string,
+	outcome?: string,
 	significanceTest?: SignificanceTest,
 ): void {
 	setSignificanceTest(prev => {
-		const oldOnes = prev.filter(p => p.runId !== runId)
+		const oldOnes = prev.filter(p => p.runId !== runId || p.outcome !== outcome)
 		if (!significanceTest) return oldOnes
 
 		const existing = prev.find(
-			p => p.runId === significanceTest.runId,
+			p => p.runId === significanceTest.runId && p.outcome === outcome,
 		) as SignificanceTest
 
 		const newOne = {

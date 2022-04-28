@@ -6,7 +6,8 @@
 import type { RefutationResult } from '@showwhy/types'
 
 export interface Specification {
-	id: number
+	id: string
+	taskId: string
 	population: string
 	treatment: string
 	outcome: string
@@ -30,7 +31,6 @@ export interface Specification {
 	populationType: string
 	treatmentType: string
 	outcomeType: string
-	taskId: string
 	/**
 	 * 95% Confidence interval
 	 */

@@ -13,15 +13,13 @@ import type {
 import { NodeResponseStatus } from '@showwhy/types'
 import { useCallback, useMemo, useState } from 'react'
 
-import { useDefaultRun, useWakeLock } from '~hooks'
+import { useDefaultRun, useLoadSpecificationData, useWakeLock } from '~hooks'
 import {
 	useSetSignificanceTest,
 	useSetSpecificationCurveConfig,
 	useSpecificationCurveConfig,
 } from '~state'
 import { updateSignificanceTests } from '~utils'
-
-import { useLoadSpecificationData } from './useLoadSpecificationData'
 
 export function useSpecificationCurve(): {
 	failedRefutations: string[]

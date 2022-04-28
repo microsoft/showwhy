@@ -38,16 +38,16 @@ export function useResetSpecificationCurveConfig(): Resetter {
 	return useResetRecoilState(specificationCurveConfig)
 }
 
-export const hoverState = atom<Maybe<number>>({
+export const hoverState = atom<Maybe<string>>({
 	key: 'specification-curve-hover-state',
 	default: undefined,
 })
 
-export function useHoverState(): Maybe<number> {
+export function useHoverState(): Maybe<string> {
 	return useRecoilValue(hoverState)
 }
 
-export function useSetHoverState(): SetterOrUpdater<Maybe<number>> {
+export function useSetHoverState(): SetterOrUpdater<Maybe<string>> {
 	return useSetRecoilState(hoverState)
 }
 

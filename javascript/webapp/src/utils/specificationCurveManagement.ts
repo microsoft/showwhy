@@ -9,7 +9,8 @@ import isNull from 'lodash/isNull'
 // eslint-disable-next-line
 export function row2spec(d: any): Specification {
 	return {
-		id: +d.Specification_ID,
+		id: '',
+		taskId: d.task_id,
 		population: d.population_name,
 		treatment: d.treatment,
 		outcome: d.outcome,
@@ -38,6 +39,48 @@ export function row2spec(d: any): Specification {
 		c95Upper: d.upper_bound,
 		c95Lower: d.lower_bound,
 		refutationResult: d.refutation_result,
-		taskId: d.task_id,
 	}
+}
+
+export function buildOutcomeGroups(
+	specifications: Specification[],
+): Specification[] {
+	const grouped = groupBySpecification(specifications)
+
+	return grouped.sort(function (a, b) {
+		return a?.estimatedEffect - b?.estimatedEffect
+	})
+}
+function returnKeys(item: Specification) {
+	return [item.treatment, item.causalModel, item.estimator]
+}
+
+function returnGroupLetter(number: number) {
+	return String.fromCharCode(97 + number).toUpperCase()
+}
+
+function insertGroupsToObjects(groups: any) {
+	return Object.keys(groups).map((outcomeGroup: any, groupNumber: number) => {
+		return groups[outcomeGroup]
+			.sort((a: Specification, b: Specification) => {
+				//order by primary first?
+				return a?.outcome.localeCompare(b?.outcome)
+			})
+			.map((specification: any, specificationNumber: number) => {
+				return {
+					...specification,
+					id: returnGroupLetter(specificationNumber) + (groupNumber + 1), //So it doesn't start in 0
+				}
+			})
+	})
+}
+
+function groupBySpecification(array: Specification[]): Specification[] {
+	const groups: any = {}
+	array.forEach((s: Specification) => {
+		const group = JSON.stringify(returnKeys(s))
+		groups[group] = groups[group] || []
+		groups[group].push(s)
+	})
+	return insertGroupsToObjects(groups).flat()
 }

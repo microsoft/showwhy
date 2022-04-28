@@ -2,9 +2,8 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { isProcessingStatus } from '@showwhy/api-client'
-import { LinkCallout, Paragraph, ProgressBar, Value } from '@showwhy/components'
-import type { Handler, Maybe, Question, SignificanceTest } from '@showwhy/types'
+import { LinkCallout, Paragraph, Value } from '@showwhy/components'
+import type { Maybe, Question, SignificanceTest } from '@showwhy/types'
 import { NodeResponseStatus, Significance } from '@showwhy/types'
 import { memo } from 'react'
 
@@ -15,16 +14,12 @@ import {
 	confidenceIntervalCalloutLine2,
 } from '../../../locales/en-US/perform-analysis'
 
-export const SignificanceTests: React.FC<{
+export const SignificanceTestResult: React.FC<{
 	significanceTestResult: Maybe<SignificanceTest>
-	cancelRun: Handler
-	isCanceled: boolean
 	question: Question
 	activeEstimatedEffects: number[]
-}> = memo(function SignificanceTests({
+}> = memo(function SignificanceTestResult({
 	significanceTestResult,
-	cancelRun,
-	isCanceled,
 	question,
 	activeEstimatedEffects,
 }) {
@@ -65,21 +60,6 @@ export const SignificanceTests: React.FC<{
 					% ({significanceTestResult?.test_results?.p_value}).
 				</Paragraph>
 			)}
-
-			{significanceTestResult &&
-				isProcessingStatus(
-					significanceTestResult.status as NodeResponseStatus,
-				) && (
-					<ProgressBar
-						description={
-							isCanceled ? 'This could take a few seconds.' : undefined
-						}
-						label={`Significance test: Simulations ${significanceTestResult?.simulation_completed}/${significanceTestResult?.total_simulations}`}
-						percentage={significanceTestResult?.percentage as number}
-						startTime={significanceTestResult?.startTime as Date}
-						onCancel={() => (!isCanceled ? cancelRun() : undefined)}
-					/>
-				)}
 		</>
 	)
 })

@@ -41,7 +41,8 @@ export const SpecificationDescription: React.FC<{
 						causal model and a<Value>{specification.estimator}</Value>
 						estimator. The estimated effect of exposure
 						<Value>{specification.treatment}</Value> for population
-						<Value>{specification.population}</Value>
+						<Value>{specification.population}</Value> and outcome
+						<Value>{specification.outcome}</Value>
 						is
 						<Effect>{round(specification.estimatedEffect, 3)}</Effect>
 						<EstimateDetails
