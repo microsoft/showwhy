@@ -28,6 +28,7 @@ import { useEstimators } from '~state'
 import {
 	IdentifierMessage,
 	MicrodataMessage,
+	OutputTableColumnsMessage,
 	VariablesMessage,
 } from './ErrorMessages'
 import { EstimatedEffectConfig } from './EstimatedEffectConfig'
@@ -56,8 +57,13 @@ export const EstimateCausalEffectPage: React.FC = memo(
 			loadingFile,
 		} = useEstimateLogic(isProcessing)
 
-		const { isMicrodata, isMissingVariable, isMissingIdentifier, hasAnyError } =
-			useDataErrors()
+		const {
+			isMicrodata,
+			isMissingVariable,
+			isMissingIdentifier,
+			isNotInOutputTable,
+			hasAnyError,
+		} = useDataErrors()
 
 		const {
 			data,
@@ -101,6 +107,7 @@ export const EstimateCausalEffectPage: React.FC = memo(
 							{isMissingVariable && <VariablesMessage />}
 							{isMissingIdentifier && <IdentifierMessage />}
 							{!isMicrodata && <MicrodataMessage />}
+							{isNotInOutputTable && <OutputTableColumnsMessage />}
 							{!isProcessing && (
 								<Container>
 									<PrimaryButton

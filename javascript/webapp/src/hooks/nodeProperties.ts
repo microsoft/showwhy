@@ -5,13 +5,14 @@
 
 import type { AlternativeModels, Definition, Estimator } from '@showwhy/types'
 import { CausalModelLevel } from '@showwhy/types'
-import { useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 
 import { useAlternativeModels } from '~hooks'
 import {
 	useConfidenceInterval,
 	useDefinitions,
 	useEstimators,
+	useOutputTablePrep,
 	useRefutationCount,
 } from '~state'
 
@@ -26,10 +27,12 @@ export function useNodeProperties(): {
 	intermediateLevel: AlternativeModels
 	unadjustedModel: AlternativeModels
 } {
+	const outputTable = useOutputTablePrep()
 	const definitions = useDefinitions()
 	const estimators = useEstimators()
 	const refutationCount = useRefutationCount()
 	const confidenceInterval = useConfidenceInterval()
+
 	const maximumLevel = useAlternativeModels(CausalModelLevel.Maximum, false)
 	const intermediateLevel = useAlternativeModels(
 		CausalModelLevel.Intermediate,
@@ -40,19 +43,43 @@ export function useNodeProperties(): {
 		CausalModelLevel.Unadjusted,
 		false,
 	)
+
+	const filterDefinitions = useCallback(() => {
+		const outputTableColumns = outputTable?.columnNames() || []
+		return definitions.filter(d => outputTableColumns.includes(d.column || ''))
+	}, [definitions, outputTable])
+
+	const filterModel = useCallback(
+		(model: AlternativeModels) => {
+			const outputTableColumns = outputTable?.columnNames() || []
+			const filtered = {
+				confounders: model.confounders.filter(i =>
+					outputTableColumns.includes(i),
+				),
+				exposureDeterminants: model.exposureDeterminants.filter(i =>
+					outputTableColumns.includes(i),
+				),
+				outcomeDeterminants: model.outcomeDeterminants.filter(i =>
+					outputTableColumns.includes(i),
+				),
+			}
+			return filtered
+		},
+		[outputTable],
+	)
+
 	return useMemo(() => {
 		return {
-			definitions,
+			definitions: filterDefinitions(),
 			estimators,
 			refutationCount,
 			confidenceInterval,
-			maximumLevel,
-			minimumModel,
-			intermediateLevel,
-			unadjustedModel,
+			maximumLevel: filterModel(maximumLevel),
+			minimumModel: filterModel(minimumModel),
+			intermediateLevel: filterModel(intermediateLevel),
+			unadjustedModel: filterModel(unadjustedModel),
 		}
 	}, [
-		definitions,
 		estimators,
 		refutationCount,
 		confidenceInterval,
@@ -60,5 +87,7 @@ export function useNodeProperties(): {
 		minimumModel,
 		intermediateLevel,
 		unadjustedModel,
+		filterDefinitions,
+		filterModel,
 	])
 }

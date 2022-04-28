@@ -50,3 +50,20 @@ export const IdentifierMessage: FC = memo(function IdentifierMessage() {
 		</MessageContainer>
 	)
 })
+
+export const OutputTableColumnsMessage: FC = memo(
+	function OutputTableColumnsMessage() {
+		return (
+			<MessageContainer styles={{ marginBottom: '1rem' }}>
+				<span>
+					Looks like some variables have been assigned but they are not mapped
+					in the output table, go back to
+					<Link to={Pages.DeriveDataVariables}>
+						Derive data variables page
+					</Link>{' '}
+					to fix this.
+				</span>
+			</MessageContainer>
+		)
+	},
+)

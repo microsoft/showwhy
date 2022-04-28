@@ -19,28 +19,45 @@ export function useDataErrors(): {
 	isMicrodata: boolean
 	isMissingVariable: boolean
 	isMissingIdentifier: boolean
+	isNotInOutputTable: boolean
 	hasAnyError: boolean
 } {
 	const outputTable = useOutputTablePrep()
-	const subjectIndentifier = useSubjectIdentifier()
-	const isMicrodata = useIsMicrodata(outputTable, subjectIndentifier)
-
+	const subjectIdentifier = useSubjectIdentifier()
 	const definitions = useDefinitions()
 	const causalFactors = useCausalFactors()
 	const allVariables = useAllVariables(causalFactors, definitions)
+	const isMicrodata = useIsMicrodata(outputTable, subjectIdentifier)
+	const variablesColumns = useMemo(
+		() => [subjectIdentifier, ...allVariables.map(v => v.column)],
+		[subjectIdentifier, allVariables],
+	)
+	const outputTableColumns = useMemo(
+		() => outputTable?.columnNames() || [],
+		[outputTable],
+	)
+	const isMissingVariable = useMemo(
+		() => outputTableColumns.some(i => !variablesColumns.includes(i)),
+		[outputTableColumns, variablesColumns],
+	)
+	const isNotInOutputTable = useMemo(
+		() =>
+			variablesColumns
+				.filter(v => !!v)
+				.some(i => !outputTableColumns.includes(i || '')),
+		[variablesColumns, outputTableColumns],
+	)
+	const isMissingIdentifier = !subjectIdentifier && !!outputTable
 
 	const hasAnyError = useMemo((): any => {
-		return (
-			!isMicrodata ||
-			allVariables.some(v => !v.column) ||
-			(outputTable && !subjectIndentifier)
-		)
-	}, [isMicrodata, allVariables, outputTable, subjectIndentifier])
+		return !isMicrodata || isMissingVariable || isMissingIdentifier
+	}, [isMicrodata, isMissingVariable, isMissingIdentifier])
 
 	return {
 		isMicrodata,
-		isMissingVariable: allVariables.some(v => !v.column),
-		isMissingIdentifier: !subjectIndentifier && !!outputTable,
+		isMissingVariable,
+		isMissingIdentifier,
+		isNotInOutputTable,
 		hasAnyError,
 	}
 }

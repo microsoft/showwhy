@@ -41,11 +41,15 @@ export function useUploadFile(
 
 	return useCallback(async () => {
 		let output = projectFiles[0]?.table as ColumnTable
+		let outputTableColumns: string[] = []
 		if (outputTablePrep) {
 			output = outputTablePrep
+			outputTableColumns = outputTablePrep.columnNames()
 		}
 
-		if (allColumns) {
+		if (outputTableColumns.length) {
+			output = output?.select(outputTableColumns)
+		} else if (allColumns) {
 			output = output?.select(allColumns)
 		}
 		const files = await uploadOutputFile(output)

@@ -2,7 +2,14 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { Callout, DefaultButton, DirectionalHint, Icon } from '@fluentui/react'
+import {
+	Callout,
+	DefaultButton,
+	DirectionalHint,
+	Icon,
+	TooltipDelay,
+	TooltipHost,
+} from '@fluentui/react'
 import { useBoolean, useId } from '@fluentui/react-hooks'
 import type {
 	CausalFactor,
@@ -14,6 +21,8 @@ import type {
 import type { FC } from 'react'
 import { memo, useMemo } from 'react'
 import styled from 'styled-components'
+
+import { useOutputTablePrep } from '~state'
 
 interface Props {
 	completedElements: number
@@ -27,6 +36,7 @@ interface ListElement {
 	key: string
 	variable: string
 	isComplete: boolean
+	notInOutput?: boolean
 	icon: string
 	onClick: Maybe<() => void>
 }
@@ -38,6 +48,11 @@ export const CompletedElements: FC<Props> = memo(function CompletedElements({
 	subjectIdentifier,
 	onSetSubjectIdentifier,
 }) {
+	const outputTable = useOutputTablePrep()
+	const outputTableColumns = useMemo(
+		() => outputTable?.columnNames(),
+		[outputTable],
+	)
 	const [isVisible, { toggle }] = useBoolean(false)
 	const buttonId = useId('callout-button')
 	const elements = useMemo((): any => {
@@ -49,11 +64,15 @@ export const CompletedElements: FC<Props> = memo(function CompletedElements({
 		allElements,
 		onResetVariable,
 		onSetSubjectIdentifier,
+		outputTableColumns,
 	)
+
+	const showWarning = useMemo(() => list.some(i => i.notInOutput), [list])
 
 	return (
 		<Container>
 			<DefaultButton id={buttonId} onClick={toggle}>
+				{showWarning ? <Icon iconName="Warning" /> : null}
 				{isVisible ? 'Hide' : 'Show'} Assigned Variables {completedElements}/
 				{elements}
 			</DefaultButton>
@@ -78,12 +97,36 @@ const List: FC<{ list: ListElement[] }> = memo(function ListItem({ list }) {
 	return list.length ? (
 		<Ul>
 			{list.map(item => {
-				const { icon, variable, onClick, key, isComplete = false } = item
+				const {
+					icon,
+					variable,
+					onClick,
+					key,
+					isComplete = false,
+					notInOutput = false,
+				} = item
+				const tooltipId = notInOutput ? key : undefined
 				return (
-					<Li key={key} isComplete={isComplete} onClick={onClick}>
-						{icon ? <Icon iconName={icon} /> : null}
-						{variable}
-					</Li>
+					<TooltipHost
+						key={key}
+						content={
+							notInOutput
+								? 'This variable is selected but is not in the output table. Please, click on it to unselect it or add the table.'
+								: ''
+						}
+						delay={TooltipDelay.zero}
+						id={tooltipId}
+					>
+						<Li
+							isComplete={isComplete}
+							notInOutput={notInOutput}
+							onClick={onClick}
+							aria-describedby={tooltipId}
+						>
+							{icon ? <Icon iconName={icon} /> : null}
+							{variable}
+						</Li>
+					</TooltipHost>
 				)
 			})}
 		</Ul>
@@ -95,7 +138,8 @@ function useList(
 	allElements: FactorsOrDefinitions,
 	onResetVariable: (columnName: string) => void,
 	onSetSubjectIdentifier: Handler1<Maybe<string>>,
-) {
+	outputTableColumns: string[] = [],
+): ListElement[] {
 	return useMemo((): any => {
 		const all: ListElement[] = [
 			{
@@ -111,11 +155,18 @@ function useList(
 
 		allElements.forEach(element => {
 			const isComplete = isElementComplete(element, allElements)
+			const isInOutput = isElementInOutputTable(element, outputTableColumns)
+			const notInOutput = isComplete && !isInOutput
 			const _element = {
 				variable: element.variable,
 				key: element.id,
 				isComplete,
-				icon: isComplete ? 'SkypeCircleCheck' : 'SkypeCircleMinus',
+				notInOutput,
+				icon: notInOutput
+					? 'Warning'
+					: isComplete
+					? 'SkypeCircleCheck'
+					: 'SkypeCircleMinus',
 				onClick: isComplete
 					? () => onResetVariable(element.column || '')
 					: undefined,
@@ -123,7 +174,13 @@ function useList(
 			all.push(_element)
 		})
 		return all
-	}, [subjectIdentifier, allElements, onResetVariable, onSetSubjectIdentifier])
+	}, [
+		subjectIdentifier,
+		allElements,
+		onResetVariable,
+		onSetSubjectIdentifier,
+		outputTableColumns,
+	])
 }
 
 function isElementComplete(
@@ -134,6 +191,13 @@ function isElementComplete(
 		(x: CausalFactor | Definition) => x.id === element.id,
 	)
 	return !!found?.column
+}
+
+function isElementInOutputTable(
+	element: CausalFactor | Definition,
+	outputTableColumns: string[],
+) {
+	return !!(element.column && outputTableColumns.includes(element.column))
 }
 
 const CalloutStyles = {
@@ -162,13 +226,15 @@ const Ul = styled.ul`
 	margin: 0;
 `
 
-const Li = styled.li<{ isComplete: boolean }>`
+const Li = styled.li<{ isComplete: boolean; notInOutput: boolean }>`
 	display: flex;
 	align-items: center;
 	gap: 0.5rem;
 	padding: 0 0 0.5rem 0;
-	color: ${({ theme, isComplete }) =>
-		isComplete
+	color: ${({ theme, isComplete, notInOutput }) =>
+		notInOutput
+			? theme.application().warning
+			: isComplete
 			? theme.application().accent()
 			: theme.application().foreground()};
 	cursor: ${({ isComplete }) => (isComplete ? 'pointer' : 'default')};
