@@ -109,11 +109,7 @@ const List: FC<{ list: ListElement[] }> = memo(function ListItem({ list }) {
 				return (
 					<TooltipHost
 						key={key}
-						content={
-							notInOutput
-								? 'This variable is selected but is not in the output table. Please, click on it to unselect it or add the table.'
-								: ''
-						}
+						content={getTooltipContent(notInOutput, !isComplete)}
 						delay={TooltipDelay.zero}
 						id={tooltipId}
 					>
@@ -198,6 +194,15 @@ function isElementInOutputTable(
 	outputTableColumns: string[],
 ) {
 	return !!(element.column && outputTableColumns.includes(element.column))
+}
+
+function getTooltipContent(notInOutput: boolean, notAssigned: boolean): string {
+	if (notInOutput) {
+		return 'This variable is selected but is not in the output table. Please, click on it to unselect it or add the table.'
+	} else if (notAssigned) {
+		return 'This variable has not been assigned to a column. Assign it to a column of the output table or delete it.'
+	}
+	return ''
 }
 
 const CalloutStyles = {
