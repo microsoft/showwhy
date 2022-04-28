@@ -22,7 +22,6 @@ import type {
 } from '@showwhy/types'
 import { DownloadType, NodeResponseStatus } from '@showwhy/types'
 import { useCallback, useMemo } from 'react'
-
 import { useGetStepUrlsByStatus } from '~hooks'
 import {
 	useCausalFactors,
@@ -43,7 +42,6 @@ import {
 	useTablesPrepSpecification,
 } from '~state'
 import { isDataUrl } from '~utils'
-
 import { getResult } from '../App.util'
 
 export function useSaveProject(): AsyncHandler {
@@ -198,7 +196,9 @@ function useRunHistoryFile(): Maybe<FileWithPath> {
 }
 
 function useSignificanceTestFile(): Maybe<FileWithPath> {
-	const significanceTest = useSignificanceTest()
+	const significanceTest = useSignificanceTest().filter(s =>
+		isStatus(s?.status, NodeResponseStatus.Completed),
+	)
 	return useMemo(() => {
 		if (significanceTest?.length) {
 			const file = createFileWithPath(
