@@ -84,6 +84,7 @@ const Container = styled.div<{ size: CausalEffectSize }>`
 		size === CausalEffectSize.Small ? '1em' : '5em'};
 	grid-row-gap: ${({ size }) =>
 		size === CausalEffectSize.Small ? '0em' : '2em'};
+	position: relative;
 `
 
 const Box = styled.div`
