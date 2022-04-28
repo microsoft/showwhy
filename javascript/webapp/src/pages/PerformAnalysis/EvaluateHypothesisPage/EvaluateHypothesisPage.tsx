@@ -120,12 +120,10 @@ export const EvaluateHypothesisPage: React.FC = memo(
 				</Container>
 				<Title>Domain model </Title>
 				<Container>
-					<Container>
-						<CausalEffectsArrows
-							size={CausalEffectSize.Small}
-							{...causalEffects}
-						/>
-					</Container>
+					<CausalEffectsArrows
+						size={CausalEffectSize.Small}
+						{...causalEffects}
+					/>
 				</Container>
 				<Title noMarginBottom noMarginTop>
 					Effect size estimates
