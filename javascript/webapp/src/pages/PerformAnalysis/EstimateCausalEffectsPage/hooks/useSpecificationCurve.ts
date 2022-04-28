@@ -137,6 +137,7 @@ function useOnSpecificationsChange(): Handler1<SpecificationCurveConfig> {
 	return useCallback(
 		(config: SpecificationCurveConfig) => {
 			setConfig(config)
+			//missing selectedOutput
 			updateSignificanceTests(setSignificanceTest, defaultRun?.id)
 		},
 		[setConfig, setSignificanceTest, defaultRun],

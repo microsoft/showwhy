@@ -63,8 +63,11 @@ export const EvaluateHypothesisPage: React.FC = memo(
 			setSelectedOutcome,
 		} = useSpecificationCurveData()
 
-		const { significanceTestResult, significanceFailed } =
-			useSignificanceTestData(selectedOutcome)
+		const {
+			significanceTestResult,
+			significanceFailed,
+			hasAnyProcessingActive,
+		} = useSignificanceTestData(selectedOutcome)
 
 		const { runSignificance, cancelRun, isCanceled, activeEstimatedEffects } =
 			useSignificanceTestManagement(
@@ -93,6 +96,7 @@ export const EvaluateHypothesisPage: React.FC = memo(
 					<CausalQuestion question={question} />
 					<Container>
 						<RunManagement
+							hasAnyProcessingActive={hasAnyProcessingActive}
 							significanceTestResult={significanceTestResult}
 							significanceFailed={significanceFailed}
 							runSignificance={runSignificance}

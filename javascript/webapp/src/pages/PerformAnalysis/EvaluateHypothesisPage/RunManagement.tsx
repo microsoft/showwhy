@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import type { IDropdownOption } from '@fluentui/react';
+import type { IDropdownOption } from '@fluentui/react'
 import { DefaultButton, Dropdown } from '@fluentui/react'
 import { isProcessingStatus, isStatus } from '@showwhy/api-client'
 import { ErrorMessage, ProgressBar } from '@showwhy/components'
@@ -20,6 +20,7 @@ export const RunManagement: React.FC<{
 	setSelectedOutcome: Handler1<string>
 	isCanceled: boolean
 	cancelRun: Handler
+	hasAnyProcessingActive: boolean
 }> = memo(function RunManagement({
 	significanceTestResult,
 	significanceFailed,
@@ -29,6 +30,7 @@ export const RunManagement: React.FC<{
 	setSelectedOutcome,
 	isCanceled,
 	cancelRun,
+	hasAnyProcessingActive,
 }) {
 	const showButton = useMemo((): any => {
 		return (
@@ -51,7 +53,7 @@ export const RunManagement: React.FC<{
 				<DropdownContainer>
 					<Dropdown
 						label="Outcome"
-						disabled={outcomeOptions.length <= 2 || isProcessing}
+						disabled={outcomeOptions.length <= 2}
 						selectedKey={selectedOutcome}
 						onChange={(_, val) => setSelectedOutcome(val?.key as string)}
 						options={outcomeOptions}
@@ -61,6 +63,12 @@ export const RunManagement: React.FC<{
 			{showButton && (
 				<DefaultButton
 					onClick={runSignificance}
+					disabled={hasAnyProcessingActive}
+					title={
+						hasAnyProcessingActive
+							? 'You must wait for the current run to end'
+							: 'Run significance test for this outcome'
+					}
 					data-pw="run-significance-test-button"
 				>
 					Run significance test

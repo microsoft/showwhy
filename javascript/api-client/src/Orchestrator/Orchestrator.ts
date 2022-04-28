@@ -7,13 +7,13 @@ import type {
 	Maybe,
 	NodeRequest,
 	NodeResponse,
-	NodeResponseStatus,
 	OrchestratorStatusResponse,
 	StatusResponse,
 } from '@showwhy/types'
+import { NodeResponseStatus } from '@showwhy/types'
 
 import type { FetchApiInteractor } from '../FetchApiInteractor.js'
-import { isProcessingStatus, wait } from '../utils.js'
+import { isProcessingStatus, isStatus, wait } from '../utils.js'
 import type { OrchestratorType } from './OrchestratorType.js'
 
 export type OrchestratorHandler = (...args: unknown[]) => void
@@ -71,6 +71,15 @@ export class Orchestrator<UpdateStatus> {
 			])
 
 			this._onUpdate && this._onUpdate({ ...status, ...estimateStatus } as any)
+		}
+
+		if (
+			isStatus(
+				status?.runtimeStatus as NodeResponseStatus,
+				NodeResponseStatus.Failed,
+			)
+		) {
+			this._onUpdate && this._onUpdate(status as any)
 		}
 		return { ...status, ...estimateStatus } as StatusResponse
 	}
