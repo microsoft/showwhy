@@ -37,8 +37,8 @@ export function useDataErrors(): {
 		[outputTable],
 	)
 	const isMissingVariable = useMemo(
-		() => outputTableColumns.some(i => !variablesColumns.includes(i)),
-		[outputTableColumns, variablesColumns],
+		() => allVariables.some(i => !i.column),
+		[allVariables],
 	)
 	const isNotInOutputTable = useMemo(
 		() =>
@@ -50,9 +50,13 @@ export function useDataErrors(): {
 	const isMissingIdentifier = !subjectIdentifier && !!outputTable
 
 	const hasAnyError = useMemo((): any => {
-		return !isMicrodata || isMissingVariable || isMissingIdentifier
-	}, [isMicrodata, isMissingVariable, isMissingIdentifier])
-
+		return (
+			!isMicrodata ||
+			isMissingVariable ||
+			isMissingIdentifier ||
+			isNotInOutputTable
+		)
+	}, [isMicrodata, isMissingVariable, isMissingIdentifier, isNotInOutputTable])
 	return {
 		isMicrodata,
 		isMissingVariable,
