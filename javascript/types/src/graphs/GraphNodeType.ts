@@ -4,8 +4,8 @@
  */
 
 export enum GraphNodeType {
-	IdentifyEstimand = 'IdentifyEstimandNode',
-	CreateCausalGraph = 'CausalGraphNode',
+	// IdentifyEstimand = 'IdentifyEstimandNode', // TODO: Validate if it's being used
+	// CreateCausalGraph = 'CausalGraphNode', // TODO: Validate if it's being used
 	LoadDataset = 'LoadNode',
 	EstimateEffects = 'EstimateEffectNode',
 	SignificanceTest = 'SignificanceTestNode',
