@@ -8,6 +8,6 @@ const configuration = {
 	...configure(),
 	testEnvironment: 'jsdom',
 	extensionsToTreatAsEsm: ['.ts', '.tsx'],
-	reporters: ['default'],
+	reporters: ['default', 'jest-junit'],
 }
 export default configuration

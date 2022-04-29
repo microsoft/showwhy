@@ -2041,6 +2041,7 @@ __metadata:
     "@types/jest": ^27.4.1
     "@types/react": ^17.0.44
     jest: ^27.5.1
+    jest-junit: ^13.1.0
   languageName: unknown
   linkType: soft
 
