@@ -15,3 +15,9 @@ export interface PopulationSpec {
 	dataframe: string
 	population_id?: string
 }
+
+export enum NodeIds {
+	LoadDataset = 'Load Dataset',
+	EstimateEffects = 'Estimate Effects',
+	SignificanceTest = 'Significance Test',
+}

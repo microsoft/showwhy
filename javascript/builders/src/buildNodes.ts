@@ -5,17 +5,11 @@
 import type { GraphNodeData, NodeRequest } from '@showwhy/types'
 import { GraphNodeType } from '@showwhy/types'
 
+import { NodeIds } from './types.js'
+
 interface Node {
 	type: GraphNodeType
 	[key: string]: any
-}
-
-enum NodeIds {
-	IdentifyEstimand = 'Identify Estimand',
-	CreateCausalGraph = 'Create Causal Graph',
-	LoadDataset = 'Load Dataset',
-	EstimateEffects = 'Estimate Effects',
-	SignificanceTest = 'Significance Test',
 }
 
 export function buildNodes(nodes: Node[]): NodeRequest {
@@ -39,22 +33,6 @@ function getNodeProperties(type: GraphNodeType): GraphNodeData {
 				id: NodeIds.EstimateEffects,
 				value: NodeIds.EstimateEffects,
 				name: NodeIds.EstimateEffects,
-			}
-		case GraphNodeType.IdentifyEstimand:
-			return {
-				type: GraphNodeType.IdentifyEstimand,
-				result: 'primary_estimand',
-				id: NodeIds.IdentifyEstimand,
-				value: NodeIds.IdentifyEstimand,
-				name: NodeIds.IdentifyEstimand,
-			}
-		case GraphNodeType.CreateCausalGraph:
-			return {
-				type: GraphNodeType.CreateCausalGraph,
-				result: 'primary_maximum_model',
-				id: NodeIds.CreateCausalGraph,
-				value: NodeIds.CreateCausalGraph,
-				name: NodeIds.CreateCausalGraph,
 			}
 		case GraphNodeType.LoadDataset:
 			return {

@@ -9,14 +9,24 @@
 	},
 	"scripts": {
 		"clean": "essex clean",
-		"build": "essex build --skipExportCheck"
+		"build": "essex build --skipExportCheck",
+		"test": "NODE_OPTIONS=--experimental-vm-modules yarn node $(yarn bin jest) --runInBand --no-cache"
 	},
 	"dependencies": {
 		"@showwhy/types": "workspace:^"
 	},
 	"devDependencies": {
+		"@essex/jest-config": "^21.0.10",
 		"@essex/scripts": "^20.4.7",
 		"@essex/tsconfig-base": "^1.0.2",
-		"@types/react": "^17.0.44"
+		"@types/jest": "^27.4.1",
+		"@types/react": "^17.0.44",
+		"jest": "^27.5.1",
+		"jest-junit": "^13.1.0"
+	},
+	"jest-junit": {
+		"suiteName": "@showwhy/builders",
+		"outputDirectory": "./test-results",
+		"outputName": "jest-junit.xml"
 	}
 }
