@@ -25,13 +25,13 @@ There are two ways you can run this project
 # Folder structure
 
 - src
-  - common(enums, interfaces, types, styles and utils): common files & functions between the files
-  - components: generic reusable components to be used within the app
+  - components: contains the App and the GeneralSteps components. All other reusable components are in the @showwhy/components package.
   - data: stepLists and config for the left side panel menu
   - hooks: reusable [React hooks](https://reactjs.org/docs/hooks-intro.html) used within the app
     - test: Jest test for the hooks
   - locales: guidance tests for the pages, separated by language so in the future can be used with Internationalization (i18n).
     - en-US
+  - markdown: markdown files that are used for the Guidance section on each step of the app
   - pages: pages separated by their step title. Pages have lazy loading and a hooks with it's business logic.
   - resources: REST api resources and preparation of objects to be sent
   - state: Recoil state
