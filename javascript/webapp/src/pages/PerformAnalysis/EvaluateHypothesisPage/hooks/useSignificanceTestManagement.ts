@@ -7,9 +7,12 @@ import { OrchestratorType } from '@showwhy/api-client'
 import { buildSignificanceTestsNode } from '@showwhy/builders'
 import type {
 	Handler,
+	Maybe,
+	SignificanceTest,
 	Specification,
 	SpecificationCurveConfig,
 } from '@showwhy/types'
+import difference from 'lodash/difference'
 import { useCallback, useMemo, useState } from 'react'
 
 import { useDefaultRun } from '~hooks'
@@ -21,14 +24,15 @@ export function useSignificanceTestManagement(
 	specificationData: Specification[],
 	specificationCurveConfig: SpecificationCurveConfig,
 	selectedOutcome: string,
+	significanceTestResult: Maybe<SignificanceTest>,
 ): {
 	cancelRun: Handler
 	runSignificance: Handler
 	isCanceled: boolean
 	activeEstimatedEffects: number[]
+	taskIdsChanged: boolean
 } {
 	const defaultRun = useDefaultRun()
-	const run = useRunSignificanceTest(defaultRun?.id, selectedOutcome)
 	const [isCanceled, setIsCanceled] = useState<boolean>(false)
 
 	const activeSpecifications = useMemo((): Specification[] => {
@@ -54,6 +58,15 @@ export function useSignificanceTestManagement(
 		return activeSpecifications.map(x => x.estimatedEffect)
 	}, [activeSpecifications])
 
+	const taskIdsChanged = useMemo((): boolean => {
+		return !!difference(significanceTestResult?.taskIds, activeTaskIds).length
+	}, [activeTaskIds, significanceTestResult])
+
+	const run = useRunSignificanceTest(
+		defaultRun?.id,
+		selectedOutcome,
+		activeTaskIds,
+	)
 	const cancelRun = useCallback(() => {
 		setIsCanceled(true)
 		run().cancel()
@@ -61,7 +74,7 @@ export function useSignificanceTestManagement(
 
 	const runSignificance = useCallback(() => {
 		const nodes = buildSignificanceTestsNode(activeTaskIds)
-		run().execute(nodes, OrchestratorType.ConfidenceInterval)
+		run().execute(nodes, OrchestratorType.SignificanceTests)
 	}, [run, activeTaskIds])
 
 	return {
@@ -69,5 +82,6 @@ export function useSignificanceTestManagement(
 		runSignificance,
 		isCanceled,
 		activeEstimatedEffects,
+		taskIdsChanged,
 	}
 }

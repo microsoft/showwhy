@@ -12,7 +12,6 @@ import type {
 } from '@showwhy/types'
 import { NodeResponseStatus } from '@showwhy/types'
 import { useCallback, useMemo, useState } from 'react'
-
 import { useDefaultRun, useLoadSpecificationData, useWakeLock } from '~hooks'
 import {
 	useSetSignificanceTest,
@@ -137,7 +136,6 @@ function useOnSpecificationsChange(): Handler1<SpecificationCurveConfig> {
 	return useCallback(
 		(config: SpecificationCurveConfig) => {
 			setConfig(config)
-			//missing selectedOutput
 			updateSignificanceTests(setSignificanceTest, defaultRun?.id)
 		},
 		[setConfig, setSignificanceTest, defaultRun],

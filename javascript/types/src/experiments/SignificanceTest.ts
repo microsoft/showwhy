@@ -10,10 +10,11 @@ import type {
 
 export interface SignificanceTest {
 	runId: string
+	outcome: string
+	taskIds?: string[]
 	status?: NodeResponseStatus
 	total_simulations?: number
 	simulation_completed?: number
-	outcome: string
 	test_results?: TestResults
 	startTime?: Date
 	percentage?: number

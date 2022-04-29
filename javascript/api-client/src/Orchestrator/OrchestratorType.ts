@@ -5,5 +5,5 @@
 
 export enum OrchestratorType {
 	Estimator = 'estimator',
-	ConfidenceInterval = 'confidenceInterval',
+	SignificanceTests = 'significance tests',
 }

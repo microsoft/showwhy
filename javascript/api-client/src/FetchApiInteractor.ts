@@ -142,7 +142,7 @@ export class FetchApiInteractor {
 		let path: string
 
 		switch (type) {
-			case OrchestratorType.ConfidenceInterval:
+			case OrchestratorType.SignificanceTests:
 				code = this.checkSignificanceStatusApiKey
 				path = 'checksignificanceteststatus'
 				break

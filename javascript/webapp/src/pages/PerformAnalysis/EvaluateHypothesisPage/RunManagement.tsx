@@ -4,10 +4,15 @@
  */
 import type { IDropdownOption } from '@fluentui/react'
 import { DefaultButton, Dropdown } from '@fluentui/react'
-import { isProcessingStatus, isStatus } from '@showwhy/api-client'
+import { isProcessingStatus } from '@showwhy/api-client'
 import { ErrorMessage, ProgressBar } from '@showwhy/components'
-import type { Handler, Handler1, Maybe, SignificanceTest } from '@showwhy/types'
-import { NodeResponseStatus } from '@showwhy/types'
+import type {
+	Handler,
+	Handler1,
+	Maybe,
+	NodeResponseStatus,
+	SignificanceTest,
+} from '@showwhy/types'
 import { memo, useMemo } from 'react'
 import styled from 'styled-components'
 
@@ -32,14 +37,6 @@ export const RunManagement: React.FC<{
 	cancelRun,
 	hasAnyProcessingActive,
 }) {
-	const showButton = useMemo((): any => {
-		return (
-			!significanceTestResult ||
-			(significanceTestResult.status &&
-				isStatus(significanceTestResult?.status, NodeResponseStatus.Failed))
-		)
-	}, [significanceTestResult])
-
 	const isProcessing = useMemo((): any => {
 		return (
 			significanceTestResult &&
@@ -60,7 +57,7 @@ export const RunManagement: React.FC<{
 					/>
 				</DropdownContainer>
 			)}
-			{showButton && (
+			{!isProcessing && (
 				<DefaultButton
 					onClick={runSignificance}
 					disabled={hasAnyProcessingActive}
