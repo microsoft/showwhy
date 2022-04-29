@@ -32,6 +32,7 @@ import { AnalysisSummary } from './AnalysisSummary'
 import { EmptyDataPageWarning } from './EmptyDataPageWarning'
 import { useSignificanceTestData } from './hooks/useSignificanceTestData'
 import { useSignificanceTestManagement } from './hooks/useSignificanceTestManagement'
+import { NewTaskIdsMessage } from './NewTaskIdsMessage'
 import { ResultsGraph } from './ResultsGraph'
 import { RunManagement } from './RunManagement'
 import { SignificanceTestResult } from './SignificanceTestResult'
@@ -63,16 +64,25 @@ export const EvaluateHypothesisPage: React.FC = memo(
 			setSelectedOutcome,
 		} = useSpecificationCurveData()
 
-		const { significanceTestResult, significanceFailed } =
-			useSignificanceTestData(selectedOutcome)
+		const {
+			significanceTestResult,
+			significanceFailed,
+			hasAnyProcessingActive,
+		} = useSignificanceTestData(selectedOutcome)
 
-		const { runSignificance, cancelRun, isCanceled, activeEstimatedEffects } =
-			useSignificanceTestManagement(
-				failedRefutationTaskIds,
-				specificationData,
-				config,
-				selectedOutcome,
-			)
+		const {
+			runSignificance,
+			cancelRun,
+			isCanceled,
+			activeEstimatedEffects,
+			taskIdsChanged,
+		} = useSignificanceTestManagement(
+			failedRefutationTaskIds,
+			specificationData,
+			config,
+			selectedOutcome,
+			significanceTestResult,
+		)
 
 		if (
 			!specificationData.length ||
@@ -91,8 +101,10 @@ export const EvaluateHypothesisPage: React.FC = memo(
 			<ContainerFlexColumn data-pw="evaluate-hypothesis-content">
 				<Container>
 					<CausalQuestion question={question} />
+					{taskIdsChanged && <NewTaskIdsMessage />}
 					<Container>
 						<RunManagement
+							hasAnyProcessingActive={hasAnyProcessingActive}
 							significanceTestResult={significanceTestResult}
 							significanceFailed={significanceFailed}
 							runSignificance={runSignificance}

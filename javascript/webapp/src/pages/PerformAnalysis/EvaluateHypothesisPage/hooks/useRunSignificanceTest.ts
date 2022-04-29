@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { getConfidenceOrchestrator, isStatus } from '@showwhy/api-client'
+import { getSignificanceOrchestrator, isStatus } from '@showwhy/api-client'
 import type {
 	Maybe,
 	NodeResponse,
@@ -20,6 +20,7 @@ import { percentage, updateSignificanceTests } from '~utils'
 export function useRunSignificanceTest(
 	runId: Maybe<string>,
 	outcome: string,
+	taskIds: string[],
 ): () => any {
 	const setSignificanceTest = useSetSignificanceTest()
 
@@ -53,14 +54,15 @@ export function useRunSignificanceTest(
 				runId as string,
 				nodeResponse,
 				outcome,
+				taskIds,
 			)
 			updateSignificanceTests(setSignificanceTest, runId, outcome, initialRun)
 		},
-		[runId, setSignificanceTest, outcome],
+		[runId, setSignificanceTest, outcome, taskIds],
 	)
 
 	const run = useCallback((): any => {
-		return getConfidenceOrchestrator(
+		return getSignificanceOrchestrator(
 			api,
 			onStart,
 			onUpdate,
@@ -77,6 +79,7 @@ function getSignificanceTest(
 	runId: string,
 	nodeResponse: NodeResponse,
 	outcome: string,
+	taskIds: string[],
 ): SignificanceTest {
 	return {
 		runId,
@@ -87,5 +90,6 @@ function getSignificanceTest(
 		status: NodeResponseStatus.Pending,
 		startTime: new Date(),
 		nodeResponse,
+		taskIds,
 	}
 }

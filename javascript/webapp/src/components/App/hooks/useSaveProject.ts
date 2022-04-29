@@ -198,7 +198,9 @@ function useRunHistoryFile(): Maybe<FileWithPath> {
 }
 
 function useSignificanceTestFile(): Maybe<FileWithPath> {
-	const significanceTest = useSignificanceTest()
+	const significanceTest = useSignificanceTest().filter(s =>
+		isStatus(s?.status, NodeResponseStatus.Completed),
+	)
 	return useMemo(() => {
 		if (significanceTest?.length) {
 			const file = createFileWithPath(

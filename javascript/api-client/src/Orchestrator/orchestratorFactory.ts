@@ -65,7 +65,7 @@ export function getEstimatorOrchestrator<UpdateStatus>(
 	)
 }
 
-export function getConfidenceOrchestrator<UpdateStatus>(
+export function getSignificanceOrchestrator<UpdateStatus>(
 	apiInteractor: FetchApiInteractor,
 	onStart?: Maybe<OrchestratorOnStartHandler>,
 	onUpdate?: Maybe<OrchestatorOnUpdateHandler<UpdateStatus>>,
@@ -73,7 +73,7 @@ export function getConfidenceOrchestrator<UpdateStatus>(
 	onCancel?: Maybe<OrchestratorHandler>,
 	replace?: Maybe<boolean>,
 ): Orchestrator<UpdateStatus> {
-	const type = OrchestratorType.ConfidenceInterval
+	const type = OrchestratorType.SignificanceTests
 	if (replace) {
 		deleteOrchestrator(type)
 	}
