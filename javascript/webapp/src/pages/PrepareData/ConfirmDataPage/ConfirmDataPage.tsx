@@ -2,10 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import {
-	ArqueroDetailsList,
-	ArqueroTableHeader,
-} from '@data-wrangling-components/react'
+import { ArqueroDetailsList, ArqueroTableHeader } from '@essex/arquero-react'
 import type { FC } from 'react'
 import { memo } from 'react'
 import styled from 'styled-components'
