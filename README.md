@@ -69,6 +69,10 @@ This process will setup all dependencies needed to run javascript packages local
 
 `yarn start:webapp`
 
+## Azure Deployment
+
+We deploy our services to an Azure environment, as you can see in the [deployment instructions](/deployment.md)
+
 ## License
 
 Code licensed under the [MIT License](LICENSE).
