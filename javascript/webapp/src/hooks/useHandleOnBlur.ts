@@ -8,13 +8,13 @@ import { useCallback } from 'react'
 
 export function useHandleOnBlur(
 	fn: Handler,
-	comparePW?: string,
+	comparePW?: string[],
 ): Handler1<React.FocusEvent<HTMLInputElement>> {
 	return useCallback(
 		(event: React.FocusEvent<HTMLInputElement>) => {
 			const { relatedTarget } = event
-			const pw = relatedTarget?.getAttribute('data-pw')
-			if (!comparePW || pw !== comparePW) {
+			const pw = relatedTarget?.getAttribute('data-pw') || ''
+			if (!comparePW?.length || !comparePW.includes(pw)) {
 				fn()
 			}
 		},

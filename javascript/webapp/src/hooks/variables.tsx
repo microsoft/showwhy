@@ -31,7 +31,10 @@ export function useVariableField(
 	setVariable: (v: string) => void,
 	factor?: CausalFactor,
 ): JSX.Element {
-	const handleOnBlur = useHandleOnBlur(add, 'factors-form-description')
+	const handleOnBlur = useHandleOnBlur(add, [
+		'factors-form-description',
+		'factors-form-variable-name',
+	])
 	const handler = useHandleKeyPress(add)
 	return useMemo(() => {
 		return (

@@ -23,7 +23,10 @@ export const RelevantVariablesForm: FC<{
 	}, [onAdd, label, description, setDescription, setLabel])
 
 	const handler = useHandleKeyPress(add, 'enter')
-	const handleOnBlur = useHandleOnBlur(add, 'variables-form-description')
+	const handleOnBlur = useHandleOnBlur(add, [
+		'variables-form-description',
+		'variables-form-variable-name',
+	])
 
 	return (
 		<Container data-pw="variables-form">

@@ -8,7 +8,12 @@ import { DefinitionType } from '@showwhy/types'
 import { useEffect, useMemo, useState } from 'react'
 
 import { useHandleOnLinkClick } from '~hooks'
-import { useDefinitions, useDefinitionType, useQuestion } from '~state'
+import {
+	useDefinitions,
+	useDefinitionType,
+	useQuestion,
+	useSetDefinitionType,
+} from '~state'
 import { getDefinitionsByType } from '~utils'
 
 import {
@@ -55,6 +60,13 @@ export function useBusinessLogic(): {
 	const editDefinition = useEditDefinition(definitions)
 
 	const handleOnLinkClick = useHandleOnLinkClick()
+
+	const setDefinitionType = useSetDefinitionType()
+
+	useEffect(() => {
+		setDefinitionType(DefinitionType.Population)
+		/* eslint-disable-next-line react-hooks/exhaustive-deps */
+	}, [])
 
 	useEffect(() => {
 		setDefinitionToEdit(undefined)
