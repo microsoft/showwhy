@@ -12,6 +12,10 @@ const pwConfig: PlaywrightTestConfig = {
 	workers: config.get('workers') ?? undefined,
 	timeout: config.get('timeout') ?? undefined,
 	retries: config.get('retries') ?? 1,
+	reporter: [
+		['github'],
+		['junit', { outputFile: 'test-results/playwright-junit.xml' }],
+	],
 	use: {
 		ignoreHTTPSErrors: true,
 		headless: config.get('headless'),
