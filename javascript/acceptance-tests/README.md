@@ -10,3 +10,11 @@ This package contains the end-to-end acceptance tests for the ShowWhy webapp. Th
 - pw-tests: Tests for each of the pages of the app
 - playwright.config.ts
 - util.ts
+
+## Tests
+
+1. `yarn install` - Install project dependencies
+
+2. `yarn install:playwright_deps` - Install playwright dependencies
+
+3. `yarn acceptance:test-localhost` - Build the webapp and start the tests headless

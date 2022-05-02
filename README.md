@@ -47,7 +47,7 @@ Open a terminal, navigate to the directory where this project is located and run
 ### Commands
 
 - `docker-compose up --build -d`: Start all the containers (UI and Backend with all the dependencies) - Useful for users to start using ShowWhy
-- `docker-compose up --build -d client`: Start only the UI container
+- `docker-compose up --build -d webapp`: Start only the UI container
 - `docker-compose up --build -d reverseproxy`: Start all the containers needed for the backend and proxy for UI (the UI is excluded) - Useful for UI development
 - `docker-compose up --build -d functions`: Start all the containers needed for the backend except the proxy - Useful for backend development
 
@@ -57,16 +57,17 @@ To stop using showwhy you can run these commands on the same powershell terminal
 - `docker-compose down -v`: Stops and removes all the containers and volumes used - Use when you stop using ShowWhy
 - `docker-compose rm --force`: Use after `docker-compose down -v` to delete all the data used in previous ShowWhy runs
 
-### Development
+### Javacript Development
 
-To be able to work on this package you will need to install:
+To be able to work on the javacript package you will need to install:
 
 - [yarn](https://yarnpkg.com/)
-- [Poetry](https://python-poetry.org/)
 
-To install all dependencies you must run `yarn install` in the root folder of this project and `poetry install` in `python/showwhy-backend` and `python/showwhy-inference`. You can also use the `install` script in the `scripts` folder.
+To install all dependencies you must run `yarn install` in the root folder of this project.
 
-This process will setup all dependencies on python and javascript needed to run all packages locally.
+This process will setup all dependencies needed to run javascript packages locally.
+
+`yarn start:webapp`
 
 ## License
 
