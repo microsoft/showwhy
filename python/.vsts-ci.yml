@@ -7,7 +7,6 @@ trigger:
   branches:
     include:
       - main
-      - dev
   paths:
     include:
       - python
@@ -45,91 +44,7 @@ stages:
               ArtifactName: 'CodeAnalysisLogs'
               ArtifactType: 'Container'
 
-  - stage: DeploymentDev
-    dependsOn:
-      - Compliance
-    condition: and(succeeded(), eq(variables['build.sourceBranch'], 'refs/heads/dev'))
-    jobs:
-      - job: DeploymentJob
-        steps:
-          # Install tooling
-          - task: UsePythonVersion@0
-            displayName: Use python
-            inputs:
-              versionSpec: '3.9.x'
-              addToPath: true
-              architecture: 'x64'
-
-          - task: Bash@3
-            displayName: Install poetry
-            inputs:
-              targetType: 'inline'
-              workingDirectory: '$(System.DefaultWorkingDirectory)/python/showwhy-inference/'
-              script: curl -sSL https://install.python-poetry.org | python3 -
-
-          # Install dependencies
-          - task: Bash@3
-            displayName: Install inference dependencies
-            inputs:
-              targetType: 'inline'
-              workingDirectory: '$(System.DefaultWorkingDirectory)/python/showwhy-inference/'
-              script: |
-                source $HOME/.poetry/env
-                poetry install --no-dev
-                poetry build
-
-          - task: Bash@3
-            displayName: Install backend dependencies
-            inputs:
-              targetType: 'inline'
-              workingDirectory: '$(System.DefaultWorkingDirectory)/python/showwhy-backend/'
-              script: |
-                source $HOME/.poetry/env
-                poetry install --no-dev
-
-          - task: Bash@3
-            displayName: Export dependencies
-            inputs:
-              targetType: 'inline'
-              workingDirectory: '$(System.DefaultWorkingDirectory)/python/showwhy-backend'
-              script: |
-                source $HOME/.poetry/env 
-                poetry export -f requirements.txt --output showwhy_backend/requirements.txt --without-hashes
-
-          - task: Bash@3
-            displayName: Install requirements locally
-            inputs:
-              targetType: 'inline'
-              workingDirectory: '$(System.DefaultWorkingDirectory)/python/showwhy-backend/showwhy_backend'
-              script: |
-                source $HOME/.poetry/env
-                rm local.settings.json
-                pip install --target="./.python_packages/lib/site-packages" -r requirements.txt
-
-          - task: AzureCLI@2
-            displayName: Download azure fn core tools
-            inputs:
-              azureSubscription: '$(subscription)'
-              scriptType: 'pscore'
-              scriptLocation: 'inlineScript'
-              inlineScript: |
-                curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
-                sudo mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg
-                sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/microsoft-ubuntu-$(lsb_release -cs)-prod $(lsb_release -cs) main" > /etc/apt/sources.list.d/dotnetdev.list'
-                sudo apt-get update
-                sudo apt-get install azure-functions-core-tools-3
-
-          - task: AzureCLI@2
-            displayName: Deploy azure fn
-            inputs:
-              azureSubscription: '$(subscription)'
-              scriptType: 'pscore'
-              scriptLocation: 'inlineScript'
-              inlineScript: |
-                cd python/showwhy-backend/showwhy_backend
-                func azure functionapp publish showwhy-functions-experiment --python --no-build
-
-  - stage: DeploymentInteg
+  - stage: Deployment
     dependsOn:
       - Compliance
     condition: and(succeeded(), eq(variables['build.sourceBranch'], 'refs/heads/main'))
@@ -211,4 +126,4 @@ stages:
               scriptLocation: 'inlineScript'
               inlineScript: |
                 cd python/showwhy-backend/showwhy_backend
-                func azure functionapp publish showwhyfunctions --python --no-build
+                func azure functionapp publish $(functionName) --python --no-build
