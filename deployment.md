@@ -5,15 +5,13 @@ Create and configure the following resources
 ## Python
 
 - Storage account
-  - Security + networking -> Access keys, copy key1 value to use in the Function App
 - Cosmos DB
-  - Settings -> Keys blade, copy the Primary Connection String to use in the Function App
 - Function App
   - Runtime stack: Python v3.9
   - Version: ~3
-  - Settings -> Configuration blade, create the following application settings:
-    - COSMOS_CONNECTION: Key copied from CosmosDB
-    - CONTEXT_STORAGE_ACCOUNT_CONNECTION: Key copied from Storage Account
+  - Environment Variables:
+    - COSMOS_CONNECTION: CosmosDB Connection String (available from Settings -> Keys in CosmosDB instance )
+    - CONTEXT_STORAGE_ACCOUNT_CONNECTION: Storage Account access key (available from Security & Networking Tab)
 - [YAML file](/python/.vsts-ci.yml)
   - Create a pipeline with this yml file
   - Create the following pipeline variables:
@@ -24,7 +22,7 @@ Create and configure the following resources
 ## WebApp
 
 - App Service
-  - Runtime stack: NodeJS >=14
+  - Runtime stack: NodeJS = 16
 - [YAML file](.vsts-ci.yml)
   - Create a pipeline with this yml file
   - Create the following pipeline variables:
