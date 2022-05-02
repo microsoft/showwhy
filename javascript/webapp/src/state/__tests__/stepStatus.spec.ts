@@ -26,7 +26,7 @@ describe('stepStatusState', () => {
 			)
 				.getLoadable(stepStatusState('a'))
 				.valueOrThrow()
-			expect(snapshot).toBe(expected)
+			expect(snapshot).toBeUndefined()
 		})
 	})
 })
