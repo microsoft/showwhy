@@ -12,4 +12,4 @@ Follow the instructions to [start your docker container here:](../../README.md#i
 
 ## Azure Deployment
 
-TODO: Write the Azure Deployment guide
+We deploy our services to an Azure environment, as you can see in the [deployment instructions](/deployment.md)
