@@ -2,14 +2,14 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import type { IComboBoxOption } from '@fluentui/react'
-import { ComboBox } from '@fluentui/react'
+import type { IDropdownOption } from '@fluentui/react'
+import { Dropdown } from '@fluentui/react'
 import type { CausalFactorType } from '@showwhy/types'
 import { BeliefDegree } from '@showwhy/types'
 import type { FC } from 'react'
 import { memo } from 'react'
 
-const beliefOptions: IComboBoxOption[] = [
+const beliefOptions: IDropdownOption[] = [
 	{ key: BeliefDegree.None, text: 'No' },
 	{ key: BeliefDegree.Weak, text: 'Weakly' },
 	{ key: BeliefDegree.Moderate, text: 'Moderately' },
@@ -17,7 +17,7 @@ const beliefOptions: IComboBoxOption[] = [
 ]
 interface Props {
 	onChangeDegree: (
-		value: IComboBoxOption,
+		value: IDropdownOption,
 		type: CausalFactorType,
 		id?: string,
 	) => void
@@ -25,14 +25,14 @@ interface Props {
 	type: CausalFactorType
 	id?: string
 }
-export const DegreeComboBox: FC<Props> = memo(function DegreeComboBox({
+export const DegreeDropdown: FC<Props> = memo(function DegreeDropdown({
 	onChangeDegree,
 	degree,
 	type,
 	id,
 }) {
 	return (
-		<ComboBox
+		<Dropdown
 			selectedKey={degree}
 			onChange={(_, value) => value && onChangeDegree(value, type, id)}
 			options={beliefOptions}
