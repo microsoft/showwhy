@@ -7,10 +7,9 @@ trigger:
   branches:
     include:
       - main
-      - dev
   paths:
     include:
-      - javascript/webapp
+      - javascript
 
 pr:
   branches:
@@ -79,61 +78,10 @@ stages:
               testResultsFormat: 'JUnit'
               testResultsFiles: '**/test-results/jest-junit.xml'
               mergeTestResults: true
+            condition: succeededOrFailed()
 
-  - stage: DeploymentDev
-    displayName: Deployment (Dev)
-    dependsOn:
-      - Compliance
-      - Verification
-    condition: and(succeeded(), eq(variables['build.sourceBranch'], 'refs/heads/dev'))
-    jobs:
-      - job: DeploymentJob
-        steps:
-          - checkout: self
-            clean: true
-            persistCredentials: true
-            fetchDepth: 1
-
-          - task: Bash@3
-            displayName: Install Dependencies
-            inputs:
-              targetType: 'inline'
-              script: yarn install
-            env:
-              CI: true
-
-          - task: DeleteFiles@1
-            displayName: Delete .env file
-            inputs:
-              SourceFolder: '$(System.DefaultWorkingDirectory)/javascript/webapp'
-              Contents: '.env'
-              RemoveDotFiles: true
-
-          - task: Bash@3
-            displayName: Build Client
-            inputs:
-              targetType: 'inline'
-              script: yarn build:client
-            env:
-              VITE_API_URI: $(VITE_DEV_API_URI)
-              VITE_UPLOAD_FILES_API_KEY: $(VITE_UPLOAD_FILES_API_KEY)
-              VITE_DOWNLOAD_FILES_API_KEY: $(VITE_DOWNLOAD_FILES_API_KEY)
-              VITE_CHECK_STATUS_API_KEY: $(VITE_CHECK_STATUS_API_KEY)
-              VITE_CHECK_SIGNIFICANCE_STATUS_API_KEY: $(VITE_CHECK_SIGNIFICANCE_STATUS_API_KEY)
-              VITE_ORCHESTRATORS_API_KEY: $(VITE_ORCHESTRATORS_API_KEY)
-              VITE_EXECUTIONS_NUMBER_API_KEY: $(VITE_EXECUTIONS_NUMBER_API_KEY)
-
-          - task: AzureRmWebAppDeployment@4
-            displayName: Deploy Webapp
-            inputs:
-              ConnectionType: 'AzureRM'
-              appType: 'webApp'
-              ConnectedServiceName: '$(subscription)'
-              WebAppName: 'showwhy-dev-ui'
-              packageForLinux: '$(System.DefaultWorkingDirectory)/javascript/webapp/deploy.zip'
-
-  - stage: DeploymentInteg
-    displayName: Deployment (Integ)
+  - stage: Deployment
+    displayName: Deployment
     dependsOn:
       - Compliance
       - Verification
@@ -181,5 +129,5 @@ stages:
               ConnectionType: 'AzureRM'
               appType: 'webApp'
               ConnectedServiceName: '$(subscription)'
-              WebAppName: 'showwhy-ui'
+              WebAppName: '$(webAppName)'
               packageForLinux: '$(System.DefaultWorkingDirectory)/javascript/webapp/deploy.zip'
