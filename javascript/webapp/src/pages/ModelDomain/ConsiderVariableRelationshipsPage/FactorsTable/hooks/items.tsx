@@ -3,9 +3,9 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { IComboBoxOption } from '@fluentui/react'
+import type { IDropdownOption } from '@fluentui/react'
 import { TextField } from '@fluentui/react'
-import { DegreeComboBox } from '@showwhy/components'
+import { DegreeDropdown } from '@showwhy/components'
 import type { FlatCausalFactor } from '@showwhy/types'
 import { CausalFactorType } from '@showwhy/types'
 import { useMemo } from 'react'
@@ -13,7 +13,7 @@ import { useMemo } from 'react'
 export function useItems(
 	flatFactorsList: FlatCausalFactor[],
 	onChangeCauses: (
-		selected: IComboBoxOption,
+		selected: IDropdownOption,
 		type: CausalFactorType,
 		id?: string,
 	) => void,
@@ -24,7 +24,7 @@ export function useItems(
 			return {
 				variable: factor.variable,
 				[CausalFactorType.CauseExposure]: (
-					<DegreeComboBox
+					<DegreeDropdown
 						onChangeDegree={onChangeCauses}
 						degree={factor[CausalFactorType.CauseExposure]}
 						type={CausalFactorType.CauseExposure}
@@ -32,7 +32,7 @@ export function useItems(
 					/>
 				),
 				[CausalFactorType.CauseOutcome]: (
-					<DegreeComboBox
+					<DegreeDropdown
 						onChangeDegree={onChangeCauses}
 						degree={factor[CausalFactorType.CauseOutcome]}
 						type={CausalFactorType.CauseOutcome}

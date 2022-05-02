@@ -40,6 +40,6 @@
 		"../types/src/workspace/ProjectSource.ts",
 		"../types/src/files/DownloadType.ts",
 		"../types/src/files/ZipFileData.ts",
-		"../components/src/DegreeComboBox/DegreeComboBox.tsx"
+		"../components/src/DegreeDropdown/DegreeDropdown.tsx"
 	]
 }

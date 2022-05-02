@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { IComboBoxOption } from '@fluentui/react'
+import type { IDropdownOption } from '@fluentui/react'
 import type {
 	BeliefDegree,
 	CausalFactorType,
@@ -16,9 +16,9 @@ import { useCallback } from 'react'
 export function useOnChangeCauses(
 	flatFactorsList: FlatCausalFactor[],
 	saveNewFactors: (id: string, value: Cause) => void,
-): (selected: IComboBoxOption, type: CausalFactorType, id?: string) => void {
+): (selected: IDropdownOption, type: CausalFactorType, id?: string) => void {
 	return useCallback(
-		(selected: IComboBoxOption, type: CausalFactorType, id?: string) => {
+		(selected: IDropdownOption, type: CausalFactorType, id?: string) => {
 			const newValue = flatFactorsList.find(x => x.id === id) as Cause
 			;(newValue as any)[type] = selected.key as BeliefDegree
 			saveNewFactors(id as string, newValue)

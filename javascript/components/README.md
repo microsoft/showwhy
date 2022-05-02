@@ -12,7 +12,7 @@ This package contains generic reusable components to be used within te ShowWhy w
   - CausalEffectsArrow
   - CausalQuestion
   - DatasetList
-  - DegreeComboBox
+  - DegreeDropdown
   - DetailsList
   - DropzoneContainer
   - EffectScatterplot
