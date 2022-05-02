@@ -57,9 +57,9 @@ To stop using showwhy you can run these commands on the same powershell terminal
 - `docker-compose down -v`: Stops and removes all the containers and volumes used - Use when you stop using ShowWhy
 - `docker-compose rm --force`: Use after `docker-compose down -v` to delete all the data used in previous ShowWhy runs
 
-### Javacript Development
+### Javascript Development
 
-To be able to work on the javacript package you will need to install:
+To be able to work on the javascript package you will need to install:
 
 - [yarn](https://yarnpkg.com/)
 
