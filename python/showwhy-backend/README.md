@@ -9,7 +9,3 @@ This repository contains the code for the ShowWhy Backend
 This process will get the backend running in your local environment, all the data is stored locally and never leaves your computer.
 
 Follow the instructions to [start your docker container here:](../../README.md#installation-process)
-
-## Azure Deployment
-
-We deploy our services to an Azure environment, as you can see in the [deployment instructions](/deployment.md)
