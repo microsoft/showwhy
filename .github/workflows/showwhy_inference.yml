@@ -1,4 +1,4 @@
-pname: Python-Publish-CI
+name: Python-Publish-CI
 on:
   push:
     paths:
