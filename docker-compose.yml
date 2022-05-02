@@ -65,11 +65,11 @@ services:
     volumes:
       - vol_reverseproxy:/etc/nginx/conf.d
       - ./nginx.conf:/etc/nginx/nginx.conf
-  client:
+  webapp:
     cpus: 1
     build:
       context: .
-      dockerfile: client.dockerfile
+      dockerfile: webapp.dockerfile
     ports:
       - 3000:80
 

@@ -124,10 +124,10 @@ stages:
               RemoveDotFiles: true
 
           - task: Bash@3
-            displayName: Build Client
+            displayName: Build Webapp
             inputs:
               targetType: 'inline'
-              script: yarn build:client
+              script: yarn build:webapp
             env:
               VITE_API_URI: $(VITE_API_URI)
               VITE_UPLOAD_FILES_API_KEY: $(VITE_UPLOAD_FILES_API_KEY)
