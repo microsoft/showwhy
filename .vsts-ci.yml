@@ -71,14 +71,28 @@ stages:
               script: yarn ci
             env:
               CI: true
+          - task: Bash@3
+            displayName: Install Playwright deps
+            inputs:
+              targetType: 'inline'
+              script: yarn install:playwright_deps
+            env:
+              CI: true
+          - task: Bash@3
+            displayName: Run Playwright tests
+            inputs:
+              targetType: 'inline'
+              script: yarn acceptance:test
+            env:
+              CI: true
           #Publish results of tests
           - task: PublishTestResults@2
             displayName: Publish Jest test results
             inputs:
               testResultsFormat: 'JUnit'
-              testResultsFiles: '**/test-results/jest-junit.xml'
+              testResultsFiles: '**/test-results/*-junit.xml'
               mergeTestResults: true
-            condition: succeededOrFailed()
+            condition: always()
 
   - stage: Deployment
     displayName: Deployment
