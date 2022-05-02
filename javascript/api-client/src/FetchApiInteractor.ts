@@ -17,17 +17,12 @@ import { OrchestratorType } from './Orchestrator/index.js'
 export class FetchApiInteractor {
 	public constructor(
 		private baseUrl: string,
-		private checkStatusApiKey: string,
-		private checkSignificanceStatusApiKey: string,
-		private downloadFilesApiKey: string,
-		private orchestratorsApiKey: string,
-		private uploadFilesApiKey: string,
-		private executionsNumberApiKey: string,
+		private apiFunctionsKey: string,
 		private getSessionKey: () => string,
 	) {}
 
 	public async executeNode(data: NodeRequest): Promise<NodeResponse> {
-		const url = `${this.baseUrl}/api/orchestrators/ExecuteNodeOrchestrator?code=${this.orchestratorsApiKey}`
+		const url = `${this.baseUrl}/api/orchestrators/ExecuteNodeOrchestrator?code=${this.apiFunctionsKey}`
 		return fetch(url, {
 			method: 'POST',
 			headers: {
@@ -47,7 +42,7 @@ export class FetchApiInteractor {
 	public async numberExecutions(
 		data: NodeRequest,
 	): Promise<TotalExecutionsResponse> {
-		const url = `${this.baseUrl}/api/getnumberofexecutions?code=${this.executionsNumberApiKey}`
+		const url = `${this.baseUrl}/api/getnumberofexecutions?code=${this.apiFunctionsKey}`
 		const [node_data] = data.nodes
 		const options = {
 			method: 'POST',
@@ -64,7 +59,7 @@ export class FetchApiInteractor {
 		const url = `${
 			this.baseUrl
 		}/api/UploadFile?session_id=${this.getSessionKey()}&code=${
-			this.uploadFilesApiKey
+			this.apiFunctionsKey
 		}`
 		return fetch(url, {
 			method: 'POST',
@@ -79,7 +74,7 @@ export class FetchApiInteractor {
 			`${
 				this.baseUrl
 			}/api/getdownloadurl?session_id=${this.getSessionKey()}&code=${
-				this.downloadFilesApiKey
+				this.apiFunctionsKey
 			}&file_name=${fileName}`,
 		).then(response => response.json())
 		const url = this.replaceAzureUrl(fileUrl.signed_url)
@@ -143,12 +138,12 @@ export class FetchApiInteractor {
 
 		switch (type) {
 			case OrchestratorType.SignificanceTests:
-				code = this.checkSignificanceStatusApiKey
+				code = this.apiFunctionsKey
 				path = 'checksignificanceteststatus'
 				break
 			case OrchestratorType.Estimator:
 			default:
-				code = this.checkStatusApiKey
+				code = this.apiFunctionsKey
 				path = 'checkinferencestatus'
 				break
 		}
