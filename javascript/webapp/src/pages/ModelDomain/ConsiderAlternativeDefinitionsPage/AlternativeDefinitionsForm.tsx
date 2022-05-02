@@ -43,12 +43,11 @@ export const AlternativeDefinitionsForm: FC<{
 		isPrimary,
 		definitionType,
 	])
-
 	const handler = useHandleKeyPress(add, 'enter')
-	const handleOnBlur = useHandleOnBlur(
-		add,
+	const handleOnBlur = useHandleOnBlur(add, [
 		'definitions-form-variable-description',
-	)
+		'definitions-form-variable-name',
+	])
 
 	return (
 		<Container data-pw="definitions-form">
