@@ -2,12 +2,11 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import { Container } from '@showwhy/components'
+import type { WorkflowHelpLink } from '@showwhy/types'
 import type { FC } from 'react'
 import { memo } from 'react'
 import styled from 'styled-components'
-
-import { Container } from '../styles.js'
-import type { WorkflowHelpLink } from './UnderstandProcessModal.types.js'
 
 export const UnderstandProcessLink: FC<{ link: WorkflowHelpLink }> = memo(
 	function UnderstandProcessLink({ link }) {

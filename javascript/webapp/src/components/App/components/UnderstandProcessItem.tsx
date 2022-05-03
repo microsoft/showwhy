@@ -3,14 +3,13 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { Separator } from '@fluentui/react'
+import { Text } from '@showwhy/components'
+import type { WorkflowHelp } from '@showwhy/types'
 import Markdown from 'markdown-to-jsx'
 import type { FC } from 'react'
 import { memo } from 'react'
 import styled from 'styled-components'
-
-import { Text } from '../styles.js'
-import { UnderstandProcessLink } from './UnderstandProcessLink.js'
-import type { WorkflowHelp } from './UnderstandProcessModal.types.js'
+import { UnderstandProcessLink } from './UnderstandProcessLink'
 
 export const UnderstandProcessItem: FC<{
 	markdown: string

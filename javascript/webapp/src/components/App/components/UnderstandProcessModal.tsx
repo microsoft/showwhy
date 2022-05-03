@@ -5,16 +5,14 @@
 
 import type { IIconProps } from '@fluentui/react'
 import { mergeStyleSets, Modal, Pivot, PivotItem } from '@fluentui/react'
-import { IconButton } from '@fluentui/react/lib/Button'
 import { useId } from '@fluentui/react-hooks'
-import type { Handler } from '@showwhy/types'
+import { IconButton } from '@fluentui/react/lib/Button'
+import type { Handler, WorkflowHelp } from '@showwhy/types'
 import type { FC } from 'react'
 import { memo, useCallback, useState } from 'react'
 import styled from 'styled-components'
-
-import { useMarkdown } from '../hooks.js'
-import { UnderstandProcessItem } from './UnderstandProcessItem.js'
-import type { WorkflowHelp } from './UnderstandProcessModal.types.js'
+import { useMarkdown } from '~hooks'
+import { UnderstandProcessItem } from './UnderstandProcessItem'
 
 export const UnderstandProcessModal: FC<{
 	isModalOpen: boolean

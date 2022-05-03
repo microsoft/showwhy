@@ -4,22 +4,16 @@
  */
 import { useDimensions } from '@essex/hooks'
 import { MessageBarType } from '@fluentui/react'
-import {
-	AppHeader,
-	Guidance,
-	MessageContainer,
-	StepTitle,
-	StyledSpinner,
-} from '@showwhy/components'
+import { MessageContainer, StepTitle, StyledSpinner } from '@showwhy/components'
 import type { Maybe } from '@showwhy/types'
 import { memo, Suspense, useMemo, useRef, useState } from 'react'
 import { understandProcessSteps } from 'src/data/understandProcess'
 import styled from 'styled-components'
-
 import { StepControls, StepSelector } from '~components/GeneralSteps'
 import { useGuidance, useQuestion, useSelectedProject } from '~state'
-
 import { Pages } from '../../constants'
+import { AppHeader } from './components/AppHeader'
+import { Guidance } from './components/Guidance'
 import { useExampleProjects } from './hooks/useExampleProjects'
 import { useLoadMenu } from './hooks/useLoadMenu'
 import { useOnClickProject } from './hooks/useOnClickProject'

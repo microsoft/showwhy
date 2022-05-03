@@ -2,11 +2,11 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import { ContainerFlexRow } from '@showwhy/components'
 import type { Maybe, ProjectFile } from '@showwhy/types'
 import { memo } from 'react'
 import styled from 'styled-components'
 
-import { ContainerFlexRow } from '../styles.js'
 import { Dataset } from './Dataset.js'
 
 export const DatasetsList: React.FC<{

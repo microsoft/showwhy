@@ -10,7 +10,7 @@ export interface WorkflowHelpLink {
 	url: string
 }
 
-export interface WorkflowHelpResource {
+interface WorkflowHelpResource {
 	id: string
 	title: string
 	links: WorkflowHelpLink[]

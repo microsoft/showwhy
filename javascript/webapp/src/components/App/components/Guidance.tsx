@@ -5,11 +5,12 @@
 
 import { IconButton, TooltipHost } from '@fluentui/react'
 import { useId } from '@fluentui/react-hooks'
-import { StepTitle, useMarkdown } from '@showwhy/components'
+import { StepTitle } from '@showwhy/components'
 import type { Handler, Maybe, WorkflowStep } from '@showwhy/types'
 import Markdown from 'markdown-to-jsx'
 import { memo } from 'react'
 import styled from 'styled-components'
+import { useMarkdown } from '~hooks'
 
 export const Guidance: React.FC<{
 	isGuidanceVisible: boolean

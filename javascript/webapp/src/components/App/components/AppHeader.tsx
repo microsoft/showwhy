@@ -3,16 +3,12 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import type { IContextualMenuProps } from '@fluentui/react'
-import type { Question } from '@showwhy/types'
+import { CausalQuestion, Container } from '@showwhy/components'
+import type { Question, WorkflowHelp } from '@showwhy/types'
 import { memo } from 'react'
 import styled from 'styled-components'
-
-import { CausalQuestion } from '../CausalQuestion/index.js'
-import { Container } from '../styles.js'
-import type { WorkflowHelp } from '../UnderstandProcessModal/index.js'
-import { ProjectsSelector } from './ProjectsSelector.js'
-import { SaveProject } from './SaveProject.js'
-import { UnderstandProcessButton } from './UnderstandProcessButton.js'
+import { AppHeaderMenu } from './AppHeaderMenu'
+import { UnderstandProcessButton } from './UnderstandProcessButton'
 
 export const AppHeader: React.FC<{
 	question: Question
@@ -29,8 +25,8 @@ export const AppHeader: React.FC<{
 				<CausalQuestion question={question} />
 			</Container>
 			<UserInformationContainer>
-				<ProjectsSelector loadMenu={loadMenu} />
-				<SaveProject saveProps={saveProps} />
+				<AppHeaderMenu menuProps={loadMenu} text="Load" />
+				<AppHeaderMenu menuProps={saveProps} text="Save" />
 				<UnderstandProcessButton items={helpItems} />
 			</UserInformationContainer>
 		</AppHeaderContainer>

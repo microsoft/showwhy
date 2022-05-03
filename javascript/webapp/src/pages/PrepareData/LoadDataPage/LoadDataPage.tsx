@@ -12,7 +12,6 @@ import {
 import { useBoolean } from '@fluentui/react-hooks'
 import {
 	ContainerFlexRow,
-	DatasetsList,
 	DropzoneContainer,
 	MessageContainer,
 } from '@showwhy/components'
@@ -22,6 +21,9 @@ import styled from 'styled-components'
 
 import { useAutomaticWorkflowStatus } from '~hooks'
 
+import { DatasetsList } from './components/DatasetsList'
+import { SelectedTableDisplay } from './components/SelectedTableDisplay'
+import { SupportedFileTypes } from './components/SupportedFileTypes'
 import { useDropzone } from './hooks/useDropzone'
 import { useFileManagement } from './hooks/useFileManagement'
 import { useHandleDelimiterChange } from './hooks/useHandleDelimiterChange'
@@ -29,8 +31,6 @@ import { useOnConfirmDelete } from './hooks/useOnConfirmDelete'
 import { useToggleAutoType } from './hooks/useToggleAutoType'
 import { useToggleLoadedCorrectly } from './hooks/useToggleLoadedCorrectly'
 import { delimiterOptions } from './LoadDataPage.constants'
-import { SelectedTableDisplay } from './SelectedTableDisplay'
-import { SupportedFileTypes } from './SupportedFileTypes'
 
 export const LoadDataPage: React.FC = memo(function LoadDataPage() {
 	const [showConfirm, { toggle: toggleShowConfirm }] = useBoolean(false)
