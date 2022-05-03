@@ -9,6 +9,7 @@ import Markdown from 'markdown-to-jsx'
 import type { FC } from 'react'
 import { memo } from 'react'
 import styled from 'styled-components'
+
 import { UnderstandProcessLink } from './UnderstandProcessLink'
 
 export const UnderstandProcessItem: FC<{
