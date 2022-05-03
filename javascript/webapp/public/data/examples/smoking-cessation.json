@@ -325,7 +325,8 @@
                 "source": "https://www.hsph.harvard.edu/miguel-hernan/causal-inference-book/",
                 "citation": "Hernán MA, Robins JM (2020). Causal Inference: What If. Boca Raton: Chapman & Hall/CRC"
             },
-            "primary": true
+            "primary": true,
+            "loadedCorrectly": true
         }
     ],
     "postLoad": [{

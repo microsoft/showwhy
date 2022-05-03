@@ -11,11 +11,11 @@ import type {
 	Specification,
 	SpecificationCurveConfig,
 } from '@showwhy/types'
-import type { FC} from 'react';
+import type { FC } from 'react'
 import { memo, useCallback } from 'react'
 import styled from 'styled-components'
 
-import { VegaSpecificationCurve } from './vega/VegaSpecificationCurve'
+import { VegaSpecificationCurve } from '../vega/VegaSpecificationCurve'
 
 export const SpecificationGraphs: FC<{
 	data: Specification[]

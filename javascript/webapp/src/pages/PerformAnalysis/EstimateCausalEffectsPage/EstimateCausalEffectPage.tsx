@@ -7,8 +7,7 @@ import { isStatus } from '@showwhy/api-client'
 import {
 	ContainerFlexColumn,
 	ContainerFlexRow,
-	ErrorMessage,
-	RunProgressIndicator,
+	ErrorInfo,
 	Title,
 } from '@showwhy/components'
 import { NodeResponseStatus } from '@showwhy/types'
@@ -30,13 +29,14 @@ import {
 	MicrodataMessage,
 	OutputTableColumnsMessage,
 	VariablesMessage,
-} from './ErrorMessages'
-import { EstimatedEffectConfig } from './EstimatedEffectConfig'
+} from './components/ErrorMessages'
+import { EstimatedEffectConfig } from './components/EstimatedEffectConfig'
+import { EstimatorsRunProgress } from './components/EstimatorsRunProgress'
+import { SpecificationDescription } from './components/SpecificationDescription'
+import { SpecificationGraphs } from './components/SpecificationGraphs'
 import { useDataErrors } from './hooks/useDataErrors'
 import { useEstimateLogic } from './hooks/useEstimateLogic'
 import { useSpecificationCurve } from './hooks/useSpecificationCurve'
-import { SpecificationDescription } from './SpecificationDescription'
-import { SpecificationGraphs } from './SpecificationGraphs'
 
 export const EstimateCausalEffectPage: React.FC = memo(
 	function EstimateCausalEffectPage() {
@@ -130,17 +130,17 @@ export const EstimateCausalEffectPage: React.FC = memo(
 											<Text>Loading specifications count...</Text>
 										)
 									)}
-									{!!errors && <ErrorMessage log={errors} />}
+									{!!errors && <ErrorInfo log={errors} />}
 								</Container>
 							)}
 							{!activeProcessing && defaultRun && defaultRun.status.error && (
-								<ErrorMessage
-									message={'Undefined error. Please, execute the run again.'}
+								<ErrorInfo
+									text={'Undefined error. Please, execute the run again.'}
 									log={defaultRun.status.error}
 								/>
 							)}
 							{activeProcessing && (
-								<RunProgressIndicator
+								<EstimatorsRunProgress
 									run={activeProcessing}
 									theme={theme}
 									cancelRun={!isCanceled && cancelRun ? cancelRun : undefined}

@@ -4,7 +4,11 @@
  */
 import { useDimensions } from '@essex/hooks'
 import { MessageBarType } from '@fluentui/react'
-import { MessageContainer, StepTitle, StyledSpinner } from '@showwhy/components'
+import {
+	MessageContainer,
+	StyledSpinner,
+	WorkflowTitle,
+} from '@showwhy/components'
 import type { Maybe } from '@showwhy/types'
 import { memo, Suspense, useMemo, useRef, useState } from 'react'
 import { understandProcessSteps } from 'src/data/understandProcess'
@@ -76,7 +80,7 @@ export const Layout: React.FC = memo(function Layout({ children }) {
 
 				<Content>
 					<ControlsContainer>
-						<StepTitle title="Workspace" />
+						<WorkflowTitle title="Workspace" />
 						<ChildrenContainer
 							noPadding={noChildPadding.includes(step?.url as Pages)}
 							url={step?.url}

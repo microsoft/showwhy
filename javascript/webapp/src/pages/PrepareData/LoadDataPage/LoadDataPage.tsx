@@ -10,11 +10,7 @@ import {
 	Toggle,
 } from '@fluentui/react'
 import { useBoolean } from '@fluentui/react-hooks'
-import {
-	ContainerFlexRow,
-	DropzoneContainer,
-	MessageContainer,
-} from '@showwhy/components'
+import { ContainerFlexRow, MessageContainer } from '@showwhy/components'
 import type { Maybe } from '@showwhy/types'
 import { memo, useEffect, useState } from 'react'
 import styled from 'styled-components'
@@ -22,6 +18,7 @@ import styled from 'styled-components'
 import { useAutomaticWorkflowStatus } from '~hooks'
 
 import { DatasetsList } from './components/DatasetsList'
+import { DropzoneContainer } from './components/DropzoneContainer'
 import { SelectedTableDisplay } from './components/SelectedTableDisplay'
 import { SupportedFileTypes } from './components/SupportedFileTypes'
 import { useDropzone } from './hooks/useDropzone'

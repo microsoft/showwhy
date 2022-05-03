@@ -5,7 +5,7 @@
 import type { IDropdownOption } from '@fluentui/react'
 import { DefaultButton, Dropdown } from '@fluentui/react'
 import { isProcessingStatus } from '@showwhy/api-client'
-import { ErrorMessage, ProgressBar } from '@showwhy/components'
+import { ErrorInfo, ProgressBar } from '@showwhy/components'
 import type {
 	Handler,
 	Handler1,
@@ -72,7 +72,7 @@ export const RunManagement: React.FC<{
 				</DefaultButton>
 			)}
 
-			{significanceFailed && <ErrorMessage />}
+			{significanceFailed && <ErrorInfo />}
 			{isProcessing && (
 				<ProgressBar
 					description={

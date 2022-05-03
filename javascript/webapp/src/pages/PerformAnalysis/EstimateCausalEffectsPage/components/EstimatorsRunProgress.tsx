@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { ProgressBar } from '@showwhy/components'
+import { Container, ProgressBar } from '@showwhy/components'
 import type { Handler, RunHistory } from '@showwhy/types'
 import { NodeResponseStatus } from '@showwhy/types'
 import type { Theme } from '@thematic/core'
@@ -10,14 +10,12 @@ import { memo, useMemo } from 'react'
 import Xarrow from 'react-xarrows'
 import styled from 'styled-components'
 
-import { Container } from '../styles.js'
-
 interface LabelProps {
 	id: string
 	status: string
 }
 
-export const RunProgressIndicator: React.FC<{
+export const EstimatorsRunProgress: React.FC<{
 	run: RunHistory
 	props?: {
 		label?: string
@@ -26,7 +24,7 @@ export const RunProgressIndicator: React.FC<{
 	}
 	cancelRun?: Handler
 	theme: Theme
-}> = memo(function RunProgressIndicator({ run, props, cancelRun, theme }) {
+}> = memo(function EstimatorsRunProgress({ run, props, cancelRun, theme }) {
 	const estimatorLabel: LabelProps = useMemo(() => {
 		return {
 			id: 'estimators',

@@ -8,12 +8,12 @@ import styled from 'styled-components'
 
 import { ShortenMessage } from './ShortenMessage.js'
 
-export const ErrorMessage: React.FC<{
-	message?: string
+export const ErrorInfo: React.FC<{
+	text?: string
 	log?: string
 	styles?: React.CSSProperties
-}> = memo(function ErrorMessage({
-	message = 'Undefined error, please try again.',
+}> = memo(function ErrorInfo({
+	text = 'Undefined error, please try again.',
 	log = 'Undefined error, please try again.',
 	children,
 	styles,
@@ -23,14 +23,10 @@ export const ErrorMessage: React.FC<{
 	}
 	return (
 		<Container style={styles}>
-			<Error title={message}>
+			<Error title={text}>
 				<Icon iconName="IncidentTriangle" />
 				{children}
-				{!children && message.length > 100 ? (
-					<ShortenMessage message={message} />
-				) : (
-					message
-				)}
+				{!children && text.length > 100 ? <ShortenMessage text={text} /> : text}
 			</Error>
 		</Container>
 	)

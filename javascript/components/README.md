@@ -12,14 +12,12 @@ This package contains generic reusable components to be used within te ShowWhy w
   - CausalQuestion
   - DegreeDropdown
   - DetailsList
-  - DropzoneContainer
   - EffectScatterplot
-  - ErrorMessage
+  - ErrorInfo
   - MessageContainer
   - PivotScatterplot
   - ProgressBar
-  - RunProgressIndicator
-  - StepTitle
+  - WorkflowTitle
   - VegaHost
 
 ## Tests

@@ -6,11 +6,15 @@ import { Text } from '@showwhy/components'
 import round from 'lodash/round'
 import { memo } from 'react'
 
-export const EstimateDetails: React.FC<{
+export const SpecificationDetails: React.FC<{
 	populationSize: number
 	c95Lower: number | null
 	c95Upper: number | null
-}> = memo(function EstimateDetails({ c95Lower, c95Upper, populationSize }) {
+}> = memo(function SpecificationDetails({
+	c95Lower,
+	c95Upper,
+	populationSize,
+}) {
 	return (
 		<Text>
 			{' ('}

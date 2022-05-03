@@ -12,8 +12,8 @@ import styled from 'styled-components'
 
 import { pluralize } from '~utils'
 
-import { EstimateDetails } from './EstimateDetails'
 import { RefutationOptionsCallout } from './RefutationOptionsCallout'
+import { SpecificationDetails } from './SpecificationDetails'
 
 export const SpecificationDescription: React.FC<{
 	specification?: Specification
@@ -45,7 +45,7 @@ export const SpecificationDescription: React.FC<{
 						<Value>{specification.outcome}</Value>
 						is
 						<Effect>{round(specification.estimatedEffect, 3)}</Effect>
-						<EstimateDetails
+						<SpecificationDetails
 							c95Lower={specification?.c95Lower}
 							c95Upper={specification?.c95Upper}
 							populationSize={specification?.populationSize}

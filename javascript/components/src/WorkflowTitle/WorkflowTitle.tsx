@@ -5,23 +5,23 @@
 import { memo } from 'react'
 import styled from 'styled-components'
 
-export const StepTitle: React.FC<{
+export const WorkflowTitle: React.FC<{
 	title: string
-}> = memo(function StepTitle({ title }) {
+}> = memo(function WorkflowTitle({ title }) {
 	return (
-		<Workflow>
-			<WorkflowTitle>{title}</WorkflowTitle>
-		</Workflow>
+		<Container>
+			<Title>{title}</Title>
+		</Container>
 	)
 })
 
-const Workflow = styled.div`
+const Container = styled.div`
 	background-color: ${({ theme }) => theme.application().midContrast};
 	padding: 8px 16px;
 	height: 18px;
 `
 
-const WorkflowTitle = styled.span`
+const Title = styled.span`
 	color: white;
 	font-weight: bold;
 `
