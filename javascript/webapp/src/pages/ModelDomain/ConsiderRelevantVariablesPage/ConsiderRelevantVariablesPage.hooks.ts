@@ -4,8 +4,8 @@
  */
 
 export * from './hooks/useAddFactor'
-export * from './hooks/useBusinessLogic'
 export * from './hooks/useDeleteFactor'
+export * from './hooks/useDetailsList'
 export * from './hooks/useEditFactor'
 export * from './hooks/useFactorsNavigation'
 export * from './hooks/useHeaders'
