@@ -11,13 +11,13 @@ import styled from 'styled-components'
 import { useDimensions } from '~hooks'
 import { useDefinitionType } from '~state'
 
-import { AlternativeDefinitionsForm } from './AlternativeDefinitionsForm'
 import { useDefinitionToEdit } from '../ConsiderAlternativeDefinitions.state'
 import {
 	useDefinitionItems,
 	useHeaders,
 } from '../ConsiderAlternativeDefinitionsPage.hooks'
 import { usePivotType } from '../hooks/usePivotType'
+import { AlternativeDefinitionsForm } from './AlternativeDefinitionsForm'
 
 interface PivotData {
 	key: string

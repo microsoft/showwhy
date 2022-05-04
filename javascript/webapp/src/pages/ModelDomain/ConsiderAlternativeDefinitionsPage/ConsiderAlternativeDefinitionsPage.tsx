@@ -7,10 +7,10 @@ import { Container, Title } from '@showwhy/components'
 import { memo } from 'react'
 import styled from 'styled-components'
 
-import { PivotType } from './components/PivotType'
 import { useHandleOnLinkClick } from '~hooks'
 
 import { useDefinitions } from '../../../state'
+import { PivotType } from './components/PivotType'
 import { usePivotData } from './ConsiderAlternativeDefinitionsPage.hooks'
 
 export const ConsiderAlternativeDefinitionsPage: React.FC = memo(
