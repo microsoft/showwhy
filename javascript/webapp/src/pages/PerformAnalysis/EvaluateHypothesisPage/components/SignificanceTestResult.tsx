@@ -12,7 +12,7 @@ import { median as calcMedian } from '~utils'
 import {
 	confidenceIntervalCalloutLine1,
 	confidenceIntervalCalloutLine2,
-} from '../../../locales/en-US/perform-analysis'
+} from '../../../../locales/en-US/perform-analysis'
 
 export const SignificanceTestResult: React.FC<{
 	significanceTestResult: Maybe<SignificanceTest>

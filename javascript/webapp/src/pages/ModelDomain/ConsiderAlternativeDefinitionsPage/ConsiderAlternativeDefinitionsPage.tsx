@@ -7,8 +7,8 @@ import { Container, Title } from '@showwhy/components'
 import { memo } from 'react'
 import styled from 'styled-components'
 
+import { PivotType } from './components/PivotType'
 import { useBusinessLogic } from './ConsiderAlternativeDefinitionsPage.hooks'
-import { PivotType } from './PivotType'
 
 export const ConsiderAlternativeDefinitionsPage: React.FC = memo(
 	function ConsiderAlternativeDefinitionsPage() {

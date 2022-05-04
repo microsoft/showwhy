@@ -6,7 +6,8 @@ import { MessageContainer } from '@showwhy/components'
 import type { FC } from 'react'
 import { memo } from 'react'
 import { Link } from 'react-router-dom'
-import { Pages } from 'src/constants'
+
+import { Pages } from '~constants'
 
 export const MicrodataMessage: FC = memo(function MicrodataMessage() {
 	return (

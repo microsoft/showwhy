@@ -7,7 +7,7 @@ import type { Maybe } from '@showwhy/types'
 import { memo } from 'react'
 import { Link } from 'react-router-dom'
 
-import type { Pages } from '../../../constants'
+import type { Pages } from '~constants'
 
 export const EmptyDataPageWarning: React.FC<{
 	text: string

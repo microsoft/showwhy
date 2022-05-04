@@ -15,9 +15,9 @@ import { understandProcessSteps } from 'src/data/understandProcess'
 import styled from 'styled-components'
 
 import { StepControls, StepSelector } from '~components/GeneralSteps'
+import { Pages } from '~constants'
 import { useGuidance, useQuestion, useSelectedProject } from '~state'
 
-import { Pages } from '../../constants'
 import { AppHeader } from './components/AppHeader'
 import { Guidance } from './components/Guidance'
 import { useExampleProjects } from './hooks/useExampleProjects'

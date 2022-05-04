@@ -14,11 +14,11 @@ import type { FC } from 'react'
 import { memo, useRef } from 'react'
 import styled from 'styled-components'
 
-import { AlternativeDefinitionsForm } from './AlternativeDefinitionsForm'
 import {
 	useDefinitionItems,
 	useHeaders,
-} from './ConsiderAlternativeDefinitionsPage.hooks'
+} from '../ConsiderAlternativeDefinitionsPage.hooks'
+import { AlternativeDefinitionsForm } from './AlternativeDefinitionsForm'
 
 interface PivotData {
 	key: string

@@ -13,7 +13,7 @@ import styled from 'styled-components'
 
 import { isCausalFactorType } from '~utils'
 
-import { useAddVariable } from './DeriveDataVariablesPage.hooks'
+import { useAddVariable } from '../DeriveDataVariablesPage.hooks'
 
 export const AddVariableFields: FC = memo(function AddVariableFields() {
 	const { showCallout, toggleShowCallout, selectedColumn, onAdd } =

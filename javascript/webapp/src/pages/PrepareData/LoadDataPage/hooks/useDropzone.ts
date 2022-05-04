@@ -6,10 +6,10 @@
 import type { FileCollection } from '@data-wrangling-components/utilities'
 import { FileType, isZipFile } from '@data-wrangling-components/utilities'
 import type {
+	DropFilesCount,
 	Handler,
 	Handler1,
 	ProjectFile,
-	DropFilesCount,
 } from '@showwhy/types'
 import type { Dispatch, SetStateAction } from 'react'
 import { useCallback, useState } from 'react'

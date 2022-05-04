@@ -7,9 +7,9 @@ import type { Handler, Maybe } from '@showwhy/types'
 import { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 
+import { Pages } from '~constants'
 import { noop } from '~utils'
 
-import { Pages } from '../../../../constants'
 import type { PathData } from '../ConsiderRelevantVariablesPage.types'
 
 export function useFactorsNavigation(): [Handler, PathData] {
