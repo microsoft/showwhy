@@ -13,7 +13,7 @@ export const AppHeaderMenu: React.FC<{
 	text: string
 }> = memo(function AppHeaderMenu({ menuProps, text }) {
 	return (
-		<Container data-pw={text.toLowerCase}>
+		<Container data-pw={text.toLowerCase()}>
 			<OptionsButton text={text} menuProps={menuProps} />
 		</Container>
 	)
