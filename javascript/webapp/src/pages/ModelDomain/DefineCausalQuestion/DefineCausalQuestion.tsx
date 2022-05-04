@@ -10,7 +10,7 @@ import { Hypothesis } from '@showwhy/types'
 import { memo } from 'react'
 import styled from 'styled-components'
 
-import { useBusinessLogic } from './DefineCausalQuestion.hooks'
+import { useDefineCausalQuestion } from './DefineCausalQuestion.hooks'
 import { FieldGroup } from './FieldGroup'
 
 const hypothesisOptions: IChoiceGroupOption[] = [
@@ -21,7 +21,7 @@ const hypothesisOptions: IChoiceGroupOption[] = [
 
 export const DefineCausalQuestion: React.FC = memo(
 	function DefineCausalQuestion() {
-		const { question, onInputChange, setHypothesis } = useBusinessLogic()
+		const { question, onInputChange, setHypothesis } = useDefineCausalQuestion()
 
 		return (
 			<Container>

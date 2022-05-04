@@ -8,22 +8,16 @@ import { memo } from 'react'
 import styled from 'styled-components'
 
 import { PivotType } from './components/PivotType'
-import { useBusinessLogic } from './ConsiderAlternativeDefinitionsPage.hooks'
+import { useHandleOnLinkClick } from '~hooks'
+
+import { useDefinitions } from '../../../state'
+import { usePivotData } from './ConsiderAlternativeDefinitionsPage.hooks'
 
 export const ConsiderAlternativeDefinitionsPage: React.FC = memo(
 	function ConsiderAlternativeDefinitionsPage() {
-		const {
-			shouldHavePrimary,
-			pivotData,
-			definitionType,
-			definitions,
-			definitionToEdit,
-			editDefinition,
-			addDefinition,
-			handleOnLinkClick,
-			removeDefinition,
-			setDefinitionToEdit,
-		} = useBusinessLogic()
+		const definitions = useDefinitions()
+		const { pivotData } = usePivotData(definitions)
+		const handleOnLinkClick = useHandleOnLinkClick()
 
 		return (
 			<Container>
@@ -34,17 +28,7 @@ export const ConsiderAlternativeDefinitionsPage: React.FC = memo(
 				>
 					{pivotData.map(item => (
 						<PivotItem key={item.key} headerText={item.title}>
-							<PivotType
-								setDefinitionToEdit={setDefinitionToEdit}
-								definitionToEdit={definitionToEdit}
-								removeDefinition={removeDefinition}
-								definitions={definitions}
-								editDefinition={editDefinition}
-								item={item}
-								addDefinition={addDefinition}
-								definitionType={definitionType}
-								shouldHavePrimary={shouldHavePrimary}
-							/>
+							<PivotType definitions={definitions} item={item} />
 						</PivotItem>
 					))}
 				</Pivot>

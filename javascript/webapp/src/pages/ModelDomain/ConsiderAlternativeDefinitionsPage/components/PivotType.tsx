@@ -2,23 +2,22 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { useDimensions } from '@essex/hooks'
 import { DetailsList } from '@showwhy/components'
-import type {
-	Definition,
-	DefinitionType,
-	Handler1,
-	Maybe,
-} from '@showwhy/types'
+import type { Definition } from '@showwhy/types'
 import type { FC } from 'react'
-import { memo, useRef } from 'react'
+import { memo } from 'react'
 import styled from 'styled-components'
 
+import { useDimensions } from '~hooks'
+import { useDefinitionType } from '~state'
+
+import { AlternativeDefinitionsForm } from './AlternativeDefinitionsForm'
+import { useDefinitionToEdit } from '../ConsiderAlternativeDefinitions.state'
 import {
 	useDefinitionItems,
 	useHeaders,
 } from '../ConsiderAlternativeDefinitionsPage.hooks'
-import { AlternativeDefinitionsForm } from './AlternativeDefinitionsForm'
+import { usePivotType } from '../hooks/usePivotType'
 
 interface PivotData {
 	key: string
@@ -30,25 +29,12 @@ interface PivotData {
 
 export const PivotType: FC<{
 	item: PivotData
-	definitionToEdit: Maybe<Definition>
-	shouldHavePrimary: boolean
-	definitionType: DefinitionType
-	addDefinition: Handler1<Definition>
-	editDefinition: Handler1<Definition>
-	removeDefinition: Handler1<Definition>
-	setDefinitionToEdit: Handler1<Maybe<Definition>>
 	definitions: Definition[]
-}> = memo(function PivotType({
-	item,
-	shouldHavePrimary,
-	definitionType,
-	addDefinition,
-	editDefinition,
-	definitions,
-	definitionToEdit,
-	setDefinitionToEdit,
-	removeDefinition,
-}) {
+}> = memo(function PivotType({ item, definitions }) {
+	const definitionType = useDefinitionType()
+	const [definitionToEdit, setDefinitionToEdit] = useDefinitionToEdit()
+	const { shouldHavePrimary, editDefinition, addDefinition, removeDefinition } =
+		usePivotType(definitions, definitionType)
 	const { items } = useDefinitionItems(
 		definitions.filter(d => d.type === definitionType),
 		definitionToEdit,
@@ -58,9 +44,7 @@ export const PivotType: FC<{
 		setDefinitionToEdit,
 		() => setDefinitionToEdit(undefined),
 	)
-	const ref = useRef(null)
-	const dimensions = useDimensions(ref)
-	const { width = 0 } = dimensions || {}
+	const { ref, width } = useDimensions()
 	const headers = useHeaders(width)
 
 	return (

@@ -14,7 +14,7 @@ import {
 	useSetPageDone,
 } from '../DefineCausalQuestion.hooks'
 
-export function useBusinessLogic(): {
+export function useDefineCausalQuestion(): {
 	question: Question
 	onInputChange: (value: Maybe<string>, type: string, field: string) => void
 	setHypothesis: (e: any, option: Maybe<IChoiceGroupOption>) => void

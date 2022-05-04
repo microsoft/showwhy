@@ -3,25 +3,21 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { useDimensions } from '@essex/hooks'
 import { DefaultButton } from '@fluentui/react'
 import { Container, DetailsList, Title } from '@showwhy/components'
-import { memo, useRef } from 'react'
+import { memo } from 'react'
 import styled from 'styled-components'
 
 import {
-	useBusinessLogic,
-	useHeaders,
+	useDetailsList,
+	useFactorsNavigation,
 } from './ConsiderRelevantVariablesPage.hooks'
 import { RelevantVariablesForm } from './RelevantVariablesForm'
 
 export const ConsiderRelevantVariablesPage: React.FC = memo(
 	function ConsiderRelevantVariablesPage() {
-		const { items, addFactor, goToFactorsPage, page } = useBusinessLogic()
-		const ref = useRef(null)
-		const dimensions = useDimensions(ref)
-		const { width = 0 } = dimensions || {}
-		const headers = useHeaders(width)
+		const { items, addFactor, ref, headers } = useDetailsList()
+		const [goToFactorsPage, factorsPathData] = useFactorsNavigation()
 
 		return (
 			<Container>
@@ -32,10 +28,10 @@ export const ConsiderRelevantVariablesPage: React.FC = memo(
 					</Container>
 				</Container>
 				<RelevantVariablesForm onAdd={addFactor}></RelevantVariablesForm>
-				{page ? (
+				{factorsPathData?.page ? (
 					<ButtonContainer>
 						<DefaultButton onClick={goToFactorsPage} data-pw="go-back-button">
-							Go back to {page} page
+							Go back to {factorsPathData?.page} page
 						</DefaultButton>
 					</ButtonContainer>
 				) : null}

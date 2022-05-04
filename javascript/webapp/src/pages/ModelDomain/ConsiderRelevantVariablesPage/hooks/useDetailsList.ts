@@ -3,32 +3,28 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type {
-	CausalFactor,
-	Definition,
-	Handler,
-	Maybe,
-	OptionalId,
-} from '@showwhy/types'
+import type { Header } from '@showwhy/components'
+import type { CausalFactor, Definition, OptionalId } from '@showwhy/types'
 import { useMemo, useState } from 'react'
 
+import { useDimensions } from '~hooks'
 import { useCausalFactors } from '~state'
 
 import {
 	useAddFactor,
 	useDeleteFactor,
 	useEditFactor,
-	useFactorsNavigation,
+	useHeaders,
 	useSetPageDone,
 } from '../ConsiderRelevantVariablesPage.hooks'
 import { useFactorItems } from './useFactorItems'
 
-export function useBusinessLogic(): {
+export function useDetailsList(): {
 	isEditing: boolean
-	page: Maybe<string>
 	addFactor: (factor: OptionalId<CausalFactor>) => void
-	goToFactorsPage: Handler
 	items: any
+	ref: React.MutableRefObject<HTMLDivElement | null>
+	headers: Header[]
 } {
 	const causalFactors = useCausalFactors()
 	const [factor, setFactor] = useState<CausalFactor>()
@@ -38,7 +34,8 @@ export function useBusinessLogic(): {
 	const editFactor = useEditFactor(setFactor, setIsEditing)
 	const addFactor = useAddFactor(isEditing, setIsEditing, setFactor)
 	const flatFactorsList = useFlatFactorsList(causalFactors)
-	const [goToFactorsPage, factorsPathData] = useFactorsNavigation()
+	const { ref, width } = useDimensions()
+	const headers = useHeaders(width)
 	useSetPageDone()
 	const { items } = useFactorItems(
 		flatFactorsList,
@@ -56,8 +53,8 @@ export function useBusinessLogic(): {
 		items,
 		isEditing,
 		addFactor,
-		goToFactorsPage,
-		page: factorsPathData?.page,
+		ref,
+		headers,
 	}
 }
 
