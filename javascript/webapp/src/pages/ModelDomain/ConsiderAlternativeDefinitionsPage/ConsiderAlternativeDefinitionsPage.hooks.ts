@@ -4,9 +4,9 @@
  */
 
 export * from './hooks/useAddDefinition'
-export * from './hooks/useBusinessLogic'
 export * from './hooks/useDefinitionItems'
 export * from './hooks/useEditDefinition'
 export * from './hooks/useHeaders'
+export * from './hooks/usePivotData'
 export * from './hooks/useRemoveDefinition'
 export * from './hooks/useSetPageDone'

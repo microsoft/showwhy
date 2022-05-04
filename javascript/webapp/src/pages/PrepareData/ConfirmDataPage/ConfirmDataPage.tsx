@@ -7,10 +7,10 @@ import type { FC } from 'react'
 import { memo } from 'react'
 import styled from 'styled-components'
 
-import { useBusinessLogic } from './ConfirmDataPage.hooks'
+import { useOutput } from './ConfirmDataPage.hooks'
 
 export const ConfirmDataPage: FC = memo(function ConfirmDataPage() {
-	const { output } = useBusinessLogic()
+	const { output } = useOutput()
 
 	if (!output) return <span>Empty result</span>
 	return (

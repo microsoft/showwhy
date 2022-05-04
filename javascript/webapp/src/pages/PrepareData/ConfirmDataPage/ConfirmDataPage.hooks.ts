@@ -10,7 +10,7 @@ import { useMemo } from 'react'
 import { useAllVariables } from '~hooks'
 import { useCausalFactors, useDefinitions, useOutputTablePrep } from '~state'
 
-export function useBusinessLogic(): { output: Maybe<ColumnTable> } {
+export function useOutput(): { output: Maybe<ColumnTable> } {
 	const outputTablePrep = useOutputTablePrep()
 	const causalFactors = useCausalFactors()
 	const definitions = useDefinitions()
