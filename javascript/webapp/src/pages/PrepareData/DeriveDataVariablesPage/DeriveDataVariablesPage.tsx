@@ -6,10 +6,10 @@ import type { FC } from 'react'
 import { memo } from 'react'
 import styled from 'styled-components'
 
-import { AddVariableFields } from './AddVariableFields'
-import { CompletedElements } from './CompletedElements'
+import { AddVariableFields } from './components/AddVariableFields'
+import { CompletedElements } from './components/CompletedElements'
+import { PrepareData } from './components/PrepareData'
 import { useBusinessLogic } from './DeriveDataVariablesPage.hooks'
-import { PrepareData } from './PrepareData'
 
 export const DeriveDataVariablesPage: FC = memo(
 	function DeriveDataVariablesPage() {

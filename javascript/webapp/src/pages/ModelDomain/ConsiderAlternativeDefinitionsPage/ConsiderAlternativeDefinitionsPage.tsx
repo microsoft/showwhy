@@ -10,8 +10,8 @@ import styled from 'styled-components'
 import { useHandleOnLinkClick } from '~hooks'
 
 import { useDefinitions } from '../../../state'
-import { usePivotData } from './ConsiderAlternativeDefinitionsPage.hooks'
-import { PivotType } from './PivotType'
+import { PivotType } from './components/PivotType'
+import { usePivotData } from './hooks/usePivotData'
 
 export const ConsiderAlternativeDefinitionsPage: React.FC = memo(
 	function ConsiderAlternativeDefinitionsPage() {

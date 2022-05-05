@@ -6,7 +6,7 @@ import type { StepList } from '@showwhy/types'
 import { StepStatus } from '@showwhy/types'
 import { v4 as uuidv4 } from 'uuid'
 
-import { Pages } from '../constants'
+import { Pages } from '~constants'
 
 export const stepsList = [
 	{

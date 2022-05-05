@@ -6,4 +6,5 @@
 export * from './StepList.js'
 export * from './StepStatus.js'
 export * from './Workflow.js'
+export * from './WorkflowHelp.js'
 export * from './WorkflowStep.js'

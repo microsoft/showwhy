@@ -8,11 +8,9 @@ import type { Maybe, Question } from '@showwhy/types'
 
 import { useQuestion } from '~state'
 
-import {
-	useOnInputChange,
-	useSetHypothesis,
-	useSetPageDone,
-} from '../DefineCausalQuestion.hooks'
+import { useOnInputChange } from './useOnInputChange'
+import { useSetHypothesis } from './useSetHypothesis'
+import { useSetPageDone } from './useSetPageDone'
 
 export function useDefineCausalQuestion(): {
 	question: Question

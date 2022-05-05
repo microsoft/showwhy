@@ -14,7 +14,7 @@ import { CausalModelLevel } from '@showwhy/types'
 import { memo } from 'react'
 import styled from 'styled-components'
 
-import { useBusinessLogic } from './ConfirmDomainModelsPage.hooks'
+import { useBusinessLogic } from './hooks/useBusinessLogic'
 
 export const ConfirmDomainModelsPage: React.FC = memo(
 	function ConfirmDomainModelsPage() {

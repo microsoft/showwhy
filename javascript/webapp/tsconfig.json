@@ -14,7 +14,8 @@
 			"~utils": ["./src/utils/index.ts"],
 			"~utils/*": ["./src/utils/*"],
 			"~data/*": ["./src/data/*"],
-			"~hooks": ["./src/hooks/index.ts"]
+			"~hooks": ["./src/hooks/index.ts"],
+			"~constants": ["./src/constants.ts"]
 		},
 		"lib": ["ESNext", "DOM", "DOM.Iterable", "ES2020.BigInt"],
 		"outDir": "lib",

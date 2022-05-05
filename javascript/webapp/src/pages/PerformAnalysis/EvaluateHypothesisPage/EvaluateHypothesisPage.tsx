@@ -28,14 +28,14 @@ import {
 	useQuestion,
 } from '~state'
 
-import { AnalysisSummary } from './AnalysisSummary'
-import { EmptyDataPageWarning } from './EmptyDataPageWarning'
+import { AnalysisSummary } from './components/AnalysisSummary'
+import { EmptyDataPageWarning } from './components/EmptyDataPageWarning'
+import { NewTaskIdsMessage } from './components/NewTaskIdsMessage'
+import { ResultsGraph } from './components/ResultsGraph'
+import { RunManagement } from './components/RunManagement'
+import { SignificanceTestResult } from './components/SignificanceTestResult'
 import { useSignificanceTestData } from './hooks/useSignificanceTestData'
 import { useSignificanceTestManagement } from './hooks/useSignificanceTestManagement'
-import { NewTaskIdsMessage } from './NewTaskIdsMessage'
-import { ResultsGraph } from './ResultsGraph'
-import { RunManagement } from './RunManagement'
-import { SignificanceTestResult } from './SignificanceTestResult'
 
 export const EvaluateHypothesisPage: React.FC = memo(
 	function EvaluateHypothesisPage() {

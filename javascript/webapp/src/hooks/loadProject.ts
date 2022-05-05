@@ -224,8 +224,9 @@ function preProcessTables(
 		const stepPostLoad =
 			!!postLoad?.length &&
 			postLoad.find(p => p?.steps && p?.steps[0]?.input === table.name)
+		let result
 		if (stepPostLoad && stepPostLoad.steps) {
-			const result = await runPipeline(
+			const resultPipeline = await runPipeline(
 				tables,
 				stepPostLoad.steps,
 				store,
@@ -233,7 +234,7 @@ function preProcessTables(
 				tableFiles,
 			)
 
-			const resultTable = result?.table?.derive(
+			result = resultPipeline?.table?.derive(
 				{
 					index: op.row_number(),
 				},
@@ -243,12 +244,14 @@ function preProcessTables(
 			const file = {
 				name: table.name,
 				id: table.name,
-				table: resultTable,
+				table: result,
 				autoType: !!table.autoType,
+				loadedCorrectly: table.loadedCorrectly ?? true,
+				delimiter: table.delimiter,
 			}
 			return file
 		} else {
-			let result = await (!isZipUrl(table.url)
+			result = await (!isZipUrl(table.url)
 				? fetchTable(table)
 				: loadTable(table, tableFiles))
 
@@ -258,15 +261,17 @@ function preProcessTables(
 				},
 				{ before: all() },
 			)
-
-			const file: ProjectFile = {
-				id: table.name,
-				name: table.name,
-				table: result,
-				autoType: !!table.autoType,
-			}
-			return file
 		}
+
+		const file: ProjectFile = {
+			id: table.name,
+			name: table.name,
+			table: result,
+			autoType: !!table.autoType,
+			loadedCorrectly: table.loadedCorrectly ?? true,
+			delimiter: table.delimiter,
+		}
+		return file
 	})
 }
 

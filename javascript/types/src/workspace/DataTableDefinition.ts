@@ -16,4 +16,5 @@ export interface DataTableFileDefinition extends FileDefinition {
 	 */
 	delimiter?: string
 	autoType?: boolean
+	loadedCorrectly?: boolean
 }

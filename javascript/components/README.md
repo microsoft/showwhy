@@ -6,25 +6,18 @@ This package contains generic reusable components to be used within te ShowWhy w
 
 - src
   - ActionButtons
-  - AppHeader
   - Callout
   - CardComponent
   - CausalEffectsArrow
   - CausalQuestion
-  - DatasetList
   - DegreeDropdown
   - DetailsList
-  - DropzoneContainer
   - EffectScatterplot
-  - ErrorMessage
-  - Guidance
-  - hooks
+  - ErrorInfo
   - MessageContainer
   - PivotScatterplot
   - ProgressBar
-  - RunProgressIndicator
-  - StepTitle
-  - UnderstandProcessModal
+  - WorkflowTitle
   - VegaHost
 
 ## Tests

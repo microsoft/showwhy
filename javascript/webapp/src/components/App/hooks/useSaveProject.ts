@@ -126,6 +126,9 @@ function useTables(fileCollection: FileCollection) {
 				if (project?.delimiter) {
 					definition.delimiter = project.delimiter
 				}
+				if (!project?.loadedCorrectly) {
+					definition.loadedCorrectly = false
+				}
 				return definition
 			})
 		},

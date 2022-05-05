@@ -10,14 +10,12 @@ import { useMemo, useState } from 'react'
 import { useDimensions } from '~hooks'
 import { useCausalFactors } from '~state'
 
-import {
-	useAddFactor,
-	useDeleteFactor,
-	useEditFactor,
-	useHeaders,
-	useSetPageDone,
-} from '../ConsiderRelevantVariablesPage.hooks'
+import { useAddFactor } from './useAddFactor'
+import { useDeleteFactor } from './useDeleteFactor'
+import { useEditFactor } from './useEditFactor'
 import { useFactorItems } from './useFactorItems'
+import { useHeaders } from './useHeaders'
+import { useSetPageDone } from './useSetPageDone'
 
 export function useDetailsList(): {
 	isEditing: boolean

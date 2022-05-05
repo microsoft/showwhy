@@ -6,7 +6,7 @@ import {
 	CollapsiblePanel,
 	CollapsiblePanelContainer,
 } from '@essex/themed-components'
-import { StepTitle } from '@showwhy/components'
+import { WorkflowTitle } from '@showwhy/components'
 import type { StepList, Workflow } from '@showwhy/types'
 import { memo, useState } from 'react'
 import styled from 'styled-components'
@@ -37,7 +37,7 @@ export const StepSelector: React.FC<{
 
 	return (
 		<Container>
-			<StepTitle title="Workflow" />
+			<WorkflowTitle title="Workflow" />
 			<PanelWrapper>
 				<CollapsiblePanelContainer>
 					{panels.map((step: StepList) => (

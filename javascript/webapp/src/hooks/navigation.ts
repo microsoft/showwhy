@@ -7,9 +7,9 @@ import { DefinitionType } from '@showwhy/types'
 import { useCallback } from 'react'
 import { useHistory } from 'react-router-dom'
 
+import { Pages } from '~constants'
 import { useSetDefinitionType } from '~state'
 
-import { Pages } from '../constants'
 import { useHandleTabNavigation } from './tabsNavigation'
 
 export function useGoToPage(

@@ -10,8 +10,8 @@ import { Hypothesis } from '@showwhy/types'
 import { memo } from 'react'
 import styled from 'styled-components'
 
-import { useDefineCausalQuestion } from './DefineCausalQuestion.hooks'
 import { FieldGroup } from './FieldGroup'
+import { useDefineCausalQuestion } from './hooks/useDefineCausalQuestion'
 
 const hypothesisOptions: IChoiceGroupOption[] = [
 	{ key: Hypothesis.Change, text: Hypothesis.Change },
