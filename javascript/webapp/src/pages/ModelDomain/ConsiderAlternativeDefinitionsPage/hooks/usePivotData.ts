@@ -10,7 +10,7 @@ import { useEffect, useMemo } from 'react'
 import { useQuestion, useSetDefinitionType } from '~state'
 
 import { useDefinitionToEdit } from '../ConsiderAlternativeDefinitions.state'
-import { useSetPageDone } from '../ConsiderAlternativeDefinitionsPage.hooks'
+import { useSetPageDone } from './useSetPageDone'
 
 interface PivotData {
 	key: string

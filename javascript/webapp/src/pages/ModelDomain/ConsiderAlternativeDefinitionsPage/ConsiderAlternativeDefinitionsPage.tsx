@@ -11,7 +11,7 @@ import { useHandleOnLinkClick } from '~hooks'
 
 import { useDefinitions } from '../../../state'
 import { PivotType } from './components/PivotType'
-import { usePivotData } from './ConsiderAlternativeDefinitionsPage.hooks'
+import { usePivotData } from './hooks/usePivotData'
 
 export const ConsiderAlternativeDefinitionsPage: React.FC = memo(
 	function ConsiderAlternativeDefinitionsPage() {

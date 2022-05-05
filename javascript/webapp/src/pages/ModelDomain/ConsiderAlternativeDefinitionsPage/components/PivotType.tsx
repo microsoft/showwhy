@@ -12,10 +12,8 @@ import { useDimensions } from '~hooks'
 import { useDefinitionType } from '~state'
 
 import { useDefinitionToEdit } from '../ConsiderAlternativeDefinitions.state'
-import {
-	useDefinitionItems,
-	useHeaders,
-} from '../ConsiderAlternativeDefinitionsPage.hooks'
+import { useDefinitionItems } from '../hooks/useDefinitionItems'
+import { useHeaders } from '../hooks/useHeaders'
 import { usePivotType } from '../hooks/usePivotType'
 import { AlternativeDefinitionsForm } from './AlternativeDefinitionsForm'
 
