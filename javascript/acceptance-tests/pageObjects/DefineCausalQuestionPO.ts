@@ -11,7 +11,7 @@ type fn = (type: string) => string
 const selectors: Record<string, string> = {
 	group: dataAttr('field-group'),
 	title: dataAttr('field-group-title'),
-	hypothesis: dataAttr('hypothesis-choice'),
+	hypothesis: dataAttr('radio-option'),
 }
 
 const fnSelectors: Record<string, fn> = {
@@ -43,6 +43,6 @@ export class DefineCausalQuestionPO extends Page {
 	}
 
 	public async selectHypothesis(type: string): Promise<void> {
-		await this.page.click(`${selectors.hypothesis} + label:has-text('${type}')`)
+		await this.page.click(`${selectors.hypothesis} h3:has-text('${type}')`)
 	}
 }

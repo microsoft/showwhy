@@ -15,6 +15,7 @@ export const RadioButtonCard: React.FC<{
 	return (
 		<CardComponent key={option.key} styles={{ margin: 0, padding: 0 }}>
 			<Option
+				className="radio-option"
 				onClick={() => option.onChange(option)}
 				data-pw={`${option.isSelected ? 'selected-' : ''}radio-option`}
 			>

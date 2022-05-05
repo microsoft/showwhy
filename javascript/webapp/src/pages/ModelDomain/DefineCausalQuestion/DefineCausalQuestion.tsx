@@ -3,25 +3,17 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { IChoiceGroupOption } from '@fluentui/react'
-import { ChoiceGroup } from '@fluentui/react'
 import { Container } from '@showwhy/components'
-import { Hypothesis } from '@showwhy/types'
 import { memo } from 'react'
 import styled from 'styled-components'
 
 import { useDefineCausalQuestion } from './DefineCausalQuestion.hooks'
 import { FieldGroup } from './FieldGroup'
-
-const hypothesisOptions: IChoiceGroupOption[] = [
-	{ key: Hypothesis.Change, text: Hypothesis.Change },
-	{ key: Hypothesis.Increase, text: Hypothesis.Increase },
-	{ key: Hypothesis.Decrease, text: Hypothesis.Decrease },
-].map(i => ({ ...i, 'data-pw': 'hypothesis-choice' }))
+import { HypothesisGroup } from './HypothesisGroup'
 
 export const DefineCausalQuestion: React.FC = memo(
 	function DefineCausalQuestion() {
-		const { question, onInputChange, setHypothesis } = useDefineCausalQuestion()
+		const { question, onInputChange } = useDefineCausalQuestion()
 
 		return (
 			<Container>
@@ -43,12 +35,7 @@ export const DefineCausalQuestion: React.FC = memo(
 
 				<Container>
 					<FieldTitle>Hypothesis</FieldTitle>
-					<ChoiceGroup
-						onChange={setHypothesis}
-						selectedKey={question.hypothesis || Hypothesis.Change}
-						label="Exposure causes outcome to:"
-						options={hypothesisOptions}
-					/>
+					<HypothesisGroup hypothesis={question.hypothesis} />
 				</Container>
 			</Container>
 		)
