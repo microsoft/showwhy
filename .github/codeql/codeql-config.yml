@@ -1,6 +1,7 @@
 name: 'ShowWhy CodeQL Configuration'
 paths:
-  - javascript/
+  - javascript
+  - python
 paths-ignore:
   - '**/*.spec.ts'
   - '.pnp.*'
