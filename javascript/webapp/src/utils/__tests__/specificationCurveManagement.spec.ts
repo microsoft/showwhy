@@ -60,114 +60,54 @@ describe('specificationCurveManagementUtils', () => {
 		const specifications: Specification[] = [
 			{
 				...defaultObject,
-				treatment: 'treat 2',
+			},
+			{
+				...defaultObject,
+				treatment: 'pop 2',
 				estimatedEffect: 0.7,
 			},
 			{
 				...defaultObject,
+				outcomeType: 'Secondary',
+				outcome: 'Secondary',
 			},
 			{
 				...defaultObject,
-				causalModel: 'two',
-				outcome: 'out 2',
-				estimatedEffect: 0.9,
-			},
-			{
-				...defaultObject,
-				outcome: 'out 3',
-				estimatedEffect: 1,
-				causalModel: 'two',
-			},
-			{
-				...defaultObject,
-				causalModel: 'two',
-				estimatedEffect: 0.8,
-			},
-			{
-				...defaultObject,
-				outcome: 'out 2',
-			},
-			{
-				...defaultObject,
-				treatment: 'treat 2',
-				outcome: 'out 2',
+				treatment: 'pop 2',
+				outcomeType: 'Secondary',
+				outcome: 'Secondary',
 				estimatedEffect: 0.7,
-			},
-			{
-				...defaultObject,
-				outcome: 'out 3',
-				estimatedEffect: 0.7,
-			},
-			{
-				...defaultObject,
-				treatment: 'treat 2',
-				outcome: 'out 3',
 			},
 		]
 
 		const expected = [
 			{
 				...defaultObject,
-				id: 'A2',
-			},
-			{
-				...defaultObject,
-				outcome: 'out 2',
-				id: 'B2',
-			},
-			{
-				...defaultObject,
-				treatment: 'treat 2',
-				outcome: 'out 3',
-				id: 'C1',
-			},
-			{
-				...defaultObject,
-				treatment: 'treat 2',
-				estimatedEffect: 0.7,
 				id: 'A1',
 			},
 			{
 				...defaultObject,
-				treatment: 'treat 2',
-				outcome: 'out 2',
+				treatment: 'pop 2',
 				estimatedEffect: 0.7,
+				id: 'A2',
+			},
+			{
+				...defaultObject,
+				outcomeType: 'Secondary',
+				outcome: 'Secondary',
 				id: 'B1',
 			},
 			{
 				...defaultObject,
-				outcome: 'out 3',
+				treatment: 'pop 2',
+				outcomeType: 'Secondary',
+				outcome: 'Secondary',
 				estimatedEffect: 0.7,
-				id: 'C2',
+				id: 'B2',
 			},
-			{
-				...defaultObject,
-				causalModel: 'two',
-				estimatedEffect: 0.8,
-				id: 'A3',
-			},
-			{
-				...defaultObject,
-				causalModel: 'two',
-				outcome: 'out 2',
-				estimatedEffect: 0.9,
-				id: 'B3',
-			},
-			{
-				...defaultObject,
-				outcome: 'out 3',
-				estimatedEffect: 1,
-				causalModel: 'two',
-				id: 'C3',
-			},
-		].sort(function (a, b) {
-			return a?.id.localeCompare(b?.id)
-		})
+		]
 
-		const result = buildOutcomeGroups(specifications).sort(function (a, b) {
-			return a?.id.localeCompare(b?.id)
-		})
-
+		const result = buildOutcomeGroups(specifications)
 		expect(result).toEqual(expected)
 	})
 })

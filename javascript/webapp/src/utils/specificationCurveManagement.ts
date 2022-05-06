@@ -45,11 +45,18 @@ export function row2spec(d: any): Specification {
 export function buildOutcomeGroups(
 	specifications: Specification[],
 ): Specification[] {
-	const grouped = groupBySpecification(specifications)
+	const primaryOutcome = specifications
+		.filter(x => x.outcomeType === 'Primary')
+		.sort((a, b) => a?.estimatedEffect - b?.estimatedEffect)
 
-	return grouped.sort(function (a, b) {
-		return a?.estimatedEffect - b?.estimatedEffect
-	})
+	const secondaryOutcomes = specifications
+		.filter(x => x.outcomeType !== 'Primary')
+		.sort((a, b) => a?.outcome.localeCompare(b?.outcome))
+
+	const { grouped, groups, outcomes } = groupBySpecification(primaryOutcome)
+	const secondaries = groupBySpecification(secondaryOutcomes, groups, outcomes)
+
+	return grouped.concat(secondaries.grouped)
 }
 function returnKeys(item: Specification) {
 	return [item.treatment, item.causalModel, item.estimator]
@@ -59,28 +66,39 @@ function returnGroupLetter(number: number) {
 	return String.fromCharCode(97 + number).toUpperCase()
 }
 
-function insertGroupsToObjects(groups: any) {
-	return Object.keys(groups).map((outcomeGroup: any, groupNumber: number) => {
-		return groups[outcomeGroup]
-			.sort((a: Specification, b: Specification) => {
-				//order by primary first?
-				return a?.outcome.localeCompare(b?.outcome)
-			})
-			.map((specification: any, specificationNumber: number) => {
-				return {
-					...specification,
-					id: returnGroupLetter(specificationNumber) + (groupNumber + 1), //So it doesn't start in 0
-				}
-			})
-	})
-}
+function groupBySpecification(
+	array: Specification[],
+	groups: string[] = [],
+	outcomes: string[] = [],
+): {
+	grouped: Specification[]
+	groups: string[]
+	outcomes: string[]
+} {
+	const grouped = array.map((specification: Specification) => {
+		const group = JSON.stringify(returnKeys(specification))
+		let groupNumber = groups.indexOf(group)
 
-function groupBySpecification(array: Specification[]): Specification[] {
-	const groups: any = {}
-	array.forEach((s: Specification) => {
-		const group = JSON.stringify(returnKeys(s))
-		groups[group] = groups[group] || []
-		groups[group].push(s)
+		if (groupNumber < 0) {
+			groupNumber = groups.length
+			groups.push(group)
+		}
+
+		let outcomeNumber = outcomes.indexOf(specification.outcome)
+		if (outcomeNumber < 0) {
+			outcomes.push(specification.outcome)
+			outcomeNumber = outcomes.length - 1
+		}
+
+		return {
+			...specification,
+			id: returnGroupLetter(outcomeNumber) + (groupNumber + 1),
+		}
 	})
-	return insertGroupsToObjects(groups).flat()
+
+	return {
+		grouped,
+		outcomes,
+		groups,
+	}
 }
