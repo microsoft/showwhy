@@ -73,29 +73,55 @@ describe('specificationCurveManagementUtils', () => {
 			},
 			{
 				...defaultObject,
+				outcomeType: 'Secondary',
+				outcome: 'Third',
+			},
+			{
+				...defaultObject,
 				treatment: 'pop 2',
 				outcomeType: 'Secondary',
 				outcome: 'Secondary',
 				estimatedEffect: 0.7,
+			},
+			{
+				...defaultObject,
+				treatment: 'pop 2',
+				outcomeType: 'Secondary',
+				outcome: 'Third',
+				estimatedEffect: 0.1,
 			},
 		]
 
 		const expected = [
 			{
 				...defaultObject,
-				id: 'A1',
+				treatment: 'pop 2',
+				outcomeType: 'Secondary',
+				outcome: 'Third',
+				estimatedEffect: 0.1,
+				id: 'C2',
 			},
 			{
 				...defaultObject,
-				treatment: 'pop 2',
-				estimatedEffect: 0.7,
-				id: 'A2',
+				id: 'A1',
 			},
 			{
 				...defaultObject,
 				outcomeType: 'Secondary',
 				outcome: 'Secondary',
 				id: 'B1',
+			},
+			{
+				...defaultObject,
+				outcomeType: 'Secondary',
+				outcome: 'Third',
+				id: 'C1',
+			},
+			{
+				...defaultObject,
+				treatment: 'pop 2',
+				estimatedEffect: 0.7,
+				id: 'A2',
 			},
 			{
 				...defaultObject,

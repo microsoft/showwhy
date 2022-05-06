@@ -42,12 +42,16 @@ export function row2spec(d: any): Specification {
 	}
 }
 
+function sortByEstimatedEffect(specifications: Specification[]) {
+	return specifications.sort((a, b) => a?.estimatedEffect - b?.estimatedEffect)
+}
+
 export function buildOutcomeGroups(
 	specifications: Specification[],
 ): Specification[] {
-	const primaryOutcome = specifications
-		.filter(x => x.outcomeType === 'Primary')
-		.sort((a, b) => a?.estimatedEffect - b?.estimatedEffect)
+	const primaryOutcome = sortByEstimatedEffect(
+		specifications.filter(x => x.outcomeType === 'Primary'),
+	)
 
 	const secondaryOutcomes = specifications
 		.filter(x => x.outcomeType !== 'Primary')
@@ -56,7 +60,7 @@ export function buildOutcomeGroups(
 	const { grouped, groups, outcomes } = groupBySpecification(primaryOutcome)
 	const secondaries = groupBySpecification(secondaryOutcomes, groups, outcomes)
 
-	return grouped.concat(secondaries.grouped)
+	return sortByEstimatedEffect(grouped.concat(secondaries.grouped))
 }
 function returnKeys(item: Specification) {
 	return [item.treatment, item.causalModel, item.estimator]
