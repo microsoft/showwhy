@@ -26,6 +26,7 @@ import {
 import { useEstimators } from '~state'
 
 import {
+	ColumnDataTypeMessage,
 	IdentifierMessage,
 	MicrodataMessage,
 	OutputTableColumnsMessage,
@@ -62,6 +63,7 @@ export const EstimateCausalEffectPage: React.FC = memo(
 			isMissingVariable,
 			isMissingIdentifier,
 			isNotInOutputTable,
+			isValidDataType,
 			hasAnyError,
 		} = useDataErrors()
 
@@ -108,6 +110,7 @@ export const EstimateCausalEffectPage: React.FC = memo(
 							{isMissingIdentifier && <IdentifierMessage />}
 							{!isMicrodata && <MicrodataMessage />}
 							{isNotInOutputTable && <OutputTableColumnsMessage />}
+							{!isValidDataType && <ColumnDataTypeMessage />}
 							{!isProcessing && (
 								<Container>
 									<PrimaryButton

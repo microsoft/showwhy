@@ -67,3 +67,18 @@ export const OutputTableColumnsMessage: FC = memo(
 		)
 	},
 )
+
+export const ColumnDataTypeMessage: FC = memo(function ColumnDataTypeMessage() {
+	return (
+		<MessageContainer styles={{ marginBottom: '1rem' }}>
+			<span>
+				Looks like some columns have an invalid data type according to the
+				variable type that have been assigned to them, go back to
+				<Link to={Pages.DeriveDataVariables}>
+					Derive data variables page
+				</Link>{' '}
+				to fix this.
+			</span>
+		</MessageContainer>
+	)
+})
