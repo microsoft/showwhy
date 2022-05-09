@@ -4,6 +4,7 @@
  */
 export * from './arquero'
 export * from './arrays'
+export * from './assertDataType'
 export * from './definition'
 export * from './files'
 export * from './ids'

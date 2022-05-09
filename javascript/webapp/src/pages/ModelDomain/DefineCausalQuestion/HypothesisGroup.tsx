@@ -9,7 +9,7 @@ import type { FC} from 'react';
 import { memo } from 'react'
 import styled from 'styled-components'
 
-import { useSetHypothesis } from './DefineCausalQuestion.hooks'
+import { useSetHypothesis } from './hooks/useSetHypothesis'
 
 export const HypothesisGroup: FC<{hypothesis: Hypothesis}> = memo(
   function HypothesisGroup({hypothesis}) {

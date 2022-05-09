@@ -9,8 +9,7 @@ import { Case, Default, Switch } from 'react-if'
 
 import { useAllVariables, useIsDataTypeValid } from '~hooks'
 import { useCausalFactors, useDefinitions } from '~state'
-
-import { getColumnDataTypeWarning } from './assertDataType'
+import { getColumnDataTypeWarning } from '~utils'
 
 export const DataTypeWarningMessage: FC = memo(
 	function DataTypeWarningMessage() {

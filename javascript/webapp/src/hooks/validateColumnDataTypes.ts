@@ -8,8 +8,7 @@ import { useMemo } from 'react'
 
 import { useAllVariables } from '~hooks'
 import { useCausalFactors, useDefinitions, useOutputTablePrep } from '~state'
-
-import { assertDataType } from '../pages/PrepareData/DeriveDataVariablesPage/assertDataType'
+import { assertDataType } from '~utils'
 
 export function isColumnValid(
 	data: any[],

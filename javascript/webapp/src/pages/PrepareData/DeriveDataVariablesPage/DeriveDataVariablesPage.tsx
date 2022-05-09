@@ -9,8 +9,8 @@ import styled from 'styled-components'
 
 import { AddVariableFields } from './components/AddVariableFields'
 import { CompletedElements } from './components/CompletedElements'
-import { PrepareData } from './components/PrepareData'
 import { DataTypeWarningMessage } from './components/DataTypeWarningMessage'
+import { PrepareData } from './components/PrepareData'
 import { useBusinessLogic } from './DeriveDataVariablesPage.hooks'
 
 export const DeriveDataVariablesPage: FC = memo(

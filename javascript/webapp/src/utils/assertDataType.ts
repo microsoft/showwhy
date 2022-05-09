@@ -102,5 +102,7 @@ export function getColumnDataTypeWarning(
 	if (!len) {
 		return ''
 	}
-	return `The data type of ${column} is not valid for ${type}. Please change it to ${len === 1 ? 'the' : 'one of these'} allowed data type${pluralize(len)}: ${accepted.join(', ')}.`
+	return `The data type of ${column} is not valid for ${type}. Please change it to ${
+		len === 1 ? 'the' : 'one of these'
+	} allowed data type${pluralize(len)}: ${accepted.join(', ')}.`
 }
