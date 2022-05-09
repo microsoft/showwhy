@@ -8,10 +8,8 @@ import { Container, DetailsList, Title } from '@showwhy/components'
 import { memo } from 'react'
 import styled from 'styled-components'
 
-import {
-	useDetailsList,
-	useFactorsNavigation,
-} from './ConsiderRelevantVariablesPage.hooks'
+import { useDetailsList } from './hooks/useDetailsList'
+import { useFactorsNavigation } from './hooks/useFactorsNavigation'
 import { RelevantVariablesForm } from './RelevantVariablesForm'
 
 export const ConsiderRelevantVariablesPage: React.FC = memo(

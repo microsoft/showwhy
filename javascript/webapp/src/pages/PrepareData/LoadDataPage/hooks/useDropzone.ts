@@ -5,8 +5,12 @@
 
 import type { FileCollection } from '@data-wrangling-components/utilities'
 import { FileType, isZipFile } from '@data-wrangling-components/utilities'
-import type { DropFilesCount } from '@showwhy/components'
-import type { Handler, Handler1, ProjectFile } from '@showwhy/types'
+import type {
+	DropFilesCount,
+	Handler,
+	Handler1,
+	ProjectFile,
+} from '@showwhy/types'
 import type { Dispatch, SetStateAction } from 'react'
 import { useCallback, useState } from 'react'
 

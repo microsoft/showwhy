@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import type { WorkflowHelp } from '@showwhy/components'
+import type { WorkflowHelp } from '@showwhy/types'
 import { v4 as uuidv4 } from 'uuid'
 
 import {

@@ -7,8 +7,8 @@ import { Container } from '@showwhy/components'
 import { memo } from 'react'
 import styled from 'styled-components'
 
-import { useDefineCausalQuestion } from './DefineCausalQuestion.hooks'
 import { FieldGroup } from './FieldGroup'
+import { useDefineCausalQuestion } from './hooks/useDefineCausalQuestion'
 import { HypothesisGroup } from './HypothesisGroup'
 
 export const DefineCausalQuestion: React.FC = memo(

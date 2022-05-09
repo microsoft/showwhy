@@ -15,7 +15,7 @@ import {
 	useSetPrimarySpecificationConfig,
 } from '~state'
 
-import { useSetPageDone } from '../ConfirmDomainModelsPage.hooks'
+import { useSetPageDone } from './useSetPageDone'
 
 export function useBusinessLogic(): {
 	causalEffects: CausalEffectsProps

@@ -19,6 +19,7 @@ const configuration = {
 		'~utils/(.*)': ['<rootDir>/src/utils/$1'],
 		'~utils': ['<rootDir>/src/utils/index.ts'],
 		'~hooks': ['<rootDir>/src/hooks/index.ts'],
+		'~constants': ['<rootDir>/src/constants.ts'],
 	},
 	setupFilesAfterEnv: ['<rootDir>/jest.setup.mjs'],
 	reporters: ['default', 'jest-junit'],

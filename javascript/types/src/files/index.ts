@@ -4,5 +4,6 @@
  */
 
 export * from './DownloadType.js'
+export * from './DropFilesCount.js'
 export * from './ProjectFile.js'
 export * from './ZipFileData.js'
