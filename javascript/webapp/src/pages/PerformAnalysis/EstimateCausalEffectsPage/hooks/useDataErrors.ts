@@ -5,7 +5,7 @@
 
 import { useMemo } from 'react'
 
-import { useAllVariables } from '~hooks'
+import { useAllVariables, useIsDataTypeValid } from '~hooks'
 import {
 	useCausalFactors,
 	useDefinitions,
@@ -20,6 +20,7 @@ export function useDataErrors(): {
 	isMissingVariable: boolean
 	isMissingIdentifier: boolean
 	isNotInOutputTable: boolean
+	isValidDataType: boolean
 	hasAnyError: boolean
 } {
 	const outputTable = useOutputTablePrep()
@@ -28,6 +29,7 @@ export function useDataErrors(): {
 	const causalFactors = useCausalFactors()
 	const allVariables = useAllVariables(causalFactors, definitions)
 	const isMicrodata = useIsMicrodata(outputTable, subjectIdentifier)
+	const [isValidDataType = true] = useIsDataTypeValid() || []
 	const variablesColumns = useMemo(
 		() => [subjectIdentifier, ...allVariables.map(v => v.column)],
 		[subjectIdentifier, allVariables],
@@ -54,14 +56,22 @@ export function useDataErrors(): {
 			!isMicrodata ||
 			isMissingVariable ||
 			isMissingIdentifier ||
-			isNotInOutputTable
+			isNotInOutputTable ||
+			!isValidDataType
 		)
-	}, [isMicrodata, isMissingVariable, isMissingIdentifier, isNotInOutputTable])
+	}, [
+		isMicrodata,
+		isMissingVariable,
+		isMissingIdentifier,
+		isNotInOutputTable,
+		isValidDataType,
+	])
 	return {
 		isMicrodata,
 		isMissingVariable,
 		isMissingIdentifier,
 		isNotInOutputTable,
+		isValidDataType,
 		hasAnyError,
 	}
 }

@@ -2,12 +2,14 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+
 import type { FC } from 'react'
 import { memo } from 'react'
 import styled from 'styled-components'
 
 import { AddVariableFields } from './components/AddVariableFields'
 import { CompletedElements } from './components/CompletedElements'
+import { DataTypeWarningMessage } from './components/DataTypeWarningMessage'
 import { PrepareData } from './components/PrepareData'
 import { useBusinessLogic } from './DeriveDataVariablesPage.hooks'
 
@@ -24,6 +26,7 @@ export const DeriveDataVariablesPage: FC = memo(
 
 		return (
 			<Container>
+				<DataTypeWarningMessage />
 				<AddVariableFields />
 				{allElements.length ? (
 					<CompletedElements
