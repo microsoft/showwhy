@@ -9,7 +9,6 @@ import type { CausalFactor, Definition } from '@showwhy/types'
 import {
 	CausalFactorType,
 	CausalModelLevel,
-	CommandActionType,
 	DefinitionType,
 } from '@showwhy/types'
 import upperFirst from 'lodash/upperFirst'
@@ -17,6 +16,8 @@ import { useMemo } from 'react'
 
 import { useCausalEffects } from '~hooks'
 import { getDefinitionsByType } from '~utils'
+
+import { CommandActionType } from '../DeriveDataVariablesPage.types'
 
 export function useDefinitionDropdownOptions(
 	definitions: Definition[],

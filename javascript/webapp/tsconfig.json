@@ -36,7 +36,6 @@
 		"../types/src/workspace/DefaultDatasetResult.ts",
 		"../types/src/workspace/DataTableDefinition.ts",
 		"../types/src/workspace/Workspace.ts",
-		"../types/src/workspace/DataTableMetadata.ts",
 		"../types/src/workspace/FileDefinition.ts",
 		"../types/src/workspace/ProjectSource.ts",
 		"../types/src/files/DownloadType.ts",

@@ -3,11 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 export * from './AlternativeModels.js'
-export * from './CommandActionType.js'
 export * from './Definition.js'
 export * from './DefinitionType.js'
-export * from './Element.js'
-export * from './Hypothesis.js'
 export * from './PrimarySpecificationConfig.js'
-export * from './Question.js'
 export * from './SignificanceTest.js'

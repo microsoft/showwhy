@@ -7,11 +7,11 @@ import type {
 	NodeRequest,
 	NodeResponse,
 	OrchestratorStatusResponse,
-	TotalExecutionsResponse,
 	UploadFilesResponse,
 } from '@showwhy/types'
 import { NodeResponseStatus } from '@showwhy/types'
 
+import type { TotalExecutionsResponse } from './FetchApiInteractor.types.js'
 import { OrchestratorType } from './Orchestrator/index.js'
 
 export class FetchApiInteractor {
