@@ -14,7 +14,6 @@ import type {
 	FactorsOrDefinitions,
 	Maybe,
 } from '@showwhy/types'
-import { CommandActionType } from '@showwhy/types'
 import { useCallback } from 'react'
 import styled from 'styled-components'
 
@@ -24,6 +23,7 @@ import {
 	useSelectedOptions,
 } from '../DeriveDataVariablesPage.hooks'
 import { useCallout, useSelectedColumn } from '../DeriveDataVariablesPage.state'
+import { CommandActionType } from '../DeriveDataVariablesPage.types'
 
 const buttonStyles = {
 	root: {
