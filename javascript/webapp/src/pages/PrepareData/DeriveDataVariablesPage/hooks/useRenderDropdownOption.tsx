@@ -7,6 +7,7 @@ import { ColumnarMenu, ColumnarMenuList } from '@essex/themed-components'
 import type {
 	IContextualMenuItem,
 	IContextualMenuListProps,
+	IRawStyle,
 } from '@fluentui/react'
 import type {
 	CausalFactor,
@@ -32,7 +33,10 @@ const buttonStyles = {
 	label: {
 		width: 150,
 		lineHeight: 'unset',
-	},
+		whiteSpace: 'nowrap',
+		overflow: 'hidden',
+		textOverflow: 'ellipsis',
+	} as IRawStyle,
 }
 
 export function useRenderDropdown(
