@@ -7,6 +7,7 @@ ENV AzureWebJobsScriptRoot=/home/site/wwwroot \
 
 COPY ./showwhy-backend/showwhy_backend/ /home/site/wwwroot/
 COPY ./showwhy-backend/pyproject.toml /home/site/wwwroot/
+COPY ./showwhy-backend/poetry.lock /home/site/wwwroot/
 
 RUN mkdir /home/site/showwhy-inference/
 
@@ -24,9 +25,6 @@ RUN apt-get update && apt-get install -y \
 RUN python -m ensurepip &&\
     python -m pip install --upgrade pip &&\
     python -m pip install poetry==1.1.12
-
-RUN cd /home/site/showwhy-inference &&\
-    python -m poetry build
 
 RUN cd /home/site/wwwroot &&\
     python -m poetry config virtualenvs.create false &&\

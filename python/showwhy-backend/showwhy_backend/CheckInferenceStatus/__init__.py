@@ -6,6 +6,7 @@
 import itertools
 import json
 import operator
+import traceback
 
 from collections import ChainMap
 
@@ -38,7 +39,9 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
             records_for_task = list(records_for_task)
             partial_results.append(dict(ChainMap(*records_for_task)))
 
-        partial_results = sorted(partial_results, key=lambda k: k["estimated_effect"])
+        partial_results = sorted(
+            partial_results, key=lambda k: k.get("estimated_effect", 0)
+        )
 
         total_results = storage.read_output(
             session, f"{instance}_metadata.json", file_type="partial"
@@ -94,9 +97,15 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
             mimetype="application/json",
             status_code=200,
         )
-    except:
+    except Exception as e:
         return func.HttpResponse(
-            body=json.dumps({"status": "calculating number of executions"}),
+            body=json.dumps(
+                {
+                    "status": "calculating number of executions",
+                    "additional_info": str(e),
+                    "stacktrace": traceback.format_exc(),
+                }
+            ),
             mimetype="application/json",
             status_code=200,
         )
