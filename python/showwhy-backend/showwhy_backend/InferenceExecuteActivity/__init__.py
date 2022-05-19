@@ -46,7 +46,7 @@ def main(body: Dict):
             else None,
         }
 
-        if result["estimated_effect"] == None:
+        if result["estimated_effect"] is None:
             for refuter in node_data["refuter_specs"]:
                 result_json[
                     f'refuter_{refuter["method_name"].replace("_refuter", "")}'

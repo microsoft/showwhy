@@ -7,19 +7,28 @@ import itertools
 import logging
 import time
 import warnings
+
 from typing import Dict, List, Tuple
+
 import dowhy
 import numpy as np
 import pandas as pd
+
 from sklearn import preprocessing
+
 from showwhy_inference.causal_graph import CausalGraph
+from showwhy_inference.covariate_balance import COVARIATE_BALANCE_FUNC_MAPPING
 from showwhy_inference.estimator import CausalEstimator
 from showwhy_inference.inference_config import (
     DEFAULT_REFUTATION_TESTS,
     INCLUDE_SENSITIVITY_REFUTERS,
     SENSITIVITY_REFUTERS,
 )
+
+
 warnings.simplefilter("ignore")
+
+
 def is_valid_spec(spec: List) -> bool:
     """
     Helper function to filter out obviously invalid specs
@@ -37,6 +46,8 @@ def is_valid_spec(spec: List) -> bool:
         return False
     else:
         return True
+
+
 def generate_all_specs(
     population_specs, treatment_specs, outcome_specs, model_specs, estimator_specs
 ):
@@ -50,9 +61,17 @@ def generate_all_specs(
         population_specs, treatment_specs, outcome_specs, model_specs, estimator_specs
     )
     return [spec for spec in specs if is_valid_spec(spec)]
+
+
 def estimate_specification(spec: Tuple, context: Dict) -> Dict:
     start_time = time.time()
-    causal_model, identified_estimand, estimate, population_size = __estimate_effect(
+    (
+        causal_model,
+        identified_estimand,
+        estimate,
+        population_size,
+        covariate_balance,
+    ) = __estimate_effect(
         population_spec=spec[0],
         treatment_spec=spec[1],
         outcome_spec=spec[2],
@@ -71,10 +90,13 @@ def estimate_specification(spec: Tuple, context: Dict) -> Dict:
         "causal_model": spec[3]["label"],
         "estimator": spec[4]["label"],
         "estimated_effect": (causal_model, identified_estimand, estimate),
+        "covariate_balance": covariate_balance,
         "time": time.time() - start_time,
     }
     logging.info(f"Estimated effect: {result_dict}")
     return result_dict
+
+
 def __estimate_effect(
     population_spec: Dict,
     treatment_spec: Dict,
@@ -105,7 +127,9 @@ def __estimate_effect(
     # encode string columns
     le = preprocessing.LabelEncoder()
     for var in causal_variables:
-        if population_data[var].dtype == object and isinstance(population_data.iloc[0][var], str):
+        if population_data[var].dtype == object and isinstance(
+            population_data.iloc[0][var], str
+        ):
             population_data[var] = le.fit_transform(population_data[var])
     causal_graph = copy.deepcopy(model_spec["causal_graph"])
     logging.info(
@@ -150,13 +174,34 @@ def __estimate_effect(
                 method_name=estimator_config["method_name"],
                 method_params=estimator_config["method_params"],
             )
-            return causal_model, identified_estimand, estimate, population_data.shape[0]
+            if (
+                "propensity" in estimator_spec["method_name"]
+                and "matching" not in estimator_spec["method_name"]
+            ):
+                covariate_balance = COVARIATE_BALANCE_FUNC_MAPPING[
+                    estimator_spec["method_name"]
+                ](
+                    estimate.estimator._data,
+                    estimate.estimator._observed_common_causes_names,
+                    estimate.estimator._treatment_name,
+                ).to_dict()
+            else:
+                covariate_balance = None
+            return (
+                causal_model,
+                identified_estimand,
+                estimate,
+                population_data.shape[0],
+                covariate_balance,
+            )
         except Exception as e:
             logging.info(f"Cannot compute estimate: {e}. Returning None values")
-            return None, None, None, population_data.shape[0]
+            return None, None, None, population_data.shape[0], None
     else:
         logging.info("Backdoor estimate is not possible")
-        return None, None, None, population_data.shape[0]
+        return None, None, None, population_data.shape[0], None
+
+
 def join_results(results: List) -> pd.DataFrame:
     """
     Join estimate, confidence interval, refutation and SHAP results
@@ -173,6 +218,7 @@ def join_results(results: List) -> pd.DataFrame:
         and str(column) != "lower_bound"
         and str(column) != "upper_bound"
         and str(column) != "refutation_results"
+        and str(column) != "covariate_balance"
     ]
     available_refuters = {
         column: np.sum
@@ -182,8 +228,19 @@ def join_results(results: List) -> pd.DataFrame:
     for column in results_df.columns:
         if column not in columns:
             results_df[column] = results_df[column].fillna(0)
+
+    if "covariate_balance" in results_df.columns:
+        covariate_agg = {"covariate_balance": "first"}
+    else:
+        covariate_agg = {}
+
     results_df = results_df.groupby(columns, sort=False).agg(
-        {"estimated_effect": np.mean, "time": np.mean, **available_refuters}
+        {
+            "estimated_effect": np.mean,
+            "time": np.mean,
+            **covariate_agg,
+            **available_refuters,
+        }
     )
     # calculate final refutation result
     results_df["refutation_result"] = results_df.apply(
@@ -193,6 +250,8 @@ def join_results(results: List) -> pd.DataFrame:
     results_df.index = np.arange(1, len(results_df) + 1)
     results_df.index = results_df.index.set_names(["SpecificationID"])
     return results_df
+
+
 def check_refutation_result(result: dict) -> int:
     """
     Helper function to output a single value representing
