@@ -14,10 +14,10 @@ import dowhy
 import numpy as np
 import pandas as pd
 
-from causallib.evaluation.weight_evaluator import calculate_covariate_balance
 from sklearn import preprocessing
 
 from showwhy_inference.causal_graph import CausalGraph
+from showwhy_inference.covariate_balance import COVARIATE_BALANCE_FUNC_MAPPING
 from showwhy_inference.estimator import CausalEstimator
 from showwhy_inference.inference_config import (
     DEFAULT_REFUTATION_TESTS,
@@ -27,91 +27,6 @@ from showwhy_inference.inference_config import (
 
 
 warnings.simplefilter("ignore")
-
-
-def stratification_covariate_balance(df, common_causes, treatments):
-    df_long = df.melt(
-        id_vars=treatments + ["strata", "propensity_score"],
-        value_vars=common_causes,
-        value_name="common_cause_value",
-        var_name="covariate",
-    )
-    mean_diff = df_long.groupby(treatments + ["covariate", "strata"]).agg(
-        mean_w=("common_cause_value", np.mean)
-    )
-    mean_diff = (
-        mean_diff.groupby(["covariate", "strata"])
-        .transform(lambda x: x.max() - x.min())
-        .reset_index()
-    )
-    mean_diff = mean_diff.query(f"{treatments[0]}==True")
-    size_by_w_strata = (
-        df_long.groupby(["covariate", "strata"])
-        .agg(size=("propensity_score", np.size))
-        .reset_index()
-    )
-    size_by_strata = (
-        df_long.groupby(["covariate"])
-        .agg(size=("propensity_score", np.size))
-        .reset_index()
-    )
-    size_by_strata = pd.merge(size_by_w_strata, size_by_strata, on="covariate")
-    mean_diff_strata = pd.merge(mean_diff, size_by_strata, on=("covariate", "strata"))
-
-    stddev_by_w_strata = (
-        df_long.groupby(["covariate", "strata"])
-        .agg(stddev=("common_cause_value", np.std))
-        .reset_index()
-    )
-    mean_diff_strata = pd.merge(
-        mean_diff_strata, stddev_by_w_strata, on=["covariate", "strata"]
-    )
-    mean_diff_strata["scaled_mean"] = (
-        mean_diff_strata["mean_w"] / mean_diff_strata["stddev"]
-    ) * (mean_diff_strata["size_x"] / mean_diff_strata["size_y"])
-    mean_diff_strata = (
-        mean_diff_strata.groupby("covariate")
-        .agg(std_mean_diff=("scaled_mean", np.sum))
-        .reset_index()
-    )
-    mean_diff_overall = df_long.groupby(treatments + ["covariate"]).agg(
-        mean_w=("common_cause_value", np.mean)
-    )
-    mean_diff_overall = (
-        mean_diff_overall.groupby("covariate")
-        .transform(lambda x: x.max() - x.min())
-        .reset_index()
-    )
-    mean_diff_overall = mean_diff_overall[mean_diff_overall[treatments[0]] is True]
-    stddev_overall = (
-        df_long.groupby(["covariate"])
-        .agg(stddev=("common_cause_value", np.std))
-        .reset_index()
-    )
-    mean_diff_overall = pd.merge(mean_diff_overall, stddev_overall, on=["covariate"])
-    mean_diff_overall["std_mean_diff"] = (
-        mean_diff_overall["mean_w"] / mean_diff_overall["stddev"]
-    )
-    mean_diff_overall = mean_diff_overall[["covariate", "std_mean_diff"]]
-    mean_diff_strata["abs_smd"] = "adjusted"
-    mean_diff_overall["abs_smd"] = "unadjusted"
-    return pd.concat([mean_diff_overall, mean_diff_strata]).pivot_table(
-        values="std_mean_diff", index=["covariate"], columns=["abs_smd"]
-    )
-
-
-def weighting_covariate_balance(df, common_causes, treatments):
-    return calculate_covariate_balance(
-        df[common_causes], df[treatments[0]], df["ips_weight"]
-    ).rename(columns={"weighted": "adjusted", "unweighted": "unadjusted"})
-
-
-COVARIATE_BALANCE_FUNC_MAPPING = {
-    # TODO calculate covariate balance for score_matching
-    "backdoor.propensity_score_matching": lambda df, **kwargs: pd.DataFrame(),
-    "backdoor.propensity_score_stratification": stratification_covariate_balance,
-    "backdoor.propensity_score_weighting": weighting_covariate_balance,
-}
 
 
 def is_valid_spec(spec: List) -> bool:
@@ -315,9 +230,7 @@ def join_results(results: List) -> pd.DataFrame:
             results_df[column] = results_df[column].fillna(0)
 
     if "covariate_balance" in results_df.columns:
-        covariate_agg = {
-            "covariate_balance": 'first'
-        }
+        covariate_agg = {"covariate_balance": "first"}
     else:
         covariate_agg = {}
 
