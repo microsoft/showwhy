@@ -57,7 +57,7 @@ def stratification_covariate_balance(df, common_causes, treatments):
         .transform(lambda x: x.max() - x.min())
         .reset_index()
     )
-    mean_diff_overall = mean_diff_overall[mean_diff_overall[treatments[0]] is True]
+    mean_diff_overall = mean_diff_overall[mean_diff_overall[treatments[0]] == True]
     stddev_overall = (
         df_long.groupby(["covariate"])
         .agg(stddev=("common_cause_value", np.std))
