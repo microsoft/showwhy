@@ -2,14 +2,20 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import type {
+import {
 	Pipeline,
-	Specification,
+	WorkflowObject,
 	Step,
 	TableContainer,
 	TableStore,
+	Workflow,
+	createGraphManager,
 } from '@data-wrangling-components/core'
-import { usePipeline, useStore } from '@data-wrangling-components/react'
+import {
+	useGraphManager,
+	usePipeline,
+	useStore,
+} from '@data-wrangling-components/react'
 import type { BaseFile } from '@data-wrangling-components/utilities'
 import type {
 	CausalFactor,
@@ -165,7 +171,7 @@ export function useLoadProject(
 			setFiles(processedTables)
 
 			const dataPrepTable = await processDataTables(
-				pipeline,
+				// pipeline,
 				tps,
 				processedTables,
 			)
@@ -223,7 +229,9 @@ function preProcessTables(
 		table.autoType = true
 		const stepPostLoad =
 			!!postLoad?.length &&
-			postLoad.find(p => p?.steps && p?.steps[0]?.input === table.name)
+			postLoad.find(
+				p => p?.steps && p?.steps[0]?.input['source']?.node === table.name,
+			) // TODO: Validate this!
 		let result
 		if (stepPostLoad && stepPostLoad.steps) {
 			const resultPipeline = await runPipeline(
@@ -275,15 +283,37 @@ function preProcessTables(
 	})
 }
 
-async function processDataTables(
+async function processDataTablesOLD(
 	pipeline: Pipeline,
-	tps?: Specification[],
+	tps?: Workflow[],
 	projectFiles?: ProjectFile[],
 ): Promise<TableContainer | undefined> {
 	if (tps !== undefined && tps[0]?.steps?.length && projectFiles?.length) {
 		const steps = tps[0]?.steps as Step[]
 		pipeline.clear()
 		return await runPipelineFromProjectFiles(projectFiles, steps, pipeline)
+	}
+	return undefined
+}
+
+async function processDataTables(
+	wf?: Workflow[],
+	projectFiles?: ProjectFile[],
+): Promise<TableContainer | undefined> {
+	if (wf !== undefined && wf[0]?.steps?.length && projectFiles?.length) {
+		const inputs = new Map()
+		projectFiles.forEach(table => {
+			const tableContainer = {
+				id: table.name,
+				table: table?.table as ColumnTable,
+				name: table.name,
+			}
+			inputs.set(table.name, tableContainer)
+		})
+		const [workflow] = wf
+		const graph = createGraphManager(inputs, workflow)
+		const outputName = [...graph.outputs].pop() || ''
+		return graph.output(outputName)
 	}
 	return undefined
 }
@@ -296,8 +326,8 @@ function prepDefinitions(definitions: Definition[]): Definition[] {
 	return definitions.map(withRandomId)
 }
 
-function prepTablesSpec(specifications?: Specification[]): Specification[] {
-	return specifications as Specification[]
+function prepTablesSpec(wf: WorkflowObject[] = []): Workflow[] {
+	return wf?.map(w => new Workflow(w))
 }
 
 function useUpdateCollection(): (

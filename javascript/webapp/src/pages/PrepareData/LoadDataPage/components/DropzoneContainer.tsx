@@ -2,11 +2,10 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import type {
-	DropzoneOptions,
-	FileRejection,
-} from '@data-wrangling-components/react'
+import type { DropzoneProps } from '@data-wrangling-components/react'
 import { Dropzone } from '@data-wrangling-components/react'
+// TODO: Check this import!
+import type { FileRejection } from '@data-wrangling-components/react/dist/components/Dropzone.types'
 import type { FileCollection } from '@data-wrangling-components/utilities'
 import { Icon, Spinner } from '@fluentui/react'
 import type { DropFilesCount, Maybe } from '@showwhy/types'
@@ -22,7 +21,7 @@ export const DropzoneContainer: FC<{
 	onDropAccepted?: (collection: FileCollection) => void
 	onDropRejected?: (message: string, files?: Maybe<FileRejection[]>) => void
 	acceptedFileTypes: string[]
-	dropzoneOptions?: DropzoneOptions
+	dropzoneOptions?: DropzoneProps
 	progress?: number
 }> = memo(function DropzoneContainer({
 	loading,

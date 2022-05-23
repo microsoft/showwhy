@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import type { Specification } from '@data-wrangling-components/core'
+import type { Workflow } from '@data-wrangling-components/core'
 import type {
 	CausalFactor,
 	Definition,
@@ -33,6 +33,6 @@ export interface Workspace {
 	todoPages?: string[]
 	confidenceInterval?: boolean
 	subjectIdentifier?: string
-	postLoad?: Specification[]
-	tablesPrep?: Specification[]
+	postLoad?: Workflow[]
+	tablesPrep?: Workflow[]
 }
