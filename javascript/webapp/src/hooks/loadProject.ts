@@ -2,20 +2,20 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import type { TableContainer } from '@essex/arquero'
 import {
-	Pipeline,
+	// Pipeline,
 	WorkflowObject,
-	Step,
-	TableContainer,
-	TableStore,
+	// Step,
+	// TableStore,
 	Workflow,
 	createGraphManager,
 } from '@data-wrangling-components/core'
-import {
-	useGraphManager,
-	usePipeline,
-	useStore,
-} from '@data-wrangling-components/react'
+// import {
+// 	useGraphManager,
+// 	usePipeline,
+// 	useStore,
+// } from '@data-wrangling-components/react'
 import type { BaseFile } from '@data-wrangling-components/utilities'
 import type {
 	CausalFactor,
@@ -39,6 +39,7 @@ import {
 	useSetRunAsDefault,
 } from '~hooks'
 import {
+	useOutput,
 	useSetCausalFactors,
 	useSetConfidenceInterval,
 	useSetConfigJson,
@@ -55,14 +56,16 @@ import {
 	useSetStepStatuses,
 	useSetSubjectIdentifier,
 	useSetTablesPrepSpecification,
+	// useWorkflowState,
 } from '~state'
 import {
 	fetchRemoteTables,
 	fetchTable,
+	fetchTables,
 	isZipUrl,
 	loadTable,
-	runPipeline,
-	runPipelineFromProjectFiles,
+	// runPipeline,
+	// runPipelineFromProjectFiles,
 	withRandomId,
 } from '~utils'
 
@@ -89,9 +92,11 @@ export function useLoadProject(
 	const setSignificanceTests = useSetSignificanceTest()
 	const setTablePrepSpec = useSetTablesPrepSpecification()
 	const setOutputTablePrep = useSetOutputTablePrep()
-	const store = useStore()
-	const pipeline = usePipeline(store)
+	// const store = useStore()
+	// const pipeline = usePipeline(store)
 	const setConfigJson = useSetConfigJson()
+	const [, setOutput] = useOutput()
+	// const [, setWorkflow] = useWorkflowState()
 
 	return useCallback(
 		async (definition?: FileDefinition, zip: ZipFileData = {}) => {
@@ -163,8 +168,8 @@ export function useLoadProject(
 			setConfidenceInterval(!!confidenceInterval)
 			const processedTablesPromise = preProcessTables(
 				workspace,
-				store,
-				pipeline,
+				// store,
+				// pipeline,
 				tables as File[],
 			)
 			const processedTables = await Promise.all(processedTablesPromise)
@@ -174,7 +179,9 @@ export function useLoadProject(
 				// pipeline,
 				tps,
 				processedTables,
+				// setWorkflow,
 			)
+			dataPrepTable && setOutput([dataPrepTable])
 			setOutputTablePrep(dataPrepTable?.table)
 
 			const completed = getStepUrls(workspace.todoPages, true)
@@ -201,11 +208,13 @@ export function useLoadProject(
 			updateRunHistory,
 			setTablePrepSpec,
 			setOutputTablePrep,
-			pipeline,
-			store,
+			// pipeline,
+			// store,
 			setConfigJson,
 			setSignificanceTests,
 			setDefinitions,
+			// setWorkflow,
+			setOutput,
 		],
 	)
 }
@@ -218,8 +227,8 @@ export function useLoadProject(
 // right now we need only one final table to submit, but don't provide enough data wrangling to enable anything complex.
 function preProcessTables(
 	workspace: Workspace,
-	store: TableStore,
-	pipeline: Pipeline,
+	// store: TableStore,
+	// pipeline: Pipeline,
 	tableFiles?: File[],
 ) {
 	const { tables, postLoad } = workspace
@@ -234,13 +243,27 @@ function preProcessTables(
 			) // TODO: Validate this!
 		let result
 		if (stepPostLoad && stepPostLoad.steps) {
-			const resultPipeline = await runPipeline(
-				tables,
-				stepPostLoad.steps,
-				store,
-				pipeline,
-				tableFiles,
-			)
+			const fetched = await fetchTables(tables, tableFiles)
+			const inputs = new Map()
+			tables.forEach((table, index) => {
+				const tableContainer = {
+					id: table.name,
+					table: fetched[index] as ColumnTable,
+					name: table.name,
+				}
+				inputs.set(table.name, tableContainer)
+			})
+
+			const graph = createGraphManager(inputs, stepPostLoad)
+			const outputName = [...graph.outputs].pop() || ''
+			const resultPipeline = graph.latest(outputName)
+			// const resultPipeline = await runPipeline(
+			// 	tables,
+			// 	stepPostLoad.steps,
+			// 	store,
+			// 	pipeline,
+			// 	tableFiles,
+			// )
 
 			result = resultPipeline?.table?.derive(
 				{
@@ -283,22 +306,23 @@ function preProcessTables(
 	})
 }
 
-async function processDataTablesOLD(
-	pipeline: Pipeline,
-	tps?: Workflow[],
-	projectFiles?: ProjectFile[],
-): Promise<TableContainer | undefined> {
-	if (tps !== undefined && tps[0]?.steps?.length && projectFiles?.length) {
-		const steps = tps[0]?.steps as Step[]
-		pipeline.clear()
-		return await runPipelineFromProjectFiles(projectFiles, steps, pipeline)
-	}
-	return undefined
-}
+// async function processDataTablesOLD(
+// 	pipeline: Pipeline,
+// 	tps?: Workflow[],
+// 	projectFiles?: ProjectFile[],
+// ): Promise<TableContainer | undefined> {
+// 	if (tps !== undefined && tps[0]?.steps?.length && projectFiles?.length) {
+// 		const steps = tps[0]?.steps as Step[]
+// 		pipeline.clear()
+// 		return await runPipelineFromProjectFiles(projectFiles, steps, pipeline)
+// 	}
+// 	return undefined
+// }
 
 async function processDataTables(
 	wf?: Workflow[],
 	projectFiles?: ProjectFile[],
+	// setWorkflow?: (workflow: Workflow) => void,
 ): Promise<TableContainer | undefined> {
 	if (wf !== undefined && wf[0]?.steps?.length && projectFiles?.length) {
 		const inputs = new Map()
@@ -311,9 +335,10 @@ async function processDataTables(
 			inputs.set(table.name, tableContainer)
 		})
 		const [workflow] = wf
+		// setWorkflow && setWorkflow(workflow)
 		const graph = createGraphManager(inputs, workflow)
 		const outputName = [...graph.outputs].pop() || ''
-		return graph.output(outputName)
+		return graph.latest(outputName)
 	}
 	return undefined
 }

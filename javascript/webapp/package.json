@@ -28,6 +28,7 @@
 		"@data-wrangling-components/core": "^7.0.0",
 		"@data-wrangling-components/react": "^6.0.1",
 		"@data-wrangling-components/utilities": "^2.0.0",
+		"@essex/arquero": "^2.0.2",
 		"@essex/arquero-react": "^1.0.5",
 		"@essex/hooks": "^4.0.11",
 		"@essex/thematic-lineup": "^2.0.10",
