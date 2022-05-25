@@ -3,20 +3,13 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import type { TableContainer } from '@essex/arquero'
-import { Workflow } from '@data-wrangling-components/core'
 import { PrepareDataFull } from '@data-wrangling-components/react'
 import type { IDetailsColumnProps, IRenderFunction } from '@fluentui/react'
-import { FC, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { memo, useMemo } from 'react'
 
-import {
-	useOutput,
-	useProjectFiles,
-	useWorkflow,
-	// useSetOutputTablePrep,
-	// useSetTablesPrepSpecification,
-	// useTablesPrepSpecification,
-} from '~state'
+import { useOutput, useProjectFiles, useWorkflow } from '~state'
+import { cloneDeep } from 'lodash'
 
 interface Props {
 	commandBar: IRenderFunction<IDetailsColumnProps>
@@ -25,15 +18,11 @@ export const PrepareData: FC<Props> = memo(function PrepareData({
 	commandBar,
 }) {
 	const projectFiles = useProjectFiles()
-	// const setOutputTable = useSetOutputTablePrep()
-	// const prepSpecification = useTablesPrepSpecification()
-	// const setStepsTablePrep = useSetTablesPrepSpecification()
 
 	const [selectedTableId, setSelectedTableId] = useState<string | undefined>()
-	// const { tables, onAddTables } = useTables(setSelectedTableId)
-	const [workflow] = useState<Workflow>(new Workflow())
-	// const workflow = useWorkflow()
+	const workflow = useWorkflow()
 	const [output, setOutput] = useOutput()
+	const wf = useMemo(() => cloneDeep(workflow), [workflow])
 
 	const tables = useMemo((): TableContainer[] => {
 		return projectFiles.map(f => {
@@ -45,33 +34,18 @@ export const PrepareData: FC<Props> = memo(function PrepareData({
 		})
 	}, [projectFiles])
 
-	// const steps = useMemo((): any => {
-	// 	return prepSpecification !== undefined ? prepSpecification[0]?.steps : []
-	// }, [prepSpecification])
-
-	// const onChangeSteps = useCallback(
-	// 	(steps: Step[]) => {
-	// 		setStepsTablePrep(prev => {
-	// 			const _prev = [...(prev ?? [])]
-	// 			_prev[0] = { ..._prev[0], steps }
-	// 			return _prev
-	// 		})
-	// 	},
-	// 	[setStepsTablePrep],
-	// )
-
-	// const onUpdateOutput = useCallback(
-	// 	(table: TableContainer) => {
-	// 		setOutputTable(table.table)
-	// 	},
-	// 	[setOutputTable],
-	// )
+	useEffect(() => {
+		const len = output?.length ?? 0
+		if (len) {
+			setSelectedTableId(prev => (!prev ? output[len - 1]?.id : prev))
+		}
+	}, [output, setSelectedTableId])
 
 	return (
 		<PrepareDataFull
 			inputs={tables}
 			derived={output}
-			workflow={workflow}
+			workflow={wf}
 			selectedTableId={selectedTableId}
 			onSelectedTableIdChanged={setSelectedTableId}
 			onUpdateOutput={setOutput}
