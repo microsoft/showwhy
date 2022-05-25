@@ -2,12 +2,12 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import {
-	WorkflowObject,
-	Workflow,
-	PortBinding,
+import type {
 	NamedPortBinding,
+	PortBinding,
+	WorkflowObject,
 } from '@data-wrangling-components/core'
+import { Workflow } from '@data-wrangling-components/core'
 import type { BaseFile } from '@data-wrangling-components/utilities'
 import type {
 	CausalFactor,
@@ -24,6 +24,7 @@ import { ProjectSource, StepStatus } from '@showwhy/types'
 import { all, op } from 'arquero'
 import type ColumnTable from 'arquero/dist/types/table/column-table'
 import { useCallback } from 'react'
+import { v4 as uuidv4 } from 'uuid'
 
 import {
 	useAddFilesToCollection,
@@ -51,9 +52,9 @@ import {
 import {
 	fetchRemoteTables,
 	fetchTable,
-	runWorkflow,
 	isZipUrl,
 	loadTable,
+	runWorkflow,
 	withRandomId,
 } from '~utils'
 
@@ -286,7 +287,7 @@ function formatTableDefinitionAsProjectFile(
 	content: ColumnTable,
 ): ProjectFile {
 	return {
-		id: table.name,
+		id: uuidv4(),
 		name: table.name,
 		table: content,
 		autoType: !!table.autoType,
@@ -309,13 +310,11 @@ function getPostLoadWorkflow(
 	tableName: string,
 ): Maybe<WorkflowObject> {
 	return workflows.find(p => {
-		if (p.steps?.length) {
-			const input = p.steps[0]?.input
-			const source = input?.hasOwnProperty('source')
-				? ((input as Record<string, PortBinding>)['source'] as NamedPortBinding)
-						?.node
-				: input
-			return source === tableName
-		}
+		const input = p.steps?.length ? p.steps[0]?.input : undefined
+		const source = input?.hasOwnProperty('source')
+			? ((input as Record<string, PortBinding>)['source'] as NamedPortBinding)
+					?.node
+			: input
+		return source === tableName
 	})
 }
