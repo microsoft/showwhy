@@ -36,7 +36,7 @@ In other words, ShowWhy enables emulation of randomized controlled trials that p
 
 ### Windows
 
-Open a Poweshell terminal, [navigate to the directory](https://docs.microsoft.com/en-us/powershell/scripting/samples/managing-current-location?view=powershell-7.2) where this project is located and run one of the commands at the `Commands` section of this README.
+Open a Powershell terminal, [navigate to the directory](https://docs.microsoft.com/en-us/powershell/scripting/samples/managing-current-location?view=powershell-7.2) where this project is located and run one of the commands at the `Commands` section of this README.
 
 ### MAC/LINUX:
 
