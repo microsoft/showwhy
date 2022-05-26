@@ -12,6 +12,7 @@ import {
 	useResetConfigJson,
 	useResetDefaultDatasetResult,
 	useResetDefinitions,
+	useResetDefinitionType,
 	useResetEstimators,
 	useResetFileCollection,
 	useResetHoverState,
@@ -27,6 +28,7 @@ import {
 	useResetSpecificationCurveConfig,
 	useResetSubjectIdentifier,
 	useResetTablesPrepSpecification,
+	useResetWorkflow,
 } from '~state'
 
 export function useResetProject(): Handler {
@@ -50,6 +52,8 @@ export function useResetProject(): Handler {
 	const resetSpecCount = useResetSpecCount()
 	const resetSignificanteTest = useResetSignificanceTest()
 	const resetDefinitions = useResetDefinitions()
+	const resetDefinitionType = useResetDefinitionType()
+	const resetWorkflow = useResetWorkflow()
 
 	return useCallback(() => {
 		resetProjectFiles()
@@ -72,6 +76,8 @@ export function useResetProject(): Handler {
 		resetSpecCount()
 		resetSignificanteTest()
 		resetDefinitions()
+		resetDefinitionType()
+		resetWorkflow()
 	}, [
 		resetProjectFiles,
 		resetCausalFactors,
@@ -93,5 +99,7 @@ export function useResetProject(): Handler {
 		resetSpecCount,
 		resetSignificanteTest,
 		resetDefinitions,
+		resetDefinitionType,
+		resetWorkflow,
 	])
 }
