@@ -9,7 +9,7 @@ import { useAllVariables, useIsDataTypeValid } from '~hooks'
 import {
 	useCausalFactors,
 	useDefinitions,
-	useOutputTablePrep,
+	useOutputLast,
 	useSubjectIdentifier,
 } from '~state'
 
@@ -23,7 +23,7 @@ export function useDataErrors(): {
 	isValidDataType: boolean
 	hasAnyError: boolean
 } {
-	const outputTable = useOutputTablePrep()
+	const outputTable = useOutputLast()
 	const subjectIdentifier = useSubjectIdentifier()
 	const definitions = useDefinitions()
 	const causalFactors = useCausalFactors()

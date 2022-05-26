@@ -32,7 +32,7 @@ import {
 	useDefinitions,
 	useEstimators,
 	useFileCollection,
-	useOutputTablePrep,
+	useOutputLast,
 	usePrimarySpecificationConfig,
 	useProjectFiles,
 	useQuestion,
@@ -93,15 +93,15 @@ export function useSaveProject(): AsyncHandler {
 }
 
 function useOutputTable(): () => Maybe<FileWithPath> {
-	const outputTablePrep = useOutputTablePrep()
+	const outputTable = useOutputLast()
 	return useCallback(() => {
-		if (outputTablePrep) {
-			return createFileWithPath(new Blob([outputTablePrep.toCSV()]), {
+		if (outputTable) {
+			return createFileWithPath(new Blob([outputTable.toCSV()]), {
 				name: 'output_table.csv',
 			})
 		}
 		return undefined
-	}, [outputTablePrep])
+	}, [outputTable])
 }
 
 function useTables(fileCollection: FileCollection) {

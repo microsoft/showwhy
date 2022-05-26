@@ -8,27 +8,27 @@ import type ColumnTable from 'arquero/dist/types/table/column-table'
 import { useMemo } from 'react'
 
 import { useAllVariables } from '~hooks'
-import { useCausalFactors, useDefinitions, useOutputTablePrep } from '~state'
+import { useCausalFactors, useDefinitions, useOutputLast } from '~state'
 
 export function useOutput(): { output: Maybe<ColumnTable> } {
-	const outputTablePrep = useOutputTablePrep()
+	const outputTable = useOutputLast()
 	const causalFactors = useCausalFactors()
 	const definitions = useDefinitions()
 	const allVariables = useAllVariables(causalFactors, definitions)
 
 	const columns = useMemo((): string[] => {
-		const columnNames = outputTablePrep?.columnNames()
+		const columnNames = outputTable?.columnNames()
 		const selectedColumns = allVariables.map(
 			(v: CausalFactor | Definition) => v.column,
 		)
 		return selectedColumns.filter(
 			(col: string | undefined) => col && columnNames?.includes(col),
 		) as string[]
-	}, [allVariables, outputTablePrep])
+	}, [allVariables, outputTable])
 
 	const output = useMemo(() => {
-		return outputTablePrep?.select(columns)
-	}, [columns, outputTablePrep])
+		return outputTable?.select(columns)
+	}, [columns, outputTable])
 
 	return {
 		output,

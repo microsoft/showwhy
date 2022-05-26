@@ -3,6 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import type { TableContainer } from '@essex/arquero'
+import type { Maybe } from '@showwhy/types'
 import type ColumnTable from 'arquero/dist/types/table/column-table'
 import type { Resetter, SetterOrUpdater } from 'recoil'
 import {
@@ -12,25 +13,6 @@ import {
 	useSetRecoilState,
 } from 'recoil'
 
-export const outputTablePrepState = atom<ColumnTable | undefined>({
-	key: 'output-table-prep',
-	default: undefined,
-	dangerouslyAllowMutability: true,
-})
-
-export function useOutputTablePrep(): ColumnTable | undefined {
-	return useRecoilValue(outputTablePrepState)
-}
-
-export function useSetOutputTablePrep(): SetterOrUpdater<
-	ColumnTable | undefined
-> {
-	return useSetRecoilState(outputTablePrepState)
-}
-
-export function useResetOutputTablePrep(): Resetter {
-	return useResetRecoilState(outputTablePrepState)
-}
 export const outputTableState = atom<TableContainer[]>({
 	key: 'output-table-store',
 	default: [],
@@ -56,4 +38,11 @@ export function useOutput(): [
 	const output = useOutputTable()
 	const setOutput = useSetOutputTable()
 	return [output, setOutput]
+}
+
+export function useOutputLast(): Maybe<ColumnTable> {
+	const output = useOutputTable()
+	const len = output.length
+	const last = len > 0 ? output[len - 1] : undefined
+	return last?.table
 }

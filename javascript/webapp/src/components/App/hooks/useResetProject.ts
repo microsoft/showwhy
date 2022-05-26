@@ -15,7 +15,7 @@ import {
 	useResetEstimators,
 	useResetFileCollection,
 	useResetHoverState,
-	useResetOutputTablePrep,
+	useResetOutputTable,
 	useResetPrimarySpecificationConfig,
 	useResetProjectFiles,
 	useResetQuestion,
@@ -40,7 +40,7 @@ export function useResetProject(): Handler {
 	const resetPrimarySpecificationConfig = useResetPrimarySpecificationConfig()
 	const resetHoverState = useResetHoverState()
 	const resetSubjectIdentifier = useResetSubjectIdentifier()
-	const resetOutputTablePrep = useResetOutputTablePrep()
+	const resetOutputTable = useResetOutputTable()
 	const resetTablePrepSpecification = useResetTablesPrepSpecification()
 	const resetConfigJson = useResetConfigJson()
 	const resetConfidenceInterval = useResetConfidenceInterval()
@@ -62,7 +62,7 @@ export function useResetProject(): Handler {
 		resetSpecificationCurveConfig()
 		resetPrimarySpecificationConfig()
 		resetSubjectIdentifier()
-		resetOutputTablePrep()
+		resetOutputTable()
 		resetTablePrepSpecification()
 		resetConfigJson()
 		resetConfidenceInterval()
@@ -83,7 +83,7 @@ export function useResetProject(): Handler {
 		resetSpecificationCurveConfig,
 		resetPrimarySpecificationConfig,
 		resetSubjectIdentifier,
-		resetOutputTablePrep,
+		resetOutputTable,
 		resetTablePrepSpecification,
 		resetConfigJson,
 		resetConfidenceInterval,
