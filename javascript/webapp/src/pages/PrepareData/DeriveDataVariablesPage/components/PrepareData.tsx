@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { Workflow } from '@data-wrangling-components/core'
+import type { Workflow } from '@data-wrangling-components/core'
 import { PrepareDataFull } from '@data-wrangling-components/react'
 import type { TableContainer } from '@essex/arquero'
 import type { IDetailsColumnProps, IRenderFunction } from '@fluentui/react'
