@@ -123,229 +123,233 @@
             "output": [
                 {
                     "node": "select-0",
-                    "name": "preload-table-0"
+                    "name": "select-0"
                 },
                 {
                     "node": "rename-1",
-                    "name": "preload-table-1"
+                    "name": "rename-1"
                 },
                 {
                     "node": "filter-2",
-                    "name": "preload-table-2"
+                    "name": "filter-2"
                 },
                 {
                     "node": "filter-3",
-                    "name": "preload-table-3"
+                    "name": "filter-3"
                 },
                 {
                     "node": "filter-4",
-                    "name": "preload-table-4"
+                    "name": "filter-4"
                 },
                 {
                     "node": "filter-5",
-                    "name": "preload-table-5"
+                    "name": "filter-5"
                 },
                 {
                     "node": "filter-6",
-                    "name": "preload-table-6"
+                    "name": "filter-6"
                 },
                 {
                     "node": "filter-7",
-                    "name": "preload-table-7"
+                    "name": "filter-7"
                 },
                 {
                     "node": "filter-8",
-                    "name": "preload-table-8"
+                    "name": "filter-8"
                 },
                 {
                     "node": "filter-9",
-                    "name": "preload-table-9"
+                    "name": "filter-9"
                 },
                 {
                     "node": "filter-10",
-                    "name": "preload-table-10"
+                    "name": "filter-10"
                 },
                 {
                     "node": "filter-11",
-                    "name": "preload-table-11"
+                    "name": "filter-11"
                 },
                 {
                     "node": "filter-12",
-                    "name": "preload-table-12"
+                    "name": "filter-12"
                 },
                 {
                     "node": "binarize-13",
-                    "name": "preload-table-13"
+                    "name": "binarize-13"
                 },
                 {
                     "node": "binarize-14",
-                    "name": "preload-table-14"
+                    "name": "binarize-14"
                 },
                 {
                     "node": "binarize-15",
-                    "name": "preload-table-15"
+                    "name": "binarize-15"
                 },
                 {
                     "node": "binarize-16",
-                    "name": "preload-table-16"
+                    "name": "binarize-16"
                 },
                 {
                     "node": "binarize-17",
-                    "name": "preload-table-17"
+                    "name": "binarize-17"
                 },
                 {
                     "node": "binarize-18",
-                    "name": "preload-table-18"
+                    "name": "binarize-18"
                 },
                 {
                     "node": "binarize-19",
-                    "name": "preload-table-19"
+                    "name": "binarize-19"
                 },
                 {
                     "node": "binarize-20",
-                    "name": "preload-table-20"
+                    "name": "binarize-20"
                 },
                 {
                     "node": "binarize-21",
-                    "name": "preload-table-21"
+                    "name": "binarize-21"
                 },
                 {
                     "node": "fill-22",
-                    "name": "preload-table-22"
+                    "name": "fill-22"
                 },
                 {
                     "node": "fill-23",
-                    "name": "preload-table-23"
+                    "name": "fill-23"
                 },
                 {
                     "node": "fill-24",
-                    "name": "preload-table-24"
+                    "name": "fill-24"
                 },
                 {
                     "node": "fill-25",
-                    "name": "preload-table-25"
+                    "name": "fill-25"
                 },
                 {
                     "node": "fill-26",
-                    "name": "preload-table-26"
+                    "name": "fill-26"
                 },
                 {
                     "node": "fill-27",
-                    "name": "preload-table-27"
+                    "name": "fill-27"
                 },
                 {
                     "node": "fill-28",
-                    "name": "preload-table-28"
+                    "name": "fill-28"
                 },
                 {
                     "node": "fill-29",
-                    "name": "preload-table-29"
+                    "name": "fill-29"
                 },
                 {
                     "node": "fill-30",
-                    "name": "preload-table-30"
+                    "name": "fill-30"
                 },
                 {
                     "node": "derive-31",
-                    "name": "preload-table-31"
+                    "name": "derive-31"
                 },
                 {
                     "node": "derive-32",
-                    "name": "preload-table-32"
+                    "name": "derive-32"
                 },
                 {
                     "node": "derive-33",
-                    "name": "preload-table-33"
+                    "name": "derive-33"
                 },
                 {
                     "node": "derive-34",
-                    "name": "preload-table-34"
+                    "name": "derive-34"
                 },
                 {
                     "node": "derive-35",
-                    "name": "preload-table-35"
+                    "name": "derive-35"
                 },
                 {
                     "node": "derive-36",
-                    "name": "preload-table-36"
+                    "name": "derive-36"
                 },
                 {
                     "node": "derive-37",
-                    "name": "preload-table-37"
+                    "name": "derive-37"
                 },
                 {
                     "node": "derive-38",
-                    "name": "preload-table-38"
+                    "name": "derive-38"
                 },
                 {
                     "node": "derive-39",
-                    "name": "preload-table-39"
+                    "name": "derive-39"
                 },
                 {
                     "node": "derive-40",
-                    "name": "preload-table-40"
+                    "name": "derive-40"
                 },
                 {
                     "node": "derive-41",
-                    "name": "preload-table-41"
+                    "name": "derive-41"
                 },
                 {
                     "node": "derive-42",
-                    "name": "preload-table-42"
+                    "name": "derive-42"
                 },
                 {
                     "node": "derive-43",
-                    "name": "preload-table-43"
+                    "name": "derive-43"
                 },
                 {
                     "node": "derive-44",
-                    "name": "preload-table-44"
+                    "name": "derive-44"
                 },
                 {
                     "node": "derive-45",
-                    "name": "preload-table-45"
+                    "name": "derive-45"
                 },
                 {
                     "node": "derive-46",
-                    "name": "preload-table-46"
+                    "name": "derive-46"
                 },
                 {
                     "node": "derive-47",
-                    "name": "preload-table-47"
+                    "name": "derive-47"
                 },
                 {
                     "node": "derive-48",
-                    "name": "preload-table-48"
+                    "name": "derive-48"
                 },
                 {
                     "node": "convert-49",
-                    "name": "preload-table-49"
+                    "name": "convert-49"
                 },
                 {
                     "node": "binarize-50",
-                    "name": "preload-table-50"
+                    "name": "binarize-50"
                 },
                 {
                     "node": "select-51",
-                    "name": "preload-table-51"
+                    "name": "select-51"
                 },
                 {
                     "node": "fill-52",
-                    "name": "preload-table-52"
+                    "name": "fill-52"
+                },
+                {
+                    "node": "fill-52",
+                    "name": "fill-52"
                 }
             ],
             "steps": [
                 {
                     "id": "select-0",
                     "args": {
-                        "columns": {
-                            "age": "age",
-                            "ChronicDiseaseQ": "ChronicDiseaseQ",
-                            "gender_binary": "gender_binary",
-                            "death_binary": "death_binary",
-                            "hypertension": "hypertension",
-                            "diabetes": "diabetes"
-                        }
+                        "columns": [
+                            "age",
+                            "ChronicDiseaseQ",
+                            "gender_binary",
+                            "death_binary",
+                            "hypertension",
+                            "diabetes"
+                        ]
                     },
                     "verb": "select",
                     "input": {
@@ -1187,14 +1191,14 @@
                 {
                     "id": "select-51",
                     "args": {
-                        "columns": {
-                            "age": "age",
-                            "chronic_disease": "chronic_disease",
-                            "gender": "gender",
-                            "death": "death",
-                            "age_group": "age_group",
-                            "diabetes_hypertension": "diabetes_hypertension"
-                        }
+                        "columns": [
+                            "age",
+                            "chronic_disease",
+                            "gender",
+                            "death",
+                            "age_group",
+                            "diabetes_hypertension"
+                        ]
                     },
                     "verb": "select",
                     "input": {
@@ -1227,7 +1231,7 @@
             "output": [
                 {
                     "node": "select-0",
-                    "name": "prep-table-1"
+                    "name": "select-0"
                 }
             ],
             "steps": [

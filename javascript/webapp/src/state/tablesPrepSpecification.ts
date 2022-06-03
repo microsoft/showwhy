@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import type { Workflow } from '@data-wrangling-components/core'
+import type { WorkflowObject } from '@data-wrangling-components/core'
 import type { Resetter, SetterOrUpdater } from 'recoil'
 import {
 	atom,
@@ -11,16 +11,18 @@ import {
 	useSetRecoilState,
 } from 'recoil'
 
-export const stepsTablesPrepSpecification = atom<Workflow[]>({
+export const stepsTablesPrepSpecification = atom<WorkflowObject[]>({
 	key: 'tables-prep-spec',
 	default: [],
 })
 
-export function useTablesPrepSpecification(): Workflow[] {
+export function useTablesPrepSpecification(): WorkflowObject[] {
 	return useRecoilValue(stepsTablesPrepSpecification)
 }
 
-export function useSetTablesPrepSpecification(): SetterOrUpdater<Workflow[]> {
+export function useSetTablesPrepSpecification(): SetterOrUpdater<
+	WorkflowObject[]
+> {
 	return useSetRecoilState(stepsTablesPrepSpecification)
 }
 

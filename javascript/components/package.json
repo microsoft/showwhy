@@ -24,8 +24,8 @@
 	},
 	"devDependencies": {
 		"@data-wrangling-components/core": "^7.0.0",
-		"@data-wrangling-components/react": "^6.0.1",
-		"@data-wrangling-components/utilities": "^2.0.0",
+		"@data-wrangling-components/react": "^6.2.0",
+		"@data-wrangling-components/utilities": "^2.1.0",
 		"@essex/hooks": "^4.0.6",
 		"@essex/jest-config": "^21.0.8",
 		"@essex/scripts": "^20.4.7",
@@ -55,8 +55,8 @@
 	},
 	"peerDependencies": {
 		"@data-wrangling-components/core": "^7.0.0",
-		"@data-wrangling-components/react": "^6.0.1",
-		"@data-wrangling-components/utilities": "^2.0.0",
+		"@data-wrangling-components/react": "^6.2.0",
+		"@data-wrangling-components/utilities": "^2.1.0",
 		"@essex/hooks": "^4.0.6",
 		"@essex/themed-components": "^2.2.6",
 		"@fluentui/font-icons-mdl2": "^8.3.1",

@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import type { Workflow, WorkflowObject } from '@data-wrangling-components/core'
+import type { WorkflowObject } from '@data-wrangling-components/core'
 import type {
 	CausalFactor,
 	Definition,
@@ -34,5 +34,5 @@ export interface Workspace {
 	confidenceInterval?: boolean
 	subjectIdentifier?: string
 	postLoad?: WorkflowObject[]
-	tablesPrep?: Workflow[]
+	tablesPrep?: WorkflowObject[]
 }

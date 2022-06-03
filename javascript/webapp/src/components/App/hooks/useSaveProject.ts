@@ -3,6 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import type { WorkflowObject } from '@data-wrangling-components/core'
 import type {
 	FileCollection,
 	FileWithPath,
@@ -40,7 +41,7 @@ import {
 	useRunHistory,
 	useSignificanceTest,
 	useSubjectIdentifier,
-	useTablesPrepSpecification,
+	useWorkflow,
 } from '~state'
 import { isDataUrl } from '~utils'
 
@@ -56,7 +57,7 @@ export function useSaveProject(): AsyncHandler {
 	const definitions = useDefinitions()
 	const estimators = useEstimators()
 	const refutations = useRefutationCount()
-	const tablesPrep = useTablesPrepSpecification()
+	const tablesPrep = useTablesPrep()
 	const todoPages = useGetStepUrlsByStatus()({ exclude: true })
 	const download = useDownload(fileCollection, question)
 	const oldConfig = useConfigJson()
@@ -216,6 +217,25 @@ function useSignificanceTestFile(): Maybe<FileWithPath> {
 		}
 		return undefined
 	}, [significanceTest])
+}
+
+function useTablesPrep(): Maybe<WorkflowObject[]> {
+	const workflow = useWorkflow()
+	return useMemo(() => {
+		const [inputEntry] = [...(workflow?.input.entries() || [])]
+		const input = inputEntry ? [inputEntry[0]] : ['']
+		const output = [...(workflow?.output.entries() || [])]?.map(
+			([, value]) => value,
+		)
+
+		return [
+			{
+				input,
+				output,
+				steps: workflow?.steps || [],
+			},
+		]
+	}, [workflow])
 }
 
 function useDownload(fileCollection: FileCollection, question: Question) {
