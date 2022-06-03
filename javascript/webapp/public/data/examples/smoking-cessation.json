@@ -338,35 +338,35 @@
             "output": [
                 {
                     "node": "select-0",
-                    "name": "output-table-0"
+                    "name": "select-0"
                 },
                 {
                     "node": "rename-1",
-                    "name": "output-table-1"
+                    "name": "rename-1"
                 },
                 {
                     "node": "derive-2",
-                    "name": "output-table-2"
+                    "name": "derive-2"
                 },
                 {
                     "node": "binarize-3",
-                    "name": "output-table-3"
+                    "name": "binarize-3"
                 },
                 {
                     "node": "binarize-4",
-                    "name": "output-table-4"
+                    "name": "binarize-4"
                 },
                 {
                     "node": "binarize-5",
-                    "name": "output-table-5"
+                    "name": "binarize-5"
                 },
                 {
                     "node": "binarize-6",
-                    "name": "output-table-6"
+                    "name": "binarize-6"
                 },
                 {
                     "node": "binarize-7",
-                    "name": "smoking_cessation"
+                    "name": "binarize-7"
                 }
             ],
             "steps": [
