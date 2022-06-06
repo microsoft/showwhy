@@ -921,17 +921,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@data-wrangling-components/utilities@npm:^2.0.0":
-  version: 2.0.0
-  resolution: "@data-wrangling-components/utilities@npm:2.0.0"
-  dependencies:
-    "@zip.js/zip.js": ^2.4.12
-  peerDependencies:
-    arquero: ^4.8.7
-  checksum: 70dcc6894c134606306162c4dc740582796541bc07e80f38b29bc2fc736aa9d3108c914c218d6a15bfa00abf1dcd1211b8c1caaf27983370c5f2813ce7d15e7e
-  languageName: node
-  linkType: hard
-
 "@data-wrangling-components/utilities@npm:^2.1.0":
   version: 2.1.0
   resolution: "@data-wrangling-components/utilities@npm:2.1.0"
@@ -2358,7 +2347,7 @@ __metadata:
   resolution: "@showwhy/types@workspace:javascript/types"
   dependencies:
     "@data-wrangling-components/core": ^7.0.0
-    "@data-wrangling-components/utilities": ^2.0.0
+    "@data-wrangling-components/utilities": ^2.1.0
     "@essex/scripts": ^20.4.7
     "@essex/tsconfig-base": ^1.0.2
     "@types/react": ^17.0.39

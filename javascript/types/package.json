@@ -18,7 +18,7 @@
 	},
 	"dependencies": {
 		"@data-wrangling-components/core": "^7.0.0",
-		"@data-wrangling-components/utilities": "^2.0.0",
+		"@data-wrangling-components/utilities": "^2.1.0",
 		"arquero": "^4.8.8"
 	}
 }
