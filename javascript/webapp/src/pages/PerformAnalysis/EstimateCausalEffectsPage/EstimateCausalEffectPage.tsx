@@ -92,7 +92,7 @@ export const EstimateCausalEffectPage: React.FC = memo(
 			refutationNumbers,
 			failedRefutations,
 			onToggleRejectEstimate,
-		} = useSpecificationCurve()
+		} = useSpecificationCurve(data)
 
 		useEffect(() => {
 			!isStatus(defaultRun?.status?.status, NodeResponseStatus.Completed)
@@ -192,6 +192,7 @@ export const EstimateCausalEffectPage: React.FC = memo(
 						isSpecificationOn={isSpecificationOn}
 						refutationNumbers={refutationNumbers}
 						failedRefutations={failedRefutations}
+						confounderThreshold={defaultRun?.confounderThreshold}
 						onToggleRejectEstimate={onToggleRejectEstimate}
 					/>
 				</Main>

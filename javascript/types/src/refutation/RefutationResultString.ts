@@ -4,8 +4,8 @@
  */
 
 export enum RefutationResultString {
-	NotCompleted = 'Refutation in progress',
-	FailedCritical = 'Failed refutation',
+	NotCompleted = 'Validation in progress',
+	FailedCritical = 'Failed validation',
 	//FailedNonCritical = 'Review required',
-	PassedAll = 'Passed refutation',
+	PassedAll = 'Passed validation',
 }

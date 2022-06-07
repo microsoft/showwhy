@@ -3,7 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { Specification } from '@showwhy/types'
+import type { CovariateBalance, Specification } from '@showwhy/types'
+import { RefutationResult } from '@showwhy/types'
 import isNull from 'lodash/isNull'
 
 // eslint-disable-next-line
@@ -22,6 +23,7 @@ export function row2spec(d: any): Specification {
 		estimatorSHAP: +d.shap_estimator,
 		populationSHAP: +d.shap_population_name,
 		treatmentSHAP: +d.shap_treatment,
+		covariateBalance: d.covariate_balance,
 		refuterPlaceboTreatment: isNull(d.refuter_placebo_treatment)
 			? null
 			: +d.refuter_placebo_treatment,
@@ -105,4 +107,63 @@ function groupBySpecification(
 		outcomes,
 		groups,
 	}
+}
+
+function validateCovariateConfounders(
+	confounders: string[],
+	covariateBalance: CovariateBalance,
+	confounderThreshold: number,
+): string[] {
+	return confounders?.filter(
+		x =>
+			confounderThreshold - (covariateBalance?.adjusted[x] as number) * 100 < 0,
+	)
+}
+
+export function returnFailedConfounders(
+	d: Specification,
+	confounderThreshold?: number,
+): string[] {
+	const confounders =
+		d.covariateBalance?.adjusted && Object.keys(d.covariateBalance?.adjusted)
+	if (confounders && d.covariateBalance?.adjusted) {
+		return confounderThreshold
+			? validateCovariateConfounders(
+					confounders,
+					d.covariateBalance,
+					confounderThreshold,
+			  )
+			: []
+	}
+	return []
+}
+
+export function returnValidatedSpecification(
+	d: Specification,
+	confounderThreshold?: number,
+	proportionThreshold?: number,
+): Specification {
+	if (!confounderThreshold || !proportionThreshold) {
+		return d
+	}
+	const confounders =
+		d.covariateBalance?.adjusted && Object.keys(d.covariateBalance?.adjusted)
+	if (confounders && d.covariateBalance?.adjusted) {
+		const failedConfounders = validateCovariateConfounders(
+			confounders,
+			d.covariateBalance,
+			confounderThreshold,
+		)
+		const total = (failedConfounders?.length / confounders.length) * 100 || 0
+
+		return {
+			...d,
+			refutationResult:
+				d.refutationResult === RefutationResult.PassedAll &&
+				total < proportionThreshold
+					? RefutationResult.PassedAll
+					: RefutationResult.FailedCritical,
+		} as Specification
+	}
+	return d
 }

@@ -21,6 +21,8 @@ import {
 	SESSION_ID_KEY,
 	setStorageItem,
 	useConfidenceInterval,
+	useConfounderThreshold,
+	useCovariateProportionThreshold,
 	useRefutationCount,
 	useResetSpecificationCurveConfig,
 	useRunHistory,
@@ -69,6 +71,8 @@ export function useIsDefaultRunProcessing(): boolean {
 export function useSaveNewRun(): Handler {
 	const updateRunHistory = useUpdateAndDisableRunHistory()
 	const hasConfidenceInterval = useConfidenceInterval()
+	const confounderThreshold = useConfounderThreshold()
+	const proportionThreshold = useCovariateProportionThreshold()
 	const runHistory = useRunHistory()
 	const specCount = useSpecCount()
 	const refutationCount = useRefutationCount()
@@ -79,6 +83,8 @@ export function useSaveNewRun(): Handler {
 			hasConfidenceInterval,
 			refutationCount,
 			runHistory.length,
+			confounderThreshold,
+			proportionThreshold,
 		)
 		updateRunHistory(initialRun)
 	}, [
@@ -87,6 +93,8 @@ export function useSaveNewRun(): Handler {
 		hasConfidenceInterval,
 		refutationCount,
 		runHistory.length,
+		confounderThreshold,
+		proportionThreshold,
 	])
 }
 
@@ -173,6 +181,8 @@ function initialRunHistory(
 	hasConfidenceInterval: boolean,
 	refutationCount: number,
 	runHistoryLength: number,
+	confounderThreshold: number,
+	proportionThreshold: number,
 ): RunHistory {
 	return {
 		id: v4(),
@@ -191,5 +201,7 @@ function initialRunHistory(
 		sessionId: getStorageItem(SESSION_ID_KEY),
 		hasConfidenceInterval,
 		refutationCount,
+		confounderThreshold,
+		proportionThreshold,
 	} as RunHistory
 }

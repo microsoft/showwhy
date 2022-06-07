@@ -5,6 +5,8 @@
 
 import type { RefutationResult } from '@showwhy/types'
 
+import type { CovariateBalance } from './CovariateBalance'
+
 export interface Specification {
 	id: string
 	taskId: string
@@ -13,6 +15,7 @@ export interface Specification {
 	outcome: string
 	causalModel: string
 	estimator: string
+	covariateBalance: CovariateBalance | null
 	/**
 	 * This is a "JSON" payload of the python config params, but contains non-JSON-compatible
 	 * pythonisms (e.g., function calls). We'll just leave it a string for display.

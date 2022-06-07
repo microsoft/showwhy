@@ -16,4 +16,6 @@ export interface RunHistory {
 	status: RunStatus
 	sessionId?: string
 	nodeResponse?: NodeResponse
+	confounderThreshold?: number
+	proportionThreshold?: number
 }

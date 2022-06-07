@@ -7,6 +7,9 @@ import type { IChoiceGroupOption } from '@fluentui/react'
 import type { Estimator } from '@showwhy/types'
 import { EstimatorGroup, EstimatorType } from '@showwhy/types'
 
+export const COVARIATE_BALANCE_SUFFIX = '%'
+export const COVARIATE_BALANCE_MIN = 1
+export const COVARIATE_BALANCE_MAX = 100
 export const estimatorGroups: IChoiceGroupOption[] = [
 	{
 		key: EstimatorGroup.Exposure,
@@ -124,3 +127,8 @@ export const ESTIMATORS: Estimator[] = [
 	...EXPOSURE_ESTIMATORS,
 	...OUTCOME_ESTIMATORS,
 ].map((e, i) => ({ ...e, order: i }))
+
+export const ESTIMATORS_HAVE_COVARIATE = [
+	EstimatorType.PropensityScoreStratification,
+	EstimatorType.InversePropensityWeighting,
+]
