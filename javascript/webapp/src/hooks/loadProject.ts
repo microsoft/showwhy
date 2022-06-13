@@ -149,7 +149,6 @@ export function useLoadProject(
 			setEstimators(est)
 			setSubjectIdentifier(subjectIdentifier)
 			setTablePrepSpec(tablesPrep)
-			wf?.length && setWorkflow(wf[0] as Workflow)
 			setDefaultDatasetResult(defaultDatasetResult)
 			setConfidenceInterval(!!confidenceInterval)
 			const processedTablesPromise = preProcessTables(
@@ -158,6 +157,7 @@ export function useLoadProject(
 			)
 			const processedTables = await Promise.all(processedTablesPromise)
 			setFiles(processedTables)
+			wf?.length && setWorkflow(wf[0] as Workflow)
 
 			const completed = getStepUrls(workspace.todoPages, true)
 			setAllStepStatus(completed, StepStatus.Done)

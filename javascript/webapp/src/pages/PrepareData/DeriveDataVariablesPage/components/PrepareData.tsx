@@ -2,11 +2,9 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import type { Workflow } from '@data-wrangling-components/core'
 import { PrepareDataFull } from '@data-wrangling-components/react'
 import type { TableContainer } from '@essex/arquero'
 import type { IDetailsColumnProps, IRenderFunction } from '@fluentui/react'
-import { cloneDeep } from 'lodash'
 import type { FC } from 'react'
 import { memo, useEffect, useMemo, useState } from 'react'
 
@@ -21,8 +19,7 @@ export const PrepareData: FC<Props> = memo(function PrepareData({
 	const projectFiles = useProjectFiles()
 	const [selectedTableId, setSelectedTableId] = useState<string | undefined>()
 	const [output, setOutput] = useOutput()
-	const [wf, setWorkflow2] = useWorkflowState()
-	const [workflow, setWorkflow] = useState<Workflow>(cloneDeep(wf))
+	const [workflow, setWorkflow] = useWorkflowState()
 
 	const tables = useMemo((): TableContainer[] => {
 		return projectFiles.map(f => {
@@ -43,10 +40,6 @@ export const PrepareData: FC<Props> = memo(function PrepareData({
 		}
 	}, [output, tables, setSelectedTableId])
 
-	useEffect(() => {
-		setWorkflow(cloneDeep(wf))
-	}, [wf])
-
 	return (
 		<PrepareDataFull
 			inputs={tables}
@@ -56,7 +49,7 @@ export const PrepareData: FC<Props> = memo(function PrepareData({
 			onSelectedTableIdChanged={setSelectedTableId}
 			onUpdateOutput={setOutput}
 			outputHeaderCommandBar={[commandBar]}
-			onUpdateWorkflow={w => setWorkflow2(cloneDeep(w))}
+			onUpdateWorkflow={setWorkflow}
 		/>
 	)
 })

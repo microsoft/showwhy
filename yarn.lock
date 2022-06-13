@@ -867,12 +867,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@data-wrangling-components/core@npm:^7.0.0":
-  version: 7.0.0
-  resolution: "@data-wrangling-components/core@npm:7.0.0"
+"@data-wrangling-components/core@npm:^7.1.0":
+  version: 7.1.0
+  resolution: "@data-wrangling-components/core@npm:7.1.0"
   dependencies:
-    "@essex/arquero": ^2.0.2
-    "@essex/dataflow": ^0.1.1
+    "@essex/arquero": ^3.0.0
+    "@essex/dataflow": ^0.1.2
     d3-time-format: ^4.1.0
     lodash-es: ^4.17.21
     rxjs: ^7.5.5
@@ -883,22 +883,23 @@ __metadata:
   peerDependenciesMeta:
     "@types/node":
       optional: true
-  checksum: 6581aed88b8f8827265682dfc26e33b37f6c24215e2e692ba86cc402da1729618c770411e9b00f476be0f82bb2effece490ebbc93526290d8945ad3f547e8bf7
+  checksum: 31497023c402e23abe75296de64ecab43f218be11262558ae750a7c68dba22cba537adc11530b442b631c9f0b494950eaac7762b468d5057634cc413363c2844
   languageName: node
   linkType: hard
 
-"@data-wrangling-components/react@npm:^6.2.0":
-  version: 6.2.0
-  resolution: "@data-wrangling-components/react@npm:6.2.0"
+"@data-wrangling-components/react@npm:^6.3.0":
+  version: 6.3.0
+  resolution: "@data-wrangling-components/react@npm:6.3.0"
   dependencies:
-    "@data-wrangling-components/core": ^7.0.0
-    "@data-wrangling-components/utilities": ^2.1.0
+    "@data-wrangling-components/core": ^7.1.0
+    "@data-wrangling-components/utilities": ^2.2.0
     "@data-wrangling-components/verb-guidance": ^0.1.14
-    "@essex/arquero": ^2.0.3
-    "@essex/arquero-react": ^1.0.6
+    "@essex/arquero": ^3.0.0
+    "@essex/arquero-react": ^1.1.0
     "@essex/charts-react": ^1.0.5
     "@essex/dataflow": ^0.1.2
     "@essex/themed-components": ^2.2.7
+    "@fluentui/font-icons-mdl2": ^8.4.0
     d3-format: ^3.1.0
     immer: ^9.0.14
     lodash-es: ^4.17.21
@@ -917,18 +918,18 @@ __metadata:
     arquero: ^4.8.7
     react: ^17.0.2
     styled-components: ^5.3.0
-  checksum: 9af0086013223d688f3ec85f2c038d6190aa3e8cdd4b01049a5858f7a3c781b03c6b05041d2324879bdb29d7b3046d46d8ee0a3d00ce92902924de447068f529
+  checksum: 33a0f4794031b5c55f84fae0dfc43fb47926c9969d7d6fd0b8ee1e4519fc4040de89339f1a6e93557cf331b1b78ecfbff503655eaf67c7ef4170309f83b19828
   languageName: node
   linkType: hard
 
-"@data-wrangling-components/utilities@npm:^2.1.0":
-  version: 2.1.0
-  resolution: "@data-wrangling-components/utilities@npm:2.1.0"
+"@data-wrangling-components/utilities@npm:^2.2.0, @data-wrangling-components/utilities@npm:^2.3.0":
+  version: 2.3.0
+  resolution: "@data-wrangling-components/utilities@npm:2.3.0"
   dependencies:
     "@zip.js/zip.js": ^2.4.12
   peerDependencies:
     arquero: ^4.8.7
-  checksum: 5a2da42578dbd65e12cf1c4ceed606f205157aafdb78c36290b44f8743914b7612d427d4ec66bf646b18d770a25ccae169997b2d4e9129fad91b6fa6b39f0444
+  checksum: 00530ca3737643c0f487413bb4bc79e7bae8b35b4eb455855f7bc43e1c9be681606c258b9a9b945c79f7d0fface1a11b5ffb2a641481a2b2e21c33af07400234
   languageName: node
   linkType: hard
 
@@ -1003,33 +1004,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@essex/arquero-react@npm:^1.0.5":
-  version: 1.0.5
-  resolution: "@essex/arquero-react@npm:1.0.5"
+"@essex/arquero-react@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "@essex/arquero-react@npm:1.1.0"
   dependencies:
-    "@essex/arquero": ^2.0.2
-    "@essex/charts-react": ^1.0.4
-    d3-format: ^3.1.0
-    lodash-es: ^4.17.21
-    react-if: ^4.1.4
-  peerDependencies:
-    "@fluentui/react": ^8.24.0
-    "@fluentui/utilities": ^8.2.1
-    "@thematic/core": ^1.3.0
-    "@thematic/d3": ^1.3.0
-    "@thematic/react": ^1.3.0
-    arquero: ^4.8.7
-    react: ">= 18"
-    styled-components: ^5.3.0
-  checksum: e846827031fd5331f69d33450f7f44286fe8c11ab05a9c8cf4330795af33024e2401078ef66fef8ec67bba5749a0cb706df42865fa1d54736060aa1fba30a730
-  languageName: node
-  linkType: hard
-
-"@essex/arquero-react@npm:^1.0.6":
-  version: 1.0.6
-  resolution: "@essex/arquero-react@npm:1.0.6"
-  dependencies:
-    "@essex/arquero": ^2.0.3
+    "@essex/arquero": ^3.0.0
     "@essex/charts-react": ^1.0.5
     d3-format: ^3.1.0
     lodash-es: ^4.17.21
@@ -1043,47 +1022,18 @@ __metadata:
     arquero: ^4.8.7
     react: ">= 18"
     styled-components: ^5.3.0
-  checksum: 63b8d5e87b31967b91dd6c0bc7f97b254f3e3ba3fa175cbe798cb39fae90f0015aaa2d65ef3bab1d02d6d3bc2a3ce19a6f884b5ccee5867b6868bd0706ca4e7e
+  checksum: 604cf74fa52eec9f0fa71be6ec0b63a41d47c4f37630a0665ca30eaa93a49149b43a1b42ddbf8ddf4e12e8bd5eea2c8f228ba904e77eac7fac92c5be8e941978
   languageName: node
   linkType: hard
 
-"@essex/arquero@npm:^2.0.2":
-  version: 2.0.2
-  resolution: "@essex/arquero@npm:2.0.2"
+"@essex/arquero@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "@essex/arquero@npm:3.0.0"
   dependencies:
     lodash-es: ^4.17.21
   peerDependencies:
     arquero: ^4.8.7
-  checksum: 77cd36270a2b57427723df8c40a1dbad919c49f0838dd46f638513c9994811031f9e7a7016cb87bb52ef54e68d16c2d116491b5d4cb03b58214f539db044a65f
-  languageName: node
-  linkType: hard
-
-"@essex/arquero@npm:^2.0.3":
-  version: 2.0.3
-  resolution: "@essex/arquero@npm:2.0.3"
-  dependencies:
-    lodash-es: ^4.17.21
-  peerDependencies:
-    arquero: ^4.8.7
-  checksum: fbcebc76699e42d4cb10cd71805317480625601ddb6c5301cbce0f347f3245586ea3ebb6f01981d1adc6cc36f77d23d06548dcc1f3ef9bac0239dc603e05fa2e
-  languageName: node
-  linkType: hard
-
-"@essex/charts-react@npm:^1.0.4":
-  version: 1.0.4
-  resolution: "@essex/charts-react@npm:1.0.4"
-  dependencies:
-    d3-format: ^3.1.0
-    d3-scale: ^4.0.2
-    d3-selection: ^3.0.0
-    d3-shape: ^3.1.0
-    lodash-es: ^4.17.21
-  peerDependencies:
-    "@thematic/core": ^1.3.0
-    "@thematic/d3": ^1.3.0
-    "@thematic/react": ^1.3.0
-    react: ">= 18"
-  checksum: f1ac4839b04611aa86b6ec83b63dcdcc73fd9347e8a9e1df780cef7380fd56ec26f03090f61632fa37a11bb3441052f50880fcbc1a26bdc2d791b5f626bca9c1
+  checksum: c49d122d5d7ed53842648f0a77a3bfceaa222ddc5103568d39383a8f7ba1e6103e04ee6bd190078c82ae5c2d6127a7a92b884660e4d1bf649ead5d5d8ef62cb4
   languageName: node
   linkType: hard
 
@@ -1102,17 +1052,6 @@ __metadata:
     "@thematic/react": ^1.3.0
     react: ">= 18"
   checksum: 9f89bb3d541d4b159fa8ad0026b8dc6a276b5e8b5228b24b933007a415ed7ce7f1e0ba70fff44eb61a7a8648516b0ff5d444419dd6fa81f9ece796e7a5d11055
-  languageName: node
-  linkType: hard
-
-"@essex/dataflow@npm:^0.1.1":
-  version: 0.1.1
-  resolution: "@essex/dataflow@npm:0.1.1"
-  dependencies:
-    "@essex/toposort": ^1.0.0
-    rxjs: ^7.5.5
-    uuid: ^8.3.2
-  checksum: 751c05c91646425016b0623ad3448adeabb5723fbb600ef5a10d39456064082e126f813e54dab1dcf1caf80f6bccb04a75b9f6f027b8db665a5bf82f4c3b8207
   languageName: node
   linkType: hard
 
@@ -1519,13 +1458,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@essex/toposort@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "@essex/toposort@npm:1.0.0"
-  checksum: b86cf0ed7d924e03e1f7cbb553246f2145bbb8486fc81e757c9013e71080226c90701178f646d9a46ee673ae400c0ceed5d99c06980730b8d9714999aa6590d6
-  languageName: node
-  linkType: hard
-
 "@essex/toposort@npm:^1.0.1":
   version: 1.0.1
   resolution: "@essex/toposort@npm:1.0.1"
@@ -1583,6 +1515,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fluentui/dom-utilities@npm:^2.2.1":
+  version: 2.2.1
+  resolution: "@fluentui/dom-utilities@npm:2.2.1"
+  dependencies:
+    "@fluentui/set-version": ^8.2.1
+    tslib: ^2.1.0
+  checksum: 6b0e6ffc75b190892eaa58df9e520b1bb578138da93bed0565839f2b0bb6a5bcb38709ae16f109ea1a6babae25a9a4f12032552d2096a72941ce0737815e0cc3
+  languageName: node
+  linkType: hard
+
 "@fluentui/font-icons-mdl2@npm:^8.3.1":
   version: 8.3.1
   resolution: "@fluentui/font-icons-mdl2@npm:8.3.1"
@@ -1604,6 +1546,18 @@ __metadata:
     "@fluentui/utilities": ^8.8.2
     tslib: ^2.1.0
   checksum: b80e49558c45d2b597db09981619325b4afe0ac17e51ab116ca84126f994ec97755a75971f01221c7e871931f49aa2027eab27bbc8bba48382548ae0544c8bd8
+  languageName: node
+  linkType: hard
+
+"@fluentui/font-icons-mdl2@npm:^8.4.0":
+  version: 8.4.1
+  resolution: "@fluentui/font-icons-mdl2@npm:8.4.1"
+  dependencies:
+    "@fluentui/set-version": ^8.2.1
+    "@fluentui/style-utilities": ^8.7.0
+    "@fluentui/utilities": ^8.8.3
+    tslib: ^2.1.0
+  checksum: 08abf0c9f0878600e8f0fc28c88e1f1ed98a40be62ab03266cd6778e5125eb3b90c5d8231ec4adfcde1bebb51e9c3c61e571e04cdb799f918875b06394ac546c
   languageName: node
   linkType: hard
 
@@ -1639,6 +1593,16 @@ __metadata:
     "@fluentui/set-version": ^8.2.0
     tslib: ^2.1.0
   checksum: 7aabecafc8d3d3ec4dedfb0785c156243a67a081c7483abd4564247bd8b3d3f89f05adb7157a02d09cd9a0573438ddb5d5faa0326d82aa1319b6b4b5e7f9fbb7
+  languageName: node
+  linkType: hard
+
+"@fluentui/merge-styles@npm:^8.5.2":
+  version: 8.5.2
+  resolution: "@fluentui/merge-styles@npm:8.5.2"
+  dependencies:
+    "@fluentui/set-version": ^8.2.1
+    tslib: ^2.1.0
+  checksum: 646f97b5c319d521cecde45bb470477164d2bcfe8c40ccfef963a93ade5471871a332ea13255608729a8fbe733fdb9fad29ef83d6d9718b0739b00df25d7466a
   languageName: node
   linkType: hard
 
@@ -1748,6 +1712,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fluentui/set-version@npm:^8.2.1":
+  version: 8.2.1
+  resolution: "@fluentui/set-version@npm:8.2.1"
+  dependencies:
+    tslib: ^2.1.0
+  checksum: d452597cf90a1b6ef304e86641a485a30b4021b926ede80f9eeb313ab2a45a31b207541b3ab3573ee730b4fa9f05ac4dbe342e0c0c21a75b5b636853e259f583
+  languageName: node
+  linkType: hard
+
 "@fluentui/style-utilities@npm:^8.6.6":
   version: 8.6.6
   resolution: "@fluentui/style-utilities@npm:8.6.6"
@@ -1759,6 +1732,20 @@ __metadata:
     "@microsoft/load-themed-styles": ^1.10.26
     tslib: ^2.1.0
   checksum: ffac261b73adebf4e7735234a2360b14cfccccd5da0f545e438e7056fa6ccf2b41302aa6ba69dc4316a253501e6382c4b27dc6c9cefe13987be14151a74f1cd5
+  languageName: node
+  linkType: hard
+
+"@fluentui/style-utilities@npm:^8.7.0":
+  version: 8.7.0
+  resolution: "@fluentui/style-utilities@npm:8.7.0"
+  dependencies:
+    "@fluentui/merge-styles": ^8.5.2
+    "@fluentui/set-version": ^8.2.1
+    "@fluentui/theme": ^2.6.6
+    "@fluentui/utilities": ^8.8.3
+    "@microsoft/load-themed-styles": ^1.10.26
+    tslib: ^2.1.0
+  checksum: 8e4f7b82428776f539953edc039e9dc6a76d7e6afc0b9c8e5494c18955322a0bc0219aa8178cb045434df6887658bd57dc18e301ab175581992cbcce0dc86727
   languageName: node
   linkType: hard
 
@@ -1794,6 +1781,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fluentui/theme@npm:^2.6.6":
+  version: 2.6.6
+  resolution: "@fluentui/theme@npm:2.6.6"
+  dependencies:
+    "@fluentui/merge-styles": ^8.5.2
+    "@fluentui/set-version": ^8.2.1
+    "@fluentui/utilities": ^8.8.3
+    tslib: ^2.1.0
+  peerDependencies:
+    "@types/react": ">=16.8.0 <18.0.0"
+    react: ">=16.8.0 <18.0.0"
+  checksum: e5c09e2385d6e19defc5dd4ded1d0673aa2858c24f8d9c438ebf71a958bb2e7906b1a73c8bfba6efe001b449aeaff2189ba4e9f1e469e02d818f10f52948ad3e
+  languageName: node
+  linkType: hard
+
 "@fluentui/utilities@npm:^8.8.2":
   version: 8.8.2
   resolution: "@fluentui/utilities@npm:8.8.2"
@@ -1806,6 +1808,21 @@ __metadata:
     "@types/react": ">=16.8.0 <18.0.0"
     react: ">=16.8.0 <18.0.0"
   checksum: cc9cba04a26f6260f741fb4f1f24d35abea634becd54aa31f5521f2a58d6907bf17d7e7045cfeb16455799dc4bd754a8f13904586d4b6511330945deab1be905
+  languageName: node
+  linkType: hard
+
+"@fluentui/utilities@npm:^8.8.3":
+  version: 8.8.3
+  resolution: "@fluentui/utilities@npm:8.8.3"
+  dependencies:
+    "@fluentui/dom-utilities": ^2.2.1
+    "@fluentui/merge-styles": ^8.5.2
+    "@fluentui/set-version": ^8.2.1
+    tslib: ^2.1.0
+  peerDependencies:
+    "@types/react": ">=16.8.0 <18.0.0"
+    react: ">=16.8.0 <18.0.0"
+  checksum: 91eccaae5642208274785943a42053b4417c564bb896bf18aa5199ea945f091ddee2539fe9ab8231d519da0dacd330f7c47a8249e0bce910af30b54d785abaeb
   languageName: node
   linkType: hard
 
@@ -2266,9 +2283,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/components@workspace:javascript/components"
   dependencies:
-    "@data-wrangling-components/core": ^7.0.0
-    "@data-wrangling-components/react": ^6.2.0
-    "@data-wrangling-components/utilities": ^2.1.0
+    "@data-wrangling-components/core": ^7.1.0
+    "@data-wrangling-components/react": ^6.3.0
+    "@data-wrangling-components/utilities": ^2.3.0
     "@essex/hooks": ^4.0.6
     "@essex/jest-config": ^21.0.8
     "@essex/scripts": ^20.4.7
@@ -2303,9 +2320,9 @@ __metadata:
     styled-components: ^5.3.5
     vega: ^5.22.1
   peerDependencies:
-    "@data-wrangling-components/core": ^7.0.0
-    "@data-wrangling-components/react": ^6.2.0
-    "@data-wrangling-components/utilities": ^2.1.0
+    "@data-wrangling-components/core": ^7.1.0
+    "@data-wrangling-components/react": ^6.3.0
+    "@data-wrangling-components/utilities": ^2.3.0
     "@essex/hooks": ^4.0.6
     "@essex/themed-components": ^2.2.6
     "@fluentui/font-icons-mdl2": ^8.3.1
@@ -2346,8 +2363,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/types@workspace:javascript/types"
   dependencies:
-    "@data-wrangling-components/core": ^7.0.0
-    "@data-wrangling-components/utilities": ^2.1.0
+    "@data-wrangling-components/core": ^7.1.0
+    "@data-wrangling-components/utilities": ^2.3.0
     "@essex/scripts": ^20.4.7
     "@essex/tsconfig-base": ^1.0.2
     "@types/react": ^17.0.39
@@ -2359,11 +2376,11 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/webapp@workspace:javascript/webapp"
   dependencies:
-    "@data-wrangling-components/core": ^7.0.0
-    "@data-wrangling-components/react": ^6.2.0
-    "@data-wrangling-components/utilities": ^2.1.0
-    "@essex/arquero": ^2.0.2
-    "@essex/arquero-react": ^1.0.5
+    "@data-wrangling-components/core": ^7.1.0
+    "@data-wrangling-components/react": ^6.3.0
+    "@data-wrangling-components/utilities": ^2.3.0
+    "@essex/arquero": ^3.0.0
+    "@essex/arquero-react": ^1.1.0
     "@essex/hooks": ^4.0.11
     "@essex/jest-config": ^21.0.5
     "@essex/scripts": ^20.4.7
