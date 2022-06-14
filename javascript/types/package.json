@@ -17,8 +17,8 @@
 		"@types/react": "^17.0.39"
 	},
 	"dependencies": {
-		"@data-wrangling-components/core": "^6.1.0",
-		"@data-wrangling-components/utilities": "^1.8.2",
+		"@data-wrangling-components/core": "^7.1.0",
+		"@data-wrangling-components/utilities": "^2.3.0",
 		"arquero": "^4.8.8"
 	}
 }

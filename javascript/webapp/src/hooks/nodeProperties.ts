@@ -12,7 +12,7 @@ import {
 	useConfidenceInterval,
 	useDefinitions,
 	useEstimators,
-	useOutputTablePrep,
+	useOutputLast,
 	useRefutationCount,
 } from '~state'
 
@@ -27,7 +27,7 @@ export function useNodeProperties(): {
 	intermediateLevel: AlternativeModels
 	unadjustedModel: AlternativeModels
 } {
-	const outputTable = useOutputTablePrep()
+	const outputTable = useOutputLast()
 	const definitions = useDefinitions()
 	const estimators = useEstimators()
 	const refutationCount = useRefutationCount()

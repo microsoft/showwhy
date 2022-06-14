@@ -8,7 +8,7 @@ import type { SetterOrUpdater } from 'recoil'
 import { atom, useRecoilValue, useSetRecoilState } from 'recoil'
 
 const state = atom<Maybe<Definition>>({
-	key: 'selected-column-store',
+	key: 'definition-store',
 	default: undefined,
 })
 

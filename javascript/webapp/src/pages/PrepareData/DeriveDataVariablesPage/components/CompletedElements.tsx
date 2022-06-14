@@ -22,7 +22,7 @@ import type { FC } from 'react'
 import { memo, useMemo } from 'react'
 import styled from 'styled-components'
 
-import { useOutputTablePrep } from '~state'
+import { useOutputLast } from '~state'
 
 interface Props {
 	completedElements: number
@@ -48,7 +48,7 @@ export const CompletedElements: FC<Props> = memo(function CompletedElements({
 	subjectIdentifier,
 	onSetSubjectIdentifier,
 }) {
-	const outputTable = useOutputTablePrep()
+	const outputTable = useOutputLast()
 	const outputTableColumns = useMemo(
 		() => outputTable?.columnNames(),
 		[outputTable],

@@ -3,13 +3,11 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import type {
-	Pipeline,
-	Specification,
-	Step,
-	TableContainer,
-	TableStore,
+	NamedPortBinding,
+	PortBinding,
+	WorkflowObject,
 } from '@data-wrangling-components/core'
-import { usePipeline, useStore } from '@data-wrangling-components/react'
+import { Workflow } from '@data-wrangling-components/core'
 import type { BaseFile } from '@data-wrangling-components/utilities'
 import type {
 	CausalFactor,
@@ -26,6 +24,7 @@ import { ProjectSource, StepStatus } from '@showwhy/types'
 import { all, op } from 'arquero'
 import type ColumnTable from 'arquero/dist/types/table/column-table'
 import { useCallback } from 'react'
+import { v4 as uuidv4 } from 'uuid'
 
 import {
 	useAddFilesToCollection,
@@ -39,7 +38,6 @@ import {
 	useSetDefaultDatasetResult,
 	useSetDefinitions,
 	useSetEstimators,
-	useSetOutputTablePrep,
 	useSetPrimarySpecificationConfig,
 	useSetProjectFiles,
 	useSetQuestion,
@@ -49,14 +47,14 @@ import {
 	useSetStepStatuses,
 	useSetSubjectIdentifier,
 	useSetTablesPrepSpecification,
+	useWorkflowState,
 } from '~state'
 import {
 	fetchRemoteTables,
 	fetchTable,
 	isZipUrl,
 	loadTable,
-	runPipeline,
-	runPipelineFromProjectFiles,
+	runWorkflow,
 	withRandomId,
 } from '~utils'
 
@@ -82,10 +80,8 @@ export function useLoadProject(
 	const updateRunHistory = useUpdateRunHistory()
 	const setSignificanceTests = useSetSignificanceTest()
 	const setTablePrepSpec = useSetTablesPrepSpecification()
-	const setOutputTablePrep = useSetOutputTablePrep()
-	const store = useStore()
-	const pipeline = usePipeline(store)
 	const setConfigJson = useSetConfigJson()
+	const [, setWorkflow] = useWorkflowState()
 
 	return useCallback(
 		async (definition?: FileDefinition, zip: ZipFileData = {}) => {
@@ -140,7 +136,7 @@ export function useLoadProject(
 			const cfs = prepCausalFactors(causalFactors)
 			const df = prepDefinitions(definitions)
 			const est = estimators || []
-			const tps = prepTablesSpec(tablesPrep)
+			const wf = prepWorkflow(tablesPrep)
 			const defaultDatasetResult = defaultResult || null
 
 			primarySpecification &&
@@ -152,24 +148,16 @@ export function useLoadProject(
 			setQuestion(question)
 			setEstimators(est)
 			setSubjectIdentifier(subjectIdentifier)
-			setTablePrepSpec(tps)
+			setTablePrepSpec(tablesPrep)
 			setDefaultDatasetResult(defaultDatasetResult)
 			setConfidenceInterval(!!confidenceInterval)
 			const processedTablesPromise = preProcessTables(
 				workspace,
-				store,
-				pipeline,
 				tables as File[],
 			)
 			const processedTables = await Promise.all(processedTablesPromise)
 			setFiles(processedTables)
-
-			const dataPrepTable = await processDataTables(
-				pipeline,
-				tps,
-				processedTables,
-			)
-			setOutputTablePrep(dataPrepTable?.table)
+			wf?.length && setWorkflow(wf[0] as Workflow)
 
 			const completed = getStepUrls(workspace.todoPages, true)
 			setAllStepStatus(completed, StepStatus.Done)
@@ -194,12 +182,10 @@ export function useLoadProject(
 			updateCollection,
 			updateRunHistory,
 			setTablePrepSpec,
-			setOutputTablePrep,
-			pipeline,
-			store,
 			setConfigJson,
 			setSignificanceTests,
 			setDefinitions,
+			setWorkflow,
 		],
 	)
 }
@@ -207,85 +193,37 @@ export function useLoadProject(
 // HACK: this is pretty kludgy, just to wrap up some weird load logic in a single spot
 // things we should be able to do cleanly:
 // 1: load any number of tables into the system
-// 2: apply a post-load pipeline to any combination of tables
+// 2: apply a post-load workflow to any combination of tables
 // 3: specify which tables to display to the user for usage in the model
 // right now we need only one final table to submit, but don't provide enough data wrangling to enable anything complex.
-function preProcessTables(
-	workspace: Workspace,
-	store: TableStore,
-	pipeline: Pipeline,
-	tableFiles?: File[],
-) {
+function preProcessTables(workspace: Workspace, tableFiles?: File[]) {
 	const { tables, postLoad } = workspace
 
 	return tables.map(async table => {
 		// Turning autoType on by default for demo
 		table.autoType = true
-		const stepPostLoad =
-			!!postLoad?.length &&
-			postLoad.find(p => p?.steps && p?.steps[0]?.input === table.name)
-		let result
-		if (stepPostLoad && stepPostLoad.steps) {
-			const resultPipeline = await runPipeline(
+		const postLoadWorkflow = getPostLoadWorkflow(postLoad, table.name)
+
+		let content
+		if (postLoadWorkflow?.steps) {
+			const latestOutput = await runWorkflow(
 				tables,
-				stepPostLoad.steps,
-				store,
-				pipeline,
 				tableFiles,
+				postLoadWorkflow,
 			)
 
-			result = resultPipeline?.table?.derive(
-				{
-					index: op.row_number(),
-				},
-				{ before: all() },
-			) as ColumnTable
-
-			const file = {
-				name: table.name,
-				id: table.name,
-				table: result,
-				autoType: !!table.autoType,
-				loadedCorrectly: table.loadedCorrectly ?? true,
-				delimiter: table.delimiter,
-			}
-			return file
+			content = getDerivedTableContent(latestOutput?.table as ColumnTable)
+			return formatTableDefinitionAsProjectFile(table, content)
 		} else {
-			result = await (!isZipUrl(table.url)
+			content = await (!isZipUrl(table.url)
 				? fetchTable(table)
 				: loadTable(table, tableFiles))
 
-			result = result.derive(
-				{
-					index: op.row_number(),
-				},
-				{ before: all() },
-			)
+			content = getDerivedTableContent(content)
 		}
 
-		const file: ProjectFile = {
-			id: table.name,
-			name: table.name,
-			table: result,
-			autoType: !!table.autoType,
-			loadedCorrectly: table.loadedCorrectly ?? true,
-			delimiter: table.delimiter,
-		}
-		return file
+		return formatTableDefinitionAsProjectFile(table, content)
 	})
-}
-
-async function processDataTables(
-	pipeline: Pipeline,
-	tps?: Specification[],
-	projectFiles?: ProjectFile[],
-): Promise<TableContainer | undefined> {
-	if (tps !== undefined && tps[0]?.steps?.length && projectFiles?.length) {
-		const steps = tps[0]?.steps as Step[]
-		pipeline.clear()
-		return await runPipelineFromProjectFiles(projectFiles, steps, pipeline)
-	}
-	return undefined
 }
 
 function prepCausalFactors(factors?: Partial<CausalFactor>[]): CausalFactor[] {
@@ -296,8 +234,8 @@ function prepDefinitions(definitions: Definition[]): Definition[] {
 	return definitions.map(withRandomId)
 }
 
-function prepTablesSpec(specifications?: Specification[]): Specification[] {
-	return specifications as Specification[]
+function prepWorkflow(workflowObject: WorkflowObject[] = []): Workflow[] {
+	return workflowObject?.map(w => new Workflow(w))
 }
 
 function useUpdateCollection(): (
@@ -341,4 +279,41 @@ function useUpdateRunHistory() {
 		},
 		[setRunHistory, setDefaultRun],
 	)
+}
+
+function formatTableDefinitionAsProjectFile(
+	table: DataTableFileDefinition,
+	content: ColumnTable,
+): ProjectFile {
+	return {
+		id: uuidv4(),
+		name: table.name,
+		table: content,
+		autoType: !!table.autoType,
+		loadedCorrectly: table.loadedCorrectly ?? true,
+		delimiter: table.delimiter,
+	}
+}
+
+function getDerivedTableContent(content: ColumnTable): ColumnTable {
+	return content.derive(
+		{
+			index: op.row_number(),
+		},
+		{ before: all() },
+	)
+}
+
+function getPostLoadWorkflow(
+	workflows: WorkflowObject[] = [],
+	tableName: string,
+): Maybe<WorkflowObject> {
+	return workflows.find(p => {
+		const input = p.steps?.length ? p.steps[0]?.input : undefined
+		const source = input?.hasOwnProperty('source')
+			? ((input as Record<string, PortBinding>)['source'] as NamedPortBinding)
+					?.node
+			: input
+		return source === tableName
+	})
 }

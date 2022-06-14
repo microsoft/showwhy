@@ -16,7 +16,7 @@ import { api } from '~resources'
 import {
 	useCausalFactors,
 	useDefinitions,
-	useOutputTablePrep,
+	useOutputLast,
 	useProjectFiles,
 } from '~state'
 import { createZipFormData } from '~utils'
@@ -29,7 +29,7 @@ export function useUploadFile(
 	falseLoadingFile: Handler,
 ): () => Promise<Maybe<UploadFilesResponse>> {
 	const projectFiles = useProjectFiles()
-	const outputTablePrep = useOutputTablePrep()
+	const outputTable = useOutputLast()
 	const definitions = useDefinitions()
 	const causalFactors = useCausalFactors()
 	const allColumns = useAllColumns(causalFactors, definitions)
@@ -41,8 +41,8 @@ export function useUploadFile(
 
 	return useCallback(async () => {
 		let output = projectFiles[0]?.table as ColumnTable
-		if (outputTablePrep) {
-			output = outputTablePrep
+		if (outputTable) {
+			output = outputTable
 		}
 
 		if (allColumns) {
@@ -64,7 +64,7 @@ export function useUploadFile(
 		allColumns,
 		uploadOutputFile,
 		falseLoadingFile,
-		outputTablePrep,
+		outputTable,
 		setErrors,
 	])
 }
