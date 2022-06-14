@@ -25,6 +25,8 @@ In other words, ShowWhy enables emulation of randomized controlled trials that p
 
 - Docker (For all platforms):
 
+  **NOTE:** Mac devices with M1 chips are not currently supported.
+
   - Windows: https://docs.docker.com/desktop/windows/install/
   - MAC: https://docs.docker.com/desktop/mac/install/
   - Ubuntu: https://docs.docker.com/engine/install/ubuntu/
