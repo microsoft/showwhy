@@ -115,7 +115,8 @@
 			"type": "point",
 			"domain": {
 				"data": "features",
-				"field": "feature"
+				"field": "sort",
+				"sort": true
 			},
 			"range": [
 				30,
@@ -129,7 +130,8 @@
 			"type": "point",
 			"domain": {
 				"data": "features",
-				"field": "sort"
+				"field": "sort",
+				"sort": true
 			},
 			"range": [
 				30,
@@ -363,7 +365,8 @@
 					},
 					"y": {
 						"scale": "y",
-						"field": "feature"
+						"field": "sort",
+						"sort": true
 					},
 					"fill": {
 						"scale": "color",
@@ -396,7 +399,8 @@
 					},
 					"y": {
 						"scale": "y",
-						"field": "feature"
+						"field": "sort",
+						"sort": true
 					},
 					"size": {
 						"value": 25
@@ -418,7 +422,8 @@
 					},
 					"y": {
 						"scale": "y",
-						"field": "feature"
+						"field": "sort",
+						"sort": true
 					},
 					"size": {
 						"value": 25
