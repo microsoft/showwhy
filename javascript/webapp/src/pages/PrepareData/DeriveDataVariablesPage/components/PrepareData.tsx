@@ -2,18 +2,13 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import type { Step, TableContainer } from '@data-wrangling-components/core'
 import { PrepareDataFull } from '@data-wrangling-components/react'
+import type { TableContainer } from '@essex/arquero'
 import type { IDetailsColumnProps, IRenderFunction } from '@fluentui/react'
 import type { FC } from 'react'
-import { memo, useCallback, useMemo } from 'react'
+import { memo, useEffect, useMemo, useState } from 'react'
 
-import {
-	useProjectFiles,
-	useSetOutputTablePrep,
-	useSetTablesPrepSpecification,
-	useTablesPrepSpecification,
-} from '~state'
+import { useOutput, useProjectFiles, useWorkflowState } from '~state'
 
 interface Props {
 	commandBar: IRenderFunction<IDetailsColumnProps>
@@ -22,9 +17,9 @@ export const PrepareData: FC<Props> = memo(function PrepareData({
 	commandBar,
 }) {
 	const projectFiles = useProjectFiles()
-	const setOutputTable = useSetOutputTablePrep()
-	const prepSpecification = useTablesPrepSpecification()
-	const setStepsTablePrep = useSetTablesPrepSpecification()
+	const [selectedTableId, setSelectedTableId] = useState<string | undefined>()
+	const [output, setOutput] = useOutput()
+	const [workflow, setWorkflow] = useWorkflowState()
 
 	const tables = useMemo((): TableContainer[] => {
 		return projectFiles.map(f => {
@@ -36,35 +31,25 @@ export const PrepareData: FC<Props> = memo(function PrepareData({
 		})
 	}, [projectFiles])
 
-	const steps = useMemo((): any => {
-		return prepSpecification !== undefined ? prepSpecification[0]?.steps : []
-	}, [prepSpecification])
-
-	const onChangeSteps = useCallback(
-		(steps: Step[]) => {
-			setStepsTablePrep(prev => {
-				const _prev = [...(prev ?? [])]
-				_prev[0] = { ..._prev[0], steps }
-				return _prev
-			})
-		},
-		[setStepsTablePrep],
-	)
-
-	const onUpdateOutput = useCallback(
-		(table: TableContainer) => {
-			setOutputTable(table.table)
-		},
-		[setOutputTable],
-	)
+	useEffect(() => {
+		const len = output?.length ?? 0
+		if (len) {
+			setSelectedTableId(prev => (!prev ? output[len - 1]?.id : prev))
+		} else {
+			setSelectedTableId(prev => (!prev ? tables[0]?.id : prev))
+		}
+	}, [output, tables, setSelectedTableId])
 
 	return (
 		<PrepareDataFull
-			steps={steps}
-			onUpdateSteps={onChangeSteps}
-			onOutputTable={onUpdateOutput}
-			tables={tables}
+			inputs={tables}
+			derived={output}
+			workflow={workflow}
+			selectedTableId={selectedTableId}
+			onSelectedTableIdChanged={setSelectedTableId}
+			onUpdateOutput={setOutput}
 			outputHeaderCommandBar={[commandBar]}
+			onUpdateWorkflow={setWorkflow}
 		/>
 	)
 })

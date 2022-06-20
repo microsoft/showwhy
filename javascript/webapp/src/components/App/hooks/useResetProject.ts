@@ -12,10 +12,11 @@ import {
 	useResetConfigJson,
 	useResetDefaultDatasetResult,
 	useResetDefinitions,
+	useResetDefinitionType,
 	useResetEstimators,
 	useResetFileCollection,
 	useResetHoverState,
-	useResetOutputTablePrep,
+	useResetOutputTable,
 	useResetPrimarySpecificationConfig,
 	useResetProjectFiles,
 	useResetQuestion,
@@ -27,6 +28,7 @@ import {
 	useResetSpecificationCurveConfig,
 	useResetSubjectIdentifier,
 	useResetTablesPrepSpecification,
+	useResetWorkflow,
 } from '~state'
 
 export function useResetProject(): Handler {
@@ -40,7 +42,7 @@ export function useResetProject(): Handler {
 	const resetPrimarySpecificationConfig = useResetPrimarySpecificationConfig()
 	const resetHoverState = useResetHoverState()
 	const resetSubjectIdentifier = useResetSubjectIdentifier()
-	const resetOutputTablePrep = useResetOutputTablePrep()
+	const resetOutputTable = useResetOutputTable()
 	const resetTablePrepSpecification = useResetTablesPrepSpecification()
 	const resetConfigJson = useResetConfigJson()
 	const resetConfidenceInterval = useResetConfidenceInterval()
@@ -50,6 +52,8 @@ export function useResetProject(): Handler {
 	const resetSpecCount = useResetSpecCount()
 	const resetSignificanteTest = useResetSignificanceTest()
 	const resetDefinitions = useResetDefinitions()
+	const resetDefinitionType = useResetDefinitionType()
+	const resetWorkflow = useResetWorkflow()
 
 	return useCallback(() => {
 		resetProjectFiles()
@@ -62,7 +66,7 @@ export function useResetProject(): Handler {
 		resetSpecificationCurveConfig()
 		resetPrimarySpecificationConfig()
 		resetSubjectIdentifier()
-		resetOutputTablePrep()
+		resetOutputTable()
 		resetTablePrepSpecification()
 		resetConfigJson()
 		resetConfidenceInterval()
@@ -72,6 +76,8 @@ export function useResetProject(): Handler {
 		resetSpecCount()
 		resetSignificanteTest()
 		resetDefinitions()
+		resetDefinitionType()
+		resetWorkflow()
 	}, [
 		resetProjectFiles,
 		resetCausalFactors,
@@ -83,7 +89,7 @@ export function useResetProject(): Handler {
 		resetSpecificationCurveConfig,
 		resetPrimarySpecificationConfig,
 		resetSubjectIdentifier,
-		resetOutputTablePrep,
+		resetOutputTable,
 		resetTablePrepSpecification,
 		resetConfigJson,
 		resetConfidenceInterval,
@@ -93,5 +99,7 @@ export function useResetProject(): Handler {
 		resetSpecCount,
 		resetSignificanteTest,
 		resetDefinitions,
+		resetDefinitionType,
+		resetWorkflow,
 	])
 }

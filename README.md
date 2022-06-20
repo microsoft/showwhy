@@ -25,6 +25,8 @@ In other words, ShowWhy enables emulation of randomized controlled trials that p
 
 - Docker (For all platforms):
 
+  **NOTE:** Mac devices with M1 chips are not currently supported.
+
   - Windows: https://docs.docker.com/desktop/windows/install/
   - MAC: https://docs.docker.com/desktop/mac/install/
   - Ubuntu: https://docs.docker.com/engine/install/ubuntu/
@@ -36,7 +38,7 @@ In other words, ShowWhy enables emulation of randomized controlled trials that p
 
 ### Windows
 
-Open a Poweshell terminal, [navigate to the directory](https://docs.microsoft.com/en-us/powershell/scripting/samples/managing-current-location?view=powershell-7.2) where this project is located and run one of the commands at the `Commands` section of this README.
+Open a PowerShell terminal, [navigate to the directory](https://docs.microsoft.com/en-us/powershell/scripting/samples/managing-current-location?view=powershell-7.2) where this project is located and run one of the commands at the `Commands` section of this README.
 
 ### MAC/LINUX:
 

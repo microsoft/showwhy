@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import type {
-	DropzoneOptions,
+	DropzoneProps,
 	FileRejection,
 } from '@data-wrangling-components/react'
 import { Dropzone } from '@data-wrangling-components/react'
@@ -22,7 +22,7 @@ export const DropzoneContainer: FC<{
 	onDropAccepted?: (collection: FileCollection) => void
 	onDropRejected?: (message: string, files?: Maybe<FileRejection[]>) => void
 	acceptedFileTypes: string[]
-	dropzoneOptions?: DropzoneOptions
+	dropzoneOptions?: DropzoneProps
 	progress?: number
 }> = memo(function DropzoneContainer({
 	loading,

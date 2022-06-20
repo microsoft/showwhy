@@ -49,8 +49,8 @@ export function useFileManagement(setErrorMessage: Handler1<string>): {
 				setErrorMessage && setErrorMessage('File already uploaded')
 				return null
 			}
-			const fileId = uuidv4()
-			file.id = fileId
+
+			file.id = file.id ?? uuidv4()
 			file.loadedCorrectly = true
 			setProjectFiles([...projectFiles, file])
 			setSelectedFile(file)

@@ -329,146 +329,209 @@
             "loadedCorrectly": true
         }
     ],
-    "postLoad": [{
-        "tableName": "nhefs.csv",
-        "steps": [
-            {
-                "type": "verb",
-                "verb": "select",
-                "input": "nhefs.csv",
-                "output": "output-table-0",
-                "args": {
-                    "columns": {
-                        "sex": "sex",
-                        "age": "age",
-                        "race": "race",
-                        "education": "education",
-                        "wt71": "wt71",
-                        "wt82_71": "wt82_71",
-                        "smokeintensity": "smokeintensity",
-                        "smkintensity82_71": "smkintensity82_71",
-                        "active": "active",
-                        "exercise": "exercise",
-                        "smokeyrs": "smokeyrs"
+    "postLoad": [
+        {
+            "tableName": "nhefs.csv",
+            "input": [
+                "nhefs.csv"
+            ],
+            "output": [
+                {
+                    "node": "select-0",
+                    "name": "select-0"
+                },
+                {
+                    "node": "rename-1",
+                    "name": "rename-1"
+                },
+                {
+                    "node": "derive-2",
+                    "name": "derive-2"
+                },
+                {
+                    "node": "binarize-3",
+                    "name": "binarize-3"
+                },
+                {
+                    "node": "binarize-4",
+                    "name": "binarize-4"
+                },
+                {
+                    "node": "binarize-5",
+                    "name": "binarize-5"
+                },
+                {
+                    "node": "binarize-6",
+                    "name": "binarize-6"
+                },
+                {
+                    "node": "binarize-7",
+                    "name": "binarize-7"
+                }
+            ],
+            "steps": [
+                {
+                    "id": "select-0",
+                    "args": {
+                        "columns": {
+                            "sex": "sex",
+                            "age": "age",
+                            "race": "race",
+                            "education": "education",
+                            "wt71": "wt71",
+                            "wt82_71": "wt82_71",
+                            "smokeintensity": "smokeintensity",
+                            "smkintensity82_71": "smkintensity82_71",
+                            "active": "active",
+                            "exercise": "exercise",
+                            "smokeyrs": "smokeyrs"
+                        }
+                    },
+                    "verb": "select",
+                    "input": {
+                        "source": {
+                            "node": "nhefs.csv"
+                        }
+                    }
+                },
+                {
+                    "id": "rename-1",
+                    "args": {
+                        "columns": {
+                            "sex": "sex",
+                            "age": "age",
+                            "race": "race",
+                            "education": "education",
+                            "wt71": "weight_1971",
+                            "wt82_71": "weight_change",
+                            "smokeintensity": "smoke_intensity_1971",
+                            "smkintensity82_71": "smoke_intensity_change",
+                            "active": "active",
+                            "exercise": "exercise",
+                            "smokeyrs": "smoke_years"
+                        }
+                    },
+                    "verb": "rename",
+                    "input": {
+                        "source": {
+                            "node": "select-0"
+                        }
+                    }
+                },
+                {
+                    "id": "derive-2",
+                    "args": {
+                        "to": "smoke_intensity_change_pct",
+                        "column1": "smoke_intensity_change",
+                        "operator": "/",
+                        "column2": "smoke_intensity_1971"
+                    },
+                    "verb": "derive",
+                    "input": {
+                        "source": {
+                            "node": "rename-1"
+                        }
+                    }
+                },
+                {
+                    "id": "binarize-3",
+                    "args": {
+                        "to": "smoke_reduction_25pct",
+                        "column": "smoke_intensity_change_pct",
+                        "criteria": [
+                            {
+                                "operator": "<=",
+                                "type": "value",
+                                "value": "-0.25"
+                            }
+                        ]
+                    },
+                    "verb": "binarize",
+                    "input": {
+                        "source": {
+                            "node": "derive-2"
+                        }
+                    }
+                },
+                {
+                    "id": "binarize-4",
+                    "args": {
+                        "to": "smoke_reduction_50pct",
+                        "column": "smoke_intensity_change_pct",
+                        "criteria": [
+                            {
+                                "operator": "<=",
+                                "type": "value",
+                                "value": "-0.5"
+                            }
+                        ]
+                    },
+                    "verb": "binarize",
+                    "input": {
+                        "source": {
+                            "node": "binarize-3"
+                        }
+                    }
+                },
+                {
+                    "id": "binarize-5",
+                    "args": {
+                        "to": "smoke_reduction_75pct",
+                        "column": "smoke_intensity_change_pct",
+                        "criteria": [
+                            {
+                                "operator": "<=",
+                                "type": "value",
+                                "value": "-0.75"
+                            }
+                        ]
+                    },
+                    "verb": "binarize",
+                    "input": {
+                        "source": {
+                            "node": "binarize-4"
+                        }
+                    }
+                },
+                {
+                    "id": "binarize-6",
+                    "args": {
+                        "to": "quit_smoking",
+                        "column": "smoke_intensity_change_pct",
+                        "criteria": [
+                            {
+                                "operator": "=",
+                                "type": "value",
+                                "value": "-1"
+                            }
+                        ]
+                    },
+                    "verb": "binarize",
+                    "input": {
+                        "source": {
+                            "node": "binarize-5"
+                        }
+                    }
+                },
+                {
+                    "id": "binarize-7",
+                    "args": {
+                        "to": "subject_inclusion",
+                        "column": "weight_change",
+                        "criteria": [
+                            {
+                                "operator": "is not empty"
+                            }
+                        ]
+                    },
+                    "verb": "binarize",
+                    "input": {
+                        "source": {
+                            "node": "binarize-6"
+                        }
                     }
                 }
-            },
-            {
-                "type": "verb",
-                "verb": "rename",
-                "input": "output-table-0",
-                "output": "output-table-1",
-                "args": {
-                    "columns": {
-                        "sex": "sex",
-                        "age": "age",
-                        "race": "race",
-                        "education": "education",
-                        "wt71": "weight_1971",
-                        "wt82_71": "weight_change",
-                        "smokeintensity": "smoke_intensity_1971",
-                        "smkintensity82_71": "smoke_intensity_change",
-                        "active": "active",
-                        "exercise": "exercise",
-                        "smokeyrs": "smoke_years"
-                    }
-                }
-            },
-            {
-                "type": "verb",
-                "verb": "derive",
-                "input": "output-table-1",
-                "output": "output-table-2",
-                "args": {
-                    "to": "smoke_intensity_change_pct",
-                    "column1": "smoke_intensity_change",
-                    "operator": "/",
-                    "column2": "smoke_intensity_1971"
-                }
-            },
-            {
-                "type": "verb",
-                "verb": "binarize",
-                "input": "output-table-2",
-                "output": "output-table-3",
-                "args": {
-                    "to": "smoke_reduction_25pct",
-                    "column": "smoke_intensity_change_pct",
-                    "criteria": [
-                        {
-                            "operator": "<=",
-                            "type": "value",
-                            "value": "-0.25"
-                        }
-                    ]
-                }
-            },
-            {
-                "type": "verb",
-                "verb": "binarize",
-                "input": "output-table-3",
-                "output": "output-table-4",
-                "args": {
-                    "to": "smoke_reduction_50pct",
-                    "column": "smoke_intensity_change_pct",
-                    "criteria": [
-                        {
-                            "operator": "<=",
-                            "type": "value",
-                            "value": "-0.5"
-                        }
-                    ]
-                }
-            },
-            {
-                "type": "verb",
-                "verb": "binarize",
-                "input": "output-table-4",
-                "output": "output-table-5",
-                "args": {
-                    "to": "smoke_reduction_75pct",
-                    "column": "smoke_intensity_change_pct",
-                    "criteria": [
-                        {
-                            "operator": "<=",
-                            "type": "value",
-                            "value": "-0.75"
-                        }
-                    ]
-                }
-            },
-            {
-                "type": "verb",
-                "verb": "binarize",
-                "input": "output-table-5",
-                "output": "output-table-6",
-                "args": {
-                    "to": "quit_smoking",
-                    "column": "smoke_intensity_change_pct",
-                    "criteria": [
-                        {
-                            "operator": "=",
-                            "type": "value",
-                            "value": "-1"
-                        }
-                    ]
-                }
-            },
-            {
-                "type": "verb",
-                "verb": "binarize",
-                "input": "output-table-6",
-                "output": "smoking_cessation",
-                "args": {
-                    "to": "subject_inclusion",
-                    "column": "weight_change",
-                    "criteria": [
-                        {
-                            "operator": "is not empty"
-                        }
-                    ]
-                }
-            }
-        ]
-    }]
+            ]
+        }
+    ]
 }
