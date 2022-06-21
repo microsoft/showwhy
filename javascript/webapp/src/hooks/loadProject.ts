@@ -189,6 +189,7 @@ export function useLoadProject(
 			setSignificanceTests,
 			setDefinitions,
 			setWorkflow,
+			setOutput,
 		],
 	)
 }
