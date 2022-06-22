@@ -31,7 +31,7 @@ export class EstimateCausalEffectPO extends Page {
 		await this.page
 			.locator(specificationSelector(specification))
 			.first()
-			.click()
+			.click({ force: true })
 	}
 
 	public async isTextVisible(): Promise<boolean> {
@@ -39,7 +39,9 @@ export class EstimateCausalEffectPO extends Page {
 	}
 
 	public async clickToggleButton(): Promise<void> {
-		return this.page.locator(selectors.toggleEstimateButton).click()
+		return this.page
+			.locator(selectors.toggleEstimateButton)
+			.click({ force: true })
 	}
 
 	public async getToggleButton(): Promise<Locator> {

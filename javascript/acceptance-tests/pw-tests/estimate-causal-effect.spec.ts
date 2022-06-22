@@ -25,6 +25,6 @@ test.describe('Estimate Causal Effect Page', () => {
 		await expect(isTextVisible).toBeTruthy()
 		await po.estimateCausalEffectPage.clickToggleButton()
 		const button = await po.estimateCausalEffectPage.getToggleButton()
-		await expect(button).toContainText('Accept estimate')
+		await expect(button).toContainText('Reject estimate')
 	})
 })
