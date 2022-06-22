@@ -12,6 +12,7 @@ import styled from 'styled-components'
 
 import { pluralize } from '~utils'
 
+import { CovariateBalanceDetails } from './CovariateBalanceDetails'
 import { RefutationOptionsCallout } from './RefutationOptionsCallout'
 import { SpecificationDetails } from './SpecificationDetails'
 
@@ -22,6 +23,7 @@ export const SpecificationDescription: React.FC<{
 	refutationNumbers: string
 	failedRefutations: string[]
 	onToggleRejectEstimate: Handler
+	confounderThreshold?: number
 }> = memo(function SpecificationDescription({
 	specification,
 	refutationOptions,
@@ -29,6 +31,7 @@ export const SpecificationDescription: React.FC<{
 	refutationNumbers,
 	failedRefutations,
 	onToggleRejectEstimate,
+	confounderThreshold,
 }) {
 	return (
 		<Container>
@@ -77,6 +80,10 @@ export const SpecificationDescription: React.FC<{
 								.
 							</Text>
 						)}
+						<CovariateBalanceDetails
+							confounderThreshold={confounderThreshold}
+							specification={specification}
+						/>
 					</Paragraph>
 					<ToggleButton
 						onClick={onToggleRejectEstimate}

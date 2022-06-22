@@ -13,7 +13,7 @@ import type {
 import { NodeResponseStatus } from '@showwhy/types'
 import { useCallback, useMemo, useState } from 'react'
 
-import { useDefaultRun, useLoadSpecificationData, useWakeLock } from '~hooks'
+import { useDefaultRun, useWakeLock } from '~hooks'
 import {
 	useSetSignificanceTest,
 	useSetSpecificationCurveConfig,
@@ -21,7 +21,7 @@ import {
 } from '~state'
 import { updateSignificanceTests } from '~utils'
 
-export function useSpecificationCurve(): {
+export function useSpecificationCurve(data: Specification[]): {
 	failedRefutations: string[]
 	handleConfidenceIntervalTicksChange: (checked: boolean) => void
 	handleShapTicksChange: (checked: boolean) => void
@@ -35,7 +35,6 @@ export function useSpecificationCurve(): {
 	setSelectedSpecification: (s: Maybe<Specification>) => void
 } {
 	useWakeLock()
-	const data = useLoadSpecificationData()
 	const [selectedSpecification, setSelectedSpecification] =
 		useState<Maybe<Specification>>()
 

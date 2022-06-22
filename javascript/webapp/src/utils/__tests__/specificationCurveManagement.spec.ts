@@ -31,6 +31,7 @@ const defaultObject = {
 	c95Upper: 1,
 	c95Lower: 0,
 	refutationResult: 1,
+	covariateBalance: null,
 }
 
 describe('specificationCurveManagementUtils', () => {

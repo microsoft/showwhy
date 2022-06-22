@@ -22,6 +22,8 @@ import { csv } from 'd3-fetch'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 
 import {
+	useConfounderThreshold,
+	useCovariateProportionThreshold,
 	useDefaultDatasetResult,
 	useDefinitions,
 	useHoverState,
@@ -31,6 +33,7 @@ import {
 } from '~state'
 import {
 	buildOutcomeGroups,
+	returnValidatedSpecification,
 	row2spec,
 } from '~utils/specificationCurveManagement'
 
@@ -84,6 +87,8 @@ export function useSpecificationCurveData(): {
 export function useLoadSpecificationData(): Specification[] {
 	const [data, setData] = useState<Specification[]>([])
 	const defaultRun = useDefaultRun()
+	const confounderThreshold = useConfounderThreshold()
+	const proportionThreshold = useCovariateProportionThreshold()
 	const defaultDatasetResult = useDefaultDatasetResult()
 
 	useEffect(() => {
@@ -92,9 +97,13 @@ export function useLoadSpecificationData(): Specification[] {
 				setData([])
 			} else {
 				const result = defaultRun.result.map((x: any) => {
-					return row2spec(x)
+					const row = row2spec(x)
+					return returnValidatedSpecification(
+						row,
+						defaultRun.confounderThreshold,
+						defaultRun.proportionThreshold,
+					)
 				}) as Specification[]
-
 				setData(buildOutcomeGroups(result))
 			}
 		} else if (!defaultRun) {
@@ -102,7 +111,16 @@ export function useLoadSpecificationData(): Specification[] {
 				const f = async () => {
 					try {
 						const result = await csv(defaultDatasetResult?.url, row2spec)
-						setData(buildOutcomeGroups(result))
+						let specResult = buildOutcomeGroups(result)
+						specResult = result.map(x => {
+							return returnValidatedSpecification(
+								x,
+								confounderThreshold,
+								proportionThreshold,
+							)
+						}) as Specification[]
+
+						setData(specResult)
 					} catch (err) {
 						setData([])
 					}
@@ -110,7 +128,13 @@ export function useLoadSpecificationData(): Specification[] {
 				f()
 			}
 		}
-	}, [setData, defaultRun, defaultDatasetResult])
+	}, [
+		setData,
+		defaultRun,
+		defaultDatasetResult,
+		confounderThreshold,
+		proportionThreshold,
+	])
 	return data
 }
 
