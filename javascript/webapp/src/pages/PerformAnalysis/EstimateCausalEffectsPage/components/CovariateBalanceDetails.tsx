@@ -21,11 +21,10 @@ export const CovariateBalanceDetails: FC<{
 		<>
 			{confounderThreshold && (
 				<Text>
-					{!validated.length
-						? 'All covariate balance thresholds were met.'
-						: `The following threshold${pluralize(validated.length)} failed: ${[
-								validated.join(','),
-						  ]}.`}
+					{validated.length > 0 &&
+						` The following threshold${pluralize(validated.length)} failed: ${[
+							validated.join(','),
+						]}.`}
 				</Text>
 			)}
 		</>
