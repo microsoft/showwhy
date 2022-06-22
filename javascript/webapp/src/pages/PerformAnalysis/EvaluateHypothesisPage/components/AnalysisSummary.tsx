@@ -33,7 +33,7 @@ export const AnalysisSummary: FC<{
 		definitions,
 	)
 	const exposureDefinitions = getDefinitionsByType(
-		DefinitionType.Population,
+		DefinitionType.Exposure,
 		definitions,
 	)
 
