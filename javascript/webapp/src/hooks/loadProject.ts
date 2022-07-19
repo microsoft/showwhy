@@ -24,7 +24,6 @@ import { ProjectSource, StepStatus } from '@showwhy/types'
 import { all, op } from 'arquero'
 import type ColumnTable from 'arquero/dist/types/table/column-table'
 import { useCallback } from 'react'
-import { v4 as uuidv4 } from 'uuid'
 
 import {
 	useAddFilesToCollection,
@@ -159,7 +158,9 @@ export function useLoadProject(
 			)
 			const processedTables = await Promise.all(processedTablesPromise)
 			setFiles(processedTables)
-			setOutput(processedTables.map(t => ({id: t.id || t.name, table: t.table})))
+			setOutput(
+				processedTables.map(t => ({ id: t.id || t.name, table: t.table })),
+			)
 			wf?.length && setWorkflow(wf[0] as Workflow)
 
 			const completed = getStepUrls(workspace.todoPages, true)
@@ -290,7 +291,7 @@ function formatTableDefinitionAsProjectFile(
 	content: ColumnTable,
 ): ProjectFile {
 	return {
-		id: uuidv4(),
+		id: table.name,
 		name: table.name,
 		table: content,
 		autoType: !!table.autoType,
