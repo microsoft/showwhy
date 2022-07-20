@@ -115,8 +115,8 @@
 			"type": "point",
 			"domain": {
 				"data": "features",
-				"field": "sort",
-				"sort": true
+				"field": "feature",
+				"sort": { "field": "sort" }
 			},
 			"range": [
 				30,
@@ -307,7 +307,7 @@
 						"field": "id"
 					},
 					"y": {
-						"signal": "scale('y',datum.key) - (datum.value < 0 ? -2.5 : (scale('shapSize', datum.value) + 2.5))"
+						"signal": "scale('y', datum.key) - (datum.value < 0 ? -2.5 : (scale('shapSize', datum.value) + 2.5))"
 					},
 					"width": {
 						"value": 1
@@ -365,8 +365,8 @@
 					},
 					"y": {
 						"scale": "y",
-						"field": "sort",
-						"sort": true
+						"field": "feature",
+						"sort": { "field": "sort" }
 					},
 					"fill": {
 						"scale": "color",
@@ -399,8 +399,8 @@
 					},
 					"y": {
 						"scale": "y",
-						"field": "sort",
-						"sort": true
+						"field": "feature",
+						"sort": { "field": "sort" }
 					},
 					"size": {
 						"value": 25
@@ -422,8 +422,8 @@
 					},
 					"y": {
 						"scale": "y",
-						"field": "sort",
-						"sort": true
+						"field": "feature",
+						"sort": { "field": "sort" }
 					},
 					"size": {
 						"value": 25
