@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { WorkflowObject } from '@data-wrangling-components/core'
+import type { Workflow,WorkflowObject } from '@data-wrangling-components/core'
 import type {
 	FileCollection,
 	FileWithPath,
@@ -21,7 +21,7 @@ import type {
 	Question,
 	Workspace,
 } from '@showwhy/types'
-import { DownloadType, NodeResponseStatus } from '@showwhy/types'
+import { DownloadType, NodeResponseStatus } from '@showwhy/types';
 import { useCallback, useMemo } from 'react'
 
 import { useGetStepUrlsByStatus } from '~hooks'
@@ -33,7 +33,6 @@ import {
 	useDefinitions,
 	useEstimators,
 	useFileCollection,
-	useOutputLast,
 	usePrimarySpecificationConfig,
 	useProjectFiles,
 	useQuestion,
@@ -57,7 +56,8 @@ export function useSaveProject(): AsyncHandler {
 	const definitions = useDefinitions()
 	const estimators = useEstimators()
 	const refutations = useRefutationCount()
-	const tablesPrep = useTablesPrep()
+	const workflow = useWorkflow()
+	const tablesPrep = getTablesPrep(workflow)
 	const todoPages = useGetStepUrlsByStatus()({ exclude: true })
 	const download = useDownload(fileCollection, question)
 	const oldConfig = useConfigJson()
@@ -93,28 +93,13 @@ export function useSaveProject(): AsyncHandler {
 	])
 }
 
-function useOutputTable(): () => Maybe<FileWithPath> {
-	const outputTable = useOutputLast()
-	return useCallback(() => {
-		if (outputTable) {
-			return createFileWithPath(new Blob([outputTable.toCSV()]), {
-				name: 'output_table.csv',
-			})
-		}
-		return undefined
-	}, [outputTable])
-}
-
 function useTables(fileCollection: FileCollection) {
 	const projectFiles = useProjectFiles()
 	const oldConfig = useConfigJson()
 	return useCallback(
-		output => {
+		() => {
 			const files = fileCollection.list(FileType.table)
 			const primary = oldConfig.tables?.find(t => t.primary)
-			if (output) {
-				files.push(output)
-			}
 			return files.map(file => {
 				const isPrimary = files.length === 1 || file.name === primary?.name
 				const project = projectFiles.find(p => p.name === file.name)
@@ -219,28 +204,24 @@ function useSignificanceTestFile(): Maybe<FileWithPath> {
 	}, [significanceTest])
 }
 
-function useTablesPrep(): Maybe<WorkflowObject[]> {
-	const workflow = useWorkflow()
-	return useMemo(() => {
-		const [inputEntry] = [...(workflow?.input.entries() || [])]
-		const input = inputEntry ? [inputEntry[0]] : ['']
-		const output = [...(workflow?.output.entries() || [])]?.map(
-			([, value]) => value,
-		)
+function getTablesPrep(workflow: Workflow): Maybe<WorkflowObject[]> {
+	const [inputEntry] = [...(workflow?.input.entries() || [])]
+	const input = inputEntry ? [inputEntry[0]] : ['']
+	const output = [...(workflow?.output.entries() || [])]?.map(
+		([, value]) => value,
+	)
 
-		return [
-			{
-				input,
-				output,
-				steps: workflow?.steps || [],
-			},
-		]
-	}, [workflow])
+	return [
+		{
+			input,
+			output,
+			steps: workflow?.steps || [],
+		},
+	]
 }
 
 function useDownload(fileCollection: FileCollection, question: Question) {
 	const csvResult = useCSVResult()
-	const outputTable = useOutputTable()
 	const getTables = useTables(fileCollection)
 	const notebookResult = useResult(DownloadType.jupyter)
 	const runHistoryFile = useRunHistoryFile()
@@ -248,7 +229,7 @@ function useDownload(fileCollection: FileCollection, question: Question) {
 
 	return useCallback(
 		async (workspace: Partial<Workspace>) => {
-			const tables = getTables(outputTable())
+			const tables = getTables()
 			/* eslint-disable @essex/adjacent-await */
 			const csv = await csvResult
 			const notebook = await notebookResult
@@ -263,7 +244,7 @@ function useDownload(fileCollection: FileCollection, question: Question) {
 				new Blob([JSON.stringify(workspace, null, 4)]),
 				{ name: 'workspace_config.json' },
 			)
-			const files = [file, outputTable()].filter(t => !!t) as FileWithPath[]
+			const files = [file].filter(t => !!t) as FileWithPath[]
 			if (csv?.file) {
 				files.push(csv.file)
 			}
@@ -294,7 +275,6 @@ function useDownload(fileCollection: FileCollection, question: Question) {
 			question,
 			csvResult,
 			getTables,
-			outputTable,
 			notebookResult,
 			runHistoryFile,
 			significanceTestsFile,
