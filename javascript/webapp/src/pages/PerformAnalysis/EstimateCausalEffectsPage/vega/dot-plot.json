@@ -115,8 +115,23 @@
 			"type": "point",
 			"domain": {
 				"data": "features",
-				"field": "feature",
-				"sort": { "field": "sort" }
+				"field": "sort",
+				"sort": true
+			},
+			"range": [
+				30,
+				{
+					"signal": "height - 30"
+				}
+			]
+		},
+		{
+			"name": "yc",
+			"type": "point",
+			"domain": {
+				"data": "features",
+				"fields": ["sort", "feature"],
+				"sort": { "field": "sort", "op": "min" }
 			},
 			"range": [
 				30,
@@ -307,7 +322,7 @@
 						"field": "id"
 					},
 					"y": {
-						"signal": "scale('y', datum.key) - (datum.value < 0 ? -2.5 : (scale('shapSize', datum.value) + 2.5))"
+						"signal": "scale('yc', datum.key) - (datum.value < 0 ? -2.5 : (scale('shapSize', datum.value) + 2.5))"
 					},
 					"width": {
 						"value": 1
@@ -346,7 +361,7 @@
 						"field": "id"
 					},
 					"y": {
-						"signal": "scale('y',datum.key) - (datum.value < 0 ? -scale('shapSize', datum.value) - 4.5 : (scale('shapSize', datum.value) + 4.5))"
+						"signal": "scale('yc',datum.key) - (datum.value < 0 ? -scale('shapSize', datum.value) - 4.5 : (scale('shapSize', datum.value) + 4.5))"
 					}
 				}
 			}
@@ -365,8 +380,8 @@
 					},
 					"y": {
 						"scale": "y",
-						"field": "feature",
-						"sort": { "field": "sort" }
+						"field": "sort",
+						"sort": true
 					},
 					"fill": {
 						"scale": "color",
@@ -399,8 +414,8 @@
 					},
 					"y": {
 						"scale": "y",
-						"field": "feature",
-						"sort": { "field": "sort" }
+						"field": "sort",
+						"sort": true
 					},
 					"size": {
 						"value": 25
@@ -422,8 +437,8 @@
 					},
 					"y": {
 						"scale": "y",
-						"field": "feature",
-						"sort": { "field": "sort" }
+						"field": "sort",
+						"sort": true
 					},
 					"size": {
 						"value": 25
