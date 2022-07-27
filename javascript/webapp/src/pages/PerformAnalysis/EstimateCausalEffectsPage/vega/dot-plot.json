@@ -126,11 +126,11 @@
 			]
 		},
 		{
-			"name": "yc",
+			"name": "yFeaturesSorted",
 			"type": "point",
 			"domain": {
 				"data": "features",
-				"fields": ["sort", "feature"],
+				"field": "feature",
 				"sort": { "field": "sort", "op": "min" }
 			},
 			"range": [
@@ -322,7 +322,7 @@
 						"field": "id"
 					},
 					"y": {
-						"signal": "scale('yc', datum.key) - (datum.value < 0 ? -2.5 : (scale('shapSize', datum.value) + 2.5))"
+						"signal": "scale('yFeaturesSorted', datum.key) - (datum.value < 0 ? -2.5 : (scale('shapSize', datum.value)) +2.5)"
 					},
 					"width": {
 						"value": 1
@@ -361,7 +361,7 @@
 						"field": "id"
 					},
 					"y": {
-						"signal": "scale('yc',datum.key) - (datum.value < 0 ? -scale('shapSize', datum.value) - 4.5 : (scale('shapSize', datum.value) + 4.5))"
+						"signal": "scale('yFeaturesSorted',datum.key) - (datum.value < 0 ? -scale('shapSize', datum.value) - 4.5 : (scale('shapSize', datum.value) + 4.5))"
 					}
 				}
 			}
