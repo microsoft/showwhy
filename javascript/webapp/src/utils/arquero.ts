@@ -3,15 +3,16 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { WorkflowObject } from '@data-wrangling-components/core'
-import { createGraphManager, Workflow } from '@data-wrangling-components/core'
-import { guessDelimiter } from '@data-wrangling-components/utilities'
+import type { WorkflowObject } from '@datashaper/core'
+import { createGraphManager, Workflow } from '@datashaper/core'
+import { guessDelimiter } from '@datashaper/utilities'
 import type { TableContainer } from '@essex/arquero'
 import type { DataTableFileDefinition, Maybe } from '@showwhy/types'
 import { fromCSV } from 'arquero'
 import type ColumnTable from 'arquero/dist/types/table/column-table'
 
 import { isZipUrl, readFile } from '~utils'
+
 /**
  * Creates a default data table by parsing csv/tsv content.
  * This adds an incremented index column to the front to ensure all tables

@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { FileWithPath } from '@data-wrangling-components/utilities'
+import type { FileWithPath } from '@datashaper/utilities'
 import { useCallback, useMemo } from 'react'
 
 import { useFileCollection, useSetFileCollection } from '~state'

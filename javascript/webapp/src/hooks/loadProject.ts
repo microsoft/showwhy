@@ -6,9 +6,9 @@ import type {
 	NamedPortBinding,
 	PortBinding,
 	WorkflowObject,
-} from '@data-wrangling-components/core'
-import { Workflow } from '@data-wrangling-components/core'
-import type { BaseFile } from '@data-wrangling-components/utilities'
+} from '@datashaper/core'
+import { Workflow } from '@datashaper/core'
+import type { BaseFile } from '@datashaper/utilities'
 import type {
 	CausalFactor,
 	DataTableFileDefinition,

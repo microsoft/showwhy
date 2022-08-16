@@ -3,8 +3,6 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import type { TableContainer } from '@essex/arquero'
-import type { Maybe } from '@showwhy/types'
-import type ColumnTable from 'arquero/dist/types/table/column-table'
 import type { Resetter, SetterOrUpdater } from 'recoil'
 import {
 	atom,
@@ -38,11 +36,4 @@ export function useOutput(): [
 	const output = useOutputTable()
 	const setOutput = useSetOutputTable()
 	return [output, setOutput]
-}
-
-export function useOutputLast(): Maybe<ColumnTable> {
-	const output = useOutputTable()
-	const len = output.length
-	const last = len > 0 ? output[len - 1] : undefined
-	return last?.table
 }

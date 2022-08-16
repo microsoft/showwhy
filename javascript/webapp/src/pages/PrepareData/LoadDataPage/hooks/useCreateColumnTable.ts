@@ -3,8 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { BaseFile } from '@data-wrangling-components/utilities'
-import { guessDelimiter } from '@data-wrangling-components/utilities'
+import type { BaseFile } from '@datashaper/utilities'
+import { guessDelimiter } from '@datashaper/utilities'
 import type { Handler, Handler1, ProjectFile } from '@showwhy/types'
 import { all, op } from 'arquero'
 import type ColumnTable from 'arquero/dist/types/table/column-table'

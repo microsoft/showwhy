@@ -22,7 +22,7 @@ import type { FC } from 'react'
 import { memo, useMemo } from 'react'
 import styled from 'styled-components'
 
-import { useOutputLast } from '~state'
+import { useOutputLast } from '~hooks'
 
 interface Props {
 	completedElements: number

@@ -7,12 +7,11 @@ import type { AlternativeModels, Definition, Estimator } from '@showwhy/types'
 import { CausalModelLevel } from '@showwhy/types'
 import { useCallback, useMemo } from 'react'
 
-import { useAlternativeModels } from '~hooks'
+import { useAlternativeModels, useOutputLast } from '~hooks'
 import {
 	useConfidenceInterval,
 	useDefinitions,
 	useEstimators,
-	useOutputLast,
 	useRefutationCount,
 } from '~state'
 

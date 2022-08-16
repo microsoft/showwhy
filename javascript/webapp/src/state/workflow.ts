@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { Workflow } from '@data-wrangling-components/core'
+import { Workflow } from '@datashaper/core'
 import type { Resetter, SetterOrUpdater } from 'recoil'
 import {
 	atom,

@@ -6,8 +6,8 @@
 import { CausalFactorType, DefinitionType } from '@showwhy/types'
 import { useMemo } from 'react'
 
-import { useAllVariables } from '~hooks'
-import { useCausalFactors, useDefinitions, useOutputLast } from '~state'
+import { useAllVariables, useOutputLast } from '~hooks'
+import { useCausalFactors, useDefinitions } from '~state'
 import { assertDataType } from '~utils'
 
 export function isColumnValid(

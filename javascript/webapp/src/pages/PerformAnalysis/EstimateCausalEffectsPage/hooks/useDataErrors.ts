@@ -5,13 +5,8 @@
 
 import { useMemo } from 'react'
 
-import { useAllVariables, useIsDataTypeValid } from '~hooks'
-import {
-	useCausalFactors,
-	useDefinitions,
-	useOutputLast,
-	useSubjectIdentifier,
-} from '~state'
+import { useAllVariables, useIsDataTypeValid, useOutputLast } from '~hooks'
+import { useCausalFactors, useDefinitions, useSubjectIdentifier } from '~state'
 
 import { useIsMicrodata } from './useIsMicrodata'
 
