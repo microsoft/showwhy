@@ -5,6 +5,7 @@
 
 import { CausalFactorType, DefinitionType } from '@showwhy/types'
 import { useMemo } from 'react'
+
 import { useAllVariables, useOutputTable } from '~hooks'
 import { useCausalFactors, useDefinitions } from '~state'
 import { assertDataType } from '~utils'

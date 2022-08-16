@@ -11,10 +11,12 @@ import type {
 } from '@showwhy/types'
 import type ColumnTable from 'arquero/dist/types/table/column-table'
 import { useCallback } from 'react'
+
 import { useOutputTable } from '~hooks'
 import { api } from '~resources'
 import { useCausalFactors, useDefinitions, useProjectFiles } from '~state'
 import { createZipFormData } from '~utils'
+
 import { OUTPUT_FILE_NAME } from '../EstimateCausalEffectPage.constants'
 import { useAllColumns } from './useAllColumns'
 

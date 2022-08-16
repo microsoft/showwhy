@@ -5,6 +5,7 @@
 
 import type { Maybe } from '@showwhy/types'
 import type ColumnTable from 'arquero/dist/types/table/column-table'
+
 import { useOutputTables, useProjectFiles } from '~state'
 
 export function useOutputTable(): Maybe<ColumnTable> {

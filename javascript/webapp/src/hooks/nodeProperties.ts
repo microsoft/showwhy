@@ -6,6 +6,7 @@
 import type { AlternativeModels, Definition, Estimator } from '@showwhy/types'
 import { CausalModelLevel } from '@showwhy/types'
 import { useCallback, useMemo } from 'react'
+
 import { useAlternativeModels, useOutputTable } from '~hooks'
 import {
 	useConfidenceInterval,

@@ -7,6 +7,7 @@ import type { TableContainer } from '@essex/arquero'
 import type { IDetailsColumnProps, IRenderFunction } from '@fluentui/react'
 import type { FC } from 'react'
 import { memo, useEffect, useMemo, useState } from 'react'
+
 import { useOutputs, useProjectFiles, useWorkflowState } from '~state'
 
 interface Props {
