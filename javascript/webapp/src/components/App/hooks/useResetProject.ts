@@ -5,7 +5,6 @@
 
 import type { Handler } from '@showwhy/types'
 import { useCallback } from 'react'
-
 import {
 	useResetCausalFactors,
 	useResetConfidenceInterval,
@@ -16,7 +15,7 @@ import {
 	useResetEstimators,
 	useResetFileCollection,
 	useResetHoverState,
-	useResetOutputTable,
+	useResetOutputTables,
 	useResetPrimarySpecificationConfig,
 	useResetProjectFiles,
 	useResetQuestion,
@@ -42,7 +41,7 @@ export function useResetProject(): Handler {
 	const resetPrimarySpecificationConfig = useResetPrimarySpecificationConfig()
 	const resetHoverState = useResetHoverState()
 	const resetSubjectIdentifier = useResetSubjectIdentifier()
-	const resetOutputTable = useResetOutputTable()
+	const resetOutputTables = useResetOutputTables()
 	const resetTablePrepSpecification = useResetTablesPrepSpecification()
 	const resetConfigJson = useResetConfigJson()
 	const resetConfidenceInterval = useResetConfidenceInterval()
@@ -66,7 +65,7 @@ export function useResetProject(): Handler {
 		resetSpecificationCurveConfig()
 		resetPrimarySpecificationConfig()
 		resetSubjectIdentifier()
-		resetOutputTable()
+		resetOutputTables()
 		resetTablePrepSpecification()
 		resetConfigJson()
 		resetConfidenceInterval()
@@ -89,7 +88,7 @@ export function useResetProject(): Handler {
 		resetSpecificationCurveConfig,
 		resetPrimarySpecificationConfig,
 		resetSubjectIdentifier,
-		resetOutputTable,
+		resetOutputTables,
 		resetTablePrepSpecification,
 		resetConfigJson,
 		resetConfidenceInterval,

@@ -5,11 +5,10 @@
 
 import type { Maybe } from '@showwhy/types'
 import type ColumnTable from 'arquero/dist/types/table/column-table'
+import { useOutputTables, useProjectFiles } from '~state'
 
-import { useOutputTable, useProjectFiles } from '~state'
-
-export function useOutputLast(): Maybe<ColumnTable> {
-	const output = useOutputTable()
+export function useOutputTable(): Maybe<ColumnTable> {
+	const output = useOutputTables()
 	const files = useProjectFiles()
 	const outputLen = output.length
 	if (outputLen > 0) {

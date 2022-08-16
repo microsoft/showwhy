@@ -21,8 +21,7 @@ import type {
 import type { FC } from 'react'
 import { memo, useMemo } from 'react'
 import styled from 'styled-components'
-
-import { useOutputLast } from '~hooks'
+import { useOutputTable } from '~hooks'
 
 interface Props {
 	completedElements: number
@@ -48,7 +47,7 @@ export const CompletedElements: FC<Props> = memo(function CompletedElements({
 	subjectIdentifier,
 	onSetSubjectIdentifier,
 }) {
-	const outputTable = useOutputLast()
+	const outputTable = useOutputTable()
 	const outputTableColumns = useMemo(
 		() => outputTable?.columnNames(),
 		[outputTable],
