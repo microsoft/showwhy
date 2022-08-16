@@ -3,8 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { useHandleFilesUpload } from '@datashaper/react'
-import { FileType } from '@datashaper/utilities'
+import { useHandleFilesUpload } from '@data-wrangling-components/react'
+import { FileType } from '@data-wrangling-components/utilities'
 import type { IContextualMenuItem } from '@fluentui/react'
 import { useMemo } from 'react'
 

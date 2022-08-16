@@ -3,8 +3,11 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { BaseFile, FileCollection } from '@datashaper/utilities'
-import { FileType } from '@datashaper/utilities'
+import type {
+	BaseFile,
+	FileCollection,
+} from '@data-wrangling-components/utilities'
+import { FileType } from '@data-wrangling-components/utilities'
 import type { AsyncHandler1, FileDefinition } from '@showwhy/types'
 import { ProjectSource } from '@showwhy/types'
 

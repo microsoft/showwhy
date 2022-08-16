@@ -3,9 +3,16 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { Workflow, WorkflowObject } from '@datashaper/core'
-import type { FileCollection, FileWithPath } from '@datashaper/utilities'
-import { createFileWithPath, fetchFile, FileType } from '@datashaper/utilities'
+import type { Workflow, WorkflowObject } from '@data-wrangling-components/core'
+import type {
+	FileCollection,
+	FileWithPath,
+} from '@data-wrangling-components/utilities'
+import {
+	createFileWithPath,
+	fetchFile,
+	FileType,
+} from '@data-wrangling-components/utilities'
 import { isStatus } from '@showwhy/api-client'
 import type {
 	AsyncHandler,

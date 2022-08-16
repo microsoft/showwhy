@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { FileCollection } from '@datashaper/utilities'
+import { FileCollection } from '@data-wrangling-components/utilities'
 import type { Resetter, SetterOrUpdater } from 'recoil'
 import {
 	atom,

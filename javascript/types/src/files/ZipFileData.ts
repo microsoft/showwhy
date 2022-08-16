@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { BaseFile, Json } from '@datashaper/utilities'
+import type { BaseFile, Json } from '@data-wrangling-components/utilities'
 import type { RunHistory, SignificanceTest } from '@showwhy/types'
 
 export interface ZipFileData {

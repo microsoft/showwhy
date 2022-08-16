@@ -3,8 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { FileCollection } from '@datashaper/utilities'
-import { FileType, isZipFile } from '@datashaper/utilities'
+import type { FileCollection } from '@data-wrangling-components/utilities'
+import { FileType, isZipFile } from '@data-wrangling-components/utilities'
 import type {
 	DropFilesCount,
 	Handler,

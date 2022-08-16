@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { createDefaultCommandBar } from '@datashaper/react'
+import { createDefaultCommandBar } from '@data-wrangling-components/react'
 import type { ICommandBarItemProps, IDetailsColumnProps } from '@fluentui/react'
 import { useCallback } from 'react'
 

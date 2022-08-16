@@ -3,7 +3,10 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { BaseFile, FileCollection } from '@datashaper/utilities'
+import type {
+	BaseFile,
+	FileCollection,
+} from '@data-wrangling-components/utilities'
 import {
 	createBaseFile,
 	createFile,
@@ -11,7 +14,7 @@ import {
 	FileType,
 	FileWithPath,
 	toZip,
-} from '@datashaper/utilities'
+} from '@data-wrangling-components/utilities'
 import type {
 	DataTableFileDefinition,
 	Maybe,

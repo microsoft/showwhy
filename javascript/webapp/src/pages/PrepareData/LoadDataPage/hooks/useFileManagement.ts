@@ -3,8 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { FileCollection } from '@datashaper/utilities'
-import { FileType } from '@datashaper/utilities'
+import type { FileCollection } from '@data-wrangling-components/utilities'
+import { FileType } from '@data-wrangling-components/utilities'
 import type { Handler, Handler1, ProjectFile } from '@showwhy/types'
 import { useCallback } from 'react'
 import { v4 as uuidv4 } from 'uuid'
