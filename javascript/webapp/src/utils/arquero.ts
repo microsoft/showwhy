@@ -12,6 +12,7 @@ import { fromCSV } from 'arquero'
 import type ColumnTable from 'arquero/dist/types/table/column-table'
 
 import { isZipUrl, readFile } from '~utils'
+
 /**
  * Creates a default data table by parsing csv/tsv content.
  * This adds an incremented index column to the front to ensure all tables

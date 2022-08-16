@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { Workflow,WorkflowObject } from '@data-wrangling-components/core'
+import type { Workflow, WorkflowObject } from '@data-wrangling-components/core'
 import type {
 	FileCollection,
 	FileWithPath,
@@ -21,7 +21,7 @@ import type {
 	Question,
 	Workspace,
 } from '@showwhy/types'
-import { DownloadType, NodeResponseStatus } from '@showwhy/types';
+import { DownloadType, NodeResponseStatus } from '@showwhy/types'
 import { useCallback, useMemo } from 'react'
 
 import { useGetStepUrlsByStatus } from '~hooks'
@@ -96,30 +96,27 @@ export function useSaveProject(): AsyncHandler {
 function useTables(fileCollection: FileCollection) {
 	const projectFiles = useProjectFiles()
 	const oldConfig = useConfigJson()
-	return useCallback(
-		() => {
-			const files = fileCollection.list(FileType.table)
-			const primary = oldConfig.tables?.find(t => t.primary)
-			return files.map(file => {
-				const isPrimary = files.length === 1 || file.name === primary?.name
-				const project = projectFiles.find(p => p.name === file.name)
-				const definition: DataTableFileDefinition = {
-					url: `zip://${file.name}`,
-					name: file.name,
-					primary: isPrimary,
-					autoType: !!project?.autoType,
-				}
-				if (project?.delimiter) {
-					definition.delimiter = project.delimiter
-				}
-				if (!project?.loadedCorrectly) {
-					definition.loadedCorrectly = false
-				}
-				return definition
-			})
-		},
-		[fileCollection, projectFiles, oldConfig],
-	)
+	return useCallback(() => {
+		const files = fileCollection.list(FileType.table)
+		const primary = oldConfig.tables?.find(t => t.primary)
+		return files.map(file => {
+			const isPrimary = files.length === 1 || file.name === primary?.name
+			const project = projectFiles.find(p => p.name === file.name)
+			const definition: DataTableFileDefinition = {
+				url: `zip://${file.name}`,
+				name: file.name,
+				primary: isPrimary,
+				autoType: !!project?.autoType,
+			}
+			if (project?.delimiter) {
+				definition.delimiter = project.delimiter
+			}
+			if (!project?.loadedCorrectly) {
+				definition.loadedCorrectly = false
+			}
+			return definition
+		})
+	}, [fileCollection, projectFiles, oldConfig])
 }
 
 function useResult(type?: DownloadType): Promise<Maybe<FileWithPath>> {

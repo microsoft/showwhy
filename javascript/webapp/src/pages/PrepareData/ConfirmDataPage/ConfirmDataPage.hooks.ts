@@ -7,11 +7,11 @@ import type { CausalFactor, Definition, Maybe } from '@showwhy/types'
 import type ColumnTable from 'arquero/dist/types/table/column-table'
 import { useMemo } from 'react'
 
-import { useAllVariables } from '~hooks'
-import { useCausalFactors, useDefinitions, useOutputLast } from '~state'
+import { useAllVariables, useOutputTable } from '~hooks'
+import { useCausalFactors, useDefinitions } from '~state'
 
 export function useOutput(): { output: Maybe<ColumnTable> } {
-	const outputTable = useOutputLast()
+	const outputTable = useOutputTable()
 	const causalFactors = useCausalFactors()
 	const definitions = useDefinitions()
 	const allVariables = useAllVariables(causalFactors, definitions)

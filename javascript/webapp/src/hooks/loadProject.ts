@@ -31,7 +31,7 @@ import {
 	useSetRunAsDefault,
 } from '~hooks'
 import {
-	useOutput,
+	useOutputs,
 	useSetCausalFactors,
 	useSetConfidenceInterval,
 	useSetConfigJson,
@@ -82,7 +82,7 @@ export function useLoadProject(
 	const setTablePrepSpec = useSetTablesPrepSpecification()
 	const setConfigJson = useSetConfigJson()
 	const [, setWorkflow] = useWorkflowState()
-	const [, setOutput] = useOutput()
+	const [, setOutputs] = useOutputs()
 
 	return useCallback(
 		async (definition?: FileDefinition, zip: ZipFileData = {}) => {
@@ -158,7 +158,7 @@ export function useLoadProject(
 			)
 			const processedTables = await Promise.all(processedTablesPromise)
 			setFiles(processedTables)
-			setOutput(
+			setOutputs(
 				processedTables.map(t => ({ id: t.id || t.name, table: t.table })),
 			)
 			wf?.length && setWorkflow(wf[0] as Workflow)
@@ -190,7 +190,7 @@ export function useLoadProject(
 			setSignificanceTests,
 			setDefinitions,
 			setWorkflow,
-			setOutput,
+			setOutputs,
 		],
 	)
 }

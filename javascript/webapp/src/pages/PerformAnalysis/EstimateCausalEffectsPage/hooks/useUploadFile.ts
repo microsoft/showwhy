@@ -12,13 +12,9 @@ import type {
 import type ColumnTable from 'arquero/dist/types/table/column-table'
 import { useCallback } from 'react'
 
+import { useOutputTable } from '~hooks'
 import { api } from '~resources'
-import {
-	useCausalFactors,
-	useDefinitions,
-	useOutputLast,
-	useProjectFiles,
-} from '~state'
+import { useCausalFactors, useDefinitions, useProjectFiles } from '~state'
 import { createZipFormData } from '~utils'
 
 import { OUTPUT_FILE_NAME } from '../EstimateCausalEffectPage.constants'
@@ -29,7 +25,7 @@ export function useUploadFile(
 	falseLoadingFile: Handler,
 ): () => Promise<Maybe<UploadFilesResponse>> {
 	const projectFiles = useProjectFiles()
-	const outputTable = useOutputLast()
+	const outputTable = useOutputTable()
 	const definitions = useDefinitions()
 	const causalFactors = useCausalFactors()
 	const allColumns = useAllColumns(causalFactors, definitions)

@@ -7,12 +7,11 @@ import type { AlternativeModels, Definition, Estimator } from '@showwhy/types'
 import { CausalModelLevel } from '@showwhy/types'
 import { useCallback, useMemo } from 'react'
 
-import { useAlternativeModels } from '~hooks'
+import { useAlternativeModels, useOutputTable } from '~hooks'
 import {
 	useConfidenceInterval,
 	useDefinitions,
 	useEstimators,
-	useOutputLast,
 	useRefutationCount,
 } from '~state'
 
@@ -27,7 +26,7 @@ export function useNodeProperties(): {
 	intermediateLevel: AlternativeModels
 	unadjustedModel: AlternativeModels
 } {
-	const outputTable = useOutputLast()
+	const outputTable = useOutputTable()
 	const definitions = useDefinitions()
 	const estimators = useEstimators()
 	const refutationCount = useRefutationCount()
