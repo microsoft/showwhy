@@ -4,10 +4,8 @@
  */
 
 import { useMemo } from 'react'
-
 import { useAllVariables, useIsDataTypeValid, useOutputTable } from '~hooks'
 import { useCausalFactors, useDefinitions, useSubjectIdentifier } from '~state'
-
 import { useIsMicrodata } from './useIsMicrodata'
 
 export function useDataErrors(): {
@@ -18,7 +16,6 @@ export function useDataErrors(): {
 	isValidDataType: boolean
 	hasAnyError: boolean
 } {
-	debugger
 	const outputTable = useOutputTable()
 	const subjectIdentifier = useSubjectIdentifier()
 	const definitions = useDefinitions()
