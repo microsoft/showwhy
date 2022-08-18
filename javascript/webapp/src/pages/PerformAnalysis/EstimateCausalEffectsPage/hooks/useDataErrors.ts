@@ -4,8 +4,10 @@
  */
 
 import { useMemo } from 'react'
+
 import { useAllVariables, useIsDataTypeValid, useOutputTable } from '~hooks'
 import { useCausalFactors, useDefinitions, useSubjectIdentifier } from '~state'
+
 import { useIsMicrodata } from './useIsMicrodata'
 
 export function useDataErrors(): {
