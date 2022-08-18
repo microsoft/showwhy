@@ -18,6 +18,7 @@ export function useDataErrors(): {
 	isValidDataType: boolean
 	hasAnyError: boolean
 } {
+	debugger
 	const outputTable = useOutputTable()
 	const subjectIdentifier = useSubjectIdentifier()
 	const definitions = useDefinitions()

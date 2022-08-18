@@ -24,6 +24,13 @@ import {
 } from '~hooks'
 import { useEstimators } from '~state'
 
+import {
+	ColumnDataTypeMessage,
+	IdentifierMessage,
+	MicrodataMessage,
+	OutputTableColumnsMessage,
+	VariablesMessage,
+} from './components/ErrorMessages'
 import { EstimatedEffectConfig } from './components/EstimatedEffectConfig'
 import { EstimatorsRunProgress } from './components/EstimatorsRunProgress'
 import { SpecificationDescription } from './components/SpecificationDescription'
@@ -52,11 +59,11 @@ export const EstimateCausalEffectPage: React.FC = memo(
 		} = useEstimateLogic(isProcessing)
 
 		const {
-			// isMicrodata,
-			// isMissingVariable,
-			// isMissingIdentifier,
-			// isNotInOutputTable,
-			// isValidDataType,
+			isMicrodata,
+			isMissingVariable,
+			isMissingIdentifier,
+			isNotInOutputTable,
+			isValidDataType,
 			hasAnyError,
 		} = useDataErrors()
 
@@ -99,11 +106,11 @@ export const EstimateCausalEffectPage: React.FC = memo(
 					<ContainerFlexRow justifyContent="space-between">
 						<EstimatesContainer>
 							<Title>Estimate causal effects</Title>
-							{/* {isMissingVariable && <VariablesMessage />}
+							{isMissingVariable && <VariablesMessage />}
 							{isMissingIdentifier && <IdentifierMessage />}
 							{!isMicrodata && <MicrodataMessage />}
 							{isNotInOutputTable && <OutputTableColumnsMessage />}
-							{!isValidDataType && <ColumnDataTypeMessage />} */}
+							{!isValidDataType && <ColumnDataTypeMessage />}
 							{!isProcessing && (
 								<Container>
 									<PrimaryButton
