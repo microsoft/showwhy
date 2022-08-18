@@ -2,12 +2,9 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import type {
-	DropzoneProps,
-	FileRejection,
-} from '@data-wrangling-components/react'
-import { Dropzone } from '@data-wrangling-components/react'
-import type { FileCollection } from '@data-wrangling-components/utilities'
+import type { DropzoneProps, FileRejection } from '@datashaper/react'
+import { Dropzone } from '@datashaper/react'
+import type { FileCollection } from '@datashaper/utilities'
 import { Icon, Spinner } from '@fluentui/react'
 import type { DropFilesCount, Maybe } from '@showwhy/types'
 import { type FC, memo, useMemo } from 'react'

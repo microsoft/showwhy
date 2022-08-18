@@ -3,9 +3,9 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { WorkflowObject } from '@data-wrangling-components/core'
-import { createGraphManager, Workflow } from '@data-wrangling-components/core'
-import { guessDelimiter } from '@data-wrangling-components/utilities'
+import type { WorkflowObject } from '@datashaper/core'
+import { createGraphManager, Workflow } from '@datashaper/core'
+import { guessDelimiter } from '@datashaper/utilities'
 import type { TableContainer } from '@essex/arquero'
 import type { DataTableFileDefinition, Maybe } from '@showwhy/types'
 import { fromCSV } from 'arquero'

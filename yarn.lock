@@ -867,40 +867,51 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@data-wrangling-components/core@npm:^7.1.0, @data-wrangling-components/core@npm:^7.1.1":
-  version: 7.1.1
-  resolution: "@data-wrangling-components/core@npm:7.1.1"
+"@datashaper/arquero@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "@datashaper/arquero@npm:4.0.0"
   dependencies:
-    "@essex/arquero": ^3.0.0
-    "@essex/dataflow": ^0.1.2
+    "@datashaper/schema": ^3.0.0
+    lodash-es: ^4.17.21
+  peerDependencies:
+    arquero: ^4.8.7
+  checksum: a14c16ea8321f55e9b729e7b758f224f2e18422b1d12f3c2350cdde72663875cccd3e78efe4ffaa9cc89f67e9867c40ba199c79b6d9f5c082d3e6be7f6af9193
+  languageName: node
+  linkType: hard
+
+"@datashaper/core@npm:^9.0.1":
+  version: 9.0.1
+  resolution: "@datashaper/core@npm:9.0.1"
+  dependencies:
+    "@datashaper/arquero": ^4.0.0
+    "@datashaper/schema": ^3.0.0
+    ajv: ^8.11.0
     d3-time-format: ^4.1.0
     lodash-es: ^4.17.21
     rxjs: ^7.5.5
-    toposort: ^2.0.2
+    uuid: ^8.3.2
   peerDependencies:
     "@types/node": "*"
     arquero: ^4.8.7
   peerDependenciesMeta:
     "@types/node":
       optional: true
-  checksum: ce7fb6188ecb8e7bd3d956c72fb02133d093ea8e586f69e989d180fd87f2514b452786da9be4fb50cd6717f3974e70e1e190364940669bba91079535cfb79ca5
+  checksum: dcee29f6c4b8d1bfaa7a9baeb3636d62c79fd24f610741095d9c04fa6878cbd6e914ad445f43db4451ec17b6f6c47fb4d54c9ac8b71704d849923986c613fe5b
   languageName: node
   linkType: hard
 
-"@data-wrangling-components/react@npm:^6.3.0":
-  version: 6.5.0
-  resolution: "@data-wrangling-components/react@npm:6.5.0"
+"@datashaper/react@npm:^8.0.1":
+  version: 8.0.1
+  resolution: "@datashaper/react@npm:8.0.1"
   dependencies:
-    "@data-wrangling-components/core": ^7.1.1
-    "@data-wrangling-components/schema": ^1.4.1
-    "@data-wrangling-components/utilities": ^2.3.1
-    "@data-wrangling-components/verb-guidance": ^0.1.15
-    "@essex/arquero": ^3.1.0
-    "@essex/arquero-react": ^1.2.0
+    "@datashaper/arquero": ^4.0.0
+    "@datashaper/core": ^9.0.1
+    "@datashaper/schema": ^3.0.0
+    "@datashaper/utilities": ^2.3.1
+    "@datashaper/verb-guidance": ^0.1.15
     "@essex/charts-react": ^1.0.5
-    "@essex/dataflow": ^0.1.2
     "@essex/styled-components": ^0.0.2
-    "@essex/themed-components": ^2.2.7
+    "@essex/themed-components": ^2.3.2
     "@fluentui/font-icons-mdl2": ^8.4.2
     d3-format: ^3.1.0
     immer: ^9.0.14
@@ -920,35 +931,32 @@ __metadata:
     arquero: ^4.8.7
     react: ^17.0.2
     styled-components: ^5.3.0
-  checksum: d54f52a323baa048c3ffeb11dc4342c4e110a02e5893c74030bc9153a48489463ecc389d99881e09d3b4a14293f424cf1a7887c62c22b510419fcaf7265692ee
+  checksum: 12ea800aab9de706d34e5f3a50bc27998ca7d8e2797462566e4c812253591db4457c8734e1e9ac99220cfec5fe959af58df66cf1e69c0151e5b497938238ca10
   languageName: node
   linkType: hard
 
-"@data-wrangling-components/schema@npm:^1.4.1":
-  version: 1.4.2
-  resolution: "@data-wrangling-components/schema@npm:1.4.2"
-  dependencies:
-    "@data-wrangling-components/core": ^7.1.1
-    ajv: ^8.11.0
-  checksum: 4e90ee07dbcd9dc55b01d17e498a5c725c8f6edf784073963d0dd5c8b6759d42e6dad8fefde9c90934dbbfe874abd97d77e767e2f4c3dd2ade6acebccc52c94b
+"@datashaper/schema@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "@datashaper/schema@npm:3.0.0"
+  checksum: 18fca2457230406b75346d1de271008f34a0e1dfc69538c4e522afadb9bfb035596fb5db063cc2b384622d542588e72ebec5caa1f79185b770d049f4bb5a84fd
   languageName: node
   linkType: hard
 
-"@data-wrangling-components/utilities@npm:^2.3.0, @data-wrangling-components/utilities@npm:^2.3.1":
+"@datashaper/utilities@npm:^2.3.1":
   version: 2.3.1
-  resolution: "@data-wrangling-components/utilities@npm:2.3.1"
+  resolution: "@datashaper/utilities@npm:2.3.1"
   dependencies:
     "@zip.js/zip.js": ^2.4.26
   peerDependencies:
     arquero: ^4.8.7
-  checksum: 9434c3e258b998cdc1d0a63e50adc6c2f80ee57f9228878238df17ef5e5e99609cc76b275c910301a7a2611a9cd3f3031c528960cb4764b0c6fa538b49ec80ad
+  checksum: 5dc64884116be35a7e5cf2f66e9651524089c9ab1172902c196e3364f80974250fe633c19af18880e90ad5c60756014264e56f5c8fbd0fbed948af325257e5eb
   languageName: node
   linkType: hard
 
-"@data-wrangling-components/verb-guidance@npm:^0.1.15":
+"@datashaper/verb-guidance@npm:^0.1.15":
   version: 0.1.15
-  resolution: "@data-wrangling-components/verb-guidance@npm:0.1.15"
-  checksum: 2fdcb22301975f36d02db572e24b04b910e2e8cef3213e065aa8c1d0af7e7b110cd6c476de7b46a1eaf7a83de5ee917d1a55a3b670e8a14cfa08451754344264
+  resolution: "@datashaper/verb-guidance@npm:0.1.15"
+  checksum: 0edd7dcc8a0fb4b04b6d20172f4fb5e12b1328e7af5d762ca9b21615df653af57a6edd686307708e975b67a76f1f9660e46bf2cc38f6fa236c95656510d7943e
   languageName: node
   linkType: hard
 
@@ -1038,31 +1046,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@essex/arquero-react@npm:^1.2.0":
-  version: 1.2.1
-  resolution: "@essex/arquero-react@npm:1.2.1"
-  dependencies:
-    "@essex/arquero": ^3.1.0
-    "@essex/charts-react": ^1.1.0
-    "@essex/styled-components": ^0.0.2
-    d3-format: ^3.1.0
-    lodash-es: ^4.17.21
-    react-if: ^4.1.4
-  peerDependencies:
-    "@fluentui/react": ">= 8.24.0"
-    "@fluentui/utilities": ">= 8.2.1"
-    "@thematic/core": ">= 1.3.0"
-    "@thematic/d3": ">= 1.3.0"
-    "@thematic/react": ">= 1.3.0"
-    "@types/react-is": ">= 17.0.3"
-    arquero: ">= 4.8.7"
-    react: ">= 18"
-    react-is: ">= 18.1.0"
-    styled-components: ">= 5"
-  checksum: 9b86d89d6d24ab4011ff7aa0c4c81b00325cac84f358b9684a73c3c9a60e303dad70b3c2f35b42ac5d755405d03ad4b81be7a0a3c79c12f16fb7a586d3209bd5
-  languageName: node
-  linkType: hard
-
 "@essex/arquero@npm:^3.0.0":
   version: 3.0.0
   resolution: "@essex/arquero@npm:3.0.0"
@@ -1071,17 +1054,6 @@ __metadata:
   peerDependencies:
     arquero: ^4.8.7
   checksum: c49d122d5d7ed53842648f0a77a3bfceaa222ddc5103568d39383a8f7ba1e6103e04ee6bd190078c82ae5c2d6127a7a92b884660e4d1bf649ead5d5d8ef62cb4
-  languageName: node
-  linkType: hard
-
-"@essex/arquero@npm:^3.1.0":
-  version: 3.1.0
-  resolution: "@essex/arquero@npm:3.1.0"
-  dependencies:
-    lodash-es: ^4.17.21
-  peerDependencies:
-    arquero: ^4.8.7
-  checksum: 65e73d4f6867635aecd9e5965efd09f59d2065cc4989a8429b76e406e9a4e580be9f628cb2a66d1a6c4846ed99cec661e1d75683bec91dcbc431ee664ba9d403
   languageName: node
   linkType: hard
 
@@ -1100,35 +1072,6 @@ __metadata:
     "@thematic/react": ^1.3.0
     react: ">= 18"
   checksum: 9f89bb3d541d4b159fa8ad0026b8dc6a276b5e8b5228b24b933007a415ed7ce7f1e0ba70fff44eb61a7a8648516b0ff5d444419dd6fa81f9ece796e7a5d11055
-  languageName: node
-  linkType: hard
-
-"@essex/charts-react@npm:^1.1.0":
-  version: 1.1.0
-  resolution: "@essex/charts-react@npm:1.1.0"
-  dependencies:
-    d3-format: ^3.1.0
-    d3-scale: ^4.0.2
-    d3-selection: ^3.0.0
-    d3-shape: ^3.1.0
-    lodash-es: ^4.17.21
-  peerDependencies:
-    "@thematic/core": ^1.3.0
-    "@thematic/d3": ^1.3.0
-    "@thematic/react": ^1.3.0
-    react: ">= 18"
-  checksum: 1e4e9d11621545f577b582e3ba159b28b2ccf6757bf92fd67588523531a7843b5ee8d8fe39ebe260b2bcb7a7c5210bbc48b48d537d184d08d8f9070c29c63538
-  languageName: node
-  linkType: hard
-
-"@essex/dataflow@npm:^0.1.2":
-  version: 0.1.2
-  resolution: "@essex/dataflow@npm:0.1.2"
-  dependencies:
-    "@essex/toposort": ^1.0.1
-    rxjs: ^7.5.5
-    uuid: ^8.3.2
-  checksum: 63998bce98ea7afd35ea00ddd41b7359f253aea1996d38fb95232019cf75156267cf0583296e38febcb4b634a92fb134775cbc3e740b74b2488cbf2cfd99eed5
   languageName: node
   linkType: hard
 
@@ -1476,9 +1419,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@essex/themed-components@npm:^2.2.7":
-  version: 2.2.7
-  resolution: "@essex/themed-components@npm:2.2.7"
+"@essex/themed-components@npm:^2.3.2":
+  version: 2.3.2
+  resolution: "@essex/themed-components@npm:2.3.2"
   dependencies:
     "@essex/hooks": ^4.0.12
     "@essex/react-animate-height": ^2.1.4
@@ -1508,7 +1451,7 @@ __metadata:
     "@uifabric/icons": ">= 7.3.38"
     react: ">= 18"
     react-dom: ">= 18"
-  checksum: 17e6f2db3ae3e51b0a3dd5c070c942a430d231223d25faea4cdf06428b344928a9bebe64c6c2592da637784e07aee8ec84bf132ea452eb3ff70cf32386709a65
+  checksum: dcd4c88c7775aa5f761df1f140e85b7333cff978e4fc605fffb5111ba6fb9e34bf1b0c217b56556ee5961332c94e7a64839d42cc6187ce7fe6998a489f61f8f2
   languageName: node
   linkType: hard
 
@@ -1530,13 +1473,6 @@ __metadata:
   version: 3.0.8
   resolution: "@essex/toolbox@npm:3.0.8"
   checksum: 70cecf83f223a182c0a142e721f3d8689b0ec816174733e5403576d06b697bb8a8489f655479a2d358830f58fc71aef033dee6e64b2e90c6d1cb332f73bee18d
-  languageName: node
-  linkType: hard
-
-"@essex/toposort@npm:^1.0.1":
-  version: 1.0.1
-  resolution: "@essex/toposort@npm:1.0.1"
-  checksum: ad9682e9804b75953bb2eca1df962510e7e80f2ac183da1db61f98d40b610fe02a60758cbd1b83048a0883fa4a895bf2e6ba42d1313a2c82448d64752481f0c7
   languageName: node
   linkType: hard
 
@@ -2358,9 +2294,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/components@workspace:javascript/components"
   dependencies:
-    "@data-wrangling-components/core": ^7.1.0
-    "@data-wrangling-components/react": ^6.3.0
-    "@data-wrangling-components/utilities": ^2.3.0
+    "@datashaper/core": ^9.0.1
+    "@datashaper/react": ^8.0.1
+    "@datashaper/utilities": ^2.3.1
     "@essex/hooks": ^4.0.6
     "@essex/jest-config": ^21.0.8
     "@essex/scripts": ^20.4.7
@@ -2395,9 +2331,9 @@ __metadata:
     styled-components: ^5.3.5
     vega: ^5.22.1
   peerDependencies:
-    "@data-wrangling-components/core": ^7.1.0
-    "@data-wrangling-components/react": ^6.3.0
-    "@data-wrangling-components/utilities": ^2.3.0
+    "@datashaper/core": ^9.0.1
+    "@datashaper/react": ^8.0.1
+    "@datashaper/utilities": ^2.3.1
     "@essex/hooks": ^4.0.6
     "@essex/themed-components": ^2.2.6
     "@fluentui/font-icons-mdl2": ^8.3.1
@@ -2438,8 +2374,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/types@workspace:javascript/types"
   dependencies:
-    "@data-wrangling-components/core": ^7.1.0
-    "@data-wrangling-components/utilities": ^2.3.0
+    "@datashaper/core": ^9.0.1
+    "@datashaper/utilities": ^2.3.1
     "@essex/scripts": ^20.4.7
     "@essex/tsconfig-base": ^1.0.2
     "@types/react": ^17.0.39
@@ -2451,9 +2387,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/webapp@workspace:javascript/webapp"
   dependencies:
-    "@data-wrangling-components/core": ^7.1.0
-    "@data-wrangling-components/react": ^6.3.0
-    "@data-wrangling-components/utilities": ^2.3.0
+    "@datashaper/core": ^9.0.1
+    "@datashaper/react": ^8.0.1
+    "@datashaper/utilities": ^2.3.1
     "@essex/arquero": ^3.0.0
     "@essex/arquero-react": ^1.1.0
     "@essex/hooks": ^4.0.11
@@ -11271,13 +11207,6 @@ __metadata:
     topomerge: bin/topomerge
     topoquantize: bin/topoquantize
   checksum: 8c029a4f18324ace0b8b55dd90edbd40c9e3c6de18bafbb5da37ca20ebf20e26fbd4420891acb3c2c264e214185f7557871f5651a9eee517028663be98d836de
-  languageName: node
-  linkType: hard
-
-"toposort@npm:^2.0.2":
-  version: 2.0.2
-  resolution: "toposort@npm:2.0.2"
-  checksum: d64c74b570391c9432873f48e231b439ee56bc49f7cb9780b505cfdf5cb832f808d0bae072515d93834dd6bceca5bb34448b5b4b408335e4d4716eaf68195dcb
   languageName: node
   linkType: hard
 

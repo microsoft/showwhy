@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { PrepareDataFull } from '@data-wrangling-components/react'
+import { PrepareDataFull } from '@datashaper/react'
 import type { TableContainer } from '@essex/arquero'
 import type { IDetailsColumnProps, IRenderFunction } from '@fluentui/react'
 import type { FC } from 'react'
