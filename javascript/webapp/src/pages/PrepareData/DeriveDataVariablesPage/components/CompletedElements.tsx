@@ -137,14 +137,26 @@ function useList(
 	outputTableColumns: string[] = [],
 ): ListElement[] {
 	return useMemo((): any => {
+		const isInOutput = !!subjectIdentifier
+			? outputTableColumns.includes(subjectIdentifier)
+			: true
+		const isComplete = !!subjectIdentifier
+
+		const notInOutput = isComplete && !isInOutput
+
 		const all: ListElement[] = [
 			{
 				variable: `Subject identifier${
 					subjectIdentifier ? `: ${subjectIdentifier}` : ''
 				}`,
 				key: 'Subject identifier',
-				isComplete: !!subjectIdentifier,
-				icon: !!subjectIdentifier ? 'SkypeCircleCheck' : 'SkypeCircleMinus',
+				isComplete: isComplete,
+				notInOutput,
+				icon: !isInOutput
+					? 'Warning'
+					: isComplete
+					? 'SkypeCircleCheck'
+					: 'SkypeCircleMinus',
 				onClick: () => onSetSubjectIdentifier(subjectIdentifier),
 			},
 		]

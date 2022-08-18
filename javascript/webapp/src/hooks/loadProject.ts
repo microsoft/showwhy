@@ -2,13 +2,9 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import type {
-	NamedPortBinding,
-	PortBinding,
-	WorkflowObject,
-} from '@data-wrangling-components/core'
-import { Workflow } from '@data-wrangling-components/core'
-import type { BaseFile } from '@data-wrangling-components/utilities'
+import type { WorkflowObject } from '@datashaper/core'
+import { Workflow } from '@datashaper/core'
+import type { BaseFile } from '@datashaper/utilities'
 import type {
 	CausalFactor,
 	DataTableFileDefinition,
@@ -316,8 +312,7 @@ function getPostLoadWorkflow(
 	return workflows.find(p => {
 		const input = p.steps?.length ? p.steps[0]?.input : undefined
 		const source = input?.hasOwnProperty('source')
-			? ((input as Record<string, PortBinding>)['source'] as NamedPortBinding)
-					?.node
+			? (input as Record<string, any>)['source']?.node
 			: input
 		return source === tableName
 	})

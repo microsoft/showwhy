@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { FileType } from '@data-wrangling-components/utilities'
+import { FileType } from '@datashaper/utilities'
 import type { Maybe } from '@showwhy/types'
 import { DownloadType } from '@showwhy/types'
 

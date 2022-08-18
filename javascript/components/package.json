@@ -23,9 +23,9 @@
 		"vega": "^5.22.1"
 	},
 	"devDependencies": {
-		"@data-wrangling-components/core": "^7.1.0",
-		"@data-wrangling-components/react": "^6.3.0",
-		"@data-wrangling-components/utilities": "^2.3.0",
+		"@datashaper/core": "^9.0.1",
+		"@datashaper/react": "^8.0.1",
+		"@datashaper/utilities": "^2.3.1",
 		"@essex/hooks": "^4.0.6",
 		"@essex/jest-config": "^21.0.8",
 		"@essex/scripts": "^20.4.7",
@@ -54,9 +54,9 @@
 		"styled-components": "^5.3.5"
 	},
 	"peerDependencies": {
-		"@data-wrangling-components/core": "^7.1.0",
-		"@data-wrangling-components/react": "^6.3.0",
-		"@data-wrangling-components/utilities": "^2.3.0",
+		"@datashaper/core": "^9.0.1",
+		"@datashaper/react": "^8.0.1",
+		"@datashaper/utilities": "^2.3.1",
 		"@essex/hooks": "^4.0.6",
 		"@essex/themed-components": "^2.2.6",
 		"@fluentui/font-icons-mdl2": "^8.3.1",
