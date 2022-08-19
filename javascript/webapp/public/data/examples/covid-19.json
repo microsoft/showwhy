@@ -115,7 +115,7 @@
             "loadedCorrectly": true
         }
     ],
-    "postLoad": [
+    "tablesPrep": [
         {
             "input": [
                 "covid19_small_data.csv"
@@ -336,6 +336,10 @@
                 {
                     "node": "fill-52",
                     "name": "fill-52"
+                },
+                {
+                    "node": "select-53",
+                    "name": "select-53"
                 }
             ],
             "steps": [
@@ -1219,24 +1223,9 @@
                             "node": "select-51"
                         }
                     }
-                }
-            ]
-        }
-    ],
-    "tablesPrep": [
-        {
-            "input": [
-                "covid19_small_data.csv"
-            ],
-            "output": [
+                },
                 {
-                    "node": "select-0",
-                    "name": "select-0"
-                }
-            ],
-            "steps": [
-                {
-                    "id": "select-0",
+                    "id": "select-53",
                     "args": {
                         "columns": [
                             "index",
@@ -1251,7 +1240,7 @@
                     "verb": "select",
                     "input": {
                         "source": {
-                            "node": "covid19_small_data.csv"
+                            "node": "fill-52"
                         }
                     }
                 }

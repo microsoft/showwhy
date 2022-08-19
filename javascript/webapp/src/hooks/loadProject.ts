@@ -27,7 +27,6 @@ import {
 	useSetRunAsDefault,
 } from '~hooks'
 import {
-	useOutputs,
 	useSetCausalFactors,
 	useSetConfidenceInterval,
 	useSetConfigJson,
@@ -50,7 +49,6 @@ import {
 	fetchTable,
 	isZipUrl,
 	loadTable,
-	runWorkflow,
 	withRandomId,
 } from '~utils'
 
@@ -78,7 +76,6 @@ export function useLoadProject(
 	const setTablePrepSpec = useSetTablesPrepSpecification()
 	const setConfigJson = useSetConfigJson()
 	const [, setWorkflow] = useWorkflowState()
-	const [, setOutputs] = useOutputs()
 
 	return useCallback(
 		async (definition?: FileDefinition, zip: ZipFileData = {}) => {
@@ -148,15 +145,8 @@ export function useLoadProject(
 			setTablePrepSpec(tablesPrep)
 			setDefaultDatasetResult(defaultDatasetResult)
 			setConfidenceInterval(!!confidenceInterval)
-			const processedTablesPromise = preProcessTables(
-				workspace,
-				tables as File[],
-			)
-			const processedTables = await Promise.all(processedTablesPromise)
-			setFiles(processedTables)
-			setOutputs(
-				processedTables.map(t => ({ id: t.id || t.name, table: t.table })),
-			)
+			const projectFiles = await prepProjectFiles(workspace, tables as File[])
+			setFiles(projectFiles)
 			wf?.length && setWorkflow(wf[0] as Workflow)
 
 			const completed = getStepUrls(workspace.todoPages, true)
@@ -186,45 +176,25 @@ export function useLoadProject(
 			setSignificanceTests,
 			setDefinitions,
 			setWorkflow,
-			setOutputs,
 		],
 	)
 }
 
-// HACK: this is pretty kludgy, just to wrap up some weird load logic in a single spot
-// things we should be able to do cleanly:
-// 1: load any number of tables into the system
-// 2: apply a post-load workflow to any combination of tables
-// 3: specify which tables to display to the user for usage in the model
-// right now we need only one final table to submit, but don't provide enough data wrangling to enable anything complex.
-function preProcessTables(workspace: Workspace, tableFiles?: File[]) {
-	const { tables, postLoad } = workspace
+async function prepProjectFiles(
+	workspace: Workspace,
+	tableFiles?: File[],
+): Promise<ProjectFile[]> {
+	const { tables } = workspace
+	const projectFiles = []
+	for (const table of tables) {
+		const content = await (!isZipUrl(table.url)
+			? fetchTable(table)
+			: loadTable(table, tableFiles))
 
-	return tables.map(async table => {
-		// Turning autoType on by default for demo
-		table.autoType = true
-		const postLoadWorkflow = getPostLoadWorkflow(postLoad, table.name)
-
-		let content
-		if (postLoadWorkflow?.steps) {
-			const latestOutput = await runWorkflow(
-				tables,
-				tableFiles,
-				postLoadWorkflow,
-			)
-
-			content = getDerivedTableContent(latestOutput?.table as ColumnTable)
-			return formatTableDefinitionAsProjectFile(table, content)
-		} else {
-			content = await (!isZipUrl(table.url)
-				? fetchTable(table)
-				: loadTable(table, tableFiles))
-
-			content = getDerivedTableContent(content)
-		}
-
-		return formatTableDefinitionAsProjectFile(table, content)
-	})
+		const derived = getDerivedTableContent(content)
+		projectFiles.push(formatTableDefinitionAsProjectFile(table, derived))
+	}
+	return projectFiles
 }
 
 function prepCausalFactors(factors?: Partial<CausalFactor>[]): CausalFactor[] {
@@ -303,17 +273,4 @@ function getDerivedTableContent(content: ColumnTable): ColumnTable {
 		},
 		{ before: all() },
 	)
-}
-
-function getPostLoadWorkflow(
-	workflows: WorkflowObject[] = [],
-	tableName: string,
-): Maybe<WorkflowObject> {
-	return workflows.find(p => {
-		const input = p.steps?.length ? p.steps[0]?.input : undefined
-		const source = input?.hasOwnProperty('source')
-			? (input as Record<string, any>)['source']?.node
-			: input
-		return source === tableName
-	})
 }
