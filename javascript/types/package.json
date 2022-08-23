@@ -17,7 +17,7 @@
 		"@types/react": "^17.0.39"
 	},
 	"dependencies": {
-		"@datashaper/core": "^9.0.1",
+		"@datashaper/core": "^10.0.0",
 		"@datashaper/utilities": "^2.3.1",
 		"arquero": "^4.8.8"
 	}

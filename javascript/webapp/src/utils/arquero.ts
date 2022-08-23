@@ -3,15 +3,12 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { WorkflowObject } from '@datashaper/core'
-import { createGraphManager, Workflow } from '@datashaper/core'
 import { guessDelimiter } from '@datashaper/utilities'
-import type { TableContainer } from '@essex/arquero'
-import type { DataTableFileDefinition, Maybe } from '@showwhy/types'
+import type { DataTableFileDefinition } from '@showwhy/types'
 import { fromCSV } from 'arquero'
 import type ColumnTable from 'arquero/dist/types/table/column-table'
 
-import { isZipUrl, readFile } from '~utils'
+import { readFile } from '~utils'
 
 /**
  * Creates a default data table by parsing csv/tsv content.
@@ -54,40 +51,4 @@ export async function fetchTable(
 			const delimiter = table.delimiter || guessDelimiter(table.url)
 			return createDefaultTable(text, delimiter, undefined, table.autoType)
 		})
-}
-
-export async function fetchTables(
-	tables: DataTableFileDefinition[],
-	tableFiles: File[] = [],
-): Promise<ColumnTable[]> {
-	return Promise.all(
-		tables.map(table => {
-			if (isZipUrl(table.url)) {
-				return loadTable(table, tableFiles as File[])
-			}
-			return fetchTable(table)
-		}),
-	)
-}
-
-export async function runWorkflow(
-	tables: DataTableFileDefinition[],
-	tableFiles?: File[],
-	workflowObject?: WorkflowObject,
-): Promise<Maybe<TableContainer>> {
-	const fetched = await fetchTables(tables, tableFiles)
-	const inputs = new Map()
-	tables.forEach((table, index) => {
-		const tableContainer = {
-			id: table.name,
-			table: fetched[index] as ColumnTable,
-			name: table.name,
-		}
-		inputs.set(table.name, tableContainer)
-	})
-
-	const wf = new Workflow(workflowObject)
-	const graph = createGraphManager(inputs, wf)
-	const outputName = [...graph.outputs].pop() || ''
-	return graph.latest(outputName)
 }

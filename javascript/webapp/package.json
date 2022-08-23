@@ -25,8 +25,8 @@
 		"test:cov": "jest --coverage"
 	},
 	"dependencies": {
-		"@datashaper/core": "^9.0.1",
-		"@datashaper/react": "^8.0.1",
+		"@datashaper/core": "^10.0.0",
+		"@datashaper/react": "^9.0.0",
 		"@datashaper/utilities": "^2.3.1",
 		"@essex/arquero": "^3.0.0",
 		"@essex/arquero-react": "^1.1.0",
