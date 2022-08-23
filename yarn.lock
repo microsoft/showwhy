@@ -2387,10 +2387,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/webapp@workspace:javascript/webapp"
   dependencies:
+    "@datashaper/arquero": ^4.0.1
     "@datashaper/core": ^10.0.0
     "@datashaper/react": ^9.0.0
     "@datashaper/utilities": ^2.3.1
-    "@essex/arquero": ^3.0.0
     "@essex/arquero-react": ^1.1.0
     "@essex/hooks": ^4.0.11
     "@essex/jest-config": ^21.0.5
