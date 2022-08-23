@@ -329,7 +329,7 @@
             "loadedCorrectly": true
         }
     ],
-    "postLoad": [
+    "tablesPrep": [
         {
             "tableName": "nhefs.csv",
             "input": [
@@ -367,25 +367,29 @@
                 {
                     "node": "binarize-7",
                     "name": "binarize-7"
+                },
+                {
+                    "node": "convert-8",
+                    "name": "convert-8"
                 }
             ],
             "steps": [
                 {
                     "id": "select-0",
                     "args": {
-                        "columns": {
-                            "sex": "sex",
-                            "age": "age",
-                            "race": "race",
-                            "education": "education",
-                            "wt71": "wt71",
-                            "wt82_71": "wt82_71",
-                            "smokeintensity": "smokeintensity",
-                            "smkintensity82_71": "smkintensity82_71",
-                            "active": "active",
-                            "exercise": "exercise",
-                            "smokeyrs": "smokeyrs"
-                        }
+                        "columns": [
+                            "sex",
+                            "age",
+                            "race",
+                            "education",
+                            "wt71",
+                            "wt82_71",
+                            "smokeintensity",
+                            "smkintensity82_71",
+                            "active",
+                            "exercise",
+                            "smokeyrs"
+                        ]
                     },
                     "verb": "select",
                     "input": {
@@ -528,6 +532,22 @@
                     "input": {
                         "source": {
                             "node": "binarize-6"
+                        }
+                    }
+                },
+                {
+                    "id": "convert-8",
+                    "args": {
+                        "type": "float",
+                        "formatPattern": "%Y-%m-%d",
+                        "columns": [
+                            "weight_change"
+                        ]
+                    },
+                    "verb": "convert",
+                    "input": {
+                        "source": {
+                            "node": "binarize-7"
                         }
                     }
                 }

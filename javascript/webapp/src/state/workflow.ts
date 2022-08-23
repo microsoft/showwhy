@@ -15,7 +15,6 @@ import {
 const workflowState = atom<Workflow>({
 	key: 'workflow-store',
 	default: new Workflow(),
-	dangerouslyAllowMutability: true,
 })
 
 export function useWorkflow(): Workflow {

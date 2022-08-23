@@ -867,23 +867,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@datashaper/arquero@npm:^4.0.0":
-  version: 4.0.0
-  resolution: "@datashaper/arquero@npm:4.0.0"
+"@datashaper/arquero@npm:^4.0.1":
+  version: 4.0.1
+  resolution: "@datashaper/arquero@npm:4.0.1"
   dependencies:
     "@datashaper/schema": ^3.0.0
     lodash-es: ^4.17.21
   peerDependencies:
     arquero: ^4.8.7
-  checksum: a14c16ea8321f55e9b729e7b758f224f2e18422b1d12f3c2350cdde72663875cccd3e78efe4ffaa9cc89f67e9867c40ba199c79b6d9f5c082d3e6be7f6af9193
+  checksum: 028cac910f9bd8549ae70b9ed2f261e5d2048bd730deaf0955c8bb48df89b67f6b58f6644f278a28887138bb48ba848a9a1e95ee3bb4a912c6960d549f8b5b62
   languageName: node
   linkType: hard
 
-"@datashaper/core@npm:^9.0.1":
-  version: 9.0.1
-  resolution: "@datashaper/core@npm:9.0.1"
+"@datashaper/core@npm:^10.0.0":
+  version: 10.0.0
+  resolution: "@datashaper/core@npm:10.0.0"
   dependencies:
-    "@datashaper/arquero": ^4.0.0
+    "@datashaper/arquero": ^4.0.1
     "@datashaper/schema": ^3.0.0
     ajv: ^8.11.0
     d3-time-format: ^4.1.0
@@ -896,16 +896,16 @@ __metadata:
   peerDependenciesMeta:
     "@types/node":
       optional: true
-  checksum: dcee29f6c4b8d1bfaa7a9baeb3636d62c79fd24f610741095d9c04fa6878cbd6e914ad445f43db4451ec17b6f6c47fb4d54c9ac8b71704d849923986c613fe5b
+  checksum: 205edea63a77b87f1a4de857c9306af3d0e831744f11bf8e8568f5e0e95965bc214a512f6959e8e8d6c0be044f131107fb1524195595d9fb243e269dbe0d3f4a
   languageName: node
   linkType: hard
 
-"@datashaper/react@npm:^8.0.1":
-  version: 8.0.1
-  resolution: "@datashaper/react@npm:8.0.1"
+"@datashaper/react@npm:^9.0.0":
+  version: 9.0.0
+  resolution: "@datashaper/react@npm:9.0.0"
   dependencies:
-    "@datashaper/arquero": ^4.0.0
-    "@datashaper/core": ^9.0.1
+    "@datashaper/arquero": ^4.0.1
+    "@datashaper/core": ^10.0.0
     "@datashaper/schema": ^3.0.0
     "@datashaper/utilities": ^2.3.1
     "@datashaper/verb-guidance": ^0.1.15
@@ -931,7 +931,7 @@ __metadata:
     arquero: ^4.8.7
     react: ^17.0.2
     styled-components: ^5.3.0
-  checksum: 12ea800aab9de706d34e5f3a50bc27998ca7d8e2797462566e4c812253591db4457c8734e1e9ac99220cfec5fe959af58df66cf1e69c0151e5b497938238ca10
+  checksum: 0672bf0914a39a6b5dc489777182eebdffcf065c83a912599aa4830ef842d1af30d107a7fe599d4251a8d8fa47269fd2097eb35cd8bc5c08889fe364001a1cd2
   languageName: node
   linkType: hard
 
@@ -2294,8 +2294,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/components@workspace:javascript/components"
   dependencies:
-    "@datashaper/core": ^9.0.1
-    "@datashaper/react": ^8.0.1
+    "@datashaper/core": ^10.0.0
+    "@datashaper/react": ^9.0.0
     "@datashaper/utilities": ^2.3.1
     "@essex/hooks": ^4.0.6
     "@essex/jest-config": ^21.0.8
@@ -2331,8 +2331,8 @@ __metadata:
     styled-components: ^5.3.5
     vega: ^5.22.1
   peerDependencies:
-    "@datashaper/core": ^9.0.1
-    "@datashaper/react": ^8.0.1
+    "@datashaper/core": ^10.0.0
+    "@datashaper/react": ^9.0.0
     "@datashaper/utilities": ^2.3.1
     "@essex/hooks": ^4.0.6
     "@essex/themed-components": ^2.2.6
@@ -2374,7 +2374,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/types@workspace:javascript/types"
   dependencies:
-    "@datashaper/core": ^9.0.1
+    "@datashaper/core": ^10.0.0
     "@datashaper/utilities": ^2.3.1
     "@essex/scripts": ^20.4.7
     "@essex/tsconfig-base": ^1.0.2
@@ -2387,10 +2387,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/webapp@workspace:javascript/webapp"
   dependencies:
-    "@datashaper/core": ^9.0.1
-    "@datashaper/react": ^8.0.1
+    "@datashaper/arquero": ^4.0.1
+    "@datashaper/core": ^10.0.0
+    "@datashaper/react": ^9.0.0
     "@datashaper/utilities": ^2.3.1
-    "@essex/arquero": ^3.0.0
     "@essex/arquero-react": ^1.1.0
     "@essex/hooks": ^4.0.11
     "@essex/jest-config": ^21.0.5

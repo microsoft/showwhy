@@ -53,7 +53,6 @@ export function useSaveProject(): AsyncHandler {
 	const tablesPrep = getTablesPrep(workflow)
 	const todoPages = useGetStepUrlsByStatus()({ exclude: true })
 	const download = useDownload(fileCollection, question)
-	const oldConfig = useConfigJson()
 
 	return useCallback(async () => {
 		const workspace: Partial<Workspace> = {
@@ -67,7 +66,6 @@ export function useSaveProject(): AsyncHandler {
 			todoPages,
 			subjectIdentifier,
 			tablesPrep,
-			postLoad: oldConfig.postLoad,
 		}
 		await download(workspace)
 	}, [
@@ -82,7 +80,6 @@ export function useSaveProject(): AsyncHandler {
 		tablesPrep,
 		subjectIdentifier,
 		download,
-		oldConfig,
 	])
 }
 
