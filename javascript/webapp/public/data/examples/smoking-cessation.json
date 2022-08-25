@@ -378,6 +378,7 @@
                     "id": "select-0",
                     "args": {
                         "columns": [
+                            "index",
                             "sex",
                             "age",
                             "race",

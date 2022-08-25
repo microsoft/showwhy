@@ -347,6 +347,7 @@
                     "id": "select-0",
                     "args": {
                         "columns": [
+                            "index",
                             "age",
                             "ChronicDiseaseQ",
                             "gender_binary",
@@ -1196,6 +1197,7 @@
                     "id": "select-51",
                     "args": {
                         "columns": [
+                            "index",
                             "age",
                             "chronic_disease",
                             "gender",
