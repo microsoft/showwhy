@@ -108,6 +108,12 @@ stages:
             persistCredentials: true
             fetchDepth: 1
 
+          # Install Tooling
+          - task: NodeTool@0
+            displayName: Install Node
+            inputs:
+              versionSpec: '14.x'
+
           - task: Bash@3
             displayName: Install Dependencies
             inputs:
