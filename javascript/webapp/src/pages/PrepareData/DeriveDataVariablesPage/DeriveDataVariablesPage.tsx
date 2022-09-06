@@ -7,7 +7,6 @@ import { PrepareDataFull } from '@datashaper/react'
 import type { FC } from 'react'
 import { memo } from 'react'
 import styled from 'styled-components'
-
 import { AddVariableFields } from './components/AddVariableFields'
 import { CompletedElements } from './components/CompletedElements'
 import { DataTypeWarningMessage } from './components/DataTypeWarningMessage'
@@ -34,7 +33,12 @@ export const DeriveDataVariablesPage: FC = memo(
 			subjectIdentifier,
 			onSetSubjectIdentifier,
 			onAssignAllSubjects,
-		} = useBusinessLogic(workflow, setWorkflow, setSelectedTableId)
+		} = useBusinessLogic(
+			workflow,
+			setWorkflow,
+			setSelectedTableId,
+			selectedTableId,
+		)
 
 		return (
 			<Container>

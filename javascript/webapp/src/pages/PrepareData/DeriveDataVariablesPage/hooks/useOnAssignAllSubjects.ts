@@ -16,28 +16,34 @@ export function useOnAssignAllSubjects(
 		option: Maybe<IContextualMenuItem>,
 		columnName: string,
 	) => void,
+	selectedTableId: Maybe<string>,
 ): (definitionName: string, definitionId: string) => void {
 	return useCallback(
 		(definitionName: string, definitionId: string) => {
 			const tableName = definitionName.split(' ').join('_')
-			const name = workflow.steps[workflow.steps.length - 1]
-			const columnName = 'all_subjects_population'
-
 			if (workflow && !workflow.hasOutput(tableName)) {
+				const work = workflow.clone()
+
+				let input = workflow.steps[workflow.steps.length - 1]?.id
+				if (!input && selectedTableId) {
+					input = selectedTableId
+					work.addInput(input)
+				}
+				const columnName = 'all_subjects_population'
+
 				const step = {
 					id: tableName,
 					args: {
 						to: columnName,
-						value: '1',
+						value: 1,
 					},
 					verb: 'fill',
 					input: {
 						source: {
-							node: name?.id,
+							node: input,
 						},
 					},
 				} as StepInput
-				const work = workflow.clone()
 				work.addStep(step)
 				work.addOutput({
 					name: tableName,

@@ -4,44 +4,38 @@
  */
 
 import type { Workflow } from '@datashaper/core'
-import type {
-	IDetailsColumnProps,
-	IRenderFunction
-} from '@fluentui/react'
+import type { IDetailsColumnProps, IRenderFunction } from '@fluentui/react'
 import type {
 	CausalFactor,
 	Definition,
 	FactorsOrDefinitions,
 	Handler1,
-	Maybe
+	Maybe,
 } from '@showwhy/types'
 import { useCallback, useMemo } from 'react'
-
 import { useAllVariables, useAutomaticWorkflowStatus } from '~hooks'
 import {
 	useCausalFactors,
 	useDefinitions,
 	useSetDefinitions,
 	useSetSubjectIdentifier,
-	useSubjectIdentifier
+	useSubjectIdentifier,
 } from '~state'
-
 import {
 	useCommandBar,
 	useDefinitionDropdownOptions,
 	useOnResetVariable,
 	useOnSelectVariable,
 	useOnSetSubjectIdentifier,
-	useRenderDropdown
+	useRenderDropdown,
 } from '../DeriveDataVariablesPage.hooks'
 import { useOnAssignAllSubjects } from './useOnAssignAllSubjects'
-
-
 
 export function useBusinessLogic(
 	workflow: Workflow,
 	setWorkflow: Handler1<Workflow>,
 	setSelectedTableId: Handler1<string>,
+	selectedTableId: Maybe<string>,
 ): {
 	commandBar: IRenderFunction<IDetailsColumnProps>
 	completedElements: number
@@ -93,7 +87,11 @@ export function useBusinessLogic(
 	)
 
 	const onAssignAllSubjects = useOnAssignAllSubjects(
-		workflow, setWorkflow, setSelectedTableId, onSelectVariable
+		workflow,
+		setWorkflow,
+		setSelectedTableId,
+		onSelectVariable,
+		selectedTableId,
 	)
 
 	const dropdownOptions = useDefinitionDropdownOptions(
