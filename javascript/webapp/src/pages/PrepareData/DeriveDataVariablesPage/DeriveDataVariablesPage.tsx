@@ -7,6 +7,7 @@ import { PrepareDataFull } from '@datashaper/react'
 import type { FC } from 'react'
 import { memo } from 'react'
 import styled from 'styled-components'
+
 import { AddVariableFields } from './components/AddVariableFields'
 import { CompletedElements } from './components/CompletedElements'
 import { DataTypeWarningMessage } from './components/DataTypeWarningMessage'

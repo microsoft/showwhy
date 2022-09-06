@@ -55,6 +55,12 @@ export function useOnAssignAllSubjects(
 				onSelectVariable(option, columnName)
 			}
 		},
-		[workflow, setWorkflow, setSelectedTableId, onSelectVariable],
+		[
+			workflow,
+			setWorkflow,
+			setSelectedTableId,
+			onSelectVariable,
+			selectedTableId,
+		],
 	)
 }

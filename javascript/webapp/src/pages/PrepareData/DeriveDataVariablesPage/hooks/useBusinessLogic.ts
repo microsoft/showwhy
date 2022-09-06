@@ -13,6 +13,7 @@ import type {
 	Maybe,
 } from '@showwhy/types'
 import { useCallback, useMemo } from 'react'
+
 import { useAllVariables, useAutomaticWorkflowStatus } from '~hooks'
 import {
 	useCausalFactors,
@@ -21,6 +22,7 @@ import {
 	useSetSubjectIdentifier,
 	useSubjectIdentifier,
 } from '~state'
+
 import {
 	useCommandBar,
 	useDefinitionDropdownOptions,
