@@ -3,23 +3,27 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import type { TableContainer } from '@datashaper/arquero'
-import { PrepareDataFull } from '@datashaper/react'
-import type { IDetailsColumnProps, IRenderFunction } from '@fluentui/react'
-import type { FC } from 'react'
-import { memo, useEffect, useMemo, useState } from 'react'
+import type { Workflow } from '@datashaper/core'
+import type { Handler1, Maybe } from '@showwhy/types'
+import { useEffect, useMemo, useState } from 'react'
 
 import { useOutputs, useProjectFiles, useWorkflowState } from '~state'
 
-interface Props {
-	commandBar: IRenderFunction<IDetailsColumnProps>
-}
-export const PrepareData: FC<Props> = memo(function PrepareData({
-	commandBar,
-}) {
+export function usePrepareData(): {
+	tables: TableContainer[]
+	workflow: Workflow
+	setWorkflow: Handler1<Workflow>
+	selectedTableId: Maybe<string>
+	setSelectedTableId: Handler1<Maybe<string>>
+	outputs: TableContainer[]
+	setOutputs: Handler1<TableContainer[]>
+} {
 	const projectFiles = useProjectFiles()
+	const [workflow, setWorkflow] = useWorkflowState()
+
 	const [selectedTableId, setSelectedTableId] = useState<string | undefined>()
 	const [outputs, setOutputs] = useOutputs()
-	const [workflow, setWorkflow] = useWorkflowState()
+
 	const tables = useMemo((): TableContainer[] => {
 		return projectFiles.map(f => {
 			return {
@@ -39,16 +43,13 @@ export const PrepareData: FC<Props> = memo(function PrepareData({
 		}
 	}, [outputs, tables, setSelectedTableId])
 
-	return (
-		<PrepareDataFull
-			inputs={tables}
-			derived={outputs}
-			workflow={workflow}
-			selectedTableId={selectedTableId}
-			onSelectedTableIdChanged={setSelectedTableId}
-			onUpdateOutput={setOutputs}
-			outputHeaderCommandBar={[commandBar]}
-			onUpdateWorkflow={setWorkflow}
-		/>
-	)
-})
+	return {
+		tables,
+		workflow,
+		setWorkflow,
+		selectedTableId,
+		setSelectedTableId,
+		outputs,
+		setOutputs,
+	}
+}

@@ -3,13 +3,17 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { IDetailsColumnProps, IRenderFunction } from '@fluentui/react'
+import type { Workflow } from '@datashaper/core'
+import type {
+	IDetailsColumnProps,
+	IRenderFunction
+} from '@fluentui/react'
 import type {
 	CausalFactor,
 	Definition,
 	FactorsOrDefinitions,
 	Handler1,
-	Maybe,
+	Maybe
 } from '@showwhy/types'
 import { useCallback, useMemo } from 'react'
 
@@ -19,7 +23,7 @@ import {
 	useDefinitions,
 	useSetDefinitions,
 	useSetSubjectIdentifier,
-	useSubjectIdentifier,
+	useSubjectIdentifier
 } from '~state'
 
 import {
@@ -28,16 +32,24 @@ import {
 	useOnResetVariable,
 	useOnSelectVariable,
 	useOnSetSubjectIdentifier,
-	useRenderDropdown,
+	useRenderDropdown
 } from '../DeriveDataVariablesPage.hooks'
+import { useOnAssignAllSubjects } from './useOnAssignAllSubjects'
 
-export function useBusinessLogic(): {
+
+
+export function useBusinessLogic(
+	workflow: Workflow,
+	setWorkflow: Handler1<Workflow>,
+	setSelectedTableId: Handler1<string>,
+): {
 	commandBar: IRenderFunction<IDetailsColumnProps>
 	completedElements: number
 	allElements: FactorsOrDefinitions
 	onResetVariable: (columnName: string) => void
 	subjectIdentifier: Maybe<string>
 	onSetSubjectIdentifier: Handler1<Maybe<string>>
+	onAssignAllSubjects: (definitionName: string, definitionId: string) => void
 } {
 	const causalFactors = useCausalFactors()
 	const definitions = useDefinitions()
@@ -80,6 +92,10 @@ export function useBusinessLogic(): {
 		isStepDone,
 	)
 
+	const onAssignAllSubjects = useOnAssignAllSubjects(
+		workflow, setWorkflow, setSelectedTableId, onSelectVariable
+	)
+
 	const dropdownOptions = useDefinitionDropdownOptions(
 		definitions,
 		causalFactors,
@@ -108,5 +124,6 @@ export function useBusinessLogic(): {
 		onResetVariable,
 		subjectIdentifier,
 		onSetSubjectIdentifier,
+		onAssignAllSubjects,
 	}
 }
