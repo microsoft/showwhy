@@ -4,9 +4,12 @@
  */
 
 import type { StepInput, Workflow } from '@datashaper/core'
+import { nextColumnName } from '@datashaper/core'
 import type { IContextualMenuItem } from '@fluentui/react'
 import type { Handler1, Maybe } from '@showwhy/types'
 import { useCallback } from 'react'
+
+import { useOutputTable } from '~hooks'
 
 export function useOnAssignAllSubjects(
 	workflow: Workflow,
@@ -18,18 +21,23 @@ export function useOnAssignAllSubjects(
 	) => void,
 	selectedTableId: Maybe<string>,
 ): (definitionName: string, definitionId: string) => void {
+	const outputTable = useOutputTable()
 	return useCallback(
 		(definitionName: string, definitionId: string) => {
 			const tableName = definitionName.split(' ').join('_')
 			if (workflow && !workflow.hasOutput(tableName)) {
-				const work = workflow.clone()
+				const clonedWorkflow = workflow.clone()
 
 				let input = workflow.steps[workflow.steps.length - 1]?.id
 				if (!input && selectedTableId) {
 					input = selectedTableId
-					work.addInput(input)
+					clonedWorkflow.addInput(input)
 				}
-				const columnName = 'all_subjects_population'
+				const existingColumns = outputTable?.columnNames() || []
+				const columnName = nextColumnName(
+					'all_subjects_population',
+					existingColumns,
+				)
 
 				const step = {
 					id: tableName,
@@ -44,12 +52,12 @@ export function useOnAssignAllSubjects(
 						},
 					},
 				} as StepInput
-				work.addStep(step)
-				work.addOutput({
+				clonedWorkflow.addStep(step)
+				clonedWorkflow.addOutput({
 					name: tableName,
 					node: tableName,
 				})
-				setWorkflow(work)
+				setWorkflow(clonedWorkflow)
 				setSelectedTableId(tableName)
 				const option = { key: definitionId } as IContextualMenuItem
 				onSelectVariable(option, columnName)
@@ -61,6 +69,7 @@ export function useOnAssignAllSubjects(
 			setSelectedTableId,
 			onSelectVariable,
 			selectedTableId,
+			outputTable,
 		],
 	)
 }
