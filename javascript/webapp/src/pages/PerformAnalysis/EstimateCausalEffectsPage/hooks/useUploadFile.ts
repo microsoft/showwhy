@@ -11,13 +11,11 @@ import type {
 } from '@showwhy/types'
 import type ColumnTable from 'arquero/dist/types/table/column-table'
 import { useCallback } from 'react'
-
 import { OUTPUT_FILE_NAME } from '~constants'
 import { useOutputTable } from '~hooks'
 import { api } from '~resources'
 import { useCausalFactors, useDefinitions, useProjectFiles } from '~state'
 import { createZipFormData } from '~utils'
-
 import { useAllColumns } from './useAllColumns'
 
 export function useUploadFile(
@@ -42,7 +40,10 @@ export function useUploadFile(
 		}
 
 		if (allColumns) {
-			output = output?.select(allColumns)
+			const existingColumns = output.columnNames()
+			output = output?.select(
+				allColumns.filter(x => existingColumns.includes(x)),
+			)
 		}
 		const files = await uploadOutputFile(output)
 			.catch(err => {
