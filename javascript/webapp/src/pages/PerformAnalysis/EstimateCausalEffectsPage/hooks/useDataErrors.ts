@@ -7,6 +7,7 @@ import { useMemo } from 'react'
 
 import { useAllVariables, useIsDataTypeValid, useOutputTable } from '~hooks'
 import { useCausalFactors, useDefinitions, useSubjectIdentifier } from '~state'
+import { isFullDatasetPopulation } from '~utils'
 
 import { useIsMicrodata } from './useIsMicrodata'
 
@@ -41,8 +42,19 @@ export function useDataErrors(): {
 		() =>
 			variablesColumns
 				.filter(v => !!v)
-				.some(i => !outputTableColumns.includes(i || '')),
-		[variablesColumns, outputTableColumns],
+				.some(i => {
+					const missing = !outputTableColumns.includes(i || '')
+					if (
+						missing &&
+						!!definitions.find(
+							x => x.column === i && isFullDatasetPopulation(x),
+						)
+					) {
+						return false
+					}
+					return missing
+				}),
+		[variablesColumns, outputTableColumns, definitions],
 	)
 	const isMissingIdentifier = !subjectIdentifier && !!outputTable
 

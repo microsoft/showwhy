@@ -3,7 +3,6 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { Workflow } from '@datashaper/core'
 import type { IDetailsColumnProps, IRenderFunction } from '@fluentui/react'
 import type {
 	CausalFactor,
@@ -33,19 +32,14 @@ import {
 } from '../DeriveDataVariablesPage.hooks'
 import { useOnAssignAllSubjects } from './useOnAssignAllSubjects'
 
-export function useBusinessLogic(
-	workflow: Workflow,
-	setWorkflow: Handler1<Workflow>,
-	setSelectedTableId: Handler1<string>,
-	selectedTableId: Maybe<string>,
-): {
+export function useBusinessLogic(): {
 	commandBar: IRenderFunction<IDetailsColumnProps>
 	completedElements: number
 	allElements: FactorsOrDefinitions
 	onResetVariable: (columnName: string) => void
 	subjectIdentifier: Maybe<string>
 	onSetSubjectIdentifier: Handler1<Maybe<string>>
-	onAssignAllSubjects: (definitionName: string, definitionId: string) => void
+	onAssignAllSubjects: (definitionId: string) => void
 } {
 	const causalFactors = useCausalFactors()
 	const definitions = useDefinitions()
@@ -88,13 +82,7 @@ export function useBusinessLogic(
 		isStepDone,
 	)
 
-	const onAssignAllSubjects = useOnAssignAllSubjects(
-		workflow,
-		setWorkflow,
-		setSelectedTableId,
-		onSelectVariable,
-		selectedTableId,
-	)
+	const onAssignAllSubjects = useOnAssignAllSubjects(onSelectVariable)
 
 	const dropdownOptions = useDefinitionDropdownOptions(
 		definitions,

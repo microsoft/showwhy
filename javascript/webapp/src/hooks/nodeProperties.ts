@@ -6,7 +6,6 @@
 import type { AlternativeModels, Definition, Estimator } from '@showwhy/types'
 import { CausalModelLevel } from '@showwhy/types'
 import { useCallback, useMemo } from 'react'
-
 import { useAlternativeModels, useOutputTable } from '~hooks'
 import {
 	useConfidenceInterval,
@@ -43,11 +42,6 @@ export function useNodeProperties(): {
 		false,
 	)
 
-	const filterDefinitions = useCallback(() => {
-		const outputTableColumns = outputTable?.columnNames() || []
-		return definitions.filter(d => outputTableColumns.includes(d.column || ''))
-	}, [definitions, outputTable])
-
 	const filterModel = useCallback(
 		(model: AlternativeModels) => {
 			const outputTableColumns = outputTable?.columnNames() || []
@@ -69,7 +63,7 @@ export function useNodeProperties(): {
 
 	return useMemo(() => {
 		return {
-			definitions: filterDefinitions(),
+			definitions,
 			estimators,
 			refutationCount,
 			confidenceInterval,
@@ -86,7 +80,7 @@ export function useNodeProperties(): {
 		minimumModel,
 		intermediateLevel,
 		unadjustedModel,
-		filterDefinitions,
+		definitions,
 		filterModel,
 	])
 }

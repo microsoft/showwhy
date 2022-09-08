@@ -25,6 +25,7 @@ import { memo, useMemo } from 'react'
 import styled from 'styled-components'
 
 import { useOutputTable } from '~hooks'
+import { isFullDatasetPopulation } from '~utils'
 
 interface Props {
 	completedElements: number
@@ -32,7 +33,7 @@ interface Props {
 	onResetVariable: (columnName: string) => void
 	subjectIdentifier: Maybe<string>
 	onSetSubjectIdentifier: Handler1<Maybe<string>>
-	onAssignAllSubjects: (definitionName: string, definitionId: string) => void
+	onAssignAllSubjects: (definitionId: string) => void
 }
 
 interface ListElement {
@@ -142,13 +143,14 @@ function useList(
 	allElements: FactorsOrDefinitions,
 	onResetVariable: (columnName: string) => void,
 	onSetSubjectIdentifier: Handler1<Maybe<string>>,
-	onAssignAllSubjects: (definitionName: string, definitionId: string) => void,
+	onAssignAllSubjects: (definitionId: string) => void,
 	outputTableColumns: string[] = [],
 ): ListElement[] {
 	return useMemo((): any => {
 		const isInOutput = !!subjectIdentifier
 			? outputTableColumns.includes(subjectIdentifier)
 			: true
+
 		const isComplete = !!subjectIdentifier
 
 		const notInOutput = isComplete && !isInOutput
@@ -189,7 +191,7 @@ function useList(
 						<AssignAllSubjectsButton
 							iconProps={{ iconName: 'Add' }}
 							allowDisabledFocus
-							onClick={() => onAssignAllSubjects(element.variable, element.id)}
+							onClick={() => onAssignAllSubjects(element.id)}
 						>
 							Assign all subjects
 						</AssignAllSubjectsButton>
@@ -225,7 +227,11 @@ function isElementInOutputTable(
 	element: CausalFactor | Definition,
 	outputTableColumns: string[],
 ) {
-	return !!(element.column && outputTableColumns.includes(element.column))
+	return !!(
+		element.column &&
+		(isFullDatasetPopulation(element) ||
+			outputTableColumns.includes(element.column))
+	)
 }
 
 function getTooltipContent(notInOutput: boolean, notAssigned: boolean): string {

@@ -34,12 +34,7 @@ export const DeriveDataVariablesPage: FC = memo(
 			subjectIdentifier,
 			onSetSubjectIdentifier,
 			onAssignAllSubjects,
-		} = useBusinessLogic(
-			workflow,
-			setWorkflow,
-			setSelectedTableId,
-			selectedTableId,
-		)
+		} = useBusinessLogic()
 
 		return (
 			<Container>

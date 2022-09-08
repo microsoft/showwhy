@@ -29,3 +29,5 @@ export enum PageType {
 	CauseExposure = 'cause-exposure',
 	CauseOutcome = 'cause-outcome',
 }
+
+export const OUTPUT_FILE_NAME = 'output'

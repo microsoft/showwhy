@@ -13,9 +13,7 @@ import {
 import type { GraphNodeData, Maybe, NodeRequest } from '@showwhy/types'
 import { DefinitionType, GraphNodeType } from '@showwhy/types'
 import { useCallback, useMemo } from 'react'
-
 import { getDefinitionsByType } from '~utils'
-
 import { useNodeProperties } from './nodeProperties'
 
 export function useEstimateNode(fileName?: string): Maybe<NodeRequest> {

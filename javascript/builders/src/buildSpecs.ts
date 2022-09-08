@@ -21,7 +21,7 @@ export function buildSpecs(
 			type: p.level,
 			label: p.variable || '',
 			dataframe: dataframeName,
-			population_id: p.column,
+			population_id: p.column === dataframeName ? undefined : p.column,
 		}
 		return pop
 	})
