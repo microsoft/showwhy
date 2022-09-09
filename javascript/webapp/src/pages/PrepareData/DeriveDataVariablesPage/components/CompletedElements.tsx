@@ -175,6 +175,10 @@ function useList(
 		allElements.forEach(element => {
 			const isComplete = isElementComplete(element, allElements)
 			const isInOutput = isElementInOutputTable(element, outputTableColumns)
+			const showAllSubjectsButton = isElementAllSubjectsCandidate(
+				element,
+				isComplete,
+			)
 			const notInOutput = isComplete && !isInOutput
 			const _element = {
 				variable: element.variable,
@@ -186,16 +190,16 @@ function useList(
 					: isComplete
 					? 'SkypeCircleCheck'
 					: 'SkypeCircleMinus',
-				button:
-					element.type === DefinitionType.Population && !isComplete ? (
-						<AssignAllSubjectsButton
-							iconProps={{ iconName: 'Add' }}
-							allowDisabledFocus
-							onClick={() => onAssignAllSubjects(element.id)}
-						>
-							Assign all subjects
-						</AssignAllSubjectsButton>
-					) : undefined,
+				button: showAllSubjectsButton ? (
+					<AssignAllSubjectsButton
+						iconProps={{ iconName: isComplete ? undefined : 'Add' }}
+						allowDisabledFocus
+						disabled={isComplete}
+						onClick={() => onAssignAllSubjects(element.id)}
+					>
+						{isComplete ? 'All subjects assigned' : 'Assign all subjects'}
+					</AssignAllSubjectsButton>
+				) : undefined,
 				onClick: isComplete
 					? () => onResetVariable(element.column || '')
 					: undefined,
@@ -231,6 +235,16 @@ function isElementInOutputTable(
 		element.column &&
 		(isFullDatasetPopulation(element) ||
 			outputTableColumns.includes(element.column))
+	)
+}
+
+function isElementAllSubjectsCandidate(
+	element: CausalFactor | Definition,
+	isComplete: boolean,
+) {
+	return (
+		element.type === DefinitionType.Population &&
+		(!isComplete || isFullDatasetPopulation(element))
 	)
 }
 
