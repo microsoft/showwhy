@@ -19,5 +19,3 @@ export const SHAP_COLUMNS = [
 	'populationSHAP',
 	'treatmentSHAP',
 ]
-
-export const OUTPUT_FILE_NAME = 'output'

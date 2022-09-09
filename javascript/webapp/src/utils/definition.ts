@@ -3,8 +3,10 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { Definition, DefinitionType } from '@showwhy/types'
-import { CausalFactorType } from '@showwhy/types'
+import type { Definition } from '@showwhy/types'
+import { CausalFactorType, DefinitionType } from '@showwhy/types'
+
+import { OUTPUT_FILE_NAME } from '~constants'
 
 const causalFactorTypes = [
 	CausalFactorType.Confounders,
@@ -21,4 +23,11 @@ export function getDefinitionsByType(
 	definitions: Definition[] = [],
 ): Definition[] {
 	return definitions.filter(x => x.type === type)
+}
+
+export function isFullDatasetPopulation(definition: Definition): boolean {
+	if (definition.type === DefinitionType.Population) {
+		return definition.column === OUTPUT_FILE_NAME
+	}
+	return true
 }

@@ -3,6 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import {
+	ActionButton,
 	Callout,
 	DefaultButton,
 	DirectionalHint,
@@ -18,11 +19,13 @@ import type {
 	Handler1,
 	Maybe,
 } from '@showwhy/types'
+import { DefinitionType } from '@showwhy/types'
 import type { FC } from 'react'
 import { memo, useMemo } from 'react'
 import styled from 'styled-components'
 
 import { useOutputTable } from '~hooks'
+import { isFullDatasetPopulation } from '~utils'
 
 interface Props {
 	completedElements: number
@@ -30,6 +33,7 @@ interface Props {
 	onResetVariable: (columnName: string) => void
 	subjectIdentifier: Maybe<string>
 	onSetSubjectIdentifier: Handler1<Maybe<string>>
+	onAssignAllSubjects: (definitionId: string) => void
 }
 
 interface ListElement {
@@ -38,6 +42,7 @@ interface ListElement {
 	isComplete: boolean
 	notInOutput?: boolean
 	icon: string
+	button?: JSX.Element
 	onClick: Maybe<() => void>
 }
 
@@ -47,6 +52,7 @@ export const CompletedElements: FC<Props> = memo(function CompletedElements({
 	onResetVariable,
 	subjectIdentifier,
 	onSetSubjectIdentifier,
+	onAssignAllSubjects,
 }) {
 	const outputTable = useOutputTable()
 	const outputTableColumns = useMemo(
@@ -64,6 +70,7 @@ export const CompletedElements: FC<Props> = memo(function CompletedElements({
 		allElements,
 		onResetVariable,
 		onSetSubjectIdentifier,
+		onAssignAllSubjects,
 		outputTableColumns,
 	)
 
@@ -104,6 +111,7 @@ const List: FC<{ list: ListElement[] }> = memo(function ListItem({ list }) {
 					key,
 					isComplete = false,
 					notInOutput = false,
+					button,
 				} = item
 				const tooltipId = notInOutput ? key : undefined
 				return (
@@ -121,6 +129,7 @@ const List: FC<{ list: ListElement[] }> = memo(function ListItem({ list }) {
 						>
 							{icon ? <Icon iconName={icon} /> : null}
 							{variable}
+							{button && button}
 						</Li>
 					</TooltipHost>
 				)
@@ -134,12 +143,14 @@ function useList(
 	allElements: FactorsOrDefinitions,
 	onResetVariable: (columnName: string) => void,
 	onSetSubjectIdentifier: Handler1<Maybe<string>>,
+	onAssignAllSubjects: (definitionId: string) => void,
 	outputTableColumns: string[] = [],
 ): ListElement[] {
 	return useMemo((): any => {
 		const isInOutput = !!subjectIdentifier
 			? outputTableColumns.includes(subjectIdentifier)
 			: true
+
 		const isComplete = !!subjectIdentifier
 
 		const notInOutput = isComplete && !isInOutput
@@ -164,6 +175,10 @@ function useList(
 		allElements.forEach(element => {
 			const isComplete = isElementComplete(element, allElements)
 			const isInOutput = isElementInOutputTable(element, outputTableColumns)
+			const showAllSubjectsButton = isElementAllSubjectsCandidate(
+				element,
+				isComplete,
+			)
 			const notInOutput = isComplete && !isInOutput
 			const _element = {
 				variable: element.variable,
@@ -175,6 +190,16 @@ function useList(
 					: isComplete
 					? 'SkypeCircleCheck'
 					: 'SkypeCircleMinus',
+				button: showAllSubjectsButton ? (
+					<AssignAllSubjectsButton
+						iconProps={{ iconName: isComplete ? undefined : 'Add' }}
+						allowDisabledFocus
+						disabled={isComplete}
+						onClick={() => onAssignAllSubjects(element.id)}
+					>
+						{isComplete ? 'All subjects assigned' : 'Assign all subjects'}
+					</AssignAllSubjectsButton>
+				) : undefined,
 				onClick: isComplete
 					? () => onResetVariable(element.column || '')
 					: undefined,
@@ -188,6 +213,7 @@ function useList(
 		onResetVariable,
 		onSetSubjectIdentifier,
 		outputTableColumns,
+		onAssignAllSubjects,
 	])
 }
 
@@ -205,7 +231,21 @@ function isElementInOutputTable(
 	element: CausalFactor | Definition,
 	outputTableColumns: string[],
 ) {
-	return !!(element.column && outputTableColumns.includes(element.column))
+	return !!(
+		element.column &&
+		(isFullDatasetPopulation(element) ||
+			outputTableColumns.includes(element.column))
+	)
+}
+
+function isElementAllSubjectsCandidate(
+	element: CausalFactor | Definition,
+	isComplete: boolean,
+) {
+	return (
+		element.type === DefinitionType.Population &&
+		(!isComplete || isFullDatasetPopulation(element))
+	)
 }
 
 function getTooltipContent(notInOutput: boolean, notAssigned: boolean): string {
@@ -235,6 +275,8 @@ const Container = styled.section`
 	right: 0;
 	z-index: 1;
 `
+
+const AssignAllSubjectsButton = styled(ActionButton)``
 
 const Ul = styled.ul`
 	list-style: none;

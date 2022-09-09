@@ -30,6 +30,7 @@ import {
 	useOnSetSubjectIdentifier,
 	useRenderDropdown,
 } from '../DeriveDataVariablesPage.hooks'
+import { useOnAssignAllSubjects } from './useOnAssignAllSubjects'
 
 export function useBusinessLogic(): {
 	commandBar: IRenderFunction<IDetailsColumnProps>
@@ -38,6 +39,7 @@ export function useBusinessLogic(): {
 	onResetVariable: (columnName: string) => void
 	subjectIdentifier: Maybe<string>
 	onSetSubjectIdentifier: Handler1<Maybe<string>>
+	onAssignAllSubjects: (definitionId: string) => void
 } {
 	const causalFactors = useCausalFactors()
 	const definitions = useDefinitions()
@@ -80,6 +82,8 @@ export function useBusinessLogic(): {
 		isStepDone,
 	)
 
+	const onAssignAllSubjects = useOnAssignAllSubjects(onSelectVariable)
+
 	const dropdownOptions = useDefinitionDropdownOptions(
 		definitions,
 		causalFactors,
@@ -108,5 +112,6 @@ export function useBusinessLogic(): {
 		onResetVariable,
 		subjectIdentifier,
 		onSetSubjectIdentifier,
+		onAssignAllSubjects,
 	}
 }

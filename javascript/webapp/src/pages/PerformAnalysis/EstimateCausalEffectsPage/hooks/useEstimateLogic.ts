@@ -10,10 +10,10 @@ import type { AsyncHandler, Handler, Maybe, NodeRequest } from '@showwhy/types'
 import { useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 
+import { OUTPUT_FILE_NAME } from '~constants'
 import { useEstimateNode, useSaveNewRun, useWakeLock } from '~hooks'
 import { SESSION_ID_KEY, setStorageItem, useSpecCount } from '~state'
 
-import { OUTPUT_FILE_NAME } from '../EstimateCausalEffectPage.constants'
 import { useLoadSpecCount } from './useLoadSpecCount'
 import { useRunEstimate } from './useRunEstimate'
 import { useUploadFile } from './useUploadFile'

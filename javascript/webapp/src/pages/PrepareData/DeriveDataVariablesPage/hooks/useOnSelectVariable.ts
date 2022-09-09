@@ -36,7 +36,7 @@ export function useOnSelectVariable(
 		(option: Maybe<IContextualMenuItem>, columnName: string) => {
 			let hasVariable = false
 
-			if (isCausalFactorType(option?.data.type)) {
+			if (isCausalFactorType(option?.data?.type)) {
 				hasVariable = setCausalFactor(option?.key as string, columnName)
 			} else {
 				hasVariable = setDefinition(option?.key as string, columnName)
