@@ -105,38 +105,38 @@ export function useAlternativeModelsTestable(
 export function useAddOrEditFactor(): (
 	factor: OptionalId<CausalFactor>,
 ) => void {
-	return useAddOrEditFactorTestable(useCausalFactors(), useSetCausalFactors())
+	return useAddOrEditFactorTestable(useSetCausalFactors())
 }
 
 export function useAddOrEditFactorTestable(
-	causalFactors: CausalFactor[],
 	setCausalFactors: SetterOrUpdater<CausalFactor[]>,
 ): (factor: OptionalId<CausalFactor>) => void {
 	return useCallback(
-		(factor: OptionalId<CausalFactor>, factors = causalFactors) => {
-			const exists = factors.find(f => f.id === factor?.id) || {}
+		(factor: OptionalId<CausalFactor>) => {
+			setCausalFactors(factors => {
+				const exists = factors.find(f => f.id === factor?.id) || {}
 
-			const existsIndex = factors.findIndex(f => f.id === factor?.id)
-			const newFactor = {
-				...exists,
-				...factor,
-				id: factor?.id ?? v4(),
-			} as CausalFactor
+				const existsIndex = factors.findIndex(f => f.id === factor?.id)
+				const newFactor = {
+					...exists,
+					...factor,
+					id: factor?.id ?? v4(),
+				} as CausalFactor
 
-			let newFactorList = factors
+				let newFactorList = [...factors]
 
-			if (existsIndex >= 0) {
-				newFactorList = replaceItemAtIndex(
-					newFactorList,
-					existsIndex,
-					newFactor,
-				)
-			} else {
-				newFactorList = [...newFactorList, newFactor]
-			}
-
-			setCausalFactors(newFactorList)
+				if (existsIndex >= 0) {
+					newFactorList = replaceItemAtIndex(
+						newFactorList,
+						existsIndex,
+						newFactor,
+					)
+				} else {
+					newFactorList = [...newFactorList, newFactor]
+				}
+				return newFactorList
+			})
 		},
-		[causalFactors, setCausalFactors],
+		[setCausalFactors],
 	)
 }

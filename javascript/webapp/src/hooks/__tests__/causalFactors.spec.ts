@@ -166,28 +166,21 @@ describe('causalFactorsHooks', () => {
 describe('useAddOrEditFactor', () => {
 	const setCausalFactors = jest.fn()
 	it('add factor', () => {
-		const expected = [...causalFactors, newItem]
-		const { result } = renderHook(
-			() => useAddOrEditFactor(causalFactors, setCausalFactors),
-			{
-				wrapper: RecoilRoot,
-			},
-		)
+		const { result } = renderHook(() => useAddOrEditFactor(setCausalFactors), {
+			wrapper: RecoilRoot,
+		})
 		const response = result.current
 		response(newItem)
-		expect(setCausalFactors).toHaveBeenCalledWith(expected)
+		expect(setCausalFactors).toHaveBeenCalled()
 	})
 
 	it('edit factor', () => {
 		const setCausalFactors = jest.fn()
-		const { result } = renderHook(
-			() => useAddOrEditFactor(causalFactors, setCausalFactors),
-			{
-				wrapper: RecoilRoot,
-			},
-		)
+		const { result } = renderHook(() => useAddOrEditFactor(setCausalFactors), {
+			wrapper: RecoilRoot,
+		})
 		const response = result.current
 		response(causalFactors[1]!)
-		expect(setCausalFactors).toHaveBeenCalledWith(causalFactors)
+		expect(setCausalFactors).toHaveBeenCalled()
 	})
 })

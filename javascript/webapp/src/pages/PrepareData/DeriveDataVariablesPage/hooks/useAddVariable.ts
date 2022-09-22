@@ -18,7 +18,6 @@ import { v4 as uuiv4 } from 'uuid'
 import { useAddOrEditFactor, useSaveDefinition } from '~hooks'
 import {
 	useDefinitions,
-	useSetDefinitions,
 	useSetSubjectIdentifier,
 	useSubjectIdentifier,
 } from '~state'
@@ -41,10 +40,9 @@ export function useAddVariable(): {
 	const [selectedColumn, setSelectedColumn] = useSelectedColumn()
 
 	const definitions = useDefinitions()
-	const setDefinitions = useSetDefinitions()
 	const subjectIdentifier = useSubjectIdentifier()
 	const setSubjectIdentifier = useSetSubjectIdentifier()
-	const saveDefinition = useSaveDefinition(definitions, setDefinitions)
+	const saveDefinition = useSaveDefinition()
 	const addFactor = useAddOrEditFactor()
 
 	const onAdd = useCallback(

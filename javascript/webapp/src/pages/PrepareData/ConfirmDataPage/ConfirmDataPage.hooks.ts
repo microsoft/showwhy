@@ -8,13 +8,10 @@ import type ColumnTable from 'arquero/dist/types/table/column-table'
 import { useMemo } from 'react'
 
 import { useAllVariables, useOutputTable } from '~hooks'
-import { useCausalFactors, useDefinitions } from '~state'
 
 export function useOutput(): { output: Maybe<ColumnTable> } {
 	const outputTable = useOutputTable()
-	const causalFactors = useCausalFactors()
-	const definitions = useDefinitions()
-	const allVariables = useAllVariables(causalFactors, definitions)
+	const allVariables = useAllVariables()
 
 	const columns = useMemo((): string[] => {
 		const columnNames = outputTable?.columnNames()

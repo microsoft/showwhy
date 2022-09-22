@@ -62,6 +62,7 @@ export function useRenderDropdown(
 				case CommandActionType.SubjectIdentifier:
 					return onSelectIdentifier(columnName)
 				default:
+					onResetVariable(columnName)
 					return onSelect(option, columnName)
 			}
 		},
