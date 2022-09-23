@@ -8,14 +8,11 @@ import { memo, useEffect, useState } from 'react'
 import { Case, Default, Switch } from 'react-if'
 
 import { useAllVariables, useIsDataTypeValid } from '~hooks'
-import { useCausalFactors, useDefinitions } from '~state'
 import { getColumnDataTypeWarning } from '~utils'
 
 export const DataTypeWarningMessage: FC = memo(
 	function DataTypeWarningMessage() {
-		const causalFactors = useCausalFactors()
-		const definitions = useDefinitions()
-		const allVariables = useAllVariables(causalFactors, definitions)
+		const allVariables = useAllVariables()
 		const [message, setMessage] = useState<string[]>([])
 		const [, validColumns] = useIsDataTypeValid() || []
 

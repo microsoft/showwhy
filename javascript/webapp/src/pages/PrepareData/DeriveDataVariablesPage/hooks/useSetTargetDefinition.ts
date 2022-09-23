@@ -6,10 +6,16 @@
 import type { Definition } from '@showwhy/types'
 import { useCallback } from 'react'
 
-export function useSetTargetDefinition(
-	saveDefinition: (definition: Definition | Definition) => void,
-	definitions: Definition[],
-): (selectedDefinitionId: string, column: string) => boolean {
+import { useSaveDefinition } from '~hooks'
+import { useDefinitions } from '~state'
+
+export function useSetTargetDefinition(): (
+	selectedDefinitionId: string,
+	column: string,
+) => boolean {
+	const definitions = useDefinitions()
+	const saveDefinition = useSaveDefinition()
+
 	return useCallback(
 		(selectedDefinitionId: string, column: string) => {
 			const all: Definition[] = [...definitions]

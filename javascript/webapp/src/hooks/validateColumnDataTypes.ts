@@ -7,7 +7,6 @@ import { CausalFactorType, DefinitionType } from '@showwhy/types'
 import { useMemo } from 'react'
 
 import { useAllVariables, useOutputTable } from '~hooks'
-import { useCausalFactors, useDefinitions } from '~state'
 import { assertDataType } from '~utils'
 
 export function isColumnValid(
@@ -34,9 +33,7 @@ export function isColumnValid(
 export function useIsDataTypeValid():
 	| [boolean, Record<string, boolean>]
 	| undefined {
-	const causalFactors = useCausalFactors()
-	const definitions = useDefinitions()
-	const allVariables = useAllVariables(causalFactors, definitions)
+	const allVariables = useAllVariables()
 	const table = useOutputTable()
 	return useMemo(() => {
 		if (!table) {

@@ -4,33 +4,30 @@
  */
 
 import type { IContextualMenuItem } from '@fluentui/react'
-import type { CausalFactor, Definition, Handler1, Maybe } from '@showwhy/types'
+import type { Maybe } from '@showwhy/types'
 import { useCallback } from 'react'
-import type { SetterOrUpdater } from 'recoil'
 
-import { useAddOrEditFactor, useSaveDefinition } from '~hooks'
+import { useAddOrEditFactor } from '~hooks'
+import { useSetSubjectIdentifier, useSubjectIdentifier } from '~state'
 import { isCausalFactorType } from '~utils'
 
 import {
 	useSetTargetCausalFactor,
 	useSetTargetDefinition,
 } from '../DeriveDataVariablesPage.hooks'
+import { useStepIsDone } from './useIsStepDone'
 
-export function useOnSelectVariable(
-	causalFactors: CausalFactor[],
-	definitions: Definition[],
-	subjectIdentifier: string | undefined,
-	setDefinitions: SetterOrUpdater<Definition[]>,
-	setSubjectIdentifier: SetterOrUpdater<string | undefined>,
-	onSelect: Handler1<boolean>,
-): (option: Maybe<IContextualMenuItem>, columnName: string) => void {
+export function useOnSelectVariable(): (
+	option: Maybe<IContextualMenuItem>,
+	columnName: string,
+) => void {
 	const onSaveCausalFactor = useAddOrEditFactor()
-	const setCausalFactor = useSetTargetCausalFactor(
-		onSaveCausalFactor,
-		causalFactors,
-	)
-	const onSaveDefinition = useSaveDefinition(definitions, setDefinitions)
-	const setDefinition = useSetTargetDefinition(onSaveDefinition, definitions)
+	const setCausalFactor = useSetTargetCausalFactor(onSaveCausalFactor)
+	const subjectIdentifier = useSubjectIdentifier()
+
+	const onSelect = useStepIsDone()
+	const setSubjectIdentifier = useSetSubjectIdentifier()
+	const setDefinition = useSetTargetDefinition()
 
 	return useCallback(
 		(option: Maybe<IContextualMenuItem>, columnName: string) => {

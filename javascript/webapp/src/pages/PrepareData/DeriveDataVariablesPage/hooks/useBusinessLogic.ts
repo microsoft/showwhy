@@ -4,23 +4,10 @@
  */
 
 import type { IDetailsColumnProps, IRenderFunction } from '@fluentui/react'
-import type {
-	CausalFactor,
-	Definition,
-	FactorsOrDefinitions,
-	Handler1,
-	Maybe,
-} from '@showwhy/types'
-import { useCallback, useMemo } from 'react'
+import type { FactorsOrDefinitions, Handler1, Maybe } from '@showwhy/types'
 
-import { useAllVariables, useAutomaticWorkflowStatus } from '~hooks'
-import {
-	useCausalFactors,
-	useDefinitions,
-	useSetDefinitions,
-	useSetSubjectIdentifier,
-	useSubjectIdentifier,
-} from '~state'
+import { useAllVariables } from '~hooks'
+import { useSetSubjectIdentifier, useSubjectIdentifier } from '~state'
 
 import {
 	useCommandBar,
@@ -30,6 +17,7 @@ import {
 	useOnSetSubjectIdentifier,
 	useRenderDropdown,
 } from '../DeriveDataVariablesPage.hooks'
+import { useCompletedElements } from './useCompletedElements'
 import { useOnAssignAllSubjects } from './useOnAssignAllSubjects'
 
 export function useBusinessLogic(): {
@@ -41,53 +29,19 @@ export function useBusinessLogic(): {
 	onSetSubjectIdentifier: Handler1<Maybe<string>>
 	onAssignAllSubjects: (definitionId: string) => void
 } {
-	const causalFactors = useCausalFactors()
-	const definitions = useDefinitions()
-	const setDefinitions = useSetDefinitions()
-	const allElements = useAllVariables(causalFactors, definitions)
+	const allElements = useAllVariables()
 	const setSubjectIdentifier = useSetSubjectIdentifier()
 	const subjectIdentifier = useSubjectIdentifier()
-	const { setDone, setTodo } = useAutomaticWorkflowStatus()
-
-	const completedElements = useMemo((): number => {
-		const initial = !!subjectIdentifier ? 1 : 0
-		return allElements.find((x: CausalFactor | Definition) => x)
-			? allElements?.filter((x: CausalFactor | Definition) => x.column).length +
-					initial
-			: initial
-	}, [allElements, subjectIdentifier])
-
-	const isStepDone = useCallback(
-		(hasVariable: boolean) => {
-			const done =
-				allElements.length + 1 ===
-				(hasVariable ? completedElements + 1 : completedElements - 1)
-			done ? setDone() : setTodo()
-		},
-		[allElements, completedElements, setDone, setTodo],
-	)
+	const completedElements = useCompletedElements()
 
 	const onSetSubjectIdentifier = useOnSetSubjectIdentifier(
 		subjectIdentifier,
 		setSubjectIdentifier,
-		isStepDone,
 	)
 
-	const onSelectVariable = useOnSelectVariable(
-		causalFactors,
-		definitions,
-		subjectIdentifier,
-		setDefinitions,
-		setSubjectIdentifier,
-		isStepDone,
-	)
-
+	const onSelectVariable = useOnSelectVariable()
 	const onAssignAllSubjects = useOnAssignAllSubjects(onSelectVariable)
-
-	const dropdownOptions = useDefinitionDropdownOptions(
-		definitions,
-		causalFactors,
-	)
+	const dropdownOptions = useDefinitionDropdownOptions()
 	const onResetVariable = useOnResetVariable(
 		allElements,
 		dropdownOptions,

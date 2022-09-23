@@ -17,12 +17,12 @@ import { useMemo } from 'react'
 import { useCausalEffects } from '~hooks'
 import { getDefinitionsByType } from '~utils'
 
+import { useCausalFactors, useDefinitions } from '../../../../state'
 import { CommandActionType } from '../DeriveDataVariablesPage.types'
 
-export function useDefinitionDropdownOptions(
-	definitions: Definition[],
-	causalFactors: CausalFactor[],
-): IContextualMenuItem[] {
+export function useDefinitionDropdownOptions(): IContextualMenuItem[] {
+	const causalFactors = useCausalFactors()
+	const definitions = useDefinitions()
 	const causalEffects = useCausalEffects(CausalModelLevel.Maximum)
 	return useMemo((): IContextualMenuItem[] => {
 		const menuItems: IContextualMenuItem[] = [...baseMenuItems]

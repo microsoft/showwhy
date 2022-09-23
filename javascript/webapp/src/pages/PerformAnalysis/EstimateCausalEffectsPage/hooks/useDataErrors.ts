@@ -6,7 +6,7 @@
 import { useMemo } from 'react'
 
 import { useAllVariables, useIsDataTypeValid, useOutputTable } from '~hooks'
-import { useCausalFactors, useDefinitions, useSubjectIdentifier } from '~state'
+import { useDefinitions, useSubjectIdentifier } from '~state'
 import { isFullDatasetPopulation } from '~utils'
 
 import { useIsMicrodata } from './useIsMicrodata'
@@ -22,8 +22,7 @@ export function useDataErrors(): {
 	const outputTable = useOutputTable()
 	const subjectIdentifier = useSubjectIdentifier()
 	const definitions = useDefinitions()
-	const causalFactors = useCausalFactors()
-	const allVariables = useAllVariables(causalFactors, definitions)
+	const allVariables = useAllVariables()
 	const isMicrodata = useIsMicrodata(outputTable, subjectIdentifier)
 	const [isValidDataType = true] = useIsDataTypeValid() || []
 	const variablesColumns = useMemo(

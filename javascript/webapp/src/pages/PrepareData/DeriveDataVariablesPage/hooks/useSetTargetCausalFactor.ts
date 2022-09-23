@@ -6,10 +6,12 @@
 import type { CausalFactor } from '@showwhy/types'
 import { useCallback } from 'react'
 
+import { useCausalFactors } from '~state'
+
 export function useSetTargetCausalFactor(
 	saveCausalFactor: (causalFactor: CausalFactor) => void,
-	causalFactors: CausalFactor[],
 ): (selectedDefinitionId: string, column: string) => boolean {
+	const causalFactors = useCausalFactors()
 	return useCallback(
 		(selectedDefinitionId: string, column: string) => {
 			const selectedCausal = {

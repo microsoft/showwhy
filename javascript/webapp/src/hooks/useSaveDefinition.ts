@@ -5,32 +5,36 @@
 
 import type { CausalFactor, Definition } from '@showwhy/types'
 import { useCallback } from 'react'
-import type { SetterOrUpdater } from 'recoil'
 
 import { replaceItemAtIndex } from '~utils/arrays'
 
-export function useSaveDefinition(
-	definitions: Definition[],
-	setDefinitions: SetterOrUpdater<Definition[]>,
-): (newDefinition: CausalFactor | Definition) => void {
+import { useSetDefinitions } from '../state'
+
+export function useSaveDefinition(): (
+	newDefinition: CausalFactor | Definition,
+) => void {
+	const setDefinitions = useSetDefinitions()
+
 	return useCallback(
 		(newDefinition: CausalFactor | Definition) => {
-			let newDefinitionList = [...definitions]
+			setDefinitions(definitions => {
+				let newDefinitionList = [...definitions]
 
-			const index = definitions?.findIndex(
-				(x: Definition) => x.id === newDefinition?.id,
-			)
-			if (index > -1) {
-				newDefinitionList = replaceItemAtIndex(
-					newDefinitionList,
-					index,
-					newDefinition,
+				const index = definitions?.findIndex(
+					(x: Definition) => x.id === newDefinition?.id,
 				)
-			} else {
-				newDefinitionList.push(newDefinition)
-			}
-			setDefinitions(newDefinitionList)
+				if (index > -1) {
+					newDefinitionList = replaceItemAtIndex(
+						newDefinitionList,
+						index,
+						newDefinition,
+					)
+				} else {
+					newDefinitionList.push(newDefinition)
+				}
+				return newDefinitionList
+			})
 		},
-		[definitions, setDefinitions],
+		[setDefinitions],
 	)
 }
