@@ -1916,12 +1916,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@causal-platform/backend@workspace:python/backend":
-  version: 0.0.0-use.local
-  resolution: "@causal-platform/backend@workspace:python/backend"
-  languageName: unknown
-  linkType: soft
-
 "@cush/relative@npm:^1.0.0":
   version: 1.0.0
   resolution: "@cush/relative@npm:1.0.0"

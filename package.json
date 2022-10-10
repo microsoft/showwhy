@@ -50,8 +50,7 @@
 		"typescript": "^4.8.4"
 	},
 	"workspaces": [
-		"javascript/*",
-		"python/backend"
+		"javascript/*"
 	],
 	"packageManager": "yarn@3.2.4"
 }
