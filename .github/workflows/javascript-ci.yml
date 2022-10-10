@@ -52,9 +52,6 @@ jobs:
       - run: yarn test
         name: Test
 
-      - run: yarn bundle
-        name: Bundle
-
       - run: |
           git add -A 
           git status
