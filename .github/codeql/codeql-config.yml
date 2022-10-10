@@ -1,0 +1,7 @@
+name: 'CodeQL Configuration'
+paths:
+  - javascript/
+  - python/
+paths-ignore:
+  - '**/*.spec.ts'
+  - '.pnp.*'
