@@ -4,8 +4,8 @@
  */
 /* eslint-disable  @typescript-eslint/ban-ts-comment, @typescript-eslint/no-unsafe-return */
 
-import { PersistenceProvider, TableStoreProvider } from '@showwhy/app-common'
 import { Spinner } from '@fluentui/react'
+import { PersistenceProvider, TableStoreProvider } from '@showwhy/app-common'
 import { lazy, Suspense } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { RecoilRoot } from 'recoil'

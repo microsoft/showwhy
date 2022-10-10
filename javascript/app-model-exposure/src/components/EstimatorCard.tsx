@@ -2,9 +2,9 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { CardComponent } from '@showwhy/app-common'
 import type { IChoiceGroupOption } from '@fluentui/react'
 import { Checkbox, ChoiceGroup, SpinButton, Stack } from '@fluentui/react'
+import { CardComponent } from '@showwhy/app-common'
 import { useDebounceFn } from 'ahooks'
 import uniqueId from 'lodash/uniqueId.js'
 import type { FormEvent } from 'react'

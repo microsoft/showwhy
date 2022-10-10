@@ -3,8 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { Hypothesis } from '@showwhy/app-common'
 import type { IChoiceGroupOption } from '@fluentui/react'
+import type { Hypothesis } from '@showwhy/app-common'
 import { type FormEvent, useCallback } from 'react'
 
 import { useSetCausalQuestion } from '../state/causalQuestion.js'

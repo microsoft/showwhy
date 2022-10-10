@@ -3,10 +3,10 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { RadioButtonChoice } from '@showwhy/app-common'
 import type { IDropdownOption } from '@fluentui/react'
 import { TextField } from '@fluentui/react'
 import { useBoolean } from '@fluentui/react-hooks'
+import type { RadioButtonChoice } from '@showwhy/app-common'
 import { useCallback, useMemo, useState } from 'react'
 import { useXarrow } from 'react-xarrows'
 

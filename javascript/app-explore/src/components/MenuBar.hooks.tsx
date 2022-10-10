@@ -2,10 +2,10 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { useDataTables } from '@showwhy/app-common'
 import type { ICommandBarItemProps } from '@fluentui/react'
 import { Checkbox, ContextualMenuItemType, Toggle } from '@fluentui/react'
 import { useBoolean } from '@fluentui/react-hooks'
+import { useDataTables } from '@showwhy/app-common'
 import type ColumnTable from 'arquero/dist/types/table/column-table'
 import { useEffect, useMemo } from 'react'
 import type { RecoilState } from 'recoil'

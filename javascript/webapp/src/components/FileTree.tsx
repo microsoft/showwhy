@@ -2,10 +2,10 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { ImportTable } from '@showwhy/app-common'
 import type { BaseFile } from '@datashaper/utilities'
 import { DirectionalHint, Separator } from '@fluentui/react'
 import { useBoolean } from '@fluentui/react-hooks'
+import { ImportTable } from '@showwhy/app-common'
 import merge from 'lodash-es/merge.js'
 import { memo, useCallback, useState } from 'react'
 

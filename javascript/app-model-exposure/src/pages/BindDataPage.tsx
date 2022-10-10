@@ -2,8 +2,8 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { MenuBar } from '@showwhy/app-common'
 import { ArqueroDetailsList, ArqueroTableHeader } from '@datashaper/react'
+import { MenuBar } from '@showwhy/app-common'
 import type { FC } from 'react'
 import { memo } from 'react'
 

@@ -2,7 +2,6 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { useDataTableOutput } from '@showwhy/app-common'
 import {
 	ArqueroDetailsList,
 	ArqueroTableHeader,
@@ -18,6 +17,7 @@ import { useInputTableNames } from '@datashaper/react/dist/hooks/useTableDropdow
 import type { TableContainer } from '@datashaper/tables'
 import { type IColumn, CommandBar } from '@fluentui/react'
 import { useBoolean } from '@fluentui/react-hooks'
+import { useDataTableOutput } from '@showwhy/app-common'
 import upperFirst from 'lodash-es/upperFirst.js'
 import { memo, useCallback, useMemo, useState } from 'react'
 

@@ -4,8 +4,8 @@
  */
 import 'allotment/dist/style.css'
 
-import { CommonLayout } from '@showwhy/app-common'
 import { Spinner } from '@fluentui/react'
+import { CommonLayout } from '@showwhy/app-common'
 import { Allotment } from 'allotment'
 import { memo, Suspense } from 'react'
 import { useMeasure } from 'react-use'

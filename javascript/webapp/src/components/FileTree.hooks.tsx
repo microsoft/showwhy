@@ -3,13 +3,6 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { OpenTableHandler } from '@showwhy/app-common'
-import {
-	DataPackageContext,
-	PersistenceContext,
-	removeExtension,
-	useDataTables,
-} from '@showwhy/app-common'
 import type { DataFormat, DataShape, ParserOptions } from '@datashaper/schema'
 import { createDataTableSchemaObject } from '@datashaper/schema'
 import type { TableContainer } from '@datashaper/tables'
@@ -17,6 +10,13 @@ import type { BaseFile } from '@datashaper/utilities'
 import { createBaseFile } from '@datashaper/utilities'
 import { DataTable } from '@datashaper/workflow'
 import type { ICommandBarItemProps, IContextualMenuItem } from '@fluentui/react'
+import type { OpenTableHandler } from '@showwhy/app-common'
+import {
+	DataPackageContext,
+	PersistenceContext,
+	removeExtension,
+	useDataTables,
+} from '@showwhy/app-common'
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 

@@ -2,13 +2,6 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import {
-	TableDelimiterOptions,
-	TablePreview,
-	useDataTableSource,
-} from '@showwhy/app-common'
-import { choiceGroupStyles } from '@showwhy/app-common/src/file_management/TableDelimiterOptions.styles.js'
-import { TableLayoutOptions } from '@showwhy/app-common/src/file_management/TableLayoutOptions.js'
 import type { DataOrientation } from '@datashaper/schema'
 import { DataFormat } from '@datashaper/schema'
 import type { DataTable } from '@datashaper/workflow'
@@ -20,6 +13,13 @@ import {
 	TextField,
 } from '@fluentui/react'
 import { useBoolean } from '@fluentui/react-hooks'
+import {
+	TableDelimiterOptions,
+	TablePreview,
+	useDataTableSource,
+} from '@showwhy/app-common'
+import { choiceGroupStyles } from '@showwhy/app-common/src/file_management/TableDelimiterOptions.styles.js'
+import { TableLayoutOptions } from '@showwhy/app-common/src/file_management/TableLayoutOptions.js'
 import { useDebounceFn } from 'ahooks'
 import { memo, useCallback, useEffect, useState } from 'react'
 
