@@ -1,0 +1,67 @@
+{
+	"$schema": "https://turborepo.org/schema.json",
+	"baseBranch": "origin/main",
+	"pipeline": {
+		"build": {
+			"dependsOn": ["^build", "^assets", "assets"],
+			"outputs": [
+				"dist/**",
+				"docs/**",
+				"build/**",
+				"storybook-static/**",
+				"public/**"
+			]
+		},
+		"assets": {
+			"dependsOn": ["^assets"],
+			"outputs": ["public/**"]
+		},
+		"test": {
+			"dependsOn": [],
+			"outputs": []
+		},
+		"typecheck": {
+			"dependsOn": [],
+			"outputs": []
+		},
+		"lint": {
+			"dependsOn": [],
+			"outputs": []
+		},
+		"lint_fix": {
+			"dependsOn": [],
+			"outputs": []
+		},
+		"ci": {
+			"dependsOn": ["assets", "typecheck", "build", "lint", "test"],
+			"outputs": [
+				"dist/**",
+				"docs/**",
+				"build/**",
+				"storybook-static/**",
+				"public/**"
+			]
+		},
+		"prestart": {
+			"dependsOn": ["^prestart"],
+			"outputs": ["dist/**"]
+		},
+		"start": {
+			"cache": false,
+			"dependsOn": ["assets", "prestart"],
+			"outputs": []
+		},
+		"clean": {
+			"cache": false
+		},
+		"release": {
+			"cache": false
+		},
+		"deploy": {
+			"cache": false
+		},
+		"poetry_install": {
+			"cache": false
+		}
+	}
+}

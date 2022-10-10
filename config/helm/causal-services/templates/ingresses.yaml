@@ -1,0 +1,36 @@
+{{- $context := . }}
+{{- range .Values.applicationGroups }}
+{{- $appGroup := . }}
+{{- if eq (tpl ($appGroup.disable | default "false") $context) "false" }}
+{{- $ingress := $appGroup.ingress | default dict }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ $appGroup.namespace }}
+  namespace: {{ $appGroup.namespace }}
+  labels:
+    app: {{ $appGroup.namespace }}
+  annotations:
+    {{- tpl (toYaml $ingress.annotations) $context | nindent 4 }}
+spec:
+  ingressClassName: nginx
+  tls:
+    {{- tpl (toYaml $ingress.tls) $context | nindent 4 }}
+  rules:
+    - host: {{ tpl $ingress.host $context }}
+      http:
+        paths:
+          {{- range $appGroup.services }}
+          {{- if .path }}
+          - pathType: Prefix
+            path: {{ .path }}
+            backend:
+              service:
+                name: {{ .name }}
+                port:
+                  name: {{ .name }}
+          {{- end }}
+          {{- end }}
+---
+{{- end }}
+{{- end }}

@@ -1,7 +1,7 @@
-.yarn/
-.yarnrc.yml
+.yarn*
 yarn.lock
 .pnp.*
+
 node_modules/
 storybook-static/
 build/
@@ -9,7 +9,8 @@ dist/
 lib/
 coverage/
 public/
-bot_backups/*
-DATA_REVIEW.md
-.cache
-.eslintrc
+docs/
+
+.*
+
+config/helm/**/templates/*.yaml

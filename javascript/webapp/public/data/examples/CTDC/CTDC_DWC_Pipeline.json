@@ -1,0 +1,108 @@
+{
+    "input": [
+        "CTDC_synthetic_20210825.csv"
+    ],
+    "output": [
+        {
+            "node": "impute",
+            "name": "recode"
+        },
+        {
+            "node": "select",
+            "name": "select"
+        }
+    ],
+    "steps": [
+        {
+            "id": "impute",
+            "args": {
+                "columns": [
+                    "meansOfControlDebtBondage",
+                    "meansOfControlTakesEarnings",
+                    "meansOfControlThreats",
+                    "meansOfControlPsychologicalAbuse",
+                    "meansOfControlPhysicalAbuse",
+                    "meansOfControlSexualAbuse",
+                    "meansOfControlFalsePromises",
+                    "meansOfControlPsychoactiveSubstances",
+                    "meansOfControlRestrictsMovement",
+                    "meansOfControlRestrictsMedicalCare",
+                    "meansOfControlExcessiveWorkingHours",
+                    "meansOfControlThreatOfLawEnforce",
+                    "meansOfControlWithholdsNecessities",
+                    "meansOfControlWithholdsDocuments",
+                    "meansOfControlOther",
+                    "isForcedLabour",
+                    "isSexualExploit",
+                    "isOtherExploit",
+                    "typeOfLabourAgriculture",
+                    "typeOfLabourConstruction",
+                    "typeOfLabourDomesticWork",
+                    "typeOfLabourHospitality",
+                    "typeOfLabourOther",
+                    "typeOfSexProstitution",
+                    "typeOfSexPornography",
+                    "typeOfSexOther",
+                    "recruiterRelationIntimatePartner",
+                    "recruiterRelationFriend",
+                    "recruiterRelationFamily",
+                    "recruiterRelationOther"
+                ],
+                "value": "0"
+            },
+            "verb": "impute",
+            "input": {
+                "source": {
+                    "node": "CTDC_synthetic_20210825.csv"
+                }
+            }
+        },
+        {
+            "id": "select",
+            "args": {
+                "columns": [
+                    "gender",
+                    "ageBroad",
+                    "majorityStatusAtExploit",
+                    "traffickMonths",
+                    "meansOfControlDebtBondage",
+                    "meansOfControlTakesEarnings",
+                    "meansOfControlThreats",
+                    "meansOfControlPsychologicalAbuse",
+                    "meansOfControlPhysicalAbuse",
+                    "meansOfControlSexualAbuse",
+                    "meansOfControlFalsePromises",
+                    "meansOfControlPsychoactiveSubstances",
+                    "meansOfControlRestrictsMovement",
+                    "meansOfControlRestrictsMedicalCare",
+                    "meansOfControlExcessiveWorkingHours",
+                    "meansOfControlThreatOfLawEnforce",
+                    "meansOfControlWithholdsNecessities",
+                    "meansOfControlWithholdsDocuments",
+                    "meansOfControlOther",
+                    "isForcedLabour",
+                    "isSexualExploit",
+                    "isOtherExploit",
+                    "typeOfLabourAgriculture",
+                    "typeOfLabourConstruction",
+                    "typeOfLabourDomesticWork",
+                    "typeOfLabourHospitality",
+                    "typeOfLabourOther",
+                    "typeOfSexProstitution",
+                    "typeOfSexPornography",
+                    "typeOfSexOther",
+                    "recruiterRelationIntimatePartner",
+                    "recruiterRelationFriend",
+                    "recruiterRelationFamily",
+                    "recruiterRelationOther"
+                ]
+            },
+            "verb": "select",
+            "input": {
+                "source": {
+                    "node": "impute"
+                }
+            }
+        }
+    ]
+}

@@ -1,0 +1,232 @@
+#
+# the top level domain of the application
+#   - used for tls hosts
+#   - used to configure auth whitelist and cookie domains
+#
+domain: localhost
+
+#
+# registry to pull the causal services from
+#   - for local dev, this can be left empty to
+#     use locally built images
+#
+causalImagesRegistry: ''
+
+#
+# policy to pull the causal services images
+#   - for locally built images set this to Never, so the images
+#     should had been built locally
+#   - for production environments this could be set to Always
+#     so the latest tag will always be pulled
+#
+causalImagesPullPolicy: Never
+
+#
+# where to pull the oauth2-proxy image from
+#
+oauth2ProxyImage: quay.io/oauth2-proxy/oauth2-proxy
+
+#
+# where to pull the redis image from
+#
+redisImage: mcr.microsoft.com/mirror/docker/library/redis:7
+
+#
+# default number of requests accepted from a given IP each minute
+#   - this only applies to the ingresses defined in applicationGroups
+#     and not for the default backend
+#
+defaultLimitRPM: 240
+
+#
+# whether pods should be recreated on every upgrade or not
+#
+recreatePodsOnUpgrade: true
+
+#
+# the number of old ReplicaSets to retain to allow rollback
+#
+revisionHistoryLimit: 1
+
+#
+# enables the oauth2-proxy service for the backend and frontend
+#
+enableAuthentication: false
+
+#
+# application services grouped by ingress
+#
+applicationGroups:
+  #
+  # backend services and ingress
+  #
+  - namespace: backend
+    services:
+      - name: backend-api
+        image: '{{ .Values.causalImagesRegistry }}backend'
+        imagePullPolicy: '{{ .Values.causalImagesPullPolicy }}'
+        replicas: 1
+        containerPort: 8081
+        servicePort: 8081
+        path: /api
+        env:
+          - name: REDIS_URL
+            value: redis://redis:6379/0
+          - name: STORAGE
+            value: /data/
+          # - fastapi will redirect routes with no trailing spaces
+          # - this ensures the redirect works with the reserve proxy
+          # - it is safe to allow for '*', since the container is only
+          #   accessible within the cluster
+          - name: FORWARDED_ALLOW_IPS
+            value: '*'
+
+      - name: backend-worker
+        image: '{{ .Values.causalImagesRegistry }}backend'
+        imagePullPolicy: '{{ .Values.causalImagesPullPolicy }}'
+        replicas: 1
+        containerPort: 8081
+        servicePort: 8082
+        env:
+          - name: WORKER
+            value: 'true'
+          - name: REDIS_URL
+            value: redis://redis:6379/0
+
+      - name: redis
+        image: '{{ .Values.redisImage }}'
+        imagePullPolicy: Always
+        replicas: 1
+        containerPort: 6379
+        servicePort: 6379
+
+    ingress:
+      host: '{{ .Values.domain }}'
+
+      annotations:
+        # force ingress to work with HTTPS
+        nginx.ingress.kubernetes.io/force-ssl-redirect: 'true'
+        # auth configuration
+        #   here we do not set auth-signin so the default
+        #   behavior for the backend APIs is to return 401 Unauthorized
+        nginx.ingress.kubernetes.io/auth-url: '{{ if .Values.enableAuthentication }}https://$host/oauth2/auth{{ end }}'
+        # increase the buffer size so the auth cookie will fit
+        nginx.ingress.kubernetes.io/proxy-buffer-size: '16k'
+        nginx.ingress.kubernetes.io/proxy-buffers-number: '64'
+        nginx.ingress.kubernetes.io/limit-rpm: '{{ .Values.defaultLimitRPM }}'
+
+      # setup HTTPS for the backend services routes
+      tls:
+        - hosts:
+            - '{{ .Values.domain }}'
+
+  #
+  # frontend services and ingress
+  #
+  - namespace: frontend
+    services:
+      - name: app-shell
+        image: '{{ .Values.causalImagesRegistry }}app-shell'
+        imagePullPolicy: '{{ .Values.causalImagesPullPolicy }}'
+        replicas: 1
+        containerPort: 8080
+        servicePort: 3005
+        path: /
+
+    ingress:
+      host: '{{ .Values.domain }}'
+
+      annotations:
+        # force ingress to work with HTTPS
+        nginx.ingress.kubernetes.io/force-ssl-redirect: 'true'
+        # auth configuration
+        #   this will redirect to the sign page in case the
+        #   auth check fails
+        nginx.ingress.kubernetes.io/auth-url: '{{ if .Values.enableAuthentication }}https://$host/oauth2/auth{{ end }}'
+        nginx.ingress.kubernetes.io/auth-signin: '{{ if .Values.enableAuthentication }}https://$host/oauth2/start?rd=$escaped_request_uri{{ end }}'
+        # increase the buffer size so the auth cookie will fit
+        nginx.ingress.kubernetes.io/proxy-buffer-size: '16k'
+        nginx.ingress.kubernetes.io/proxy-buffers-number: '64'
+        nginx.ingress.kubernetes.io/limit-rpm: '{{ .Values.defaultLimitRPM }}'
+
+      # setup HTTPS for the frontend services routes
+      tls:
+        - hosts:
+            - '{{ .Values.domain }}'
+
+  #
+  # authentication services and ingress
+  #
+  - namespace: oauth-proxy
+    # set this to true, so helm won't try to create the namespace
+    externalNamespace: true
+    disable: '{{ not .Values.enableAuthentication }}'
+    services:
+      - name: oauth2-proxy
+        image: '{{ .Values.oauth2ProxyImage }}'
+        imagePullPolicy: Always
+        # oauth2-proxy config
+        args:
+          - --provider=oidc
+          - --email-domain=*
+          - --upstream=file:///dev/null
+          - --http-address=0.0.0.0:4180
+          - --reverse-proxy=true
+          - --whitelist-domain={{ .Values.domain }}
+          - --cookie-domain={{ .Values.domain }}
+          - --cookie-httponly=true
+          - --cookie-secure=true
+          - --cookie-expire=48h0m0s
+          - --cookie-samesite=lax
+        # parameters with potential sensitive info are provided through secrets
+        env:
+          - name: OAUTH2_PROXY_OIDC_ISSUER_URL
+            valueFrom:
+              secretKeyRef:
+                name: oauth-proxy-secret
+                key: oidc-issuer-url
+          - name: OAUTH2_PROXY_SCOPE
+            valueFrom:
+              secretKeyRef:
+                name: oauth-proxy-secret
+                key: scope
+          - name: OAUTH2_PROXY_CLIENT_ID
+            valueFrom:
+              secretKeyRef:
+                name: oauth-proxy-secret
+                key: client-id
+          - name: OAUTH2_PROXY_CLIENT_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: oauth-proxy-secret
+                key: client-secret
+          - name: OAUTH2_PROXY_COOKIE_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: oauth-proxy-secret
+                key: cookie-secret
+          - name: OAUTH2_PROXY_COOKIE_NAME
+            valueFrom:
+              secretKeyRef:
+                name: oauth-proxy-secret
+                key: cookie-name
+        replicas: 1
+        containerPort: 4180
+        servicePort: 4180
+        path: /oauth2
+
+    ingress:
+      host: '{{ .Values.domain }}'
+
+      annotations:
+        # force ingress to work with HTTPS
+        nginx.ingress.kubernetes.io/force-ssl-redirect: 'true'
+        # increase the buffer size so the auth cookie will fit
+        nginx.ingress.kubernetes.io/proxy-buffer-size: '16k'
+        nginx.ingress.kubernetes.io/proxy-buffers-number: '64'
+        nginx.ingress.kubernetes.io/limit-rpm: '{{ .Values.defaultLimitRPM }}'
+
+      # setup HTTPS for /oauth2
+      tls:
+        - hosts:
+            - '{{ .Values.domain }}'

@@ -1,102 +1,70 @@
 # ShowWhy
 
-ShowWhy is an interactive application that guides users through the process of answering a causal question using observational data.
+ShowWhy is a suite of no-code tools for performing data analysis using causal techniques and causal ML tools.
+Currently, ShowWhy consists of four primary tools:
 
-In use, it has the potential to empower domain experts (who may not be data scientists) to develop a higher standard of evidence than could be achieved using conventional forms of exploratory data analysis (since correlation does not imply causation).
+- Data-Wrangling
+  The data-wrangling application allows users to clean, transform, and prepare data for analysis.
+  Data tables created in the wrangling app can be used in other tools within the application.
 
-In other words, ShowWhy enables emulation of randomized controlled trials that produce a high standard of real-world evidence.
+- Exposure Analysis
+  This tool, formerly known as ShowWhy, allows users to define and test hypotheses around causal links within data in order to validate their prior assumptions.
+  For example, a user may have some prior domain knowledge that "co2 emissions cause global warming" or "smoking causes cancer".
+  This tool will verify these causal claims using the [dowhy](https://py-why.github.io/dowhy/v0.8/) suite of refuters and estimators, and will help the user to understand the results of these analyses.
 
-## Packages
+- Event Analysis
+  The event analysis tool allows users to use time-series observational data containing treated and untreated units to detect whether treatments had a net effect on outcomes. This tool uses the [Synthetic Differences-in-Differences](https://github.com/synth-inference/synthdid) technique for analysis.
 
-- [acceptance-tests](javascript/acceptance-tests)
-- [api-client](javascript/api-client)
-- [builders](javascript/builders)
-- [components](javascript/components)
-- [types](javascript/types)
-- [webapp](javascript/webapp)
-- [showwhy-backend](python/showwhy-backend)
-- [showwhy-inference](python/showwhy-inference)
+- Causal Discovery
+  This tool allows users to inspect variable relationships within data, and to perform causal discovery using a variety of techniques such as [Causica](https://github.com/microsoft/causica), [NOTEARS](https://github.com/xunzheng/notears) and [DirectLiNGAM](https://lingam.readthedocs.io/en/latest/reference/direct_lingam.html).
 
-## Getting Started
+# Getting Started
 
-### Installation process
+Before anything you will need to install the proper dependencies and build the frontend code:
 
-- Windows Subsystem for Linux (WSL): https://docs.microsoft.com/en-us/windows/wsl/setup/environment (Only for Windows users)
+```bash
+yarn install
+yarn build # or yarn force_build
+```
 
-- Docker (For all platforms):
+The application is designed to start up using [Docker](https://www.docker.com/products/docker-desktop/). You should have the `docker` tools available in your shell, particulary [`docker-compose`](https://docs.docker.com/compose/).
+To start the application, run the following command:
 
-  **NOTE:** Mac devices with M1 chips are not currently supported.
+```bash
+yarn start # or docker-compose --profile all up
+```
 
-  - Windows: https://docs.docker.com/desktop/windows/install/
-  - MAC: https://docs.docker.com/desktop/mac/install/
-  - Ubuntu: https://docs.docker.com/engine/install/ubuntu/
+To start the services and webapps separately, you will need [yarn](https://yarnpkg.com/en/docs/install) available:
 
-- Docker Compose (For Linux Users):
-  - Docker Compose: https://docs.docker.com/compose/install/ (look at the correct tab depending on your Operating System)
+```bash
+yarn start_backend # or docker-compose --profile backend up
+yarn start_webapps
+```
 
-## Build and Test
+The application will then be available on `http://localhost:3000`
 
-### Windows
+# Build and Test
 
-Open a PowerShell terminal, [navigate to the directory](https://docs.microsoft.com/en-us/powershell/scripting/samples/managing-current-location?view=powershell-7.2) where this project is located and run one of the commands at the `Commands` section of this README.
+The application is structured as a monorepo. Web-application packages are written using [typescript](https://www.typescriptlang.org/), and backend packages are written using [python](https://www.python.org/). [yarn](https://yarnpkg.com/en/docs/install) is used to orchestrate monorepo builds.
 
-### MAC/LINUX:
+## Available Commands
 
-Open a terminal, navigate to the directory where this project is located and run.
+```bash
+yarn clean # clean the app
+yarn assets # bundle workers and pre-process assets
+yarn build # perform build steps
+yarn lint # perform linting
+yarn lint_fix # perform linting and correct linting issues
+yarn test # run tests
+yarn typecheck # perform typechecking
+yarn ci # perform the full verification suite
+```
 
-**NOTE:** For linux you will need to replace the `-` in `docker-compose` for a space in order for the commands to work, for example: `docker-compose up --build -d` in linux should be `docker compose up --build -d`
+# Deployment
 
-### Commands
+Check the [deployment documentation](./docs/deployment/README.md) for instructions on how to deploy to a local kubernetes instance or to AKS on Azure.
 
-- `docker-compose up --build -d`: Start all the containers (UI and Backend with all the dependencies) - Useful for users to start using ShowWhy
-- `docker-compose up --build -d webapp`: Start only the UI container
-- `docker-compose up --build -d reverseproxy`: Start all the containers needed for the backend and proxy for UI (the UI is excluded) - Useful for UI development
-- `docker-compose up --build -d functions`: Start all the containers needed for the backend except the proxy - Useful for backend development
+# Contribute
 
-To stop using showwhy you can run these commands on the same powershell terminal:
-
-- `docker-compose stop`: Stops the containers without removing anything
-- `docker-compose down -v`: Stops and removes all the containers and volumes used - Use when you stop using ShowWhy
-- `docker-compose rm --force`: Use after `docker-compose down -v` to delete all the data used in previous ShowWhy runs
-
-### Javascript Development
-
-To be able to work on the javascript package you will need to install:
-
-- [yarn](https://yarnpkg.com/)
-
-To install all dependencies you must run `yarn install` in the root folder of this project.
-
-This process will setup all dependencies needed to run javascript packages locally.
-
-`yarn start:webapp`
-
-## Azure Deployment
-
-We deploy our services to an Azure environment, as you can see in the [deployment instructions](/deployment.md)
-
-## License
-
-Code licensed under the [MIT License](LICENSE).
-
-## Contributing
-
-This project welcomes contributions and suggestions. Most contributions require you to agree to a
-Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us
-the rights to use your contribution. For details, visit https://cla.opensource.microsoft.com.
-
-When you submit a pull request, a CLA bot will automatically determine whether you need to provide
-a CLA and decorate the PR appropriately (e.g., status check, comment). Simply follow the instructions
-provided by the bot. You will only need to do this once across all repos using our CLA.
-
-This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
-For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or
-contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
-
-## Trademarks
-
-This project may contain trademarks or logos for projects, products, or services. Authorized use of Microsoft
-trademarks or logos is subject to and must follow
-[Microsoft's Trademark & Brand Guidelines](https://www.microsoft.com/en-us/legal/intellectualproperty/trademarks/usage/general).
-Use of Microsoft trademarks or logos in modified versions of this project must not cause confusion or imply Microsoft sponsorship.
-Any use of third-party trademarks or logos are subject to those third-party's policies.
+We welcome contributions to the application.
+All submissions must pass the CLABot verification.

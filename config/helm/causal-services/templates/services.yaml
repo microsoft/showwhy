@@ -1,0 +1,62 @@
+{{- $context := . }}
+{{- range .Values.applicationGroups }}
+{{- $appGroup := . }}
+{{- if eq (tpl ($appGroup.disable | default "false") $context) "false" }}
+{{- range $appGroup.services }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: {{ .name }}
+  name: {{ .name }}
+  namespace: {{ $appGroup.namespace }}
+spec:
+  replicas: {{ .replicas }}
+  revisionHistoryLimit: {{ $context.Values.revisionHistoryLimit }}
+  selector:
+    matchLabels:
+      app: {{ .name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .name }}
+      {{- if $context.Values.recreatePodsOnUpgrade }}
+      annotations:
+        rollme: {{ randAlphaNum 5 | quote }}
+      {{- end }}
+    spec:
+      containers:
+        - name: {{ .name }}
+          image: {{ tpl .image $context }}
+          imagePullPolicy: {{ tpl .imagePullPolicy $context }}
+          args:
+            {{- tpl (toYaml .args) $context | nindent 12 }}
+          env:
+            {{- toYaml .env | nindent 12 }}
+          resources:
+            {{- toYaml .resources | nindent 12 }}
+          ports:
+            - containerPort: {{ .containerPort }}
+      {{- if .imagePullSecret }}
+      imagePullSecrets:
+        - name: {{ .imagePullSecret }}
+      {{- end }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: {{ .name }}
+  name: {{ .name }}
+  namespace: {{ $appGroup.namespace }}
+spec:
+  selector:
+    app: {{ .name }}
+  ports:
+    - port: {{ .servicePort }}
+      name: {{ .name }}
+      targetPort: {{ .containerPort }}
+---
+{{- end }}
+{{- end }}
+{{- end }}

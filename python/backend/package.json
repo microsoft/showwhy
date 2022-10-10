@@ -1,0 +1,9 @@
+{
+	"name": "@causal-platform/backend",
+	"scripts": {
+		"poetry_install": "./scripts/install_python_deps.sh",
+		"lint_fix": "poetry run poe format",
+		"lint": "poetry run poe lint",
+		"test": "poetry run poe test"
+	}
+}

@@ -1,0 +1,37 @@
+parameters:
+  name: ''
+  subscription: ''
+  aksClusterName: ''
+  aksResourceGroup: ''
+  valueFile: ''
+
+jobs:
+- job: ${{ parameters.name }}
+  steps:
+  #
+  # Deploy Helm Chart
+  #
+  - task: HelmInstaller@0
+    displayName: "Install Helm 3.9.0"
+    inputs:
+      helmVersion: 3.9.0
+
+  - task: HelmDeploy@0
+    displayName: "Validate helm package"
+    inputs:
+      command: package
+      chartPath: "config/helm/causal-services"
+      destination: "config/helm/dist"
+      save: false
+
+  - task: HelmDeploy@0
+    displayName: "Deploy chart to cluster"
+    inputs:
+      azureSubscription: "${{ parameters.subscription }}"
+      azureResourceGroup: "${{ parameters.aksResourceGroup }}"
+      kubernetesCluster: "${{ parameters.aksClusterName }}"
+      command: upgrade
+      chartType: FilePath
+      chartPath: "config/helm/causal-services"
+      releaseName: "causal-services"
+      valueFile: "${{ parameters.valueFile }}"

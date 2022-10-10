@@ -1,0 +1,4 @@
+cache-dir = '~/.cache/causalplatform/pypoetry-exposure'
+
+[virtualenvs]
+in-project = true

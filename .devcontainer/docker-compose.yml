@@ -1,5 +1,0 @@
-version: '3.7'
-services:
-  development:
-    image: mcr.microsoft.com/vscode/devcontainers/universal
-    container_name: development

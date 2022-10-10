@@ -1,0 +1,159 @@
+
+name: Causal Platform CI
+pool: resilience-build-agents-1es
+
+trigger:
+  batch: true
+  branches:
+    include:
+      - main
+
+variables:
+  NODE_VERSION: '16.x'
+  YARN_CACHE_FOLDER: $(Pipeline.Workspace)/.yarn/cache
+  isMainBranch: $[eq(variables['Build.SourceBranch'], 'refs/heads/main')]
+  isProdBranch: $[eq(variables['Build.SourceBranch'], 'refs/heads/prod')]
+
+stages:
+  - stage: Compliance
+    dependsOn: []
+    jobs:
+      - job: ComplianceJob
+        pool:
+          vmImage: windows-latest
+        steps:
+          - task: CredScan@3
+            inputs:
+              outputFormat: sarif
+              debugMode: false
+
+          - task: ComponentGovernanceComponentDetection@0
+            inputs:
+              scanType: 'Register'
+              verbosity: 'Verbose'
+              alertWarningLevel: 'High'
+
+          - task: PublishSecurityAnalysisLogs@3
+            inputs:
+              ArtifactName: 'CodeAnalysisLogs'
+              ArtifactType: 'Container'
+
+  - stage: Verification
+    dependsOn: []
+    jobs:
+      - job: VerificationJob
+        steps:
+          #
+          # Install Tooling
+          #
+          - task: Bash@3
+            displayName: Install Apt Deps
+            inputs:
+              targetType: 'inline'
+              script: sudo apt-get install -y --no-install-recommends graphviz libgraphviz-dev libpython3.8-dev libpython3.9-dev
+
+          - task: NodeTool@0
+            displayName: Install Node
+            inputs:
+              versionSpec: $(NODE_VERSION)
+
+          - task: Bash@3
+            displayName: Install Poetry
+            inputs:
+              targetType: 'inline'
+              script: |
+                curl -sSL https://install.python-poetry.org | python3 - --version 1.2.1
+                echo "##vso[task.prependpath]$HOME/.local/bin"
+
+          - task: npmAuthenticate@0
+            displayName: Authenticate with npm
+            inputs:
+              workingFile: .npmrc
+
+          #
+          # Set up Dependency Caches
+          #
+          - task: Cache@2
+            displayName: Cache Yarn cache
+            inputs:
+              key: '"yarn" | "$(Agent.OS)" | yarn.lock'
+              restoreKeys: |
+                yarn | "$(Agent.OS)"
+                yarn
+              path: $(YARN_CACHE_FOLDER)
+
+          #
+          # Install Dependencies
+          #
+          - task: Bash@3
+            displayName: Install Node Dependencies
+            env:
+              CI: true
+            inputs:
+              targetType: 'inline'
+              script: yarn install --immutable
+
+          - task: Bash@3
+            displayName: Install Poetry Dependencies
+            env:
+              CI: true
+            inputs:
+              targetType: 'inline'
+              script: yarn poetry_install
+
+          #
+          # Verify Packages
+          #
+          - task: Bash@3
+            displayName: Verify Packages
+            env:
+              CI: true
+            inputs:
+              targetType: 'inline'
+              script: yarn ci
+
+          - task: Bash@3
+            displayName: Verify Clean Repo
+            inputs:
+              targetType: 'inline'
+              script: yarn is_clean
+
+  - stage: DeployProdBuildFrontendImages
+    displayName: Prod Deploy - Frontend Images
+    dependsOn: []
+    # change to isProdBranch
+    condition: and(eq(variables.enableDeploy, 'true'), eq(variables.isMainBranch, 'true'))
+    jobs:
+    - template: jobs/cd-frontend.yml
+      parameters:
+        name: "DeployProdBuildFrontendImagesJob"
+        subscription: "$(subscription)"
+        containerRegistry: "$(prod-container-registry)"
+
+  - stage: DeployProdBuildBackendImages
+    displayName: Prod Deploy - Backend Images
+    dependsOn: []
+    # change to isProdBranch
+    condition: and(eq(variables.enableDeploy, 'true'), eq(variables.isMainBranch, 'true'))
+    jobs:
+    - template: jobs/cd-backend.yml
+      parameters:
+        name: "DeployProdBuildBackendImagesJob"
+        subscription: "$(subscription)"
+        containerRegistry: "$(prod-container-registry)"
+
+  - stage: DeployProdHelmCharts
+    displayName: Deploy Prod Helm Charts
+    dependsOn:
+      - DeployProdBuildFrontendImages
+      - DeployProdBuildBackendImages
+    # change to isProdBranch
+    condition: and(eq(variables.enableDeploy, 'true'), and(succeeded(), eq(variables.isMainBranch, 'true')))
+    jobs:
+      - template: jobs/cd-helm.yml
+        parameters:
+          name: "DeployProdHelmChartsJob"
+          subscription: "$(subscription)"
+          aksClusterName: "$(prod-aks-cluster-name)"
+          aksResourceGroup: "$(prod-aks-resource-group)"
+          valueFile: "config/helm/causal-services/values.prod.yaml"

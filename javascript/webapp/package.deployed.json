@@ -1,0 +1,13 @@
+{
+	"name": "@showwhy/webapp",
+	"private": true,
+	"version": "0.0.1",
+	"main": "src/index.ts",
+	"license": "MIT",
+	"scripts": {
+		"start": "http-server build/"
+	},
+	"dependencies": {
+		"http-server": "^14.1.1"
+	}
+}

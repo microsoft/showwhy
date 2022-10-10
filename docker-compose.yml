@@ -1,80 +1,45 @@
-version: '3.7'
+version: '3'
+
 services:
-  mongodb:
-    image: mongo:latest
-    container_name: mongodb
-    cpus: 1
-    restart: always
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: showwhy
-      MONGO_INITDB_ROOT_PASSWORD: showwhy
-    ports:
-      - '27017:27017'
-  azurite:
-    container_name: azurite
-    cpus: 1
-    image: mcr.microsoft.com/azure-storage/azurite:3.17.1
-    mem_limit: 2G
-    restart: always
-    ports:
-      - '10000:10000'
-      - '10001:10001'
-      - '10002:10002'
-    expose:
-      - '10000'
-      - '10001'
-      - '10002'
-    volumes:
-      - vol_azurite:/data
-  functions:
-    container_name: showwhyfunctions
-    cpus: 4
-    build: ./python/
-    ports:
-      - '7071:80'
-    expose:
-      - '80'
-    environment:
-      # Well-know azurite connection string (https://docs.microsoft.com/en-us/azure/storage/common/storage-use-azurite?tabs=visual-studio#http-connection-strings)
-      - AzureWebJobsStorage=AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;DefaultEndpointsProtocol=http;BlobEndpoint=http://azurite:10000/devstoreaccount1;QueueEndpoint=http://azurite:10001/devstoreaccount1;TableEndpoint=http://azurite:10002/devstoreaccount1;
-      - LOCAL_EXECUTION=True
-      - LOCAL_STORAGE_ENABLED=True
-      - DISABLE_SSL_COSMOS=True
-      - WEBSITE_HOSTNAME=localhost:7071
-      - MONGO_CONNECTION=mongodb://showwhy:showwhy@mongodb/
-      - ESTIMATE_EFFECT_BATCH_SIZE=20
-      - CONFIDENCE_INTERVAL_BATCH_SIZE=20
-      - REFUTER_BATCH_SIZE=10
-      - SIGNIFICANCE_BATCH_SIZE=10
-    volumes:
-      - vol_functions:/home
-    depends_on:
-      - mongodb
-      - azurite
-  reverseproxy:
-    container_name: reverseproxy
-    cpus: 1
-    image: nginx:alpine
-    mem_limit: 1G
-    restart: always
-    links:
-      - functions
-      - azurite
-    ports:
-      - '81:81'
-    volumes:
-      - vol_reverseproxy:/etc/nginx/conf.d
-      - ./nginx.conf:/etc/nginx/nginx.conf
-  webapp:
-    cpus: 1
+  frontend:
     build:
       context: .
-      dockerfile: webapp.dockerfile
+      dockerfile: Frontend.dockerfile
     ports:
-      - 3000:80
+      - 3000:3000
+    volumes:
+      - ./:/app
+    profiles:
+      - all
 
-volumes:
-  vol_cosmos:
-  vol_azurite:
-  vol_functions:
-  vol_reverseproxy:
+  backend_api:
+    build: ./python/backend
+    environment:
+      - ENABLE_CORS=http://localhost:3000
+      - REDIS_URL=redis://redis:6379/0
+      - STORAGE=/data
+    ports:
+      - 8081:8081
+    depends_on:
+      - redis
+    profiles:
+      - all
+      - backend
+
+  backend_worker:
+    build: ./python/backend
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+      - WORKER=true
+    depends_on:
+      - redis
+      - backend_api
+    profiles:
+      - all
+      - backend
+
+  redis:
+    image: redis:6-alpine
+    profiles:
+      - all
+      - backend

@@ -1,0 +1,30 @@
+parameters:
+  name: ''
+  subscription: ''
+  containerRegistry: ''
+
+jobs:
+- job: ${{ parameters.name }}
+  steps:
+  #
+  # Build Service Images
+  #
+  - task: Docker@1
+    displayName: "Build backend service image"
+    inputs:
+      azureSubscriptionEndpoint: "${{ parameters.subscription }}"
+      azureContainerRegistry: "${{ parameters.containerRegistry }}"
+      dockerFile: python/backend/Dockerfile
+      imageName: "backend:$(Build.BuildId)"
+      includeLatestTag: true
+
+  #
+  # Push Service Images
+  #
+  - task: Docker@1
+    displayName: "Push backend service image"
+    inputs:
+      azureSubscriptionEndpoint: "${{ parameters.subscription }}"
+      azureContainerRegistry: "${{ parameters.containerRegistry }}"
+      command: "Push an image"
+      imageName: backend:latest

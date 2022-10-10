@@ -1,0 +1,14 @@
+{{- $context := . }}
+{{- range .Values.applicationGroups }}
+{{- if eq (tpl (.disable | default "false") $context) "false" }}
+{{- if not .externalNamespace }}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: {{ .namespace }}
+  labels:
+    name: {{ .namespace }}
+---
+{{- end }}
+{{- end }}
+{{- end }}

@@ -1,14 +1,4 @@
 {
-	"*.{json,md}": ["essex prettify --staged"],
-	"javascript/**/*.*.{js,jsx,cjs,mjs,ts,tsx,cts,mts}": [
-		"essex lint --fix --staged"
-	],
-	"python/showwhy-backend/**/*.py": [
-		"bash -c \"(cd python/showwhy-backend && poetry run isort ./showwhy_backend)\"",
-		"bash -c \"(cd python/showwhy-backend && poetry run black ./showwhy_backend)\""
-	],
-	"python/showwhy-interface/**/*.py": [
-		"bash -c \"(cd python/showwhy-inference && poetry run isort ./showwhy_inference)\"",
-		"bash -c \"(cd python/showwhy-inference && poetry run black ./showwhy_inference)\""
-	]
+	"*": ["essex prettify --staged"],
+	"*.{js,jsx,cjs,mjs,ts,tsx,cts,mts}": ["essex lint --fix --staged"]
 }

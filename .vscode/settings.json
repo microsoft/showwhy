@@ -1,31 +1,39 @@
 {
-	"search.exclude": {
-		"**/.yarn": true,
-		"**/.pnp.*": true
-	},
-	"eslint.nodePath": ".yarn/sdks",
-	"typescript.tsdk": ".yarn/sdks/typescript/lib",
-	"typescript.enablePromptUseWorkspaceTsdk": true,
-	"prettier.prettierPath": ".yarn/sdks/prettier/index.js",
-	"editor.formatOnSave": true,
-	"azureFunctions.deploySubpath": "python/showwhy-backend/showwhy_backend",
-	"azureFunctions.scmDoBuildDuringDeployment": true,
-	"azureFunctions.pythonVenv": "python/showwhy-backend/.venv",
-	"azureFunctions.projectLanguage": "Python",
-	"azureFunctions.projectRuntime": "~3",
-	"jest.jestCommandLine": "yarn run test:jest",
-	"python.linting.flake8Enabled": true,
-	"python.linting.enabled": true,
-	"python.formatting.provider": "black",
-	"python.linting.flake8Args": ["--max-line-length=88"],
-	"python.testing.pytestArgs": ["tests"],
-	"python.testing.unittestEnabled": false,
-	"python.testing.pytestEnabled": true,
-	"python.sortImports.args": ["--profile", "black"],
-	"[python]": {
-		"editor.codeActionsOnSave": {
-			"source.organizeImports": true,
-			"source.fixAll": true
-		}
-	}
+  "javascript.preferences.importModuleSpecifier": "relative",
+  "javascript.preferences.importModuleSpecifierEnding": "js",
+  "typescript.preferences.importModuleSpecifier": "relative",
+  "typescript.preferences.importModuleSpecifierEnding": "js",
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.patterns": {
+    "*.tsx": "${capture}.*.ts, ${capture}.*.tsx, ${capture}.md, ${capture}.css, , ${capture}.module.scss",
+    "tsconfig.json": "tsconfig.*.json",
+    "package.json": "turbo.json, tsconfig.json, .npmrc, .npmignore, package.*.json",
+    "README.md": "SECURITY.md, DEVELOPING.md, SUPPORT.md, CODE_OF_CONDUCT.md, LICENSE",
+    ".eslintrc": ".eslintignore",
+    ".prettierrc": ".prettierignore",
+    ".gitattributes": ".gitignore",
+    ".yarnrc.yml": "yarn.lock, .pnp.*",
+    "jest.config.js": "jest.setup.mjs"
+  },
+  "search.exclude": {
+    "**/.yarn": true,
+    "**/.pnp.*": true
+  },
+  "eslint.nodePath": ".yarn/sdks",
+  "prettier.prettierPath": ".yarn/sdks/prettier/index.js",
+  "typescript.tsdk": ".yarn/sdks/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "python.formatting.provider": "black",
+  "python.formatting.blackArgs": [
+    "--line-length=99"
+  ],
+  "python.sortImports.args": [
+    "--profile",
+    "black"
+  ],
+  "[python]": {
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": true
+    }
+  }
 }

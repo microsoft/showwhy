@@ -1,9 +1,7 @@
 {
-	"recommendations": [
-		"ms-azuretools.vscode-azurefunctions",
-		"ms-python.python",
-		"arcanis.vscode-zipfs",
-		"dbaeumer.vscode-eslint",
-		"esbenp.prettier-vscode"
-	]
+  "recommendations": [
+    "arcanis.vscode-zipfs",
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode"
+  ]
 }
