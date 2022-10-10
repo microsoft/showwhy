@@ -13,7 +13,6 @@ lib/
 build/
 coverage/
 node_modules/
-runs/
 .turbo/
 *.zip
 *-*.log
