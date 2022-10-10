@@ -32,7 +32,7 @@ jobs:
       - name: Install dependencies
         shell: bash
         working-directory: ./python/backend
-        run: poetry install
+        run: ./scripts/install_python_deps.sh
 
       - name: Check Formatting
         working-directory: ./python/backend
