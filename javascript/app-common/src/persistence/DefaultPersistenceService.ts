@@ -31,6 +31,7 @@ export class DefaultPersistenceService implements PersistenceService {
 		await this.dataPackage.load(files)
 	}
 }
+
 function hashFilesByPath(files: FileWithPath[]): Map<string, FileWithPath> {
 	const result = new Map<string, FileWithPath>()
 	for (const file of files) {
