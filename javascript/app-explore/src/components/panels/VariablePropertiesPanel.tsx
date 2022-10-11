@@ -15,7 +15,7 @@ import {
 	TooltipHost,
 } from '@fluentui/react'
 import { memo } from 'react'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilValue } from 'recoil'
 
 import {
 	Constraints,
@@ -26,9 +26,11 @@ import { isAddable } from '../../domain/CausalVariable.js'
 import * as Graph from '../../domain/Graph.js'
 import { VariableNature } from '../../domain/VariableNature.js'
 import {
-	CausalGraphConstraintsState,
 	CausalGraphState,
-	InModelCausalVariablesState,
+	useCausalGraphConstraints,
+	useInModelCausalVariables,
+	useSetCausalGraphConstraints,
+	useSetInModelCausalVariables,
 } from '../../state/CausalGraphState.js'
 import { DatasetState } from '../../state/DatasetState.js'
 import { Chart } from '../charts/Chart.js'
@@ -45,15 +47,11 @@ export const VariablePropertiesPanel: React.FC<VariablePropertiesPanelProps> =
 	memo(function VariablePropertiesPanel({ variable }) {
 		const dataset = useRecoilValue(DatasetState)
 		const causalGraph = useRecoilValue(CausalGraphState)
-		const [inModelVariables, setInModelVariables] = useRecoilState(
-			InModelCausalVariablesState,
-		)
-
+		const inModelVariables = useInModelCausalVariables()
+		const setInModelVariables = useSetInModelCausalVariables()
 		const isInModel = Graph.includesVariable(causalGraph, variable)
-		const [constraints, setConstraints] = useRecoilState(
-			CausalGraphConstraintsState,
-		)
-
+		const constraints = useCausalGraphConstraints()
+		const setConstraints = useSetCausalGraphConstraints()
 		const onChange = (
 			e?: React.FormEvent<HTMLElement | HTMLInputElement>,
 			option?: IChoiceGroupOption,

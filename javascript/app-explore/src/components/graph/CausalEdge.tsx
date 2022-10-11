@@ -11,12 +11,16 @@ import {
 import { memo } from 'react'
 import type { anchorType } from 'react-xarrows'
 import Xarrow from 'react-xarrows'
-import { useRecoilState, useRecoilValue, useRecoilValueLoadable } from 'recoil'
+import { useRecoilValue, useRecoilValueLoadable } from 'recoil'
 
 import { getModifiedRelationship } from '../../domain/GraphDifferences.js'
 import { CausalGraphChangesState } from '../../state/CausalGraphState.js'
 import { FilteredCorrelationsState } from '../../state/CorrelationsState.js'
-import { SelectedObjectState, StraightEdgesState } from '../../state/UIState.js'
+import {
+	StraightEdgesState,
+	useSelectedObject,
+	useSetSelectedObject,
+} from '../../state/UIState.js'
 import { correlationForColumnNames } from '../../utils/Correlation.js'
 import { map } from '../../utils/Math.js'
 import { useEdgeColors, useSvgStyle } from './CausalEdge.hooks.js'
@@ -28,8 +32,8 @@ export const CausalEdge: React.FC<CausalEdgeProps> = memo(function CausalEdge({
 	maxEdgeWidth,
 	state = 'normal',
 }) {
-	const [selectedObject, setSelectedObject] =
-		useRecoilState(SelectedObjectState)
+	const selectedObject = useSelectedObject()
+	const setSelectedObject = useSetSelectedObject()
 	const correlations =
 		useRecoilValueLoadable(FilteredCorrelationsState).valueMaybe() || []
 	const useStraightEdges = useRecoilValue(StraightEdgesState)

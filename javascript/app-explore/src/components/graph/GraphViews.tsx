@@ -4,9 +4,7 @@
  */
 import { Spinner } from '@fluentui/react'
 import { memo, Suspense } from 'react'
-import { useRecoilState } from 'recoil'
-
-import { GraphViewState } from '../../state/UIState.jsx'
+import { useGraphViewState } from '../../state/UIState.jsx'
 import { CausalGraphExplorer } from './CausalGraphExplorer.jsx'
 import { CorrelationGraph2D } from './CorrelationGraph2D.jsx'
 import { CorrelationGraph3D } from './CorrelationGraph3D.js'
@@ -20,7 +18,7 @@ function isValidSize(n: number | undefined): boolean {
 export const GraphViews: React.FC<DimensionProps> = memo(function GraphViews({
 	dimensions,
 }) {
-	const [selectedViewKey] = useRecoilState(GraphViewState)
+	const selectedViewKey = useGraphViewState()
 	const verticalMargin = 10
 	const width = isValidSize(dimensions?.width) ? dimensions!.width : 800
 	let height = isValidSize(dimensions?.height) ? dimensions!.height : 800

@@ -119,3 +119,13 @@ export function useCausalInferenceUpdater() {
 		setInitialValues,
 	])
 }
+
+export function useCausalInterventions(): Intervention[] {
+	return useRecoilValue(CausalInterventionsState)
+}
+
+export function useSetCausalInterventions(): (
+	interventions: Intervention[],
+) => void {
+	return useSetRecoilState(CausalInterventionsState)
+}

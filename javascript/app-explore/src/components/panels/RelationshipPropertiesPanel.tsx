@@ -4,10 +4,13 @@
  */
 import { PrimaryButton, Separator, Text, TooltipHost } from '@fluentui/react'
 import { memo } from 'react'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilValue } from 'recoil'
 
 import { variableForColumnName } from '../../domain/Dataset.js'
-import { CausalGraphConstraintsState } from '../../state/CausalGraphState.js'
+import {
+	useCausalGraphConstraints,
+	useSetCausalGraphConstraints,
+} from '../../state/CausalGraphState.js'
 import { FilteredCorrelationsState } from '../../state/CorrelationsState.js'
 import { DatasetState } from '../../state/DatasetState.js'
 import { correlationForVariables } from '../../utils/Correlation.js'
@@ -24,9 +27,8 @@ export const RelationshipPropertiesPanel: React.FC<RelationshipPropertiesPanelPr
 			relationship.source,
 			relationship.target,
 		)
-		const [constraints, setConstraints] = useRecoilState(
-			CausalGraphConstraintsState,
-		)
+		const constraints = useCausalGraphConstraints()
+		const setConstraints = useSetCausalGraphConstraints()
 		const sourceVariable = variableForColumnName(
 			dataset,
 			relationship.source.columnName,

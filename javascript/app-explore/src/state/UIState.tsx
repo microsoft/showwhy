@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { atom } from 'recoil'
+import { atom, useRecoilValue, useSetRecoilState } from 'recoil'
 import { recoilPersist } from 'recoil-persist'
 
 import { GraphViewStates } from '../components/graph/GraphViews.types.js'
@@ -82,3 +82,83 @@ export const PauseAutoRunState = atom<
 	key: 'PauseAutoRunState',
 	default: undefined,
 })
+
+export function useLoading(): string | undefined {
+	return useRecoilValue(LoadingState)
+}
+
+export function useCausalDiscoveryAlgorithm(): CausalDiscoveryAlgorithm {
+	return useRecoilValue(SelectedCausalDiscoveryAlgorithmState)
+}
+
+export function useSetCausalDiscoveryAlgorithm(): (
+	value: CausalDiscoveryAlgorithm,
+) => void {
+	return useSetRecoilState(SelectedCausalDiscoveryAlgorithmState)
+}
+
+export function useAutoLayoutEnabled(): boolean {
+	return useRecoilValue(AutoLayoutEnabledState)
+}
+
+export function useSetAutoLayoutEnabled(): (value: boolean) => void {
+	return useSetRecoilState(AutoLayoutEnabledState)
+}
+
+export function usePauseAutoRun(): CausalDiscoveryAlgorithm.None | undefined {
+	return useRecoilValue(PauseAutoRunState)
+}
+
+export function useSetPauseAutoRun(): (
+	value: CausalDiscoveryAlgorithm.None | undefined,
+) => void {
+	return useSetRecoilState(PauseAutoRunState)
+}
+
+export function useGraphViewState(): GraphViewStates {
+	return useRecoilValue(GraphViewState)
+}
+
+export function useSetGraphViewState(): (value: GraphViewStates) => void {
+	return useSetRecoilState(GraphViewState)
+}
+
+export function useStraightEdges(): boolean {
+	return useRecoilValue(StraightEdgesState)
+}
+
+export function useSetStraightEdges(): (value: boolean) => void {
+	return useSetRecoilState(StraightEdgesState)
+}
+
+export function useShowChangesInGraph(): boolean {
+	return useRecoilValue(ShowChangesInGraphState)
+}
+
+export function useSetShowChangesInGraph(): (value: boolean) => void {
+	return useSetRecoilState(ShowChangesInGraphState)
+}
+
+export function useCorrelationThreshold(): number {
+	return useRecoilValue(CorrelationThresholdState)
+}
+
+export function useSetCorrelationThreshold(): (value: number) => void {
+	return useSetRecoilState(CorrelationThresholdState)
+}
+
+export function useWeightThreshold(): number {
+	return useRecoilValue(WeightThresholdState)
+}
+
+export function useSetWeightThreshold(): (value: number) => void {
+	return useSetRecoilState(WeightThresholdState)
+}
+
+export function useSelectedObject(): Selectable {
+	return useRecoilValue(SelectedObjectState)
+}
+
+export function useSetSelectedObject(): (value: Selectable) => void {
+	return useSetRecoilState(SelectedObjectState)
+}

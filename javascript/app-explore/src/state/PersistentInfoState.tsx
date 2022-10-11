@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import type { AtomEffect, RecoilState } from 'recoil'
+import { AtomEffect, RecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { DefaultValue, selector } from 'recoil'
 
 let persistedInfoKeys: RecoilState<any>[] = []
@@ -37,4 +37,12 @@ export const persistAtomEffect: AtomEffect<any> = ({ trigger, node }) => {
 	if (trigger === 'get') {
 		persistedInfoKeys = [...persistedInfoKeys, node]
 	}
+}
+
+export function usePersistedInfo(): object {
+	return useRecoilValue(PersistedInfoState)
+}
+
+export function useSetPersistedInfo(): (newValue: object) => void {
+	return useSetRecoilState(PersistedInfoState)
 }

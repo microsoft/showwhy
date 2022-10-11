@@ -78,7 +78,7 @@ export const CausalGraphConstraintsState = atom<CausalDiscoveryConstraints>({
 	effects_UNSTABLE: [persistAtomEffect, persistAtom],
 })
 
-export const CausalGraphHistoryState = atom<CausalGraph[]>({
+const CausalGraphHistoryState = atom<CausalGraph[]>({
 	key: 'CausalGraphHistoryState',
 	default: [],
 	// eslint-disable-next-line camelcase
@@ -219,3 +219,23 @@ export const CausalGraphChangesState = selector<GraphDifferences | undefined>({
 		return difference
 	},
 })
+
+export function useCausalGraphConstraints(): CausalDiscoveryConstraints {
+	return useRecoilValue(CausalGraphConstraintsState)
+}
+
+export function useSetCausalGraphConstraints(): (
+	constraints: CausalDiscoveryConstraints,
+) => void {
+	return useSetRecoilState(CausalGraphConstraintsState)
+}
+
+export function useInModelCausalVariables(): CausalVariable[] {
+	return useRecoilValue(InModelCausalVariablesState)
+}
+
+export function useSetInModelCausalVariables(): (
+	variables: CausalVariable[],
+) => void {
+	return useSetRecoilState(InModelCausalVariablesState)
+}

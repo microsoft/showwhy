@@ -9,9 +9,8 @@ import { CommonLayout } from '@showwhy/app-common'
 import { Allotment } from 'allotment'
 import { memo, Suspense } from 'react'
 import { useMeasure } from 'react-use'
-import { useRecoilValue } from 'recoil'
 
-import { LoadingState } from '../state/UIState.js'
+import { useLoading } from '../state/UIState.js'
 import {
 	FillContainer,
 	FullScreenContainer,
@@ -26,7 +25,7 @@ import { MenuBar } from './MenuBar.js'
 import { PropertyPanels } from './panels/PropertyPanels.js'
 
 export const CauseDis = memo(function CauseDis() {
-	const loading = useRecoilValue(LoadingState)
+	const loading = useLoading()
 	const [ref, { width, height }] = useMeasure<HTMLDivElement>()
 	return (
 		<CommonLayout

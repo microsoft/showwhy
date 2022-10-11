@@ -2,41 +2,42 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import type { IChoiceGroupOption } from '@fluentui/react';
+import type { IChoiceGroupOption } from '@fluentui/react'
 import { ChoiceGroup } from '@fluentui/react'
 import { memo, useCallback } from 'react'
-import { useRecoilState } from 'recoil'
 
 import { CausalDiscoveryAlgorithm } from '../domain/CausalDiscovery/CausalDiscoveryAlgorithm.js'
-import { SelectedCausalDiscoveryAlgorithmState } from '../state/UIState.js'
+import {
+	useCausalDiscoveryAlgorithm,
+	useSetCausalDiscoveryAlgorithm,
+} from '../state/UIState.js'
 import { ALGORITHMS } from './AlgorithmControls.constants.js'
 import { Divider } from './controls/Divider.js'
 
 export const AlgorithmControls = memo(function AlgorithmControls() {
-	const [
-		selectedCausalDiscoveryAlgorithm,
-		setSelectedCausalDiscoveryAlgorithm,
-	] = useRecoilState(SelectedCausalDiscoveryAlgorithmState)
-	const selectAlgorithm = useCallback(
+	const selected = useCausalDiscoveryAlgorithm()
+	const setSelected = useSetCausalDiscoveryAlgorithm()
+	
+	const select = useCallback(
 		(_e: unknown, selection: IChoiceGroupOption | undefined) => {
 			if (typeof selection?.value === 'string') {
-				setSelectedCausalDiscoveryAlgorithm(
+				setSelected(
 					CausalDiscoveryAlgorithm[
 						selection.value as keyof typeof CausalDiscoveryAlgorithm
 					],
 				)
 			}
 		},
-		[setSelectedCausalDiscoveryAlgorithm],
+		[setSelected],
 	)
 
 	return (
 		<>
 			<Divider>Causal Discovery</Divider>
 			<ChoiceGroup
-				selectedKey={selectedCausalDiscoveryAlgorithm}
+				selectedKey={selected}
 				options={ALGORITHMS}
-				onChange={selectAlgorithm}
+				onChange={select}
 			/>
 		</>
 	)

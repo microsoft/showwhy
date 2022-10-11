@@ -9,14 +9,15 @@ import {
 } from '@fluentui/react-icons-mdl2'
 import isEqual from 'lodash-es/isEqual'
 import { memo, useCallback } from 'react'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilValue } from 'recoil'
 
 import { isAddable as isVariableAddable } from '../../domain/CausalVariable.jsx'
 import {
-	InModelCausalVariablesState,
 	isVariableInModel,
+	useInModelCausalVariables,
+	useSetInModelCausalVariables,
 } from '../../state/CausalGraphState.jsx'
-import { SelectedObjectState } from '../../state/UIState.jsx'
+import { useSetSelectedObject } from '../../state/UIState.jsx'
 import type { CausalNodeProps } from './CausalNode.types.js'
 
 export const CausalNode: React.FC<CausalNodeProps> = memo(function CausalNode({
@@ -28,10 +29,9 @@ export const CausalNode: React.FC<CausalNodeProps> = memo(function CausalNode({
 	center = false,
 	wasDragged = false,
 }) {
-	const [, setSelectedObject] = useRecoilState(SelectedObjectState)
-	const [inModelVariables, setInModelVariables] = useRecoilState(
-		InModelCausalVariablesState,
-	)
+	const setSelectedObject = useSetSelectedObject()
+	const inModelVariables = useInModelCausalVariables()
+	const setInModelVariables = useSetInModelCausalVariables()
 	const isInModel = useRecoilValue(isVariableInModel(variable.columnName))
 	if (!isVariableAddable(variable)) {
 		isAddable = false

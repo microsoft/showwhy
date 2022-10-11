@@ -5,21 +5,23 @@
 import { DefaultButton, Stack } from '@fluentui/react'
 import { DeleteIcon } from '@fluentui/react-icons-mdl2'
 import { memo } from 'react'
-import { useRecoilState, useResetRecoilState } from 'recoil'
+import { useResetRecoilState } from 'recoil'
 
 import type { VariableReference } from '../../domain/CausalVariable.js'
 import type { RelationshipReference } from '../../domain/Relationship.js'
-import { CausalGraphConstraintsState } from '../../state/CausalGraphState.js'
+import {
+	CausalGraphConstraintsState,
+	useCausalGraphConstraints,
+	useSetCausalGraphConstraints,
+} from '../../state/CausalGraphState.js'
 import { Divider } from '../controls/Divider.js'
 import type { ConstraintsPanelProps } from './ConstraintsPanel.types.js'
 
 export const ConstraintsPanel: React.FC<ConstraintsPanelProps> = memo(
 	function ConstraintsPanel({ children }) {
-		const [constraints, setConstraints] = useRecoilState(
-			CausalGraphConstraintsState,
-		)
+		const constraints = useCausalGraphConstraints()
+		const setConstraints = useSetCausalGraphConstraints()
 		const resetConstraints = useResetRecoilState(CausalGraphConstraintsState)
-
 		const removeFromRelationshipConstraints = (
 			relationshipToRemove: RelationshipReference,
 		) => {

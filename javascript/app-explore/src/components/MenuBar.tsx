@@ -6,7 +6,7 @@ import type { ICommandBarItemProps } from '@fluentui/react'
 import { CommandBar } from '@fluentui/react'
 import type ColumnTable from 'arquero/dist/types/table/column-table'
 import { memo, useCallback, useEffect, useMemo } from 'react'
-import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil'
+import { useResetRecoilState, useSetRecoilState } from 'recoil'
 import { useFilePicker } from 'use-file-picker'
 
 import type { DatasetDatapackage } from '../domain/Dataset.js'
@@ -15,15 +15,22 @@ import {
 	CausalGraphConstraintsState,
 	InModelColumnNamesState,
 } from '../state/CausalGraphState.js'
-import { PersistedInfoState } from '../state/PersistentInfoState.js'
 import {
-	AutoLayoutEnabledState,
+	usePersistedInfo,
+	useSetPersistedInfo,
+} from '../state/PersistentInfoState.js'
+import {
 	ConfidenceThresholdState,
 	CorrelationThresholdState,
-	GraphViewState,
 	LoadingState,
-	ShowChangesInGraphState,
-	StraightEdgesState,
+	useAutoLayoutEnabled,
+	useGraphViewState,
+	useSetAutoLayoutEnabled,
+	useSetGraphViewState,
+	useSetShowChangesInGraph,
+	useSetStraightEdges,
+	useShowChangesInGraph,
+	useStraightEdges,
 	WeightThresholdState,
 } from '../state/UIState.js'
 import { saveObjectJSON } from '../utils/Save.js'
@@ -38,21 +45,21 @@ import {
 } from './MenuBar.hooks.js'
 
 export const MenuBar: React.FC = memo(function MenuBar() {
-	const [selectedViewKey, setSelectedViewKey] = useRecoilState(GraphViewState)
+	const selectedViewKey = useGraphViewState()
+	const setSelectedViewKey = useSetGraphViewState()
 	const { loadColumnTable } = useDatasetLoader()
 	const resetVariables = useResetRecoilState(InModelColumnNamesState)
 	const resetConstraints = useResetRecoilState(CausalGraphConstraintsState)
-	const [useStraightEdges, setUseStraightEdges] =
-		useRecoilState(StraightEdgesState)
-	const [autoLayoutEnabled, setAutoLayoutEnabled] = useRecoilState(
-		AutoLayoutEnabledState,
-	)
-	const [showChangesInGraph, setShowChangesInGraph] = useRecoilState(
-		ShowChangesInGraphState,
-	)
+	const straightEdges = useStraightEdges()
+	const setStraightEdges = useSetStraightEdges()
+	const autoLayoutEnabled = useAutoLayoutEnabled()
+	const setAutoLayoutEnabled = useSetAutoLayoutEnabled()
+	const showChangesInGraph = useShowChangesInGraph()
+	const setShowChangesInGraph = useSetShowChangesInGraph()
 
 	const setLoadingState = useSetRecoilState(LoadingState)
-	const [persistedInfo, setPersistedInfo] = useRecoilState(PersistedInfoState)
+	const persistedInfo = usePersistedInfo()
+	const setPersistedInfo = useSetPersistedInfo()
 	const [
 		openCausalModelFileSelector,
 		{ filesContent: causalModelFileContent },
@@ -97,8 +104,8 @@ export const MenuBar: React.FC = memo(function MenuBar() {
 	const viewMenuItems = useViewMenuItems(
 		selectedViewKey,
 		setSelectedViewKey,
-		useStraightEdges,
-		setUseStraightEdges,
+		straightEdges,
+		setStraightEdges,
 		autoLayoutEnabled,
 		setAutoLayoutEnabled,
 		showChangesInGraph,

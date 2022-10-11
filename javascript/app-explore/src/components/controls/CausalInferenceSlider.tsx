@@ -4,12 +4,13 @@
  */
 import { IconButton, Slider, Stack, Text } from '@fluentui/react'
 import { memo, useCallback } from 'react'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilValue } from 'recoil'
 
 import {
 	CausalInferenceDifferenceFromBaselineValuesState,
 	CausalInferenceResultState,
-	CausalInterventionsState,
+	useCausalInterventions,
+	useSetCausalInterventions,
 } from '../../state/CausalInferenceState.jsx'
 import {
 	icon_button_props,
@@ -28,9 +29,8 @@ export const CausalInferenceSlider: React.FC<CausalInferenceSliderProps> = memo(
 		)
 		// const initialValueOffsets = useRecoilValue(CausalInferenceBaselineOffsetsState);
 		const causalInferenceResults = useRecoilValue(CausalInferenceResultState)
-		const [interventions, setInterventions] = useRecoilState(
-			CausalInterventionsState,
-		)
+		const interventions = useCausalInterventions()
+		const setInterventions = useSetCausalInterventions()
 		const min = (variable.min || 0) < 0 ? -1 : 0
 		const inferenceResult = causalInferenceResults.get(variable.columnName)
 		const unscaledValue = (

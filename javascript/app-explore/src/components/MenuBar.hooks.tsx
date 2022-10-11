@@ -9,10 +9,12 @@ import { useDataTables } from '@showwhy/app-common'
 import type ColumnTable from 'arquero/dist/types/table/column-table'
 import { useEffect, useMemo } from 'react'
 import type { RecoilState } from 'recoil'
-import { useRecoilState } from 'recoil'
-
 import { CausalDiscoveryAlgorithm } from '../domain/CausalDiscovery/CausalDiscoveryAlgorithm.js'
-import { AutoLayoutEnabledState, PauseAutoRunState } from '../state/UIState.js'
+import {
+	useAutoLayoutEnabled,
+	useSetAutoLayoutEnabled,
+	useSetPauseAutoRun,
+} from '../state/UIState.js'
 import { ThresholdSlider } from './controls/ThresholdSlider.js'
 import { GraphViewStates } from './graph/GraphViews.types.js'
 import { Button, toggleStyles } from './MenuBar.styles.js'
@@ -183,9 +185,8 @@ export function useSliderMenuItem(
 }
 
 export function useAutoLayoutSliderMenuItem() {
-	const [autoLayoutEnabled, setAutoLayoutEnabled] = useRecoilState(
-		AutoLayoutEnabledState,
-	)
+	const autoLayoutEnabled = useAutoLayoutEnabled()
+	const setAutoLayoutEnabled = useSetAutoLayoutEnabled()
 	return useMemo(
 		() => ({
 			key: 'auto-layout-toggle',
@@ -204,7 +205,7 @@ export function useAutoLayoutSliderMenuItem() {
 
 export function useTogglePauseButtonMenuItem() {
 	const [paused, { toggle: togglePaused }] = useBoolean(false)
-	const [, setPauseAutoRun] = useRecoilState(PauseAutoRunState)
+	const setPauseAutoRun = useSetPauseAutoRun()
 
 	useEffect(() => {
 		setPauseAutoRun(paused ? CausalDiscoveryAlgorithm.None : undefined)
