@@ -11,6 +11,6 @@ import type { Maybe } from '../types/primitives.js'
 export function useOutputTable(): Maybe<ColumnTable> {
 	const packages = useDataTables()
 	const selectedTableName = useSelectedTableName()
-	const pkg = packages.find(x => x.id === selectedTableName)
+	const pkg = packages.find(x => x.name === selectedTableName)
 	return pkg?.currentOutput?.table
 }
