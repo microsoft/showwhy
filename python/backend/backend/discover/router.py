@@ -11,7 +11,7 @@ import networkx
 import numpy as np
 import pandas as pd
 import torch
-from castle.algorithms import GOLEM, PC, DirectLiNGAM
+from castle.algorithms import PC, DirectLiNGAM
 from causalnex.structure.notears import from_pandas
 from causica.models.deci.deci_gaussian import DECIGaussian
 from causica.models.deci.generation_functions import ContractiveInvertibleGNN
@@ -51,7 +51,6 @@ class Algorithms(Enum):
     NOTEARS = "NOTEARS"
     DECI = "DECI"
     DirectLiNGAM = "DirectLiNGAM"
-    GOLEM = "GOLEM"
     PC = "PC"
 
 
@@ -99,8 +98,6 @@ def discover(cd_request: CausalDiscoveryRequest):
         return run_deci_hq(cd_request)
     elif cd_request.algorithm == Algorithms.DirectLiNGAM:
         return run_direct_lingam(cd_request)
-    elif cd_request.algorithm == Algorithms.GOLEM:
-        return run_golem(cd_request)
     elif cd_request.algorithm == Algorithms.PC:
         return run_pc(cd_request)
     else:
@@ -457,26 +454,6 @@ def run_direct_lingam(req_body: CausalDiscoveryRequest):
     graph_json["has_weights"] = True
     graph_json["has_confidence_values"] = False
     return graph_json
-
-
-def run_golem(req_body: CausalDiscoveryRequest):
-    logging.info("Running GOLEM Causal Discovery.")
-    data = prepData(req_body)
-    if data.size == 0:
-        return getEmptyGraphJSON(data)
-
-    n = GOLEM()
-    n.learn(data.to_numpy())
-    graph_gc = causalnex.structure.StructureModel(n.causal_matrix)
-
-    logging.info(graph_gc)
-    labels = {i: data.columns[i] for i in range(len(data.columns))}
-    labeled_gc = networkx.relabel_nodes(graph_gc, labels)
-    graph_json = json_graph.cytoscape_data(labeled_gc)
-    graph_json["has_weights"] = True
-    graph_json["has_confidence_values"] = False
-    return graph_json
-
 
 def run_pc(req_body: CausalDiscoveryRequest):
     logging.info("Running PC Causal Discovery.")

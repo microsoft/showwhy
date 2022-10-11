@@ -10,7 +10,6 @@ export enum CausalDiscoveryAlgorithm {
 	DECIDraftC = 'DECIDraftC',
 	DirectLiNGAM = 'DirectLiNGAM',
 	None = 'None',
-	GOLEM = 'GOLEM',
 	PC = 'PC',
 }
 
