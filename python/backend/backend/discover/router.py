@@ -455,6 +455,7 @@ def run_direct_lingam(req_body: CausalDiscoveryRequest):
     graph_json["has_confidence_values"] = False
     return graph_json
 
+
 def run_pc(req_body: CausalDiscoveryRequest):
     logging.info("Running PC Causal Discovery.")
     data = prepData(req_body)
