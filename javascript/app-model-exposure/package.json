@@ -16,11 +16,11 @@
 		"lint": "essex lint"
 	},
 	"dependencies": {
-		"@datashaper/react": "^14.0.2",
-		"@datashaper/schema": "^6.2.1",
-		"@datashaper/tables": "^5.0.1",
-		"@datashaper/utilities": "^2.3.6",
-		"@datashaper/workflow": "^14.0.0",
+		"@datashaper/react": "^14.1.0",
+		"@datashaper/schema": "^6.2.2",
+		"@datashaper/tables": "^5.0.2",
+		"@datashaper/utilities": "^2.3.7",
+		"@datashaper/workflow": "^14.1.0",
 		"@essex/components": "^2.8.0",
 		"@essex/hooks": "^4.0.13",
 		"@essex/webpack-config": "^21.0.8",
