@@ -19,11 +19,8 @@ export class DefaultPersistenceService implements PersistenceService {
 
 	public async save(projectName = DEFAULT_PROJECT_NAME): Promise<void> {
 		const files = this.dataPackage.save()
-		const fc = new FileCollection()
-		for (const [path, file] of files) {
-			await fc.add(new FileWithPath(file, path, path))
-		}
-		await fc.toZip(projectName)
+		const collection = await toFileCollection(files)
+		return collection.toZip(projectName)
 	}
 
 	public async load(pkg: BaseFile): Promise<void> {
@@ -38,4 +35,14 @@ function hashFilesByPath(files: FileWithPath[]): Map<string, FileWithPath> {
 		result.set(file.path, file)
 	}
 	return result
+}
+
+async function toFileCollection(
+	files: Map<string, Blob>,
+): Promise<FileCollection> {
+	const fc = new FileCollection()
+	for (const [path, file] of files) {
+		await fc.add(new FileWithPath(file, path, path))
+	}
+	return fc
 }
