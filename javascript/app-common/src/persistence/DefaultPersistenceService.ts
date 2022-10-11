@@ -18,7 +18,7 @@ export class DefaultPersistenceService implements PersistenceService {
 	public constructor(private readonly dataPackage: DataPackage) {}
 
 	public async save(projectName = DEFAULT_PROJECT_NAME): Promise<void> {
-		const files = this.dataPackage.save()
+		const files = await this.dataPackage.save()
 		const collection = await toFileCollection(files)
 		return collection.toZip(projectName)
 	}
