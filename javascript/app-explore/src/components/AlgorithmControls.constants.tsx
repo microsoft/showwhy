@@ -42,9 +42,4 @@ export const ALGORITHMS: IChoiceGroupOption[] = [
 		text: 'PC',
 		value: CausalDiscoveryAlgorithm.PC,
 	},
-	{
-		key: 'GOLEM',
-		text: 'GOLEM (SLOW)',
-		value: CausalDiscoveryAlgorithm.GOLEM,
-	},
 ]
