@@ -10,7 +10,8 @@ import {
 	useCausalDiscoveryRunner,
 	useCausalGraphHistoryTracker,
 	useCausalInferenceUpdater,
- useRehydrateRecoil } from './state/hooks.js'
+	useRehydrateRecoil,
+} from './state/hooks/index.js'
 
 export const ExplorePage: React.FC = memo(function ExplorePage() {
 	return (
