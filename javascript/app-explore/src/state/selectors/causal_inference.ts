@@ -18,13 +18,6 @@ export const CausalInferenceModelState = selector<CausalInferenceModel | null>({
 	},
 })
 
-export const CausalInferenceSupportedState = selector<boolean>({
-	key: 'CausalInferenceSupportedState',
-	get({ get }) {
-		return get(CausalInferenceModelState) !== null
-	},
-})
-
 export const CausalInferenceDifferenceFromBaselineValuesState = selector<
 	Map<string, number>
 >({

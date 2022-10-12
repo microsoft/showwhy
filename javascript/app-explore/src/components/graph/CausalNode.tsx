@@ -9,14 +9,14 @@ import {
 } from '@fluentui/react-icons-mdl2'
 import isEqual from 'lodash-es/isEqual'
 import { memo, useCallback } from 'react'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilState } from 'recoil'
 
 import { isAddable as isVariableAddable } from '../../domain/CausalVariable.jsx'
 import {
 	InModelCausalVariablesState,
-	isVariableInModel,
 	SelectedObjectState,
 } from '../../state/index.jsx'
+import { useIsVariableInModel } from './CausalNode.hooks.js'
 import type { CausalNodeProps } from './CausalNode.types.js'
 
 export const CausalNode: React.FC<CausalNodeProps> = memo(function CausalNode({
@@ -32,7 +32,7 @@ export const CausalNode: React.FC<CausalNodeProps> = memo(function CausalNode({
 	const [inModelVariables, setInModelVariables] = useRecoilState(
 		InModelCausalVariablesState,
 	)
-	const isInModel = useRecoilValue(isVariableInModel(variable.columnName))
+	const isInModel = useIsVariableInModel(variable.columnName)
 	if (!isVariableAddable(variable)) {
 		isAddable = false
 	}

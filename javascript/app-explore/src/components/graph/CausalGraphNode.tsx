@@ -5,11 +5,9 @@
 import { memo } from 'react'
 import { useRecoilValue } from 'recoil'
 
-import {
-	CausalInferenceSupportedState,
-	SelectedObjectState,
-} from '../../state/index.js'
+import { SelectedObjectState } from '../../state/index.js'
 import { CausalInferenceSlider } from '../controls/CausalInferenceSlider.js'
+import { useIsCausalInferenceSupported } from './CausalGraphNode.hooks.js'
 import { NodeContainer } from './CausalGraphNode.styles.js'
 import { CausalNode } from './CausalNode.js'
 import type { CausalNodeProps } from './CausalNode.types.js'
@@ -19,7 +17,7 @@ export const CausalGraphNode: React.FC<CausalNodeProps> = memo(
 		const { variable } = props
 		const selectedObject = useRecoilValue(SelectedObjectState)
 		const isFocused = variable === selectedObject
-		const isInferenceSupported = useRecoilValue(CausalInferenceSupportedState)
+		const isInferenceSupported = useIsCausalInferenceSupported()
 
 		return (
 			<>

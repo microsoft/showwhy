@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { DefaultValue, selector, selectorFamily } from 'recoil'
+import { DefaultValue, selector } from 'recoil'
 
 import type { CausalVariable } from '../../domain/CausalVariable.js'
 import { variablesForColumnNames } from '../../domain/Dataset.js'
@@ -32,14 +32,6 @@ export const InModelCausalVariablesState = selector<CausalVariable[]>({
 				: newValue.map(variable => variable.columnName)
 		set(InModelColumnNamesState, columnNames)
 	},
-})
-
-export const isVariableInModel = selectorFamily<boolean, string>({
-	key: 'IsVariableInModel',
-	get:
-		(variableColumnName: string) =>
-		({ get }) =>
-			get(InModelColumnNamesState).includes(variableColumnName),
 })
 
 export const PreviousCausalGraphState = selector<CausalGraph | undefined>({
