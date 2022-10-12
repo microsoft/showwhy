@@ -20,7 +20,7 @@ export interface VariableReference {
 	columnName: string
 }
 
-export type CausalVariable = VariableReference & {
+export interface CausalVariable extends VariableReference {
 	name: string
 	nature?: VariableNature
 	columnDataNature?: ColumnNature
@@ -35,7 +35,6 @@ export type CausalVariable = VariableReference & {
 	mean?: number
 	mode?: number
 	count?: number
-	foreignkey?: ForeignTableMapping
 }
 
 export type ForeignTableMapping = {
@@ -186,14 +185,10 @@ export async function createVariablesFromTable(
 	const inferredMetadata = inferMissingMetadataForTable(table, metadata)
 
 	for (const columnName of table?.columnNames() ?? []) {
-		let meta = metadata?.find(metadatum => metadatum.columnName === columnName)
+		const meta = metadata?.find(metadatum => metadatum.columnName === columnName)
 		const inferredMeta = inferredMetadata.find(
 			metadatum => metadatum.columnName === columnName,
 		)
-		if (meta?.foreignkey) {
-			const mapping = await createMapFromForeignKey(meta.foreignkey, tableStore)
-			meta = { ...meta, mapping }
-		}
 
 		variables.set(columnName, {
 			...inferredMeta,
@@ -203,20 +198,6 @@ export async function createVariablesFromTable(
 		})
 	}
 	return variables
-}
-
-export async function createMapFromForeignKey(
-	foreignTableMapping: ForeignTableMapping,
-	tableStore: TableStore,
-) {
-	const foreignTableContainer = await tableStore.get(
-		foreignTableMapping.resource,
-	)
-	const foreignTable = foreignTableContainer.table ?? createTable({})
-	const mapping = new Map()
-	/* eslint-disable-next-line */
-	foreignTable.objects().forEach((row: any) => mapping.set(row.key, row.value))
-	return mapping
 }
 
 export function isDerived(variable: CausalVariable): boolean {
