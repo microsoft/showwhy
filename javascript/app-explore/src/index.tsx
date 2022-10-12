@@ -11,7 +11,7 @@ import {
 	useCausalGraphHistoryTracker,
 } from './state/CausalGraphState.js'
 import { useCausalInferenceUpdater } from './state/CausalInferenceState.js'
-import { useRehydrateRecoil } from './state/RehydrateRecoil.js'
+import { useRehydrateRecoil } from './state/hooks.js'
 
 export const ExplorePage: React.FC = memo(function ExplorePage() {
 	return (
