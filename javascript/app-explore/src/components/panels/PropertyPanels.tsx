@@ -11,9 +11,11 @@ import {
 	selectableIsCausalVariable,
 	selectableIsRelationship,
 } from '../../domain/Selection.js'
-import { CausalGraphState } from '../../state/CausalGraphState.js'
-import { DatasetState } from '../../state/DatasetState.js'
-import { SelectedObjectState } from '../../state/UIState.js'
+import {
+	CausalGraphState,
+	DatasetState,
+	SelectedObjectState,
+} from '../../state/index.js'
 import { GraphPropertiesPanel } from './GraphPropertiesPanel.js'
 import { RelationshipPropertiesPanel } from './RelationshipPropertiesPanel.js'
 import { VariablePropertiesPanel } from './VariablePropertiesPanel.js'

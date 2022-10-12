@@ -6,7 +6,7 @@ import { Spinner } from '@fluentui/react'
 import { memo, Suspense } from 'react'
 import { useRecoilValue } from 'recoil'
 
-import { FilteredCorrelationsState } from '../../state/CorrelationsState.jsx'
+import { FilteredCorrelationsState } from '../../state/index.jsx'
 import type { CorrelationGraph2DProps } from './CorrelationGraph2D.types.js'
 import { NetworkGraphExplorer } from './NetworkGraphExplorer.jsx'
 

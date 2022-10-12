@@ -12,20 +12,18 @@ import { useFilePicker } from 'use-file-picker'
 import type { DatasetDatapackage } from '../domain/Dataset.js'
 import useDatasetLoader from '../domain/Dataset.js'
 import {
-	CausalGraphConstraintsState,
-	InModelColumnNamesState,
-} from '../state/CausalGraphState.js'
-import { PersistedInfoState } from '../state/PersistentInfoState.js'
-import {
 	AutoLayoutEnabledState,
+	CausalGraphConstraintsState,
 	ConfidenceThresholdState,
 	CorrelationThresholdState,
 	GraphViewState,
+	InModelColumnNamesState,
 	LoadingState,
+	PersistedInfoState,
 	ShowChangesInGraphState,
 	StraightEdgesState,
 	WeightThresholdState,
-} from '../state/UIState.js'
+} from '../state/index.js'
 import { saveObjectJSON } from '../utils/Save.js'
 import { command_bar_styles } from './MenuBar.constants.js'
 import {

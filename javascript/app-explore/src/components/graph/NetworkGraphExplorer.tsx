@@ -11,9 +11,11 @@ import SpriteText from 'three-spritetext'
 
 import { variableForColumnName } from '../../domain/Dataset.js'
 import type { Relationship } from '../../domain/Relationship.js'
-import { InModelColumnNamesState } from '../../state/CausalGraphState.js'
-import { DatasetState } from '../../state/DatasetState.js'
-import { SelectedObjectState } from '../../state/UIState.js'
+import {
+	DatasetState,
+	InModelColumnNamesState,
+	SelectedObjectState,
+} from '../../state/index.js'
 import type {
 	NetworkGraphLink,
 	NetworkGraphNode,

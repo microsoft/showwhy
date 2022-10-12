@@ -9,7 +9,7 @@ import { useRecoilValue } from 'recoil'
 import styled from 'styled-components'
 
 import { variableForColumnName } from '../../domain/Dataset.js'
-import { DatasetState } from '../../state/DatasetState.js'
+import { DatasetState } from '../../state/index.js'
 import { CausalNode } from '../graph/CausalNode.js'
 import type { RelationshipItemProps } from './RelationshipItem.types.js'
 

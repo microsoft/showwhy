@@ -2,13 +2,14 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { atom, selector } from 'recoil'
+import { selector } from 'recoil'
 
-import type {
-	CausalInferenceModel,
-	Intervention,
-} from '../domain/CausalInference.js'
-import { CausalDiscoveryResultsState } from './CausalGraphState.js'
+import type { CausalInferenceModel } from '../../domain/CausalInference.js'
+import {
+	CausalDiscoveryResultsState,
+	CausalInferenceBaselineValuesState,
+	CausalInferenceResultState,
+} from '../atoms/index.js'
 
 export const CausalInferenceModelState = selector<CausalInferenceModel | null>({
 	key: 'CausalInferenceModel',
@@ -22,21 +23,6 @@ export const CausalInferenceSupportedState = selector<boolean>({
 	get({ get }) {
 		return get(CausalInferenceModelState) !== null
 	},
-})
-
-export const CausalInterventionsState = atom<Intervention[]>({
-	key: 'CausalInterventionsState',
-	default: [],
-})
-
-export const CausalInferenceBaselineValuesState = atom<Map<string, number>>({
-	key: 'CausalInferenceBaselineValuesState',
-	default: new Map(),
-})
-
-export const CausalInferenceBaselineOffsetsState = atom<Map<string, number>>({
-	key: 'CausalInferenceBaselineOffsetsState',
-	default: new Map(),
 })
 
 export const CausalInferenceDifferenceFromBaselineValuesState = selector<
@@ -56,9 +42,4 @@ export const CausalInferenceDifferenceFromBaselineValuesState = selector<
 		})
 		return differences
 	},
-})
-
-export const CausalInferenceResultState = atom<Map<string, number>>({
-	key: 'CausalInferenceResultState',
-	default: new Map(),
 })

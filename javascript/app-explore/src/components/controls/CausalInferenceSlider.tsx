@@ -10,7 +10,7 @@ import {
 	CausalInferenceDifferenceFromBaselineValuesState,
 	CausalInferenceResultState,
 	CausalInterventionsState,
-} from '../../state/CausalInferenceState.jsx'
+} from '../../state/index.jsx'
 import {
 	icon_button_props,
 	icon_button_style,

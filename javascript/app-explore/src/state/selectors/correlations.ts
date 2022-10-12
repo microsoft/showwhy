@@ -4,14 +4,13 @@
  */
 import { selector } from 'recoil'
 
-// import type { VariableReference } from '../domain/CausalVariable.js'
-import type { RelationshipWithWeight } from '../domain/Relationship.js'
+import type { RelationshipWithWeight } from '../../domain/Relationship.js'
 import {
 	correlationsInTable,
 	filterBoringRelationships,
-} from '../utils/Correlation.js'
-import { DatasetState, ProcessedArqueroTableState } from './DatasetState.js'
-import { CorrelationThresholdState } from './UIState.js'
+} from '../../utils/Correlation.js'
+import { CorrelationThresholdState } from '../atoms/index.js'
+import { DatasetState, ProcessedArqueroTableState } from './dataset.js'
 
 // TODO: We just use a plain variable to store the precalculatedCorrelations rather than an atom
 // due to performance issues encountered setting an atom when using a large number of causal-variables.

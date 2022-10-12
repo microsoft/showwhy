@@ -8,7 +8,7 @@ import { memo, useCallback, useEffect, useState } from 'react'
 import { useRecoilState } from 'recoil'
 
 import type { VariableNature } from '../../domain/VariableNature.js'
-import { variableMetadataState } from '../../state/DatasetState.js'
+import { variableMetadataState } from '../../state/index.js'
 import { options } from './VariableNaturePicker.constants.js'
 import type { VariableNaturePickerProps } from './VariableNaturePicker.types.js'
 

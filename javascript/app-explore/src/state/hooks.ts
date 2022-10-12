@@ -12,26 +12,25 @@ import {
 	CausalDiscoveryResultsState,
 	CausalGraphConstraintsState,
 	CausalGraphHistoryState,
-	CausalGraphState,
-	InModelCausalVariablesState,
-	InModelColumnNamesState,
-} from './CausalGraphState.js'
-import {
 	CausalInferenceBaselineOffsetsState,
 	CausalInferenceBaselineValuesState,
-	CausalInferenceModelState,
 	CausalInferenceResultState,
 	CausalInterventionsState,
-} from './CausalInferenceState.js'
-import { DatasetState, DEFAULT_DATASET_NAME } from './DatasetState.js'
-import {
 	ConfidenceThresholdState,
 	CorrelationThresholdState,
+	DEFAULT_DATASET_NAME,
+	InModelColumnNamesState,
 	LoadingState,
 	PauseAutoRunState,
 	SelectedCausalDiscoveryAlgorithmState,
 	WeightThresholdState,
-} from './UIState.js'
+} from './atoms/index.js'
+import {
+	CausalGraphState,
+	CausalInferenceModelState,
+	DatasetState,
+	InModelCausalVariablesState,
+} from './selectors/index.js'
 
 /**
  * This component just performs an initial access of persisted state atoms to

@@ -12,7 +12,7 @@ import type { RecoilState } from 'recoil'
 import { useRecoilState } from 'recoil'
 
 import { CausalDiscoveryAlgorithm } from '../domain/CausalDiscovery/CausalDiscoveryAlgorithm.js'
-import { AutoLayoutEnabledState, PauseAutoRunState } from '../state/UIState.js'
+import { AutoLayoutEnabledState, PauseAutoRunState } from '../state/index.js'
 import { ThresholdSlider } from './controls/ThresholdSlider.js'
 import { GraphViewStates } from './graph/GraphViews.types.js'
 import { Button, toggleStyles } from './MenuBar.styles.js'

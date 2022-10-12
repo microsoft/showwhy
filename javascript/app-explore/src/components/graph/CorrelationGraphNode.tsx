@@ -5,7 +5,7 @@
 import { Stack } from '@fluentui/react'
 import { useRecoilValue } from 'recoil'
 
-import { SelectedObjectState } from '../../state/UIState.jsx'
+import { SelectedObjectState } from '../../state/index.jsx'
 import { CausalNode } from './CausalNode.jsx'
 import type { CausalNodeProps } from './CausalNode.types.js'
 import { NodeContainer } from './CorrelationGraphNode.styles.js'

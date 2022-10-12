@@ -14,9 +14,12 @@ import Xarrow from 'react-xarrows'
 import { useRecoilState, useRecoilValue, useRecoilValueLoadable } from 'recoil'
 
 import { getModifiedRelationship } from '../../domain/GraphDifferences.js'
-import { CausalGraphChangesState } from '../../state/CausalGraphState.js'
-import { FilteredCorrelationsState } from '../../state/CorrelationsState.js'
-import { SelectedObjectState, StraightEdgesState } from '../../state/UIState.js'
+import {
+	CausalGraphChangesState,
+	FilteredCorrelationsState,
+	SelectedObjectState,
+	StraightEdgesState,
+} from '../../state/index.js'
 import { correlationForColumnNames } from '../../utils/Correlation.js'
 import { map } from '../../utils/Math.js'
 import { useEdgeColors, useSvgStyle } from './CausalEdge.hooks.js'

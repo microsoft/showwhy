@@ -3,36 +3,24 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import type { Step } from '@data-wrangling-components/core'
-import {
-	createPipeline,
-	createTableStore,
-	Verb,
-} from '@data-wrangling-components/core'
-import { table } from 'arquero'
+import { createPipeline, Verb } from '@data-wrangling-components/core'
 import type ColumnTable from 'arquero/dist/types/table/column-table'
-import { atom, DefaultValue, selector, selectorFamily } from 'recoil'
+import { DefaultValue, selector, selectorFamily } from 'recoil'
 
-import type { CausalVariable } from '../domain/CausalVariable.js'
-import { inferMissingMetadataForColumn } from '../domain/CausalVariable.js'
-import type { Dataset } from '../domain/Dataset.js'
-import { createDatasetFromTable } from '../domain/Dataset.js'
-import { VariableNature } from '../domain/VariableNature.js'
-
-export const DEFAULT_INPUT_TABLE_NAME = 'original-data'
-export const DEFAULT_PREPROCESSED_TABLE_NAME = 'processed-data'
-export const DEFAULT_PIPELINE_TABLE_NAME = 'pipeline-table'
-
-export const TableStoreState = atom({
-	key: 'TableStoreState',
-	default: createTableStore([
-		{ id: DEFAULT_INPUT_TABLE_NAME, table: table({}) },
-	]),
-})
-
-export const PreprocessingPipelineState = atom<Step[]>({
-	key: 'PreprocessingPipeline',
-	default: [],
-})
+import type { CausalVariable } from '../../domain/CausalVariable.js'
+import { inferMissingMetadataForColumn } from '../../domain/CausalVariable.js'
+import type { Dataset } from '../../domain/Dataset.js'
+import { createDatasetFromTable } from '../../domain/Dataset.js'
+import { VariableNature } from '../../domain/VariableNature.js'
+import {
+	DatasetNameState,
+	DEFAULT_INPUT_TABLE_NAME,
+	DEFAULT_PIPELINE_TABLE_NAME,
+	DEFAULT_PREPROCESSED_TABLE_NAME,
+	MetadataState,
+	PreprocessingPipelineState,
+	TableStoreState,
+} from '../atoms/index.js'
 
 export const InputTableState = selector<ColumnTable | undefined>({
 	key: 'InputTableState',
@@ -113,11 +101,6 @@ export const ProcessedArqueroTableState = selector<ColumnTable | undefined>({
 	},
 })
 
-export const MetadataState = atom<CausalVariable[]>({
-	key: 'MetadataState',
-	default: [],
-})
-
 export const DerivedMetadataState = selector<CausalVariable[]>({
 	key: 'DerivedMetadataState',
 	get({ get }) {
@@ -194,12 +177,6 @@ export const variableMetadataState = selectorFamily<
 
 			set(MetadataState, newMetadata)
 		},
-})
-
-export const DEFAULT_DATASET_NAME = 'Causal Dataset'
-export const DatasetNameState = atom({
-	key: 'DatasetNameState',
-	default: DEFAULT_DATASET_NAME,
 })
 
 export const DatasetState = selector<Dataset>({

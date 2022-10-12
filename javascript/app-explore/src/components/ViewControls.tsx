@@ -11,7 +11,7 @@ import {
 	CorrelationThresholdState,
 	StraightEdgesState,
 	WeightThresholdState,
-} from '../state/UIState.js'
+} from '../state/index.js'
 import { ThresholdSlider } from './controls/ThresholdSlider.js'
 
 export const ViewControls: React.FC = memo(function ViewControls() {

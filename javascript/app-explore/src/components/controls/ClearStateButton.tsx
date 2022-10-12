@@ -6,7 +6,7 @@ import { DefaultButton } from '@fluentui/react'
 import { memo, useCallback } from 'react'
 import { useResetRecoilState } from 'recoil'
 
-import { PersistedInfoState } from '../../state/PersistentInfoState.jsx'
+import { PersistedInfoState } from '../../state/index.js'
 import type { ClearStateButtonProps } from './ClearStateButton.types.js'
 
 export const ClearStateButton: React.FC<ClearStateButtonProps> = memo(

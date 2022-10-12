@@ -5,8 +5,10 @@
 import { memo } from 'react'
 import { useRecoilValue } from 'recoil'
 
-import { CausalInferenceSupportedState } from '../../state/CausalInferenceState.js'
-import { SelectedObjectState } from '../../state/UIState.js'
+import {
+	CausalInferenceSupportedState,
+	SelectedObjectState,
+} from '../../state/index.js'
 import { CausalInferenceSlider } from '../controls/CausalInferenceSlider.js'
 import { NodeContainer } from './CausalGraphNode.styles.js'
 import { CausalNode } from './CausalNode.js'

@@ -6,7 +6,7 @@ import { Stack } from '@fluentui/react'
 import { memo } from 'react'
 import { useRecoilValue } from 'recoil'
 
-import { SelectedObjectState } from '../../state/UIState.js'
+import { SelectedObjectState } from '../../state/index.js'
 import { CausalNode } from './../graph/CausalNode.js'
 import type { CausalNodeProps } from './CausalNode.types.js'
 import { NodeContainer } from './GhostGraphNode.styles.js'

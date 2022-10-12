@@ -2,13 +2,13 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import type { IChoiceGroupOption } from '@fluentui/react';
+import type { IChoiceGroupOption } from '@fluentui/react'
 import { ChoiceGroup } from '@fluentui/react'
 import { memo, useCallback } from 'react'
 import { useRecoilState } from 'recoil'
 
 import { CausalDiscoveryAlgorithm } from '../domain/CausalDiscovery/CausalDiscoveryAlgorithm.js'
-import { SelectedCausalDiscoveryAlgorithmState } from '../state/UIState.js'
+import { SelectedCausalDiscoveryAlgorithmState } from '../state/index.js'
 import { ALGORITHMS } from './AlgorithmControls.constants.js'
 import { Divider } from './controls/Divider.js'
 

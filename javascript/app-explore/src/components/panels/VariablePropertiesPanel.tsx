@@ -28,9 +28,9 @@ import { VariableNature } from '../../domain/VariableNature.js'
 import {
 	CausalGraphConstraintsState,
 	CausalGraphState,
+	DatasetState,
 	InModelCausalVariablesState,
-} from '../../state/CausalGraphState.js'
-import { DatasetState } from '../../state/DatasetState.js'
+} from '../../state/index.js'
 import { Chart } from '../charts/Chart.js'
 import { Divider } from '../controls/Divider.js'
 import { VariableNaturePicker } from '../controls/VariableNaturePicker.js'
