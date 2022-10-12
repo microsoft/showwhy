@@ -38,31 +38,37 @@ export function useCausalDiscoveryRunner() {
 	)
 	const setLoadingState = useSetRecoilState(LoadingState)
 
-	const derivedConstraints: RelationshipReference[] = []
-	inModelCausalVariables.forEach(sourceVar => {
-		sourceVar.derivedFrom?.forEach(sourceColumn => {
-			inModelCausalVariables.forEach(targetVar => {
-				if (
-					sourceVar !== targetVar &&
-					(targetVar.derivedFrom?.includes(sourceColumn) ||
-						sourceVar.disallowedRelationships?.includes(targetVar.columnName))
-				) {
-					derivedConstraints.push({
-						source: sourceVar,
-						target: targetVar,
-					})
-				}
+	const derivedConstraints = useMemo<RelationshipReference[]>(() => {
+		const result: RelationshipReference[] = []
+		inModelCausalVariables.forEach(sourceVar => {
+			sourceVar.derivedFrom?.forEach(sourceColumn => {
+				inModelCausalVariables.forEach(targetVar => {
+					if (
+						sourceVar !== targetVar &&
+						(targetVar.derivedFrom?.includes(sourceColumn) ||
+							sourceVar.disallowedRelationships?.includes(targetVar.columnName))
+					) {
+						result.push({
+							source: sourceVar,
+							target: targetVar,
+						})
+					}
+				})
 			})
 		})
-	})
+		return result
+	}, [inModelCausalVariables])
 
-	const causalDiscoveryConstraints = {
-		...userConstraints,
-		forbiddenRelationships: [
-			...userConstraints.forbiddenRelationships,
-			...derivedConstraints,
-		],
-	}
+	const causalDiscoveryConstraints = useMemo(
+		() => ({
+			...userConstraints,
+			forbiddenRelationships: [
+				...userConstraints.forbiddenRelationships,
+				...derivedConstraints,
+			],
+		}),
+		[userConstraints, derivedConstraints],
+	)
 
 	useEffect(() => {
 		if (
@@ -93,5 +99,13 @@ export function useCausalDiscoveryRunner() {
 		}
 
 		void runDiscovery()
-	}, [dataset, inModelCausalVariables, userConstraints, algorithm])
+	}, [
+		dataset,
+		inModelCausalVariables,
+		userConstraints,
+		algorithm,
+		causalDiscoveryConstraints,
+		setLoadingState,
+		setCausalDiscoveryResultsState,
+	])
 }

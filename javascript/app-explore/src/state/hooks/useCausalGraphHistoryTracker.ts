@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { useEffect } from 'react'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilState } from 'recoil'
 
 import { CausalGraphHistoryState } from '../atoms/index.js'
 import { useCausalGraph } from './useCausalGraph.js'
