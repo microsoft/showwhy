@@ -9,9 +9,8 @@ import { CauseDisErrorBoundary } from './components/CauseDisErrorBoundary.js'
 import {
 	useCausalDiscoveryRunner,
 	useCausalGraphHistoryTracker,
-} from './state/CausalGraphState.js'
-import { useCausalInferenceUpdater } from './state/CausalInferenceState.js'
-import { useRehydrateRecoil } from './state/RehydrateRecoil.js'
+	useCausalInferenceUpdater,
+ useRehydrateRecoil } from './state/hooks.js'
 
 export const ExplorePage: React.FC = memo(function ExplorePage() {
 	return (

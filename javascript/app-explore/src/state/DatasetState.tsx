@@ -13,10 +13,7 @@ import type ColumnTable from 'arquero/dist/types/table/column-table'
 import { atom, DefaultValue, selector, selectorFamily } from 'recoil'
 
 import type { CausalVariable } from '../domain/CausalVariable.js'
-import {
-	createMapFromForeignKey,
-	inferMissingMetadataForColumn,
-} from '../domain/CausalVariable.js'
+import { inferMissingMetadataForColumn } from '../domain/CausalVariable.js'
 import type { Dataset } from '../domain/Dataset.js'
 import { createDatasetFromTable } from '../domain/Dataset.js'
 import { VariableNature } from '../domain/VariableNature.js'
@@ -76,23 +73,8 @@ export const ProcessedArqueroTableState = selector<ColumnTable | undefined>({
 
 		const metadataDerivedPipelineSteps: Step[] = []
 
-		// Convert foreignKeys to mappings1
-		const mappedMetadata = await Promise.all(
-			metadata.map(async metadatum => {
-				let { mapping } = metadatum
-				if (metadatum.foreignkey) {
-					mapping = await createMapFromForeignKey(
-						metadatum.foreignkey,
-						tableStore,
-					)
-				}
-
-				return { mapping, ...metadatum }
-			}),
-		)
-
 		// Create implied pipeline steps from metadata
-		mappedMetadata.forEach(metadatum => {
+		metadata.forEach(metadatum => {
 			if (metadatum.nature === VariableNature.CategoricalNominal) {
 				const recodedColumnName = `${metadatum.columnName}` // (recoded)`;
 				metadataDerivedPipelineSteps.push({
