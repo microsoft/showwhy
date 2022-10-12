@@ -69,21 +69,3 @@ export const nodePositionsFamily = selectorFamily<NodePosition, string>({
 			set(NodePositionsState, newNodePositions)
 		},
 })
-
-export const GraphBoundsState = selector<{ width: number; height: number }>({
-	key: 'GraphBoundsState',
-	get({ get }) {
-		const nodePositions = get(NodePositionsState)
-		const width = Math.max(
-			...Object.values(nodePositions).map(
-				nodePosition => nodePosition.right ?? 0,
-			),
-		)
-		const height = Math.max(
-			...Object.values(nodePositions).map(
-				nodePosition => nodePosition.bottom ?? 0,
-			),
-		)
-		return { width, height }
-	},
-})

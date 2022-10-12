@@ -34,7 +34,7 @@ export const InModelCausalVariablesState = selector<CausalVariable[]>({
 	},
 })
 
-export const PreviousCausalGraphState = selector<CausalGraph | undefined>({
+const PreviousCausalGraphState = selector<CausalGraph | undefined>({
 	key: 'PreviousCausalGraphState',
 	get({ get }) {
 		const graphHistory = get(CausalGraphHistoryState)
@@ -49,7 +49,7 @@ export const CausalGraphChangesState = selector<GraphDifferences | undefined>({
 	get({ get }) {
 		const weightThreshold = get(WeightThresholdState)
 		const confidenceThreshold = get(ConfidenceThresholdState)
-		const currentCausalGraph = get(CausalDiscoveryResultsState)
+		const currentCausalGraph = get(CausalDiscoveryResultsState).graph
 		const previousCausalGraph = get(PreviousCausalGraphState)
 		if (previousCausalGraph === undefined) {
 			return
