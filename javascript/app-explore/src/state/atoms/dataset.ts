@@ -2,7 +2,6 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import type { Step } from '@data-wrangling-components/core'
 import { createTableStore } from '@data-wrangling-components/core'
 import { table } from 'arquero'
 import { atom } from 'recoil'
@@ -19,11 +18,6 @@ export const TableStoreState = atom({
 	default: createTableStore([
 		{ id: DEFAULT_INPUT_TABLE_NAME, table: table({}) },
 	]),
-})
-
-export const PreprocessingPipelineState = atom<Step[]>({
-	key: 'PreprocessingPipeline',
-	default: [],
 })
 
 export const MetadataState = atom<CausalVariable[]>({

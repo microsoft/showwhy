@@ -7,6 +7,7 @@ import { createTableStore } from '@data-wrangling-components/core'
 import { table } from 'arquero'
 import type ColumnTable from 'arquero/dist/types/table/column-table'
 import { compressSync, strFromU8, strToU8 } from 'fflate'
+import { useCallback } from 'react'
 import {
 	useRecoilValue,
 	useRecoilValueLoadable,
@@ -23,7 +24,6 @@ import {
 	DerivedMetadataState,
 	InputTableState,
 	MetadataState,
-	PreprocessingPipelineState,
 	ProcessedArqueroTableState,
 	TableStoreState,
 	unsetPrecalculatedCorrelations,
@@ -64,25 +64,22 @@ export interface DatasetDatapackage {
 export default function useDatasetLoader() {
 	const resetDataset = useResetRecoilState(DatasetState)
 	const setTableStoreState = useSetRecoilState(TableStoreState)
-	const setPreprocessingPipelineState = useSetRecoilState(
-		PreprocessingPipelineState,
-	)
 	const setMetadataState = useSetRecoilState(MetadataState)
 	const setDatasetNameState = useSetRecoilState(DatasetNameState)
 
-	return {
-		loadColumnTable: (name: string, table: ColumnTable) => {
+	return useCallback(
+		function loadTable(name: string, table: ColumnTable) {
 			resetDataset()
 			unsetPrecalculatedCorrelations()
 			const tableStore = createTableStore()
 			tableStore.set({ id: DEFAULT_INPUT_TABLE_NAME, table })
 			const metadata = inferMissingMetadataForTable(table)
 			setTableStoreState(tableStore)
-			setPreprocessingPipelineState([])
 			setMetadataState(metadata)
 			setDatasetNameState(name)
 		},
-	}
+		[resetDataset, setTableStoreState, setMetadataState, setDatasetNameState],
+	)
 }
 
 export async function createDatasetFromTable(
@@ -121,7 +118,6 @@ export function useDataPackageExport() {
 	const baseMetadata = useRecoilValue(MetadataState)
 	const derivedMetadata = useRecoilValue(DerivedMetadataState)
 	const metadata = [...baseMetadata, ...derivedMetadata]
-	const pipeline = useRecoilValue(PreprocessingPipelineState)
 	const datasetName = useRecoilValue(DatasetNameState)
 	const table = useRecoilValue(InputTableState)
 	const processedTable = useRecoilValue(ProcessedArqueroTableState)
@@ -149,7 +145,6 @@ export function useDataPackageExport() {
 		return {
 			profile: 'data-package',
 			name: datasetName,
-			pipeline,
 			metadata: outputMetadata,
 			correlations,
 			resources: [

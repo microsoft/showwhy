@@ -18,7 +18,6 @@ import {
 	DEFAULT_PIPELINE_TABLE_NAME,
 	DEFAULT_PREPROCESSED_TABLE_NAME,
 	MetadataState,
-	PreprocessingPipelineState,
 	TableStoreState,
 } from '../atoms/index.js'
 
@@ -38,7 +37,6 @@ export const ProcessedArqueroTableState = selector<ColumnTable | undefined>({
 		const tableStore = get(TableStoreState)
 		const metadata = get(MetadataState)
 		const originalTable = await tableStore.get(DEFAULT_INPUT_TABLE_NAME)
-		const preprocessingPipelineSteps = get(PreprocessingPipelineState)
 		const preprocessedTable = tableStore
 			.list()
 			.includes(DEFAULT_PREPROCESSED_TABLE_NAME)
@@ -59,13 +57,13 @@ export const ProcessedArqueroTableState = selector<ColumnTable | undefined>({
 		})
 		let resultTable = originalTable
 
-		const metadataDerivedPipelineSteps: Step[] = []
+		const pipelineSteps: Step[] = []
 
 		// Create implied pipeline steps from metadata
 		metadata.forEach(metadatum => {
 			if (metadatum.nature === VariableNature.CategoricalNominal) {
 				const recodedColumnName = `${metadatum.columnName}` // (recoded)`;
-				metadataDerivedPipelineSteps.push({
+				pipelineSteps.push({
 					verb: Verb.Recode,
 					input: DEFAULT_PIPELINE_TABLE_NAME,
 					output: DEFAULT_PIPELINE_TABLE_NAME,
@@ -76,7 +74,7 @@ export const ProcessedArqueroTableState = selector<ColumnTable | undefined>({
 					},
 				})
 
-				metadataDerivedPipelineSteps.push({
+				pipelineSteps.push({
 					verb: Verb.OneHot,
 					input: DEFAULT_PIPELINE_TABLE_NAME,
 					output: DEFAULT_PIPELINE_TABLE_NAME,
@@ -86,10 +84,6 @@ export const ProcessedArqueroTableState = selector<ColumnTable | undefined>({
 				})
 			}
 		})
-		const pipelineSteps = [
-			...preprocessingPipelineSteps,
-			...metadataDerivedPipelineSteps,
-		]
 
 		if (pipelineSteps.length > 0) {
 			const pipeline = createPipeline(tableStore)
@@ -195,10 +189,9 @@ export const DatasetState = selector<Dataset>({
 		)
 		return dataset
 	},
-	set({ set, reset }, newValue: Dataset | DefaultValue) {
+	set({ reset }, newValue: Dataset | DefaultValue) {
 		if (newValue instanceof DefaultValue) {
 			reset(TableStoreState)
-			reset(PreprocessingPipelineState)
 			reset(MetadataState)
 			reset(DatasetNameState)
 			return

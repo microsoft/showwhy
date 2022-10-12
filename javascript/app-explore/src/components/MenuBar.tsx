@@ -37,7 +37,7 @@ import {
 
 export const MenuBar: React.FC = memo(function MenuBar() {
 	const [selectedViewKey, setSelectedViewKey] = useRecoilState(GraphViewState)
-	const { loadColumnTable } = useDatasetLoader()
+	const loadColumnTable = useDatasetLoader()
 	const resetVariables = useResetRecoilState(InModelColumnNamesState)
 	const resetConstraints = useResetRecoilState(CausalGraphConstraintsState)
 	const [useStraightEdges, setUseStraightEdges] =
