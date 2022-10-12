@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { selector } from 'recoil'
+import { selector, useRecoilValue } from 'recoil'
 
 // import type { VariableReference } from '../domain/CausalVariable.js'
 import type { RelationshipWithWeight } from '../domain/Relationship.js'
@@ -66,3 +66,7 @@ export const FilteredCorrelationsState = selector<RelationshipWithWeight[]>({
 			.sort((a, b) => Math.abs(b.weight) - Math.abs(a.weight))
 	},
 })
+
+export function useFilteredCorrelations() {
+	return useRecoilValue(FilteredCorrelationsState)
+}

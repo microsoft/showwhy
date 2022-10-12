@@ -21,7 +21,7 @@ import {
 } from '../../domain/Relationship.jsx'
 import {
 	CausalGraphChangesState,
-	CausalGraphState,
+	useCausalGraph,
 } from '../../state/CausalGraphState.jsx'
 import { FilteredCorrelationsState } from '../../state/CorrelationsState.jsx'
 import {
@@ -32,7 +32,8 @@ import {
 	ConfidenceThresholdState,
 	SelectedObjectState,
 	ShowChangesInGraphState,
-	WeightThresholdState,
+	useConfidenceThreshold,
+	useWeightThreshold,
 } from '../../state/UIState.jsx'
 import { CausalEdge } from './CausalEdge.jsx'
 import { Background } from './CausalGraphExplorer.styles.js'
@@ -46,9 +47,9 @@ const MIN_EDGE_WIDTH = 2
 const MAX_EDGE_WIDTH = 10
 
 export const CausalGraphExplorer = memo(function CausalGraphExplorer() {
-	const causalGraph = useRecoilValue(CausalGraphState)
-	const weightThreshold = useRecoilValue(WeightThresholdState)
-	const confidenceThreshold = useRecoilValue(ConfidenceThresholdState)
+	const causalGraph = useCausalGraph()
+	const weightThreshold = useWeightThreshold()
+	const confidenceThreshold = useConfidenceThreshold()
 	const showChangesInGraph = useRecoilValue(ShowChangesInGraphState)
 	const causalRelationships = Graph.relationshipsAboveThresholds(
 		causalGraph,

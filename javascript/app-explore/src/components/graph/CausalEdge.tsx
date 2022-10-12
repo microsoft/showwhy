@@ -11,15 +11,14 @@ import {
 import { memo } from 'react'
 import type { anchorType } from 'react-xarrows'
 import Xarrow from 'react-xarrows'
-import { useRecoilValue, useRecoilValueLoadable } from 'recoil'
 
 import { getModifiedRelationship } from '../../domain/GraphDifferences.js'
-import { CausalGraphChangesState } from '../../state/CausalGraphState.js'
-import { FilteredCorrelationsState } from '../../state/CorrelationsState.js'
+import { useCausalGraphChanges } from '../../state/CausalGraphState.js'
+import { useFilteredCorrelations } from '../../state/CorrelationsState.js'
 import {
-	StraightEdgesState,
 	useSelectedObject,
 	useSetSelectedObject,
+	useStraightEdges,
 } from '../../state/UIState.js'
 import { correlationForColumnNames } from '../../utils/Correlation.js'
 import { map } from '../../utils/Math.js'
@@ -34,10 +33,9 @@ export const CausalEdge: React.FC<CausalEdgeProps> = memo(function CausalEdge({
 }) {
 	const selectedObject = useSelectedObject()
 	const setSelectedObject = useSetSelectedObject()
-	const correlations =
-		useRecoilValueLoadable(FilteredCorrelationsState).valueMaybe() || []
-	const useStraightEdges = useRecoilValue(StraightEdgesState)
-	const causalGraphChangesState = useRecoilValue(CausalGraphChangesState)
+	const correlations = useFilteredCorrelations() || []
+	const straightEdges = useStraightEdges()
+	const causalGraphChangesState = useCausalGraphChanges()
 	const strokeWidth = map(
 		Math.abs(relationship.weight || 0),
 		0,
@@ -126,14 +124,14 @@ export const CausalEdge: React.FC<CausalEdgeProps> = memo(function CausalEdge({
 		)
 
 	const startAnchor: anchorType = {
-		position: useStraightEdges ? 'auto' : 'right',
+		position: straightEdges ? 'auto' : 'right',
 		offset: { x: 0, y: 0 },
 	}
 	const endAnchor: anchorType = {
-		position: useStraightEdges ? 'auto' : 'left',
+		position: straightEdges ? 'auto' : 'left',
 		offset: { x: 0, y: 0 },
 	}
-	const path = useStraightEdges ? 'straight' : 'smooth'
+	const path = straightEdges ? 'straight' : 'smooth'
 	const headSize = (maxEdgeWidth * 2) / strokeWidth
 	const correlationHeadSize = (maxEdgeWidth * 2) / correlationStrokeWidth
 	const showArrowHead = true

@@ -4,15 +4,14 @@
  */
 import { DefaultButton } from '@fluentui/react'
 import { memo } from 'react'
-import { useRecoilValue } from 'recoil'
 
-import { PersistedInfoState } from '../../state/PersistentInfoState.jsx'
+import { usePersistedInfo } from '../../state/PersistentInfoState.jsx'
 import { saveObjectJSON } from '../../utils/Save.js'
 import type { SaveStateButtonProps } from './SaveStateButton.types.js'
 
 export const SaveStateButton: React.FC<SaveStateButtonProps> = memo(
 	function SaveStateButton({ label, filename = 'causal-model', error }) {
-		const persistedInfo = useRecoilValue(PersistedInfoState)
+		const persistedInfo = usePersistedInfo()
 
 		return (
 			<DefaultButton

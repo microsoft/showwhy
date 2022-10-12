@@ -162,3 +162,7 @@ export function useSelectedObject(): Selectable {
 export function useSetSelectedObject(): (value: Selectable) => void {
 	return useSetRecoilState(SelectedObjectState)
 }
+
+export function useConfidenceThreshold(): number {
+	return useRecoilValue(ConfidenceThresholdState)
+}

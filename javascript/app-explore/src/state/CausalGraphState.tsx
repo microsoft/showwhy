@@ -220,6 +220,10 @@ export const CausalGraphChangesState = selector<GraphDifferences | undefined>({
 	},
 })
 
+export function useCausalGraph() {
+	return useRecoilValue(CausalGraphState)
+}
+
 export function useCausalGraphConstraints(): CausalDiscoveryConstraints {
 	return useRecoilValue(CausalGraphConstraintsState)
 }
@@ -238,4 +242,8 @@ export function useSetInModelCausalVariables(): (
 	variables: CausalVariable[],
 ) => void {
 	return useSetRecoilState(InModelCausalVariablesState)
+}
+
+export function useCausalGraphChanges() {
+	return useRecoilValue(CausalGraphChangesState)
 }
