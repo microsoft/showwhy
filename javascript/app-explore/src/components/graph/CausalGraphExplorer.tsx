@@ -22,10 +22,10 @@ import {
 import {
 	CausalGraphChangesState,
 	CausalGraphState,
+	ConfidenceThresholdState,
 	FilteredCorrelationsState,
 	GraphBoundsState,
 	GraphLayoutState,
-	ConfidenceThresholdState,
 	SelectedObjectState,
 	ShowChangesInGraphState,
 	WeightThresholdState,

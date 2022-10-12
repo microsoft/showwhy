@@ -3,13 +3,13 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { selector } from 'recoil'
-import {
-	CausalInferenceBaselineValuesState,
-	CausalInferenceResultState,
-	CausalDiscoveryResultsState,
-} from '../atoms/index.js'
 
 import type { CausalInferenceModel } from '../../domain/CausalInference.js'
+import {
+	CausalDiscoveryResultsState,
+	CausalInferenceBaselineValuesState,
+	CausalInferenceResultState,
+} from '../atoms/index.js'
 
 export const CausalInferenceModelState = selector<CausalInferenceModel | null>({
 	key: 'CausalInferenceModel',

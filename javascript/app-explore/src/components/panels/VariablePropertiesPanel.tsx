@@ -28,8 +28,8 @@ import { VariableNature } from '../../domain/VariableNature.js'
 import {
 	CausalGraphConstraintsState,
 	CausalGraphState,
-	InModelCausalVariablesState,
 	DatasetState,
+	InModelCausalVariablesState,
 } from '../../state/index.js'
 import { Chart } from '../charts/Chart.js'
 import { Divider } from '../controls/Divider.js'

@@ -12,8 +12,8 @@ import SpriteText from 'three-spritetext'
 import { variableForColumnName } from '../../domain/Dataset.js'
 import type { Relationship } from '../../domain/Relationship.js'
 import {
-	InModelColumnNamesState,
 	DatasetState,
+	InModelColumnNamesState,
 	SelectedObjectState,
 } from '../../state/index.js'
 import type {

@@ -3,18 +3,19 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { DefaultValue, selector, selectorFamily } from 'recoil'
-import {
-	CausalDiscoveryResultsState,
-	CausalGraphHistoryState,
-	InModelColumnNamesState,
-	ConfidenceThresholdState,
-	WeightThresholdState,
-} from '../atoms/index.js'
+
 import type { CausalVariable } from '../../domain/CausalVariable.js'
 import { variablesForColumnNames } from '../../domain/Dataset.js'
 import type { CausalGraph } from '../../domain/Graph.js'
 import type { GraphDifferences } from '../../domain/GraphDifferences.js'
 import { findDifferencesBetweenGraphs } from '../../domain/GraphDifferences.js'
+import {
+	CausalDiscoveryResultsState,
+	CausalGraphHistoryState,
+	ConfidenceThresholdState,
+	InModelColumnNamesState,
+	WeightThresholdState,
+} from '../atoms/index.js'
 import { DatasetState } from './dataset.js'
 
 export const CausalGraphState = selector<CausalGraph>({

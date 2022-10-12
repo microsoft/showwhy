@@ -12,23 +12,23 @@ import {
 	CausalDiscoveryResultsState,
 	CausalGraphConstraintsState,
 	CausalGraphHistoryState,
-	InModelColumnNamesState,
 	CausalInferenceBaselineOffsetsState,
 	CausalInferenceBaselineValuesState,
 	CausalInferenceResultState,
 	CausalInterventionsState,
 	ConfidenceThresholdState,
 	CorrelationThresholdState,
+	DEFAULT_DATASET_NAME,
+	InModelColumnNamesState,
 	LoadingState,
 	PauseAutoRunState,
 	SelectedCausalDiscoveryAlgorithmState,
 	WeightThresholdState,
-	DEFAULT_DATASET_NAME,
 } from './atoms/index.js'
 import {
-	DatasetState,
-	CausalInferenceModelState,
 	CausalGraphState,
+	CausalInferenceModelState,
+	DatasetState,
 	InModelCausalVariablesState,
 } from './selectors/index.js'
 

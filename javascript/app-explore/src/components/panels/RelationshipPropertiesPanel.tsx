@@ -9,8 +9,8 @@ import { useRecoilState, useRecoilValue } from 'recoil'
 import { variableForColumnName } from '../../domain/Dataset.js'
 import {
 	CausalGraphConstraintsState,
-	FilteredCorrelationsState,
 	DatasetState,
+	FilteredCorrelationsState,
 } from '../../state/index.js'
 import { correlationForVariables } from '../../utils/Correlation.js'
 import { ComparisonChart } from '../charts/ComparisonChart.js'
