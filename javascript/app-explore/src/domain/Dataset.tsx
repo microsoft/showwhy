@@ -96,19 +96,18 @@ function listenToProcessedTable(
 	metadata: CausalVariable[],
 	setTable: (table: ColumnTable | undefined) => void,
 ): Subscription | undefined {
-	const steps: StepInput[] = getTableProcessingSteps(metadata)
-	if (steps.length > 0) {
-		const flow = new Workflow()
-		flow.addInputTable({ id: 'source', table })
-		steps.forEach(s => flow.addStep(s))
-		const sub = flow
-			.outputObservable()
-			?.subscribe(tbl => setTable(tbl?.table ?? table))
-		setTable(flow.latestOutput()?.table ?? table)
-		return sub
-	} else {
+	const steps = getTableProcessingSteps(metadata)
+	if (steps.length === 0) {
 		setTable(table)
+		return
 	}
+
+	const wf = new Workflow()
+	wf.addInputTable({ id: 'source', table })
+	steps.forEach(s => wf.addStep(s))
+	const sub = wf.outputObservable()?.subscribe(t => setTable(t?.table ?? table))
+	setTable(wf.latestOutput()?.table ?? table)
+	return sub
 }
 
 function getTableProcessingSteps(metadata: CausalVariable[]): StepInput[] {
