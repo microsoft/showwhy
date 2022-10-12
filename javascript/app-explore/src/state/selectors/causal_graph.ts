@@ -18,14 +18,6 @@ import {
 } from '../atoms/index.js'
 import { DatasetState } from './dataset.js'
 
-export const CausalGraphState = selector<CausalGraph>({
-	key: 'CausalGraphState',
-	get({ get }) {
-		const results = get(CausalDiscoveryResultsState)
-		return results.graph
-	},
-})
-
 export const InModelCausalVariablesState = selector<CausalVariable[]>({
 	key: 'InModelCausalVariablesState',
 	get({ get }) {
@@ -65,7 +57,7 @@ export const CausalGraphChangesState = selector<GraphDifferences | undefined>({
 	get({ get }) {
 		const weightThreshold = get(WeightThresholdState)
 		const confidenceThreshold = get(ConfidenceThresholdState)
-		const currentCausalGraph = get(CausalGraphState)
+		const currentCausalGraph = get(CausalDiscoveryResultsState)
 		const previousCausalGraph = get(PreviousCausalGraphState)
 		if (previousCausalGraph === undefined) {
 			return

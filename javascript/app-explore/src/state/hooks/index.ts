@@ -4,5 +4,6 @@
  */
 export * from './useCausalDiscoveryRunner.js'
 export * from './useCausalGraphHistoryTracker.js'
+export * from './useCausalGraphState.js'
 export * from './useCausalInferenceUpdater.js'
 export * from './useRehydrateRecoil.js'

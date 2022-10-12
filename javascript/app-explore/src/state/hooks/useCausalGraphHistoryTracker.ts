@@ -6,12 +6,12 @@ import { useEffect } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
 
 import { CausalGraphHistoryState } from '../atoms/index.js'
-import { CausalGraphState } from '../selectors/index.js'
+import { useCausalGraphState } from './useCausalGraphState.js'
 
 // Component to track causal graph history using the pattern outlined here:
 // https://github.com/facebookexperimental/Recoil/issues/485#issuecomment-660519295
 export function useCausalGraphHistoryTracker() {
-	const currentCausalGraph = useRecoilValue(CausalGraphState)
+	const currentCausalGraph = useCausalGraphState()
 	const [causalGraphHistory, setCausalGraphHistory] = useRecoilState(
 		CausalGraphHistoryState,
 	)

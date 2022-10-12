@@ -20,11 +20,6 @@ export const CausalGraphNode: React.FC<CausalNodeProps> = memo(
 		const selectedObject = useRecoilValue(SelectedObjectState)
 		const isFocused = variable === selectedObject
 		const isInferenceSupported = useRecoilValue(CausalInferenceSupportedState)
-		// const weightThreshold = useRecoilValue(WeightThresholdState);
-		// const causalGraph = useRecoilValue(CausalGraphState);
-		// const isInModel = Graph.includesVariable(causalGraph, variable);
-		// const hasChildren = isInModel && Graph.nodeHasChildren(causalGraph, variable, weightThreshold);
-		// const hasParents = isInModel && Graph.nodeHasParents(causalGraph, variable, weightThreshold);
 
 		return (
 			<>
@@ -36,10 +31,6 @@ export const CausalGraphNode: React.FC<CausalNodeProps> = memo(
 					}}
 				>
 					<CausalNode className="handle" {...props}></CausalNode>
-					{/* <Stack horizontal horizontalAlign="space-between">
-				{hasParents && <Stack.Item align="center"><ChevronRightIcon/></Stack.Item>}
-				{hasChildren && <Stack.Item align="center"><ChevronRightIcon/></Stack.Item>}
-			</Stack> */}
 					{isInferenceSupported && (
 						<CausalInferenceSlider {...props}></CausalInferenceSlider>
 					)}
