@@ -30,7 +30,7 @@ export const CausalInferenceSupportedState = selector<boolean>({
 	},
 })
 
-export const CausalInterventionsState = atom<Intervention[]>({
+const CausalInterventionsState = atom<Intervention[]>({
 	key: 'CausalInterventionsState',
 	default: [],
 })

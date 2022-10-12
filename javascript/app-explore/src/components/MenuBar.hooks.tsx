@@ -8,7 +8,9 @@ import { useBoolean } from '@fluentui/react-hooks'
 import { useDataTables } from '@showwhy/app-common'
 import type ColumnTable from 'arquero/dist/types/table/column-table'
 import { useEffect, useMemo } from 'react'
-import type { RecoilState } from 'recoil'
+import type { RecoilState} from 'recoil';
+import { useRecoilState } from 'recoil'
+
 import { CausalDiscoveryAlgorithm } from '../domain/CausalDiscovery/CausalDiscoveryAlgorithm.js'
 import {
 	useAutoLayoutEnabled,
@@ -172,11 +174,17 @@ export function useSliderMenuItem(
 	label: string,
 	state: RecoilState<number>,
 ): ICommandBarItemProps {
+	const [value, setValue] = useRecoilState(state)
 	return useMemo(
 		() => ({
 			key: label.toLowerCase().replaceAll(' ', '-'),
 			onRender: () => (
-				<ThresholdSlider label={label} thresholdState={state} width={200} />
+				<ThresholdSlider
+					label={label}
+					value={value}
+					setValue={setValue}
+					width={200}
+				/>
 			),
 			styles: { padding: '0.5rem' },
 		}),
