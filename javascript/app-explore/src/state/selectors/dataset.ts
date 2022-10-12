@@ -2,9 +2,6 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import type { Step } from '@data-wrangling-components/core'
-import { createPipeline, Verb } from '@data-wrangling-components/core'
-import type ColumnTable from 'arquero/dist/types/table/column-table'
 import { DefaultValue, selector, selectorFamily } from 'recoil'
 
 import type { CausalVariable } from '../../domain/CausalVariable.js'
@@ -14,92 +11,16 @@ import { createDatasetFromTable } from '../../domain/Dataset.js'
 import { VariableNature } from '../../domain/VariableNature.js'
 import {
 	DatasetNameState,
-	DEFAULT_INPUT_TABLE_NAME,
 	DEFAULT_PIPELINE_TABLE_NAME,
-	DEFAULT_PREPROCESSED_TABLE_NAME,
 	MetadataState,
-	TableStoreState,
+	TableState,
 } from '../atoms/index.js'
-
-export const InputTableState = selector<ColumnTable | undefined>({
-	key: 'InputTableState',
-	async get({ get }) {
-		const tableStore = get(TableStoreState)
-		const { table } = await tableStore.get(DEFAULT_INPUT_TABLE_NAME)
-
-		return table
-	},
-})
-
-export const ProcessedArqueroTableState = selector<ColumnTable | undefined>({
-	key: 'ProcessedArqueroTableState',
-	async get({ get }) {
-		const tableStore = get(TableStoreState)
-		const metadata = get(MetadataState)
-		const originalTable = await tableStore.get(DEFAULT_INPUT_TABLE_NAME)
-		const preprocessedTable = tableStore
-			.list()
-			.includes(DEFAULT_PREPROCESSED_TABLE_NAME)
-			? await tableStore.get(DEFAULT_PREPROCESSED_TABLE_NAME)
-			: undefined
-		if (preprocessedTable) {
-			tableStore.set({
-				id: DEFAULT_PIPELINE_TABLE_NAME,
-				table: preprocessedTable.table,
-			})
-			tableStore.delete(DEFAULT_PREPROCESSED_TABLE_NAME)
-			return preprocessedTable.table
-		}
-
-		tableStore.set({
-			id: DEFAULT_PIPELINE_TABLE_NAME,
-			table: originalTable.table,
-		})
-		let resultTable = originalTable
-
-		const pipelineSteps: Step[] = []
-
-		// Create implied pipeline steps from metadata
-		metadata.forEach(metadatum => {
-			if (metadatum.nature === VariableNature.CategoricalNominal) {
-				const recodedColumnName = `${metadatum.columnName}` // (recoded)`;
-				pipelineSteps.push({
-					verb: Verb.Recode,
-					input: DEFAULT_PIPELINE_TABLE_NAME,
-					output: DEFAULT_PIPELINE_TABLE_NAME,
-					args: {
-						column: metadatum.columnName,
-						to: recodedColumnName,
-						map: metadatum.mapping,
-					},
-				})
-
-				pipelineSteps.push({
-					verb: Verb.OneHot,
-					input: DEFAULT_PIPELINE_TABLE_NAME,
-					output: DEFAULT_PIPELINE_TABLE_NAME,
-					args: {
-						column: recodedColumnName,
-					},
-				})
-			}
-		})
-
-		if (pipelineSteps.length > 0) {
-			const pipeline = createPipeline(tableStore)
-			pipeline.addAll(pipelineSteps)
-			resultTable = await pipeline.run()
-		}
-
-		return resultTable.table
-	},
-})
 
 export const DerivedMetadataState = selector<CausalVariable[]>({
 	key: 'DerivedMetadataState',
 	get({ get }) {
 		const metadata = get(MetadataState)
-		const table = get(ProcessedArqueroTableState)
+		const table = get(TableState)
 		if (table === undefined) {
 			return []
 		}
@@ -175,23 +96,22 @@ export const variableMetadataState = selectorFamily<
 
 export const DatasetState = selector<Dataset>({
 	key: 'DatasetState',
-	async get({ get }) {
+	get({ get }) {
 		const datasetName = get(DatasetNameState)
-		const tableStore = get(TableStoreState)
 		const metadata = get(MetadataState)
 		const derivedMetadata = get(DerivedMetadataState)
+		const table = get(TableState)
 		const allMetadata = [...metadata, ...derivedMetadata]
 		const dataset = createDatasetFromTable(
 			DEFAULT_PIPELINE_TABLE_NAME,
 			datasetName,
-			tableStore,
 			allMetadata,
+			table,
 		)
 		return dataset
 	},
 	set({ reset }, newValue: Dataset | DefaultValue) {
 		if (newValue instanceof DefaultValue) {
-			reset(TableStoreState)
 			reset(MetadataState)
 			reset(DatasetNameState)
 			return
