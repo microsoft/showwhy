@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { Verb } from '@datashaper/schema'
-import type { Step} from '@datashaper/workflow';
+import type { Step, StepInput } from '@datashaper/workflow'
 import { Workflow } from '@datashaper/workflow'
 import { table } from 'arquero'
 import type ColumnTable from 'arquero/dist/types/table/column-table'
@@ -96,14 +96,14 @@ function listenToProcessedTable(
 	metadata: CausalVariable[],
 	setTable: (table: ColumnTable | undefined) => void,
 ): Subscription | undefined {
-	const flow = new Workflow()
+	const steps: StepInput[] = []
 
 	// Create implied pipeline steps from metadata
 	let first = true
 	metadata.forEach(metadatum => {
 		if (metadatum.nature === VariableNature.CategoricalNominal) {
 			const recodedColumnName = `${metadatum.columnName}` // (recoded)`;
-			flow.addStep({
+			steps.push({
 				verb: Verb.Recode,
 				input: first ? 'source' : undefined,
 				args: {
@@ -113,7 +113,7 @@ function listenToProcessedTable(
 				},
 			})
 
-			flow.addStep({
+			steps.push({
 				verb: Verb.Onehot,
 				args: {
 					column: recodedColumnName,
@@ -123,8 +123,10 @@ function listenToProcessedTable(
 		}
 	})
 
-	if (flow.steps.length > 0) {
+	if (steps.length > 0) {
+		const flow = new Workflow()
 		flow.addInputTable({ id: 'source', table })
+		steps.forEach(s => flow.addStep(s))
 		const sub = flow
 			.outputObservable()
 			?.subscribe(tbl => setTable(tbl?.table ?? table))
