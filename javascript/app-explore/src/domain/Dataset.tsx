@@ -96,9 +96,23 @@ function listenToProcessedTable(
 	metadata: CausalVariable[],
 	setTable: (table: ColumnTable | undefined) => void,
 ): Subscription | undefined {
-	const steps: StepInput[] = []
+	const steps: StepInput[] = getTableProcessingSteps(metadata)
+	if (steps.length > 0) {
+		const flow = new Workflow()
+		flow.addInputTable({ id: 'source', table })
+		steps.forEach(s => flow.addStep(s))
+		const sub = flow
+			.outputObservable()
+			?.subscribe(tbl => setTable(tbl?.table ?? table))
+		setTable(flow.latestOutput()?.table ?? table)
+		return sub
+	} else {
+		setTable(table)
+	}
+}
 
-	// Create implied pipeline steps from metadata
+function getTableProcessingSteps(metadata: CausalVariable[]): StepInput[] {
+	const steps: StepInput[] = []
 	let first = true
 	metadata.forEach(metadatum => {
 		if (metadatum.nature === VariableNature.CategoricalNominal) {
@@ -123,18 +137,7 @@ function listenToProcessedTable(
 		}
 	})
 
-	if (steps.length > 0) {
-		const flow = new Workflow()
-		flow.addInputTable({ id: 'source', table })
-		steps.forEach(s => flow.addStep(s))
-		const sub = flow
-			.outputObservable()
-			?.subscribe(tbl => setTable(tbl?.table ?? table))
-		setTable(flow.latestOutput()?.table ?? table)
-		return sub
-	} else {
-		setTable(table)
-	}
+	return steps
 }
 
 export function createDatasetFromTable(
