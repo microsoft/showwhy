@@ -8,18 +8,18 @@ import type { NodePosition } from '../../domain/NodePosition.js'
 import { layoutGraph } from '../../utils/Layout.js'
 import {
 	AutoLayoutEnabledState,
+	CausalDiscoveryResultsState,
 	ConfidenceThresholdState,
 	NodePositionsState,
 	WeightThresholdState,
 } from '../atoms/index.js'
-import { CausalGraphState } from './causal_graph.js'
 
 export const GraphLayoutState = selector({
 	key: 'GraphLayoutState',
 	async get({ get }) {
 		const isAutoLayotEnabled = get(AutoLayoutEnabledState)
 		if (isAutoLayotEnabled) {
-			const causalGraph = get(CausalGraphState)
+			const causalGraph = get(CausalDiscoveryResultsState).graph
 			const weightThreshold = get(WeightThresholdState)
 			const confidenceThreshold = get(ConfidenceThresholdState)
 			const elkLayout = await layoutGraph(
@@ -68,22 +68,4 @@ export const nodePositionsFamily = selectorFamily<NodePosition, string>({
 			newNodePositions[id] = nodePosition
 			set(NodePositionsState, newNodePositions)
 		},
-})
-
-export const GraphBoundsState = selector<{ width: number; height: number }>({
-	key: 'GraphBoundsState',
-	get({ get }) {
-		const nodePositions = get(NodePositionsState)
-		const width = Math.max(
-			...Object.values(nodePositions).map(
-				nodePosition => nodePosition.right ?? 0,
-			),
-		)
-		const height = Math.max(
-			...Object.values(nodePositions).map(
-				nodePosition => nodePosition.bottom ?? 0,
-			),
-		)
-		return { width, height }
-	},
 })

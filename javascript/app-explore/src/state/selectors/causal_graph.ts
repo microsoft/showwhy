@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { DefaultValue, selector, selectorFamily } from 'recoil'
+import { DefaultValue, selector } from 'recoil'
 
 import type { CausalVariable } from '../../domain/CausalVariable.js'
 import { variablesForColumnNames } from '../../domain/Dataset.js'
@@ -17,14 +17,6 @@ import {
 	WeightThresholdState,
 } from '../atoms/index.js'
 import { DatasetState } from './dataset.js'
-
-export const CausalGraphState = selector<CausalGraph>({
-	key: 'CausalGraphState',
-	get({ get }) {
-		const results = get(CausalDiscoveryResultsState)
-		return results.graph
-	},
-})
 
 export const InModelCausalVariablesState = selector<CausalVariable[]>({
 	key: 'InModelCausalVariablesState',
@@ -42,15 +34,7 @@ export const InModelCausalVariablesState = selector<CausalVariable[]>({
 	},
 })
 
-export const isVariableInModel = selectorFamily<boolean, string>({
-	key: 'IsVariableInModel',
-	get:
-		(variableColumnName: string) =>
-		({ get }) =>
-			get(InModelColumnNamesState).includes(variableColumnName),
-})
-
-export const PreviousCausalGraphState = selector<CausalGraph | undefined>({
+const PreviousCausalGraphState = selector<CausalGraph | undefined>({
 	key: 'PreviousCausalGraphState',
 	get({ get }) {
 		const graphHistory = get(CausalGraphHistoryState)
@@ -65,7 +49,7 @@ export const CausalGraphChangesState = selector<GraphDifferences | undefined>({
 	get({ get }) {
 		const weightThreshold = get(WeightThresholdState)
 		const confidenceThreshold = get(ConfidenceThresholdState)
-		const currentCausalGraph = get(CausalGraphState)
+		const currentCausalGraph = get(CausalDiscoveryResultsState).graph
 		const previousCausalGraph = get(PreviousCausalGraphState)
 		if (previousCausalGraph === undefined) {
 			return

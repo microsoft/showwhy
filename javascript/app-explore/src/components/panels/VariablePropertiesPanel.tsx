@@ -27,9 +27,9 @@ import * as Graph from '../../domain/Graph.js'
 import { VariableNature } from '../../domain/VariableNature.js'
 import {
 	CausalGraphConstraintsState,
-	CausalGraphState,
 	DatasetState,
 	InModelCausalVariablesState,
+	useCausalGraph,
 } from '../../state/index.js'
 import { Chart } from '../charts/Chart.js'
 import { Divider } from '../controls/Divider.js'
@@ -44,7 +44,7 @@ import type { VariablePropertiesPanelProps } from './VariablePropertiesPanel.typ
 export const VariablePropertiesPanel: React.FC<VariablePropertiesPanelProps> =
 	memo(function VariablePropertiesPanel({ variable }) {
 		const dataset = useRecoilValue(DatasetState)
-		const causalGraph = useRecoilValue(CausalGraphState)
+		const causalGraph = useCausalGraph()
 		const [inModelVariables, setInModelVariables] = useRecoilState(
 			InModelCausalVariablesState,
 		)

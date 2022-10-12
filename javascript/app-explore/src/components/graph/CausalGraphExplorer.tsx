@@ -21,16 +21,16 @@ import {
 } from '../../domain/Relationship.jsx'
 import {
 	CausalGraphChangesState,
-	CausalGraphState,
 	ConfidenceThresholdState,
 	FilteredCorrelationsState,
-	GraphBoundsState,
 	GraphLayoutState,
 	SelectedObjectState,
 	ShowChangesInGraphState,
+	useCausalGraph,
 	WeightThresholdState,
 } from '../../state/index.jsx'
 import { CausalEdge } from './CausalEdge.jsx'
+import { useGraphBounds } from './CausalGraphExplorer.hooks.js'
 import { Background } from './CausalGraphExplorer.styles.js'
 import { CausalGraphNode } from './CausalGraphNode.jsx'
 import { CorrelationEdge } from './CorrelationEdge.jsx'
@@ -42,7 +42,7 @@ const MIN_EDGE_WIDTH = 2
 const MAX_EDGE_WIDTH = 10
 
 export const CausalGraphExplorer = memo(function CausalGraphExplorer() {
-	const causalGraph = useRecoilValue(CausalGraphState)
+	const causalGraph = useCausalGraph()
 	const weightThreshold = useRecoilValue(WeightThresholdState)
 	const confidenceThreshold = useRecoilValue(ConfidenceThresholdState)
 	const showChangesInGraph = useRecoilValue(ShowChangesInGraphState)
@@ -71,8 +71,7 @@ export const CausalGraphExplorer = memo(function CausalGraphExplorer() {
 					hasSameOrInvertedSourceAndTarget(correlation, relationship),
 				),
 		)
-	const bounds = useRecoilValue(GraphBoundsState)
-
+	const bounds = useGraphBounds()
 	const layout = useRecoilValue(GraphLayoutState)
 	const updateXarrow = useXarrow()
 
