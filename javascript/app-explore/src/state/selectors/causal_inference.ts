@@ -4,19 +4,10 @@
  */
 import { selector } from 'recoil'
 
-import type { CausalInferenceModel } from '../../domain/CausalInference.js'
 import {
-	CausalDiscoveryResultsState,
 	CausalInferenceBaselineValuesState,
 	CausalInferenceResultState,
 } from '../atoms/index.js'
-
-export const CausalInferenceModelState = selector<CausalInferenceModel | null>({
-	key: 'CausalInferenceModel',
-	get({ get }) {
-		return get(CausalDiscoveryResultsState).causalInferenceModel
-	},
-})
 
 export const CausalInferenceDifferenceFromBaselineValuesState = selector<
 	Map<string, number>

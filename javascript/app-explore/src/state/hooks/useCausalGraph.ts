@@ -7,6 +7,6 @@ import { useRecoilValue } from 'recoil'
 import type { CausalGraph } from '../../domain/Graph.js'
 import { CausalDiscoveryResultsState } from '../atoms/index.js'
 
-export function useCausalGraphState(): CausalGraph {
+export function useCausalGraph(): CausalGraph {
 	return useRecoilValue(CausalDiscoveryResultsState).graph
 }

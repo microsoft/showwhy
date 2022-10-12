@@ -14,17 +14,15 @@ import {
 	ConfidenceThresholdState,
 	WeightThresholdState,
 } from '../atoms/index.js'
-import {
-	CausalInferenceModelState,
-	InModelCausalVariablesState,
-} from '../selectors/index.js'
+import { InModelCausalVariablesState } from '../selectors/index.js'
+import { useCausalInferenceModel } from './useCausalInferenceModel.js'
 
 /**
  * Hook to update initial causal inference results after causal discovery is run
  */
 export function useCausalInferenceUpdater() {
 	const inModelVariables = useRecoilValue(InModelCausalVariablesState)
-	const inferenceModel = useRecoilValue(CausalInferenceModelState)
+	const inferenceModel = useCausalInferenceModel()
 	const weightThreshold = useRecoilValue(WeightThresholdState)
 	const confidenceThreshold = useRecoilValue(ConfidenceThresholdState)
 	const setInitialValues = useSetRecoilState(CausalInferenceBaselineValuesState)

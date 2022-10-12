@@ -14,7 +14,7 @@ import {
 import {
 	DatasetState,
 	SelectedObjectState,
-	useCausalGraphState,
+	useCausalGraph,
 } from '../../state/index.js'
 import { GraphPropertiesPanel } from './GraphPropertiesPanel.js'
 import { RelationshipPropertiesPanel } from './RelationshipPropertiesPanel.js'
@@ -23,7 +23,7 @@ import { VariablePropertiesPanel } from './VariablePropertiesPanel.js'
 export const PropertyPanels: React.FC = memo(function PropertyPanels() {
 	const selection = useRecoilValue(SelectedObjectState)
 	const dataset = useRecoilValue(DatasetState)
-	const causalGraph = useCausalGraphState()
+	const causalGraph = useCausalGraph()
 	let propertiesPanel
 	if (selectableIsCausalVariable(selection)) {
 		const selectedObject = variableForColumnName(dataset, selection.columnName)
