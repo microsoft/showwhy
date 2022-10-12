@@ -2,7 +2,6 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import type { TableStore } from '@data-wrangling-components/core'
 import { table as createTable } from 'arquero'
 import type ColumnTable from 'arquero/dist/types/table/column-table'
 
