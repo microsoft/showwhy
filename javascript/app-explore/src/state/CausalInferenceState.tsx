@@ -14,7 +14,7 @@ import {
 	CausalDiscoveryResultsState,
 	InModelCausalVariablesState,
 } from './CausalGraphState.js'
-import { ConfidenceThresholdState, WeightThresholdState } from './UIState.js'
+import { ConfidenceThresholdState, useWeightThreshold } from './UIState.js'
 
 export const CausalInferenceModelState = selector<CausalInferenceModel | null>({
 	key: 'CausalInferenceModel',
@@ -35,7 +35,7 @@ const CausalInterventionsState = atom<Intervention[]>({
 	default: [],
 })
 
-export const CausalInferenceBaselineValuesState = atom<Map<string, number>>({
+const CausalInferenceBaselineValuesState = atom<Map<string, number>>({
 	key: 'CausalInferenceBaselineValuesState',
 	default: new Map(),
 })
@@ -45,7 +45,7 @@ export const CausalInferenceBaselineOffsetsState = atom<Map<string, number>>({
 	default: new Map(),
 })
 
-export const CausalInferenceDifferenceFromBaselineValuesState = selector<
+const CausalInferenceDifferenceFromBaselineValuesState = selector<
 	Map<string, number>
 >({
 	key: 'CausalInferenceDifferenceFromBaselineValuesState',
@@ -64,18 +64,55 @@ export const CausalInferenceDifferenceFromBaselineValuesState = selector<
 	},
 })
 
-export const CausalInferenceResultState = atom<Map<string, number>>({
+const CausalInferenceResultState = atom<Map<string, number>>({
 	key: 'CausalInferenceResultState',
 	default: new Map(),
 })
+
+export function useCausalInterventions(): Intervention[] {
+	return useRecoilValue(CausalInterventionsState)
+}
+
+export function useSetCausalInterventions(): (
+	interventions: Intervention[],
+) => void {
+	return useSetRecoilState(CausalInterventionsState)
+}
+
+export function useCausalInferenceBaselineValues(): Map<string, number> {
+	return useRecoilValue(CausalInferenceBaselineValuesState)
+}
+
+export function useSetCausalInferenceBaselineValues(): (
+	values: Map<string, number>,
+) => void {
+	return useSetRecoilState(CausalInferenceBaselineValuesState)
+}
+
+export function useCausalInferenceDifferenceFromBaselineValues(): Map<
+	string,
+	number
+> {
+	return useRecoilValue(CausalInferenceDifferenceFromBaselineValuesState)
+}
+
+export function useCausalInferenceResultState(): Map<string, number> {
+	return useRecoilValue(CausalInferenceResultState)
+}
+
+export function useSetCausalInferenceResultState(): (
+	values: Map<string, number>,
+) => void {
+	return useSetRecoilState(CausalInferenceResultState)
+}
 
 // Component to update initial causal inference results after causal discovery is run
 export function useCausalInferenceUpdater() {
 	const inModelVariables = useRecoilValue(InModelCausalVariablesState)
 	const inferenceModel = useRecoilValue(CausalInferenceModelState)
-	const weightThreshold = useRecoilValue(WeightThresholdState)
+	const weightThreshold = useWeightThreshold()
 	const confidenceThreshold = useRecoilValue(ConfidenceThresholdState)
-	const setInitialValues = useSetRecoilState(CausalInferenceBaselineValuesState)
+	const setInitialValues = useSetCausalInferenceBaselineValues()
 
 	const initialValueOffsets = useRecoilValue(
 		CausalInferenceBaselineOffsetsState,
@@ -118,14 +155,4 @@ export function useCausalInferenceUpdater() {
 		setCausalInferenceResults,
 		setInitialValues,
 	])
-}
-
-export function useCausalInterventions(): Intervention[] {
-	return useRecoilValue(CausalInterventionsState)
-}
-
-export function useSetCausalInterventions(): (
-	interventions: Intervention[],
-) => void {
-	return useSetRecoilState(CausalInterventionsState)
 }

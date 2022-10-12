@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import type { Step } from '@data-wrangling-components/core'
+import type { Step, TableStore } from '@data-wrangling-components/core'
 import {
 	createPipeline,
 	createTableStore,
@@ -10,7 +10,15 @@ import {
 } from '@data-wrangling-components/core'
 import { table } from 'arquero'
 import type ColumnTable from 'arquero/dist/types/table/column-table'
-import { atom, DefaultValue, selector, selectorFamily } from 'recoil'
+import {
+	atom,
+	DefaultValue,
+	selector,
+	selectorFamily,
+	useRecoilValue,
+	useResetRecoilState,
+	useSetRecoilState,
+} from 'recoil'
 
 import type { CausalVariable } from '../domain/CausalVariable.js'
 import {
@@ -131,12 +139,12 @@ export const ProcessedArqueroTableState = selector<ColumnTable | undefined>({
 	},
 })
 
-export const MetadataState = atom<CausalVariable[]>({
+const MetadataState = atom<CausalVariable[]>({
 	key: 'MetadataState',
 	default: [],
 })
 
-export const DerivedMetadataState = selector<CausalVariable[]>({
+const DerivedMetadataState = selector<CausalVariable[]>({
 	key: 'DerivedMetadataState',
 	get({ get }) {
 		const metadata = get(MetadataState)
@@ -257,3 +265,55 @@ export const CausalVariablesState = selector<CausalVariable[]>({
 		return Array.from(dataset.variables.values())
 	},
 })
+
+export function useDataset() {
+	return useRecoilValue(DatasetState)
+}
+
+export function useResetDataset(): () => void {
+	return useResetRecoilState(DatasetState)
+}
+
+export function useTableStore() {
+	return useRecoilValue(TableStoreState)
+}
+
+export function useSetTableStore(): (tableStore: TableStore) => void {
+	return useSetRecoilState(TableStoreState)
+}
+
+export function usePreprocessingPipeline() {
+	return useRecoilValue(PreprocessingPipelineState)
+}
+
+export function useSetPreprocessingPipeline(): (pipeline: Step[]) => void {
+	return useSetRecoilState(PreprocessingPipelineState)
+}
+
+export function useMetadata() {
+	return useRecoilValue(MetadataState)
+}
+
+export function useSetMetadata(): (metadata: CausalVariable[]) => void {
+	return useSetRecoilState(MetadataState)
+}
+
+export function useDatasetName() {
+	return useRecoilValue(DatasetNameState)
+}
+
+export function useSetDatasetName(): (name: string) => void {
+	return useSetRecoilState(DatasetNameState)
+}
+
+export function useDerivedMetadata() {
+	return useRecoilValue(DerivedMetadataState)
+}
+
+export function useInputTable() {
+	return useRecoilValue(InputTableState)
+}
+
+export function useProcessedArqueroTable() {
+	return useRecoilValue(ProcessedArqueroTableState)
+}

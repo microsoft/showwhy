@@ -4,11 +4,10 @@
  */
 import { IconButton, Slider, Stack, Text } from '@fluentui/react'
 import { memo, useCallback } from 'react'
-import { useRecoilValue } from 'recoil'
 
 import {
-	CausalInferenceDifferenceFromBaselineValuesState,
-	CausalInferenceResultState,
+	useCausalInferenceDifferenceFromBaselineValues,
+	useCausalInferenceResultState,
 	useCausalInterventions,
 	useSetCausalInterventions,
 } from '../../state/CausalInferenceState.jsx'
@@ -24,11 +23,8 @@ import type { CausalInferenceSliderProps } from './CausalInferenceSlider.types.j
 
 export const CausalInferenceSlider: React.FC<CausalInferenceSliderProps> = memo(
 	function CausalInferenceSlider({ variable, wasDragged }) {
-		const differenceValues = useRecoilValue(
-			CausalInferenceDifferenceFromBaselineValuesState,
-		)
-		// const initialValueOffsets = useRecoilValue(CausalInferenceBaselineOffsetsState);
-		const causalInferenceResults = useRecoilValue(CausalInferenceResultState)
+		const differenceValues = useCausalInferenceDifferenceFromBaselineValues()
+		const causalInferenceResults = useCausalInferenceResultState()
 		const interventions = useCausalInterventions()
 		const setInterventions = useSetCausalInterventions()
 		const min = (variable.min || 0) < 0 ? -1 : 0

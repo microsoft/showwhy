@@ -7,28 +7,26 @@ import { createTableStore } from '@data-wrangling-components/core'
 import { table } from 'arquero'
 import type ColumnTable from 'arquero/dist/types/table/column-table'
 import { compressSync, strFromU8, strToU8 } from 'fflate'
-import {
-	useRecoilValue,
-	useRecoilValueLoadable,
-	useResetRecoilState,
-	useSetRecoilState,
-} from 'recoil'
+import { useRecoilValueLoadable } from 'recoil'
 
 import {
 	AllCorrelationsState,
 	unsetPrecalculatedCorrelations,
 } from '../state/CorrelationsState.js'
 import {
-	DatasetNameState,
-	DatasetState,
 	DEFAULT_INPUT_TABLE_NAME,
 	DEFAULT_PREPROCESSED_TABLE_NAME,
-	DerivedMetadataState,
-	InputTableState,
-	MetadataState,
-	PreprocessingPipelineState,
-	ProcessedArqueroTableState,
-	TableStoreState,
+	useDatasetName,
+	useDerivedMetadata,
+	useInputTable,
+	useMetadata,
+	usePreprocessingPipeline,
+	useProcessedArqueroTable,
+	useResetDataset,
+	useSetDatasetName,
+	useSetMetadata,
+	useSetPreprocessingPipeline,
+	useSetTableStore,
 } from '../state/DatasetState.js'
 import type { CausalVariable } from './CausalVariable.js'
 import {
@@ -64,14 +62,11 @@ export interface DatasetDatapackage {
 }
 
 export default function useDatasetLoader() {
-	const resetDataset = useResetRecoilState(DatasetState)
-	const setTableStoreState = useSetRecoilState(TableStoreState)
-	const setPreprocessingPipelineState = useSetRecoilState(
-		PreprocessingPipelineState,
-	)
-	const setMetadataState = useSetRecoilState(MetadataState)
-	const setDatasetNameState = useSetRecoilState(DatasetNameState)
-
+	const resetDataset = useResetDataset()
+	const setTableStoreState = useSetTableStore()
+	const setPreprocessingPipelineState = useSetPreprocessingPipeline()
+	const setMetadataState = useSetMetadata()
+	const setDatasetNameState = useSetDatasetName()
 	return {
 		loadColumnTable: (name: string, table: ColumnTable) => {
 			resetDataset()
@@ -120,13 +115,13 @@ export function variablesForColumnNames(
 export function useDataPackageExport() {
 	const correlations =
 		useRecoilValueLoadable(AllCorrelationsState).valueMaybe() || []
-	const baseMetadata = useRecoilValue(MetadataState)
-	const derivedMetadata = useRecoilValue(DerivedMetadataState)
+	const baseMetadata = useMetadata()
+	const derivedMetadata = useDerivedMetadata()
 	const metadata = [...baseMetadata, ...derivedMetadata]
-	const pipeline = useRecoilValue(PreprocessingPipelineState)
-	const datasetName = useRecoilValue(DatasetNameState)
-	const table = useRecoilValue(InputTableState)
-	const processedTable = useRecoilValue(ProcessedArqueroTableState)
+	const pipeline = usePreprocessingPipeline()
+	const datasetName = useDatasetName()
+	const table = useInputTable()
+	const processedTable = useProcessedArqueroTable()
 	const createExport = () => {
 		let compressedTable
 		if (table) {
