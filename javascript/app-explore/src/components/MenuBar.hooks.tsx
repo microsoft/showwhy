@@ -83,8 +83,6 @@ export function useViewMenuItems(
 	setUseStraightEdges: (v: boolean) => void,
 	autoLayoutEnabled: boolean,
 	setAutoLayoutEnabled: (v: boolean) => void,
-	showChangesInGraph: boolean,
-	setShowChangesInGraph: (v: boolean) => void,
 ): ICommandBarItemProps {
 	return useMemo(
 		() => ({
@@ -160,8 +158,6 @@ export function useViewMenuItems(
 			setUseStraightEdges,
 			autoLayoutEnabled,
 			setAutoLayoutEnabled,
-			showChangesInGraph,
-			setShowChangesInGraph,
 		],
 	)
 }
@@ -208,7 +204,7 @@ export function useTogglePauseButtonMenuItem() {
 
 	useEffect(() => {
 		setPauseAutoRun(paused ? CausalDiscoveryAlgorithm.None : undefined)
-	}, [paused])
+	}, [paused, setPauseAutoRun])
 
 	return useMemo(
 		() => ({

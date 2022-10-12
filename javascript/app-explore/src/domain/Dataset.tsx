@@ -2,30 +2,29 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import type { Step, TableStore } from '@data-wrangling-components/core'
-import { createTableStore } from '@data-wrangling-components/core'
+import { Verb } from '@datashaper/schema'
+import type { Step, StepInput } from '@datashaper/workflow'
+import { Workflow } from '@datashaper/workflow'
 import { table } from 'arquero'
 import type ColumnTable from 'arquero/dist/types/table/column-table'
-import { compressSync, strFromU8, strToU8 } from 'fflate'
+import { useCallback } from 'react'
 import {
+	useRecoilState,
 	useRecoilValue,
 	useRecoilValueLoadable,
 	useResetRecoilState,
 	useSetRecoilState,
 } from 'recoil'
+import type { Subscription } from 'rxjs'
 
 import {
 	AllCorrelationsState,
 	DatasetNameState,
 	DatasetState,
-	DEFAULT_INPUT_TABLE_NAME,
-	DEFAULT_PREPROCESSED_TABLE_NAME,
 	DerivedMetadataState,
-	InputTableState,
 	MetadataState,
-	PreprocessingPipelineState,
-	ProcessedArqueroTableState,
-	TableStoreState,
+	TableState,
+	TableSubscriptionState,
 	unsetPrecalculatedCorrelations,
 } from '../state/index.js'
 import type { CausalVariable } from './CausalVariable.js'
@@ -34,6 +33,7 @@ import {
 	inferMissingMetadataForTable,
 } from './CausalVariable.js'
 import type { RelationshipWithWeight } from './Relationship.js'
+import { VariableNature } from './VariableNature.js'
 
 export interface Dataset {
 	key: string
@@ -63,42 +63,94 @@ export interface DatasetDatapackage {
 
 export default function useDatasetLoader() {
 	const resetDataset = useResetRecoilState(DatasetState)
-	const setTableStoreState = useSetRecoilState(TableStoreState)
-	const setPreprocessingPipelineState = useSetRecoilState(
-		PreprocessingPipelineState,
-	)
 	const setMetadataState = useSetRecoilState(MetadataState)
 	const setDatasetNameState = useSetRecoilState(DatasetNameState)
+	const setTable = useSetRecoilState(TableState)
+	const [subscription, setSubscription] = useRecoilState(TableSubscriptionState)
 
-	return {
-		loadColumnTable: (name: string, table: ColumnTable) => {
+	return useCallback(
+		function loadTable(name: string, table: ColumnTable) {
 			resetDataset()
 			unsetPrecalculatedCorrelations()
-			const tableStore = createTableStore()
-			tableStore.set({ id: DEFAULT_INPUT_TABLE_NAME, table })
-			const metadata = inferMissingMetadataForTable(table)
-			setTableStoreState(tableStore)
-			setPreprocessingPipelineState([])
-			setMetadataState(metadata)
 			setDatasetNameState(name)
+			const metadata = inferMissingMetadataForTable(table)
+			setMetadataState(metadata)
+			if (subscription) {
+				subscription.unsubscribe()
+			}
+			setSubscription(listenToProcessedTable(table, metadata, setTable))
 		},
-	}
+		[
+			resetDataset,
+			setMetadataState,
+			setDatasetNameState,
+			setSubscription,
+			setTable,
+			subscription,
+		],
+	)
 }
 
-export async function createDatasetFromTable(
+function listenToProcessedTable(
+	table: ColumnTable | undefined,
+	metadata: CausalVariable[],
+	setTable: (table: ColumnTable | undefined) => void,
+): Subscription | undefined {
+	const steps = getTableProcessingSteps(metadata)
+	if (steps.length === 0) {
+		setTable(table)
+		return
+	}
+
+	const wf = new Workflow()
+	wf.addInputTable({ id: 'source', table })
+	steps.forEach(s => wf.addStep(s))
+	const sub = wf.outputObservable()?.subscribe(t => setTable(t?.table ?? table))
+	setTable(wf.latestOutput()?.table ?? table)
+	return sub
+}
+
+function getTableProcessingSteps(metadata: CausalVariable[]): StepInput[] {
+	const steps: StepInput[] = []
+	let first = true
+	metadata.forEach(metadatum => {
+		if (metadatum.nature === VariableNature.CategoricalNominal) {
+			const recodedColumnName = `${metadatum.columnName}` // (recoded)`;
+			steps.push({
+				verb: Verb.Recode,
+				input: first ? 'source' : undefined,
+				args: {
+					column: metadatum.columnName,
+					to: recodedColumnName,
+					mapping: metadatum.mapping,
+				},
+			})
+
+			steps.push({
+				verb: Verb.Onehot,
+				args: {
+					column: recodedColumnName,
+				},
+			})
+			first = false
+		}
+	})
+
+	return steps
+}
+
+export function createDatasetFromTable(
 	key: string,
 	name: string,
-	tableStore: TableStore,
 	metadata: CausalVariable[],
+	inputTable: ColumnTable | undefined,
 ) {
-	const variables = await createVariablesFromTable(key, tableStore, metadata)
-	const tableContainer = await tableStore.get(key)
-	const mainTable = tableContainer.table ?? table({})
+	const variables = createVariablesFromTable(key, inputTable, metadata)
 	return {
 		key,
 		name,
 		variables,
-		table: mainTable,
+		table: inputTable ?? table({}),
 	}
 }
 
@@ -121,23 +173,8 @@ export function useDataPackageExport() {
 	const baseMetadata = useRecoilValue(MetadataState)
 	const derivedMetadata = useRecoilValue(DerivedMetadataState)
 	const metadata = [...baseMetadata, ...derivedMetadata]
-	const pipeline = useRecoilValue(PreprocessingPipelineState)
 	const datasetName = useRecoilValue(DatasetNameState)
-	const table = useRecoilValue(InputTableState)
-	const processedTable = useRecoilValue(ProcessedArqueroTableState)
 	const createExport = () => {
-		let compressedTable
-		if (table) {
-			const gzTable = compressSync(strToU8(table?.toJSON()))
-			compressedTable = btoa(strFromU8(gzTable, true))
-		}
-
-		let compressedProcessedTable
-		if (processedTable) {
-			const gzTable = compressSync(strToU8(processedTable?.toJSON()))
-			compressedProcessedTable = btoa(strFromU8(gzTable, true))
-		}
-
 		const outputMetadata = metadata.map(metadatum => ({
 			...metadatum,
 			mapping:
@@ -149,21 +186,8 @@ export function useDataPackageExport() {
 		return {
 			profile: 'data-package',
 			name: datasetName,
-			pipeline,
 			metadata: outputMetadata,
 			correlations,
-			resources: [
-				{
-					profile: 'arquero-data-resource-compressed',
-					name: DEFAULT_INPUT_TABLE_NAME,
-					data: compressedTable,
-				},
-				{
-					profile: 'arquero-data-resource-compressed',
-					name: DEFAULT_PREPROCESSED_TABLE_NAME,
-					data: compressedProcessedTable,
-				},
-			],
 		}
 	}
 

@@ -9,8 +9,8 @@ import {
 	correlationsInTable,
 	filterBoringRelationships,
 } from '../../utils/Correlation.js'
-import { CorrelationThresholdState } from '../atoms/index.js'
-import { DatasetState, ProcessedArqueroTableState } from './dataset.js'
+import { CorrelationThresholdState, TableState } from '../atoms/index.js'
+import { DatasetState } from './dataset.js'
 
 // TODO: We just use a plain variable to store the precalculatedCorrelations rather than an atom
 // due to performance issues encountered setting an atom when using a large number of causal-variables.
@@ -29,7 +29,7 @@ export function unsetPrecalculatedCorrelations() {
 export const AllCorrelationsState = selector<RelationshipWithWeight[]>({
 	key: 'AllCorrelationsState',
 	async get({ get }) {
-		const dataTable = get(ProcessedArqueroTableState)
+		const dataTable = get(TableState)
 		if (dataTable === undefined || dataTable.numCols() === 0) {
 			return []
 		}

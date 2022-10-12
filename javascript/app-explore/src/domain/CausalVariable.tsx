@@ -2,7 +2,6 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import type { TableStore } from '@data-wrangling-components/core'
 import { table as createTable } from 'arquero'
 import type ColumnTable from 'arquero/dist/types/table/column-table'
 
@@ -174,27 +173,24 @@ export function inferMissingMetadataForColumn(
 	}
 }
 
-export async function createVariablesFromTable(
+export function createVariablesFromTable(
 	datasetKey: string,
-	tableStore: TableStore,
+	table: ColumnTable | undefined,
 	metadata: CausalVariable[],
 ) {
+	table = table ?? createTable({})
 	const variables = new Map()
-	const tableContainer = await tableStore.get(datasetKey)
-	const table = tableContainer.table ?? createTable({})
 	const inferredMetadata = inferMissingMetadataForTable(table, metadata)
 
-	for (const columnName of table?.columnNames() ?? []) {
-		const meta = metadata?.find(metadatum => metadatum.columnName === columnName)
-		const inferredMeta = inferredMetadata.find(
-			metadatum => metadatum.columnName === columnName,
-		)
+	for (const colName of table?.columnNames() ?? []) {
+		const meta = metadata?.find(md => md.columnName === colName)
+		const inferredMeta = inferredMetadata.find(md => md.columnName === colName)
 
-		variables.set(columnName, {
+		variables.set(colName, {
 			...inferredMeta,
 			...meta,
 			datasetName: datasetKey,
-			key: `${datasetKey} : ${columnName}`,
+			key: `${datasetKey} : ${colName}`,
 		})
 	}
 	return variables

@@ -20,7 +20,6 @@ import {
 	InModelColumnNamesState,
 	LoadingState,
 	PersistedInfoState,
-	ShowChangesInGraphState,
 	StraightEdgesState,
 	WeightThresholdState,
 } from '../state/index.js'
@@ -37,7 +36,7 @@ import {
 
 export const MenuBar: React.FC = memo(function MenuBar() {
 	const [selectedViewKey, setSelectedViewKey] = useRecoilState(GraphViewState)
-	const { loadColumnTable } = useDatasetLoader()
+	const loadColumnTable = useDatasetLoader()
 	const resetVariables = useResetRecoilState(InModelColumnNamesState)
 	const resetConstraints = useResetRecoilState(CausalGraphConstraintsState)
 	const [useStraightEdges, setUseStraightEdges] =
@@ -45,10 +44,6 @@ export const MenuBar: React.FC = memo(function MenuBar() {
 	const [autoLayoutEnabled, setAutoLayoutEnabled] = useRecoilState(
 		AutoLayoutEnabledState,
 	)
-	const [showChangesInGraph, setShowChangesInGraph] = useRecoilState(
-		ShowChangesInGraphState,
-	)
-
 	const setLoadingState = useSetRecoilState(LoadingState)
 	const [persistedInfo, setPersistedInfo] = useRecoilState(PersistedInfoState)
 	const [
@@ -99,8 +94,6 @@ export const MenuBar: React.FC = memo(function MenuBar() {
 		setUseStraightEdges,
 		autoLayoutEnabled,
 		setAutoLayoutEnabled,
-		showChangesInGraph,
-		setShowChangesInGraph,
 	)
 	const edgeWeightSliderMenuItem = useSliderMenuItem(
 		'Edge Weight Threshold',
