@@ -6,7 +6,14 @@ import type { Step } from '@data-wrangling-components/core'
 import { createPipeline, Verb } from '@data-wrangling-components/core'
 import type ColumnTable from 'arquero/dist/types/table/column-table'
 import { DefaultValue, selector, selectorFamily } from 'recoil'
+
+import type { CausalVariable } from '../../domain/CausalVariable.js'
+import { inferMissingMetadataForColumn } from '../../domain/CausalVariable.js'
+import type { Dataset } from '../../domain/Dataset.js'
+import { createDatasetFromTable } from '../../domain/Dataset.js'
+import { VariableNature } from '../../domain/VariableNature.js'
 import {
+	DatasetNameState,
 	DEFAULT_INPUT_TABLE_NAME,
 	DEFAULT_PIPELINE_TABLE_NAME,
 	DEFAULT_PREPROCESSED_TABLE_NAME,
@@ -14,12 +21,6 @@ import {
 	PreprocessingPipelineState,
 	TableStoreState,
 } from '../atoms/index.js'
-
-import type { CausalVariable } from '../../domain/CausalVariable.js'
-import { inferMissingMetadataForColumn } from '../../domain/CausalVariable.js'
-import type { Dataset } from '../../domain/Dataset.js'
-import { createDatasetFromTable } from '../../domain/Dataset.js'
-import { VariableNature } from '../../domain/VariableNature.js'
 
 export const InputTableState = selector<ColumnTable | undefined>({
 	key: 'InputTableState',

@@ -6,12 +6,13 @@ import { DefaultValue, selector, selectorFamily } from 'recoil'
 
 import type { NodePosition } from '../../domain/NodePosition.js'
 import { layoutGraph } from '../../utils/Layout.js'
-import { CausalGraphState } from './causal_graph.js'
 import {
 	AutoLayoutEnabledState,
 	ConfidenceThresholdState,
+	NodePositionsState,
 	WeightThresholdState,
 } from '../atoms/index.js'
+import { CausalGraphState } from './causal_graph.js'
 
 export const GraphLayoutState = selector({
 	key: 'GraphLayoutState',

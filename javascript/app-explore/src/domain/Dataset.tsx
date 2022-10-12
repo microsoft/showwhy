@@ -16,9 +16,6 @@ import {
 
 import {
 	AllCorrelationsState,
-	unsetPrecalculatedCorrelations,
-} from '../state/CorrelationsState.js'
-import {
 	DatasetNameState,
 	DatasetState,
 	DEFAULT_INPUT_TABLE_NAME,
@@ -29,7 +26,8 @@ import {
 	PreprocessingPipelineState,
 	ProcessedArqueroTableState,
 	TableStoreState,
-} from '../state/DatasetState.js'
+	unsetPrecalculatedCorrelations,
+} from '../state/index.js'
 import type { CausalVariable } from './CausalVariable.js'
 import {
 	createVariablesFromTable,
