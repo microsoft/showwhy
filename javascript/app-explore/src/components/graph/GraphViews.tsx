@@ -6,7 +6,7 @@ import { Spinner } from '@fluentui/react'
 import { memo, Suspense } from 'react'
 import { useRecoilState } from 'recoil'
 
-import { GraphViewState } from '../../state/UIState.jsx'
+import { GraphViewState } from '../../state/index.jsx'
 import { CausalGraphExplorer } from './CausalGraphExplorer.jsx'
 import { CorrelationGraph2D } from './CorrelationGraph2D.jsx'
 import { CorrelationGraph3D } from './CorrelationGraph3D.js'

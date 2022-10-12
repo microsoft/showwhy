@@ -7,7 +7,7 @@ import { memo, Suspense, useCallback, useEffect, useState } from 'react'
 import { useRecoilValue } from 'recoil'
 
 import type { CausalVariable } from '../../domain/CausalVariable.js'
-import { CausalVariablesState } from '../../state/DatasetState.js'
+import { CausalVariablesState } from '../../state/index.js'
 import { ListFilter } from '../controls/ListFilter.js'
 import { CausalNodeListItem } from './CausalNodeListItem.js'
 import type { CausalVariableListProps } from './CausalVariableList.types.js'

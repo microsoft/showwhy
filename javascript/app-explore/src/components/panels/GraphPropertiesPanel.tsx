@@ -5,7 +5,7 @@
 import { memo } from 'react'
 import { useRecoilValue } from 'recoil'
 
-import { CausalGraphChangesState } from '../../state/CausalGraphState.js'
+import { CausalGraphChangesState } from '../../state/index.js'
 import { AlgorithmControls } from '../AlgorithmControls.js'
 import { Divider } from '../controls/Divider.js'
 import { GraphDifferenceList } from '../GraphChanges.js'

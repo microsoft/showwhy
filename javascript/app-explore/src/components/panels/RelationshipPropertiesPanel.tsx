@@ -7,9 +7,11 @@ import { memo } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
 
 import { variableForColumnName } from '../../domain/Dataset.js'
-import { CausalGraphConstraintsState } from '../../state/CausalGraphState.js'
-import { FilteredCorrelationsState } from '../../state/CorrelationsState.js'
-import { DatasetState } from '../../state/DatasetState.js'
+import {
+	CausalGraphConstraintsState,
+	FilteredCorrelationsState,
+	DatasetState,
+} from '../../state/index.js'
 import { correlationForVariables } from '../../utils/Correlation.js'
 import { ComparisonChart } from '../charts/ComparisonChart.js'
 import { remove_button_styles } from './RelationshipPropertiesPanel.constants.js'

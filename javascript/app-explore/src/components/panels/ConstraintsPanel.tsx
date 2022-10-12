@@ -9,7 +9,7 @@ import { useRecoilState, useResetRecoilState } from 'recoil'
 
 import type { VariableReference } from '../../domain/CausalVariable.js'
 import type { RelationshipReference } from '../../domain/Relationship.js'
-import { CausalGraphConstraintsState } from '../../state/CausalGraphState.js'
+import { CausalGraphConstraintsState } from '../../state/index.js'
 import { Divider } from '../controls/Divider.js'
 import type { ConstraintsPanelProps } from './ConstraintsPanel.types.js'
 

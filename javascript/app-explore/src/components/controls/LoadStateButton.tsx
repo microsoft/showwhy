@@ -6,7 +6,7 @@ import { DefaultButton } from '@fluentui/react'
 import { memo, useCallback, useRef } from 'react'
 import { useSetRecoilState } from 'recoil'
 
-import { PersistedInfoState } from '../../state/PersistentInfoState.js'
+import { PersistedInfoState } from '../../state/index.js'
 import type { LoadStateButtonProps } from './LoadStateButton.types.js'
 
 export const LoadStateButton: React.FC<LoadStateButtonProps> = memo(

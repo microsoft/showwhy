@@ -14,9 +14,6 @@ import useDatasetLoader from '../domain/Dataset.js'
 import {
 	CausalGraphConstraintsState,
 	InModelColumnNamesState,
-} from '../state/CausalGraphState.js'
-import { PersistedInfoState } from '../state/PersistentInfoState.js'
-import {
 	AutoLayoutEnabledState,
 	ConfidenceThresholdState,
 	CorrelationThresholdState,
@@ -25,7 +22,8 @@ import {
 	ShowChangesInGraphState,
 	StraightEdgesState,
 	WeightThresholdState,
-} from '../state/UIState.js'
+	PersistedInfoState,
+} from '../state/index.js'
 import { saveObjectJSON } from '../utils/Save.js'
 import { command_bar_styles } from './MenuBar.constants.js'
 import {

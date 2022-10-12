@@ -2,27 +2,16 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { atom, DefaultValue, selector, selectorFamily } from 'recoil'
-import { recoilPersist } from 'recoil-persist'
+import { DefaultValue, selector, selectorFamily } from 'recoil'
 
-import type { NodePosition } from '../domain/NodePosition.js'
-import { layoutGraph } from '../utils/Layout.js'
-import { CausalGraphState } from './CausalGraphState.js'
-import { persistAtomEffect } from './PersistentInfoState.js'
+import type { NodePosition } from '../../domain/NodePosition.js'
+import { layoutGraph } from '../../utils/Layout.js'
+import { CausalGraphState } from './causal_graph.js'
 import {
 	AutoLayoutEnabledState,
 	ConfidenceThresholdState,
 	WeightThresholdState,
-} from './UIState.js'
-
-const { persistAtom } = recoilPersist()
-
-export const NodePositionsState = atom<{ [key: string]: NodePosition }>({
-	key: 'NodePositionState',
-	default: {},
-	// eslint-disable-next-line camelcase
-	effects_UNSTABLE: [persistAtomEffect, persistAtom],
-})
+} from '../atoms/index.js'
 
 export const GraphLayoutState = selector({
 	key: 'GraphLayoutState',

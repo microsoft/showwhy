@@ -11,7 +11,7 @@ import { memo, Suspense } from 'react'
 import { useMeasure } from 'react-use'
 import { useRecoilValue } from 'recoil'
 
-import { LoadingState } from '../state/UIState.js'
+import { LoadingState } from '../state/index.js'
 import {
 	FillContainer,
 	FullScreenContainer,

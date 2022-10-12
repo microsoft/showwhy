@@ -6,7 +6,7 @@ import { DefaultButton } from '@fluentui/react'
 import { memo } from 'react'
 import { useRecoilValue } from 'recoil'
 
-import { PersistedInfoState } from '../../state/PersistentInfoState.jsx'
+import { PersistedInfoState } from '../../state/index.js'
 import { saveObjectJSON } from '../../utils/Save.js'
 import type { SaveStateButtonProps } from './SaveStateButton.types.js'
 

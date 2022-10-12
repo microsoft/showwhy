@@ -17,7 +17,7 @@ import Draggable from 'react-draggable'
 import { useXarrow } from 'react-xarrows'
 import { useRecoilState } from 'recoil'
 
-import { nodePositionsFamily } from '../../state/GraphLayoutState.jsx'
+import { nodePositionsFamily } from '../../state/index.jsx'
 import type { DraggableGraphNodeProps } from './DraggableNode.types.js'
 
 export const DraggableGraphNode: React.FC<DraggableGraphNodeProps> = memo(

@@ -14,10 +14,9 @@ import { useRecoilState, useRecoilValue } from 'recoil'
 import { isAddable as isVariableAddable } from '../../domain/CausalVariable.jsx'
 import {
 	InModelCausalVariablesState,
-	isVariableInModel,
-} from '../../state/CausalGraphState.jsx'
-import { SelectedObjectState } from '../../state/UIState.jsx'
-import type { CausalNodeProps } from './CausalNode.types.js'
+	isVariableInModel,SelectedObjectState,
+} from '../../state/index.jsx'
+Simport type { CausalNodeProps } from './CausalNode.types.js'
 
 export const CausalNode: React.FC<CausalNodeProps> = memo(function CausalNode({
 	variable,

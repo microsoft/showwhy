@@ -5,10 +5,10 @@
 import { atom } from 'recoil'
 import { recoilPersist } from 'recoil-persist'
 
-import { GraphViewStates } from '../components/graph/GraphViews.types.js'
-import { CausalDiscoveryAlgorithm } from '../domain/CausalDiscovery/CausalDiscoveryAlgorithm.js'
-import type { Selectable } from '../domain/Selection.js'
-import { persistAtomEffect } from '../state/PersistentInfoState.js'
+import { GraphViewStates } from '../../components/graph/GraphViews.types.js'
+import { CausalDiscoveryAlgorithm } from '../../domain/CausalDiscovery/CausalDiscoveryAlgorithm.js'
+import type { Selectable } from '../../domain/Selection.js'
+import { persistAtomEffect } from '../persistence.js'
 
 const { persistAtom } = recoilPersist()
 

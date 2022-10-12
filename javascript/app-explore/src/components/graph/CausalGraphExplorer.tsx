@@ -22,18 +22,14 @@ import {
 import {
 	CausalGraphChangesState,
 	CausalGraphState,
-} from '../../state/CausalGraphState.jsx'
-import { FilteredCorrelationsState } from '../../state/CorrelationsState.jsx'
-import {
+	FilteredCorrelationsState,
 	GraphBoundsState,
 	GraphLayoutState,
-} from '../../state/GraphLayoutState.jsx'
-import {
 	ConfidenceThresholdState,
 	SelectedObjectState,
 	ShowChangesInGraphState,
 	WeightThresholdState,
-} from '../../state/UIState.jsx'
+} from '../../state/index.jsx'
 import { CausalEdge } from './CausalEdge.jsx'
 import { Background } from './CausalGraphExplorer.styles.js'
 import { CausalGraphNode } from './CausalGraphNode.jsx'
