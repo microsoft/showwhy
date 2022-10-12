@@ -7,7 +7,6 @@ import { memo, useCallback } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
 
 import {
-	CausalInferenceDifferenceFromBaselineValuesState,
 	CausalInferenceResultState,
 	CausalInterventionsState,
 } from '../../state/index.jsx'
@@ -19,13 +18,12 @@ import {
 	slider_stack_tokens,
 	slider_style,
 } from './CausalInferenceSlider.constants.js'
+import { useCausalInferenceDifferenceFromBaselineValues } from './CausalInferenceSlider.hooks.js'
 import type { CausalInferenceSliderProps } from './CausalInferenceSlider.types.js'
 
 export const CausalInferenceSlider: React.FC<CausalInferenceSliderProps> = memo(
 	function CausalInferenceSlider({ variable, wasDragged }) {
-		const differenceValues = useRecoilValue(
-			CausalInferenceDifferenceFromBaselineValuesState,
-		)
+		const differenceValues = useCausalInferenceDifferenceFromBaselineValues()
 		// const initialValueOffsets = useRecoilValue(CausalInferenceBaselineOffsetsState);
 		const causalInferenceResults = useRecoilValue(CausalInferenceResultState)
 		const [interventions, setInterventions] = useRecoilState(

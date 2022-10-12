@@ -33,11 +33,9 @@ export const AllCorrelationsState = selector<RelationshipWithWeight[]>({
 		if (dataTable === undefined || dataTable.numCols() === 0) {
 			return []
 		}
-
 		if (precalculatedCorrelations) {
 			return precalculatedCorrelations
 		}
-
 		const corrs = await correlationsInTable(dataTable, undefined, true)
 		return corrs
 	},
