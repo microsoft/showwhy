@@ -1,728 +1,730 @@
 {
     "name": "COVID-19",
-    "primarySpecification": {
-        "causalModel": "Maximum",
-        "type": "Propensity Score Stratification"
-    },
-    "subjectIdentifier": "index",
-    "causalFactors": [
+    "resources": [
         {
-            "description": "Patient's age group derived from the Wolfram dataset",
-            "variable": "Patient Age",
-            "column": "age_group",
-            "causes": {
-                "causeExposure": 100,
-                "causeOutcome": 100,
-                "reasoning": "Exposure: Older adults are more likely to experience chronic diseases than younger adults. / Outcome: Older adults are likely to have higher mortality rates than younger adults"
-            }
-        },
-        {
-            "description": "Patient gender recorded in the Wolfram dataset",
-            "variable": "Patient Gender",
-            "column": "gender",
-            "causes": {
-                "causeExposure": 50,
-                "causeOutcome": 50,
-                "reasoning": "Exposure: Women tend to be more affected by long-term and chronic illness. / Outcome: There might be differences in risk of mortality between men and women"
-            }
-        }
-    ],
-    "definitions": [
-        {
-            "level": "Primary",
-            "variable": "Experienced chronic disease",
-            "description": "A binary variable indicating whether the patient reported having a chronic disease",
-            "column": "chronic_disease",
-            "type": "exposure"
-        },
-        {
-            "level": "Secondary",
-            "variable": "Experienced diabetes & hypertension chronic disease",
-            "description": "COVID-19 patients recorded in the Wolfram dataset. Records must include complete information on the patient's age, gender, chronic disease status, and survival status",
-            "column": "diabetes_hypertension",
-            "type": "exposure"
-        },
-        {
-            "level": "Primary",
-            "variable": "Confirmed COVID-19 cases",
-            "description": "COVID-19 patients recorded in the Wolfram dataset. Records must include complete information on the patient's age, gender, chronic disease status, and survival status",
-            "column": "subject_inclusion",
-            "type": "population"
-        },
-        {
-            "level": "Primary",
-            "variable": "Mortality",
-            "description": "Binary variable indicating whether the patient died after contracting COVID-19",
-            "column": "death",
-            "type": "outcome"
-        }
-    ],
-    "question": {
-        "exposure": {
-            "label": "Chronic Disease",
-            "description": "Patient presented in the Wolfram dataset who reported having a chronic disease prior to contracting COVID-19",
-            "dataset": "Wolfram dataset"
-        },
-        "population": {
-            "label": "Confirmed COVID-19 Cases",
-            "description": "Patients who tested positive for COVID-19 and were presented in the Wolfram's Patient Medical Data for Novel Coronavirus COVID-19 dataset",
-            "dataset": "Wolfram dataset"
-        },
-        "outcome": {
-            "label": "Mortality Risk",
-            "description": "Patients did not survive after contracting COVID-19",
-            "dataset": "Wolfram dataset"
-        },
-        "hypothesis": "Increase"
-    },
-    "estimators": [
-        {
-            "group": "Exposure-assignment",
-            "type": "Inverse Propensity Weighting",
-            "refutations": 10,
-            "confidenceInterval": true
-        },
-        {
-            "group": "Exposure-assignment",
-            "type": "Propensity Score Stratification",
-            "refutations": 10,
-            "confidenceInterval": true
-        },
-        {
-            "group": "Outcome-based",
-            "type": "Linear Double Machine Learning",
-            "refutations": 10,
-            "confidenceInterval": true
-        },
-        {
-            "group": "Outcome-based",
-            "type": "Linear Doubly Robust Learner",
-            "refutations": 10,
-            "confidenceInterval": true
-        },
-        {
-            "group": "Outcome-based",
-            "type": "Linear Regression",
-            "refutations": 10,
-            "confidenceInterval": true
-        }
-    ],
-    "todoPages": [
-        "/perform/specification-curve",
-        "/perform/evaluate"
-    ],
-    "datapackage": {
-        "resources": [
-            {
-                "profile": "datatable",
-                "name": "covid19_small_data",
-                "metadata": {
-                    "source": "https://www.frontiersin.org/articles/10.3389/fpubh.2020.587937/full",
-                    "citation": "Li, Yun, et al. (2020). Individual-level fatality prediction of COVID-19 patients using AI methods. Frontiers in Public Health 8 (2020): 566."
+            "profile": "model-exposure",
+            "selectedTableName": "covid19_small_data",
+            "primarySpecification": {
+                "causalModel": "Maximum",
+                "type": "Propensity Score Stratification"
+            },
+            "subjectIdentifier": "index",
+            "causalFactors": [
+                {
+                    "description": "Patient's age group derived from the Wolfram dataset",
+                    "variable": "Patient Age",
+                    "column": "age_group",
+                    "causes": {
+                        "causeExposure": 100,
+                        "causeOutcome": 100,
+                        "reasoning": "Exposure: Older adults are more likely to experience chronic diseases than younger adults. / Outcome: Older adults are likely to have higher mortality rates than younger adults"
+                    }
                 },
-                "sources": [
-                    "https://raw.githubusercontent.com/stccenter/COVID-19/master/prediction/patiant-level%20fatality/data/small%20records.csv",
-                    {
-                        "profile": "workflow",
-                        "input": [
-                            "covid19_small_data"
-                        ],
-                        "steps": [
-                            {
-                                "verb": "window",
-                                "args": {
-                                    "operation": "row_number",
-                                    "to": "index"
-                                },
-                                "input": {
-                                    "source": {
-                                        "node": "covid19_small_data"
-                                    }
+                {
+                    "description": "Patient gender recorded in the Wolfram dataset",
+                    "variable": "Patient Gender",
+                    "column": "gender",
+                    "causes": {
+                        "causeExposure": 50,
+                        "causeOutcome": 50,
+                        "reasoning": "Exposure: Women tend to be more affected by long-term and chronic illness. / Outcome: There might be differences in risk of mortality between men and women"
+                    }
+                }
+            ],
+            "definitions": [
+                {
+                    "level": "Primary",
+                    "variable": "Experienced chronic disease",
+                    "description": "A binary variable indicating whether the patient reported having a chronic disease",
+                    "column": "chronic_disease",
+                    "type": "exposure"
+                },
+                {
+                    "level": "Secondary",
+                    "variable": "Experienced diabetes & hypertension chronic disease",
+                    "description": "COVID-19 patients recorded in the Wolfram dataset. Records must include complete information on the patient's age, gender, chronic disease status, and survival status",
+                    "column": "diabetes_hypertension",
+                    "type": "exposure"
+                },
+                {
+                    "level": "Primary",
+                    "variable": "Confirmed COVID-19 cases",
+                    "description": "COVID-19 patients recorded in the Wolfram dataset. Records must include complete information on the patient's age, gender, chronic disease status, and survival status",
+                    "column": "subject_inclusion",
+                    "type": "population"
+                },
+                {
+                    "level": "Primary",
+                    "variable": "Mortality",
+                    "description": "Binary variable indicating whether the patient died after contracting COVID-19",
+                    "column": "death",
+                    "type": "outcome"
+                }
+            ],
+            "question": {
+                "exposure": {
+                    "label": "Chronic Disease",
+                    "description": "Patient presented in the Wolfram dataset who reported having a chronic disease prior to contracting COVID-19",
+                    "dataset": "Wolfram dataset"
+                },
+                "population": {
+                    "label": "Confirmed COVID-19 Cases",
+                    "description": "Patients who tested positive for COVID-19 and were presented in the Wolfram's Patient Medical Data for Novel Coronavirus COVID-19 dataset",
+                    "dataset": "Wolfram dataset"
+                },
+                "outcome": {
+                    "label": "Mortality Risk",
+                    "description": "Patients did not survive after contracting COVID-19",
+                    "dataset": "Wolfram dataset"
+                },
+                "hypothesis": "Increase"
+            },
+            "estimators": [
+                {
+                    "group": "Exposure-assignment",
+                    "type": "Inverse Propensity Weighting",
+                    "refutations": 10,
+                    "confidenceInterval": true
+                },
+                {
+                    "group": "Exposure-assignment",
+                    "type": "Propensity Score Stratification",
+                    "refutations": 10,
+                    "confidenceInterval": true
+                },
+                {
+                    "group": "Outcome-based",
+                    "type": "Linear Double Machine Learning",
+                    "refutations": 10,
+                    "confidenceInterval": true
+                },
+                {
+                    "group": "Outcome-based",
+                    "type": "Linear Doubly Robust Learner",
+                    "refutations": 10,
+                    "confidenceInterval": true
+                },
+                {
+                    "group": "Outcome-based",
+                    "type": "Linear Regression",
+                    "refutations": 10,
+                    "confidenceInterval": true
+                }
+            ],
+            "todoPages": [
+                "/perform/specification-curve",
+                "/perform/evaluate"
+            ]
+        },
+        {
+            "profile": "datatable",
+            "name": "covid19_small_data",
+            "metadata": {
+                "source": "https://www.frontiersin.org/articles/10.3389/fpubh.2020.587937/full",
+                "citation": "Li, Yun, et al. (2020). Individual-level fatality prediction of COVID-19 patients using AI methods. Frontiers in Public Health 8 (2020): 566."
+            },
+            "sources": [
+                "https://raw.githubusercontent.com/stccenter/COVID-19/master/prediction/patiant-level%20fatality/data/small%20records.csv",
+                {
+                    "profile": "workflow",
+                    "input": [
+                        "covid19_small_data"
+                    ],
+                    "steps": [
+                        {
+                            "verb": "window",
+                            "args": {
+                                "operation": "row_number",
+                                "to": "index"
+                            },
+                            "input": {
+                                "source": {
+                                    "node": "covid19_small_data"
+                                }
+                            }
+                        },
+                        {
+                            "args": {
+                                "columns": [
+                                    "index",
+                                    "age",
+                                    "ChronicDiseaseQ",
+                                    "gender_binary",
+                                    "death_binary",
+                                    "hypertension",
+                                    "diabetes"
+                                ]
+                            },
+                            "verb": "select"
+                        },
+                        {
+                            "args": {
+                                "columns": {
+                                    "age": "age",
+                                    "ChronicDiseaseQ": "chronic_disease",
+                                    "gender_binary": "gender",
+                                    "death_binary": "death",
+                                    "hypertension": "hypertension",
+                                    "diabetes": "diabetes"
                                 }
                             },
-                            {
-                                "args": {
-                                    "columns": [
-                                        "index",
-                                        "age",
-                                        "ChronicDiseaseQ",
-                                        "gender_binary",
-                                        "death_binary",
-                                        "hypertension",
-                                        "diabetes"
-                                    ]
-                                },
-                                "verb": "select"
-                            },
-                            {
-                                "args": {
-                                    "columns": {
-                                        "age": "age",
-                                        "ChronicDiseaseQ": "chronic_disease",
-                                        "gender_binary": "gender",
-                                        "death_binary": "death",
-                                        "hypertension": "hypertension",
-                                        "diabetes": "diabetes"
+                            "verb": "rename"
+                        },
+                        {
+                            "args": {
+                                "column": "age",
+                                "criteria": [
+                                    {
+                                        "operator": "is not equal",
+                                        "type": "value",
+                                        "value": "0-6"
                                     }
-                                },
-                                "verb": "rename"
+                                ]
                             },
-                            {
-                                "args": {
-                                    "column": "age",
-                                    "criteria": [
-                                        {
-                                            "operator": "is not equal",
-                                            "type": "value",
-                                            "value": "0-6"
-                                        }
-                                    ]
-                                },
-                                "verb": "filter"
+                            "verb": "filter"
+                        },
+                        {
+                            "args": {
+                                "column": "age",
+                                "criteria": [
+                                    {
+                                        "operator": "is not equal",
+                                        "type": "value",
+                                        "value": "0-10"
+                                    }
+                                ]
                             },
-                            {
-                                "args": {
-                                    "column": "age",
-                                    "criteria": [
-                                        {
-                                            "operator": "is not equal",
-                                            "type": "value",
-                                            "value": "0-10"
-                                        }
-                                    ]
-                                },
-                                "verb": "filter"
+                            "verb": "filter"
+                        },
+                        {
+                            "args": {
+                                "column": "age",
+                                "criteria": [
+                                    {
+                                        "operator": "is not equal",
+                                        "type": "value",
+                                        "value": "1"
+                                    }
+                                ]
                             },
-                            {
-                                "args": {
-                                    "column": "age",
-                                    "criteria": [
-                                        {
-                                            "operator": "is not equal",
-                                            "type": "value",
-                                            "value": "1"
-                                        }
-                                    ]
-                                },
-                                "verb": "filter"
+                            "verb": "filter"
+                        },
+                        {
+                            "args": {
+                                "column": "age",
+                                "criteria": [
+                                    {
+                                        "operator": "is not equal",
+                                        "type": "value",
+                                        "value": "2"
+                                    }
+                                ]
                             },
-                            {
-                                "args": {
-                                    "column": "age",
-                                    "criteria": [
-                                        {
-                                            "operator": "is not equal",
-                                            "type": "value",
-                                            "value": "2"
-                                        }
-                                    ]
-                                },
-                                "verb": "filter"
+                            "verb": "filter"
+                        },
+                        {
+                            "args": {
+                                "column": "age",
+                                "criteria": [
+                                    {
+                                        "operator": "is not equal",
+                                        "type": "value",
+                                        "value": "3"
+                                    }
+                                ]
                             },
-                            {
-                                "args": {
-                                    "column": "age",
-                                    "criteria": [
-                                        {
-                                            "operator": "is not equal",
-                                            "type": "value",
-                                            "value": "3"
-                                        }
-                                    ]
-                                },
-                                "verb": "filter"
+                            "verb": "filter"
+                        },
+                        {
+                            "args": {
+                                "column": "age",
+                                "criteria": [
+                                    {
+                                        "operator": "is not equal",
+                                        "type": "value",
+                                        "value": "4"
+                                    }
+                                ]
                             },
-                            {
-                                "args": {
-                                    "column": "age",
-                                    "criteria": [
-                                        {
-                                            "operator": "is not equal",
-                                            "type": "value",
-                                            "value": "4"
-                                        }
-                                    ]
-                                },
-                                "verb": "filter"
+                            "verb": "filter"
+                        },
+                        {
+                            "args": {
+                                "column": "age",
+                                "criteria": [
+                                    {
+                                        "operator": "is not equal",
+                                        "type": "value",
+                                        "value": "5"
+                                    }
+                                ]
                             },
-                            {
-                                "args": {
-                                    "column": "age",
-                                    "criteria": [
-                                        {
-                                            "operator": "is not equal",
-                                            "type": "value",
-                                            "value": "5"
-                                        }
-                                    ]
-                                },
-                                "verb": "filter"
+                            "verb": "filter"
+                        },
+                        {
+                            "args": {
+                                "column": "age",
+                                "criteria": [
+                                    {
+                                        "operator": "is not equal",
+                                        "type": "value",
+                                        "value": "6"
+                                    }
+                                ]
                             },
-                            {
-                                "args": {
-                                    "column": "age",
-                                    "criteria": [
-                                        {
-                                            "operator": "is not equal",
-                                            "type": "value",
-                                            "value": "6"
-                                        }
-                                    ]
-                                },
-                                "verb": "filter"
+                            "verb": "filter"
+                        },
+                        {
+                            "args": {
+                                "column": "age",
+                                "criteria": [
+                                    {
+                                        "operator": "is not equal",
+                                        "type": "value",
+                                        "value": "7"
+                                    }
+                                ]
                             },
-                            {
-                                "args": {
-                                    "column": "age",
-                                    "criteria": [
-                                        {
-                                            "operator": "is not equal",
-                                            "type": "value",
-                                            "value": "7"
-                                        }
-                                    ]
-                                },
-                                "verb": "filter"
+                            "verb": "filter"
+                        },
+                        {
+                            "args": {
+                                "column": "age",
+                                "criteria": [
+                                    {
+                                        "operator": "is not equal",
+                                        "type": "value",
+                                        "value": "8"
+                                    }
+                                ]
                             },
-                            {
-                                "args": {
-                                    "column": "age",
-                                    "criteria": [
-                                        {
-                                            "operator": "is not equal",
-                                            "type": "value",
-                                            "value": "8"
-                                        }
-                                    ]
-                                },
-                                "verb": "filter"
+                            "verb": "filter"
+                        },
+                        {
+                            "args": {
+                                "column": "age",
+                                "criteria": [
+                                    {
+                                        "operator": "is not equal",
+                                        "type": "value",
+                                        "value": "9"
+                                    }
+                                ]
                             },
-                            {
-                                "args": {
-                                    "column": "age",
-                                    "criteria": [
-                                        {
-                                            "operator": "is not equal",
-                                            "type": "value",
-                                            "value": "9"
-                                        }
-                                    ]
-                                },
-                                "verb": "filter"
+                            "verb": "filter"
+                        },
+                        {
+                            "args": {
+                                "to": "age_10_19",
+                                "column": "age",
+                                "criteria": [
+                                    {
+                                        "operator": "starts with",
+                                        "type": "value",
+                                        "value": "1"
+                                    }
+                                ]
                             },
-                            {
-                                "args": {
-                                    "to": "age_10_19",
-                                    "column": "age",
-                                    "criteria": [
-                                        {
-                                            "operator": "starts with",
-                                            "type": "value",
-                                            "value": "1"
-                                        }
-                                    ]
-                                },
-                                "verb": "binarize"
+                            "verb": "binarize"
+                        },
+                        {
+                            "args": {
+                                "to": "age_20_29",
+                                "column": "age",
+                                "criteria": [
+                                    {
+                                        "operator": "starts with",
+                                        "type": "value",
+                                        "value": "2"
+                                    }
+                                ]
                             },
-                            {
-                                "args": {
-                                    "to": "age_20_29",
-                                    "column": "age",
-                                    "criteria": [
-                                        {
-                                            "operator": "starts with",
-                                            "type": "value",
-                                            "value": "2"
-                                        }
-                                    ]
-                                },
-                                "verb": "binarize"
+                            "verb": "binarize"
+                        },
+                        {
+                            "args": {
+                                "to": "age_30_39",
+                                "column": "age",
+                                "criteria": [
+                                    {
+                                        "operator": "starts with",
+                                        "type": "value",
+                                        "value": "3"
+                                    }
+                                ]
                             },
-                            {
-                                "args": {
-                                    "to": "age_30_39",
-                                    "column": "age",
-                                    "criteria": [
-                                        {
-                                            "operator": "starts with",
-                                            "type": "value",
-                                            "value": "3"
-                                        }
-                                    ]
-                                },
-                                "verb": "binarize"
+                            "verb": "binarize"
+                        },
+                        {
+                            "args": {
+                                "to": "age_40_49",
+                                "column": "age",
+                                "criteria": [
+                                    {
+                                        "operator": "starts with",
+                                        "type": "value",
+                                        "value": "4"
+                                    }
+                                ]
                             },
-                            {
-                                "args": {
-                                    "to": "age_40_49",
-                                    "column": "age",
-                                    "criteria": [
-                                        {
-                                            "operator": "starts with",
-                                            "type": "value",
-                                            "value": "4"
-                                        }
-                                    ]
-                                },
-                                "verb": "binarize"
+                            "verb": "binarize"
+                        },
+                        {
+                            "args": {
+                                "to": "age_50_59",
+                                "column": "age",
+                                "criteria": [
+                                    {
+                                        "operator": "starts with",
+                                        "type": "value",
+                                        "value": "5"
+                                    }
+                                ]
                             },
-                            {
-                                "args": {
-                                    "to": "age_50_59",
-                                    "column": "age",
-                                    "criteria": [
-                                        {
-                                            "operator": "starts with",
-                                            "type": "value",
-                                            "value": "5"
-                                        }
-                                    ]
-                                },
-                                "verb": "binarize"
+                            "verb": "binarize"
+                        },
+                        {
+                            "args": {
+                                "to": "age_60_69",
+                                "column": "age",
+                                "criteria": [
+                                    {
+                                        "operator": "starts with",
+                                        "type": "value",
+                                        "value": "6"
+                                    }
+                                ]
                             },
-                            {
-                                "args": {
-                                    "to": "age_60_69",
-                                    "column": "age",
-                                    "criteria": [
-                                        {
-                                            "operator": "starts with",
-                                            "type": "value",
-                                            "value": "6"
-                                        }
-                                    ]
-                                },
-                                "verb": "binarize"
+                            "verb": "binarize"
+                        },
+                        {
+                            "args": {
+                                "to": "age_70_79",
+                                "column": "age",
+                                "criteria": [
+                                    {
+                                        "operator": "starts with",
+                                        "type": "value",
+                                        "value": "7"
+                                    }
+                                ]
                             },
-                            {
-                                "args": {
-                                    "to": "age_70_79",
-                                    "column": "age",
-                                    "criteria": [
-                                        {
-                                            "operator": "starts with",
-                                            "type": "value",
-                                            "value": "7"
-                                        }
-                                    ]
-                                },
-                                "verb": "binarize"
+                            "verb": "binarize"
+                        },
+                        {
+                            "args": {
+                                "to": "age_80_89",
+                                "column": "age",
+                                "criteria": [
+                                    {
+                                        "operator": "starts with",
+                                        "type": "value",
+                                        "value": "8"
+                                    }
+                                ]
                             },
-                            {
-                                "args": {
-                                    "to": "age_80_89",
-                                    "column": "age",
-                                    "criteria": [
-                                        {
-                                            "operator": "starts with",
-                                            "type": "value",
-                                            "value": "8"
-                                        }
-                                    ]
-                                },
-                                "verb": "binarize"
+                            "verb": "binarize"
+                        },
+                        {
+                            "args": {
+                                "to": "age_90_99",
+                                "column": "age",
+                                "criteria": [
+                                    {
+                                        "operator": "starts with",
+                                        "type": "value",
+                                        "value": "9"
+                                    }
+                                ]
                             },
-                            {
-                                "args": {
-                                    "to": "age_90_99",
-                                    "column": "age",
-                                    "criteria": [
-                                        {
-                                            "operator": "starts with",
-                                            "type": "value",
-                                            "value": "9"
-                                        }
-                                    ]
-                                },
-                                "verb": "binarize"
+                            "verb": "binarize"
+                        },
+                        {
+                            "args": {
+                                "to": "age_group_1",
+                                "value": "1"
                             },
-                            {
-                                "args": {
-                                    "to": "age_group_1",
-                                    "value": "1"
-                                },
-                                "verb": "fill"
+                            "verb": "fill"
+                        },
+                        {
+                            "args": {
+                                "to": "age_group_2",
+                                "value": "2"
                             },
-                            {
-                                "args": {
-                                    "to": "age_group_2",
-                                    "value": "2"
-                                },
-                                "verb": "fill"
+                            "verb": "fill"
+                        },
+                        {
+                            "args": {
+                                "to": "age_group_3",
+                                "value": "3"
                             },
-                            {
-                                "args": {
-                                    "to": "age_group_3",
-                                    "value": "3"
-                                },
-                                "verb": "fill"
+                            "verb": "fill"
+                        },
+                        {
+                            "args": {
+                                "to": "age_group_4",
+                                "value": "4"
                             },
-                            {
-                                "args": {
-                                    "to": "age_group_4",
-                                    "value": "4"
-                                },
-                                "verb": "fill"
+                            "verb": "fill"
+                        },
+                        {
+                            "args": {
+                                "to": "age_group_5",
+                                "value": "5"
                             },
-                            {
-                                "args": {
-                                    "to": "age_group_5",
-                                    "value": "5"
-                                },
-                                "verb": "fill"
+                            "verb": "fill"
+                        },
+                        {
+                            "args": {
+                                "to": "age_group_6",
+                                "value": "6"
                             },
-                            {
-                                "args": {
-                                    "to": "age_group_6",
-                                    "value": "6"
-                                },
-                                "verb": "fill"
+                            "verb": "fill"
+                        },
+                        {
+                            "args": {
+                                "to": "age_group_7",
+                                "value": "7"
                             },
-                            {
-                                "args": {
-                                    "to": "age_group_7",
-                                    "value": "7"
-                                },
-                                "verb": "fill"
+                            "verb": "fill"
+                        },
+                        {
+                            "args": {
+                                "to": "age_group_8",
+                                "value": "8"
                             },
-                            {
-                                "args": {
-                                    "to": "age_group_8",
-                                    "value": "8"
-                                },
-                                "verb": "fill"
+                            "verb": "fill"
+                        },
+                        {
+                            "args": {
+                                "to": "age_group_9",
+                                "value": "9"
                             },
-                            {
-                                "args": {
-                                    "to": "age_group_9",
-                                    "value": "9"
-                                },
-                                "verb": "fill"
+                            "verb": "fill"
+                        },
+                        {
+                            "args": {
+                                "to": "age_10_19",
+                                "column1": "age_10_19",
+                                "operator": "*",
+                                "column2": "age_group_1"
                             },
-                            {
-                                "args": {
-                                    "to": "age_10_19",
-                                    "column1": "age_10_19",
-                                    "operator": "*",
-                                    "column2": "age_group_1"
-                                },
-                                "verb": "derive"
+                            "verb": "derive"
+                        },
+                        {
+                            "args": {
+                                "to": "age_20_29",
+                                "column1": "age_20_29",
+                                "operator": "*",
+                                "column2": "age_group_2"
                             },
-                            {
-                                "args": {
-                                    "to": "age_20_29",
-                                    "column1": "age_20_29",
-                                    "operator": "*",
-                                    "column2": "age_group_2"
-                                },
-                                "verb": "derive"
+                            "verb": "derive"
+                        },
+                        {
+                            "args": {
+                                "to": "age_30_39",
+                                "column1": "age_30_39",
+                                "operator": "*",
+                                "column2": "age_group_3"
                             },
-                            {
-                                "args": {
-                                    "to": "age_30_39",
-                                    "column1": "age_30_39",
-                                    "operator": "*",
-                                    "column2": "age_group_3"
-                                },
-                                "verb": "derive"
+                            "verb": "derive"
+                        },
+                        {
+                            "args": {
+                                "to": "age_40_49",
+                                "column1": "age_40_49",
+                                "operator": "*",
+                                "column2": "age_group_4"
                             },
-                            {
-                                "args": {
-                                    "to": "age_40_49",
-                                    "column1": "age_40_49",
-                                    "operator": "*",
-                                    "column2": "age_group_4"
-                                },
-                                "verb": "derive"
+                            "verb": "derive"
+                        },
+                        {
+                            "args": {
+                                "to": "age_50_59",
+                                "column1": "age_50_59",
+                                "operator": "*",
+                                "column2": "age_group_5"
                             },
-                            {
-                                "args": {
-                                    "to": "age_50_59",
-                                    "column1": "age_50_59",
-                                    "operator": "*",
-                                    "column2": "age_group_5"
-                                },
-                                "verb": "derive"
+                            "verb": "derive"
+                        },
+                        {
+                            "args": {
+                                "to": "age_60_69",
+                                "column1": "age_60_69",
+                                "operator": "*",
+                                "column2": "age_group_6"
                             },
-                            {
-                                "args": {
-                                    "to": "age_60_69",
-                                    "column1": "age_60_69",
-                                    "operator": "*",
-                                    "column2": "age_group_6"
-                                },
-                                "verb": "derive"
+                            "verb": "derive"
+                        },
+                        {
+                            "args": {
+                                "to": "age_70_79",
+                                "column1": "age_70_79",
+                                "operator": "*",
+                                "column2": "age_group_7"
                             },
-                            {
-                                "args": {
-                                    "to": "age_70_79",
-                                    "column1": "age_70_79",
-                                    "operator": "*",
-                                    "column2": "age_group_7"
-                                },
-                                "verb": "derive"
+                            "verb": "derive"
+                        },
+                        {
+                            "args": {
+                                "to": "age_80_89",
+                                "column1": "age_80_89",
+                                "operator": "*",
+                                "column2": "age_group_8"
                             },
-                            {
-                                "args": {
-                                    "to": "age_80_89",
-                                    "column1": "age_80_89",
-                                    "operator": "*",
-                                    "column2": "age_group_8"
-                                },
-                                "verb": "derive"
+                            "verb": "derive"
+                        },
+                        {
+                            "args": {
+                                "to": "age_90_99",
+                                "column1": "age_90_99",
+                                "operator": "*",
+                                "column2": "age_group_9"
                             },
-                            {
-                                "args": {
-                                    "to": "age_90_99",
-                                    "column1": "age_90_99",
-                                    "operator": "*",
-                                    "column2": "age_group_9"
-                                },
-                                "verb": "derive"
+                            "verb": "derive"
+                        },
+                        {
+                            "args": {
+                                "to": "age_10_29",
+                                "column1": "age_10_19",
+                                "operator": "+",
+                                "column2": "age_20_29"
                             },
-                            {
-                                "args": {
-                                    "to": "age_10_29",
-                                    "column1": "age_10_19",
-                                    "operator": "+",
-                                    "column2": "age_20_29"
-                                },
-                                "verb": "derive"
+                            "verb": "derive"
+                        },
+                        {
+                            "args": {
+                                "to": "age_30_49",
+                                "column1": "age_30_39",
+                                "operator": "+",
+                                "column2": "age_40_49"
                             },
-                            {
-                                "args": {
-                                    "to": "age_30_49",
-                                    "column1": "age_30_39",
-                                    "operator": "+",
-                                    "column2": "age_40_49"
-                                },
-                                "verb": "derive"
+                            "verb": "derive"
+                        },
+                        {
+                            "args": {
+                                "to": "age_50_69",
+                                "column1": "age_50_59",
+                                "operator": "+",
+                                "column2": "age_60_69"
                             },
-                            {
-                                "args": {
-                                    "to": "age_50_69",
-                                    "column1": "age_50_59",
-                                    "operator": "+",
-                                    "column2": "age_60_69"
-                                },
-                                "verb": "derive"
+                            "verb": "derive"
+                        },
+                        {
+                            "args": {
+                                "to": "age_70_89",
+                                "column1": "age_70_79",
+                                "operator": "+",
+                                "column2": "age_80_89"
                             },
-                            {
-                                "args": {
-                                    "to": "age_70_89",
-                                    "column1": "age_70_79",
-                                    "operator": "+",
-                                    "column2": "age_80_89"
-                                },
-                                "verb": "derive"
+                            "verb": "derive"
+                        },
+                        {
+                            "args": {
+                                "to": "age_10_49",
+                                "column1": "age_10_29",
+                                "operator": "+",
+                                "column2": "age_30_49"
                             },
-                            {
-                                "args": {
-                                    "to": "age_10_49",
-                                    "column1": "age_10_29",
-                                    "operator": "+",
-                                    "column2": "age_30_49"
-                                },
-                                "verb": "derive"
+                            "verb": "derive"
+                        },
+                        {
+                            "args": {
+                                "to": "age_50_89",
+                                "column1": "age_50_69",
+                                "operator": "+",
+                                "column2": "age_70_89"
                             },
-                            {
-                                "args": {
-                                    "to": "age_50_89",
-                                    "column1": "age_50_69",
-                                    "operator": "+",
-                                    "column2": "age_70_89"
-                                },
-                                "verb": "derive"
+                            "verb": "derive"
+                        },
+                        {
+                            "args": {
+                                "to": "age_10_89",
+                                "column1": "age_10_49",
+                                "operator": "+",
+                                "column2": "age_50_89"
                             },
-                            {
-                                "args": {
-                                    "to": "age_10_89",
-                                    "column1": "age_10_49",
-                                    "operator": "+",
-                                    "column2": "age_50_89"
-                                },
-                                "verb": "derive"
+                            "verb": "derive"
+                        },
+                        {
+                            "args": {
+                                "to": "age_group",
+                                "column1": "age_10_89",
+                                "operator": "+",
+                                "column2": "age_90_99"
                             },
-                            {
-                                "args": {
-                                    "to": "age_group",
-                                    "column1": "age_10_89",
-                                    "operator": "+",
-                                    "column2": "age_90_99"
-                                },
-                                "verb": "derive"
+                            "verb": "derive"
+                        },
+                        {
+                            "args": {
+                                "column1": "diabetes",
+                                "column2": "hypertension",
+                                "operator": "+",
+                                "to": "Combined"
                             },
-                            {
-                                "args": {
-                                    "column1": "diabetes",
-                                    "column2": "hypertension",
-                                    "operator": "+",
-                                    "to": "Combined"
-                                },
-                                "verb": "derive"
+                            "verb": "derive"
+                        },
+                        {
+                            "args": {
+                                "columns": [
+                                    "Combined"
+                                ],
+                                "type": "float"
                             },
-                            {
-                                "args": {
-                                    "columns": [
-                                        "Combined"
-                                    ],
-                                    "type": "float"
-                                },
-                                "verb": "convert"
+                            "verb": "convert"
+                        },
+                        {
+                            "args": {
+                                "column": "Combined",
+                                "to": "diabetes_hypertension",
+                                "criteria": [
+                                    {
+                                        "operator": ">",
+                                        "value": 0,
+                                        "type": "value"
+                                    }
+                                ]
                             },
-                            {
-                                "args": {
-                                    "column": "Combined",
-                                    "to": "diabetes_hypertension",
-                                    "criteria": [
-                                        {
-                                            "operator": ">",
-                                            "value": 0,
-                                            "type": "value"
-                                        }
-                                    ]
-                                },
-                                "verb": "binarize"
+                            "verb": "binarize"
+                        },
+                        {
+                            "args": {
+                                "columns": [
+                                    "index",
+                                    "age",
+                                    "chronic_disease",
+                                    "gender",
+                                    "death",
+                                    "age_group",
+                                    "diabetes_hypertension"
+                                ]
                             },
-                            {
-                                "args": {
-                                    "columns": [
-                                        "index",
-                                        "age",
-                                        "chronic_disease",
-                                        "gender",
-                                        "death",
-                                        "age_group",
-                                        "diabetes_hypertension"
-                                    ]
-                                },
-                                "verb": "select"
+                            "verb": "select"
+                        },
+                        {
+                            "args": {
+                                "to": "subject_inclusion",
+                                "value": "1"
                             },
-                            {
-                                "args": {
-                                    "to": "subject_inclusion",
-                                    "value": "1"
-                                },
-                                "verb": "fill"
+                            "verb": "fill"
+                        },
+                        {
+                            "args": {
+                                "columns": [
+                                    "index",
+                                    "diabetes_hypertension",
+                                    "subject_inclusion",
+                                    "chronic_disease",
+                                    "gender",
+                                    "death",
+                                    "age_group"
+                                ]
                             },
-                            {
-                                "args": {
-                                    "columns": [
-                                        "index",
-                                        "diabetes_hypertension",
-                                        "subject_inclusion",
-                                        "chronic_disease",
-                                        "gender",
-                                        "death",
-                                        "age_group"
-                                    ]
-                                },
-                                "verb": "select"
-                            }
-                        ]
-                    }
-                ]
-            }
-        ]
-    }
+                            "verb": "select"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
 }

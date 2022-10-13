@@ -11,6 +11,7 @@ import type {
 	IStyle,
 } from '@fluentui/react'
 
+import type { ExampleIndex, FileDefinition } from '../hooks/examples.js'
 import type { ResourceTreeData } from '../models.js'
 import { icons } from './FileTree.styles.js'
 
@@ -107,6 +108,8 @@ function bundleNode(
 }
 
 export function openProps(
+	examples: ExampleIndex,
+	onClickExample: (example: FileDefinition) => void,
 	onClickUploadTable: () => void,
 	onClickUploadZip: () => void,
 ): IContextualMenuItem[] {
@@ -132,21 +135,33 @@ export function openProps(
 						key: 'causalDiscovery',
 						text: 'Causal Discovery',
 						subMenuProps: {
-							items: [],
-						},
-					},
-					{
-						key: 'exposureAnalysis',
-						text: 'Exposure Analysis',
-						subMenuProps: {
-							items: [],
+							items: examples.discovery.map(example => ({
+								key: example.name,
+								text: example.name,
+								onClick: () => onClickExample(example),
+							})),
 						},
 					},
 					{
 						key: 'eventAnalysys',
 						text: 'Event Analysis',
 						subMenuProps: {
-							items: [],
+							items: examples.events.map(example => ({
+								key: example.name,
+								text: example.name,
+								onClick: () => onClickExample(example),
+							})),
+						},
+					},
+					{
+						key: 'exposureAnalysis',
+						text: 'Exposure Analysis',
+						subMenuProps: {
+							items: examples.exposure.map(example => ({
+								key: example.name,
+								text: example.name,
+								onClick: () => onClickExample(example),
+							})),
 						},
 					},
 				],

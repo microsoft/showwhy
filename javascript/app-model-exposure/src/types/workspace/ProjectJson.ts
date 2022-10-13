@@ -2,8 +2,6 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import type { DataPackageSchema } from '@datashaper/schema'
-
 import type { CausalFactor } from '../causality/CausalFactor.js'
 import type { Estimator } from '../estimators/Estimator.js'
 import type { Definition } from '../experiments/Definition.js'
@@ -25,9 +23,5 @@ export interface ProjectJson {
 	estimators?: Estimator[]
 	defaultResult?: DefaultDatasetResult
 	subjectIdentifier?: string
-
-	/**
-	 * The source data tables to import.
-	 */
-	datapackage: DataPackageSchema
+	selectedTableName: string
 }
