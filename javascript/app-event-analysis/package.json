@@ -2,7 +2,7 @@
 	"name": "@showwhy/event-analysis-app",
 	"private": true,
 	"version": "0.0.1",
-	"main": "src/index.tsx",
+	"main": "src/index.ts",
 	"publishConfig": {
 		"main": "dist/index.js",
 		"types": "dist/index.d.ts"

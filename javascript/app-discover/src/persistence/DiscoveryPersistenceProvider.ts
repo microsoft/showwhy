@@ -63,7 +63,7 @@ interface ProjectJson {
 }
 
 export const DiscoveryPersistenceProvider: React.FC = memo(
-	function ModelExposurePersistenceProvider() {
+	function EventsPersistenceProvider() {
 		const dp = useDataPackage()
 		const getProjectJson = useGetProjectJson()
 		const loadProjectJson = useLoadProjectJson()

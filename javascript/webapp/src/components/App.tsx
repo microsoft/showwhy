@@ -7,6 +7,7 @@
 import { Spinner } from '@fluentui/react'
 import { PersistenceProvider, TableStoreProvider } from '@showwhy/app-common'
 import { DiscoveryPersistenceProvider } from '@showwhy/discover-app'
+import { EventsPersistenceProvider } from '@showwhy/event-analysis-app'
 import { ModelExposurePersistenceProvider } from '@showwhy/model-exposure-app'
 import { lazy, Suspense } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
@@ -64,6 +65,7 @@ export const App: React.FC = function App() {
 											{/* Application Persistence Utilities */}
 											<ModelExposurePersistenceProvider />
 											<DiscoveryPersistenceProvider />
+											<EventsPersistenceProvider />
 										</>
 										<Routes>
 											<Route path="/" element={<HomePage />} />
