@@ -5,6 +5,7 @@
 import { useDataTables } from '@showwhy/app-common'
 import { all, op } from 'arquero'
 import type ColumnTable from 'arquero/dist/types/table/column-table'
+import { useMemo } from 'react'
 
 import { useSelectedTableName } from '../state/selectedDataPackage.js'
 import type { Maybe } from '../types/primitives.js'
@@ -12,8 +13,10 @@ import type { Maybe } from '../types/primitives.js'
 export function useOutputTable(): Maybe<ColumnTable> {
 	const packages = useDataTables()
 	const selectedTableName = useSelectedTableName()
-	const pkg = packages.find(x => x.name === selectedTableName)
-	return withRowNumbers(pkg?.currentOutput?.table)
+	return useMemo(() => {
+		const pkg = packages.find(x => x.name === selectedTableName)
+		return withRowNumbers(pkg?.currentOutput?.table)
+	}, [packages, selectedTableName])
 }
 
 function withRowNumbers(
