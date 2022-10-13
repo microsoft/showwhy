@@ -7,27 +7,27 @@ import { useBoolean } from '@fluentui/react-hooks'
 import { useEffect } from 'react'
 
 import { api } from '../../resources/api.js'
+import { useProjectName } from '../../state/projectName.js'
 import { useSetSpecCount } from '../../state/specCount.js'
 import type { EstimateEffectRequest } from '../../types/api/EstimateEffectRequest.js'
 import type { Handler1, Maybe } from '../../types/primitives.js'
-import type { ProjectJson } from '../../types/workspace/ProjectJson.js'
 
 export function useLoadSpecCount(
 	estimateNode: Maybe<EstimateEffectRequest>,
 	isProcessing: boolean,
 	setErrors: Handler1<string>,
-	project: Partial<ProjectJson>,
 ): boolean {
+	const projectName = useProjectName()
 	const [loading, { setTrue: trueLoading, setFalse: falseLoading }] =
 		useBoolean(false)
 	const setSpecCount = useSetSpecCount()
 
 	useEffect(() => {
-		if (!estimateNode || isProcessing || !project.name) return
+		if (!estimateNode || isProcessing || !projectName) return
 		trueLoading()
 		setErrors('')
-		if (api.project !== project.name) {
-			api.setProject(project.name)
+		if (api.project !== projectName) {
+			api.setProject(projectName)
 		}
 		api
 			.estimateExecutionCount(estimateNode)
@@ -48,7 +48,7 @@ export function useLoadSpecCount(
 		setErrors,
 		trueLoading,
 		falseLoading,
-		project,
+		projectName,
 	])
 
 	return loading

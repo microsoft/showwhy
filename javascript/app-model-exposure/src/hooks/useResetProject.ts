@@ -13,7 +13,6 @@ import { useResetDefinitions } from '../state/definitions.js'
 import { useResetEstimateEffectResponse } from '../state/estimateEffectResponse.js'
 import { useResetEstimators } from '../state/estimators.js'
 import { useResetPrimarySpecificationConfig } from '../state/primarySpecificationConfig.js'
-import { useResetProjectJson } from '../state/projectJson.js'
 import { useResetRefutationResponse } from '../state/refutationResponse.js'
 import { useResetRunHistory } from '../state/runHistory.js'
 import { useResetSelectedTableName } from '../state/selectedDataPackage.js'
@@ -37,7 +36,6 @@ export function useResetProject(): Handler {
 	const resetPrimarySpecificationConfig = useResetPrimarySpecificationConfig()
 	const resetHoverState = useResetHoverState()
 	const resetSubjectIdentifier = useResetSubjectIdentifier()
-	const resetProject = useResetProjectJson()
 	const resetDefaultDatasetResult = useResetDefaultDatasetResult()
 	const resetSpecCount = useResetSpecCount()
 	const resetSignificanteTest = useResetSignificanceTest()
@@ -56,7 +54,6 @@ export function useResetProject(): Handler {
 		resetSpecificationCurveConfig()
 		resetPrimarySpecificationConfig()
 		resetSubjectIdentifier()
-		resetProject()
 		resetSelectedDataPackage()
 		resetDefaultDatasetResult()
 		resetSpecCount()
@@ -75,7 +72,6 @@ export function useResetProject(): Handler {
 		resetSpecificationCurveConfig,
 		resetPrimarySpecificationConfig,
 		resetSubjectIdentifier,
-		resetProject,
 		resetSelectedDataPackage,
 		resetDefaultDatasetResult,
 		resetSpecCount,
