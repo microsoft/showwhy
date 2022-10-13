@@ -2,30 +2,107 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-/* eslint-disable*/
-import { DataPackageContext } from '@showwhy/app-common'
-import { useCallback, useContext } from 'react'
-import { useSetCausalFactors } from '../state/causalFactors.js'
-import { useSetCausalQuestion } from '../state/causalQuestion.js'
-import { useSetDefaultDatasetResult } from '../state/defaultDatasetResult.js'
-import { useSetDefinitions } from '../state/definitions.js'
-import { useSetEstimators } from '../state/estimators.js'
-import { useSetPrimarySpecificationConfig } from '../state/primarySpecificationConfig.js'
-import { useSetProjectName } from '../state/projectName.js'
+import { AppResourceHandler, useDataPackage } from '@showwhy/app-common'
+import { memo, useCallback, useEffect, useMemo } from 'react'
+
+import { useSetRunAsDefault } from '../hooks/runHistory.js'
+import { useResetProject } from '../hooks/useResetProject.js'
+import {
+	useCausalFactors,
+	useSetCausalFactors,
+} from '../state/causalFactors.js'
+import {
+	useCausalQuestion,
+	useSetCausalQuestion,
+} from '../state/causalQuestion.js'
+import {
+	useDefaultDatasetResult,
+	useSetDefaultDatasetResult,
+} from '../state/defaultDatasetResult.js'
+import { useDefinitions, useSetDefinitions } from '../state/definitions.js'
+import { useEstimators, useSetEstimators } from '../state/estimators.js'
+import {
+	usePrimarySpecificationConfig,
+	useSetPrimarySpecificationConfig,
+} from '../state/primarySpecificationConfig.js'
+import { useProjectName, useSetProjectName } from '../state/projectName.js'
 import { useSetRunHistory } from '../state/runHistory.js'
-import { useSetSelectedTableName } from '../state/selectedDataPackage.js'
+import {
+	useSelectedTableName,
+	useSetSelectedTableName,
+} from '../state/selectedDataPackage.js'
 import { useSetSignificanceTest } from '../state/significanceTests.js'
 import { useSetSubjectIdentifier } from '../state/subjectIdentifier.js'
 import type { CausalFactor } from '../types/causality/CausalFactor.js'
 import type { Definition } from '../types/experiments/Definition.js'
-import type { ZipFileData } from '../types/files/ZipFileData.js'
-import { CausalQuestion } from '../types/question/CausalQuestion.js'
+import type { CausalQuestion } from '../types/question/CausalQuestion.js'
 import type { RunHistory } from '../types/runs/RunHistory.js'
 import type { ProjectJson } from '../types/workspace/ProjectJson.js'
 import { withRandomId } from '../utils/ids.js'
-import { useSetRunAsDefault } from './runHistory.js'
 
-export function useLoadProject(): (project: ProjectJson) => Promise<void> {
+export const ModelExposurePersistenceProvider: React.FC = memo(
+	function ModelExposurePersistenceProvider() {
+		const dp = useDataPackage()
+		const getProjectJson = useGetProjectJson()
+		const loadProjectJson = useLoadProjectJson()
+
+		const persistable = useMemo(
+			() =>
+				new AppResourceHandler<ProjectJson>(
+					'model-exposure',
+					'model-exposure',
+					getProjectJson,
+					loadProjectJson,
+				),
+			[getProjectJson, loadProjectJson],
+		)
+
+		useEffect(() => {
+			dp.addResourceHandler(persistable)
+		}, [dp, persistable])
+
+		// renderless component
+		return null
+	},
+)
+
+const EMPTY_DEFAULT = { url: '' }
+
+function useGetProjectJson(): () => ProjectJson {
+	const name = useProjectName()
+	const causalFactors = useCausalFactors()
+	const defaultResult = useDefaultDatasetResult() ?? EMPTY_DEFAULT
+	const estimators = useEstimators()
+	const primarySpecification = usePrimarySpecificationConfig()
+	const definitions = useDefinitions()
+	const question = useCausalQuestion()
+	const selectedTableName = useSelectedTableName() ?? ''
+
+	return useCallback(
+		(): ProjectJson => ({
+			name,
+			causalFactors,
+			defaultResult,
+			estimators,
+			primarySpecification,
+			definitions,
+			question,
+			selectedTableName,
+		}),
+		[
+			name,
+			causalFactors,
+			defaultResult,
+			estimators,
+			primarySpecification,
+			definitions,
+			question,
+			selectedTableName,
+		],
+	)
+}
+
+function useLoadProjectJson(): (project: ProjectJson) => void {
 	const setPrimarySpecificationConfig = useSetPrimarySpecificationConfig()
 	const setCausalFactors = useSetCausalFactors()
 	const setSubjectIdentifier = useSetSubjectIdentifier()
@@ -36,17 +113,12 @@ export function useLoadProject(): (project: ProjectJson) => Promise<void> {
 	const updateRunHistory = useUpdateRunHistory()
 	const setSignificanceTests = useSetSignificanceTest()
 	const setSelectedTableName = useSetSelectedTableName()
-	const updateFileCollection = useUpdateFileCollection(setSelectedTableName)
 	const setProjectName = useSetProjectName()
+	const resetProject = useResetProject()
 
 	return useCallback(
-		async (project: ProjectJson) => {
-			// TODO: replace this
-			const {
-				results,
-				runHistory = [],
-				significanceTests = [],
-			} = {} as ZipFileData
+		(project: ProjectJson) => {
+			resetProject()
 
 			const {
 				primarySpecification,
@@ -57,11 +129,8 @@ export function useLoadProject(): (project: ProjectJson) => Promise<void> {
 				subjectIdentifier,
 				defaultResult,
 				name,
+				selectedTableName,
 			} = project
-
-			if (results && defaultResult) {
-				defaultResult.url = results?.dataUri
-			}
 
 			setProjectName(name)
 
@@ -81,9 +150,9 @@ export function useLoadProject(): (project: ProjectJson) => Promise<void> {
 			setEstimators(est)
 			setSubjectIdentifier(subjectIdentifier)
 			setDefaultDatasetResult(defaultDatasetResult)
-			updateFileCollection(project)
-			updateRunHistory(runHistory)
-			setSignificanceTests(significanceTests)
+			setSelectedTableName(selectedTableName)
+			updateRunHistory([])
+			setSignificanceTests([])
 		},
 		[
 			setPrimarySpecificationConfig,
@@ -92,11 +161,12 @@ export function useLoadProject(): (project: ProjectJson) => Promise<void> {
 			setEstimators,
 			setSubjectIdentifier,
 			setDefaultDatasetResult,
-			updateFileCollection,
 			updateRunHistory,
 			setSignificanceTests,
 			setDefinitions,
 			setSelectedTableName,
+			resetProject,
+			setProjectName,
 		],
 	)
 }
@@ -109,26 +179,6 @@ function prepCausalFactors(
 
 function prepDefinitions(definitions: Definition[] = []): Definition[] {
 	return definitions.map(withRandomId)
-}
-
-function useUpdateFileCollection(
-	setSelectedTableName: (name: string) => void,
-): (project: ProjectJson) => Promise<void> {
-	const dp = useContext(DataPackageContext)
-
-	return useCallback(
-		async (project: ProjectJson) => {
-			const files = new Map<string, Blob>()
-			files.set(
-				'datapackage.json',
-				new Blob([JSON.stringify(project.datapackage)]),
-			)
-			dp.load(files)
-				.then(() => setSelectedTableName(dp.tableStore.names[0]))
-				.catch(err => console.error('error loading datapackage', err))
-		},
-		[dp],
-	)
 }
 
 function useUpdateRunHistory() {

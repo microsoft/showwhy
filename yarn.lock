@@ -2056,15 +2056,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@datashaper/react@npm:^14.1.1":
-  version: 14.1.1
-  resolution: "@datashaper/react@npm:14.1.1"
+"@datashaper/react@npm:^14.2.1":
+  version: 14.2.1
+  resolution: "@datashaper/react@npm:14.2.1"
   dependencies:
-    "@datashaper/schema": ^6.2.2
-    "@datashaper/tables": ^5.0.2
+    "@datashaper/schema": ^6.3.0
+    "@datashaper/tables": ^5.1.0
     "@datashaper/utilities": ^2.3.7
     "@datashaper/verb-guidance": ^0.1.20
-    "@datashaper/workflow": ^15.0.0
+    "@datashaper/workflow": ^16.0.0
     "@essex/charts-react": ^1.1.2
     "@essex/components": ^2.8.0
     "@essex/styled-components": ^0.0.4
@@ -2091,7 +2091,7 @@ __metadata:
     arquero: ^5.1.0
     react: ^17.0.2
     styled-components: ^5.3.0
-  checksum: d1b57e577be6c11ee22bab19aaaa33410af90b76a2f4962719611722287e2108fadfc50d0c4320e20bf2309ad2174ebbc37cf55c16ba1160c489a30a28c15cf0
+  checksum: 7c4c533369ef43d606c8db247e465b1a84ff674aaab422f0ab160f09170c02c6ad3370e8e8a9998ad7ad1cf70ccd5df8b968fec9e8c8d74abfdeea84ad6d3918
   languageName: node
   linkType: hard
 
@@ -2102,26 +2102,26 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@datashaper/schema@npm:^6.2.2":
-  version: 6.2.2
-  resolution: "@datashaper/schema@npm:6.2.2"
+"@datashaper/schema@npm:^6.3.0":
+  version: 6.3.0
+  resolution: "@datashaper/schema@npm:6.3.0"
   dependencies:
     uuid: ^9.0.0
-  checksum: 7dd2b8189f075fa48045d61a68a1556cc157f030744aaced27e3d4ffeecfa9088573c616ad13117782ef3e97eacfe72cf24c01700767852721288335176bdea0
+  checksum: 89b942616a5c661f68653de75745715191549f358c372e44e007991a058640e7b0681f0f4c019276e51973be4569c080e768453d9fb55b375826c7e193f7cb6d
   languageName: node
   linkType: hard
 
-"@datashaper/tables@npm:^5.0.2":
-  version: 5.0.2
-  resolution: "@datashaper/tables@npm:5.0.2"
+"@datashaper/tables@npm:^5.1.0":
+  version: 5.1.0
+  resolution: "@datashaper/tables@npm:5.1.0"
   dependencies:
-    "@datashaper/schema": ^6.2.2
+    "@datashaper/schema": ^6.3.0
     lodash-es: ^4.17.21
     moment: ^2.29.4
     papaparse: ^5.3.2
   peerDependencies:
     arquero: ^5.1.0
-  checksum: ca27b054a76650e6cc1ae325d56405b32eae789af1ded231e19195188d66d68cc341065d6607cfceef3edae75a75219bb95af0ebbe4ef9f664f1a69c38902e11
+  checksum: 2f5358fbcd934cbecbc06e5516d70513845c469545dbd15f609c0955e040aee8c78e7849e918ce7a07dc1cf9beed984b14438e197cb9837eb0f5d152ea39cb74
   languageName: node
   linkType: hard
 
@@ -2147,12 +2147,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@datashaper/workflow@npm:^15.0.0":
-  version: 15.0.0
-  resolution: "@datashaper/workflow@npm:15.0.0"
+"@datashaper/workflow@npm:^16.0.0":
+  version: 16.0.0
+  resolution: "@datashaper/workflow@npm:16.0.0"
   dependencies:
-    "@datashaper/schema": ^6.2.2
-    "@datashaper/tables": ^5.0.2
+    "@datashaper/schema": ^6.3.0
+    "@datashaper/tables": ^5.1.0
     ajv: ^8.11.0
     cross-blob: ^3.0.1
     cross-fetch: ^3.1.5
@@ -2168,7 +2168,7 @@ __metadata:
   peerDependenciesMeta:
     "@types/node":
       optional: true
-  checksum: c6a2bcf62e2942dde30c057453dd635b2457b1d322b869b8e8d53dbb31f7b8972037bb44c64e211fdc74800ec9fb47cd462c16986956f0b676d8aab83e487055
+  checksum: 5d66a8cb3cb2a6f3c610e319507dce76090f3d065d42a0e311847774dfe581f57024b38503500dddc9252fc61ea0f6278a8dfc7d0e600139a667bffd9d6e0816
   languageName: node
   linkType: hard
 
@@ -3760,11 +3760,11 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/app-common@workspace:javascript/app-common"
   dependencies:
-    "@datashaper/react": ^14.1.1
-    "@datashaper/schema": ^6.2.2
-    "@datashaper/tables": ^5.0.2
+    "@datashaper/react": ^14.2.1
+    "@datashaper/schema": ^6.3.0
+    "@datashaper/tables": ^5.1.0
     "@datashaper/utilities": ^2.3.7
-    "@datashaper/workflow": ^15.0.0
+    "@datashaper/workflow": ^16.0.0
     "@essex/components": ^2.8.0
     "@essex/scripts": ^22.1.0
     "@fluentui/react": ^8.98.1
@@ -3846,11 +3846,11 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/explore-app@workspace:javascript/app-explore"
   dependencies:
-    "@datashaper/react": ^14.1.1
-    "@datashaper/schema": ^6.2.2
-    "@datashaper/tables": ^5.0.2
+    "@datashaper/react": ^14.2.1
+    "@datashaper/schema": ^6.3.0
+    "@datashaper/tables": ^5.1.0
     "@datashaper/utilities": ^2.3.7
-    "@datashaper/workflow": ^15.0.0
+    "@datashaper/workflow": ^16.0.0
     "@essex-js-toolkit/hooks": ^4.0.3
     "@essex/components": ^2.8.0
     "@essex/hooks": ^4.0.13
@@ -3936,11 +3936,11 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/model-exposure-app@workspace:javascript/app-model-exposure"
   dependencies:
-    "@datashaper/react": ^14.1.1
-    "@datashaper/schema": ^6.2.2
-    "@datashaper/tables": ^5.0.2
+    "@datashaper/react": ^14.2.1
+    "@datashaper/schema": ^6.3.0
+    "@datashaper/tables": ^5.1.0
     "@datashaper/utilities": ^2.3.7
-    "@datashaper/workflow": ^15.0.0
+    "@datashaper/workflow": ^16.0.0
     "@essex/components": ^2.8.0
     "@essex/hooks": ^4.0.13
     "@essex/scripts": ^22.1.0
@@ -3996,10 +3996,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/webapp@workspace:javascript/webapp"
   dependencies:
-    "@datashaper/schema": ^6.2.2
-    "@datashaper/tables": ^5.0.2
+    "@datashaper/schema": ^6.3.0
+    "@datashaper/tables": ^5.1.0
     "@datashaper/utilities": ^2.3.7
-    "@datashaper/workflow": ^15.0.0
+    "@datashaper/workflow": ^16.0.0
     "@essex/components": ^2.8.0
     "@essex/hooks": ^4.0.13
     "@essex/scripts": ^22.1.0
@@ -4060,11 +4060,11 @@ __metadata:
   resolution: "@showwhy/wrangle-app@workspace:javascript/app-wrangle"
   dependencies:
     "@datashaper/core": ^10.0.0
-    "@datashaper/react": ^14.1.1
-    "@datashaper/schema": ^6.2.2
-    "@datashaper/tables": ^5.0.2
+    "@datashaper/react": ^14.2.1
+    "@datashaper/schema": ^6.3.0
+    "@datashaper/tables": ^5.1.0
     "@datashaper/utilities": ^2.3.7
-    "@datashaper/workflow": ^15.0.0
+    "@datashaper/workflow": ^16.0.0
     "@essex-js-toolkit/hooks": ^4.0.3
     "@essex/components": ^2.8.0
     "@essex/hooks": ^4.0.13

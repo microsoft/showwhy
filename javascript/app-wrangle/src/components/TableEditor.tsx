@@ -105,7 +105,6 @@ export const TableEditor: React.FC<TableEditorProps> = memo(
 				</DetailsListContainer>
 				<HistoryPanel
 					title="Steps"
-					isCollapsed={isCollapsed}
 					toggleCollapsed={toggleCollapsed}
 					steps={workflow.steps}
 					showStepCount

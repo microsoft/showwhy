@@ -2,7 +2,6 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-
 import type { DataFormat, DataShape, ParserOptions } from '@datashaper/schema'
 import { createDataTableSchemaObject } from '@datashaper/schema'
 import type { TableContainer } from '@datashaper/tables'
@@ -11,15 +10,17 @@ import { createBaseFile } from '@datashaper/utilities'
 import { DataTable } from '@datashaper/workflow'
 import type { ICommandBarItemProps, IContextualMenuItem } from '@fluentui/react'
 import type { OpenTableHandler } from '@showwhy/app-common'
-import {
-	DataPackageContext,
+import { 	DataPackageContext,
 	PersistenceContext,
 	removeExtension,
+useDataPackage ,
 	useDataTables,
 } from '@showwhy/app-common'
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 
+import type { FileDefinition} from '../hooks/examples.js';
+import { useExampleProjects } from '../hooks/examples.js'
 import type { ResourceTreeData } from '../models.js'
 import { TABLE_TYPES, ZIP_TYPES } from './FileTree.constants.js'
 import type { AddTableHandler } from './FileTree.types.js'
@@ -88,6 +89,8 @@ export function useFileManagementCommands(
 	const hasDataPackages = tables.length > 0
 	const uploadZip = useUploadZip()
 	const onClickDownloadZip = useDownloadZip()
+	const examples = useExampleProjects()
+	const dataPackage = useDataPackage()
 
 	const onClickUploadTable = useCallback(
 		() =>
@@ -105,9 +108,28 @@ export function useFileManagementCommands(
 		[uploadZip, onOpenFileRequested],
 	)
 
+	const onClickExample = useCallback(
+		(ex: FileDefinition) => {
+			void fetch(ex.url)
+				.then(res => res.blob())
+				.then(data => {
+					const files = new Map<string, Blob>()
+					files.set('datapackage.json', data)
+					return dataPackage.load(files)
+				})
+				.catch(err => console.error('error loading example file', err))
+		},
+		[dataPackage],
+	)
+
 	const onOpenCommands = useMemo(() => {
-		return openProps(onClickUploadTable, onClickUploadZip)
-	}, [onClickUploadTable, onClickUploadZip])
+		return openProps(
+			examples,
+			onClickExample,
+			onClickUploadTable,
+			onClickUploadZip,
+		)
+	}, [examples, onClickExample, onClickUploadTable, onClickUploadZip])
 
 	const onSaveCommands = useMemo(() => {
 		return saveProps(onClickDownloadZip)
