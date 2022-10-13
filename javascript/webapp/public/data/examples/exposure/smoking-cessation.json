@@ -340,6 +340,18 @@
                         ],
                         "steps": [
                             {
+                                "verb": "window",
+                                "args": {
+                                    "operation": "row_number",
+                                    "to": "index"
+                                },
+                                "input": {
+                                    "source": {
+                                        "node": "nhefs"
+                                    }
+                                }
+                            },
+                            {
                                 "args": {
                                     "columns": [
                                         "index",
@@ -356,12 +368,7 @@
                                         "smokeyrs"
                                     ]
                                 },
-                                "verb": "select",
-                                "input": {
-                                    "source": {
-                                        "node": "nhefs"
-                                    }
-                                }
+                                "verb": "select"
                             },
                             {
                                 "args": {

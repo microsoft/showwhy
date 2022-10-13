@@ -129,6 +129,18 @@
                         ],
                         "steps": [
                             {
+                                "verb": "window",
+                                "args": {
+                                    "operation": "row_number",
+                                    "to": "index"
+                                },
+                                "input": {
+                                    "source": {
+                                        "node": "covid19_small_data"
+                                    }
+                                }
+                            },
+                            {
                                 "args": {
                                     "columns": [
                                         "index",
@@ -140,12 +152,7 @@
                                         "diabetes"
                                     ]
                                 },
-                                "verb": "select",
-                                "input": {
-                                    "source": {
-                                        "node": "covid19_small_data"
-                                    }
-                                }
+                                "verb": "select"
                             },
                             {
                                 "args": {

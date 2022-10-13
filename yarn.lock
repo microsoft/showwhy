@@ -2056,15 +2056,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@datashaper/react@npm:^14.1.0":
-  version: 14.1.0
-  resolution: "@datashaper/react@npm:14.1.0"
+"@datashaper/react@npm:^14.1.1":
+  version: 14.1.1
+  resolution: "@datashaper/react@npm:14.1.1"
   dependencies:
     "@datashaper/schema": ^6.2.2
     "@datashaper/tables": ^5.0.2
     "@datashaper/utilities": ^2.3.7
     "@datashaper/verb-guidance": ^0.1.20
-    "@datashaper/workflow": ^14.1.0
+    "@datashaper/workflow": ^15.0.0
     "@essex/charts-react": ^1.1.2
     "@essex/components": ^2.8.0
     "@essex/styled-components": ^0.0.4
@@ -2091,7 +2091,7 @@ __metadata:
     arquero: ^5.1.0
     react: ^17.0.2
     styled-components: ^5.3.0
-  checksum: 1e7580098e8ae6ca815ff5d274083a0b3a2147bb7a490e5e8d0f70fcc342fb7151a56fffc8b678532c2d13320f0ea88e6c801b2abb4aeb8fa9cc16ef7da53219
+  checksum: d1b57e577be6c11ee22bab19aaaa33410af90b76a2f4962719611722287e2108fadfc50d0c4320e20bf2309ad2174ebbc37cf55c16ba1160c489a30a28c15cf0
   languageName: node
   linkType: hard
 
@@ -2147,9 +2147,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@datashaper/workflow@npm:^14.1.0":
-  version: 14.1.0
-  resolution: "@datashaper/workflow@npm:14.1.0"
+"@datashaper/workflow@npm:^15.0.0":
+  version: 15.0.0
+  resolution: "@datashaper/workflow@npm:15.0.0"
   dependencies:
     "@datashaper/schema": ^6.2.2
     "@datashaper/tables": ^5.0.2
@@ -2168,7 +2168,7 @@ __metadata:
   peerDependenciesMeta:
     "@types/node":
       optional: true
-  checksum: cbd22d321ed353f6bd4ba657260ced587b57dc9d5c7481248c9f09c751adfbcad99eb3b99f951afbc8555d1dca1ab26fb24b3c2e3e15869149c0a0ba203f71fc
+  checksum: c6a2bcf62e2942dde30c057453dd635b2457b1d322b869b8e8d53dbb31f7b8972037bb44c64e211fdc74800ec9fb47cd462c16986956f0b676d8aab83e487055
   languageName: node
   linkType: hard
 
@@ -2738,9 +2738,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fluentui/react@npm:^8.98.0":
-  version: 8.98.0
-  resolution: "@fluentui/react@npm:8.98.0"
+"@fluentui/react@npm:^8.98.1":
+  version: 8.98.1
+  resolution: "@fluentui/react@npm:8.98.1"
   dependencies:
     "@fluentui/date-time-utilities": ^8.5.2
     "@fluentui/font-icons-mdl2": ^8.5.1
@@ -2761,7 +2761,7 @@ __metadata:
     "@types/react-dom": ">=16.8.0 <18.0.0"
     react: ">=16.8.0 <18.0.0"
     react-dom: ">=16.8.0 <18.0.0"
-  checksum: e1d8bed6fc19b4d417dcb965e67d16ae967bc742719e1b51dbe77afbf92d63f170a2b531cffe294523d83cb2144e382e7b434f2a8238a7cd79e389cbf1586243
+  checksum: 4d83b7f2db9334e1e9b44a15ff1c147e4d20e33fd72b2a192ffc70b945bd7c79d5099a6e97d0eacbf2c7f03a4e6f895ce9bbad197193ff8460fce3eabdcdef19
   languageName: node
   linkType: hard
 
@@ -3760,14 +3760,14 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/app-common@workspace:javascript/app-common"
   dependencies:
-    "@datashaper/react": ^14.1.0
+    "@datashaper/react": ^14.1.1
     "@datashaper/schema": ^6.2.2
     "@datashaper/tables": ^5.0.2
     "@datashaper/utilities": ^2.3.7
-    "@datashaper/workflow": ^14.1.0
+    "@datashaper/workflow": ^15.0.0
     "@essex/components": ^2.8.0
     "@essex/scripts": ^22.1.0
-    "@fluentui/react": ^8.98.0
+    "@fluentui/react": ^8.98.1
     "@fluentui/react-hooks": ^8.6.11
     "@thematic/core": ^3.1.0
     "@thematic/d3": ^2.0.13
@@ -3785,7 +3785,7 @@ __metadata:
     react-dom: ^18.2.0
     react-is: ^18.2.0
     react-router-dom: ^6.3.0
-    recoil: ^0.7.5
+    recoil: ^0.7.6
     rxjs: ^7.5.7
     styled-components: ^5.3.6
     typescript: ^4.8.4
@@ -3803,7 +3803,7 @@ __metadata:
     "@essex/scripts": ^22.1.0
     "@essex/webpack-config": ^21.0.8
     "@fluentui/font-icons-mdl2": ^8.5.1
-    "@fluentui/react": ^8.98.0
+    "@fluentui/react": ^8.98.1
     "@fluentui/react-hooks": ^8.6.11
     "@fluentui/utilities": ^8.13.1
     "@reduxjs/toolkit": ^1.8.6
@@ -3815,7 +3815,7 @@ __metadata:
     "@types/d3": ^7.4.0
     "@types/lodash": ^4.14.186
     "@types/lodash-es": ^4.17.6
-    "@types/node": ^18.8.4
+    "@types/node": ^18.8.5
     "@types/react": ^18.0.21
     "@types/react-dom": ^18.0.6
     "@types/react-is": ^17.0.3
@@ -3825,7 +3825,7 @@ __metadata:
     ahooks: ^3.7.1
     arquero: ^5.1.0
     axios: ^0.27.2
-    d3: ^7.4.5
+    d3: ^7.6.1
     lodash: ^4.17.21
     lodash-es: ^4.17.21
     react: ^18.2.0
@@ -3834,7 +3834,7 @@ __metadata:
     react-is: ^18.2.0
     react-redux: ^8.0.4
     react-router-dom: ^6.3.0
-    recoil: ^0.7.5
+    recoil: ^0.7.6
     redbox-react: ^1.6.0
     shx: ^0.3.4
     styled-components: ^5.3.6
@@ -3846,11 +3846,11 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/explore-app@workspace:javascript/app-explore"
   dependencies:
-    "@datashaper/react": ^14.1.0
+    "@datashaper/react": ^14.1.1
     "@datashaper/schema": ^6.2.2
     "@datashaper/tables": ^5.0.2
     "@datashaper/utilities": ^2.3.7
-    "@datashaper/workflow": ^14.1.0
+    "@datashaper/workflow": ^15.0.0
     "@essex-js-toolkit/hooks": ^4.0.3
     "@essex/components": ^2.8.0
     "@essex/hooks": ^4.0.13
@@ -3858,7 +3858,7 @@ __metadata:
     "@essex/vite-config": ^19.0.14
     "@essex/webpack-config": ^21.0.8
     "@fluentui/font-icons-mdl2": ^8.5.1
-    "@fluentui/react": ^8.98.0
+    "@fluentui/react": ^8.98.1
     "@fluentui/react-hooks": ^8.6.11
     "@fluentui/react-icons-mdl2": ^1.3.23
     "@fluentui/utilities": ^8.13.1
@@ -3872,7 +3872,7 @@ __metadata:
     "@types/file-saver": ^2.0.5
     "@types/lodash": ^4.14.186
     "@types/lodash-es": ^4.17.6
-    "@types/node": ^18.8.4
+    "@types/node": ^18.8.5
     "@types/react": ^18.0.21
     "@types/react-cytoscapejs": ^1.2.2
     "@types/react-dom": ^18.0.6
@@ -3903,8 +3903,8 @@ __metadata:
     react-dom: ^18.2.0
     react-draggable: ^4.4.5
     react-error-boundary: ^3.1.4
-    react-force-graph-2d: ^1.23.10
-    react-force-graph-3d: ^1.21.12
+    react-force-graph-2d: ^1.23.11
+    react-force-graph-3d: ^1.21.13
     react-is: ^18.2.0
     react-redux: ^8.0.4
     react-router-dom: ^6.3.0
@@ -3912,7 +3912,7 @@ __metadata:
     react-vega: ^7.4.4
     react-xarrows: ^2.0.2
     react-zoom-pan-pinch: ^2.1.3
-    recoil: ^0.7.5
+    recoil: ^0.7.6
     recoil-persist: ^4.2.0
     redbox-react: ^1.6.0
     rxjs: ^7.5.7
@@ -3922,7 +3922,7 @@ __metadata:
     three: ^0.141.0
     three-spritetext: ^1.6.5
     typescript: ^4.8.4
-    use-file-picker: ^1.4.2
+    use-file-picker: ^1.5.1
     uuid: ^9.0.0
     vega: ^5.22.1
     vega-lite: ^5.2.0
@@ -3936,17 +3936,17 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/model-exposure-app@workspace:javascript/app-model-exposure"
   dependencies:
-    "@datashaper/react": ^14.1.0
+    "@datashaper/react": ^14.1.1
     "@datashaper/schema": ^6.2.2
     "@datashaper/tables": ^5.0.2
     "@datashaper/utilities": ^2.3.7
-    "@datashaper/workflow": ^14.1.0
+    "@datashaper/workflow": ^15.0.0
     "@essex/components": ^2.8.0
     "@essex/hooks": ^4.0.13
     "@essex/scripts": ^22.1.0
     "@essex/webpack-config": ^21.0.8
     "@fluentui/font-icons-mdl2": ^8.5.1
-    "@fluentui/react": ^8.98.0
+    "@fluentui/react": ^8.98.1
     "@fluentui/react-hooks": ^8.6.11
     "@fluentui/utilities": ^8.13.1
     "@reduxjs/toolkit": ^1.8.6
@@ -3959,7 +3959,7 @@ __metadata:
     "@types/d3-fetch": ^3.0.1
     "@types/lodash": ^4.14.186
     "@types/lodash-es": ^4.17.6
-    "@types/node": ^18.8.4
+    "@types/node": ^18.8.5
     "@types/react": ^18.0.21
     "@types/react-dom": ^18.0.6
     "@types/react-is": ^17.0.3
@@ -3981,7 +3981,7 @@ __metadata:
     react-redux: ^8.0.4
     react-router-dom: ^6.3.0
     react-xarrows: ^2.0.2
-    recoil: ^0.7.5
+    recoil: ^0.7.6
     redbox-react: ^1.6.0
     rxjs: ^7.5.7
     shx: ^0.3.4
@@ -3999,13 +3999,13 @@ __metadata:
     "@datashaper/schema": ^6.2.2
     "@datashaper/tables": ^5.0.2
     "@datashaper/utilities": ^2.3.7
-    "@datashaper/workflow": ^14.1.0
+    "@datashaper/workflow": ^15.0.0
     "@essex/components": ^2.8.0
     "@essex/hooks": ^4.0.13
     "@essex/scripts": ^22.1.0
     "@essex/webpack-config": ^21.0.8
     "@fluentui/font-icons-mdl2": ^8.5.1
-    "@fluentui/react": ^8.98.0
+    "@fluentui/react": ^8.98.1
     "@fluentui/react-hooks": ^8.6.11
     "@fluentui/utilities": ^8.13.1
     "@fluentui/web-components": ^2.5.6
@@ -4023,7 +4023,7 @@ __metadata:
     "@thematic/react": ^2.1.0
     "@types/lodash": ^4.14.186
     "@types/lodash-es": ^4.17.6
-    "@types/node": ^18.8.4
+    "@types/node": ^18.8.5
     "@types/react": ^18.0.21
     "@types/react-dom": ^18.0.6
     "@types/react-is": ^17.0.3
@@ -4045,7 +4045,7 @@ __metadata:
     react-error-boundary: ^3.1.4
     react-is: ^18.2.0
     react-router-dom: ^6.3.0
-    recoil: ^0.7.5
+    recoil: ^0.7.6
     redbox-react: ^1.6.0
     shx: ^0.3.4
     styled-components: ^5.3.6
@@ -4060,18 +4060,18 @@ __metadata:
   resolution: "@showwhy/wrangle-app@workspace:javascript/app-wrangle"
   dependencies:
     "@datashaper/core": ^10.0.0
-    "@datashaper/react": ^14.1.0
+    "@datashaper/react": ^14.1.1
     "@datashaper/schema": ^6.2.2
     "@datashaper/tables": ^5.0.2
     "@datashaper/utilities": ^2.3.7
-    "@datashaper/workflow": ^14.1.0
+    "@datashaper/workflow": ^15.0.0
     "@essex-js-toolkit/hooks": ^4.0.3
     "@essex/components": ^2.8.0
     "@essex/hooks": ^4.0.13
     "@essex/scripts": ^22.1.0
     "@essex/webpack-config": ^21.0.8
     "@fluentui/font-icons-mdl2": ^8.5.1
-    "@fluentui/react": ^8.98.0
+    "@fluentui/react": ^8.98.1
     "@fluentui/react-hooks": ^8.6.11
     "@fluentui/utilities": ^8.13.1
     "@monaco-editor/react": ^4.4.6
@@ -4085,7 +4085,7 @@ __metadata:
     "@types/d3-fetch": ^3.0.1
     "@types/lodash": ^4.14.186
     "@types/lodash-es": ^4.17.6
-    "@types/node": ^18.8.4
+    "@types/node": ^18.8.5
     "@types/react": ^18.0.21
     "@types/react-dom": ^18.0.6
     "@types/react-is": ^17.0.3
@@ -4100,13 +4100,13 @@ __metadata:
     lodash-es: ^4.17.21
     react: ^18.2.0
     react-dom: ^18.2.0
-    react-dropzone: ^14.2.2
+    react-dropzone: ^14.2.3
     react-error-boundary: ^3.1.4
     react-is: ^18.2.0
     react-redux: ^8.0.4
     react-router-dom: ^6.3.0
     react-xarrows: ^2.0.2
-    recoil: ^0.7.5
+    recoil: ^0.7.6
     redbox-react: ^1.6.0
     shx: ^0.3.4
     styled-components: ^5.3.6
@@ -5166,10 +5166,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^18.8.4":
-  version: 18.8.4
-  resolution: "@types/node@npm:18.8.4"
-  checksum: c2b87f6b0b1f02b2ce61ca7cb93ea287119bda086a3f33e48da8f5e70c24ad7141cc3465946e0e36abb7eba70c7b320c7659842096e4aa573b3a8d557322c818
+"@types/node@npm:^18.8.5":
+  version: 18.8.5
+  resolution: "@types/node@npm:18.8.5"
+  checksum: f7d896f54743178e64c534c6da16f582505acf18904ecd0ee8541cb4bc1d429ba514e7ecfd5145221b71adbd6ae1ff72df082f667e56d056fcd1a719df948e08
   languageName: node
   linkType: hard
 
@@ -7763,12 +7763,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"d3-contour@npm:3":
-  version: 3.0.1
-  resolution: "d3-contour@npm:3.0.1"
+"d3-contour@npm:4":
+  version: 4.0.0
+  resolution: "d3-contour@npm:4.0.0"
   dependencies:
-    d3-array: 2 - 3
-  checksum: efd5f092562c4883ac7372968e59018339e4448c816f9113c4d8a54c93bf93fa7395e9f97c7168dab2755aa3442c2e03e5170a3129567be15c64f8a17739089e
+    d3-array: ^3.2.0
+  checksum: 1f9b9e56d0966d98a4c740b6af32b4fa2d14424159644adc24f4eb0ab023afbd414938f63f95032a66407fb701f4966efe40875e2cc0460fb653a943d3fc86b0
   languageName: node
   linkType: hard
 
@@ -8035,16 +8035,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"d3@npm:^7.4.5":
-  version: 7.4.5
-  resolution: "d3@npm:7.4.5"
+"d3@npm:^7.6.1":
+  version: 7.6.1
+  resolution: "d3@npm:7.6.1"
   dependencies:
     d3-array: 3
     d3-axis: 3
     d3-brush: 3
     d3-chord: 3
     d3-color: 3
-    d3-contour: 3
+    d3-contour: 4
     d3-delaunay: 6
     d3-dispatch: 3
     d3-drag: 3
@@ -8069,7 +8069,7 @@ __metadata:
     d3-timer: 3
     d3-transition: 3
     d3-zoom: 3
-  checksum: 47db3da8f6bd9ac689cd1c36c700a13d5c61c8ae87db01b9bd1c356575cc5b8d1e94ee1093f929dc6f0e8fe666f440f157af6f68b0571272462e00f4ef40e220
+  checksum: af883cfeaf0a861afb2424edcb5419a5c56c84ddbc1ac9c7771c569f1926ace8db3cf0f4996038eb1db9700f7335e30c23b885199e0320a002893492ae83b415
   languageName: node
   linkType: hard
 
@@ -13689,16 +13689,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dropzone@npm:^14.2.2":
-  version: 14.2.2
-  resolution: "react-dropzone@npm:14.2.2"
+"react-dropzone@npm:^14.2.3":
+  version: 14.2.3
+  resolution: "react-dropzone@npm:14.2.3"
   dependencies:
     attr-accept: ^2.2.2
     file-selector: ^0.6.0
     prop-types: ^15.8.1
   peerDependencies:
     react: ">= 16.8 || 18.0.0"
-  checksum: ef9ea7b3b5734e8eade2d29efc26da410dd7d6d046216331f6a51e2df4459c35f3a8f950fa7f723f3db6b0ead8aa68f58f6adbd39b98575c9fc8d8dfe02b671f
+  checksum: 174b744d5ca898cf3d84ec1aeb6cef5211c446697e45dc8ece8287a03d291f8d07253206d5a1247ef156fd385d65e7de666d4d5c2986020b8543b8f2434e8b40
   languageName: node
   linkType: hard
 
@@ -13713,29 +13713,29 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-force-graph-2d@npm:^1.23.10":
-  version: 1.23.10
-  resolution: "react-force-graph-2d@npm:1.23.10"
+"react-force-graph-2d@npm:^1.23.11":
+  version: 1.23.11
+  resolution: "react-force-graph-2d@npm:1.23.11"
   dependencies:
     force-graph: ^1.42
     prop-types: ^15.8
     react-kapsule: ^2.2
   peerDependencies:
     react: "*"
-  checksum: 2b8a1368a8be0afd1bf951889120e2ff1116c90a6767d569736df4543c5b537daf538251c6316c949c5e59e5eda3a15fde3956314e7467f4ffefea88409df0bb
+  checksum: 23df61c33f4005dd2e342cfc4c8599eaa6673eb4f3fdfec223ae470a750d8472e80fa7a3854aefcb7f369dd70f71a5ef7ac13a96d4ce8ee84a6a06d4d1ea2268
   languageName: node
   linkType: hard
 
-"react-force-graph-3d@npm:^1.21.12":
-  version: 1.21.12
-  resolution: "react-force-graph-3d@npm:1.21.12"
+"react-force-graph-3d@npm:^1.21.13":
+  version: 1.21.13
+  resolution: "react-force-graph-3d@npm:1.21.13"
   dependencies:
     3d-force-graph: ^1.70
     prop-types: ^15.8
     react-kapsule: ^2.2
   peerDependencies:
     react: "*"
-  checksum: a492f838af66dfd8d8407ded085026d48f30139dd4fd32194ad8afd0ee64a3e512f7b05f440bc7990fdd52bb16e1c852799f8ac7a99a0c248c4f5315298d99ac
+  checksum: ea0fcb6f53f58d6dd605a0e2a3823bc26c2c0caa8310c893c120b52280d36e97720ebb88c4b21748df4e75bfe1cb8487aded650bc65ad127034c64aac2c7cb97
   languageName: node
   linkType: hard
 
@@ -14027,9 +14027,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"recoil@npm:^0.7.5":
-  version: 0.7.5
-  resolution: "recoil@npm:0.7.5"
+"recoil@npm:^0.7.6":
+  version: 0.7.6
+  resolution: "recoil@npm:0.7.6"
   dependencies:
     hamt_plus: 1.0.2
   peerDependencies:
@@ -14039,7 +14039,7 @@ __metadata:
       optional: true
     react-native:
       optional: true
-  checksum: 19b410cca6839c8b886b91378112e12de3e0393b547211dafcf7a272c1aa2d7af6c09a9ed39fb3e1997abe5f3d6583e3774dc9f9cdda8c36e4cb0be64a1b17ce
+  checksum: 2b31dd29a7e0b369bc986a16f7253006776845144684c9e38bb6760e4ea954c5d7dc682aaf88e815e69098b8dea3ff62b6fa4e6c156157a29d2d9cb824db1779
   languageName: node
   linkType: hard
 
@@ -16151,14 +16151,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"use-file-picker@npm:^1.4.2":
-  version: 1.4.2
-  resolution: "use-file-picker@npm:1.4.2"
+"use-file-picker@npm:^1.5.1":
+  version: 1.5.1
+  resolution: "use-file-picker@npm:1.5.1"
   dependencies:
     file-selector: 0.2.4
   peerDependencies:
     react: ">=16"
-  checksum: 166e09ac124b47797c292dbc901f07457c25971a4a8cff04ffc1694a78773e02e57a0caaac8775306087cfc421828917fc643d002ade47031b7264dd5e111bf3
+  checksum: 4f4c5f1aa1dcec2d8acf47506c1047a2dfa18713f31bb3468d3d1be0d6347c60f1a0937025fbe115dbd306f6ae8b87189c5b23f9b7422695ab9a2b9e0b8aeed4
   languageName: node
   linkType: hard
 
