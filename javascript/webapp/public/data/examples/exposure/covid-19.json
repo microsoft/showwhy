@@ -3,118 +3,120 @@
     "resources": [
         {
             "profile": "model-exposure",
-            "selectedTableName": "covid19_small_data",
-            "primarySpecification": {
-                "causalModel": "Maximum",
-                "type": "Propensity Score Stratification"
-            },
-            "subjectIdentifier": "index",
-            "causalFactors": [
-                {
-                    "description": "Patient's age group derived from the Wolfram dataset",
-                    "variable": "Patient Age",
-                    "column": "age_group",
-                    "causes": {
-                        "causeExposure": 100,
-                        "causeOutcome": 100,
-                        "reasoning": "Exposure: Older adults are more likely to experience chronic diseases than younger adults. / Outcome: Older adults are likely to have higher mortality rates than younger adults"
+            "data": {
+                "selectedTableName": "covid19_small_data",
+                "primarySpecification": {
+                    "causalModel": "Maximum",
+                    "type": "Propensity Score Stratification"
+                },
+                "subjectIdentifier": "index",
+                "causalFactors": [
+                    {
+                        "description": "Patient's age group derived from the Wolfram dataset",
+                        "variable": "Patient Age",
+                        "column": "age_group",
+                        "causes": {
+                            "causeExposure": 100,
+                            "causeOutcome": 100,
+                            "reasoning": "Exposure: Older adults are more likely to experience chronic diseases than younger adults. / Outcome: Older adults are likely to have higher mortality rates than younger adults"
+                        }
+                    },
+                    {
+                        "description": "Patient gender recorded in the Wolfram dataset",
+                        "variable": "Patient Gender",
+                        "column": "gender",
+                        "causes": {
+                            "causeExposure": 50,
+                            "causeOutcome": 50,
+                            "reasoning": "Exposure: Women tend to be more affected by long-term and chronic illness. / Outcome: There might be differences in risk of mortality between men and women"
+                        }
                     }
-                },
-                {
-                    "description": "Patient gender recorded in the Wolfram dataset",
-                    "variable": "Patient Gender",
-                    "column": "gender",
-                    "causes": {
-                        "causeExposure": 50,
-                        "causeOutcome": 50,
-                        "reasoning": "Exposure: Women tend to be more affected by long-term and chronic illness. / Outcome: There might be differences in risk of mortality between men and women"
+                ],
+                "definitions": [
+                    {
+                        "level": "Primary",
+                        "variable": "Experienced chronic disease",
+                        "description": "A binary variable indicating whether the patient reported having a chronic disease",
+                        "column": "chronic_disease",
+                        "type": "exposure"
+                    },
+                    {
+                        "level": "Secondary",
+                        "variable": "Experienced diabetes & hypertension chronic disease",
+                        "description": "COVID-19 patients recorded in the Wolfram dataset. Records must include complete information on the patient's age, gender, chronic disease status, and survival status",
+                        "column": "diabetes_hypertension",
+                        "type": "exposure"
+                    },
+                    {
+                        "level": "Primary",
+                        "variable": "Confirmed COVID-19 cases",
+                        "description": "COVID-19 patients recorded in the Wolfram dataset. Records must include complete information on the patient's age, gender, chronic disease status, and survival status",
+                        "column": "subject_inclusion",
+                        "type": "population"
+                    },
+                    {
+                        "level": "Primary",
+                        "variable": "Mortality",
+                        "description": "Binary variable indicating whether the patient died after contracting COVID-19",
+                        "column": "death",
+                        "type": "outcome"
                     }
-                }
-            ],
-            "definitions": [
-                {
-                    "level": "Primary",
-                    "variable": "Experienced chronic disease",
-                    "description": "A binary variable indicating whether the patient reported having a chronic disease",
-                    "column": "chronic_disease",
-                    "type": "exposure"
+                ],
+                "question": {
+                    "exposure": {
+                        "label": "Chronic Disease",
+                        "description": "Patient presented in the Wolfram dataset who reported having a chronic disease prior to contracting COVID-19",
+                        "dataset": "Wolfram dataset"
+                    },
+                    "population": {
+                        "label": "Confirmed COVID-19 Cases",
+                        "description": "Patients who tested positive for COVID-19 and were presented in the Wolfram's Patient Medical Data for Novel Coronavirus COVID-19 dataset",
+                        "dataset": "Wolfram dataset"
+                    },
+                    "outcome": {
+                        "label": "Mortality Risk",
+                        "description": "Patients did not survive after contracting COVID-19",
+                        "dataset": "Wolfram dataset"
+                    },
+                    "hypothesis": "Increase"
                 },
-                {
-                    "level": "Secondary",
-                    "variable": "Experienced diabetes & hypertension chronic disease",
-                    "description": "COVID-19 patients recorded in the Wolfram dataset. Records must include complete information on the patient's age, gender, chronic disease status, and survival status",
-                    "column": "diabetes_hypertension",
-                    "type": "exposure"
-                },
-                {
-                    "level": "Primary",
-                    "variable": "Confirmed COVID-19 cases",
-                    "description": "COVID-19 patients recorded in the Wolfram dataset. Records must include complete information on the patient's age, gender, chronic disease status, and survival status",
-                    "column": "subject_inclusion",
-                    "type": "population"
-                },
-                {
-                    "level": "Primary",
-                    "variable": "Mortality",
-                    "description": "Binary variable indicating whether the patient died after contracting COVID-19",
-                    "column": "death",
-                    "type": "outcome"
-                }
-            ],
-            "question": {
-                "exposure": {
-                    "label": "Chronic Disease",
-                    "description": "Patient presented in the Wolfram dataset who reported having a chronic disease prior to contracting COVID-19",
-                    "dataset": "Wolfram dataset"
-                },
-                "population": {
-                    "label": "Confirmed COVID-19 Cases",
-                    "description": "Patients who tested positive for COVID-19 and were presented in the Wolfram's Patient Medical Data for Novel Coronavirus COVID-19 dataset",
-                    "dataset": "Wolfram dataset"
-                },
-                "outcome": {
-                    "label": "Mortality Risk",
-                    "description": "Patients did not survive after contracting COVID-19",
-                    "dataset": "Wolfram dataset"
-                },
-                "hypothesis": "Increase"
-            },
-            "estimators": [
-                {
-                    "group": "Exposure-assignment",
-                    "type": "Inverse Propensity Weighting",
-                    "refutations": 10,
-                    "confidenceInterval": true
-                },
-                {
-                    "group": "Exposure-assignment",
-                    "type": "Propensity Score Stratification",
-                    "refutations": 10,
-                    "confidenceInterval": true
-                },
-                {
-                    "group": "Outcome-based",
-                    "type": "Linear Double Machine Learning",
-                    "refutations": 10,
-                    "confidenceInterval": true
-                },
-                {
-                    "group": "Outcome-based",
-                    "type": "Linear Doubly Robust Learner",
-                    "refutations": 10,
-                    "confidenceInterval": true
-                },
-                {
-                    "group": "Outcome-based",
-                    "type": "Linear Regression",
-                    "refutations": 10,
-                    "confidenceInterval": true
-                }
-            ],
-            "todoPages": [
-                "/perform/specification-curve",
-                "/perform/evaluate"
-            ]
+                "estimators": [
+                    {
+                        "group": "Exposure-assignment",
+                        "type": "Inverse Propensity Weighting",
+                        "refutations": 10,
+                        "confidenceInterval": true
+                    },
+                    {
+                        "group": "Exposure-assignment",
+                        "type": "Propensity Score Stratification",
+                        "refutations": 10,
+                        "confidenceInterval": true
+                    },
+                    {
+                        "group": "Outcome-based",
+                        "type": "Linear Double Machine Learning",
+                        "refutations": 10,
+                        "confidenceInterval": true
+                    },
+                    {
+                        "group": "Outcome-based",
+                        "type": "Linear Doubly Robust Learner",
+                        "refutations": 10,
+                        "confidenceInterval": true
+                    },
+                    {
+                        "group": "Outcome-based",
+                        "type": "Linear Regression",
+                        "refutations": 10,
+                        "confidenceInterval": true
+                    }
+                ],
+                "todoPages": [
+                    "/perform/specification-curve",
+                    "/perform/evaluate"
+                ]
+            }
         },
         {
             "profile": "datatable",

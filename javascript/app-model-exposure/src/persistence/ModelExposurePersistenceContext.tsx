@@ -2,20 +2,35 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { JsonPersistable,useDataPackage } from '@showwhy/app-common'
+import { AppResourceHandler, useDataPackage } from '@showwhy/app-common'
 import { memo, useCallback, useEffect, useMemo } from 'react'
 
 import { useSetRunAsDefault } from '../hooks/runHistory.js'
 import { useResetProject } from '../hooks/useResetProject.js'
-import { useCausalFactors , useSetCausalFactors } from '../state/causalFactors.js'
-import { useCausalQuestion , useSetCausalQuestion } from '../state/causalQuestion.js'
-import { useDefaultDatasetResult , useSetDefaultDatasetResult } from '../state/defaultDatasetResult.js'
-import { useDefinitions , useSetDefinitions } from '../state/definitions.js'
-import { useEstimators , useSetEstimators } from '../state/estimators.js'
-import { usePrimarySpecificationConfig , useSetPrimarySpecificationConfig } from '../state/primarySpecificationConfig.js'
-import { useProjectName , useSetProjectName } from '../state/projectName.js'
+import {
+	useCausalFactors,
+	useSetCausalFactors,
+} from '../state/causalFactors.js'
+import {
+	useCausalQuestion,
+	useSetCausalQuestion,
+} from '../state/causalQuestion.js'
+import {
+	useDefaultDatasetResult,
+	useSetDefaultDatasetResult,
+} from '../state/defaultDatasetResult.js'
+import { useDefinitions, useSetDefinitions } from '../state/definitions.js'
+import { useEstimators, useSetEstimators } from '../state/estimators.js'
+import {
+	usePrimarySpecificationConfig,
+	useSetPrimarySpecificationConfig,
+} from '../state/primarySpecificationConfig.js'
+import { useProjectName, useSetProjectName } from '../state/projectName.js'
 import { useSetRunHistory } from '../state/runHistory.js'
-import { useSelectedTableName , useSetSelectedTableName } from '../state/selectedDataPackage.js'
+import {
+	useSelectedTableName,
+	useSetSelectedTableName,
+} from '../state/selectedDataPackage.js'
 import { useSetSignificanceTest } from '../state/significanceTests.js'
 import { useSetSubjectIdentifier } from '../state/subjectIdentifier.js'
 import type { CausalFactor } from '../types/causality/CausalFactor.js'
@@ -33,8 +48,8 @@ export const ModelExposurePersistenceProvider: React.FC = memo(
 
 		const persistable = useMemo(
 			() =>
-				new JsonPersistable<ProjectJson>(
-					'model-exposure-instance',
+				new AppResourceHandler<ProjectJson>(
+					'model-exposure',
 					'model-exposure',
 					getProjectJson,
 					loadProjectJson,
@@ -43,9 +58,8 @@ export const ModelExposurePersistenceProvider: React.FC = memo(
 		)
 
 		useEffect(() => {
-			dp.persistableStore.add(persistable)
-			return () => dp.persistableStore.remove(persistable.name)
-		}, [dp.persistableStore, persistable])
+			dp.addResourceHandler(persistable)
+		}, [dp, persistable])
 
 		// renderless component
 		return null
