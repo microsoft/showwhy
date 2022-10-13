@@ -17,13 +17,13 @@
 		"lint": "essex lint"
 	},
 	"dependencies": {
-		"@datashaper/react": "^14.1.0",
+		"@datashaper/react": "^14.1.1",
 		"@datashaper/schema": "^6.2.2",
 		"@datashaper/tables": "^5.0.2",
 		"@datashaper/utilities": "^2.3.7",
-		"@datashaper/workflow": "^14.1.0",
+		"@datashaper/workflow": "^15.0.0",
 		"@essex/components": "^2.8.0",
-		"@fluentui/react": "^8.98.0",
+		"@fluentui/react": "^8.98.1",
 		"@fluentui/react-hooks": "^8.6.11",
 		"@thematic/core": "^3.1.0",
 		"@thematic/d3": "^2.0.13",
@@ -36,7 +36,7 @@
 		"react-dom": "^18.2.0",
 		"react-is": "^18.2.0",
 		"react-router-dom": "^6.3.0",
-		"recoil": "^0.7.5",
+		"recoil": "^0.7.6",
 		"rxjs": "^7.5.7",
 		"styled-components": "^5.3.6"
 	},
