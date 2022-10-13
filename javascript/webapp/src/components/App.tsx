@@ -68,7 +68,7 @@ export const App: React.FC = function App() {
 										<Routes>
 											<Route path="/" element={<HomePage />} />
 											<Route path="wrangle/*" element={<WranglePage />} />
-											<Route path="discovery/*" element={<ExplorePage />} />
+											<Route path="discover/*" element={<ExplorePage />} />
 											<Route
 												path="exposure/*"
 												element={<ModelExposurePage />}

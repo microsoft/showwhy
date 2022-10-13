@@ -1,5 +1,9 @@
+/*!
+ * Copyright (c) Microsoft. All rights reserved.
+ * Licensed under the MIT license. See LICENSE file in the project.
+ */
+import { AppResourceHandler, useDataPackage } from '@showwhy/app-common'
 import { memo, useEffect, useMemo } from 'react'
-import { useDataPackage, AppResourceHandler } from '@showwhy/app-common'
 
 type ProjectJson = any
 
@@ -34,5 +38,7 @@ function useGetProjectJson(): () => ProjectJson {
 }
 
 function useLoadProjectJson(): (json: ProjectJson) => void {
-	return (json: ProjectJson) => {}
+	return (json: ProjectJson) => {
+		console.log('TODO: load json', json)
+	}
 }
