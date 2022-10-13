@@ -3,29 +3,22 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { useDataTables } from '@showwhy/app-common'
-import { all, op } from 'arquero'
 import type ColumnTable from 'arquero/dist/types/table/column-table'
-import { useMemo } from 'react'
+import { useEffect, useState } from 'react'
 
 import { useSelectedTableName } from '../state/selectedDataPackage.js'
 import type { Maybe } from '../types/primitives.js'
 
 export function useOutputTable(): Maybe<ColumnTable> {
+	const [table, setTable] = useState<Maybe<ColumnTable>>()
 	const packages = useDataTables()
 	const selectedTableName = useSelectedTableName()
-	return useMemo(() => {
-		const pkg = packages.find(x => x.name === selectedTableName)
-		return withRowNumbers(pkg?.currentOutput?.table)
-	}, [packages, selectedTableName])
-}
-
-function withRowNumbers(
-	table: ColumnTable | undefined,
-): ColumnTable | undefined {
-	return table?.derive(
-		{
-			index: op.row_number(),
-		},
-		{ before: all() },
-	)
+	useEffect(() => {
+		const dt = packages.find(x => x.name === selectedTableName)
+		if (dt) {
+			const sub = dt.output.subscribe(tbl => setTable(tbl?.table))
+			return () => sub.unsubscribe()
+		}
+	})
+	return table
 }
