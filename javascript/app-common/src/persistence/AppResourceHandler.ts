@@ -14,7 +14,7 @@ export class AppResourceHandler<JsonForm> implements ResourceHandler {
 	) {}
 
 	public save(files: Map<string, Blob>): Promise<string[]> {
-		const filename = `${this.name}.json`
+		const filename = `apps/${this.name}.json`
 		const data = this.getProjectJson()
 		const resource = { profile: this.profile, name: this.name, data }
 		const jsonText = JSON.stringify(resource, null, 2)
