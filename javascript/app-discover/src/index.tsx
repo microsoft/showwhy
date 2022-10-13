@@ -32,4 +32,5 @@ const CauseDisHooks: React.FC = memo(function CauseDisHooks() {
 	return null
 })
 
+export * from './persistence/index.js'
 export default ExplorePage

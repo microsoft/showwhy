@@ -2,6 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { MessageBar, MessageBarType, Stack } from '@fluentui/react'
 import { memo } from 'react'
 import type { FallbackProps } from 'react-error-boundary'
@@ -24,7 +25,7 @@ const ErrorFallback: React.FC<FallbackProps> = memo(function ErrorFallback({
 			<br />
 			<textarea value={error.stack} rows={20} cols={150} readOnly />
 			<div style={{ display: 'flex' }}>
-				<ClearStateButton label="Reset" onClick={resetErrorBoundary as any} />
+				<ClearStateButton label="Reset" onClick={resetErrorBoundary} />
 				<SaveStateButton
 					label="Save"
 					filename={`ErrorReport-${new Date().toLocaleString()}`}
