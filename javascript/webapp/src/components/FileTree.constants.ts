@@ -11,7 +11,7 @@ export const appLinks: ResourceTreeData[] = [
 	{
 		title: 'Causal Discovery',
 		icon: 'SearchData',
-		route: '/explore',
+		route: '/discovery',
 	},
 	{
 		title: 'Event Analysis',

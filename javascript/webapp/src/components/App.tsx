@@ -6,6 +6,7 @@
 
 import { Spinner } from '@fluentui/react'
 import { PersistenceProvider, TableStoreProvider } from '@showwhy/app-common'
+import { DiscoveryPersistenceProvider } from '@showwhy/discover-app'
 import { ModelExposurePersistenceProvider } from '@showwhy/model-exposure-app'
 import { lazy, Suspense } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
@@ -28,7 +29,7 @@ const ExplorePage = lazy(
 	() =>
 		import(
 			/* webpackChunkName: "Explore" */
-			'@showwhy/explore-app'
+			'@showwhy/discover-app'
 		),
 )
 const EventAnalysisPage = lazy(
@@ -60,13 +61,14 @@ export const App: React.FC = function App() {
 								<Layout>
 									<Suspense fallback={<Spinner />}>
 										<>
-											{/* Application Persistence Context Utilities */}
+											{/* Application Persistence Utilities */}
 											<ModelExposurePersistenceProvider />
+											<DiscoveryPersistenceProvider />
 										</>
 										<Routes>
 											<Route path="/" element={<HomePage />} />
 											<Route path="wrangle/*" element={<WranglePage />} />
-											<Route path="explore/*" element={<ExplorePage />} />
+											<Route path="discovery/*" element={<ExplorePage />} />
 											<Route
 												path="exposure/*"
 												element={<ModelExposurePage />}

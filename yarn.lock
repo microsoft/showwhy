@@ -3794,57 +3794,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@showwhy/event-analysis-app@workspace:^, @showwhy/event-analysis-app@workspace:javascript/app-event-analysis":
+"@showwhy/discover-app@workspace:^, @showwhy/discover-app@workspace:javascript/app-discover":
   version: 0.0.0-use.local
-  resolution: "@showwhy/event-analysis-app@workspace:javascript/app-event-analysis"
-  dependencies:
-    "@essex/components": ^2.8.0
-    "@essex/hooks": ^4.0.13
-    "@essex/scripts": ^22.1.0
-    "@essex/webpack-config": ^21.0.8
-    "@fluentui/font-icons-mdl2": ^8.5.1
-    "@fluentui/react": ^8.98.1
-    "@fluentui/react-hooks": ^8.6.11
-    "@fluentui/utilities": ^8.13.1
-    "@reduxjs/toolkit": ^1.8.6
-    "@showwhy/app-common": "workspace:^"
-    "@thematic/core": ^3.1.0
-    "@thematic/d3": ^2.0.13
-    "@thematic/fluent": ^4.1.0
-    "@thematic/react": ^2.1.0
-    "@types/d3": ^7.4.0
-    "@types/lodash": ^4.14.186
-    "@types/lodash-es": ^4.17.6
-    "@types/node": ^18.8.5
-    "@types/react": ^18.0.21
-    "@types/react-dom": ^18.0.6
-    "@types/react-is": ^17.0.3
-    "@types/react-router-dom": ^5.3.3
-    "@types/styled-components": ^5.1.26
-    "@uifabric/icons": ^7.9.4
-    ahooks: ^3.7.1
-    arquero: ^5.1.0
-    axios: ^0.27.2
-    d3: ^7.6.1
-    lodash: ^4.17.21
-    lodash-es: ^4.17.21
-    react: ^18.2.0
-    react-dom: ^18.2.0
-    react-error-boundary: ^3.1.4
-    react-is: ^18.2.0
-    react-redux: ^8.0.4
-    react-router-dom: ^6.3.0
-    recoil: ^0.7.6
-    redbox-react: ^1.6.0
-    shx: ^0.3.4
-    styled-components: ^5.3.6
-    typescript: ^4.8.4
-  languageName: unknown
-  linkType: soft
-
-"@showwhy/explore-app@workspace:^, @showwhy/explore-app@workspace:javascript/app-explore":
-  version: 0.0.0-use.local
-  resolution: "@showwhy/explore-app@workspace:javascript/app-explore"
+  resolution: "@showwhy/discover-app@workspace:javascript/app-discover"
   dependencies:
     "@datashaper/react": ^14.2.1
     "@datashaper/schema": ^6.3.0
@@ -3932,6 +3884,54 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@showwhy/event-analysis-app@workspace:^, @showwhy/event-analysis-app@workspace:javascript/app-event-analysis":
+  version: 0.0.0-use.local
+  resolution: "@showwhy/event-analysis-app@workspace:javascript/app-event-analysis"
+  dependencies:
+    "@essex/components": ^2.8.0
+    "@essex/hooks": ^4.0.13
+    "@essex/scripts": ^22.1.0
+    "@essex/webpack-config": ^21.0.8
+    "@fluentui/font-icons-mdl2": ^8.5.1
+    "@fluentui/react": ^8.98.1
+    "@fluentui/react-hooks": ^8.6.11
+    "@fluentui/utilities": ^8.13.1
+    "@reduxjs/toolkit": ^1.8.6
+    "@showwhy/app-common": "workspace:^"
+    "@thematic/core": ^3.1.0
+    "@thematic/d3": ^2.0.13
+    "@thematic/fluent": ^4.1.0
+    "@thematic/react": ^2.1.0
+    "@types/d3": ^7.4.0
+    "@types/lodash": ^4.14.186
+    "@types/lodash-es": ^4.17.6
+    "@types/node": ^18.8.5
+    "@types/react": ^18.0.21
+    "@types/react-dom": ^18.0.6
+    "@types/react-is": ^17.0.3
+    "@types/react-router-dom": ^5.3.3
+    "@types/styled-components": ^5.1.26
+    "@uifabric/icons": ^7.9.4
+    ahooks: ^3.7.1
+    arquero: ^5.1.0
+    axios: ^0.27.2
+    d3: ^7.6.1
+    lodash: ^4.17.21
+    lodash-es: ^4.17.21
+    react: ^18.2.0
+    react-dom: ^18.2.0
+    react-error-boundary: ^3.1.4
+    react-is: ^18.2.0
+    react-redux: ^8.0.4
+    react-router-dom: ^6.3.0
+    recoil: ^0.7.6
+    redbox-react: ^1.6.0
+    shx: ^0.3.4
+    styled-components: ^5.3.6
+    typescript: ^4.8.4
+  languageName: unknown
+  linkType: soft
+
 "@showwhy/model-exposure-app@workspace:^, @showwhy/model-exposure-app@workspace:javascript/app-model-exposure":
   version: 0.0.0-use.local
   resolution: "@showwhy/model-exposure-app@workspace:javascript/app-model-exposure"
@@ -4013,8 +4013,8 @@ __metadata:
     "@microsoft/fast-foundation": ^2.46.14
     "@microsoft/fast-react-wrapper": ^0.3.14
     "@showwhy/app-common": "workspace:^"
+    "@showwhy/discover-app": "workspace:^"
     "@showwhy/event-analysis-app": "workspace:^"
-    "@showwhy/explore-app": "workspace:^"
     "@showwhy/model-exposure-app": "workspace:^"
     "@showwhy/wrangle-app": "workspace:^"
     "@thematic/core": ^3.1.0
