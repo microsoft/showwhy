@@ -9,7 +9,6 @@ import { useCallback, useState } from 'react'
 import { ApiType } from '../../api-client/FetchApiInteractor.types.js'
 import { OUTPUT_FILE_NAME } from '../../pages/AnalyzeTestPage.constants.js'
 import { api } from '../../resources/api.js'
-import { useProjectJson } from '../../state/projectJson.js'
 import { useSpecCount } from '../../state/specCount.js'
 import type { AsyncHandler, Maybe } from '../../types/primitives.js'
 import { useDefaultRun } from '../runHistory.js'
@@ -36,7 +35,6 @@ export function useEstimateLogic(isProcessing: boolean): {
 	const [isCanceled, setIsCanceled] = useState<boolean>(false)
 	const [errors, setErrors] = useState<string>('')
 	const specCount = useSpecCount()
-	const project = useProjectJson()
 	const defaultRun = useDefaultRun()
 	const runStatus = useGetRunStatus(defaultRun)
 	const run = useRunEstimate(falseLoadingFile)
@@ -47,7 +45,6 @@ export function useEstimateLogic(isProcessing: boolean): {
 		estimateProps,
 		isProcessing,
 		setErrors,
-		project,
 	)
 	useWakeLock()
 

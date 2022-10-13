@@ -11,7 +11,7 @@ import { useSetDefaultDatasetResult } from '../state/defaultDatasetResult.js'
 import { useSetDefinitions } from '../state/definitions.js'
 import { useSetEstimators } from '../state/estimators.js'
 import { useSetPrimarySpecificationConfig } from '../state/primarySpecificationConfig.js'
-import { useSetProjectJson } from '../state/projectJson.js'
+import { useSetProjectName } from '../state/projectName.js'
 import { useSetRunHistory } from '../state/runHistory.js'
 import { useSetSelectedTableName } from '../state/selectedDataPackage.js'
 import { useSetSignificanceTest } from '../state/significanceTests.js'
@@ -35,9 +35,9 @@ export function useLoadProject(): (project: ProjectJson) => Promise<void> {
 	const setDefaultDatasetResult = useSetDefaultDatasetResult()
 	const updateRunHistory = useUpdateRunHistory()
 	const setSignificanceTests = useSetSignificanceTest()
-	const setProjectJson = useSetProjectJson()
 	const setSelectedTableName = useSetSelectedTableName()
 	const updateFileCollection = useUpdateFileCollection(setSelectedTableName)
+	const setProjectName = useSetProjectName()
 
 	return useCallback(
 		async (project: ProjectJson) => {
@@ -56,11 +56,14 @@ export function useLoadProject(): (project: ProjectJson) => Promise<void> {
 				estimators,
 				subjectIdentifier,
 				defaultResult,
+				name,
 			} = project
 
 			if (results && defaultResult) {
 				defaultResult.url = results?.dataUri
 			}
+
+			setProjectName(name)
 
 			// prep everything as needed to ensure partials from the JSON
 			// have required fields
@@ -81,7 +84,6 @@ export function useLoadProject(): (project: ProjectJson) => Promise<void> {
 			updateFileCollection(project)
 			updateRunHistory(runHistory)
 			setSignificanceTests(significanceTests)
-			setProjectJson(project)
 		},
 		[
 			setPrimarySpecificationConfig,
@@ -92,7 +94,6 @@ export function useLoadProject(): (project: ProjectJson) => Promise<void> {
 			setDefaultDatasetResult,
 			updateFileCollection,
 			updateRunHistory,
-			setProjectJson,
 			setSignificanceTests,
 			setDefinitions,
 			setSelectedTableName,

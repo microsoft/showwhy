@@ -6,6 +6,7 @@ import { MessageBarType, Pivot, PivotItem } from '@fluentui/react'
 import { memo, useMemo, useState } from 'react'
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import { useXarrow, Xwrapper } from 'react-xarrows'
+import { useRecoilSnapshot } from 'recoil'
 
 import { AppMenu } from '../components/AppMenu.js'
 import { MessageContainer } from '../components/MessageContainer.js'
@@ -24,7 +25,6 @@ export const ModelExposurePage: React.FC = memo(function ModelExposurePage() {
 	const navigate = useNavigate()
 	const updateXarrow = useXarrow()
 	const [error, setError] = useState<Maybe<string>>()
-
 	const route = useMemo(() => {
 		return location.pathname.includes(`${EXTERNAL_ROUTE_KUBERNETES}`)
 			? `/${EXTERNAL_ROUTE_KUBERNETES}`
