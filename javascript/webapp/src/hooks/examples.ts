@@ -5,18 +5,14 @@
 import { useEffect, useState } from 'react'
 
 export interface ExampleIndex {
-	exposure: FileDefinition[]
-	discovery: FileDefinition[]
-	events: FileDefinition[]
+	examples: FileDefinition[]
 }
 export interface FileDefinition {
 	name: string
 	url: string
 }
 const EMPTY_INDEX: ExampleIndex = {
-	exposure: [],
-	discovery: [],
-	events: [],
+	examples: [],
 }
 
 const EXAMPLES_PATH = 'data/examples/index.json'

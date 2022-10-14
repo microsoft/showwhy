@@ -1,0 +1,1551 @@
+// TODO: this was the original codebook spec in the CauseDis NHEFS example
+{
+	"profile": "codebook-todo",
+	"fields": [
+		{
+			"profile": "tabular-data-resource",
+			"schema": {
+				"fields": [
+					{
+						"name": "key",
+						"type": "integer",
+						"format": "default"
+					},
+					{
+						"name": "value",
+						"type": "string",
+						"format": "default"
+					}
+				]
+			},
+			"name": "active",
+			"data": [
+				{
+					"key": 0,
+					"value": "Very Active"
+				},
+				{
+					"key": 1,
+					"value": "Moderately Active"
+				},
+				{
+					"key": 2,
+					"value": "Inactive"
+				}
+			]
+		},
+		{
+			"profile": "tabular-data-resource",
+			"schema": {
+				"fields": [
+					{
+						"name": "key",
+						"type": "integer",
+						"format": "default"
+					},
+					{
+						"name": "value",
+						"type": "string",
+						"format": "default"
+					}
+				]
+			},
+			"name": "alcoholfreq",
+			"data": [
+				{
+					"key": 0,
+					"value": "Almost every day"
+				},
+				{
+					"key": 1,
+					"value": "2-3 times/week"
+				},
+				{
+					"key": 2,
+					"value": "1-4 times/month"
+				},
+				{
+					"key": 3,
+					"value": "< 12 times/year"
+				},
+				{
+					"key": 4,
+					"value": "No alcohol last year"
+				},
+				{
+					"key": 5,
+					"value": "Unknown"
+				}
+			]
+		},
+		{
+			"profile": "tabular-data-resource",
+			"schema": {
+				"fields": [
+					{
+						"name": "key",
+						"type": "integer",
+						"format": "default"
+					},
+					{
+						"name": "value",
+						"type": "string",
+						"format": "default"
+					}
+				]
+			},
+			"name": "alcoholtype",
+			"data": [
+				{
+					"key": 1,
+					"value": "Beer"
+				},
+				{
+					"key": 2,
+					"value": "Wine"
+				},
+				{
+					"key": 3,
+					"value": "Liquor"
+				},
+				{
+					"key": 4,
+					"value": "Other/Unknown"
+				}
+			]
+		},
+		{
+			"profile": "tabular-data-resource",
+			"schema": {
+				"fields": [
+					{
+						"name": "key",
+						"type": "integer",
+						"format": "default"
+					},
+					{
+						"name": "value",
+						"type": "string",
+						"format": "default"
+					}
+				]
+			},
+			"name": "allergies",
+			"data": [
+				{
+					"key": 1,
+					"value": "Yes"
+				},
+				{
+					"key": 0,
+					"value": "No"
+				}
+			]
+		},
+		{
+			"profile": "tabular-data-resource",
+			"schema": {
+				"fields": [
+					{
+						"name": "key",
+						"type": "integer",
+						"format": "default"
+					},
+					{
+						"name": "value",
+						"type": "string",
+						"format": "default"
+					}
+				]
+			},
+			"name": "asthma",
+			"data": [
+				{
+					"key": 1,
+					"value": "Yes"
+				},
+				{
+					"key": 0,
+					"value": "No"
+				}
+			]
+		},
+		{
+			"profile": "tabular-data-resource",
+			"schema": {
+				"fields": [
+					{
+						"name": "key",
+						"type": "integer",
+						"format": "default"
+					},
+					{
+						"name": "value",
+						"type": "string",
+						"format": "default"
+					}
+				]
+			},
+			"name": "birthcontrol",
+			"data": [
+				{
+					"key": 1,
+					"value": "Yes"
+				},
+				{
+					"key": 0,
+					"value": "No"
+				}
+			]
+		},
+		{
+			"profile": "tabular-data-resource",
+			"schema": {
+				"fields": [
+					{
+						"name": "key",
+						"type": "integer",
+						"format": "default"
+					},
+					{
+						"name": "value",
+						"type": "string",
+						"format": "default"
+					}
+				]
+			},
+			"name": "boweltrouble",
+			"data": [
+				{
+					"key": 1,
+					"value": "Yes"
+				},
+				{
+					"key": 0,
+					"value": "No"
+				}
+			]
+		},
+		{
+			"profile": "tabular-data-resource",
+			"schema": {
+				"fields": [
+					{
+						"name": "key",
+						"type": "integer",
+						"format": "default"
+					},
+					{
+						"name": "value",
+						"type": "string",
+						"format": "default"
+					}
+				]
+			},
+			"name": "bronch",
+			"data": [
+				{
+					"key": 1,
+					"value": "Yes"
+				},
+				{
+					"key": 0,
+					"value": "No"
+				}
+			]
+		},
+		{
+			"profile": "tabular-data-resource",
+			"schema": {
+				"fields": [
+					{
+						"name": "key",
+						"type": "integer",
+						"format": "default"
+					},
+					{
+						"name": "value",
+						"type": "string",
+						"format": "default"
+					}
+				]
+			},
+			"name": "chroniccough",
+			"data": [
+				{
+					"key": 1,
+					"value": "Yes"
+				},
+				{
+					"key": 0,
+					"value": "No"
+				}
+			]
+		},
+		{
+			"profile": "tabular-data-resource",
+			"schema": {
+				"fields": [
+					{
+						"name": "key",
+						"type": "integer",
+						"format": "default"
+					},
+					{
+						"name": "value",
+						"type": "string",
+						"format": "default"
+					}
+				]
+			},
+			"name": "colitis",
+			"data": [
+				{
+					"key": 1,
+					"value": "Yes"
+				},
+				{
+					"key": 0,
+					"value": "No"
+				}
+			]
+		},
+		{
+			"profile": "tabular-data-resource",
+			"schema": {
+				"fields": [
+					{
+						"name": "key",
+						"type": "integer",
+						"format": "default"
+					},
+					{
+						"name": "value",
+						"type": "string",
+						"format": "default"
+					}
+				]
+			},
+			"name": "death",
+			"data": [
+				{
+					"key": 1,
+					"value": "Yes"
+				},
+				{
+					"key": 0,
+					"value": "No"
+				}
+			]
+		},
+		{
+			"profile": "tabular-data-resource",
+			"schema": {
+				"fields": [
+					{
+						"name": "key",
+						"type": "integer",
+						"format": "default"
+					},
+					{
+						"name": "value",
+						"type": "string",
+						"format": "default"
+					}
+				]
+			},
+			"name": "diabetes",
+			"data": [
+				{
+					"key": 1,
+					"value": "Yes"
+				},
+				{
+					"key": 0,
+					"value": "No"
+				}
+			]
+		},
+		{
+			"profile": "tabular-data-resource",
+			"schema": {
+				"fields": [
+					{
+						"name": "key",
+						"type": "integer",
+						"format": "default"
+					},
+					{
+						"name": "value",
+						"type": "string",
+						"format": "default"
+					}
+				]
+			},
+			"name": "education",
+			"data": [
+				{
+					"key": 1,
+					"value": "8th grade or less"
+				},
+				{
+					"key": 2,
+					"value": "Highschool dropout"
+				},
+				{
+					"key": 3,
+					"value": "Highschool"
+				},
+				{
+					"key": 4,
+					"value": "College Dropout"
+				},
+				{
+					"key": 5,
+					"value": "College or more"
+				}
+			]
+		},
+		{
+			"profile": "tabular-data-resource",
+			"schema": {
+				"fields": [
+					{
+						"name": "key",
+						"type": "integer",
+						"format": "default"
+					},
+					{
+						"name": "value",
+						"type": "string",
+						"format": "default"
+					}
+				]
+			},
+			"name": "exercise",
+			"data": [
+				{
+					"key": 0,
+					"value": "Much exercise"
+				},
+				{
+					"key": 1,
+					"value": "Moderate exercise"
+				},
+				{
+					"key": 2,
+					"value": "Little or no exercise"
+				}
+			]
+		},
+		{
+			"profile": "tabular-data-resource",
+			"schema": {
+				"fields": [
+					{
+						"name": "key",
+						"type": "integer",
+						"format": "default"
+					},
+					{
+						"name": "value",
+						"type": "string",
+						"format": "default"
+					}
+				]
+			},
+			"name": "hayfever",
+			"data": [
+				{
+					"key": 1,
+					"value": "Yes"
+				},
+				{
+					"key": 0,
+					"value": "No"
+				}
+			]
+		},
+		{
+			"profile": "tabular-data-resource",
+			"schema": {
+				"fields": [
+					{
+						"name": "key",
+						"type": "integer",
+						"format": "default"
+					},
+					{
+						"name": "value",
+						"type": "string",
+						"format": "default"
+					}
+				]
+			},
+			"name": "hbp",
+			"data": [
+				{
+					"key": 1,
+					"value": "Yes"
+				},
+				{
+					"key": 0,
+					"value": "No"
+				}
+			]
+		},
+		{
+			"profile": "tabular-data-resource",
+			"schema": {
+				"fields": [
+					{
+						"name": "key",
+						"type": "integer",
+						"format": "default"
+					},
+					{
+						"name": "value",
+						"type": "string",
+						"format": "default"
+					}
+				]
+			},
+			"name": "hbpmed",
+			"data": [
+				{
+					"key": 1,
+					"value": "Yes"
+				},
+				{
+					"key": 0,
+					"value": "No"
+				}
+			]
+		},
+		{
+			"profile": "tabular-data-resource",
+			"schema": {
+				"fields": [
+					{
+						"name": "key",
+						"type": "integer",
+						"format": "default"
+					},
+					{
+						"name": "value",
+						"type": "string",
+						"format": "default"
+					}
+				]
+			},
+			"name": "headache",
+			"data": [
+				{
+					"key": 1,
+					"value": "Yes"
+				},
+				{
+					"key": 0,
+					"value": "No"
+				}
+			]
+		},
+		{
+			"profile": "tabular-data-resource",
+			"schema": {
+				"fields": [
+					{
+						"name": "key",
+						"type": "integer",
+						"format": "default"
+					},
+					{
+						"name": "value",
+						"type": "string",
+						"format": "default"
+					}
+				]
+			},
+			"name": "hepatitis",
+			"data": [
+				{
+					"key": 1,
+					"value": "Yes"
+				},
+				{
+					"key": 0,
+					"value": "No"
+				}
+			]
+		},
+		{
+			"profile": "tabular-data-resource",
+			"schema": {
+				"fields": [
+					{
+						"name": "key",
+						"type": "integer",
+						"format": "default"
+					},
+					{
+						"name": "value",
+						"type": "string",
+						"format": "default"
+					}
+				]
+			},
+			"name": "hf",
+			"data": [
+				{
+					"key": 1,
+					"value": "Yes"
+				},
+				{
+					"key": 0,
+					"value": "No"
+				}
+			]
+		},
+		{
+			"profile": "tabular-data-resource",
+			"schema": {
+				"fields": [
+					{
+						"name": "key",
+						"type": "integer",
+						"format": "default"
+					},
+					{
+						"name": "value",
+						"type": "string",
+						"format": "default"
+					}
+				]
+			},
+			"name": "hightax82",
+			"data": [
+				{
+					"key": 1,
+					"value": "High taxed state of residence"
+				},
+				{
+					"key": 0,
+					"value": "Otherwise"
+				}
+			]
+		},
+		{
+			"profile": "tabular-data-resource",
+			"schema": {
+				"fields": [
+					{
+						"name": "key",
+						"type": "integer",
+						"format": "default"
+					},
+					{
+						"name": "value",
+						"type": "string",
+						"format": "default"
+					}
+				]
+			},
+			"name": "income",
+			"data": [
+				{
+					"key": 11,
+					"value": "<$1000"
+				},
+				{
+					"key": 12,
+					"value": "1000-1999"
+				},
+				{
+					"key": 13,
+					"value": "2000-2999"
+				},
+				{
+					"key": 14,
+					"value": "3000-3999"
+				},
+				{
+					"key": 15,
+					"value": "4000-4999"
+				},
+				{
+					"key": 16,
+					"value": "5000-5999"
+				},
+				{
+					"key": 17,
+					"value": "6000-6999"
+				},
+				{
+					"key": 18,
+					"value": "7000-9999"
+				},
+				{
+					"key": 19,
+					"value": "10000-14999"
+				},
+				{
+					"key": 20,
+					"value": "15000-19999"
+				},
+				{
+					"key": 21,
+					"value": "20000-24999"
+				},
+				{
+					"key": 22,
+					"value": "25000+"
+				}
+			]
+		},
+		{
+			"profile": "tabular-data-resource",
+			"schema": {
+				"fields": [
+					{
+						"name": "key",
+						"type": "integer",
+						"format": "default"
+					},
+					{
+						"name": "value",
+						"type": "string",
+						"format": "default"
+					}
+				]
+			},
+			"name": "infection",
+			"data": [
+				{
+					"key": 1,
+					"value": "Yes"
+				},
+				{
+					"key": 0,
+					"value": "No"
+				}
+			]
+		},
+		{
+			"profile": "tabular-data-resource",
+			"schema": {
+				"fields": [
+					{
+						"name": "key",
+						"type": "integer",
+						"format": "default"
+					},
+					{
+						"name": "value",
+						"type": "string",
+						"format": "default"
+					}
+				]
+			},
+			"name": "lackpep",
+			"data": [
+				{
+					"key": 1,
+					"value": "Yes"
+				},
+				{
+					"key": 0,
+					"value": "No"
+				}
+			]
+		},
+		{
+			"profile": "tabular-data-resource",
+			"schema": {
+				"fields": [
+					{
+						"name": "key",
+						"type": "integer",
+						"format": "default"
+					},
+					{
+						"name": "value",
+						"type": "string",
+						"format": "default"
+					}
+				]
+			},
+			"name": "marital",
+			"data": [
+				{
+					"key": 1,
+					"value": "Under 17"
+				},
+				{
+					"key": 2,
+					"value": "Married"
+				},
+				{
+					"key": 3,
+					"value": "Widowed"
+				},
+				{
+					"key": 4,
+					"value": "Never married"
+				},
+				{
+					"key": 5,
+					"value": "Divorced"
+				},
+				{
+					"key": 6,
+					"value": "Separated"
+				},
+				{
+					"key": 8,
+					"value": "Unknown"
+				}
+			]
+		},
+		{
+			"profile": "tabular-data-resource",
+			"schema": {
+				"fields": [
+					{
+						"name": "key",
+						"type": "integer",
+						"format": "default"
+					},
+					{
+						"name": "value",
+						"type": "string",
+						"format": "default"
+					}
+				]
+			},
+			"name": "married",
+			"data": [
+				{
+					"key": 1,
+					"value": "Yes"
+				},
+				{
+					"key": 0,
+					"value": "No"
+				}
+			]
+		},
+		{
+			"profile": "tabular-data-resource",
+			"schema": {
+				"fields": [
+					{
+						"name": "key",
+						"type": "integer",
+						"format": "default"
+					},
+					{
+						"name": "value",
+						"type": "string",
+						"format": "default"
+					}
+				]
+			},
+			"name": "widowed",
+			"data": [
+				{
+					"key": 1,
+					"value": "Yes"
+				},
+				{
+					"key": 0,
+					"value": "No"
+				}
+			]
+		},
+		{
+			"profile": "tabular-data-resource",
+			"schema": {
+				"fields": [
+					{
+						"name": "key",
+						"type": "integer",
+						"format": "default"
+					},
+					{
+						"name": "value",
+						"type": "string",
+						"format": "default"
+					}
+				]
+			},
+			"name": "nevermarried",
+			"data": [
+				{
+					"key": 1,
+					"value": "Yes"
+				},
+				{
+					"key": 0,
+					"value": "No"
+				}
+			]
+		},
+		{
+			"profile": "tabular-data-resource",
+			"schema": {
+				"fields": [
+					{
+						"name": "key",
+						"type": "integer",
+						"format": "default"
+					},
+					{
+						"name": "value",
+						"type": "string",
+						"format": "default"
+					}
+				]
+			},
+			"name": "divorced",
+			"data": [
+				{
+					"key": 1,
+					"value": "Yes"
+				},
+				{
+					"key": 0,
+					"value": "No"
+				}
+			]
+		},
+		{
+			"profile": "tabular-data-resource",
+			"schema": {
+				"fields": [
+					{
+						"name": "key",
+						"type": "integer",
+						"format": "default"
+					},
+					{
+						"name": "value",
+						"type": "string",
+						"format": "default"
+					}
+				]
+			},
+			"name": "seperated",
+			"data": [
+				{
+					"key": 1,
+					"value": "Yes"
+				},
+				{
+					"key": 0,
+					"value": "No"
+				}
+			]
+		},
+		{
+			"profile": "tabular-data-resource",
+			"schema": {
+				"fields": [
+					{
+						"name": "key",
+						"type": "integer",
+						"format": "default"
+					},
+					{
+						"name": "value",
+						"type": "string",
+						"format": "default"
+					}
+				]
+			},
+			"name": "nerves",
+			"data": [
+				{
+					"key": 1,
+					"value": "Yes"
+				},
+				{
+					"key": 0,
+					"value": "No"
+				}
+			]
+		},
+		{
+			"profile": "tabular-data-resource",
+			"schema": {
+				"fields": [
+					{
+						"name": "key",
+						"type": "integer",
+						"format": "default"
+					},
+					{
+						"name": "value",
+						"type": "string",
+						"format": "default"
+					}
+				]
+			},
+			"name": "nervousbreak",
+			"data": [
+				{
+					"key": 1,
+					"value": "Yes"
+				},
+				{
+					"key": 0,
+					"value": "No"
+				}
+			]
+		},
+		{
+			"profile": "tabular-data-resource",
+			"schema": {
+				"fields": [
+					{
+						"name": "key",
+						"type": "integer",
+						"format": "default"
+					},
+					{
+						"name": "value",
+						"type": "string",
+						"format": "default"
+					}
+				]
+			},
+			"name": "otherpain",
+			"data": [
+				{
+					"key": 1,
+					"value": "Yes"
+				},
+				{
+					"key": 0,
+					"value": "No"
+				}
+			]
+		},
+		{
+			"profile": "tabular-data-resource",
+			"schema": {
+				"fields": [
+					{
+						"name": "key",
+						"type": "integer",
+						"format": "default"
+					},
+					{
+						"name": "value",
+						"type": "string",
+						"format": "default"
+					}
+				]
+			},
+			"name": "pepticulcer",
+			"data": [
+				{
+					"key": 1,
+					"value": "Yes"
+				},
+				{
+					"key": 0,
+					"value": "No"
+				}
+			]
+		},
+		{
+			"profile": "tabular-data-resource",
+			"schema": {
+				"fields": [
+					{
+						"name": "key",
+						"type": "integer",
+						"format": "default"
+					},
+					{
+						"name": "value",
+						"type": "string",
+						"format": "default"
+					}
+				]
+			},
+			"name": "pica",
+			"data": [
+				{
+					"key": 1,
+					"value": "Yes"
+				},
+				{
+					"key": 0,
+					"value": "No"
+				}
+			]
+		},
+		{
+			"profile": "tabular-data-resource",
+			"schema": {
+				"fields": [
+					{
+						"name": "key",
+						"type": "integer",
+						"format": "default"
+					},
+					{
+						"name": "value",
+						"type": "string",
+						"format": "default"
+					}
+				]
+			},
+			"name": "polio",
+			"data": [
+				{
+					"key": 1,
+					"value": "Yes"
+				},
+				{
+					"key": 0,
+					"value": "No"
+				}
+			]
+		},
+		{
+			"profile": "tabular-data-resource",
+			"schema": {
+				"fields": [
+					{
+						"name": "key",
+						"type": "integer",
+						"format": "default"
+					},
+					{
+						"name": "value",
+						"type": "string",
+						"format": "default"
+					}
+				]
+			},
+			"name": "qsmk",
+			"data": [
+				{
+					"key": 1,
+					"value": "Yes"
+				},
+				{
+					"key": 0,
+					"value": "No"
+				}
+			]
+		},
+		{
+			"profile": "tabular-data-resource",
+			"schema": {
+				"fields": [
+					{
+						"name": "key",
+						"type": "integer",
+						"format": "default"
+					},
+					{
+						"name": "value",
+						"type": "string",
+						"format": "default"
+					}
+				]
+			},
+			"name": "tb",
+			"data": [
+				{
+					"key": 1,
+					"value": "Yes"
+				},
+				{
+					"key": 0,
+					"value": "No"
+				}
+			]
+		},
+		{
+			"profile": "tabular-data-resource",
+			"schema": {
+				"fields": [
+					{
+						"name": "key",
+						"type": "integer",
+						"format": "default"
+					},
+					{
+						"name": "value",
+						"type": "string",
+						"format": "default"
+					}
+				]
+			},
+			"name": "sex",
+			"data": [
+				{
+					"key": 1,
+					"value": "Female"
+				},
+				{
+					"key": 0,
+					"value": "Male"
+				}
+			]
+		},
+		{
+			"profile": "tabular-data-resource",
+			"schema": {
+				"fields": [
+					{
+						"name": "key",
+						"type": "integer",
+						"format": "default"
+					},
+					{
+						"name": "value",
+						"type": "string",
+						"format": "default"
+					}
+				]
+			},
+			"name": "tumor",
+			"data": [
+				{
+					"key": 1,
+					"value": "Yes"
+				},
+				{
+					"key": 0,
+					"value": "No"
+				}
+			]
+		},
+		{
+			"profile": "tabular-data-resource",
+			"schema": {
+				"fields": [
+					{
+						"name": "key",
+						"type": "integer",
+						"format": "default"
+					},
+					{
+						"name": "value",
+						"type": "string",
+						"format": "default"
+					}
+				]
+			},
+			"name": "weakheart",
+			"data": [
+				{
+					"key": 1,
+					"value": "Yes"
+				},
+				{
+					"key": 0,
+					"value": "No"
+				}
+			]
+		},
+		{
+			"profile": "tabular-data-resource",
+			"schema": {
+				"fields": [
+					{
+						"name": "key",
+						"type": "integer",
+						"format": "default"
+					},
+					{
+						"name": "value",
+						"type": "string",
+						"format": "default"
+					}
+				]
+			},
+			"name": "wtloss",
+			"data": [
+				{
+					"key": 1,
+					"value": "Yes"
+				},
+				{
+					"key": 0,
+					"value": "No"
+				}
+			]
+		},
+		{
+			"profile": "tabular-data-resource",
+			"schema": {
+				"fields": [
+					{
+						"name": "key",
+						"type": "integer",
+						"format": "default"
+					},
+					{
+						"name": "value",
+						"type": "string",
+						"format": "default"
+					}
+				]
+			},
+			"name": "beerdrinker",
+			"data": [
+				{
+					"key": 1,
+					"value": "Yes"
+				},
+				{
+					"key": 0,
+					"value": "No"
+				}
+			]
+		},
+		{
+			"profile": "tabular-data-resource",
+			"schema": {
+				"fields": [
+					{
+						"name": "key",
+						"type": "integer",
+						"format": "default"
+					},
+					{
+						"name": "value",
+						"type": "string",
+						"format": "default"
+					}
+				]
+			},
+			"name": "winedrinker",
+			"data": [
+				{
+					"key": 1,
+					"value": "Yes"
+				},
+				{
+					"key": 0,
+					"value": "No"
+				}
+			]
+		},
+		{
+			"profile": "tabular-data-resource",
+			"schema": {
+				"fields": [
+					{
+						"name": "key",
+						"type": "integer",
+						"format": "default"
+					},
+					{
+						"name": "value",
+						"type": "string",
+						"format": "default"
+					}
+				]
+			},
+			"name": "liquordrinker",
+			"data": [
+				{
+					"key": 1,
+					"value": "Yes"
+				},
+				{
+					"key": 0,
+					"value": "No"
+				}
+			]
+		},
+		{
+			"profile": "arquero-data-resource",
+			"name": "original-data",
+			"data": {
+				"schema": {
+					"fields": [
+						{
+							"name": "active"
+						},
+						{
+							"name": "age"
+						},
+						{
+							"name": "alcoholfreq"
+						},
+						{
+							"name": "alcoholhowmuch"
+						},
+						{
+							"name": "alcoholtype"
+						},
+						{
+							"name": "allergies"
+						},
+						{
+							"name": "asthma"
+						},
+						{
+							"name": "birthcontrol"
+						},
+						{
+							"name": "boweltrouble"
+						},
+						{
+							"name": "bronch"
+						},
+						{
+							"name": "cholesterol"
+						},
+						{
+							"name": "chroniccough"
+						},
+						{
+							"name": "colitis"
+						},
+						{
+							"name": "dbp"
+						},
+						{
+							"name": "death"
+						},
+						{
+							"name": "diabetes"
+						},
+						{
+							"name": "education"
+						},
+						{
+							"name": "exercise"
+						},
+						{
+							"name": "hayfever"
+						},
+						{
+							"name": "hbp"
+						},
+						{
+							"name": "hbpmed"
+						},
+						{
+							"name": "headache"
+						},
+						{
+							"name": "hepatitis"
+						},
+						{
+							"name": "hf"
+						},
+						{
+							"name": "hightax82"
+						},
+						{
+							"name": "ht"
+						},
+						{
+							"name": "income"
+						},
+						{
+							"name": "infection"
+						},
+						{
+							"name": "lackpep"
+						},
+						{
+							"name": "marital"
+						},
+						{
+							"name": "nerves"
+						},
+						{
+							"name": "nervousbreak"
+						},
+						{
+							"name": "otherpain"
+						},
+						{
+							"name": "pepticulcer"
+						},
+						{
+							"name": "pica"
+						},
+						{
+							"name": "polio"
+						},
+						{
+							"name": "pregnancies"
+						},
+						{
+							"name": "price71"
+						},
+						{
+							"name": "price71_82"
+						},
+						{
+							"name": "price82"
+						},
+						{
+							"name": "qsmk"
+						},
+						{
+							"name": "sbp"
+						},
+						{
+							"name": "school"
+						},
+						{
+							"name": "sex"
+						},
+						{
+							"name": "smkintensity82_71"
+						},
+						{
+							"name": "smokeintensity"
+						},
+						{
+							"name": "smokeyrs"
+						},
+						{
+							"name": "tax71"
+						},
+						{
+							"name": "tax71_82"
+						},
+						{
+							"name": "tax82"
+						},
+						{
+							"name": "tb"
+						},
+						{
+							"name": "tumor"
+						},
+						{
+							"name": "weakheart"
+						},
+						{
+							"name": "wt71"
+						},
+						{
+							"name": "wt82"
+						},
+						{
+							"name": "wt82_71"
+						},
+						{
+							"name": "wtloss"
+						}
+					]
+				}
+			}
+		}
+	]
+}
