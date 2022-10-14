@@ -4,16 +4,13 @@
  */
 import { useMemo } from 'react'
 
-import type { RelationshipModificationType } from '../../domain/GraphDifferences.js'
 import type { Relationship } from '../../domain/Relationship.js'
-import type {
-	Selectable} from '../../domain/Selection.js';
+import type { Selectable } from '../../domain/Selection.js'
 import {
 	selectableIsCausalVariable,
 	selectableIsRelationship,
 } from '../../domain/Selection.js'
 import {
-	addedStyle,
 	colorCorrelation,
 	colorCorrelationFaded,
 	colorNegative,
@@ -25,14 +22,10 @@ import {
 	colorPositive,
 	colorPositiveFaded,
 	colorPositiveFocused,
-	colorRemoved,
-	removedStyle,
-	reversedStyle,
 } from '../../styles/styles.js'
 
 export function useEdgeColors(
 	relationship: Relationship,
-	state: RelationshipModificationType,
 	selectedObject: Selectable,
 ): {
 	edgeColor: string
@@ -44,9 +37,7 @@ export function useEdgeColors(
 	}
 
 	let correlationEdgeColor = colorCorrelation
-	if (state === 'removed') {
-		edgeColor = colorRemoved
-	} else if (selectableIsRelationship(selectedObject)) {
+	if (selectableIsRelationship(selectedObject)) {
 		if (selectedObject === relationship) {
 			edgeColor = colorNeutralFocused
 			if (relationship.weight !== undefined && relationship.weight !== 0) {
@@ -85,18 +76,4 @@ export function useEdgeColors(
 		() => ({ edgeColor, correlationEdgeColor }),
 		[edgeColor, correlationEdgeColor],
 	)
-}
-
-export function useSvgStyle(
-	state: RelationshipModificationType,
-): React.CSSProperties {
-	let svgStyle = {}
-	if (state === 'removed') {
-		svgStyle = removedStyle
-	} else if (state === 'reversed') {
-		svgStyle = reversedStyle
-	} else if (state === 'added') {
-		svgStyle = addedStyle
-	}
-	return svgStyle
 }

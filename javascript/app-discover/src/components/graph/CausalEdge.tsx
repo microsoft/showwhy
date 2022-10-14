@@ -3,11 +3,6 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { Stack } from '@fluentui/react'
-import {
-	ClearIcon,
-	FavoriteStarFillIcon,
-	RevToggleKeyIcon,
-} from '@fluentui/react-icons-mdl2'
 import { memo } from 'react'
 import type { anchorType } from 'react-xarrows'
 import Xarrow from 'react-xarrows'
@@ -20,14 +15,17 @@ import {
 } from '../../state/index.js'
 import { correlationForColumnNames } from '../../utils/Correlation.js'
 import { map } from '../../utils/Math.js'
-import { useEdgeColors, useSvgStyle } from './CausalEdge.hooks.js'
+import { useEdgeColors } from './CausalEdge.hooks.js'
 import type { CausalEdgeProps } from './CausalEdge.types.js'
+
+const LABEL_STYLE = { fontSize: '8pt', fontWeight: 'bold' }
+const CORR_REL_STYLE = { fontSize: '8pt' }
+const STACK_TOKEN_STYLE = { childrenGap: 2 }
 
 export const CausalEdge: React.FC<CausalEdgeProps> = memo(function CausalEdge({
 	relationship,
 	minEdgeWidth,
 	maxEdgeWidth,
-	state = 'normal',
 }) {
 	const [selectedObject, setSelectedObject] =
 		useRecoilState(SelectedObjectState)
@@ -44,11 +42,9 @@ export const CausalEdge: React.FC<CausalEdgeProps> = memo(function CausalEdge({
 
 	const { edgeColor, correlationEdgeColor } = useEdgeColors(
 		relationship,
-		state,
 		selectedObject,
 	)
 
-	const svgStyle = useSvgStyle(state)
 	const correlationRelationship = correlationForColumnNames(
 		correlations,
 		relationship.source.columnName,
@@ -62,33 +58,6 @@ export const CausalEdge: React.FC<CausalEdgeProps> = memo(function CausalEdge({
 		minEdgeWidth,
 		maxEdgeWidth,
 	)
-
-	const label =
-		state === 'removed' ? (
-			<ClearIcon style={iconStyle} />
-		) : (
-			<Stack horizontal tokens={{ childrenGap: 2 }}>
-				<Stack.Item align="center">
-					{state === 'added' && <FavoriteStarFillIcon style={iconStyle} />}
-					{state === 'reversed' && <RevToggleKeyIcon style={iconStyle} />}
-				</Stack.Item>
-				<Stack.Item align="center">
-					{relationship.weight !== undefined && (
-						<div style={{ fontSize: '8pt', fontWeight: 'bold' }}>
-							{relationship.weight.toFixed(2)}
-						</div>
-					)}
-					{relationship.confidence !== undefined && (
-						<div style={{ fontSize: '8pt', fontWeight: 'bold' }}>
-							conf={relationship.confidence.toFixed(2)}
-						</div>
-					)}
-					{correlationRelationship && (
-						<div style={{ fontSize: '8pt' }}>corr={correlation.toFixed(2)}</div>
-					)}
-				</Stack.Item>
-			</Stack>
-		)
 
 	const startAnchor: anchorType = {
 		position: useStraightEdges ? 'auto' : 'right',
@@ -129,13 +98,28 @@ export const CausalEdge: React.FC<CausalEdgeProps> = memo(function CausalEdge({
 				showHead={showArrowHead}
 				showTail={false}
 				// tailShape={'circle'}
-				labels={label}
+				labels={
+					<Stack horizontal tokens={STACK_TOKEN_STYLE}>
+						<Stack.Item align="center">
+							{relationship.weight != null && (
+								<div style={LABEL_STYLE}>{relationship.weight.toFixed(2)}</div>
+							)}
+							{relationship.confidence != null && (
+								<div style={LABEL_STYLE}>
+									conf={relationship.confidence.toFixed(2)}
+								</div>
+							)}
+							{correlationRelationship && (
+								<div style={CORR_REL_STYLE}>corr={correlation.toFixed(2)}</div>
+							)}
+						</Stack.Item>
+					</Stack>
+				}
 				passProps={{ onClick: () => setSelectedObject(relationship) }}
 				dashness={dashness}
-				SVGcanvasStyle={svgStyle}
 				// SVGcanvasStyle={{filter: 'blur(5px)'}}
 			/>
-			{correlationRelationship && state !== 'removed' && (
+			{correlationRelationship && (
 				<Xarrow
 					start={relationship.source.columnName}
 					end={relationship.target.columnName}

@@ -12,7 +12,6 @@ import {
 
 import type { CausalVariable } from '../../domain/CausalVariable.jsx'
 import * as Graph from '../../domain/Graph.jsx'
-import type { RelationshipModificationType } from '../../domain/GraphDifferences.jsx'
 import { hasSameOrInvertedSourceAndTarget } from '../../domain/Relationship.jsx'
 import {
 	ConfidenceThresholdState,
@@ -106,14 +105,12 @@ export const CausalGraphExplorer = memo(function CausalGraphExplorer() {
 	))
 
 	const causalEdges = causalRelationships.map(relationship => {
-		const state: RelationshipModificationType = 'normal'
 		return (
 			<CausalEdge
 				relationship={relationship}
 				key={relationship.key}
 				maxEdgeWidth={MAX_EDGE_WIDTH}
 				minEdgeWidth={MIN_EDGE_WIDTH}
-				state={state}
 			/>
 		)
 	})
