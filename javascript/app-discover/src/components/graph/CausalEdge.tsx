@@ -13,9 +13,7 @@ import type { anchorType } from 'react-xarrows'
 import Xarrow from 'react-xarrows'
 import { useRecoilState, useRecoilValue, useRecoilValueLoadable } from 'recoil'
 
-import { getModifiedRelationship } from '../../domain/GraphDifferences.js'
 import {
-	CausalGraphChangesState,
 	FilteredCorrelationsState,
 	SelectedObjectState,
 	StraightEdgesState,
@@ -36,7 +34,6 @@ export const CausalEdge: React.FC<CausalEdgeProps> = memo(function CausalEdge({
 	const correlations =
 		useRecoilValueLoadable(FilteredCorrelationsState).valueMaybe() || []
 	const useStraightEdges = useRecoilValue(StraightEdgesState)
-	const causalGraphChangesState = useRecoilValue(CausalGraphChangesState)
 	const strokeWidth = map(
 		Math.abs(relationship.weight || 0),
 		0,
@@ -52,31 +49,6 @@ export const CausalEdge: React.FC<CausalEdgeProps> = memo(function CausalEdge({
 	)
 
 	const svgStyle = useSvgStyle(state)
-
-	let changeString = ''
-	if (
-		causalGraphChangesState &&
-		(state === 'modifiedUp' || state === 'modifiedDown')
-	) {
-		const modifiedRelationship = getModifiedRelationship(
-			causalGraphChangesState.modifiedRelationships,
-			relationship,
-		)
-		if (
-			modifiedRelationship &&
-			modifiedRelationship.current.weight !== undefined
-		) {
-			const percentChange =
-				modifiedRelationship.difference.weight /
-				Math.abs(modifiedRelationship.current.weight)
-			changeString = new Intl.NumberFormat('en-US', {
-				style: 'percent',
-				signDisplay: 'always',
-				maximumFractionDigits: 2,
-			}).format(percentChange)
-		}
-	}
-
 	const correlationRelationship = correlationForColumnNames(
 		correlations,
 		relationship.source.columnName,
@@ -104,12 +76,6 @@ export const CausalEdge: React.FC<CausalEdgeProps> = memo(function CausalEdge({
 					{relationship.weight !== undefined && (
 						<div style={{ fontSize: '8pt', fontWeight: 'bold' }}>
 							{relationship.weight.toFixed(2)}
-							{state === 'modifiedUp' && (
-								<span style={{ color: 'green' }}> ({changeString})</span>
-							)}
-							{state === 'modifiedDown' && (
-								<span style={{ color: 'red' }}> ({changeString})</span>
-							)}
 						</div>
 					)}
 					{relationship.confidence !== undefined && (

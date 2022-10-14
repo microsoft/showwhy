@@ -31,13 +31,6 @@ export const AutoLayoutEnabledState = atom<boolean>({
 	effects_UNSTABLE: [persistAtomEffect, persistAtom],
 })
 
-export const ShowChangesInGraphState = atom<boolean>({
-	key: 'ShowChangesInGraphState',
-	default: false,
-	// eslint-disable-next-line camelcase
-	effects_UNSTABLE: [persistAtomEffect, persistAtom],
-})
-
 export const SelectedCausalDiscoveryAlgorithmState =
 	atom<CausalDiscoveryAlgorithm>({
 		key: 'SelectedCausalDiscoveryAlgorithmState',
