@@ -158,16 +158,21 @@ const TreeNode: React.FC<{
 	selected?: boolean
 	onSelectItem: (item: ResourceTreeData) => void
 }> = memo(function TreeNode({ node, selected, onSelectItem, expanded }) {
+	const currentPath = useCurrentPath()
 	const tooltipStyles = getTooltipStyles(expanded)
 
-	const children = node.children?.map(child => (
-		<TreeNode
-			expanded={expanded}
-			key={child.route}
-			node={child}
-			onSelectItem={onSelectItem}
-		/>
-	))
+	const children = node.children?.map(child => {
+		const selected = child.route === currentPath
+		return (
+			<TreeNode
+				expanded={expanded}
+				key={child.route}
+				node={child}
+				selected={selected}
+				onSelectItem={onSelectItem}
+			/>
+		)
+	})
 	const handleOnClick = useCallback(
 		(e: Event) => {
 			e.stopPropagation()
