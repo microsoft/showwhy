@@ -21,9 +21,5 @@ export const colorPositiveFaded = '#66aa6633'
 export const colorNeutralFaded = 'rgb(120, 120, 200, 0.3)'
 export const colorNegativeFaded = '#aa666633'
 export const addedStyle = { filter: 'drop-shadow(-1px 1px 2px #FFAA44)' }
-export const removedStyle = {
-	filter: 'drop-shadow(0px 0px 4px rgb(0 0 0 / 0.2)) blur(2px)',
-}
-export const reversedStyle = { filter: 'drop-shadow(-1px 1px 2px #6495ed)' }
 export const colorCorrelation = 'rgb(120, 120, 120)'
 export const colorCorrelationFaded = 'rgb(120, 120, 120, 0.5)'
