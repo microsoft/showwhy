@@ -134,6 +134,7 @@ export function processOutputData(
 	const outputTreated: OutputDataPoint[][] = []
 	const outputControl: OutputDataPoint[][] = []
 	const interceptOffsets: number[] = []
+	const sdidEstimates: number[] = []
 
 	//
 	// placebo results are always rendered in a single chart
@@ -147,6 +148,7 @@ export function processOutputData(
 			outputTreated.push(treatedPoints)
 			outputControl.push(controlPoints)
 			interceptOffsets.push(output.intercept_offset)
+			sdidEstimates.push(Number(output.sdid_estimate.toFixed(2)))
 			treatedUnits += outputResult.unit + ' '
 		})
 		output_data.push({
@@ -154,6 +156,7 @@ export function processOutputData(
 			output_lines_control: outputControl,
 			intercept_offset: interceptOffsets,
 			treatedUnit: treatedUnits,
+			sdid_estimates: sdidEstimates,
 		})
 	} else {
 		// prepare result for treatment effect for all units individually or combined

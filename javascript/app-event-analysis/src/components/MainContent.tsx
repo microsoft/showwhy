@@ -2,6 +2,8 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import type { Hypothesis } from '@causal/app-common';
+import { HypothesisGroup, MenuBar, useDataTables } from '@causal/app-common'
 import type { IDropdownOption, ITooltipHostStyles } from '@fluentui/react'
 import {
 	ActionButton,
@@ -22,8 +24,6 @@ import {
 	TextField,
 	TooltipHost,
 } from '@fluentui/react'
-import type { Hypothesis } from '@showwhy/app-common'
-import { HypothesisGroup, MenuBar, useDataTables } from '@showwhy/app-common'
 import { not } from 'arquero'
 import { clone, cloneDeep, isEmpty, isEqual, uniq } from 'lodash'
 import type { FormEvent } from 'react'
@@ -42,6 +42,7 @@ import {
 	EventNameState,
 	FileNameState,
 	FilterState,
+	HypothesisState,
 	OutcomeNameState,
 	OutputResState,
 	PlaceboOutputResState,
@@ -122,7 +123,7 @@ export const MainContent: React.FC = memo(function MainContent() {
 	const [outcomeName, setOutcomeName] = useRecoilState(OutcomeNameState)
 	const [eventName, setEventName] = useRecoilState(EventNameState)
 
-	const [, setFileName] = useRecoilState(FileNameState)
+	const [fileName, setFileName] = useRecoilState(FileNameState)
 
 	// Treatment setting
 	const [treatedUnits, setTreatedUnits] = useRecoilState(TreatedUnitsState)
@@ -140,6 +141,10 @@ export const MainContent: React.FC = memo(function MainContent() {
 		useRecoilState(SelectedTabKeyState)
 
 	const [timeAlignment, setTimeAlignment] = useRecoilState(TimeAlignmentState)
+
+	// TODO: should they be the same as showwhy?
+	const [units, setUnits] = useState('')
+	const [hypothesis, setHypothesis] = useRecoilState(HypothesisState)
 
 	const onDatasetClicked = (name: string) => {
 		const table = dataTables.find(d => d.name === name)?.currentOutput?.table
@@ -251,7 +256,14 @@ export const MainContent: React.FC = memo(function MainContent() {
 			map.set(treatedUnit, output)
 		})
 		return map
-	}, [outputRes, data, treatmentStartDatesAfterEstimate, checkedUnits])
+	}, [
+		outputRes,
+		data,
+		treatmentStartDatesAfterEstimate,
+		checkedUnits,
+		treatedUnits,
+		getPlaceboOutputRes,
+	])
 
 	useEffect(() => {
 		// initially, all units are checked
@@ -429,7 +441,6 @@ export const MainContent: React.FC = memo(function MainContent() {
 		validInput,
 		validColumnsMapping,
 		validTreatmentDates,
-		treatedUnits,
 	])
 
 	const checkCanExecuteEstimator = useCallback(() => {
@@ -507,7 +518,7 @@ export const MainContent: React.FC = memo(function MainContent() {
 		setCalculatingEstimator(true)
 
 		// filter input data according to unit selection, and include the treated units
-		const filteredInputData = data.dataPoints
+		let filteredInputData = data.dataPoints
 			.filter(
 				dp =>
 					(checkedUnits && checkedUnits.has(dp.unit)) ||
@@ -517,6 +528,12 @@ export const MainContent: React.FC = memo(function MainContent() {
 				// Make sure data point only includes value, date, unit, treated field
 				return { unit, date, value, treated }
 			})
+
+		if (placebo) {
+			filteredInputData = filteredInputData.filter(
+				i => i.unit === treatedUnitsList[0] || !treatedUnits.includes(i.unit),
+			)
+		}
 
 		// basically any changes to units/dates is considered placebo (i.e., what-if simulation)
 		// except when only excluding some of the units from the input data
@@ -596,7 +613,7 @@ export const MainContent: React.FC = memo(function MainContent() {
 		if (outCol !== '') {
 			const newMapping = { ...columnMapping, ...{ value: outCol } }
 			if (!isEqual(newMapping, columnMapping)) setColumnMapping(newMapping)
-			setOutcomeName(outCol)
+			setOutcomeName(prev => (!prev ? outCol : prev))
 		}
 	}
 
@@ -779,7 +796,7 @@ export const MainContent: React.FC = memo(function MainContent() {
 			setRawData(records)
 			const mapping = guessColMapping(getColumns(records))
 			setColumnMapping(mapping)
-			setOutcomeName(mapping.value)
+			setOutcomeName(prev => (!prev ? mapping.value : prev))
 			setFileName(fileName)
 		} else {
 			const {
@@ -975,15 +992,11 @@ export const MainContent: React.FC = memo(function MainContent() {
 		handleTimeAlignmentChange,
 	])
 
-	// TODO: should they be the same as showwhy?
-	const [units, setUnits] = useState('')
-	const [hypothesis, setHypothesis] = useState<Hypothesis>()
-
 	const onUnitUpdate = useCallback(
 		(value?: IDropdownOption) => {
 			const unit = !value ? '' : String(value.key)
 			updateColumnMapping({ unit })
-			setUnits(unit)
+			setUnits(prev => (!prev ? unit : prev))
 		},
 		[setUnits, updateColumnMapping],
 	)
@@ -1019,13 +1032,16 @@ export const MainContent: React.FC = memo(function MainContent() {
 									>
 										panel data format
 									</Link>
-									&nbsp; to get started
+									&nbsp;to get started
 								</Text>
-								<Stack horizontal tokens={{ childrenGap: 5 }}>
+								<Stack horizontal tokens={{ childrenGap: 10 }}>
 									<MenuBar
 										dataTables={dataTables}
 										onItemClicked={onDatasetClicked}
 									/>
+									<Stack.Item align="center">
+										<Text>{fileName}</Text>
+									</Stack.Item>
 								</Stack>
 							</Stack>
 
@@ -1363,7 +1379,8 @@ export const MainContent: React.FC = memo(function MainContent() {
 							{outcomeName || '<outcome>'} to {hypothesis || '<hypothesis>'}?
 						</Title>
 					</Stack>
-					<Stack>
+					{/* TODO: Uncomment when we have a pdf-like report to export */}
+					{/* <Stack>
 						<Stack.Item align="end">
 							<ActionButton
 								text="Export Results"
@@ -1374,7 +1391,7 @@ export const MainContent: React.FC = memo(function MainContent() {
 								onClick={handleExport}
 							/>
 						</Stack.Item>
-					</Stack>
+					</Stack> */}
 				</RightPanelHeader>
 				<ResultPane
 					inputData={data}

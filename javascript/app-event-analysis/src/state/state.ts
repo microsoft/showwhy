@@ -2,6 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import { Hypothesis } from '@causal/app-common'
 import { atom } from 'recoil'
 
 import type {
@@ -79,6 +80,7 @@ export const ChartOptionsState = atom<ChartOptions>({
 		relativeIntercept: false,
 		showGrid: true,
 		showMeanTreatmentEffect: false,
+		showChartPerUnit: false,
 	},
 })
 
@@ -134,4 +136,9 @@ export const TreatmentStartDatesAfterEstimateState = atom<{
 } | null>({
 	key: 'treatmentStartDatesAfterEstimateState',
 	default: null,
+})
+
+export const HypothesisState = atom<Hypothesis | null>({
+	key: 'HypothesisState',
+	default: Hypothesis.Change,
 })

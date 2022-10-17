@@ -11,7 +11,7 @@ import type { ScaleBand, ScaleLinear } from 'd3'
 export const BAR_NORMAL = 1
 export const BAR_TRANSPARENT = 0.5
 export const MAX_BAR_COUNT_BEFORE_TICK_ROTATION = 5
-export const MAX_BAR_COUNT_WITH_VISIBLE_LABELS = 15 // hide labels after this count
+export const MAX_BAR_COUNT_WITH_VISIBLE_LABELS = 35 // hide labels after this count
 export const BAR_GAP = 0.4 // gap between bars
 
 //
@@ -48,6 +48,7 @@ export interface ChartOptions {
 	relativeIntercept: boolean
 	showGrid: boolean
 	showMeanTreatmentEffect: boolean
+	showChartPerUnit?: boolean
 }
 
 export interface MessageBarProps {
@@ -209,7 +210,9 @@ export interface OutputData {
 	time_mapping_applied: boolean
 }
 
-export type PlaceboOutputData = Pick<
+export type PlaceboOutputData = {
+	sdid_estimates: number[]
+} & Pick<
 	OutputData,
 	| 'output_lines_control'
 	| 'output_lines_treated'
@@ -261,4 +264,3 @@ export interface SyntheticControlUnit {
 	unit: string
 	weight: number
 }
-// ======
