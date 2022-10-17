@@ -18,6 +18,7 @@ export function useData(
 	barNames: string[]
 	minValue: number
 	maxValue: number
+	absMaxValue: number
 } {
 	return useMemo(() => {
 		const inputBars: BarData[] = []
@@ -39,6 +40,7 @@ export function useData(
 		const allValues = inputData.map(dataElement => dataElement.value)
 		const minValue = min(allValues) ?? 0
 		const maxValue = max(allValues) ?? 1
+		const absMaxValue = max([Math.abs(maxValue), Math.abs(minValue)]) ?? 1
 
 		const barNames = inputData.map(dataElement => dataElement.name)
 
@@ -47,6 +49,7 @@ export function useData(
 			barNames,
 			minValue,
 			maxValue,
+			absMaxValue,
 		}
 	}, [inputData, treatedUnits, isPlaceboSimulation])
 }
@@ -78,7 +81,7 @@ export function useLegends(
 			(orientation === BarChartOrientation.row
 				? legendOffsetFromAxis * 1.5
 				: renderAxisLabels
-				? legendOffsetFromAxis * 3
+				? legendOffsetFromAxis * 3.5
 				: legendOffsetFromAxis)
 		container
 			.append('text')
