@@ -1,14 +1,12 @@
 {
-    "discovery": [],
-    "events": [],
-    "exposure": [
+    "examples": [
         {
-            "name": "COVID-19",
-            "url": "data/examples/exposure/covid-19.json"
+            "name": "Smoking (NHEFS + Prop 99)",
+            "url": "data/examples/smoking.json"
         },
         {
-            "name": "Smoking Cessation",
-            "url": "data/examples/exposure/smoking-cessation.json"
+            "name": "COVID-19",
+            "url": "data/examples/covid-19.json"
         }
     ]
 }

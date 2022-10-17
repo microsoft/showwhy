@@ -116,7 +116,7 @@ export function openProps(
 	return [
 		{
 			key: 'csv',
-			text: 'Table',
+			text: 'CSV File',
 			iconProps: icons.table,
 			onClick: onClickUploadTable,
 		},
@@ -128,43 +128,13 @@ export function openProps(
 		},
 		{
 			key: 'examples',
-			text: 'Examples',
+			text: 'Example',
 			subMenuProps: {
-				items: [
-					{
-						key: 'causalDiscovery',
-						text: 'Causal Discovery',
-						subMenuProps: {
-							items: examples.discovery.map(example => ({
-								key: example.name,
-								text: example.name,
-								onClick: () => onClickExample(example),
-							})),
-						},
-					},
-					{
-						key: 'eventAnalysys',
-						text: 'Event Analysis',
-						subMenuProps: {
-							items: examples.events.map(example => ({
-								key: example.name,
-								text: example.name,
-								onClick: () => onClickExample(example),
-							})),
-						},
-					},
-					{
-						key: 'exposureAnalysis',
-						text: 'Exposure Analysis',
-						subMenuProps: {
-							items: examples.exposure.map(example => ({
-								key: example.name,
-								text: example.name,
-								onClick: () => onClickExample(example),
-							})),
-						},
-					},
-				],
+				items: examples.examples.map(example => ({
+					key: example.name,
+					text: example.name,
+					onClick: () => onClickExample(example),
+				})),
 			},
 		},
 	]
