@@ -1,33 +1,28 @@
-import logging
-
 from causalnex.structure.notears import from_pandas
-from fastapi import APIRouter
 from networkx.readwrite import json_graph
 
-from backend.discover.base_payload import CausalDiscoveryPayload, prepare_data
+from backend.discover.algorithms.base import CausalDiscoveryRunner, CausalGraph
+from backend.discover.base_payload import CausalDiscoveryPayload
 
 
 class NotearsPayload(CausalDiscoveryPayload):
     pass
 
 
-notears_router = APIRouter()
+class NotearsRunner(CausalDiscoveryRunner):
+    def __init__(self, p: NotearsPayload):
+        super().__init__(p)
 
+    def do_causal_discovery(self) -> CausalGraph:
+        notears_graph = from_pandas(
+            self._prepared_data,
+            tabu_child_nodes=self._constraints.causes,
+            tabu_parent_nodes=self._constraints.effects,
+            tabu_edges=self._constraints.forbiddenRelationships,
+        )
 
-@notears_router.post("/")
-@prepare_data
-def run_notears(p: NotearsPayload):
-    logging.info("Running NOTEARS Causal Discovery.")
+        graph_json = json_graph.cytoscape_data(notears_graph)
+        graph_json["has_weights"] = True
+        graph_json["has_confidence_values"] = False
 
-    notears_graph = from_pandas(
-        p._prepared_data,
-        tabu_child_nodes=p.constraints.causes,
-        tabu_parent_nodes=p.constraints.effects,
-        tabu_edges=p.constraints.forbiddenRelationships,
-    )
-
-    graph_json = json_graph.cytoscape_data(notears_graph)
-    graph_json["has_weights"] = True
-    graph_json["has_confidence_values"] = False
-
-    return graph_json
+        return graph_json
