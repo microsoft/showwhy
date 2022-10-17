@@ -18,7 +18,7 @@ class Dataset(BaseModel):
     data: Dict[str, List[Any]]
 
 
-class CausalDiscoveryRequest(BaseModel):
+class CausalDiscoveryPayload(BaseModel):
     # expected parameters
     dataset: Dataset
     constraints: Constraints
@@ -31,24 +31,23 @@ class CausalDiscoveryRequest(BaseModel):
         extra = Extra.allow
 
 
-def prepare_data(func: Callable[[CausalDiscoveryRequest], Any]):
+def prepare_data(func: Callable[[CausalDiscoveryPayload], Any]):
     @wraps(func)
-    def wrapper(req: CausalDiscoveryRequest):
-        req._prepared_data = pd.DataFrame.from_dict(req.dataset.data)
-        req._prepared_data.dropna(inplace=True)
+    def wrapper(p: CausalDiscoveryPayload):
+        p._prepared_data = pd.DataFrame.from_dict(p.dataset.data)
+        p._prepared_data.dropna(inplace=True)
 
-        if req._prepared_data.size == 0:
-            return _get_empty_graph_json(req._prepared_data)
+        if p._prepared_data.size == 0:
+            return _get_empty_graph_json(p._prepared_data)
 
-        scaled_data = MaxAbsScaler().fit_transform(req._prepared_data)
-        # scaled_data = Normalizer().fit_transform(req._prepared_data)
-        req._prepared_data = pd.DataFrame(
+        scaled_data = MaxAbsScaler().fit_transform(p._prepared_data)
+        p._prepared_data = pd.DataFrame(
             data=scaled_data,
-            index=req._prepared_data.index,
-            columns=req._prepared_data.columns,
+            index=p._prepared_data.index,
+            columns=p._prepared_data.columns,
         )
 
-        return func(req)
+        return func(p)
 
     return wrapper
 

@@ -15,8 +15,8 @@ from fastapi import APIRouter
 from networkx.readwrite import json_graph
 from pydantic import BaseModel
 
+from backend.discover.base_payload import CausalDiscoveryPayload, prepare_data
 from backend.discover.pandas_dataset_loader import PandasDatasetLoader
-from backend.discover.request_models import CausalDiscoveryRequest, prepare_data
 
 torch.set_default_dtype(torch.float32)
 
@@ -26,7 +26,7 @@ class DeciOptions(BaseModel):
     max_auglag_inner_epochs: int
 
 
-class CDDeciRequest(CausalDiscoveryRequest):
+class DeciPayload(CausalDiscoveryPayload):
     deciOptions: Union[DeciOptions, None] = None
 
 
@@ -35,16 +35,16 @@ deci_router = APIRouter()
 
 @deci_router.post("/")
 @prepare_data
-def run_deci_hq(req: CDDeciRequest):
+def run_deci_hq(p: DeciPayload):
     logging.info("Running DECI Causal Discovery.")
 
-    if req.deciOptions is None:
-        return _run_deci(req)
+    if p.deciOptions is None:
+        return _run_deci(p)
     else:
         return _run_deci(
-            req,
-            req.deciOptions.max_steps_auglag,
-            req.deciOptions.max_auglag_inner_epochs,
+            p,
+            p.deciOptions.max_steps_auglag,
+            p.deciOptions.max_auglag_inner_epochs,
         )
 
 
@@ -108,7 +108,7 @@ def _compute_deci_average_treatment_effect(model, dataset):
     return ate_matrix
 
 
-def _run_deci(req: CDDeciRequest, max_steps_auglag=20, max_auglag_inner_epochs=1000):
+def _run_deci(p: DeciPayload, max_steps_auglag=20, max_auglag_inner_epochs=1000):
     model_config = {
         "imputation": False,
         "lambda_dag": 100.0,
@@ -145,8 +145,8 @@ def _run_deci(req: CDDeciRequest, max_steps_auglag=20, max_auglag_inner_epochs=1
         "anneal_entropy": "noanneal",
     }
 
-    pandas_data = req._prepared_data
-    constraints = req.constraints
+    pandas_data = p._prepared_data
+    constraints = p.constraints
 
     dataset_loader = PandasDatasetLoader("")
     azua_dataset = dataset_loader.split_data_and_load_dataset(
