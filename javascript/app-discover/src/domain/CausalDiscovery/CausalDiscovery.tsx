@@ -91,18 +91,20 @@ export async function discover(
 		CausalDiscoveryAlgorithmOptions.get(algorithm)?.algorithm || algorithm
 	const algorithmOptions =
 		CausalDiscoveryAlgorithmOptions.get(algorithm)?.options
-	const result = await fetch(RUN_CAUSAL_DISCOVERY_BASE_URL, {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
+	const result = await fetch(
+		`${RUN_CAUSAL_DISCOVERY_BASE_URL}${algorithmName.toLowerCase()}/`,
+		{
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				dataset: JSON.parse(jsonData),
+				constraints: constraintsJson,
+				deciOptions: algorithmOptions,
+			}),
 		},
-		body: JSON.stringify({
-			algorithm: algorithmName,
-			dataset: JSON.parse(jsonData),
-			constraints: constraintsJson,
-			deciOptions: algorithmOptions,
-		}),
-	})
+	)
 	const causalDiscoveryResult = await result.json()
 	const graph = fromCausalDiscoveryResults(
 		variables,
