@@ -64,15 +64,21 @@ export const LineChart: React.FC<LineChartProps> = memo(function LineChart({
 	showMeanTreatmentEffect,
 	checkableUnits,
 	onRemoveCheckedUnit,
+	treatedUnitsList,
 }) {
 	const [hoverUnit, setHoverUnit] = useState('')
 
 	const { width, height, margin } = dimensions
 	const [checkedUnits] = useRecoilState(CheckedUnitsState)
 	const [outcomeName] = useRecoilState(OutcomeNameState)
-	const [treatedUnits] = useRecoilState(TreatedUnitsState)
+	const [treatedUnitsState] = useRecoilState(TreatedUnitsState)
 	const [treatmentStartDates] = useRecoilState(TreatmentStartDatesState)
 	const [isPlaceboSimulation] = useRecoilState(PlaceboSimulationState)
+
+	const treatedUnits = useMemo(
+		() => treatedUnitsList || treatedUnitsState,
+		[treatedUnitsState, treatedUnitsList],
+	)
 
 	const firstOutput =
 		outputData.length > 0
