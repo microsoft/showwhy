@@ -2,8 +2,8 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import type { Hypothesis } from '@causal/app-common';
-import { HypothesisGroup, MenuBar, useDataTables } from '@causal/app-common'
+import type { Hypothesis } from '@showwhy/app-common';
+import { HypothesisGroup, MenuBar, useDataTables } from '@showwhy/app-common'
 import type { IDropdownOption, ITooltipHostStyles } from '@fluentui/react'
 import {
 	ActionButton,

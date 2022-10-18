@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { Hypothesis } from '@causal/app-common'
+import { Hypothesis } from '@showwhy/app-common'
 import { atom } from 'recoil'
 
 import type {

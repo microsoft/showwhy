@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { Hypothesis } from '@causal/app-common'
+import { Hypothesis } from '@showwhy/app-common'
 import { Spinner, SpinnerSize, Stack, Text } from '@fluentui/react'
 import { mean } from 'lodash'
 import { memo, useCallback, useMemo, useRef, useState } from 'react'
