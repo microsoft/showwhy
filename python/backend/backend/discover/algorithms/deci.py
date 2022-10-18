@@ -184,7 +184,9 @@ class DeciRunner(CausalDiscoveryRunner):
         )
 
         for n1, n2, d in deci_graph.edges(data=True):
-            ate = deci_ate_graph.get_edge_data(n1, n2)["weight"]
+            # TODO: validate what to do when there is no edge in the ate graph
+            #       currently returning weight 0
+            ate = deci_ate_graph.get_edge_data(n1, n2, default={"weight": 0})["weight"]
             d["confidence"] = d.pop("weight", None)
             d["weight"] = ate
 

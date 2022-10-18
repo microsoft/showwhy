@@ -92,7 +92,7 @@ export async function discover(
 	const deciTrainingOptions =
 		CausalDiscoveryAlgorithmOptions.get(algorithm)?.deci_training_options
 	const result = await fetch(
-		`${RUN_CAUSAL_DISCOVERY_BASE_URL}${algorithmName.toLowerCase()}/`,
+		`${RUN_CAUSAL_DISCOVERY_BASE_URL}${algorithmName.toLowerCase()}`,
 		{
 			method: 'POST',
 			headers: {
