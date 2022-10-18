@@ -131,6 +131,7 @@ export const CausalEdge: React.FC<CausalEdgeProps> = memo(function CausalEdge({
 					showHead={showArrowHead}
 					showTail={false}
 					path={path}
+					passProps={{ onClick: () => setSelectedObject(relationship) }}
 					key={relationship.key + '-correlation'}
 					dashness={{ strokeLen: 20, nonStrokeLen: 30, animation: 0 }}
 					// SVGcanvasStyle={{filter: 'blur(2px)'}}
@@ -139,5 +140,3 @@ export const CausalEdge: React.FC<CausalEdgeProps> = memo(function CausalEdge({
 		</div>
 	)
 })
-
-const iconStyle = { fontSize: '8pt' }

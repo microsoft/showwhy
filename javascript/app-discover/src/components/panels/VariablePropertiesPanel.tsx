@@ -27,14 +27,18 @@ import * as Graph from '../../domain/Graph.js'
 import { VariableNature } from '../../domain/VariableNature.js'
 import {
 	CausalGraphConstraintsState,
+	ConfidenceThresholdState,
 	DatasetState,
 	InModelCausalVariablesState,
+	SelectedObjectState,
 	useCausalGraph,
+	WeightThresholdState,
 } from '../../state/index.js'
 import { Chart } from '../charts/Chart.js'
 import { Divider } from '../controls/Divider.js'
 import { VariableNaturePicker } from '../controls/VariableNaturePicker.js'
 import { VariableCorrelationsList } from '../lists/CorrelationList.js'
+import { EdgeList } from '../lists/EdgeList.js'
 import {
 	add_remove_button_styles,
 	panel_stack_tokens,
@@ -45,11 +49,21 @@ export const VariablePropertiesPanel: React.FC<VariablePropertiesPanelProps> =
 	memo(function VariablePropertiesPanel({ variable }) {
 		const dataset = useRecoilValue(DatasetState)
 		const causalGraph = useCausalGraph()
+		const weightThreshold = useRecoilValue(WeightThresholdState)
+		const confidenceThreshold = useRecoilValue(ConfidenceThresholdState)
+		const [, setSelectedObject] = useRecoilState(SelectedObjectState)
+
 		const [inModelVariables, setInModelVariables] = useRecoilState(
 			InModelCausalVariablesState,
 		)
 
 		const isInModel = Graph.includesVariable(causalGraph, variable)
+		const relationships = Graph.validRelationshipsForColumnName(
+			causalGraph,
+			variable,
+			weightThreshold,
+			confidenceThreshold,
+		)
 		const [constraints, setConstraints] = useRecoilState(
 			CausalGraphConstraintsState,
 		)
@@ -133,6 +147,8 @@ export const VariablePropertiesPanel: React.FC<VariablePropertiesPanelProps> =
 				),
 			} as IChoiceGroupOption,
 		]
+		console.log('relationships', relationships)
+		console.log('constraints', constraints)
 
 		return (
 			<>
@@ -195,6 +211,15 @@ export const VariablePropertiesPanel: React.FC<VariablePropertiesPanelProps> =
 							)
 						))}
 				</Stack>
+				<Divider>Edges</Divider>
+				{relationships && (
+					<EdgeList
+						onSelect={setSelectedObject}
+						variable={variable}
+						relationships={relationships}
+					/>
+				)}
+
 				{isInModel && (
 					<>
 						<Divider>Constraint</Divider>

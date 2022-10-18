@@ -18,6 +18,7 @@ export const ConstraintsPanel: React.FC<ConstraintsPanelProps> = memo(
 		const [constraints, setConstraints] = useRecoilState(
 			CausalGraphConstraintsState,
 		)
+		console.log('constraints', constraints)
 		const resetConstraints = useResetRecoilState(CausalGraphConstraintsState)
 
 		const removeFromRelationshipConstraints = (

@@ -7,9 +7,17 @@ import type ColumnTable from 'arquero/dist/types/table/column-table'
 import type { CausalVariable, VariableReference } from './CausalVariable.js'
 import { applyMappingFromVariableToTable, isSame } from './CausalVariable.js'
 
+export enum ManualRelationshipReason {
+	Removed = 'Removed',
+	Pinned = 'Pinned',
+	Flipped = 'Flipped',
+	Unknown = 'Unknown',
+}
+
 export interface RelationshipReference {
 	source: VariableReference
 	target: VariableReference
+	reason?: ManualRelationshipReason
 }
 
 export type Relationship = RelationshipReference & {

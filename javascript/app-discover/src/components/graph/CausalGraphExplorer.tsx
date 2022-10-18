@@ -104,6 +104,8 @@ export const CausalGraphExplorer = memo(function CausalGraphExplorer() {
 		/>
 	))
 
+	console.log('causalRelationships', causalRelationships)
+
 	const causalEdges = causalRelationships.map(relationship => {
 		return (
 			<CausalEdge
