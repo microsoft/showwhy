@@ -2,8 +2,6 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import type { Hypothesis } from '@showwhy/app-common';
-import { HypothesisGroup, MenuBar, useDataTables } from '@showwhy/app-common'
 import type { IDropdownOption, ITooltipHostStyles } from '@fluentui/react'
 import {
 	ActionButton,
@@ -24,6 +22,8 @@ import {
 	TextField,
 	TooltipHost,
 } from '@fluentui/react'
+import type { Hypothesis } from '@showwhy/app-common'
+import { HypothesisGroup, MenuBar, useDataTables } from '@showwhy/app-common'
 import { not } from 'arquero'
 import { clone, cloneDeep, isEmpty, isEqual, uniq } from 'lodash'
 import type { FormEvent } from 'react'
@@ -257,7 +257,6 @@ export const MainContent: React.FC = memo(function MainContent() {
 		})
 		return map
 	}, [
-		outputRes,
 		data,
 		treatmentStartDatesAfterEstimate,
 		checkedUnits,

@@ -80,10 +80,13 @@ export const LineChart: React.FC<LineChartProps> = memo(function LineChart({
 		[treatedUnitsState, treatedUnitsList],
 	)
 
-	const firstOutput =
-		outputData.length > 0
-			? outputData[0]
-			: ({} as OutputData | PlaceboOutputData)
+	const firstOutput = useMemo(
+		() =>
+			outputData.length > 0
+				? outputData[0]
+				: ({} as OutputData | PlaceboOutputData),
+		[outputData],
+	)
 
 	// hacks to speed up computation:
 	// cache treated units and selected units as maps

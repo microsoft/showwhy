@@ -123,6 +123,7 @@ export const Bar: React.FC<BarProps> = memo(function Bar({
 		height,
 		renderRotatedLabel,
 		animation,
+		barElementClassName,
 		renderPositiveAndNegativeValues,
 	])
 

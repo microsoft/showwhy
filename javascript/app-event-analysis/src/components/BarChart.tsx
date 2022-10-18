@@ -344,7 +344,14 @@ export const BarChart: React.FC<BarChartProps> = memo(function BarChart({
 				transform={`translate(${width - widthExcludingAxis}, 0)`}
 			/>
 		)
-	}, [orientation, yScale, renderAxisLabels, width, widthExcludingAxis])
+	}, [
+		orientation,
+		yScale,
+		renderAxisLabels,
+		width,
+		widthExcludingAxis,
+		yAxisScale,
+	])
 
 	const bottomAxis = useMemo(() => {
 		return orientation === BarChartOrientation.column ? (

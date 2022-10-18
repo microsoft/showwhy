@@ -2,8 +2,8 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { Hypothesis } from '@showwhy/app-common'
 import { Spinner, SpinnerSize, Stack, Text } from '@fluentui/react'
+import { Hypothesis } from '@showwhy/app-common'
 import { mean } from 'lodash'
 import { memo, useCallback, useMemo, useRef, useState } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
@@ -151,7 +151,7 @@ export const ResultPane: React.FC<ResultPaneProps> = memo(function ResultPane({
 			})
 			return inputData.sort((a, b) => a.value - b.value)
 		},
-		[placeboOutputData, hypothesis],
+		[hypothesis],
 	)
 
 	const getPlaceboTreatedMSPERatio = useCallback(
