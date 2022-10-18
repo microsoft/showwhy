@@ -33,6 +33,7 @@
 		"allotment": "^1.17.0",
 		"arquero": "^5.1.0",
 		"normalize.css": "^8.0.1",
+		"observable-hooks": "^4.2.1",
 		"react-dom": "^18.2.0",
 		"react-is": "^18.2.0",
 		"react-router-dom": "^6.3.0",
