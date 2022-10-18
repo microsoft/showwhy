@@ -5,7 +5,8 @@
 import type { TableContainer } from '@datashaper/tables'
 import type { DataTable, Maybe } from '@datashaper/workflow'
 import type ColumnTable from 'arquero/dist/types/table/column-table.js'
-import { useEffect, useState } from 'react'
+import { useObservableState } from 'observable-hooks'
+import { from } from 'rxjs'
 
 /**
  * Uses the latest table from a data package. This is updatde as the package changes
@@ -15,15 +16,7 @@ import { useEffect, useState } from 'react'
 export function useDataTableOutput(
 	pkg: DataTable | undefined,
 ): Maybe<TableContainer> {
-	const [table, setTable] = useState(pkg?.currentOutput)
-
-	useEffect(() => {
-		if (pkg) {
-			const sub = pkg.output.subscribe(setTable)
-			return () => sub.unsubscribe()
-		}
-	}, [pkg])
-	return table
+	return useObservableState(pkg?.output ?? none())
 }
 
 /**
@@ -34,14 +27,7 @@ export function useDataTableOutput(
 export function useDataTableSource(
 	pkg: DataTable | undefined,
 ): Maybe<ColumnTable> {
-	const [table, setTable] = useState<Maybe<ColumnTable>>(
-		() => pkg?.currentSource,
-	)
-	useEffect(() => {
-		if (pkg) {
-			const sub = pkg.source.subscribe(setTable)
-			return () => sub.unsubscribe()
-		}
-	}, [pkg])
-	return table
+	return useObservableState(pkg?.source ?? none(), () => pkg?.currentSource)
 }
+
+const none = () => from([undefined])
