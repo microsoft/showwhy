@@ -89,8 +89,8 @@ export async function discover(
 	const constraintsJson = createConstraintsJson(variables, constraints)
 	const algorithmName =
 		CausalDiscoveryAlgorithmOptions.get(algorithm)?.algorithm || algorithm
-	const deciTrainingOptions =
-		CausalDiscoveryAlgorithmOptions.get(algorithm)?.deci_training_options
+	const trainingOptions =
+		CausalDiscoveryAlgorithmOptions.get(algorithm)?.training_options
 	const result = await fetch(
 		`${RUN_CAUSAL_DISCOVERY_BASE_URL}${algorithmName.toLowerCase()}`,
 		{
@@ -101,7 +101,7 @@ export async function discover(
 			body: JSON.stringify({
 				dataset: JSON.parse(jsonData),
 				constraints: constraintsJson,
-				deci_training_options: deciTrainingOptions,
+				training_options: trainingOptions,
 			}),
 		},
 	)

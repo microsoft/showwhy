@@ -61,15 +61,15 @@ class DeciTrainingOptions(BaseModel):
 
 
 class DeciPayload(CausalDiscoveryPayload):
-    deci_model_options: DeciModelOptions = DeciModelOptions()
-    deci_training_options: DeciTrainingOptions = DeciTrainingOptions()
+    model_options: DeciModelOptions = DeciModelOptions()
+    training_options: DeciTrainingOptions = DeciTrainingOptions()
 
 
 class DeciRunner(CausalDiscoveryRunner):
     def __init__(self, p: DeciPayload):
         super().__init__(p)
-        self._deci_model_options = p.deci_model_options
-        self._deci_training_options = p.deci_training_options
+        self._model_options = p.model_options
+        self._training_options = p.training_options
 
     def do_causal_discovery(self) -> CausalGraph:
         dataset_loader = PandasDatasetLoader("")
@@ -94,7 +94,7 @@ class DeciRunner(CausalDiscoveryRunner):
             azua_dataset.variables,
             "CauseDisDECIDir",
             torch_device,
-            **self._deci_model_options.dict(),
+            **self._model_options.dict(),
         )
         constraint_matrix = DeciRunner._build_azua_constraint_matrix(
             self._prepared_data,  # azua_dataset.variables,
@@ -103,7 +103,7 @@ class DeciRunner(CausalDiscoveryRunner):
             tabu_edges=self._constraints.forbiddenRelationships,
         )
         deci_model.set_graph_constraint(constraint_matrix)
-        deci_model.run_train(azua_dataset, self._deci_training_options.dict())
+        deci_model.run_train(azua_dataset, self._training_options.dict())
 
         # The next two lines of code are the same as:
         # deci_graph = deci_model.networkx_graph()
