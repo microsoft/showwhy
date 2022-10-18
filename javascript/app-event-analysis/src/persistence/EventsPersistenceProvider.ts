@@ -2,7 +2,12 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { AppResourceHandler, useDataPackage } from '@showwhy/app-common'
+import type {
+	Hypothesis} from '@showwhy/app-common';
+import {
+	AppResourceHandler,
+	useDataPackage,
+} from '@showwhy/app-common'
 import { memo, useCallback, useEffect, useMemo } from 'react'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
 
@@ -16,6 +21,7 @@ import {
 	EventNameState,
 	FileNameState,
 	FilterState,
+	HypothesisState,
 	OutcomeNameState,
 	OutputResState,
 	PlaceboOutputResState,
@@ -55,6 +61,7 @@ interface ProjectJson {
 	timeAlignment: string
 	aggTreatment: Treatment | null
 	aggregateEnabled: boolean
+	hypothesis: Hypothesis | null
 	treatmentStartDatesAfterEstimate: {
 		tStartDates: number[]
 	} | null
@@ -105,6 +112,7 @@ function useGetProjectJson(): () => ProjectJson {
 	const timeAlignment = useRecoilValue(TimeAlignmentState)
 	const aggTreatment = useRecoilValue(AggTreatmentState)
 	const aggregateEnabled = useRecoilValue(AggregateEnabledState)
+	const hypothesis = useRecoilValue(HypothesisState)
 	const treatmentStartDatesAfterEstimate = useRecoilValue(
 		TreatmentStartDatesAfterEstimateState,
 	)
@@ -129,6 +137,7 @@ function useGetProjectJson(): () => ProjectJson {
 			timeAlignment,
 			aggTreatment,
 			aggregateEnabled,
+			hypothesis,
 			treatmentStartDatesAfterEstimate,
 		}),
 		[
@@ -151,6 +160,7 @@ function useGetProjectJson(): () => ProjectJson {
 			aggTreatment,
 			aggregateEnabled,
 			treatmentStartDatesAfterEstimate,
+			hypothesis,
 		],
 	)
 }
@@ -180,6 +190,7 @@ function useLoadProjectJson(): (json: ProjectJson) => void {
 	const setTimeAlignment = useSetRecoilState(TimeAlignmentState)
 	const setAggTreatment = useSetRecoilState(AggTreatmentState)
 	const setAggregateEnabled = useSetRecoilState(AggregateEnabledState)
+	const setHypothesis = useSetRecoilState(HypothesisState)
 	const setTreatmentStartDatesAfterEstimate = useSetRecoilState(
 		TreatmentStartDatesAfterEstimateState,
 	)
@@ -204,6 +215,7 @@ function useLoadProjectJson(): (json: ProjectJson) => void {
 			setTimeAlignment(json.timeAlignment)
 			setAggTreatment(json.aggTreatment)
 			setAggregateEnabled(json.aggregateEnabled)
+			setHypothesis(json.hypothesis)
 			setTreatmentStartDatesAfterEstimate(json.treatmentStartDatesAfterEstimate)
 		},
 		[
@@ -225,6 +237,7 @@ function useLoadProjectJson(): (json: ProjectJson) => void {
 			setTimeAlignment,
 			setAggTreatment,
 			setAggregateEnabled,
+			setHypothesis,
 			setTreatmentStartDatesAfterEstimate,
 		],
 	)

@@ -14,6 +14,7 @@ export const DrawingContainer: React.FC<
 	margin = DEFAULT_MARGIN,
 	className = 'chart',
 	children,
+	refLine = false,
 	handleClickOutside,
 	handleContainerClick,
 }) {
@@ -38,6 +39,32 @@ export const DrawingContainer: React.FC<
 			document.removeEventListener('click', handleDocumentClick, true)
 		}
 	}, [])
+
+	useEffect(() => {
+		if (refLine) {
+			const svg = ref?.current
+			const path = svg?.querySelector('path.domain') as any
+			const d = path?.getAttribute('d') || ''
+			const height = parseFloat(d.split(',')[1]?.split('H')[0])
+			if (svg && !isNaN(height)) {
+				const rl = svg.querySelector('.reference-line')
+				rl?.remove()
+				const line = document.createElementNS(
+					'http://www.w3.org/2000/svg',
+					'line',
+				)
+				const halfHeight = `${height / 2}`
+				line.setAttributeNS(null, 'class', 'reference-line')
+				line.setAttributeNS(null, 'stroke', 'rgb(43, 185, 212)')
+				line.setAttributeNS(null, 'stroke-width', '0.2')
+				line.setAttributeNS(null, 'x1', '0')
+				line.setAttributeNS(null, 'y1', halfHeight)
+				line.setAttributeNS(null, 'x2', `${width}`)
+				line.setAttributeNS(null, 'y2', halfHeight)
+				svg.querySelector('g')?.appendChild(line)
+			}
+		}
+	}, [refLine, width])
 
 	return (
 		<svg

@@ -64,20 +64,29 @@ export const LineChart: React.FC<LineChartProps> = memo(function LineChart({
 	showMeanTreatmentEffect,
 	checkableUnits,
 	onRemoveCheckedUnit,
+	treatedUnitsList,
 }) {
 	const [hoverUnit, setHoverUnit] = useState('')
 
 	const { width, height, margin } = dimensions
 	const [checkedUnits] = useRecoilState(CheckedUnitsState)
 	const [outcomeName] = useRecoilState(OutcomeNameState)
-	const [treatedUnits] = useRecoilState(TreatedUnitsState)
+	const [treatedUnitsState] = useRecoilState(TreatedUnitsState)
 	const [treatmentStartDates] = useRecoilState(TreatmentStartDatesState)
 	const [isPlaceboSimulation] = useRecoilState(PlaceboSimulationState)
 
-	const firstOutput =
-		outputData.length > 0
-			? outputData[0]
-			: ({} as OutputData | PlaceboOutputData)
+	const treatedUnits = useMemo(
+		() => treatedUnitsList || treatedUnitsState,
+		[treatedUnitsState, treatedUnitsList],
+	)
+
+	const firstOutput = useMemo(
+		() =>
+			outputData.length > 0
+				? outputData[0]
+				: ({} as OutputData | PlaceboOutputData),
+		[outputData],
+	)
 
 	// hacks to speed up computation:
 	// cache treated units and selected units as maps

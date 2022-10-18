@@ -21,4 +21,5 @@ export interface LineChartProps extends ChartOptions {
 	hoverInfo: HoverInfo
 	checkableUnits: string[]
 	onRemoveCheckedUnit: (unitToRemove: string) => void
+	treatedUnitsList?: string[]
 }
