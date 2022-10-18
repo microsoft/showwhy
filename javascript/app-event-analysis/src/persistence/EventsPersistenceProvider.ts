@@ -61,7 +61,7 @@ interface ProjectJson {
 	timeAlignment: string
 	aggTreatment: Treatment | null
 	aggregateEnabled: boolean
-	hypothesis: Hypothesis
+	hypothesis: Hypothesis | null
 	treatmentStartDatesAfterEstimate: {
 		tStartDates: number[]
 	} | null
