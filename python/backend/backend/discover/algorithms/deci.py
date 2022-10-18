@@ -1,7 +1,7 @@
 import base64
 import io
 import math
-from typing import Optional
+from typing import List, Literal, Optional, Tuple, Union
 
 import networkx
 import numpy as np
@@ -20,60 +20,58 @@ from backend.discover.pandas_dataset_loader import PandasDatasetLoader
 torch.set_default_dtype(torch.float32)
 
 
-class DeciOptions(BaseModel):
+class DeciModelOptions(BaseModel):
+    imputation: bool = False
+    lambda_dag: float = 100.0
+    lambda_sparse: float = 5.0
+    tau_gumbel: float = 1.0
+    var_dist_A_mode: Literal["simple", "enco", "true", "three"] = "three"
+    imputer_layer_sizes: Optional[List[int]] = None
+    mode_adjacency: Literal["upper", "lower", "learn"] = "learn"
+    # TODO: Once pytorch implements opset 17 we can use nn.LayerNorm
+    norm_layers: bool = False
+    res_connection: bool = True
+    encoder_layer_sizes: Optional[List[int]] = [32, 32]
+    decoder_layer_sizes: Optional[List[int]] = [32, 32]
+    cate_rff_n_features: int = 3000
+    cate_rff_lengthscale: Union[int, float, List[float], Tuple[float, float]] = 1
+
+
+# To speed up training you can try:
+#  increasing learning_rate
+#  increasing batch_size (reduces noise when using higher learning rate)
+#  decreasing max_steps_auglag (go as low as you can and still get a DAG)
+#  decreasing max_auglag_inner_epochs
+class DeciTrainingOptions(BaseModel):
+    learning_rate: float = 3e-2
+    batch_size: int = 512
+    stardardize_data_mean: bool = False
+    stardardize_data_std: bool = False
+    rho: float = 10.0
+    safety_rho: float = 1e13
+    alpha: float = 0.0
+    safety_alpha: float = 1e13
+    tol_dag: float = 1e-3
+    progress_rate: float = 0.25
     max_steps_auglag: int = 20
     max_auglag_inner_epochs: int = 1000
+    max_p_train_dropout: float = 0.25
+    reconstruction_loss_factor: float = 1.0
+    anneal_entropy: Literal["linear", "noanneal"] = "noanneal"
 
 
 class DeciPayload(CausalDiscoveryPayload):
-    deciOptions: DeciOptions = DeciOptions()
+    deci_model_options: DeciModelOptions = DeciModelOptions()
+    deci_training_options: DeciTrainingOptions = DeciTrainingOptions()
 
 
 class DeciRunner(CausalDiscoveryRunner):
     def __init__(self, p: DeciPayload):
         super().__init__(p)
-        self._deci_options = p.deciOptions
+        self._deci_model_options = p.deci_model_options
+        self._deci_training_options = p.deci_training_options
 
     def do_causal_discovery(self) -> CausalGraph:
-        model_config = {
-            "imputation": False,
-            "lambda_dag": 100.0,
-            "lambda_sparse": 5.0,
-            "tau_gumbel": 1.0,
-            "var_dist_A_mode": "three",
-            "imputer_layer_sizes": None,
-            "mode_adjacency": "learn",
-            "norm_layers": False,  # TODO: Once pytorch implements opset 17 we can use nn.LayerNorm
-            "res_connection": True,
-            "encoder_layer_sizes": [32, 32],
-            "decoder_layer_sizes": [32, 32],
-            "cate_rff_n_features": 3000,
-            "cate_rff_lengthscale": 1,
-        }
-
-        # To speed up training you can try:
-        #  increasing learning_rate
-        #  increasing batch_size (reduces noise when using higher learning rate)
-        #  decreasing max_steps_auglag (go as low as you can and still get a DAG)
-        #  decreasing max_auglag_inner_epochs
-        training_params = {
-            "learning_rate": 3e-2,
-            "batch_size": 512,
-            "stardardize_data_mean": False,
-            "stardardize_data_std": False,
-            "rho": 10.0,
-            "safety_rho": 1e13,
-            "alpha": 0.0,
-            "safety_alpha": 1e13,
-            "tol_dag": 1e-3,
-            "progress_rate": 0.25,
-            "max_steps_auglag": self._deci_options.max_steps_auglag,
-            "max_auglag_inner_epochs": self._deci_options.max_auglag_inner_epochs,
-            "max_p_train_dropout": 0.25,
-            "reconstruction_loss_factor": 1.0,
-            "anneal_entropy": "noanneal",
-        }
-
         dataset_loader = PandasDatasetLoader("")
         azua_dataset = dataset_loader.split_data_and_load_dataset(
             self._prepared_data, 0.5, 0, 0
@@ -96,7 +94,7 @@ class DeciRunner(CausalDiscoveryRunner):
             azua_dataset.variables,
             "CauseDisDECIDir",
             torch_device,
-            **model_config,
+            **self._deci_model_options.dict(),
         )
         constraint_matrix = DeciRunner._build_azua_constraint_matrix(
             self._prepared_data,  # azua_dataset.variables,
@@ -105,7 +103,7 @@ class DeciRunner(CausalDiscoveryRunner):
             tabu_edges=self._constraints.forbiddenRelationships,
         )
         deci_model.set_graph_constraint(constraint_matrix)
-        deci_model.run_train(azua_dataset, training_params)
+        deci_model.run_train(azua_dataset, self._deci_training_options.dict())
 
         # The next two lines of code are the same as:
         # deci_graph = deci_model.networkx_graph()
