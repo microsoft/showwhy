@@ -10,13 +10,11 @@ import type { ChartOptionsGroupProps } from './ChartOptionsGroup.types.js'
 export const ChartOptionsGroup: React.FC<ChartOptionsGroupProps> = memo(
 	function ChartOptionsGroup({ options, onChange, isPlaceboSimulation }) {
 		const {
-			renderRawData,
-			showTreatmentStart,
 			showSynthControl,
 			applyIntercept,
 			relativeIntercept,
-			showGrid,
 			showMeanTreatmentEffect,
+			showChartPerUnit,
 		} = options
 
 		const handleOnChange = useCallback(
@@ -37,7 +35,7 @@ export const ChartOptionsGroup: React.FC<ChartOptionsGroupProps> = memo(
 					disabled={isPlaceboSimulation}
 				/>
 				<Checkbox
-					label="Apply intercept offset"
+					label="Align curves pretreatment"
 					checked={applyIntercept}
 					onChange={(e, isChecked) =>
 						handleOnChange({ applyIntercept: !!isChecked })
@@ -45,7 +43,7 @@ export const ChartOptionsGroup: React.FC<ChartOptionsGroupProps> = memo(
 					disabled={isPlaceboSimulation}
 				/>
 				<Checkbox
-					label="Relative intercept"
+					label="Plot difference"
 					checked={relativeIntercept}
 					onChange={(e, isChecked) =>
 						handleOnChange({ relativeIntercept: !!isChecked })
@@ -57,6 +55,14 @@ export const ChartOptionsGroup: React.FC<ChartOptionsGroupProps> = memo(
 					checked={showMeanTreatmentEffect}
 					onChange={(e, isChecked) =>
 						handleOnChange({ showMeanTreatmentEffect: !!isChecked })
+					}
+					disabled={isPlaceboSimulation}
+				/>
+				<Checkbox
+					label="Show chart per unit"
+					checked={showChartPerUnit}
+					onChange={(e, isChecked) =>
+						handleOnChange({ showChartPerUnit: !!isChecked })
 					}
 					disabled={isPlaceboSimulation}
 				/>
