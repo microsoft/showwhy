@@ -2,6 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import { Hypothesis } from '@causal/app-common'
 import { Spinner, SpinnerSize, Stack, Text } from '@fluentui/react'
 import { mean } from 'lodash'
 import { memo, useCallback, useMemo, useRef, useState } from 'react'
@@ -11,8 +12,10 @@ import { useRecoilState } from 'recoil'
 import {
 	ChartOptionsState,
 	EventNameState,
+	HypothesisState,
 	OutcomeNameState,
 	PlaceboSimulationState,
+	SelectedTabKeyState,
 	TreatedUnitsState,
 	TreatmentStartDatesState,
 } from '../state/state.js'
@@ -25,7 +28,11 @@ import type {
 	ResultPaneProps,
 	TooltipInfo,
 } from '../types.js'
-import { BarChartOrientation, TimeAlignmentOptions } from '../types.js'
+import {
+	BarChartOrientation,
+	CONFIGURATION_TABS,
+	TimeAlignmentOptions,
+} from '../types.js'
 import { getKeyByValue, weightedMean } from '../utils/misc.js'
 import { isValidUnit } from '../utils/validation.js'
 import { BarChart } from './BarChart.js'
@@ -71,6 +78,8 @@ export const ResultPane: React.FC<ResultPaneProps> = memo(function ResultPane({
 	const [treatedUnits] = useRecoilState(TreatedUnitsState)
 	const [treatmentStartDates] = useRecoilState(TreatmentStartDatesState)
 	const [isPlaceboSimulation] = useRecoilState(PlaceboSimulationState)
+	const [selectedTabKey] = useRecoilState(SelectedTabKeyState)
+	const [hypothesis] = useRecoilState(HypothesisState)
 
 	const hoverInfo = useMemo(() => {
 		return {
@@ -87,7 +96,16 @@ export const ResultPane: React.FC<ResultPaneProps> = memo(function ResultPane({
 		relativeIntercept,
 		showGrid,
 		showMeanTreatmentEffect,
+		showChartPerUnit,
 	} = chartOptions
+
+	const showRawDataLineChart = useMemo((): boolean => {
+		return (
+			!isCalculatingEstimator &&
+			renderRawData &&
+			selectedTabKey === CONFIGURATION_TABS.prepareAnalysis.key
+		)
+	}, [selectedTabKey, renderRawData, isCalculatingEstimator])
 
 	// barChartData is mainly used as a dependency to re-trigger the useDynamicChartDimensions hook
 	//  when data changes
@@ -104,7 +122,7 @@ export const ResultPane: React.FC<ResultPaneProps> = memo(function ResultPane({
 	)
 
 	const barChartRef = useRef<HTMLDivElement | null>(null)
-	const barChartHeightPercOfWinHeight = 0.25
+	const barChartHeightPercOfWinHeight = 0.35
 	const barChartDimensions = useDynamicChartDimensions(
 		barChartRef,
 		barChartHeightPercOfWinHeight,
@@ -112,15 +130,28 @@ export const ResultPane: React.FC<ResultPaneProps> = memo(function ResultPane({
 	)
 
 	const getPlaceboBarChartInputData = useCallback(
-		(placeboDataGroup: PlaceboDataGroup[]) => {
-			return placeboDataGroup.map(placebo => ({
-				name: placebo.unit,
-				value: placebo.frequency,
-				label: placebo.ratio,
-				color: 'gray',
-			}))
+		(placeboDataGroup: PlaceboDataGroup[], output?: PlaceboOutputData) => {
+			const inputData = placeboDataGroup.map(placebo => {
+				let direction = 1
+				if (output && hypothesis !== Hypothesis.Change) {
+					const index =
+						output.output_lines_treated.findIndex(
+							l => l[0].unit === placebo.unit,
+						) || -1
+					const sdidEstimate = index >= 0 ? output.sdid_estimates[index] : 0
+					direction = sdidEstimate < 0 ? -1 : 1
+				}
+
+				return {
+					name: placebo.unit,
+					value: placebo.frequency * direction,
+					label: placebo.ratio * direction,
+					color: 'gray',
+				}
+			})
+			return inputData.sort((a, b) => a.value - b.value)
 		},
-		[],
+		[placeboOutputData, hypothesis],
 	)
 
 	const getPlaceboTreatedMSPERatio = useCallback(
@@ -294,6 +325,53 @@ export const ResultPane: React.FC<ResultPaneProps> = memo(function ResultPane({
 		)
 	}, [treatedUnits, outputData, isCalculatingEstimator, isPlaceboSimulation]) // timeAlignment used but not needed as a dependency!
 
+	const getLineChart = useCallback(
+		(
+			output: (OutputData | PlaceboOutputData)[],
+			treatedUnitsList = treatedUnits,
+		) => {
+			return (
+				<div ref={lineChartRef} className="chartContainer">
+					<ErrorBoundary FallbackComponent={ChartErrorFallback}>
+						<LineChart
+							inputData={inputData}
+							outputData={output}
+							showSynthControl={showSynthControl}
+							showGrid={showGrid}
+							applyIntercept={applyIntercept}
+							relativeIntercept={relativeIntercept}
+							renderRawData={renderRawData}
+							showTreatmentStart={showTreatmentStart}
+							dimensions={lineChartDimensions}
+							hoverInfo={hoverInfo}
+							showMeanTreatmentEffect={showMeanTreatmentEffect}
+							checkableUnits={checkableUnits}
+							onRemoveCheckedUnit={onRemoveCheckedUnit}
+							treatedUnitsList={treatedUnitsList}
+						/>
+					</ErrorBoundary>
+				</div>
+			)
+		},
+		[
+			treatedUnits,
+			lineChartRef,
+			ChartErrorFallback,
+			inputData,
+			showSynthControl,
+			showGrid,
+			applyIntercept,
+			relativeIntercept,
+			renderRawData,
+			showTreatmentStart,
+			lineChartDimensions,
+			hoverInfo,
+			showMeanTreatmentEffect,
+			checkableUnits,
+			onRemoveCheckedUnit,
+		],
+	)
+
 	const syntheticControlComposition = useMemo(() => {
 		if (
 			isCalculatingEstimator ||
@@ -302,11 +380,28 @@ export const ResultPane: React.FC<ResultPaneProps> = memo(function ResultPane({
 			treatedUnits.length === 0
 		)
 			return <></>
+		const lineChart = getLineChart(outputData)
 		return (
 			<>
+				{!showChartPerUnit && lineChart}
 				{treatedUnits
 					.filter(unit => synthControlData[unit] !== undefined)
 					.map(treatedUnit => {
+						const output =
+							outputData.find(o => o.treatedUnit === treatedUnit) ||
+							({} as OutputData)
+
+						const filteredOutput = {
+							...output,
+							output_lines_control: output.output_lines_control.filter(l =>
+								l[0].unit.includes(treatedUnit),
+							),
+							output_lines_treated: output.output_lines_treated.filter(l =>
+								l[0].unit.includes(treatedUnit),
+							),
+						}
+						const lineChart = getLineChart([filteredOutput], [treatedUnit])
+
 						const header = (
 							<Text
 								className="infoText synth-control-text-margin"
@@ -331,7 +426,7 @@ export const ResultPane: React.FC<ResultPaneProps> = memo(function ResultPane({
 										dimensions={barChartDimensions}
 										orientation={BarChartOrientation[BarChartOrientation.row]}
 										hoverInfo={hoverInfo}
-										leftAxisLabel={'Control units'}
+										leftAxisLabel={''}
 										bottomAxisLabel={'Weight'}
 										checkableUnits={checkableUnits}
 										onRemoveCheckedUnit={onRemoveCheckedUnit}
@@ -340,7 +435,10 @@ export const ResultPane: React.FC<ResultPaneProps> = memo(function ResultPane({
 							</div>
 						)
 						return (
-							<Stack key={treatedUnit}>
+							<Stack key={treatedUnit} tokens={{ padding: 10 }}>
+								<Text variant="xxLarge">{treatedUnit}</Text>
+								<Spacer axis="vertical" size={10} />
+								{showChartPerUnit && lineChart}
 								{header}
 								{syntheticControlBarChart}
 							</Stack>
@@ -360,6 +458,7 @@ export const ResultPane: React.FC<ResultPaneProps> = memo(function ResultPane({
 		barChartDimensions,
 		hoverInfo,
 		synthControlBarChartData,
+		showChartPerUnit,
 	])
 
 	const renderForPlacebo = useMemo(() => {
@@ -370,67 +469,25 @@ export const ResultPane: React.FC<ResultPaneProps> = memo(function ResultPane({
 		)
 	}, [isCalculatingEstimator, isPlaceboSimulation, placeboDataGroup])
 
-	const getLineChart = useCallback(
-		(output: (OutputData | PlaceboOutputData)[]) => {
-			return (
-				<div ref={lineChartRef} className="chartContainer">
-					<ErrorBoundary FallbackComponent={ChartErrorFallback}>
-						<LineChart
-							inputData={inputData}
-							outputData={output}
-							showSynthControl={showSynthControl}
-							showGrid={showGrid}
-							applyIntercept={applyIntercept}
-							relativeIntercept={relativeIntercept}
-							renderRawData={renderRawData}
-							showTreatmentStart={showTreatmentStart}
-							dimensions={lineChartDimensions}
-							hoverInfo={hoverInfo}
-							showMeanTreatmentEffect={showMeanTreatmentEffect}
-							checkableUnits={checkableUnits}
-							onRemoveCheckedUnit={onRemoveCheckedUnit}
-						/>
-					</ErrorBoundary>
-				</div>
-			)
-		},
-		[
-			lineChartRef,
-			ChartErrorFallback,
-			inputData,
-			showSynthControl,
-			showGrid,
-			applyIntercept,
-			relativeIntercept,
-			renderRawData,
-			showTreatmentStart,
-			lineChartDimensions,
-			hoverInfo,
-			showMeanTreatmentEffect,
-			checkableUnits,
-			onRemoveCheckedUnit,
-		],
-	)
-
-	const nonPlaceboLineChart = useMemo(() => {
+	const rawDataLineChart = useMemo(() => {
 		return getLineChart(outputData)
 	}, [outputData, getLineChart])
 
 	const placeboGraphs = useMemo(() => {
 		if (!renderForPlacebo) return null
 		return treatedUnits.map((treatedUnit: string) => {
-			const opd = placeboDataGroup.get(treatedUnit)
-			if (!opd) return null
-			const placeboBarChartInputData = getPlaceboBarChartInputData(opd)
+			const pdg = placeboDataGroup.get(treatedUnit)
+			if (!pdg) return null
+			const output = placeboOutputData.get(treatedUnit) as PlaceboOutputData[]
+			const placeboBarChartInputData = getPlaceboBarChartInputData(
+				pdg,
+				output[0],
+			)
 			const placeboTreatedMSPERatio = getPlaceboTreatedMSPERatio(
 				treatedUnit,
-				opd,
+				pdg,
 			)
-			const output = placeboOutputData.get(treatedUnit) as (
-				| OutputData
-				| PlaceboOutputData
-			)[]
-			const lineChart = getLineChart(output)
+			const lineChart = getLineChart(output, [treatedUnit])
 			return (
 				<>
 					<Stack.Item>
@@ -464,11 +521,10 @@ export const ResultPane: React.FC<ResultPaneProps> = memo(function ResultPane({
 									orientation={BarChartOrientation[BarChartOrientation.column]}
 									hoverInfo={hoverInfo}
 									leftAxisLabel={'Ratio'}
-									bottomAxisLabel={
-										'Post/Pre-treatment mean squared prediction error'
-									}
+									bottomAxisLabel={''}
 									checkableUnits={checkableUnits}
 									onRemoveCheckedUnit={onRemoveCheckedUnit}
+									refLine={hypothesis !== Hypothesis.Change}
 								/>
 							</ErrorBoundary>
 						</div>
@@ -479,7 +535,7 @@ export const ResultPane: React.FC<ResultPaneProps> = memo(function ResultPane({
 							<Text className="infoText last-item-margin" variant="large">
 								<b>{treatedUnit}</b>
 								{placeboTreatedMSPERatio > 0
-									? ` stands out with a larger ratio (post MSPE ${Math.trunc(
+									? ` stands out with an extreme ratio (top 3 post MSPE ${Math.trunc(
 											placeboTreatedMSPERatio,
 									  )} times the pre MSPE), so one may conclude the significance of results`
 									: ' seems to have a small ratio, so one may conclude the insignificance of results'}
@@ -491,6 +547,7 @@ export const ResultPane: React.FC<ResultPaneProps> = memo(function ResultPane({
 		})
 	}, [
 		hoverInfo,
+		hypothesis,
 		barChartRef,
 		treatedUnits,
 		renderForPlacebo,
@@ -542,9 +599,7 @@ export const ResultPane: React.FC<ResultPaneProps> = memo(function ResultPane({
 				)}
 			</Stack.Item>
 
-			<Stack.Item>
-				{!isCalculatingEstimator && (!isPlaceboSimulation || renderRawData) && nonPlaceboLineChart}
-			</Stack.Item>
+			<Stack.Item>{showRawDataLineChart && rawDataLineChart}</Stack.Item>
 
 			{!renderRawData && (
 				<>
