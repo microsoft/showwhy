@@ -3,8 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import type { Theme } from '@fluentui/react'
 import { DefaultButton, Icon } from '@fluentui/react'
-import type { Theme } from '@thematic/core'
 import styled from 'styled-components'
 
 export const Button = styled(DefaultButton)`
@@ -16,9 +16,7 @@ export const Button = styled(DefaultButton)`
 	}
 	border: 1px solid;
 	${({ checked, theme }: { checked: boolean; theme: Theme }) =>
-		checked
-			? theme.application().accent().hex()
-			: theme.application().foreground().hex()};
+		checked ? theme.palette.themePrimary : theme.palette.neutralPrimary};
 `
 
 export const ButtonIcon = styled(Icon)`

@@ -7,7 +7,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { ActionButton } from '@fluentui/react'
-import type { Theme } from '@thematic/core'
+import type { FluentTheme } from '@thematic/fluent'
 import styled from 'styled-components'
 
 export const CalloutStyles = {
@@ -46,15 +46,15 @@ export const Li = styled.li<{ complete: boolean; missing: boolean }>`
 		complete,
 		missing,
 	}: {
-		theme: Theme
+		theme: FluentTheme
 		complete: boolean
 		missing: boolean
 	}) =>
 		missing
 			? theme.application().warning().hex()
 			: complete
-			? theme.application().accent().hex()
-			: theme.application().foreground().hex()};
+			? theme.palette.themePrimary
+			: theme.palette.neutralPrimary};
 	cursor: ${({ complete }) => (complete ? 'pointer' : 'default')};
 `
 

@@ -15,7 +15,7 @@ export const Divider = styled(Label)`
 		content: '';
 		height: 1px;
 		margin: 8px;
-		background-color: ${({ theme }) => theme.application().lowContrast()};
+		background-color: ${({ theme }) => theme.palette.neutralTertiaryAlt};
 		flex-grow: 1; // both lines will expand to occupy the available space
 	}
 `

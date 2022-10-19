@@ -2,14 +2,13 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import type { Theme } from '@fluentui/react'
 import { Stack } from '@fluentui/react'
-import type { Theme } from '@thematic/core'
 import styled from 'styled-components'
 
 export const StyledStack = styled(Stack)`
 	.add-treated-unit {
-		color: ${({ theme }: { theme: Theme }) =>
-			theme.application().accent().hex()};
+		color: ${({ theme }: { theme: Theme }) => theme.palette.themePrimary};
 		cursor: pointer;
 	}
 	.remove-treated-unit {
@@ -143,5 +142,5 @@ export const hypothesisGroupStyles = {
 	flexContainer: {
 		display: 'flex',
 		justifyContent: 'space-between',
-	}
+	},
 }

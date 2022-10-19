@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import type { Theme } from '@thematic/core'
+import type { Theme } from '@fluentui/react'
 import styled from 'styled-components'
 
 import { CausalEffectSize } from './CausalEffectsArrows.constants.js'
@@ -55,7 +55,7 @@ export const CausalBox = styled.div<{ size: CausalEffectSize; width: number }>`
 	font-size: ${({ size }) =>
 		size === CausalEffectSize.Small ? '12px' : '14px'};
 	border: 1px
-		${({ theme }: { theme: Theme }) => theme.application().border().hex()} solid;
+		${({ theme }: { theme: Theme }) => theme.palette.neutralTertiaryAlt} solid;
 	position: relative;
 	border-radius: 5px;
 	overflow: auto;

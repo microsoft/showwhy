@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import type { Theme } from '@thematic/core'
+import type { Theme } from '@fluentui/react'
 import { createGlobalStyle } from 'styled-components'
 
 export const GlobalStyle = createGlobalStyle`
@@ -37,6 +37,6 @@ export const GlobalStyle = createGlobalStyle`
 	}
 
 	:root {
-		--faint: ${({ theme }: { theme: Theme }) => theme.application().faint().hex()};
+		--faint: ${({ theme }: { theme: Theme }) => theme.palette.neutralLighter};
 	}
 `

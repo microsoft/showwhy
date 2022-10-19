@@ -33,14 +33,9 @@ export const Value = styled(Bold)`
 `
 
 export const Paragraph = styled.p<{
-	color?: string
 	noMarginBottom?: Maybe<boolean>
 	noMarginTop?: Maybe<boolean>
 }>`
-	color: ${({ color, theme }: { color?: string; theme: Theme }): string =>
-		color
-			? theme.application()[color as keyof Application].toString()
-			: 'black'};
 	margin-bottom: ${({ noMarginBottom }) => (noMarginBottom ? 'unset' : '1em')};
 	margin-top: ${({ noMarginTop }) => (noMarginTop ? 'unset' : '1em')};
 `
