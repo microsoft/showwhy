@@ -38,7 +38,7 @@ def prepare_data(func: Callable[[CausalDiscoveryPayload], Any]):
         p._prepared_data.dropna(inplace=True)
 
         if p._prepared_data.size == 0:
-            return _get_empty_graph_json(p._prepared_data)
+            return get_empty_graph_json(p._prepared_data)
 
         scaled_data = MaxAbsScaler().fit_transform(p._prepared_data)
         p._prepared_data = pd.DataFrame(
@@ -52,7 +52,7 @@ def prepare_data(func: Callable[[CausalDiscoveryPayload], Any]):
     return wrapper
 
 
-def _get_empty_graph_json(pandas_data: pd.DataFrame):
+def get_empty_graph_json(pandas_data: pd.DataFrame):
     graph = networkx.Graph()
     graph.add_nodes_from(pandas_data.columns)
     return json_graph.cytoscape_data(graph)
