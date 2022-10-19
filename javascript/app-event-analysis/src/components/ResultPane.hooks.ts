@@ -23,7 +23,7 @@ export function useDynamicChartDimensions(
 		width: 0,
 		height: 0,
 		margin: {
-			top: 0,
+			top: 1,
 			right: 100,
 			bottom: 50,
 			left: 100,
@@ -62,9 +62,8 @@ export function useDynamicChartDimensions(
 				setChartDimensions((chartDimensions: ChartDimensions) => ({
 					...chartDimensions,
 					width:
-						window.outerWidth -
+						newWidth -
 						SCROLL_BAR_OFFSET -
-						widthDiff.current -
 						chartDimensions.margin.right -
 						chartDimensions.margin.left,
 					height:

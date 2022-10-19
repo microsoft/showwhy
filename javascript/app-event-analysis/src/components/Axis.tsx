@@ -2,7 +2,8 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { axisBottom, axisLeft, easeLinear, format,select } from 'd3'
+import { axisBottom, axisLeft, easeLinear, format, select } from 'd3'
+import truncate from 'lodash-es/truncate'
 import { memo, useEffect, useRef } from 'react'
 
 import { MAX_BAR_COUNT_BEFORE_TICK_ROTATION } from '../types.js'
@@ -56,12 +57,18 @@ export const Axis: React.FC<AxisProps> = memo(function Axis({
 					numBars > MAX_BAR_COUNT_BEFORE_TICK_ROTATION && type === 'bottom'
 				renderedAxis
 					.selectAll('text')
+					.text(
+						text =>
+							(rotateBars
+								? truncate(text as string, { length: 20 })
+								: text) as string,
+					)
 					.style(
 						'text-anchor',
 						rotateBars || type === 'left' ? 'end' : 'middle',
 					)
-					.attr('dx', rotateBars || type === 'left' ? '-0.75em' : '0em')
-					.attr('dy', rotateBars || type === 'left' ? '0em' : '1em')
+					.attr('dx', rotateBars || type === 'left' ? '-0.5em' : '0em')
+					.attr('dy', rotateBars || type === 'left' ? '0.25rem' : '1em')
 					.attr('transform', function () {
 						return rotateBars ? 'rotate(-60)' : ''
 					})

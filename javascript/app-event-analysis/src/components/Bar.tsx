@@ -22,8 +22,9 @@ export const Bar: React.FC<BarProps> = memo(function Bar({
 	height,
 	color,
 	data,
-	animation = 'left',
+	animation,
 	renderRotatedLabel,
+	renderPositiveAndNegativeValues,
 	...props
 }) {
 	const ref = useRef<SVGGElement | null>(null)
@@ -38,9 +39,12 @@ export const Bar: React.FC<BarProps> = memo(function Bar({
 					.select<SVGGElement, BarData>(ref.current)
 					.datum(data)
 					.attr('transform', d => {
-						const xOffset = ((xScale as D3ScaleBand)(d.name) ?? 0).toString()
-						const yOffset = (yScale as D3ScaleLinear)(d.value).toString()
-						return 'translate(' + xOffset + ', ' + yOffset + ')'
+						const xOffset = (xScale as D3ScaleBand)(d.name) ?? 0
+						const barHeight = (yScale as D3ScaleLinear)(d.value)
+						const yOffset = renderPositiveAndNegativeValues
+							? height / 2 - (d.value < 0 ? 0 : barHeight)
+							: barHeight
+						return `translate(${xOffset}, ${yOffset})`
 					})
 				barElement.selectAll('*').remove()
 				const renderedRect = barElement
@@ -48,19 +52,15 @@ export const Bar: React.FC<BarProps> = memo(function Bar({
 					.attr('class', barElementClassName)
 					.attr('stroke', 'none')
 					.attr('opacity', BAR_TRANSPARENT)
-				if (animation === 'left') {
-					renderedRect
-						.transition()
-						.duration(ANIMATION_DURATION)
-						.ease(EASING_FN)
-						.style('fill', d => d.color)
-						.attr('width', barWidth)
-						.attr('height', d => height - (yScale as D3ScaleLinear)(d.value))
-				} else {
-					renderedRect
-						.style('fill', d => d.color)
-						.attr('width', barWidth)
-						.attr('height', d => height - (yScale as D3ScaleLinear)(d.value))
+				renderedRect
+					.style('fill', d => d.color)
+					.attr('width', barWidth)
+					.attr('height', d => {
+						const value = (yScale as D3ScaleLinear)(Math.abs(d.value))
+						return renderPositiveAndNegativeValues ? value : height - value
+					})
+				if (animation) {
+					renderedRect.transition().duration(ANIMATION_DURATION).ease(EASING_FN)
 				}
 				// add rotated label
 				if (renderRotatedLabel) {
@@ -69,7 +69,7 @@ export const Bar: React.FC<BarProps> = memo(function Bar({
 						.text(d => d.name ?? '')
 						.attr('transform', function (d) {
 							const xText = barWidth * 0.25
-							return 'translate(' + xText.toString() + ', 0) rotate(90)'
+							return `translate(${xText}, 0) rotate(90)`
 						})
 						.attr('fill', 'black')
 						.attr('font-size', 'x-small')
@@ -83,9 +83,9 @@ export const Bar: React.FC<BarProps> = memo(function Bar({
 					.select<SVGGElement, BarData>(ref.current)
 					.datum(data)
 					.attr('transform', d => {
-						const yOffset = ((yScale as D3ScaleBand)(d.name) ?? 0).toString()
-						const xOffset = widthOffset.toString()
-						return 'translate(' + xOffset + ', ' + yOffset + ')'
+						const yOffset = (yScale as D3ScaleBand)(d.name) ?? 0
+						const xOffset = widthOffset
+						return `translate(${xOffset}, ${yOffset})`
 					})
 				barElement.selectAll('*').remove()
 				const renderedRect = barElement
@@ -93,19 +93,12 @@ export const Bar: React.FC<BarProps> = memo(function Bar({
 					.attr('class', barElementClassName)
 					.attr('stroke', 'none')
 					.attr('opacity', BAR_TRANSPARENT)
-				if (animation === 'left') {
-					renderedRect
-						.transition()
-						.duration(ANIMATION_DURATION)
-						.ease(EASING_FN)
-						.style('fill', d => d.color)
-						.attr('width', d => (xScale as D3ScaleLinear)(d.value))
-						.attr('height', barHeight)
-				} else {
-					renderedRect
-						.style('fill', d => d.color)
-						.attr('width', d => (xScale as D3ScaleLinear)(d.value))
-						.attr('height', barHeight)
+				renderedRect
+					.style('fill', d => d.color)
+					.attr('width', d => (xScale as D3ScaleLinear)(d.value))
+					.attr('height', barHeight)
+				if (animation) {
+					renderedRect.transition().duration(ANIMATION_DURATION).ease(EASING_FN)
 				}
 				// add rotated label
 				if (renderRotatedLabel) {
@@ -114,7 +107,7 @@ export const Bar: React.FC<BarProps> = memo(function Bar({
 						.text(d => d.name ?? '')
 						.attr('transform', function (d) {
 							const xText = barHeight * 0.25
-							return 'translate(' + xText.toString() + ', 0) rotate(90)'
+							return `translate(${xText}, 0) rotate(90)`
 						})
 						.attr('fill', 'black')
 						.attr('font-size', 'x-small')
@@ -130,6 +123,8 @@ export const Bar: React.FC<BarProps> = memo(function Bar({
 		height,
 		renderRotatedLabel,
 		animation,
+		barElementClassName,
+		renderPositiveAndNegativeValues,
 	])
 
 	useEffect(() => {

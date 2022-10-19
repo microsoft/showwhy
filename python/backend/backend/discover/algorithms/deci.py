@@ -14,7 +14,7 @@ from networkx.readwrite import json_graph
 from pydantic import BaseModel
 
 from backend.discover.algorithms.base import CausalDiscoveryRunner, CausalGraph
-from backend.discover.base_payload import CausalDiscoveryPayload
+from backend.discover.base_payload import CausalDiscoveryPayload, get_empty_graph_json
 from backend.discover.pandas_dataset_loader import PandasDatasetLoader
 
 torch.set_default_dtype(torch.float32)
@@ -72,6 +72,11 @@ class DeciRunner(CausalDiscoveryRunner):
         self._training_options = p.training_options
 
     def do_causal_discovery(self) -> CausalGraph:
+        # if the data contains only a single column,
+        # let's return an empty graph
+        if self._prepared_data.columns.size == 1:
+            return get_empty_graph_json(self._prepared_data)
+
         dataset_loader = PandasDatasetLoader("")
         azua_dataset = dataset_loader.split_data_and_load_dataset(
             self._prepared_data, 0.5, 0, 0
