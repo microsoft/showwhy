@@ -5,7 +5,7 @@
 
 from celery import Celery
 
-from backend.exposure import config
+from backend.worker_commons import config
 
 exposure_worker = Celery(
     "app", backend=config.get_redis_url(), broker=config.get_redis_url()

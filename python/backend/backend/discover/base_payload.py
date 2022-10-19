@@ -40,6 +40,7 @@ def prepare_data(func: Callable[[CausalDiscoveryPayload], Any]):
         if p._prepared_data.size == 0:
             return get_empty_graph_json(p._prepared_data)
 
+        # TODO: do mean / std normalization instead
         scaled_data = MaxAbsScaler().fit_transform(p._prepared_data)
         p._prepared_data = pd.DataFrame(
             data=scaled_data,

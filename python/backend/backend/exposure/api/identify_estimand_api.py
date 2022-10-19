@@ -11,8 +11,8 @@ from celery.result import AsyncResult
 from fastapi import APIRouter
 from pydantic import BaseModel
 
-from backend.exposure.io.storage import get_storage_client
 from backend.exposure.worker.identify_estimand_task import identify_estimand_task
+from backend.worker_commons.io.storage import get_storage_client
 
 identify_estimand_router = APIRouter(
     prefix="/identify_estimand",

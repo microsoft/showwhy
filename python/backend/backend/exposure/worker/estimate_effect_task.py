@@ -6,9 +6,9 @@
 import celery
 
 from backend.exposure.inference.estimate_effect import estimate_effect
-from backend.exposure.io.db import get_db_client
 from backend.exposure.model.estimate_effect_models import EstimateResult, Specification
 from backend.exposure.worker.worker import exposure_worker
+from backend.worker_commons.io.db import get_db_client
 
 
 @exposure_worker.task

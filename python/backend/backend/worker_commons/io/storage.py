@@ -11,7 +11,7 @@ from typing import Any, Dict
 import pandas as pd
 
 from backend.exposure import config
-from backend.exposure.model.exceptions import FileNotFoundError
+from backend.worker_commons.io.exceptions import FileNotFoundError
 
 
 class StorageClient(ABC):

@@ -6,9 +6,9 @@
 import celery
 
 from backend.exposure.inference.refutation import refute_estimate
-from backend.exposure.io.db import get_db_client
 from backend.exposure.model.refute_estimate_models import RefuterResult, RefuterSpec
 from backend.exposure.worker.worker import exposure_worker
+from backend.worker_commons.io.db import get_db_client
 
 
 @exposure_worker.task

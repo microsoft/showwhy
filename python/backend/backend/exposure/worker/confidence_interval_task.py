@@ -6,12 +6,12 @@
 import celery
 
 from backend.exposure.inference.confidence_interval import estimate_confidence_intervals
-from backend.exposure.io.db import get_db_client
 from backend.exposure.model.confidence_interval_models import (
     ConfidenceIntervalParams,
     ConfidenceIntervalResult,
 )
 from backend.exposure.worker.worker import exposure_worker
+from backend.worker_commons.io.db import get_db_client
 
 
 @exposure_worker.task
