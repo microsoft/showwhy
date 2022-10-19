@@ -4,6 +4,7 @@
  */
 import type { SetterOrUpdater } from 'recoil'
 
+import type { CausalDiscoveryConstraints } from '../../domain/CausalDiscovery/CausalDiscoveryConstraints.js'
 import type { CausalVariable } from '../../domain/CausalVariable.js'
 import type { Relationship } from '../../domain/Relationship.jsx'
 import type { Selectable } from '../../domain/Selection.js'
@@ -12,4 +13,6 @@ export interface EdgeListProps {
 	relationships: Relationship[]
 	variable: CausalVariable
 	onSelect: SetterOrUpdater<Selectable>
+	constraints: CausalDiscoveryConstraints
+	onUpdateConstraints: SetterOrUpdater<CausalDiscoveryConstraints>
 }

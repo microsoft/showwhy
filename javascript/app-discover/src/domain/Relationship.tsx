@@ -11,7 +11,6 @@ export enum ManualRelationshipReason {
 	Removed = 'Removed',
 	Pinned = 'Pinned',
 	Flipped = 'Flipped',
-	Unknown = 'Unknown',
 }
 
 export interface RelationshipReference {

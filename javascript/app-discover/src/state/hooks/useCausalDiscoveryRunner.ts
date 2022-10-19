@@ -6,7 +6,14 @@ import { useEffect, useMemo } from 'react'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
 
 import { discover as runCausalDiscovery } from '../../domain/CausalDiscovery/CausalDiscovery.js'
-import type { RelationshipReference } from '../../domain/Relationship.js'
+import type {
+	Relationship,
+	RelationshipReference,
+} from '../../domain/Relationship.js'
+import {
+	invertRelationship,
+	ManualRelationshipReason,
+} from '../../domain/Relationship.js'
 import {
 	CausalDiscoveryResultsState,
 	CausalGraphConstraintsState,
@@ -62,10 +69,21 @@ export function useCausalDiscoveryRunner() {
 	const causalDiscoveryConstraints = useMemo(
 		() => ({
 			...userConstraints,
-			forbiddenRelationships: [
-				...userConstraints.forbiddenRelationships,
+			manualRelationships: [
+				...userConstraints.manualRelationships.map(x => {
+					if (
+						x.reason &&
+						[
+							ManualRelationshipReason.Flipped,
+							ManualRelationshipReason.Pinned,
+						].includes(x.reason)
+					) {
+						return invertRelationship(x)
+					}
+					return x
+				}),
 				...derivedConstraints,
-			],
+			] as Relationship[],
 		}),
 		[userConstraints, derivedConstraints],
 	)

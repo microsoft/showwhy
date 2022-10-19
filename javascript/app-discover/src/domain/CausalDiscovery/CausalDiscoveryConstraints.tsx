@@ -3,12 +3,12 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import type { VariableReference } from '../CausalVariable.js'
-import type { RelationshipReference } from '../Relationship.js'
+import type { Relationship } from '../Relationship.js'
 
 export interface CausalDiscoveryConstraints {
 	causes: VariableReference[]
 	effects: VariableReference[]
-	forbiddenRelationships: RelationshipReference[]
+	manualRelationships: Relationship[]
 }
 
 export enum Constraints {

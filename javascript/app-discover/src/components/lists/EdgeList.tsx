@@ -4,14 +4,13 @@
  */
 import { FocusZone, Label } from '@fluentui/react'
 import { memo, useCallback } from 'react'
-import { useRecoilState } from 'recoil'
 
 import {
 	type Relationship,
+	hasSameSourceAndTarget,
 	invertRelationship,
 	ManualRelationshipReason,
 } from '../../domain/Relationship.js'
-import { CausalGraphConstraintsState } from '../../state/index.js'
 import { EdgeItem } from './EdgeItem.js'
 import type { EdgeListProps } from './EdgeList.types.js'
 
@@ -19,62 +18,86 @@ export const EdgeList: React.FC<EdgeListProps> = memo(function EdgeList({
 	relationships,
 	variable,
 	onSelect,
+	constraints,
+	onUpdateConstraints,
 }) {
-	const [constraints, setConstraints] = useRecoilState(
-		CausalGraphConstraintsState,
-	)
-
 	const onFlip = useCallback(
 		(relationship: Relationship) => {
-			const existingRelationships = constraints.forbiddenRelationships.filter(
-				x => x.target.columnName !== relationship.source.columnName,
-			)
+			const reverse = invertRelationship(relationship)
+			const existingRelationships = [...constraints.manualRelationships]
 			const newConstraints = {
 				...constraints,
-				forbiddenRelationships: [
-					...existingRelationships,
-					{
-						...relationship,
-						reason: ManualRelationshipReason.Flipped,
-					},
-				],
+				manualRelationships: constraints.manualRelationships.find(
+					x =>
+						hasSameSourceAndTarget(x, relationship) &&
+						x.reason === ManualRelationshipReason.Flipped,
+				)
+					? existingRelationships.filter(
+							x =>
+								!(
+									hasSameSourceAndTarget(x, relationship) &&
+									x.reason === ManualRelationshipReason.Flipped
+								),
+					  )
+					: [
+							...existingRelationships,
+							{
+								...reverse,
+								reason: ManualRelationshipReason.Flipped,
+							},
+					  ],
 			}
-			setConstraints(newConstraints)
+
+			onUpdateConstraints(newConstraints)
 		},
-		[setConstraints, constraints],
+		[onUpdateConstraints, constraints],
 	)
 
 	const onPin = useCallback(
 		(relationship: Relationship) => {
-			const reverse = invertRelationship(relationship)
-			reverse.reason = ManualRelationshipReason.Pinned
-			const newConstraints = {
+			let newConstraints = {
 				...constraints,
-				forbiddenRelationships: [
-					...constraints.forbiddenRelationships,
-					reverse,
+				manualRelationships: [
+					...constraints.manualRelationships,
+					{
+						...relationship,
+						reason: ManualRelationshipReason.Pinned,
+					},
 				],
 			}
-			setConstraints(newConstraints)
+			if (
+				constraints.manualRelationships.find(x => x.key === relationship.key)
+			) {
+				newConstraints = {
+					...constraints,
+					manualRelationships: [
+						...constraints.manualRelationships.filter(
+							x => x.key !== relationship.key,
+						),
+					],
+				}
+			}
+
+			onUpdateConstraints(newConstraints)
 		},
-		[setConstraints, constraints],
+		[onUpdateConstraints, constraints],
 	)
 
 	const onRemove = useCallback(
 		(relationship: Relationship) => {
 			const newConstraints = {
 				...constraints,
-				forbiddenRelationships: [
-					...constraints.forbiddenRelationships,
+				manualRelationships: [
+					...constraints.manualRelationships,
 					{
 						...relationship,
 						reason: ManualRelationshipReason.Removed,
 					},
 				],
 			}
-			setConstraints(newConstraints)
+			onUpdateConstraints(newConstraints)
 		},
-		[setConstraints, constraints],
+		[onUpdateConstraints, constraints],
 	)
 
 	const renderItem = useCallback(
@@ -87,9 +110,14 @@ export const EdgeList: React.FC<EdgeListProps> = memo(function EdgeList({
 				onPin={onPin}
 				onSelect={onSelect}
 				columnName={columnName}
+				constraint={constraints?.manualRelationships?.find(
+					x =>
+						x.source.columnName === relationship.source.columnName &&
+						x.target.columnName === relationship.target.columnName,
+				)}
 			/>
 		),
-		[onSelect, onFlip, onPin, onRemove],
+		[onSelect, onFlip, onPin, onRemove, constraints],
 	)
 
 	const increases = relationships?.flatMap(r => {

@@ -211,15 +211,6 @@ export const VariablePropertiesPanel: React.FC<VariablePropertiesPanelProps> =
 							)
 						))}
 				</Stack>
-				<Divider>Edges</Divider>
-				{relationships && (
-					<EdgeList
-						onSelect={setSelectedObject}
-						variable={variable}
-						relationships={relationships}
-					/>
-				)}
-
 				{isInModel && (
 					<>
 						<Divider>Constraint</Divider>
@@ -230,6 +221,17 @@ export const VariablePropertiesPanel: React.FC<VariablePropertiesPanelProps> =
 						/>
 					</>
 				)}
+				<Divider>Edges</Divider>
+				{relationships && (
+					<EdgeList
+						onSelect={setSelectedObject}
+						variable={variable}
+						relationships={relationships}
+						constraints={constraints}
+						onUpdateConstraints={setConstraints}
+					/>
+				)}
+
 				<Divider>Correlations</Divider>
 				<VariableCorrelationsList variable={variable} />
 			</>

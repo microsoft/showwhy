@@ -2,11 +2,12 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { IconButton, Stack, Text } from '@fluentui/react'
+import { Stack, Text, TooltipHost } from '@fluentui/react'
 import { memo } from 'react'
-import styled from 'styled-components'
 
 import { ManualRelationshipReason } from '../../domain/Relationship.js'
+import { IconButtonDark } from '../../styles/styles.js'
+import { Container, icons } from './EdgeItem.styles.js'
 import type { EdgeItemProps } from './EdgeItem.types.js'
 
 export const EdgeItem: React.FC<EdgeItemProps> = memo(function EdgeItem({
@@ -16,9 +17,10 @@ export const EdgeItem: React.FC<EdgeItemProps> = memo(function EdgeItem({
 	onRemove,
 	onPin,
 	onSelect,
+	constraint,
 }) {
 	return (
-		<RelationshipContainer>
+		<Container>
 			<Stack
 				horizontal
 				horizontalAlign="space-between"
@@ -44,43 +46,56 @@ export const EdgeItem: React.FC<EdgeItemProps> = memo(function EdgeItem({
 							<Text variant={'tiny'}>{relationship?.weight?.toFixed(2)}</Text>
 						</Stack.Item>
 						<Stack.Item align="center">
-							<IconButton
-								toggle
-								checked={
-									relationship.reason === ManualRelationshipReason.Pinned
+							<TooltipHost
+								content={
+									constraint?.reason === ManualRelationshipReason.Pinned
+										? 'Relationship confirmed as relevant by the user. Click to undo it'
+										: 'Confirm as relevant relationship'
 								}
-								iconProps={
-									relationship.reason === ManualRelationshipReason.Pinned
-										? icons.pinned
-										: icons.pin
-								}
-								onClick={() => onPin(relationship)}
-							/>
+							>
+								<IconButtonDark
+									toggle
+									checked={
+										constraint?.reason === ManualRelationshipReason.Pinned
+									}
+									iconProps={
+										constraint?.reason === ManualRelationshipReason.Pinned
+											? icons.pinned
+											: icons.pin
+									}
+									onClick={() => onPin(relationship)}
+								/>
+							</TooltipHost>
 						</Stack.Item>
 						<Stack.Item align="center">
-							<IconButton
-								iconProps={icons.switch}
-								onClick={() => onFlip(relationship)}
-							/>
+							<TooltipHost
+								content={
+									constraint?.reason === ManualRelationshipReason.Flipped
+										? 'Relationship manually reversed by the user. Click to undo it'
+										: 'Manually reverse direction of relationship'
+								}
+							>
+								<IconButtonDark
+									toggle
+									checked={
+										constraint?.reason === ManualRelationshipReason.Flipped
+									}
+									iconProps={icons.switch}
+									onClick={() => onFlip(relationship)}
+								/>
+							</TooltipHost>
 						</Stack.Item>
 						<Stack.Item align="center">
-							<IconButton
-								iconProps={icons.delete}
-								onClick={() => onRemove(relationship)}
-							/>
+							<TooltipHost content="Remove relationship">
+								<IconButtonDark
+									iconProps={icons.delete}
+									onClick={() => onRemove(relationship)}
+								/>
+							</TooltipHost>
 						</Stack.Item>
 					</Stack>
 				</Stack.Item>
 			</Stack>
-		</RelationshipContainer>
+		</Container>
 	)
 })
-
-const RelationshipContainer = styled.div``
-
-const icons = {
-	delete: { iconName: 'Delete' },
-	pin: { iconName: 'Pin' },
-	switch: { iconName: 'Switch' },
-	pinned: { iconName: 'PinSolid12' },
-}
