@@ -10,7 +10,7 @@ from backend.discover.algorithms.direct_lingam import (
 )
 from backend.discover.algorithms.notears import NotearsPayload, NotearsRunner
 from backend.discover.algorithms.pc import PCPayload, PCRunner
-from backend.discover.base_payload import prepare_data
+from backend.discover.api.data_prep import prepare_data
 
 disable_eager_execution()
 

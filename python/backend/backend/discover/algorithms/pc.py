@@ -4,8 +4,11 @@ import networkx
 from castle.algorithms import PC
 from networkx.readwrite import json_graph
 
-from backend.discover.algorithms.base import CausalDiscoveryRunner, CausalGraph
-from backend.discover.base_payload import CausalDiscoveryPayload
+from backend.discover.algorithms.commons.base_runner import (
+    CausalDiscoveryRunner,
+    CausalGraph,
+)
+from backend.discover.model.causal_discovery import CausalDiscoveryPayload
 
 
 class PCPayload(CausalDiscoveryPayload):

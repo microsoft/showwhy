@@ -1,34 +1,12 @@
 from functools import wraps
-from typing import Any, Callable, Dict, List, Tuple, Union
+from typing import Any, Callable
 
 import networkx
 import pandas as pd
 from networkx.readwrite import json_graph
-from pydantic import BaseModel, Extra
 from sklearn.preprocessing import MaxAbsScaler
 
-
-class Constraints(BaseModel):
-    causes: List[str]
-    effects: List[str]
-    forbiddenRelationships: List[Tuple[str, str]]
-
-
-class Dataset(BaseModel):
-    data: Dict[str, List[Any]]
-
-
-class CausalDiscoveryPayload(BaseModel):
-    # expected parameters
-    dataset: Dataset
-    constraints: Constraints
-
-    # internal use only
-    _prepared_data: Union[pd.DataFrame, None] = None
-
-    class Config:
-        arbitrary_types_allowed = True
-        extra = Extra.allow
+from backend.discover.model.causal_discovery import CausalDiscoveryPayload
 
 
 def prepare_data(func: Callable[[CausalDiscoveryPayload], Any]):

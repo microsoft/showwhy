@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import Dict
 
-from backend.discover.base_payload import CausalDiscoveryPayload
+from backend.discover.model.causal_discovery import CausalDiscoveryPayload
 
 CausalGraph = Dict[str, list]
 

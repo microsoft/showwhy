@@ -13,9 +13,15 @@ from causica.utils.torch_utils import get_torch_device
 from networkx.readwrite import json_graph
 from pydantic import BaseModel
 
-from backend.discover.algorithms.base import CausalDiscoveryRunner, CausalGraph
-from backend.discover.base_payload import CausalDiscoveryPayload, get_empty_graph_json
-from backend.discover.pandas_dataset_loader import PandasDatasetLoader
+from backend.discover.algorithms.commons.base_runner import (
+    CausalDiscoveryRunner,
+    CausalGraph,
+)
+from backend.discover.algorithms.commons.pandas_dataset_loader import (
+    PandasDatasetLoader,
+)
+from backend.discover.api.data_prep import get_empty_graph_json
+from backend.discover.model.causal_discovery import CausalDiscoveryPayload
 
 torch.set_default_dtype(torch.float32)
 
