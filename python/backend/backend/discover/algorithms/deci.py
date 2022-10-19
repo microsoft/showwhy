@@ -16,6 +16,7 @@ from pydantic import BaseModel
 from backend.discover.algorithms.commons.base_runner import (
     CausalDiscoveryRunner,
     CausalGraph,
+    ProgressCallback,
 )
 from backend.discover.algorithms.commons.pandas_dataset_loader import (
     PandasDatasetLoader,
@@ -72,10 +73,13 @@ class DeciPayload(CausalDiscoveryPayload):
 
 
 class DeciRunner(CausalDiscoveryRunner):
-    def __init__(self, p: DeciPayload):
-        super().__init__(p)
+    name = "DeciRunner"
+
+    def __init__(self, p: DeciPayload, progress_callback: ProgressCallback = None):
+        super().__init__(p, progress_callback)
         self._model_options = p.model_options
         self._training_options = p.training_options
+        self._deci_save_dir = "CauseDisDECIDir"
 
     def do_causal_discovery(self) -> CausalGraph:
         # if the data contains only a single column,
@@ -103,7 +107,7 @@ class DeciRunner(CausalDiscoveryRunner):
         deci_model = DECIGaussian(
             "CauseDisDECI",
             azua_dataset.variables,
-            "CauseDisDECIDir",
+            self._deci_save_dir,
             torch_device,
             **self._model_options.dict(),
         )
@@ -114,7 +118,13 @@ class DeciRunner(CausalDiscoveryRunner):
             tabu_edges=self._constraints.forbiddenRelationships,
         )
         deci_model.set_graph_constraint(constraint_matrix)
-        deci_model.run_train(azua_dataset, self._training_options.dict())
+        deci_model.run_train(
+            azua_dataset,
+            self._training_options.dict(),
+            lambda model_id, step, max_steps: self._report_progress(
+                step * 100.0 / max_steps
+            ),
+        )
 
         # The next two lines of code are the same as:
         # deci_graph = deci_model.networkx_graph()
@@ -217,6 +227,8 @@ class DeciRunner(CausalDiscoveryRunner):
         graph_json["interpret_boolean_as_continuous"] = interpret_boolean_as_continuous
         graph_json["has_weights"] = True
         graph_json["has_confidence_values"] = True
+
+        self._report_progress(100.0)
 
         return graph_json
 

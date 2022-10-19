@@ -7,6 +7,7 @@ from networkx.readwrite import json_graph
 from backend.discover.algorithms.commons.base_runner import (
     CausalDiscoveryRunner,
     CausalGraph,
+    ProgressCallback,
 )
 from backend.discover.model.causal_discovery import CausalDiscoveryPayload
 
@@ -16,8 +17,10 @@ class PCPayload(CausalDiscoveryPayload):
 
 
 class PCRunner(CausalDiscoveryRunner):
-    def __init__(self, p: PCPayload):
-        super().__init__(p)
+    name = "PC"
+
+    def __init__(self, p: PCPayload, progress_callback: ProgressCallback = None):
+        super().__init__(p, progress_callback)
 
     def do_causal_discovery(self) -> CausalGraph:
         n = PC(alpha=0.2)
@@ -34,6 +37,8 @@ class PCRunner(CausalDiscoveryRunner):
         graph_json = json_graph.cytoscape_data(labeled_gc)
         graph_json["has_weights"] = False
         graph_json["has_confidence_values"] = False
+
+        self._report_progress(100.0)
 
         return graph_json
 

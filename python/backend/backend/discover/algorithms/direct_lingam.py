@@ -9,6 +9,7 @@ from networkx.readwrite import json_graph
 from backend.discover.algorithms.commons.base_runner import (
     CausalDiscoveryRunner,
     CausalGraph,
+    ProgressCallback,
 )
 from backend.discover.model.causal_discovery import CausalDiscoveryPayload
 
@@ -18,8 +19,12 @@ class DirectLiNGAMPayload(CausalDiscoveryPayload):
 
 
 class DirectLiNGAMRunner(CausalDiscoveryRunner):
-    def __init__(self, p: DirectLiNGAMPayload):
-        super().__init__(p)
+    name = "DirectLiNGAM"
+
+    def __init__(
+        self, p: DirectLiNGAMPayload, progress_callback: ProgressCallback = None
+    ):
+        super().__init__(p, progress_callback)
 
     def do_causal_discovery(self) -> CausalGraph:
         prior_matrix = self._build_gcastle_constraint_matrix()
@@ -37,6 +42,8 @@ class DirectLiNGAMRunner(CausalDiscoveryRunner):
         graph_json = json_graph.cytoscape_data(labeled_gc)
         graph_json["has_weights"] = True
         graph_json["has_confidence_values"] = False
+
+        self._report_progress(100.0)
 
         return graph_json
 

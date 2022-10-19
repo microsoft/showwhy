@@ -4,6 +4,7 @@ from networkx.readwrite import json_graph
 from backend.discover.algorithms.commons.base_runner import (
     CausalDiscoveryRunner,
     CausalGraph,
+    ProgressCallback,
 )
 from backend.discover.model.causal_discovery import CausalDiscoveryPayload
 
@@ -13,8 +14,10 @@ class NotearsPayload(CausalDiscoveryPayload):
 
 
 class NotearsRunner(CausalDiscoveryRunner):
-    def __init__(self, p: NotearsPayload):
-        super().__init__(p)
+    name = "Notears"
+
+    def __init__(self, p: NotearsPayload, progress_callback: ProgressCallback = None):
+        super().__init__(p, progress_callback)
 
     def do_causal_discovery(self) -> CausalGraph:
         notears_graph = from_pandas(
@@ -27,5 +30,7 @@ class NotearsRunner(CausalDiscoveryRunner):
         graph_json = json_graph.cytoscape_data(notears_graph)
         graph_json["has_weights"] = True
         graph_json["has_confidence_values"] = False
+
+        self._report_progress(100.0)
 
         return graph_json

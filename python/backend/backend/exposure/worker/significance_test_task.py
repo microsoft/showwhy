@@ -17,11 +17,11 @@ from backend.exposure.model.significance_test_models import (
     ComputeNullEffectSpec,
     PropensityScoreSpec,
 )
-from backend.exposure.worker.worker import exposure_worker
 from backend.worker_commons.io.db import get_db_client
+from backend.worker_commons.worker import backend_worker
 
 
-@exposure_worker.task
+@backend_worker.task
 def compute_null_effects(specs: List[ComputeNullEffectSpec]):
     group(
         [
@@ -31,7 +31,7 @@ def compute_null_effects(specs: List[ComputeNullEffectSpec]):
     )()
 
 
-@exposure_worker.task
+@backend_worker.task
 def calculate_propensity_score(
     specification: PropensityScoreSpec,
 ) -> ComputeNullEffectSpec:
@@ -43,7 +43,7 @@ def calculate_propensity_score(
     )
 
 
-@exposure_worker.task
+@backend_worker.task
 def __compute_null_effect(specifications: List[ComputeNullEffectSpec]):
     db_client = get_db_client()
 

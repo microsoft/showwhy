@@ -10,11 +10,11 @@ from backend.exposure.model.confidence_interval_models import (
     ConfidenceIntervalParams,
     ConfidenceIntervalResult,
 )
-from backend.exposure.worker.worker import exposure_worker
 from backend.worker_commons.io.db import get_db_client
+from backend.worker_commons.worker import backend_worker
 
 
-@exposure_worker.task
+@backend_worker.task
 def confidence_interval_task(
     specification: ConfidenceIntervalParams,
 ) -> ConfidenceIntervalResult:

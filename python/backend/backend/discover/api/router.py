@@ -1,5 +1,4 @@
-import logging
-
+import celery.states as states
 from fastapi import APIRouter
 from tensorflow.python.framework.ops import disable_eager_execution
 
@@ -11,6 +10,7 @@ from backend.discover.algorithms.direct_lingam import (
 from backend.discover.algorithms.notears import NotearsPayload, NotearsRunner
 from backend.discover.algorithms.pc import PCPayload, PCRunner
 from backend.discover.api.data_prep import prepare_data
+from backend.discover.worker.causal_discovery_task import causal_discovery_task
 
 disable_eager_execution()
 
@@ -22,33 +22,41 @@ def main():
     return {"message": "discover api is healthy"}
 
 
+@discover_router.get("/{task_id}")
+def get_results(task_id: str):
+    async_task = causal_discovery_task.AsyncResult(task_id)
+    if async_task.status == states.SUCCESS:
+        return {"status": async_task.status, "result": async_task.get()}
+    else:
+        return {
+            "status": async_task.status,
+            "progress": async_task.info["progress"] if async_task.info else 0.0,
+        }
+
+
 @discover_router.post("/notears")
 @prepare_data
 def run_notears(p: NotearsPayload):
-    logging.info("Running NOTEARS Causal Discovery.")
-    runner = NotearsRunner(p)
-    return runner.do_causal_discovery()
+    async_task = causal_discovery_task.delay(NotearsRunner, p)
+    return {"id": async_task.id}
 
 
 @discover_router.post("/deci")
 @prepare_data
 def run_deci_hq(p: DeciPayload):
-    logging.info("Running DECI Causal Discovery.")
-    runner = DeciRunner(p)
-    return runner.do_causal_discovery()
+    async_task = causal_discovery_task.delay(DeciRunner, p)
+    return {"id": async_task.id}
 
 
 @discover_router.post("/directlingam")
 @prepare_data
 def run_direct_lingam(p: DirectLiNGAMPayload):
-    logging.info("Running DirectLiNGAM Causal Discovery.")
-    runner = DirectLiNGAMRunner(p)
-    return runner.do_causal_discovery()
+    async_task = causal_discovery_task.delay(DirectLiNGAMRunner, p)
+    return {"id": async_task.id}
 
 
 @discover_router.post("/pc")
 @prepare_data
 def run_pc(p: PCPayload):
-    logging.info("Running PC Causal Discovery.")
-    runner = PCRunner(p)
-    return runner.do_causal_discovery()
+    async_task = causal_discovery_task.delay(PCRunner, p)
+    return {"id": async_task.id}

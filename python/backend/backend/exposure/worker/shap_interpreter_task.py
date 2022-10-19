@@ -10,11 +10,11 @@ from backend.exposure.model.shap_interpreter_models import (
     ListShapInterpreterResult,
     ShapInterpreterSpec,
 )
-from backend.exposure.worker.worker import exposure_worker
 from backend.worker_commons.io.db import get_db_client
+from backend.worker_commons.worker import backend_worker
 
 
-@exposure_worker.task
+@backend_worker.task
 def shap_interpreter_task(
     specification: ShapInterpreterSpec,
 ) -> ListShapInterpreterResult:
