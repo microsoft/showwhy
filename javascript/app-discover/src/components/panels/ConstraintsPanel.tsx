@@ -2,12 +2,13 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { DefaultButton, Stack } from '@fluentui/react'
+import { DefaultButton, Icon, Stack, TooltipHost } from '@fluentui/react'
 import { memo } from 'react'
 import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil'
 
 import type { VariableReference } from '../../domain/CausalVariable.js'
 import type { RelationshipReference } from '../../domain/Relationship.js'
+import { ManualRelationshipReason } from '../../domain/Relationship.js'
 import { CausalGraphConstraintsState, TableState } from '../../state/index.js'
 import { IconButtonDark } from '../../styles/styles.js'
 import { Divider } from '../controls/Divider.js'
@@ -45,7 +46,15 @@ export const ConstraintsPanel: React.FC<ConstraintsPanelProps> = memo(
 						grow
 					>{`${constraint.source.columnName}-${constraint.target.columnName}`}</Stack.Item>
 					<Stack.Item>
-						{constraint.reason}
+						<TooltipHost content={constraint.reason}>
+							<Icon
+								iconName={
+									constraint.reason === ManualRelationshipReason.Flipped
+										? icons.switch.iconName
+										: icons.pinned.iconName
+								}
+							></Icon>
+						</TooltipHost>
 						<IconButtonDark
 							iconProps={icons.delete}
 							onClick={() => removeFromRelationshipConstraints(constraint)}
@@ -117,7 +126,9 @@ export const ConstraintsPanel: React.FC<ConstraintsPanelProps> = memo(
 				{causeConstraints}
 				{effectConstraints.length > 0 && <Divider>Effect Constraints</Divider>}
 				{effectConstraints}
-				{relationshipConstraints.length > 0 && <Divider>Edges</Divider>}
+				{relationshipConstraints.length > 0 && (
+					<Divider>Edge Constraints</Divider>
+				)}
 				{relationshipConstraints}
 				<Divider></Divider>
 				<DefaultButton onClick={resetConstraints}>
@@ -130,4 +141,6 @@ export const ConstraintsPanel: React.FC<ConstraintsPanelProps> = memo(
 
 const icons = {
 	delete: { iconName: 'Delete' },
+	switch: { iconName: 'Switch' },
+	pinned: { iconName: 'PinSolid12' },
 }

@@ -2,8 +2,10 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import { DialogConfirm } from '@essex/components'
 import { FocusZone, Label } from '@fluentui/react'
-import { memo, useCallback } from 'react'
+import { useBoolean } from '@fluentui/react-hooks'
+import { memo, useCallback, useState } from 'react'
 
 import {
 	type Relationship,
@@ -21,12 +23,27 @@ export const EdgeList: React.FC<EdgeListProps> = memo(function EdgeList({
 	constraints,
 	onUpdateConstraints,
 }) {
-	const onFlip = useCallback(
-		(relationship: Relationship) => {
+	const [
+		showDialogConfirm,
+		{ toggle: toggleDialogConfirm, setFalse: closeDialogConfirm },
+	] = useBoolean(false)
+	const causes = constraints.causes.concat(constraints.effects)
+	const [relationshipOption, setRelationshipOption] = useState<Relationship>()
+
+	const onUpdateFlippedConstraint = useCallback(
+		(relationship?: Relationship) => {
+			if (!relationship) return
+			const columns = [
+				relationship.source.columnName,
+				relationship.target.columnName,
+			]
 			const reverse = invertRelationship(relationship)
 			const existingRelationships = [...constraints.manualRelationships]
 			const newConstraints = {
-				...constraints,
+				causes: constraints.causes.filter(x => !columns.includes(x.columnName)),
+				effects: constraints.effects.filter(
+					x => !columns.includes(x.columnName),
+				),
 				manualRelationships: constraints.manualRelationships.find(
 					x =>
 						hasSameSourceAndTarget(x, relationship) &&
@@ -49,8 +66,23 @@ export const EdgeList: React.FC<EdgeListProps> = memo(function EdgeList({
 			}
 
 			onUpdateConstraints(newConstraints)
+			closeDialogConfirm()
 		},
-		[onUpdateConstraints, constraints],
+		[closeDialogConfirm, onUpdateConstraints, constraints],
+	)
+
+	const onFlip = useCallback(
+		(relationship: Relationship) => {
+			if (
+				causes.find(x => x.columnName === relationship.source.columnName) ||
+				causes.find(x => x.columnName === relationship.target.columnName)
+			) {
+				setRelationshipOption(relationship)
+				return toggleDialogConfirm()
+			}
+			onUpdateFlippedConstraint(relationship)
+		},
+		[onUpdateFlippedConstraint, toggleDialogConfirm, causes],
 	)
 
 	const onPin = useCallback(
@@ -110,10 +142,8 @@ export const EdgeList: React.FC<EdgeListProps> = memo(function EdgeList({
 				onPin={onPin}
 				onSelect={onSelect}
 				columnName={columnName}
-				constraint={constraints?.manualRelationships?.find(
-					x =>
-						x.source.columnName === relationship.source.columnName &&
-						x.target.columnName === relationship.target.columnName,
+				constraint={constraints?.manualRelationships?.find(x =>
+					hasSameSourceAndTarget(x, relationship),
 				)}
 			/>
 		),
@@ -143,9 +173,26 @@ export const EdgeList: React.FC<EdgeListProps> = memo(function EdgeList({
 			(r?.weight || 0) < 0 && r.target.columnName === variable.columnName
 		return yes ? renderItem(r, r.source.columnName) : []
 	})
+	const affects = relationships?.flatMap(r => {
+		const yes =
+			r?.weight === undefined && r.source.columnName === variable.columnName
+		return yes ? renderItem(r, r.target.columnName) : []
+	})
+	const isAffectedBy = relationships?.flatMap(r => {
+		const yes =
+			r?.weight === undefined && r.target.columnName === variable.columnName
+		return yes ? renderItem(r, r.source.columnName) : []
+	})
 
 	return (
 		<FocusZone>
+			<DialogConfirm
+				onConfirm={() => onUpdateFlippedConstraint(relationshipOption)}
+				toggle={toggleDialogConfirm}
+				show={showDialogConfirm}
+				title="Are you sure you want to proceed?"
+				subText="Setting this constraint will remove any manual edges you pinned or flipped for this variable"
+			></DialogConfirm>
 			{!!increases.length && <Label>Increases:</Label>}
 			{increases}
 			{!!decreases.length && <Label>Decreases:</Label>}
@@ -154,6 +201,10 @@ export const EdgeList: React.FC<EdgeListProps> = memo(function EdgeList({
 			{isIncreasedBy}
 			{!!isDecreasedBy.length && <Label>Is decreased by:</Label>}
 			{isDecreasedBy}
+			{!!affects.length && <Label>Affects:</Label>}
+			{affects}
+			{!!isAffectedBy.length && <Label>Is affected by:</Label>}
+			{isAffectedBy}
 		</FocusZone>
 	)
 })

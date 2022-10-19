@@ -4,6 +4,7 @@
  */
 import type { VariableReference } from '../CausalVariable.js'
 import type { Relationship } from '../Relationship.js'
+import { involvesVariable } from '../Relationship.js'
 
 export interface CausalDiscoveryConstraints {
 	causes: VariableReference[]
@@ -46,6 +47,7 @@ export const updateConstraints = (
 	constraintType: Constraints,
 ) => {
 	let { causes, effects } = constraints
+	const { manualRelationships } = constraints
 	const currentConstraintType = getConstraintType(constraints, variable)
 	if (currentConstraintType === Constraints.Cause) {
 		causes = removeConstraint(causes, variable)
@@ -58,9 +60,15 @@ export const updateConstraints = (
 	} else if (constraintType === Constraints.Effect) {
 		effects = addConstraint(effects, variable)
 	}
+	const filteredConstraints = {
+		...constraints,
+		manualRelationships: manualRelationships.filter(
+			r => !involvesVariable(r, variable),
+		),
+	}
 
 	return {
-		...constraints,
+		...filteredConstraints,
 		causes,
 		effects,
 	}
