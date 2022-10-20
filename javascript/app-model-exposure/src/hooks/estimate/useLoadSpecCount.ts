@@ -28,6 +28,7 @@ export function useLoadSpecCount(
 		if (!estimateNode || isProcessing) return
 		if (!projectName) {
 			setProjectName(v4())
+			return
 		}
 		trueLoading()
 		setErrors('')
