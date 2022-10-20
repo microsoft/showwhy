@@ -153,3 +153,10 @@ export function arrayIncludesRelationship(
 		hasSameSourceAndTarget(relationship, otherRelationship),
 	)
 }
+
+export function hasSameReason(
+	reason: ManualRelationshipReason,
+	relationship?: Relationship,
+) {
+	return relationship?.reason === reason
+}

@@ -5,7 +5,10 @@
 import { Stack, Text, TooltipHost } from '@fluentui/react'
 import { memo } from 'react'
 
-import { ManualRelationshipReason } from '../../domain/Relationship.js'
+import {
+	hasSameReason,
+	ManualRelationshipReason,
+} from '../../domain/Relationship.js'
 import { IconButtonDark } from '../../styles/styles.js'
 import { Container, icons } from './EdgeItem.styles.js'
 import type { EdgeItemProps } from './EdgeItem.types.js'
@@ -48,18 +51,19 @@ export const EdgeItem: React.FC<EdgeItemProps> = memo(function EdgeItem({
 						<Stack.Item align="center">
 							<TooltipHost
 								content={
-									constraint?.reason === ManualRelationshipReason.Pinned
+									hasSameReason(ManualRelationshipReason.Pinned, constraint)
 										? 'Relationship confirmed as relevant by the user. Click to undo it'
 										: 'Confirm as relevant relationship'
 								}
 							>
 								<IconButtonDark
 									toggle
-									checked={
-										constraint?.reason === ManualRelationshipReason.Pinned
-									}
+									checked={hasSameReason(
+										ManualRelationshipReason.Pinned,
+										constraint,
+									)}
 									iconProps={
-										constraint?.reason === ManualRelationshipReason.Pinned
+										hasSameReason(ManualRelationshipReason.Pinned, constraint)
 											? icons.pinned
 											: icons.pin
 									}
@@ -70,16 +74,17 @@ export const EdgeItem: React.FC<EdgeItemProps> = memo(function EdgeItem({
 						<Stack.Item align="center">
 							<TooltipHost
 								content={
-									constraint?.reason === ManualRelationshipReason.Flipped
+									hasSameReason(ManualRelationshipReason.Flipped, constraint)
 										? 'Relationship manually reversed by the user. Click to undo it'
 										: 'Manually reverse direction of relationship'
 								}
 							>
 								<IconButtonDark
 									toggle
-									checked={
-										constraint?.reason === ManualRelationshipReason.Flipped
-									}
+									checked={hasSameReason(
+										ManualRelationshipReason.Flipped,
+										constraint,
+									)}
 									iconProps={icons.switch}
 									onClick={() => onFlip(relationship)}
 								/>

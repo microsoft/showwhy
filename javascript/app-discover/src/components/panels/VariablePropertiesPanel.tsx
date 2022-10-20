@@ -89,9 +89,9 @@ export const VariablePropertiesPanel: React.FC<VariablePropertiesPanelProps> =
 				closeDialogConfirm()
 			},
 			[
+				constraints,
 				setConstraintOption,
 				variable,
-				constraintOption,
 				setConstraints,
 				closeDialogConfirm,
 			],
