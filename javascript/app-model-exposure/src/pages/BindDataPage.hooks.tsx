@@ -74,7 +74,7 @@ export function useCommandBar(): IRenderFunction<IDetailsColumnProps> {
 		dropdownOptions,
 	)
 
-	return () => null //useCreateCommandBar(renderDropdown)
+	return useCreateCommandBar(renderDropdown)
 }
 
 function useCreateCommandBar(
