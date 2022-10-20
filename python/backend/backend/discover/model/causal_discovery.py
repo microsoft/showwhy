@@ -1,7 +1,6 @@
-from typing import Any, Dict, List, Tuple, Union
+from typing import Any, Dict, List, Tuple
 
-import pandas as pd
-from pydantic import BaseModel, Extra
+from pydantic import BaseModel
 
 
 class Constraints(BaseModel):
@@ -15,13 +14,8 @@ class Dataset(BaseModel):
 
 
 class CausalDiscoveryPayload(BaseModel):
-    # expected parameters
     dataset: Dataset
     constraints: Constraints
 
-    # internal use only
-    _prepared_data: Union[pd.DataFrame, None] = None
-
     class Config:
         arbitrary_types_allowed = True
-        extra = Extra.allow

@@ -21,7 +21,6 @@ from backend.discover.algorithms.commons.base_runner import (
 from backend.discover.algorithms.commons.pandas_dataset_loader import (
     PandasDatasetLoader,
 )
-from backend.discover.api.data_prep import get_empty_graph_json
 from backend.discover.model.causal_discovery import CausalDiscoveryPayload
 
 torch.set_default_dtype(torch.float32)
@@ -85,7 +84,7 @@ class DeciRunner(CausalDiscoveryRunner):
         # if the data contains only a single column,
         # let's return an empty graph
         if self._prepared_data.columns.size == 1:
-            return get_empty_graph_json(self._prepared_data)
+            return self._get_empty_graph_json(self._prepared_data)
 
         dataset_loader = PandasDatasetLoader("")
         azua_dataset = dataset_loader.split_data_and_load_dataset(

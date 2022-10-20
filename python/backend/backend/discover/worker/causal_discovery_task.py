@@ -22,4 +22,4 @@ def causal_discovery_task(
             state=states.STARTED, meta={"progress": progress}
         ),
     )
-    return runner.do_causal_discovery()
+    return runner.run()
