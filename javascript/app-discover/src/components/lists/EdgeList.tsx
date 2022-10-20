@@ -117,10 +117,10 @@ export const EdgeList: React.FC<EdgeListProps> = memo(function EdgeList({
 			></DialogConfirm>
 			{Object.keys(groupedList).map(groupName => {
 				return (
-					<>
+					<div key={groupName}>
 						<Label>{groupName}</Label>
 						{groupedList[groupName].map(r => renderItem(r))}
-					</>
+					</div>
 				)
 			})}
 		</FocusZone>

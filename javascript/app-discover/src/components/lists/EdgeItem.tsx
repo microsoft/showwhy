@@ -62,6 +62,10 @@ export const EdgeItem: React.FC<EdgeItemProps> = memo(function EdgeItem({
 										ManualRelationshipReason.Pinned,
 										constraint,
 									)}
+									disabled={hasSameReason(
+										ManualRelationshipReason.Flipped,
+										constraint,
+									)}
 									iconProps={
 										hasSameReason(ManualRelationshipReason.Pinned, constraint)
 											? icons.pinned
@@ -81,6 +85,10 @@ export const EdgeItem: React.FC<EdgeItemProps> = memo(function EdgeItem({
 							>
 								<IconButtonDark
 									toggle
+									disabled={hasSameReason(
+										ManualRelationshipReason.Pinned,
+										constraint,
+									)}
 									checked={hasSameReason(
 										ManualRelationshipReason.Flipped,
 										constraint,

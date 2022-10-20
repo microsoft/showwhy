@@ -8,7 +8,10 @@ import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil'
 
 import type { VariableReference } from '../../domain/CausalVariable.js'
 import type { RelationshipReference } from '../../domain/Relationship.js'
-import { ManualRelationshipReason } from '../../domain/Relationship.js'
+import {
+	hasSameReason,
+	ManualRelationshipReason,
+} from '../../domain/Relationship.js'
 import { CausalGraphConstraintsState, TableState } from '../../state/index.js'
 import { IconButtonDark } from '../../styles/styles.js'
 import { Divider } from '../controls/Divider.js'
@@ -49,16 +52,23 @@ export const ConstraintsPanel: React.FC<ConstraintsPanelProps> = memo(
 						<TooltipHost content={constraint.reason}>
 							<Icon
 								iconName={
-									constraint.reason === ManualRelationshipReason.Flipped
+									hasSameReason(ManualRelationshipReason.Flipped, constraint)
 										? icons.switch.iconName
+										: hasSameReason(
+												ManualRelationshipReason.Removed,
+												constraint,
+										  )
+										? icons.delete.iconName
 										: icons.pinned.iconName
 								}
 							></Icon>
 						</TooltipHost>
-						<IconButtonDark
-							iconProps={icons.delete}
-							onClick={() => removeFromRelationshipConstraints(constraint)}
-						/>
+						<TooltipHost content="Remove constraint">
+							<IconButtonDark
+								iconProps={icons.remove}
+								onClick={() => removeFromRelationshipConstraints(constraint)}
+							/>
+						</TooltipHost>
 					</Stack.Item>
 				</Stack>
 			),
@@ -141,6 +151,7 @@ export const ConstraintsPanel: React.FC<ConstraintsPanelProps> = memo(
 
 const icons = {
 	delete: { iconName: 'Delete' },
+	remove: { iconName: 'StatusCircleErrorX' },
 	switch: { iconName: 'Switch' },
 	pinned: { iconName: 'PinSolid12' },
 }

@@ -6,6 +6,7 @@
 import type { CausalDiscoveryConstraints } from '../../domain/CausalDiscovery/CausalDiscoveryConstraints.js'
 import type { Relationship } from '../../domain/Relationship.js'
 import {
+	hasInvertedSourceAndTarget,
 	hasSameReason,
 	hasSameSourceAndTarget,
 	invertRelationship,
@@ -20,7 +21,12 @@ export function removeEdge(
 	const newConstraints = {
 		...constraints,
 		manualRelationships: [
-			...constraints.manualRelationships,
+			...constraints.manualRelationships.filter(
+				r =>
+					!hasSameSourceAndTarget(r, relationship) ||
+					(hasSameReason(ManualRelationshipReason.Flipped, relationship) &&
+						!hasInvertedSourceAndTarget(r, relationship)),
+			),
 			{
 				...relationship,
 				reason: ManualRelationshipReason.Removed,
@@ -34,17 +40,23 @@ export function pinEdge(
 	onUpdateConstraints: (newConstraints: CausalDiscoveryConstraints) => void,
 	relationship: Relationship,
 ) {
+	const isPinned = constraints.manualRelationships.find(
+		x => x.key === relationship.key,
+	)
+	const filtered = constraints.manualRelationships.filter(
+		x => x.key !== relationship.key,
+	)
 	const newConstraints = {
 		...constraints,
-		manualRelationships: [
-			...constraints.manualRelationships.filter(
-				x => x.key !== relationship.key,
-			),
-			{
-				...relationship,
-				reason: ManualRelationshipReason.Pinned,
-			},
-		],
+		manualRelationships: isPinned
+			? filtered
+			: [
+					...filtered,
+					{
+						...relationship,
+						reason: ManualRelationshipReason.Pinned,
+					},
+			  ],
 	}
 	onUpdateConstraints(newConstraints)
 }
