@@ -41,7 +41,7 @@ export const OutcomeNameState = atom<string>({
 
 export const EventNameState = atom<string>({
 	key: 'EventNameState',
-	default: '',
+	default: 'Treatment/Event',
 })
 
 export const FileNameState = atom<string>({
@@ -141,4 +141,8 @@ export const TreatmentStartDatesAfterEstimateState = atom<{
 export const HypothesisState = atom<Hypothesis | null>({
 	key: 'HypothesisState',
 	default: Hypothesis.Change,
+})
+export const UnitsState = atom<string>({
+	key: 'UnitsState',
+	default: '',
 })

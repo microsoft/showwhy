@@ -17,7 +17,7 @@ export const Line: React.FC<LineProps> = memo(function Line({
 	yScale,
 	color,
 	data,
-	animation = 'none',
+	animation,
 	...props
 }) {
 	const refSolid = useRef<SVGPathElement | null>(null)

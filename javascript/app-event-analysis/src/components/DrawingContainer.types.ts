@@ -7,7 +7,6 @@ export interface DrawingContainerProps {
 	height: number
 	margin: { top: number; bottom: number; left: number; right: number }
 	className: string
-	refLine?: boolean
 	handleClickOutside: () => void
 	handleContainerClick: (event: React.MouseEvent<SVGElement>) => void
 }
