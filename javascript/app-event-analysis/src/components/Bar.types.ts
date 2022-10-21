@@ -22,5 +22,4 @@ export type BarProps = SVGProps<SVGRectElement> & {
 	data: BarData
 	animation?: boolean
 	renderRotatedLabel?: boolean
-	renderPositiveAndNegativeValues?: boolean
 }

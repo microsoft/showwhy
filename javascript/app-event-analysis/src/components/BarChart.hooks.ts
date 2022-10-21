@@ -6,7 +6,7 @@ import { useThematic } from '@thematic/react'
 import { max, min, select } from 'd3'
 import { useEffect, useMemo, useRef } from 'react'
 
-import type { BarData } from '../types'
+import type { BarData, LegendData } from '../types'
 import { BarChartOrientation } from '../types'
 import { getColor } from './BarChart.utils.js'
 
@@ -24,7 +24,7 @@ export function useData(
 	barNames: string[]
 	minValue: number
 	maxValue: number
-	absMaxValue: number
+	legendData: LegendData[]
 } {
 	const colors = useColors()
 	return useMemo(() => {
@@ -34,6 +34,8 @@ export function useData(
 			if (isPlaceboSimulation) {
 				color = treatedUnits.some(unit => element.name.includes(unit))
 					? colors.get('highlight')
+					: (element.label as number) < 0
+					? colors.get('negative')
 					: colors.get('normal')
 			}
 			inputBars.push({
@@ -44,10 +46,31 @@ export function useData(
 			})
 		})
 
+		const legendData = !isPlaceboSimulation
+			? [
+					{
+						name: 'Control units',
+						color: colors.get('control-units'),
+					},
+			  ]
+			: [
+					{
+						name: 'Treated unit',
+						color: colors.get('highlight'),
+					},
+					{
+						name: 'Units with negative effect',
+						color: colors.get('negative'),
+					},
+					{
+						name: 'Units with positive effect',
+						color: colors.get('positive'),
+					},
+			  ]
+
 		const allValues = inputData.map(dataElement => dataElement.value)
 		const minValue = min(allValues) ?? 0
 		const maxValue = max(allValues) ?? 1
-		const absMaxValue = max([Math.abs(maxValue), Math.abs(minValue)]) ?? 1
 
 		const barNames = inputData.map(dataElement => dataElement.name)
 
@@ -56,7 +79,7 @@ export function useData(
 			barNames,
 			minValue,
 			maxValue,
-			absMaxValue,
+			legendData,
 		}
 	}, [colors, inputData, treatedUnits, isPlaceboSimulation])
 }

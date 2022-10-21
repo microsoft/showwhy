@@ -309,7 +309,7 @@ export function useLegends(
 			.style('fill', colors.defaultAxisTitle)
 			.text(
 				isPlaceboSimulation || relativeIntercept
-					? 'Gap in ' + outputDisplayName
+					? 'Diff in outcome vs control group'
 					: outputDisplayName,
 			)
 	}, [

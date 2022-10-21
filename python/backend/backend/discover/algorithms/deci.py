@@ -13,9 +13,15 @@ from causica.utils.torch_utils import get_torch_device
 from networkx.readwrite import json_graph
 from pydantic import BaseModel
 
-from backend.discover.algorithms.base import CausalDiscoveryRunner, CausalGraph
-from backend.discover.base_payload import CausalDiscoveryPayload
-from backend.discover.pandas_dataset_loader import PandasDatasetLoader
+from backend.discover.algorithms.commons.base_runner import (
+    CausalDiscoveryRunner,
+    CausalGraph,
+    ProgressCallback,
+)
+from backend.discover.algorithms.commons.pandas_dataset_loader import (
+    PandasDatasetLoader,
+)
+from backend.discover.model.causal_discovery import CausalDiscoveryPayload
 
 torch.set_default_dtype(torch.float32)
 
@@ -66,12 +72,20 @@ class DeciPayload(CausalDiscoveryPayload):
 
 
 class DeciRunner(CausalDiscoveryRunner):
-    def __init__(self, p: DeciPayload):
-        super().__init__(p)
+    name = "DeciRunner"
+
+    def __init__(self, p: DeciPayload, progress_callback: ProgressCallback = None):
+        super().__init__(p, progress_callback)
         self._model_options = p.model_options
         self._training_options = p.training_options
+        self._deci_save_dir = "CauseDisDECIDir"
 
     def do_causal_discovery(self) -> CausalGraph:
+        # if the data contains only a single column,
+        # let's return an empty graph
+        if self._prepared_data.columns.size == 1:
+            return self._get_empty_graph_json(self._prepared_data)
+
         dataset_loader = PandasDatasetLoader("")
         azua_dataset = dataset_loader.split_data_and_load_dataset(
             self._prepared_data, 0.5, 0, 0
@@ -92,7 +106,7 @@ class DeciRunner(CausalDiscoveryRunner):
         deci_model = DECIGaussian(
             "CauseDisDECI",
             azua_dataset.variables,
-            "CauseDisDECIDir",
+            self._deci_save_dir,
             torch_device,
             **self._model_options.dict(),
         )
@@ -103,7 +117,13 @@ class DeciRunner(CausalDiscoveryRunner):
             tabu_edges=self._constraints.forbiddenRelationships,
         )
         deci_model.set_graph_constraint(constraint_matrix)
-        deci_model.run_train(azua_dataset, self._training_options.dict())
+        deci_model.run_train(
+            azua_dataset,
+            self._training_options.dict(),
+            lambda model_id, step, max_steps: self._report_progress(
+                step * 100.0 / max_steps
+            ),
+        )
 
         # The next two lines of code are the same as:
         # deci_graph = deci_model.networkx_graph()
@@ -206,6 +226,8 @@ class DeciRunner(CausalDiscoveryRunner):
         graph_json["interpret_boolean_as_continuous"] = interpret_boolean_as_continuous
         graph_json["has_weights"] = True
         graph_json["has_confidence_values"] = True
+
+        self._report_progress(100.0)
 
         return graph_json
 

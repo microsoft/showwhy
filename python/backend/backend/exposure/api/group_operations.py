@@ -9,8 +9,8 @@ from typing import Any, List
 from celery import group, states
 from celery.result import AsyncResult
 
-from backend.exposure.io.db import get_db_client
 from backend.exposure.model.response import StatusModel
+from backend.worker_commons.io.db import get_db_client
 
 
 def schedule_task(workspace_name: str, task_name: str, task: Any, params: List):

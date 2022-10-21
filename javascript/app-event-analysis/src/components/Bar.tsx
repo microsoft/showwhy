@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { useThematic } from "@thematic/react"
+import { useThematic } from '@thematic/react'
 import * as d3 from 'd3'
 import { memo, useCallback, useEffect, useRef } from 'react'
 
@@ -25,7 +25,6 @@ export const Bar: React.FC<BarProps> = memo(function Bar({
 	data,
 	animation,
 	renderRotatedLabel,
-	renderPositiveAndNegativeValues,
 	...props
 }) {
 	const ref = useRef<SVGGElement | null>(null)
@@ -43,10 +42,7 @@ export const Bar: React.FC<BarProps> = memo(function Bar({
 					.datum(data)
 					.attr('transform', d => {
 						const xOffset = (xScale as D3ScaleBand)(d.name) ?? 0
-						const barHeight = (yScale as D3ScaleLinear)(d.value)
-						const yOffset = renderPositiveAndNegativeValues
-							? height / 2 - (d.value < 0 ? 0 : barHeight)
-							: barHeight
+						const yOffset = (yScale as D3ScaleLinear)(d.value)
 						return `translate(${xOffset}, ${yOffset})`
 					})
 				barElement.selectAll('*').remove()
@@ -60,7 +56,7 @@ export const Bar: React.FC<BarProps> = memo(function Bar({
 					.attr('width', barWidth)
 					.attr('height', d => {
 						const value = (yScale as D3ScaleLinear)(Math.abs(d.value))
-						return renderPositiveAndNegativeValues ? value : height - value
+						return height - value
 					})
 				if (animation) {
 					renderedRect.transition().duration(ANIMATION_DURATION).ease(EASING_FN)
@@ -128,7 +124,6 @@ export const Bar: React.FC<BarProps> = memo(function Bar({
 		renderRotatedLabel,
 		animation,
 		barElementClassName,
-		renderPositiveAndNegativeValues,
 	])
 
 	useEffect(() => {

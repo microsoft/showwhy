@@ -264,3 +264,8 @@ export interface SyntheticControlUnit {
 	unit: string
 	weight: number
 }
+
+export interface LegendData {
+	color: string
+	name: string
+}

@@ -32,7 +32,10 @@ import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useRecoilState } from 'recoil'
 
 import API from '../api.js'
+import { usePlaceboDataGroup } from '../hooks/usePlaceboDataGroup.js'
+import { usePlaceboOutputData } from '../hooks/usePlaceboOutputData.js'
 import { useProcessedInputData } from '../hooks/useProcessedInputData.js'
+import { useTreatedUnitsMap } from '../hooks/useTreatedUnitsMap.js'
 import {
 	AggregateEnabledState,
 	AggTreatmentState,
@@ -54,6 +57,7 @@ import {
 	TreatedUnitsState,
 	TreatmentStartDatesAfterEstimateState,
 	TreatmentStartDatesState,
+	UnitsState,
 } from '../state/state.js'
 import {
 	CONFIGURATION_TABS,
@@ -69,11 +73,8 @@ import type {
 	Treatment,
 } from '../types.js'
 import { csvToRecords, getColumns } from '../utils/csv.js'
-import {
-	deserializeExportState,
-	serializeExportState,
-} from '../utils/exportState.js'
-import { saveAsFile } from '../utils/file.js'
+import { deserializeExportState } from '../utils/exportState.js'
+import { processOutputData } from '../utils/processOutputData.js'
 import { isValidTreatmentDate, isValidUnit } from '../utils/validation.js'
 import { ChartOptionsGroup } from './ChartOptionsGroup.js'
 import { CheckboxList } from './CheckboxList.js'
@@ -86,9 +87,7 @@ import {
 	Title,
 } from './MainContent.styles.js'
 import {
-	computeRMSPE,
 	guessColMapping,
-	processOutputData,
 	processSynthControlData,
 } from './MainContent.utils.js'
 import { RangeFilter } from './RangeFilter.js'
@@ -144,8 +143,7 @@ export const MainContent: React.FC = memo(function MainContent() {
 
 	const [timeAlignment, setTimeAlignment] = useRecoilState(TimeAlignmentState)
 
-	// TODO: should they be the same as showwhy?
-	const [units, setUnits] = useState('')
+	const [units, setUnits] = useRecoilState(UnitsState)
 	const [hypothesis, setHypothesis] = useRecoilState(HypothesisState)
 
 	const onDatasetClicked = (name: string) => {
@@ -161,16 +159,13 @@ export const MainContent: React.FC = memo(function MainContent() {
 	// Raw output data
 	const [outputRes, setOutputRes] = useRecoilState(OutputResState)
 
-	const [placeboOutputRes, setPlaceboOutputRes] = useRecoilState(
-		PlaceboOutputResState,
-	)
+	const [, setPlaceboOutputRes] = useRecoilState(PlaceboOutputResState)
 
 	// encapsulate the value of treatment-start-date in certain occasions only
 	//  e.g., after session data is loaded and after an estimator is executed
-	const [
-		treatmentStartDatesAfterEstimate,
-		setTreatmentStartDatesAfterEstimate,
-	] = useRecoilState(TreatmentStartDatesAfterEstimateState)
+	const [, setTreatmentStartDatesAfterEstimate] = useRecoilState(
+		TreatmentStartDatesAfterEstimateState,
+	)
 
 	const [userMessage, setUserMessage] = useState<MessageBarProps>({
 		isVisible: false,
@@ -193,85 +188,41 @@ export const MainContent: React.FC = memo(function MainContent() {
 
 	// hacks to speed up computation:
 	// cache treated units and selected units as maps
-	const treatedUnitsMap = useMemo(() => {
-		const updatedMap: { [unit: string]: number } = {}
-		treatedUnits.forEach(unit => {
-			updatedMap[unit] = 1
-		})
-		return updatedMap
-	}, [treatedUnits])
+	const treatedUnitsMap = useTreatedUnitsMap()
 
 	const unitCheckboxListItems = useMemo(
 		() =>
 			data.uniqueUnits
-				.filter(unit => !treatedUnitsMap[unit])
-				.map(unit => ({ name: unit })),
+				.filter((unit: string) => !treatedUnitsMap[unit])
+				.map((unit: string) => ({ name: unit })),
 		[data.uniqueUnits, treatedUnitsMap],
 	)
 
-	const exportFileName = `${eventName} on ${outcomeName}.sdid.json`.replaceAll(
-		' ',
-		'_',
-	)
+	// const exportFileName = `${eventName} on ${outcomeName}.sdid.json`.replaceAll(
+	// 	' ',
+	// 	'_',
+	// )
 
 	const outputData: (OutputData | PlaceboOutputData)[] = useMemo(
 		() => processOutputData(outputRes, treatedUnitsMap),
 		[outputRes, treatedUnitsMap],
 	)
 
-	const placeboOutputData: Map<string, (OutputData | PlaceboOutputData)[]> =
-		useMemo(() => {
-			const map = new Map<string, (OutputData | PlaceboOutputData)[]>()
-			treatedUnits.forEach(treatedUnit => {
-				const output = placeboOutputRes.get(
-					treatedUnit,
-				) as SDIDOutputResponse | null
-				const data = processOutputData(output, treatedUnitsMap)
-				map.set(treatedUnit, data)
-			})
-			return map
-		}, [placeboOutputRes, treatedUnitsMap, treatedUnits])
+	const placeboOutputData = usePlaceboOutputData()
 
 	const synthControlData = useMemo(
 		() => processSynthControlData(outputData, checkedUnits),
 		[outputData, checkedUnits],
 	)
 
-	const getPlaceboOutputRes = useCallback(
-		(unit: string): SDIDOutputResponse => {
-			return placeboOutputRes.get(unit) as SDIDOutputResponse
-		},
-		[placeboOutputRes],
-	)
-
-	const placeboDataGroup = useMemo(() => {
-		const map = new Map()
-		treatedUnits.forEach(treatedUnit => {
-			const output = computeRMSPE(
-				getPlaceboOutputRes(treatedUnit),
-				data.startDate,
-				data.endDate,
-				treatmentStartDatesAfterEstimate,
-				[treatedUnit],
-				checkedUnits,
-			)
-			map.set(treatedUnit, output)
-		})
-		return map
-	}, [
-		data,
-		treatmentStartDatesAfterEstimate,
-		checkedUnits,
-		treatedUnits,
-		getPlaceboOutputRes,
-	])
+	const placeboDataGroup = usePlaceboDataGroup()
 
 	useEffect(() => {
 		// initially, all units are checked
 		if (checkedUnits === null && data.uniqueUnits.length) {
 			setCheckedUnits(new Set(data.uniqueUnits))
 		}
-	}, [data])
+	}, [data, checkedUnits, setCheckedUnits])
 
 	useEffect(() => {
 		if (
@@ -600,11 +551,14 @@ export const MainContent: React.FC = memo(function MainContent() {
 		})
 	}
 
-	const updateColumnMapping = (mapping: ColumnMapping) => {
-		const newMapping = { ...columnMapping, ...mapping }
-		if (isEqual(newMapping, columnMapping)) return
-		setColumnMapping(newMapping)
-	}
+	const updateColumnMapping = useCallback(
+		(mapping: ColumnMapping) => {
+			const newMapping = { ...columnMapping, ...mapping }
+			if (isEqual(newMapping, columnMapping)) return
+			setColumnMapping(newMapping)
+		},
+		[columnMapping, setColumnMapping],
+	)
 
 	const handleOutColumnChange = (
 		e: FormEvent<HTMLDivElement>,
@@ -678,7 +632,15 @@ export const MainContent: React.FC = memo(function MainContent() {
 				}
 			}
 		},
-		[treatedUnits, treatmentStartDates, outputRes],
+		[
+			treatedUnits,
+			treatmentStartDates,
+			outputRes,
+			setOutputRes,
+			setPlaceboOutputRes,
+			setTreatedUnits,
+			setTreatmentStartDates,
+		],
 	)
 
 	const addNewTreatedUnit = useCallback(() => {
@@ -699,7 +661,13 @@ export const MainContent: React.FC = memo(function MainContent() {
 			setTreatedUnits(updatedUnits)
 			setTreatmentStartDates(updatedPeriods)
 		}
-	}, [treatedUnits, treatmentStartDates, data])
+	}, [
+		treatedUnits,
+		treatmentStartDates,
+		data,
+		setTreatedUnits,
+		setTreatmentStartDates,
+	])
 
 	const handleEstimatorChange = useCallback(
 		(newEstimator: string) => {
@@ -734,6 +702,7 @@ export const MainContent: React.FC = memo(function MainContent() {
 		data,
 		validTreatedUnits,
 		treatedUnits,
+		setCheckedUnits,
 	])
 
 	const enableRegroupButton = useMemo(() => {
@@ -758,7 +727,12 @@ export const MainContent: React.FC = memo(function MainContent() {
 			}
 		})
 		updateTreatmentsForAggregation(treatment)
-	}, [treatedUnits, treatmentStartDates])
+	}, [
+		treatedUnits,
+		treatmentStartDates,
+		defaultTreatment?.groups,
+		updateTreatmentsForAggregation,
+	])
 
 	const handleAggregateOption = useCallback(() => {
 		const enabled = !aggregateEnabled
@@ -832,25 +806,25 @@ export const MainContent: React.FC = memo(function MainContent() {
 		}
 	}
 
-	const handleExport = () => {
-		if (!isDataLoaded) return
-		const payload = serializeExportState({
-			rawData,
-			eventName,
-			outcomeName,
-			columnMapping,
-			filter,
-			treatmentStartDates,
-			treatedUnits,
-			checkedUnits,
-			chartOptions,
-			estimator,
-			timeAlignment,
-			outputData: outputRes,
-			aggregateEnabled,
-		})
-		saveAsFile(`${exportFileName}`, payload, 'application/json')
-	}
+	// const handleExport = () => {
+	// 	if (!isDataLoaded) return
+	// 	const payload = serializeExportState({
+	// 		rawData,
+	// 		eventName,
+	// 		outcomeName,
+	// 		columnMapping,
+	// 		filter,
+	// 		treatmentStartDates,
+	// 		treatedUnits,
+	// 		checkedUnits,
+	// 		chartOptions,
+	// 		estimator,
+	// 		timeAlignment,
+	// 		outputData: outputRes,
+	// 		aggregateEnabled,
+	// 	})
+	// 	saveAsFile(`${exportFileName}`, payload, 'application/json')
+	// }
 
 	const handleRemoveCheckedUnit = useCallback(
 		(unitToRemove: string) => {
@@ -858,7 +832,7 @@ export const MainContent: React.FC = memo(function MainContent() {
 			checkedUnitsCopy?.delete(unitToRemove)
 			setCheckedUnits(checkedUnitsCopy)
 		},
-		[checkedUnits],
+		[checkedUnits, setCheckedUnits],
 	)
 
 	const tooltipHostStyles: Partial<ITooltipHostStyles> = {
@@ -991,6 +965,10 @@ export const MainContent: React.FC = memo(function MainContent() {
 		handleRemoveTreatmentUnit,
 		timeAlignment,
 		handleTimeAlignmentChange,
+		setOutputRes,
+		setPlaceboOutputRes,
+		setTreatedUnits,
+		setTreatmentStartDates,
 	])
 
 	const onUnitUpdate = useCallback(
@@ -1033,7 +1011,7 @@ export const MainContent: React.FC = memo(function MainContent() {
 									>
 										panel data format
 									</Link>
-									&nbsp;to get started
+									&nbsp;to get started.
 								</Text>
 								<Stack horizontal tokens={{ childrenGap: 10 }}>
 									<MenuBar
@@ -1056,7 +1034,7 @@ export const MainContent: React.FC = memo(function MainContent() {
 									Select data columns representing the time periods (e.g.,
 									years) in which the units of your analysis (e.g., different
 									regions or groups) were observed to have outcomes before and
-									after the event/treatment of interest
+									after the treatment/event of interest.
 								</Text>
 								<DropdownContainer>
 									<Dropdown
@@ -1125,11 +1103,11 @@ export const MainContent: React.FC = memo(function MainContent() {
 
 							<Stack tokens={{ childrenGap: 5 }}>
 								<Text className="stepText">
-									3. Define treatment units and time periods
+									3. Define treated units and time periods
 								</Text>
 								<Text className="stepDesc">
 									Select some units and time-periods to consider as treated.
-									Alternately, if your dataset contains a column specifying a
+									Alternatively, if your dataset contains a column specifying a
 									treatment, select the column to automatically create
 									treatments.
 								</Text>
@@ -1202,9 +1180,9 @@ export const MainContent: React.FC = memo(function MainContent() {
 										/>
 									</Stack>
 									<Stack tokens={{ childrenGap: 5, padding: 10 }}>
-										<Text className="stepText">Event</Text>
+										<Text className="stepText">Treatment/Event</Text>
 										<TextField
-											placeholder="Event"
+											placeholder="Treatment/Event"
 											value={eventName}
 											onChange={(e, v) => setEventName(v || '')}
 										/>
@@ -1265,7 +1243,7 @@ export const MainContent: React.FC = memo(function MainContent() {
 								</Stack>
 								<Text className="stepDesc">
 									Include or exclude units from the pool of data that can be
-									used to generate our synthetic control
+									used to generate our synthetic control.
 								</Text>
 								<CheckboxList
 									selection={checkedUnits || new Set([])}
@@ -1297,10 +1275,12 @@ export const MainContent: React.FC = memo(function MainContent() {
 										/>
 									</TooltipHost>
 								</Label>
+								<Spacer axis="vertical" size={5} />
 								<Text>
 									Constrain the time before and after the event used to
 									calculate the causal effect
 								</Text>
+								<Spacer axis="vertical" size={5} />
 								<RangeFilter
 									defaultRange={filter && [filter.startDate, filter.endDate]}
 									labelStart="Start date"
@@ -1342,7 +1322,6 @@ export const MainContent: React.FC = memo(function MainContent() {
 								<ChartOptionsGroup
 									options={chartOptions}
 									onChange={setChartOptions}
-									isPlaceboSimulation={isPlaceboSimulation}
 								/>
 							</Stack>
 						</PivotItem>
@@ -1353,7 +1332,7 @@ export const MainContent: React.FC = memo(function MainContent() {
 							<Stack tokens={{ childrenGap: 5 }}>
 								<Label className="stepText">Run placebo simulation</Label>
 								<Text className="stepDesc">
-									Compare treated effects to placebo effects of untreated units
+									Compare treated effects to placebo effects of untreated units.
 								</Text>
 
 								<Stack horizontal grow tokens={{ childrenGap: 5 }}>
@@ -1376,8 +1355,8 @@ export const MainContent: React.FC = memo(function MainContent() {
 				<RightPanelHeader>
 					<Stack tokens={{ childrenGap: 5 }}>
 						<Title>
-							For {units || '<units>'}, did {eventName || '<event>'} cause{' '}
-							{outcomeName || '<outcome>'} to {hypothesis || '<hypothesis>'}?
+							For treated {units || 'units'}, did {eventName || 'event'} cause{' '}
+							{outcomeName || 'outcome'} to {hypothesis || 'hypothesis'}?
 						</Title>
 					</Stack>
 					{/* TODO: Uncomment when we have a pdf-like report to export */}
