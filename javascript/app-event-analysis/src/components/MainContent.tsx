@@ -157,11 +157,11 @@ export const MainContent: React.FC = memo(function MainContent() {
 	// Raw output data
 	const [outputRes, setOutputRes] = useRecoilState(OutputResState)
 
-	const [setPlaceboOutputRes] = useRecoilState(PlaceboOutputResState)
+	const [, setPlaceboOutputRes] = useRecoilState(PlaceboOutputResState)
 
 	// encapsulate the value of treatment-start-date in certain occasions only
 	//  e.g., after session data is loaded and after an estimator is executed
-	const [setTreatmentStartDatesAfterEstimate] = useRecoilState(
+	const [, setTreatmentStartDatesAfterEstimate] = useRecoilState(
 		TreatmentStartDatesAfterEstimateState,
 	)
 
