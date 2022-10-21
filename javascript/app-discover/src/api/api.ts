@@ -31,14 +31,19 @@ export async function fetchDiscoverResult<T>(
 
 	let status = await fetchStatus<T>(taskId)
 
-	progressCallback?.(0, taskId)
+	let last_progress = 0.0
+
+	progressCallback?.(last_progress, taskId)
 
 	// TODO: replace this pooling with something like web sockets
 	while (isProcessingStatus(status.status)) {
 		await sleep(1000)
 		status = await fetchStatus<T>(taskId)
-		progressCallback?.(status.progress ?? 0, taskId)
+		last_progress = Math.max(status.progress ?? 0, last_progress)
+		progressCallback?.(last_progress, taskId)
 	}
+
+	progressCallback?.(100.0, taskId)
 
 	return { result: status.result, taskId: taskId }
 }
