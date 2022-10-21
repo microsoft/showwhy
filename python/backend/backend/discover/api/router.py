@@ -29,7 +29,9 @@ def get_results(task_id: str):
     else:
         return {
             "status": async_task.status,
-            "progress": async_task.info["progress"] if async_task.info else 0.0,
+            "progress": async_task.info["progress"]
+            if async_task.info and "progress" in async_task.info
+            else 0.0,
         }
 
 

@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { useEffect, useMemo } from 'react'
+import { useCallback, useEffect, useMemo } from 'react'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
 
 import { discover as runCausalDiscovery } from '../../domain/CausalDiscovery/CausalDiscovery.js'
@@ -70,6 +70,13 @@ export function useCausalDiscoveryRunner() {
 		[userConstraints, derivedConstraints],
 	)
 
+	const updateProgress = useCallback(
+		(progress: number) => {
+			setLoadingState(`Running causal discovery ${progress}%...`)
+		},
+		[setLoadingState],
+	)
+
 	useEffect(() => {
 		if (
 			inModelCausalVariables.length < 2 ||
@@ -86,13 +93,14 @@ export function useCausalDiscoveryRunner() {
 			})
 		}
 
-		setLoadingState('Running causal discovery...')
+		updateProgress(0)
 		const runDiscovery = async () => {
 			const results = await runCausalDiscovery(
 				dataset,
 				inModelCausalVariables,
 				causalDiscoveryConstraints,
 				algorithm,
+				updateProgress,
 			)
 			setCausalDiscoveryResultsState(results)
 			setLoadingState(undefined)
@@ -107,5 +115,6 @@ export function useCausalDiscoveryRunner() {
 		causalDiscoveryConstraints,
 		setLoadingState,
 		setCausalDiscoveryResultsState,
+		updateProgress,
 	])
 }
