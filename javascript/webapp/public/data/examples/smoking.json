@@ -662,9 +662,11 @@
                     "treated": "treated",
                     "value": "PacksPerCapita"
                 },
-                "outcomeName": "PacksPerCapita",
-                "eventName": " Prop99",
-                "fileName": "california_prop99",
+                "outcomeName": "Cigarette Sales",
+                "eventName": " Prop 99",
+                "fileName": "california-prop99",
+                "units": "US States",
+                "hypothesis": "Change",
                 "estimator": "SDID",
                 "treatedUnits": [
                     "California"
