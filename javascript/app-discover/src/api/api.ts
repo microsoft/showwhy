@@ -20,18 +20,26 @@ export async function fetchDiscoverResult(
 	algorithmName: string,
 	body: string,
 	progressCallback?: DiscoverProgressCallback,
-) {
+): Promise<{ result: unknown; taskId: string }> {
 	const taskId = await startDiscoverAndGetTaskId(algorithmName, body)
 
 	let status = await fetchStatus(taskId)
 
+	progressCallback?.(0, taskId)
+
 	while (isProcessingStatus(status.status)) {
 		await sleep(1000)
 		status = await fetchStatus(taskId)
-		progressCallback?.(status.progress ?? 0)
+		progressCallback?.(status.progress ?? 0, taskId)
 	}
 
-	return status.result
+	return { result: status.result, taskId: taskId }
+}
+
+export async function cancelDiscoverTask(taskId: string) {
+	await fetch(`${RUN_CAUSAL_DISCOVERY_BASE_URL}${taskId}`, {
+		method: 'DELETE',
+	})
 }
 
 async function startDiscoverAndGetTaskId(

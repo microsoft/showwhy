@@ -16,23 +16,31 @@ disable_eager_execution()
 discover_router = APIRouter()
 
 
+def get_progress(async_task):
+    try:
+        return async_task.info["progress"]
+    except:  # noqa: E722
+        return 0.0
+
+
 @discover_router.get("/")
 def main():
     return {"message": "discover api is healthy"}
 
 
 @discover_router.get("/{task_id}")
-def get_results(task_id: str):
+def get_discover_results(task_id: str):
     async_task = causal_discovery_task.AsyncResult(task_id)
     if async_task.status == states.SUCCESS:
         return {"status": async_task.status, "result": async_task.get()}
     else:
-        return {
-            "status": async_task.status,
-            "progress": async_task.info["progress"]
-            if async_task.info and "progress" in async_task.info
-            else 0.0,
-        }
+        return {"status": async_task.status, "progress": get_progress(async_task)}
+
+
+@discover_router.delete("/{task_id}")
+def cancel_discover(task_id: str):
+    causal_discovery_task.AsyncResult(task_id).revoke(terminate=True)
+    return {"status": states.REVOKED}
 
 
 @discover_router.post("/notears")

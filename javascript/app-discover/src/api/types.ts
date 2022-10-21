@@ -21,4 +21,7 @@ export interface DiscoverStatusResponse {
 	result: unknown
 }
 
-export type DiscoverProgressCallback = (progress: number) => void
+export type DiscoverProgressCallback = (
+	progress: number,
+	taskId: string,
+) => void

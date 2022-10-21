@@ -88,7 +88,7 @@ export async function discover(
 		CausalDiscoveryAlgorithmOptions.get(algorithm)?.algorithm || algorithm
 	const trainingOptions =
 		CausalDiscoveryAlgorithmOptions.get(algorithm)?.training_options
-	const causalDiscoveryResult = (await fetchDiscoverResult(
+	const { result, taskId } = await fetchDiscoverResult(
 		algorithmName.toLowerCase(),
 		JSON.stringify({
 			dataset: JSON.parse(jsonData),
@@ -96,7 +96,8 @@ export async function discover(
 			training_options: trainingOptions,
 		}),
 		progressCallback,
-	)) as any
+	)
+	const causalDiscoveryResult = result as any
 	const graph = fromCausalDiscoveryResults(
 		variables,
 		causalDiscoveryResult as CausalDiscoveryRequestReturnValue,
@@ -133,7 +134,7 @@ export async function discover(
 	}
 	/* eslint-enable */
 
-	return { graph, causalInferenceModel }
+	return { graph, causalInferenceModel, taskId }
 }
 
 function createConstraintsJson(
