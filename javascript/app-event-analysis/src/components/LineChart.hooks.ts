@@ -302,7 +302,7 @@ export function useLegends(
 			.style('fill', 'gray')
 			.text(
 				isPlaceboSimulation || relativeIntercept
-					? 'Gap in ' + outputDisplayName
+					? 'Diff in outcome vs control group'
 					: outputDisplayName,
 			)
 	}, [

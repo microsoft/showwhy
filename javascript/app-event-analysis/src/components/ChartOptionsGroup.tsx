@@ -8,7 +8,7 @@ import { memo, useCallback } from 'react'
 import type { ChartOptionsGroupProps } from './ChartOptionsGroup.types.js'
 
 export const ChartOptionsGroup: React.FC<ChartOptionsGroupProps> = memo(
-	function ChartOptionsGroup({ options, onChange, isPlaceboSimulation }) {
+	function ChartOptionsGroup({ options, onChange }) {
 		const {
 			showSynthControl,
 			applyIntercept,
@@ -32,7 +32,6 @@ export const ChartOptionsGroup: React.FC<ChartOptionsGroupProps> = memo(
 					onChange={(e, isChecked) =>
 						handleOnChange({ showSynthControl: !!isChecked })
 					}
-					disabled={isPlaceboSimulation}
 				/>
 				<Checkbox
 					label="Align curves pretreatment"
@@ -40,7 +39,6 @@ export const ChartOptionsGroup: React.FC<ChartOptionsGroupProps> = memo(
 					onChange={(e, isChecked) =>
 						handleOnChange({ applyIntercept: !!isChecked })
 					}
-					disabled={isPlaceboSimulation}
 				/>
 				<Checkbox
 					label="Plot difference"
@@ -48,15 +46,13 @@ export const ChartOptionsGroup: React.FC<ChartOptionsGroupProps> = memo(
 					onChange={(e, isChecked) =>
 						handleOnChange({ relativeIntercept: !!isChecked })
 					}
-					disabled={isPlaceboSimulation}
 				/>
 				<Checkbox
-					label="Show Mean Treatment"
+					label="Show mean treatment"
 					checked={showMeanTreatmentEffect}
 					onChange={(e, isChecked) =>
 						handleOnChange({ showMeanTreatmentEffect: !!isChecked })
 					}
-					disabled={isPlaceboSimulation}
 				/>
 				<Checkbox
 					label="Show chart per unit"
@@ -64,7 +60,6 @@ export const ChartOptionsGroup: React.FC<ChartOptionsGroupProps> = memo(
 					onChange={(e, isChecked) =>
 						handleOnChange({ showChartPerUnit: !!isChecked })
 					}
-					disabled={isPlaceboSimulation}
 				/>
 			</Stack>
 		)

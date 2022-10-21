@@ -8,12 +8,9 @@ import React, { memo, useCallback, useEffect, useMemo } from 'react'
 import * as ReactDOM from 'react-dom'
 import { useRecoilState } from 'recoil'
 
+import { useShowPlaceboGraphs } from '../hooks/useShowPlaceboGraphs.js'
 import { useTooltip } from '../hooks/useTooltip'
-import {
-	CheckedUnitsState,
-	PlaceboSimulationState,
-	TreatedUnitsState,
-} from '../state/state.js'
+import { CheckedUnitsState, TreatedUnitsState } from '../state/state.js'
 import type { BarData, TooltipInfo } from '../types.js'
 import {
 	BAR_GAP,
@@ -46,15 +43,14 @@ export const BarChart: React.FC<BarChartProps> = memo(function BarChart({
 	leftAxisLabel,
 	bottomAxisLabel,
 	checkableUnits,
-	refLine,
 	onRemoveCheckedUnit,
 }) {
 	const { width, height, margin } = dimensions
 	const [treatedUnits] = useRecoilState(TreatedUnitsState)
-	const [isPlaceboSimulation] = useRecoilState(PlaceboSimulationState)
+	const isPlaceboSimulation = useShowPlaceboGraphs()
 	const [checkedUnits] = useRecoilState(CheckedUnitsState)
 
-	const { inputBars, minValue, maxValue, barNames, absMaxValue } = useData(
+	const { inputBars, minValue, maxValue, barNames } = useData(
 		inputData,
 		treatedUnits,
 		isPlaceboSimulation,
@@ -87,7 +83,7 @@ export const BarChart: React.FC<BarChartProps> = memo(function BarChart({
 			? width * 0.9
 			: width
 
-	const { xScale, yScale, yAxisScale } = useMemo(() => {
+	const { xScale, yScale } = useMemo(() => {
 		const xScale =
 			orientation === BarChartOrientation.column
 				? d3
@@ -100,36 +96,25 @@ export const BarChart: React.FC<BarChartProps> = memo(function BarChart({
 						.domain([minValue > 0 ? 0 : minValue, maxValue]) // ensure that axis starts at 0
 						.range([0, widthExcludingAxis])
 
-		const colDomain = minValue < 0 ? [0, absMaxValue] : [0, maxValue]
-		const colRange =
-			minValue < 0 ? [0, heightExcludingAxis / 2] : [heightExcludingAxis, 0]
 		const yScale =
 			orientation === BarChartOrientation.column
 				? d3
 						.scaleLinear()
-						.domain(colDomain) // ensure that axis starts at 0
-						.range(colRange)
+						.domain([minValue > 0 ? 0 : minValue, maxValue]) // ensure that axis starts at 0
+						.range([heightExcludingAxis, 0])
 				: d3
 						.scaleBand()
 						.domain(barNames)
 						.range([heightExcludingAxis, 0])
 						.padding(BAR_GAP)
 
-		const yAxisDomain = minValue < 0 ? [-absMaxValue, absMaxValue] : colDomain
-		const yAxisScale = d3
-			.scaleLinear()
-			.domain(yAxisDomain)
-			.range([heightExcludingAxis, 0])
-
 		return {
 			xScale,
 			yScale,
-			yAxisScale,
 		}
 	}, [
 		minValue,
 		maxValue,
-		absMaxValue,
 		heightExcludingAxis,
 		widthExcludingAxis,
 		barNames,
@@ -261,7 +246,7 @@ export const BarChart: React.FC<BarChartProps> = memo(function BarChart({
 				} as TooltipInfo)
 			})
 		},
-		[hideTooltip, hoverInfo.setHoverItem],
+		[hideTooltip, hoverInfo],
 	)
 
 	const handleContainerClick = useCallback(
@@ -291,14 +276,6 @@ export const BarChart: React.FC<BarChartProps> = memo(function BarChart({
 		hideTooltip(true)
 	}, [hideTooltip])
 
-	const renderRefLine = useMemo((): boolean => {
-		return !!(minValue < 0 && refLine)
-	}, [refLine, minValue])
-
-	const renderPositiveAndNegativeValues = useMemo((): boolean => {
-		return orientation === BarChartOrientation.column && renderRefLine
-	}, [orientation, renderRefLine])
-
 	const bars = useMemo(() => {
 		return inputBars.map((ld, index) => (
 			<Bar
@@ -316,7 +293,6 @@ export const BarChart: React.FC<BarChartProps> = memo(function BarChart({
 				onMouseMove={handleBarMouseMove}
 				onMouseLeave={handleBarMouseLeave}
 				onClick={handleBarMouseClick}
-				renderPositiveAndNegativeValues={renderPositiveAndNegativeValues}
 			/>
 		))
 	}, [
@@ -330,12 +306,11 @@ export const BarChart: React.FC<BarChartProps> = memo(function BarChart({
 		widthExcludingAxis,
 		heightExcludingAxis,
 		orientation,
-		renderPositiveAndNegativeValues,
 	])
 
 	const leftAxis = useMemo(() => {
 		return orientation === BarChartOrientation.column ? (
-			<Axis type="left" myscale={yAxisScale} ticks={5} />
+			<Axis type="left" myscale={yScale} ticks={5} />
 		) : (
 			<Axis
 				type="left"
@@ -344,14 +319,7 @@ export const BarChart: React.FC<BarChartProps> = memo(function BarChart({
 				transform={`translate(${width - widthExcludingAxis}, 0)`}
 			/>
 		)
-	}, [
-		orientation,
-		yScale,
-		renderAxisLabels,
-		width,
-		widthExcludingAxis,
-		yAxisScale,
-	])
+	}, [orientation, yScale, renderAxisLabels, width, widthExcludingAxis])
 
 	const bottomAxis = useMemo(() => {
 		return orientation === BarChartOrientation.column ? (
@@ -387,7 +355,6 @@ export const BarChart: React.FC<BarChartProps> = memo(function BarChart({
 				width={width}
 				height={height}
 				margin={margin}
-				refLine={renderRefLine}
 				handleClickOutside={handleClickOutside}
 				handleContainerClick={handleContainerClick}
 			>
