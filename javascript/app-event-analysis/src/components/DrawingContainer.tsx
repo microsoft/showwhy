@@ -2,6 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import { useThematic } from '@thematic/react'
 import { memo, useEffect, useRef } from 'react'
 
 import type { DrawingContainerProps } from './DrawingContainer.types.js'
@@ -18,6 +19,7 @@ export const DrawingContainer: React.FC<
 	handleClickOutside,
 	handleContainerClick,
 }) {
+	const theme = useThematic()
 	const svgWidth = width + margin.left + margin.right
 	const svgHeight = height + margin.top + margin.bottom
 
@@ -55,7 +57,7 @@ export const DrawingContainer: React.FC<
 				)
 				const halfHeight = `${height / 2}`
 				line.setAttributeNS(null, 'class', 'reference-line')
-				line.setAttributeNS(null, 'stroke', 'rgb(43, 185, 212)')
+				line.setAttributeNS(null, 'stroke', theme.line().stroke().hex())
 				line.setAttributeNS(null, 'stroke-width', '0.2')
 				line.setAttributeNS(null, 'x1', '0')
 				line.setAttributeNS(null, 'y1', halfHeight)
@@ -64,7 +66,7 @@ export const DrawingContainer: React.FC<
 				svg.querySelector('g')?.appendChild(line)
 			}
 		}
-	}, [refLine, width])
+	}, [theme, refLine, width])
 
 	return (
 		<svg

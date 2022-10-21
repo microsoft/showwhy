@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { Stack } from '@fluentui/react'
+import { ITheme, Stack } from '@fluentui/react'
 import styled from 'styled-components'
 
 export const StyledStack = styled(Stack)`
@@ -49,10 +49,9 @@ export const StyledStack = styled(Stack)`
 			color: #008000;
 		}
 		.help-link {
-			color: dodgerblue;
 			cursor: help;
 			position: relative;
-			border-bottom: 1px dotted black;
+			border-bottom: 1px dotted ${({ theme }: { theme: ITheme }) => theme.palette.neutralPrimary};
 		}
 		.help-link:before {
 			content: attr(data-hover);

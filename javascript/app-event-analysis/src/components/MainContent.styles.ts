@@ -2,17 +2,17 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import type { Theme } from '@fluentui/react'
 import { Stack } from '@fluentui/react'
+import type { FluentTheme } from '@thematic/fluent'
 import styled from 'styled-components'
 
 export const StyledStack = styled(Stack)`
 	.add-treated-unit {
-		color: ${({ theme }: { theme: Theme }) => theme.palette.themePrimary};
+		color: ${({ theme }: { theme: FluentTheme }) => theme.palette.themePrimary};
 		cursor: pointer;
 	}
 	.remove-treated-unit {
-		color: red;
+		color: ${({ theme }: { theme: FluentTheme }) => theme.application().error().hex()};
 		cursor: pointer;
 	}
 
@@ -42,7 +42,7 @@ export const StyledStack = styled(Stack)`
 	}
 
 	.bad-input {
-		color: red;
+		color: ${({ theme }: { theme: FluentTheme }) => theme.application().error().hex()};
 		cursor: pointer;
 		align-self: center;
 	}
@@ -94,13 +94,13 @@ export const StyledStack = styled(Stack)`
 	.colInvalidSelection {
 		border-style: solid;
 		border-width: 1px;
-		border-color: red;
+		border-color: ${({ theme }: { theme: FluentTheme }) => theme.application().error().hex()};
 	}
 
 	.attributeClearSelection {
 		font-weight: bold;
 		&:hover {
-			color: red;
+			color: ${({ theme }: { theme: FluentTheme }) => theme.application().error().hex()};
 			cursor: pointer;
 		}
 	}

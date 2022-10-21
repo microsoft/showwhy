@@ -21,6 +21,7 @@ import {
 	Text,
 	TextField,
 	TooltipHost,
+	useTheme,
 } from '@fluentui/react'
 import type { Hypothesis } from '@showwhy/app-common'
 import { HypothesisGroup, MenuBar, useDataTables } from '@showwhy/app-common'
@@ -97,6 +98,7 @@ import { TimeAlignmentSelector } from './TimeAlignmentSelector.js'
 import { TreatmentSelector } from './TreatmentSelector.js'
 
 export const MainContent: React.FC = memo(function MainContent() {
+	const theme = useTheme()
 	// Dataset selection (from wrangler)
 	const dataTables = useDataTables()
 
@@ -1157,7 +1159,7 @@ export const MainContent: React.FC = memo(function MainContent() {
 											text="Automatically create treatments from column:"
 											disabled
 											styles={{
-												label: { color: 'black' },
+												label: { color: theme.palette.neutralPrimary },
 												root: { padding: 16 },
 											}}
 										/>

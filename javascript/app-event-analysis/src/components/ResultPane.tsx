@@ -4,6 +4,7 @@
  */
 import { Spinner, SpinnerSize, Stack, Text } from '@fluentui/react'
 import { Hypothesis } from '@showwhy/app-common'
+import { useThematic } from '@thematic/react'
 import { mean } from 'lodash'
 import { memo, useCallback, useMemo, useRef, useState } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
@@ -65,6 +66,7 @@ export const ResultPane: React.FC<ResultPaneProps> = memo(function ResultPane({
 	checkableUnits,
 	onRemoveCheckedUnit,
 }) {
+	const theme = useThematic()
 	// Calls to setHoverItem is batched by default when updating the state
 	// d3 mouse move/leave events are emitted too quickly sometimes causing the batching of state update
 	// to skip clearing existing hover before applying a new, different, hover
@@ -146,12 +148,12 @@ export const ResultPane: React.FC<ResultPaneProps> = memo(function ResultPane({
 					name: placebo.unit,
 					value: placebo.frequency * direction,
 					label: placebo.ratio * direction,
-					color: 'gray',
+					color: theme.process().fill().hex(),
 				}
 			})
 			return inputData.sort((a, b) => a.value - b.value)
 		},
-		[hypothesis],
+		[theme, hypothesis],
 	)
 
 	const getPlaceboTreatedMSPERatio = useCallback(
@@ -184,12 +186,12 @@ export const ResultPane: React.FC<ResultPaneProps> = memo(function ResultPane({
 				.map(weightedUnit => ({
 					name: weightedUnit.unit,
 					value: weightedUnit.weight,
-					color: 'gray',
+					color: theme.process().fill().hex(),
 				}))
 				.reverse()
 		})
 		return barChartData
-	}, [synthControlData])
+	}, [theme, synthControlData])
 
 	const summaryResult = useMemo(() => {
 		const outputDataNonPlacebo = outputData.filter(output =>

@@ -30,24 +30,26 @@ import { Axis } from './Axis.js'
 import { DrawingContainer } from './DrawingContainer.js'
 import { GridLine } from './GridLine.js'
 import { Line } from './Line.js'
-import { useCounterfactual, useData, useLegends } from './LineChart.hooks.js'
+import {
+	useColors,
+	useCounterfactual,
+	useData,
+	useLegends,
+} from './LineChart.hooks.js'
 import { TooltipContent } from './LineChart.styles.js'
 import type { LineChartProps } from './LineChart.types.js'
-import { constructLineTooltipContent, getColor } from './LineChart.utils.js'
+import { constructLineTooltipContent } from './LineChart.utils.js'
 import { ToolTip } from './ToolTip.js'
 
-const GRID_LINE_COLOR = '#def'
 const LINE_WIDTH = 1
 const LINE_WIDTH_TREATED = 2
 const LINE_WIDTH_HOVER = 2
 const OUTPUT_LINE_WIDTH = 3
 const TREATMENT_LINE_WIDTH = 1.5
-const TREATMENT_LINE_COLOR = 'green'
 const CONTROL_LINE_WIDTH = 2
 const TRANSPARENT_LINE = 0.25
 const HIGHLIGHT_LINE = 1
 const OUTPUT_LINE = 0.5
-const CONTROL_COLOR = 'gray'
 const LINE_ELEMENT_CLASS_NAME = 'line-element'
 
 export const LineChart: React.FC<LineChartProps> = memo(function LineChart({
@@ -66,6 +68,7 @@ export const LineChart: React.FC<LineChartProps> = memo(function LineChart({
 	onRemoveCheckedUnit,
 	treatedUnitsList,
 }) {
+	const colors = useColors()
 	const [hoverUnit, setHoverUnit] = useState('')
 
 	const { width, height, margin } = dimensions
@@ -424,7 +427,7 @@ export const LineChart: React.FC<LineChartProps> = memo(function LineChart({
 					const treatedDateXPos = xScale(treatedDate)
 					const marker = (
 						<line
-							stroke={TREATMENT_LINE_COLOR}
+							stroke={colors.treatmentLine}
 							x1={treatedDateXPos}
 							x2={treatedDateXPos}
 							y1={0}
@@ -458,12 +461,20 @@ export const LineChart: React.FC<LineChartProps> = memo(function LineChart({
 					height={height}
 					x={xScale(treatmentDates[0])}
 					opacity={0.03}
-					fill={TREATMENT_LINE_COLOR}
+					fill={colors.treatmentLine}
 					pointerEvents="none"
 				/>
 			</>
 		)
-	}, [treatmentDates, treatedUnits, showTreatmentStart, height, width, xScale])
+	}, [
+		colors,
+		treatmentDates,
+		treatedUnits,
+		showTreatmentStart,
+		height,
+		width,
+		xScale,
+	])
 
 	const legendGroupRef = useLegends(
 		width,
@@ -697,8 +708,8 @@ export const LineChart: React.FC<LineChartProps> = memo(function LineChart({
 					)}`}
 					color={
 						treatedUnitsMap[ld[ld.length - 1].unit]
-							? getColor('treated')
-							: CONTROL_COLOR
+							? colors.get('treated')
+							: colors.control
 					}
 					xScale={xScale}
 					yScale={yScale}
@@ -740,9 +751,9 @@ export const LineChart: React.FC<LineChartProps> = memo(function LineChart({
 					color={
 						isPlaceboSimulation
 							? treatedUnitsMap[ld[ld.length - 1].unit]
-								? getColor('treated')
-								: getColor(ld[0].color)
-							: getColor(ld[0].color)
+								? colors.get('treated')
+								: colors.get(ld[0].color)
+							: colors.get(ld[0].color)
 					}
 					xScale={xScale}
 					yScale={yScale}
@@ -786,6 +797,7 @@ export const LineChart: React.FC<LineChartProps> = memo(function LineChart({
 			))
 		}
 	}, [
+		colors,
 		renderRawData,
 		isPlaceboSimulation,
 		inputLines,
@@ -831,7 +843,7 @@ export const LineChart: React.FC<LineChartProps> = memo(function LineChart({
 						x2={x2}
 						y1={yScale(outputDataNonPlacebo.control_pre_value)}
 						y2={yScale(outputDataNonPlacebo.control_post_value)}
-						stroke={getColor('control')}
+						stroke={colors.get('control')}
 						strokeWidth={CONTROL_LINE_WIDTH}
 					/>
 				)}
@@ -843,7 +855,7 @@ export const LineChart: React.FC<LineChartProps> = memo(function LineChart({
 							x2={x2}
 							y1={yScale(outputDataNonPlacebo.treated_pre_value)}
 							y2={yScale(outputDataNonPlacebo.treated_post_value)}
-							stroke={getColor('treated')}
+							stroke={colors.get('treated')}
 							strokeWidth={CONTROL_LINE_WIDTH}
 						/>
 						<line
@@ -852,7 +864,7 @@ export const LineChart: React.FC<LineChartProps> = memo(function LineChart({
 							x2={x2}
 							y1={yScale(outputDataNonPlacebo.treated_pre_value)}
 							y2={yScale(outputDataNonPlacebo.counterfactual_value)}
-							stroke="gray"
+							stroke={colors.counterfactualLine}
 							strokeWidth={CONTROL_LINE_WIDTH}
 							strokeDasharray={'6, 4'}
 						/>
@@ -867,7 +879,7 @@ export const LineChart: React.FC<LineChartProps> = memo(function LineChart({
 								x2={x1}
 								y1={yScale(outputDataNonPlacebo.control_pre_value)}
 								y2={yScale(outputDataNonPlacebo.treated_pre_value)}
-								stroke="gray"
+								stroke={colors.counterfactualLine}
 								strokeWidth={CONTROL_LINE_WIDTH}
 								strokeDasharray={'6, 4'}
 							/>
@@ -878,7 +890,7 @@ export const LineChart: React.FC<LineChartProps> = memo(function LineChart({
 							x2={x2}
 							y1={yScale(outputDataNonPlacebo.control_post_value)}
 							y2={yScale(outputDataNonPlacebo.counterfactual_value)}
-							stroke="gray"
+							stroke={colors.counterfactualLine}
 							strokeWidth={CONTROL_LINE_WIDTH}
 							strokeDasharray={'6, 4'}
 						/>
@@ -887,6 +899,7 @@ export const LineChart: React.FC<LineChartProps> = memo(function LineChart({
 			</g>
 		)
 	}, [
+		colors,
 		hoverUnit,
 		outputData,
 		relativeIntercept,
@@ -922,14 +935,14 @@ export const LineChart: React.FC<LineChartProps> = memo(function LineChart({
 							myscale={yScale}
 							tickSize={width}
 							ticks={10}
-							color={GRID_LINE_COLOR}
+							color={colors.gridLine}
 						/>
 						<GridLine
 							myscale={xScale}
 							tickSize={height}
 							ticks={10}
 							transform={`translate(0, ${height})`}
-							color={GRID_LINE_COLOR}
+							color={colors.gridLine}
 						/>
 					</>
 				)}

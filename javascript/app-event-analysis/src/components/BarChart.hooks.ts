@@ -2,12 +2,18 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import { useThematic } from '@thematic/react'
 import { max, min, select } from 'd3'
 import { useEffect, useMemo, useRef } from 'react'
 
 import type { BarData } from '../types'
 import { BarChartOrientation } from '../types'
 import { getColor } from './BarChart.utils.js'
+
+export function useColors() {
+	const theme = useThematic()
+	return useMemo(() => getColor(theme), [theme])
+}
 
 export function useData(
 	inputData: BarData[],
@@ -20,14 +26,15 @@ export function useData(
 	maxValue: number
 	absMaxValue: number
 } {
+	const colors = useColors()
 	return useMemo(() => {
 		const inputBars: BarData[] = []
-		let color = getColor('control-units')
+		let color = colors.get('control-units')
 		inputData.forEach(element => {
 			if (isPlaceboSimulation) {
 				color = treatedUnits.some(unit => element.name.includes(unit))
-					? getColor('highlight')
-					: getColor('normal')
+					? colors.get('highlight')
+					: colors.get('normal')
 			}
 			inputBars.push({
 				name: element.name,
@@ -51,7 +58,7 @@ export function useData(
 			maxValue,
 			absMaxValue,
 		}
-	}, [inputData, treatedUnits, isPlaceboSimulation])
+	}, [colors, inputData, treatedUnits, isPlaceboSimulation])
 }
 
 export function useLegends(
@@ -63,6 +70,7 @@ export function useLegends(
 	leftAxisLabel: string,
 	bottomAxisLabel: string,
 ) {
+	const colors = useColors()
 	const legendGroupRef = useRef(null)
 	useEffect(() => {
 		const container = select(legendGroupRef.current)
@@ -89,13 +97,13 @@ export function useLegends(
 			.attr('x', bottomAxisLabelX)
 			.attr('y', bottomAxisLabelY)
 			.style('font-size', 'large')
-			.style('fill', getColor('relative'))
+			.style('fill', colors.get('relative'))
 			.text(bottomAxisLabel)
 		// add background rect for the bottom axis' text
 		container
 			.append('rect')
 			.attr('class', 'axis-name-text-bkgnd-rect')
-			.style('fill', 'white')
+			.style('fill', colors.axisBackground)
 			.attr('x', bottomAxisLabelX)
 			.attr('y', bottomAxisLabelY)
 			.attr('width', 10)
@@ -129,9 +137,10 @@ export function useLegends(
 			.attr('text-anchor', 'middle')
 			.attr('transform', 'rotate(-90)')
 			.style('font-size', 'large')
-			.style('fill', 'gray')
+			.style('fill', colors.defaultAxisTitle)
 			.text(leftAxisLabel)
 	}, [
+		colors,
 		isPlaceboSimulation,
 		height,
 		width,
