@@ -2,6 +2,8 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import { fetchDiscoverResult } from '../../api'
+import type { DiscoverProgressCallback } from '../../api/types.js'
 import type { CausalInferenceModel } from '../../domain/CausalInference.js'
 import type { CausalVariable } from '../../domain/CausalVariable.js'
 import { arrayIncludesVariable } from '../../domain/CausalVariable.js'
@@ -25,12 +27,6 @@ import type {
 // https://github.com/microsoft/onnxruntime-web-demo/issues/15
 // import * as ort from 'onnxruntime-web';
 declare const ort: any
-
-const RUN_CAUSAL_DISCOVERY_BASE_URL = process.env.DISCOVER_API_URL?.endsWith(
-	'/',
-)
-	? process.env.DISCOVER_API_URL
-	: `${process.env.DISCOVER_API_URL || '/api/discover'}/`
 
 export function fromCausalDiscoveryResults(
 	variables: CausalVariable[],
@@ -75,6 +71,7 @@ export async function discover(
 	variables: CausalVariable[],
 	constraints: CausalDiscoveryConstraints,
 	algorithm: CausalDiscoveryAlgorithm,
+	progressCallback?: DiscoverProgressCallback,
 ): Promise<CausalDiscoveryResult> {
 	if (algorithm === CausalDiscoveryAlgorithm.None) {
 		return {
@@ -91,21 +88,16 @@ export async function discover(
 		CausalDiscoveryAlgorithmOptions.get(algorithm)?.algorithm || algorithm
 	const trainingOptions =
 		CausalDiscoveryAlgorithmOptions.get(algorithm)?.training_options
-	const result = await fetch(
-		`${RUN_CAUSAL_DISCOVERY_BASE_URL}${algorithmName.toLowerCase()}`,
-		{
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({
+	const { result: causalDiscoveryResult, taskId } =
+		await fetchDiscoverResult<any>(
+			algorithmName.toLowerCase(),
+			JSON.stringify({
 				dataset: JSON.parse(jsonData),
 				constraints: constraintsJson,
 				training_options: trainingOptions,
 			}),
-		},
-	)
-	const causalDiscoveryResult = await result.json()
+			progressCallback,
+		)
 	const graph = fromCausalDiscoveryResults(
 		variables,
 		causalDiscoveryResult as CausalDiscoveryRequestReturnValue,
@@ -142,7 +134,7 @@ export async function discover(
 	}
 	/* eslint-enable */
 
-	return { graph, causalInferenceModel }
+	return { graph, causalInferenceModel, taskId }
 }
 
 function createConstraintsJson(

@@ -19,7 +19,10 @@ from backend.exposure.model.estimate_effect_models import (
     PopulationSpecDataFrame,
     Specification,
 )
-from backend.exposure.model.exceptions import DataFrameNotLoadedError, FileNotFoundError
+from backend.worker_commons.io.exceptions import (
+    DataFrameNotLoadedError,
+    FileNotFoundError,
+)
 
 
 def get_tasks(

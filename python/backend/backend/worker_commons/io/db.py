@@ -10,7 +10,7 @@ from urllib.parse import urlparse
 
 import redis
 
-from backend.exposure import config
+from backend.worker_commons import config
 
 
 class Storage(ABC):
