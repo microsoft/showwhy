@@ -2,16 +2,20 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-
+/*!
+ * Copyright (c) Microsoft. All rights reserved.
+ * Licensed under the MIT license. See LICENSE file in the project.
+ */
 import type { CausalDiscoveryConstraints } from '../../domain/CausalDiscovery/CausalDiscoveryConstraints.js'
 import type { Relationship } from '../../domain/Relationship.js'
 import {
-	hasInvertedSourceAndTarget,
 	hasSameReason,
 	hasSameSourceAndTarget,
 	invertRelationship,
+	isEquivalentRelationship,
 	ManualRelationshipReason,
 } from '../../domain/Relationship.js'
+import type { VariableReference } from './../../domain/CausalVariable.js'
 
 export function removeEdge(
 	constraints: CausalDiscoveryConstraints,
@@ -22,10 +26,7 @@ export function removeEdge(
 		...constraints,
 		manualRelationships: [
 			...constraints.manualRelationships.filter(
-				r =>
-					!hasSameSourceAndTarget(r, relationship) ||
-					(hasSameReason(ManualRelationshipReason.Flipped, relationship) &&
-						!hasInvertedSourceAndTarget(r, relationship)),
+				r => !isEquivalentRelationship(r, relationship),
 			),
 			{
 				...relationship,
@@ -40,7 +41,7 @@ export function pinEdge(
 	onUpdateConstraints: (newConstraints: CausalDiscoveryConstraints) => void,
 	relationship: Relationship,
 ) {
-	const isPinned = constraints.manualRelationships.find(
+	const shouldUndo = constraints.manualRelationships.find(
 		x => x.key === relationship.key,
 	)
 	const filtered = constraints.manualRelationships.filter(
@@ -48,7 +49,7 @@ export function pinEdge(
 	)
 	const newConstraints = {
 		...constraints,
-		manualRelationships: isPinned
+		manualRelationships: shouldUndo
 			? filtered
 			: [
 					...filtered,
@@ -74,7 +75,7 @@ export function flipEdge(
 	]
 	const reverse = invertRelationship(relationship)
 	const existingRelationships = [...constraints.manualRelationships]
-	const isFlipped = constraints.manualRelationships.find(
+	const shouldUndo = constraints.manualRelationships.find(
 		r =>
 			hasSameSourceAndTarget(r, relationship) &&
 			hasSameReason(ManualRelationshipReason.Flipped, r),
@@ -89,7 +90,7 @@ export function flipEdge(
 	const newConstraints = {
 		causes: constraints.causes.filter(r => !columns.includes(r.columnName)),
 		effects: constraints.effects.filter(r => !columns.includes(r.columnName)),
-		manualRelationships: isFlipped
+		manualRelationships: shouldUndo
 			? filtered
 			: [
 					...filtered,
@@ -107,9 +108,9 @@ export function flipEdge(
 export function groupByEffectType(
 	relationships: Relationship[],
 	variableName: string,
-): { [index: string]: Relationship[] } {
+): Record<string, Relationship[]> {
 	return relationships.reduce(
-		(acc: { [index: string]: Relationship[] }, obj: Relationship) => {
+		(acc: Record<string, Relationship[]>, obj: Relationship) => {
 			let key = 'Is affected by'
 			switch (true) {
 				case obj.weight === undefined:
@@ -142,4 +143,18 @@ export function groupByEffectType(
 		},
 		{},
 	)
+}
+
+export function isSource(
+	relationship: Relationship,
+	variableReference: VariableReference,
+): boolean {
+	return variableReference.columnName === relationship.source.columnName
+}
+
+export function isTarget(
+	relationship: Relationship,
+	variableReference: VariableReference,
+): boolean {
+	return variableReference.columnName === relationship.source.columnName
 }

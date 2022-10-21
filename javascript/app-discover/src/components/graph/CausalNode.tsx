@@ -16,6 +16,7 @@ import { IconButtonDark } from '../../styles/styles.js'
 import { useIsVariableInModel } from './CausalNode.hooks.js'
 import type { CausalNodeProps } from './CausalNode.types.js'
 
+const childrenGap = 5
 export const CausalNode: React.FC<CausalNodeProps> = memo(function CausalNode({
 	variable,
 	className,
@@ -61,7 +62,7 @@ export const CausalNode: React.FC<CausalNodeProps> = memo(function CausalNode({
 			verticalAlign="center"
 			grow
 			horizontal
-			tokens={{ childrenGap: 5 }}
+			tokens={{ childrenGap }}
 		>
 			<Stack.Item align="center" grow onClick={selectVariable}>
 				<Label

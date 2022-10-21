@@ -13,6 +13,8 @@ import { IconButtonDark } from '../../styles/styles.js'
 import { Container, icons } from './EdgeItem.styles.js'
 import type { EdgeItemProps } from './EdgeItem.types.js'
 
+const childrenGap = 5
+const cursor = 'pointer'
 export const EdgeItem: React.FC<EdgeItemProps> = memo(function EdgeItem({
 	relationship,
 	columnName,
@@ -27,14 +29,11 @@ export const EdgeItem: React.FC<EdgeItemProps> = memo(function EdgeItem({
 			<Stack
 				horizontal
 				horizontalAlign="space-between"
-				tokens={{ childrenGap: 5 }}
+				tokens={{ childrenGap }}
 				verticalAlign="center"
 			>
 				<Stack.Item>
-					<Text
-						style={{ cursor: 'pointer' }}
-						onClick={() => onSelect(relationship)}
-					>
+					<Text style={{ cursor }} onClick={() => onSelect(relationship)}>
 						{columnName}
 					</Text>
 				</Stack.Item>
@@ -42,7 +41,7 @@ export const EdgeItem: React.FC<EdgeItemProps> = memo(function EdgeItem({
 					<Stack
 						horizontal
 						horizontalAlign="space-between"
-						tokens={{ childrenGap: 5 }}
+						tokens={{ childrenGap }}
 						verticalAlign="center"
 					>
 						<Stack.Item>
@@ -52,8 +51,8 @@ export const EdgeItem: React.FC<EdgeItemProps> = memo(function EdgeItem({
 							<TooltipHost
 								content={
 									hasSameReason(ManualRelationshipReason.Pinned, constraint)
-										? 'Relationship confirmed as relevant by the user. Click to undo it'
-										: 'Confirm as relevant relationship'
+										? 'Relationship confirmed as relevant. Click to undo'
+										: 'Confirm relationship as relevant'
 								}
 							>
 								<IconButtonDark
@@ -79,7 +78,7 @@ export const EdgeItem: React.FC<EdgeItemProps> = memo(function EdgeItem({
 							<TooltipHost
 								content={
 									hasSameReason(ManualRelationshipReason.Flipped, constraint)
-										? 'Relationship manually reversed by the user. Click to undo it'
+										? 'Relationship manually reversed. Click to undo it'
 										: 'Manually reverse direction of relationship'
 								}
 							>

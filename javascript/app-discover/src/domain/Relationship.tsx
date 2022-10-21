@@ -160,3 +160,14 @@ export function hasSameReason(
 ) {
 	return relationship?.reason === reason
 }
+
+export function isEquivalentRelationship(
+	relationship: Relationship,
+	asRelationship: Relationship,
+) {
+	return (
+		hasSameSourceAndTarget(relationship, asRelationship) ||
+		(hasSameReason(ManualRelationshipReason.Flipped, asRelationship) &&
+			hasInvertedSourceAndTarget(relationship, asRelationship))
+	)
+}

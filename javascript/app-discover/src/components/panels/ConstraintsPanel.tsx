@@ -8,14 +8,11 @@ import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil'
 
 import type { VariableReference } from '../../domain/CausalVariable.js'
 import type { RelationshipReference } from '../../domain/Relationship.js'
-import {
-	hasSameReason,
-	ManualRelationshipReason,
-} from '../../domain/Relationship.js'
 import { CausalGraphConstraintsState, TableState } from '../../state/index.js'
 import { IconButtonDark } from '../../styles/styles.js'
 import { Divider } from '../controls/Divider.js'
 import type { ConstraintsPanelProps } from './ConstraintsPanel.types.js'
+import { getConstraintIconName } from './ConstraintsPanel.utils.js'
 
 export const ConstraintsPanel: React.FC<ConstraintsPanelProps> = memo(
 	function ConstraintsPanel({ children }) {
@@ -50,18 +47,7 @@ export const ConstraintsPanel: React.FC<ConstraintsPanelProps> = memo(
 					>{`${constraint.source.columnName}-${constraint.target.columnName}`}</Stack.Item>
 					<Stack.Item>
 						<TooltipHost content={constraint.reason}>
-							<Icon
-								iconName={
-									hasSameReason(ManualRelationshipReason.Flipped, constraint)
-										? icons.switch.iconName
-										: hasSameReason(
-												ManualRelationshipReason.Removed,
-												constraint,
-										  )
-										? icons.delete.iconName
-										: icons.pinned.iconName
-								}
-							></Icon>
+							<Icon iconName={getConstraintIconName(constraint)}></Icon>
 						</TooltipHost>
 						<TooltipHost content="Remove constraint">
 							<IconButtonDark
