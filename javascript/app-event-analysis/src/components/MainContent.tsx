@@ -72,11 +72,7 @@ import type {
 	Treatment,
 } from '../types.js'
 import { csvToRecords, getColumns } from '../utils/csv.js'
-import {
-	deserializeExportState,
-	serializeExportState,
-} from '../utils/exportState.js'
-import { saveAsFile } from '../utils/file.js'
+import { deserializeExportState } from '../utils/exportState.js'
 import { processOutputData } from '../utils/processOutputData.js'
 import { isValidTreatmentDate, isValidUnit } from '../utils/validation.js'
 import { ChartOptionsGroup } from './ChartOptionsGroup.js'
@@ -161,16 +157,13 @@ export const MainContent: React.FC = memo(function MainContent() {
 	// Raw output data
 	const [outputRes, setOutputRes] = useRecoilState(OutputResState)
 
-	const [placeboOutputRes, setPlaceboOutputRes] = useRecoilState(
-		PlaceboOutputResState,
-	)
+	const [setPlaceboOutputRes] = useRecoilState(PlaceboOutputResState)
 
 	// encapsulate the value of treatment-start-date in certain occasions only
 	//  e.g., after session data is loaded and after an estimator is executed
-	const [
-		treatmentStartDatesAfterEstimate,
-		setTreatmentStartDatesAfterEstimate,
-	] = useRecoilState(TreatmentStartDatesAfterEstimateState)
+	const [setTreatmentStartDatesAfterEstimate] = useRecoilState(
+		TreatmentStartDatesAfterEstimateState,
+	)
 
 	const [userMessage, setUserMessage] = useState<MessageBarProps>({
 		isVisible: false,
@@ -203,10 +196,10 @@ export const MainContent: React.FC = memo(function MainContent() {
 		[data.uniqueUnits, treatedUnitsMap],
 	)
 
-	const exportFileName = `${eventName} on ${outcomeName}.sdid.json`.replaceAll(
-		' ',
-		'_',
-	)
+	// const exportFileName = `${eventName} on ${outcomeName}.sdid.json`.replaceAll(
+	// 	' ',
+	// 	'_',
+	// )
 
 	const outputData: (OutputData | PlaceboOutputData)[] = useMemo(
 		() => processOutputData(outputRes, treatedUnitsMap),
@@ -227,7 +220,7 @@ export const MainContent: React.FC = memo(function MainContent() {
 		if (checkedUnits === null && data.uniqueUnits.length) {
 			setCheckedUnits(new Set(data.uniqueUnits))
 		}
-	}, [data])
+	}, [data, checkedUnits, setCheckedUnits])
 
 	useEffect(() => {
 		if (
@@ -556,11 +549,14 @@ export const MainContent: React.FC = memo(function MainContent() {
 		})
 	}
 
-	const updateColumnMapping = (mapping: ColumnMapping) => {
-		const newMapping = { ...columnMapping, ...mapping }
-		if (isEqual(newMapping, columnMapping)) return
-		setColumnMapping(newMapping)
-	}
+	const updateColumnMapping = useCallback(
+		(mapping: ColumnMapping) => {
+			const newMapping = { ...columnMapping, ...mapping }
+			if (isEqual(newMapping, columnMapping)) return
+			setColumnMapping(newMapping)
+		},
+		[columnMapping, setColumnMapping],
+	)
 
 	const handleOutColumnChange = (
 		e: FormEvent<HTMLDivElement>,
@@ -634,7 +630,15 @@ export const MainContent: React.FC = memo(function MainContent() {
 				}
 			}
 		},
-		[treatedUnits, treatmentStartDates, outputRes],
+		[
+			treatedUnits,
+			treatmentStartDates,
+			outputRes,
+			setOutputRes,
+			setPlaceboOutputRes,
+			setTreatedUnits,
+			setTreatmentStartDates,
+		],
 	)
 
 	const addNewTreatedUnit = useCallback(() => {
@@ -655,7 +659,13 @@ export const MainContent: React.FC = memo(function MainContent() {
 			setTreatedUnits(updatedUnits)
 			setTreatmentStartDates(updatedPeriods)
 		}
-	}, [treatedUnits, treatmentStartDates, data])
+	}, [
+		treatedUnits,
+		treatmentStartDates,
+		data,
+		setTreatedUnits,
+		setTreatmentStartDates,
+	])
 
 	const handleEstimatorChange = useCallback(
 		(newEstimator: string) => {
@@ -690,6 +700,7 @@ export const MainContent: React.FC = memo(function MainContent() {
 		data,
 		validTreatedUnits,
 		treatedUnits,
+		setCheckedUnits,
 	])
 
 	const enableRegroupButton = useMemo(() => {
@@ -714,7 +725,12 @@ export const MainContent: React.FC = memo(function MainContent() {
 			}
 		})
 		updateTreatmentsForAggregation(treatment)
-	}, [treatedUnits, treatmentStartDates])
+	}, [
+		treatedUnits,
+		treatmentStartDates,
+		defaultTreatment?.groups,
+		updateTreatmentsForAggregation,
+	])
 
 	const handleAggregateOption = useCallback(() => {
 		const enabled = !aggregateEnabled
@@ -788,25 +804,25 @@ export const MainContent: React.FC = memo(function MainContent() {
 		}
 	}
 
-	const handleExport = () => {
-		if (!isDataLoaded) return
-		const payload = serializeExportState({
-			rawData,
-			eventName,
-			outcomeName,
-			columnMapping,
-			filter,
-			treatmentStartDates,
-			treatedUnits,
-			checkedUnits,
-			chartOptions,
-			estimator,
-			timeAlignment,
-			outputData: outputRes,
-			aggregateEnabled,
-		})
-		saveAsFile(`${exportFileName}`, payload, 'application/json')
-	}
+	// const handleExport = () => {
+	// 	if (!isDataLoaded) return
+	// 	const payload = serializeExportState({
+	// 		rawData,
+	// 		eventName,
+	// 		outcomeName,
+	// 		columnMapping,
+	// 		filter,
+	// 		treatmentStartDates,
+	// 		treatedUnits,
+	// 		checkedUnits,
+	// 		chartOptions,
+	// 		estimator,
+	// 		timeAlignment,
+	// 		outputData: outputRes,
+	// 		aggregateEnabled,
+	// 	})
+	// 	saveAsFile(`${exportFileName}`, payload, 'application/json')
+	// }
 
 	const handleRemoveCheckedUnit = useCallback(
 		(unitToRemove: string) => {
@@ -814,7 +830,7 @@ export const MainContent: React.FC = memo(function MainContent() {
 			checkedUnitsCopy?.delete(unitToRemove)
 			setCheckedUnits(checkedUnitsCopy)
 		},
-		[checkedUnits],
+		[checkedUnits, setCheckedUnits],
 	)
 
 	const tooltipHostStyles: Partial<ITooltipHostStyles> = {
@@ -947,6 +963,10 @@ export const MainContent: React.FC = memo(function MainContent() {
 		handleRemoveTreatmentUnit,
 		timeAlignment,
 		handleTimeAlignmentChange,
+		setOutputRes,
+		setPlaceboOutputRes,
+		setTreatedUnits,
+		setTreatmentStartDates,
 	])
 
 	const onUnitUpdate = useCallback(

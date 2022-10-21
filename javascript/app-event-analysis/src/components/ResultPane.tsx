@@ -111,7 +111,10 @@ export const ResultPane: React.FC<ResultPaneProps> = memo(function ResultPane({
 		)
 	}, [isCalculatingEstimator, outputData, treatedUnits, selectedTabKey])
 
-	const showPlaceboGraphsLocal = useMemo((): boolean => !isCalculatingEstimator && showPlaceboGraphs, [isCalculatingEstimator, showPlaceboGraphs])
+	const showPlaceboGraphsLocal = useMemo(
+		(): boolean => !isCalculatingEstimator && showPlaceboGraphs,
+		[isCalculatingEstimator, showPlaceboGraphs],
+	)
 
 	// barChartData is mainly used as a dependency to re-trigger the useDynamicChartDimensions hook
 	//  when data changes
@@ -162,7 +165,7 @@ export const ResultPane: React.FC<ResultPaneProps> = memo(function ResultPane({
 			})
 			return inputData.sort((a, b) => b.label - a.label)
 		},
-		[hypothesis, getSdidEstimate],
+		[getSdidEstimate],
 	)
 
 	const getTreatedPlaceboIndex = useCallback(
@@ -351,7 +354,14 @@ export const ResultPane: React.FC<ResultPaneProps> = memo(function ResultPane({
 				</Stack.Item>
 			</Stack>
 		)
-	}, [treatedUnits, outputData, isCalculatingEstimator, isPlaceboSimulation]) // timeAlignment used but not needed as a dependency!
+	}, [
+		treatedUnits,
+		outputData,
+		isCalculatingEstimator,
+		isPlaceboSimulation,
+		treatmentStartDates,
+		inputData.endDate,
+	]) // timeAlignment used but not needed as a dependency!
 
 	const getLineChart = useCallback(
 		(
@@ -368,7 +378,7 @@ export const ResultPane: React.FC<ResultPaneProps> = memo(function ResultPane({
 				treatedUnitsList={treatedUnitsList}
 			/>
 		),
-		[inputData, checkableUnits, onRemoveCheckedUnit],
+		[inputData, checkableUnits, onRemoveCheckedUnit, treatedUnits],
 	)
 
 	const syntheticControlComposition = useMemo(() => {
@@ -443,8 +453,6 @@ export const ResultPane: React.FC<ResultPaneProps> = memo(function ResultPane({
 			</>
 		)
 	}, [
-		isCalculatingEstimator,
-		isPlaceboSimulation,
 		outputData,
 		outcomeName,
 		treatedUnits,
@@ -610,6 +618,9 @@ export const ResultPane: React.FC<ResultPaneProps> = memo(function ResultPane({
 		getPlaceboResults,
 		getTreatedPlaceboP,
 		getSdidEstimate,
+		units,
+		eventName,
+		outcomeName,
 	])
 
 	const graphTitle = useMemo((): string => {

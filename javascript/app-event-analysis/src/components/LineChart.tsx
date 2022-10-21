@@ -597,7 +597,6 @@ export const LineChart: React.FC<LineChartProps> = memo(function LineChart({
 		},
 		[
 			handleLineMouseClickOrMove,
-			persistTooltip,
 			isPlaceboSimulation,
 			renderRawData,
 			showMeanTreatmentEffect,

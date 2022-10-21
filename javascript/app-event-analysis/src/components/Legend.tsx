@@ -5,7 +5,6 @@
 import * as d3 from 'd3'
 import { memo, useCallback, useEffect, useRef } from 'react'
 
-import type { LegendData } from '../types.js'
 import { BAR_TRANSPARENT } from '../types.js'
 import type { LegendProps } from './Legend.types.js'
 
@@ -53,7 +52,7 @@ export const Legend: React.FC<LegendProps> = memo(function Legend({
 				)
 				.text(d => d.name)
 		}
-	}, [ref])
+	}, [ref, data])
 
 	useEffect(() => {
 		renderLegend()

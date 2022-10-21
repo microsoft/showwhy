@@ -4,7 +4,7 @@
  */
 import { DefaultButton, SpinButton, Stack } from '@fluentui/react'
 import isEqual from 'lodash-es/isEqual.js'
-import { type SyntheticEvent, memo, useEffect, useState } from 'react'
+import { type SyntheticEvent, memo, useEffect, useMemo, useState } from 'react'
 
 import type { RangeFilterProps } from './RangeFilter.types.js'
 
@@ -19,7 +19,10 @@ export const RangeFilter: React.FC<RangeFilterProps> = memo(
 		onApply,
 		onReset,
 	}) {
-		const defaults = defaultRange || [min, max]
+		const defaults = useMemo(
+			() => defaultRange || [min, max],
+			[defaultRange, min, max],
+		)
 		const [range, setRange] = useState<[number, number]>(defaults)
 		const handleStartValueChange = (e: SyntheticEvent, newVal?: string) => {
 			if (!newVal) return
