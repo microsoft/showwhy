@@ -2,6 +2,7 @@
 # Copyright (c) Microsoft. All rights reserved.
 # Licensed under the MIT license. See LICENSE file in the project.
 #
+from uuid import UUID
 
 from fastapi import APIRouter, UploadFile
 
@@ -37,10 +38,10 @@ def health_check():
 
 
 @exposure_router.post("/upload/{workspace_name}")
-async def upload(workspace_name: str, file: UploadFile):
+async def upload(workspace_name: UUID, file: UploadFile):
     try:
         storage_client = get_storage_client()
-        storage_client.save(workspace_name, file.filename, file.file.read())
+        storage_client.save(str(workspace_name), file.filename, file.file.read())
         return {"status": "ok"}
     except Exception as error:
         return {"status": str(error)}
