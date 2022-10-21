@@ -9,11 +9,11 @@ import React, { memo, useCallback, useEffect, useMemo, useState } from 'react'
 import * as ReactDOM from 'react-dom'
 import { useRecoilState } from 'recoil'
 
+import { useShowPlaceboGraphs } from '../hooks/useShowPlaceboGraphs.js'
 import { useTooltip } from '../hooks/useTooltip'
 import {
 	CheckedUnitsState,
 	OutcomeNameState,
-	PlaceboSimulationState,
 	TreatedUnitsState,
 	TreatmentStartDatesState,
 } from '../state/state.js'
@@ -73,7 +73,7 @@ export const LineChart: React.FC<LineChartProps> = memo(function LineChart({
 	const [outcomeName] = useRecoilState(OutcomeNameState)
 	const [treatedUnitsState] = useRecoilState(TreatedUnitsState)
 	const [treatmentStartDates] = useRecoilState(TreatmentStartDatesState)
-	const [isPlaceboSimulation] = useRecoilState(PlaceboSimulationState)
+	const isPlaceboSimulation = useShowPlaceboGraphs()
 
 	const treatedUnits = useMemo(
 		() => treatedUnitsList || treatedUnitsState,
@@ -167,6 +167,7 @@ export const LineChart: React.FC<LineChartProps> = memo(function LineChart({
 
 		return outLines
 	}, [
+		checkedUnits,
 		applyIntercept,
 		relativeIntercept,
 		isPlaceboSimulation,
@@ -566,6 +567,8 @@ export const LineChart: React.FC<LineChartProps> = memo(function LineChart({
 			isPlaceboSimulation,
 			renderRawData,
 			showMeanTreatmentEffect,
+			checkableUnits,
+			persistTooltip,
 		],
 	)
 
@@ -581,7 +584,6 @@ export const LineChart: React.FC<LineChartProps> = memo(function LineChart({
 			handleLineMouseClickOrMove(event, true)
 
 			if (!renderRawData && !isPlaceboSimulation && !showMeanTreatmentEffect) {
-				const target = event.currentTarget
 				// nodeName
 				// mouse target is an output line
 				event.stopPropagation()
@@ -595,7 +597,6 @@ export const LineChart: React.FC<LineChartProps> = memo(function LineChart({
 		},
 		[
 			handleLineMouseClickOrMove,
-			persistTooltip,
 			isPlaceboSimulation,
 			renderRawData,
 			showMeanTreatmentEffect,
@@ -778,7 +779,6 @@ export const LineChart: React.FC<LineChartProps> = memo(function LineChart({
 							? '3, 3'
 							: ''
 					}
-					animation="path"
 					onMouseMove={handleLineMouseMove}
 					onMouseLeave={handleLineMouseLeave}
 					onClick={handleLineMouseClick}
@@ -799,6 +799,7 @@ export const LineChart: React.FC<LineChartProps> = memo(function LineChart({
 		treatedUnitsMap,
 		outLines,
 		aggregatedOutputLines,
+		showMeanTreatmentEffect,
 	])
 
 	const counterfactualLines = useMemo(() => {
@@ -894,6 +895,8 @@ export const LineChart: React.FC<LineChartProps> = memo(function LineChart({
 		isPlaceboSimulation,
 		showSynthControl,
 		applyIntercept,
+		xScale,
+		yScale,
 	])
 
 	const timePeriodsShouldBeAbstract = useMemo(() => {
