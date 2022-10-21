@@ -9,10 +9,10 @@ import pandas as pd
 from dowhy import CausalModel
 
 from backend.exposure.inference.identify_estimand import identify_estimand
-from backend.exposure.worker.worker import exposure_worker
+from backend.worker_commons.worker import backend_worker
 
 
-@exposure_worker.task
+@backend_worker.task
 def identify_estimand_task(
     causal_graph: Dict,
     dataframe: Optional[pd.DataFrame],

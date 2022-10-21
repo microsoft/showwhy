@@ -2,11 +2,18 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { useEffect, useMemo } from 'react'
+import { useCallback, useEffect, useMemo } from 'react'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
 
 import { discover as runCausalDiscovery } from '../../domain/CausalDiscovery/CausalDiscovery.js'
-import type { RelationshipReference } from '../../domain/Relationship.js'
+import type {
+	Relationship,
+	RelationshipReference,
+} from '../../domain/Relationship.js'
+import {
+	invertRelationship,
+	ManualRelationshipReason,
+} from '../../domain/Relationship.js'
 import {
 	CausalDiscoveryResultsState,
 	CausalGraphConstraintsState,
@@ -19,6 +26,7 @@ import {
 	DatasetState,
 	InModelCausalVariablesState,
 } from '../selectors/index.js'
+import { useLastDiscoveryResultPromise } from './useLastDiscoveryResultPromise.js'
 
 export function useCausalDiscoveryRunner() {
 	const dataset = useRecoilValue(DatasetState)
@@ -32,11 +40,12 @@ export function useCausalDiscoveryRunner() {
 		() => pauseAutoRun ?? causalDiscoveryAlgorithm,
 		[pauseAutoRun, causalDiscoveryAlgorithm],
 	)
-
 	const setCausalDiscoveryResultsState = useSetRecoilState(
 		CausalDiscoveryResultsState,
 	)
 	const setLoadingState = useSetRecoilState(LoadingState)
+	const [setLastDiscoveryResultPromise, cancelLastDiscoveryResultPromise] =
+		useLastDiscoveryResultPromise()
 
 	const derivedConstraints = useMemo<RelationshipReference[]>(() => {
 		const result: RelationshipReference[] = []
@@ -62,12 +71,30 @@ export function useCausalDiscoveryRunner() {
 	const causalDiscoveryConstraints = useMemo(
 		() => ({
 			...userConstraints,
-			forbiddenRelationships: [
-				...userConstraints.forbiddenRelationships,
+			manualRelationships: [
+				...userConstraints.manualRelationships.map(x => {
+					if (
+						x.reason &&
+						[
+							ManualRelationshipReason.Flipped,
+							ManualRelationshipReason.Pinned,
+						].includes(x.reason)
+					) {
+						return invertRelationship(x)
+					}
+					return x
+				}),
 				...derivedConstraints,
-			],
+			] as Relationship[],
 		}),
 		[userConstraints, derivedConstraints],
+	)
+
+	const updateProgress = useCallback(
+		(progress: number, taskId?: string) => {
+			setLoadingState(`Running causal discovery ${progress}%...`)
+		},
+		[setLoadingState],
 	)
 
 	useEffect(() => {
@@ -86,19 +113,39 @@ export function useCausalDiscoveryRunner() {
 			})
 		}
 
-		setLoadingState('Running causal discovery...')
+		updateProgress(0, undefined)
 		const runDiscovery = async () => {
-			const results = await runCausalDiscovery(
+			// if the last task has not finished just yet, cancel it
+			await cancelLastDiscoveryResultPromise()
+
+			const discoveryPromise = runCausalDiscovery(
 				dataset,
 				inModelCausalVariables,
 				causalDiscoveryConstraints,
 				algorithm,
+				updateProgress,
 			)
-			setCausalDiscoveryResultsState(results)
-			setLoadingState(undefined)
+
+			setLastDiscoveryResultPromise(discoveryPromise)
+
+			try {
+				const results = await discoveryPromise.promise!
+
+				// only update if the promise is not canceled
+				if (discoveryPromise.isFinished()) {
+					setCausalDiscoveryResultsState(results)
+					setLoadingState(undefined)
+				}
+			} catch (err) {
+				setLoadingState('Cancelling last task...')
+			}
 		}
 
 		void runDiscovery()
+
+		return () => {
+			void cancelLastDiscoveryResultPromise()
+		}
 	}, [
 		dataset,
 		inModelCausalVariables,
@@ -107,5 +154,8 @@ export function useCausalDiscoveryRunner() {
 		causalDiscoveryConstraints,
 		setLoadingState,
 		setCausalDiscoveryResultsState,
+		updateProgress,
+		cancelLastDiscoveryResultPromise,
+		setLastDiscoveryResultPromise,
 	])
 }

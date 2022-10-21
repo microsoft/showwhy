@@ -8,9 +8,7 @@ import styled from 'styled-components'
 import { containerPadding } from '../../styles/styles.js'
 
 export const NodeContainer = styled.div({
-	paddingRight: containerPadding,
 	paddingLeft: containerPadding,
-	paddingBottom: containerPadding,
 	display: 'inline-block',
 	backgroundColor: '#FFFFFF99',
 	backdropFilter: 'blur(2px)',

@@ -2,12 +2,18 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import { fetchDiscoverResult } from '../../api'
+import type {
+	DiscoverProgressCallback,
+	FetchDiscoverMetadata,
+} from '../../api/types.js'
 import type { CausalInferenceModel } from '../../domain/CausalInference.js'
 import type { CausalVariable } from '../../domain/CausalVariable.js'
 import { arrayIncludesVariable } from '../../domain/CausalVariable.js'
 import type { Dataset } from '../../domain/Dataset.js'
 import type { CausalGraph } from '../../domain/Graph.js'
 import type { Relationship } from '../../domain/Relationship.js'
+import { CancelablePromise } from '../../utils/CancelablePromise.js'
 import {
 	CausalDiscoveryAlgorithm,
 	CausalDiscoveryAlgorithmOptions,
@@ -16,6 +22,7 @@ import type { CausalDiscoveryConstraints } from './CausalDiscoveryConstraints.js
 import type {
 	CausalDiscoveryRequestReturnValue,
 	CausalDiscoveryResult,
+	CausalDiscoveryResultPromise,
 } from './CausalDiscoveryResult.js'
 
 // TODO: We are loading onnxruntime-web from a script tag at the moment to work around an issue with
@@ -25,12 +32,6 @@ import type {
 // https://github.com/microsoft/onnxruntime-web-demo/issues/15
 // import * as ort from 'onnxruntime-web';
 declare const ort: any
-
-const RUN_CAUSAL_DISCOVERY_BASE_URL = process.env.DISCOVER_API_URL?.endsWith(
-	'/',
-)
-	? process.env.DISCOVER_API_URL
-	: `${process.env.DISCOVER_API_URL || '/api/discover'}/`
 
 export function fromCausalDiscoveryResults(
 	variables: CausalVariable[],
@@ -70,17 +71,34 @@ export function fromCausalDiscoveryResults(
 	return { variables, relationships, constraints, algorithm }
 }
 
-export async function discover(
+function empty_discover_result(
+	variables: CausalVariable[],
+	constraints: CausalDiscoveryConstraints,
+	algorithm: CausalDiscoveryAlgorithm,
+) {
+	const ret = new CancelablePromise<
+		FetchDiscoverMetadata,
+		CausalDiscoveryResult
+	>({ taskId: undefined })
+
+	ret.promise = new Promise(resolve => {
+		resolve({
+			graph: { variables, relationships: [], constraints, algorithm },
+			causalInferenceModel: null,
+		})
+	})
+	return ret
+}
+
+export function discover(
 	dataset: Dataset,
 	variables: CausalVariable[],
 	constraints: CausalDiscoveryConstraints,
 	algorithm: CausalDiscoveryAlgorithm,
-): Promise<CausalDiscoveryResult> {
+	progressCallback?: DiscoverProgressCallback,
+): CausalDiscoveryResultPromise {
 	if (algorithm === CausalDiscoveryAlgorithm.None) {
-		return {
-			graph: { variables, relationships: [], constraints, algorithm },
-			causalInferenceModel: null,
-		}
+		return empty_discover_result(variables, constraints, algorithm)
 	}
 
 	/* eslint-disable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-argument */
@@ -91,58 +109,62 @@ export async function discover(
 		CausalDiscoveryAlgorithmOptions.get(algorithm)?.algorithm || algorithm
 	const trainingOptions =
 		CausalDiscoveryAlgorithmOptions.get(algorithm)?.training_options
-	const result = await fetch(
-		`${RUN_CAUSAL_DISCOVERY_BASE_URL}${algorithmName.toLowerCase()}`,
-		{
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({
-				dataset: JSON.parse(jsonData),
-				constraints: constraintsJson,
-				training_options: trainingOptions,
-			}),
-		},
+	const fetchDiscoverResultPromise = fetchDiscoverResult<any>(
+		algorithmName.toLowerCase(),
+		JSON.stringify({
+			dataset: JSON.parse(jsonData),
+			constraints: constraintsJson,
+			training_options: trainingOptions,
+		}),
+		progressCallback,
 	)
-	const causalDiscoveryResult = await result.json()
-	const graph = fromCausalDiscoveryResults(
-		variables,
-		causalDiscoveryResult as CausalDiscoveryRequestReturnValue,
-		constraints,
-		algorithm,
-	)
-	let causalInferenceModel: CausalInferenceModel | null = null
-	if (causalDiscoveryResult.onnx) {
-		const onnx = Uint8Array.from(atob(causalDiscoveryResult.onnx), c =>
-			c.charCodeAt(0),
-		)
-		const inferenceSession = await ort.InferenceSession.create(onnx)
-		const confidenceMatrix = new ort.Tensor(
-			'float32',
-			causalDiscoveryResult.confidence_matrix.flat(),
-			[columns.length, columns.length],
-		)
-		const treatmentEffectMatrix = new ort.Tensor(
-			'float32',
-			causalDiscoveryResult.ate_matrix.flat(),
-			[columns.length, columns.length],
-		)
+	const causalDiscoverResultPromise =
+		fetchDiscoverResultPromise as unknown as CausalDiscoveryResultPromise
 
-		const columnNames = causalDiscoveryResult.columns
-		const isBooleanInterpretedAsContinuous =
-			causalDiscoveryResult.interpret_boolean_as_continuous
-		causalInferenceModel = {
-			inferenceSession,
-			confidenceMatrix,
-			treatmentEffectMatrix,
-			columnNames,
-			isBooleanInterpretedAsContinuous,
-		}
-	}
+	causalDiscoverResultPromise.promise =
+		fetchDiscoverResultPromise.promise?.then(
+			async ({ result: causalDiscoveryResult }) => {
+				const graph = fromCausalDiscoveryResults(
+					variables,
+					causalDiscoveryResult as CausalDiscoveryRequestReturnValue,
+					constraints,
+					algorithm,
+				)
+				let causalInferenceModel: CausalInferenceModel | null = null
+				if (causalDiscoveryResult.onnx) {
+					const onnx = Uint8Array.from(atob(causalDiscoveryResult.onnx), c =>
+						c.charCodeAt(0),
+					)
+					const inferenceSession = await ort.InferenceSession.create(onnx)
+					const confidenceMatrix = new ort.Tensor(
+						'float32',
+						causalDiscoveryResult.confidence_matrix.flat(),
+						[columns.length, columns.length],
+					)
+					const treatmentEffectMatrix = new ort.Tensor(
+						'float32',
+						causalDiscoveryResult.ate_matrix.flat(),
+						[columns.length, columns.length],
+					)
+
+					const columnNames = causalDiscoveryResult.columns
+					const isBooleanInterpretedAsContinuous =
+						causalDiscoveryResult.interpret_boolean_as_continuous
+					causalInferenceModel = {
+						inferenceSession,
+						confidenceMatrix,
+						treatmentEffectMatrix,
+						columnNames,
+						isBooleanInterpretedAsContinuous,
+					}
+				}
+
+				return { graph, causalInferenceModel }
+			},
+		)
 	/* eslint-enable */
 
-	return { graph, causalInferenceModel }
+	return causalDiscoverResultPromise
 }
 
 function createConstraintsJson(
@@ -156,7 +178,7 @@ function createConstraintsJson(
 		effects: constraints.effects
 			.filter(variable => arrayIncludesVariable(variables, variable))
 			.map(variable => variable.columnName),
-		forbiddenRelationships: constraints.forbiddenRelationships
+		forbiddenRelationships: constraints.manualRelationships
 			.filter(
 				relationship =>
 					arrayIncludesVariable(variables, relationship.source) &&

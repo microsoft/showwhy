@@ -2,7 +2,7 @@
 
 if [[ -z "${DEBUG}" ]]; then
     # worker debug disabled
-    echo "Starting backend workers with debug disabled"
+    echo "Starting backend worker with debug disabled"
     poetry run python -m celery -A backend.worker_main worker -l info
 else
     # worker debug enabled

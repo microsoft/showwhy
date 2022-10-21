@@ -19,7 +19,7 @@ export const RangeFilter: React.FC<RangeFilterProps> = memo(
 		onApply,
 		onReset,
 	}) {
-		const defaults = useMemo(
+		const defaults: [number, number] = useMemo(
 			() => defaultRange || [min, max],
 			[defaultRange, min, max],
 		)

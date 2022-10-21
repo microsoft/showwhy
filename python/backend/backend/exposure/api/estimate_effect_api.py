@@ -9,13 +9,13 @@ from fastapi import APIRouter, HTTPException
 
 from backend.exposure.api import group_operations as go
 from backend.exposure.inference.estimate_effect import get_tasks
-from backend.exposure.io.storage import get_storage_client
 from backend.exposure.model.estimate_effect_models import EstimateEffectRequestBody
-from backend.exposure.model.exceptions import DataFrameNotLoadedError
 from backend.exposure.model.response import NumberOfExecutionsResult
 from backend.exposure.worker.estimate_effect_task import (
     estimate_effect_for_specification,
 )
+from backend.worker_commons.io.exceptions import DataFrameNotLoadedError
+from backend.worker_commons.io.storage import get_storage_client
 
 estimate_effect_router = APIRouter(
     prefix="/estimate_effect",

@@ -3,10 +3,6 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { Label, Stack } from '@fluentui/react'
-import {
-	CirclePlusIcon,
-	StatusCircleErrorXIcon,
-} from '@fluentui/react-icons-mdl2'
 import isEqual from 'lodash-es/isEqual'
 import { memo, useCallback } from 'react'
 import { useRecoilState } from 'recoil'
@@ -16,9 +12,11 @@ import {
 	InModelCausalVariablesState,
 	SelectedObjectState,
 } from '../../state/index.jsx'
+import { IconButtonDark } from '../../styles/styles.js'
 import { useIsVariableInModel } from './CausalNode.hooks.js'
 import type { CausalNodeProps } from './CausalNode.types.js'
 
+const childrenGap = 5
 export const CausalNode: React.FC<CausalNodeProps> = memo(function CausalNode({
 	variable,
 	className,
@@ -59,12 +57,19 @@ export const CausalNode: React.FC<CausalNodeProps> = memo(function CausalNode({
 	}
 
 	return (
-		<Stack className={className} grow horizontal tokens={{ childrenGap: 5 }}>
+		<Stack
+			className={className}
+			verticalAlign="center"
+			grow
+			horizontal
+			tokens={{ childrenGap }}
+		>
 			<Stack.Item align="center" grow onClick={selectVariable}>
 				<Label
 					disabled={!isInModel}
 					style={{
 						textAlign: center ? 'center' : undefined,
+						overflow: 'hidden',
 					}}
 				>
 					{variable.name}
@@ -72,14 +77,19 @@ export const CausalNode: React.FC<CausalNodeProps> = memo(function CausalNode({
 			</Stack.Item>
 			{isAddable && !isInModel && (
 				<Stack.Item align="center">
-					<CirclePlusIcon onClick={addToModel} />
+					<IconButtonDark onClick={addToModel} iconProps={icons.add} />
 				</Stack.Item>
 			)}
 			{isRemovable && isInModel && (
-				<Stack.Item align="center" onClick={removeFromModel}>
-					<StatusCircleErrorXIcon />
+				<Stack.Item align="center">
+					<IconButtonDark onClick={removeFromModel} iconProps={icons.remove} />
 				</Stack.Item>
 			)}
 		</Stack>
 	)
 })
+
+const icons = {
+	remove: { iconName: 'StatusCircleErrorX' },
+	add: { iconName: 'circlePlus' },
+}
