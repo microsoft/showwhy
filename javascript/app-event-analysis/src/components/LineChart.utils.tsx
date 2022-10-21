@@ -24,7 +24,7 @@ export function getLineStroke(theme: Theme) {
 				case 'mean synthetic':
 				case 'control':
 				case 'reference':
-					return scale(2).hex()
+					return scale(1).hex()
 				default:
 					return theme.text().fill().hex()
 			}
@@ -37,7 +37,7 @@ export function getLineStroke(theme: Theme) {
 		timeMarker: theme.process().fill().hex(),
 		counterfactual: theme.link().stroke().hex(),
 		gridLine: theme.gridLines().stroke().hex(),
-		treatmentLine: scale(1).hex(),
+		treatmentLine: scale(4).hex(),
 		counterfactualLine: theme.link().stroke().hex(),
 		control: theme.link().stroke().hex(),
 	}

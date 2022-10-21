@@ -18,9 +18,9 @@ export function getColor(theme: Theme) {
 						.fill()
 						.hex()
 				case 'control-units':
-					return scale(2).hex()
-				case 'negative':
 					return scale(1).hex()
+				case 'negative':
+					return scale(2).hex()
 				case 'normal':
 				default:
 					return theme.process().fill().hex()
