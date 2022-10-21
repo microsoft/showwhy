@@ -2,12 +2,15 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import { CancelablePromise } from '../utils/CancelablePromise.js'
 import { sleep } from '../utils/Sleep.js'
 import type {
 	DiscoverProgressCallback,
-	DiscoverResult,
 	DiscoverStartResponse,
 	DiscoverStatusResponse,
+	FetchDiscoverMetadata,
+	FetchDiscoverResult,
+	FetchDiscoverResultPromise,
 } from './types.js'
 import { DiscoverResponseStatus } from './types.js'
 
@@ -22,12 +25,15 @@ function getCausalDiscoveryBaseUrl(): string {
 	return base
 }
 
-export async function fetchDiscoverResult<T>(
+async function _fetchDiscoverResult<T>(
+	cancelablePromise: FetchDiscoverResultPromise<T>,
 	algorithmName: string,
 	body: string,
 	progressCallback?: DiscoverProgressCallback,
-): Promise<DiscoverResult<T>> {
+) {
 	const taskId = await startDiscoverAndGetTaskId(algorithmName, body)
+
+	cancelablePromise.metadata = { taskId }
 
 	let status = await fetchStatus<T>(taskId)
 
@@ -36,16 +42,64 @@ export async function fetchDiscoverResult<T>(
 	progressCallback?.(last_progress, taskId)
 
 	// TODO: replace this pooling with something like web sockets
-	while (isProcessingStatus(status.status)) {
+	while (
+		isProcessingStatus(status.status) &&
+		!cancelablePromise.isCancellingOrCanceled()
+	) {
 		await sleep(1000)
 		status = await fetchStatus<T>(taskId)
 		last_progress = Math.max(status.progress ?? 0, last_progress)
 		progressCallback?.(last_progress, taskId)
 	}
 
-	progressCallback?.(100.0, taskId)
+	if (cancelablePromise.isCancellingOrCanceled()) {
+		cancelablePromise.setCanceled()
+		throw new Error(`task ${taskId} has been canceled`)
+	}
+
+	cancelablePromise.setFinished()
 
 	return { result: status.result, taskId: taskId }
+}
+
+export function fetchDiscoverResult<T>(
+	algorithmName: string,
+	body: string,
+	progressCallback?: DiscoverProgressCallback,
+): FetchDiscoverResultPromise<T> {
+	const cancelablePromise = new CancelablePromise<
+		FetchDiscoverMetadata,
+		FetchDiscoverResult<T>
+	>({ taskId: undefined })
+
+	cancelablePromise.promise = new Promise((resolve, reject) => {
+		try {
+			resolve(
+				_fetchDiscoverResult(
+					cancelablePromise,
+					algorithmName,
+					body,
+					progressCallback,
+				),
+			)
+		} catch (err) {
+			reject(err)
+		}
+	})
+
+	cancelablePromise.cancel = async () => {
+		if (cancelablePromise.isFinished()) {
+			return
+		}
+
+		cancelablePromise.setCanceling()
+
+		if (cancelablePromise.metadata?.taskId) {
+			await cancelDiscoverTask(cancelablePromise.metadata?.taskId)
+		}
+	}
+
+	return cancelablePromise
 }
 
 export async function cancelDiscoverTask(taskId: string) {

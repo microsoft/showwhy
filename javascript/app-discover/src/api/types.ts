@@ -2,6 +2,8 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import type { CancelablePromise } from '../utils/CancelablePromise.js'
+
 export enum DiscoverResponseStatus {
 	Pending = 'pending',
 	Started = 'started',
@@ -11,9 +13,8 @@ export enum DiscoverResponseStatus {
 	Revoked = 'revoked',
 }
 
-export interface DiscoverResult<T> {
+export interface FetchDiscoverResult<T> {
 	result: T
-	taskId: string
 }
 
 export interface DiscoverStartResponse {
@@ -26,7 +27,16 @@ export interface DiscoverStatusResponse<T> {
 	result: T
 }
 
+export interface FetchDiscoverMetadata {
+	taskId?: string
+}
+
 export type DiscoverProgressCallback = (
 	progress: number,
 	taskId: string,
 ) => void
+
+export type FetchDiscoverResultPromise<T> = CancelablePromise<
+	FetchDiscoverMetadata,
+	FetchDiscoverResult<T>
+>

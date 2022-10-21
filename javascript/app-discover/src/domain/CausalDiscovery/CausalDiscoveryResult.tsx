@@ -2,8 +2,10 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import type { FetchDiscoverMetadata } from '../../api/types.js'
 import type { CausalInferenceModel } from '../../domain/CausalInference.js'
 import type { CausalGraph } from '../../domain/Graph.js'
+import type { CancelablePromise } from '../../utils/CancelablePromise.js'
 import { CausalDiscoveryAlgorithm } from './CausalDiscoveryAlgorithm.js'
 import type { CausalDiscoveryResultEdge } from './CausalDiscoveryResultEdge.js'
 import type { CausalDiscoveryResultNode } from './CausalDiscoveryResultNode.js'
@@ -38,3 +40,8 @@ export interface CausalDiscoveryResult {
 	causalInferenceModel: CausalInferenceModel | null
 	taskId?: string
 }
+
+export type CausalDiscoveryResultPromise = CancelablePromise<
+	FetchDiscoverMetadata,
+	CausalDiscoveryResult
+>
