@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { Stack } from '@fluentui/react'
-import { memo } from 'react'
+import { memo, useCallback } from 'react'
 import type { anchorType } from 'react-xarrows'
 import Xarrow from 'react-xarrows'
 import { useRecoilState, useRecoilValue, useRecoilValueLoadable } from 'recoil'
@@ -21,6 +21,7 @@ import type { CausalEdgeProps } from './CausalEdge.types.js'
 const LABEL_STYLE = { fontSize: '8pt', fontWeight: 'bold' }
 const CORR_REL_STYLE = { fontSize: '8pt' }
 const STACK_TOKEN_STYLE = { childrenGap: 2 }
+const DASHNESS_CORRELATION = { strokeLen: 20, nonStrokeLen: 30, animation: 0 }
 
 export const CausalEdge: React.FC<CausalEdgeProps> = memo(function CausalEdge({
 	relationship,
@@ -32,6 +33,11 @@ export const CausalEdge: React.FC<CausalEdgeProps> = memo(function CausalEdge({
 	const correlations =
 		useRecoilValueLoadable(FilteredCorrelationsState).valueMaybe() || []
 	const useStraightEdges = useRecoilValue(StraightEdgesState)
+
+	const onSelectEdge = useCallback(() => {
+		setSelectedObject(relationship)
+	}, [relationship])
+
 	const strokeWidth = map(
 		Math.abs(relationship.weight || 0),
 		0,
@@ -115,7 +121,7 @@ export const CausalEdge: React.FC<CausalEdgeProps> = memo(function CausalEdge({
 						</Stack.Item>
 					</Stack>
 				}
-				passProps={{ onClick: () => setSelectedObject(relationship) }}
+				passProps={{ onClick: onSelectEdge }}
 				dashness={dashness}
 				// SVGcanvasStyle={{filter: 'blur(5px)'}}
 			/>
@@ -131,9 +137,9 @@ export const CausalEdge: React.FC<CausalEdgeProps> = memo(function CausalEdge({
 					showHead={showArrowHead}
 					showTail={false}
 					path={path}
-					passProps={{ onClick: () => setSelectedObject(relationship) }}
+					passProps={{ onClick: onSelectEdge }}
 					key={relationship.key + '-correlation'}
-					dashness={{ strokeLen: 20, nonStrokeLen: 30, animation: 0 }}
+					dashness={DASHNESS_CORRELATION}
 					// SVGcanvasStyle={{filter: 'blur(2px)'}}
 				/>
 			)}
