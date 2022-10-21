@@ -3,6 +3,10 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import type { ITheme } from '@fluentui/react'
+import { IconButton } from '@fluentui/react'
+import styled from 'styled-components'
+
 export const containerPadding = 5
 export const padding = {
 	paddingLeft: containerPadding,
@@ -23,3 +27,7 @@ export const colorNegativeFaded = '#aa666633'
 export const addedStyle = { filter: 'drop-shadow(-1px 1px 2px #FFAA44)' }
 export const colorCorrelation = 'rgb(120, 120, 120)'
 export const colorCorrelationFaded = 'rgb(120, 120, 120, 0.5)'
+
+export const IconButtonDark = styled(IconButton)`
+	color: ${({ theme }: { theme: ITheme }) => theme.palette.black};
+`

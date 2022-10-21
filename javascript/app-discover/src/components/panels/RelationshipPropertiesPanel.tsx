@@ -42,10 +42,7 @@ export const RelationshipPropertiesPanel: React.FC<RelationshipPropertiesPanelPr
 		const addToConstraints = () => {
 			const newConstraints = {
 				...constraints,
-				forbiddenRelationships: [
-					...constraints.forbiddenRelationships,
-					relationship,
-				],
+				manualRelationships: [...constraints.manualRelationships, relationship],
 			}
 			setConstraints(newConstraints)
 		}

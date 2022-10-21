@@ -25,7 +25,7 @@ export const CausalGraphConstraintsState = atom<CausalDiscoveryConstraints>({
 	default: {
 		causes: [],
 		effects: [],
-		forbiddenRelationships: [],
+		manualRelationships: [],
 	},
 	// eslint-disable-next-line camelcase
 	effects_UNSTABLE: [persistAtomEffect, persistAtom],

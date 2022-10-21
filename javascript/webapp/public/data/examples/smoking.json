@@ -612,7 +612,7 @@
                     "constraints": {
                         "causes": [],
                         "effects": [],
-                        "forbiddenRelationships": []
+                        "manualRelationships": []
                     },
                     "results": {
                         "graph": {
@@ -621,7 +621,7 @@
                             "constraints": {
                                 "causes": [],
                                 "effects": [],
-                                "forbiddenRelationships": []
+                                "manualRelationships": []
                             },
                             "algorithm": "NOTEARS"
                         },
