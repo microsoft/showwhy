@@ -1,0 +1,27 @@
+/*!
+ * Copyright (c) Microsoft. All rights reserved.
+ * Licensed under the MIT license. See LICENSE file in the project.
+ */
+
+import { atom } from 'recoil'
+import { recoilPersist } from 'recoil-persist'
+
+import { persistAtomEffect } from '../persistence.js'
+import type {
+	DECIParams,
+	DECITrainingOptions,
+} from './../../domain/Algorithms/DECI.js'
+
+const { persistAtom } = recoilPersist()
+
+const training_options = {
+	max_steps_auglag: 10, //20
+	max_auglag_inner_epochs: 100, //1000
+} as DECITrainingOptions
+
+export const DeciParamsState = atom<DECIParams>({
+	key: 'DeciParamsState',
+	default: { training_options },
+	// eslint-disable-next-line camelcase
+	effects_UNSTABLE: [persistAtomEffect, persistAtom],
+})

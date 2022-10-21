@@ -10,10 +10,8 @@ import { arrayIncludesVariable } from '../../domain/CausalVariable.js'
 import type { Dataset } from '../../domain/Dataset.js'
 import type { CausalGraph } from '../../domain/Graph.js'
 import type { Relationship } from '../../domain/Relationship.js'
-import {
-	CausalDiscoveryAlgorithm,
-	CausalDiscoveryAlgorithmOptions,
-} from './CausalDiscoveryAlgorithm.js'
+import type { DECIParams } from '../Algorithms/DECI.js'
+import { CausalDiscoveryAlgorithm } from './CausalDiscoveryAlgorithm.js'
 import type { CausalDiscoveryConstraints } from './CausalDiscoveryConstraints.js'
 import type {
 	CausalDiscoveryRequestReturnValue,
@@ -72,6 +70,7 @@ export async function discover(
 	constraints: CausalDiscoveryConstraints,
 	algorithm: CausalDiscoveryAlgorithm,
 	progressCallback?: DiscoverProgressCallback,
+	paramOptions?: DECIParams,
 ): Promise<CausalDiscoveryResult> {
 	if (algorithm === CausalDiscoveryAlgorithm.None) {
 		return {
@@ -84,17 +83,14 @@ export async function discover(
 	const columns = variables.map(v => v.columnName)
 	const jsonData = dataset.table.toJSON({ columns })
 	const constraintsJson = createConstraintsJson(variables, constraints)
-	const algorithmName =
-		CausalDiscoveryAlgorithmOptions.get(algorithm)?.algorithm || algorithm
-	const trainingOptions =
-		CausalDiscoveryAlgorithmOptions.get(algorithm)?.training_options
+
 	const { result: causalDiscoveryResult, taskId } =
 		await fetchDiscoverResult<any>(
-			algorithmName.toLowerCase(),
+			algorithm.toLowerCase(),
 			JSON.stringify({
 				dataset: JSON.parse(jsonData),
 				constraints: constraintsJson,
-				training_options: trainingOptions,
+				...paramOptions,
 			}),
 			progressCallback,
 		)

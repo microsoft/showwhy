@@ -139,5 +139,3 @@ export const CausalEdge: React.FC<CausalEdgeProps> = memo(function CausalEdge({
 		</div>
 	)
 })
-
-const iconStyle = { fontSize: '8pt' }

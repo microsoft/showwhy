@@ -4,7 +4,7 @@
  */
 
 export interface DECIParams {
-	model_options: DECIModelOptions
+	model_options?: DECIModelOptions
 	training_options: DECITrainingOptions
 }
 
@@ -43,6 +43,8 @@ export interface DECIModelOptions {
 }
 
 export interface DECITrainingOptions {
+	max_steps_auglag: number
+	max_auglag_inner_epochs: number
 	learning_rate?: number
 	stardardize_data_mean?: boolean
 	stardardize_data_std?: boolean
@@ -52,8 +54,7 @@ export interface DECITrainingOptions {
 	safety_alpha?: number
 	tol_dag?: number
 	progress_rate?: number
-	max_steps_auglag?: number
-	max_auglag_inner_epochs?: number
+
 	max_p_train_dropout?: number
 	reconstruction_loss_factor?: number
 	anneal_entropy?: AnnealEntropy

@@ -2,11 +2,16 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+/*!
+ * Copyright (c) Microsoft. All rights reserved.
+ * Licensed under the MIT license. See LICENSE file in the project.
+ */
 import { useCallback, useEffect, useMemo, useRef } from 'react'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
 
 import { cancelDiscoverTask } from '../../api/api.js'
 import { discover as runCausalDiscovery } from '../../domain/CausalDiscovery/CausalDiscovery.js'
+import { CausalDiscoveryAlgorithm } from '../../domain/CausalDiscovery/CausalDiscoveryAlgorithm.js'
 import type { RelationshipReference } from '../../domain/Relationship.js'
 import {
 	CausalDiscoveryResultsState,
@@ -20,6 +25,8 @@ import {
 	DatasetState,
 	InModelCausalVariablesState,
 } from '../selectors/index.js'
+import type { DECIParams } from './../../domain/Algorithms/DECI.js'
+import { DeciParamsState } from './../atoms/algorithms_params.js'
 
 export function useCausalDiscoveryRunner() {
 	const dataset = useRecoilValue(DatasetState)
@@ -28,12 +35,18 @@ export function useCausalDiscoveryRunner() {
 	const causalDiscoveryAlgorithm = useRecoilValue(
 		SelectedCausalDiscoveryAlgorithmState,
 	)
+	const DECIParams = useRecoilValue(DeciParamsState)
 	const pauseAutoRun = useRecoilValue(PauseAutoRunState)
 	const algorithm = useMemo(
 		() => pauseAutoRun ?? causalDiscoveryAlgorithm,
 		[pauseAutoRun, causalDiscoveryAlgorithm],
 	)
 
+	const algorithmParams = useMemo((): DECIParams | undefined => {
+		return causalDiscoveryAlgorithm === CausalDiscoveryAlgorithm.DECI
+			? DECIParams
+			: undefined
+	}, [DECIParams, causalDiscoveryAlgorithm])
 	const setCausalDiscoveryResultsState = useSetRecoilState(
 		CausalDiscoveryResultsState,
 	)
@@ -122,6 +135,7 @@ export function useCausalDiscoveryRunner() {
 				causalDiscoveryConstraints,
 				algorithm,
 				updateProgress,
+				algorithmParams,
 			)
 
 			// TODO: this is just a workaround, we should
@@ -153,5 +167,6 @@ export function useCausalDiscoveryRunner() {
 		updateProgress,
 		setLastTaskId,
 		cancelLastTask,
+		algorithmParams,
 	])
 }
