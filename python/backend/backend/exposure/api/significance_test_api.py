@@ -12,7 +12,6 @@ from pydantic import BaseModel
 
 from backend.exposure import config
 from backend.exposure.api import group_operations as go
-from backend.exposure.io.db import get_db_client
 from backend.exposure.model.response import NumberOfExecutionsResult, StatusModel
 from backend.exposure.model.significance_test_models import (
     PropensityScoreSpec,
@@ -22,6 +21,7 @@ from backend.exposure.worker.significance_test_task import (
     calculate_propensity_score,
     compute_null_effects,
 )
+from backend.worker_commons.io.db import get_db_client
 
 significance_test_router = APIRouter(
     prefix="/significance_test",

@@ -4,7 +4,7 @@ import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from backend.discover.router import discover_router
+from backend.discover.api.router import discover_router
 from backend.events.router import events_router
 from backend.exposure.api.router import exposure_router
 

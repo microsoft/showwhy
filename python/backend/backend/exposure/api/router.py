@@ -12,7 +12,7 @@ from backend.exposure.api.notebook_api import notebook_router
 from backend.exposure.api.refute_estimate_api import refute_estimate_router
 from backend.exposure.api.shap_interpreter_api import shap_interpreter_router
 from backend.exposure.api.significance_test_api import significance_test_router
-from backend.exposure.io.storage import get_storage_client
+from backend.worker_commons.io.storage import get_storage_client
 
 exposure_router = APIRouter()
 
@@ -40,7 +40,7 @@ def health_check():
 async def upload(workspace_name: str, file: UploadFile):
     try:
         storage_client = get_storage_client()
-        storage_client.save(workspace_name, file.filename, file.file.read())
+        storage_client.save(str(workspace_name), file.filename, file.file.read())
         return {"status": "ok"}
     except Exception as error:
         return {"status": str(error)}

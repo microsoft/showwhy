@@ -36,4 +36,5 @@ export interface CausalDiscoveryRequestReturnValue {
 export interface CausalDiscoveryResult {
 	graph: CausalGraph
 	causalInferenceModel: CausalInferenceModel | null
+	taskId?: string
 }

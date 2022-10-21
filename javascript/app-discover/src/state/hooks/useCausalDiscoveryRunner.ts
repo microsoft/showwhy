@@ -2,9 +2,10 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { useEffect, useMemo } from 'react'
+import { useCallback, useEffect, useMemo, useRef } from 'react'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
 
+import { cancelDiscoverTask } from '../../api/api.js'
 import { discover as runCausalDiscovery } from '../../domain/CausalDiscovery/CausalDiscovery.js'
 import type { RelationshipReference } from '../../domain/Relationship.js'
 import {
@@ -38,6 +39,22 @@ export function useCausalDiscoveryRunner() {
 	)
 	const setLoadingState = useSetRecoilState(LoadingState)
 
+	const lastTaskId = useRef<string | undefined>(undefined)
+
+	const setLastTaskId = useCallback(
+		(taskId?: string) => {
+			lastTaskId.current = taskId
+		},
+		[lastTaskId],
+	)
+
+	const cancelLastTask = useCallback(async () => {
+		if (lastTaskId.current) {
+			await cancelDiscoverTask(lastTaskId.current)
+			lastTaskId.current = undefined
+		}
+	}, [lastTaskId, cancelDiscoverTask])
+
 	const derivedConstraints = useMemo<RelationshipReference[]>(() => {
 		const result: RelationshipReference[] = []
 		inModelCausalVariables.forEach(sourceVar => {
@@ -70,6 +87,14 @@ export function useCausalDiscoveryRunner() {
 		[userConstraints, derivedConstraints],
 	)
 
+	const updateProgress = useCallback(
+		(progress: number, taskId?: string) => {
+			setLoadingState(`Running causal discovery ${progress}%...`)
+			setLastTaskId(taskId)
+		},
+		[setLoadingState, setLastTaskId],
+	)
+
 	useEffect(() => {
 		if (
 			inModelCausalVariables.length < 2 ||
@@ -86,19 +111,37 @@ export function useCausalDiscoveryRunner() {
 			})
 		}
 
-		setLoadingState('Running causal discovery...')
+		updateProgress(0, undefined)
 		const runDiscovery = async () => {
+			// if the last task has not finished just yet, cancel it
+			await cancelLastTask()
+
 			const results = await runCausalDiscovery(
 				dataset,
 				inModelCausalVariables,
 				causalDiscoveryConstraints,
 				algorithm,
+				updateProgress,
 			)
-			setCausalDiscoveryResultsState(results)
-			setLoadingState(undefined)
+
+			// TODO: this is just a workaround, we should
+			// block the UI instead to only call the backend once all
+			// properties are set and disable inputs while running
+			//
+			// only update if the result if for the last task
+			if (!results.taskId || results.taskId === lastTaskId.current) {
+				setCausalDiscoveryResultsState(results)
+				setLoadingState(undefined)
+			}
+			setLastTaskId(undefined)
 		}
 
 		void runDiscovery()
+
+		return () => {
+			// if the last task has not finished just yet, cancel it
+			void cancelLastTask()
+		}
 	}, [
 		dataset,
 		inModelCausalVariables,
@@ -107,5 +150,8 @@ export function useCausalDiscoveryRunner() {
 		causalDiscoveryConstraints,
 		setLoadingState,
 		setCausalDiscoveryResultsState,
+		updateProgress,
+		setLastTaskId,
+		cancelLastTask,
 	])
 }
