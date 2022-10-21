@@ -11,14 +11,19 @@ export enum DiscoverResponseStatus {
 	Revoked = 'revoked',
 }
 
+export interface DiscoverResult<T> {
+	result: T
+	taskId: string
+}
+
 export interface DiscoverStartResponse {
 	id: string
 }
 
-export interface DiscoverStatusResponse {
+export interface DiscoverStatusResponse<T> {
 	status: DiscoverResponseStatus
 	progress?: number
-	result: unknown
+	result: T
 }
 
 export type DiscoverProgressCallback = (

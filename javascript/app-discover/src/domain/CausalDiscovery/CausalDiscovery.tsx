@@ -88,16 +88,16 @@ export async function discover(
 		CausalDiscoveryAlgorithmOptions.get(algorithm)?.algorithm || algorithm
 	const trainingOptions =
 		CausalDiscoveryAlgorithmOptions.get(algorithm)?.training_options
-	const { result, taskId } = await fetchDiscoverResult(
-		algorithmName.toLowerCase(),
-		JSON.stringify({
-			dataset: JSON.parse(jsonData),
-			constraints: constraintsJson,
-			training_options: trainingOptions,
-		}),
-		progressCallback,
-	)
-	const causalDiscoveryResult = result as any
+	const { result: causalDiscoveryResult, taskId } =
+		await fetchDiscoverResult<any>(
+			algorithmName.toLowerCase(),
+			JSON.stringify({
+				dataset: JSON.parse(jsonData),
+				constraints: constraintsJson,
+				training_options: trainingOptions,
+			}),
+			progressCallback,
+		)
 	const graph = fromCausalDiscoveryResults(
 		variables,
 		causalDiscoveryResult as CausalDiscoveryRequestReturnValue,

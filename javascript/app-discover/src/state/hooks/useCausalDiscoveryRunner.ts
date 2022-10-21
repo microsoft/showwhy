@@ -124,7 +124,11 @@ export function useCausalDiscoveryRunner() {
 				updateProgress,
 			)
 
-			/// only update if the result if for the last task
+			// TODO: this is just a workaround, we should
+			// block the UI instead to only call the backend once all
+			// properties are set and disable inputs while running
+			//
+			// only update if the result if for the last task
 			if (!results.taskId || results.taskId === lastTaskId.current) {
 				setCausalDiscoveryResultsState(results)
 				setLoadingState(undefined)

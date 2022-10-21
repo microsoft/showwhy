@@ -5,31 +5,38 @@
 import { sleep } from '../utils/Sleep.js'
 import type {
 	DiscoverProgressCallback,
+	DiscoverResult,
 	DiscoverStartResponse,
 	DiscoverStatusResponse,
 } from './types.js'
 import { DiscoverResponseStatus } from './types.js'
 
-const RUN_CAUSAL_DISCOVERY_BASE_URL = process.env.DISCOVER_API_URL?.endsWith(
-	'/',
-)
-	? process.env.DISCOVER_API_URL
-	: `${process.env.DISCOVER_API_URL || '/api/discover'}/`
+const RUN_CAUSAL_DISCOVERY_BASE_URL = getCausalDiscoveryBaseUrl()
 
-export async function fetchDiscoverResult(
+function getCausalDiscoveryBaseUrl(): string {
+	let base = process.env.DISCOVER_API_URL || '/api/discover/'
+
+	if (!base.endsWith('/')) {
+		base += '/'
+	}
+	return base
+}
+
+export async function fetchDiscoverResult<T>(
 	algorithmName: string,
 	body: string,
 	progressCallback?: DiscoverProgressCallback,
-): Promise<{ result: unknown; taskId: string }> {
+): Promise<DiscoverResult<T>> {
 	const taskId = await startDiscoverAndGetTaskId(algorithmName, body)
 
-	let status = await fetchStatus(taskId)
+	let status = await fetchStatus<T>(taskId)
 
 	progressCallback?.(0, taskId)
 
+	// TODO: replace this pooling with something like web sockets
 	while (isProcessingStatus(status.status)) {
 		await sleep(1000)
-		status = await fetchStatus(taskId)
+		status = await fetchStatus<T>(taskId)
 		progressCallback?.(status.progress ?? 0, taskId)
 	}
 
@@ -59,10 +66,12 @@ async function startDiscoverAndGetTaskId(
 	return ((await startResult.json()) as DiscoverStartResponse).id
 }
 
-async function fetchStatus(taskId: string): Promise<DiscoverStatusResponse> {
+async function fetchStatus<T>(
+	taskId: string,
+): Promise<DiscoverStatusResponse<T>> {
 	return (await (
 		await fetch(`${RUN_CAUSAL_DISCOVERY_BASE_URL}${taskId}`)
-	).json()) as DiscoverStatusResponse
+	).json()) as DiscoverStatusResponse<T>
 }
 
 function isProcessingStatus(nodeStatus: DiscoverResponseStatus): boolean {
