@@ -19,10 +19,10 @@ export function useShowPlaceboGraphs() {
 
 	return useMemo((): boolean => {
 		const hasOutput = treatedUnits.some(
-			(tu: string) => placeboOutputData.get(tu)?.length > 0,
+			(tu: string) => (placeboOutputData.get(tu)?.length ?? 0) > 0,
 		)
 		const hasDataGroup = treatedUnits.some(
-			(tu: string) => placeboDataGroup.get(tu)?.length > 0,
+			(tu: string) => (placeboDataGroup.get(tu)?.length ?? 0) > 0,
 		)
 		return (
 			hasOutput &&

@@ -13,18 +13,11 @@ import {
 	TreatedUnitsState,
 	TreatmentStartDatesAfterEstimateState,
 } from '../state/state.js'
-import type {
-	OutputData,
-	PlaceboOutputData,
-	SDIDOutputResponse,
-} from '../types.js'
+import type { PlaceboDataGroup, SDIDOutputResponse } from '../types.js'
 import { computeRMSPE } from '../utils/computeRMSPE.js'
 import { useProcessedInputData } from './useProcessedInputData.js'
 
-export function usePlaceboDataGroup(): Map<
-	string,
-	(OutputData | PlaceboOutputData)[]
-> {
+export function usePlaceboDataGroup(): Map<string, PlaceboDataGroup[]> {
 	const [treatedUnits] = useRecoilState(TreatedUnitsState)
 	const [checkedUnits] = useRecoilState(CheckedUnitsState)
 	const [columnMapping] = useRecoilState(ColumnMappingState)
@@ -40,7 +33,6 @@ export function usePlaceboDataGroup(): Map<
 		treatedUnits.forEach((treatedUnit: string) => {
 			const output = computeRMSPE(
 				placeboOutputRes.get(treatedUnit) as SDIDOutputResponse,
-				// getPlaceboOutputRes(treatedUnit),
 				data.startDate,
 				data.endDate,
 				treatmentStartDatesAfterEstimate,

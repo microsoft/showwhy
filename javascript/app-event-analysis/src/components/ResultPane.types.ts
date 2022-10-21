@@ -20,7 +20,7 @@ export interface DimensionedLineChartProps
 		ResultPaneProps,
 		'inputData' | 'checkableUnits' | 'onRemoveCheckedUnit'
 	> {
-	lineChartRef: HTMLDivElement | null
+	lineChartRef: React.MutableRefObject<HTMLDivElement | null>
 	output: (OutputData | PlaceboOutputData)[]
 	treatedUnitsList?: string[]
 }

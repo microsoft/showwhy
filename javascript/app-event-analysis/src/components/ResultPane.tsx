@@ -10,6 +10,7 @@ import { ErrorBoundary } from 'react-error-boundary'
 import { Case, Switch } from 'react-if'
 import { useRecoilState } from 'recoil'
 
+import { useShowPlaceboGraphs } from '../hooks/useShowPlaceboGraphs.js'
 import {
 	ChartOptionsState,
 	EventNameState,
@@ -84,6 +85,7 @@ export const ResultPane: React.FC<ResultPaneProps> = memo(function ResultPane({
 	const [selectedTabKey] = useRecoilState(SelectedTabKeyState)
 	const [hypothesis] = useRecoilState(HypothesisState)
 	const [units] = useRecoilState(UnitsState)
+	const showPlaceboGraphs = useShowPlaceboGraphs()
 
 	const hoverInfo = useMemo(() => {
 		return {
@@ -109,26 +111,7 @@ export const ResultPane: React.FC<ResultPaneProps> = memo(function ResultPane({
 		)
 	}, [isCalculatingEstimator, outputData, treatedUnits, selectedTabKey])
 
-	const showPlaceboGraphs = useMemo((): boolean => {
-		const hasOutput = treatedUnits.some(
-			(tu: string) => placeboOutputData.get(tu)?.length > 0,
-		)
-		const hasDataGroup = treatedUnits.some(
-			(tu: string) => placeboDataGroup.get(tu)?.length > 0,
-		)
-		return (
-			!isCalculatingEstimator &&
-			hasOutput &&
-			hasDataGroup &&
-			selectedTabKey === CONFIGURATION_TABS.validateEffects.key
-		)
-	}, [
-		isCalculatingEstimator,
-		placeboDataGroup,
-		placeboOutputData,
-		treatedUnits,
-		selectedTabKey,
-	])
+	const showPlaceboGraphsLocal = useMemo((): boolean => !isCalculatingEstimator && showPlaceboGraphs, [isCalculatingEstimator, showPlaceboGraphs])
 
 	// barChartData is mainly used as a dependency to re-trigger the useDynamicChartDimensions hook
 	//  when data changes
@@ -373,7 +356,7 @@ export const ResultPane: React.FC<ResultPaneProps> = memo(function ResultPane({
 	const getLineChart = useCallback(
 		(
 			output: (OutputData | PlaceboOutputData)[],
-			lineChartRef: HTMLDivElement | null,
+			lineChartRef: React.MutableRefObject<HTMLDivElement | null>,
 			treatedUnitsList = treatedUnits,
 		) => (
 			<DimensionedLineChart
@@ -632,7 +615,7 @@ export const ResultPane: React.FC<ResultPaneProps> = memo(function ResultPane({
 	const graphTitle = useMemo((): string => {
 		if (showRawDataLineChart) {
 			return 'Input Data'
-		} else if (showPlaceboGraphs) {
+		} else if (showPlaceboGraphsLocal) {
 			return 'Placebo Analysis'
 		} else if (showSynthControl) {
 			return `Effect of ${eventName} on ${outcomeName}`
@@ -640,7 +623,7 @@ export const ResultPane: React.FC<ResultPaneProps> = memo(function ResultPane({
 		return ''
 	}, [
 		showRawDataLineChart,
-		showPlaceboGraphs,
+		showPlaceboGraphsLocal,
 		showSynthControl,
 		eventName,
 		outcomeName,
@@ -677,7 +660,7 @@ export const ResultPane: React.FC<ResultPaneProps> = memo(function ResultPane({
 						<Stack.Item>{syntheticControlComposition}</Stack.Item>
 					</>
 				</Case>
-				<Case condition={showPlaceboGraphs}>
+				<Case condition={showPlaceboGraphsLocal}>
 					<>
 						<Stack.Item>
 							<Text className="infoText" variant="large">

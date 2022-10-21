@@ -5,10 +5,9 @@
 import * as d3 from 'd3'
 import { memo, useCallback, useEffect, useRef } from 'react'
 
-import type { LegendData } from '../types.js';
+import type { LegendData } from '../types.js'
 import { BAR_TRANSPARENT } from '../types.js'
 import type { LegendProps } from './Legend.types.js'
-
 
 const legendItemSize = 12
 const legendSpacing = 4
@@ -19,7 +18,7 @@ export const Legend: React.FC<LegendProps> = memo(function Legend({
 	data,
 	...props
 }) {
-	const ref = useRef<HTMLDivElement | LegendData>(null)
+	const ref = useRef<HTMLDivElement>(null)
 
 	const renderLegend = useCallback(() => {
 		if (ref.current) {
@@ -30,7 +29,7 @@ export const Legend: React.FC<LegendProps> = memo(function Legend({
 				.attr('height', '100')
 				.selectAll('.legendItem')
 				.data(data)
-			
+
 			legend
 				.enter()
 				.append('rect')
@@ -39,26 +38,33 @@ export const Legend: React.FC<LegendProps> = memo(function Legend({
 				.attr('height', legendItemSize)
 				.style('fill', d => d.color)
 				.attr('opacity', BAR_TRANSPARENT)
-				.attr('transform',
-					(d, i) => {
-						const y = yOffset + (legendItemSize + legendSpacing) * i
-						return `translate(${xOffset}, ${y})`
-					})
+				.attr('transform', (d, i) => {
+					const y = yOffset + (legendItemSize + legendSpacing) * i
+					return `translate(${xOffset}, ${y})`
+				})
 			legend
 				.enter()
 				.append('text')
 				.attr('x', xOffset + legendItemSize + 5)
-				.attr('y', (d, i) => yOffset + (legendItemSize + legendSpacing) * i + legendItemSize)
+				.attr(
+					'y',
+					(d, i) =>
+						yOffset + (legendItemSize + legendSpacing) * i + legendItemSize,
+				)
 				.text(d => d.name)
 		}
 	}, [ref])
 
 	useEffect(() => {
 		renderLegend()
-	}, [
-		renderLegend,
-		data,
-	])
+	}, [renderLegend, data])
 
-	return <div className="legend" ref={ref} style={{ textAlign: 'center' }} {...props} />
+	return (
+		<div
+			className="legend"
+			ref={ref}
+			style={{ textAlign: 'center' }}
+			{...props}
+		/>
+	)
 })

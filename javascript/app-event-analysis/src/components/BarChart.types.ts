@@ -16,6 +16,6 @@ export interface BarChartProps {
 	leftAxisLabel: string
 	bottomAxisLabel: string
 	checkableUnits: string[]
-	renderLegend: boolean
+	renderLegend?: boolean
 	onRemoveCheckedUnit: (unitToRemove: string) => void
 }
