@@ -5,14 +5,13 @@
 import { memo } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { Container, HeaderText, Row } from './Header.styles.js'
+import { Container, Title } from './Header.styles.js'
 
 export const Header: React.FC = memo(function Header() {
 	const navigate = useNavigate()
 	return (
 		<Container>
-			<HeaderText onClick={() => navigate('/')}>ShowWhy</HeaderText>
-			<Row></Row>
+			<Title onClick={() => navigate('/')}>ShowWhy</Title>
 		</Container>
 	)
 })

@@ -3,23 +3,41 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import type { ITheme} from '@fluentui/react';
 import { mergeStyles } from '@fluentui/react'
 import styled from 'styled-components'
 
-export const Row = styled.div`
+// always ensure the header is dark, regardless of mode
+export const Container = styled.div`
+	padding: 0 16px 0 16px;
+	background: ${({ theme }: { theme: ITheme }) =>
+		theme.isInverted
+			? theme.palette.neutralQuaternary
+			: theme.palette.neutralPrimary};
+	border-bottom: 1px solid
+		${({ theme }: { theme: ITheme }) =>
+			theme.isInverted
+				? theme.palette.neutralTertiary
+				: theme.palette.neutralSecondary};
 	display: flex;
 	flex-direction: row;
-	align-items: center;
 	justify-content: space-between;
-`
-export const Container = styled.header`
-	height: 39px;
-	display: flex;
-	align-content: center;
 	align-items: center;
-	justify-content: space-between;
-	border-bottom: 1px solid #e1dfdd;
+	height: 42px;
 `
+
+export const Title = styled.h1`
+	cursor: pointer;
+	font-size: 25px;
+	align-self: center;
+	margin: 0;
+	padding: 0;
+	color: ${({ theme }: { theme: ITheme }) =>
+		theme.isInverted
+			? theme.palette.neutralSecondary
+			: theme.palette.neutralQuaternary};
+`
+
 export const HeaderText = styled.h1`
 	cursor: pointer;
 	font-size: 1.4em;
