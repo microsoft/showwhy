@@ -191,25 +191,26 @@ export const ResultPane: React.FC<ResultPaneProps> = memo(function ResultPane({
 		[],
 	)
 
-	const getPlaceboTreatedMSPERatio = useCallback(
-		(treatedUnit: string, placeboBarChartInputData: BarData[]) => {
-			const treatedPlaceboIndex = getTreatedPlaceboIndex(
-				treatedUnit,
-				placeboBarChartInputData,
-			)
-			const TOP_3_PLACEBOS = 3
-			// we assume that a treated placebo unit to have insignificant result
-			//  if either it was an extreme placebo and was filtered out or if it has a low ranker (below the top 3)
-			if (
-				treatedPlaceboIndex < 0 ||
-				treatedPlaceboIndex < placeboBarChartInputData.length - TOP_3_PLACEBOS
-			) {
-				return 0
-			}
-			return placeboBarChartInputData[treatedPlaceboIndex].label
-		},
-		[getTreatedPlaceboIndex],
-	)
+	// TODO: Validate its use with Darren
+	// const getPlaceboTreatedMSPERatio = useCallback(
+	// 	(treatedUnit: string, placeboBarChartInputData: BarData[]) => {
+	// 		const treatedPlaceboIndex = getTreatedPlaceboIndex(
+	// 			treatedUnit,
+	// 			placeboBarChartInputData,
+	// 		)
+	// 		const TOP_3_PLACEBOS = 3
+	// 		// we assume that a treated placebo unit to have insignificant result
+	// 		//  if either it was an extreme placebo and was filtered out or if it has a low ranker (below the top 3)
+	// 		if (
+	// 			treatedPlaceboIndex < 0 ||
+	// 			treatedPlaceboIndex < placeboBarChartInputData.length - TOP_3_PLACEBOS
+	// 		) {
+	// 			return 0
+	// 		}
+	// 		return placeboBarChartInputData[treatedPlaceboIndex].label
+	// 	},
+	// 	[getTreatedPlaceboIndex],
+	// )
 
 	const getTreatedPlaceboP = useCallback(
 		(treatedUnit: string, placeboBarChartInputData: BarData[]): number => {
@@ -568,6 +569,8 @@ export const ResultPane: React.FC<ResultPaneProps> = memo(function ResultPane({
 						</Text>
 					</Stack.Item>
 
+					<Spacer axis="vertical" size={10} />
+
 					<Stack.Item className={'no-top-margin'}>
 						<div ref={placeboBarChartRef} className="chartContainer">
 							<ErrorBoundary FallbackComponent={ChartErrorFallback}>
@@ -580,6 +583,7 @@ export const ResultPane: React.FC<ResultPaneProps> = memo(function ResultPane({
 									bottomAxisLabel={''}
 									checkableUnits={checkableUnits}
 									onRemoveCheckedUnit={onRemoveCheckedUnit}
+									renderLegend
 								/>
 							</ErrorBoundary>
 						</div>
@@ -594,7 +598,7 @@ export const ResultPane: React.FC<ResultPaneProps> = memo(function ResultPane({
 									{hypothesis}?
 								</Text>
 								Is therefore, {placeboResult}
-								<Text variant="large" block>
+								<Text variant="medium" block>
 									<Link
 										href="https://mixtape.scunning.com/10-synthetic_control#californias-proposition-99"
 										target="_blank"

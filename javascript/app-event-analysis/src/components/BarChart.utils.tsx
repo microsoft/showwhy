@@ -12,6 +12,8 @@ export function getColor(val: string | undefined) {
 			return '#d22d54'
 		case 'normal':
 			return 'gray'
+		case 'negative':
+			return 'purple'
 		default:
 			return 'gray'
 	}

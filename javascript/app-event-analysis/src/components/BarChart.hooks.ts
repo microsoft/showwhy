@@ -5,7 +5,7 @@
 import { max, min, select } from 'd3'
 import { useEffect, useMemo, useRef } from 'react'
 
-import type { BarData } from '../types'
+import type { BarData, LegendData } from '../types'
 import { BarChartOrientation } from '../types'
 import { getColor } from './BarChart.utils.js'
 
@@ -18,6 +18,7 @@ export function useData(
 	barNames: string[]
 	minValue: number
 	maxValue: number
+	legendData: LegendData[]
 } {
 	return useMemo(() => {
 		const inputBars: BarData[] = []
@@ -26,7 +27,7 @@ export function useData(
 			if (isPlaceboSimulation) {
 				color = treatedUnits.some(unit => element.name.includes(unit))
 					? getColor('highlight')
-					: getColor('normal')
+					: (element.label as number) < 0 ? getColor('negative') : getColor('normal')
 			}
 			inputBars.push({
 				name: element.name,
@@ -35,6 +36,24 @@ export function useData(
 				color: color,
 			})
 		})
+
+		const legendData = !isPlaceboSimulation ? [{
+			name: 'Control units',
+			color: getColor('control-units'),
+		}] : [
+			{
+				name: 'Treated unit',
+				color: getColor('highlight'),
+			},
+			{
+				name: 'Units with negative effect',
+				color: getColor('negative'),
+			},
+			{
+				name: 'Units with positive effect',
+				color: getColor('positive'),
+			},
+		]
 
 		const allValues = inputData.map(dataElement => dataElement.value)
 		const minValue = min(allValues) ?? 0
@@ -47,6 +66,7 @@ export function useData(
 			barNames,
 			minValue,
 			maxValue,
+			legendData,
 		}
 	}, [inputData, treatedUnits, isPlaceboSimulation])
 }

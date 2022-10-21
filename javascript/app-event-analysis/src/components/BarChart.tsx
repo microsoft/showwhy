@@ -31,6 +31,7 @@ import { TooltipContent } from './BarChart.styles.js'
 import type { BarChartProps } from './BarChart.types.js'
 import { constructBarTooltipContent } from './BarChart.utils.js'
 import { DrawingContainer } from './DrawingContainer.js'
+import { Legend } from './Legend.js'
 import { ToolTip } from './ToolTip.js'
 
 const BAR_ELEMENT_CLASS_NAME = 'bar'
@@ -43,6 +44,7 @@ export const BarChart: React.FC<BarChartProps> = memo(function BarChart({
 	leftAxisLabel,
 	bottomAxisLabel,
 	checkableUnits,
+	renderLegend,
 	onRemoveCheckedUnit,
 }) {
 	const { width, height, margin } = dimensions
@@ -50,7 +52,7 @@ export const BarChart: React.FC<BarChartProps> = memo(function BarChart({
 	const isPlaceboSimulation = useShowPlaceboGraphs()
 	const [checkedUnits] = useRecoilState(CheckedUnitsState)
 
-	const { inputBars, minValue, maxValue, barNames } = useData(
+	const { inputBars, minValue, maxValue, barNames, legendData } = useData(
 		inputData,
 		treatedUnits,
 		isPlaceboSimulation,
@@ -363,6 +365,7 @@ export const BarChart: React.FC<BarChartProps> = memo(function BarChart({
 				{bars}
 				<g ref={legendGroupRef} />
 			</DrawingContainer>
+			{renderLegend && <Legend data={legendData} />}
 			<ToolTip
 				xPos={tooltip.x}
 				yPos={tooltip.y}
