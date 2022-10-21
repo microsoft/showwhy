@@ -2,14 +2,9 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-/*!
- * Copyright (c) Microsoft. All rights reserved.
- * Licensed under the MIT license. See LICENSE file in the project.
- */
-import { useCallback, useEffect, useMemo, useRef } from 'react'
+import { useCallback, useEffect, useMemo } from 'react'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
 
-import { cancelDiscoverTask } from '../../api/api.js'
 import { discover as runCausalDiscovery } from '../../domain/CausalDiscovery/CausalDiscovery.js'
 import { CausalDiscoveryAlgorithm } from '../../domain/CausalDiscovery/CausalDiscoveryAlgorithm.js'
 import type { RelationshipReference } from '../../domain/Relationship.js'
@@ -27,6 +22,7 @@ import {
 } from '../selectors/index.js'
 import type { DECIParams } from './../../domain/Algorithms/DECI.js'
 import { DeciParamsState } from './../atoms/algorithms_params.js'
+import { useLastDiscoveryResultPromise } from './useLastDiscoveryResultPromise.js'
 
 export function useCausalDiscoveryRunner() {
 	const dataset = useRecoilValue(DatasetState)
@@ -51,22 +47,8 @@ export function useCausalDiscoveryRunner() {
 		CausalDiscoveryResultsState,
 	)
 	const setLoadingState = useSetRecoilState(LoadingState)
-
-	const lastTaskId = useRef<string | undefined>(undefined)
-
-	const setLastTaskId = useCallback(
-		(taskId?: string) => {
-			lastTaskId.current = taskId
-		},
-		[lastTaskId],
-	)
-
-	const cancelLastTask = useCallback(async () => {
-		if (lastTaskId.current) {
-			await cancelDiscoverTask(lastTaskId.current)
-			lastTaskId.current = undefined
-		}
-	}, [lastTaskId, cancelDiscoverTask])
+	const [setLastDiscoveryResultPromise, cancelLastDiscoveryResultPromise] =
+		useLastDiscoveryResultPromise()
 
 	const derivedConstraints = useMemo<RelationshipReference[]>(() => {
 		const result: RelationshipReference[] = []
@@ -103,9 +85,8 @@ export function useCausalDiscoveryRunner() {
 	const updateProgress = useCallback(
 		(progress: number, taskId?: string) => {
 			setLoadingState(`Running causal discovery ${progress}%...`)
-			setLastTaskId(taskId)
 		},
-		[setLoadingState, setLastTaskId],
+		[setLoadingState],
 	)
 
 	useEffect(() => {
@@ -127,9 +108,9 @@ export function useCausalDiscoveryRunner() {
 		updateProgress(0, undefined)
 		const runDiscovery = async () => {
 			// if the last task has not finished just yet, cancel it
-			await cancelLastTask()
+			await cancelLastDiscoveryResultPromise()
 
-			const results = await runCausalDiscovery(
+			const discoveryPromise = runCausalDiscovery(
 				dataset,
 				inModelCausalVariables,
 				causalDiscoveryConstraints,
@@ -138,23 +119,25 @@ export function useCausalDiscoveryRunner() {
 				algorithmParams,
 			)
 
-			// TODO: this is just a workaround, we should
-			// block the UI instead to only call the backend once all
-			// properties are set and disable inputs while running
-			//
-			// only update if the result if for the last task
-			if (!results.taskId || results.taskId === lastTaskId.current) {
-				setCausalDiscoveryResultsState(results)
-				setLoadingState(undefined)
+			setLastDiscoveryResultPromise(discoveryPromise)
+
+			try {
+				const results = await discoveryPromise.promise!
+
+				// only update if the promise is not canceled
+				if (discoveryPromise.isFinished()) {
+					setCausalDiscoveryResultsState(results)
+					setLoadingState(undefined)
+				}
+			} catch (err) {
+				setLoadingState('Cancelling last task...')
 			}
-			setLastTaskId(undefined)
 		}
 
 		void runDiscovery()
 
 		return () => {
-			// if the last task has not finished just yet, cancel it
-			void cancelLastTask()
+			void cancelLastDiscoveryResultPromise()
 		}
 	}, [
 		dataset,
@@ -165,8 +148,8 @@ export function useCausalDiscoveryRunner() {
 		setLoadingState,
 		setCausalDiscoveryResultsState,
 		updateProgress,
-		setLastTaskId,
-		cancelLastTask,
 		algorithmParams,
+		cancelLastDiscoveryResultPromise,
+		setLastDiscoveryResultPromise,
 	])
 }
