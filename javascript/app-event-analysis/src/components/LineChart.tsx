@@ -939,6 +939,7 @@ export const LineChart: React.FC<LineChartProps> = memo(function LineChart({
 							tickSize={width}
 							ticks={10}
 							color={colors.gridLine}
+							opacity={0.33}
 						/>
 						<GridLine
 							myscale={xScale}
@@ -946,6 +947,7 @@ export const LineChart: React.FC<LineChartProps> = memo(function LineChart({
 							ticks={10}
 							transform={`translate(0, ${height})`}
 							color={colors.gridLine}
+							opacity={0.33}
 						/>
 					</>
 				)}

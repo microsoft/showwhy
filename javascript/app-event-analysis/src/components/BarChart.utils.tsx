@@ -17,13 +17,14 @@ export function getColor(theme: Theme) {
 						.rect({ selectionState: SelectionState.Selected })
 						.fill()
 						.hex()
+				case 'relative':
 				case 'control-units':
 					return scale(1).hex()
 				case 'negative':
 					return scale(2).hex()
 				case 'normal':
 				default:
-					return theme.process().fill().hex()
+					return theme.rect().fill().hex()
 			}
 		},
 		defaultAxisTitle: theme.axisTitle().fill().hex(),

@@ -2,7 +2,8 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { ITheme, Stack } from '@fluentui/react'
+import type { ITheme } from '@fluentui/react'
+import { Stack } from '@fluentui/react'
 import styled from 'styled-components'
 
 export const StyledStack = styled(Stack)`
@@ -51,7 +52,8 @@ export const StyledStack = styled(Stack)`
 		.help-link {
 			cursor: help;
 			position: relative;
-			border-bottom: 1px dotted ${({ theme }: { theme: ITheme }) => theme.palette.neutralPrimary};
+			border-bottom: 1px dotted
+				${({ theme }: { theme: ITheme }) => theme.palette.neutralPrimary};
 		}
 		.help-link:before {
 			content: attr(data-hover);

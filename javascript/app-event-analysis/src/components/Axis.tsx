@@ -2,6 +2,8 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import { axis as decorator } from '@thematic/d3'
+import { useThematic } from '@thematic/react'
 import { axisBottom, axisLeft, easeLinear, format, select } from 'd3'
 import truncate from 'lodash-es/truncate'
 import { memo, useEffect, useRef } from 'react'
@@ -21,12 +23,15 @@ export const Axis: React.FC<AxisProps> = memo(function Axis({
 	tickFormatAsWholeNumber,
 	disableAnimation,
 }) {
+	const theme = useThematic()
 	const ref = useRef<SVGGElement | null>(null)
 	useEffect(() => {
 		if (ref.current) {
 			const axisFn = type === 'left' ? axisLeft : axisBottom
 			/* eslint-disable-next-line */
 			const axis = axisFn(myscale as any)
+			const g = select(ref.current)
+			decorator(g, theme, axis)
 			if (ticks !== undefined) {
 				axis.ticks(ticks)
 				if (ticks === 0) {
@@ -75,6 +80,7 @@ export const Axis: React.FC<AxisProps> = memo(function Axis({
 			}
 		}
 	}, [
+		theme,
 		disableAnimation,
 		type,
 		myscale,

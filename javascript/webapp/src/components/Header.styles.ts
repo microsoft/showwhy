@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { ITheme} from '@fluentui/react';
+import type { ITheme } from '@fluentui/react'
 import { mergeStyles } from '@fluentui/react'
 import styled from 'styled-components'
 
@@ -37,17 +37,3 @@ export const Title = styled.h1`
 			? theme.palette.neutralSecondary
 			: theme.palette.neutralQuaternary};
 `
-
-export const HeaderText = styled.h1`
-	cursor: pointer;
-	font-size: 1.4em;
-	font-weight: 400;
-	margin-left: 10px;
-`
-export const iconClass = mergeStyles({
-	fontSize: 25,
-	height: 25,
-	width: 25,
-	margin: '0 10px 0 5px',
-	cursor: 'pointer',
-})

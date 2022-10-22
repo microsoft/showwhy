@@ -36,7 +36,7 @@ export function getLineStroke(theme: Theme) {
 		circleFill: theme.circle().fill().hex(),
 		timeMarker: theme.process().fill().hex(),
 		counterfactual: theme.link().stroke().hex(),
-		gridLine: theme.gridLines().stroke().hex(),
+		gridLine: theme.gridLines().stroke().hex(0.5),
 		treatmentLine: scale(4).hex(),
 		counterfactualLine: theme.link().stroke().hex(),
 		control: theme.link().stroke().hex(),

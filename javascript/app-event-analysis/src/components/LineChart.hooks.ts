@@ -278,14 +278,14 @@ export function useLegends(
 						.attr('y', height + legendOffsetFromAxis)
 						.style('font-size', 'large')
 						.style('fill', colors.get('treated'))
-						.text('treated')
+						.text('Treated')
 					container
 						.append('text')
 						.attr('x', width * 0.5)
 						.attr('y', height + legendOffsetFromAxis)
 						.style('font-size', 'large')
 						.style('fill', colors.get('control'))
-						.text('synthetic control')
+						.text('Synthetic control')
 				} else {
 					container
 						.append('text')
