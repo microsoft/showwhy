@@ -839,14 +839,15 @@ export const MainContent: React.FC = memo(function MainContent() {
 
 	const onDataTablesUpdate = useCallback(() => {
 		if (fileName !== currentTableName) {
-			onDatasetClicked(fileName)
 			setCurrentTableName(fileName)
+			setFileName(fileName)
+			onDatasetClicked(fileName)
 		}
-	}, [fileName, currentTableName, setCurrentTableName, onDatasetClicked])
+	}, [fileName, currentTableName, setCurrentTableName, setFileName, onDatasetClicked])
 
 	useEffect(() => {
 		onDataTablesUpdate()
-	}, [dataTables, onDataTablesUpdate])
+	}, [dataTables])
 
 	// const handleExport = () => {
 	// 	if (!isDataLoaded) return
