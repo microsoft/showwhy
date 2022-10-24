@@ -3769,10 +3769,10 @@ __metadata:
     "@essex/scripts": ^22.1.0
     "@fluentui/react": ^8.98.1
     "@fluentui/react-hooks": ^8.6.11
-    "@thematic/core": ^3.1.0
-    "@thematic/d3": ^2.0.13
-    "@thematic/fluent": ^4.1.0
-    "@thematic/react": ^2.1.0
+    "@thematic/core": ^3.1.1
+    "@thematic/d3": ^2.0.14
+    "@thematic/fluent": ^4.1.1
+    "@thematic/react": ^2.1.1
     "@types/react": ^18.0.21
     "@types/react-dom": ^18.0.6
     "@types/react-is": ^17.0.3
@@ -3817,10 +3817,10 @@ __metadata:
     "@fluentui/utilities": ^8.13.1
     "@reduxjs/toolkit": ^1.8.6
     "@showwhy/app-common": "workspace:^"
-    "@thematic/core": ^3.1.0
-    "@thematic/d3": ^2.0.13
-    "@thematic/fluent": ^4.1.0
-    "@thematic/react": ^2.1.0
+    "@thematic/core": ^3.1.1
+    "@thematic/d3": ^2.0.14
+    "@thematic/fluent": ^4.1.1
+    "@thematic/react": ^2.1.1
     "@thematic/vega": ^2.0.14
     "@types/cytoscape": ^3.19.8
     "@types/file-saver": ^2.0.5
@@ -3900,10 +3900,10 @@ __metadata:
     "@fluentui/utilities": ^8.13.1
     "@reduxjs/toolkit": ^1.8.6
     "@showwhy/app-common": "workspace:^"
-    "@thematic/core": ^3.1.0
-    "@thematic/d3": ^2.0.13
-    "@thematic/fluent": ^4.1.0
-    "@thematic/react": ^2.1.0
+    "@thematic/core": ^3.1.1
+    "@thematic/d3": ^2.0.14
+    "@thematic/fluent": ^4.1.1
+    "@thematic/react": ^2.1.1
     "@types/d3": ^7.4.0
     "@types/lodash": ^4.14.186
     "@types/lodash-es": ^4.17.6
@@ -3954,10 +3954,10 @@ __metadata:
     "@fluentui/utilities": ^8.13.1
     "@reduxjs/toolkit": ^1.8.6
     "@showwhy/app-common": "workspace:^"
-    "@thematic/core": ^3.1.0
-    "@thematic/d3": ^2.0.13
-    "@thematic/fluent": ^4.1.0
-    "@thematic/react": ^2.1.0
+    "@thematic/core": ^3.1.1
+    "@thematic/d3": ^2.0.14
+    "@thematic/fluent": ^4.1.1
+    "@thematic/react": ^2.1.1
     "@thematic/vega": ^2.0.14
     "@types/d3-fetch": ^3.0.1
     "@types/lodash": ^4.14.186
@@ -4020,10 +4020,10 @@ __metadata:
     "@showwhy/event-analysis-app": "workspace:^"
     "@showwhy/model-exposure-app": "workspace:^"
     "@showwhy/wrangle-app": "workspace:^"
-    "@thematic/core": ^3.1.0
-    "@thematic/d3": ^2.0.13
-    "@thematic/fluent": ^4.1.0
-    "@thematic/react": ^2.1.0
+    "@thematic/core": ^3.1.1
+    "@thematic/d3": ^2.0.14
+    "@thematic/fluent": ^4.1.1
+    "@thematic/react": ^2.1.1
     "@types/lodash": ^4.14.186
     "@types/lodash-es": ^4.17.6
     "@types/node": ^18.8.5
@@ -4080,10 +4080,10 @@ __metadata:
     "@monaco-editor/react": ^4.4.6
     "@reduxjs/toolkit": ^1.8.6
     "@showwhy/app-common": "workspace:^"
-    "@thematic/core": ^3.1.0
-    "@thematic/d3": ^2.0.13
-    "@thematic/fluent": ^4.1.0
-    "@thematic/react": ^2.1.0
+    "@thematic/core": ^3.1.1
+    "@thematic/d3": ^2.0.14
+    "@thematic/fluent": ^4.1.1
+    "@thematic/react": ^2.1.1
     "@thematic/vega": ^2.0.14
     "@types/d3-fetch": ^3.0.1
     "@types/lodash": ^4.14.186
@@ -4374,25 +4374,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@thematic/color@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "@thematic/color@npm:3.0.0"
-  dependencies:
-    chroma-js: ^2.4.2
-    color-blind: ^0.1.1
-    hsluv: ^0.1.0
-  peerDependencies:
-    "@types/chroma-js": "*"
-    "@types/node": "*"
-  peerDependenciesMeta:
-    "@types/chroma-js":
-      optional: true
-    "@types/node":
-      optional: true
-  checksum: 77fa6e40860d1e2233e034efa4d6a7c026a43bf49a31271116ceec661de57a1a990d40483b1dc6af419183b93756fa40aacda0b40ab05ca7d2a25074573bd875
-  languageName: node
-  linkType: hard
-
 "@thematic/color@npm:^3.0.1":
   version: 3.0.1
   resolution: "@thematic/color@npm:3.0.1"
@@ -4409,26 +4390,6 @@ __metadata:
     "@types/node":
       optional: true
   checksum: 476cea3b6567fd05a075d312e786d0062dadf4aece60ca101e0fe5b13d741e77eea255032b106c206646671bf82c7761bfb0f682daf3f98cc6575e95aad002aa
-  languageName: node
-  linkType: hard
-
-"@thematic/core@npm:^3.1.0":
-  version: 3.1.0
-  resolution: "@thematic/core@npm:3.1.0"
-  dependencies:
-    "@thematic/color": ^3.0.0
-    d3-scale: ^4.0.2
-    lodash-es: ^4.17.21
-    murmurhash-js: ^1.0.0
-  peerDependencies:
-    "@types/d3-scale": ">= 2"
-    "@types/node": "*"
-  peerDependenciesMeta:
-    "@types/d3-scale":
-      optional: true
-    "@types/node":
-      optional: true
-  checksum: 47e812d16f53c3a2f67de135c5996e274186b5554d89cdf69da983527efbdc0bfb7e0602bae27dba0aa06bc8102f71455b05779c6396728abe98eff7413dcbee
   languageName: node
   linkType: hard
 
@@ -4452,11 +4413,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@thematic/d3@npm:^2.0.13":
-  version: 2.0.13
-  resolution: "@thematic/d3@npm:2.0.13"
+"@thematic/d3@npm:^2.0.14":
+  version: 2.0.14
+  resolution: "@thematic/d3@npm:2.0.14"
   dependencies:
-    "@thematic/core": ^3.1.0
+    "@thematic/core": ^3.1.1
     d3-axis: ^3.0.0
     d3-selection: ^3.0.0
   peerDependencies:
@@ -4470,17 +4431,17 @@ __metadata:
       optional: true
     "@types/node":
       optional: true
-  checksum: 0c2888b918f3af6ac75d8e185c929998f90b8cbdf2a7343fac27ae70ac31638f7b07cfe6d57069299c330a31626465f7749fa34be13ea68e2a202742f5514bdd
+  checksum: a4e56151918a0154360e3bdfbb5aceadfcc0789a1bf8751242f0aac4b945282fc09939ee65f9041d1cd36a6491d58f4ee7057b84ddf4a9c7f5dca8ae6013c6cb
   languageName: node
   linkType: hard
 
-"@thematic/fluent@npm:^4.1.0":
-  version: 4.1.0
-  resolution: "@thematic/fluent@npm:4.1.0"
+"@thematic/fluent@npm:^4.1.1":
+  version: 4.1.1
+  resolution: "@thematic/fluent@npm:4.1.1"
   dependencies:
-    "@thematic/color": ^3.0.0
-    "@thematic/core": ^3.1.0
-    "@thematic/react": ^2.1.0
+    "@thematic/color": ^3.0.1
+    "@thematic/core": ^3.1.1
+    "@thematic/react": ^2.1.1
     ahooks: ^3.7.1
     d3-scale: ^4.0.2
   peerDependencies:
@@ -4497,16 +4458,16 @@ __metadata:
       optional: true
     react:
       optional: false
-  checksum: ce806074e69382823c74021f9d50be97876325ef85cbdbcf40de49c2c8dc6fa7bb2d7e3579a3d50629386e2fa69183e8db1288b65119b82ad8afe7170c38773e
+  checksum: cb6efe246b14c838912d63de0436d3928522e6c86e0e5ab64d76088412901b623b8f1680b6b60e9479ac8e0d736f7a8699477f0249018dabe0abb0b1841315e1
   languageName: node
   linkType: hard
 
-"@thematic/react@npm:^2.1.0":
-  version: 2.1.0
-  resolution: "@thematic/react@npm:2.1.0"
+"@thematic/react@npm:^2.1.1":
+  version: 2.1.1
+  resolution: "@thematic/react@npm:2.1.1"
   dependencies:
-    "@thematic/color": ^3.0.0
-    "@thematic/core": ^3.1.0
+    "@thematic/color": ^3.0.1
+    "@thematic/core": ^3.1.1
   peerDependencies:
     "@types/node": "*"
     "@types/react": ">= 17"
@@ -4518,7 +4479,7 @@ __metadata:
       optional: true
     react:
       optional: false
-  checksum: 1e5f1ce7278df19d9110ae5b0d1fbc7a2b80c8c5b414df4371f48d7cb0297bccf7109d08656925630943666988e2c50a484bb60ac8d1aded1409fa351064bdfa
+  checksum: 6aa1abe3b2f44656f3ce9ece3ecdd30e89ca65dc1d06e93ed679fd87cb7e8860142ee97c3fc4c78baf40c739e188c391fa1e143ea275a94fa39eeb720025c0c8
   languageName: node
   linkType: hard
 
@@ -10237,13 +10198,6 @@ __metadata:
     readable-stream: ^2.0.1
     wbuf: ^1.1.0
   checksum: 2de144115197967ad6eeee33faf41096c6ba87078703c5cb011632dcfbffeb45784569e0cf02c317bd79c48375597c8ec88c30fff5bb0b023e8f654fb6e9c06e
-  languageName: node
-  linkType: hard
-
-"hsluv@npm:^0.1.0":
-  version: 0.1.0
-  resolution: "hsluv@npm:0.1.0"
-  checksum: e7ad3c16363a74949dbb6bd28c84752ae4bddf84a8ec9cb50236693c32f6724dd1b1d9ae506b77e7c176b5b22c486f82a91905b30da1e7ef4397a604580a5498
   languageName: node
   linkType: hard
 
