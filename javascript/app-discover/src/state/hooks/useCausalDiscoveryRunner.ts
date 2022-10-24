@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { useCallback, useEffect, useMemo } from 'react'
-import { useRecoilValue, useSetRecoilState } from 'recoil'
+import { useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil'
 
 import { discover as runCausalDiscovery } from '../../domain/CausalDiscovery/CausalDiscovery.js'
 import type {
@@ -14,6 +14,7 @@ import {
 	invertRelationship,
 	ManualRelationshipReason,
 } from '../../domain/Relationship.js'
+import { CanceledPromiseError } from '../../utils/CancelablePromise.js'
 import {
 	CausalDiscoveryResultsState,
 	CausalGraphConstraintsState,
@@ -41,6 +42,9 @@ export function useCausalDiscoveryRunner() {
 		[pauseAutoRun, causalDiscoveryAlgorithm],
 	)
 	const setCausalDiscoveryResultsState = useSetRecoilState(
+		CausalDiscoveryResultsState,
+	)
+	const resetCausalDiscoveryResultsState = useResetRecoilState(
 		CausalDiscoveryResultsState,
 	)
 	const setLoadingState = useSetRecoilState(LoadingState)
@@ -137,7 +141,14 @@ export function useCausalDiscoveryRunner() {
 					setLoadingState(undefined)
 				}
 			} catch (err) {
-				setLoadingState('Cancelling last run...')
+				if (err instanceof CanceledPromiseError) {
+					setLoadingState('Cancelling last run...')
+				} else {
+					// TODO: handle error message in the UI
+					console.error(err)
+					resetCausalDiscoveryResultsState()
+					setLoadingState(undefined)
+				}
 			}
 		}
 

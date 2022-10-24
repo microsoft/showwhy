@@ -60,3 +60,9 @@ export class CancelablePromise<MetadataType, PromiseReturnType> {
 		return this.setState(PromiseState.Finished)
 	}
 }
+
+export class CanceledPromiseError extends Error {
+	constructor(message?: string) {
+		super(message)
+	}
+}

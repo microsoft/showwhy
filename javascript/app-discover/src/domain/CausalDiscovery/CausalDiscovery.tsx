@@ -124,6 +124,10 @@ export function discover(
 	causalDiscoverResultPromise.promise =
 		fetchDiscoverResultPromise.promise?.then(
 			async ({ result: causalDiscoveryResult }) => {
+				if (!causalDiscoveryResult) {
+					throw Error('discover backend did not return any result')
+				}
+
 				const graph = fromCausalDiscoveryResults(
 					variables,
 					causalDiscoveryResult as CausalDiscoveryRequestReturnValue,
