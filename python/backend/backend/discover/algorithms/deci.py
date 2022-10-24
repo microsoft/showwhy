@@ -2,6 +2,7 @@ import base64
 import io
 import logging
 import math
+import shutil
 from typing import Any, List, Literal, Optional, Tuple, Union
 
 import networkx
@@ -12,6 +13,7 @@ from causica.datasets.dataset import Dataset
 from causica.models.deci.deci_gaussian import DECIGaussian
 from causica.models.deci.generation_functions import ContractiveInvertibleGNN
 from causica.utils.torch_utils import get_torch_device
+from celery import uuid
 from networkx.readwrite import json_graph
 from pydantic import BaseModel
 
@@ -80,7 +82,8 @@ class DeciRunner(CausalDiscoveryRunner):
         super().__init__(p, progress_callback)
         self._model_options = p.model_options
         self._training_options = p.training_options
-        self._deci_save_dir = "CauseDisDECIDir"
+        # make sure every run has its own folder
+        self._deci_save_dir = f"CauseDisDECIDir/{uuid()}"
 
     def _build_causica_dataset(self) -> Dataset:
         return PandasDatasetLoader("").split_data_and_load_dataset(
@@ -289,7 +292,7 @@ class DeciRunner(CausalDiscoveryRunner):
 
         return causal_graph
 
-    def do_causal_discovery(self) -> CausalGraph:
+    def _do_causal_discovery(self) -> CausalGraph:
         # if the data contains only a single column,
         # let's return an empty graph
         if self._prepared_data.columns.size == 1:
@@ -323,6 +326,13 @@ class DeciRunner(CausalDiscoveryRunner):
         self._report_progress(100.0)
 
         return causal_graph
+
+    def do_causal_discovery(self) -> CausalGraph:
+        try:
+            return self._do_causal_discovery()
+        finally:
+            # cleanup deci save dir
+            shutil.rmtree(self._deci_save_dir, ignore_errors=True)
 
 
 #### Can be removed if https://github.com/microsoft/causica/pull/17 is approved/merged
