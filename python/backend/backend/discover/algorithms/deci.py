@@ -1,15 +1,19 @@
 import base64
 import io
+import logging
 import math
-from typing import List, Literal, Optional, Tuple, Union
+import shutil
+from typing import Any, List, Literal, Optional, Tuple, Union
 
 import networkx
 import numpy as np
 import pandas as pd
 import torch
+from causica.datasets.dataset import Dataset
 from causica.models.deci.deci_gaussian import DECIGaussian
 from causica.models.deci.generation_functions import ContractiveInvertibleGNN
 from causica.utils.torch_utils import get_torch_device
+from celery import uuid
 from networkx.readwrite import json_graph
 from pydantic import BaseModel
 
@@ -78,77 +82,128 @@ class DeciRunner(CausalDiscoveryRunner):
         super().__init__(p, progress_callback)
         self._model_options = p.model_options
         self._training_options = p.training_options
-        self._deci_save_dir = "CauseDisDECIDir"
+        # make sure every run has its own folder
+        self._deci_save_dir = f"CauseDisDECIDir/{uuid()}"
 
-    def do_causal_discovery(self) -> CausalGraph:
-        # if the data contains only a single column,
-        # let's return an empty graph
-        if self._prepared_data.columns.size == 1:
-            return self._get_empty_graph_json(self._prepared_data)
-
-        dataset_loader = PandasDatasetLoader("")
-        azua_dataset = dataset_loader.split_data_and_load_dataset(
+    def _build_causica_dataset(self) -> Dataset:
+        return PandasDatasetLoader("").split_data_and_load_dataset(
             self._prepared_data, 0.5, 0, 0
-        )  # 0.1, 0.1, 0)
+        )
 
-        interpret_boolean_as_continuous = True
-        for var in azua_dataset.variables:
-            if interpret_boolean_as_continuous:
-                var.type = "continuous"
-            if var.type == "continuous":
-                if var.lower < 0:
-                    var.lower = -1
-                else:
-                    var.lower = 0
-                var.upper = 1
-
-        torch_device = get_torch_device("gpu")
+    def _build_model(self, causica_dataset: Dataset) -> DECIGaussian:
         deci_model = DECIGaussian(
             "CauseDisDECI",
-            azua_dataset.variables,
+            causica_dataset.variables,
             self._deci_save_dir,
-            torch_device,
+            get_torch_device("gpu"),
             **self._model_options.dict(),
         )
-        constraint_matrix = DeciRunner._build_azua_constraint_matrix(
-            self._prepared_data,  # azua_dataset.variables,
+        constraint_matrix = self._build_constraint_matrix(
+            self._prepared_data,
             tabu_child_nodes=self._constraints.causes,
             tabu_parent_nodes=self._constraints.effects,
             tabu_edges=self._constraints.forbiddenRelationships,
         )
-        deci_model.set_graph_constraint(constraint_matrix)
-        deci_model.run_train(
-            azua_dataset,
-            self._training_options.dict(),
-            lambda model_id, step, max_steps: self._report_progress(
-                step * 100.0 / max_steps
-            ),
-        )
 
+        deci_model.set_graph_constraint(constraint_matrix)
+
+        return deci_model
+
+    def _build_constraint_matrix(
+        self,
+        data: pd.DataFrame,
+        tabu_child_nodes: Optional[List[str]] = None,
+        tabu_parent_nodes: Optional[List[str]] = None,
+        tabu_edges: Optional[List[Tuple[str, str]]] = None,
+    ) -> np.ndarray:
+        """
+        Makes a DECI constraint matrix from GCastle constraint format.
+
+        Arguments:
+            tabu_child_nodes: Optional[List[str]]
+                nodes that cannot be children of any other nodes (root nodes)
+            tabu_parent_nodes: Optional[List[str]]
+                edges that cannot be the parent of any other node (leaf nodes)
+            tabu_edge: Optional[List[Tuple[str, str]]]
+                edges that cannot exist
+        """
+        constraint = np.full((len(data.columns), len(data.columns)), np.nan)
+        name_to_idx = {name: i for (i, name) in enumerate(data.columns)}
+
+        if tabu_child_nodes is not None:
+            for node in tabu_child_nodes:
+                idx = name_to_idx[node]
+                constraint[:, idx] = 0.0
+
+        if tabu_parent_nodes is not None:
+            for node in tabu_parent_nodes:
+                idx = name_to_idx[node]
+                constraint[idx, :] = 0.0
+
+        if tabu_edges is not None:
+            for source, sink in tabu_edges:
+                source_idx, sink_idx = name_to_idx[source], name_to_idx[sink]
+                constraint[source_idx, sink_idx] = 0.0
+
+        return constraint.astype(np.float32)
+
+    def _get_adj_matrix(self, deci_model: DECIGaussian) -> np.ndarray:
         # The next two lines of code are the same as:
         # deci_graph = deci_model.networkx_graph()
         # but omit an assertion that the graph is a DAG.  This is so the calculation doesn't just
         # fail after 20 minutes due to a single bad edge.
-        # adj_mat = deci_model.get_adj_matrix(samples=1, most_likely_graph=True, squeeze=True)
-        adj_mat = deci_model.get_adj_matrix_tensor(
+        adj_matrix = deci_model.get_adj_matrix_tensor(
             do_round=False, samples=1, most_likely_graph=True
         )
-        adj_mat = adj_mat.squeeze(0)
-        adj_mat = adj_mat.detach().cpu().numpy().astype(np.float64)
-        ate_mat = DeciRunner._compute_deci_average_treatment_effect(
-            deci_model, azua_dataset
-        )
+        adj_matrix = adj_matrix.squeeze(0)
+        adj_matrix = adj_matrix.detach().cpu().numpy().astype(np.float64)
 
-        deci_model.eval()
-        numCols = self._prepared_data.shape[1]
+        return adj_matrix
+
+    def _compute_average_treatment_effect(
+        self, model: DECIGaussian, causica_dataset: Dataset
+    ) -> np.ndarray:
+        train_data = pd.DataFrame(causica_dataset.train_data_and_mask[0])
+        treatment_values = train_data.mean(0) + train_data.std(0)
+        reference_values = train_data.mean(0) - train_data.std(0)
+        ates = []
+
+        for variable in range(treatment_values.shape[0]):
+            intervention_idxs = torch.tensor([variable])
+            intervention_value = torch.tensor([treatment_values[variable]])
+            reference_value = torch.tensor([reference_values[variable]])
+
+            logging.info(
+                f"Computing the ATE between X{variable}={treatment_values[variable]} and X{variable}={reference_values[variable]}"
+            )
+
+            # This estimate uses 200k samples for accuracy. You can get away with fewer if necessary
+            ate, _ = model.cate(
+                intervention_idxs,
+                intervention_value,
+                reference_value,
+                Ngraphs=1,
+                Nsamples_per_graph=200,
+                most_likely_graph=True,
+            )
+            ates.append(ate)
+
+        ate_matrix = np.stack(ates)
+
+        return ate_matrix
+
+    def _build_onnx_model(
+        self, deci_model: DECIGaussian, adj_matrix: np.ndarray
+    ) -> bytes:
+        num_columns = self._prepared_data.shape[1]
         intervention_mask = torch.cat(
             (
-                torch.zeros(math.ceil(numCols / 2), dtype=torch.bool),
-                torch.ones(math.floor(numCols / 2), dtype=torch.bool),
+                torch.zeros(math.ceil(num_columns / 2), dtype=torch.bool),
+                torch.ones(math.floor(num_columns / 2), dtype=torch.bool),
             ),
             0,
         )
-        intervention_values = torch.rand(math.floor(numCols / 2))
+        intervention_values = torch.rand(math.floor(num_columns / 2))
         gumbel_max_regions = torch.LongTensor(
             deci_model.variables.processed_cols_by_type["categorical"]
         )
@@ -159,10 +214,9 @@ class DeciRunner(CausalDiscoveryRunner):
                 for j in i
             ]
         )
-
         deci_inference_inputs = (
-            torch.rand([1, numCols]),
-            torch.from_numpy(adj_mat).float(),
+            torch.rand([1, num_columns]),
+            torch.from_numpy(adj_matrix).float(),
             intervention_mask,
             intervention_values,
             gumbel_max_regions,
@@ -178,6 +232,7 @@ class DeciRunner(CausalDiscoveryRunner):
         ]
         output_names = ["inference_results"]
         onnx_output = io.BytesIO()
+
         torch.onnx.export(
             torch.jit.script(deci_model.ICGNN),
             deci_inference_inputs,
@@ -187,21 +242,22 @@ class DeciRunner(CausalDiscoveryRunner):
             # opset_version=17, # TODO: Once pytorch implements opset 17 we can use nn.LayerNorm
             opset_version=11,
             export_params=True,
-            # verbose=True,
-            # keep_initializers_as_inputs=True,
-            dynamic_axes={
-                # 'intervention_mask' : {0 : 'intervention_count'},    # variable length axes
-                "intervention_values": {0: "intervention_count"}
-            },
+            dynamic_axes={"intervention_values": {0: "intervention_count"}},
         )
-        onnx_base64 = base64.b64encode(onnx_output.getvalue())
 
+        return onnx_output.getvalue()
+
+    def _build_labeled_graph(self, adj_matrix: np.ndarray) -> Any:
         deci_graph = networkx.convert_matrix.from_numpy_matrix(
-            adj_mat, create_using=networkx.DiGraph
+            adj_matrix, create_using=networkx.DiGraph
         )
         deci_ate_graph = networkx.convert_matrix.from_numpy_matrix(
-            ate_mat, create_using=networkx.DiGraph
+            adj_matrix, create_using=networkx.DiGraph
         )
+        labels = {
+            i: self._prepared_data.columns[i]
+            for i in range(len(self._prepared_data.columns))
+        }
 
         for n1, n2, d in deci_graph.edges(data=True):
             # TODO: validate what to do when there is no edge in the ate graph
@@ -210,86 +266,73 @@ class DeciRunner(CausalDiscoveryRunner):
             d["confidence"] = d.pop("weight", None)
             d["weight"] = ate
 
-        labels = {
-            i: self._prepared_data.columns[i]
-            for i in range(len(self._prepared_data.columns))
-        }
-        labeled_graph = networkx.relabel_nodes(deci_graph, labels)
-        graph_json = json_graph.cytoscape_data(labeled_graph)
-        graph_json["onnx"] = onnx_base64
-        graph_json["columns"] = [
+        return networkx.relabel_nodes(deci_graph, labels)
+
+    def _build_causal_graph(
+        self,
+        onnx_model: bytes,
+        labeled_graph: Any,
+        adj_matrix: np.ndarray,
+        ate_matrix: np.ndarray,
+    ) -> CausalGraph:
+        causal_graph = json_graph.cytoscape_data(labeled_graph)
+
+        causal_graph["onnx"] = base64.b64encode(onnx_model)
+        causal_graph["columns"] = [
             self._prepared_data.columns[i]
             for i in range(len(self._prepared_data.columns))
         ]
-        graph_json["confidence_matrix"] = adj_mat.tolist()
-        graph_json["ate_matrix"] = ate_mat.tolist()
-        graph_json["interpret_boolean_as_continuous"] = interpret_boolean_as_continuous
-        graph_json["has_weights"] = True
-        graph_json["has_confidence_values"] = True
+        causal_graph["confidence_matrix"] = adj_matrix.tolist()
+        causal_graph["ate_matrix"] = ate_matrix.tolist()
+        # TODO: we should evaluate whether this is necessary to keep or not
+        #       in case we need to keep, reimplement it
+        causal_graph["interpret_boolean_as_continuous"] = False
+        causal_graph["has_weights"] = True
+        causal_graph["has_confidence_values"] = True
+
+        return causal_graph
+
+    def _do_causal_discovery(self) -> CausalGraph:
+        # if the data contains only a single column,
+        # let's return an empty graph
+        if self._prepared_data.columns.size == 1:
+            return self._get_empty_graph_json(self._prepared_data)
+
+        causica_dataset = self._build_causica_dataset()
+
+        deci_model = self._build_model(causica_dataset)
+
+        deci_model.run_train(
+            causica_dataset,
+            self._training_options.dict(),
+            lambda model_id, step, max_steps: self._report_progress(
+                step * 100.0 / max_steps
+            ),
+        )
+
+        adj_matrix = self._get_adj_matrix(deci_model)
+
+        ate_matrix = self._compute_average_treatment_effect(deci_model, causica_dataset)
+
+        deci_model.eval()
+
+        causal_graph = self._build_causal_graph(
+            self._build_onnx_model(deci_model, adj_matrix),
+            self._build_labeled_graph(adj_matrix),
+            adj_matrix,
+            ate_matrix,
+        )
 
         self._report_progress(100.0)
 
-        return graph_json
+        return causal_graph
 
-    @staticmethod
-    def _build_azua_constraint_matrix(
-        variables, tabu_child_nodes=None, tabu_parent_nodes=None, tabu_edges=None
-    ):
-        """
-        Makes a DECI constraint matrix from GCastle constraint format.
-
-        Arguments:
-            tabu_child_nodes: Optional[List[str]]
-                nodes that cannot be children of any other nodes (root nodes)
-            tabu_parent_nodes: Optional[List[str]]
-                edges that cannot be the parent of any other node (leaf nodes)
-            tabu_edge: Optional[List[Tuple[str, str]]]
-                edges that cannot exist
-        """
-
-        constraint = np.full((len(variables.columns), len(variables.columns)), np.nan)
-        name_to_idx = {name: i for (i, name) in enumerate(variables.columns)}
-        if tabu_child_nodes is not None:
-            for node in tabu_child_nodes:
-                idx = name_to_idx[node]
-                constraint[:, idx] = 0.0
-        if tabu_parent_nodes is not None:
-            for node in tabu_parent_nodes:
-                idx = name_to_idx[node]
-                constraint[idx, :] = 0.0
-        if tabu_edges is not None:
-            for source, sink in tabu_edges:
-                source_idx, sink_idx = name_to_idx[source], name_to_idx[sink]
-                constraint[source_idx, sink_idx] = 0.0
-        return constraint.astype(np.float32)
-
-    @staticmethod
-    def _compute_deci_average_treatment_effect(model, dataset):
-        train_data = pd.DataFrame(dataset.train_data_and_mask[0])
-        treatment_values = train_data.mean(0) + train_data.std(0)
-        reference_values = train_data.mean(0) - train_data.std(0)
-        ates = []
-
-        for variable in range(treatment_values.shape[0]):
-            intervention_idxs = torch.tensor([variable])
-            intervention_value = torch.tensor([treatment_values[variable]])
-            reference_value = torch.tensor([reference_values[variable]])
-            print(
-                f"Computing the ATE between X{variable}={treatment_values[variable]} and X{variable}={reference_values[variable]}"
-            )
-            # This estimate uses 200k samples for accuracy. You can get away with fewer if necessary
-            ate, _ = model.cate(
-                intervention_idxs,
-                intervention_value,
-                reference_value,
-                Ngraphs=1,
-                Nsamples_per_graph=200,
-                most_likely_graph=True,
-            )
-            ates.append(ate)
-
-        ate_matrix = np.stack(ates)
-        return ate_matrix
+    def do_causal_discovery(self) -> CausalGraph:
+        try:
+            return self._do_causal_discovery()
+        finally:
+            # cleanup deci save dir
+            shutil.rmtree(self._deci_save_dir, ignore_errors=True)
 
 
 #### Can be removed if https://github.com/microsoft/causica/pull/17 is approved/merged
@@ -336,6 +379,7 @@ def simulate_SEM(
 
     if intervention_mask is not None and intervention_values is not None:
         X[:, intervention_mask] = intervention_values.unsqueeze(0)
+
     return X
 
 

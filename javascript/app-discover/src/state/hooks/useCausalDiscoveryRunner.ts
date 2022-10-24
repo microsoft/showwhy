@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { useCallback, useEffect, useMemo } from 'react'
-import { useRecoilValue, useSetRecoilState } from 'recoil'
+import { useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil'
 
 import { discover as runCausalDiscovery } from '../../domain/CausalDiscovery/CausalDiscovery.js'
 import { CausalDiscoveryAlgorithm } from '../../domain/CausalDiscovery/CausalDiscoveryAlgorithm.js'
@@ -15,6 +15,7 @@ import {
 	invertRelationship,
 	ManualRelationshipReason,
 } from '../../domain/Relationship.js'
+import { CanceledPromiseError } from '../../utils/CancelablePromise.js'
 import {
 	CausalDiscoveryResultsState,
 	CausalGraphConstraintsState,
@@ -51,6 +52,9 @@ export function useCausalDiscoveryRunner() {
 			: undefined
 	}, [DECIParams, causalDiscoveryAlgorithm])
 	const setCausalDiscoveryResultsState = useSetRecoilState(
+		CausalDiscoveryResultsState,
+	)
+	const resetCausalDiscoveryResultsState = useResetRecoilState(
 		CausalDiscoveryResultsState,
 	)
 	const setLoadingState = useSetRecoilState(LoadingState)
@@ -102,7 +106,7 @@ export function useCausalDiscoveryRunner() {
 
 	const updateProgress = useCallback(
 		(progress: number, taskId?: string) => {
-			setLoadingState(`Running causal discovery ${progress.toFixed(1)}%...`)
+			setLoadingState(`Running causal discovery ${progress.toFixed(0)}%...`)
 		},
 		[setLoadingState],
 	)
@@ -148,7 +152,14 @@ export function useCausalDiscoveryRunner() {
 					setLoadingState(undefined)
 				}
 			} catch (err) {
-				setLoadingState('Cancelling last task...')
+				if (err instanceof CanceledPromiseError) {
+					setLoadingState('Cancelling last run...')
+				} else {
+					// TODO: handle error message in the UI
+					console.error(err)
+					resetCausalDiscoveryResultsState()
+					setLoadingState(undefined)
+				}
 			}
 		}
 
