@@ -92,7 +92,7 @@ export function useCausalDiscoveryRunner() {
 
 	const updateProgress = useCallback(
 		(progress: number, taskId?: string) => {
-			setLoadingState(`Running causal discovery ${progress}%...`)
+			setLoadingState(`Running causal discovery ${progress.toFixed(0)}%...`)
 		},
 		[setLoadingState],
 	)
@@ -137,7 +137,7 @@ export function useCausalDiscoveryRunner() {
 					setLoadingState(undefined)
 				}
 			} catch (err) {
-				setLoadingState('Cancelling last task...')
+				setLoadingState('Cancelling last run...')
 			}
 		}
 

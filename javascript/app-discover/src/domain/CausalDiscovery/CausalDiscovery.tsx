@@ -81,12 +81,12 @@ function empty_discover_result(
 		CausalDiscoveryResult
 	>({ taskId: undefined })
 
-	ret.promise = new Promise(resolve => {
-		resolve({
-			graph: { variables, relationships: [], constraints, algorithm },
-			causalInferenceModel: null,
-		})
+	ret.setFinished()
+	ret.promise = Promise.resolve({
+		graph: { variables, relationships: [], constraints, algorithm },
+		causalInferenceModel: null,
 	})
+
 	return ret
 }
 
