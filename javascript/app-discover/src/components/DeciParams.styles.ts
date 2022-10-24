@@ -10,6 +10,11 @@ export const Container = styled.div`
 	display: flex;
 	flex-direction: column;
 `
+
+export const SpinContainer = styled.div`
+	margin-bottom: 10px;
+`
+
 export const ContainerAdvancedGrid = styled.div`
 	display: grid;
 	grid-template-columns: 1fr 1fr;
