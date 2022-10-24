@@ -3906,7 +3906,6 @@ __metadata:
     react-xarrows: ^2.0.2
     react-zoom-pan-pinch: ^2.1.3
     recoil: ^0.7.6
-    recoil-persist: ^4.2.0
     redbox-react: ^1.6.0
     rxjs: ^7.5.7
     scheduler: ^0.23.0
@@ -14086,15 +14085,6 @@ __metadata:
   dependencies:
     resolve: ^1.9.0
   checksum: 2a04aab4e28c05fcd6ee6768446bc8b859d8f108e71fc7f5bcbc5ef25e53330ce2c11d10f82a24591a2df4c49c4f61feabe1fd11f844c66feedd4cd7bb61146a
-  languageName: node
-  linkType: hard
-
-"recoil-persist@npm:^4.2.0":
-  version: 4.2.0
-  resolution: "recoil-persist@npm:4.2.0"
-  peerDependencies:
-    recoil: ^0.7.2
-  checksum: 1c8a6be4bb914b383429603e910aba80734311d8657ddf9f94a39513da0eb41fd6a2b74439f93658daf465d2e66a2d890e9f6b2f8a047e4fb99dc5b31f301515
   languageName: node
   linkType: hard
 

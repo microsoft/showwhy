@@ -599,11 +599,6 @@
             "data": {
                 "causalGraph": {
                     "inModelColumnNames": [
-                        "death",
-                        "birthcontrol",
-                        "asthma",
-                        "boweltrouble",
-                        "bronch"
                     ],
                     "constraints": {
                         "causes": [],
