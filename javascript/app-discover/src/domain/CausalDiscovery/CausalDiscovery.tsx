@@ -81,12 +81,12 @@ function empty_discover_result(
 		CausalDiscoveryResult
 	>({ taskId: undefined })
 
-	ret.promise = new Promise(resolve => {
-		resolve({
-			graph: { variables, relationships: [], constraints, algorithm },
-			causalInferenceModel: null,
-		})
+	ret.setFinished()
+	ret.promise = Promise.resolve({
+		graph: { variables, relationships: [], constraints, algorithm },
+		causalInferenceModel: null,
 	})
+
 	return ret
 }
 
@@ -124,6 +124,10 @@ export function discover(
 	causalDiscoverResultPromise.promise =
 		fetchDiscoverResultPromise.promise?.then(
 			async ({ result: causalDiscoveryResult }) => {
+				if (!causalDiscoveryResult) {
+					throw Error('discover backend did not return any result')
+				}
+
 				const graph = fromCausalDiscoveryResults(
 					variables,
 					causalDiscoveryResult as CausalDiscoveryRequestReturnValue,
