@@ -72,11 +72,8 @@ export const MenuBar: React.FC = memo(function MenuBar() {
 
 	const loadTable = useCallback(
 		(name: string, table: ColumnTable) => {
-			setLoadingState('Loading ' + name)
-			setTimeout(() => {
-				loadColumnTable(name, table)
-				setLoadingState(undefined)
-			}, 500)
+			loadColumnTable(name, table)
+			setLoadingState(undefined)
 		},
 		[loadColumnTable, setLoadingState],
 	)
