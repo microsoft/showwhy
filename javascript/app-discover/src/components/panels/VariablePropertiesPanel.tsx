@@ -2,6 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import { DialogConfirm } from '@essex/components'
 import type {
 	IChoiceGroupOption,
 	IChoiceGroupOptionProps,
@@ -14,7 +15,8 @@ import {
 	Text,
 	TooltipHost,
 } from '@fluentui/react'
-import { memo } from 'react'
+import { useBoolean } from '@fluentui/react-hooks'
+import { memo, useCallback, useState } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
 
 import {
@@ -24,17 +26,22 @@ import {
 } from '../../domain/CausalDiscovery/CausalDiscoveryConstraints.js'
 import { isAddable } from '../../domain/CausalVariable.js'
 import * as Graph from '../../domain/Graph.js'
+import { involvesVariable } from '../../domain/Relationship.js'
 import { VariableNature } from '../../domain/VariableNature.js'
 import {
 	CausalGraphConstraintsState,
+	ConfidenceThresholdState,
 	DatasetState,
 	InModelCausalVariablesState,
+	SelectedObjectState,
 	useCausalGraph,
+	WeightThresholdState,
 } from '../../state/index.js'
 import { Chart } from '../charts/Chart.js'
 import { Divider } from '../controls/Divider.js'
 import { VariableNaturePicker } from '../controls/VariableNaturePicker.js'
 import { VariableCorrelationsList } from '../lists/CorrelationList.js'
+import { EdgeList } from '../lists/EdgeList.js'
 import {
 	add_remove_button_styles,
 	panel_stack_tokens,
@@ -44,28 +51,75 @@ import type { VariablePropertiesPanelProps } from './VariablePropertiesPanel.typ
 export const VariablePropertiesPanel: React.FC<VariablePropertiesPanelProps> =
 	memo(function VariablePropertiesPanel({ variable }) {
 		const dataset = useRecoilValue(DatasetState)
+		const [
+			showDialogConfirm,
+			{ toggle: toggleDialogConfirm, setFalse: closeDialogConfirm },
+		] = useBoolean(false)
+		const [constraintOption, setConstraintOption] = useState('')
 		const causalGraph = useCausalGraph()
+		const weightThreshold = useRecoilValue(WeightThresholdState)
+		const confidenceThreshold = useRecoilValue(ConfidenceThresholdState)
+		const [, setSelectedObject] = useRecoilState(SelectedObjectState)
+
 		const [inModelVariables, setInModelVariables] = useRecoilState(
 			InModelCausalVariablesState,
 		)
 
 		const isInModel = Graph.includesVariable(causalGraph, variable)
+		const relationships = Graph.validRelationshipsForColumnName(
+			causalGraph,
+			variable,
+			weightThreshold,
+			confidenceThreshold,
+		)
 		const [constraints, setConstraints] = useRecoilState(
 			CausalGraphConstraintsState,
 		)
 
-		const onChange = (
-			e?: React.FormEvent<HTMLElement | HTMLInputElement>,
-			option?: IChoiceGroupOption,
-		): void => {
-			setConstraints(
-				updateConstraints(
-					constraints,
-					variable,
-					Constraints[option?.key as keyof typeof Constraints],
-				),
-			)
-		}
+		const onUpdateConstraints = useCallback(
+			(constraintKey?: string) => {
+				setConstraints(
+					updateConstraints(
+						constraints,
+						variable,
+						Constraints[constraintKey as keyof typeof Constraints],
+					),
+				)
+				setConstraintOption('')
+				closeDialogConfirm()
+			},
+			[
+				constraints,
+				setConstraintOption,
+				variable,
+				setConstraints,
+				closeDialogConfirm,
+			],
+		)
+
+		const onChange = useCallback(
+			(
+				e?: React.FormEvent<HTMLElement | HTMLInputElement>,
+				option?: IChoiceGroupOption,
+			) => {
+				if (
+					constraints.manualRelationships?.find(r =>
+						involvesVariable(r, variable),
+					)
+				) {
+					setConstraintOption(option?.key as string)
+					return toggleDialogConfirm()
+				}
+				onUpdateConstraints(option?.key)
+			},
+			[
+				onUpdateConstraints,
+				toggleDialogConfirm,
+				constraints,
+				setConstraintOption,
+				variable,
+			],
+		)
 
 		// TODO: DRY this out. It's also in CausalNode
 		const addToModel = () => {
@@ -136,6 +190,13 @@ export const VariablePropertiesPanel: React.FC<VariablePropertiesPanelProps> =
 
 		return (
 			<>
+				<DialogConfirm
+					onConfirm={() => onUpdateConstraints(constraintOption)}
+					toggle={toggleDialogConfirm}
+					show={showDialogConfirm}
+					title="Are you sure you want to proceed?"
+					subText="Setting this constraint will remove any manual edges you pinned or flipped for this variable"
+				></DialogConfirm>
 				<Text variant={'large'} block>
 					{variable.name}
 				</Text>
@@ -205,6 +266,17 @@ export const VariablePropertiesPanel: React.FC<VariablePropertiesPanelProps> =
 						/>
 					</>
 				)}
+				<Divider>Edges</Divider>
+				{relationships && (
+					<EdgeList
+						onSelect={setSelectedObject}
+						variable={variable}
+						relationships={relationships}
+						constraints={constraints}
+						onUpdateConstraints={setConstraints}
+					/>
+				)}
+
 				<Divider>Correlations</Divider>
 				<VariableCorrelationsList variable={variable} />
 			</>

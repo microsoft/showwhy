@@ -7,9 +7,16 @@ import type ColumnTable from 'arquero/dist/types/table/column-table'
 import type { CausalVariable, VariableReference } from './CausalVariable.js'
 import { applyMappingFromVariableToTable, isSame } from './CausalVariable.js'
 
+export enum ManualRelationshipReason {
+	Removed = 'Removed',
+	Pinned = 'Pinned',
+	Flipped = 'Flipped',
+}
+
 export interface RelationshipReference {
 	source: VariableReference
 	target: VariableReference
+	reason?: ManualRelationshipReason
 }
 
 export type Relationship = RelationshipReference & {
@@ -144,5 +151,23 @@ export function arrayIncludesRelationship(
 ) {
 	return relationships.some(otherRelationship =>
 		hasSameSourceAndTarget(relationship, otherRelationship),
+	)
+}
+
+export function hasSameReason(
+	reason: ManualRelationshipReason,
+	relationship?: Relationship,
+) {
+	return relationship?.reason === reason
+}
+
+export function isEquivalentRelationship(
+	relationship: Relationship,
+	asRelationship: Relationship,
+) {
+	return (
+		hasSameSourceAndTarget(relationship, asRelationship) ||
+		(hasSameReason(ManualRelationshipReason.Flipped, asRelationship) &&
+			hasInvertedSourceAndTarget(relationship, asRelationship))
 	)
 }

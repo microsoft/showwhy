@@ -3,10 +3,18 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { useCallback, useEffect, useMemo } from 'react'
-import { useRecoilValue, useSetRecoilState } from 'recoil'
+import { useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil'
 
 import { discover as runCausalDiscovery } from '../../domain/CausalDiscovery/CausalDiscovery.js'
-import type { RelationshipReference } from '../../domain/Relationship.js'
+import type {
+	Relationship,
+	RelationshipReference,
+} from '../../domain/Relationship.js'
+import {
+	invertRelationship,
+	ManualRelationshipReason,
+} from '../../domain/Relationship.js'
+import { CanceledPromiseError } from '../../utils/CancelablePromise.js'
 import {
 	CausalDiscoveryResultsState,
 	CausalGraphConstraintsState,
@@ -34,6 +42,9 @@ export function useCausalDiscoveryRunner() {
 		[pauseAutoRun, causalDiscoveryAlgorithm],
 	)
 	const setCausalDiscoveryResultsState = useSetRecoilState(
+		CausalDiscoveryResultsState,
+	)
+	const resetCausalDiscoveryResultsState = useResetRecoilState(
 		CausalDiscoveryResultsState,
 	)
 	const setLoadingState = useSetRecoilState(LoadingState)
@@ -64,17 +75,28 @@ export function useCausalDiscoveryRunner() {
 	const causalDiscoveryConstraints = useMemo(
 		() => ({
 			...userConstraints,
-			forbiddenRelationships: [
-				...userConstraints.forbiddenRelationships,
+			manualRelationships: [
+				...userConstraints.manualRelationships.map(x => {
+					if (
+						x.reason &&
+						[
+							ManualRelationshipReason.Flipped,
+							ManualRelationshipReason.Pinned,
+						].includes(x.reason)
+					) {
+						return invertRelationship(x)
+					}
+					return x
+				}),
 				...derivedConstraints,
-			],
+			] as Relationship[],
 		}),
 		[userConstraints, derivedConstraints],
 	)
 
 	const updateProgress = useCallback(
 		(progress: number, taskId?: string) => {
-			setLoadingState(`Running causal discovery ${progress}%...`)
+			setLoadingState(`Running causal discovery ${progress.toFixed(0)}%...`)
 		},
 		[setLoadingState],
 	)
@@ -119,7 +141,14 @@ export function useCausalDiscoveryRunner() {
 					setLoadingState(undefined)
 				}
 			} catch (err) {
-				setLoadingState('Cancelling last task...')
+				if (err instanceof CanceledPromiseError) {
+					setLoadingState('Cancelling last run...')
+				} else {
+					// TODO: handle error message in the UI
+					console.error(err)
+					resetCausalDiscoveryResultsState()
+					setLoadingState(undefined)
+				}
 			}
 		}
 

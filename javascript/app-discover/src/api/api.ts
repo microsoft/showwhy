@@ -2,7 +2,10 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { CancelablePromise } from '../utils/CancelablePromise.js'
+import {
+	CancelablePromise,
+	CanceledPromiseError,
+} from '../utils/CancelablePromise.js'
 import { sleep } from '../utils/Sleep.js'
 import type {
 	DiscoverProgressCallback,
@@ -54,7 +57,7 @@ async function _fetchDiscoverResult<T>(
 
 	if (cancelablePromise.isCancellingOrCanceled()) {
 		cancelablePromise.setCanceled()
-		throw new Error(`task ${taskId} has been canceled`)
+		throw new CanceledPromiseError(`task ${taskId} has been canceled`)
 	}
 
 	cancelablePromise.setFinished()

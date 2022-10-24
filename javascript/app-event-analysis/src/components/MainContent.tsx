@@ -145,16 +145,7 @@ export const MainContent: React.FC = memo(function MainContent() {
 
 	const [units, setUnits] = useRecoilState(UnitsState)
 	const [hypothesis, setHypothesis] = useRecoilState(HypothesisState)
-
-	const onDatasetClicked = (name: string) => {
-		const table = dataTables.find(d => d.name === name)?.currentOutput?.table
-		if (table) {
-			// @FIXME: ideally we should consume the wrangled data-table as is
-			//  and not convert it back to CSV before reading its content
-			const tableAsCSV = table?.select(not('index')).toCSV()
-			handleFileLoad({ fileName: name, content: tableAsCSV })
-		}
-	}
+	const [currentTableName, setCurrentTableName] = useState('')
 
 	// Raw output data
 	const [outputRes, setOutputRes] = useRecoilState(OutputResState)
@@ -237,7 +228,7 @@ export const MainContent: React.FC = memo(function MainContent() {
 		isInitialRender.current = false
 	}, [defaultTreatment])
 
-	const clearAllState = () => {
+	const clearAllState = useCallback(() => {
 		setRawData([])
 		setPlaceboOutputRes(new Map())
 		setOutputRes(null)
@@ -250,7 +241,20 @@ export const MainContent: React.FC = memo(function MainContent() {
 		setAggregateEnabled(false)
 		setAggTreatment(null)
 		setTreatmentStartDatesAfterEstimate(null)
-	}
+	}, [
+		setRawData,
+		setPlaceboOutputRes,
+		setOutputRes,
+		setFilter,
+		setTreatmentStartDates,
+		setTreatedUnits,
+		setCheckedUnits,
+		setUserMessage,
+		setPlaceboSimulation,
+		setAggregateEnabled,
+		setAggTreatment,
+		setTreatmentStartDatesAfterEstimate,
+	])
 
 	const resetDataHandler = () => {
 		if (!isDataLoaded) {
@@ -754,57 +758,104 @@ export const MainContent: React.FC = memo(function MainContent() {
 		[setSelectedTabKey],
 	)
 
-	const handleFileLoad = ({
-		fileName,
-		content,
-	}: {
-		fileName: string
-		content: string
-	}) => {
-		// clear old state since we are loading a new data set
-		clearAllState()
+	const handleFileLoad = useCallback(
+		({ fileName, content }: { fileName: string; content: string }) => {
+			// clear old state since we are loading a new data set
+			clearAllState()
+			const exportState = deserializeExportState(content)
+			// If not exportState, assume the content is csv
+			if (!exportState) {
+				const records = csvToRecords(content)
+				setRawData(records)
+				const mapping = guessColMapping(getColumns(records))
+				setColumnMapping(mapping)
+				setOutcomeName(prev => (!prev ? mapping.value : prev))
+				setFileName(fileName)
+			} else {
+				const {
+					rawData,
+					eventName,
+					outcomeName,
+					columnMapping,
+					treatmentStartDates,
+					treatedUnits,
+					checkedUnits,
+					chartOptions,
+					estimator,
+					timeAlignment,
+					filter,
+					outputData,
+				} = exportState
+				setRawData(rawData)
+				setEventName(eventName)
+				setOutcomeName(outcomeName)
+				updateColumnMapping(columnMapping)
+				setTreatedUnits(treatedUnits)
+				setTreatmentStartDates(treatmentStartDates)
+				setChartOptions(chartOptions)
+				setCheckedUnits(checkedUnits)
+				setEstimator(estimator)
+				setTimeAlignment(timeAlignment)
+				setFilter(filter)
+				setOutputRes(outputData)
+				if (outputData) setPlaceboSimulation(outputData.compute_placebos)
+				setTreatmentStartDatesAfterEstimate({
+					tStartDates: treatmentStartDates,
+				})
+				setFileName('')
+			}
+		},
+		[
+			clearAllState,
+			setRawData,
+			setOutcomeName,
+			updateColumnMapping,
+			setTreatedUnits,
+			setTreatmentStartDates,
+			setChartOptions,
+			setCheckedUnits,
+			setEstimator,
+			setTimeAlignment,
+			setFilter,
+			setOutputRes,
+			setPlaceboSimulation,
+			setTreatmentStartDatesAfterEstimate,
+			setFileName,
+			setEventName,
+			setColumnMapping,
+		],
+	)
 
-		const exportState = deserializeExportState(content)
-		// If not exportState, assume the content is csv
-		if (!exportState) {
-			const records = csvToRecords(content)
-			setRawData(records)
-			const mapping = guessColMapping(getColumns(records))
-			setColumnMapping(mapping)
-			setOutcomeName(prev => (!prev ? mapping.value : prev))
+	const onDatasetClicked = useCallback(
+		(name: string) => {
+			const table = dataTables.find(d => d.name === name)?.currentOutput?.table
+			if (table) {
+				// @FIXME: ideally we should consume the wrangled data-table as is
+				//  and not convert it back to CSV before reading its content
+				const tableAsCSV = table?.select(not('index')).toCSV()
+				handleFileLoad({ fileName: name, content: tableAsCSV })
+			}
+		},
+		[dataTables, handleFileLoad],
+	)
+
+	const onDataTablesUpdate = useCallback(() => {
+		if (fileName !== currentTableName) {
+			setCurrentTableName(fileName)
 			setFileName(fileName)
-		} else {
-			const {
-				rawData,
-				eventName,
-				outcomeName,
-				columnMapping,
-				treatmentStartDates,
-				treatedUnits,
-				checkedUnits,
-				chartOptions,
-				estimator,
-				timeAlignment,
-				filter,
-				outputData,
-			} = exportState
-			setRawData(rawData)
-			setEventName(eventName)
-			setOutcomeName(outcomeName)
-			updateColumnMapping(columnMapping)
-			setTreatedUnits(treatedUnits)
-			setTreatmentStartDates(treatmentStartDates)
-			setChartOptions(chartOptions)
-			setCheckedUnits(checkedUnits)
-			setEstimator(estimator)
-			setTimeAlignment(timeAlignment)
-			setFilter(filter)
-			setOutputRes(outputData)
-			if (outputData) setPlaceboSimulation(outputData.compute_placebos)
-			setTreatmentStartDatesAfterEstimate({ tStartDates: treatmentStartDates })
-			setFileName('')
+			onDatasetClicked(fileName)
 		}
-	}
+	}, [
+		fileName,
+		currentTableName,
+		setCurrentTableName,
+		setFileName,
+		onDatasetClicked,
+	])
+
+	useEffect(() => {
+		onDataTablesUpdate()
+	}, [dataTables])
 
 	// const handleExport = () => {
 	// 	if (!isDataLoaded) return

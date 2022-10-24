@@ -2,22 +2,25 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { DefaultButton, Stack } from '@fluentui/react'
-import { DeleteIcon } from '@fluentui/react-icons-mdl2'
+import { DefaultButton, Icon, Stack, TooltipHost } from '@fluentui/react'
 import { memo } from 'react'
-import { useRecoilState, useResetRecoilState } from 'recoil'
+import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil'
 
 import type { VariableReference } from '../../domain/CausalVariable.js'
 import type { RelationshipReference } from '../../domain/Relationship.js'
-import { CausalGraphConstraintsState } from '../../state/index.js'
+import { CausalGraphConstraintsState, TableState } from '../../state/index.js'
+import { IconButtonDark } from '../../styles/styles.js'
 import { Divider } from '../controls/Divider.js'
 import type { ConstraintsPanelProps } from './ConstraintsPanel.types.js'
+import { getConstraintIconName } from './ConstraintsPanel.utils.js'
 
 export const ConstraintsPanel: React.FC<ConstraintsPanelProps> = memo(
 	function ConstraintsPanel({ children }) {
 		const [constraints, setConstraints] = useRecoilState(
 			CausalGraphConstraintsState,
 		)
+		const dataTable = useRecoilValue(TableState)
+
 		const resetConstraints = useResetRecoilState(CausalGraphConstraintsState)
 
 		const removeFromRelationshipConstraints = (
@@ -25,26 +28,33 @@ export const ConstraintsPanel: React.FC<ConstraintsPanelProps> = memo(
 		) => {
 			const newConstraints = {
 				...constraints,
-				forbiddenRelationships: constraints.forbiddenRelationships.filter(
+				manualRelationships: constraints.manualRelationships.filter(
 					relationship => relationship !== relationshipToRemove,
 				),
 			}
 			setConstraints(newConstraints)
 		}
 
-		const relationshipConstraints = constraints.forbiddenRelationships.map(
+		const relationshipConstraints = constraints.manualRelationships.map(
 			constraint => (
 				<Stack
 					horizontal
+					verticalAlign="center"
 					key={`${constraint.source.columnName}-${constraint.target.columnName}`}
 				>
 					<Stack.Item
 						grow
 					>{`${constraint.source.columnName}-${constraint.target.columnName}`}</Stack.Item>
 					<Stack.Item>
-						<DeleteIcon
-							onClick={() => removeFromRelationshipConstraints(constraint)}
-						/>
+						<TooltipHost content={constraint.reason}>
+							<Icon iconName={getConstraintIconName(constraint)}></Icon>
+						</TooltipHost>
+						<TooltipHost content="Remove constraint">
+							<IconButtonDark
+								iconProps={icons.remove}
+								onClick={() => removeFromRelationshipConstraints(constraint)}
+							/>
+						</TooltipHost>
 					</Stack.Item>
 				</Stack>
 			),
@@ -66,7 +76,10 @@ export const ConstraintsPanel: React.FC<ConstraintsPanelProps> = memo(
 			<Stack horizontal key={constraint.columnName}>
 				<Stack.Item grow>{constraint.columnName}</Stack.Item>
 				<Stack.Item>
-					<DeleteIcon onClick={() => removeFromCauseConstraints(constraint)} />
+					<IconButtonDark
+						iconProps={icons.delete}
+						onClick={() => removeFromCauseConstraints(constraint)}
+					/>
 				</Stack.Item>
 			</Stack>
 		))
@@ -84,37 +97,47 @@ export const ConstraintsPanel: React.FC<ConstraintsPanelProps> = memo(
 		}
 
 		const effectConstraints = constraints.effects.map(constraint => (
-			<Stack horizontal key={constraint.columnName}>
+			<Stack horizontal key={constraint.columnName} verticalAlign="center">
 				<Stack.Item grow>{constraint.columnName}</Stack.Item>
 				<Stack.Item>
-					<DeleteIcon onClick={() => removeFromEffectConstraints(constraint)} />
+					<IconButtonDark
+						iconProps={icons.delete}
+						onClick={() => removeFromEffectConstraints(constraint)}
+					/>
 				</Stack.Item>
 			</Stack>
 		))
+
 		const hasAnyConstraints =
-			relationshipConstraints.length > 0 ||
-			causeConstraints.length > 0 ||
-			effectConstraints.length > 0
-		return (
+			dataTable !== undefined &&
+			dataTable?.numCols() !== 0 &&
+			(relationshipConstraints.length > 0 ||
+				causeConstraints.length > 0 ||
+				effectConstraints.length > 0)
+
+		return hasAnyConstraints ? (
 			<>
-				{hasAnyConstraints && children}
-				{relationshipConstraints.length > 0 && (
-					<Divider>Forbidden Relationships</Divider>
-				)}
-				{relationshipConstraints}
+				{children}
 				{causeConstraints.length > 0 && <Divider>Cause Constraints</Divider>}
 				{causeConstraints}
 				{effectConstraints.length > 0 && <Divider>Effect Constraints</Divider>}
 				{effectConstraints}
-				{hasAnyConstraints && (
-					<>
-						<Divider></Divider>
-						<DefaultButton onClick={resetConstraints}>
-							Clear all constraints
-						</DefaultButton>
-					</>
+				{relationshipConstraints.length > 0 && (
+					<Divider>Edge Constraints</Divider>
 				)}
+				{relationshipConstraints}
+				<Divider></Divider>
+				<DefaultButton onClick={resetConstraints}>
+					Clear all constraints
+				</DefaultButton>
 			</>
-		)
+		) : null
 	},
 )
+
+const icons = {
+	delete: { iconName: 'Delete' },
+	remove: { iconName: 'StatusCircleErrorX' },
+	switch: { iconName: 'Switch' },
+	pinned: { iconName: 'PinSolid12' },
+}
