@@ -2,11 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { Verb } from '@datashaper/schema'
-import type { StepInput } from '@datashaper/workflow'
-import { Workflow } from '@datashaper/workflow'
 import { DefaultValue, selector, selectorFamily } from 'recoil'
-import { from } from 'rxjs'
 
 import type { CausalVariable } from '../../domain/CausalVariable.js'
 import { inferMissingMetadataForColumn } from '../../domain/CausalVariable.js'
@@ -16,7 +12,6 @@ import { VariableNature } from '../../domain/VariableNature.js'
 import {
 	DatasetNameState,
 	DEFAULT_PIPELINE_TABLE_NAME,
-	InputTableState,
 	MetadataState,
 	TableState,
 } from '../atoms/index.js'
