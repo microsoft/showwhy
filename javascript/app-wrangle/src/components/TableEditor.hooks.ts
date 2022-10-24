@@ -19,8 +19,8 @@ export function useStepListener(
 			const { id } = workflow.steps[workflow.steps.length - 1]
 			setSelectedTableId(id)
 		} else {
-			if (workflow.inputNames.size > 0) {
-				const lastInputName = inputNames[workflow.inputNames.size - 1]
+			if (workflow.inputNames.length > 0) {
+				const lastInputName = inputNames[workflow.inputNames.length - 1]
 				if (lastInputName) {
 					setSelectedTableId(lastInputName)
 				}

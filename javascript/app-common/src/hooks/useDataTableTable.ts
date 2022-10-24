@@ -16,7 +16,7 @@ import { from } from 'rxjs'
 export function useDataTableOutput(
 	pkg: DataTable | undefined,
 ): Maybe<TableContainer> {
-	return useObservableState(pkg?.output ?? none())
+	return useObservableState(pkg?.output$ ?? none())
 }
 
 /**
@@ -27,7 +27,7 @@ export function useDataTableOutput(
 export function useDataTableSource(
 	pkg: DataTable | undefined,
 ): Maybe<ColumnTable> {
-	return useObservableState(pkg?.source ?? none(), () => pkg?.currentSource)
+	return useObservableState(pkg?.source$ ?? none(), () => pkg?.source)
 }
 
 const none = () => from([undefined])

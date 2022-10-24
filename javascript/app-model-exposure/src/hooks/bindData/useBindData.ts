@@ -24,7 +24,7 @@ export function useBindData(): {
 	const onSelectTableId = useSetSelectedTableName()
 	const selectedTable = useMemo(
 		(): Maybe<TableContainer> =>
-			tables.find(x => x.name === selectedTableName)?.currentOutput,
+			tables.find(x => x.name === selectedTableName)?.output,
 		[selectedTableName, tables],
 	)
 

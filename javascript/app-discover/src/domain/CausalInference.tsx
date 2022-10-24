@@ -2,7 +2,8 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-
+/* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-assignment */
 import type { CausalVariable } from './CausalVariable.js'
 import { VariableNature } from './VariableNature.js'
 
@@ -99,6 +100,5 @@ export async function runCausalInference(
 	model.columnNames.forEach((columnName, i) => {
 		resultMap.set(columnName, results.inference_results.data[i])
 	})
-	// console.log('Ran causal inference! ', resultMap.entries());
 	return resultMap
 }
