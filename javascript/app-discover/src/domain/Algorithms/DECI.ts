@@ -8,20 +8,20 @@ export interface DECIParams {
 	training_options: DECITrainingOptions
 }
 
-enum VarDistAMode {
+export enum VarDistAMode {
 	Simple = 'simple',
 	Enco = 'enco',
 	True = 'true',
 	Three = 'three',
 }
 
-enum ModeAdjacency {
+export enum ModeAdjacency {
 	Upper = 'upper',
 	Lower = 'lower',
 	Learn = 'learn',
 }
 
-enum AnnealEntropy {
+export enum AnnealEntropy {
 	Linear = 'linear',
 	Noanneal = 'noanneal',
 }
@@ -39,7 +39,7 @@ export interface DECIModelOptions {
 	encoder_layer_sizes?: number[]
 	decoder_layer_sizes?: number[]
 	cate_rff_n_features?: number
-	cate_rff_lengthscale?: number | number[] | [number, number]
+	cate_rff_lengthscale?: number | number[]
 }
 
 export interface DECITrainingOptions {
@@ -54,7 +54,6 @@ export interface DECITrainingOptions {
 	safety_alpha?: number
 	tol_dag?: number
 	progress_rate?: number
-
 	max_p_train_dropout?: number
 	reconstruction_loss_factor?: number
 	anneal_entropy?: AnnealEntropy

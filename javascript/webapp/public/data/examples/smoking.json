@@ -162,7 +162,7 @@
         },
         {
             "profile": "datatable",
-            "name": "nhefs-causedis",
+            "name": "nhefs-discovery",
             "sources": [
                 {
                     "profile": "workflow",
@@ -635,7 +635,7 @@
                     "results": {}
                 },
                 "dataset": {
-                    "datasetName": "nhefs-causedis"
+                    "datasetName": "nhefs-discovery"
                 },
                 "layout": {
                     "nodePositions": {}

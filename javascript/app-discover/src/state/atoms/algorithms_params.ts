@@ -21,7 +21,7 @@ const training_options = {
 
 export const DeciParamsState = atom<DECIParams>({
 	key: 'DeciParamsState',
-	default: { training_options },
+	default: { training_options, model_options: {} },
 	// eslint-disable-next-line camelcase
 	effects_UNSTABLE: [persistAtomEffect, persistAtom],
 })
