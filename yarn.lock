@@ -3821,6 +3821,7 @@ __metadata:
     "@thematic/d3": ^2.0.13
     "@thematic/fluent": ^4.1.0
     "@thematic/react": ^2.1.0
+    "@thematic/vega": ^2.0.14
     "@types/cytoscape": ^3.19.8
     "@types/file-saver": ^2.0.5
     "@types/lodash": ^4.14.186
@@ -3957,7 +3958,7 @@ __metadata:
     "@thematic/d3": ^2.0.13
     "@thematic/fluent": ^4.1.0
     "@thematic/react": ^2.1.0
-    "@thematic/vega": ^2.0.13
+    "@thematic/vega": ^2.0.14
     "@types/d3-fetch": ^3.0.1
     "@types/lodash": ^4.14.186
     "@types/lodash-es": ^4.17.6
@@ -4083,7 +4084,7 @@ __metadata:
     "@thematic/d3": ^2.0.13
     "@thematic/fluent": ^4.1.0
     "@thematic/react": ^2.1.0
-    "@thematic/vega": ^2.0.13
+    "@thematic/vega": ^2.0.14
     "@types/d3-fetch": ^3.0.1
     "@types/lodash": ^4.14.186
     "@types/lodash-es": ^4.17.6
@@ -4392,6 +4393,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@thematic/color@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "@thematic/color@npm:3.0.1"
+  dependencies:
+    chroma-js: ^2.4.2
+    color-blind: ^0.1.1
+    hsluv: ^1.0.0
+  peerDependencies:
+    "@types/chroma-js": "*"
+    "@types/node": "*"
+  peerDependenciesMeta:
+    "@types/chroma-js":
+      optional: true
+    "@types/node":
+      optional: true
+  checksum: 476cea3b6567fd05a075d312e786d0062dadf4aece60ca101e0fe5b13d741e77eea255032b106c206646671bf82c7761bfb0f682daf3f98cc6575e95aad002aa
+  languageName: node
+  linkType: hard
+
 "@thematic/core@npm:^3.1.0":
   version: 3.1.0
   resolution: "@thematic/core@npm:3.1.0"
@@ -4409,6 +4429,26 @@ __metadata:
     "@types/node":
       optional: true
   checksum: 47e812d16f53c3a2f67de135c5996e274186b5554d89cdf69da983527efbdc0bfb7e0602bae27dba0aa06bc8102f71455b05779c6396728abe98eff7413dcbee
+  languageName: node
+  linkType: hard
+
+"@thematic/core@npm:^3.1.1":
+  version: 3.1.1
+  resolution: "@thematic/core@npm:3.1.1"
+  dependencies:
+    "@thematic/color": ^3.0.1
+    d3-scale: ^4.0.2
+    lodash-es: ^4.17.21
+    murmurhash-js: ^1.0.0
+  peerDependencies:
+    "@types/d3-scale": ">= 2"
+    "@types/node": "*"
+  peerDependenciesMeta:
+    "@types/d3-scale":
+      optional: true
+    "@types/node":
+      optional: true
+  checksum: 044d4e508c9343e81ef25b27da13524de442f7dbeb2f1a061ca8501da228f71064f88fc8db6b57e28b94bbda7c120ba23ece8f4439101bc7c829dd4973b93bca
   languageName: node
   linkType: hard
 
@@ -4482,17 +4522,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@thematic/vega@npm:^2.0.13":
-  version: 2.0.13
-  resolution: "@thematic/vega@npm:2.0.13"
+"@thematic/vega@npm:^2.0.14":
+  version: 2.0.14
+  resolution: "@thematic/vega@npm:2.0.14"
   dependencies:
-    "@thematic/core": ^3.1.0
+    "@thematic/core": ^3.1.1
   peerDependencies:
     vega: 5
   peerDependenciesMeta:
     vega:
       optional: false
-  checksum: 64ceace5613907991374fb4647e5a54cdb155412048ec9f3a7d2ad6e481817c1a0f8f90f6b4fbc206295d3737e480a834259b739c5094f52fa3ba0a262e9c399
+  checksum: 8a19356a474b9d7150c4b360abad2fb35f774c140ae1d3b76329e19a12dd18116e4c4146ec09a55a75147a9522a34aa4a28cf537727d1c4b404ada8257682c41
   languageName: node
   linkType: hard
 
@@ -10204,6 +10244,13 @@ __metadata:
   version: 0.1.0
   resolution: "hsluv@npm:0.1.0"
   checksum: e7ad3c16363a74949dbb6bd28c84752ae4bddf84a8ec9cb50236693c32f6724dd1b1d9ae506b77e7c176b5b22c486f82a91905b30da1e7ef4397a604580a5498
+  languageName: node
+  linkType: hard
+
+"hsluv@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "hsluv@npm:1.0.0"
+  checksum: bb6f0a3d7b06cf0086e72044554f77517df2d4ca57d16fba36d30aa9e70c9c51ae6c7d0c09266c5eeba70821080e7b8483cd6fc156d7e34ec7da208688d55fc0
   languageName: node
   linkType: hard
 

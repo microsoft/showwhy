@@ -37,6 +37,7 @@
 		"@thematic/d3": "^2.0.13",
 		"@thematic/fluent": "^4.1.0",
 		"@thematic/react": "^2.1.0",
+		"@thematic/vega": "^2.0.14",
 		"@types/cytoscape": "^3.19.8",
 		"@types/lodash": "^4.14.186",
 		"@types/react-cytoscapejs": "^1.2.2",

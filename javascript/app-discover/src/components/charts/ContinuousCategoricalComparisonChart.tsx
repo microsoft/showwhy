@@ -37,5 +37,5 @@ export const ContinuousCategoricalComparisonChart: React.FC<ComparisonChartProps
 
 		const spec = useVisualizationSpec(varA, varB, preparedData)
 
-		return <Vega mode={'vega-lite'} spec={spec} />
+		return <Vega mode={'vega'} spec={spec} actions={false} renderer={'svg'} />
 	})

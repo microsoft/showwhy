@@ -30,7 +30,7 @@ export const CategoricalChart: React.FC<ChartProps> = memo(
 				  column.params({ map: variable.mapping }).derive(remapping)
 		const preparedData: RowObject[] = mappedData.objects()
 		const spec: VisualizationSpec = useVisualizationSpec(variable, preparedData)
-
-		return <Vega mode={'vega-lite'} spec={spec} />
+		console.log('categorical', spec)
+		return <Vega mode={'vega'} spec={spec} actions={false} renderer={'svg'} />
 	},
 )
