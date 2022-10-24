@@ -13,13 +13,11 @@ import {
 	TextField,
 } from '@fluentui/react'
 import { useBoolean } from '@fluentui/react-hooks'
-import { isArray } from 'lodash'
-import { memo, useCallback } from 'react'
+import { memo } from 'react'
 import { useRecoilState } from 'recoil'
 
 import type {
 	DECIModelOptions,
-	DECIParams,
 	DECITrainingOptions,
 } from '../domain/Algorithms/DECI.js'
 import { DeciParamsState } from '../state/atoms/algorithms_params.js'
@@ -39,6 +37,13 @@ import {
 	VAR_DIST_A_MODE,
 } from './DeciParams.constants.js'
 import {
+	useOnChangeBooleanOption,
+	useOnChangeCateOption,
+	useOnChangeChoiceGroupOption,
+	useOnChangeNumberListOption,
+	useOnChangeNumberOption,
+} from './DeciParams.hooks.js'
+import {
 	AdvancedButton,
 	Container,
 	ContainerAdvancedCheckbox,
@@ -50,81 +55,11 @@ export const DeciParams: React.FC = memo(function DeciParams() {
 		useBoolean(false)
 	const [deciParams, setDeciParams] = useRecoilState(DeciParamsState)
 
-	const onChangeNumberOptions = useCallback(
-		(key: keyof DECIParams, val?: string, name?: string) => {
-			if (!val || !name) return
-			setDeciParams(curr => ({
-				...curr,
-				[key]: {
-					...curr[key],
-					[name]: +val,
-				},
-			}))
-		},
-		[setDeciParams],
-	)
-
-	const onChangeBooleanOptions = useCallback(
-		(key: keyof DECIParams, val?: boolean, name?: string) => {
-			if (!name) return
-			setDeciParams(curr => ({
-				...curr,
-				[key]: {
-					...curr[key],
-					[name]: val,
-				},
-			}))
-		},
-		[setDeciParams],
-	)
-
-	const onChangeChoiceGroupOptions = useCallback(
-		(key: keyof DECIParams, val?: string, name?: string) => {
-			if (!name || !val) return
-			setDeciParams(curr => ({
-				...curr,
-				[key]: {
-					...curr[key],
-					[name]: val,
-				},
-			}))
-		},
-		[setDeciParams],
-	)
-
-	const onChangeNumberListOptions = useCallback(
-		(key: keyof DECIParams, val?: string, name?: string) => {
-			if (!name || !val) return
-			setDeciParams(curr => ({
-				...curr,
-				[key]: {
-					...curr[key],
-					[name]: val.replaceAll(' ', '').split(','),
-				},
-			}))
-		},
-		[setDeciParams],
-	)
-
-	const onChangeCate = useCallback(
-		(val?: string) => {
-			const value =
-				val && isArray(val)
-					? val?.split(',').map(v => +v)
-					: val
-					? +val
-					: undefined
-
-			setDeciParams(curr => ({
-				...curr,
-				model_options: {
-					...curr.model_options,
-					cate_rff_lengthscale: value,
-				},
-			}))
-		},
-		[setDeciParams],
-	)
+	const onChangeNumberOptions = useOnChangeNumberOption(setDeciParams)
+	const onChangeBooleanOptions = useOnChangeBooleanOption(setDeciParams)
+	const onChangeChoiceGroupOptions = useOnChangeChoiceGroupOption(setDeciParams)
+	const onChangeNumberListOptions = useOnChangeNumberListOption(setDeciParams)
+	const onChangeCate = useOnChangeCateOption(setDeciParams)
 
 	return (
 		<Container>
