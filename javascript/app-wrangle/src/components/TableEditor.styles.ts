@@ -13,7 +13,6 @@ export const icons = {
 export const DetailsListContainer = styled.div`
 	overflow: auto;
 	display: flex;
-	margin-right: 18px;
 	flex-direction: column;
 	height: 100%;
 	border-right: 1px solid

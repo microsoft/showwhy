@@ -8,7 +8,7 @@ import type { IDetailsListStyles, ITheme } from '@fluentui/react'
 export function getRawTableStyles(theme: ITheme): Partial<IDetailsListStyles> {
 	return {
 		root: {
-			border: `1px solid ${theme.palette.neutralQuaternaryAlt}`,
+			//border: `1px solid ${theme.palette.neutralQuaternaryAlt}`,
 		},
 	}
 }
