@@ -1,12 +1,16 @@
+import logging
 from abc import ABC, abstractmethod
 from typing import Callable, Dict, Optional
 
 import networkx
 import pandas as pd
 from networkx.readwrite import json_graph
-from sklearn.preprocessing import MaxAbsScaler
+from sklearn.preprocessing import StandardScaler
 
-from backend.discover.model.causal_discovery import CausalDiscoveryPayload
+from backend.discover.model.causal_discovery import (
+    CausalDiscoveryPayload,
+    CausalVariableNature,
+)
 
 CausalGraph = Dict[str, list]
 
@@ -20,6 +24,7 @@ class CausalDiscoveryRunner(ABC):
         self._dataset_data = p.dataset.data
         self._constraints = p.constraints
         self._progress_callback = progress_callback
+        self._nature_by_variable = {v.name: v.nature for v in p.causal_variables}
 
     def register_progress_callback(
         self, progress_callback: ProgressCallback = None
@@ -40,13 +45,20 @@ class CausalDiscoveryRunner(ABC):
         self._prepared_data.dropna(inplace=True)
 
         if self._prepared_data.size != 0:
-            # TODO: do mean / std normalization instead
-            scaled_data = MaxAbsScaler().fit_transform(self._prepared_data)
-            self._prepared_data = pd.DataFrame(
-                data=scaled_data,
-                index=self._prepared_data.index,
-                columns=self._prepared_data.columns,
-            )
+            continuous_columns = []
+
+            for column in self._prepared_data.columns:
+                nature = self._nature_by_variable[column]
+                if nature and nature == CausalVariableNature.Continuous:
+                    continuous_columns.append(column)
+
+            if continuous_columns:
+                logging.info(
+                    f"Scaling continuous columns {continuous_columns} using mean and standard deviation"
+                )
+                self._prepared_data[continuous_columns] = StandardScaler(
+                    with_mean=True, with_std=True
+                ).fit_transform(self._prepared_data[continuous_columns])
 
     @abstractmethod
     def do_causal_discovery(self) -> CausalGraph:

@@ -16,6 +16,7 @@ from causica.utils.torch_utils import get_torch_device
 from celery import uuid
 from networkx.readwrite import json_graph
 from pydantic import BaseModel
+from sklearn.preprocessing import MaxAbsScaler
 
 from backend.discover.algorithms.commons.base_runner import (
     CausalDiscoveryRunner,
@@ -25,7 +26,10 @@ from backend.discover.algorithms.commons.base_runner import (
 from backend.discover.algorithms.commons.pandas_dataset_loader import (
     PandasDatasetLoader,
 )
-from backend.discover.model.causal_discovery import CausalDiscoveryPayload
+from backend.discover.model.causal_discovery import (
+    CausalDiscoveryPayload,
+    CausalVariableNature,
+)
 
 torch.set_default_dtype(torch.float32)
 
@@ -85,10 +89,33 @@ class DeciRunner(CausalDiscoveryRunner):
         # make sure every run has its own folder
         self._deci_save_dir = f"CauseDisDECIDir/{uuid()}"
 
+    def _scale_non_binary_and_non_continuous(self):
+        columns_to_scale = []
+
+        for column in self._prepared_data.columns:
+            nature = self._nature_by_variable[column]
+            if (
+                nature
+                and nature != CausalVariableNature.Binary
+                and nature != CausalVariableNature.Continuous
+            ):
+                columns_to_scale.append(column)
+
+        if columns_to_scale:
+            self._prepared_data[columns_to_scale] = MaxAbsScaler().fit_transform(
+                self._prepared_data[columns_to_scale]
+            )
+
     def _build_causica_dataset(self) -> Dataset:
-        return PandasDatasetLoader("").split_data_and_load_dataset(
+        # TODO: normalizing non binary and non continuous
+        # columns for now, until we work around representing
+        # categorical variables with ONNX
+        self._scale_non_binary_and_non_continuous()
+        causica_dataset = PandasDatasetLoader("").split_data_and_load_dataset(
             self._prepared_data, 0.5, 0, 0
         )
+
+        return causica_dataset
 
     def _build_model(self, causica_dataset: Dataset) -> DECIGaussian:
         deci_model = DECIGaussian(
@@ -204,6 +231,8 @@ class DeciRunner(CausalDiscoveryRunner):
             0,
         )
         intervention_values = torch.rand(math.floor(num_columns / 2))
+        # TODO: looks like onnx does not support categorical features
+        # we should look into it
         gumbel_max_regions = torch.LongTensor(
             deci_model.variables.processed_cols_by_type["categorical"]
         )

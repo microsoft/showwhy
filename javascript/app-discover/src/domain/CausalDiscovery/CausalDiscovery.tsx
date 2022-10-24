@@ -115,6 +115,10 @@ export function discover(
 			dataset: JSON.parse(jsonData),
 			constraints: constraintsJson,
 			training_options: trainingOptions,
+			causal_variables: variables.map(v => ({
+				name: v.name,
+				nature: v.nature,
+			})),
 		}),
 		progressCallback,
 	)
