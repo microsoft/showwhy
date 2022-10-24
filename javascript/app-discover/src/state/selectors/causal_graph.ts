@@ -6,7 +6,11 @@ import { DefaultValue, selector } from 'recoil'
 
 import type { CausalVariable } from '../../domain/CausalVariable.js'
 import { variablesForColumnNames } from '../../domain/Dataset.js'
-import { InModelColumnNamesState } from '../atoms/index.js'
+import {
+	CausalDiscoveryResultsState,
+	CausalInferenceResultState,
+	InModelColumnNamesState,
+} from '../atoms/index.js'
 import { DatasetState } from './dataset.js'
 
 export const InModelCausalVariablesState = selector<CausalVariable[]>({
@@ -16,11 +20,13 @@ export const InModelCausalVariablesState = selector<CausalVariable[]>({
 		const dataset = get(DatasetState)
 		return variablesForColumnNames(dataset, inModelColumnNames) // inModelColumnNames.filter(columnName => dataset.variables.has(columnName));
 	},
-	set({ set }, newValue) {
+	set({ set, reset }, newValue) {
 		const columnNames =
 			newValue instanceof DefaultValue
 				? newValue
 				: newValue.map(variable => variable.columnName)
+		reset(CausalDiscoveryResultsState)
+		reset(CausalInferenceResultState)
 		set(InModelColumnNamesState, columnNames)
 	},
 })
