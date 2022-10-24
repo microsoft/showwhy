@@ -121,28 +121,20 @@
         {
             "profile": "datatable",
             "name": "covid19_small_data",
+            "path": "https://raw.githubusercontent.com/stccenter/COVID-19/master/prediction/patiant-level%20fatality/data/small%20records.csv",
             "metadata": {
                 "source": "https://www.frontiersin.org/articles/10.3389/fpubh.2020.587937/full",
                 "citation": "Li, Yun, et al. (2020). Individual-level fatality prediction of COVID-19 patients using AI methods. Frontiers in Public Health 8 (2020): 566."
             },
             "sources": [
-                "https://raw.githubusercontent.com/stccenter/COVID-19/master/prediction/patiant-level%20fatality/data/small%20records.csv",
                 {
                     "profile": "workflow",
-                    "input": [
-                        "covid19_small_data"
-                    ],
                     "steps": [
                         {
                             "verb": "window",
                             "args": {
                                 "operation": "row_number",
                                 "to": "index"
-                            },
-                            "input": {
-                                "source": {
-                                    "node": "covid19_small_data"
-                                }
                             }
                         },
                         {
