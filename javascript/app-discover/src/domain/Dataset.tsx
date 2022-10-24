@@ -5,9 +5,10 @@
 import { Verb } from '@datashaper/schema'
 import type { Step, StepInput } from '@datashaper/workflow'
 import { Workflow } from '@datashaper/workflow'
+import { useDataTable, useDataTableOutput } from '@showwhy/app-common'
 import { table } from 'arquero'
 import type ColumnTable from 'arquero/dist/types/table/column-table'
-import { useCallback, useEffect,useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import {
 	useRecoilValue,
 	useRecoilValueLoadable,
@@ -59,35 +60,51 @@ export interface DatasetDatapackage {
 	correlations?: RelationshipWithWeight[]
 }
 
-export default function useDatasetLoader() {
+export function useDatasetLoader() {
+	const datasetName = useRecoilValue(DatasetNameState)
 	const resetDataset = useResetRecoilState(DatasetState)
 	const setMetadataState = useSetRecoilState(MetadataState)
 	const setDatasetNameState = useSetRecoilState(DatasetNameState)
 	const setTable = useSetRecoilState(TableState)
 
+	const datatable = useDataTable(datasetName)
+	const datatableOutput = useDataTableOutput(datatable)
+
 	const [inputTable, setInputTable] = useState<ColumnTable | undefined>()
 	const workflow = useWorkflow(inputTable)
 
-	useEffect(() => {
-		const sub = workflow
-			.read$()
-			?.subscribe(t => setTable(t?.table ?? table([])))
-		return () => sub.unsubscribe()
-	}, [workflow])
+	const tbl = datatableOutput?.table
+
+	useEffect(
+		function populateTableAndMetadata() {
+			setInputTable(tbl)
+			if (tbl != null) {
+				const metadata = inferMissingMetadataForTable(tbl)
+				setMetadataState(metadata)
+			}
+		},
+		[setInputTable, tbl, inferMissingMetadataForTable, setMetadataState],
+	)
+
+	useEffect(
+		function listenToWorkflowOutput() {
+			const sub = workflow
+				.read$()
+				?.subscribe(t => setTable(t?.table ?? table([])))
+			return () => sub.unsubscribe()
+		},
+		[workflow],
+	)
 
 	return useCallback(
-		function loadTable(name: string, table: ColumnTable) {
+		function loadTable(name: string) {
 			// Clear old state
 			resetDataset()
 			unsetPrecalculatedCorrelations()
-
-			// Set up new state
-			setInputTable(table)
-			const metadata = inferMissingMetadataForTable(table)
+			// Set the new state
 			setDatasetNameState(name)
-			setMetadataState(metadata)
 		},
-		[resetDataset, setMetadataState, setDatasetNameState, setTable],
+		[setDatasetNameState],
 	)
 }
 
