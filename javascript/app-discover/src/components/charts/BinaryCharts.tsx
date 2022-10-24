@@ -19,6 +19,5 @@ export const BinaryChart: React.FC<ChartProps> = memo(function BinaryChart({
 		table,
 	).objects()
 	const spec = useVisualizationSpec(variable, preparedData)
-	console.log('binary', spec)
 	return <Vega mode={'vega'} spec={spec} actions={false} renderer={'svg'} />
 })

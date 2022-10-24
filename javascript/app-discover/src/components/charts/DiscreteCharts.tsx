@@ -15,6 +15,5 @@ export const DiscreteChart: React.FC<ChartProps> = memo(function DiscreteChart({
 }) {
 	const preparedData = table.select(variable.columnName).objects()
 	const spec = useVisualizationSpec(variable, preparedData)
-	console.log(spec)
 	return <Vega mode={'vega'} spec={spec} actions={false} renderer={'svg'} />
 })

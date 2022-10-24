@@ -37,7 +37,7 @@
 		"@thematic/d3": "^2.0.14",
 		"@thematic/fluent": "^4.1.1",
 		"@thematic/react": "^2.1.1",
-		"@thematic/vega": "^2.0.14",
+		"@thematic/vega": "^2.0.15",
 		"@types/lodash": "^4.14.186",
 		"@uifabric/icons": "^7.9.4",
 		"ahooks": "^3.7.1",

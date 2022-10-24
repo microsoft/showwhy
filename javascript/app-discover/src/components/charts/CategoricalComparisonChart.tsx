@@ -25,7 +25,6 @@ export const CategoricalComparisonChart: React.FC<ComparisonChartProps> = memo(
 			targetVariable,
 			preparedData,
 		)
-		console.log('categorical comparison', spec)
 		return <Vega mode={'vega'} spec={spec} actions={false} renderer={'svg'} />
 	},
 )

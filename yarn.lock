@@ -3821,7 +3821,7 @@ __metadata:
     "@thematic/d3": ^2.0.14
     "@thematic/fluent": ^4.1.1
     "@thematic/react": ^2.1.1
-    "@thematic/vega": ^2.0.14
+    "@thematic/vega": ^2.0.15
     "@types/cytoscape": ^3.19.8
     "@types/file-saver": ^2.0.5
     "@types/lodash": ^4.14.186
@@ -3958,7 +3958,7 @@ __metadata:
     "@thematic/d3": ^2.0.14
     "@thematic/fluent": ^4.1.1
     "@thematic/react": ^2.1.1
-    "@thematic/vega": ^2.0.14
+    "@thematic/vega": ^2.0.15
     "@types/d3-fetch": ^3.0.1
     "@types/lodash": ^4.14.186
     "@types/lodash-es": ^4.17.6
@@ -4084,7 +4084,7 @@ __metadata:
     "@thematic/d3": ^2.0.14
     "@thematic/fluent": ^4.1.1
     "@thematic/react": ^2.1.1
-    "@thematic/vega": ^2.0.14
+    "@thematic/vega": ^2.0.15
     "@types/d3-fetch": ^3.0.1
     "@types/lodash": ^4.14.186
     "@types/lodash-es": ^4.17.6
@@ -4483,9 +4483,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@thematic/vega@npm:^2.0.14":
-  version: 2.0.14
-  resolution: "@thematic/vega@npm:2.0.14"
+"@thematic/vega@npm:^2.0.15":
+  version: 2.0.15
+  resolution: "@thematic/vega@npm:2.0.15"
   dependencies:
     "@thematic/core": ^3.1.1
   peerDependencies:
@@ -4493,7 +4493,7 @@ __metadata:
   peerDependenciesMeta:
     vega:
       optional: false
-  checksum: 8a19356a474b9d7150c4b360abad2fb35f774c140ae1d3b76329e19a12dd18116e4c4146ec09a55a75147a9522a34aa4a28cf537727d1c4b404ada8257682c41
+  checksum: 8faaa8a7326aca2ba09c8e3e4992c54983fd4d2e75fbf956b84efd5fbed8dc5d8333ba5a3223950c04c2c1517447b0e95c0282d2eae843aeb24fab68d2720e9a
   languageName: node
   linkType: hard
 

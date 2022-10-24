@@ -4,7 +4,6 @@
  */
 
 import type { ITheme } from '@fluentui/react'
-import { mergeStyles } from '@fluentui/react'
 import styled from 'styled-components'
 
 // always ensure the header is dark, regardless of mode
