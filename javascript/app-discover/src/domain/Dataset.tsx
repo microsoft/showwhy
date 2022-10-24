@@ -2,9 +2,8 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { Verb } from '@datashaper/schema'
-import type { Step, StepInput } from '@datashaper/workflow'
-import { Workflow } from '@datashaper/workflow'
+import type { Step } from '@datashaper/workflow'
+import type { Workflow } from '@datashaper/workflow'
 import { table } from 'arquero'
 import type ColumnTable from 'arquero/dist/types/table/column-table'
 import { useCallback } from 'react'
@@ -26,6 +25,7 @@ import {
 	TableState,
 	TableSubscriptionState,
 	unsetPrecalculatedCorrelations,
+	workflowState,
 } from '../state/index.js'
 import type { CausalVariable } from './CausalVariable.js'
 import {
@@ -33,7 +33,6 @@ import {
 	inferMissingMetadataForTable,
 } from './CausalVariable.js'
 import type { RelationshipWithWeight } from './Relationship.js'
-import { VariableNature } from './VariableNature.js'
 
 export interface Dataset {
 	key: string
@@ -66,6 +65,7 @@ export default function useDatasetLoader() {
 	const setMetadataState = useSetRecoilState(MetadataState)
 	const setDatasetNameState = useSetRecoilState(DatasetNameState)
 	const setTable = useSetRecoilState(TableState)
+	const workflow = useRecoilValue(workflowState)
 	const [subscription, setSubscription] = useRecoilState(TableSubscriptionState)
 
 	return useCallback(
@@ -78,7 +78,7 @@ export default function useDatasetLoader() {
 			if (subscription) {
 				subscription.unsubscribe()
 			}
-			setSubscription(listenToProcessedTable(table, metadata, setTable))
+			setSubscription(listenToProcessedTable(workflow, setTable))
 		},
 		[
 			resetDataset,
@@ -87,56 +87,20 @@ export default function useDatasetLoader() {
 			setSubscription,
 			setTable,
 			subscription,
+			workflow,
 		],
 	)
 }
 
 function listenToProcessedTable(
-	table: ColumnTable | undefined,
-	metadata: CausalVariable[],
+	wf: Workflow | undefined,
 	setTable: (table: ColumnTable | undefined) => void,
 ): Subscription | undefined {
-	const steps = getTableProcessingSteps(metadata)
-	if (steps.length === 0) {
-		setTable(table)
+	if (!wf) {
 		return
 	}
-
-	const wf = new Workflow()
-	wf.addInputTable({ id: 'source', table })
-	steps.forEach(s => wf.addStep(s))
-	const sub = wf.outputObservable()?.subscribe(t => setTable(t?.table ?? table))
-	setTable(wf.latestOutput()?.table ?? table)
+	const sub = wf.read$()?.subscribe(t => setTable(t?.table ?? table({})))
 	return sub
-}
-
-function getTableProcessingSteps(metadata: CausalVariable[]): StepInput[] {
-	const steps: StepInput[] = []
-	let first = true
-	metadata.forEach(metadatum => {
-		if (metadatum.nature === VariableNature.CategoricalNominal) {
-			const recodedColumnName = `${metadatum.columnName}` // (recoded)`;
-			steps.push({
-				verb: Verb.Recode,
-				input: first ? 'source' : undefined,
-				args: {
-					column: metadatum.columnName,
-					to: recodedColumnName,
-					mapping: metadatum.mapping,
-				},
-			})
-
-			steps.push({
-				verb: Verb.Onehot,
-				args: {
-					column: recodedColumnName,
-				},
-			})
-			first = false
-		}
-	})
-
-	return steps
 }
 
 export function createDatasetFromTable(

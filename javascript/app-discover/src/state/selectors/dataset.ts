@@ -2,7 +2,11 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import { Verb } from '@datashaper/schema'
+import type { StepInput } from '@datashaper/workflow'
+import { Workflow } from '@datashaper/workflow'
 import { DefaultValue, selector, selectorFamily } from 'recoil'
+import { from } from 'rxjs'
 
 import type { CausalVariable } from '../../domain/CausalVariable.js'
 import { inferMissingMetadataForColumn } from '../../domain/CausalVariable.js'
@@ -92,6 +96,51 @@ export const variableMetadataState = selectorFamily<
 
 			set(MetadataState, newMetadata)
 		},
+})
+
+const tableProcessingStepsState = selector<StepInput[]>({
+	key: 'TableProcessingSteps',
+	get({ get }) {
+		const metadata = get(MetadataState)
+		const result: StepInput[] = []
+		let first = true
+		metadata.forEach(metadatum => {
+			if (metadatum.nature === VariableNature.CategoricalNominal) {
+				const recodedColumnName = `${metadatum.columnName}` // (recoded)`;
+				result.push({
+					verb: Verb.Recode,
+					input: first ? 'source' : undefined,
+					args: {
+						column: metadatum.columnName,
+						to: recodedColumnName,
+						mapping: metadatum.mapping,
+					},
+				})
+
+				result.push({
+					verb: Verb.Onehot,
+					args: {
+						column: recodedColumnName,
+					},
+				})
+				first = false
+			}
+		})
+
+		return result
+	},
+})
+
+export const workflowState = selector<Workflow | undefined>({
+	key: 'ProcessedTableState',
+	get({ get }) {
+		const steps = get(tableProcessingStepsState)
+		const table = get(TableState)
+		const workflow = new Workflow()
+		workflow.defaultInput = from([{ id: 'source', table }])
+		steps.forEach(s => workflow.addStep(s))
+		return table != null ? workflow : undefined
+	},
 })
 
 export const DatasetState = selector<Dataset>({
