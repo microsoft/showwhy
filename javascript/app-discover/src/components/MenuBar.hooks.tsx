@@ -8,32 +8,35 @@ import { useBoolean } from '@fluentui/react-hooks'
 import { useDataTables } from '@showwhy/app-common'
 import type ColumnTable from 'arquero/dist/types/table/column-table'
 import { useEffect, useMemo } from 'react'
-import type { RecoilState } from 'recoil'
-import { useRecoilState } from 'recoil'
+import type { RecoilState} from 'recoil';
+import { useRecoilState,useRecoilValue  } from 'recoil'
 
 import { CausalDiscoveryAlgorithm } from '../domain/CausalDiscovery/CausalDiscoveryAlgorithm.js'
-import { AutoLayoutEnabledState, PauseAutoRunState } from '../state/index.js'
+import {
+	AutoLayoutEnabledState,
+	DatasetNameState,
+	PauseAutoRunState,
+} from '../state/index.js'
 import { ThresholdSlider } from './controls/ThresholdSlider.js'
 import { GraphViewStates } from './graph/GraphViews.types.js'
 import { Button, toggleStyles } from './MenuBar.styles.js'
 
 export function useDatasetMenuItems(
-	loadTable: (name: string, table: ColumnTable) => void,
+	loadTable: (name: string) => void,
 ): ICommandBarItemProps {
+	const selectedTable = useRecoilValue(DatasetNameState)
 	const dataTables = useDataTables()
 	return useMemo(
 		() => ({
 			key: 'dataset',
-			text: 'Dataset',
+			text: selectedTable || 'Dataset',
 			subMenuProps: {
 				items: [...dataTables.values()].map(dataset => {
 					return {
 						key: dataset.id,
 						text: dataset.name,
 						onClick: () => {
-							if (dataset.output?.table) {
-								loadTable(dataset.name, dataset.output?.table)
-							}
+							loadTable(dataset.name)
 						},
 					}
 				}),
