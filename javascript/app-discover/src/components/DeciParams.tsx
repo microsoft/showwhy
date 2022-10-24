@@ -47,7 +47,7 @@ import {
 
 export const DeciParams: React.FC = memo(function DeciParams() {
 	const [isAdvancedShowing, { toggle: toggleAdvancedOptions }] =
-		useBoolean(true)
+		useBoolean(false)
 	const [deciParams, setDeciParams] = useRecoilState(DeciParamsState)
 
 	const onChangeNumberOptions = useCallback(
