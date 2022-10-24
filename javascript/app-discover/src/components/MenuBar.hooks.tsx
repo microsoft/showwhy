@@ -199,7 +199,7 @@ export function useAutoLayoutSliderMenuItem() {
 }
 
 export function useTogglePauseButtonMenuItem() {
-	const [paused, { toggle: togglePaused }] = useBoolean(false)
+	const [paused, { toggle: togglePaused }] = useBoolean(true)
 	const [, setPauseAutoRun] = useRecoilState(PauseAutoRunState)
 
 	useEffect(() => {
@@ -212,10 +212,9 @@ export function useTogglePauseButtonMenuItem() {
 			onRender: () => (
 				<Button
 					toggle
-					checked={paused}
 					onClick={togglePaused}
 					iconProps={{ iconName: paused ? 'Play' : 'Pause' }}
-					text={paused ? 'Auto Run' : 'Pause'}
+					text={paused ? 'Run' : 'Pause'}
 				/>
 			),
 		}),

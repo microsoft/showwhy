@@ -3,21 +3,17 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { atom } from 'recoil'
-import { recoilPersist } from 'recoil-persist'
 
 import type { CausalDiscoveryConstraints } from '../../domain/CausalDiscovery/CausalDiscoveryConstraints.js'
 import type { CausalDiscoveryResult } from '../../domain/CausalDiscovery/CausalDiscoveryResult.js'
 import { EMPTY_CAUSAL_DISCOVERY_RESULT } from '../../domain/CausalDiscovery/CausalDiscoveryResult.js'
 import type { CausalGraph } from '../../domain/Graph.js'
-import { persistAtomEffect } from '../persistence.js'
-
-const { persistAtom } = recoilPersist()
+import { persistence } from './persistence.js'
 
 export const InModelColumnNamesState = atom<string[]>({
 	key: 'InModelColumnNamesState',
 	default: [],
-	// eslint-disable-next-line camelcase
-	effects_UNSTABLE: [persistAtomEffect, persistAtom],
+	...persistence,
 })
 
 export const CausalGraphConstraintsState = atom<CausalDiscoveryConstraints>({
@@ -27,8 +23,7 @@ export const CausalGraphConstraintsState = atom<CausalDiscoveryConstraints>({
 		effects: [],
 		manualRelationships: [],
 	},
-	// eslint-disable-next-line camelcase
-	effects_UNSTABLE: [persistAtomEffect, persistAtom],
+	...persistence,
 })
 
 export const CausalGraphHistoryState = atom<CausalGraph[]>({
