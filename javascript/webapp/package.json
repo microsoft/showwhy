@@ -19,10 +19,10 @@
 		"lint": "essex lint"
 	},
 	"dependencies": {
-		"@datashaper/schema": "^6.3.0",
-		"@datashaper/tables": "^5.1.0",
-		"@datashaper/utilities": "^2.3.7",
-		"@datashaper/workflow": "^16.0.0",
+		"@datashaper/schema": "^7.0.0",
+		"@datashaper/tables": "^5.1.2",
+		"@datashaper/utilities": "^2.3.8",
+		"@datashaper/workflow": "^18.0.0",
 		"@essex/components": "^2.8.0",
 		"@essex/hooks": "^4.0.13",
 		"@fluentui/font-icons-mdl2": "^8.5.1",

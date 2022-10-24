@@ -17,10 +17,6 @@ export const TableState = atom<ColumnTable | undefined>({
 	key: 'TableState',
 	default: undefined,
 })
-export const TableSubscriptionState = atom<Subscription | undefined>({
-	key: 'TableSubscription',
-	default: undefined,
-})
 export const MetadataState = atom<CausalVariable[]>({
 	key: 'MetadataState',
 	default: [],

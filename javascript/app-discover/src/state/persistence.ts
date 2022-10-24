@@ -2,10 +2,11 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import type { AtomEffect, RecoilState } from 'recoil'
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+import type { RecoilState } from 'recoil'
 import { DefaultValue, selector } from 'recoil'
 
-let persistedInfoKeys: RecoilState<any>[] = []
+const persistedInfoKeys: RecoilState<any>[] = []
 
 export const PersistedInfoState = selector<object>({
 	key: 'PersistedInfoState',
@@ -32,9 +33,3 @@ export const PersistedInfoState = selector<object>({
 		}
 	},
 })
-
-export const persistAtomEffect: AtomEffect<any> = ({ trigger, node }) => {
-	if (trigger === 'get') {
-		persistedInfoKeys = [...persistedInfoKeys, node]
-	}
-}
