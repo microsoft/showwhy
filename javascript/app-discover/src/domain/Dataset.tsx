@@ -7,16 +7,16 @@ import type { Step, StepInput } from '@datashaper/workflow'
 import { Workflow } from '@datashaper/workflow'
 import { table } from 'arquero'
 import type ColumnTable from 'arquero/dist/types/table/column-table'
-import { useCallback } from 'react'
+import { useCallback, useEffect,useMemo, useState } from 'react'
 import {
-	useRecoilState,
 	useRecoilValue,
 	useRecoilValueLoadable,
 	useResetRecoilState,
 	useSetRecoilState,
 } from 'recoil'
-import type { Subscription } from 'rxjs'
+import { from } from 'rxjs'
 
+import { VariableNature } from '../domain/VariableNature.js'
 import {
 	AllCorrelationsState,
 	DatasetNameState,
@@ -24,7 +24,6 @@ import {
 	DerivedMetadataState,
 	MetadataState,
 	TableState,
-	TableSubscriptionState,
 	unsetPrecalculatedCorrelations,
 } from '../state/index.js'
 import type { CausalVariable } from './CausalVariable.js'
@@ -33,7 +32,6 @@ import {
 	inferMissingMetadataForTable,
 } from './CausalVariable.js'
 import type { RelationshipWithWeight } from './Relationship.js'
-import { VariableNature } from './VariableNature.js'
 
 export interface Dataset {
 	key: string
@@ -66,77 +64,65 @@ export default function useDatasetLoader() {
 	const setMetadataState = useSetRecoilState(MetadataState)
 	const setDatasetNameState = useSetRecoilState(DatasetNameState)
 	const setTable = useSetRecoilState(TableState)
-	const [subscription, setSubscription] = useRecoilState(TableSubscriptionState)
+
+	const [inputTable, setInputTable] = useState<ColumnTable | undefined>()
+	const workflow = useWorkflow(inputTable)
+
+	useEffect(() => {
+		const sub = workflow
+			.read$()
+			?.subscribe(t => setTable(t?.table ?? table([])))
+		return () => sub.unsubscribe()
+	}, [workflow])
 
 	return useCallback(
 		function loadTable(name: string, table: ColumnTable) {
+			// Clear old state
 			resetDataset()
 			unsetPrecalculatedCorrelations()
-			setDatasetNameState(name)
+
+			// Set up new state
+			setInputTable(table)
 			const metadata = inferMissingMetadataForTable(table)
+			setDatasetNameState(name)
 			setMetadataState(metadata)
-			if (subscription) {
-				subscription.unsubscribe()
-			}
-			setSubscription(listenToProcessedTable(table, metadata, setTable))
 		},
-		[
-			resetDataset,
-			setMetadataState,
-			setDatasetNameState,
-			setSubscription,
-			setTable,
-			subscription,
-		],
+		[resetDataset, setMetadataState, setDatasetNameState, setTable],
 	)
 }
 
-function listenToProcessedTable(
-	table: ColumnTable | undefined,
-	metadata: CausalVariable[],
-	setTable: (table: ColumnTable | undefined) => void,
-): Subscription | undefined {
-	const steps = getTableProcessingSteps(metadata)
-	if (steps.length === 0) {
-		setTable(table)
-		return
-	}
-
-	const wf = new Workflow()
-	wf.addInputTable({ id: 'source', table })
-	steps.forEach(s => wf.addStep(s))
-	const sub = wf.outputObservable()?.subscribe(t => setTable(t?.table ?? table))
-	setTable(wf.latestOutput()?.table ?? table)
-	return sub
+function useWorkflow(table: ColumnTable | undefined): Workflow {
+	const steps = useDataProcessingSteps()
+	return useMemo<Workflow>(() => {
+		const res = new Workflow()
+		res.defaultInput = from([{ id: '', table }])
+		steps.forEach(s => res.addStep(s))
+		return res
+	}, [steps, table])
 }
 
-function getTableProcessingSteps(metadata: CausalVariable[]): StepInput[] {
-	const steps: StepInput[] = []
-	let first = true
-	metadata.forEach(metadatum => {
-		if (metadatum.nature === VariableNature.CategoricalNominal) {
-			const recodedColumnName = `${metadatum.columnName}` // (recoded)`;
-			steps.push({
-				verb: Verb.Recode,
-				input: first ? 'source' : undefined,
-				args: {
-					column: metadatum.columnName,
-					to: recodedColumnName,
-					mapping: metadatum.mapping,
-				},
-			})
-
-			steps.push({
-				verb: Verb.Onehot,
-				args: {
-					column: recodedColumnName,
-				},
-			})
-			first = false
-		}
-	})
-
-	return steps
+function useDataProcessingSteps(): StepInput[] {
+	const metadata = useRecoilValue(MetadataState)
+	return useMemo<StepInput[]>(() => {
+		const result: StepInput[] = []
+		metadata.forEach(metadatum => {
+			if (
+				metadatum.nature === VariableNature.CategoricalNominal &&
+				metadatum.min != null &&
+				metadatum.max != null
+			) {
+				result.push({
+					verb: Verb.Onehot,
+					args: {
+						column: metadatum.columnName,
+						prefix: `${metadatum.columnName}: `,
+						preserveSource: true,
+					},
+				})
+			}
+		})
+		return result
+	}, [metadata])
 }
 
 export function createDatasetFromTable(

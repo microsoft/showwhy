@@ -31,8 +31,8 @@ export function useDatasetMenuItems(
 						key: dataset.id,
 						text: dataset.name,
 						onClick: () => {
-							if (dataset.currentOutput?.table) {
-								loadTable(dataset.name, dataset.currentOutput?.table)
+							if (dataset.output?.table) {
+								loadTable(dataset.name, dataset.output?.table)
 							}
 						},
 					}
