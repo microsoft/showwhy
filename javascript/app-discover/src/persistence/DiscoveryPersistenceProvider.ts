@@ -190,9 +190,16 @@ function useLoadProjectJson(): (json: ProjectJson) => void {
 			setCausalGraphConstraints(json.causalGraph.constraints)
 			setCausalDiscoveryResultsState(json.causalGraph.results)
 			setCausalInterventions(json.causalInference.interventions)
-			setBaselineValues(json.causalInference.baselineValues)
-			setBaselineOffsets(json.causalInference.baselineOffsets)
-			setInferenceResults(json.causalInference.results)
+
+			// these are treated as Maps in the code
+			setBaselineValues(
+				new Map(Object.entries(json.causalInference.baselineValues)),
+			)
+			setBaselineOffsets(
+				new Map(Object.entries(json.causalInference.baselineOffsets)),
+			)
+			setInferenceResults(new Map(Object.entries(json.causalInference.results)))
+
 			setDatasetName(json.dataset.datasetName)
 			setNodePositions(json.layout.nodePositions)
 			setStraightEdges(json.ui.straightEdges)
