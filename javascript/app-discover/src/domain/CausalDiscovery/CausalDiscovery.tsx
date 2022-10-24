@@ -174,7 +174,7 @@ function createConstraintsJson(
 		effects: constraints.effects
 			.filter(variable => arrayIncludesVariable(variables, variable))
 			.map(variable => variable.columnName),
-		forbiddenRelationships: constraints.forbiddenRelationships
+		forbiddenRelationships: constraints.manualRelationships
 			.filter(
 				relationship =>
 					arrayIncludesVariable(variables, relationship.source) &&

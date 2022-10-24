@@ -6,8 +6,11 @@ import type { CausalDiscoveryAlgorithm } from './CausalDiscovery/CausalDiscovery
 import type { CausalDiscoveryConstraints } from './CausalDiscovery/CausalDiscoveryConstraints.js'
 import type { CausalVariable, VariableReference } from './CausalVariable.js'
 import { arrayIncludesVariable, isSame } from './CausalVariable.js'
-import type { Relationship } from './Relationship.js'
-import { hasSameSourceAndTargetColumns } from './Relationship.js'
+import {
+	type Relationship,
+	hasSameSourceAndTargetColumns,
+	involvesVariable,
+} from './Relationship.js'
 
 export interface CausalGraph {
 	variables: CausalVariable[]
@@ -113,6 +116,26 @@ export function relationshipsForColumnNames(
 	return graph.relationships.find(relationship =>
 		hasSameSourceAndTargetColumns(relationship, source, target),
 	)
+}
+
+export function validRelationshipsForColumnName(
+	graph: CausalGraph,
+	variable: VariableReference,
+	weightThreshold: number,
+	confidenceThreshold: number,
+): Relationship[] | undefined {
+	return graph.relationships
+		?.flatMap(relationship =>
+			involvesVariable(relationship, variable) &&
+			isRelationshipAboveThresholds(
+				relationship,
+				weightThreshold,
+				confidenceThreshold,
+			)
+				? relationship
+				: [],
+		)
+		?.sort((a, b) => Math.abs(b?.weight || 0) - Math.abs(a?.weight || 0))
 }
 
 export function includesVariable(

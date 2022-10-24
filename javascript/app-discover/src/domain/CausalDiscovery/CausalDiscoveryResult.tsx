@@ -21,7 +21,7 @@ export const EMPTY_CAUSAL_DISCOVERY_RESULT = {
 		constraints: {
 			causes: [],
 			effects: [],
-			forbiddenRelationships: [],
+			manualRelationships: [],
 		},
 		algorithm: CausalDiscoveryAlgorithm.None,
 	},

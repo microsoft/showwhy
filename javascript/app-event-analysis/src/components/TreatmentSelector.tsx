@@ -64,7 +64,7 @@ export const TreatmentSelector: React.FC<TreatmentSelectorProps> = memo(
 				<Stack.Item grow className="treatment-element">
 					<Dropdown
 						className={!isValidUnit(treatedUnit) ? 'colInvalidSelection' : ''}
-						placeholder="Subject (unit)"
+						placeholder="Treated unit"
 						options={units.map(unit => ({ key: unit, text: unit }))}
 						selectedKey={treatedUnit}
 						onChange={onUnitChange}
