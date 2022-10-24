@@ -15,8 +15,8 @@ import type {
 const { persistAtom } = recoilPersist()
 
 const training_options = {
-	max_steps_auglag: 10, //20
-	max_auglag_inner_epochs: 100, //1000
+	max_steps_auglag: 20,
+	max_auglag_inner_epochs: 1000,
 } as DECITrainingOptions
 
 export const DeciParamsState = atom<DECIParams>({
