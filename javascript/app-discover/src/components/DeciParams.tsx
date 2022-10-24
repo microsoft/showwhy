@@ -2,40 +2,15 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import type { IChoiceGroupOption } from '@fluentui/react'
-import {
-	Checkbox,
-	ChoiceGroup,
-	Pivot,
-	PivotItem,
-	Position,
-	SpinButton,
-	TextField,
-} from '@fluentui/react'
+import { Pivot, PivotItem, Position, SpinButton } from '@fluentui/react'
 import { useBoolean } from '@fluentui/react-hooks'
 import { memo } from 'react'
 import { useRecoilState } from 'recoil'
 
-import type {
-	DECIModelOptions,
-	DECITrainingOptions,
-} from '../domain/Algorithms/DECI.js'
+import type { DECITrainingOptions } from '../domain/Algorithms/DECI.js'
 import { DeciParamsState } from '../state/atoms/algorithms_params.js'
-import {
-	advancedModelBooleanOptions,
-	advancedModelModeAdjacencyChoiceOptions,
-	advancedModelNumberListOptions,
-	advancedModelSpinningOptions,
-	advancedModelVarModeChoiceOptions,
-	advancedTrainingAnnealChoiceOptions,
-	advancedTrainingBooleanOptions,
-	advancedTrainingSpinningOptions,
-	ANNEAL_ENTROPY,
-	CATE_RFF_LENGTHSCALE,
-	defaultTrainingSpinningOptions,
-	MODE_ADJACENCY,
-	VAR_DIST_A_MODE,
-} from './DeciParams.constants.js'
+import { DeciModelParams } from './DeciModelParams.js'
+import { defaultTrainingSpinningOptions } from './DeciParams.constants.js'
 import {
 	useOnChangeBooleanOption,
 	useOnChangeCateOption,
@@ -43,21 +18,17 @@ import {
 	useOnChangeNumberListOption,
 	useOnChangeNumberOption,
 } from './DeciParams.hooks.js'
-import {
-	AdvancedButton,
-	Container,
-	ContainerAdvancedCheckbox,
-	ContainerAdvancedGrid,
-} from './DeciParams.styles.js'
+import { AdvancedButton, Container } from './DeciParams.styles.js'
+import { DeciTrainingParams } from './DeciTrainingParams.js'
 
 export const DeciParams: React.FC = memo(function DeciParams() {
 	const [isAdvancedShowing, { toggle: toggleAdvancedOptions }] =
 		useBoolean(false)
 	const [deciParams, setDeciParams] = useRecoilState(DeciParamsState)
 
-	const onChangeNumberOptions = useOnChangeNumberOption(setDeciParams)
-	const onChangeBooleanOptions = useOnChangeBooleanOption(setDeciParams)
-	const onChangeChoiceGroupOptions = useOnChangeChoiceGroupOption(setDeciParams)
+	const onChangeNumberOption = useOnChangeNumberOption(setDeciParams)
+	const onChangeBooleanOption = useOnChangeBooleanOption(setDeciParams)
+	const onChangeChoiceGroupOption = useOnChangeChoiceGroupOption(setDeciParams)
 	const onChangeNumberListOptions = useOnChangeNumberListOption(setDeciParams)
 	const onChangeCate = useOnChangeCateOption(setDeciParams)
 
@@ -72,7 +43,7 @@ export const DeciParams: React.FC = memo(function DeciParams() {
 						x.inputProps?.name as keyof DECITrainingOptions
 					]?.toString()}
 					onChange={(_, val?: string) =>
-						onChangeNumberOptions('training_options', val, x.inputProps?.name)
+						onChangeNumberOption('training_options', val, x.inputProps?.name)
 					}
 					min={x.min}
 					max={x.max}
@@ -91,163 +62,21 @@ export const DeciParams: React.FC = memo(function DeciParams() {
 			{isAdvancedShowing && (
 				<Pivot aria-label="Advanced options">
 					<PivotItem headerText="Training">
-						<ContainerAdvancedGrid>
-							{advancedTrainingSpinningOptions.map(x => (
-								<SpinButton
-									key={x.inputProps?.name}
-									label={x.label}
-									labelPosition={Position.top}
-									onChange={(_, val?: string) =>
-										onChangeNumberOptions(
-											'training_options',
-											val,
-											x.inputProps?.name,
-										)
-									}
-									value={
-										deciParams.training_options[
-											x.inputProps?.name as keyof DECITrainingOptions
-										]?.toString() || x.defaultValue
-									}
-									min={1}
-									step={x.step}
-									incrementButtonAriaLabel="Increase value by 1"
-									decrementButtonAriaLabel="Decrease value by 1"
-								/>
-							))}
-						</ContainerAdvancedGrid>
-						<ContainerAdvancedCheckbox>
-							{advancedTrainingBooleanOptions.map(x => (
-								<Checkbox
-									label={x.label}
-									key={x.name}
-									checked={
-										!!deciParams.training_options[
-											x.name as keyof DECITrainingOptions
-										] || x.checked
-									}
-									onChange={(_, val?: boolean) =>
-										onChangeBooleanOptions('training_options', val, x.name)
-									}
-								/>
-							))}
-						</ContainerAdvancedCheckbox>
-						<ChoiceGroup
-							selectedKey={
-								deciParams.training_options.anneal_entropy || ANNEAL_ENTROPY
-							}
-							options={advancedTrainingAnnealChoiceOptions}
-							onChange={(_, opt?: IChoiceGroupOption) =>
-								onChangeChoiceGroupOptions(
-									'training_options',
-									opt?.key,
-									'anneal_entropy',
-								)
-							}
-							label="Anneal entropy"
+						<DeciTrainingParams
+							values={deciParams}
+							onChangeBoolean={onChangeBooleanOption}
+							onChangeNumber={onChangeNumberOption}
+							onChangeChoiceGroup={onChangeChoiceGroupOption}
 						/>
 					</PivotItem>
 					<PivotItem headerText="Model">
-						<ContainerAdvancedGrid>
-							{advancedModelSpinningOptions.map(x => (
-								<SpinButton
-									key={x.inputProps?.name}
-									label={x.label}
-									labelPosition={Position.top}
-									onChange={(_, val?: string) =>
-										onChangeNumberOptions(
-											'model_options',
-											val,
-											x.inputProps?.name,
-										)
-									}
-									value={
-										(deciParams.model_options &&
-											deciParams.model_options[
-												x.inputProps?.name as keyof DECIModelOptions
-											]?.toString()) ||
-										x.defaultValue
-									}
-									min={1}
-									step={x.step}
-									incrementButtonAriaLabel="Increase value by 1"
-									decrementButtonAriaLabel="Decrease value by 1"
-								/>
-							))}
-						</ContainerAdvancedGrid>
-						<ContainerAdvancedGrid>
-							{advancedModelNumberListOptions.map(x => (
-								<TextField
-									label={x.label}
-									key={x.name}
-									onChange={(_, val?: string) =>
-										onChangeNumberListOptions('model_options', val, x.name)
-									}
-									value={
-										(
-											deciParams.model_options &&
-											(deciParams.model_options[
-												x.name as keyof DECIModelOptions
-											] as number[])
-										)?.join(',') || x.defaultValue
-									}
-								/>
-							))}
-							<TextField
-								label="Cate rff lengthscale"
-								onChange={(_, val?: string) => onChangeCate(val)}
-								value={
-									deciParams?.model_options?.cate_rff_lengthscale?.toString() ||
-									CATE_RFF_LENGTHSCALE.toString()
-								}
-							/>
-						</ContainerAdvancedGrid>
-						<ContainerAdvancedCheckbox>
-							{advancedModelBooleanOptions.map(x => (
-								<Checkbox
-									key={x.name}
-									label={x.label}
-									checked={
-										(deciParams?.model_options &&
-											!!deciParams?.model_options[
-												x.name as keyof DECIModelOptions
-											]) ??
-										x.checked
-									}
-									onChange={(_, val?: boolean) =>
-										onChangeBooleanOptions('model_options', val, x.name)
-									}
-								/>
-							))}
-						</ContainerAdvancedCheckbox>
-
-						<ChoiceGroup
-							selectedKey={
-								deciParams.model_options?.mode_adjacency || MODE_ADJACENCY
-							}
-							options={advancedModelModeAdjacencyChoiceOptions}
-							onChange={(_, opt?: IChoiceGroupOption) =>
-								onChangeChoiceGroupOptions(
-									'model_options',
-									opt?.key,
-									'mode_adjacency',
-								)
-							}
-							label="Mode adjacency"
-						/>
-						<ChoiceGroup
-							selectedKey={
-								deciParams.model_options?.var_dist_A_mode || VAR_DIST_A_MODE
-							}
-							options={advancedModelVarModeChoiceOptions}
-							onChange={(_, opt?: IChoiceGroupOption) =>
-								onChangeChoiceGroupOptions(
-									'model_options',
-									opt?.key,
-									'var_dist_A_mode',
-								)
-							}
-							label="Var dist A mode"
+						<DeciModelParams
+							onChangeBoolean={onChangeBooleanOption}
+							onChangeNumber={onChangeNumberOption}
+							onChangeChoiceGroup={onChangeChoiceGroupOption}
+							onChangeCate={onChangeCate}
+							onChangeNumberList={onChangeNumberListOptions}
+							values={deciParams}
 						/>
 					</PivotItem>
 				</Pivot>

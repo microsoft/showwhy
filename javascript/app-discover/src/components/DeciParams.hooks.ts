@@ -8,10 +8,11 @@ import { useCallback } from 'react'
 import type { SetterOrUpdater } from 'recoil'
 
 import type { DECIParams } from '../domain/Algorithms/DECI.js'
+import type { onChangeBooleanFn, onChangeStringFn } from './DeciParams.types.js'
 
 export function useOnChangeNumberOption(
 	onSetDeciParams: SetterOrUpdater<DECIParams>,
-): (key: keyof DECIParams, val?: string, name?: string) => void | undefined {
+): onChangeStringFn {
 	return useCallback(
 		(key: keyof DECIParams, val?: string, name?: string) => {
 			if (!val || !name) return
@@ -29,7 +30,7 @@ export function useOnChangeNumberOption(
 
 export function useOnChangeBooleanOption(
 	onSetDeciParams: SetterOrUpdater<DECIParams>,
-): (key: keyof DECIParams, val?: boolean, name?: string) => void | undefined {
+): onChangeBooleanFn {
 	return useCallback(
 		(key: keyof DECIParams, val?: boolean, name?: string) => {
 			if (!name) return
@@ -47,7 +48,7 @@ export function useOnChangeBooleanOption(
 
 export function useOnChangeChoiceGroupOption(
 	onSetDeciParams: SetterOrUpdater<DECIParams>,
-): (key: keyof DECIParams, val?: string, name?: string) => void | undefined {
+): onChangeStringFn {
 	return useCallback(
 		(key: keyof DECIParams, val?: string, name?: string) => {
 			if (!name || !val) return
@@ -65,7 +66,7 @@ export function useOnChangeChoiceGroupOption(
 
 export function useOnChangeNumberListOption(
 	onSetDeciParams: SetterOrUpdater<DECIParams>,
-): (key: keyof DECIParams, val?: string, name?: string) => void | undefined {
+): onChangeStringFn {
 	return useCallback(
 		(key: keyof DECIParams, val?: string, name?: string) => {
 			if (!name || !val) return
