@@ -17,7 +17,7 @@
 		"lint": "essex lint"
 	},
 	"dependencies": {
-		"@datashaper/react": "^15.1.1",
+		"@datashaper/react": "^15.1.2",
 		"@datashaper/schema": "^7.0.2",
 		"@datashaper/tables": "^5.2.1",
 		"@datashaper/utilities": "^2.3.9",
