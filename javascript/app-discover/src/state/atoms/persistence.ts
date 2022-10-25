@@ -4,6 +4,7 @@
  */
 
 import { recoilPersist } from 'recoil-persist'
+
 import { persistAtomEffect } from '../persistence.js'
 
 const { persistAtom } = recoilPersist()
