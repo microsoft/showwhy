@@ -27,23 +27,6 @@ const STARDARDIZE_DATA_STD = false
 
 export const ANNEAL_ENTROPY = AnnealEntropy.Noanneal
 
-export const defaultTrainingSpinningOptions = [
-	{
-		label: 'Max steps auglag',
-		inputProps: { name: 'max_steps_auglag' },
-		step: 0.1,
-		min: 10,
-		max: 100,
-	},
-	{
-		label: 'Max auglag inner epochs',
-		inputProps: { name: 'max_auglag_inner_epochs' },
-		step: 100,
-		min: 100,
-		max: 2000,
-	},
-] as ISpinButtonProps[]
-
 export const advancedTrainingAnnealChoiceOptions: IChoiceGroupOption[] = [
 	{ key: AnnealEntropy.Linear, text: upperFirst(AnnealEntropy.Linear) },
 	{ key: AnnealEntropy.Noanneal, text: upperFirst(AnnealEntropy.Noanneal) },

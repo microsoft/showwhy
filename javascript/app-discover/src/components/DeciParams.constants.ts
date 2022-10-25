@@ -9,7 +9,7 @@ export const defaultTrainingSpinningOptions = [
 	{
 		label: 'Max steps auglag',
 		inputProps: { name: 'max_steps_auglag' },
-		step: 0.1,
+		step: 10,
 		min: 10,
 		max: 100,
 	},
