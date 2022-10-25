@@ -31,7 +31,7 @@
 		"@fluentui/utilities": "^8.13.2",
 		"@fluentui/web-components": "^2.5.7",
 		"@microsoft/fast-element": "^1.11.0",
-		"@microsoft/fast-foundation": "2.46.14",
+		"@microsoft/fast-foundation": "^2.47.0",
 		"@microsoft/fast-react-wrapper": "0.3.14",
 		"@showwhy/app-common": "workspace:^",
 		"@showwhy/discover-app": "workspace:^",

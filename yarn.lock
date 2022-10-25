@@ -3462,7 +3462,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@microsoft/fast-foundation@npm:2.46.14, @microsoft/fast-foundation@npm:^2.46.14":
+"@microsoft/fast-foundation@npm:^2.46.14":
   version: 2.46.14
   resolution: "@microsoft/fast-foundation@npm:2.46.14"
   dependencies:
@@ -3471,6 +3471,18 @@ __metadata:
     tabbable: ^5.2.0
     tslib: ^1.13.0
   checksum: 68a3f586b78dfc68228566a51be0f0134641723df3f9bcf9b6f9ffd3f882901106ced94bc1fc7e90020568e5a221459544db11b239c141d88bd3a3e53bbe59d2
+  languageName: node
+  linkType: hard
+
+"@microsoft/fast-foundation@npm:^2.47.0":
+  version: 2.47.0
+  resolution: "@microsoft/fast-foundation@npm:2.47.0"
+  dependencies:
+    "@microsoft/fast-element": ^1.11.0
+    "@microsoft/fast-web-utilities": ^5.4.1
+    tabbable: ^5.2.0
+    tslib: ^1.13.0
+  checksum: 065a70bf7399f068a876c9b78d9c2e3474fe764cb9865635a55474b47020329f6f0a7f5e2aba6abe9076e7fe6868028852b7460e6c099d5b669fa5c4a8613762
   languageName: node
   linkType: hard
 
@@ -4055,7 +4067,7 @@ __metadata:
     "@fluentui/utilities": ^8.13.2
     "@fluentui/web-components": ^2.5.7
     "@microsoft/fast-element": ^1.11.0
-    "@microsoft/fast-foundation": 2.46.14
+    "@microsoft/fast-foundation": ^2.47.0
     "@microsoft/fast-react-wrapper": 0.3.14
     "@showwhy/app-common": "workspace:^"
     "@showwhy/discover-app": "workspace:^"
