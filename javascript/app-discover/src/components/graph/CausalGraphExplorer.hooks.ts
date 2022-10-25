@@ -12,9 +12,11 @@ export function useGraphBounds(): { width: number; height: number } {
 	return useMemo<{ width: number; height: number }>(() => {
 		const width = Math.max(
 			...Object.values(positions).map(pos => pos.right ?? 0),
+			0,
 		)
 		const height = Math.max(
 			...Object.values(positions).map(pos => pos.bottom ?? 0),
+			0,
 		)
 		return { width, height }
 	}, [positions])

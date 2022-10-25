@@ -38,7 +38,7 @@ export const DeciParams: React.FC = memo(function DeciParams() {
 
 	useEffect(() => {
 		updateState.run(deciParams) // eslint-disable-line
-	}, [deciParams])
+	}, [deciParams, updateState])
 
 	const onChangeNumberOption = useOnChangeNumberOption(setDeciParams)
 	const onChangeBooleanOption = useOnChangeBooleanOption(setDeciParams)
