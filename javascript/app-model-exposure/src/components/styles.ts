@@ -2,7 +2,8 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { Spinner } from '@fluentui/react'
+import type { ITheme } from '@fluentui/react'
+import { Spinner, themeRulesStandardCreator } from '@fluentui/react'
 import styled from 'styled-components'
 
 import type { Maybe } from '../types/primitives.js'
@@ -57,6 +58,16 @@ export const ContainerFlexColumn = styled(Container)<{
 	display: flex;
 	flex-direction: column;
 	justify-content: ${({ justifyContent }) => justifyContent};
+`
+
+export const Header = styled.div`
+	height: 44px;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	background: ${({ theme }: { theme: ITheme }) => theme.palette.neutralLighter};
+	border-bottom: 1px solid
+		${({ theme }: { theme: ITheme }) => theme.palette.neutralTertiaryAlt};
 `
 
 export const ContainerFlexRow = styled(Container)<{ justifyContent?: string }>`

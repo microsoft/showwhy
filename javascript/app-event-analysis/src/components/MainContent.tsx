@@ -21,7 +21,6 @@ import {
 	Text,
 	TextField,
 	TooltipHost,
-	useTheme,
 } from '@fluentui/react'
 import type { Hypothesis } from '@showwhy/app-common'
 import {
@@ -89,6 +88,7 @@ import {
 	RightPanelHeader,
 	StyledStack,
 	Title,
+	usePivotStyles,
 } from './MainContent.styles.js'
 import {
 	guessColMapping,
@@ -101,7 +101,6 @@ import { TimeAlignmentSelector } from './TimeAlignmentSelector.js'
 import { TreatmentSelector } from './TreatmentSelector.js'
 
 export const MainContent: React.FC = memo(function MainContent() {
-	const theme = useTheme()
 	// Dataset selection (from wrangler)
 	const dataTables = useDataTables()
 
@@ -861,26 +860,6 @@ export const MainContent: React.FC = memo(function MainContent() {
 		onDataTablesUpdate()
 	}, [dataTables])
 
-	// const handleExport = () => {
-	// 	if (!isDataLoaded) return
-	// 	const payload = serializeExportState({
-	// 		rawData,
-	// 		eventName,
-	// 		outcomeName,
-	// 		columnMapping,
-	// 		filter,
-	// 		treatmentStartDates,
-	// 		treatedUnits,
-	// 		checkedUnits,
-	// 		chartOptions,
-	// 		estimator,
-	// 		timeAlignment,
-	// 		outputData: outputRes,
-	// 		aggregateEnabled,
-	// 	})
-	// 	saveAsFile(`${exportFileName}`, payload, 'application/json')
-	// }
-
 	const handleRemoveCheckedUnit = useCallback(
 		(unitToRemove: string) => {
 			const checkedUnitsCopy = new Set(checkedUnits)
@@ -1041,16 +1020,17 @@ export const MainContent: React.FC = memo(function MainContent() {
 			renderRawData: selectedTabKey === CONFIGURATION_TABS.prepareAnalysis.key,
 		}))
 	}, [selectedTabKey])
-
+	const pivotStyles = usePivotStyles()
 	return (
-		<StyledStack grow horizontal verticalFill>
+		<StyledStack grow horizontal verticalFill className="synthdid-container">
 			<Stack.Item>
-				<Stack tokens={{ childrenGap: 5 }} className="leftPanel">
+				<Stack tokens={{ childrenGap: 8 }} className="leftPanel">
 					<Pivot
 						aria-label="SynthDiD Navigation Tabs"
 						className="tabControl"
 						onLinkClick={onHandleTabClicked}
 						selectedKey={selectedTabKey}
+						styles={pivotStyles}
 					>
 						<PivotItem
 							headerText={CONFIGURATION_TABS.prepareAnalysis.label}
@@ -1073,9 +1053,6 @@ export const MainContent: React.FC = memo(function MainContent() {
 										selectedTable={fileName}
 										onTableSelected={onDatasetClicked}
 									/>
-									<Stack.Item align="center">
-										<Text>{fileName}</Text>
-									</Stack.Item>
 								</Stack>
 							</Stack>
 
@@ -1188,14 +1165,7 @@ export const MainContent: React.FC = memo(function MainContent() {
 								</Stack>
 								<Stack horizontal tokens={{ childrenGap: 3 }}>
 									<Stack.Item>
-										<DefaultButton
-											text="Automatically create treatments from column:"
-											disabled
-											styles={{
-												label: { color: theme.palette.neutralPrimary },
-												root: { padding: 16 },
-											}}
-										/>
+										<Label>Automatically create treatments from column:</Label>
 									</Stack.Item>
 									<Stack.Item grow>
 										<Dropdown
@@ -1263,7 +1233,7 @@ export const MainContent: React.FC = memo(function MainContent() {
 							</Stack>
 
 							<Stack>
-								<Text className="stepText">Chart Options</Text>
+								<Text className="stepText">Chart options</Text>
 								<Stack tokens={{ childrenGap: 5, padding: 5 }}>
 									<Checkbox
 										label="Show treatment start indicator"
@@ -1288,7 +1258,7 @@ export const MainContent: React.FC = memo(function MainContent() {
 									tokens={{ childrenGap: 5 }}
 									className="unit-selection-header"
 								>
-									<Label className="stepText">Unit Selection</Label>
+									<Label className="stepText">Unit selection</Label>
 									<Checkbox
 										label="Select All/None"
 										checked={controlUnitsChecked}
@@ -1317,7 +1287,7 @@ export const MainContent: React.FC = memo(function MainContent() {
 
 							<Stack>
 								<Label>
-									<Text className="stepText">Filter Data</Text>
+									<Text className="stepText">Filter data</Text>
 									<TooltipHost
 										content="Use the Start/End dates to customize and filter the data range"
 										id="filterDataTooltipId"
@@ -1372,7 +1342,7 @@ export const MainContent: React.FC = memo(function MainContent() {
 							</Stack>
 							<Spacer axis="vertical" size={20} />
 
-							<Text className="stepText">Chart Options</Text>
+							<Text className="stepText">Chart options</Text>
 							<Stack tokens={{ childrenGap: 5, padding: 5 }}>
 								<ChartOptionsGroup
 									options={chartOptions}
@@ -1414,19 +1384,6 @@ export const MainContent: React.FC = memo(function MainContent() {
 							{outcomeName || 'outcome'} to {hypothesis || 'hypothesis'}?
 						</Title>
 					</Stack>
-					{/* TODO: Uncomment when we have a pdf-like report to export */}
-					{/* <Stack>
-						<Stack.Item align="end">
-							<ActionButton
-								text="Export Results"
-								disabled={
-									(cannotCalculateEstimate && cannotCalculatePlacebo) ||
-									isCalculatingEstimator
-								}
-								onClick={handleExport}
-							/>
-						</Stack.Item>
-					</Stack> */}
 				</RightPanelHeader>
 				<ResultPane
 					inputData={data}

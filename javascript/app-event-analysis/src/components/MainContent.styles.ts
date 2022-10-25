@@ -2,8 +2,9 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { Stack } from '@fluentui/react'
+import { Stack, useTheme } from '@fluentui/react'
 import type { FluentTheme } from '@thematic/fluent'
+import { useMemo } from 'react'
 import styled from 'styled-components'
 
 export const StyledStack = styled(Stack)`
@@ -12,7 +13,8 @@ export const StyledStack = styled(Stack)`
 		cursor: pointer;
 	}
 	.remove-treated-unit {
-		color: ${({ theme }: { theme: FluentTheme }) => theme.application().error().hex()};
+		color: ${({ theme }: { theme: FluentTheme }) =>
+			theme.application().error().hex()};
 		cursor: pointer;
 	}
 
@@ -42,34 +44,29 @@ export const StyledStack = styled(Stack)`
 	}
 
 	.bad-input {
-		color: ${({ theme }: { theme: FluentTheme }) => theme.application().error().hex()};
+		color: ${({ theme }: { theme: FluentTheme }) =>
+			theme.application().error().hex()};
 		cursor: pointer;
 		align-self: center;
 	}
 
 	.stepText {
-		color: #000;
+		color: ${({ theme }: { theme: FluentTheme }) =>
+			theme.palette.neutralSecondary};
 		font-weight: 600;
-		&.ms-Label {
-			padding: 0;
-		}
+		font-size: 16px;
 	}
 	.stepDesc {
 		color: #5a5b5c;
 	}
 
 	.leftPanel {
-		max-width: 30vw;
-		width: 30vw;
-		min-width: 400px;
+		width: 420px;
+		min-width: 420px;
 		height: 100%;
-		background: #ffffff;
 	}
 
 	.rightPanel {
-		min-width: 0;
-		// 300px is the width of the suite side panel. It would be nice if we didn't have to consider that side panel width.
-		max-width: calc(100vw - 30vw - 300px);
 	}
 
 	.unit-selection-header {
@@ -82,25 +79,28 @@ export const StyledStack = styled(Stack)`
 		flex-direction: column;
 
 		[role='tabpanel'] {
-			padding: 10px 20px;
+			padding: 8px;
 			flex-grow: 1;
 			overflow: auto;
-			box-shadow: 0px 4px 4px 3px rgba(0, 0, 0, 0.25);
+			border-right: 1px solid
+				${({ theme }: { theme: FluentTheme }) =>
+					theme.palette.neutralTertiaryAlt};
 			overflow: hidden auto;
-			box-sizing: border-box;
 		}
 	}
 
 	.colInvalidSelection {
 		border-style: solid;
 		border-width: 1px;
-		border-color: ${({ theme }: { theme: FluentTheme }) => theme.application().error().hex()};
+		border-color: ${({ theme }: { theme: FluentTheme }) =>
+			theme.application().error().hex()};
 	}
 
 	.attributeClearSelection {
 		font-weight: bold;
 		&:hover {
-			color: ${({ theme }: { theme: FluentTheme }) => theme.application().error().hex()};
+			color: ${({ theme }: { theme: FluentTheme }) =>
+				theme.application().error().hex()};
 			cursor: pointer;
 		}
 	}
@@ -129,10 +129,15 @@ export const Title = styled.h2`
 `
 
 export const RightPanelHeader = styled.div`
-	display: grid;
-	grid-template-columns: 85% 15%;
+	display: flex;
 	align-items: center;
-	justify-items: center;
+	justify-content: center;
+	background: ${({ theme }: { theme: FluentTheme }) =>
+		theme.palette.neutralLighter};
+	border-bottom: 1px solid
+		${({ theme }: { theme: FluentTheme }) => theme.palette.neutralTertiaryAlt};
+	height: 44px;
+	width: 100%;
 `
 
 export const hypothesisGroupStyles = {
@@ -143,4 +148,18 @@ export const hypothesisGroupStyles = {
 		display: 'flex',
 		justifyContent: 'space-between',
 	},
+}
+
+export function usePivotStyles() {
+	const theme = useTheme()
+	return useMemo(
+		() => ({
+			root: {
+				height: 44,
+				background: theme.palette.neutralLighter,
+				borderBottom: `1px solid ${theme.palette.neutralTertiaryAlt}`,
+			},
+		}),
+		[theme],
+	)
 }

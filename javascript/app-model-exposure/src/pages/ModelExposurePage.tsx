@@ -9,7 +9,7 @@ import { useXarrow, Xwrapper } from 'react-xarrows'
 
 import { AppMenu } from '../components/AppMenu.js'
 import { MessageContainer } from '../components/MessageContainer.js'
-import { ContainerFlexRow } from '../components/styles.js'
+import { ContainerFlexRow, Header } from '../components/styles.js'
 import type { Maybe } from '../types/primitives.js'
 import { AnalyzeTestPage } from './AnalyzeTestPage.js'
 import { BindDataPage } from './BindDataPage.js'
@@ -45,7 +45,7 @@ export const ModelExposurePage: React.FC = memo(function ModelExposurePage() {
 
 	return (
 		<Container>
-			<ContainerFlexRow justifyContent="space-between">
+			<Header>
 				<Pivot
 					aria-label="Model Exposure Flow"
 					selectedKey={key}
@@ -57,7 +57,7 @@ export const ModelExposurePage: React.FC = memo(function ModelExposurePage() {
 					<PivotItem headerText="4. Analyze and test" itemKey="analyze" />
 				</Pivot>
 				<AppMenu setError={setError} />
-			</ContainerFlexRow>
+			</Header>
 			<Xwrapper>
 				<Content onScroll={updateXarrow}>
 					{error ? (
