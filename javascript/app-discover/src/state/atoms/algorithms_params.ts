@@ -4,15 +4,11 @@
  */
 
 import { atom } from 'recoil'
-import { recoilPersist } from 'recoil-persist'
 
-import { persistAtomEffect } from '../persistence.js'
 import type {
 	DECIParams,
 	DECITrainingOptions,
 } from './../../domain/Algorithms/DECI.js'
-
-const { persistAtom } = recoilPersist()
 
 const training_options = {
 	max_steps_auglag: 20,
@@ -22,6 +18,4 @@ const training_options = {
 export const DeciParamsState = atom<DECIParams>({
 	key: 'DeciParamsState',
 	default: { training_options, model_options: {} },
-	// eslint-disable-next-line camelcase
-	effects_UNSTABLE: [persistAtomEffect, persistAtom],
 })
