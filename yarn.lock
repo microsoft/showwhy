@@ -2056,9 +2056,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@datashaper/react@npm:^15.1.1":
-  version: 15.1.1
-  resolution: "@datashaper/react@npm:15.1.1"
+"@datashaper/react@npm:^15.1.2":
+  version: 15.1.2
+  resolution: "@datashaper/react@npm:15.1.2"
   dependencies:
     "@datashaper/schema": ^7.0.2
     "@datashaper/tables": ^5.2.1
@@ -2092,7 +2092,7 @@ __metadata:
     arquero: ^5.1.0
     react: ^17.0.2
     styled-components: ^5.3.0
-  checksum: f504561b71f0159117ef2c989885662696fd68143cd60b38c271afd86829ac393306753c4a5e1a19bf4f6278b649e6ec2c9bd2a9b120ff01f41b25f72a964820
+  checksum: 027b62fea62af50f955bfaa9f06a6ead5393c35f427f0b50b3e940fc1aad63bcac0587126ecaf549d187a498f92afc6f01c823362afc2e54c8761e20f217454b
   languageName: node
   linkType: hard
 
@@ -3418,6 +3418,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@microsoft/fast-element@npm:^1.11.0":
+  version: 1.11.0
+  resolution: "@microsoft/fast-element@npm:1.11.0"
+  checksum: 1fab25a7956cd40e0b51d7bbd01b57e620e140634abac83826b51ceac5b5c2ac4b1343e1e2253bf319a8f6f7a8391a2465e3b88d8a906029b17e05a6dfdd462c
+  languageName: node
+  linkType: hard
+
 "@microsoft/fast-foundation@npm:^2.46.14":
   version: 2.46.14
   resolution: "@microsoft/fast-foundation@npm:2.46.14"
@@ -3427,6 +3434,18 @@ __metadata:
     tabbable: ^5.2.0
     tslib: ^1.13.0
   checksum: 68a3f586b78dfc68228566a51be0f0134641723df3f9bcf9b6f9ffd3f882901106ced94bc1fc7e90020568e5a221459544db11b239c141d88bd3a3e53bbe59d2
+  languageName: node
+  linkType: hard
+
+"@microsoft/fast-foundation@npm:^2.47.0":
+  version: 2.47.0
+  resolution: "@microsoft/fast-foundation@npm:2.47.0"
+  dependencies:
+    "@microsoft/fast-element": ^1.11.0
+    "@microsoft/fast-web-utilities": ^5.4.1
+    tabbable: ^5.2.0
+    tslib: ^1.13.0
+  checksum: 065a70bf7399f068a876c9b78d9c2e3474fe764cb9865635a55474b47020329f6f0a7f5e2aba6abe9076e7fe6868028852b7460e6c099d5b669fa5c4a8613762
   languageName: node
   linkType: hard
 
@@ -3760,7 +3779,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/app-common@workspace:javascript/app-common"
   dependencies:
-    "@datashaper/react": ^15.1.1
+    "@datashaper/react": ^15.1.2
     "@datashaper/schema": ^7.0.2
     "@datashaper/tables": ^5.2.1
     "@datashaper/utilities": ^2.3.9
@@ -3799,7 +3818,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/discover-app@workspace:javascript/app-discover"
   dependencies:
-    "@datashaper/react": ^15.1.1
+    "@datashaper/react": ^15.1.2
     "@datashaper/schema": ^7.0.2
     "@datashaper/tables": ^5.2.1
     "@datashaper/utilities": ^2.3.9
@@ -3938,7 +3957,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/model-exposure-app@workspace:javascript/app-model-exposure"
   dependencies:
-    "@datashaper/react": ^15.1.1
+    "@datashaper/react": ^15.1.2
     "@datashaper/schema": ^7.0.2
     "@datashaper/tables": ^5.2.1
     "@datashaper/utilities": ^2.3.9
@@ -4011,8 +4030,8 @@ __metadata:
     "@fluentui/react-hooks": ^8.6.12
     "@fluentui/utilities": ^8.13.2
     "@fluentui/web-components": ^2.5.7
-    "@microsoft/fast-element": ^1.10.5
-    "@microsoft/fast-foundation": ^2.46.14
+    "@microsoft/fast-element": ^1.11.0
+    "@microsoft/fast-foundation": ^2.47.0
     "@microsoft/fast-react-wrapper": ^0.3.14
     "@showwhy/app-common": "workspace:^"
     "@showwhy/discover-app": "workspace:^"
@@ -4064,7 +4083,7 @@ __metadata:
   resolution: "@showwhy/wrangle-app@workspace:javascript/app-wrangle"
   dependencies:
     "@datashaper/core": ^10.0.0
-    "@datashaper/react": ^15.1.1
+    "@datashaper/react": ^15.1.2
     "@datashaper/schema": ^7.0.2
     "@datashaper/tables": ^5.2.1
     "@datashaper/utilities": ^2.3.9
