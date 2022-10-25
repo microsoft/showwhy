@@ -33,6 +33,14 @@ def get_discover_results(task_id: str):
     async_task = causal_discovery_task.AsyncResult(task_id)
     if async_task.status == states.SUCCESS:
         return {"status": async_task.status, "result": async_task.get()}
+    elif async_task.status == states.FAILURE:
+        try:
+            return {"status": async_task.status, "result": async_task.get()}
+        except Exception:
+            return {
+                "status": async_task.status,
+                "result": "error processing task, maybe the combination of parameters/variables is invalid?",
+            }
     else:
         return {"status": async_task.status, "progress": get_progress(async_task)}
 

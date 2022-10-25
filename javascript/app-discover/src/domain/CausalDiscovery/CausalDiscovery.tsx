@@ -109,6 +109,10 @@ export function discover(
 		JSON.stringify({
 			dataset: JSON.parse(jsonData),
 			constraints: constraintsJson,
+			causal_variables: variables.map(v => ({
+				name: v.name,
+				nature: v.nature,
+			})),
 			...paramOptions,
 		}),
 		progressCallback,
