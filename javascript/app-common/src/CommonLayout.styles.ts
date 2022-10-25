@@ -38,7 +38,7 @@ export const Rail = styled.aside`
 	display: flex;
 	flex-direction: column;
 	margin: 0;
-	padding: 8px;
+	padding: 0px;
 	width: 100%;
 	max-height: 100%;
 	justify-self: stretch;

@@ -32,7 +32,7 @@ export const AlgorithmControls = memo(function AlgorithmControls() {
 
 	return (
 		<>
-			<Divider>Causal Discovery</Divider>
+			<Divider>Discovery algorithm</Divider>
 			<ChoiceGroup
 				selectedKey={selectedCausalDiscoveryAlgorithm}
 				options={ALGORITHMS}
