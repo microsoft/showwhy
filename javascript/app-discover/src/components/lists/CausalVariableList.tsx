@@ -2,15 +2,36 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { FocusZone, List, Spinner } from '@fluentui/react'
+import { ActionButton, FocusZone, List, Spinner } from '@fluentui/react'
 import { memo, Suspense, useCallback, useEffect, useState } from 'react'
-import { useRecoilValue } from 'recoil'
+import { useRecoilValue,useSetRecoilState } from 'recoil'
 
 import type { CausalVariable } from '../../domain/CausalVariable.js'
-import { CausalVariablesState } from '../../state/index.js'
+import {
+	CausalVariablesState,
+	InModelCausalVariablesState,
+} from '../../state/index.js'
 import { ListFilter } from '../controls/ListFilter.js'
 import { CausalNodeListItem } from './CausalNodeListItem.js'
+import { addAllButtonStyles, icons } from './CausalVariableList.styles.js'
 import type { CausalVariableListProps } from './CausalVariableList.types.js'
+
+const AddAllVariablesButton: React.FC<CausalVariableListProps> = memo(
+	function AddAllVariablesButton({ variables }) {
+		const setInModelVariables = useSetRecoilState(InModelCausalVariablesState)
+		const handleClick = useCallback(() => {
+			setInModelVariables(variables)
+		}, [variables, setInModelVariables])
+		return (
+			<ActionButton
+				onClick={handleClick}
+				text={'Add all variables'}
+				iconProps={icons.add}
+				styles={addAllButtonStyles}
+			/>
+		)
+	},
+)
 
 export const CausalVariableList: React.FC<CausalVariableListProps> = memo(
 	function CausalVariableList({ variables }) {
@@ -21,6 +42,7 @@ export const CausalVariableList: React.FC<CausalVariableListProps> = memo(
 		)
 		return (
 			<FocusZone>
+				{!!variables.length && <AddAllVariablesButton variables={variables} />}
 				<List
 					items={variables}
 					renderedWindowsAhead={1}
