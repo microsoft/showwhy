@@ -19,6 +19,7 @@ import {
 	CausalDiscoveryResultsState,
 	CausalGraphConstraintsState,
 	DEFAULT_DATASET_NAME,
+	ErrorMessageState,
 	LoadingState,
 	PauseAutoRunState,
 	SelectedCausalDiscoveryAlgorithmState,
@@ -48,6 +49,7 @@ export function useCausalDiscoveryRunner() {
 		CausalDiscoveryResultsState,
 	)
 	const setLoadingState = useSetRecoilState(LoadingState)
+	const setErrorMessage = useSetRecoilState(ErrorMessageState)
 	const [setLastDiscoveryResultPromise, cancelLastDiscoveryResultPromise] =
 		useLastDiscoveryResultPromise()
 
@@ -119,6 +121,8 @@ export function useCausalDiscoveryRunner() {
 
 		updateProgress(0, undefined)
 		const runDiscovery = async () => {
+			setErrorMessage(undefined)
+
 			// if the last task has not finished just yet, cancel it
 			await cancelLastDiscoveryResultPromise()
 
@@ -139,15 +143,16 @@ export function useCausalDiscoveryRunner() {
 				if (discoveryPromise.isFinished()) {
 					setCausalDiscoveryResultsState(results)
 					setLoadingState(undefined)
+					setErrorMessage(undefined)
 				}
 			} catch (err) {
 				if (err instanceof CanceledPromiseError) {
 					setLoadingState('Cancelling last run...')
+					setErrorMessage(undefined)
 				} else {
-					// TODO: handle error message in the UI
-					console.error(err)
 					resetCausalDiscoveryResultsState()
 					setLoadingState(undefined)
+					setErrorMessage((err as Error).message)
 				}
 			}
 		}
@@ -168,5 +173,6 @@ export function useCausalDiscoveryRunner() {
 		updateProgress,
 		cancelLastDiscoveryResultPromise,
 		setLastDiscoveryResultPromise,
+		setErrorMessage,
 	])
 }
