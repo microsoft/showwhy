@@ -55,9 +55,16 @@ async function _fetchDiscoverResult<T>(
 		progressCallback?.(last_progress, taskId)
 	}
 
-	if (cancelablePromise.isCancellingOrCanceled()) {
+	if (
+		cancelablePromise.isCancellingOrCanceled() ||
+		isRevokedStatus(status.status)
+	) {
 		cancelablePromise.setCanceled()
 		throw new CanceledPromiseError(`task ${taskId} has been canceled`)
+	}
+
+	if (isFailureStatus(status.status)) {
+		throw new Error(`error running discovery: ${status.result as string}`)
 	}
 
 	cancelablePromise.setFinished()
@@ -142,4 +149,14 @@ function isProcessingStatus(nodeStatus: DiscoverResponseStatus): boolean {
 		status === DiscoverResponseStatus.Pending ||
 		status === DiscoverResponseStatus.Started
 	)
+}
+
+function isRevokedStatus(nodeStatus: DiscoverResponseStatus): boolean {
+	const status = nodeStatus?.toLowerCase()
+	return status === DiscoverResponseStatus.Revoked
+}
+
+function isFailureStatus(nodeStatus: DiscoverResponseStatus): boolean {
+	const status = nodeStatus?.toLowerCase()
+	return status === DiscoverResponseStatus.Failure
 }

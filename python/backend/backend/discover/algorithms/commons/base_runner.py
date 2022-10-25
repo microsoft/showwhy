@@ -1,12 +1,16 @@
+import logging
 from abc import ABC, abstractmethod
 from typing import Callable, Dict, Optional
 
 import networkx
 import pandas as pd
 from networkx.readwrite import json_graph
-from sklearn.preprocessing import MaxAbsScaler
+from sklearn.preprocessing import StandardScaler
 
-from backend.discover.model.causal_discovery import CausalDiscoveryPayload
+from backend.discover.model.causal_discovery import (
+    CausalDiscoveryPayload,
+    CausalVariableNature,
+)
 
 CausalGraph = Dict[str, list]
 
@@ -20,6 +24,7 @@ class CausalDiscoveryRunner(ABC):
         self._dataset_data = p.dataset.data
         self._constraints = p.constraints
         self._progress_callback = progress_callback
+        self._nature_by_variable = {v.name: v.nature for v in p.causal_variables}
 
     def register_progress_callback(
         self, progress_callback: ProgressCallback = None
@@ -35,18 +40,30 @@ class CausalDiscoveryRunner(ABC):
         graph.add_nodes_from(pandas_data.columns)
         return json_graph.cytoscape_data(graph)
 
+    def _has_column_nature(self, column: str, nature: CausalVariableNature) -> bool:
+        column_nature = self._nature_by_variable[column]
+        return column_nature and column_nature == nature
+
+    def _normalize_continuous_columns(self):
+        if self._prepared_data.size != 0:
+            continuous_columns = [
+                c
+                for c in self._prepared_data.columns
+                if self._has_column_nature(c, CausalVariableNature.Continuous)
+            ]
+
+            if continuous_columns:
+                logging.info(
+                    f"Scaling continuous columns {continuous_columns} using mean and standard deviation"
+                )
+                self._prepared_data[continuous_columns] = StandardScaler(
+                    with_mean=True, with_std=True
+                ).fit_transform(self._prepared_data[continuous_columns])
+
     def _prepare_data(self):
         self._prepared_data = pd.DataFrame.from_dict(self._dataset_data)
         self._prepared_data.dropna(inplace=True)
-
-        if self._prepared_data.size != 0:
-            # TODO: do mean / std normalization instead
-            scaled_data = MaxAbsScaler().fit_transform(self._prepared_data)
-            self._prepared_data = pd.DataFrame(
-                data=scaled_data,
-                index=self._prepared_data.index,
-                columns=self._prepared_data.columns,
-            )
+        self._normalize_continuous_columns()
 
     @abstractmethod
     def do_causal_discovery(self) -> CausalGraph:

@@ -11,6 +11,7 @@ import { CausalDiscoveryAlgorithm } from '../domain/CausalDiscovery/CausalDiscov
 import { SelectedCausalDiscoveryAlgorithmState } from '../state/index.js'
 import { ALGORITHMS } from './AlgorithmControls.constants.js'
 import { Divider } from './controls/Divider.js'
+import { DeciParams } from './DeciParams.js'
 
 export const AlgorithmControls = memo(function AlgorithmControls() {
 	const [
@@ -38,6 +39,9 @@ export const AlgorithmControls = memo(function AlgorithmControls() {
 				options={ALGORITHMS}
 				onChange={selectAlgorithm}
 			/>
+			{selectedCausalDiscoveryAlgorithm === CausalDiscoveryAlgorithm.DECI && (
+				<DeciParams />
+			)}
 		</>
 	)
 })

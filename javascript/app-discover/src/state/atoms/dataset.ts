@@ -4,7 +4,6 @@
  */
 import type ColumnTable from 'arquero/dist/types/table/column-table.js'
 import { atom } from 'recoil'
-import type { Subscription } from 'rxjs'
 
 import type { CausalVariable } from '../../domain/CausalVariable.js'
 

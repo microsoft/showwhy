@@ -24,7 +24,11 @@ import {
 	useTheme,
 } from '@fluentui/react'
 import type { Hypothesis } from '@showwhy/app-common'
-import { HypothesisGroup, MenuBar, useDataTables } from '@showwhy/app-common'
+import {
+	HypothesisGroup,
+	TableMenuBar,
+	useDataTables,
+} from '@showwhy/app-common'
 import { not } from 'arquero'
 import { clone, cloneDeep, isEmpty, isEqual, uniq } from 'lodash'
 import type { FormEvent } from 'react'
@@ -1065,9 +1069,9 @@ export const MainContent: React.FC = memo(function MainContent() {
 									&nbsp;to get started.
 								</Text>
 								<Stack horizontal tokens={{ childrenGap: 10 }}>
-									<MenuBar
-										dataTables={dataTables}
-										onItemClicked={onDatasetClicked}
+									<TableMenuBar
+										selectedTable={fileName}
+										onTableSelected={onDatasetClicked}
 									/>
 									<Stack.Item align="center">
 										<Text>{fileName}</Text>

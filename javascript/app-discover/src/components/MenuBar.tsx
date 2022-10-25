@@ -10,6 +10,7 @@ import { useFilePicker } from 'use-file-picker'
 
 import type { DatasetDatapackage } from '../domain/Dataset.js'
 import { useDatasetLoader } from '../domain/Dataset.js'
+import { DeciParamsState } from '../state/atoms/algorithms_params.js'
 import {
 	AutoLayoutEnabledState,
 	CausalGraphConstraintsState,
@@ -38,6 +39,7 @@ export const MenuBar: React.FC = memo(function MenuBar() {
 	const loadColumnTable = useDatasetLoader()
 	const resetVariables = useResetRecoilState(InModelColumnNamesState)
 	const resetConstraints = useResetRecoilState(CausalGraphConstraintsState)
+	const resetParams = useResetRecoilState(DeciParamsState)
 	const [useStraightEdges, setUseStraightEdges] =
 		useRecoilState(StraightEdgesState)
 	const [autoLayoutEnabled, setAutoLayoutEnabled] = useRecoilState(
@@ -54,7 +56,8 @@ export const MenuBar: React.FC = memo(function MenuBar() {
 	const clearModel = useCallback(() => {
 		resetVariables()
 		resetConstraints()
-	}, [resetVariables, resetConstraints])
+		resetParams()
+	}, [resetVariables, resetConstraints, resetParams])
 
 	useEffect(() => {
 		if (causalModelFileContent[0] !== undefined) {

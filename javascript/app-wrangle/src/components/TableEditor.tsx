@@ -80,7 +80,8 @@ export const TableEditor: React.FC<TableEditorProps> = memo(
 					<ArqueroTableHeader
 						commandBar={
 							<TableCommands
-								inputTable={selectedTable}
+								// hack to work around datashper
+								inputTable={undefined}
 								workflow={workflow}
 								onAddStep={onCreate}
 								selectedColumn={selectedColumn}

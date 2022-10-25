@@ -7,17 +7,21 @@ import { useEffect, useState } from 'react'
 
 import { useDataPackage } from './useDataPackage.js'
 
-export function useDataTable(name: string): DataTable | undefined {
+export function useDataTable(name: string | undefined): DataTable | undefined {
 	const dp = useDataPackage()
 	const tableStore = dp.tableStore
 	const [table, setTable] = useState<DataTable | undefined>(() =>
-		tableStore.get(name),
+		name != null ? tableStore.get(name) : undefined,
 	)
 	useEffect(() => {
-		const sub = tableStore.tables$.subscribe(tables => {
-			setTable(tables.find(t => t.name === name))
-		})
-		return () => sub.unsubscribe()
+		if (name == null) {
+			setTable(undefined)
+		} else {
+			const sub = tableStore.tables$.subscribe(tables => {
+				setTable(tables.find(t => t.name === name))
+			})
+			return () => sub.unsubscribe()
+		}
 	}, [tableStore, name])
 	return table
 }

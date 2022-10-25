@@ -5,7 +5,7 @@
 import type { ICommandBarItemProps } from '@fluentui/react'
 import { Checkbox, ContextualMenuItemType, Toggle } from '@fluentui/react'
 import { useBoolean } from '@fluentui/react-hooks'
-import { useDataTables } from '@showwhy/app-common'
+import { useDatasetMenuItems as useDatasetMenuItemsCommon } from '@showwhy/app-common'
 import { useEffect, useMemo } from 'react'
 import type { RecoilState } from 'recoil'
 import { useRecoilState, useRecoilValue } from 'recoil'
@@ -24,27 +24,7 @@ export function useDatasetMenuItems(
 	loadTable: (name: string) => void,
 ): ICommandBarItemProps {
 	const selectedTable = useRecoilValue(DatasetNameState)
-	const dataTables = useDataTables()
-	const buttonStyles = useMenuButtonStyles()
-	return useMemo(
-		() => ({
-			key: 'dataset',
-			text: selectedTable || 'Dataset',
-			buttonStyles,
-			subMenuProps: {
-				items: [...dataTables.values()].map(dataset => {
-					return {
-						key: dataset.id,
-						text: dataset.name,
-						onClick: () => {
-							loadTable(dataset.name)
-						},
-					}
-				}),
-			},
-		}),
-		[dataTables, loadTable, buttonStyles],
-	)
+	return useDatasetMenuItemsCommon(selectedTable, loadTable)
 }
 
 export function useModelMenuItems(
@@ -208,7 +188,7 @@ export function useAutoLayoutToggleMenuItem() {
 }
 
 export function useTogglePauseButtonMenuItem() {
-	const [paused, { toggle: togglePaused }] = useBoolean(false)
+	const [paused, { toggle: togglePaused }] = useBoolean(true)
 	const [, setPauseAutoRun] = useRecoilState(PauseAutoRunState)
 
 	useEffect(() => {
@@ -222,10 +202,9 @@ export function useTogglePauseButtonMenuItem() {
 			onRender: () => (
 				<Button
 					toggle
-					checked={paused}
 					onClick={togglePaused}
 					iconProps={{ iconName: paused ? 'Play' : 'Pause' }}
-					text={paused ? 'Auto-run' : 'Pause'}
+					text={paused ? 'Run' : 'Pause'}
 				/>
 			),
 		}),
