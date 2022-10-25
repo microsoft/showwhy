@@ -31,7 +31,7 @@ const categoricalNatures = [
 ]
 
 export const CausalInferenceSlider: React.FC<CausalInferenceSliderProps> = memo(
-	function CausalInferenceSlider({ variable, columnMetadata }) {
+	function CausalInferenceSlider({ variable, wasDragged, columnMetadata }) {
 		const inferenceResult = useInferenceResult(variable.columnName)
 		const differenceValue = useDifferenceValue(variable.columnName)
 		const isCategorical =
@@ -51,6 +51,7 @@ export const CausalInferenceSlider: React.FC<CausalInferenceSliderProps> = memo(
 		const onRemoveIntervention = useOnRemoveInterventions(
 			variable.columnName,
 			interventions,
+			wasDragged,
 		)
 
 		if (isCategorical) return null

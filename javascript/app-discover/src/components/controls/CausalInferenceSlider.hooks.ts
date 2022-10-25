@@ -64,13 +64,17 @@ export function useOnUpdateInterventions(
 export function useOnRemoveInterventions(
 	columnName: string,
 	interventions: Intervention[],
+	wasDragged?: boolean,
 ): () => void {
 	const setInterventions = useSetRecoilState(CausalInterventionsState)
 	return useCallback(() => {
+		if (wasDragged) {
+			return
+		}
 		setInterventions(
 			interventions.filter(
 				intervention => intervention.columnName !== columnName,
 			),
 		)
-	}, [interventions, setInterventions])
+	}, [interventions, setInterventions, wasDragged])
 }
