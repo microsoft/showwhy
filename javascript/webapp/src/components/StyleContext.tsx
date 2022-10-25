@@ -2,8 +2,8 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import type { SwatchRGB } from '@fluentui/web-components'
-import { accentBaseColor } from '@fluentui/web-components'
+import type { SwatchRGB } from '@fluentui/web-components';
+import { accentBaseColor,controlCornerRadius  } from '@fluentui/web-components'
 import { loadById } from '@thematic/core'
 import { loadFluentTheme, ThematicFluentProvider } from '@thematic/fluent'
 import { ApplicationStyles, useThematic } from '@thematic/react'
@@ -39,6 +39,8 @@ const DesignTokenTheming: React.FC = () => {
 			g: rgba[1],
 			b: rgba[2],
 		} as SwatchRGB)
+		// tree item
+		controlCornerRadius.withDefault(0)
 	}, [theme])
 	return null
 }

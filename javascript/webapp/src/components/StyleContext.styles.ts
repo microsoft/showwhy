@@ -45,5 +45,7 @@ export const GlobalStyle = createGlobalStyle`
 			theme.palette.neutralTertiaryAlt};
 		--separator-border: ${({ theme }: { theme: Theme }) =>
 			theme.palette.neutralTertiaryAlt};
+		
 	}
+	
 `

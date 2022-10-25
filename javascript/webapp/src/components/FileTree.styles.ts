@@ -45,7 +45,7 @@ export const ItemIcon = styled(Icon)`
 `
 
 export const TreeItem = styled(FluentTreeItem)`
-	align-items: 'center';
+	align-items: center;
 `
 
 export const Commands = styled(CommandBar)`
