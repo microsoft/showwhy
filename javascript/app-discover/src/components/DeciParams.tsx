@@ -4,10 +4,14 @@
  */
 import { Expando } from '@essex/components'
 import { Pivot, PivotItem, Position, SpinButton } from '@fluentui/react'
-import { memo } from 'react'
+import { useDebounceFn } from 'ahooks'
+import { memo, useEffect, useState } from 'react'
 import { useRecoilState } from 'recoil'
 
-import type { DECITrainingOptions } from '../domain/Algorithms/DECI.js'
+import type {
+	DECIParams,
+	DECITrainingOptions,
+} from '../domain/Algorithms/DECI.js'
 import { DeciParamsState } from '../state/atoms/algorithms_params.js'
 import { DeciModelParams } from './DeciModelParams.js'
 import { defaultTrainingSpinningOptions } from './DeciParams.constants.js'
@@ -22,7 +26,19 @@ import { Container, SpinContainer } from './DeciParams.styles.js'
 import { DeciTrainingParams } from './DeciTrainingParams.js'
 
 export const DeciParams: React.FC = memo(function DeciParams() {
-	const [deciParams, setDeciParams] = useRecoilState(DeciParamsState)
+	const [stateDeciParams, setStateDeciParams] = useRecoilState(DeciParamsState)
+	const [deciParams, setDeciParams] = useState(stateDeciParams)
+
+	const updateState = useDebounceFn(
+		(value: DECIParams) => {
+			setStateDeciParams(value)
+		},
+		{ wait: 500 },
+	)
+
+	useEffect(() => {
+		updateState.run(deciParams) // eslint-disable-line
+	}, [deciParams])
 
 	const onChangeNumberOption = useOnChangeNumberOption(setDeciParams)
 	const onChangeBooleanOption = useOnChangeBooleanOption(setDeciParams)
