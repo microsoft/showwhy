@@ -18,8 +18,10 @@ import {
 	useDataPackage,
 	useDataTables,
 } from '@showwhy/app-common'
-import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import { useObservableState } from 'observable-hooks'
+import { useCallback, useContext, useMemo } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { map } from 'rxjs'
 
 import type { FileDefinition } from '../hooks/examples.js'
 import { useExampleProjects } from '../hooks/examples.js'
@@ -214,20 +216,12 @@ export function useOnOpenFileRequested(): (
 }
 
 export function useTreeItems(): ResourceTreeData[] {
-	const dataPackages = useDataTables()
-	const [items, setItems] = useState<ResourceTreeData[]>([])
-
-	useEffect(() => {
-		setItems(groupTables(dataPackages))
-		const unsubs = dataPackages.map(dataPackage =>
-			dataPackage?.onChange(() => {
-				setItems(groupTables(dataPackages))
-			}),
-		)
-		return () => unsubs.forEach(subscription => subscription?.())
-	}, [dataPackages, setItems])
-
-	return items
+	const pkg = useDataPackage()
+	const observable = useMemo(
+		() => pkg.tableStore.tables$.pipe(map(tables => groupTables(tables))),
+		[pkg],
+	)
+	return useObservableState(observable, () => [])
 }
 
 export function useCurrentPath(): string {

@@ -19,7 +19,9 @@ import { type IColumn, CommandBar } from '@fluentui/react'
 import { useBoolean } from '@fluentui/react-hooks'
 import { useDataTableOutput } from '@showwhy/app-common'
 import upperFirst from 'lodash-es/upperFirst.js'
+import { useObservableState } from 'observable-hooks'
 import { memo, useCallback, useMemo, useState } from 'react'
+import { map } from 'rxjs'
 
 import {
 	useHistoryButtonCommandBar,
@@ -43,6 +45,9 @@ export const TableEditor: React.FC<TableEditorProps> = memo(
 		const onCreate = useOnCreateStep(onSave, setSelectedTableId)
 		const onDelete = useOnDeleteStep(workflow)
 		const inputNames = useInputTableNames(workflow)
+		const numSteps = useObservableState(
+			workflow.steps$.pipe(map(steps => steps.length)),
+		)
 
 		const tableName = useMemo(() => {
 			const stepIndex = workflow.steps.findIndex(x => x.id === selectedTableId)
@@ -70,7 +75,7 @@ export const TableEditor: React.FC<TableEditorProps> = memo(
 
 		const historyButtonCommandBar = useHistoryButtonCommandBar(
 			isCollapsed,
-			workflow,
+			numSteps,
 			toggleCollapsed,
 		)
 
@@ -80,8 +85,6 @@ export const TableEditor: React.FC<TableEditorProps> = memo(
 					<ArqueroTableHeader
 						commandBar={
 							<TableCommands
-								// hack to work around datashper
-								inputTable={undefined}
 								workflow={workflow}
 								onAddStep={onCreate}
 								selectedColumn={selectedColumn}

@@ -33,12 +33,13 @@ export function groupTables(tables: DataTable[]): ResourceTreeData[] {
 	const result: ResourceTreeData[] = []
 
 	tables.forEach(table => {
-		const children: ResourceTreeData[] = [
-			resourceNode(table),
-			datasourceNode(table),
-		]
+		const children: ResourceTreeData[] = []
+		if (table.data != null) {
+			children.push(resourceNode(table))
+			children.push(datasourceNode(table))
+		}
 		if (table.codebook.fields.length > 0) {
-			codebookNode(table)
+			children.push(codebookNode(table))
 		}
 		if (table.workflow.length > 0) {
 			children.push(workflowNode(table))
