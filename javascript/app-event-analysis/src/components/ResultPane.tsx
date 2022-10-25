@@ -43,7 +43,7 @@ import { BarChart } from './BarChart.js'
 import { CustomMessageBar } from './CustomMessageBar.js'
 import { LineChart } from './LineChart.js'
 import { useDynamicChartDimensions } from './ResultPane.hooks.js'
-import { StyledStack } from './ResultPane.styles.js'
+import { GraphTitle, StyledStack, TreatedTitle } from './ResultPane.styles.js'
 import type { DimensionedLineChartProps } from './ResultPane.types.js'
 import Spacer from './style/Spacer.js'
 
@@ -257,7 +257,7 @@ export const ResultPane: React.FC<ResultPaneProps> = memo(function ResultPane({
 				'The algorithm has selected a different time range according to the treatment period of each unit to measure the effect'
 		}
 		const header = (
-			<Text className="infoText bottom-gap" variant="large">
+			<Text className="infoText bottom-gap" variant="medium">
 				{headerText}
 				<br />
 			</Text>
@@ -301,7 +301,7 @@ export const ResultPane: React.FC<ResultPaneProps> = memo(function ResultPane({
 			outputDataNonPlacebo.length === 1 ? (
 				<></>
 			) : (
-				<Text className="infoText" variant="large">
+				<Text className="infoText" variant="medium">
 					<b>
 						Mean treatment effect across all treated units is{' '}
 						{meanTreatmentEffect}
@@ -317,7 +317,7 @@ export const ResultPane: React.FC<ResultPaneProps> = memo(function ResultPane({
 							getKeyByValue(TimeAlignmentOptions.Fixed_No_Overlap) && (
 							<Text
 								className="infoText italic light bottom-gap"
-								variant="large"
+								variant="medium"
 							>
 								NOTE: Pre-treatment period for all units is before the
 								first-treated unit and post-treatment is after the last-treated
@@ -332,7 +332,7 @@ export const ResultPane: React.FC<ResultPaneProps> = memo(function ResultPane({
 							getKeyByValue(TimeAlignmentOptions.Shift_And_Align_Units) && (
 							<Text
 								className="infoText italic light bottom-gap"
-								variant="large"
+								variant="medium"
 							>
 								NOTE: Units with different treatment times have been aligned at
 								time step {consistent_time_window[0]} (&quot;T&quot;).
@@ -345,7 +345,11 @@ export const ResultPane: React.FC<ResultPaneProps> = memo(function ResultPane({
 
 				<Stack.Item className="summary-list">
 					{outputDataNonPlacebo.map(output => (
-						<Text key={output.treatedUnit} className="infoText" variant="large">
+						<Text
+							key={output.treatedUnit}
+							className="infoText"
+							variant="medium"
+						>
 							{'Treatment effect in '}
 							{output.treatedUnit} {' is: '}
 							<b className={output.sdid_estimate < 0 ? 'negative' : 'positive'}>
@@ -414,11 +418,12 @@ export const ResultPane: React.FC<ResultPaneProps> = memo(function ResultPane({
 						const header = (
 							<Text
 								className="infoText synth-control-text-margin"
-								variant="large"
+								variant="medium"
 							>
 								This outcome was calculated by comparing the actual{' '}
-								<b>{outcomeName}</b> data from <b>{treatedUnit}</b> with a
-								control group composed of weighted combinations of the following{' '}
+								<b>{outcomeName}</b> data from <b>{treatedUnit}</b> with a{' '}
+								<b className="control-label">control group</b> composed of
+								weighted combinations of the following{' '}
 								<b>
 									{synthControlData[treatedUnit].length} {'units'},
 								</b>{' '}
@@ -445,7 +450,7 @@ export const ResultPane: React.FC<ResultPaneProps> = memo(function ResultPane({
 						)
 						return (
 							<Stack key={treatedUnit} tokens={{ padding: 10 }}>
-								<Text variant="xLarge">{treatedUnit}</Text>
+								<TreatedTitle>{treatedUnit}</TreatedTitle>
 								<Spacer axis="vertical" size={10} />
 								{showChartPerUnit && lineChart}
 								{header}
@@ -542,7 +547,7 @@ export const ResultPane: React.FC<ResultPaneProps> = memo(function ResultPane({
 			return (
 				<>
 					<Stack.Item>
-						<Text variant="xxLarge">{treatedUnit}</Text>
+						<TreatedTitle>{treatedUnit}</TreatedTitle>
 					</Stack.Item>
 
 					<Spacer axis="vertical" size={15} />
@@ -552,7 +557,7 @@ export const ResultPane: React.FC<ResultPaneProps> = memo(function ResultPane({
 					<Spacer axis="vertical" size={15} />
 
 					<Stack.Item className={'no-top-margin'}>
-						<Text className="infoText" variant="large">
+						<Text className="infoText" variant="medium">
 							The following visualization shows how the post-treatment
 							divergence between the treated unit <b>{treatedUnit}</b> and its
 							control group (highlighted) compares with the set of divergence
@@ -585,9 +590,9 @@ export const ResultPane: React.FC<ResultPaneProps> = memo(function ResultPane({
 
 					<Stack.Item className={'no-top-margin'}>
 						{isValidUnit(treatedUnit) && placeboResult && (
-							<Text className="infoText last-item-margin" variant="large">
+							<Text className="infoText last-item-margin" variant="medium">
 								The answer to the overall question of:
-								<Text variant="large" block>
+								<Text variant="medium" block>
 									For treated {units}, did {eventName} cause {outcomeName} to{' '}
 									{hypothesis}?
 								</Text>
@@ -628,9 +633,9 @@ export const ResultPane: React.FC<ResultPaneProps> = memo(function ResultPane({
 
 	const graphTitle = useMemo((): string => {
 		if (showRawDataLineChart) {
-			return 'Input Data'
+			return 'Input data'
 		} else if (showPlaceboGraphsLocal) {
-			return 'Placebo Analysis'
+			return 'Placebo analysis'
 		} else if (showSynthControl) {
 			return `Effect of ${eventName} on ${outcomeName}`
 		}
@@ -642,7 +647,6 @@ export const ResultPane: React.FC<ResultPaneProps> = memo(function ResultPane({
 		eventName,
 		outcomeName,
 	])
-
 	return (
 		<StyledStack grow verticalFill tokens={{ childrenGap: 15 }}>
 			<Stack.Item className="statusMessage">
@@ -659,9 +663,7 @@ export const ResultPane: React.FC<ResultPaneProps> = memo(function ResultPane({
 			</Stack.Item>
 
 			<Stack.Item className="no-top-margin">
-				{!isCalculatingEstimator && graphTitle && (
-					<Text variant="xxLarge">{graphTitle}</Text>
-				)}
+				<GraphTitle>{graphTitle}</GraphTitle>
 			</Stack.Item>
 
 			<Switch>
@@ -677,7 +679,7 @@ export const ResultPane: React.FC<ResultPaneProps> = memo(function ResultPane({
 				<Case condition={showPlaceboGraphsLocal}>
 					<>
 						<Stack.Item>
-							<Text className="infoText" variant="large">
+							<Text className="infoText" variant="medium">
 								The following visualization shows the trajectory of each unit
 								under the placebo assumption that it was treated in the
 								specified period (with actual treated units highlighted). Note

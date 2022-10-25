@@ -10,6 +10,8 @@ import type { BarData, LegendData } from '../types'
 import { BarChartOrientation } from '../types'
 import { getColor } from './BarChart.utils.js'
 
+const axisFontSize = '14px'
+
 export function useColors() {
 	const theme = useThematic()
 	return useMemo(() => getColor(theme), [theme])
@@ -119,8 +121,8 @@ export function useLegends(
 			.attr('class', 'axis-name-text')
 			.attr('x', bottomAxisLabelX)
 			.attr('y', bottomAxisLabelY)
-			.style('font-size', 'large')
-			.style('fill', colors.get('relative'))
+			.style('font-size', axisFontSize)
+			.style('fill', colors.defaultAxisTitle)
 			.text(bottomAxisLabel)
 		// add background rect for the bottom axis' text
 		container
@@ -159,7 +161,7 @@ export function useLegends(
 			.append('text')
 			.attr('text-anchor', 'middle')
 			.attr('transform', 'rotate(-90)')
-			.style('font-size', 'large')
+			.style('font-size', axisFontSize)
 			.style('fill', colors.defaultAxisTitle)
 			.text(leftAxisLabel)
 	}, [

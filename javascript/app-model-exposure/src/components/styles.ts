@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import type { ITheme } from '@fluentui/react'
-import { Spinner, themeRulesStandardCreator } from '@fluentui/react'
+import { Spinner } from '@fluentui/react'
 import styled from 'styled-components'
 
 import type { Maybe } from '../types/primitives.js'

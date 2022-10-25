@@ -126,6 +126,8 @@ export const Title = styled.h2`
 	font-weight: 500;
 	font-size: 1.2rem;
 	text-align: center;
+	color: ${({ theme }: { theme: FluentTheme }) =>
+		theme.palette.neutralSecondary};
 `
 
 export const RightPanelHeader = styled.div`

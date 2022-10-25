@@ -16,6 +16,8 @@ import type {
 } from '../types'
 import { getLineStroke } from './LineChart.utils.js'
 
+const axisFontSize = '14px'
+
 export function useColors() {
 	const theme = useThematic()
 	return useMemo(() => getLineStroke(theme), [theme])
@@ -258,7 +260,7 @@ export function useLegends(
 				.append('text')
 				.attr('x', width * 0.45)
 				.attr('y', height + legendOffsetFromAxis)
-				.style('font-size', 'large')
+				.style('font-size', axisFontSize)
 				.style('fill', colors.defaultAxisTitle)
 				.text('Time')
 		} else {
@@ -267,7 +269,7 @@ export function useLegends(
 					.append('text')
 					.attr('x', width * 0.28)
 					.attr('y', height + legendOffsetFromAxis)
-					.style('font-size', 'large')
+					.style('font-size', axisFontSize)
 					.style('fill', colors.get('relative'))
 					.text('Placebo distribution using all units')
 			} else {
@@ -276,14 +278,14 @@ export function useLegends(
 						.append('text')
 						.attr('x', width * 0.2)
 						.attr('y', height + legendOffsetFromAxis)
-						.style('font-size', 'large')
+						.style('font-size', axisFontSize)
 						.style('fill', colors.get('treated'))
 						.text('Treated')
 					container
 						.append('text')
 						.attr('x', width * 0.5)
 						.attr('y', height + legendOffsetFromAxis)
-						.style('font-size', 'large')
+						.style('font-size', axisFontSize)
 						.style('fill', colors.get('control'))
 						.text('Synthetic control')
 				} else {
@@ -291,7 +293,7 @@ export function useLegends(
 						.append('text')
 						.attr('x', width * 0.2)
 						.attr('y', height + legendOffsetFromAxis)
-						.style('font-size', 'large')
+						.style('font-size', axisFontSize)
 						.style('fill', colors.get('relative'))
 						.text('Difference between treated and synthetic units')
 				}
@@ -305,7 +307,7 @@ export function useLegends(
 			.append('text')
 			.attr('text-anchor', 'middle')
 			.attr('transform', 'rotate(-90)')
-			.style('font-size', 'large')
+			.style('font-size', axisFontSize)
 			.style('fill', colors.defaultAxisTitle)
 			.text(
 				isPlaceboSimulation || relativeIntercept
