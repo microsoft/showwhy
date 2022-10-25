@@ -36,8 +36,11 @@ def get_discover_results(task_id: str):
     elif async_task.status == states.FAILURE:
         try:
             return {"status": async_task.status, "result": async_task.get()}
-        except Exception as err:
-            return {"status": async_task.status, "result": str(err)}
+        except Exception:
+            return {
+                "status": async_task.status,
+                "result": "error processing task, maybe the combination of parameters/variables is invalid?",
+            }
     else:
         return {"status": async_task.status, "progress": get_progress(async_task)}
 
