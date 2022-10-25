@@ -54,7 +54,7 @@ export const DeciParams: React.FC = memo(function DeciParams() {
 						label={x.label}
 						key={x.inputProps?.name}
 						labelPosition={Position.top}
-						value={deciParams.training_options[
+						value={deciParams?.training_options?.[
 							x.inputProps?.name as keyof DECITrainingOptions
 						]?.toString()}
 						onChange={(_, val?: string) =>

@@ -216,7 +216,10 @@ function useLoadProjectJson(): (json: ProjectJson) => void {
 			setConfidenceThreshold(json.ui.confidenceThreshold)
 			setCorrelationThreshold(json.ui.correlationThreshold)
 			setView(json.ui.view)
-			setDeciParams(json.ui.deciParams)
+
+			if (json.ui.deciParams) {
+				setDeciParams(json.ui.deciParams)
+			}
 		},
 		[
 			setInModelColumnNames,
