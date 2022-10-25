@@ -3,7 +3,6 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { useTheme } from '@fluentui/react'
 import type ColumnTable from 'arquero/dist/types/table/column-table.js'
 import { memo } from 'react'
 

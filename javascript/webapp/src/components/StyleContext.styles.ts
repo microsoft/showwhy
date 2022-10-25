@@ -41,5 +41,9 @@ export const GlobalStyle = createGlobalStyle`
 
 	:root {
 		--faint: ${({ theme }: { theme: Theme }) => theme.palette.neutralLighter};
+		--focus-border: ${({ theme }: { theme: Theme }) =>
+			theme.palette.neutralTertiaryAlt};
+		--separator-border: ${({ theme }: { theme: Theme }) =>
+			theme.palette.neutralTertiaryAlt};
 	}
 `

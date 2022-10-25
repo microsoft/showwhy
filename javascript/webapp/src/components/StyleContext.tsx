@@ -13,10 +13,10 @@ import type { StyleContextProps } from './StyleContext.types.js'
 
 export const StyleContext: React.FC<StyleContextProps> = memo(
 	function StyleContext({ children }) {
-		const theme = loadById('autumn')
+		const theme = loadById('autumn', { dark: false })
 		const fluentTheme = useMemo(() => loadFluentTheme(theme), [theme])
 		return (
-			<ThematicFluentProvider theme={theme} style={FluentProviderStyle}>
+			<ThematicFluentProvider theme={theme} style={fluentProviderStyle}>
 				<ApplicationStyles />
 				<ThemeProvider theme={fluentTheme}>
 					<GlobalStyle />
@@ -27,4 +27,4 @@ export const StyleContext: React.FC<StyleContextProps> = memo(
 	},
 )
 
-const FluentProviderStyle = { height: '100%', width: '100%' }
+const fluentProviderStyle = { height: '100%', width: '100%' }

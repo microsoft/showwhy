@@ -7,6 +7,8 @@ import { Label } from '@fluentui/react'
 import styled from 'styled-components'
 
 export const Divider = styled(Label)`
+	color: ${({ theme }) => theme.palette.neutralSecondary};
+	font-size: 14px;
 	display: flex;
 	justify-content: center;
 	align-content: center;
@@ -15,7 +17,6 @@ export const Divider = styled(Label)`
 		content: '';
 		height: 1px;
 		margin: 8px;
-		background-color: ${({ theme }) => theme.palette.neutralTertiaryAlt};
 		flex-grow: 1; // both lines will expand to occupy the available space
 	}
 `

@@ -55,12 +55,13 @@ export const ModalBody = styled.div`
 	display: flex;
 	flex-direction: column;
 	gap: 20px;
-	padding: 10px;
+	padding: 12px;
+	height: 600px;
 `
 export const Footer = styled.div`
 	padding: 10px;
 	float: right;
 `
 
-export const modalStyles = { main: { width: '90%' } }
+export const modalStyles = { main: { width: 800 } }
 export const buttonChoiceGroupStyles = { alignSelf: 'flex-start' }
