@@ -35,3 +35,17 @@ class CausalDiscoveryPayload(BaseModel):
 
     class Config:
         arbitrary_types_allowed = True
+
+
+_causal_var_nature_to_causica_var_type = {
+    "Discrete": "continuous",  # TODO: make categorical (related to ONNX)
+    "Continuous": "continuous",
+    "Categorical Ordinal": "continuous",  # TODO: make categorical (related to ONNX)
+    "Categorical Nominal": "continuous",  # TODO: make categorical (related to ONNX)
+    "Binary": "binary",
+    "Excluded": "continuous",
+}
+
+
+def map_to_causica_var_type(nature: CausalVariableNature):
+    return _causal_var_nature_to_causica_var_type.get(nature, "continuous")

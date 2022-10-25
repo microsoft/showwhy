@@ -40,17 +40,17 @@ class CausalDiscoveryRunner(ABC):
         graph.add_nodes_from(pandas_data.columns)
         return json_graph.cytoscape_data(graph)
 
-    def _prepare_data(self):
-        self._prepared_data = pd.DataFrame.from_dict(self._dataset_data)
-        self._prepared_data.dropna(inplace=True)
+    def _has_column_nature(self, column: str, nature: CausalVariableNature) -> bool:
+        column_nature = self._nature_by_variable[column]
+        return column_nature and column_nature == nature
 
+    def _normalize_continuous_columns(self):
         if self._prepared_data.size != 0:
-            continuous_columns = []
-
-            for column in self._prepared_data.columns:
-                nature = self._nature_by_variable[column]
-                if nature and nature == CausalVariableNature.Continuous:
-                    continuous_columns.append(column)
+            continuous_columns = [
+                c
+                for c in self._prepared_data.columns
+                if self._has_column_nature(c, CausalVariableNature.Continuous)
+            ]
 
             if continuous_columns:
                 logging.info(
@@ -59,6 +59,11 @@ class CausalDiscoveryRunner(ABC):
                 self._prepared_data[continuous_columns] = StandardScaler(
                     with_mean=True, with_std=True
                 ).fit_transform(self._prepared_data[continuous_columns])
+
+    def _prepare_data(self):
+        self._prepared_data = pd.DataFrame.from_dict(self._dataset_data)
+        self._prepared_data.dropna(inplace=True)
+        self._normalize_continuous_columns()
 
     @abstractmethod
     def do_causal_discovery(self) -> CausalGraph:
