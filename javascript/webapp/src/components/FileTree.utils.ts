@@ -9,6 +9,7 @@ import type {
 	ICommandBarItemProps,
 	IContextualMenuItem,
 	IStyle,
+	ITheme,
 } from '@fluentui/react'
 
 import type { ExampleIndex, FileDefinition } from '../hooks/examples.js'
@@ -158,6 +159,7 @@ export function createCommandBar(
 	hasDataPackages: boolean,
 	openProps: IContextualMenuItem[],
 	saveProps: IContextualMenuItem[],
+	theme: ITheme,
 ): ICommandBarItemProps[] {
 	return [
 		{
@@ -168,6 +170,11 @@ export function createCommandBar(
 			subMenuProps: {
 				items: openProps,
 			},
+			buttonStyles: {
+				root: {
+					background: theme.palette.neutralLighter,
+				},
+			},
 		},
 		{
 			key: 'save',
@@ -177,6 +184,11 @@ export function createCommandBar(
 			disabled: !hasDataPackages,
 			subMenuProps: {
 				items: saveProps,
+			},
+			buttonStyles: {
+				root: {
+					background: theme.palette.neutralLighter,
+				},
 			},
 		},
 	] as ICommandBarItemProps[]
