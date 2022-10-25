@@ -31,6 +31,7 @@ import {
 	MenuContainer,
 	TreeItem,
 	TreeView,
+	useCommandbarStyles,
 } from './FileTree.styles.js'
 import { getTooltipStyles } from './FileTree.utils.js'
 import { Tooltip } from './Tooltip.js'
@@ -46,7 +47,7 @@ export const FileTree: React.FC<{
 	const onOpenFileRequested = useOnOpenFileRequested()
 	const { commands, onOpenCommands, onSaveCommands } =
 		useFileManagementCommands(expanded, onOpenFileRequested, setFile)
-
+	const commandBarStyles = useCommandbarStyles()
 	return (
 		<Container
 			style={merge({ width: expanded ? '300px' : '60px' }, style)}
@@ -55,7 +56,7 @@ export const FileTree: React.FC<{
 			<MenuContainer>
 				<FileImport file={file} setFile={setFile} />
 				{expanded ? (
-					<Commands items={commands} />
+					<Commands items={commands} styles={commandBarStyles} />
 				) : (
 					<>
 						<Tooltip

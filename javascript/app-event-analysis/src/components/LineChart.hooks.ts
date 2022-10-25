@@ -2,6 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import { useThematic } from '@thematic/react'
 import { curveBasis, extent, line, max, min, select } from 'd3'
 import { cloneDeep, difference, groupBy, isEmpty, sortBy } from 'lodash'
 import { useEffect, useMemo, useRef } from 'react'
@@ -13,7 +14,14 @@ import type {
 	PlaceboOutputData,
 	ProcessedInputData,
 } from '../types'
-import { getColor } from './LineChart.utils.js'
+import { getLineStroke } from './LineChart.utils.js'
+
+const axisFontSize = '14px'
+
+export function useColors() {
+	const theme = useThematic()
+	return useMemo(() => getLineStroke(theme), [theme])
+}
 
 export function useData(
 	inputData: ProcessedInputData,
@@ -240,6 +248,7 @@ export function useLegends(
 	relativeIntercept: boolean,
 	outputDisplayName: string,
 ) {
+	const colors = useColors()
 	const legendGroupRef = useRef(null)
 	useEffect(() => {
 		const container = select(legendGroupRef.current)
@@ -251,8 +260,8 @@ export function useLegends(
 				.append('text')
 				.attr('x', width * 0.45)
 				.attr('y', height + legendOffsetFromAxis)
-				.style('font-size', 'large')
-				.style('fill', 'gray')
+				.style('font-size', axisFontSize)
+				.style('fill', colors.defaultAxisTitle)
 				.text('Time')
 		} else {
 			if (isPlaceboSimulation) {
@@ -260,8 +269,8 @@ export function useLegends(
 					.append('text')
 					.attr('x', width * 0.28)
 					.attr('y', height + legendOffsetFromAxis)
-					.style('font-size', 'large')
-					.style('fill', getColor('relative'))
+					.style('font-size', axisFontSize)
+					.style('fill', colors.get('relative'))
 					.text('Placebo distribution using all units')
 			} else {
 				if (!relativeIntercept) {
@@ -269,23 +278,23 @@ export function useLegends(
 						.append('text')
 						.attr('x', width * 0.2)
 						.attr('y', height + legendOffsetFromAxis)
-						.style('font-size', 'large')
-						.style('fill', getColor('treated'))
-						.text('treated')
+						.style('font-size', axisFontSize)
+						.style('fill', colors.get('treated'))
+						.text('Treated')
 					container
 						.append('text')
 						.attr('x', width * 0.5)
 						.attr('y', height + legendOffsetFromAxis)
-						.style('font-size', 'large')
-						.style('fill', getColor('control'))
-						.text('synthetic control')
+						.style('font-size', axisFontSize)
+						.style('fill', colors.get('control'))
+						.text('Synthetic control')
 				} else {
 					container
 						.append('text')
 						.attr('x', width * 0.2)
 						.attr('y', height + legendOffsetFromAxis)
-						.style('font-size', 'large')
-						.style('fill', getColor('relative'))
+						.style('font-size', axisFontSize)
+						.style('fill', colors.get('relative'))
 						.text('Difference between treated and synthetic units')
 				}
 			}
@@ -298,14 +307,15 @@ export function useLegends(
 			.append('text')
 			.attr('text-anchor', 'middle')
 			.attr('transform', 'rotate(-90)')
-			.style('font-size', 'large')
-			.style('fill', 'gray')
+			.style('font-size', axisFontSize)
+			.style('fill', colors.defaultAxisTitle)
 			.text(
 				isPlaceboSimulation || relativeIntercept
 					? 'Diff in outcome vs control group'
 					: outputDisplayName,
 			)
 	}, [
+		colors,
 		renderRawData,
 		isPlaceboSimulation,
 		relativeIntercept,
@@ -331,6 +341,7 @@ export function useCounterfactual(
 	hideTooltip: () => void,
 	showTooltip: (value: string, xPos: number, yPos: number) => void,
 ) {
+	const colors = useColors()
 	const ref = useRef(null)
 
 	useEffect(() => {
@@ -357,14 +368,14 @@ export function useCounterfactual(
 		// x1 will be -ve for synth-control since the time_before_intervention will be 0
 		if (x1 > 0) {
 			g.append('circle')
-				.style('stroke', 'blue')
+				.style('stroke', colors.timeMarker)
 				.attr('r', 3)
 				.attr('cx', x1)
 				.attr('cy', height)
 		}
 		// post-time
 		g.append('circle')
-			.style('stroke', 'blue')
+			.style('stroke', colors.timeMarker)
 			.attr('r', 3)
 			.attr('cx', x2)
 			.attr('cy', height)
@@ -381,9 +392,9 @@ export function useCounterfactual(
 				if (x1 > 0) {
 					// x1 will be -ve for synth-control since the time_before_intervention will be 0
 					g.append('circle')
-						.style('stroke', getColor('control'))
+						.style('stroke', colors.get('control'))
 						.style('stroke-width', 2)
-						.style('fill', 'white')
+						.style('fill', colors.circleFill)
 						.attr('r', 3)
 						.attr('cx', x1)
 						.attr('cy', yScale(outputDataNonPlacebo.control_pre_value))
@@ -402,9 +413,9 @@ export function useCounterfactual(
 				}
 				// control post
 				g.append('circle')
-					.style('stroke', getColor('control'))
+					.style('stroke', colors.get('control'))
 					.style('stroke-width', 2)
-					.style('fill', 'white')
+					.style('fill', colors.circleFill)
 					.attr('r', 3)
 					.attr('cx', x2)
 					.attr('cy', yScale(outputDataNonPlacebo.control_post_value))
@@ -426,9 +437,9 @@ export function useCounterfactual(
 			if (x1 > 0) {
 				// x1 will be -ve for synth-control since the time_before_intervention will be 0
 				g.append('circle')
-					.style('stroke', getColor('treated'))
+					.style('stroke', colors.get('treated'))
 					.style('stroke-width', 2)
-					.style('fill', 'white')
+					.style('fill', colors.circleFill)
 					.attr('r', 3)
 					.attr('cx', x1)
 					.attr('cy', yScale(outputDataNonPlacebo.treated_pre_value))
@@ -447,9 +458,9 @@ export function useCounterfactual(
 			}
 			// treated post
 			g.append('circle')
-				.style('stroke', getColor('treated'))
+				.style('stroke', colors.get('treated'))
 				.style('stroke-width', 2)
-				.style('fill', 'white')
+				.style('fill', colors.circleFill)
 				.attr('r', 3)
 				.attr('cx', x2)
 				.attr('cy', yScale(outputDataNonPlacebo.treated_post_value))
@@ -467,9 +478,9 @@ export function useCounterfactual(
 				})
 			// counterfactual
 			g.append('circle')
-				.style('stroke', 'gray')
+				.style('stroke', colors.counterfactual)
 				.style('stroke-width', 2)
-				.style('fill', 'white')
+				.style('fill', colors.circleFill)
 				.attr('r', 3)
 				.attr('cx', x2)
 				.attr('cy', yScale(outputDataNonPlacebo.counterfactual_value))
@@ -509,8 +520,8 @@ export function useCounterfactual(
 				// .attr('orient', 'auto-start-reverse')
 				.append('path')
 				.attr('d', line()(arrowHead as Array<[number, number]>))
-				.attr('stroke', 'black')
-				.style('fill', 'black')
+				.attr('stroke', colors.arrowStroke)
+				.style('fill', colors.arrowFill)
 
 			const counterfactualY = yScale(outputDataNonPlacebo.counterfactual_value)
 			const postTreatedY = yScale(outputDataNonPlacebo.treated_post_value)
@@ -529,7 +540,7 @@ export function useCounterfactual(
 			const arrowPointsOriented =
 				counterfactualY > postTreatedY ? arrowPoints.reverse() : arrowPoints
 			g.append('path')
-				.style('stroke', 'black')
+				.style('stroke', colors.arrowStroke)
 				.style('fill', 'none')
 				.style('stroke-width', 2)
 				.style('stroke-dasharray', '6, 4')
@@ -557,6 +568,7 @@ export function useCounterfactual(
 				})
 		}
 	}, [
+		colors,
 		outputData,
 		renderRawData,
 		isPlaceboSimulation,

@@ -24,15 +24,15 @@ import {
 	WeightThresholdState,
 } from '../state/index.js'
 import { saveObjectJSON } from '../utils/Save.js'
-import { command_bar_styles } from './MenuBar.constants.js'
 import {
-	useAutoLayoutSliderMenuItem,
+	useAutoLayoutToggleMenuItem,
 	useDatasetMenuItems,
 	useModelMenuItems,
 	useSliderMenuItem,
 	useTogglePauseButtonMenuItem,
 	useViewMenuItems,
 } from './MenuBar.hooks.js'
+import { useCommandBarStyles } from './MenuBar.styles.js'
 
 export const MenuBar: React.FC = memo(function MenuBar() {
 	const [selectedViewKey, setSelectedViewKey] = useRecoilState(GraphViewState)
@@ -94,19 +94,20 @@ export const MenuBar: React.FC = memo(function MenuBar() {
 		autoLayoutEnabled,
 		setAutoLayoutEnabled,
 	)
+
 	const edgeWeightSliderMenuItem = useSliderMenuItem(
-		'Edge Weight Threshold',
+		'Edge weight threshold',
 		WeightThresholdState,
 	)
 	const edgeConfidenceSliderMenuItem = useSliderMenuItem(
-		'Edge ConfidenceThreshold',
+		'Edge confidence threshold',
 		ConfidenceThresholdState,
 	)
 	const correlationSliderMenuItem = useSliderMenuItem(
-		'Correlation Visibility Threshold',
+		'Correlation visibility threshold',
 		CorrelationThresholdState,
 	)
-	const autoLayoutSliderMenuItem = useAutoLayoutSliderMenuItem()
+	const autoLayoutSliderMenuItem = useAutoLayoutToggleMenuItem()
 	const togglePauseButtonMenuItem = useTogglePauseButtonMenuItem()
 
 	const menuItems = useMemo<ICommandBarItemProps[]>(
@@ -129,11 +130,12 @@ export const MenuBar: React.FC = memo(function MenuBar() {
 			correlationSliderMenuItem,
 		],
 	)
+	const commandBarStyles = useCommandBarStyles()
 	return (
 		<CommandBar
 			items={menuItems}
 			farItems={interactiveItems}
-			styles={command_bar_styles}
+			styles={commandBarStyles}
 		/>
 	)
 })

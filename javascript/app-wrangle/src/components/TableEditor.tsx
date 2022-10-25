@@ -5,7 +5,6 @@
 import {
 	ArqueroDetailsList,
 	ArqueroTableHeader,
-	HistoryPanel,
 	StepHistoryList,
 	TableCommands,
 	useOnCreateStep,
@@ -15,6 +14,7 @@ import {
 } from '@datashaper/react'
 import { useInputTableNames } from '@datashaper/react/dist/hooks/useTableDropdownOptions.js'
 import type { TableContainer } from '@datashaper/tables'
+import { ToolPanel } from '@essex/components'
 import { type IColumn, CommandBar } from '@fluentui/react'
 import { useBoolean } from '@fluentui/react-hooks'
 import { useDataTableOutput } from '@showwhy/app-common'
@@ -100,6 +100,7 @@ export const TableEditor: React.FC<TableEditorProps> = memo(
 						sortable
 						showColumnBorders
 						isHeaderFixed
+						fill
 						clickableColumns={!!onColumnClick}
 						selectedColumn={selectedColumn}
 						onColumnClick={onColumnClick}
@@ -107,11 +108,12 @@ export const TableEditor: React.FC<TableEditorProps> = memo(
 						table={selectedTable?.table}
 					/>
 				</DetailsListContainer>
-				<HistoryPanel
-					title="Steps"
-					toggleCollapsed={toggleCollapsed}
-					numSteps={numSteps}
-					showStepCount
+				<ToolPanel
+					headerText={`Workflow steps (${workflow.steps.length})`}
+					onDismiss={toggleCollapsed}
+					headerIconProps={{
+						iconName: 'History',
+					}}
 				>
 					<StepHistoryList
 						onDelete={onDelete}
@@ -119,7 +121,7 @@ export const TableEditor: React.FC<TableEditorProps> = memo(
 						workflow={workflow}
 						onSave={onSave}
 					/>
-				</HistoryPanel>
+				</ToolPanel>
 			</Container>
 		)
 	},

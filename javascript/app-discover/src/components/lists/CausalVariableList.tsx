@@ -4,7 +4,7 @@
  */
 import { ActionButton, FocusZone, List, Spinner } from '@fluentui/react'
 import { memo, Suspense, useCallback, useEffect, useState } from 'react'
-import { useRecoilValue,useSetRecoilState } from 'recoil'
+import { useRecoilValue, useSetRecoilState } from 'recoil'
 
 import type { CausalVariable } from '../../domain/CausalVariable.js'
 import {

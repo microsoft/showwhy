@@ -29,12 +29,7 @@ export const RawTableViewer: React.FC<RawTableViewerProps> = memo(
 				{dataTable && table && (
 					<TableContainer>
 						{viewType === ViewType.Interactive ? (
-							<RawTable
-								features={{
-									...RawTableDefaultFeatures,
-								}}
-								table={table}
-							/>
+							<RawTable features={RawTableDefaultFeatures} table={table} />
 						) : (
 							<JsonEditor content={content} onChange={onChange} />
 						)}

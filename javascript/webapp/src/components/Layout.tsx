@@ -6,12 +6,13 @@ import { memo } from 'react'
 
 import { FileTree } from './FileTree.js'
 import { Header } from './Header.js'
-import { Container, Content, fileTreeStyle, Main } from './Layout.styles.js'
+import { Container, Content, Main, useFileTreeStyle } from './Layout.styles.js'
 import type { LayoutProps } from './Layout.types.js'
 
 export const Layout: React.FC<LayoutProps> = memo(function Layout({
 	children,
 }) {
+	const fileTreeStyle = useFileTreeStyle()
 	return (
 		<Container id="layout">
 			<Header />

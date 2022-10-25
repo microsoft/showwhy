@@ -3,11 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { LegendData } from '../types.js';
-
-
+import type { LegendData } from '../types.js'
 
 export interface LegendProps {
-		data: LegendData[]
-
+	data: LegendData[]
 }

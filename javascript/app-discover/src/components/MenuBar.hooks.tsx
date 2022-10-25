@@ -18,7 +18,7 @@ import {
 } from '../state/index.js'
 import { ThresholdSlider } from './controls/ThresholdSlider.js'
 import { GraphViewStates } from './graph/GraphViews.types.js'
-import { Button, toggleStyles } from './MenuBar.styles.js'
+import { Button, toggleStyles, useMenuButtonStyles } from './MenuBar.styles.js'
 
 export function useDatasetMenuItems(
 	loadTable: (name: string) => void,
@@ -32,31 +32,33 @@ export function useModelMenuItems(
 	openCausalModelFileSelector: () => void,
 	clearModel: () => void,
 ): ICommandBarItemProps {
+	const buttonStyles = useMenuButtonStyles()
 	return useMemo(
 		() => ({
 			key: 'causal-model',
-			text: 'Causal Model',
+			text: 'Causal model',
+			buttonStyles,
 			subMenuProps: {
 				items: [
 					{
 						key: 'save-model',
-						text: 'Save Model...',
+						text: 'Save model...',
 						onClick: saveModel,
 					},
 					{
 						key: 'load-model',
-						text: 'Load Model...',
+						text: 'Load model...',
 						onClick: openCausalModelFileSelector,
 					},
 					{
 						key: 'clear-model',
-						text: 'Clear Model',
+						text: 'Clear model',
 						onClick: clearModel,
 					},
 				],
 			},
 		}),
-		[saveModel, openCausalModelFileSelector, clearModel],
+		[saveModel, openCausalModelFileSelector, clearModel, buttonStyles],
 	)
 }
 
@@ -68,15 +70,17 @@ export function useViewMenuItems(
 	autoLayoutEnabled: boolean,
 	setAutoLayoutEnabled: (v: boolean) => void,
 ): ICommandBarItemProps {
+	const buttonStyles = useMenuButtonStyles()
 	return useMemo(
 		() => ({
 			key: 'view',
 			text: 'View',
+			buttonStyles,
 			subMenuProps: {
 				items: [
 					{
 						key: 'CausalView',
-						text: 'Causal Model',
+						text: 'Causal model',
 						iconProps: {
 							iconName:
 								view === GraphViewStates.CausalView
@@ -142,6 +146,7 @@ export function useViewMenuItems(
 			setUseStraightEdges,
 			autoLayoutEnabled,
 			setAutoLayoutEnabled,
+			buttonStyles,
 		],
 	)
 }
@@ -154,15 +159,14 @@ export function useSliderMenuItem(
 		() => ({
 			key: label.toLowerCase().replaceAll(' ', '-'),
 			onRender: () => (
-				<ThresholdSlider label={label} thresholdState={state} width={200} />
+				<ThresholdSlider label={label} thresholdState={state} width={180} />
 			),
-			styles: { padding: '0.5rem' },
 		}),
 		[label, state],
 	)
 }
 
-export function useAutoLayoutSliderMenuItem() {
+export function useAutoLayoutToggleMenuItem() {
 	const [autoLayoutEnabled, setAutoLayoutEnabled] = useRecoilState(
 		AutoLayoutEnabledState,
 	)
@@ -173,6 +177,7 @@ export function useAutoLayoutSliderMenuItem() {
 				<Toggle
 					label="Auto-layout"
 					checked={autoLayoutEnabled}
+					inlineLabel
 					styles={toggleStyles}
 					onChange={(e, v) => setAutoLayoutEnabled(Boolean(v))}
 				/>
@@ -193,6 +198,7 @@ export function useTogglePauseButtonMenuItem() {
 	return useMemo(
 		() => ({
 			key: 'pause-toggle-button',
+
 			onRender: () => (
 				<Button
 					toggle

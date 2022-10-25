@@ -48,9 +48,8 @@ export const MessageContainer: React.FC<{
 })
 
 const Message = styled(MessageBar)<{ type: string }>`
-	background-color: white;
-	color: ${({ theme, type }) => theme.application()[type]};
-	border: 1px solid ${({ theme, type }) => theme.application()[type]};
+	color: ${({ theme, type }) => theme.application()[type].hex()};
+	border: 1px solid ${({ theme, type }) => theme.application()[type].hex()};
 	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 	border-radius: 4px;
 `

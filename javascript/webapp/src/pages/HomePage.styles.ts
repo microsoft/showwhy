@@ -10,7 +10,9 @@ export const Container = styled.div`
 	flex-wrap: wrap;
 `
 
-export const DocumentCardStyle = {
+export const documentCardStyle = {
 	margin: 10,
 	maxHeight: 300,
 }
+
+export const documentCardTitleStyles = { root: { height: 48 } }

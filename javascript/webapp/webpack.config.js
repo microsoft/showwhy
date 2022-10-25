@@ -17,7 +17,7 @@ const configuration = configure({
 		new HtmlWebpackPlugin({
 			baseUrl: process.env.BASE_URL ?? '/',
 			template: '../../config/index.hbs',
-			title: 'Microsoft Causal Platform',
+			title: 'ShowWhy Causal Platform',
 			appMountIds: ['root', 'cookie-banner'],
 			devServer: mode === 'development',
 			files: {

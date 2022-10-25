@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { Theme } from '@thematic/core'
+import type { Theme } from '@fluentui/react'
 import { memo, useMemo } from 'react'
 import Xarrow from 'react-xarrows'
 import styled from 'styled-components'
@@ -82,7 +82,7 @@ export const EstimatorsRunProgress: React.FC<{
 								: refutersLabel.id
 						}
 						path="straight"
-						color={theme.application().border().hex()}
+						color={theme.palette.neutralTertiaryAlt}
 						headSize={7}
 						strokeWidth={1}
 					/>
@@ -101,7 +101,7 @@ export const EstimatorsRunProgress: React.FC<{
 								start={confidenceIntervalLabel.id}
 								end={refutersLabel.id}
 								path="straight"
-								color={theme.application().border().hex()}
+								color={theme.palette.neutralTertiaryAlt}
 								headSize={7}
 								strokeWidth={1}
 							/>
@@ -164,9 +164,9 @@ const ProgressIndicatorLabel = styled.div<{ status: NodeResponseStatus }>`
 			case NodeResponseStatus.Success:
 				return 'limegreen'
 			case NodeResponseStatus.Started:
-				return theme.application().accent().hex()
+				return theme.palette.themePrimary
 			default:
-				return theme.application().highContrast().hex()
+				return theme.palette.neutralPrimary
 		}
 	}};
 `

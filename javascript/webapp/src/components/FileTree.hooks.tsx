@@ -9,6 +9,7 @@ import type { BaseFile } from '@datashaper/utilities'
 import { createBaseFile } from '@datashaper/utilities'
 import { DataTable } from '@datashaper/workflow'
 import type { ICommandBarItemProps, IContextualMenuItem } from '@fluentui/react'
+import { useTheme } from '@fluentui/react'
 import type { OpenTableHandler } from '@showwhy/app-common'
 import {
 	DataPackageContext,
@@ -138,6 +139,7 @@ export function useFileManagementCommands(
 		return saveProps(onClickDownloadZip)
 	}, [onClickDownloadZip])
 
+	const theme = useTheme()
 	const commands = useMemo<ICommandBarItemProps[]>(
 		() =>
 			createCommandBar(
@@ -145,6 +147,7 @@ export function useFileManagementCommands(
 				hasDataPackages,
 				onOpenCommands,
 				onSaveCommands,
+				theme,
 			),
 		[hasDataPackages, expanded, onOpenCommands, onSaveCommands],
 	)

@@ -3,14 +3,20 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import type { IStyle } from '@fluentui/react'
-import { CommandBar, CommandBarButton, Icon, IconButton } from '@fluentui/react'
+import {
+	CommandBar,
+	CommandBarButton,
+	Icon,
+	IconButton,
+	useTheme,
+} from '@fluentui/react'
 import {
 	fluentTreeItem,
 	fluentTreeView,
 	provideFluentDesignSystem,
 } from '@fluentui/web-components'
 import { provideReactWrapper } from '@microsoft/fast-react-wrapper'
-import React from 'react'
+import React, { useMemo } from 'react'
 import styled from 'styled-components'
 
 const { wrap } = provideReactWrapper(React, provideFluentDesignSystem())
@@ -39,7 +45,7 @@ export const ItemIcon = styled(Icon)`
 `
 
 export const TreeItem = styled(FluentTreeItem)`
-	align-items: 'center';
+	align-items: center;
 `
 
 export const Commands = styled(CommandBar)`
@@ -74,4 +80,17 @@ export const icons = {
 	project: { iconName: 'ZipFolder' },
 	openExpandedView: { iconName: 'DoubleChevronRight12' },
 	closeExpandedView: { iconName: 'DoubleChevronLeft12' },
+}
+
+export function useCommandbarStyles() {
+	const theme = useTheme()
+	return useMemo(
+		() => ({
+			root: {
+				background: theme.palette.neutralLighter,
+				borderBottom: `1px solid ${theme.palette.neutralTertiaryAlt}`,
+			},
+		}),
+		[theme],
+	)
 }

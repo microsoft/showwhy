@@ -8,7 +8,7 @@ export const FullScreenContainer = styled.div`
 	height: calc(100vh - 100px);
 	display: flex;
 	flex-direction: column;
-	padding: 4px;
+	padding: 0px;
 `
 
 export const ScrollableFullScreenContainer = styled(FullScreenContainer)`
@@ -18,6 +18,7 @@ export const ScrollableFullScreenContainer = styled(FullScreenContainer)`
 export const HalfHeightContainer = styled.div`
 	flex: 0.5 0 50%;
 	display: flex;
+	padding: 8px;
 	flex-direction: column;
 	overflow: auto;
 	height: 100%;

@@ -7,6 +7,7 @@ import { CommandBar } from '@fluentui/react'
 import { memo, useCallback, useMemo } from 'react'
 
 import { useDatasetMenuItems } from '../hooks/useDatasetMenuItems.js'
+import { useTableMenuBarStyles } from './TableMenuBar.styles.js'
 import type { TableMenuBarProps } from './TableMenuBar.types.js'
 
 export const TableMenuBar: React.FC<TableMenuBarProps> = memo(function MenuBar({
@@ -22,5 +23,6 @@ export const TableMenuBar: React.FC<TableMenuBarProps> = memo(function MenuBar({
 		() => [datasetMenuItems],
 		[datasetMenuItems],
 	)
-	return <CommandBar items={menuItems} />
+	const styles = useTableMenuBarStyles()
+	return <CommandBar items={menuItems} styles={styles} />
 })
