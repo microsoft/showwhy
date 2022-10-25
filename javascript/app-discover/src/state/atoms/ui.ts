@@ -8,6 +8,11 @@ import { GraphViewStates } from '../../components/graph/GraphViews.types.js'
 import { CausalDiscoveryAlgorithm } from '../../domain/CausalDiscovery/CausalDiscoveryAlgorithm.js'
 import type { Selectable } from '../../domain/Selection.js'
 
+export const ErrorMessageState = atom<string | undefined>({
+	key: 'ErrorMessageState',
+	default: undefined,
+})
+
 export const LoadingState = atom<string | undefined>({
 	key: 'LoadingState',
 	default: undefined,
