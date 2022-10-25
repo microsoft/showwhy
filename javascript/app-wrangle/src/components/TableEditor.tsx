@@ -75,7 +75,7 @@ export const TableEditor: React.FC<TableEditorProps> = memo(
 
 		const historyButtonCommandBar = useHistoryButtonCommandBar(
 			isCollapsed,
-			workflow,
+			numSteps,
 			toggleCollapsed,
 		)
 
