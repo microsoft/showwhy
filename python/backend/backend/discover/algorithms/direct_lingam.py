@@ -34,14 +34,18 @@ class DirectLiNGAMRunner(CausalDiscoveryRunner):
         graph_gc = causalnex.structure.StructureModel(n.causal_matrix)
 
         logging.info(graph_gc)
+
         labels = {
             i: self._prepared_data.columns[i]
             for i in range(len(self._prepared_data.columns))
         }
         labeled_gc = networkx.relabel_nodes(graph_gc, labels)
+
         graph_json = json_graph.cytoscape_data(labeled_gc)
+
         graph_json["has_weights"] = True
         graph_json["has_confidence_values"] = False
+        graph_json["normalized_columns_metadata"] = self._normalized_columns_metadata
 
         self._report_progress(100.0)
 
