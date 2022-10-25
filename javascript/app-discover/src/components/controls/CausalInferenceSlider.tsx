@@ -3,13 +3,11 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { IconButton, Slider, Stack, Text } from '@fluentui/react'
-import { memo, useCallback } from 'react'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { memo, useCallback, useMemo } from 'react'
+import { useRecoilState } from 'recoil'
 
-import {
-	CausalInferenceResultState,
-	CausalInterventionsState,
-} from '../../state/index.jsx'
+import { VariableNature } from '../../domain/VariableNature.js'
+import { CausalInterventionsState } from '../../state/index.jsx'
 import {
 	icon_button_props,
 	icon_button_style,
@@ -18,52 +16,66 @@ import {
 	slider_stack_tokens,
 	slider_style,
 } from './CausalInferenceSlider.constants.js'
-import { useCausalInferenceDifferenceFromBaselineValues } from './CausalInferenceSlider.hooks.js'
+import {
+	useCausalInferenceDifferenceFromBaselineValues,
+	useInferenceResult,
+} from './CausalInferenceSlider.hooks.js'
 import type { CausalInferenceSliderProps } from './CausalInferenceSlider.types.js'
 
+const categoricalNatures = [
+	VariableNature.CategoricalNominal,
+	VariableNature.CategoricalOrdinal,
+	VariableNature.Discrete,
+]
+
 export const CausalInferenceSlider: React.FC<CausalInferenceSliderProps> = memo(
-	function CausalInferenceSlider({ variable, wasDragged }) {
+	function CausalInferenceSlider({ variable, wasDragged, columnMetadata }) {
+		const isCategorical =
+			variable?.nature && categoricalNatures.includes(variable?.nature)
+
 		const differenceValues = useCausalInferenceDifferenceFromBaselineValues()
-		// const initialValueOffsets = useRecoilValue(CausalInferenceBaselineOffsetsState);
-		const causalInferenceResults = useRecoilValue(CausalInferenceResultState)
+		const metadata = columnMetadata && columnMetadata[variable.columnName]
+
+		const inferenceResult = useInferenceResult(variable.columnName)
 		const [interventions, setInterventions] = useRecoilState(
 			CausalInterventionsState,
 		)
-		const min = (variable.min || 0) < 0 ? -1 : 0
-		const inferenceResult = causalInferenceResults.get(variable.columnName)
-		const unscaledValue = (
-			(inferenceResult || 0) * (variable.magnitude || 0)
-		).toFixed(2)
-		// const scaledValue = inferenceResult?.toFixed(2);
+
 		const rawDifferenceValue = differenceValues.get(variable.columnName) || 0
-		const differenceValue = (
-			rawDifferenceValue * (variable.magnitude || 0)
-		).toFixed(2)
+
+		const unscaledValue = (inferenceResult || 0).toFixed(2)
+		const differenceValue = rawDifferenceValue.toFixed(2)
+
 		const isIntervened = interventions.some(
 			intervention => intervention.columnName === variable.columnName,
 		)
 
+		const filteredInterventions = useMemo(() => {
+			return interventions.filter(
+				intervention => intervention.columnName !== variable.columnName,
+			)
+		}, [interventions, variable])
+
 		const updateInterventions = useCallback(
 			(value: number) => {
-				const revisedInterventions = interventions.filter(
-					intervention => intervention.columnName !== variable.columnName,
-				)
-				revisedInterventions.push({ columnName: variable.columnName, value })
+				const revisedInterventions = [...filteredInterventions]
+				revisedInterventions.push({
+					columnName: variable.columnName,
+					value: value,
+				})
 				setInterventions(revisedInterventions)
 			},
-			[interventions, setInterventions, variable.columnName],
+			[filteredInterventions, setInterventions, variable.columnName],
 		)
 
 		const removeIntervention = useCallback(() => {
 			if (wasDragged) {
 				return
 			}
-			const revisedInterventions = interventions.filter(
-				intervention => intervention.columnName !== variable.columnName,
-			)
-			setInterventions(revisedInterventions)
-		}, [interventions, setInterventions, variable.columnName, wasDragged])
+			setInterventions(filteredInterventions)
+		}, [filteredInterventions, setInterventions, wasDragged])
 
+		if (isCategorical) return null
 		return (
 			<div>
 				<Stack
@@ -78,11 +90,12 @@ export const CausalInferenceSlider: React.FC<CausalInferenceSliderProps> = memo(
 						disabled={!isIntervened}
 						style={icon_button_style}
 					/>
+					{/* min and max values are by default 0 and 1 because of binary data, they don't have lower and upper */}
 					<Slider
 						className="no-drag"
-						min={min}
-						max={1.0}
-						value={inferenceResult || 0}
+						min={metadata?.lower ?? 0}
+						max={metadata?.upper ?? 1}
+						value={+unscaledValue || 0}
 						step={0.01}
 						styles={slider_style}
 						onChange={updateInterventions}

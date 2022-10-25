@@ -2,6 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import { useMemo } from 'react'
 import { useRecoilValue } from 'recoil'
 
 import {
@@ -21,4 +22,11 @@ export function useCausalInferenceDifferenceFromBaselineValues() {
 		}
 	})
 	return differences
+}
+
+export function useInferenceResult(columnName: string): number | undefined {
+	const causalInferenceResults = useRecoilValue(CausalInferenceResultState)
+	return useMemo((): number | undefined => {
+		return causalInferenceResults.get(columnName)
+	}, [causalInferenceResults])
 }

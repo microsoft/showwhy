@@ -14,6 +14,7 @@ import type { CausalVariable } from '../../domain/CausalVariable.jsx'
 import * as Graph from '../../domain/Graph.jsx'
 import { hasSameOrInvertedSourceAndTarget } from '../../domain/Relationship.jsx'
 import {
+	CausalDiscoveryResultsState,
 	ConfidenceThresholdState,
 	FilteredCorrelationsState,
 	GraphLayoutState,
@@ -34,6 +35,10 @@ const MAX_EDGE_WIDTH = 10
 
 export const CausalGraphExplorer = memo(function CausalGraphExplorer() {
 	const causalGraph = useCausalGraph()
+	const columnMetadata = useRecoilValue(
+		CausalDiscoveryResultsState,
+	).normalizedColumnMetadata
+
 	const weightThreshold = useRecoilValue(WeightThresholdState)
 	const confidenceThreshold = useRecoilValue(ConfidenceThresholdState)
 	const causalRelationships = Graph.relationshipsAboveThresholds(
@@ -88,7 +93,12 @@ export const CausalGraphExplorer = memo(function CausalGraphExplorer() {
 			layoutTransitionTime={layoutTransitionTime}
 		>
 			{Graph.includesVariable(causalGraph, variable) ? (
-				<CausalGraphNode variable={variable} isSelectable isRemovable />
+				<CausalGraphNode
+					columnMetadata={columnMetadata}
+					variable={variable}
+					isSelectable
+					isRemovable
+				/>
 			) : (
 				<CorrelationGraphNode variable={variable} isSelectable isAddable />
 			)}
