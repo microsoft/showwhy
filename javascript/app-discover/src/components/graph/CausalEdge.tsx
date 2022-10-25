@@ -36,7 +36,7 @@ export const CausalEdge: React.FC<CausalEdgeProps> = memo(function CausalEdge({
 
 	const onSelectEdge = useCallback(() => {
 		setSelectedObject(relationship)
-	}, [relationship])
+	}, [relationship, setSelectedObject])
 
 	const strokeWidth = map(
 		Math.abs(relationship.weight || 0),

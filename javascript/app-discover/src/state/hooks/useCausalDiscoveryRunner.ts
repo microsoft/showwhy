@@ -6,6 +6,7 @@ import { useCallback, useEffect, useMemo } from 'react'
 import { useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil'
 
 import { discover as runCausalDiscovery } from '../../domain/CausalDiscovery/CausalDiscovery.js'
+import { CausalDiscoveryAlgorithm } from '../../domain/CausalDiscovery/CausalDiscoveryAlgorithm.js'
 import type {
 	Relationship,
 	RelationshipReference,
@@ -28,6 +29,8 @@ import {
 	DatasetState,
 	InModelCausalVariablesState,
 } from '../selectors/index.js'
+import type { DECIParams } from './../../domain/Algorithms/DECI.js'
+import { DeciParamsState } from './../atoms/algorithms_params.js'
 import { useLastDiscoveryResultPromise } from './useLastDiscoveryResultPromise.js'
 
 export function useCausalDiscoveryRunner() {
@@ -37,11 +40,18 @@ export function useCausalDiscoveryRunner() {
 	const causalDiscoveryAlgorithm = useRecoilValue(
 		SelectedCausalDiscoveryAlgorithmState,
 	)
+	const DECIParams = useRecoilValue(DeciParamsState)
 	const pauseAutoRun = useRecoilValue(PauseAutoRunState)
 	const algorithm = useMemo(
 		() => pauseAutoRun ?? causalDiscoveryAlgorithm,
 		[pauseAutoRun, causalDiscoveryAlgorithm],
 	)
+
+	const algorithmParams = useMemo((): DECIParams | undefined => {
+		return causalDiscoveryAlgorithm === CausalDiscoveryAlgorithm.DECI
+			? DECIParams
+			: undefined
+	}, [DECIParams, causalDiscoveryAlgorithm])
 	const setCausalDiscoveryResultsState = useSetRecoilState(
 		CausalDiscoveryResultsState,
 	)
@@ -132,6 +142,7 @@ export function useCausalDiscoveryRunner() {
 				causalDiscoveryConstraints,
 				algorithm,
 				updateProgress,
+				algorithmParams,
 			)
 
 			setLastDiscoveryResultPromise(discoveryPromise)
@@ -171,6 +182,7 @@ export function useCausalDiscoveryRunner() {
 		setLoadingState,
 		setCausalDiscoveryResultsState,
 		updateProgress,
+		algorithmParams,
 		cancelLastDiscoveryResultPromise,
 		setLastDiscoveryResultPromise,
 		setErrorMessage,

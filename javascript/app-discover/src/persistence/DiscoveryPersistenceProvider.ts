@@ -30,6 +30,8 @@ import {
 	StraightEdgesState,
 	WeightThresholdState,
 } from '../state/index.js'
+import type { DECIParams } from './../domain/Algorithms/DECI.js'
+import { DeciParamsState } from './../state/atoms/algorithms_params.js'
 
 interface ProjectJson {
 	causalGraph: {
@@ -57,6 +59,7 @@ interface ProjectJson {
 		confidenceThreshold: number
 		correlationThreshold: number
 		view: GraphViewStates
+		deciParams: DECIParams
 	}
 }
 
@@ -100,6 +103,7 @@ function useGetProjectJson(): () => ProjectJson {
 	const nodePositions = useRecoilValue(NodePositionsState)
 	const straightEdges = useRecoilValue(StraightEdgesState)
 	const autoLayoutEnabled = useRecoilValue(AutoLayoutEnabledState)
+	const deciParams = useRecoilValue(DeciParamsState)
 	const selectedDiscoveryAlgorithm = useRecoilValue(
 		SelectedCausalDiscoveryAlgorithmState,
 	)
@@ -133,6 +137,7 @@ function useGetProjectJson(): () => ProjectJson {
 				confidenceThreshold,
 				correlationThreshold,
 				view,
+				deciParams,
 			},
 		}),
 		[
@@ -152,6 +157,7 @@ function useGetProjectJson(): () => ProjectJson {
 			confidenceThreshold,
 			correlationThreshold,
 			view,
+			deciParams,
 		],
 	)
 }
@@ -161,6 +167,7 @@ function useLoadProjectJson(): (json: ProjectJson) => void {
 	const setCausalGraphConstraints = useSetRecoilState(
 		CausalGraphConstraintsState,
 	)
+	const setDeciParams = useSetRecoilState(DeciParamsState)
 	const setCausalDiscoveryResultsState = useSetRecoilState(
 		CausalDiscoveryResultsState,
 	)
@@ -209,6 +216,7 @@ function useLoadProjectJson(): (json: ProjectJson) => void {
 			setConfidenceThreshold(json.ui.confidenceThreshold)
 			setCorrelationThreshold(json.ui.correlationThreshold)
 			setView(json.ui.view)
+			setDeciParams(json.ui.deciParams)
 		},
 		[
 			setInModelColumnNames,
@@ -227,6 +235,7 @@ function useLoadProjectJson(): (json: ProjectJson) => void {
 			setConfidenceThreshold,
 			setCorrelationThreshold,
 			setView,
+			setDeciParams,
 		],
 	)
 }

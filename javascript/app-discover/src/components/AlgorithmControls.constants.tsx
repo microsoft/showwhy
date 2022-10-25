@@ -8,23 +8,8 @@ import { CausalDiscoveryAlgorithm } from '../domain/CausalDiscovery/CausalDiscov
 
 export const ALGORITHMS: IChoiceGroupOption[] = [
 	{
-		key: 'DECIDraftA',
-		text: 'DECI Draft (i: 100, j: 10)',
-		value: CausalDiscoveryAlgorithm.DECIDraftA,
-	},
-	{
-		key: 'DECIDraftB',
-		text: 'DECI Draft (i: 10, j: 100)',
-		value: CausalDiscoveryAlgorithm.DECIDraftB,
-	},
-	{
-		key: 'DECIDraftC',
-		text: 'DECI Draft (i: 100, j:100)',
-		value: CausalDiscoveryAlgorithm.DECIDraftC,
-	},
-	{
 		key: 'DECI',
-		text: 'DECI Full Quality (i: 20, j:1000)',
+		text: 'DECI',
 		value: CausalDiscoveryAlgorithm.DECI,
 	},
 	{
