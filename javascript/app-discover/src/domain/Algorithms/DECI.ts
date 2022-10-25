@@ -5,7 +5,7 @@
 
 export interface DECIParams {
 	model_options?: DECIModelOptions
-	training_options: DECITrainingOptions
+	training_options?: DECITrainingOptions
 }
 
 export enum VarDistAMode {
