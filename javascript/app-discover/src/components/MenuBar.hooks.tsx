@@ -5,7 +5,7 @@
 import type { ICommandBarItemProps } from '@fluentui/react'
 import { Checkbox, ContextualMenuItemType, Toggle } from '@fluentui/react'
 import { useBoolean } from '@fluentui/react-hooks'
-import { useDataTables } from '@showwhy/app-common'
+import { useDatasetMenuItems as useDatasetMenuItemsCommon } from '@showwhy/app-common'
 import { useEffect, useMemo } from 'react'
 import type { RecoilState } from 'recoil'
 import { useRecoilState, useRecoilValue } from 'recoil'
@@ -24,25 +24,7 @@ export function useDatasetMenuItems(
 	loadTable: (name: string) => void,
 ): ICommandBarItemProps {
 	const selectedTable = useRecoilValue(DatasetNameState)
-	const dataTables = useDataTables()
-	return useMemo(
-		() => ({
-			key: 'dataset',
-			text: selectedTable || 'Dataset',
-			subMenuProps: {
-				items: [...dataTables.values()].map(dataset => {
-					return {
-						key: dataset.id,
-						text: dataset.name,
-						onClick: () => {
-							loadTable(dataset.name)
-						},
-					}
-				}),
-			},
-		}),
-		[dataTables, loadTable],
-	)
+	return useDatasetMenuItemsCommon(selectedTable, loadTable)
 }
 
 export function useModelMenuItems(

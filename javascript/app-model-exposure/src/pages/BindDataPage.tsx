@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { ArqueroDetailsList, ArqueroTableHeader } from '@datashaper/react'
-import { MenuBar } from '@showwhy/app-common'
+import { TableMenuBar } from '@showwhy/app-common'
 import type { FC } from 'react'
 import { memo } from 'react'
 
@@ -38,7 +38,10 @@ export const BindDataPage: FC = memo(function BindDataPage() {
 		<Container>
 			<DataTypeWarningMessage />
 			<ActionsContainer>
-				<MenuBar onItemClicked={onSelectTableId} dataTables={tables}></MenuBar>
+				<TableMenuBar
+					selectedTable={selectedTableName}
+					onTableSelected={onSelectTableId}
+				/>
 				<AddVariableFields />
 				{allElements.length > 0 && (
 					<CompletedElements
