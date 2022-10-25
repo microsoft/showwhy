@@ -4,13 +4,13 @@
  */
 import type { ICommandBarItemProps } from '@fluentui/react'
 import { CommandBar } from '@fluentui/react'
-import type ColumnTable from 'arquero/dist/types/table/column-table'
 import { memo, useCallback, useEffect, useMemo } from 'react'
 import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil'
 import { useFilePicker } from 'use-file-picker'
 
 import type { DatasetDatapackage } from '../domain/Dataset.js'
-import useDatasetLoader from '../domain/Dataset.js'
+import { useDatasetLoader } from '../domain/Dataset.js'
+import { DeciParamsState } from '../state/atoms/algorithms_params.js'
 import {
 	AutoLayoutEnabledState,
 	CausalGraphConstraintsState,
@@ -39,6 +39,7 @@ export const MenuBar: React.FC = memo(function MenuBar() {
 	const loadColumnTable = useDatasetLoader()
 	const resetVariables = useResetRecoilState(InModelColumnNamesState)
 	const resetConstraints = useResetRecoilState(CausalGraphConstraintsState)
+	const resetParams = useResetRecoilState(DeciParamsState)
 	const [useStraightEdges, setUseStraightEdges] =
 		useRecoilState(StraightEdgesState)
 	const [autoLayoutEnabled, setAutoLayoutEnabled] = useRecoilState(
@@ -55,7 +56,8 @@ export const MenuBar: React.FC = memo(function MenuBar() {
 	const clearModel = useCallback(() => {
 		resetVariables()
 		resetConstraints()
-	}, [resetVariables, resetConstraints])
+		resetParams()
+	}, [resetVariables, resetConstraints, resetParams])
 
 	useEffect(() => {
 		if (causalModelFileContent[0] !== undefined) {
@@ -71,12 +73,9 @@ export const MenuBar: React.FC = memo(function MenuBar() {
 	}, [persistedInfo])
 
 	const loadTable = useCallback(
-		(name: string, table: ColumnTable) => {
-			setLoadingState('Loading ' + name)
-			setTimeout(() => {
-				loadColumnTable(name, table)
-				setLoadingState(undefined)
-			}, 500)
+		(name: string) => {
+			loadColumnTable(name)
+			setLoadingState(undefined)
 		},
 		[loadColumnTable, setLoadingState],
 	)

@@ -4,14 +4,14 @@
  */
 import 'allotment/dist/style.css'
 
-import { Spinner } from '@fluentui/react'
+import { MessageBar, MessageBarType, Spinner } from '@fluentui/react'
 import { CommonLayout } from '@showwhy/app-common'
 import { Allotment } from 'allotment'
 import { memo, Suspense } from 'react'
 import { useMeasure } from 'react-use'
 import { useRecoilValue } from 'recoil'
 
-import { LoadingState } from '../state/index.js'
+import { ErrorMessageState, LoadingState } from '../state/index.js'
 import {
 	FillContainer,
 	FullScreenContainer,
@@ -27,7 +27,9 @@ import { PropertyPanels } from './panels/PropertyPanels.js'
 
 export const CauseDis = memo(function CauseDis() {
 	const loading = useRecoilValue(LoadingState)
+	const errorMessage = useRecoilValue(ErrorMessageState)
 	const [ref, { width, height }] = useMeasure<HTMLDivElement>()
+
 	return (
 		<CommonLayout
 			configRail={<AppLeftRail />}
@@ -38,6 +40,11 @@ export const CauseDis = memo(function CauseDis() {
 				</Suspense>
 			}
 		>
+			{errorMessage && (
+				<MessageBar messageBarType={MessageBarType.error}>
+					{errorMessage}
+				</MessageBar>
+			)}
 			{loading ? (
 				<Spinner label={loading} />
 			) : (

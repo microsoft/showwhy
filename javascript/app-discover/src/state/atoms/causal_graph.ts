@@ -8,12 +8,10 @@ import type { CausalDiscoveryConstraints } from '../../domain/CausalDiscovery/Ca
 import type { CausalDiscoveryResult } from '../../domain/CausalDiscovery/CausalDiscoveryResult.js'
 import { EMPTY_CAUSAL_DISCOVERY_RESULT } from '../../domain/CausalDiscovery/CausalDiscoveryResult.js'
 import type { CausalGraph } from '../../domain/Graph.js'
-import { persistence } from './persistence.js'
 
 export const InModelColumnNamesState = atom<string[]>({
 	key: 'InModelColumnNamesState',
 	default: [],
-	...persistence,
 })
 
 export const CausalGraphConstraintsState = atom<CausalDiscoveryConstraints>({
@@ -23,14 +21,11 @@ export const CausalGraphConstraintsState = atom<CausalDiscoveryConstraints>({
 		effects: [],
 		manualRelationships: [],
 	},
-	...persistence,
 })
 
 export const CausalGraphHistoryState = atom<CausalGraph[]>({
 	key: 'CausalGraphHistoryState',
 	default: [],
-	// eslint-disable-next-line camelcase
-	// effects_UNSTABLE: [persistAtom],
 })
 
 export const CausalDiscoveryResultsState = atom<CausalDiscoveryResult>({

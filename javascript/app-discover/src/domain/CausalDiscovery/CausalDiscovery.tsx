@@ -14,10 +14,8 @@ import type { Dataset } from '../../domain/Dataset.js'
 import type { CausalGraph } from '../../domain/Graph.js'
 import type { Relationship } from '../../domain/Relationship.js'
 import { CancelablePromise } from '../../utils/CancelablePromise.js'
-import {
-	CausalDiscoveryAlgorithm,
-	CausalDiscoveryAlgorithmOptions,
-} from './CausalDiscoveryAlgorithm.js'
+import type { DECIParams } from '../Algorithms/DECI.js'
+import { CausalDiscoveryAlgorithm } from './CausalDiscoveryAlgorithm.js'
 import type { CausalDiscoveryConstraints } from './CausalDiscoveryConstraints.js'
 import type {
 	CausalDiscoveryRequestReturnValue,
@@ -94,27 +92,28 @@ export function discover(
 	dataset: Dataset,
 	variables: CausalVariable[],
 	constraints: CausalDiscoveryConstraints,
-	algorithm: CausalDiscoveryAlgorithm,
+	algorithmName: CausalDiscoveryAlgorithm,
 	progressCallback?: DiscoverProgressCallback,
+	paramOptions?: DECIParams,
 ): CausalDiscoveryResultPromise {
-	if (algorithm === CausalDiscoveryAlgorithm.None) {
-		return empty_discover_result(variables, constraints, algorithm)
+	if (algorithmName === CausalDiscoveryAlgorithm.None) {
+		return empty_discover_result(variables, constraints, algorithmName)
 	}
 
 	/* eslint-disable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-argument */
 	const columns = variables.map(v => v.columnName)
 	const jsonData = dataset.table.toJSON({ columns })
 	const constraintsJson = createConstraintsJson(variables, constraints)
-	const algorithmName =
-		CausalDiscoveryAlgorithmOptions.get(algorithm)?.algorithm || algorithm
-	const trainingOptions =
-		CausalDiscoveryAlgorithmOptions.get(algorithm)?.training_options
 	const fetchDiscoverResultPromise = fetchDiscoverResult<any>(
 		algorithmName.toLowerCase(),
 		JSON.stringify({
 			dataset: JSON.parse(jsonData),
 			constraints: constraintsJson,
-			training_options: trainingOptions,
+			causal_variables: variables.map(v => ({
+				name: v.name,
+				nature: v.nature,
+			})),
+			...paramOptions,
 		}),
 		progressCallback,
 	)
@@ -132,7 +131,7 @@ export function discover(
 					variables,
 					causalDiscoveryResult as CausalDiscoveryRequestReturnValue,
 					constraints,
-					algorithm,
+					algorithmName,
 				)
 				let causalInferenceModel: CausalInferenceModel | null = null
 				if (causalDiscoveryResult.onnx) {

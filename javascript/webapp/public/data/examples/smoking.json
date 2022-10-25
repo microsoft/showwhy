@@ -4,13 +4,11 @@
         {
             "profile": "datatable",
             "name": "nhefs",
+            "path": "https://cdn1.sph.harvard.edu/wp-content/uploads/sites/1268/1268/20/nhefs.csv",
             "metadata": {
                 "source": "https://www.hsph.harvard.edu/miguel-hernan/causal-inference-book/",
                 "citation": "Hernán MA, Robins JM (2020). Causal Inference: What If. Boca Raton: Chapman & Hall/CRC"
-            },
-            "sources": [
-                "https://cdn1.sph.harvard.edu/wp-content/uploads/sites/1268/1268/20/nhefs.csv"
-            ]
+            }
         },
         {
             "profile": "datatable",
@@ -162,7 +160,7 @@
         },
         {
             "profile": "datatable",
-            "name": "nhefs-causedis",
+            "name": "nhefs-discovery",
             "sources": [
                 {
                     "profile": "workflow",
@@ -258,16 +256,14 @@
         {
             "profile": "datatable",
             "name": "california-prop99",
+            "path": "https://gitcdn.link/cdn/synth-inference/synthdid/master/data/california_prop99.csv",
             "metadata": {
                 "source": "https://www.openicpsr.org/openicpsr/project/146381/version/V1/view?path=/openicpsr/146381/fcr:versions/V1/synthdid-sdid-paper/data/california_prop99.csv",
                 "citation": " Dmitry Arkhangelsky, CEMFI; Susan Athey, Stanford University; David A. Hirshberg, Emory University; Guido W. Imbens, Stanford University; Stefan Wager, Stanford University"
             },
             "parser": {
                 "delimiter": ";"
-            },
-            "sources": [
-                "https://gitcdn.link/cdn/synth-inference/synthdid/master/data/california_prop99.csv"
-            ]
+            }
         },
         {
             "profile": "model-exposure",
@@ -603,11 +599,6 @@
             "data": {
                 "causalGraph": {
                     "inModelColumnNames": [
-                        "death",
-                        "birthcontrol",
-                        "asthma",
-                        "boweltrouble",
-                        "bronch"
                     ],
                     "constraints": {
                         "causes": [],
@@ -635,7 +626,7 @@
                     "results": {}
                 },
                 "dataset": {
-                    "datasetName": "nhefs-causedis"
+                    "datasetName": "nhefs-discovery"
                 },
                 "layout": {
                     "nodePositions": {}

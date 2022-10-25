@@ -7,8 +7,11 @@ import { atom } from 'recoil'
 import { GraphViewStates } from '../../components/graph/GraphViews.types.js'
 import { CausalDiscoveryAlgorithm } from '../../domain/CausalDiscovery/CausalDiscoveryAlgorithm.js'
 import type { Selectable } from '../../domain/Selection.js'
-import { persistAtomEffect } from '../persistence.js'
-import { persistence } from './persistence.js'
+
+export const ErrorMessageState = atom<string | undefined>({
+	key: 'ErrorMessageState',
+	default: undefined,
+})
 
 export const LoadingState = atom<string | undefined>({
 	key: 'LoadingState',
@@ -18,13 +21,11 @@ export const LoadingState = atom<string | undefined>({
 export const StraightEdgesState = atom<boolean>({
 	key: 'StraightEdgesState',
 	default: false,
-	...persistence,
 })
 
 export const AutoLayoutEnabledState = atom<boolean>({
 	key: 'AutoLayoutEnabledState',
-	default: false,
-	...persistence,
+	default: true,
 })
 
 export const SelectedCausalDiscoveryAlgorithmState =
@@ -36,25 +37,21 @@ export const SelectedCausalDiscoveryAlgorithmState =
 export const SelectedObjectState = atom<Selectable>({
 	key: 'SelectedObjectState',
 	default: undefined,
-	effects: [persistAtomEffect],
 })
 
 export const WeightThresholdState = atom<number>({
 	key: 'WeightThresholdState',
 	default: 0.005,
-	...persistence,
 })
 
 export const ConfidenceThresholdState = atom<number>({
 	key: 'ConfidenceThresholdState',
 	default: 0.0,
-	...persistence,
 })
 
 export const CorrelationThresholdState = atom<number>({
 	key: 'CorrelationThresholdState',
 	default: 0.2,
-	...persistence,
 })
 
 export const GraphViewState = atom<GraphViewStates>({

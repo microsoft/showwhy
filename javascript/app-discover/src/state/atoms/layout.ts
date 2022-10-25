@@ -5,10 +5,8 @@
 import { atom } from 'recoil'
 
 import type { NodePosition } from '../../domain/NodePosition.js'
-import { persistence } from './persistence.js'
 
 export const NodePositionsState = atom<{ [key: string]: NodePosition }>({
 	key: 'NodePositionState',
 	default: {},
-	...persistence,
 })
