@@ -2274,44 +2274,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@essex/components@npm:^2.8.0":
-  version: 2.8.0
-  resolution: "@essex/components@npm:2.8.0"
-  dependencies:
-    "@essex/hooks": ^4.0.13
-    "@essex/react-animate-height": ^2.1.4
-    "@essex/toolbox": ^3.0.9
-    "@fluentui/utilities": ^8.13.1
-    "@types/d3-array": ^3.0.3
-    "@types/d3-axis": ^3.0.1
-    "@types/d3-brush": ^3.0.1
-    "@types/d3-scale": ^4.0.2
-    "@types/d3-selection": ^3.0.3
-    d3-array: ^3.2.0
-    d3-axis: ^3.0.0
-    d3-brush: ^3.0.0
-    d3-scale: ^4.0.2
-    d3-selection: ^3.0.0
-    lodash-es: ^4.17.21
-    react-if: ^4.1.4
-  peerDependencies:
-    "@fluentui/react": ">= 7.114.2"
-    "@thematic/color": ">= 0.8.0"
-    "@thematic/core": ">= 0.8.0"
-    "@thematic/d3": ">= 0.8.0"
-    "@thematic/fluent": ">= 0.8.0"
-    "@thematic/react": ">= 0.8.0"
-    "@types/d3": "*"
-    "@types/d3-axis": ^2.0.0
-    "@types/node": "*"
-    "@types/react": ">= 18"
-    "@uifabric/icons": ">= 7.3.38"
-    react: ">= 18"
-    react-dom: ">= 18"
-  checksum: 0771fb5f55ee401b9498206407d9d2650af6ae3cfc1e3167c1fa93757d607e7ed0ea06691fa7dc5a88fe1eb073ce52da44d8c6a76cdadef0e08a883fead95ad3
-  languageName: node
-  linkType: hard
-
 "@essex/components@npm:^3.1.0":
   version: 3.1.0
   resolution: "@essex/components@npm:3.1.0"
@@ -3804,7 +3766,7 @@ __metadata:
     "@datashaper/tables": ^5.1.2
     "@datashaper/utilities": ^2.3.8
     "@datashaper/workflow": ^18.0.0
-    "@essex/components": ^2.8.0
+    "@essex/components": ^3.1.0
     "@essex/scripts": ^22.1.0
     "@fluentui/react": ^8.98.1
     "@fluentui/react-hooks": ^8.6.11
@@ -3844,7 +3806,7 @@ __metadata:
     "@datashaper/utilities": ^2.3.8
     "@datashaper/workflow": ^18.0.0
     "@essex-js-toolkit/hooks": ^4.0.3
-    "@essex/components": ^2.8.0
+    "@essex/components": ^3.1.0
     "@essex/hooks": ^4.0.13
     "@essex/scripts": ^22.1.0
     "@essex/vite-config": ^19.0.14
@@ -3928,7 +3890,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/event-analysis-app@workspace:javascript/app-event-analysis"
   dependencies:
-    "@essex/components": ^2.8.0
+    "@essex/components": ^3.1.0
     "@essex/hooks": ^4.0.13
     "@essex/scripts": ^22.1.0
     "@essex/webpack-config": ^21.0.8
@@ -3982,7 +3944,7 @@ __metadata:
     "@datashaper/tables": ^5.1.2
     "@datashaper/utilities": ^2.3.8
     "@datashaper/workflow": ^18.0.0
-    "@essex/components": ^2.8.0
+    "@essex/components": ^3.1.0
     "@essex/hooks": ^4.0.13
     "@essex/scripts": ^22.1.0
     "@essex/webpack-config": ^21.0.8
@@ -4041,7 +4003,7 @@ __metadata:
     "@datashaper/tables": ^5.1.2
     "@datashaper/utilities": ^2.3.8
     "@datashaper/workflow": ^18.0.0
-    "@essex/components": ^2.8.0
+    "@essex/components": ^3.1.0
     "@essex/hooks": ^4.0.13
     "@essex/scripts": ^22.1.0
     "@essex/webpack-config": ^21.0.8
@@ -4107,7 +4069,7 @@ __metadata:
     "@datashaper/utilities": ^2.3.8
     "@datashaper/workflow": ^18.0.0
     "@essex-js-toolkit/hooks": ^4.0.3
-    "@essex/components": ^2.8.0
+    "@essex/components": ^3.1.0
     "@essex/hooks": ^4.0.13
     "@essex/scripts": ^22.1.0
     "@essex/webpack-config": ^21.0.8

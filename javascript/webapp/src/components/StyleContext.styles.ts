@@ -6,6 +6,9 @@ import type { Theme } from '@fluentui/react'
 import { createGlobalStyle } from 'styled-components'
 
 export const GlobalStyle = createGlobalStyle`
+	* {
+		box-sizing: border-box;
+	}
 	body {
 		height: 100vh;
 		margin: 0;

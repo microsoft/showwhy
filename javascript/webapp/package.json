@@ -23,7 +23,7 @@
 		"@datashaper/tables": "^5.1.2",
 		"@datashaper/utilities": "^2.3.8",
 		"@datashaper/workflow": "^18.0.0",
-		"@essex/components": "^2.8.0",
+		"@essex/components": "^3.1.0",
 		"@essex/hooks": "^4.0.13",
 		"@fluentui/font-icons-mdl2": "^8.5.1",
 		"@fluentui/react": "^8.98.1",
