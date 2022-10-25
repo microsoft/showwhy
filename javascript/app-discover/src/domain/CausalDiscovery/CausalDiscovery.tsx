@@ -134,6 +134,7 @@ export function discover(
 					algorithmName,
 				)
 				let causalInferenceModel: CausalInferenceModel | null = null
+
 				if (causalDiscoveryResult.onnx) {
 					const onnx = Uint8Array.from(atob(causalDiscoveryResult.onnx), c =>
 						c.charCodeAt(0),
@@ -153,6 +154,7 @@ export function discover(
 					const columnNames = causalDiscoveryResult.columns
 					const isBooleanInterpretedAsContinuous =
 						causalDiscoveryResult.interpret_boolean_as_continuous
+
 					causalInferenceModel = {
 						inferenceSession,
 						confidenceMatrix,
@@ -162,7 +164,10 @@ export function discover(
 					}
 				}
 
-				return { graph, causalInferenceModel }
+				const normalizedColumnMetadata =
+					causalDiscoveryResult.normalized_columns_metadata
+
+				return { graph, causalInferenceModel, normalizedColumnMetadata }
 			},
 		)
 	/* eslint-enable */

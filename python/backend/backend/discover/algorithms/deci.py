@@ -312,6 +312,7 @@ class DeciRunner(CausalDiscoveryRunner):
         causal_graph["interpret_boolean_as_continuous"] = False
         causal_graph["has_weights"] = True
         causal_graph["has_confidence_values"] = True
+        causal_graph["normalized_columns_metadata"] = self._normalized_columns_metadata
 
         return causal_graph
 
