@@ -27,7 +27,7 @@ export const DraggableGraphNode: React.FC<DraggableGraphNodeProps> = memo(
 		layout,
 		layoutTransitionTime = 0,
 	}) {
-		const nodeRef = useRef(null)
+		const nodeRef: React.RefObject<HTMLDivElement> | undefined = useRef(null)
 		const updateXarrow = useXarrow()
 		const [position, setPosition] = useRecoilState(nodePositionsFamily(id))
 
@@ -36,9 +36,12 @@ export const DraggableGraphNode: React.FC<DraggableGraphNodeProps> = memo(
 			x: layoutNode?.x ?? position.x,
 			y: layoutNode?.y ?? position.y,
 		}
-
 		useEffect(() => {
-			setPosition(layoutPosition)
+			const updatedLayout = {
+				...layoutPosition,
+				right: (layoutPosition?.x ?? 0) + (nodeRef?.current?.offsetWidth ?? 0),
+			}
+			setPosition(updatedLayout)
 		}, [layout])
 
 		const [isControlled, setIsControlled] = useState(true)
