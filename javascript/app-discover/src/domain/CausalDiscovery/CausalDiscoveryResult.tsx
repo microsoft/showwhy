@@ -35,10 +35,20 @@ export interface CausalDiscoveryRequestReturnValue {
 	}
 }
 
+export interface NormalizedColumnMetadata {
+	upper: number
+	lower: number
+	mean: number
+	std: number
+}
+
 export interface CausalDiscoveryResult {
 	graph: CausalGraph
 	causalInferenceModel: CausalInferenceModel | null
 	taskId?: string
+	// TODO: verify possibility to merge this with CausalVariable
+	// binary && continuous only
+	normalizedColumnMetadata?: Record<string, NormalizedColumnMetadata>
 }
 
 export type CausalDiscoveryResultPromise = CancelablePromise<
