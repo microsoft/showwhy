@@ -31,7 +31,7 @@ export function useStepListener(
 
 export function useHistoryButtonCommandBar(
 	isCollapsed: boolean,
-	workflow: Workflow,
+	numSteps: number | undefined,
 	toggleCollapsed: () => void,
 ): ICommandBarProps {
 	const base = useMemo(
@@ -41,7 +41,7 @@ export function useHistoryButtonCommandBar(
 					key: 'historyButton',
 					id: 'historyButton',
 					disabled: !isCollapsed,
-					text: `(${workflow.steps.length.toString() ?? '0'})`,
+					text: `(${numSteps ?? '0'})`,
 					iconProps: icons.history,
 					onClick: toggleCollapsed,
 					buttonStyles,
@@ -49,7 +49,7 @@ export function useHistoryButtonCommandBar(
 			],
 			id: 'historyButton',
 		}),
-		[isCollapsed, workflow, toggleCollapsed],
+		[isCollapsed, numSteps, toggleCollapsed],
 	)
 	return useHeaderCommandBarDefaults(base, true)
 }
