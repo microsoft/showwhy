@@ -3,8 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { IconButton, Slider, Stack, Text } from '@fluentui/react'
-import { memo, useCallback, useMemo } from 'react'
-import { useRecoilState } from 'recoil'
+import { memo } from 'react'
+import { useRecoilValue } from 'recoil'
 
 import { VariableNature } from '../../domain/VariableNature.js'
 import { CausalInterventionsState } from '../../state/index.jsx'
@@ -17,8 +17,10 @@ import {
 	slider_style,
 } from './CausalInferenceSlider.constants.js'
 import {
-	useCausalInferenceDifferenceFromBaselineValues,
+	useDifferenceValue,
 	useInferenceResult,
+	useOnRemoveInterventions,
+	useOnUpdateInterventions,
 } from './CausalInferenceSlider.hooks.js'
 import type { CausalInferenceSliderProps } from './CausalInferenceSlider.types.js'
 
@@ -29,51 +31,27 @@ const categoricalNatures = [
 ]
 
 export const CausalInferenceSlider: React.FC<CausalInferenceSliderProps> = memo(
-	function CausalInferenceSlider({ variable, wasDragged, columnMetadata }) {
+	function CausalInferenceSlider({ variable, columnMetadata }) {
+		const inferenceResult = useInferenceResult(variable.columnName)
+		const differenceValue = useDifferenceValue(variable.columnName)
 		const isCategorical =
 			variable?.nature && categoricalNatures.includes(variable?.nature)
+		const interventions = useRecoilValue(CausalInterventionsState)
 
-		const differenceValues = useCausalInferenceDifferenceFromBaselineValues()
 		const metadata = columnMetadata && columnMetadata[variable.columnName]
-
-		const inferenceResult = useInferenceResult(variable.columnName)
-		const [interventions, setInterventions] = useRecoilState(
-			CausalInterventionsState,
-		)
-
-		const rawDifferenceValue = differenceValues.get(variable.columnName) || 0
-
 		const unscaledValue = (inferenceResult || 0).toFixed(2)
-		const differenceValue = rawDifferenceValue.toFixed(2)
-
 		const isIntervened = interventions.some(
 			intervention => intervention.columnName === variable.columnName,
 		)
 
-		const filteredInterventions = useMemo(() => {
-			return interventions.filter(
-				intervention => intervention.columnName !== variable.columnName,
-			)
-		}, [interventions, variable])
-
-		const updateInterventions = useCallback(
-			(value: number) => {
-				const revisedInterventions = [...filteredInterventions]
-				revisedInterventions.push({
-					columnName: variable.columnName,
-					value: value,
-				})
-				setInterventions(revisedInterventions)
-			},
-			[filteredInterventions, setInterventions, variable.columnName],
+		const onUpdateInterventions = useOnUpdateInterventions(
+			variable.columnName,
+			interventions,
 		)
-
-		const removeIntervention = useCallback(() => {
-			if (wasDragged) {
-				return
-			}
-			setInterventions(filteredInterventions)
-		}, [filteredInterventions, setInterventions, wasDragged])
+		const onRemoveIntervention = useOnRemoveInterventions(
+			variable.columnName,
+			interventions,
+		)
 
 		if (isCategorical) return null
 		return (
@@ -86,7 +64,7 @@ export const CausalInferenceSlider: React.FC<CausalInferenceSliderProps> = memo(
 				>
 					<IconButton
 						iconProps={icon_button_props}
-						onClick={removeIntervention}
+						onClick={onRemoveIntervention}
 						disabled={!isIntervened}
 						style={icon_button_style}
 					/>
@@ -98,15 +76,15 @@ export const CausalInferenceSlider: React.FC<CausalInferenceSliderProps> = memo(
 						value={+unscaledValue || 0}
 						step={0.01}
 						styles={slider_style}
-						onChange={updateInterventions}
+						onChange={onUpdateInterventions}
 					/>
 					<Stack horizontalAlign="end">
 						<Text variant="xSmall">{unscaledValue}</Text>
-						{rawDifferenceValue !== 0 && (
+						{+differenceValue !== 0 && (
 							<Text
 								variant="xSmall"
 								style={
-									rawDifferenceValue > 0
+									+differenceValue > 0
 										? positive_change_text_style
 										: negative_change_text_style
 								}

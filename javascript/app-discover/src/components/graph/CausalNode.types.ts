@@ -13,5 +13,4 @@ export interface CausalNodeProps {
 	isAddable?: boolean
 	isRemovable?: boolean
 	center?: boolean
-	wasDragged?: boolean
 }
