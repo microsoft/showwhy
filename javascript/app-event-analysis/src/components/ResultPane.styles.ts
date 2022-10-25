@@ -2,12 +2,14 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import type { ITheme } from '@fluentui/react'
 import { Stack } from '@fluentui/react'
+import type { Theme } from '@thematic/core'
 import styled from 'styled-components'
 
 export const StyledStack = styled(Stack)`
 	padding: 10px 20px;
-	height: 88vh;
+	height: calc(100vh - 87px);
 	overflow: hidden auto;
 
 	.italic {
@@ -49,10 +51,10 @@ export const StyledStack = styled(Stack)`
 			color: #008000;
 		}
 		.help-link {
-			color: dodgerblue;
 			cursor: help;
 			position: relative;
-			border-bottom: 1px dotted black;
+			border-bottom: 1px dotted
+				${({ theme }: { theme: ITheme }) => theme.palette.neutralPrimary};
 		}
 		.help-link:before {
 			content: attr(data-hover);
@@ -82,7 +84,6 @@ export const StyledStack = styled(Stack)`
 	}
 
 	.statusMessage {
-		padding-top: 2rem;
 	}
 
 	.chartContainer {
@@ -94,4 +95,21 @@ export const StyledStack = styled(Stack)`
 		overflow-y: auto;
 		line-height: normal;
 	}
+
+	.control-label {
+		color: ${({ theme }: { theme: Theme }) =>
+			theme.scales().nominal()(1).hex()};
+	}
+`
+
+export const GraphTitle = styled.h3`
+	margin: 0;
+	text-transform: uppercase;
+	color: ${({ theme }: { theme: ITheme }) => theme.palette.neutralSecondary};
+`
+
+export const TreatedTitle = styled.h4`
+	margin: 0;
+	font-size: 16px;
+	color: ${({ theme }: { theme: ITheme }) => theme.palette.neutralSecondary};
 `

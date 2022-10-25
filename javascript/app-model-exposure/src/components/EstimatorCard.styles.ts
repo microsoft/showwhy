@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { Theme } from '@thematic/core'
+import type { Theme } from '@fluentui/react'
 import styled from 'styled-components'
 
 export const CardsContainer = styled.div`
@@ -52,9 +52,7 @@ export const SelectorContainer = styled.div<{ isChecked: boolean }>`
 		theme: Theme
 		isChecked: boolean
 	}) =>
-		isChecked
-			? theme.application().accent().hex()
-			: theme.application().faint().hex()};
+		isChecked ? theme.palette.themePrimary : theme.palette.neutralLighter};
 	height: 100%;
 	display: flex;
 	align-items: center;

@@ -48,7 +48,7 @@ export const DeciTrainingParams: React.FC<DeciTrainingParamsProps> = memo(
 								onChangeNumber('training_options', val, x.inputProps?.name)
 							}
 							value={
-								values.training_options[
+								values?.training_options?.[
 									x.inputProps?.name as keyof DECITrainingOptions
 								]?.toString() || x.defaultValue
 							}
@@ -65,7 +65,7 @@ export const DeciTrainingParams: React.FC<DeciTrainingParamsProps> = memo(
 							label={x.label}
 							key={x.name}
 							checked={
-								!!values.training_options[
+								!!values?.training_options?.[
 									x.name as keyof DECITrainingOptions
 								] || x.checked
 							}
@@ -76,7 +76,9 @@ export const DeciTrainingParams: React.FC<DeciTrainingParamsProps> = memo(
 					))}
 				</ContainerAdvancedCheckbox>
 				<ChoiceGroup
-					selectedKey={values.training_options.anneal_entropy || ANNEAL_ENTROPY}
+					selectedKey={
+						values?.training_options?.anneal_entropy || ANNEAL_ENTROPY
+					}
 					options={advancedTrainingAnnealChoiceOptions}
 					onChange={(_, opt?: IChoiceGroupOption) =>
 						onChangeChoiceGroup('training_options', opt?.key, 'anneal_entropy')

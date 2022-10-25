@@ -2,6 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import { useThematic } from '@thematic/react'
 import * as d3 from 'd3'
 import { memo, useCallback, useEffect, useRef } from 'react'
 
@@ -27,7 +28,9 @@ export const Bar: React.FC<BarProps> = memo(function Bar({
 	...props
 }) {
 	const ref = useRef<SVGGElement | null>(null)
+	const theme = useThematic()
 	const renderBar = useCallback(() => {
+		const textColor = theme.text().fill().hex()
 		if (ref.current) {
 			if (orientation === BarChartOrientation.column) {
 				//
@@ -67,7 +70,7 @@ export const Bar: React.FC<BarProps> = memo(function Bar({
 							const xText = barWidth * 0.25
 							return `translate(${xText}, 0) rotate(90)`
 						})
-						.attr('fill', 'black')
+						.attr('fill', textColor)
 						.attr('font-size', 'x-small')
 				}
 			} else {
@@ -105,12 +108,13 @@ export const Bar: React.FC<BarProps> = memo(function Bar({
 							const xText = barHeight * 0.25
 							return `translate(${xText}, 0) rotate(90)`
 						})
-						.attr('fill', 'black')
+						.attr('fill', theme.text().fill().hex())
 						.attr('font-size', 'x-small')
 				}
 			}
 		}
 	}, [
+		theme,
 		data,
 		xScale,
 		yScale,

@@ -2,10 +2,13 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import type { Theme } from '@thematic/core'
+import type { Theme } from '@fluentui/react'
 import { createGlobalStyle } from 'styled-components'
 
 export const GlobalStyle = createGlobalStyle`
+	* {
+		box-sizing: border-box;
+	}
 	body {
 		height: 100vh;
 		margin: 0;
@@ -37,6 +40,12 @@ export const GlobalStyle = createGlobalStyle`
 	}
 
 	:root {
-		--faint: ${({ theme }: { theme: Theme }) => theme.application().faint().hex()};
+		--faint: ${({ theme }: { theme: Theme }) => theme.palette.neutralLighter};
+		--focus-border: ${({ theme }: { theme: Theme }) =>
+			theme.palette.neutralTertiaryAlt};
+		--separator-border: ${({ theme }: { theme: Theme }) =>
+			theme.palette.neutralTertiaryAlt};
+		
 	}
+	
 `

@@ -41,7 +41,7 @@ export const ShortenMessage: FC<{ text: string }> = memo(
 )
 
 const SeeMoreButton = styled(ActionButton)`
-	color: ${({ theme }) => theme.application().accent};
+	color: ${({ theme }) => theme.palette.themePrimary};
 	text-decoration: underline;
 	padding: unset;
 	span {
@@ -49,7 +49,7 @@ const SeeMoreButton = styled(ActionButton)`
 	}
 `
 const Message = styled.span`
-	color: ${({ theme }) => theme.application().error};
+	color: ${({ theme }) => theme.application().error().hex()};
 `
 
 const styles = mergeStyleSets({

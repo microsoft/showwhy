@@ -10,17 +10,21 @@ import {
 import { memo } from 'react'
 
 import { topLevelQuestionCards } from './HomePage.constants.js'
-import { Container, DocumentCardStyle } from './HomePage.styles.js'
+import {
+	Container,
+	documentCardStyle,
+	documentCardTitleStyles,
+} from './HomePage.styles.js'
 
 const HomePage: React.FC = memo(function HomePage() {
 	const cards = topLevelQuestionCards.map(d => (
 		<DocumentCard
 			key={d.questionType}
 			onClickHref={d.href}
-			style={DocumentCardStyle}
+			style={documentCardStyle}
 		>
 			<DocumentCardPreview {...d.previewProps} />
-			<DocumentCardTitle title={d.title} />
+			<DocumentCardTitle title={d.title} styles={documentCardTitleStyles} />
 		</DocumentCard>
 	))
 	return <Container>{cards}</Container>

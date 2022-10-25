@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { PrimaryButton } from '@fluentui/react'
-import { useThematic } from '@thematic/react'
+import { useThematicFluent } from '@thematic/fluent'
 import React, { memo } from 'react'
 import styled from 'styled-components'
 
@@ -34,7 +34,7 @@ import { Box, BoxGroup, PageSection, Text } from './AnalyzeTestPage.styles.js'
 
 export const AnalyzeTestPageEffects: React.FC = memo(
 	function AnalyzeTestPageEffects() {
-		const theme = useThematic()
+		const theme = useThematicFluent()
 		const defaultRun = useDefaultRun()
 		const runStatus = useGetRunStatus(defaultRun)
 		const isProcessing = useIsDefaultRunProcessing()

@@ -2,6 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import type { Theme } from '@thematic/core'
 import styled from 'styled-components'
 
 export const TooltipContent = styled.div`
@@ -11,9 +12,13 @@ export const TooltipContent = styled.div`
 	height: auto;
 	padding: 4px;
 	font: 12px sans-serif;
-	background: lightblue;
-	border: 0px;
-	border-radius: 8px;
+	background: ${({ theme }: { theme: Theme }) => theme.tooltip().fill().hex()};
+	border: ${({ theme }: { theme: Theme }) =>
+		`${theme.tooltip().strokeWidth()}px solid ${theme
+			.tooltip()
+			.stroke()
+			.hex()}`};
+	border-radius: 2px;
 	pointer-events: none;
 	button {
 		margin: 10px 5px 5px;

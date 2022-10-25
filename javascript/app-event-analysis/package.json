@@ -15,7 +15,7 @@
 		"lint": "essex lint"
 	},
 	"dependencies": {
-		"@essex/components": "^2.8.0",
+		"@essex/components": "^3.1.0",
 		"@essex/hooks": "^4.0.13",
 		"@essex/webpack-config": "^21.0.8",
 		"@fluentui/font-icons-mdl2": "^8.5.2",
@@ -24,10 +24,10 @@
 		"@fluentui/utilities": "^8.13.2",
 		"@reduxjs/toolkit": "^1.8.6",
 		"@showwhy/app-common": "workspace:^",
-		"@thematic/core": "^3.1.0",
-		"@thematic/d3": "^2.0.13",
-		"@thematic/fluent": "^4.1.0",
-		"@thematic/react": "^2.1.0",
+		"@thematic/core": "^3.1.1",
+		"@thematic/d3": "^2.0.14",
+		"@thematic/fluent": "^4.1.1",
+		"@thematic/react": "^2.1.1",
 		"@types/lodash": "^4.14.186",
 		"@uifabric/icons": "^7.9.4",
 		"ahooks": "^3.7.2",

@@ -2,8 +2,8 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import type { Theme } from '@fluentui/react'
 import { ProgressIndicator } from '@fluentui/react'
-import type { Theme } from '@thematic/core'
 import { memo } from 'react'
 import styled from 'styled-components'
 
@@ -62,5 +62,5 @@ const ProgressIndicatorLabel = styled.div`
 	font-weight: 500;
 	font-size: 0.8rem;
 
-	color: ${({ theme }: { theme: Theme }) => theme.application().accent().hex()};
+	color: ${({ theme }: { theme: Theme }) => theme.palette.themePrimary};
 `
