@@ -36,7 +36,12 @@ const categoricalNatures = [
 ]
 
 export const CausalInferenceSlider: React.FC<CausalInferenceSliderProps> = memo(
-	function CausalInferenceSlider({ variable, wasDragged, columnsMetadata }) {
+	function CausalInferenceSlider({
+		variable,
+		useFixedInterventionRanges,
+		wasDragged,
+		columnsMetadata,
+	}) {
 		const inferenceResult = useInferenceResult(variable.columnName)
 		const differenceValue = useDifferenceValue(variable.columnName)
 		const isCategorical =
@@ -44,8 +49,12 @@ export const CausalInferenceSlider: React.FC<CausalInferenceSliderProps> = memo(
 		const isBinary = variable?.nature === VariableNature.Binary
 		const interventions = useRecoilValue(CausalInterventionsState)
 		const metadata = columnsMetadata?.[variable.columnName]
-		const lowerBound = standardDeviationFixedRange.min || metadata?.lower || -10
-		const upperBound = standardDeviationFixedRange.max || metadata?.upper || 10
+		const lowerBound = useFixedInterventionRanges
+			? standardDeviationFixedRange.min
+			: metadata?.lower || -10
+		const upperBound = useFixedInterventionRanges
+			? standardDeviationFixedRange.max
+			: metadata?.upper || 10
 		const result = +(inferenceResult || 0).toFixed(2)
 		const isIntervened = interventions.some(
 			intervention => intervention.columnName === variable.columnName,

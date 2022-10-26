@@ -8,6 +8,7 @@ import type { CausalVariable } from '../../domain/CausalVariable.js'
 export interface CausalNodeProps {
 	className?: string
 	variable: CausalVariable
+	useFixedInterventionRanges?: boolean
 	columnsMetadata?: NormalizedColumnsMetadataByName
 	isSelectable?: boolean
 	isAddable?: boolean

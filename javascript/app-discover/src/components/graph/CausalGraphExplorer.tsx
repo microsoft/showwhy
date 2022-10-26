@@ -17,6 +17,7 @@ import {
 	CausalDiscoveryResultsState,
 	ConfidenceThresholdState,
 	FilteredCorrelationsState,
+	FixedInterventionRangesEnabledState,
 	GraphLayoutState,
 	SelectedObjectState,
 	useCausalGraph,
@@ -35,6 +36,9 @@ const MAX_EDGE_WIDTH = 10
 
 export const CausalGraphExplorer = memo(function CausalGraphExplorer() {
 	const causalGraph = useCausalGraph()
+	const useFixedInterventionRanges = useRecoilValue(
+		FixedInterventionRangesEnabledState,
+	)
 	const columnsMetadata = useRecoilValue(
 		CausalDiscoveryResultsState,
 	).normalizedColumnsMetadata
@@ -96,11 +100,17 @@ export const CausalGraphExplorer = memo(function CausalGraphExplorer() {
 				<CausalGraphNode
 					columnsMetadata={columnsMetadata}
 					variable={variable}
+					useFixedInterventionRanges={useFixedInterventionRanges}
 					isSelectable
 					isRemovable
 				/>
 			) : (
-				<CorrelationGraphNode variable={variable} isSelectable isAddable />
+				<CorrelationGraphNode
+					variable={variable}
+					useFixedInterventionRanges={useFixedInterventionRanges}
+					isSelectable
+					isAddable
+				/>
 			)}
 		</DraggableGraphNode>
 	))

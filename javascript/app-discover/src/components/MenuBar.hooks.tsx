@@ -14,6 +14,7 @@ import { CausalDiscoveryAlgorithm } from '../domain/CausalDiscovery/CausalDiscov
 import {
 	AutoLayoutEnabledState,
 	DatasetNameState,
+	FixedInterventionRangesEnabledState,
 	PauseAutoRunState,
 } from '../state/index.js'
 import { ThresholdSlider } from './controls/ThresholdSlider.js'
@@ -184,6 +185,26 @@ export function useAutoLayoutToggleMenuItem() {
 			),
 		}),
 		[autoLayoutEnabled, setAutoLayoutEnabled],
+	)
+}
+
+export function useFixedInterventionRangesToggleMenuItem() {
+	const [fixedInterventionRangesEnabled, setFixedInterventionRangesEnabled] =
+		useRecoilState(FixedInterventionRangesEnabledState)
+	return useMemo(
+		() => ({
+			key: 'fixed-intervention-ranges-toggle',
+			onRender: () => (
+				<Toggle
+					label="Fixed ranges"
+					checked={fixedInterventionRangesEnabled}
+					inlineLabel
+					styles={toggleStyles}
+					onChange={(e, v) => setFixedInterventionRangesEnabled(Boolean(v))}
+				/>
+			),
+		}),
+		[fixedInterventionRangesEnabled, setFixedInterventionRangesEnabled],
 	)
 }
 

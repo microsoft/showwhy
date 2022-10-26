@@ -7,6 +7,7 @@ import type { CausalVariable } from '../../domain/CausalVariable.js'
 
 export interface CausalInferenceSliderProps {
 	variable: CausalVariable
+	useFixedInterventionRanges?: boolean
 	columnsMetadata?: NormalizedColumnsMetadataByName
 	wasDragged?: boolean
 }
