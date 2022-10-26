@@ -2056,15 +2056,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@datashaper/react@npm:^15.1.2":
-  version: 15.1.2
-  resolution: "@datashaper/react@npm:15.1.2"
+"@datashaper/react@npm:^16.0.0":
+  version: 16.0.0
+  resolution: "@datashaper/react@npm:16.0.0"
   dependencies:
-    "@datashaper/schema": ^7.0.2
-    "@datashaper/tables": ^5.2.1
+    "@datashaper/schema": ^8.0.0
+    "@datashaper/tables": ^5.2.2
     "@datashaper/utilities": ^2.3.9
     "@datashaper/verb-guidance": ^0.1.22
-    "@datashaper/workflow": ^18.1.1
+    "@datashaper/workflow": ^19.0.0
     "@essex/charts-react": ^1.1.2
     "@essex/components": ^3.1.0
     "@essex/styled-components": ^0.0.4
@@ -2092,7 +2092,7 @@ __metadata:
     arquero: ^5.1.0
     react: ^17.0.2
     styled-components: ^5.3.0
-  checksum: 027b62fea62af50f955bfaa9f06a6ead5393c35f427f0b50b3e940fc1aad63bcac0587126ecaf549d187a498f92afc6f01c823362afc2e54c8761e20f217454b
+  checksum: 5021af3ff55a4243dd615b51418994208672f70153c7a000b2c63bcc1f7bb4381f2b44034a552e16e3f1cefcbf43dba61aa066fbe3df65dc64f8cfc1ab313c79
   languageName: node
   linkType: hard
 
@@ -2103,28 +2103,28 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@datashaper/schema@npm:^7.0.2":
-  version: 7.0.2
-  resolution: "@datashaper/schema@npm:7.0.2"
+"@datashaper/schema@npm:^8.0.0":
+  version: 8.0.0
+  resolution: "@datashaper/schema@npm:8.0.0"
   dependencies:
     ajv: ^8.11.0
     ajv-formats: ^2.1.1
     uuid: ^9.0.0
-  checksum: 7d1870891001f7779b51040fc0c51e82e92b5d0c4efa0b54fceaf30256d567655e61ec6b8fce41547578c14e66ebdb9abc01476b978e48559746737d37568c3f
+  checksum: 5a4bcb4d5a232dcb333aa42752ab745f366954f8133572b0fce40230aad10d798c8324717edf8243d535dbf2c3f701b4a442c88e1df64463f3e3d651f47b165f
   languageName: node
   linkType: hard
 
-"@datashaper/tables@npm:^5.2.1":
-  version: 5.2.1
-  resolution: "@datashaper/tables@npm:5.2.1"
+"@datashaper/tables@npm:^5.2.2":
+  version: 5.2.2
+  resolution: "@datashaper/tables@npm:5.2.2"
   dependencies:
-    "@datashaper/schema": ^7.0.2
+    "@datashaper/schema": ^8.0.0
     lodash-es: ^4.17.21
     moment: ^2.29.4
     papaparse: ^5.3.2
   peerDependencies:
     arquero: ^5.1.0
-  checksum: 88ea89946374531d608bd106c1a35bcc9ff64afe7c1db9fec6276b4356a77d672b1e653a31320b8f62260d9155f7643d68d54221ffb8db0ff32b8945c9c8b816
+  checksum: 767f0dafefe1082ff9089ca754c17c24b40fc8a3bd1c87f6f7a1fa2e2c37963718abc33a643a98ca5b346b0b0f5339fbd9fa3ab1618db9c3643a42e5fd56328f
   languageName: node
   linkType: hard
 
@@ -2150,12 +2150,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@datashaper/workflow@npm:^18.1.1":
-  version: 18.1.1
-  resolution: "@datashaper/workflow@npm:18.1.1"
+"@datashaper/workflow@npm:^19.0.0":
+  version: 19.0.0
+  resolution: "@datashaper/workflow@npm:19.0.0"
   dependencies:
-    "@datashaper/schema": ^7.0.2
-    "@datashaper/tables": ^5.2.1
+    "@datashaper/schema": ^8.0.0
+    "@datashaper/tables": ^5.2.2
     cross-blob: ^3.0.2
     cross-fetch: ^3.1.5
     d3-time-format: ^4.1.0
@@ -2169,7 +2169,7 @@ __metadata:
   peerDependenciesMeta:
     "@types/node":
       optional: true
-  checksum: 20561fb4028bdefa275dc9085174cf153c26aa2a38ac3e8185eca8ad360689350b1323e50e9a95171b1005040acffb70d3b35dbf611e036287ddbff3e4cea920
+  checksum: 0527eb483e42a0a532bdb87f522d7cf83075ad70f9ab1e0aa1ddcff24ac96234256c9fa036728cbc44341e95e23915d218bbf22e410be3ffda8be85cace0d1ac
   languageName: node
   linkType: hard
 
@@ -2651,9 +2651,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fluentui/react-focus@npm:^8.8.7":
-  version: 8.8.7
-  resolution: "@fluentui/react-focus@npm:8.8.7"
+"@fluentui/react-focus@npm:^8.8.8":
+  version: 8.8.8
+  resolution: "@fluentui/react-focus@npm:8.8.8"
   dependencies:
     "@fluentui/keyboard-key": ^0.4.2
     "@fluentui/merge-styles": ^8.5.3
@@ -2664,7 +2664,7 @@ __metadata:
   peerDependencies:
     "@types/react": ">=16.8.0 <19.0.0"
     react: ">=16.8.0 <19.0.0"
-  checksum: fbca74360e4cf6f0eb87b7517c89380f68f61900ecab252bed6c140e75f3eaadefac0aca5f2f3b932cb92fa782d3f2f3faa696d88b80e9a50823b2aeb2f45cce
+  checksum: bbcbb51089baff0979cc754369ea77b66edb0eba3037be24c9c3d3081de65e33b4fc763973f80e2d2c6bf9ae33165a3f2123fdbb38fa7ae5c3570002ca65ca32
   languageName: node
   linkType: hard
 
@@ -2739,15 +2739,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fluentui/react@npm:^8.98.7":
-  version: 8.98.7
-  resolution: "@fluentui/react@npm:8.98.7"
+"@fluentui/react@npm:^8.98.8":
+  version: 8.98.8
+  resolution: "@fluentui/react@npm:8.98.8"
   dependencies:
     "@fluentui/date-time-utilities": ^8.5.2
     "@fluentui/font-icons-mdl2": ^8.5.2
     "@fluentui/foundation-legacy": ^8.2.22
     "@fluentui/merge-styles": ^8.5.3
-    "@fluentui/react-focus": ^8.8.7
+    "@fluentui/react-focus": ^8.8.8
     "@fluentui/react-hooks": ^8.6.12
     "@fluentui/react-portal-compat-context": ^9.0.3
     "@fluentui/react-window-provider": ^2.2.3
@@ -2762,7 +2762,7 @@ __metadata:
     "@types/react-dom": ">=16.8.0 <19.0.0"
     react: ">=16.8.0 <19.0.0"
     react-dom: ">=16.8.0 <19.0.0"
-  checksum: 910f67ed588f74be5a01911f79924a367e7836f9dbe7f7a0e3c204af90cdd404f150fb2deb7dc6df56faec9d4a7b3f5876efd0ffeee2673775ea081c8e831d90
+  checksum: 72ab825e8df8dd64c0e3a6b6a3ec95a6c53f8fe6889cb87359aabb34fe9a8134aa4bc5c10c276b4acfb2b7ce0f0cb2551a30cf71f39824fa1aca9109f18ce09a
   languageName: node
   linkType: hard
 
@@ -3778,14 +3778,14 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/app-common@workspace:javascript/app-common"
   dependencies:
-    "@datashaper/react": ^15.1.2
-    "@datashaper/schema": ^7.0.2
-    "@datashaper/tables": ^5.2.1
+    "@datashaper/react": ^16.0.0
+    "@datashaper/schema": ^8.0.0
+    "@datashaper/tables": ^5.2.2
     "@datashaper/utilities": ^2.3.9
-    "@datashaper/workflow": ^18.1.1
+    "@datashaper/workflow": ^19.0.0
     "@essex/components": ^3.1.0
     "@essex/scripts": ^22.1.0
-    "@fluentui/react": ^8.98.7
+    "@fluentui/react": ^8.98.8
     "@fluentui/react-hooks": ^8.6.12
     "@thematic/core": ^3.1.1
     "@thematic/d3": ^2.0.14
@@ -3817,11 +3817,11 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/discover-app@workspace:javascript/app-discover"
   dependencies:
-    "@datashaper/react": ^15.1.2
-    "@datashaper/schema": ^7.0.2
-    "@datashaper/tables": ^5.2.1
+    "@datashaper/react": ^16.0.0
+    "@datashaper/schema": ^8.0.0
+    "@datashaper/tables": ^5.2.2
     "@datashaper/utilities": ^2.3.9
-    "@datashaper/workflow": ^18.1.1
+    "@datashaper/workflow": ^19.0.0
     "@essex-js-toolkit/hooks": ^4.0.3
     "@essex/components": ^3.1.0
     "@essex/hooks": ^4.0.13
@@ -3829,7 +3829,7 @@ __metadata:
     "@essex/vite-config": ^19.0.14
     "@essex/webpack-config": ^21.0.8
     "@fluentui/font-icons-mdl2": ^8.5.2
-    "@fluentui/react": ^8.98.7
+    "@fluentui/react": ^8.98.8
     "@fluentui/react-hooks": ^8.6.12
     "@fluentui/react-icons-mdl2": ^1.3.25
     "@fluentui/utilities": ^8.13.2
@@ -3912,7 +3912,7 @@ __metadata:
     "@essex/scripts": ^22.1.0
     "@essex/webpack-config": ^21.0.8
     "@fluentui/font-icons-mdl2": ^8.5.2
-    "@fluentui/react": ^8.98.7
+    "@fluentui/react": ^8.98.8
     "@fluentui/react-hooks": ^8.6.12
     "@fluentui/utilities": ^8.13.2
     "@reduxjs/toolkit": ^1.8.6
@@ -3956,17 +3956,17 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/model-exposure-app@workspace:javascript/app-model-exposure"
   dependencies:
-    "@datashaper/react": ^15.1.2
-    "@datashaper/schema": ^7.0.2
-    "@datashaper/tables": ^5.2.1
+    "@datashaper/react": ^16.0.0
+    "@datashaper/schema": ^8.0.0
+    "@datashaper/tables": ^5.2.2
     "@datashaper/utilities": ^2.3.9
-    "@datashaper/workflow": ^18.1.1
+    "@datashaper/workflow": ^19.0.0
     "@essex/components": ^3.1.0
     "@essex/hooks": ^4.0.13
     "@essex/scripts": ^22.1.0
     "@essex/webpack-config": ^21.0.8
     "@fluentui/font-icons-mdl2": ^8.5.2
-    "@fluentui/react": ^8.98.7
+    "@fluentui/react": ^8.98.8
     "@fluentui/react-hooks": ^8.6.12
     "@fluentui/utilities": ^8.13.2
     "@reduxjs/toolkit": ^1.8.6
@@ -4016,16 +4016,16 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/webapp@workspace:javascript/webapp"
   dependencies:
-    "@datashaper/schema": ^7.0.2
-    "@datashaper/tables": ^5.2.1
+    "@datashaper/schema": ^8.0.0
+    "@datashaper/tables": ^5.2.2
     "@datashaper/utilities": ^2.3.9
-    "@datashaper/workflow": ^18.1.1
+    "@datashaper/workflow": ^19.0.0
     "@essex/components": ^3.1.0
     "@essex/hooks": ^4.0.13
     "@essex/scripts": ^22.1.0
     "@essex/webpack-config": ^21.0.8
     "@fluentui/font-icons-mdl2": ^8.5.2
-    "@fluentui/react": ^8.98.7
+    "@fluentui/react": ^8.98.8
     "@fluentui/react-hooks": ^8.6.12
     "@fluentui/utilities": ^8.13.2
     "@fluentui/web-components": ^2.5.7
@@ -4082,18 +4082,18 @@ __metadata:
   resolution: "@showwhy/wrangle-app@workspace:javascript/app-wrangle"
   dependencies:
     "@datashaper/core": ^10.0.0
-    "@datashaper/react": ^15.1.2
-    "@datashaper/schema": ^7.0.2
-    "@datashaper/tables": ^5.2.1
+    "@datashaper/react": ^16.0.0
+    "@datashaper/schema": ^8.0.0
+    "@datashaper/tables": ^5.2.2
     "@datashaper/utilities": ^2.3.9
-    "@datashaper/workflow": ^18.1.1
+    "@datashaper/workflow": ^19.0.0
     "@essex-js-toolkit/hooks": ^4.0.3
     "@essex/components": ^3.1.0
     "@essex/hooks": ^4.0.13
     "@essex/scripts": ^22.1.0
     "@essex/webpack-config": ^21.0.8
     "@fluentui/font-icons-mdl2": ^8.5.2
-    "@fluentui/react": ^8.98.7
+    "@fluentui/react": ^8.98.8
     "@fluentui/react-hooks": ^8.6.12
     "@fluentui/utilities": ^8.13.2
     "@monaco-editor/react": ^4.4.6

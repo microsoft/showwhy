@@ -19,7 +19,7 @@
 		"@essex/hooks": "^4.0.13",
 		"@essex/webpack-config": "^21.0.8",
 		"@fluentui/font-icons-mdl2": "^8.5.2",
-		"@fluentui/react": "^8.98.7",
+		"@fluentui/react": "^8.98.8",
 		"@fluentui/react-hooks": "^8.6.12",
 		"@fluentui/utilities": "^8.13.2",
 		"@reduxjs/toolkit": "^1.8.6",
