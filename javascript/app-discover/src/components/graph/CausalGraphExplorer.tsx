@@ -35,9 +35,9 @@ const MAX_EDGE_WIDTH = 10
 
 export const CausalGraphExplorer = memo(function CausalGraphExplorer() {
 	const causalGraph = useCausalGraph()
-	const columnMetadata = useRecoilValue(
+	const columnsMetadata = useRecoilValue(
 		CausalDiscoveryResultsState,
-	).normalizedColumnMetadata
+	).normalizedColumnsMetadata
 
 	const weightThreshold = useRecoilValue(WeightThresholdState)
 	const confidenceThreshold = useRecoilValue(ConfidenceThresholdState)
@@ -94,7 +94,7 @@ export const CausalGraphExplorer = memo(function CausalGraphExplorer() {
 		>
 			{Graph.includesVariable(causalGraph, variable) ? (
 				<CausalGraphNode
-					columnMetadata={columnMetadata}
+					columnsMetadata={columnsMetadata}
 					variable={variable}
 					isSelectable
 					isRemovable

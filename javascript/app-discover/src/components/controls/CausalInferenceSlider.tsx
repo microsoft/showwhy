@@ -24,6 +24,11 @@ import {
 } from './CausalInferenceSlider.hooks.js'
 import type { CausalInferenceSliderProps } from './CausalInferenceSlider.types.js'
 
+const standardDeviationFixedRange = {
+	min: -2,
+	max: 2,
+}
+
 const categoricalNatures = [
 	VariableNature.CategoricalNominal,
 	VariableNature.CategoricalOrdinal,
@@ -31,23 +36,23 @@ const categoricalNatures = [
 ]
 
 export const CausalInferenceSlider: React.FC<CausalInferenceSliderProps> = memo(
-	function CausalInferenceSlider({ variable, wasDragged, columnMetadata }) {
+	function CausalInferenceSlider({ variable, wasDragged, columnsMetadata }) {
 		const inferenceResult = useInferenceResult(variable.columnName)
 		const differenceValue = useDifferenceValue(variable.columnName)
 		const isCategorical =
-			variable?.nature && categoricalNatures.includes(variable?.nature)
+			variable?.nature && categoricalNatures.includes(variable.nature)
+		const isBinary = variable?.nature === VariableNature.Binary
 		const interventions = useRecoilValue(CausalInterventionsState)
-
-		const metadata = columnMetadata && columnMetadata[variable.columnName]
-		const result = (inferenceResult || 0).toFixed(2)
+		const metadata = columnsMetadata?.[variable.columnName]
+		const lowerBound = standardDeviationFixedRange.min || metadata?.lower || -10
+		const upperBound = standardDeviationFixedRange.max || metadata?.upper || 10
+		const result = +(inferenceResult || 0).toFixed(2)
 		const isIntervened = interventions.some(
 			intervention => intervention.columnName === variable.columnName,
 		)
-
 		const onUpdateInterventions = useOnUpdateInterventions(
 			variable.columnName,
 			interventions,
-			metadata,
 		)
 		const onRemoveIntervention = useOnRemoveInterventions(
 			variable.columnName,
@@ -56,6 +61,7 @@ export const CausalInferenceSlider: React.FC<CausalInferenceSliderProps> = memo(
 		)
 
 		if (isCategorical) return null
+
 		return (
 			<div>
 				<Stack
@@ -73,9 +79,9 @@ export const CausalInferenceSlider: React.FC<CausalInferenceSliderProps> = memo(
 					{/* min and max values are by default 0 and 1 because of binary data, they don't have lower and upper */}
 					<Slider
 						className="no-drag"
-						min={Math.min(-2, +result)}
-						max={Math.max(2, +result)}
-						value={+result || 0}
+						min={isBinary ? 0 : lowerBound}
+						max={isBinary ? 1 : upperBound}
+						value={result || 0}
 						step={0.01}
 						styles={slider_style}
 						onChange={onUpdateInterventions}

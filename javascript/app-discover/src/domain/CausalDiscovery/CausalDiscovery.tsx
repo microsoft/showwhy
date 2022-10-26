@@ -164,10 +164,10 @@ export function discover(
 					}
 				}
 
-				const normalizedColumnMetadata =
+				const normalizedColumnsMetadata =
 					causalDiscoveryResult.normalized_columns_metadata
 
-				return { graph, causalInferenceModel, normalizedColumnMetadata }
+				return { graph, causalInferenceModel, normalizedColumnsMetadata }
 			},
 		)
 	/* eslint-enable */

@@ -186,5 +186,6 @@ export function useCausalDiscoveryRunner() {
 		cancelLastDiscoveryResultPromise,
 		setLastDiscoveryResultPromise,
 		setErrorMessage,
+		resetCausalDiscoveryResultsState,
 	])
 }

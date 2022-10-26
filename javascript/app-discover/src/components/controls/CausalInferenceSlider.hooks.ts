@@ -5,7 +5,6 @@
 import { useCallback, useMemo } from 'react'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
 
-import type { NormalizedColumnMetadata } from '../../domain/CausalDiscovery/CausalDiscoveryResult.js'
 import type { Intervention } from '../../domain/CausalInference.js'
 import {
 	CausalInferenceBaselineValuesState,
@@ -31,20 +30,19 @@ export function useInferenceResult(columnName: string): number | undefined {
 	const causalInferenceResults = useRecoilValue(CausalInferenceResultState)
 	return useMemo((): number | undefined => {
 		return causalInferenceResults.get(columnName)
-	}, [causalInferenceResults])
+	}, [causalInferenceResults, columnName])
 }
 export function useDifferenceValue(columnName: string): string {
 	const differenceValues = useCausalInferenceDifferenceFromBaselineValues()
 	return useMemo((): string => {
 		const rawDifferenceValue = differenceValues.get(columnName) || 0
 		return rawDifferenceValue.toFixed(2)
-	}, [differenceValues])
+	}, [differenceValues, columnName])
 }
 
 export function useOnUpdateInterventions(
 	columnName: string,
 	interventions: Intervention[],
-	metadata?: NormalizedColumnMetadata,
 ): (value: number) => void {
 	const setInterventions = useSetRecoilState(CausalInterventionsState)
 
@@ -55,11 +53,11 @@ export function useOnUpdateInterventions(
 			)
 			revisedInterventions.push({
 				columnName,
-				value: value * (metadata?.std || 1),
+				value: value,
 			})
 			setInterventions(revisedInterventions)
 		},
-		[interventions, setInterventions, metadata],
+		[interventions, setInterventions, columnName],
 	)
 }
 
@@ -78,5 +76,5 @@ export function useOnRemoveInterventions(
 				intervention => intervention.columnName !== columnName,
 			),
 		)
-	}, [interventions, setInterventions, wasDragged])
+	}, [interventions, setInterventions, wasDragged, columnName])
 }
