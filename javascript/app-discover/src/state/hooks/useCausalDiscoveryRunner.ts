@@ -20,6 +20,7 @@ import {
 	AutoRunState,
 	CausalDiscoveryResultsState,
 	CausalGraphConstraintsState,
+	DEFAULT_DATASET_NAME,
 	ErrorMessageState,
 	LoadingState,
 	SelectedCausalDiscoveryAlgorithmState,
@@ -110,8 +111,6 @@ export function useCausalDiscoveryRunner() {
 	)
 
 	const runDiscovery = useCallback(async () => {
-		if (!autoRun && isLoading) return
-
 		setErrorMessage(undefined)
 
 		// if the last task has not finished just yet, cancel it
@@ -152,7 +151,6 @@ export function useCausalDiscoveryRunner() {
 		}
 	}, [
 		dataset,
-		autoRun,
 		inModelCausalVariables,
 		causalDiscoveryAlgorithm,
 		causalDiscoveryConstraints,
@@ -164,12 +162,15 @@ export function useCausalDiscoveryRunner() {
 		resetCausalDiscoveryResultsState,
 		setLastDiscoveryResultPromise,
 		setErrorMessage,
-		isLoading,
 		setIsLoading,
 	])
 
 	useEffect(() => {
-		if (inModelCausalVariables.length > 0) {
+		if (
+			!autoRun ||
+			inModelCausalVariables.length < 2 ||
+			dataset.name === DEFAULT_DATASET_NAME
+		) {
 			setCausalDiscoveryResultsState({
 				graph: {
 					variables: inModelCausalVariables,
@@ -181,7 +182,7 @@ export function useCausalDiscoveryRunner() {
 			})
 		}
 
-		if(autoRun) {
+		if (autoRun) {
 			updateProgress(0, undefined)
 			void runDiscovery()
 		}
@@ -191,6 +192,7 @@ export function useCausalDiscoveryRunner() {
 		}
 	}, [
 		autoRun,
+		dataset,
 		inModelCausalVariables,
 		causalDiscoveryAlgorithm,
 		causalDiscoveryConstraints,
