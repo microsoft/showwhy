@@ -142,15 +142,7 @@ export function useViewMenuItems(
 				],
 			},
 		}),
-		[
-			view,
-			setView,
-			useStraightEdges,
-			setUseStraightEdges,
-			autoLayoutEnabled,
-			setAutoLayoutEnabled,
-			buttonStyles,
-		],
+		[view, setView, useStraightEdges, setUseStraightEdges, buttonStyles],
 	)
 }
 
