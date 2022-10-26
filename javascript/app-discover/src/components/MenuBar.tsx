@@ -27,6 +27,7 @@ import { saveObjectJSON } from '../utils/Save.js'
 import {
 	useAutoLayoutToggleMenuItem,
 	useDatasetMenuItems,
+	useFixedInterventionRangesToggleMenuItem,
 	useModelMenuItems,
 	useSliderMenuItem,
 	useTogglePauseButtonMenuItem,
@@ -108,6 +109,8 @@ export const MenuBar: React.FC = memo(function MenuBar() {
 		CorrelationThresholdState,
 	)
 	const autoLayoutSliderMenuItem = useAutoLayoutToggleMenuItem()
+	const fixedInterventionRangesMenuItem =
+		useFixedInterventionRangesToggleMenuItem()
 	const togglePauseButtonMenuItem = useTogglePauseButtonMenuItem()
 
 	const menuItems = useMemo<ICommandBarItemProps[]>(
@@ -118,6 +121,7 @@ export const MenuBar: React.FC = memo(function MenuBar() {
 		() => [
 			togglePauseButtonMenuItem,
 			autoLayoutSliderMenuItem,
+			fixedInterventionRangesMenuItem,
 			edgeWeightSliderMenuItem,
 			edgeConfidenceSliderMenuItem,
 			correlationSliderMenuItem,
@@ -125,6 +129,7 @@ export const MenuBar: React.FC = memo(function MenuBar() {
 		[
 			togglePauseButtonMenuItem,
 			autoLayoutSliderMenuItem,
+			fixedInterventionRangesMenuItem,
 			edgeWeightSliderMenuItem,
 			edgeConfidenceSliderMenuItem,
 			correlationSliderMenuItem,

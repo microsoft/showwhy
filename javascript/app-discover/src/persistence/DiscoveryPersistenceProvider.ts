@@ -23,6 +23,7 @@ import {
 	ConfidenceThresholdState,
 	CorrelationThresholdState,
 	DatasetNameState,
+	FixedInterventionRangesEnabledState,
 	GraphViewState,
 	InModelColumnNamesState,
 	NodePositionsState,
@@ -54,6 +55,7 @@ interface ProjectJson {
 	ui: {
 		straightEdges: boolean
 		autoLayoutEnabled: boolean
+		fixedInterventionRangesEnabled: boolean
 		selectedDiscoveryAlgorithm: CausalDiscoveryAlgorithm
 		weightThreshold: number
 		confidenceThreshold: number
@@ -103,6 +105,9 @@ function useGetProjectJson(): () => ProjectJson {
 	const nodePositions = useRecoilValue(NodePositionsState)
 	const straightEdges = useRecoilValue(StraightEdgesState)
 	const autoLayoutEnabled = useRecoilValue(AutoLayoutEnabledState)
+	const fixedInterventionRangesEnabled = useRecoilValue(
+		FixedInterventionRangesEnabledState,
+	)
 	const deciParams = useRecoilValue(DeciParamsState)
 	const selectedDiscoveryAlgorithm = useRecoilValue(
 		SelectedCausalDiscoveryAlgorithmState,
@@ -132,6 +137,7 @@ function useGetProjectJson(): () => ProjectJson {
 			ui: {
 				straightEdges,
 				autoLayoutEnabled,
+				fixedInterventionRangesEnabled,
 				selectedDiscoveryAlgorithm,
 				weightThreshold,
 				confidenceThreshold,
@@ -152,6 +158,7 @@ function useGetProjectJson(): () => ProjectJson {
 			nodePositions,
 			straightEdges,
 			autoLayoutEnabled,
+			fixedInterventionRangesEnabled,
 			selectedDiscoveryAlgorithm,
 			weightThreshold,
 			confidenceThreshold,
@@ -183,6 +190,9 @@ function useLoadProjectJson(): (json: ProjectJson) => void {
 	const setNodePositions = useSetRecoilState(NodePositionsState)
 	const setStraightEdges = useSetRecoilState(StraightEdgesState)
 	const setAutoLayoutEnabled = useSetRecoilState(AutoLayoutEnabledState)
+	const setFixedInterventionRangesEnabled = useSetRecoilState(
+		FixedInterventionRangesEnabledState,
+	)
 	const setSelectedDiscoveryAlgorithm = useSetRecoilState(
 		SelectedCausalDiscoveryAlgorithmState,
 	)
@@ -211,6 +221,7 @@ function useLoadProjectJson(): (json: ProjectJson) => void {
 			setNodePositions(json.layout.nodePositions)
 			setStraightEdges(json.ui.straightEdges)
 			setAutoLayoutEnabled(json.ui.autoLayoutEnabled)
+			setFixedInterventionRangesEnabled(json.ui.fixedInterventionRangesEnabled)
 			setSelectedDiscoveryAlgorithm(json.ui.selectedDiscoveryAlgorithm)
 			setWeightThreshold(json.ui.weightThreshold)
 			setConfidenceThreshold(json.ui.confidenceThreshold)
@@ -233,6 +244,7 @@ function useLoadProjectJson(): (json: ProjectJson) => void {
 			setNodePositions,
 			setStraightEdges,
 			setAutoLayoutEnabled,
+			setFixedInterventionRangesEnabled,
 			setSelectedDiscoveryAlgorithm,
 			setWeightThreshold,
 			setConfidenceThreshold,

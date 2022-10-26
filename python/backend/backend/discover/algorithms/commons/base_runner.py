@@ -10,6 +10,7 @@ from sklearn.preprocessing import StandardScaler
 from backend.discover.model.causal_discovery import (
     CausalDiscoveryPayload,
     CausalVariableNature,
+    NormalizedColumnMetadata,
 )
 
 CausalGraph = Dict[str, list]
@@ -25,6 +26,7 @@ class CausalDiscoveryRunner(ABC):
         self._constraints = p.constraints
         self._progress_callback = progress_callback
         self._nature_by_variable = {v.name: v.nature for v in p.causal_variables}
+        self._normalized_columns_metadata = dict()
 
     def register_progress_callback(
         self, progress_callback: ProgressCallback = None
@@ -56,9 +58,20 @@ class CausalDiscoveryRunner(ABC):
                 logging.info(
                     f"Scaling continuous columns {continuous_columns} using mean and standard deviation"
                 )
+
                 self._prepared_data[continuous_columns] = StandardScaler(
                     with_mean=True, with_std=True
                 ).fit_transform(self._prepared_data[continuous_columns])
+
+                self._normalized_columns_metadata = {
+                    column: NormalizedColumnMetadata(
+                        upper=self._prepared_data[column].max(),
+                        lower=self._prepared_data[column].min(),
+                        mean=self._prepared_data[column].mean(),
+                        std=self._prepared_data[column].std(),
+                    )
+                    for column in continuous_columns
+                }
 
     def _prepare_data(self):
         self._prepared_data = pd.DataFrame.from_dict(self._dataset_data)
