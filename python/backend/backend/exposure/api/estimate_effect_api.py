@@ -89,11 +89,11 @@ async def get_number_of_executions(workspace_name: str, body: EstimateEffectRequ
         treatment_models,
     )
 
-    return {
-        "outcome": NumberOfExecutionsResult(
-            count=len([spec for spec in outcomeSpecifications if spec.is_valid()])
-        ),
-        "treatment": NumberOfExecutionsResult(
-            count=len([spec for spec in treatmentSpecifications if spec.is_valid()])
-        ),
-    }
+    outcome = NumberOfExecutionsResult(
+        count=len([spec for spec in outcomeSpecifications if spec.is_valid()])
+    )
+    treatment = NumberOfExecutionsResult(
+        count=len([spec for spec in treatmentSpecifications if spec.is_valid()])
+    )
+
+    return {"outcome": outcome, "treatment": treatment, "total": outcome.count + treatment.count}

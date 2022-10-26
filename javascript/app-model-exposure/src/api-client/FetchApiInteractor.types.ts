@@ -3,10 +3,6 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-export interface TotalExecutionsResponse {
-	count: number
-}
-
 export enum ApiType {
 	EstimateEffect = 'estimate_effect',
 	RefuteEstimate = 'refute_estimate',
