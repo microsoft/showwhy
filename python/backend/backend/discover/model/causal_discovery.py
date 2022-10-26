@@ -37,6 +37,13 @@ class CausalDiscoveryPayload(BaseModel):
         arbitrary_types_allowed = True
 
 
+class NormalizedColumnMetadata(BaseModel):
+    upper: float
+    lower: float
+    mean: float
+    std: float
+
+
 _causal_var_nature_to_causica_var_type = {
     "Discrete": "continuous",  # TODO: make categorical (related to ONNX)
     "Continuous": "continuous",

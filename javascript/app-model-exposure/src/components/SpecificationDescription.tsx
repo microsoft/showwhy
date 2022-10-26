@@ -113,12 +113,12 @@ const Value = styled.span`
 	&:after {
 		content: ' ';
 	}
-	color: ${({ theme }) => theme.application().midContrast().hex()};
+	color: ${({ theme }) => theme.palette.neutralSecondary};
 `
 
 const Effect = styled(Value)`
 	&:after {
 		content: '';
 	}
-	color: ${({ theme }) => theme.application().accent().hex()};
+	color: ${({ theme }) => theme.palette.themePrimary};
 `

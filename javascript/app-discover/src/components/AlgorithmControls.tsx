@@ -6,6 +6,7 @@ import type { IChoiceGroupOption } from '@fluentui/react'
 import { ChoiceGroup } from '@fluentui/react'
 import { memo, useCallback } from 'react'
 import { useRecoilState } from 'recoil'
+import styled from 'styled-components'
 
 import { CausalDiscoveryAlgorithm } from '../domain/CausalDiscovery/CausalDiscoveryAlgorithm.js'
 import { SelectedCausalDiscoveryAlgorithmState } from '../state/index.js'
@@ -32,8 +33,8 @@ export const AlgorithmControls = memo(function AlgorithmControls() {
 	)
 
 	return (
-		<>
-			<Divider>Causal Discovery</Divider>
+		<Container>
+			<Divider>Discovery algorithm</Divider>
 			<ChoiceGroup
 				selectedKey={selectedCausalDiscoveryAlgorithm}
 				options={ALGORITHMS}
@@ -42,6 +43,10 @@ export const AlgorithmControls = memo(function AlgorithmControls() {
 			{selectedCausalDiscoveryAlgorithm === CausalDiscoveryAlgorithm.DECI && (
 				<DeciParams />
 			)}
-		</>
+		</Container>
 	)
 })
+
+const Container = styled.div`
+	padding: 8px;
+`

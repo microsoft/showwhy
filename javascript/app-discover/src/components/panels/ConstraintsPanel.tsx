@@ -5,6 +5,7 @@
 import { DefaultButton, Icon, Stack, TooltipHost } from '@fluentui/react'
 import { memo } from 'react'
 import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil'
+import styled from 'styled-components'
 
 import type { VariableReference } from '../../domain/CausalVariable.js'
 import type { RelationshipReference } from '../../domain/Relationship.js'
@@ -116,7 +117,7 @@ export const ConstraintsPanel: React.FC<ConstraintsPanelProps> = memo(
 				effectConstraints.length > 0)
 
 		return hasAnyConstraints ? (
-			<>
+			<Container>
 				{children}
 				{causeConstraints.length > 0 && <Divider>Cause Constraints</Divider>}
 				{causeConstraints}
@@ -127,10 +128,10 @@ export const ConstraintsPanel: React.FC<ConstraintsPanelProps> = memo(
 				)}
 				{relationshipConstraints}
 				<Divider></Divider>
-				<DefaultButton onClick={resetConstraints}>
+				<ClearConstraintsButton onClick={resetConstraints}>
 					Clear all constraints
-				</DefaultButton>
-			</>
+				</ClearConstraintsButton>
+			</Container>
 		) : null
 	},
 )
@@ -141,3 +142,11 @@ const icons = {
 	switch: { iconName: 'Switch' },
 	pinned: { iconName: 'PinSolid12' },
 }
+
+const Container = styled.div`
+	padding: 8px;
+`
+
+const ClearConstraintsButton = styled(DefaultButton)`
+	width: 100%;
+`

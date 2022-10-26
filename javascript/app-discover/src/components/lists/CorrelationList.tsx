@@ -2,12 +2,12 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { Spinner } from '@fluentui/react'
 import { memo, Suspense } from 'react'
 import { useRecoilValue } from 'recoil'
 
 import { FilteredCorrelationsState } from '../../state/index.js'
 import { correlationsForVariable } from '../../utils/Correlation.js'
+import { PaddedSpinner } from '../CauseDis.styles.js'
 import { NetworkGraphExplorer } from '../graph/NetworkGraphExplorer.js'
 import type {
 	CorrelationListProps,
@@ -45,7 +45,9 @@ const VariableCorrelationsListInternal: React.FC<VariableCorrelationsListProps> 
 export const VariableCorrelationsList: React.FC<VariableCorrelationsListProps> =
 	memo(function VariableCorrelationsList(props: VariableCorrelationsListProps) {
 		return (
-			<Suspense fallback={<Spinner label="Calculating Correlations..." />}>
+			<Suspense
+				fallback={<PaddedSpinner label="Calculating Correlations..." />}
+			>
 				<VariableCorrelationsListInternal {...props} />
 			</Suspense>
 		)
@@ -61,7 +63,9 @@ const AllCorrelationsListInternal = memo(
 export const AllCorrelationsList: React.FC = memo(
 	function AllCorrelationsList() {
 		return (
-			<Suspense fallback={<Spinner label="Calculating Correlations..." />}>
+			<Suspense
+				fallback={<PaddedSpinner label="Calculating Correlations..." />}
+			>
 				<AllCorrelationsListInternal />
 			</Suspense>
 		)

@@ -29,7 +29,7 @@ export function usePlaceboDataGroup(): Map<string, PlaceboDataGroup[]> {
 	const { data } = useProcessedInputData(columnMapping)
 
 	return useMemo(() => {
-		const map = new Map()
+		const map = new Map<string, PlaceboDataGroup[]>()
 		treatedUnits.forEach((treatedUnit: string) => {
 			const output = computeRMSPE(
 				placeboOutputRes.get(treatedUnit) as SDIDOutputResponse,

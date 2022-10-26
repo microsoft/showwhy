@@ -3,8 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import type { Theme } from '@fluentui/react'
 import { Label } from '@fluentui/react'
-import type { Theme } from '@thematic/core'
 import styled from 'styled-components'
 
 export const PropsContainer = styled.div`
@@ -20,7 +20,7 @@ export const Code = styled.pre`
 	margin-top: 0.5em;
 	padding: 10px;
 	border: 1px solid
-		${({ theme }: { theme: Theme }) => theme.application().lowContrast().hex()};
+		${({ theme }: { theme: Theme }) => theme.palette.neutralTertiaryAlt};
 `
 export const Container = styled.div``
 export const ExampleContainer = styled.div`
@@ -28,8 +28,7 @@ export const ExampleContainer = styled.div`
 `
 export const ExampleLabel = styled(Label)`
 	font-weight: normal;
-	color: ${({ theme }: { theme: Theme }) =>
-		theme.application().midContrast().hex()};
+	color: ${({ theme }: { theme: Theme }) => theme.palette.neutralSecondary};
 `
 export const Header = styled.div`
 	display: flex;
@@ -37,7 +36,7 @@ export const Header = styled.div`
 	padding: 5px 10px;
 	column-gap: 10px;
 	background-color: ${({ theme }: { theme: Theme }) =>
-		theme.application().faint().hex()};
+		theme.palette.neutralLighter};
 `
 
 export const HeaderTitle = styled.span`
@@ -45,25 +44,24 @@ export const HeaderTitle = styled.span`
 	font-weight: bold;
 	flex-direction: column;
 	justify-content: center;
-	color: ${({ theme }: { theme: Theme }) =>
-		theme.application().midHighContrast().hex()};
+	color: ${({ theme }: { theme: Theme }) => theme.palette.neutralSecondary};
 `
 
 export const ModalLabel = styled.span`
 	font-weight: bold;
-	color: ${({ theme }: { theme: Theme }) =>
-		theme.application().midContrast().hex()};
+	color: ${({ theme }: { theme: Theme }) => theme.palette.neutralSecondary};
 `
 export const ModalBody = styled.div`
 	display: flex;
 	flex-direction: column;
 	gap: 20px;
-	padding: 10px;
+	padding: 12px;
+	height: 600px;
 `
 export const Footer = styled.div`
 	padding: 10px;
 	float: right;
 `
 
-export const modalStyles = { main: { width: '90%' } }
+export const modalStyles = { main: { width: 800 } }
 export const buttonChoiceGroupStyles = { alignSelf: 'flex-start' }

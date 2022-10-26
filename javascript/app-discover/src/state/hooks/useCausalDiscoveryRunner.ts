@@ -10,7 +10,10 @@ import {
 	useSetRecoilState,
 } from 'recoil'
 
-import { discover as runCausalDiscovery } from '../../domain/CausalDiscovery/CausalDiscovery.js'
+import {
+	discover as runCausalDiscovery,
+	empty_discover_result,
+} from '../../domain/CausalDiscovery/CausalDiscovery.js'
 import { CausalDiscoveryAlgorithm } from '../../domain/CausalDiscovery/CausalDiscoveryAlgorithm.js'
 import type {
 	Relationship,
@@ -144,15 +147,29 @@ export function useCausalDiscoveryRunner() {
 				setIsLoading(false)
 			}
 		} catch (err) {
-			if (err instanceof CanceledPromiseError) {
-				setLoadingState('Cancelling last run...')
-				setErrorMessage(undefined)
-			} else {
+			if (!(err instanceof CanceledPromiseError)) {
 				resetCausalDiscoveryResultsState()
 				setLoadingState(undefined)
 				setErrorMessage((err as Error).message)
 			}
 			setIsLoading(false)
+		}
+
+		try {
+			const results = await discoveryPromise.promise!
+
+			// only update if the promise is not canceled
+			if (discoveryPromise.isFinished()) {
+				setCausalDiscoveryResultsState(results)
+				setLoadingState(undefined)
+				setErrorMessage(undefined)
+			}
+		} catch (err) {
+			if (!(err instanceof CanceledPromiseError)) {
+				resetCausalDiscoveryResultsState()
+				setLoadingState(undefined)
+				setErrorMessage((err as Error).message)
+			}
 		}
 	}, [
 		dataset,
@@ -176,15 +193,13 @@ export function useCausalDiscoveryRunner() {
 			inModelCausalVariables.length < 2 ||
 			dataset.name === DEFAULT_DATASET_NAME
 		) {
-			setCausalDiscoveryResultsState({
-				graph: {
-					variables: inModelCausalVariables,
-					relationships: [],
-					constraints: causalDiscoveryConstraints,
-					algorithm: causalDiscoveryAlgorithm,
-				},
-				causalInferenceModel: null,
-			})
+			setCausalDiscoveryResultsState(
+				empty_discover_result(
+					inModelCausalVariables,
+					causalDiscoveryConstraints,
+					causalDiscoveryAlgorithm,
+				),
+			)
 		}
 
 		if (autoRun) {

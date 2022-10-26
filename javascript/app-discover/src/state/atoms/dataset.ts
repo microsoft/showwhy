@@ -10,7 +10,7 @@ import type { CausalVariable } from '../../domain/CausalVariable.js'
 export const DEFAULT_INPUT_TABLE_NAME = 'original-data'
 export const DEFAULT_PREPROCESSED_TABLE_NAME = 'processed-data'
 export const DEFAULT_PIPELINE_TABLE_NAME = 'pipeline-table'
-export const DEFAULT_DATASET_NAME = 'Causal Dataset'
+export const DEFAULT_DATASET_NAME = 'Causal dataset'
 
 export const TableState = atom<ColumnTable | undefined>({
 	key: 'TableState',

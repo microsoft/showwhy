@@ -69,7 +69,18 @@ export function fromCausalDiscoveryResults(
 	return { variables, relationships, constraints, algorithm }
 }
 
-function empty_discover_result(
+export function empty_discover_result(
+	variables: CausalVariable[],
+	constraints: CausalDiscoveryConstraints,
+	algorithm: CausalDiscoveryAlgorithm,
+): CausalDiscoveryResult {
+	return {
+		graph: { variables, relationships: [], constraints, algorithm },
+		causalInferenceModel: null,
+	}
+}
+
+function empty_discover_result_promise(
 	variables: CausalVariable[],
 	constraints: CausalDiscoveryConstraints,
 	algorithm: CausalDiscoveryAlgorithm,
@@ -80,10 +91,9 @@ function empty_discover_result(
 	>({ taskId: undefined })
 
 	ret.setFinished()
-	ret.promise = Promise.resolve({
-		graph: { variables, relationships: [], constraints, algorithm },
-		causalInferenceModel: null,
-	})
+	ret.promise = Promise.resolve(
+		empty_discover_result(variables, constraints, algorithm),
+	)
 
 	return ret
 }
@@ -97,7 +107,7 @@ export function discover(
 	paramOptions?: DECIParams,
 ): CausalDiscoveryResultPromise {
 	if (algorithmName === CausalDiscoveryAlgorithm.None) {
-		return empty_discover_result(variables, constraints, algorithmName)
+		return empty_discover_result_promise(variables, constraints, algorithmName)
 	}
 
 	/* eslint-disable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-argument */
@@ -134,6 +144,7 @@ export function discover(
 					algorithmName,
 				)
 				let causalInferenceModel: CausalInferenceModel | null = null
+
 				if (causalDiscoveryResult.onnx) {
 					const onnx = Uint8Array.from(atob(causalDiscoveryResult.onnx), c =>
 						c.charCodeAt(0),
@@ -153,6 +164,7 @@ export function discover(
 					const columnNames = causalDiscoveryResult.columns
 					const isBooleanInterpretedAsContinuous =
 						causalDiscoveryResult.interpret_boolean_as_continuous
+
 					causalInferenceModel = {
 						inferenceSession,
 						confidenceMatrix,
@@ -162,7 +174,10 @@ export function discover(
 					}
 				}
 
-				return { graph, causalInferenceModel }
+				const normalizedColumnsMetadata =
+					causalDiscoveryResult.normalized_columns_metadata
+
+				return { graph, causalInferenceModel, normalizedColumnsMetadata }
 			},
 		)
 	/* eslint-enable */

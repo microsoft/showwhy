@@ -15,9 +15,10 @@ export const DatasetContainer = styled.div`
 export const DetailsContainer = styled.div`
 	display: flex;
 	justify-content: space-between;
-	padding: 5px 0px;
 `
 export const DetailsText = styled.span`
+	font-size: 11px;
+	padding-right: 12px;
 	color: ${({ theme }: { theme: ITheme }) => theme.palette.neutralSecondary};
 `
 export const Message = styled(MessageBar)`

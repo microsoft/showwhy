@@ -9,17 +9,21 @@ import type { BaseFile } from '@datashaper/utilities'
 import { createBaseFile } from '@datashaper/utilities'
 import { DataTable } from '@datashaper/workflow'
 import type { ICommandBarItemProps, IContextualMenuItem } from '@fluentui/react'
+import { useTheme } from '@fluentui/react'
 import type { OpenTableHandler } from '@showwhy/app-common'
-import { 	DataPackageContext,
+import {
+	DataPackageContext,
 	PersistenceContext,
 	removeExtension,
-useDataPackage ,
+	useDataPackage,
 	useDataTables,
 } from '@showwhy/app-common'
-import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import { useObservableState } from 'observable-hooks'
+import { useCallback, useContext, useMemo } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { map } from 'rxjs'
 
-import type { FileDefinition} from '../hooks/examples.js';
+import type { FileDefinition } from '../hooks/examples.js'
 import { useExampleProjects } from '../hooks/examples.js'
 import type { ResourceTreeData } from '../models.js'
 import { TABLE_TYPES, ZIP_TYPES } from './FileTree.constants.js'
@@ -135,6 +139,7 @@ export function useFileManagementCommands(
 		return saveProps(onClickDownloadZip)
 	}, [onClickDownloadZip])
 
+	const theme = useTheme()
 	const commands = useMemo<ICommandBarItemProps[]>(
 		() =>
 			createCommandBar(
@@ -142,6 +147,7 @@ export function useFileManagementCommands(
 				hasDataPackages,
 				onOpenCommands,
 				onSaveCommands,
+				theme,
 			),
 		[hasDataPackages, expanded, onOpenCommands, onSaveCommands],
 	)
@@ -210,20 +216,12 @@ export function useOnOpenFileRequested(): (
 }
 
 export function useTreeItems(): ResourceTreeData[] {
-	const dataPackages = useDataTables()
-	const [items, setItems] = useState<ResourceTreeData[]>([])
-
-	useEffect(() => {
-		setItems(groupTables(dataPackages))
-		const unsubs = dataPackages.map(dataPackage =>
-			dataPackage?.onChange(() => {
-				setItems(groupTables(dataPackages))
-			}),
-		)
-		return () => unsubs.forEach(subscription => subscription?.())
-	}, [dataPackages, setItems])
-
-	return items
+	const pkg = useDataPackage()
+	const observable = useMemo(
+		() => pkg.tableStore.tables$.pipe(map(tables => groupTables(tables))),
+		[pkg],
+	)
+	return useObservableState(observable, () => [])
 }
 
 export function useCurrentPath(): string {

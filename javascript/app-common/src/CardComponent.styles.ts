@@ -30,7 +30,6 @@ export const Card = styled.div<{
 		z-index: 2;
 		bottom: 0.2rem;
 		
-		background-color: white;
 		padding: 1rem;
 		
 	`}

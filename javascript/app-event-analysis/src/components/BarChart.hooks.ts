@@ -2,12 +2,20 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import { useThematic } from '@thematic/react'
 import { max, min, select } from 'd3'
 import { useEffect, useMemo, useRef } from 'react'
 
 import type { BarData, LegendData } from '../types'
 import { BarChartOrientation } from '../types'
 import { getColor } from './BarChart.utils.js'
+
+const axisFontSize = '14px'
+
+export function useColors() {
+	const theme = useThematic()
+	return useMemo(() => getColor(theme), [theme])
+}
 
 export function useData(
 	inputData: BarData[],
@@ -20,14 +28,17 @@ export function useData(
 	maxValue: number
 	legendData: LegendData[]
 } {
+	const colors = useColors()
 	return useMemo(() => {
 		const inputBars: BarData[] = []
-		let color = getColor('control-units')
+		let color = colors.get('control-units')
 		inputData.forEach(element => {
 			if (isPlaceboSimulation) {
 				color = treatedUnits.some(unit => element.name.includes(unit))
-					? getColor('highlight')
-					: (element.label as number) < 0 ? getColor('negative') : getColor('normal')
+					? colors.get('highlight')
+					: (element.label as number) < 0
+					? colors.get('negative')
+					: colors.get('normal')
 			}
 			inputBars.push({
 				name: element.name,
@@ -37,23 +48,27 @@ export function useData(
 			})
 		})
 
-		const legendData = !isPlaceboSimulation ? [{
-			name: 'Control units',
-			color: getColor('control-units'),
-		}] : [
-			{
-				name: 'Treated unit',
-				color: getColor('highlight'),
-			},
-			{
-				name: 'Units with negative effect',
-				color: getColor('negative'),
-			},
-			{
-				name: 'Units with positive effect',
-				color: getColor('positive'),
-			},
-		]
+		const legendData = !isPlaceboSimulation
+			? [
+					{
+						name: 'Control units',
+						color: colors.get('control-units'),
+					},
+			  ]
+			: [
+					{
+						name: 'Treated unit',
+						color: colors.get('highlight'),
+					},
+					{
+						name: 'Units with negative effect',
+						color: colors.get('negative'),
+					},
+					{
+						name: 'Units with positive effect',
+						color: colors.get('positive'),
+					},
+			  ]
 
 		const allValues = inputData.map(dataElement => dataElement.value)
 		const minValue = min(allValues) ?? 0
@@ -68,7 +83,7 @@ export function useData(
 			maxValue,
 			legendData,
 		}
-	}, [inputData, treatedUnits, isPlaceboSimulation])
+	}, [colors, inputData, treatedUnits, isPlaceboSimulation])
 }
 
 export function useLegends(
@@ -80,6 +95,7 @@ export function useLegends(
 	leftAxisLabel: string,
 	bottomAxisLabel: string,
 ) {
+	const colors = useColors()
 	const legendGroupRef = useRef(null)
 	useEffect(() => {
 		const container = select(legendGroupRef.current)
@@ -105,14 +121,14 @@ export function useLegends(
 			.attr('class', 'axis-name-text')
 			.attr('x', bottomAxisLabelX)
 			.attr('y', bottomAxisLabelY)
-			.style('font-size', 'large')
-			.style('fill', getColor('relative'))
+			.style('font-size', axisFontSize)
+			.style('fill', colors.defaultAxisTitle)
 			.text(bottomAxisLabel)
 		// add background rect for the bottom axis' text
 		container
 			.append('rect')
 			.attr('class', 'axis-name-text-bkgnd-rect')
-			.style('fill', 'white')
+			.style('fill', colors.axisBackground)
 			.attr('x', bottomAxisLabelX)
 			.attr('y', bottomAxisLabelY)
 			.attr('width', 10)
@@ -145,10 +161,11 @@ export function useLegends(
 			.append('text')
 			.attr('text-anchor', 'middle')
 			.attr('transform', 'rotate(-90)')
-			.style('font-size', 'large')
-			.style('fill', 'gray')
+			.style('font-size', axisFontSize)
+			.style('fill', colors.defaultAxisTitle)
 			.text(leftAxisLabel)
 	}, [
+		colors,
 		isPlaceboSimulation,
 		height,
 		width,

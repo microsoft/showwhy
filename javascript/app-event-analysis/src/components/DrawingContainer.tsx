@@ -2,6 +2,9 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import { chart } from '@thematic/d3'
+import { useThematic } from '@thematic/react'
+import { select } from 'd3'
 import { memo, useEffect, useRef } from 'react'
 
 import type { DrawingContainerProps } from './DrawingContainer.types.js'
@@ -17,6 +20,7 @@ export const DrawingContainer: React.FC<
 	handleClickOutside,
 	handleContainerClick,
 }) {
+	const theme = useThematic()
 	const svgWidth = width + margin.left + margin.right
 	const svgHeight = height + margin.top + margin.bottom
 
@@ -39,6 +43,12 @@ export const DrawingContainer: React.FC<
 		}
 	}, [])
 
+	useEffect(() => {
+		if (ref.current) {
+			const svg = select(ref.current)
+			chart(svg, theme)
+		}
+	}, [theme, ref])
 	return (
 		<svg
 			ref={ref}

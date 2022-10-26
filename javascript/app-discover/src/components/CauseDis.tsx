@@ -4,7 +4,7 @@
  */
 import 'allotment/dist/style.css'
 
-import { MessageBar, MessageBarType, Spinner } from '@fluentui/react'
+import { MessageBar, MessageBarType } from '@fluentui/react'
 import { CommonLayout } from '@showwhy/app-common'
 import { Allotment } from 'allotment'
 import { memo, Suspense } from 'react'
@@ -16,6 +16,7 @@ import {
 	FillContainer,
 	FullScreenContainer,
 	HalfHeightContainer,
+	PaddedSpinner,
 	ScrollableFullScreenContainer,
 } from './CauseDis.styles.js'
 import { Divider } from './controls/Divider.js'
@@ -35,7 +36,7 @@ export const CauseDis = memo(function CauseDis() {
 			configRail={<AppLeftRail />}
 			detailRail={<AppRightRail />}
 			menu={
-				<Suspense fallback={<Spinner label="Loading menubar..." />}>
+				<Suspense fallback={<PaddedSpinner label="Loading menubar..." />}>
 					<MenuBar />
 				</Suspense>
 			}
@@ -46,7 +47,7 @@ export const CauseDis = memo(function CauseDis() {
 				</MessageBar>
 			)}
 			{loading ? (
-				<Spinner label={loading} />
+				<PaddedSpinner label={loading} />
 			) : (
 				<FillContainer ref={ref}>
 					<GraphViews dimensions={{ width, height }} />
@@ -75,7 +76,7 @@ const AppLeftRail: React.FC = memo(function AppLeftRail() {
 
 const AppRightRail: React.FC = memo(function AppRightRail() {
 	return (
-		<Suspense fallback={<Spinner label="Loading properties..." />}>
+		<Suspense fallback={<PaddedSpinner label="Loading properties..." />}>
 			<ScrollableFullScreenContainer>
 				<PropertyPanels />
 			</ScrollableFullScreenContainer>

@@ -9,7 +9,6 @@ import { applyMappingsFromRelationshipToTable } from '../../domain/Relationship.
 import { useVisualizationSpec } from './CategoricalComparisonChart.hooks.js'
 import type { ComparisonChartProps } from './ComparisonChart.types.js'
 
-
 export const CategoricalComparisonChart: React.FC<ComparisonChartProps> = memo(
 	function CategoricalComparisonChart({
 		table,
@@ -21,8 +20,11 @@ export const CategoricalComparisonChart: React.FC<ComparisonChartProps> = memo(
 			targetVariable,
 			table,
 		).objects()
-		const spec = useVisualizationSpec(sourceVariable, targetVariable, preparedData)
-
-		return <Vega mode={'vega-lite'} spec={spec} />
+		const spec = useVisualizationSpec(
+			sourceVariable,
+			targetVariable,
+			preparedData,
+		)
+		return <Vega mode={'vega'} spec={spec} actions={false} renderer={'svg'} />
 	},
 )

@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import type { Theme } from '@thematic/core'
+import type { ITheme } from '@fluentui/react'
 import styled from 'styled-components'
 
 import { CausalEffectSize } from './CausalEffectsArrows.constants.js'
@@ -29,7 +29,7 @@ export const Box = styled.div`
 `
 
 export const ControlsContainer = styled(Box)`
-	border: 1px dotted black;
+	border: 1px dotted ${({ theme }: { theme: ITheme}) => theme.palette.neutralPrimary};
 `
 
 export const ControlsBoxContainer = styled.div<{ size: CausalEffectSize }>`
@@ -55,13 +55,13 @@ export const CausalBox = styled.div<{ size: CausalEffectSize; width: number }>`
 	font-size: ${({ size }) =>
 		size === CausalEffectSize.Small ? '12px' : '14px'};
 	border: 1px
-		${({ theme }: { theme: Theme }) => theme.application().border().hex()} solid;
+		${({ theme }: { theme: ITheme }) => theme.palette.neutralTertiaryAlt} solid;
 	position: relative;
 	border-radius: 5px;
 	overflow: auto;
 	text-align: center;
 	padding: 8px;
-	color: black;
+	color: ${({ theme }: { theme: ITheme }) => theme.palette.neutralPrimary};
 	width: ${({ width }) => width}%;
 `
 

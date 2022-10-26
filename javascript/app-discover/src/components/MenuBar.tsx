@@ -24,15 +24,16 @@ import {
 	WeightThresholdState,
 } from '../state/index.js'
 import { saveObjectJSON } from '../utils/Save.js'
-import { command_bar_styles } from './MenuBar.constants.js'
 import {
-	useAutoLayoutSliderMenuItem,
+	useAutoLayoutToggleMenuItem,
 	useDatasetMenuItems,
+	useFixedInterventionRangesToggleMenuItem,
 	useModelMenuItems,
 	useRunButtonMenuItem,
 	useSliderMenuItem,
 	useViewMenuItems,
 } from './MenuBar.hooks.js'
+import { useCommandBarStyles } from './MenuBar.styles.js'
 
 export const MenuBar: React.FC = memo(function MenuBar() {
 	const [selectedViewKey, setSelectedViewKey] = useRecoilState(GraphViewState)
@@ -94,20 +95,23 @@ export const MenuBar: React.FC = memo(function MenuBar() {
 		autoLayoutEnabled,
 		setAutoLayoutEnabled,
 	)
+
 	const edgeWeightSliderMenuItem = useSliderMenuItem(
-		'Edge Weight Threshold',
+		'Edge weight threshold',
 		WeightThresholdState,
 	)
 	const edgeConfidenceSliderMenuItem = useSliderMenuItem(
-		'Edge ConfidenceThreshold',
+		'Edge confidence threshold',
 		ConfidenceThresholdState,
 	)
 	const correlationSliderMenuItem = useSliderMenuItem(
-		'Correlation Visibility Threshold',
+		'Correlation visibility threshold',
 		CorrelationThresholdState,
 	)
-	const autoLayoutSliderMenuItem = useAutoLayoutSliderMenuItem()
 	const runButtonMenuItem = useRunButtonMenuItem()
+	const autoLayoutSliderMenuItem = useAutoLayoutToggleMenuItem()
+	const fixedInterventionRangesMenuItem =
+		useFixedInterventionRangesToggleMenuItem()
 
 	const menuItems = useMemo<ICommandBarItemProps[]>(
 		() => [datasetMenuItems, modelMenuItems, viewMenuItems],
@@ -117,6 +121,7 @@ export const MenuBar: React.FC = memo(function MenuBar() {
 		() => [
 			runButtonMenuItem,
 			autoLayoutSliderMenuItem,
+			fixedInterventionRangesMenuItem,
 			edgeWeightSliderMenuItem,
 			edgeConfidenceSliderMenuItem,
 			correlationSliderMenuItem,
@@ -124,16 +129,18 @@ export const MenuBar: React.FC = memo(function MenuBar() {
 		[
 			runButtonMenuItem,
 			autoLayoutSliderMenuItem,
+			fixedInterventionRangesMenuItem,
 			edgeWeightSliderMenuItem,
 			edgeConfidenceSliderMenuItem,
 			correlationSliderMenuItem,
 		],
 	)
+	const commandBarStyles = useCommandBarStyles()
 	return (
 		<CommandBar
 			items={menuItems}
 			farItems={interactiveItems}
-			styles={command_bar_styles}
+			styles={commandBarStyles}
 		/>
 	)
 })

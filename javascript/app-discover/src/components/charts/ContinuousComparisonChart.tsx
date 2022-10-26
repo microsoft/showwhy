@@ -25,6 +25,6 @@ export const ContinuousComparisonChart: React.FC<ComparisonChartProps> = memo(
 			preparedData,
 		)
 
-		return <Vega mode={'vega-lite'} spec={spec} />
+		return <Vega mode={'vega'} spec={spec} actions={false} renderer={'svg'} />
 	},
 )

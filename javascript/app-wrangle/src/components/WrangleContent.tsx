@@ -16,6 +16,7 @@ export const WrangleContent: React.FC<WrangleContentProps> = memo(
 		if (!dataTable) {
 			return null
 		}
+
 		switch (resource) {
 			case 'datasource': // not modeled in enum
 				return <RawTableViewer dataTable={dataTable} />

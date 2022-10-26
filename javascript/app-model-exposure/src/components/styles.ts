@@ -2,8 +2,8 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import type { ITheme } from '@fluentui/react'
 import { Spinner } from '@fluentui/react'
-import type { Application, Theme } from '@thematic/core'
 import styled from 'styled-components'
 
 import type { Maybe } from '../types/primitives.js'
@@ -33,14 +33,9 @@ export const Value = styled(Bold)`
 `
 
 export const Paragraph = styled.p<{
-	color?: string
 	noMarginBottom?: Maybe<boolean>
 	noMarginTop?: Maybe<boolean>
 }>`
-	color: ${({ color, theme }: { color?: string; theme: Theme }): string =>
-		color
-			? theme.application()[color as keyof Application].toString()
-			: 'black'};
 	margin-bottom: ${({ noMarginBottom }) => (noMarginBottom ? 'unset' : '1em')};
 	margin-top: ${({ noMarginTop }) => (noMarginTop ? 'unset' : '1em')};
 `
@@ -63,6 +58,16 @@ export const ContainerFlexColumn = styled(Container)<{
 	display: flex;
 	flex-direction: column;
 	justify-content: ${({ justifyContent }) => justifyContent};
+`
+
+export const Header = styled.div`
+	height: 44px;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	background: ${({ theme }: { theme: ITheme }) => theme.palette.neutralLighter};
+	border-bottom: 1px solid
+		${({ theme }: { theme: ITheme }) => theme.palette.neutralTertiaryAlt};
 `
 
 export const ContainerFlexRow = styled(Container)<{ justifyContent?: string }>`

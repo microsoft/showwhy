@@ -40,7 +40,7 @@ export const LinkCallout: React.FC<{
 const Text = styled.span<{ noUnderline?: boolean }>`
 	text-decoration: ${({ noUnderline }) => (noUnderline ? 'none' : 'underline')};
 	cursor: pointer;
-	color: ${({ theme }) => theme.application().accent};
+	color: ${({ theme }) => theme.palette.themePrimary};
 	margin: 0;
 `
 

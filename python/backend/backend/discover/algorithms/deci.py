@@ -270,12 +270,14 @@ class DeciRunner(CausalDiscoveryRunner):
 
         return onnx_output.getvalue()
 
-    def _build_labeled_graph(self, adj_matrix: np.ndarray) -> Any:
+    def _build_labeled_graph(
+        self, adj_matrix: np.ndarray, ate_graph: np.ndarray
+    ) -> Any:
         deci_graph = networkx.convert_matrix.from_numpy_matrix(
             adj_matrix, create_using=networkx.DiGraph
         )
         deci_ate_graph = networkx.convert_matrix.from_numpy_matrix(
-            adj_matrix, create_using=networkx.DiGraph
+            ate_graph, create_using=networkx.DiGraph
         )
         labels = {
             i: self._prepared_data.columns[i]
@@ -312,6 +314,7 @@ class DeciRunner(CausalDiscoveryRunner):
         causal_graph["interpret_boolean_as_continuous"] = False
         causal_graph["has_weights"] = True
         causal_graph["has_confidence_values"] = True
+        causal_graph["normalized_columns_metadata"] = self._normalized_columns_metadata
 
         return causal_graph
 
@@ -341,7 +344,7 @@ class DeciRunner(CausalDiscoveryRunner):
 
         causal_graph = self._build_causal_graph(
             self._build_onnx_model(deci_model, adj_matrix),
-            self._build_labeled_graph(adj_matrix),
+            self._build_labeled_graph(adj_matrix, ate_matrix),
             adj_matrix,
             ate_matrix,
         )

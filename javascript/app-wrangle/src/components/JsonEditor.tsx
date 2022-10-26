@@ -14,11 +14,13 @@ export const JsonEditor: React.FC<JsonEditorProps> = memo(function JsonEditor({
 	onChange,
 }) {
 	const { run: handleEditorChange } = useDebounceFn(onChange, { wait: 1000 })
+
 	return (
 		<Editor
 			height="90vh"
 			defaultLanguage="json"
 			defaultValue={content}
+			value={content}
 			onChange={handleEditorChange}
 		/>
 	)

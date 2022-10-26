@@ -6,7 +6,9 @@ import type { ICommandBarItemProps } from '@fluentui/react'
 import {
 	Checkbox,
 	ContextualMenuItemType,
+	DefaultButton,
 	PrimaryButton,
+	Toggle,
 } from '@fluentui/react'
 import {
 	useDatasetMenuItems as useDatasetMenuItemsCommon,
@@ -20,11 +22,16 @@ import {
 	AutoLayoutEnabledState,
 	AutoRunState,
 	DatasetNameState,
+	FixedInterventionRangesEnabledState,
 	useCausalDiscoveryRunner,
 } from '../state/index.js'
 import { ThresholdSlider } from './controls/ThresholdSlider.js'
 import { GraphViewStates } from './graph/GraphViews.types.js'
-import { Button, buttonStyles, ButtonWrapper } from './MenuBar.styles.js'
+import {
+	ButtonWrapper,
+	toggleStyles,
+	useMenuButtonStyles,
+} from './MenuBar.styles.js'
 
 export function useDatasetMenuItems(
 	loadTable: (name: string) => void,
@@ -38,31 +45,33 @@ export function useModelMenuItems(
 	openCausalModelFileSelector: () => void,
 	clearModel: () => void,
 ): ICommandBarItemProps {
+	const buttonStyles = useMenuButtonStyles()
 	return useMemo(
 		() => ({
 			key: 'causal-model',
-			text: 'Causal Model',
+			text: 'Causal model',
+			buttonStyles,
 			subMenuProps: {
 				items: [
 					{
 						key: 'save-model',
-						text: 'Save Model...',
+						text: 'Save model...',
 						onClick: saveModel,
 					},
 					{
 						key: 'load-model',
-						text: 'Load Model...',
+						text: 'Load model...',
 						onClick: openCausalModelFileSelector,
 					},
 					{
 						key: 'clear-model',
-						text: 'Clear Model',
+						text: 'Clear model',
 						onClick: clearModel,
 					},
 				],
 			},
 		}),
-		[saveModel, openCausalModelFileSelector, clearModel],
+		[saveModel, openCausalModelFileSelector, clearModel, buttonStyles],
 	)
 }
 
@@ -74,15 +83,17 @@ export function useViewMenuItems(
 	autoLayoutEnabled: boolean,
 	setAutoLayoutEnabled: (v: boolean) => void,
 ): ICommandBarItemProps {
+	const buttonStyles = useMenuButtonStyles()
 	return useMemo(
 		() => ({
 			key: 'view',
 			text: 'View',
+			buttonStyles,
 			subMenuProps: {
 				items: [
 					{
 						key: 'CausalView',
-						text: 'Causal Model',
+						text: 'Causal model',
 						iconProps: {
 							iconName:
 								view === GraphViewStates.CausalView
@@ -128,16 +139,6 @@ export function useViewMenuItems(
 							/>
 						),
 					},
-					{
-						key: 'auto-layout-Checkbox',
-						onRender: () => (
-							<Checkbox
-								label="Auto-layout"
-								checked={autoLayoutEnabled}
-								onChange={(e, v) => setAutoLayoutEnabled(Boolean(v))}
-							/>
-						),
-					},
 				],
 			},
 		}),
@@ -148,6 +149,7 @@ export function useViewMenuItems(
 			setUseStraightEdges,
 			autoLayoutEnabled,
 			setAutoLayoutEnabled,
+			buttonStyles,
 		],
 	)
 }
@@ -160,15 +162,34 @@ export function useSliderMenuItem(
 		() => ({
 			key: label.toLowerCase().replaceAll(' ', '-'),
 			onRender: () => (
-				<ThresholdSlider label={label} thresholdState={state} width={200} />
+				<ThresholdSlider label={label} thresholdState={state} width={180} />
 			),
-			styles: { padding: '0.5rem' },
 		}),
 		[label, state],
 	)
 }
 
-export function useAutoLayoutSliderMenuItem() {
+export function useFixedInterventionRangesToggleMenuItem() {
+	const [fixedInterventionRangesEnabled, setFixedInterventionRangesEnabled] =
+		useRecoilState(FixedInterventionRangesEnabledState)
+	return useMemo(
+		() => ({
+			key: 'fixed-intervention-ranges-toggle',
+			onRender: () => (
+				<Toggle
+					label="Fixed ranges"
+					checked={fixedInterventionRangesEnabled}
+					inlineLabel
+					styles={toggleStyles}
+					onChange={(e, v) => setFixedInterventionRangesEnabled(Boolean(v))}
+				/>
+			),
+		}),
+		[fixedInterventionRangesEnabled, setFixedInterventionRangesEnabled],
+	)
+}
+
+export function useAutoLayoutToggleMenuItem() {
 	const [autoLayoutEnabled, setAutoLayoutEnabled] = useRecoilState(
 		AutoLayoutEnabledState,
 	)
@@ -196,9 +217,8 @@ export function useAutoLayoutSliderMenuItem() {
 			key: 'auto-layout-button',
 			onRender: () => (
 				<ButtonWrapper>
-					<Button
+					<DefaultButton
 						split
-						styles={buttonStyles}
 						menuProps={menuProps}
 						checked={autoLayoutEnabled}
 						onClick={() => void handleClick()}
@@ -244,7 +264,6 @@ export function useRunButtonMenuItem() {
 				<ButtonWrapper>
 					<PrimaryButton
 						split
-						styles={buttonStyles}
 						menuProps={menuProps}
 						onClick={handleClick}
 						iconProps={{ iconName: isRunning ? 'Pause' : 'Play' }}

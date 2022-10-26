@@ -41,6 +41,7 @@ export const RawTable: React.FC<RawTableProps> = memo(function RawTable({
 					</DetailsText>
 				</DetailsContainer>
 				<ArqueroDetailsList
+					compact
 					sortable
 					isHeaderFixed
 					striped

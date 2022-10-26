@@ -61,8 +61,4 @@ export class CancelablePromise<MetadataType, PromiseReturnType> {
 	}
 }
 
-export class CanceledPromiseError extends Error {
-	constructor(message?: string) {
-		super(message)
-	}
-}
+export class CanceledPromiseError extends Error {}

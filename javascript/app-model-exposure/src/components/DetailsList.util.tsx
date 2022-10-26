@@ -78,7 +78,6 @@ export function getColumns(headers: Header[]): IColumn[] {
 const Cell = styled.div<{ width: number }>`
 	width: ${({ width }) => (width ? `${width}px` : 'auto')};
 	padding: 0.5rem;
-	box-sizing: border-box;
 	font-size: 14px;
 	white-space: break-spaces;
 	border: 1px solid #fff;

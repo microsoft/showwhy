@@ -28,6 +28,11 @@ export const AutoLayoutEnabledState = atom<boolean>({
 	default: false,
 })
 
+export const FixedInterventionRangesEnabledState = atom<boolean>({
+	key: 'FixedInterventionRangesEnabledState',
+	default: true,
+})
+
 export const SelectedCausalDiscoveryAlgorithmState =
 	atom<CausalDiscoveryAlgorithm>({
 		key: 'SelectedCausalDiscoveryAlgorithmState',

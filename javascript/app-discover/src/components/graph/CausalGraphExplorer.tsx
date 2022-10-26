@@ -14,8 +14,10 @@ import type { CausalVariable } from '../../domain/CausalVariable.jsx'
 import * as Graph from '../../domain/Graph.jsx'
 import { hasSameOrInvertedSourceAndTarget } from '../../domain/Relationship.jsx'
 import {
+	CausalDiscoveryResultsState,
 	ConfidenceThresholdState,
 	FilteredCorrelationsState,
+	FixedInterventionRangesEnabledState,
 	GraphLayoutState,
 	SelectedObjectState,
 	useCausalGraph,
@@ -34,6 +36,13 @@ const MAX_EDGE_WIDTH = 10
 
 export const CausalGraphExplorer = memo(function CausalGraphExplorer() {
 	const causalGraph = useCausalGraph()
+	const useFixedInterventionRanges = useRecoilValue(
+		FixedInterventionRangesEnabledState,
+	)
+	const columnsMetadata = useRecoilValue(
+		CausalDiscoveryResultsState,
+	).normalizedColumnsMetadata
+
 	const weightThreshold = useRecoilValue(WeightThresholdState)
 	const confidenceThreshold = useRecoilValue(ConfidenceThresholdState)
 	const causalRelationships = Graph.relationshipsAboveThresholds(
@@ -88,9 +97,20 @@ export const CausalGraphExplorer = memo(function CausalGraphExplorer() {
 			layoutTransitionTime={layoutTransitionTime}
 		>
 			{Graph.includesVariable(causalGraph, variable) ? (
-				<CausalGraphNode variable={variable} isSelectable isRemovable />
+				<CausalGraphNode
+					columnsMetadata={columnsMetadata}
+					variable={variable}
+					useFixedInterventionRanges={useFixedInterventionRanges}
+					isSelectable
+					isRemovable
+				/>
 			) : (
-				<CorrelationGraphNode variable={variable} isSelectable isAddable />
+				<CorrelationGraphNode
+					variable={variable}
+					useFixedInterventionRanges={useFixedInterventionRanges}
+					isSelectable
+					isAddable
+				/>
 			)}
 		</DraggableGraphNode>
 	))

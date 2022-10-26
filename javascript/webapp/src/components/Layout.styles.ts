@@ -3,6 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import { useTheme } from '@fluentui/react'
+import { useMemo } from 'react'
 import styled from 'styled-components'
 
 export const Container = styled.div`
@@ -27,4 +29,12 @@ export const Content = styled.article`
 	max-width: 100%;
 `
 
-export const fileTreeStyle = { borderRight: '1px solid #CCC' }
+export function useFileTreeStyle() {
+	const theme = useTheme()
+	return useMemo(
+		() => ({
+			borderRight: `1px solid ${theme.palette.neutralTertiaryAlt}`,
+		}),
+		[theme],
+	)
+}

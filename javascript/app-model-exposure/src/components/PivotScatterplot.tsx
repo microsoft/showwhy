@@ -2,8 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { Pivot, PivotItem } from '@fluentui/react'
-import { useThematic } from '@thematic/react'
+import { Pivot, PivotItem, useTheme } from '@fluentui/react'
 import type { FC } from 'react'
 import { memo, useMemo } from 'react'
 
@@ -46,7 +45,7 @@ export const PivotScatterplot: FC<{
 	totalSpecs,
 	onMouseClick,
 }) {
-	const theme = useThematic()
+	const theme = useTheme()
 	const pivotItems = useMemo((): PivotItemChart[] => {
 		return [
 			{
@@ -67,7 +66,7 @@ export const PivotScatterplot: FC<{
 		<Pivot
 			styles={{
 				itemContainer: {
-					backgroundColor: theme.application().faint().hex(),
+					backgroundColor: theme.palette.neutralLighter,
 					paddingTop: 10,
 				},
 			}}
