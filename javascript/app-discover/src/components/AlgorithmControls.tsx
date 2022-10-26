@@ -6,13 +6,14 @@ import type { IChoiceGroupOption } from '@fluentui/react'
 import { ChoiceGroup } from '@fluentui/react'
 import { memo, useCallback } from 'react'
 import { useRecoilState } from 'recoil'
-import styled from 'styled-components'
 
 import { CausalDiscoveryAlgorithm } from '../domain/CausalDiscovery/CausalDiscoveryAlgorithm.js'
 import { SelectedCausalDiscoveryAlgorithmState } from '../state/index.js'
 import { ALGORITHMS } from './AlgorithmControls.constants.js'
+import { AlgorithmsContainer } from './AlgorithmControls.styles.js'
 import { Divider } from './controls/Divider.js'
 import { DeciParams } from './DeciParams.js'
+import { GraphFilteringControls } from './GraphFilteringControls.js'
 
 export const AlgorithmControls = memo(function AlgorithmControls() {
 	const [
@@ -33,20 +34,23 @@ export const AlgorithmControls = memo(function AlgorithmControls() {
 	)
 
 	return (
-		<Container>
+		<AlgorithmsContainer>
 			<Divider>Discovery algorithm</Divider>
 			<ChoiceGroup
 				selectedKey={selectedCausalDiscoveryAlgorithm}
 				options={ALGORITHMS}
 				onChange={selectAlgorithm}
 			/>
+
+			<Divider>Graph filtering</Divider>
+			<GraphFilteringControls />
+
 			{selectedCausalDiscoveryAlgorithm === CausalDiscoveryAlgorithm.DECI && (
-				<DeciParams />
+				<>
+					<Divider>Selected algorithm options</Divider>
+					<DeciParams />
+				</>
 			)}
-		</Container>
+		</AlgorithmsContainer>
 	)
 })
-
-const Container = styled.div`
-	padding: 8px;
-`

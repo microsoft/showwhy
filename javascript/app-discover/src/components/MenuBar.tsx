@@ -14,22 +14,17 @@ import { DeciParamsState } from '../state/atoms/algorithms_params.js'
 import {
 	AutoLayoutEnabledState,
 	CausalGraphConstraintsState,
-	ConfidenceThresholdState,
-	CorrelationThresholdState,
 	GraphViewState,
 	InModelColumnNamesState,
 	LoadingState,
 	PersistedInfoState,
 	StraightEdgesState,
-	WeightThresholdState,
 } from '../state/index.js'
 import { saveObjectJSON } from '../utils/Save.js'
 import {
 	useAutoLayoutToggleMenuItem,
 	useDatasetMenuItems,
-	useFixedInterventionRangesToggleMenuItem,
 	useModelMenuItems,
-	useSliderMenuItem,
 	useTogglePauseButtonMenuItem,
 	useViewMenuItems,
 } from './MenuBar.hooks.js'
@@ -96,21 +91,7 @@ export const MenuBar: React.FC = memo(function MenuBar() {
 		setAutoLayoutEnabled,
 	)
 
-	const edgeWeightSliderMenuItem = useSliderMenuItem(
-		'Edge weight threshold',
-		WeightThresholdState,
-	)
-	const edgeConfidenceSliderMenuItem = useSliderMenuItem(
-		'Edge confidence threshold',
-		ConfidenceThresholdState,
-	)
-	const correlationSliderMenuItem = useSliderMenuItem(
-		'Correlation visibility threshold',
-		CorrelationThresholdState,
-	)
 	const autoLayoutSliderMenuItem = useAutoLayoutToggleMenuItem()
-	const fixedInterventionRangesMenuItem =
-		useFixedInterventionRangesToggleMenuItem()
 	const togglePauseButtonMenuItem = useTogglePauseButtonMenuItem()
 
 	const menuItems = useMemo<ICommandBarItemProps[]>(
@@ -118,22 +99,8 @@ export const MenuBar: React.FC = memo(function MenuBar() {
 		[datasetMenuItems, modelMenuItems, viewMenuItems],
 	)
 	const interactiveItems = useMemo(
-		() => [
-			togglePauseButtonMenuItem,
-			autoLayoutSliderMenuItem,
-			fixedInterventionRangesMenuItem,
-			edgeWeightSliderMenuItem,
-			edgeConfidenceSliderMenuItem,
-			correlationSliderMenuItem,
-		],
-		[
-			togglePauseButtonMenuItem,
-			autoLayoutSliderMenuItem,
-			fixedInterventionRangesMenuItem,
-			edgeWeightSliderMenuItem,
-			edgeConfidenceSliderMenuItem,
-			correlationSliderMenuItem,
-		],
+		() => [autoLayoutSliderMenuItem, togglePauseButtonMenuItem],
+		[autoLayoutSliderMenuItem, togglePauseButtonMenuItem],
 	)
 	const commandBarStyles = useCommandBarStyles()
 	return (

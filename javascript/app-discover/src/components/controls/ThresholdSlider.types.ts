@@ -8,4 +8,5 @@ export interface ThresholdSliderProps {
 	label?: string
 	width?: number
 	thresholdState: RecoilState<number>
+	defaultStyling?: boolean
 }
