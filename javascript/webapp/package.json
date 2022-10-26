@@ -19,14 +19,14 @@
 		"lint": "essex lint"
 	},
 	"dependencies": {
-		"@datashaper/schema": "^7.0.2",
-		"@datashaper/tables": "^5.2.1",
+		"@datashaper/schema": "^8.0.0",
+		"@datashaper/tables": "^5.2.2",
 		"@datashaper/utilities": "^2.3.9",
-		"@datashaper/workflow": "^18.1.1",
+		"@datashaper/workflow": "^19.0.0",
 		"@essex/components": "^3.1.0",
 		"@essex/hooks": "^4.0.13",
 		"@fluentui/font-icons-mdl2": "^8.5.2",
-		"@fluentui/react": "^8.98.7",
+		"@fluentui/react": "^8.98.8",
 		"@fluentui/react-hooks": "^8.6.12",
 		"@fluentui/utilities": "^8.13.2",
 		"@fluentui/web-components": "^2.5.7",
