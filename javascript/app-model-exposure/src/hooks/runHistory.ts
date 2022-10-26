@@ -178,12 +178,17 @@ function initialRunHistory(
 	const exposure = estimators.some(
 		e => e.group === EstimatorGroup.Exposure && e.confidenceInterval,
 	)
+		? 1
+		: 0
 	const outcome = estimators.some(
 		e => e.group === EstimatorGroup.Outcome && e.confidenceInterval,
 	)
-	// const total =
-	console.log({ exposure })
-	console.log({ outcome })
+		? 1
+		: 0
+	const confidenceIntervalCount =
+		(specCount?.treatment.count ?? 0) * exposure +
+		(specCount?.outcome.count ?? 0) * outcome
+
 	return {
 		runNumber: runHistoryLength + 1,
 		isActive: true,
@@ -193,7 +198,7 @@ function initialRunHistory(
 		},
 		id,
 		specCount: specCount?.total,
-		confidenceIntervalCount: specCount?.total,
+		confidenceIntervalCount,
 		project,
 		estimators,
 		confounderThreshold,
