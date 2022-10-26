@@ -3,7 +3,12 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil'
+import {
+	useRecoilState,
+	useRecoilValue,
+	useResetRecoilState,
+	useSetRecoilState,
+} from 'recoil'
 
 import { discover as runCausalDiscovery } from '../../domain/CausalDiscovery/CausalDiscovery.js'
 import { CausalDiscoveryAlgorithm } from '../../domain/CausalDiscovery/CausalDiscoveryAlgorithm.js'
@@ -41,7 +46,7 @@ export function useCausalDiscoveryRunner() {
 		SelectedCausalDiscoveryAlgorithmState,
 	)
 	const DECIParams = useRecoilValue(DeciParamsState)
-	const autoRun = useRecoilValue(AutoRunState)
+	const [autoRun, setAutoRun] = useRecoilState(AutoRunState)
 	const [isLoading, setIsLoading] = useState<boolean>(false)
 
 	const algorithmParams = useMemo((): DECIParams | undefined => {
@@ -202,9 +207,14 @@ export function useCausalDiscoveryRunner() {
 		cancelLastDiscoveryResultPromise,
 	])
 
+	const stopDiscoveryRun = useCallback(async () => {
+		setAutoRun(false)
+		await cancelLastDiscoveryResultPromise()
+	}, [cancelLastDiscoveryResultPromise, setAutoRun])
+
 	return {
 		run: runDiscovery,
-		stop: cancelLastDiscoveryResultPromise,
+		stop: stopDiscoveryRun,
 		isLoading,
 	}
 }

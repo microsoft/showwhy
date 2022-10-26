@@ -6,15 +6,10 @@
 import { DefaultButton } from '@fluentui/react'
 import styled from 'styled-components'
 
-export const toggleStyles = {
+export const buttonStyles = {
 	root: {
-		display: 'flex',
-		alignItems: 'center',
-		margin: '0 1rem',
+		height: '28px',
 	},
-	label: {
-		margin: '0 0 0 0.5rem',
-	}
 }
 
 export const Button = styled(DefaultButton)`
