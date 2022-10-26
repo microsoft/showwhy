@@ -7,7 +7,6 @@ import { memo, Suspense } from 'react'
 import { CauseDis } from './components/CauseDis.js'
 import { CauseDisErrorBoundary } from './components/CauseDisErrorBoundary.js'
 import {
-	useCausalDiscoveryRunner,
 	useCausalGraphHistoryTracker,
 	useCausalInferenceUpdater,
 	useRehydrateRecoil,
@@ -28,7 +27,6 @@ const CauseDisHooks: React.FC = memo(function CauseDisHooks() {
 	useRehydrateRecoil()
 	useCausalGraphHistoryTracker()
 	useCausalInferenceUpdater()
-	useCausalDiscoveryRunner()
 	return null
 })
 

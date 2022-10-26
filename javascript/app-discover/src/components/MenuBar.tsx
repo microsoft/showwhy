@@ -29,8 +29,8 @@ import {
 	useAutoLayoutSliderMenuItem,
 	useDatasetMenuItems,
 	useModelMenuItems,
+	useRunButtonMenuItem,
 	useSliderMenuItem,
-	useTogglePauseButtonMenuItem,
 	useViewMenuItems,
 } from './MenuBar.hooks.js'
 
@@ -107,7 +107,7 @@ export const MenuBar: React.FC = memo(function MenuBar() {
 		CorrelationThresholdState,
 	)
 	const autoLayoutSliderMenuItem = useAutoLayoutSliderMenuItem()
-	const togglePauseButtonMenuItem = useTogglePauseButtonMenuItem()
+	const runButtonMenuItem = useRunButtonMenuItem()
 
 	const menuItems = useMemo<ICommandBarItemProps[]>(
 		() => [datasetMenuItems, modelMenuItems, viewMenuItems],
@@ -115,14 +115,14 @@ export const MenuBar: React.FC = memo(function MenuBar() {
 	)
 	const interactiveItems = useMemo(
 		() => [
-			togglePauseButtonMenuItem,
+			runButtonMenuItem,
 			autoLayoutSliderMenuItem,
 			edgeWeightSliderMenuItem,
 			edgeConfidenceSliderMenuItem,
 			correlationSliderMenuItem,
 		],
 		[
-			togglePauseButtonMenuItem,
+			runButtonMenuItem,
 			autoLayoutSliderMenuItem,
 			edgeWeightSliderMenuItem,
 			edgeConfidenceSliderMenuItem,

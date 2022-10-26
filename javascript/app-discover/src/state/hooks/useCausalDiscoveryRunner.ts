@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { useCallback, useEffect, useMemo } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil'
 
 import { discover as runCausalDiscovery } from '../../domain/CausalDiscovery/CausalDiscovery.js'
@@ -19,10 +19,8 @@ import { CanceledPromiseError } from '../../utils/CancelablePromise.js'
 import {
 	CausalDiscoveryResultsState,
 	CausalGraphConstraintsState,
-	DEFAULT_DATASET_NAME,
 	ErrorMessageState,
 	LoadingState,
-	PauseAutoRunState,
 	SelectedCausalDiscoveryAlgorithmState,
 } from '../atoms/index.js'
 import {
@@ -41,11 +39,7 @@ export function useCausalDiscoveryRunner() {
 		SelectedCausalDiscoveryAlgorithmState,
 	)
 	const DECIParams = useRecoilValue(DeciParamsState)
-	const pauseAutoRun = useRecoilValue(PauseAutoRunState)
-	const algorithm = useMemo(
-		() => pauseAutoRun ?? causalDiscoveryAlgorithm,
-		[pauseAutoRun, causalDiscoveryAlgorithm],
-	)
+	const [isLoading, setIsLoading] = useState<boolean>(false)
 
 	const algorithmParams = useMemo((): DECIParams | undefined => {
 		return causalDiscoveryAlgorithm === CausalDiscoveryAlgorithm.DECI
@@ -114,77 +108,89 @@ export function useCausalDiscoveryRunner() {
 	)
 
 	useEffect(() => {
-		if (
-			inModelCausalVariables.length < 2 ||
-			dataset.name === DEFAULT_DATASET_NAME
-		) {
+		if (inModelCausalVariables.length > 0) {
 			setCausalDiscoveryResultsState({
 				graph: {
 					variables: inModelCausalVariables,
 					relationships: [],
 					constraints: causalDiscoveryConstraints,
-					algorithm,
+					algorithm: causalDiscoveryAlgorithm,
 				},
 				causalInferenceModel: null,
 			})
 		}
 
-		updateProgress(0, undefined)
-		const runDiscovery = async () => {
-			setErrorMessage(undefined)
-
-			// if the last task has not finished just yet, cancel it
-			await cancelLastDiscoveryResultPromise()
-
-			const discoveryPromise = runCausalDiscovery(
-				dataset,
-				inModelCausalVariables,
-				causalDiscoveryConstraints,
-				algorithm,
-				updateProgress,
-				algorithmParams,
-			)
-
-			setLastDiscoveryResultPromise(discoveryPromise)
-
-			try {
-				const results = await discoveryPromise.promise!
-
-				// only update if the promise is not canceled
-				if (discoveryPromise.isFinished()) {
-					setCausalDiscoveryResultsState(results)
-					setLoadingState(undefined)
-					setErrorMessage(undefined)
-				}
-			} catch (err) {
-				if (err instanceof CanceledPromiseError) {
-					setLoadingState('Cancelling last run...')
-					setErrorMessage(undefined)
-				} else {
-					resetCausalDiscoveryResultsState()
-					setLoadingState(undefined)
-					setErrorMessage((err as Error).message)
-				}
-			}
-		}
-
-		void runDiscovery()
-
 		return () => {
 			void cancelLastDiscoveryResultPromise()
 		}
 	}, [
+		inModelCausalVariables,
+		causalDiscoveryAlgorithm,
+		causalDiscoveryConstraints,
+		setCausalDiscoveryResultsState,
+		cancelLastDiscoveryResultPromise,
+	])
+
+	const runCausalDis = useCallback(async () => {
+		if (isLoading) return
+
+		setErrorMessage(undefined)
+
+		// if the last task has not finished just yet, cancel it
+		await cancelLastDiscoveryResultPromise()
+
+		const discoveryPromise = runCausalDiscovery(
+			dataset,
+			inModelCausalVariables,
+			causalDiscoveryConstraints,
+			causalDiscoveryAlgorithm,
+			updateProgress,
+			algorithmParams,
+		)
+
+		setLastDiscoveryResultPromise(discoveryPromise)
+
+		try {
+			setIsLoading(true)
+			const results = await discoveryPromise.promise!
+
+			// only update if the promise is not canceled
+			if (discoveryPromise.isFinished()) {
+				setCausalDiscoveryResultsState(results)
+				setLoadingState(undefined)
+				setErrorMessage(undefined)
+				setIsLoading(false)
+			}
+		} catch (err) {
+			if (err instanceof CanceledPromiseError) {
+				setLoadingState('Cancelling last run...')
+				setErrorMessage(undefined)
+			} else {
+				resetCausalDiscoveryResultsState()
+				setLoadingState(undefined)
+				setErrorMessage((err as Error).message)
+			}
+			setIsLoading(false)
+		}
+	}, [
 		dataset,
 		inModelCausalVariables,
-		userConstraints,
-		algorithm,
+		causalDiscoveryAlgorithm,
 		causalDiscoveryConstraints,
 		setLoadingState,
 		setCausalDiscoveryResultsState,
 		updateProgress,
 		algorithmParams,
 		cancelLastDiscoveryResultPromise,
+		resetCausalDiscoveryResultsState,
 		setLastDiscoveryResultPromise,
 		setErrorMessage,
+		isLoading,
+		setIsLoading,
 	])
+
+	return {
+		run: runCausalDis,
+		isLoading,
+	}
 }

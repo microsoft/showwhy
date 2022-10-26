@@ -25,7 +25,7 @@ export const StraightEdgesState = atom<boolean>({
 
 export const AutoLayoutEnabledState = atom<boolean>({
 	key: 'AutoLayoutEnabledState',
-	default: true,
+	default: false,
 })
 
 export const SelectedCausalDiscoveryAlgorithmState =
@@ -57,11 +57,4 @@ export const CorrelationThresholdState = atom<number>({
 export const GraphViewState = atom<GraphViewStates>({
 	key: 'GraphViewState',
 	default: GraphViewStates.CausalView,
-})
-
-export const PauseAutoRunState = atom<
-	CausalDiscoveryAlgorithm.None | undefined
->({
-	key: 'PauseAutoRunState',
-	default: undefined,
 })

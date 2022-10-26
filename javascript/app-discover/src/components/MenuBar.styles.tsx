@@ -17,4 +17,5 @@ export const toggleStyles = {
 
 export const Button = styled(DefaultButton)`
 	margin: 0 0 0 0.5rem;
+	min-width: 2rem;
 `

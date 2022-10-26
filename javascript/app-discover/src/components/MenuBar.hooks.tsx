@@ -3,22 +3,24 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import type { ICommandBarItemProps } from '@fluentui/react'
-import { Checkbox, ContextualMenuItemType, Toggle } from '@fluentui/react'
-import { useBoolean } from '@fluentui/react-hooks'
+import {
+	Checkbox,
+	ContextualMenuItemType,
+	PrimaryButton,
+} from '@fluentui/react'
 import { useDatasetMenuItems as useDatasetMenuItemsCommon } from '@showwhy/app-common'
-import { useEffect, useMemo } from 'react'
+import { useCallback,useMemo } from 'react'
 import type { RecoilState } from 'recoil'
 import { useRecoilState, useRecoilValue } from 'recoil'
 
-import { CausalDiscoveryAlgorithm } from '../domain/CausalDiscovery/CausalDiscoveryAlgorithm.js'
 import {
 	AutoLayoutEnabledState,
 	DatasetNameState,
-	PauseAutoRunState,
+	useCausalDiscoveryRunner,
 } from '../state/index.js'
 import { ThresholdSlider } from './controls/ThresholdSlider.js'
 import { GraphViewStates } from './graph/GraphViews.types.js'
-import { Button, toggleStyles } from './MenuBar.styles.js'
+import { Button } from './MenuBar.styles.js'
 
 export function useDatasetMenuItems(
 	loadTable: (name: string) => void,
@@ -166,42 +168,42 @@ export function useAutoLayoutSliderMenuItem() {
 	const [autoLayoutEnabled, setAutoLayoutEnabled] = useRecoilState(
 		AutoLayoutEnabledState,
 	)
+	const handleClick = useCallback(() => {
+		setAutoLayoutEnabled(true)
+	}, [setAutoLayoutEnabled])
+
 	return useMemo(
 		() => ({
-			key: 'auto-layout-toggle',
+			key: 'auto-layout-button',
 			onRender: () => (
-				<Toggle
-					label="Auto-layout"
-					checked={autoLayoutEnabled}
-					styles={toggleStyles}
-					onChange={(e, v) => setAutoLayoutEnabled(Boolean(v))}
-				/>
+				<div style={{ margin: '0 1rem' }}>
+					<Button
+						checked={autoLayoutEnabled}
+						onClick={handleClick}
+						text={'Auto-layout'}
+					/>
+				</div>
 			),
 		}),
-		[autoLayoutEnabled, setAutoLayoutEnabled],
+		[handleClick, autoLayoutEnabled],
 	)
 }
 
-export function useTogglePauseButtonMenuItem() {
-	const [paused, { toggle: togglePaused }] = useBoolean(true)
-	const [, setPauseAutoRun] = useRecoilState(PauseAutoRunState)
-
-	useEffect(() => {
-		setPauseAutoRun(paused ? CausalDiscoveryAlgorithm.None : undefined)
-	}, [paused, setPauseAutoRun])
+export function useRunButtonMenuItem() {
+	const { run, isLoading } = useCausalDiscoveryRunner()
 
 	return useMemo(
 		() => ({
-			key: 'pause-toggle-button',
+			key: 'run-button',
 			onRender: () => (
-				<Button
-					toggle
-					onClick={togglePaused}
-					iconProps={{ iconName: paused ? 'Play' : 'Pause' }}
-					text={paused ? 'Run' : 'Pause'}
+				<PrimaryButton
+					onClick={() => void run()}
+					iconProps={{ iconName: isLoading ? '' : 'Play' }}
+					text={`Run${isLoading ? 'ning' : ''}`}
+					disabled={isLoading}
 				/>
 			),
 		}),
-		[paused, togglePaused],
+		[run, isLoading],
 	)
 }
