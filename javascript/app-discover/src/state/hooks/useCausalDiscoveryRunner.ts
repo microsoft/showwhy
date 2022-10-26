@@ -155,22 +155,6 @@ export function useCausalDiscoveryRunner() {
 			setIsLoading(false)
 		}
 
-		try {
-			const results = await discoveryPromise.promise!
-
-			// only update if the promise is not canceled
-			if (discoveryPromise.isFinished()) {
-				setCausalDiscoveryResultsState(results)
-				setLoadingState(undefined)
-				setErrorMessage(undefined)
-			}
-		} catch (err) {
-			if (!(err instanceof CanceledPromiseError)) {
-				resetCausalDiscoveryResultsState()
-				setLoadingState(undefined)
-				setErrorMessage((err as Error).message)
-			}
-		}
 	}, [
 		dataset,
 		inModelCausalVariables,
@@ -186,6 +170,17 @@ export function useCausalDiscoveryRunner() {
 		setErrorMessage,
 		setIsLoading,
 	])
+
+	const stopDiscoveryRun = useCallback(async () => {
+		setAutoRun(false)
+		await cancelLastDiscoveryResultPromise()
+	}, [cancelLastDiscoveryResultPromise, setAutoRun])
+
+	useEffect(() => {
+		return () => {
+			void stopDiscoveryRun()
+		}
+	}, [])
 
 	useEffect(() => {
 		if (
@@ -207,9 +202,6 @@ export function useCausalDiscoveryRunner() {
 			void runDiscovery()
 		}
 
-		return () => {
-			void cancelLastDiscoveryResultPromise()
-		}
 	}, [
 		autoRun,
 		dataset,
@@ -219,13 +211,7 @@ export function useCausalDiscoveryRunner() {
 		setCausalDiscoveryResultsState,
 		runDiscovery,
 		updateProgress,
-		cancelLastDiscoveryResultPromise,
-	])
-
-	const stopDiscoveryRun = useCallback(async () => {
-		setAutoRun(false)
-		await cancelLastDiscoveryResultPromise()
-	}, [cancelLastDiscoveryResultPromise, setAutoRun])
+	])	
 
 	return {
 		run: runDiscovery,
