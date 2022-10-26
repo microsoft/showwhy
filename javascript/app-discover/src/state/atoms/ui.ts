@@ -58,3 +58,8 @@ export const GraphViewState = atom<GraphViewStates>({
 	key: 'GraphViewState',
 	default: GraphViewStates.CausalView,
 })
+
+export const AutoRunState = atom<boolean>({
+	key: 'AutoRunState',
+	default: false,
+})

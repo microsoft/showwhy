@@ -633,7 +633,7 @@
                 },
                 "ui": {
                     "straightEdges": false,
-                    "autoLayoutEnabled": true,
+                    "autoLayoutEnabled": false,
                     "selectedDiscoveryAlgorithm": "NOTEARS",
                     "weightThreshold": 0,
                     "confidenceThreshold": 0.11,

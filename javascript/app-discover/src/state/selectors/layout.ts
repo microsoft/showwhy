@@ -17,8 +17,8 @@ import {
 export const GraphLayoutState = selector({
 	key: 'GraphLayoutState',
 	async get({ get }) {
-		const isAutoLayotEnabled = get(AutoLayoutEnabledState)
-		if (isAutoLayotEnabled) {
+		const isAutoLayoutEnabled = get(AutoLayoutEnabledState)
+		if (isAutoLayoutEnabled) {
 			const causalGraph = get(CausalDiscoveryResultsState).graph
 			const weightThreshold = get(WeightThresholdState)
 			const confidenceThreshold = get(ConfidenceThresholdState)

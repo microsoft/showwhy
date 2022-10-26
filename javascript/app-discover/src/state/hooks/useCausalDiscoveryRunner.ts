@@ -17,6 +17,7 @@ import {
 } from '../../domain/Relationship.js'
 import { CanceledPromiseError } from '../../utils/CancelablePromise.js'
 import {
+	AutoRunState,
 	CausalDiscoveryResultsState,
 	CausalGraphConstraintsState,
 	ErrorMessageState,
@@ -39,6 +40,7 @@ export function useCausalDiscoveryRunner() {
 		SelectedCausalDiscoveryAlgorithmState,
 	)
 	const DECIParams = useRecoilValue(DeciParamsState)
+	const autoRun = useRecoilValue(AutoRunState)
 	const [isLoading, setIsLoading] = useState<boolean>(false)
 
 	const algorithmParams = useMemo((): DECIParams | undefined => {
@@ -107,32 +109,8 @@ export function useCausalDiscoveryRunner() {
 		[setLoadingState],
 	)
 
-	useEffect(() => {
-		if (inModelCausalVariables.length > 0) {
-			setCausalDiscoveryResultsState({
-				graph: {
-					variables: inModelCausalVariables,
-					relationships: [],
-					constraints: causalDiscoveryConstraints,
-					algorithm: causalDiscoveryAlgorithm,
-				},
-				causalInferenceModel: null,
-			})
-		}
-
-		return () => {
-			void cancelLastDiscoveryResultPromise()
-		}
-	}, [
-		inModelCausalVariables,
-		causalDiscoveryAlgorithm,
-		causalDiscoveryConstraints,
-		setCausalDiscoveryResultsState,
-		cancelLastDiscoveryResultPromise,
-	])
-
-	const runCausalDis = useCallback(async () => {
-		if (isLoading) return
+	const runDiscovery = useCallback(async () => {
+		if (!autoRun && isLoading) return
 
 		setErrorMessage(undefined)
 
@@ -174,6 +152,7 @@ export function useCausalDiscoveryRunner() {
 		}
 	}, [
 		dataset,
+		autoRun,
 		inModelCausalVariables,
 		causalDiscoveryAlgorithm,
 		causalDiscoveryConstraints,
@@ -189,8 +168,41 @@ export function useCausalDiscoveryRunner() {
 		setIsLoading,
 	])
 
+	useEffect(() => {
+		if (inModelCausalVariables.length > 0) {
+			setCausalDiscoveryResultsState({
+				graph: {
+					variables: inModelCausalVariables,
+					relationships: [],
+					constraints: causalDiscoveryConstraints,
+					algorithm: causalDiscoveryAlgorithm,
+				},
+				causalInferenceModel: null,
+			})
+		}
+
+		if(autoRun) {
+			updateProgress(0, undefined)
+			void runDiscovery()
+		}
+
+		return () => {
+			void cancelLastDiscoveryResultPromise()
+		}
+	}, [
+		autoRun,
+		inModelCausalVariables,
+		causalDiscoveryAlgorithm,
+		causalDiscoveryConstraints,
+		setCausalDiscoveryResultsState,
+		runDiscovery,
+		updateProgress,
+		cancelLastDiscoveryResultPromise,
+	])
+
 	return {
-		run: runCausalDis,
+		run: runDiscovery,
+		stop: cancelLastDiscoveryResultPromise,
 		isLoading,
 	}
 }

@@ -9,13 +9,20 @@ import styled from 'styled-components'
 export const toggleStyles = {
 	root: {
 		display: 'flex',
-		gap: '0.5rem',
 		alignItems: 'center',
 		margin: '0 1rem',
 	},
+	label: {
+		margin: '0 0 0 0.5rem',
+	}
 }
 
 export const Button = styled(DefaultButton)`
 	margin: 0 0 0 0.5rem;
 	min-width: 2rem;
+`
+
+export const ButtonWrapper = styled.div`
+	margin: 0 1rem 0 0;
+	display: flex;
 `

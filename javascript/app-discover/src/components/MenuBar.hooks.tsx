@@ -7,20 +7,22 @@ import {
 	Checkbox,
 	ContextualMenuItemType,
 	PrimaryButton,
+	Toggle,
 } from '@fluentui/react'
-import { useDatasetMenuItems as useDatasetMenuItemsCommon } from '@showwhy/app-common'
-import { useCallback,useMemo } from 'react'
+import { useDatasetMenuItems as useDatasetMenuItemsCommon, wait } from '@showwhy/app-common'
+import { useCallback, useMemo } from 'react'
 import type { RecoilState } from 'recoil'
 import { useRecoilState, useRecoilValue } from 'recoil'
 
 import {
 	AutoLayoutEnabledState,
+	AutoRunState,
 	DatasetNameState,
 	useCausalDiscoveryRunner,
 } from '../state/index.js'
 import { ThresholdSlider } from './controls/ThresholdSlider.js'
 import { GraphViewStates } from './graph/GraphViews.types.js'
-import { Button } from './MenuBar.styles.js'
+import { Button, ButtonWrapper, toggleStyles } from './MenuBar.styles.js'
 
 export function useDatasetMenuItems(
 	loadTable: (name: string) => void,
@@ -168,42 +170,66 @@ export function useAutoLayoutSliderMenuItem() {
 	const [autoLayoutEnabled, setAutoLayoutEnabled] = useRecoilState(
 		AutoLayoutEnabledState,
 	)
-	const handleClick = useCallback(() => {
+	const handleClick = useCallback(async () => {
 		setAutoLayoutEnabled(true)
+		await wait(1000)
+		setAutoLayoutEnabled(false)
 	}, [setAutoLayoutEnabled])
 
 	return useMemo(
 		() => ({
 			key: 'auto-layout-button',
 			onRender: () => (
-				<div style={{ margin: '0 1rem' }}>
+				<ButtonWrapper>
 					<Button
 						checked={autoLayoutEnabled}
-						onClick={handleClick}
-						text={'Auto-layout'}
+						onClick={() => void handleClick()}
+						text={'Layout'}
+						disabled={autoLayoutEnabled}
 					/>
-				</div>
+					<Toggle
+						label="Auto-layout"
+						checked={autoLayoutEnabled}
+						inlineLabel
+						styles={toggleStyles}
+						onChange={(e, v) => setAutoLayoutEnabled(Boolean(v))}
+					/>
+				</ButtonWrapper>
 			),
 		}),
-		[handleClick, autoLayoutEnabled],
+		[handleClick, autoLayoutEnabled, setAutoLayoutEnabled],
 	)
 }
 
 export function useRunButtonMenuItem() {
-	const { run, isLoading } = useCausalDiscoveryRunner()
+	const [autoRun, setAutoRun] = useRecoilState(AutoRunState)
+
+	const { run, isLoading, stop } = useCausalDiscoveryRunner()
+	const handleClick = useCallback(() => {
+		return void (isLoading ? stop() : run())
+	}, [run, stop, isLoading])
 
 	return useMemo(
 		() => ({
 			key: 'run-button',
 			onRender: () => (
-				<PrimaryButton
-					onClick={() => void run()}
-					iconProps={{ iconName: isLoading ? '' : 'Play' }}
-					text={`Run${isLoading ? 'ning' : ''}`}
-					disabled={isLoading}
-				/>
+				<ButtonWrapper>
+					<PrimaryButton
+						onClick={handleClick}
+						iconProps={{ iconName: isLoading ? 'Stop' : 'Play' }}
+						text={isLoading ? 'Stop' : 'Run'}
+						disabled={autoRun}
+					/>
+					<Toggle
+						label="Auto-discovery"
+						checked={autoRun}
+						inlineLabel
+						styles={toggleStyles}
+						onChange={(e, v) => setAutoRun(Boolean(v))}
+					/>
+				</ButtonWrapper>
 			),
 		}),
-		[run, isLoading],
+		[handleClick, isLoading, autoRun, setAutoRun],
 	)
 }
