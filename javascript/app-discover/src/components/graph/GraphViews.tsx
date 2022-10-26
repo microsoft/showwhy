@@ -2,11 +2,11 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { Spinner } from '@fluentui/react'
 import { memo, Suspense } from 'react'
 import { useRecoilState } from 'recoil'
 
 import { GraphViewState } from '../../state/index.jsx'
+import { PaddedSpinner } from '../CauseDis.styles.js'
 import { CausalGraphExplorer } from './CausalGraphExplorer.jsx'
 import { CorrelationGraph2D } from './CorrelationGraph2D.jsx'
 import { CorrelationGraph3D } from './CorrelationGraph3D.js'
@@ -38,7 +38,7 @@ export const GraphViews: React.FC<DimensionProps> = memo(function GraphViews({
 			break
 		default:
 			activeGraphView = (
-				<Suspense fallback={<Spinner label="Recalculating..." />}>
+				<Suspense fallback={<PaddedSpinner label="Recalculating..." />}>
 					<div
 						style={{
 							width,

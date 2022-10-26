@@ -18,6 +18,7 @@ import {
 import { useBoolean } from '@fluentui/react-hooks'
 import { memo, useCallback, useState } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
+import styled from 'styled-components'
 
 import {
 	Constraints,
@@ -189,7 +190,7 @@ export const VariablePropertiesPanel: React.FC<VariablePropertiesPanelProps> =
 		]
 
 		return (
-			<>
+			<Container>
 				<DialogConfirm
 					onConfirm={() => onUpdateConstraints(constraintOption)}
 					toggle={toggleDialogConfirm}
@@ -279,6 +280,10 @@ export const VariablePropertiesPanel: React.FC<VariablePropertiesPanelProps> =
 
 				<Divider>Correlations</Divider>
 				<VariableCorrelationsList variable={variable} />
-			</>
+			</Container>
 		)
 	})
+
+const Container = styled.div`
+	padding: 8px;
+`
