@@ -50,9 +50,13 @@ async function _fetchDiscoverResult<T>(
 		!cancelablePromise.isCancellingOrCanceled()
 	) {
 		await sleep(1000)
+
 		status = await fetchStatus<T>(taskId)
 		last_progress = Math.max(status.progress ?? 0, last_progress)
-		progressCallback?.(last_progress, taskId)
+
+		if (!cancelablePromise.isCancellingOrCanceled()) {
+			progressCallback?.(last_progress, taskId)
+		}
 	}
 
 	if (

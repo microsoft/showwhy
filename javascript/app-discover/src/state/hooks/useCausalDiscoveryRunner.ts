@@ -158,10 +158,7 @@ export function useCausalDiscoveryRunner() {
 					setErrorMessage(undefined)
 				}
 			} catch (err) {
-				if (err instanceof CanceledPromiseError) {
-					setLoadingState('Cancelling last run...')
-					setErrorMessage(undefined)
-				} else {
+				if (!(err instanceof CanceledPromiseError)) {
 					resetCausalDiscoveryResultsState()
 					setLoadingState(undefined)
 					setErrorMessage((err as Error).message)
