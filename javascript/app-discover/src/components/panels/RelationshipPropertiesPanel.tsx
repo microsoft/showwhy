@@ -5,6 +5,7 @@
 import { PrimaryButton, Separator, Text, TooltipHost } from '@fluentui/react'
 import { memo } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
+import styled from 'styled-components'
 
 import { variableForColumnName } from '../../domain/Dataset.js'
 import {
@@ -48,7 +49,7 @@ export const RelationshipPropertiesPanel: React.FC<RelationshipPropertiesPanelPr
 		}
 
 		return (
-			<>
+			<Container>
 				<Text variant={'large'} block>
 					{relationship.name}
 				</Text>
@@ -81,6 +82,10 @@ export const RelationshipPropertiesPanel: React.FC<RelationshipPropertiesPanelPr
 						Remove relationship
 					</PrimaryButton>
 				</TooltipHost>
-			</>
+			</Container>
 		)
 	})
+
+const Container = styled.div`
+	padding: 8px;
+`
