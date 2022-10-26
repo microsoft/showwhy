@@ -63,19 +63,37 @@ async def cancel_task(workspace_name: str, task_id: str):
 
 
 @estimate_effect_router.post("/execution_count/{workspace_name}")
-async def get_number_of_executions(
-    workspace_name: str, body: EstimateEffectRequestBody
-):
-    specifications = get_tasks(
+async def get_number_of_executions(workspace_name: str, body: EstimateEffectRequestBody):
+
+    outcome_models = [model for model in body.estimator_specs if model.type == "Outcome Model"]
+    treatment_models = [
+        model for model in body.estimator_specs if model.type == "Treatment Assignment Model"
+    ]
+    outcomeSpecifications = get_tasks(
         None,
         workspace_name,
         body.population_specs,
         body.treatment_specs,
         body.outcome_specs,
         body.model_specs,
-        body.estimator_specs,
+        outcome_models,
     )
 
-    return NumberOfExecutionsResult(
-        count=len([spec for spec in specifications if spec.is_valid()])
+    treatmentSpecifications = get_tasks(
+        None,
+        workspace_name,
+        body.population_specs,
+        body.treatment_specs,
+        body.outcome_specs,
+        body.model_specs,
+        treatment_models,
     )
+
+    return {
+        "outcome": NumberOfExecutionsResult(
+            count=len([spec for spec in outcomeSpecifications if spec.is_valid()])
+        ),
+        "treatment": NumberOfExecutionsResult(
+            count=len([spec for spec in treatmentSpecifications if spec.is_valid()])
+        ),
+    }
