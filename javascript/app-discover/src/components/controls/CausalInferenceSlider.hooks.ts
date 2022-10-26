@@ -5,6 +5,7 @@
 import { useCallback, useMemo } from 'react'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
 
+import type { NormalizedColumnMetadata } from '../../domain/CausalDiscovery/CausalDiscoveryResult.js'
 import type { Intervention } from '../../domain/CausalInference.js'
 import {
 	CausalInferenceBaselineValuesState,
@@ -43,6 +44,7 @@ export function useDifferenceValue(columnName: string): string {
 export function useOnUpdateInterventions(
 	columnName: string,
 	interventions: Intervention[],
+	metadata?: NormalizedColumnMetadata,
 ): (value: number) => void {
 	const setInterventions = useSetRecoilState(CausalInterventionsState)
 
@@ -53,11 +55,11 @@ export function useOnUpdateInterventions(
 			)
 			revisedInterventions.push({
 				columnName,
-				value: value,
+				value: value * (metadata?.std || 1),
 			})
 			setInterventions(revisedInterventions)
 		},
-		[interventions, setInterventions],
+		[interventions, setInterventions, metadata],
 	)
 }
 

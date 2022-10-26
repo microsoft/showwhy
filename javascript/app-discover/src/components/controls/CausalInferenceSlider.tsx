@@ -39,7 +39,7 @@ export const CausalInferenceSlider: React.FC<CausalInferenceSliderProps> = memo(
 		const interventions = useRecoilValue(CausalInterventionsState)
 
 		const metadata = columnMetadata && columnMetadata[variable.columnName]
-		const unscaledValue = (inferenceResult || 0).toFixed(2)
+		const result = (inferenceResult || 0).toFixed(2)
 		const isIntervened = interventions.some(
 			intervention => intervention.columnName === variable.columnName,
 		)
@@ -47,6 +47,7 @@ export const CausalInferenceSlider: React.FC<CausalInferenceSliderProps> = memo(
 		const onUpdateInterventions = useOnUpdateInterventions(
 			variable.columnName,
 			interventions,
+			metadata,
 		)
 		const onRemoveIntervention = useOnRemoveInterventions(
 			variable.columnName,
@@ -72,15 +73,15 @@ export const CausalInferenceSlider: React.FC<CausalInferenceSliderProps> = memo(
 					{/* min and max values are by default 0 and 1 because of binary data, they don't have lower and upper */}
 					<Slider
 						className="no-drag"
-						min={metadata?.lower ?? 0}
-						max={metadata?.upper ?? 1}
-						value={+unscaledValue || 0}
+						min={Math.min(-2, +result)}
+						max={Math.max(2, +result)}
+						value={+result || 0}
 						step={0.01}
 						styles={slider_style}
 						onChange={onUpdateInterventions}
 					/>
 					<Stack horizontalAlign="end">
-						<Text variant="xSmall">{unscaledValue}</Text>
+						<Text variant="xSmall">{result}</Text>
 						{+differenceValue !== 0 && (
 							<Text
 								variant="xSmall"
