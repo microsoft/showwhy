@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { ActionButton, FocusZone, List, Spinner } from '@fluentui/react'
+import { ActionButton, FocusZone, List } from '@fluentui/react'
 import { memo, Suspense, useCallback, useEffect, useState } from 'react'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
 
@@ -11,6 +11,7 @@ import {
 	CausalVariablesState,
 	InModelCausalVariablesState,
 } from '../../state/index.js'
+import { PaddedSpinner } from '../CauseDis.styles.js'
 import { ListFilter } from '../controls/ListFilter.js'
 import { CausalNodeListItem } from './CausalNodeListItem.js'
 import { addAllButtonStyles, icons } from './CausalVariableList.styles.js'
@@ -123,7 +124,7 @@ const AllCausalVariablesListInternal: React.FC = memo(
 
 export const AllCausalVariablesList = memo(function AllCausalVariablesList() {
 	return (
-		<Suspense fallback={<Spinner label="Loading variables..." />}>
+		<Suspense fallback={<PaddedSpinner label="Loading variables..." />}>
 			<AllCausalVariablesListInternal />
 		</Suspense>
 	)

@@ -2,6 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import { Spinner } from '@fluentui/react'
 import styled from 'styled-components'
 
 export const FullScreenContainer = styled.div`
@@ -28,4 +29,7 @@ export const FillContainer = styled.div`
 	width: 100%;
 	height: 100%;
 	overflow: auto;
+`
+export const PaddedSpinner = styled(Spinner)`
+	padding-top: 8px;
 `
