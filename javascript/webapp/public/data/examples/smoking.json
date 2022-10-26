@@ -634,6 +634,9 @@
                 "ui": {
                     "straightEdges": false,
                     "autoLayoutEnabled": true,
+                    "fixedInterventionRangesEnabled": true,
+                    "selectedDiscoveryAlgorithm": "NOTEARS",
+                    "weightThreshold": 0,
                     "confidenceThreshold": 0.11,
                     "correlationThreshold": 0.2,
                     "view": 0
