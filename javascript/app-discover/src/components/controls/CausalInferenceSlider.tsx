@@ -96,7 +96,7 @@ export const CausalInferenceSlider: React.FC<CausalInferenceSliderProps> = memo(
 						onChange={onUpdateInterventions}
 					/>
 					<Stack horizontalAlign="end">
-						<Text variant="xSmall">{result}</Text>
+						<Text variant="xSmall">{result.toFixed(2)}</Text>
 						{+differenceValue !== 0 && (
 							<Text
 								variant="xSmall"

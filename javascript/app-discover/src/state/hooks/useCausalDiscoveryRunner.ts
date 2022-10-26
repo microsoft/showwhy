@@ -5,7 +5,10 @@
 import { useCallback, useEffect, useMemo } from 'react'
 import { useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil'
 
-import { discover as runCausalDiscovery } from '../../domain/CausalDiscovery/CausalDiscovery.js'
+import {
+	discover as runCausalDiscovery,
+	empty_discover_result,
+} from '../../domain/CausalDiscovery/CausalDiscovery.js'
 import { CausalDiscoveryAlgorithm } from '../../domain/CausalDiscovery/CausalDiscoveryAlgorithm.js'
 import type {
 	Relationship,
@@ -118,15 +121,13 @@ export function useCausalDiscoveryRunner() {
 			inModelCausalVariables.length < 2 ||
 			dataset.name === DEFAULT_DATASET_NAME
 		) {
-			setCausalDiscoveryResultsState({
-				graph: {
-					variables: inModelCausalVariables,
-					relationships: [],
-					constraints: causalDiscoveryConstraints,
+			setCausalDiscoveryResultsState(
+				empty_discover_result(
+					inModelCausalVariables,
+					causalDiscoveryConstraints,
 					algorithm,
-				},
-				causalInferenceModel: null,
-			})
+				),
+			)
 		}
 
 		updateProgress(0, undefined)

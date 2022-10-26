@@ -69,7 +69,18 @@ export function fromCausalDiscoveryResults(
 	return { variables, relationships, constraints, algorithm }
 }
 
-function empty_discover_result(
+export function empty_discover_result(
+	variables: CausalVariable[],
+	constraints: CausalDiscoveryConstraints,
+	algorithm: CausalDiscoveryAlgorithm,
+): CausalDiscoveryResult {
+	return {
+		graph: { variables, relationships: [], constraints, algorithm },
+		causalInferenceModel: null,
+	}
+}
+
+function empty_discover_result_promise(
 	variables: CausalVariable[],
 	constraints: CausalDiscoveryConstraints,
 	algorithm: CausalDiscoveryAlgorithm,
@@ -80,10 +91,9 @@ function empty_discover_result(
 	>({ taskId: undefined })
 
 	ret.setFinished()
-	ret.promise = Promise.resolve({
-		graph: { variables, relationships: [], constraints, algorithm },
-		causalInferenceModel: null,
-	})
+	ret.promise = Promise.resolve(
+		empty_discover_result(variables, constraints, algorithm),
+	)
 
 	return ret
 }
@@ -97,7 +107,7 @@ export function discover(
 	paramOptions?: DECIParams,
 ): CausalDiscoveryResultPromise {
 	if (algorithmName === CausalDiscoveryAlgorithm.None) {
-		return empty_discover_result(variables, constraints, algorithmName)
+		return empty_discover_result_promise(variables, constraints, algorithmName)
 	}
 
 	/* eslint-disable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-argument */
