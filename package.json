@@ -50,13 +50,5 @@
 	"workspaces": [
 		"javascript/*"
 	],
-	"packageManager": "yarn@3.2.4",
-	"dependenciesMeta": {
-		"@datashaper/react@16.0.0": {
-			"unplugged": true
-		},
-		"@datashaper/workflow@19.0.0": {
-			"unplugged": true
-		}
-	}
+	"packageManager": "yarn@3.2.4"
 }
