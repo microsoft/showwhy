@@ -41,13 +41,17 @@ export function useEstimatorOptions(
 
 	const onEstimatorsCheckboxChange = useCallback(
 		(estimator: Estimator, refutations: string) => {
+			const confidenceInterval = estimators.some(x => x.confidenceInterval)
 			setEstimators(prev =>
 				prev.map(e => e.type).includes(estimator.type)
 					? prev.filter(e => e.type !== estimator.type)
-					: [...prev, { ...estimator, refutations: +refutations }],
+					: [
+							...prev,
+							{ ...estimator, refutations: +refutations, confidenceInterval },
+					  ],
 			)
 		},
-		[setEstimators],
+		[setEstimators, estimators],
 	)
 
 	const verifyEstimatorGroups = useVerifyEstimatorGroups(

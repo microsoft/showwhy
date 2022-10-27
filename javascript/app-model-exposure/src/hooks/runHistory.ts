@@ -2,7 +2,6 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-
 import { useCallback, useMemo } from 'react'
 
 import { isProcessingStatus, isStatus } from '../api-client/utils.js'
@@ -16,6 +15,8 @@ import { NodeResponseStatus } from '../types/api/NodeResponseStatus.js'
 import type { Estimator } from '../types/estimators/Estimator.js'
 import type { Maybe } from '../types/primitives.js'
 import type { RunHistory } from '../types/runs/RunHistory.js'
+import type { SpecificationCount } from './../types/api/SpecificationCount.js'
+import { EstimatorGroup } from './../types/estimators/EstimatorGroup.js'
 
 export function useSetRunAsDefault(): (run: RunHistory) => void {
 	const setRunHistory = useSetRunHistory()
@@ -172,8 +173,22 @@ function initialRunHistory(
 	runHistoryLength: number,
 	confounderThreshold: number,
 	project: string,
-	specCount: Maybe<number>,
+	specCount: Maybe<SpecificationCount>,
 ): RunHistory {
+	const exposure = estimators.some(
+		e => e.group === EstimatorGroup.Exposure && e.confidenceInterval,
+	)
+		? 1
+		: 0
+	const outcome = estimators.some(
+		e => e.group === EstimatorGroup.Outcome && e.confidenceInterval,
+	)
+		? 1
+		: 0
+	const confidenceIntervalCount =
+		(specCount?.treatment.count ?? 0) * exposure +
+		(specCount?.outcome.count ?? 0) * outcome
+
 	return {
 		runNumber: runHistoryLength + 1,
 		isActive: true,
@@ -182,7 +197,8 @@ function initialRunHistory(
 			start: new Date(),
 		},
 		id,
-		specCount,
+		specCount: specCount?.total,
+		confidenceIntervalCount,
 		project,
 		estimators,
 		confounderThreshold,

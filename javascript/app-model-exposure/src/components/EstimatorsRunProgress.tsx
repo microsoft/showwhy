@@ -54,11 +54,10 @@ export const EstimatorsRunProgress: React.FC<{
 			id: 'confidenceInterval',
 			status: returnProgressStatus(
 				runStatus.confidence_interval_completed,
-				runStatus.confidence_interval_pending +
-					runStatus.confidence_interval_completed,
+				run.confidenceIntervalCount,
 			),
 		}
-	}, [runStatus])
+	}, [runStatus, run])
 
 	const refutersLabel: LabelProps = useMemo(() => {
 		return {
@@ -91,10 +90,8 @@ export const EstimatorsRunProgress: React.FC<{
 				{hasConfidenceInterval && (
 					<>
 						<ProgressIndicatorLabel status={confidenceIntervalLabel.status}>
-							Confidence Intervals{' '}
-							{runStatus.confidence_interval_completed || '-'}/
-							{runStatus.confidence_interval_pending +
-								runStatus.confidence_interval_completed || '-'}
+							Confidence Intervals {runStatus.confidence_interval_completed}/
+							{run.confidenceIntervalCount}
 						</ProgressIndicatorLabel>
 						<Container>
 							<Xarrow

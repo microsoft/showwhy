@@ -39,7 +39,7 @@ export function useLoadSpecCount(
 		api
 			.estimateExecutionCount(estimateNode)
 			.then(res => {
-				setSpecCount(res.count)
+				setSpecCount(res)
 			})
 			.catch(err => {
 				setErrors(

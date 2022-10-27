@@ -2,10 +2,6 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-/*!
- * Copyright (c) Microsoft. All rights reserved.
- * Licensed under the MIT license. See LICENSE file in the project.
- */
 import { useCallback } from 'react'
 
 import { ApiType } from '../../api-client/FetchApiInteractor.types.js'
@@ -51,8 +47,8 @@ export function useRunEstimate(
 	)
 	const setShapResponse = useSetShapResponse()
 	const newShapResponse = useSaveNewResponse<ShapStatus>(setShapResponse)
-	const createRun = useSaveNewRun()
 	const estimators = useEstimators()
+	const createRun = useSaveNewRun()
 
 	const refutationRun = useCallback(
 		async (taskId: string, estimatedEffect?: EstimatedEffect[]) => {
