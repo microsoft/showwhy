@@ -15,7 +15,6 @@ export interface RunStatus {
 	estimated_effect_completed: number
 	refute_completed: number
 	confidence_interval_completed: number
-	confidence_interval_pending: number
 	shap_completed: number
 	status: NodeResponseStatus
 	time?: RunTime

@@ -2,14 +2,13 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-
 import { v4 } from 'uuid'
 
 import type { EstimateEffectRequest } from '../types/api/EstimateEffectRequest.js'
 import type { ExecutionResponse } from '../types/api/ExecutionResponse.js'
 import type { NotebookRequest } from '../types/api/NotebookRequest.js'
 import type { UploadFileResponse } from '../types/api/UploadFileResponse.js'
-import type { TotalExecutionsResponse } from './FetchApiInteractor.types.js'
+import type { SpecificationCount } from './../types/api/SpecificationCount.js'
 
 export class FetchApiInteractor {
 	public constructor(private baseUrl: string) {}
@@ -63,7 +62,7 @@ export class FetchApiInteractor {
 
 	public async estimateExecutionCount(
 		data: EstimateEffectRequest,
-	): Promise<TotalExecutionsResponse> {
+	): Promise<SpecificationCount> {
 		const url = `${this.baseUrl}/estimate_effect/execution_count/${this.project}`
 		const options = {
 			method: 'POST',
@@ -74,7 +73,7 @@ export class FetchApiInteractor {
 			maxRetries: 1,
 		}
 		return this.fetchHandler(url, options).then(
-			response => response?.json() as Promise<TotalExecutionsResponse>,
+			response => response?.json() as Promise<SpecificationCount>,
 		)
 	}
 

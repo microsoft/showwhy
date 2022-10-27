@@ -63,13 +63,13 @@ export function useEstimateLogic(isProcessing: boolean): {
 
 		setIsCanceled(true)
 		let apiType = ApiType.RefuteEstimate
-		if (runStatus.estimated_effect_completed !== specCount) {
+		if (runStatus.estimated_effect_completed !== specCount?.total) {
 			apiType = ApiType.EstimateEffect
-		} else if (runStatus.shap_completed !== specCount) {
+		} else if (runStatus.shap_completed !== specCount?.total) {
 			apiType = ApiType.ShapInterpreter
-		} else if (runStatus.confidence_interval_completed !== specCount) {
+		} else if (runStatus.confidence_interval_completed !== specCount?.total) {
 			apiType = ApiType.ConfidenceInterval
-		} else if (runStatus.refute_completed !== specCount) {
+		} else if (runStatus.refute_completed !== specCount?.total) {
 			apiType = ApiType.RefuteEstimate
 		}
 
@@ -77,7 +77,7 @@ export function useEstimateLogic(isProcessing: boolean): {
 	}, [runStatus, setIsCanceled, specCount, defaultRun])
 
 	return {
-		specCount,
+		specCount: specCount?.total,
 		errors,
 		cancelRun,
 		runEstimate,

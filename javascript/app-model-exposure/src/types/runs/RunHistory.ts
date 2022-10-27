@@ -20,6 +20,7 @@ export interface RunHistory {
 	estimators: Estimator[]
 	status: NodeResponseStatus
 	specCount: number
+	confidenceIntervalCount: number
 	error?: string
 	confounderThreshold?: number
 }

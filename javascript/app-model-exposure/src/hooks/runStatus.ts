@@ -56,7 +56,6 @@ export function useGetRunStatus(defaultRun: Maybe<RunHistory>): RunStatus {
 			(refuters?.completed || 0) / DEFAULT_REFUTATION_TESTS.length,
 		)
 		status.confidence_interval_completed = confidenceInterval?.completed ?? 0
-		status.confidence_interval_pending = confidenceInterval?.pending ?? 0
 
 		if (!isStatus(estimators?.status, NodeResponseStatus.Success)) {
 			status.percentage = calcPercent(
