@@ -28,11 +28,12 @@ export const EdgeItem: React.FC<EdgeItemProps> = memo(function EdgeItem({
 	const isRejected = hasSameReason(ManualRelationshipReason.Removed, constraint)
 
 	const flipTooltip = useMemo((): string => {
-		return hasSameReason(ManualRelationshipReason.Flipped, constraint)
-			? 'Relationship manually reversed. Click to undo it'
-			: !flipAllowed
-			? 'Reverse relationship is not allowed'
-			: 'Manually reverse direction of relationship'
+		if (hasSameReason(ManualRelationshipReason.Flipped, constraint)) {
+			return 'Relationship manually reversed. Click to undo it'
+		} else if (!flipAllowed) {
+			return 'Reverse relationship is not allowed'
+		}
+		return 'Manually reverse direction of relationship'
 	}, [constraint, flipAllowed])
 
 	const edgeTitle = useMemo((): string => {
