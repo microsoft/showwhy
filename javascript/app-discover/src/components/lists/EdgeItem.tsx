@@ -20,7 +20,6 @@ export const EdgeItem: React.FC<EdgeItemProps> = memo(function EdgeItem({
 	columnName,
 	onFlip,
 	onRemove,
-	onPin,
 	onSelect,
 	constraint,
 }) {
@@ -46,33 +45,6 @@ export const EdgeItem: React.FC<EdgeItemProps> = memo(function EdgeItem({
 					>
 						<Stack.Item>
 							<Text variant={'tiny'}>{relationship?.weight?.toFixed(2)}</Text>
-						</Stack.Item>
-						<Stack.Item align="center">
-							<TooltipHost
-								content={
-									hasSameReason(ManualRelationshipReason.Pinned, constraint)
-										? 'Relationship confirmed as relevant. Click to undo'
-										: 'Confirm relationship as relevant'
-								}
-							>
-								<IconButtonDark
-									toggle
-									checked={hasSameReason(
-										ManualRelationshipReason.Pinned,
-										constraint,
-									)}
-									disabled={hasSameReason(
-										ManualRelationshipReason.Flipped,
-										constraint,
-									)}
-									iconProps={
-										hasSameReason(ManualRelationshipReason.Pinned, constraint)
-											? icons.pinned
-											: icons.pin
-									}
-									onClick={() => onPin(relationship)}
-								/>
-							</TooltipHost>
 						</Stack.Item>
 						<Stack.Item align="center">
 							<TooltipHost

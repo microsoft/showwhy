@@ -5,12 +5,7 @@
 import { FocusZone, Label } from '@fluentui/react'
 import { memo } from 'react'
 
-import {
-	useOnFlip,
-	useOnPin,
-	useOnRemove,
-	useOnRenderItem,
-} from './EdgeList.hooks.js'
+import { useOnFlip, useOnRemove, useOnRenderItem } from './EdgeList.hooks.js'
 import type { EdgeListProps } from './EdgeList.types.js'
 import { groupByEffectType } from './EdgeList.utils.js'
 
@@ -23,14 +18,12 @@ export const EdgeList: React.FC<EdgeListProps> = memo(function EdgeList({
 }) {
 	const groupedList = groupByEffectType(relationships, variable.columnName)
 
-	const onPin = useOnPin(constraints, onUpdateConstraints)
 	const onRemove = useOnRemove(constraints, onUpdateConstraints)
 	const onFlip = useOnFlip(constraints, onUpdateConstraints)
 
 	const renderItem = useOnRenderItem(
 		onSelect,
 		onFlip,
-		onPin,
 		onRemove,
 		variable,
 		constraints,

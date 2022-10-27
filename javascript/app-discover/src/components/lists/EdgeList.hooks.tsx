@@ -42,7 +42,6 @@ export function useOnRemove(
 export function useOnRenderItem(
 	onSelect: (relationship: Relationship) => void,
 	onFlip: (relationship: Relationship) => void,
-	onPin: (relationship: Relationship) => void,
 	onRemove: (relationship: Relationship) => void,
 	variable: CausalVariable,
 	constraints: CausalDiscoveryConstraints,
@@ -56,7 +55,6 @@ export function useOnRenderItem(
 					relationship={relationship}
 					onFlip={onFlip}
 					onRemove={onRemove}
-					onPin={onPin}
 					onSelect={onSelect}
 					columnName={
 						variable.columnName === relationship.source.columnName
@@ -69,7 +67,7 @@ export function useOnRenderItem(
 				/>
 			)
 		},
-		[onSelect, onFlip, onPin, onRemove, variable, constraints],
+		[onSelect, onFlip, onRemove, variable, constraints],
 	)
 }
 
