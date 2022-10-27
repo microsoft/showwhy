@@ -57,7 +57,7 @@ export const VariableNaturePicker: React.FC<VariableNaturePickerProps> = memo(
 					defaultSelectedKey={variable.nature}
 					options={variableNatureDropdownOptions}
 					onChange={pickNature}
-					label="Variable Nature"
+					label="Variable nature"
 					required={true}
 				/>
 				{/* {mappings} */}
