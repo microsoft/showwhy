@@ -6,10 +6,11 @@
 import styled from 'styled-components'
 
 export const Container = styled.div``
+export const LabelContainer = styled.div`
+	display: flex;
+	justify-content: space-between;
+`
 
 export const icons = {
-	delete: { iconName: 'Delete' },
-	pin: { iconName: 'Pin' },
-	switch: { iconName: 'Switch' },
 	remove: { iconName: 'StatusCircleErrorX' },
 }
