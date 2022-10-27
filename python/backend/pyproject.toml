@@ -41,7 +41,7 @@ celery = "^5.2.7"
 redis = { extras = ["hiredis"], version = "^4.3.4" }
 python-multipart = "^0.0.5"
 nbformat = "^5.4.0"
-dowhy = { git = "https://github.com/py-why/dowhy.git", branch = "main" }
+dowhy = { git = "https://github.com/py-why/dowhy.git", rev = "f523accf96d6bb1afa6f3f3f3ba13cb1272b4150" }
 
 [tool.poetry.group.dev.dependencies]
 watchfiles = "0.15.0"
