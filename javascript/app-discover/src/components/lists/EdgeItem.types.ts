@@ -9,7 +9,8 @@ export interface EdgeItemProps {
 	columnName: string
 	onFlip: (relationship: Relationship) => void
 	onRemove: (relationship: Relationship) => void
-	onPin: (relationship: Relationship) => void
+	onRemoveConstraint: (relationship: Relationship) => void
 	onSelect: (relationship: Relationship) => void
 	constraint?: Relationship
+	flipAllowed?: boolean
 }
