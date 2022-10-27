@@ -52,6 +52,11 @@ export function useHistoryButtonCommandBar(
 				} as ICommandBarItemProps,
 			],
 			id: 'historyButton',
+			styles: {
+				root: {
+					height: 43,
+				},
+			},
 		}),
 		[isCollapsed, numSteps, toggleCollapsed],
 	)
