@@ -35,6 +35,7 @@ import {
 	CausalGraphConstraintsState,
 	DEFAULT_DATASET_NAME,
 	ErrorMessageState,
+	InfoMessageState,
 	LoadingState,
 	SelectedCausalDiscoveryAlgorithmState,
 } from '../atoms/index.js'
@@ -69,6 +70,7 @@ export function useCausalDiscoveryRunner() {
 		CausalDiscoveryResultsState,
 	)
 	const setLoadingState = useSetRecoilState(LoadingState)
+	const setInfoMessage = useSetRecoilState(InfoMessageState)
 	const setErrorMessage = useSetRecoilState(ErrorMessageState)
 	const [setLastDiscoveryResultPromise, cancelLastDiscoveryResultPromise] =
 		useLastDiscoveryResultPromise()
@@ -153,6 +155,7 @@ export function useCausalDiscoveryRunner() {
 
 	const runDiscovery = useCallback(async () => {
 		setErrorMessage(undefined)
+		setInfoMessage(undefined)
 
 		const discoveryPromise = await createDiscoveryPromise(
 			dataset,
@@ -169,6 +172,13 @@ export function useCausalDiscoveryRunner() {
 
 			// only update if the promise is not canceled
 			if (discoveryPromise.isFinished()) {
+				if (results.graph.isDag === false) {
+					setInfoMessage(
+						'Discovered graph is not a DAG, try running with more steps/epochs',
+					)
+				} else {
+					setInfoMessage(undefined)
+				}
 				setCausalDiscoveryResultsState(results)
 				setLoadingState(undefined)
 				setErrorMessage(undefined)
@@ -194,6 +204,7 @@ export function useCausalDiscoveryRunner() {
 		algorithmParams,
 		resetCausalDiscoveryResultsState,
 		setErrorMessage,
+		setInfoMessage,
 		setIsLoading,
 	])
 

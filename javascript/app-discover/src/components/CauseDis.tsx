@@ -11,7 +11,11 @@ import { memo, Suspense } from 'react'
 import { useMeasure } from 'react-use'
 import { useRecoilValue } from 'recoil'
 
-import { ErrorMessageState, LoadingState } from '../state/index.js'
+import {
+	ErrorMessageState,
+	InfoMessageState,
+	LoadingState,
+} from '../state/index.js'
 import {
 	FillContainer,
 	FullScreenContainer,
@@ -29,6 +33,7 @@ import { PropertyPanels } from './panels/PropertyPanels.js'
 export const CauseDis = memo(function CauseDis() {
 	const loading = useRecoilValue(LoadingState)
 	const errorMessage = useRecoilValue(ErrorMessageState)
+	const infoMessage = useRecoilValue(InfoMessageState)
 	const [ref, { width, height }] = useMeasure<HTMLDivElement>()
 
 	return (
@@ -44,6 +49,11 @@ export const CauseDis = memo(function CauseDis() {
 			{errorMessage && (
 				<MessageBar messageBarType={MessageBarType.error}>
 					{errorMessage}
+				</MessageBar>
+			)}
+			{infoMessage && (
+				<MessageBar messageBarType={MessageBarType.info}>
+					{infoMessage}
 				</MessageBar>
 			)}
 			{loading ? (

@@ -33,6 +33,7 @@ export interface CausalDiscoveryRequestReturnValue {
 		edges: CausalDiscoveryResultEdge[]
 		nodes: CausalDiscoveryResultNode[]
 	}
+	is_dag?: boolean
 }
 
 export interface NormalizedColumnMetadata {
@@ -47,6 +48,11 @@ export type NormalizedColumnsMetadataByName = Record<
 	NormalizedColumnMetadata
 >
 
+export interface DatasetStatistics {
+	numberOfRows: number
+	numberOfDroppedRows: number
+}
+
 export interface CausalDiscoveryResult {
 	graph: CausalGraph
 	causalInferenceModel: CausalInferenceModel | null
@@ -54,6 +60,7 @@ export interface CausalDiscoveryResult {
 	// TODO: verify possibility to merge this with CausalVariable
 	// binary && continuous only
 	normalizedColumnsMetadata?: NormalizedColumnsMetadataByName
+	datasetStatistics?: DatasetStatistics
 }
 
 export type CausalDiscoveryResultPromise = CancelablePromise<

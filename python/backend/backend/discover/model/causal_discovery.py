@@ -44,6 +44,11 @@ class NormalizedColumnMetadata(BaseModel):
     std: float
 
 
+class DatasetStatistics(BaseModel):
+    number_of_dropped_rows: int
+    number_of_rows: int
+
+
 _causal_var_nature_to_causica_var_type = {
     "Discrete": "continuous",  # TODO: make categorical (related to ONNX)
     "Continuous": "continuous",

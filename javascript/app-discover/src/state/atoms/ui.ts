@@ -14,6 +14,11 @@ export const ErrorMessageState = atom<string | undefined>({
 	default: undefined,
 })
 
+export const InfoMessageState = atom<string | undefined>({
+	key: 'InfoMessageState',
+	default: undefined,
+})
+
 export const LoadingState = atom<string | undefined>({
 	key: 'LoadingState',
 	default: undefined,

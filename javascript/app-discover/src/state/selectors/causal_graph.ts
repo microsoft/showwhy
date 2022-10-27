@@ -4,12 +4,14 @@
  */
 import { DefaultValue, selector } from 'recoil'
 
+import type { DatasetStatistics } from '../../domain/CausalDiscovery/CausalDiscoveryResult.js'
 import type { CausalVariable } from '../../domain/CausalVariable.js'
 import { variablesForColumnNames } from '../../domain/Dataset.js'
 import {
 	CausalDiscoveryResultsState,
 	CausalInferenceResultState,
 	InModelColumnNamesState,
+	LoadingState,
 } from '../atoms/index.js'
 import { DatasetState } from './dataset.js'
 
@@ -28,5 +30,18 @@ export const InModelCausalVariablesState = selector<CausalVariable[]>({
 		reset(CausalDiscoveryResultsState)
 		reset(CausalInferenceResultState)
 		set(InModelColumnNamesState, columnNames)
+	},
+})
+
+export const DatasetStatisticsState = selector<DatasetStatistics | undefined>({
+	key: 'DatasetStatisticsState',
+	get({ get }) {
+		const causalDiscoveryResult = get(CausalDiscoveryResultsState)
+		const loadingState = get(LoadingState)
+
+		if (!loadingState) {
+			return causalDiscoveryResult.datasetStatistics
+		}
+		return undefined
 	},
 })

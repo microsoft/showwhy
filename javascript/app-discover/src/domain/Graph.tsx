@@ -17,6 +17,7 @@ export interface CausalGraph {
 	relationships: Relationship[]
 	constraints: CausalDiscoveryConstraints
 	algorithm: CausalDiscoveryAlgorithm
+	isDag?: boolean
 }
 
 export function nodeHasChildren(

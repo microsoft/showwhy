@@ -2,14 +2,13 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import type {
-	ICommandBarItemProps,
-	IContextualMenuProps,
-} from '@fluentui/react'
+import type { ICommandBarItemProps ,
+	IContextualMenuProps} from '@fluentui/react'
 import {
 	Checkbox,
 	ContextualMenuItemType,
 	DefaultButton,
+	Label,
 	PrimaryButton,
 	Toggle,
 } from '@fluentui/react'
@@ -22,6 +21,7 @@ import { useRecoilState, useRecoilValue } from 'recoil'
 import {
 	AutoRunState,
 	DatasetNameState,
+	DatasetStatisticsState,
 	FixedInterventionRangesEnabledState,
 	useCausalDiscoveryRunner,
 	useLayoutGraph,
@@ -256,5 +256,29 @@ export function useRunButtonMenuItem() {
 			),
 		}),
 		[handleClick, isRunning, menuProps],
+	)
+}
+
+export function useDatasetStatisticsMenuItem() {
+	const datasetStatistics = useRecoilValue(DatasetStatisticsState)
+
+	return useMemo(
+		() => ({
+			key: 'dataset-statistics',
+
+			onRender: () =>
+				datasetStatistics !== undefined &&
+				datasetStatistics.numberOfRows > 0 ? (
+					<Label>
+						Results for {datasetStatistics.numberOfRows} records (
+						{(
+							(datasetStatistics.numberOfDroppedRows * 100.0) /
+							datasetStatistics.numberOfRows
+						).toFixed(2)}
+						% missing/dropped)
+					</Label>
+				) : null,
+		}),
+		[datasetStatistics],
 	)
 }
