@@ -2,7 +2,8 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { ITheme, PrimaryButton, Separator, Text, TooltipHost } from '@fluentui/react'
+import type { ITheme } from '@fluentui/react'
+import { PrimaryButton, Separator, Text, TooltipHost } from '@fluentui/react'
 import { memo } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import styled from 'styled-components'

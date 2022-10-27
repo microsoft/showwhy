@@ -20,7 +20,6 @@ export function useVegaSpec(config: VisualizationSpec): VisualizationSpec {
 			spec.config.rect.stroke = theme.plotArea().fill().hex()
 		}
 		if (spec.config?.symbol) {
-			 /* eslint-disable @typescript-eslint/no-unsafe-member-access @typescript-eslint/no-explicit-any */
 			;(spec.config as any).circle = { ...spec.config.symbol }
 		}
 		return spec
