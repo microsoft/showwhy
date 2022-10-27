@@ -4,9 +4,8 @@
  */
 import type { ICommandBarItemProps } from '@fluentui/react'
 import { Checkbox, ContextualMenuItemType, Toggle } from '@fluentui/react'
-import { useBoolean } from '@fluentui/react-hooks'
 import { useDatasetMenuItems as useDatasetMenuItemsCommon } from '@showwhy/app-common'
-import { useEffect, useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 import type { RecoilState } from 'recoil'
 import { useRecoilState, useRecoilValue } from 'recoil'
 
@@ -209,12 +208,11 @@ export function useFixedInterventionRangesToggleMenuItem() {
 }
 
 export function useTogglePauseButtonMenuItem() {
-	const [paused, { toggle: togglePaused }] = useBoolean(true)
-	const [, setPauseAutoRun] = useRecoilState(PauseAutoRunState)
-
-	useEffect(() => {
-		setPauseAutoRun(paused ? CausalDiscoveryAlgorithm.None : undefined)
-	}, [paused, setPauseAutoRun])
+	const [pauseAutoRun, setPauseAutoRun] = useRecoilState(PauseAutoRunState)
+	const paused = pauseAutoRun === CausalDiscoveryAlgorithm.None
+	const togglePaused = useCallback(() => {
+		setPauseAutoRun(paused ? undefined : CausalDiscoveryAlgorithm.None)
+	}, [setPauseAutoRun, paused])
 
 	return useMemo(
 		() => ({

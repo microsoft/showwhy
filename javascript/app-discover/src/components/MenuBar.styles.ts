@@ -32,6 +32,7 @@ export function useCommandBarStyles(): IStyleFunctionOrObject<
 		() => ({
 			root: {
 				padding: 0,
+				paddingRight: 4,
 				background: theme.palette.neutralLighter,
 				borderBottom: `1px solid ${theme.palette.neutralTertiaryAlt}`,
 			},
