@@ -10,17 +10,18 @@ import {
 	PrimaryButton,
 	Toggle,
 } from '@fluentui/react'
+import { useBoolean } from '@fluentui/react-hooks'
 import { useDatasetMenuItems as useDatasetMenuItemsCommon } from '@showwhy/app-common'
-import { useCallback, useMemo } from 'react'
+import { useCallback, useEffect, useMemo } from 'react'
 import type { RecoilState } from 'recoil'
-import { useRecoilCallback, useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
 
 import {
-	AutoLayoutEnabledState,
 	AutoRunState,
 	DatasetNameState,
 	FixedInterventionRangesEnabledState,
 	useCausalDiscoveryRunner,
+	useLayoutGraph,
 } from '../state/index.js'
 import { ThresholdSlider } from './controls/ThresholdSlider.js'
 import { GraphViewStates } from './graph/GraphViews.types.js'
@@ -177,24 +178,14 @@ export function useFixedInterventionRangesToggleMenuItem() {
 }
 
 export function useAutoLayoutToggleMenuItem() {
-	const [autoLayoutEnabled, setAutoLayoutEnabled] = useRecoilState(
-		AutoLayoutEnabledState,
-	)
-	const handleClick = useRecoilCallback(
-		({ snapshot, set }) =>
-			async () => {
-				set(AutoLayoutEnabledState, true)
-				const autoLayoutSnapshot = await snapshot.getPromise(
-					AutoLayoutEnabledState,
-				)
-				if (autoLayoutSnapshot) {
-					setTimeout(() => {
-						set(AutoLayoutEnabledState, false)
-					}, 10)
-				}
-			},
-		[],
-	)
+	const [autoLayout, { toggle: toggleAutoLayout, setFalse }] = useBoolean(false)
+	const layoutGraph = useLayoutGraph()
+
+	useEffect(() => {
+		if (autoLayout) {
+			void layoutGraph()
+		}
+	}, [autoLayout, layoutGraph])
 
 	const menuProps = useMemo(
 		() => ({
@@ -202,11 +193,11 @@ export function useAutoLayoutToggleMenuItem() {
 				{
 					key: 'autoLayout',
 					text: 'Auto-layout',
-					onClick: () => setAutoLayoutEnabled(true),
+					onClick: toggleAutoLayout,
 				},
 			],
 		}),
-		[setAutoLayoutEnabled],
+		[toggleAutoLayout],
 	)
 
 	return useMemo(
@@ -217,14 +208,14 @@ export function useAutoLayoutToggleMenuItem() {
 					<DefaultButton
 						split
 						menuProps={menuProps}
-						checked={autoLayoutEnabled}
-						onClick={() => void handleClick()}
-						text={autoLayoutEnabled ? 'Auto-layout' : 'Layout'}
+						checked={autoLayout}
+						onClick={autoLayout ? setFalse : layoutGraph}
+						text={autoLayout ? 'Auto-layout' : 'Layout'}
 					/>
 				</ButtonWrapper>
 			),
 		}),
-		[handleClick, autoLayoutEnabled, menuProps],
+		[autoLayout, layoutGraph, setFalse, menuProps],
 	)
 }
 

@@ -72,7 +72,7 @@ export async function layoutGraph(
 	graph: CausalGraph,
 	weightThreshold: number,
 	confidenceThreshold: number,
-) {
+): Promise<ElkNode> {
 	const elkLayout = await elk.layout(
 		toElkNode(graph, weightThreshold, confidenceThreshold),
 		{
