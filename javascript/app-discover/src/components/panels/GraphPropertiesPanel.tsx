@@ -5,7 +5,6 @@
 import { memo } from 'react'
 
 import { AlgorithmControls } from '../AlgorithmControls.js'
-import { Divider } from '../controls/Divider.js'
 import { ConstraintsPanel } from './ConstraintsPanel.js'
 
 export const GraphPropertiesPanel: React.FC = memo(
@@ -13,9 +12,7 @@ export const GraphPropertiesPanel: React.FC = memo(
 		return (
 			<>
 				<AlgorithmControls />
-				<ConstraintsPanel>
-					<Divider>Constraints</Divider>
-				</ConstraintsPanel>
+				<ConstraintsPanel></ConstraintsPanel>
 			</>
 		)
 	},

@@ -9,7 +9,6 @@ import { applyMappingFromVariableToTable, isSame } from './CausalVariable.js'
 
 export enum ManualRelationshipReason {
 	Removed = 'Removed',
-	Pinned = 'Pinned',
 	Flipped = 'Flipped',
 }
 
@@ -169,5 +168,15 @@ export function isEquivalentRelationship(
 		hasSameSourceAndTarget(relationship, asRelationship) ||
 		(hasSameReason(ManualRelationshipReason.Flipped, asRelationship) &&
 			hasInvertedSourceAndTarget(relationship, asRelationship))
+	)
+}
+
+export function isInverseRemoved(
+	relationship: Relationship,
+	asRelationship: Relationship,
+) {
+	return (
+		hasSameReason(ManualRelationshipReason.Removed, asRelationship) &&
+		hasInvertedSourceAndTarget(relationship, asRelationship)
 	)
 }

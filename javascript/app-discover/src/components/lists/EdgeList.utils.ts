@@ -12,6 +12,7 @@ import {
 	hasSameReason,
 	hasSameSourceAndTarget,
 	invertRelationship,
+	involvesVariable,
 	isEquivalentRelationship,
 	ManualRelationshipReason,
 } from '../../domain/Relationship.js'
@@ -36,28 +37,17 @@ export function removeEdge(
 	}
 	onUpdateConstraints(newConstraints)
 }
-export function pinEdge(
+
+export function removeConstraint(
 	constraints: CausalDiscoveryConstraints,
 	onUpdateConstraints: (newConstraints: CausalDiscoveryConstraints) => void,
 	relationship: Relationship,
 ) {
-	const shouldUndo = constraints.manualRelationships.find(
-		x => x.key === relationship.key,
-	)
-	const filtered = constraints.manualRelationships.filter(
-		x => x.key !== relationship.key,
-	)
 	const newConstraints = {
 		...constraints,
-		manualRelationships: shouldUndo
-			? filtered
-			: [
-					...filtered,
-					{
-						...relationship,
-						reason: ManualRelationshipReason.Pinned,
-					},
-			  ],
+		manualRelationships: constraints.manualRelationships.filter(
+			r => r !== relationship,
+		),
 	}
 	onUpdateConstraints(newConstraints)
 }
@@ -65,7 +55,6 @@ export function pinEdge(
 export function flipEdge(
 	constraints: CausalDiscoveryConstraints,
 	onUpdateConstraints: (newConstraints: CausalDiscoveryConstraints) => void,
-	closeDialogConfirm: () => void,
 	relationship?: Relationship,
 ) {
 	if (!relationship) return
@@ -102,46 +91,27 @@ export function flipEdge(
 	} as CausalDiscoveryConstraints
 
 	onUpdateConstraints(newConstraints)
-	closeDialogConfirm()
 }
 
 export function groupByEffectType(
 	relationships: Relationship[],
 	variableName: string,
 ): Record<string, Relationship[]> {
+	const records: Record<string, Relationship[]> = {
+		[`Causes ${variableName}`]: [],
+		[`Caused by ${variableName}`]: [],
+	}
 	return relationships.reduce(
 		(acc: Record<string, Relationship[]>, obj: Relationship) => {
-			let key = 'Is affected by'
-			switch (true) {
-				case obj.weight === undefined:
-					if (obj.source.columnName === variableName) {
-						key = 'Affects'
-					}
-					break
-				case (obj.weight || 0) > 0:
-					if (obj.source.columnName === variableName) {
-						key = 'Increases'
-						break
-					}
-					key = 'Is increased by'
-					break
-
-				case (obj.weight || 0) < 0:
-					if (obj.source.columnName === variableName) {
-						key = 'Decreases'
-						break
-					}
-					key = 'Is decreased by'
-			}
-
-			if (!acc[key]) {
-				acc[key] = []
+			let key = `Causes ${variableName}`
+			if (obj.source.columnName === variableName) {
+				key = `Caused by ${variableName}`
 			}
 
 			acc[key].push(obj)
 			return acc
 		},
-		{},
+		records,
 	)
 }
 
@@ -152,9 +122,17 @@ export function isSource(
 	return variableReference.columnName === relationship.source.columnName
 }
 
-export function isTarget(
-	relationship: Relationship,
-	variableReference: VariableReference,
-): boolean {
-	return variableReference.columnName === relationship.source.columnName
+export function rejectedItems(
+	constraints: CausalDiscoveryConstraints,
+	variable: VariableReference,
+) {
+	return constraints.manualRelationships.flatMap(x => {
+		if (
+			x.reason === ManualRelationshipReason.Removed &&
+			involvesVariable(x, variable)
+		) {
+			return x
+		}
+		return []
+	})
 }

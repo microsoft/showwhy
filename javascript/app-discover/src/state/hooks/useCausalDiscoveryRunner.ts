@@ -24,6 +24,7 @@ import type {
 	RelationshipReference,
 } from '../../domain/Relationship.js'
 import {
+	hasSameReason,
 	invertRelationship,
 	ManualRelationshipReason,
 } from '../../domain/Relationship.js'
@@ -98,13 +99,7 @@ export function useCausalDiscoveryRunner() {
 			...userConstraints,
 			manualRelationships: [
 				...userConstraints.manualRelationships.map(x => {
-					if (
-						x.reason &&
-						[
-							ManualRelationshipReason.Flipped,
-							ManualRelationshipReason.Pinned,
-						].includes(x.reason)
-					) {
+					if (hasSameReason(ManualRelationshipReason.Flipped, x)) {
 						return invertRelationship(x)
 					}
 					return x
