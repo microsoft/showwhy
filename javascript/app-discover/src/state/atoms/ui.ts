@@ -68,5 +68,5 @@ export const PauseAutoRunState = atom<
 	CausalDiscoveryAlgorithm.None | undefined
 >({
 	key: 'PauseAutoRunState',
-	default: undefined,
+	default: CausalDiscoveryAlgorithm.None,
 })
