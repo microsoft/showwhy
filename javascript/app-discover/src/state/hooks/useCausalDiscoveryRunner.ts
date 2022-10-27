@@ -5,11 +5,15 @@
 import { useCallback, useEffect, useMemo } from 'react'
 import { useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil'
 
+import type { DiscoverProgressCallback } from '../../api/types.js'
 import {
 	discover as runCausalDiscovery,
 	empty_discover_result,
 } from '../../domain/CausalDiscovery/CausalDiscovery.js'
 import { CausalDiscoveryAlgorithm } from '../../domain/CausalDiscovery/CausalDiscoveryAlgorithm.js'
+import type { CausalDiscoveryConstraints } from '../../domain/CausalDiscovery/CausalDiscoveryConstraints.js'
+import type { CausalVariable } from '../../domain/CausalVariable.js'
+import type { Dataset } from '../../domain/Dataset.js'
 import type {
 	Relationship,
 	RelationshipReference,
@@ -116,6 +120,40 @@ export function useCausalDiscoveryRunner() {
 		[setLoadingState],
 	)
 
+	const createDiscoveryPromise = useCallback(
+		async (
+			dataset: Dataset,
+			variables: CausalVariable[],
+			constraints: CausalDiscoveryConstraints,
+			algorithmName: CausalDiscoveryAlgorithm,
+			progressCallback?: DiscoverProgressCallback,
+			paramOptions?: DECIParams,
+		) => {
+			// if the last task has not finished just yet, cancel it
+			const lastPromiseCancel = cancelLastDiscoveryResultPromise()
+			const discoveryPromise = runCausalDiscovery(
+				dataset,
+				variables,
+				constraints,
+				algorithmName,
+				progressCallback,
+				paramOptions,
+			)
+
+			setLastDiscoveryResultPromise(discoveryPromise)
+
+			// the code above
+			//     - cancelLastDiscoveryResultPromise/runCausalDiscovery/setLastDiscoveryResultPromise
+			// needs to run without awaiting
+			// so we know react wont change context and trigger a new discover promise
+			// before it being properly set
+			await lastPromiseCancel
+
+			return discoveryPromise
+		},
+		[cancelLastDiscoveryResultPromise, setLastDiscoveryResultPromise],
+	)
+
 	useEffect(() => {
 		if (
 			inModelCausalVariables.length < 2 ||
@@ -134,10 +172,7 @@ export function useCausalDiscoveryRunner() {
 		const runDiscovery = async () => {
 			setErrorMessage(undefined)
 
-			// if the last task has not finished just yet, cancel it
-			await cancelLastDiscoveryResultPromise()
-
-			const discoveryPromise = runCausalDiscovery(
+			const discoveryPromise = await createDiscoveryPromise(
 				dataset,
 				inModelCausalVariables,
 				causalDiscoveryConstraints,
@@ -145,8 +180,6 @@ export function useCausalDiscoveryRunner() {
 				updateProgress,
 				algorithmParams,
 			)
-
-			setLastDiscoveryResultPromise(discoveryPromise)
 
 			try {
 				const results = await discoveryPromise.promise!
@@ -172,6 +205,7 @@ export function useCausalDiscoveryRunner() {
 			void cancelLastDiscoveryResultPromise()
 		}
 	}, [
+		createDiscoveryPromise,
 		dataset,
 		inModelCausalVariables,
 		userConstraints,
