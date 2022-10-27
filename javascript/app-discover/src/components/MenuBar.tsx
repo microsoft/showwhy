@@ -21,7 +21,7 @@ import {
 } from '../state/index.js'
 import { saveObjectJSON } from '../utils/Save.js'
 import {
-	useAutoLayoutToggleMenuItem,
+	useAutoLayoutButtonMenuItem,
 	useDatasetMenuItems,
 	useModelMenuItems,
 	useRunButtonMenuItem,
@@ -85,7 +85,7 @@ export const MenuBar: React.FC = memo(function MenuBar() {
 		setUseStraightEdges,
 	)
 
-	const autoLayoutButtonMenuItem = useAutoLayoutToggleMenuItem()
+	const autoLayoutButtonMenuItem = useAutoLayoutButtonMenuItem()
 	const runButtonMenuItem = useRunButtonMenuItem()
 
 	const menuItems = useMemo<ICommandBarItemProps[]>(
@@ -93,7 +93,7 @@ export const MenuBar: React.FC = memo(function MenuBar() {
 		[datasetMenuItems, modelMenuItems, viewMenuItems],
 	)
 	const interactiveItems = useMemo(
-		() => [autoLayoutButtonMenuItem, runButtonMenuItem],
+		() => [runButtonMenuItem, autoLayoutButtonMenuItem],
 		[autoLayoutButtonMenuItem, runButtonMenuItem],
 	)
 	const commandBarStyles = useCommandBarStyles()

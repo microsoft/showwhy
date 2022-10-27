@@ -182,7 +182,6 @@ export function useCausalDiscoveryRunner() {
 			setLoadingState(undefined)
 			setIsLoading(false)
 		}
-
 	}, [
 		dataset,
 		createDiscoveryPromise,
@@ -200,21 +199,30 @@ export function useCausalDiscoveryRunner() {
 
 	const stopDiscoveryRun = useCallback(async () => {
 		setAutoRun(false)
-		await cancelLastDiscoveryResultPromise()
-	}, [cancelLastDiscoveryResultPromise, setAutoRun])
+		try {
+			await cancelLastDiscoveryResultPromise()
+		} catch (err) {
+			setErrorMessage((err as Error).message)
+		}
+	}, [cancelLastDiscoveryResultPromise, setAutoRun, setErrorMessage])
 
 	useEffect(() => {
 		return () => {
 			void stopDiscoveryRun()
 		}
+		/* eslint-disable-next-line */
 	}, [])
 
-	useEffect(() => {
-		if (
+	const isResetRequired = useMemo<boolean>(() => {
+		return (
 			!autoRun ||
 			inModelCausalVariables.length < 2 ||
 			dataset.name === DEFAULT_DATASET_NAME
-		) {
+		)
+	}, [autoRun, dataset, inModelCausalVariables])
+
+	useEffect(() => {
+		if (isResetRequired) {
 			setCausalDiscoveryResultsState(
 				empty_discover_result(
 					inModelCausalVariables,
@@ -228,17 +236,16 @@ export function useCausalDiscoveryRunner() {
 			updateProgress(0, undefined)
 			void runDiscovery()
 		}
-
 	}, [
 		autoRun,
-		dataset,
 		inModelCausalVariables,
 		causalDiscoveryAlgorithm,
 		causalDiscoveryConstraints,
 		setCausalDiscoveryResultsState,
 		runDiscovery,
 		updateProgress,
-	])	
+		isResetRequired,
+	])
 
 	return {
 		run: runDiscovery,

@@ -2,7 +2,10 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import type { ICommandBarItemProps } from '@fluentui/react'
+import type {
+	ICommandBarItemProps,
+	IContextualMenuProps,
+} from '@fluentui/react'
 import {
 	Checkbox,
 	ContextualMenuItemType,
@@ -25,11 +28,7 @@ import {
 } from '../state/index.js'
 import { ThresholdSlider } from './controls/ThresholdSlider.js'
 import { GraphViewStates } from './graph/GraphViews.types.js'
-import {
-	ButtonWrapper,
-	toggleStyles,
-	useMenuButtonStyles,
-} from './MenuBar.styles.js'
+import { toggleStyles, useMenuButtonStyles } from './MenuBar.styles.js'
 
 export function useDatasetMenuItems(
 	loadTable: (name: string) => void,
@@ -177,7 +176,7 @@ export function useFixedInterventionRangesToggleMenuItem() {
 	)
 }
 
-export function useAutoLayoutToggleMenuItem() {
+export function useAutoLayoutButtonMenuItem() {
 	const [autoLayout, { toggle: toggleAutoLayout, setFalse }] = useBoolean(false)
 	const layoutGraph = useLayoutGraph()
 
@@ -187,7 +186,7 @@ export function useAutoLayoutToggleMenuItem() {
 		}
 	}, [autoLayout, layoutGraph])
 
-	const menuProps = useMemo(
+	const menuProps = useMemo<IContextualMenuProps>(
 		() => ({
 			items: [
 				{
@@ -204,15 +203,13 @@ export function useAutoLayoutToggleMenuItem() {
 		() => ({
 			key: 'auto-layout-button',
 			onRender: () => (
-				<ButtonWrapper>
-					<DefaultButton
-						split
-						menuProps={menuProps}
-						checked={autoLayout}
-						onClick={autoLayout ? setFalse : layoutGraph}
-						text={autoLayout ? 'Auto-layout' : 'Layout'}
-					/>
-				</ButtonWrapper>
+				<DefaultButton
+					split
+					menuProps={menuProps}
+					checked={autoLayout}
+					onClick={autoLayout ? setFalse : layoutGraph}
+					text={autoLayout ? 'Auto-layout' : 'Layout'}
+				/>
 			),
 		}),
 		[autoLayout, layoutGraph, setFalse, menuProps],
@@ -222,8 +219,8 @@ export function useAutoLayoutToggleMenuItem() {
 export function useRunButtonMenuItem() {
 	const [autoRun, setAutoRun] = useRecoilState(AutoRunState)
 	const { run, isLoading, stop } = useCausalDiscoveryRunner()
-	const isRunning = useMemo(
-		(): boolean => isLoading || autoRun,
+	const isRunning = useMemo<boolean>(
+		() => isLoading || autoRun,
 		[isLoading, autoRun],
 	)
 
@@ -231,7 +228,7 @@ export function useRunButtonMenuItem() {
 		return void (isRunning ? stop() : run())
 	}, [run, stop, isRunning])
 
-	const menuProps = useMemo(
+	const menuProps = useMemo<IContextualMenuProps>(
 		() => ({
 			items: [
 				{
@@ -249,15 +246,13 @@ export function useRunButtonMenuItem() {
 		() => ({
 			key: 'run-button',
 			onRender: () => (
-				<ButtonWrapper>
-					<PrimaryButton
-						split
-						menuProps={menuProps}
-						onClick={handleClick}
-						iconProps={{ iconName: isRunning ? 'Pause' : 'Play' }}
-						text={isRunning ? 'Stop run' : 'Run'}
-					/>
-				</ButtonWrapper>
+				<PrimaryButton
+					split
+					menuProps={menuProps}
+					onClick={handleClick}
+					iconProps={{ iconName: isRunning ? 'Pause' : 'Play' }}
+					text={isRunning ? 'Stop run' : 'Run'}
+				/>
 			),
 		}),
 		[handleClick, isRunning, menuProps],

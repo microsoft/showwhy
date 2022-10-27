@@ -9,7 +9,6 @@ import type {
 } from '@fluentui/react'
 import { useTheme } from '@fluentui/react'
 import { useMemo } from 'react'
-import styled from 'styled-components'
 
 export const toggleStyles = {
 	root: {
@@ -19,10 +18,6 @@ export const toggleStyles = {
 		marginLeft: 4,
 	},
 }
-
-export const ButtonWrapper = styled.div`
-	margin: 0 1rem 0 0;
-`
 
 export function useCommandBarStyles(): IStyleFunctionOrObject<
 	ICommandBarStyleProps,
