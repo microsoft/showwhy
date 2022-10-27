@@ -15,7 +15,7 @@ import type { StyleContextProps } from './StyleContext.types.js'
 
 export const StyleContext: React.FC<StyleContextProps> = memo(
 	function StyleContext({ children }) {
-		const theme = loadById('autumn', { dark: false })
+		const theme = loadById('default', { dark: false })
 		const fluentTheme = useMemo(() => loadFluentTheme(theme), [theme])
 		return (
 			<ThematicFluentProvider theme={theme} style={fluentProviderStyle}>

@@ -61,7 +61,6 @@ export function useTableHeaderStyles() {
 }
 
 export function useTableCommandProps() {
-	const theme = useTheme()
 	const colors = useTableHeaderColors()
 	return useMemo(
 		() => ({
@@ -74,7 +73,7 @@ export function useTableCommandProps() {
 				},
 			},
 		}),
-		[theme, colors],
+		[colors],
 	)
 }
 
