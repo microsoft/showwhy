@@ -170,3 +170,13 @@ export function isEquivalentRelationship(
 			hasInvertedSourceAndTarget(relationship, asRelationship))
 	)
 }
+
+export function isInverseRemoved(
+	relationship: Relationship,
+	asRelationship: Relationship,
+) {
+	return (
+		hasSameReason(ManualRelationshipReason.Removed, asRelationship) &&
+		hasInvertedSourceAndTarget(relationship, asRelationship)
+	)
+}

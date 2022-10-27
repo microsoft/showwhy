@@ -9,6 +9,7 @@ import type { CausalDiscoveryConstraints } from '../../domain/CausalDiscovery/Ca
 import type { Relationship } from '../../domain/Relationship.js'
 import {
 	hasSameSourceAndTarget,
+	isInverseRemoved,
 	ManualRelationshipReason,
 } from '../../domain/Relationship.js'
 import type {
@@ -57,6 +58,12 @@ export function useOnRenderItem(
 	return useCallback(
 		(relationship: Relationship) => {
 			if (!relationship) return undefined
+			const constraint = constraints?.manualRelationships?.find(x =>
+				hasSameSourceAndTarget(x, relationship),
+			)
+			const flipRejected = constraints?.manualRelationships?.find(x =>
+				isInverseRemoved(relationship, x),
+			)
 			return (
 				<EdgeItem
 					key={relationship.key}
@@ -65,14 +72,13 @@ export function useOnRenderItem(
 					onRemove={onRemove}
 					onRemoveConstraint={onRemoveConstraint}
 					onSelect={onSelect}
+					flipAllowed={!flipRejected}
 					columnName={
 						isSource(relationship, variable)
 							? relationship.target.columnName
 							: relationship.source.columnName
 					}
-					constraint={constraints?.manualRelationships?.find(x =>
-						hasSameSourceAndTarget(x, relationship),
-					)}
+					constraint={constraint}
 				/>
 			)
 		},

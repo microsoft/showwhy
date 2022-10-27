@@ -23,6 +23,7 @@ export const EdgeItem: React.FC<EdgeItemProps> = memo(function EdgeItem({
 	onRemoveConstraint,
 	onSelect,
 	constraint,
+	flipAllowed,
 }) {
 	const isRejected = hasSameReason(ManualRelationshipReason.Removed, constraint)
 	return (
@@ -59,6 +60,8 @@ export const EdgeItem: React.FC<EdgeItemProps> = memo(function EdgeItem({
 									content={
 										hasSameReason(ManualRelationshipReason.Flipped, constraint)
 											? 'Relationship manually reversed. Click to undo it'
+											: !flipAllowed
+											? 'Reverse relationship is not allowed'
 											: 'Manually reverse direction of relationship'
 									}
 								>
@@ -68,6 +71,7 @@ export const EdgeItem: React.FC<EdgeItemProps> = memo(function EdgeItem({
 											ManualRelationshipReason.Flipped,
 											constraint,
 										)}
+										disabled={!flipAllowed}
 										iconProps={icons.switch}
 										onClick={() => onFlip(relationship)}
 									/>
@@ -88,7 +92,7 @@ export const EdgeItem: React.FC<EdgeItemProps> = memo(function EdgeItem({
 					<Stack.Item>
 						<TooltipHost content="Remove constraint">
 							<IconButtonDark
-								iconProps={icons.remove}
+								iconProps={icons.delete}
 								onClick={() => onRemoveConstraint(relationship)}
 							/>
 						</TooltipHost>
