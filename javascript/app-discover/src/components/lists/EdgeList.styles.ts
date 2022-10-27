@@ -12,5 +12,5 @@ export const LabelContainer = styled.div`
 `
 
 export const icons = {
-	add: { iconName: 'Add' },
+	remove: { iconName: 'StatusCircleErrorX' },
 }

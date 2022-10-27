@@ -12,6 +12,7 @@ import {
 	hasSameReason,
 	hasSameSourceAndTarget,
 	invertRelationship,
+	involvesVariable,
 	isEquivalentRelationship,
 	ManualRelationshipReason,
 } from '../../domain/Relationship.js'
@@ -47,31 +48,6 @@ export function removeConstraint(
 		manualRelationships: constraints.manualRelationships.filter(
 			r => r !== relationship,
 		),
-	}
-	onUpdateConstraints(newConstraints)
-}
-export function pinEdge(
-	constraints: CausalDiscoveryConstraints,
-	onUpdateConstraints: (newConstraints: CausalDiscoveryConstraints) => void,
-	relationship: Relationship,
-) {
-	const shouldUndo = constraints.manualRelationships.find(
-		x => x.key === relationship.key,
-	)
-	const filtered = constraints.manualRelationships.filter(
-		x => x.key !== relationship.key,
-	)
-	const newConstraints = {
-		...constraints,
-		manualRelationships: shouldUndo
-			? filtered
-			: [
-					...filtered,
-					{
-						...relationship,
-						reason: ManualRelationshipReason.Pinned,
-					},
-			  ],
 	}
 	onUpdateConstraints(newConstraints)
 }
@@ -146,9 +122,17 @@ export function isSource(
 	return variableReference.columnName === relationship.source.columnName
 }
 
-export function isTarget(
-	relationship: Relationship,
-	variableReference: VariableReference,
-): boolean {
-	return variableReference.columnName === relationship.source.columnName
+export function rejectedItems(
+	constraints: CausalDiscoveryConstraints,
+	variable: VariableReference,
+) {
+	return constraints.manualRelationships.flatMap(x => {
+		if (
+			x.reason === ManualRelationshipReason.Removed &&
+			involvesVariable(x, variable)
+		) {
+			return x
+		}
+		return []
+	})
 }

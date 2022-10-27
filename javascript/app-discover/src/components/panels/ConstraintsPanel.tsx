@@ -84,9 +84,7 @@ export const ConstraintsPanel: React.FC<ConstraintsPanelProps> = memo(
 
 const icons = {
 	delete: { iconName: 'Delete' },
-	remove: { iconName: 'StatusCircleErrorX' },
 	switch: { iconName: 'Switch' },
-	pinned: { iconName: 'PinSolid12' },
 }
 
 const Container = styled.div`
@@ -113,7 +111,7 @@ export const Constraint: React.FC<{
 			<Stack.Item>
 				<TooltipHost content="Remove constraint">
 					<IconButtonDark
-						iconProps={icons.remove}
+						iconProps={icons.delete}
 						onClick={() => onRemove(constraint)}
 					/>
 				</TooltipHost>

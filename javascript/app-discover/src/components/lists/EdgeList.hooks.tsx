@@ -9,8 +9,6 @@ import type { CausalDiscoveryConstraints } from '../../domain/CausalDiscovery/Ca
 import type { Relationship } from '../../domain/Relationship.js'
 import {
 	hasSameSourceAndTarget,
-	invertRelationship,
-	involvesVariable,
 	ManualRelationshipReason,
 } from '../../domain/Relationship.js'
 import type {
@@ -21,22 +19,10 @@ import { EdgeItem } from './EdgeItem.js'
 import {
 	flipEdge,
 	isSource,
-	pinEdge,
 	removeConstraint,
 	removeEdge,
 } from './EdgeList.utils.js'
 
-export function useOnPin(
-	constraints: CausalDiscoveryConstraints,
-	onUpdateConstraints: SetterOrUpdater<CausalDiscoveryConstraints>,
-): (relationship: Relationship) => void {
-	return useCallback(
-		(relationship: Relationship) => {
-			pinEdge(constraints, onUpdateConstraints, relationship)
-		},
-		[onUpdateConstraints, constraints],
-	)
-}
 export function useOnRemove(
 	constraints: CausalDiscoveryConstraints,
 	onUpdateConstraints: SetterOrUpdater<CausalDiscoveryConstraints>,
@@ -106,7 +92,7 @@ export function useOnFlip(
 	)
 }
 
-export function useOnAddAll(
+export function useOnRemoveAll(
 	constraints: CausalDiscoveryConstraints,
 	onUpdateConstraints: SetterOrUpdater<CausalDiscoveryConstraints>,
 	variable: VariableReference,
@@ -117,22 +103,16 @@ export function useOnAddAll(
 			const columnCauses = groupName.toLowerCase().includes('causes')
 			const causes = relationships.filter(x => !isSource(x, variable))
 			const causedBy = relationships.filter(x => isSource(x, variable))
-			const newList = (columnCauses ? causedBy : causes).map(x => {
+			const newList = (columnCauses ? causes : causedBy).map(x => {
 				return {
-					...invertRelationship(x),
-					reason: ManualRelationshipReason.Flipped,
+					...x,
+					reason: ManualRelationshipReason.Removed,
 				}
 			})
 
-			const clearConstraints = constraints.manualRelationships.filter(x => {
-				if (
-					involvesVariable(x, variable) &&
-					x.reason !== ManualRelationshipReason.Removed
-				) {
-					return false
-				}
-				return true
-			})
+			const clearConstraints = constraints.manualRelationships.filter(
+				x => !newList.map(a => a.key).includes(x.key),
+			)
 
 			onUpdateConstraints({
 				...constraints,

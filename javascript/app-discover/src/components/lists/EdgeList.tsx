@@ -5,18 +5,17 @@
 import { FocusZone, Label, TooltipHost } from '@fluentui/react'
 import { memo } from 'react'
 
-import { ManualRelationshipReason } from '../../domain/Relationship.js'
 import { IconButtonDark } from '../../styles/styles.js'
 import {
-	useOnAddAll,
 	useOnFlip,
 	useOnRemove,
+	useOnRemoveAll,
 	useOnRemoveConstraint,
 	useOnRenderItem,
 } from './EdgeList.hooks.js'
 import { Container, icons, LabelContainer } from './EdgeList.styles.js'
 import type { EdgeListProps } from './EdgeList.types.js'
-import { groupByEffectType } from './EdgeList.utils.js'
+import { groupByEffectType, rejectedItems } from './EdgeList.utils.js'
 
 export const EdgeList: React.FC<EdgeListProps> = memo(function EdgeList({
 	relationships,
@@ -26,12 +25,10 @@ export const EdgeList: React.FC<EdgeListProps> = memo(function EdgeList({
 	onUpdateConstraints,
 }) {
 	const groupedList = groupByEffectType(relationships, variable.columnName)
-	const removedItems = constraints.manualRelationships.filter(
-		x => x.reason === ManualRelationshipReason.Removed,
-	)
+	const removedItems = rejectedItems(constraints, variable)
 	const onRemove = useOnRemove(constraints, onUpdateConstraints)
 	const onFlip = useOnFlip(constraints, onUpdateConstraints)
-	const onAddAll = useOnAddAll(
+	const onRemoveAll = useOnRemoveAll(
 		constraints,
 		onUpdateConstraints,
 		variable,
@@ -58,10 +55,10 @@ export const EdgeList: React.FC<EdgeListProps> = memo(function EdgeList({
 					<Container key={groupName}>
 						<LabelContainer>
 							<Label>{groupName}</Label>
-							<TooltipHost content={`Set all edges as ${groupName}`}>
+							<TooltipHost content={`Remove group of edges`}>
 								<IconButtonDark
-									onClick={() => onAddAll(groupName)}
-									iconProps={icons.add}
+									onClick={() => onRemoveAll(groupName)}
+									iconProps={icons.remove}
 								/>
 							</TooltipHost>
 						</LabelContainer>
