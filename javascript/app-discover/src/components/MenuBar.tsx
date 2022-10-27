@@ -12,7 +12,6 @@ import type { DatasetDatapackage } from '../domain/Dataset.js'
 import { useDatasetLoader } from '../domain/Dataset.js'
 import { DeciParamsState } from '../state/atoms/algorithms_params.js'
 import {
-	AutoLayoutEnabledState,
 	CausalGraphConstraintsState,
 	ConfidenceThresholdState,
 	CorrelationThresholdState,
@@ -43,9 +42,6 @@ export const MenuBar: React.FC = memo(function MenuBar() {
 	const resetParams = useResetRecoilState(DeciParamsState)
 	const [useStraightEdges, setUseStraightEdges] =
 		useRecoilState(StraightEdgesState)
-	const [autoLayoutEnabled, setAutoLayoutEnabled] = useRecoilState(
-		AutoLayoutEnabledState,
-	)
 	const setLoadingState = useSetRecoilState(LoadingState)
 	const [persistedInfo, setPersistedInfo] = useRecoilState(PersistedInfoState)
 	const [
@@ -92,8 +88,6 @@ export const MenuBar: React.FC = memo(function MenuBar() {
 		setSelectedViewKey,
 		useStraightEdges,
 		setUseStraightEdges,
-		autoLayoutEnabled,
-		setAutoLayoutEnabled,
 	)
 
 	const edgeWeightSliderMenuItem = useSliderMenuItem(

@@ -10,13 +10,10 @@ import {
 	PrimaryButton,
 	Toggle,
 } from '@fluentui/react'
-import {
-	useDatasetMenuItems as useDatasetMenuItemsCommon,
-	wait,
-} from '@showwhy/app-common'
+import { useDatasetMenuItems as useDatasetMenuItemsCommon } from '@showwhy/app-common'
 import { useCallback, useMemo } from 'react'
 import type { RecoilState } from 'recoil'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilCallback, useRecoilState, useRecoilValue } from 'recoil'
 
 import {
 	AutoLayoutEnabledState,
@@ -80,8 +77,6 @@ export function useViewMenuItems(
 	setView: (s: GraphViewStates) => void,
 	useStraightEdges: boolean,
 	setUseStraightEdges: (v: boolean) => void,
-	autoLayoutEnabled: boolean,
-	setAutoLayoutEnabled: (v: boolean) => void,
 ): ICommandBarItemProps {
 	const buttonStyles = useMenuButtonStyles()
 	return useMemo(
@@ -185,11 +180,21 @@ export function useAutoLayoutToggleMenuItem() {
 	const [autoLayoutEnabled, setAutoLayoutEnabled] = useRecoilState(
 		AutoLayoutEnabledState,
 	)
-	const handleClick = useCallback(async () => {
-		setAutoLayoutEnabled(true)
-		await wait(300)
-		setAutoLayoutEnabled(false)
-	}, [setAutoLayoutEnabled])
+	const handleClick = useRecoilCallback(
+		({ snapshot, set }) =>
+			async () => {
+				set(AutoLayoutEnabledState, true)
+				const autoLayoutSnapshot = await snapshot.getPromise(
+					AutoLayoutEnabledState,
+				)
+				if (autoLayoutSnapshot) {
+					setTimeout(() => {
+						set(AutoLayoutEnabledState, false)
+					}, 10)
+				}
+			},
+		[],
+	)
 
 	const menuProps = useMemo(
 		() => ({
