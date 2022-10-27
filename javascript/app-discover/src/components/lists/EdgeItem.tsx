@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { Stack, Text, TooltipHost } from '@fluentui/react'
-import { memo } from 'react'
+import { memo, useMemo } from 'react'
 
 import {
 	hasSameReason,
@@ -26,6 +26,21 @@ export const EdgeItem: React.FC<EdgeItemProps> = memo(function EdgeItem({
 	flipAllowed,
 }) {
 	const isRejected = hasSameReason(ManualRelationshipReason.Removed, constraint)
+
+	const flipTooltip = useMemo((): string => {
+		return hasSameReason(ManualRelationshipReason.Flipped, constraint)
+			? 'Relationship manually reversed. Click to undo it'
+			: !flipAllowed
+			? 'Reverse relationship is not allowed'
+			: 'Manually reverse direction of relationship'
+	}, [constraint, flipAllowed])
+
+	const edgeTitle = useMemo((): string => {
+		return isRejected && constraint
+			? `${constraint.source.columnName}-${constraint.target.columnName}`
+			: columnName
+	}, [isRejected, constraint, columnName])
+
 	return (
 		<Container>
 			<Stack
@@ -39,9 +54,7 @@ export const EdgeItem: React.FC<EdgeItemProps> = memo(function EdgeItem({
 						style={{ cursor }}
 						onClick={() => (!isRejected ? onSelect(relationship) : undefined)}
 					>
-						{isRejected && constraint
-							? `${constraint.source.columnName}-${constraint.target.columnName}`
-							: columnName}
+						{edgeTitle}
 					</Text>
 				</Stack.Item>
 				{!isRejected && (
@@ -56,15 +69,7 @@ export const EdgeItem: React.FC<EdgeItemProps> = memo(function EdgeItem({
 								<Text variant={'tiny'}>{relationship?.weight?.toFixed(2)}</Text>
 							</Stack.Item>
 							<Stack.Item align="center">
-								<TooltipHost
-									content={
-										hasSameReason(ManualRelationshipReason.Flipped, constraint)
-											? 'Relationship manually reversed. Click to undo it'
-											: !flipAllowed
-											? 'Reverse relationship is not allowed'
-											: 'Manually reverse direction of relationship'
-									}
-								>
+								<TooltipHost content={flipTooltip}>
 									<IconButtonDark
 										toggle
 										checked={hasSameReason(

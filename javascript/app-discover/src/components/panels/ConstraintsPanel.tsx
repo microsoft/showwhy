@@ -2,19 +2,16 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { DefaultButton, Label, Stack, TooltipHost } from '@fluentui/react'
+import { DefaultButton, Label } from '@fluentui/react'
 import { memo } from 'react'
 import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil'
 import styled from 'styled-components'
 
-import type {
-	Relationship,
-	RelationshipReference,
-} from '../../domain/Relationship.js'
+import type { RelationshipReference } from '../../domain/Relationship.js'
 import { ManualRelationshipReason } from '../../domain/Relationship.js'
 import { CausalGraphConstraintsState, TableState } from '../../state/index.js'
-import { IconButtonDark } from '../../styles/styles.js'
 import { Divider } from '../controls/Divider.js'
+import { Constraint } from './Constraint.js'
 import type { ConstraintsPanelProps } from './ConstraintsPanel.types.js'
 
 export const ConstraintsPanel: React.FC<ConstraintsPanelProps> = memo(
@@ -65,6 +62,7 @@ export const ConstraintsPanel: React.FC<ConstraintsPanelProps> = memo(
 
 		return hasAnyConstraints ? (
 			<Container>
+				<Divider></Divider>
 				{children}
 				{(!!savedConstraints.length || !!removedConstraints.length) && (
 					<Divider>Edge constraints</Divider>
@@ -82,12 +80,6 @@ export const ConstraintsPanel: React.FC<ConstraintsPanelProps> = memo(
 	},
 )
 
-const icons = {
-	delete: { iconName: 'Delete' },
-	remove: { iconName: 'StatusCircleErrorX' },
-	switch: { iconName: 'Switch' },
-}
-
 const Container = styled.div`
 	padding: 8px;
 `
@@ -95,28 +87,3 @@ const Container = styled.div`
 const ClearConstraintsButton = styled(DefaultButton)`
 	width: 100%;
 `
-
-export const Constraint: React.FC<{
-	constraint: Relationship
-	onRemove: (relationship: Relationship) => void
-}> = memo(function Constraint({ constraint, onRemove }) {
-	return (
-		<Stack
-			horizontal
-			verticalAlign="center"
-			key={`${constraint.source.columnName}-${constraint.target.columnName}`}
-		>
-			<Stack.Item
-				grow
-			>{`${constraint.source.columnName}-${constraint.target.columnName}`}</Stack.Item>
-			<Stack.Item>
-				<TooltipHost content="Remove constraint">
-					<IconButtonDark
-						iconProps={icons.remove}
-						onClick={() => onRemove(constraint)}
-					/>
-				</TooltipHost>
-			</Stack.Item>
-		</Stack>
-	)
-})
