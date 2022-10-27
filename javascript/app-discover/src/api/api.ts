@@ -63,6 +63,9 @@ async function _fetchDiscoverResult<T>(
 		cancelablePromise.isCancellingOrCanceled() ||
 		isRevokedStatus(status.status)
 	) {
+		if (!isRevokedStatus(status.status)) {
+			await cancelablePromise.cancel?.()
+		}
 		cancelablePromise.setCanceled()
 		throw new CanceledPromiseError(`task ${taskId} has been canceled`)
 	}
@@ -86,6 +89,18 @@ export function fetchDiscoverResult<T>(
 		FetchDiscoverResult<T>
 	>({ taskId: undefined })
 
+	cancelablePromise.cancel = async () => {
+		if (cancelablePromise.isFinished()) {
+			return
+		}
+
+		cancelablePromise.setCanceling()
+
+		if (cancelablePromise.metadata?.taskId) {
+			await cancelDiscoverTask(cancelablePromise.metadata?.taskId)
+		}
+	}
+
 	cancelablePromise.promise = new Promise((resolve, reject) => {
 		try {
 			resolve(
@@ -100,18 +115,6 @@ export function fetchDiscoverResult<T>(
 			reject(err)
 		}
 	})
-
-	cancelablePromise.cancel = async () => {
-		if (cancelablePromise.isFinished()) {
-			return
-		}
-
-		cancelablePromise.setCanceling()
-
-		if (cancelablePromise.metadata?.taskId) {
-			await cancelDiscoverTask(cancelablePromise.metadata?.taskId)
-		}
-	}
 
 	return cancelablePromise
 }
