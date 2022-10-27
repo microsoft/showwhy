@@ -2,7 +2,6 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { DialogConfirm } from '@essex/components'
 import type {
 	IChoiceGroupOption,
 	IChoiceGroupOptionProps,
@@ -15,7 +14,6 @@ import {
 	Text,
 	TooltipHost,
 } from '@fluentui/react'
-import { useBoolean } from '@fluentui/react-hooks'
 import { memo, useCallback, useState } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import styled from 'styled-components'
@@ -52,10 +50,6 @@ import type { VariablePropertiesPanelProps } from './VariablePropertiesPanel.typ
 export const VariablePropertiesPanel: React.FC<VariablePropertiesPanelProps> =
 	memo(function VariablePropertiesPanel({ variable }) {
 		const dataset = useRecoilValue(DatasetState)
-		const [
-			showDialogConfirm,
-			{ toggle: toggleDialogConfirm, setFalse: closeDialogConfirm },
-		] = useBoolean(false)
 		const [constraintOption, setConstraintOption] = useState('')
 		const causalGraph = useCausalGraph()
 		const weightThreshold = useRecoilValue(WeightThresholdState)
@@ -87,15 +81,8 @@ export const VariablePropertiesPanel: React.FC<VariablePropertiesPanelProps> =
 					),
 				)
 				setConstraintOption('')
-				closeDialogConfirm()
 			},
-			[
-				constraints,
-				setConstraintOption,
-				variable,
-				setConstraints,
-				closeDialogConfirm,
-			],
+			[constraints, setConstraintOption, variable, setConstraints],
 		)
 
 		const onChange = useCallback(
@@ -109,17 +96,10 @@ export const VariablePropertiesPanel: React.FC<VariablePropertiesPanelProps> =
 					)
 				) {
 					setConstraintOption(option?.key as string)
-					return toggleDialogConfirm()
 				}
 				onUpdateConstraints(option?.key)
 			},
-			[
-				onUpdateConstraints,
-				toggleDialogConfirm,
-				constraints,
-				setConstraintOption,
-				variable,
-			],
+			[onUpdateConstraints, constraints, setConstraintOption, variable],
 		)
 
 		// TODO: DRY this out. It's also in CausalNode
@@ -191,13 +171,6 @@ export const VariablePropertiesPanel: React.FC<VariablePropertiesPanelProps> =
 
 		return (
 			<Container>
-				<DialogConfirm
-					onConfirm={() => onUpdateConstraints(constraintOption)}
-					toggle={toggleDialogConfirm}
-					show={showDialogConfirm}
-					title="Are you sure you want to proceed?"
-					subText="Setting this constraint will remove any manual edges you pinned or flipped for this variable"
-				></DialogConfirm>
 				<Text variant={'large'} block>
 					{variable.name}
 				</Text>

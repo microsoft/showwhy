@@ -10,40 +10,11 @@ import { useCallback } from 'react'
 import type { SetterOrUpdater } from 'recoil'
 
 import type { CausalDiscoveryConstraints } from '../../domain/CausalDiscovery/CausalDiscoveryConstraints.js'
-import type { VariableReference } from '../../domain/CausalVariable.js'
 import type { Relationship } from '../../domain/Relationship.js'
-import {
-	hasSameSourceAndTarget,
-	involvesVariable,
-} from '../../domain/Relationship.js'
+import { hasSameSourceAndTarget } from '../../domain/Relationship.js'
 import type { CausalVariable } from './../../domain/CausalVariable.js'
 import { EdgeItem } from './EdgeItem.js'
-import { pinEdge, removeEdge } from './EdgeList.utils.js'
-
-export function useOnFlip(
-	generalConstraintsCauses: VariableReference[],
-	setRelationshipOption: (relationship: Relationship) => void,
-	toggleDialogConfirm: () => void,
-	onUpdateFlippedConstraint: (relationship: Relationship) => void,
-): (relationship: Relationship) => void {
-	return useCallback(
-		(relationship: Relationship) => {
-			if (
-				generalConstraintsCauses.find(x => involvesVariable(relationship, x))
-			) {
-				setRelationshipOption(relationship)
-				return toggleDialogConfirm()
-			}
-			onUpdateFlippedConstraint(relationship)
-		},
-		[
-			onUpdateFlippedConstraint,
-			toggleDialogConfirm,
-			setRelationshipOption,
-			generalConstraintsCauses,
-		],
-	)
-}
+import { flipEdge, pinEdge, removeEdge } from './EdgeList.utils.js'
 
 export function useOnPin(
 	constraints: CausalDiscoveryConstraints,
@@ -102,12 +73,14 @@ export function useOnRenderItem(
 	)
 }
 
-export function useOnConfirmFlip(
-	onUpdateFlippedConstraint: (relationshipOption: Relationship) => void,
-	relationshipOption: Relationship | undefined,
-): () => void {
-	return useCallback(() => {
-		if (!relationshipOption) return
-		onUpdateFlippedConstraint(relationshipOption)
-	}, [relationshipOption, onUpdateFlippedConstraint])
+export function useOnFlip(
+	constraints: CausalDiscoveryConstraints,
+	onUpdateConstraints: SetterOrUpdater<CausalDiscoveryConstraints>,
+): (relationship: Relationship) => void {
+	return useCallback(
+		(relationship: Relationship) => {
+			flipEdge(constraints, onUpdateConstraints, relationship)
+		},
+		[constraints, onUpdateConstraints],
+	)
 }

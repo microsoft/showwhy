@@ -65,7 +65,6 @@ export function pinEdge(
 export function flipEdge(
 	constraints: CausalDiscoveryConstraints,
 	onUpdateConstraints: (newConstraints: CausalDiscoveryConstraints) => void,
-	closeDialogConfirm: () => void,
 	relationship?: Relationship,
 ) {
 	if (!relationship) return
@@ -102,7 +101,6 @@ export function flipEdge(
 	} as CausalDiscoveryConstraints
 
 	onUpdateConstraints(newConstraints)
-	closeDialogConfirm()
 }
 
 export function groupByEffectType(
@@ -111,27 +109,9 @@ export function groupByEffectType(
 ): Record<string, Relationship[]> {
 	return relationships.reduce(
 		(acc: Record<string, Relationship[]>, obj: Relationship) => {
-			let key = 'Is affected by'
-			switch (true) {
-				case obj.weight === undefined:
-					if (obj.source.columnName === variableName) {
-						key = 'Affects'
-					}
-					break
-				case (obj.weight || 0) > 0:
-					if (obj.source.columnName === variableName) {
-						key = 'Increases'
-						break
-					}
-					key = 'Is increased by'
-					break
-
-				case (obj.weight || 0) < 0:
-					if (obj.source.columnName === variableName) {
-						key = 'Decreases'
-						break
-					}
-					key = 'Is decreased by'
+			let key = `Caused by ${variableName}`
+			if (obj.source.columnName === variableName) {
+				key = `Causes of ${variableName}`
 			}
 
 			if (!acc[key]) {
