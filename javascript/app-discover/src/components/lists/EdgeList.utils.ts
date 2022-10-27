@@ -121,6 +121,10 @@ export function groupByEffectType(
 	relationships: Relationship[],
 	variableName: string,
 ): Record<string, Relationship[]> {
+	const records: Record<string, Relationship[]> = {
+		[`Causes ${variableName}`]: [],
+		[`Caused by ${variableName}`]: [],
+	}
 	return relationships.reduce(
 		(acc: Record<string, Relationship[]>, obj: Relationship) => {
 			let key = `Causes ${variableName}`
@@ -128,14 +132,10 @@ export function groupByEffectType(
 				key = `Caused by ${variableName}`
 			}
 
-			if (!acc[key]) {
-				acc[key] = []
-			}
-
 			acc[key].push(obj)
 			return acc
 		},
-		{},
+		records,
 	)
 }
 
