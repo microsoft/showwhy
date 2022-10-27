@@ -67,9 +67,9 @@ export const ConstraintsPanel: React.FC<ConstraintsPanelProps> = memo(
 				{(!!savedConstraints.length || !!removedConstraints.length) && (
 					<Divider>Edge constraints</Divider>
 				)}
-				{!!savedConstraints.length && <Label>Saved relationships</Label>}
+				{!!savedConstraints.length && <Label>Saved</Label>}
 				{savedConstraints}
-				{!!removedConstraints.length && <Label>Rejected relationships</Label>}
+				{!!removedConstraints.length && <Label>Disallowed</Label>}
 				{removedConstraints}
 				<Divider></Divider>
 				<ClearConstraintsButton onClick={resetConstraints}>
