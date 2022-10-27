@@ -36,6 +36,20 @@ export function removeEdge(
 	}
 	onUpdateConstraints(newConstraints)
 }
+
+export function removeConstraint(
+	constraints: CausalDiscoveryConstraints,
+	onUpdateConstraints: (newConstraints: CausalDiscoveryConstraints) => void,
+	relationship: Relationship,
+) {
+	const newConstraints = {
+		...constraints,
+		manualRelationships: constraints.manualRelationships.filter(
+			r => r !== relationship,
+		),
+	}
+	onUpdateConstraints(newConstraints)
+}
 export function pinEdge(
 	constraints: CausalDiscoveryConstraints,
 	onUpdateConstraints: (newConstraints: CausalDiscoveryConstraints) => void,

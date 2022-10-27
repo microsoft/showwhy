@@ -11,5 +11,5 @@ export const icons = {
 	delete: { iconName: 'Delete' },
 	pin: { iconName: 'Pin' },
 	switch: { iconName: 'Switch' },
-	pinned: { iconName: 'PinSolid12' },
+	remove: { iconName: 'StatusCircleErrorX' },
 }

@@ -14,7 +14,13 @@ import type { Relationship } from '../../domain/Relationship.js'
 import { hasSameSourceAndTarget } from '../../domain/Relationship.js'
 import type { CausalVariable } from './../../domain/CausalVariable.js'
 import { EdgeItem } from './EdgeItem.js'
-import { flipEdge, pinEdge, removeEdge } from './EdgeList.utils.js'
+import {
+	flipEdge,
+	isSource,
+	pinEdge,
+	removeConstraint,
+	removeEdge,
+} from './EdgeList.utils.js'
 
 export function useOnPin(
 	constraints: CausalDiscoveryConstraints,
@@ -38,11 +44,23 @@ export function useOnRemove(
 		[constraints, onUpdateConstraints],
 	)
 }
+export function useOnRemoveConstraint(
+	constraints: CausalDiscoveryConstraints,
+	onUpdateConstraints: SetterOrUpdater<CausalDiscoveryConstraints>,
+): (relationship: Relationship) => void {
+	return useCallback(
+		(relationship: Relationship) => {
+			removeConstraint(constraints, onUpdateConstraints, relationship)
+		},
+		[constraints, onUpdateConstraints],
+	)
+}
 
 export function useOnRenderItem(
 	onSelect: (relationship: Relationship) => void,
 	onFlip: (relationship: Relationship) => void,
 	onRemove: (relationship: Relationship) => void,
+	onRemoveConstraint: (relationship: Relationship) => void,
 	variable: CausalVariable,
 	constraints: CausalDiscoveryConstraints,
 ): (relationship: Relationship) => JSX.Element | undefined {
@@ -55,9 +73,10 @@ export function useOnRenderItem(
 					relationship={relationship}
 					onFlip={onFlip}
 					onRemove={onRemove}
+					onRemoveConstraint={onRemoveConstraint}
 					onSelect={onSelect}
 					columnName={
-						variable.columnName === relationship.source.columnName
+						isSource(relationship, variable)
 							? relationship.target.columnName
 							: relationship.source.columnName
 					}
@@ -67,7 +86,7 @@ export function useOnRenderItem(
 				/>
 			)
 		},
-		[onSelect, onFlip, onRemove, variable, constraints],
+		[onSelect, onFlip, onRemove, onRemoveConstraint, variable, constraints],
 	)
 }
 
