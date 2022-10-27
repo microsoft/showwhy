@@ -33,7 +33,7 @@ export function useFileTreeStyle() {
 	const theme = useTheme()
 	return useMemo(
 		() => ({
-			borderRight: `1px solid ${theme.palette.neutralTertiaryAlt}`,
+			borderRight: `2px solid ${theme.palette.neutralTertiaryAlt}`,
 		}),
 		[theme],
 	)
