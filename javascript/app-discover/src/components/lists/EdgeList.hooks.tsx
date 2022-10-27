@@ -2,17 +2,21 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-/*!
- * Copyright (c) Microsoft. All rights reserved.
- * Licensed under the MIT license. See LICENSE file in the project.
- */
 import { useCallback } from 'react'
 import type { SetterOrUpdater } from 'recoil'
 
 import type { CausalDiscoveryConstraints } from '../../domain/CausalDiscovery/CausalDiscoveryConstraints.js'
 import type { Relationship } from '../../domain/Relationship.js'
-import { hasSameSourceAndTarget } from '../../domain/Relationship.js'
-import type { CausalVariable } from './../../domain/CausalVariable.js'
+import {
+	hasSameSourceAndTarget,
+	invertRelationship,
+	involvesVariable,
+	ManualRelationshipReason,
+} from '../../domain/Relationship.js'
+import type {
+	CausalVariable,
+	VariableReference,
+} from './../../domain/CausalVariable.js'
 import { EdgeItem } from './EdgeItem.js'
 import {
 	flipEdge,
@@ -99,5 +103,42 @@ export function useOnFlip(
 			flipEdge(constraints, onUpdateConstraints, relationship)
 		},
 		[constraints, onUpdateConstraints],
+	)
+}
+
+export function useOnAddAll(
+	constraints: CausalDiscoveryConstraints,
+	onUpdateConstraints: SetterOrUpdater<CausalDiscoveryConstraints>,
+	variable: VariableReference,
+	relationships: Relationship[],
+): (groupName: string) => void {
+	return useCallback(
+		(groupName: string) => {
+			const columnCauses = groupName.toLowerCase().includes('causes')
+			const causes = relationships.filter(x => !isSource(x, variable))
+			const causedBy = relationships.filter(x => isSource(x, variable))
+			const newList = (columnCauses ? causedBy : causes).map(x => {
+				return {
+					...invertRelationship(x),
+					reason: ManualRelationshipReason.Flipped,
+				}
+			})
+
+			const clearConstraints = constraints.manualRelationships.filter(x => {
+				if (
+					involvesVariable(x, variable) &&
+					x.reason !== ManualRelationshipReason.Removed
+				) {
+					return false
+				}
+				return true
+			})
+
+			onUpdateConstraints({
+				...constraints,
+				manualRelationships: [...clearConstraints, ...newList],
+			})
+		},
+		[constraints, variable, relationships, onUpdateConstraints],
 	)
 }

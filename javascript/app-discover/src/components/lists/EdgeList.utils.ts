@@ -123,9 +123,9 @@ export function groupByEffectType(
 ): Record<string, Relationship[]> {
 	return relationships.reduce(
 		(acc: Record<string, Relationship[]>, obj: Relationship) => {
-			let key = `Caused by ${variableName}`
+			let key = `Causes ${variableName}`
 			if (obj.source.columnName === variableName) {
-				key = `Causes of ${variableName}`
+				key = `Caused by ${variableName}`
 			}
 
 			if (!acc[key]) {

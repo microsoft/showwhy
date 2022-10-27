@@ -2,16 +2,19 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { FocusZone, Label } from '@fluentui/react'
+import { FocusZone, Label, TooltipHost } from '@fluentui/react'
 import { memo } from 'react'
 
 import { ManualRelationshipReason } from '../../domain/Relationship.js'
+import { IconButtonDark } from '../../styles/styles.js'
 import {
+	useOnAddAll,
 	useOnFlip,
 	useOnRemove,
 	useOnRemoveConstraint,
 	useOnRenderItem,
 } from './EdgeList.hooks.js'
+import { Container, icons, LabelContainer } from './EdgeList.styles.js'
 import type { EdgeListProps } from './EdgeList.types.js'
 import { groupByEffectType } from './EdgeList.utils.js'
 
@@ -28,6 +31,12 @@ export const EdgeList: React.FC<EdgeListProps> = memo(function EdgeList({
 	)
 	const onRemove = useOnRemove(constraints, onUpdateConstraints)
 	const onFlip = useOnFlip(constraints, onUpdateConstraints)
+	const onAddAll = useOnAddAll(
+		constraints,
+		onUpdateConstraints,
+		variable,
+		relationships,
+	)
 	const onRemoveConstraint = useOnRemoveConstraint(
 		constraints,
 		onUpdateConstraints,
@@ -46,15 +55,27 @@ export const EdgeList: React.FC<EdgeListProps> = memo(function EdgeList({
 		<FocusZone>
 			{Object.keys(groupedList).map(groupName => {
 				return (
-					<div key={groupName}>
-						<Label>{groupName}</Label>
+					<Container key={groupName}>
+						<LabelContainer>
+							<Label>{groupName}</Label>
+							<TooltipHost content={`Set all edges as ${groupName}`}>
+								<IconButtonDark
+									onClick={() => onAddAll(groupName)}
+									iconProps={icons.add}
+								/>
+							</TooltipHost>
+						</LabelContainer>
 						{groupedList[groupName].map(r => renderItem(r))}
-					</div>
+					</Container>
 				)
 			})}
 			{!!removedItems.length && <Label>Manually rejected</Label>}
 			{removedItems.map(relationship => {
-				return <div key={relationship.key}>{renderItem(relationship)}</div>
+				return (
+					<Container key={relationship.key}>
+						{renderItem(relationship)}
+					</Container>
+				)
 			})}
 		</FocusZone>
 	)
