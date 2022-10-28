@@ -2,7 +2,14 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { PrimaryButton, Stack, Text, TooltipHost } from '@fluentui/react'
+import type {
+	ITheme} from '@fluentui/react';
+import {
+	PrimaryButton,
+	Stack,
+	Text,
+	TooltipHost,
+} from '@fluentui/react'
 import { memo } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import styled from 'styled-components'
@@ -68,82 +75,91 @@ export const VariablePropertiesPanel: React.FC<VariablePropertiesPanelProps> =
 
 		return (
 			<Container>
-				<Text variant={'large'} block>
-					{variable.name}
-				</Text>
-				<Chart table={dataset.table} variable={variable} />
-				<Stack tokens={panel_stack_tokens}>
-					<Text variant={'small'} block>
-						{variable.description}
+				<Section>
+					<Text variant={'medium'} block>
+						{variable.name}
 					</Text>
-					<Stack horizontal tokens={{ childrenGap: 5 }}>
-						<Stack.Item grow>
-							<Text variant={'xSmall'} block>
-								Sample Size: {variable.count}
-							</Text>
-							<Text variant={'xSmall'} block>
-								Min: {variable.min}
-							</Text>
-							<Text variant={'xSmall'} block>
-								Max: {variable.max}
-							</Text>
-						</Stack.Item>
-						<Stack.Item grow>
-							<Text variant={'xSmall'} block>
-								Type: {variable.nature}
-							</Text>
-							<Text variant={'xSmall'} block>
-								Mean: {variable.mean?.toFixed(3)}
-							</Text>
-							<Text variant={'xSmall'} block>
-								Mode: {variable.mode}
-							</Text>
-						</Stack.Item>
-					</Stack>
-					<VariableNaturePicker variable={variable} />
+					<Chart table={dataset.table} variable={variable} />
+					<Stack tokens={panel_stack_tokens}>
+						<Text variant={'small'} block>
+							{variable.description}
+						</Text>
+						<Stack horizontal tokens={{ childrenGap: 5 }}>
+							<Stack.Item grow>
+								<Text variant={'xSmall'} block>
+									Sample Size: {variable.count}
+								</Text>
+								<Text variant={'xSmall'} block>
+									Min: {variable.min}
+								</Text>
+								<Text variant={'xSmall'} block>
+									Max: {variable.max}
+								</Text>
+							</Stack.Item>
+							<Stack.Item grow>
+								<Text variant={'xSmall'} block>
+									Type: {variable.nature}
+								</Text>
+								<Text variant={'xSmall'} block>
+									Mean: {variable.mean?.toFixed(3)}
+								</Text>
+								<Text variant={'xSmall'} block>
+									Mode: {variable.mode}
+								</Text>
+							</Stack.Item>
+						</Stack>
+						<VariableNaturePicker variable={variable} />
 
-					{variable.nature !== VariableNature.CategoricalNominal &&
-						(isInModel ? (
-							<TooltipHost content="Remove this variable from the causal model and recalculate">
-								<PrimaryButton
-									onClick={removeFromModel}
-									primary
-									styles={add_remove_button_styles}
-								>
-									Remove from model
-								</PrimaryButton>
-							</TooltipHost>
-						) : (
-							isAddable(variable) && (
-								<TooltipHost content="Add this variable to the causal model and recalculate">
+						{variable.nature !== VariableNature.CategoricalNominal &&
+							(isInModel ? (
+								<TooltipHost content="Remove this variable from the causal model and recalculate">
 									<PrimaryButton
-										onClick={addToModel}
+										onClick={removeFromModel}
 										primary
 										styles={add_remove_button_styles}
 									>
-										Add to model
+										Remove from model
 									</PrimaryButton>
 								</TooltipHost>
-							)
-						))}
-				</Stack>
-				<Divider>Edges</Divider>
-				{relationships && (
-					<EdgeList
-						onSelect={setSelectedObject}
-						variable={variable}
-						relationships={relationships}
-						constraints={constraints}
-						onUpdateConstraints={setConstraints}
-					/>
-				)}
-
-				<Divider>Correlations</Divider>
-				<VariableCorrelationsList variable={variable} />
+							) : (
+								isAddable(variable) && (
+									<TooltipHost content="Add this variable to the causal model and recalculate">
+										<PrimaryButton
+											onClick={addToModel}
+											primary
+											styles={add_remove_button_styles}
+										>
+											Add to model
+										</PrimaryButton>
+									</TooltipHost>
+								)
+							))}
+					</Stack>
+				</Section>
+				<Section>
+					<Divider>Edges</Divider>
+					{relationships && (
+						<EdgeList
+							onSelect={setSelectedObject}
+							variable={variable}
+							relationships={relationships}
+							constraints={constraints}
+							onUpdateConstraints={setConstraints}
+						/>
+					)}
+				</Section>
+				<Section>
+					<Divider>Correlations</Divider>
+					<VariableCorrelationsList variable={variable} />
+				</Section>
 			</Container>
 		)
 	})
 
-const Container = styled.div`
+const Container = styled.div``
+
+export const Section = styled.div`
 	padding: 8px;
+	border-bottom: 1px solid
+		${({ theme }: { theme: ITheme }) => theme.palette.neutralTertiaryAlt};
 `

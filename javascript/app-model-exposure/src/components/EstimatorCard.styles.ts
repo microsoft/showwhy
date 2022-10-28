@@ -3,7 +3,6 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { Theme } from '@fluentui/react'
 import styled from 'styled-components'
 
 export const CardsContainer = styled.div`
@@ -42,26 +41,6 @@ export const Description = styled.div`
 
 export const SpinnerContainer = styled.div`
 	width: 80px;
-`
-
-export const SelectorContainer = styled.div<{ isChecked: boolean }>`
-	background-color: ${({
-		theme,
-		isChecked,
-	}: {
-		theme: Theme
-		isChecked: boolean
-	}) =>
-		isChecked ? theme.palette.themePrimary : theme.palette.neutralLighter};
-	height: 100%;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	font-size: 1.5rem;
-	font-weight: bold;
-	color: white;
-	cursor: pointer;
-	padding: 0 10px;
 `
 
 export const ConfigContainer = styled.div`

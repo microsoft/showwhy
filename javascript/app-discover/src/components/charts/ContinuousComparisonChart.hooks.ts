@@ -18,6 +18,6 @@ export function useVisualizationSpec(
 			x: { field: sourceVariable.columnName, type: 'quantitative' },
 			y: { field: targetVariable.columnName, type: 'quantitative' },
 		},
-		mark: 'point',
+		mark: 'circle',
 	})
 }

@@ -12,7 +12,7 @@ export const ControlsTitle = styled.h4`
 `
 
 export const Container = styled.div<{ size: CausalEffectSize }>`
-	background: white;
+	background: ${({ theme }: { theme: ITheme }) => theme.palette.white};
 	display: grid;
 	grid-template-rows: 2fr 1fr;
 	grid-template-columns: 1fr 1fr;
@@ -29,7 +29,8 @@ export const Box = styled.div`
 `
 
 export const ControlsContainer = styled(Box)`
-	border: 1px dotted ${({ theme }: { theme: ITheme}) => theme.palette.neutralPrimary};
+	border: 1px dotted
+		${({ theme }: { theme: ITheme }) => theme.palette.neutralPrimary};
 `
 
 export const ControlsBoxContainer = styled.div<{ size: CausalEffectSize }>`
@@ -74,5 +75,5 @@ export const ArrowLabel = styled.span<{
 		size === CausalEffectSize.Small ? '12px' : '14px'};
 	padding: 0 ${({ color }) => (color ? '4px' : '')};
 	color: ${({ color }) => color};
-	background-color: white;
+	background-color: ${({ theme }: { theme: ITheme }) => theme.palette.white};
 `

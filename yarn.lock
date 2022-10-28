@@ -2851,16 +2851,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fluentui/web-components@npm:^2.5.7":
-  version: 2.5.7
-  resolution: "@fluentui/web-components@npm:2.5.7"
+"@fluentui/web-components@npm:^2.5.8":
+  version: 2.5.8
+  resolution: "@fluentui/web-components@npm:2.5.8"
   dependencies:
     "@microsoft/fast-colors": ^5.3.0
-    "@microsoft/fast-element": ^1.10.5
-    "@microsoft/fast-foundation": ^2.46.14
+    "@microsoft/fast-element": ^1.11.0
+    "@microsoft/fast-foundation": ^2.47.0
     "@microsoft/fast-web-utilities": ^5.4.0
     tslib: ^1.13.0
-  checksum: 273c2c4a19fd6e9fe9938caf8c26ccadb635f0bff4c5fc37b6a46892f6ed3f4617db7beca68d604230384017c835c7a0845bebe3a513fe96982c2a95284097b2
+  checksum: 0522789e377605051be9285fb006ce83eceb565cfae8b0a91081b0ce938976e1a01f4c9d72b11972f0761938116c2566b0656fe4019fd98e1ed6b2882ede2d8f
   languageName: node
   linkType: hard
 
@@ -3410,29 +3410,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@microsoft/fast-element@npm:^1.10.5":
-  version: 1.10.5
-  resolution: "@microsoft/fast-element@npm:1.10.5"
-  checksum: 2aa233cb87b26b52a7a0d3b98ab37efeb587ad9648a6213d15afcaa5ee18c05fd03592c2159cef2b41d2c09dea2b8e4baeeb294b3bc8e5daea9e35c450e974db
-  languageName: node
-  linkType: hard
-
 "@microsoft/fast-element@npm:^1.11.0":
   version: 1.11.0
   resolution: "@microsoft/fast-element@npm:1.11.0"
   checksum: 1fab25a7956cd40e0b51d7bbd01b57e620e140634abac83826b51ceac5b5c2ac4b1343e1e2253bf319a8f6f7a8391a2465e3b88d8a906029b17e05a6dfdd462c
-  languageName: node
-  linkType: hard
-
-"@microsoft/fast-foundation@npm:^2.46.14":
-  version: 2.46.14
-  resolution: "@microsoft/fast-foundation@npm:2.46.14"
-  dependencies:
-    "@microsoft/fast-element": ^1.10.5
-    "@microsoft/fast-web-utilities": ^5.4.1
-    tabbable: ^5.2.0
-    tslib: ^1.13.0
-  checksum: 68a3f586b78dfc68228566a51be0f0134641723df3f9bcf9b6f9ffd3f882901106ced94bc1fc7e90020568e5a221459544db11b239c141d88bd3a3e53bbe59d2
   languageName: node
   linkType: hard
 
@@ -3448,15 +3429,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@microsoft/fast-react-wrapper@npm:^0.3.14":
-  version: 0.3.14
-  resolution: "@microsoft/fast-react-wrapper@npm:0.3.14"
+"@microsoft/fast-react-wrapper@npm:^0.3.15":
+  version: 0.3.15
+  resolution: "@microsoft/fast-react-wrapper@npm:0.3.15"
   dependencies:
-    "@microsoft/fast-element": ^1.10.5
-    "@microsoft/fast-foundation": ^2.46.14
+    "@microsoft/fast-element": ^1.11.0
+    "@microsoft/fast-foundation": ^2.47.0
   peerDependencies:
     react: ">=16.9.0"
-  checksum: 22c1849acb05491600d00a302047694c46050389e84539b24ad7c7995508264c9baadeaa607e66e1dc0aa3aa47e509f03075c2ee6851a6d58eca642eeda39690
+  checksum: d00f2979eb061c3a1ec2e0b724cb054eb51a1010826e35d4add3d3f4acc4d855859bb176c46f15b49b3c3b1f10c156a255e39cf1402eed52bc28fc8bd5b80af9
   languageName: node
   linkType: hard
 
@@ -3877,6 +3858,7 @@ __metadata:
     react-error-boundary: ^3.1.4
     react-force-graph-2d: ^1.23.11
     react-force-graph-3d: ^1.21.13
+    react-if: ^4.1.4
     react-is: ^18.2.0
     react-redux: ^8.0.4
     react-router-dom: ^6.3.0
@@ -4028,10 +4010,10 @@ __metadata:
     "@fluentui/react": ^8.98.8
     "@fluentui/react-hooks": ^8.6.12
     "@fluentui/utilities": ^8.13.2
-    "@fluentui/web-components": ^2.5.7
+    "@fluentui/web-components": ^2.5.8
     "@microsoft/fast-element": ^1.11.0
     "@microsoft/fast-foundation": ^2.47.0
-    "@microsoft/fast-react-wrapper": ^0.3.14
+    "@microsoft/fast-react-wrapper": ^0.3.15
     "@showwhy/app-common": "workspace:^"
     "@showwhy/discover-app": "workspace:^"
     "@showwhy/event-analysis-app": "workspace:^"

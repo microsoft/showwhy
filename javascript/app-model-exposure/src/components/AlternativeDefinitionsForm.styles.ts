@@ -13,8 +13,7 @@ export const Container = styled.form`
 	grid-template-columns: 15% 35% 40% 10%;
 	align-items: center;
 	padding: 0.5rem 0.2rem;
-	border-radius: 0 0 3px 3px;
-	background-color: #f1f1f1;
+	border-radius: 0 0 2px 2px;
 	margin-top: 0.1rem;
 `
 

@@ -2,6 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import type { ITheme } from '@fluentui/react'
 import { PrimaryButton, Separator, Text, TooltipHost } from '@fluentui/react'
 import { memo } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
@@ -50,42 +51,50 @@ export const RelationshipPropertiesPanel: React.FC<RelationshipPropertiesPanelPr
 
 		return (
 			<Container>
-				<Text variant={'large'} block>
-					{relationship.name}
-				</Text>
-				{sourceAndTargetExistInDataset && (
-					<ComparisonChart
-						table={dataset.table}
-						sourceVariable={sourceVariable}
-						targetVariable={targetVariable}
-					/>
-				)}
-				<Separator></Separator>
-				{relationship.weight !== undefined && (
-					<Text variant={'small'} block>
-						Normalized Causal Weight: {relationship.weight.toFixed(3)}
+				<Section>
+					<Text variant={'medium'} block>
+						{relationship.name}
 					</Text>
-				)}
-				<Text variant={'small'} block>
-					Sample Size: {correlation ? correlation.sampleSize : 0}
-				</Text>
-				<Text variant={'small'} block>
-					Correlation:{' '}
-					{correlation ? correlation.weight.toFixed(3) : 'insignificant'}
-				</Text>
-				<Separator>Constraints</Separator>
-				<TooltipHost content="This relationship is incorrect or unwanted">
-					<PrimaryButton
-						onClick={addToConstraints}
-						styles={remove_button_styles}
-					>
-						Remove relationship
-					</PrimaryButton>
-				</TooltipHost>
+					{sourceAndTargetExistInDataset && (
+						<ComparisonChart
+							table={dataset.table}
+							sourceVariable={sourceVariable}
+							targetVariable={targetVariable}
+						/>
+					)}
+					<Separator></Separator>
+					{relationship.weight !== undefined && (
+						<Text variant={'small'} block>
+							Normalized causal weight: {relationship.weight.toFixed(3)}
+						</Text>
+					)}
+					<Text variant={'small'} block>
+						Sample size: {correlation ? correlation.sampleSize : 0}
+					</Text>
+					<Text variant={'small'} block>
+						Correlation:{' '}
+						{correlation ? correlation.weight.toFixed(3) : 'insignificant'}
+					</Text>
+				</Section>
+				<Section>
+					<Separator>Constraints</Separator>
+					<TooltipHost content="This relationship is incorrect or unwanted">
+						<PrimaryButton
+							onClick={addToConstraints}
+							styles={remove_button_styles}
+						>
+							Remove relationship
+						</PrimaryButton>
+					</TooltipHost>
+				</Section>
 			</Container>
 		)
 	})
 
-const Container = styled.div`
+const Container = styled.div``
+
+export const Section = styled.div`
 	padding: 8px;
+	border-bottom: 1px solid
+		${({ theme }: { theme: ITheme }) => theme.palette.neutralTertiaryAlt};
 `

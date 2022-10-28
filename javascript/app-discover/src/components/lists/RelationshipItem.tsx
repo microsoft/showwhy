@@ -2,6 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import type { ITheme } from '@fluentui/react'
 import { Stack, Text } from '@fluentui/react'
 import { ForwardIcon, RemoteIcon } from '@fluentui/react-icons-mdl2'
 import { memo } from 'react'
@@ -63,5 +64,6 @@ export const RelationshipItem: React.FC<RelationshipItemProps> = memo(
 )
 
 const RelationshipContainer = styled.div`
-	border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+	border-bottom: 1px solid
+		${({ theme }: { theme: ITheme }) => theme.palette.neutralLighter};
 `
