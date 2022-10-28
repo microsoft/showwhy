@@ -166,7 +166,7 @@ export const ResultPane: React.FC<ResultPaneProps> = memo(function ResultPane({
 						direction === 1 ? theme.process().fill().hex() : scale(2).hex(),
 				}
 			})
-			return inputData.sort((a, b) => b.label - a.label)
+			return inputData.sort((a, b) => a.value - b.value)
 		},
 		[theme, hypothesis],
 	)
@@ -507,15 +507,15 @@ export const ResultPane: React.FC<ResultPaneProps> = memo(function ResultPane({
 				decreasedHypothesisIsConsistent
 
 			if (isHypothesisNotConsistent) {
-				return `no, the observed causal effect (${causalEffect}) for ${treatedUnit} is inconsistent with the hypothesis (it did not cause it to ${
+				return `No. The observed causal effect (${causalEffect}) for ${treatedUnit} is inconsistent with the hypothesis (it did not cause it to ${
 					isIncreasedHypothesis ? 'increase' : 'decrease'
 				})`
 			}
 			if (isHypothesisConsistent && !isSignificant) {
-				return `no, the observed causal effect (${causalEffect}) for ${treatedUnit} is consistent with the hypothesis but the result is not statistically significant at the 5% level with respect to placebo effects (p=${treatedPlaceboP})`
+				return `Maybe. The observed causal effect (${causalEffect}) for ${treatedUnit} is consistent with the hypothesis but the result is not statistically significant at the 5% level with respect to placebo effects (p=${treatedPlaceboP})`
 			}
 			if (isHypothesisConsistent && isSignificant) {
-				return `yes, the observed causal effect (${causalEffect}) for ${treatedUnit} is consistent with the hypothesis and the result is statistically significant at the 5% level with respect to placebo effects (p=${treatedPlaceboP})`
+				return `Yes. The observed causal effect (${causalEffect}) for ${treatedUnit} is consistent with the hypothesis and the result is statistically significant at the 5% level with respect to placebo effects (p=${treatedPlaceboP})`
 			}
 			return ''
 		},
@@ -591,12 +591,15 @@ export const ResultPane: React.FC<ResultPaneProps> = memo(function ResultPane({
 					<Stack.Item className={'no-top-margin'}>
 						{isValidUnit(treatedUnit) && placeboResult && (
 							<Text className="infoText last-item-margin" variant="medium">
-								The answer to the overall question of:
-								<Text variant="medium" block>
+								The answer to the overall question of: {' '}
+								<Text variant="medium">
 									For treated {units}, did {eventName} cause {outcomeName} to{' '}
 									{hypothesis}?
+								</Text> {' '}
+								is therefore:
+								<Text variant="medium" block>	
+									{placeboResult}
 								</Text>
-								Is therefore, {placeboResult}
 								<Text variant="medium" block>
 									<Link
 										href="https://mixtape.scunning.com/10-synthetic_control#californias-proposition-99"
@@ -632,11 +635,11 @@ export const ResultPane: React.FC<ResultPaneProps> = memo(function ResultPane({
 	])
 
 	const graphTitle = useMemo((): string => {
-		if (showRawDataLineChart) {
+		if (showRawDataLineChart && selectedTabKey === CONFIGURATION_TABS.prepareAnalysis.key) {
 			return 'Input data'
-		} else if (showPlaceboGraphsLocal) {
+		} else if (showPlaceboGraphsLocal && selectedTabKey === CONFIGURATION_TABS.estimateEffects.key) {
 			return 'Placebo analysis'
-		} else if (showSynthControl) {
+		} else if (showSynthControl && selectedTabKey === CONFIGURATION_TABS.validateEffects.key) {
 			return `Effect of ${eventName} on ${outcomeName}`
 		}
 		return ''
@@ -646,6 +649,7 @@ export const ResultPane: React.FC<ResultPaneProps> = memo(function ResultPane({
 		showSynthControl,
 		eventName,
 		outcomeName,
+		selectedTabKey,
 	])
 	return (
 		<StyledStack grow verticalFill tokens={{ childrenGap: 15 }}>

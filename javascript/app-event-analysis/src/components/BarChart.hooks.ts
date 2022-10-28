@@ -61,11 +61,11 @@ export function useData(
 						color: colors.get('highlight'),
 					},
 					{
-						name: 'Units with negative effect',
+						name: 'Placebo unit with negative effect',
 						color: colors.get('negative'),
 					},
 					{
-						name: 'Units with positive effect',
+						name: 'Placebo unit with positive effect',
 						color: colors.get('positive'),
 					},
 			  ]
