@@ -98,7 +98,7 @@ export const StyledStack = styled(Stack)`
 
 	.control-label {
 		color: ${({ theme }: { theme: Theme }) =>
-			theme.scales().nominal()(1).hex()};
+			theme.scales().nominal()(3).hex()};
 	}
 `
 
