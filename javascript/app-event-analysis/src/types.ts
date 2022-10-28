@@ -268,4 +268,5 @@ export interface SyntheticControlUnit {
 export interface LegendData {
 	color: string
 	name: string
+	opacity?: number
 }

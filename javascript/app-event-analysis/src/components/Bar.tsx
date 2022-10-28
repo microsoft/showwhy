@@ -50,7 +50,7 @@ export const Bar: React.FC<BarProps> = memo(function Bar({
 					.append('rect')
 					.attr('class', barElementClassName)
 					.attr('stroke', 'none')
-					.attr('opacity', BAR_TRANSPARENT)
+					.attr('opacity', d => d.opacity || BAR_TRANSPARENT)
 				renderedRect
 					.style('fill', d => d.color)
 					.attr('width', barWidth)
