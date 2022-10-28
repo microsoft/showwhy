@@ -27,26 +27,30 @@ export const GraphFilteringControls = memo(function GraphFilteringControls() {
 	return (
 		<GraphFilteringContainer>
 			<ThresholdSlider
-				label={'Edge weight threshold'}
-				thresholdState={WeightThresholdState}
-				defaultStyling
-			/>
-			<ThresholdSlider
-				label={'Edge confidence threshold'}
-				thresholdState={ConfidenceThresholdState}
-				defaultStyling
-			/>
-			<ThresholdSlider
 				label={'Correlation visibility threshold'}
 				thresholdState={CorrelationThresholdState}
 				defaultStyling
 			/>
-			{selectedCausalDiscoveryAlgorithm === CausalDiscoveryAlgorithm.DECI && (
-				<Toggle
-					label="Fixed intervention ranges"
-					checked={fixedInterventionRangesEnabled}
-					onChange={(e, v) => setFixedInterventionRangesEnabled(Boolean(v))}
+			{selectedCausalDiscoveryAlgorithm !== CausalDiscoveryAlgorithm.PC && (
+				<ThresholdSlider
+					label={'Edge weight threshold'}
+					thresholdState={WeightThresholdState}
+					defaultStyling
 				/>
+			)}
+			{selectedCausalDiscoveryAlgorithm === CausalDiscoveryAlgorithm.DECI && (
+				<>
+					<ThresholdSlider
+						label={'Edge confidence threshold'}
+						thresholdState={ConfidenceThresholdState}
+						defaultStyling
+					/>
+					<Toggle
+						label="Fixed intervention ranges"
+						checked={fixedInterventionRangesEnabled}
+						onChange={(e, v) => setFixedInterventionRangesEnabled(Boolean(v))}
+					/>
+				</>
 			)}
 		</GraphFilteringContainer>
 	)

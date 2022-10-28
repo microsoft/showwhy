@@ -73,6 +73,7 @@ def get_propensity_scores(identified_estimand, causal_model, estimate):
             * 5
         ).round(0)
 
+    causal_model._data.dropna(inplace=True)
     return ComputeNullEffectSpec(
         estimate=estimate,
         identified_estimand=identified_estimand,
