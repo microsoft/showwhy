@@ -8,6 +8,7 @@ from typing import Any, List, Literal, Optional, Tuple, Union
 import networkx
 import numpy as np
 import pandas as pd
+import scipy
 import torch
 from causica.datasets.dataset import Dataset
 from causica.datasets.variables import Variables
@@ -85,6 +86,7 @@ class DeciRunner(CausalDiscoveryRunner):
         self._training_options = p.training_options
         # make sure every run has its own folder
         self._deci_save_dir = f"CauseDisDECIDir/{uuid()}"
+        self._is_dag = None
 
     def _build_causica_dataset(self) -> Dataset:
         numpy_data = self._prepared_data.to_numpy()
@@ -168,16 +170,20 @@ class DeciRunner(CausalDiscoveryRunner):
 
         return constraint.astype(np.float32)
 
+    def _check_if_is_dag(
+        self, deci_model: DECIGaussian, adj_matrix: np.ndarray
+    ) -> bool:
+        return (np.trace(scipy.linalg.expm(adj_matrix)) - deci_model.num_nodes) == 0
+
     def _get_adj_matrix(self, deci_model: DECIGaussian) -> np.ndarray:
-        # The next two lines of code are the same as:
+        # The next lines of code are the same as:
         # deci_graph = deci_model.networkx_graph()
         # but omit an assertion that the graph is a DAG.  This is so the calculation doesn't just
         # fail after 20 minutes due to a single bad edge.
-        adj_matrix = deci_model.get_adj_matrix_tensor(
-            do_round=False, samples=1, most_likely_graph=True
+        adj_matrix = deci_model.get_adj_matrix(
+            do_round=False, samples=1, most_likely_graph=True, squeeze=True
         )
-        adj_matrix = adj_matrix.squeeze(0)
-        adj_matrix = adj_matrix.detach().cpu().numpy().astype(np.float64)
+        self._is_dag = self._check_if_is_dag(deci_model, adj_matrix)
 
         return adj_matrix
 
@@ -314,7 +320,7 @@ class DeciRunner(CausalDiscoveryRunner):
         causal_graph["interpret_boolean_as_continuous"] = False
         causal_graph["has_weights"] = True
         causal_graph["has_confidence_values"] = True
-        causal_graph["normalized_columns_metadata"] = self._normalized_columns_metadata
+        causal_graph["is_dag"] = bool(self._is_dag)
 
         return causal_graph
 

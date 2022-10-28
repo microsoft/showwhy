@@ -23,6 +23,7 @@ import { saveObjectJSON } from '../utils/Save.js'
 import {
 	useAutoLayoutButtonMenuItem,
 	useDatasetMenuItems,
+	useDatasetStatisticsMenuItem,
 	useModelMenuItems,
 	useRunButtonMenuItem,
 	useViewMenuItems,
@@ -87,14 +88,19 @@ export const MenuBar: React.FC = memo(function MenuBar() {
 
 	const autoLayoutButtonMenuItem = useAutoLayoutButtonMenuItem()
 	const runButtonMenuItem = useRunButtonMenuItem()
+	const datasetStatisticsMenuItem = useDatasetStatisticsMenuItem()
 
 	const menuItems = useMemo<ICommandBarItemProps[]>(
 		() => [datasetMenuItems, modelMenuItems, viewMenuItems],
 		[datasetMenuItems, modelMenuItems, viewMenuItems],
 	)
 	const interactiveItems = useMemo(
-		() => [runButtonMenuItem, autoLayoutButtonMenuItem],
-		[autoLayoutButtonMenuItem, runButtonMenuItem],
+		() => [
+			datasetStatisticsMenuItem,
+			autoLayoutButtonMenuItem,
+			runButtonMenuItem,
+		],
+		[datasetStatisticsMenuItem, autoLayoutButtonMenuItem, runButtonMenuItem],
 	)
 	const commandBarStyles = useCommandBarStyles()
 	return (

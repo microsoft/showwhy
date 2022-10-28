@@ -21,6 +21,7 @@ import type {
 	CausalDiscoveryRequestReturnValue,
 	CausalDiscoveryResult,
 	CausalDiscoveryResultPromise,
+	DatasetStatistics,
 } from './CausalDiscoveryResult.js'
 
 // TODO: We are loading onnxruntime-web from a script tag at the moment to work around an issue with
@@ -66,7 +67,13 @@ export function fromCausalDiscoveryResults(
 		}
 		return causalRelationship
 	})
-	return { variables, relationships, constraints, algorithm }
+	return {
+		variables,
+		relationships,
+		constraints,
+		algorithm,
+		isDag: results.is_dag,
+	}
 }
 
 export function empty_discover_result(
@@ -174,10 +181,24 @@ export function discover(
 					}
 				}
 
-				const normalizedColumnsMetadata =
-					causalDiscoveryResult.normalized_columns_metadata
+				const datasetStatistics: DatasetStatistics | undefined =
+					causalDiscoveryResult.dataset_statistics
+						? {
+								numberOfRows:
+									causalDiscoveryResult.dataset_statistics.number_of_rows,
+								numberOfDroppedRows:
+									causalDiscoveryResult.dataset_statistics
+										.number_of_dropped_rows,
+						  }
+						: undefined
 
-				return { graph, causalInferenceModel, normalizedColumnsMetadata }
+				return {
+					graph,
+					causalInferenceModel,
+					normalizedColumnsMetadata:
+						causalDiscoveryResult.normalized_columns_metadata,
+					datasetStatistics,
+				}
 			},
 		)
 	/* eslint-enable */

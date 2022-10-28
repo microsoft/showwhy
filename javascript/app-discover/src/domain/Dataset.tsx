@@ -83,7 +83,7 @@ export function useDatasetLoader() {
 				setMetadataState(metadata)
 			}
 		},
-		[setInputTable, tbl, inferMissingMetadataForTable, setMetadataState],
+		[setInputTable, tbl, setMetadataState],
 	)
 
 	useEffect(
@@ -93,7 +93,7 @@ export function useDatasetLoader() {
 				?.subscribe(t => setTable(t?.table ?? table([])))
 			return () => sub.unsubscribe()
 		},
-		[workflow],
+		[workflow, setTable],
 	)
 
 	return useCallback(
@@ -104,7 +104,7 @@ export function useDatasetLoader() {
 			// Set the new state
 			setDatasetNameState(name)
 		},
-		[setDatasetNameState],
+		[setDatasetNameState, resetDataset],
 	)
 }
 

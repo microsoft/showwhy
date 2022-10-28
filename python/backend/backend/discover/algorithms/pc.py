@@ -40,7 +40,6 @@ class PCRunner(CausalDiscoveryRunner):
 
         graph_json["has_weights"] = False
         graph_json["has_confidence_values"] = False
-        graph_json["normalized_columns_metadata"] = self._normalized_columns_metadata
 
         self._report_progress(100.0)
 
