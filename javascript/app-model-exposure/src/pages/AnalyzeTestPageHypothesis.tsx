@@ -11,7 +11,7 @@ import { CausalQuestion } from '../components/CausalQuestion.js'
 import { MessageContainer } from '../components/MessageContainer.js'
 import { RunManagement } from '../components/RunManagement.js'
 import { SignificanceTestResult } from '../components/SignificanceTestResult.js'
-import { ContainerTextCenter, Text } from '../components/styles.js'
+import { Container, Text } from '../components/styles.js'
 import { useAlternativeModels } from '../hooks/causalFactors.js'
 import {
 	useLoadSpecificationData,
@@ -130,9 +130,9 @@ const EmptyDataPageWarning: React.FC<{
 	marginTop?: Maybe<boolean>
 }> = memo(function EmptyDataPageWarning({ text, marginTop = false }) {
 	return (
-		<ContainerTextCenter marginTop={marginTop}>
+		<Container marginTop={marginTop}>
 			<Text>{text}</Text>
-		</ContainerTextCenter>
+		</Container>
 	)
 })
 

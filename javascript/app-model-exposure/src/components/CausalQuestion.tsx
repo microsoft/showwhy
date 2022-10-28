@@ -2,6 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import type { FluentTheme } from '@thematic/fluent'
 import { memo } from 'react'
 import styled from 'styled-components'
 
@@ -22,4 +23,11 @@ export const CausalQuestion: React.FC<{
 	)
 })
 
-const Title = styled.h3``
+export const Title = styled.h3`
+	margin: 0;
+	font-weight: 500;
+	text-align: center;
+	align-self: center;
+	color: ${({ theme }: { theme: FluentTheme }) =>
+		theme.palette.neutralSecondary};
+`

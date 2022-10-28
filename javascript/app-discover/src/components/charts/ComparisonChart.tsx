@@ -33,16 +33,5 @@ export const ComparisonChart: React.FC<ComparisonChartProps> = memo(
 		}
 
 		return <CategoricalComparisonChart {...props} />
-		// }
-
-		// if (variable.type === VariableClassification.CategoricalNominal || variable.type === VariableClassification.CategoricalOrdinal) {
-		// 	return <CategoricalChart dataset={dataset} variable={variable}/>;
-		// }
-
-		// if (variable.type === VariableClassification.Continuous) {
-		// 	return <ContinuousChart dataset={dataset} variable={variable}/>;
-		// }
-
-		// return <DiscreteChart dataset={dataset} variable={variable}/>;
 	},
 )

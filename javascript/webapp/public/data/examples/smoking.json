@@ -276,17 +276,17 @@
                 "subjectIdentifier": "index",
                 "causalFactors": [
                     {
-                        "description": "Participant's age recorded at the baseline visit in 1971",
+                        "description": "Participant's age recorded at the baseline visit in 1971.",
                         "variable": "Age",
                         "column": "age",
                         "causes": {
                             "causeExposure": 100,
                             "causeOutcome": 100,
-                            "reasoning": "Exposure: Older adults may have higher smoking cessation rates compared to younger adults. / Outcome: We are likely to gain more weight as we get older"
+                            "reasoning": "Exposure: Older adults may have higher smoking cessation rates compared to younger adults. / Outcome: We are likely to gain more weight as we get older."
                         }
                     },
                     {
-                        "description": "Participant's gender recorded at the baseline visit in 1971",
+                        "description": "Participant's gender recorded at the baseline visit in 1971.",
                         "variable": "Gender",
                         "column": "sex",
                         "causes": {
@@ -296,7 +296,7 @@
                         }
                     },
                     {
-                        "description": "A binary indicator of whether the participant is Caucasian, recorded at the baseline visit in 1971",
+                        "description": "A binary indicator of whether the participant is Caucasian, recorded at the baseline visit in 1971.",
                         "variable": "Race",
                         "column": "race",
                         "causes": {
@@ -306,7 +306,7 @@
                         }
                     },
                     {
-                        "description": "Participant's education level recorded at the baseline visit in 1971",
+                        "description": "Participant's education level recorded at the baseline visit in 1971.",
                         "variable": "Education Level",
                         "column": "education",
                         "causes": {
@@ -316,7 +316,7 @@
                         }
                     },
                     {
-                        "description": "Measured as number of cigarettes smoked per day in 1971",
+                        "description": "Measured as number of cigarettes smoked per day in 1971.",
                         "variable": "Smoking Intensity",
                         "column": "smoke_intensity_1971",
                         "causes": {
@@ -326,7 +326,7 @@
                         }
                     },
                     {
-                        "description": "Measures the participant's years of smoking, recorded at the baseline visit in 1971",
+                        "description": "Measures the participant's years of smoking, recorded at the baseline visit in 1971.",
                         "variable": "Years of Smoking",
                         "column": "smoke_years",
                         "causes": {
@@ -336,7 +336,7 @@
                         }
                     },
                     {
-                        "description": "Measures how active the participant was in a usual day, recorded at the baseline visit in 191",
+                        "description": "Measures how active the participant was in a usual day, recorded at the baseline visit in 191.",
                         "variable": "Active",
                         "column": "active",
                         "causes": {
@@ -346,7 +346,7 @@
                         }
                     },
                     {
-                        "description": "Measures the amount of physical exercise in recreation the participant had, recorded at teh baseline visit in 1971",
+                        "description": "Measures the amount of physical exercise in recreation the participant had, recorded at teh baseline visit in 1971.",
                         "variable": "Exercise",
                         "column": "exercise",
                         "causes": {
@@ -356,7 +356,7 @@
                         }
                     },
                     {
-                        "description": "Measures the participant's body weights in kilograms, recorded at the baseline visit in 1971",
+                        "description": "Measures the participant's body weights in kilograms, recorded at the baseline visit in 1971.",
                         "variable": "Body Weight in 1971 (kg)",
                         "column": "weight_1971",
                         "causes": {
@@ -370,7 +370,7 @@
                     {
                         "level": "Primary",
                         "variable": "Quit smoking",
-                        "description": "A binary variable indicating whether the participant quitted smoking prior to the follow-up visit in 1982",
+                        "description": "A binary variable indicating whether the participant quit smoking prior to the follow-up visit in 1982.",
                         "column": "quit_smoking",
                         "type": "exposure"
                     },
@@ -405,7 +405,7 @@
                     {
                         "level": "Primary",
                         "variable": "Body Weight Change (kg)",
-                        "description": "Change in participant's body weight between 1971 and 1982, measured in kilograms",
+                        "description": "Change in participant's body weight between 1971 and 1982, measured in kilograms.",
                         "column": "weight_change",
                         "type": "outcome"
                     }
@@ -423,7 +423,7 @@
                     },
                     "outcome": {
                         "label": "Body Weight Change (kg)",
-                        "description": "Change in the participant's body weight between the baseline visit in 1971 and the follow-up visit in 1982",
+                        "description": "Change in the participant's body weight between the baseline visit in 1971 and the follow-up visit in 1982.",
                         "dataset": "NHEFS dataset"
                     },
                     "hypothesis": "Increase"

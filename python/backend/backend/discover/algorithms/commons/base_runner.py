@@ -10,6 +10,7 @@ from sklearn.preprocessing import StandardScaler
 from backend.discover.model.causal_discovery import (
     CausalDiscoveryPayload,
     CausalVariableNature,
+    DatasetStatistics,
     NormalizedColumnMetadata,
 )
 
@@ -27,6 +28,8 @@ class CausalDiscoveryRunner(ABC):
         self._progress_callback = progress_callback
         self._nature_by_variable = {v.name: v.nature for v in p.causal_variables}
         self._normalized_columns_metadata = dict()
+        self._number_of_rows = 0
+        self._number_of_dropped_rows = 0
 
     def register_progress_callback(
         self, progress_callback: ProgressCallback = None
@@ -73,10 +76,24 @@ class CausalDiscoveryRunner(ABC):
                     for column in continuous_columns
                 }
 
+    def _remove_rows_with_missing_values(self):
+        self._number_of_rows = self._prepared_data.shape[0]
+        self._prepared_data.dropna(inplace=True)
+        self._number_of_dropped_rows = (
+            self._number_of_rows - self._prepared_data.shape[0]
+        )
+
     def _prepare_data(self):
         self._prepared_data = pd.DataFrame.from_dict(self._dataset_data)
-        self._prepared_data.dropna(inplace=True)
+        self._remove_rows_with_missing_values()
         self._normalize_continuous_columns()
+
+    def _attach_common_attributes_to_result(self, result: CausalGraph):
+        result["normalized_columns_metadata"] = self._normalized_columns_metadata
+        result["dataset_statistics"] = DatasetStatistics(
+            number_of_dropped_rows=self._number_of_dropped_rows,
+            number_of_rows=self._number_of_rows,
+        )
 
     @abstractmethod
     def do_causal_discovery(self) -> CausalGraph:
@@ -84,6 +101,12 @@ class CausalDiscoveryRunner(ABC):
 
     def run(self) -> CausalGraph:
         self._prepare_data()
+
         if self._prepared_data.size == 0:
-            return self._get_empty_graph_json(self._prepared_data)
-        return self.do_causal_discovery()
+            result = self._get_empty_graph_json(self._prepared_data)
+        else:
+            result = self.do_causal_discovery()
+
+        self._attach_common_attributes_to_result(result)
+
+        return result

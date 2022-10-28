@@ -7,7 +7,11 @@ import type { Workflow } from '@datashaper/workflow'
 import type { ICommandBarItemProps, ICommandBarProps } from '@fluentui/react'
 import { useEffect, useMemo } from 'react'
 
-import { buttonStyles, icons } from './TableEditor.styles.js'
+import {
+	buttonStyles,
+	icons,
+	useTableHeaderColors,
+} from './TableEditor.styles.js'
 
 export function useStepListener(
 	workflow: Workflow,
@@ -48,8 +52,14 @@ export function useHistoryButtonCommandBar(
 				} as ICommandBarItemProps,
 			],
 			id: 'historyButton',
+			styles: {
+				root: {
+					height: 43,
+				},
+			},
 		}),
 		[isCollapsed, numSteps, toggleCollapsed],
 	)
-	return useHeaderCommandBarDefaults(base, true)
+	const colors = useTableHeaderColors()
+	return useHeaderCommandBarDefaults(base, true, colors)
 }

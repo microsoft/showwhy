@@ -27,7 +27,14 @@ import {
 	useHistoryButtonCommandBar,
 	useStepListener,
 } from './TableEditor.hooks.js'
-import { Container, DetailsListContainer } from './TableEditor.styles.js'
+import {
+	Container,
+	DetailsListContainer,
+	useTableCommandProps,
+	useTableHeaderColors,
+	useTableHeaderStyles,
+	useToolPanelStyles,
+} from './TableEditor.styles.js'
 import type { TableEditorProps } from './TableEditor.types.js'
 
 export const TableEditor: React.FC<TableEditorProps> = memo(
@@ -79,12 +86,19 @@ export const TableEditor: React.FC<TableEditorProps> = memo(
 			toggleCollapsed,
 		)
 
+		const tableHeaderColors = useTableHeaderColors()
+		const tableHeaderStyles = useTableHeaderStyles()
+		const tableCommandProps = useTableCommandProps()
+		const toolPanelStyles = useToolPanelStyles()
 		return selectedTable?.table == null ? null : (
 			<Container isCollapsed={isCollapsed}>
 				<DetailsListContainer>
 					<ArqueroTableHeader
+						background={tableHeaderColors.background}
+						styles={tableHeaderStyles}
 						commandBar={
 							<TableCommands
+								{...tableCommandProps}
 								workflow={workflow}
 								onAddStep={onCreate}
 								selectedColumn={selectedColumn}
@@ -114,6 +128,7 @@ export const TableEditor: React.FC<TableEditorProps> = memo(
 					headerIconProps={{
 						iconName: 'History',
 					}}
+					styles={toolPanelStyles}
 				>
 					<StepHistoryList
 						onDelete={onDelete}

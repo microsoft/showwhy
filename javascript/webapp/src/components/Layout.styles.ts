@@ -17,9 +17,9 @@ export const Main = styled.main`
 	flex: 1;
 	display: flex;
 	flex-direction: row;
-	max-height: calc(100vh - 40px);
+	max-height: calc(100vh - 42px);
 	max-width: 100%;
-	min-height: calc(100vh - 40px);
+	min-height: calc(100vh - 42px);
 `
 export const Content = styled.article`
 	flex: 1;
@@ -33,7 +33,7 @@ export function useFileTreeStyle() {
 	const theme = useTheme()
 	return useMemo(
 		() => ({
-			borderRight: `1px solid ${theme.palette.neutralTertiaryAlt}`,
+			borderRight: `2px solid ${theme.palette.neutralTertiaryAlt}`,
 		}),
 		[theme],
 	)
