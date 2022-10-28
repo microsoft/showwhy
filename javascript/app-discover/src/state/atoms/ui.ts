@@ -2,6 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import type { ElkNode } from 'elkjs'
 import { atom } from 'recoil'
 
 import { GraphViewStates } from '../../components/graph/GraphViews.types.js'
@@ -21,11 +22,6 @@ export const LoadingState = atom<string | undefined>({
 export const StraightEdgesState = atom<boolean>({
 	key: 'StraightEdgesState',
 	default: false,
-})
-
-export const AutoLayoutEnabledState = atom<boolean>({
-	key: 'AutoLayoutEnabledState',
-	default: true,
 })
 
 export const FixedInterventionRangesEnabledState = atom<boolean>({
@@ -64,9 +60,12 @@ export const GraphViewState = atom<GraphViewStates>({
 	default: GraphViewStates.CausalView,
 })
 
-export const PauseAutoRunState = atom<
-	CausalDiscoveryAlgorithm.None | undefined
->({
-	key: 'PauseAutoRunState',
-	default: CausalDiscoveryAlgorithm.None,
+export const AutoRunState = atom<boolean>({
+	key: 'AutoRunState',
+	default: false,
+})
+
+export const CurrentLayoutState = atom<ElkNode | undefined>({
+	key: 'CurrentLayoutState',
+	default: undefined,
 })

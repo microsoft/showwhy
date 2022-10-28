@@ -12,7 +12,6 @@ import type { DatasetDatapackage } from '../domain/Dataset.js'
 import { useDatasetLoader } from '../domain/Dataset.js'
 import { DeciParamsState } from '../state/atoms/algorithms_params.js'
 import {
-	AutoLayoutEnabledState,
 	CausalGraphConstraintsState,
 	GraphViewState,
 	InModelColumnNamesState,
@@ -22,10 +21,10 @@ import {
 } from '../state/index.js'
 import { saveObjectJSON } from '../utils/Save.js'
 import {
-	useAutoLayoutToggleMenuItem,
+	useAutoLayoutButtonMenuItem,
 	useDatasetMenuItems,
 	useModelMenuItems,
-	useTogglePauseButtonMenuItem,
+	useRunButtonMenuItem,
 	useViewMenuItems,
 } from './MenuBar.hooks.js'
 import { useCommandBarStyles } from './MenuBar.styles.js'
@@ -38,9 +37,6 @@ export const MenuBar: React.FC = memo(function MenuBar() {
 	const resetParams = useResetRecoilState(DeciParamsState)
 	const [useStraightEdges, setUseStraightEdges] =
 		useRecoilState(StraightEdgesState)
-	const [autoLayoutEnabled, setAutoLayoutEnabled] = useRecoilState(
-		AutoLayoutEnabledState,
-	)
 	const setLoadingState = useSetRecoilState(LoadingState)
 	const [persistedInfo, setPersistedInfo] = useRecoilState(PersistedInfoState)
 	const [
@@ -87,20 +83,18 @@ export const MenuBar: React.FC = memo(function MenuBar() {
 		setSelectedViewKey,
 		useStraightEdges,
 		setUseStraightEdges,
-		autoLayoutEnabled,
-		setAutoLayoutEnabled,
 	)
 
-	const autoLayoutSliderMenuItem = useAutoLayoutToggleMenuItem()
-	const togglePauseButtonMenuItem = useTogglePauseButtonMenuItem()
+	const autoLayoutButtonMenuItem = useAutoLayoutButtonMenuItem()
+	const runButtonMenuItem = useRunButtonMenuItem()
 
 	const menuItems = useMemo<ICommandBarItemProps[]>(
 		() => [datasetMenuItems, modelMenuItems, viewMenuItems],
 		[datasetMenuItems, modelMenuItems, viewMenuItems],
 	)
 	const interactiveItems = useMemo(
-		() => [autoLayoutSliderMenuItem, togglePauseButtonMenuItem],
-		[autoLayoutSliderMenuItem, togglePauseButtonMenuItem],
+		() => [runButtonMenuItem, autoLayoutButtonMenuItem],
+		[autoLayoutButtonMenuItem, runButtonMenuItem],
 	)
 	const commandBarStyles = useCommandBarStyles()
 	return (

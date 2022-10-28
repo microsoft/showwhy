@@ -16,9 +16,9 @@ import { hasSameOrInvertedSourceAndTarget } from '../../domain/Relationship.jsx'
 import {
 	CausalDiscoveryResultsState,
 	ConfidenceThresholdState,
+	CurrentLayoutState,
 	FilteredCorrelationsState,
 	FixedInterventionRangesEnabledState,
-	GraphLayoutState,
 	SelectedObjectState,
 	useCausalGraph,
 	WeightThresholdState,
@@ -70,7 +70,7 @@ export const CausalGraphExplorer = memo(function CausalGraphExplorer() {
 				),
 		)
 	const bounds = useGraphBounds()
-	const layout = useRecoilValue(GraphLayoutState)
+	const currentLayout = useRecoilValue(CurrentLayoutState)
 	const updateXarrow = useXarrow()
 
 	const layoutTransitionTime = 1000
@@ -88,12 +88,12 @@ export const CausalGraphExplorer = memo(function CausalGraphExplorer() {
 			layoutTransitionTime,
 		)
 		return () => cancelAnimationFrame(animationRequest.current)
-	}, [layout, updateXarrow])
+	}, [currentLayout, updateXarrow])
 	const nodes = causalGraph.variables.map((variable: CausalVariable) => (
 		<DraggableGraphNode
 			id={variable.columnName}
 			key={variable.columnName}
-			layout={layout}
+			layout={currentLayout}
 			layoutTransitionTime={layoutTransitionTime}
 		>
 			{Graph.includesVariable(causalGraph, variable) ? (

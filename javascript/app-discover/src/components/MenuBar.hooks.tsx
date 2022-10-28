@@ -2,23 +2,33 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import type { ICommandBarItemProps } from '@fluentui/react'
-import { Checkbox, ContextualMenuItemType, Toggle } from '@fluentui/react'
+import type {
+	ICommandBarItemProps,
+	IContextualMenuProps,
+} from '@fluentui/react'
+import {
+	Checkbox,
+	ContextualMenuItemType,
+	DefaultButton,
+	PrimaryButton,
+	Toggle,
+} from '@fluentui/react'
+import { useBoolean } from '@fluentui/react-hooks'
 import { useDatasetMenuItems as useDatasetMenuItemsCommon } from '@showwhy/app-common'
-import { useCallback, useMemo } from 'react'
+import { useCallback, useEffect, useMemo } from 'react'
 import type { RecoilState } from 'recoil'
 import { useRecoilState, useRecoilValue } from 'recoil'
 
-import { CausalDiscoveryAlgorithm } from '../domain/CausalDiscovery/CausalDiscoveryAlgorithm.js'
 import {
-	AutoLayoutEnabledState,
+	AutoRunState,
 	DatasetNameState,
 	FixedInterventionRangesEnabledState,
-	PauseAutoRunState,
+	useCausalDiscoveryRunner,
+	useLayoutGraph,
 } from '../state/index.js'
 import { ThresholdSlider } from './controls/ThresholdSlider.js'
 import { GraphViewStates } from './graph/GraphViews.types.js'
-import { Button, toggleStyles, useMenuButtonStyles } from './MenuBar.styles.js'
+import { toggleStyles, useMenuButtonStyles } from './MenuBar.styles.js'
 
 export function useDatasetMenuItems(
 	loadTable: (name: string) => void,
@@ -67,8 +77,6 @@ export function useViewMenuItems(
 	setView: (s: GraphViewStates) => void,
 	useStraightEdges: boolean,
 	setUseStraightEdges: (v: boolean) => void,
-	autoLayoutEnabled: boolean,
-	setAutoLayoutEnabled: (v: boolean) => void,
 ): ICommandBarItemProps {
 	const buttonStyles = useMenuButtonStyles()
 	return useMemo(
@@ -126,28 +134,10 @@ export function useViewMenuItems(
 							/>
 						),
 					},
-					{
-						key: 'auto-layout-Checkbox',
-						onRender: () => (
-							<Checkbox
-								label="Auto-layout"
-								checked={autoLayoutEnabled}
-								onChange={(e, v) => setAutoLayoutEnabled(Boolean(v))}
-							/>
-						),
-					},
 				],
 			},
 		}),
-		[
-			view,
-			setView,
-			useStraightEdges,
-			setUseStraightEdges,
-			autoLayoutEnabled,
-			setAutoLayoutEnabled,
-			buttonStyles,
-		],
+		[view, setView, useStraightEdges, setUseStraightEdges, buttonStyles],
 	)
 }
 
@@ -163,27 +153,6 @@ export function useSliderMenuItem(
 			),
 		}),
 		[label, state],
-	)
-}
-
-export function useAutoLayoutToggleMenuItem() {
-	const [autoLayoutEnabled, setAutoLayoutEnabled] = useRecoilState(
-		AutoLayoutEnabledState,
-	)
-	return useMemo(
-		() => ({
-			key: 'auto-layout-toggle',
-			onRender: () => (
-				<Toggle
-					label="Auto-layout"
-					checked={autoLayoutEnabled}
-					inlineLabel
-					styles={toggleStyles}
-					onChange={(e, v) => setAutoLayoutEnabled(Boolean(v))}
-				/>
-			),
-		}),
-		[autoLayoutEnabled, setAutoLayoutEnabled],
 	)
 }
 
@@ -207,26 +176,85 @@ export function useFixedInterventionRangesToggleMenuItem() {
 	)
 }
 
-export function useTogglePauseButtonMenuItem() {
-	const [pauseAutoRun, setPauseAutoRun] = useRecoilState(PauseAutoRunState)
-	const paused = pauseAutoRun === CausalDiscoveryAlgorithm.None
-	const togglePaused = useCallback(() => {
-		setPauseAutoRun(paused ? undefined : CausalDiscoveryAlgorithm.None)
-	}, [setPauseAutoRun, paused])
+export function useAutoLayoutButtonMenuItem() {
+	const [autoLayout, { toggle: toggleAutoLayout, setFalse }] = useBoolean(false)
+	const layoutGraph = useLayoutGraph()
+
+	useEffect(() => {
+		if (autoLayout) {
+			void layoutGraph()
+		}
+	}, [autoLayout, layoutGraph])
+
+	const menuProps = useMemo<IContextualMenuProps>(
+		() => ({
+			items: [
+				{
+					key: 'autoLayout',
+					text: 'Auto-layout',
+					onClick: toggleAutoLayout,
+				},
+			],
+		}),
+		[toggleAutoLayout],
+	)
 
 	return useMemo(
 		() => ({
-			key: 'pause-toggle-button',
-
+			key: 'auto-layout-button',
 			onRender: () => (
-				<Button
-					toggle
-					onClick={togglePaused}
-					iconProps={{ iconName: paused ? 'Play' : 'Pause' }}
-					text={paused ? 'Run' : 'Pause'}
+				<DefaultButton
+					split
+					menuProps={menuProps}
+					checked={autoLayout}
+					onClick={autoLayout ? setFalse : layoutGraph}
+					text={autoLayout ? 'Auto-layout' : 'Layout'}
 				/>
 			),
 		}),
-		[paused, togglePaused],
+		[autoLayout, layoutGraph, setFalse, menuProps],
+	)
+}
+
+export function useRunButtonMenuItem() {
+	const [autoRun, setAutoRun] = useRecoilState(AutoRunState)
+	const { run, isLoading, stop } = useCausalDiscoveryRunner()
+	const isRunning = useMemo<boolean>(
+		() => isLoading || autoRun,
+		[isLoading, autoRun],
+	)
+
+	const handleClick = useCallback(() => {
+		return void (isRunning ? stop() : run())
+	}, [run, stop, isRunning])
+
+	const menuProps = useMemo<IContextualMenuProps>(
+		() => ({
+			items: [
+				{
+					key: 'autoRun',
+					text: 'Auto run',
+					iconProps: { iconName: 'PlaybackRate1x' },
+					onClick: () => setAutoRun(true),
+				},
+			],
+		}),
+		[setAutoRun],
+	)
+
+	return useMemo(
+		() => ({
+			key: 'run-button',
+			onRender: () => (
+				<PrimaryButton
+					split
+					menuProps={menuProps}
+					onClick={handleClick}
+					iconProps={{ iconName: isRunning ? 'Pause' : 'Play' }}
+					text={isRunning ? 'Stop run' : 'Run'}
+				/>
+			),
+		}),
+		[handleClick, isRunning, menuProps],
 	)
 }

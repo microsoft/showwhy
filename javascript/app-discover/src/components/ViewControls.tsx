@@ -7,7 +7,6 @@ import { memo } from 'react'
 import { useRecoilState } from 'recoil'
 
 import {
-	AutoLayoutEnabledState,
 	CorrelationThresholdState,
 	StraightEdgesState,
 	WeightThresholdState,
@@ -17,20 +16,12 @@ import { ThresholdSlider } from './controls/ThresholdSlider.js'
 export const ViewControls: React.FC = memo(function ViewControls() {
 	const [useStraightEdges, setUseStraightEdges] =
 		useRecoilState(StraightEdgesState)
-	const [autoLayoutEnabled, setAutoLayoutEnabled] = useRecoilState(
-		AutoLayoutEnabledState,
-	)
 	return (
 		<>
 			<Toggle
 				label="Use straight edges"
 				checked={useStraightEdges}
 				onChange={(e, v) => setUseStraightEdges(Boolean(v))}
-			/>
-			<Toggle
-				label="Auto-layout"
-				checked={autoLayoutEnabled}
-				onChange={(e, v) => setAutoLayoutEnabled(Boolean(v))}
 			/>
 			<ThresholdSlider
 				label={'Correlation Threshold'}

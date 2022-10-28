@@ -2,15 +2,13 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-
 import type {
 	ICommandBarStyleProps,
 	ICommandBarStyles,
 	IStyleFunctionOrObject,
 } from '@fluentui/react'
-import { DefaultButton, useTheme } from '@fluentui/react'
+import { useTheme } from '@fluentui/react'
 import { useMemo } from 'react'
-import styled from 'styled-components'
 
 export const toggleStyles = {
 	root: {
@@ -20,8 +18,6 @@ export const toggleStyles = {
 		marginLeft: 4,
 	},
 }
-
-export const Button = styled(DefaultButton)``
 
 export function useCommandBarStyles(): IStyleFunctionOrObject<
 	ICommandBarStyleProps,
