@@ -173,33 +173,13 @@ export const ResultPane: React.FC<ResultPaneProps> = memo(function ResultPane({
 
 	const getTreatedPlaceboIndex = useCallback(
 		(treatedUnit: string, placeboBarChartInputData: BarData[]): number => {
-			return placeboBarChartInputData.findIndex(
+			const len = placeboBarChartInputData.length
+			return len - placeboBarChartInputData.findIndex(
 				(placebo: BarData) => placebo.name === treatedUnit,
 			)
 		},
 		[],
 	)
-
-	// TODO: Validate its use with Darren
-	// const getPlaceboTreatedMSPERatio = useCallback(
-	// 	(treatedUnit: string, placeboBarChartInputData: BarData[]) => {
-	// 		const treatedPlaceboIndex = getTreatedPlaceboIndex(
-	// 			treatedUnit,
-	// 			placeboBarChartInputData,
-	// 		)
-	// 		const TOP_3_PLACEBOS = 3
-	// 		// we assume that a treated placebo unit to have insignificant result
-	// 		//  if either it was an extreme placebo and was filtered out or if it has a low ranker (below the top 3)
-	// 		if (
-	// 			treatedPlaceboIndex < 0 ||
-	// 			treatedPlaceboIndex < placeboBarChartInputData.length - TOP_3_PLACEBOS
-	// 		) {
-	// 			return 0
-	// 		}
-	// 		return placeboBarChartInputData[treatedPlaceboIndex].label
-	// 	},
-	// 	[getTreatedPlaceboIndex],
-	// )
 
 	const getTreatedPlaceboP = useCallback(
 		(treatedUnit: string, placeboBarChartInputData: BarData[]): number => {
@@ -208,7 +188,7 @@ export const ResultPane: React.FC<ResultPaneProps> = memo(function ResultPane({
 				placeboBarChartInputData,
 			)
 			return parseFloat(
-				((treatedPlaceboIndex + 1) / placeboBarChartInputData.length).toFixed(
+				(treatedPlaceboIndex / placeboBarChartInputData.length).toFixed(
 					3,
 				),
 			)
@@ -351,7 +331,7 @@ export const ResultPane: React.FC<ResultPaneProps> = memo(function ResultPane({
 							variant="medium"
 						>
 							{'Treatment effect in '}
-							{output.treatedUnit} {' is: '}
+							{output.treatedUnit} {': '}
 							<b className={output.sdid_estimate < 0 ? 'negative' : 'positive'}>
 								{output.sdid_estimate}
 							</b>
