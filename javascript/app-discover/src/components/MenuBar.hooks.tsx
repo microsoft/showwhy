@@ -2,8 +2,11 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import type { ICommandBarItemProps ,
-	IContextualMenuProps} from '@fluentui/react'
+import type {
+	ICommandBarItemProps,
+	IContextualMenuProps,
+	IIconProps,
+} from '@fluentui/react'
 import {
 	Checkbox,
 	ContextualMenuItemType,
@@ -204,6 +207,15 @@ export function useAutoLayoutButtonMenuItem() {
 		[toggleAutoLayout],
 	)
 
+	const handleClick = useCallback(() => {
+		return autoLayout ? setFalse : layoutGraph
+	}, [autoLayout, layoutGraph, setFalse])
+
+	const iconProps = useMemo<IIconProps>(
+		() => ({ iconName: autoLayout ? 'Pause' : 'Play' }),
+		[autoLayout],
+	)
+
 	return useMemo(
 		() => ({
 			key: 'auto-layout-button',
@@ -213,13 +225,13 @@ export function useAutoLayoutButtonMenuItem() {
 					styles={layoutButtonStyles}
 					menuProps={menuProps}
 					checked={autoLayout}
-					onClick={autoLayout ? setFalse : layoutGraph}
-					iconProps={{ iconName: autoLayout ? 'Pause' : 'Play' }}
+					onClick={handleClick}
+					iconProps={iconProps}
 					text="Layout"
 				/>
 			),
 		}),
-		[autoLayout, layoutGraph, setFalse, menuProps],
+		[autoLayout, handleClick, menuProps, iconProps],
 	)
 }
 
@@ -249,6 +261,11 @@ export function useRunButtonMenuItem() {
 		[setAutoRun],
 	)
 
+	const iconProps = useMemo<IIconProps>(
+		() => ({ iconName: isRunning ? 'Pause' : 'Play' }),
+		[isRunning],
+	)
+
 	return useMemo(
 		() => ({
 			key: 'run-button',
@@ -257,12 +274,12 @@ export function useRunButtonMenuItem() {
 					split
 					menuProps={menuProps}
 					onClick={handleClick}
-					iconProps={{ iconName: isRunning ? 'Pause' : 'Play' }}
+					iconProps={iconProps}
 					text="Discover"
 				/>
 			),
 		}),
-		[handleClick, isRunning, menuProps],
+		[handleClick, iconProps, menuProps],
 	)
 }
 
