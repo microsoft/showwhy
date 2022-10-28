@@ -84,7 +84,7 @@ applicationGroups:
       - name: backend-worker
         image: '{{ .Values.causalImagesRegistry }}backend'
         imagePullPolicy: '{{ .Values.causalImagesPullPolicy }}'
-        replicas: 1
+        replicas: 2
         containerPort: 8081
         servicePort: 8082
         env:
