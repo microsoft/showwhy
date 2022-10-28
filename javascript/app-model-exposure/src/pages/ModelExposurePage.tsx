@@ -8,8 +8,10 @@ import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import { useXarrow, Xwrapper } from 'react-xarrows'
 
 import { AppMenu } from '../components/AppMenu.js'
+import { CausalQuestion } from '../components/CausalQuestion.js'
 import { MessageContainer } from '../components/MessageContainer.js'
 import { Header } from '../components/styles.js'
+import { useCausalQuestion } from '../state/causalQuestion.js'
 import type { Maybe } from '../types/primitives.js'
 import { AnalyzeTestPage } from './AnalyzeTestPage.js'
 import { BindDataPage } from './BindDataPage.js'
@@ -21,6 +23,7 @@ const EXTERNAL_ROUTE = 'exposure'
 const EXTERNAL_ROUTE_KUBERNETES = `_${EXTERNAL_ROUTE}`
 export const ModelExposurePage: React.FC = memo(function ModelExposurePage() {
 	const location = useLocation()
+	const question = useCausalQuestion()
 	const navigate = useNavigate()
 	const updateXarrow = useXarrow()
 	const [error, setError] = useState<Maybe<string>>()
@@ -52,10 +55,11 @@ export const ModelExposurePage: React.FC = memo(function ModelExposurePage() {
 					onLinkClick={handleLinkClick}
 				>
 					<PivotItem headerText="1. Define question" itemKey="define" />
-					<PivotItem headerText="2. Build domain model" itemKey="build" />
-					<PivotItem headerText="3. Bind data variables" itemKey="bind" />
-					<PivotItem headerText="4. Analyze and test" itemKey="analyze" />
+					<PivotItem headerText="2. Build model" itemKey="build" />
+					<PivotItem headerText="3. Bind data" itemKey="bind" />
+					<PivotItem headerText="4. Estimate effects" itemKey="analyze" />
 				</Pivot>
+				<CausalQuestion question={question} />
 				<AppMenu setError={setError} />
 			</Header>
 			<Xwrapper>
