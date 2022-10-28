@@ -10,24 +10,7 @@ import {
 	useSetRecoilState,
 } from 'recoil'
 
-import type { DiscoverProgressCallback } from '../../api/types.js'
-import {
-	discover as runCausalDiscovery,
-	empty_discover_result,
-} from '../../domain/CausalDiscovery/CausalDiscovery.js'
-import { CausalDiscoveryAlgorithm } from '../../domain/CausalDiscovery/CausalDiscoveryAlgorithm.js'
-import type { CausalDiscoveryConstraints } from '../../domain/CausalDiscovery/CausalDiscoveryConstraints.js'
-import type { CausalVariable } from '../../domain/CausalVariable.js'
-import type { Dataset } from '../../domain/Dataset.js'
-import type {
-	Relationship,
-	RelationshipReference,
-} from '../../domain/Relationship.js'
-import {
-	hasSameReason,
-	invertRelationship,
-	ManualRelationshipReason,
-} from '../../domain/Relationship.js'
+import { empty_discover_result } from '../../domain/CausalDiscovery/CausalDiscovery.js'
 import { CanceledPromiseError } from '../../utils/CancelablePromise.js'
 import {
 	AutoRunState,
@@ -43,8 +26,10 @@ import {
 	DatasetState,
 	InModelCausalVariablesState,
 } from '../selectors/index.js'
-import type { DECIParams } from './../../domain/Algorithms/DECI.js'
-import { DeciParamsState } from './../atoms/algorithms_params.js'
+import { useAlgorithmParams } from './useAlgorithmParams.js'
+import { useCausalDiscoveryConstraints } from './useCausalDiscoveryConstraints.js'
+import { useCreateDiscoveryPromise } from './useCreateDiscoveryPromise.js'
+import { useDerivedConstraints } from './useDerivedConstraints.js'
 import { useLastDiscoveryResultPromise } from './useLastDiscoveryResultPromise.js'
 
 export function useCausalDiscoveryRunner() {
@@ -54,15 +39,8 @@ export function useCausalDiscoveryRunner() {
 	const causalDiscoveryAlgorithm = useRecoilValue(
 		SelectedCausalDiscoveryAlgorithmState,
 	)
-	const DECIParams = useRecoilValue(DeciParamsState)
 	const [autoRun, setAutoRun] = useRecoilState(AutoRunState)
 	const [isLoading, setIsLoading] = useState<boolean>(false)
-
-	const algorithmParams = useMemo((): DECIParams | undefined => {
-		return causalDiscoveryAlgorithm === CausalDiscoveryAlgorithm.DECI
-			? DECIParams
-			: undefined
-	}, [DECIParams, causalDiscoveryAlgorithm])
 	const setCausalDiscoveryResultsState = useSetRecoilState(
 		CausalDiscoveryResultsState,
 	)
@@ -72,85 +50,37 @@ export function useCausalDiscoveryRunner() {
 	const setLoadingState = useSetRecoilState(LoadingState)
 	const setInfoMessage = useSetRecoilState(InfoMessageState)
 	const setErrorMessage = useSetRecoilState(ErrorMessageState)
+
+	const algorithmParams = useAlgorithmParams(causalDiscoveryAlgorithm)
+
 	const [setLastDiscoveryResultPromise, cancelLastDiscoveryResultPromise] =
 		useLastDiscoveryResultPromise()
 
-	const derivedConstraints = useMemo<RelationshipReference[]>(() => {
-		const result: RelationshipReference[] = []
-		inModelCausalVariables.forEach(sourceVar => {
-			sourceVar.derivedFrom?.forEach(sourceColumn => {
-				inModelCausalVariables.forEach(targetVar => {
-					if (
-						sourceVar !== targetVar &&
-						(targetVar.derivedFrom?.includes(sourceColumn) ||
-							sourceVar.disallowedRelationships?.includes(targetVar.columnName))
-					) {
-						result.push({
-							source: sourceVar,
-							target: targetVar,
-						})
-					}
-				})
-			})
-		})
-		return result
-	}, [inModelCausalVariables])
+	const derivedConstraints = useDerivedConstraints(inModelCausalVariables)
 
-	const causalDiscoveryConstraints = useMemo(
-		() => ({
-			...userConstraints,
-			manualRelationships: [
-				...userConstraints.manualRelationships.map(x => {
-					if (hasSameReason(ManualRelationshipReason.Flipped, x)) {
-						return invertRelationship(x)
-					}
-					return x
-				}),
-				...derivedConstraints,
-			] as Relationship[],
-		}),
-		[userConstraints, derivedConstraints],
+	const causalDiscoveryConstraints = useCausalDiscoveryConstraints(
+		userConstraints,
+		derivedConstraints,
 	)
+
+	const createDiscoveryPromise = useCreateDiscoveryPromise(
+		setLastDiscoveryResultPromise,
+		cancelLastDiscoveryResultPromise,
+	)
+
+	const isResetRequired = useMemo<boolean>(() => {
+		return (
+			!autoRun ||
+			inModelCausalVariables.length < 2 ||
+			dataset.name === DEFAULT_DATASET_NAME
+		)
+	}, [autoRun, dataset, inModelCausalVariables])
 
 	const updateProgress = useCallback(
 		(progress: number, taskId?: string) => {
 			setLoadingState(`Running causal discovery ${progress.toFixed(0)}%...`)
 		},
 		[setLoadingState],
-	)
-
-	const createDiscoveryPromise = useCallback(
-		async (
-			dataset: Dataset,
-			variables: CausalVariable[],
-			constraints: CausalDiscoveryConstraints,
-			algorithmName: CausalDiscoveryAlgorithm,
-			progressCallback?: DiscoverProgressCallback,
-			paramOptions?: DECIParams,
-		) => {
-			// if the last task has not finished just yet, cancel it
-			const lastPromiseCancel = cancelLastDiscoveryResultPromise()
-			const discoveryPromise = runCausalDiscovery(
-				dataset,
-				variables,
-				constraints,
-				algorithmName,
-				progressCallback,
-				paramOptions,
-			)
-
-			setLastDiscoveryResultPromise(discoveryPromise)
-
-			// the code above
-			//     - cancelLastDiscoveryResultPromise/runCausalDiscovery/setLastDiscoveryResultPromise
-			// needs to run without awaiting
-			// so we know react wont change context and trigger a new discover promise
-			// before it being properly set
-			await lastPromiseCancel
-
-			return discoveryPromise
-		},
-		[cancelLastDiscoveryResultPromise, setLastDiscoveryResultPromise],
 	)
 
 	const runDiscovery = useCallback(async () => {
@@ -223,14 +153,6 @@ export function useCausalDiscoveryRunner() {
 		}
 		/* eslint-disable-next-line */
 	}, [])
-
-	const isResetRequired = useMemo<boolean>(() => {
-		return (
-			!autoRun ||
-			inModelCausalVariables.length < 2 ||
-			dataset.name === DEFAULT_DATASET_NAME
-		)
-	}, [autoRun, dataset, inModelCausalVariables])
 
 	useEffect(() => {
 		if (isResetRequired) {
