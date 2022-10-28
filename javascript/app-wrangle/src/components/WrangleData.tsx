@@ -22,5 +22,5 @@ export const WrangleData = memo(function CauseDis() {
 })
 
 const WrangleDataContainer = styled.div`
-	height: calc(100vh - 40px);
+	height: calc(100vh - 42px);
 `

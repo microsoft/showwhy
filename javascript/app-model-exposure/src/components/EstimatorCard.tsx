@@ -134,7 +134,7 @@ export const EstimatorCard: React.FC<{
 						</SpinnerContainer>
 					</ConfigContainer>
 					<ContainerFlexRow style={{ alignItems: 'end' }}>
-						<Title>Confidence interval</Title>
+						<Title>Confidence intervals</Title>
 						<InfoCallout id={'confidence' + uniqueId().toString()}>
 							<Text>{CONFIDENCE_INTERVAL_HELP_TEXT}</Text>
 						</InfoCallout>
@@ -143,7 +143,7 @@ export const EstimatorCard: React.FC<{
 					<ConfigContainer>
 						<Checkbox
 							disabled={!list.some(e => e.checked)}
-							label="Compute confidence interval"
+							label="Compute confidence intervals"
 							checked={list.some(e => e.confidenceInterval)}
 							onChange={(e, val) => {
 								onUpdateEstimatorParams(
