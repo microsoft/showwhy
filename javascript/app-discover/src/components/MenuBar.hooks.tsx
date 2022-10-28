@@ -2,8 +2,11 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import type { ICommandBarItemProps ,
-	IContextualMenuProps} from '@fluentui/react'
+import type {
+	ICommandBarItemProps,
+	IContextualMenuProps,
+	IIconProps,
+} from '@fluentui/react'
 import {
 	Checkbox,
 	ContextualMenuItemType,
@@ -28,7 +31,11 @@ import {
 } from '../state/index.js'
 import { ThresholdSlider } from './controls/ThresholdSlider.js'
 import { GraphViewStates } from './graph/GraphViews.types.js'
-import { toggleStyles, useMenuButtonStyles } from './MenuBar.styles.js'
+import {
+	layoutButtonStyles,
+	toggleStyles,
+	useMenuButtonStyles,
+} from './MenuBar.styles.js'
 
 export function useDatasetMenuItems(
 	loadTable: (name: string) => void,
@@ -192,11 +199,21 @@ export function useAutoLayoutButtonMenuItem() {
 				{
 					key: 'autoLayout',
 					text: 'Auto-layout',
+					iconProps: { iconName: 'PlaybackRate1x' },
 					onClick: toggleAutoLayout,
 				},
 			],
 		}),
 		[toggleAutoLayout],
+	)
+
+	const handleClick = useCallback(() => {
+		return autoLayout ? setFalse : layoutGraph
+	}, [autoLayout, layoutGraph, setFalse])
+
+	const iconProps = useMemo<IIconProps>(
+		() => ({ iconName: autoLayout ? 'Pause' : 'Play' }),
+		[autoLayout],
 	)
 
 	return useMemo(
@@ -205,14 +222,16 @@ export function useAutoLayoutButtonMenuItem() {
 			onRender: () => (
 				<DefaultButton
 					split
+					styles={layoutButtonStyles}
 					menuProps={menuProps}
 					checked={autoLayout}
-					onClick={autoLayout ? setFalse : layoutGraph}
-					text={autoLayout ? 'Auto-layout' : 'Layout'}
+					onClick={handleClick}
+					iconProps={iconProps}
+					text="Layout"
 				/>
 			),
 		}),
-		[autoLayout, layoutGraph, setFalse, menuProps],
+		[autoLayout, handleClick, menuProps, iconProps],
 	)
 }
 
@@ -233,13 +252,18 @@ export function useRunButtonMenuItem() {
 			items: [
 				{
 					key: 'autoRun',
-					text: 'Auto run',
+					text: 'Auto-run',
 					iconProps: { iconName: 'PlaybackRate1x' },
 					onClick: () => setAutoRun(true),
 				},
 			],
 		}),
 		[setAutoRun],
+	)
+
+	const iconProps = useMemo<IIconProps>(
+		() => ({ iconName: isRunning ? 'Pause' : 'Play' }),
+		[isRunning],
 	)
 
 	return useMemo(
@@ -250,12 +274,12 @@ export function useRunButtonMenuItem() {
 					split
 					menuProps={menuProps}
 					onClick={handleClick}
-					iconProps={{ iconName: isRunning ? 'Pause' : 'Play' }}
-					text={isRunning ? 'Stop run' : 'Run'}
+					iconProps={iconProps}
+					text="Discover"
 				/>
 			),
 		}),
-		[handleClick, isRunning, menuProps],
+		[handleClick, iconProps, menuProps],
 	)
 }
 

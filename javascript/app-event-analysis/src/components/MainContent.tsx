@@ -833,26 +833,24 @@ export const MainContent: React.FC = memo(function MainContent() {
 		(name: string) => {
 			const table = dataTables.find(d => d.name === name)?.output?.table
 			if (table) {
+				setCurrentTableName(fileName)
+				setFileName(fileName)
 				// @FIXME: ideally we should consume the wrangled data-table as is
 				//  and not convert it back to CSV before reading its content
 				const tableAsCSV = table?.select(not('index')).toCSV()
 				handleFileLoad({ fileName: name, content: tableAsCSV })
 			}
 		},
-		[dataTables, handleFileLoad],
+		[dataTables, handleFileLoad, setCurrentTableName, setFileName],
 	)
 
 	const onDataTablesUpdate = useCallback(() => {
 		if (fileName !== currentTableName) {
-			setCurrentTableName(fileName)
-			setFileName(fileName)
 			onDatasetClicked(fileName)
 		}
 	}, [
 		fileName,
 		currentTableName,
-		setCurrentTableName,
-		setFileName,
 		onDatasetClicked,
 	])
 
@@ -1037,7 +1035,7 @@ export const MainContent: React.FC = memo(function MainContent() {
 							itemKey={CONFIGURATION_TABS.prepareAnalysis.key}
 						>
 							<Stack tokens={{ childrenGap: 5 }}>
-								<Text className="stepText">1. Load your data set</Text>
+								<Text className="stepText">Load your data set</Text>
 								<Text className="stepDesc">
 									Load a dataset in&nbsp;
 									<Link
@@ -1060,7 +1058,7 @@ export const MainContent: React.FC = memo(function MainContent() {
 
 							<Stack tokens={{ childrenGap: 5 }}>
 								<Text className="stepText">
-									2. Select time, units, and outcome columns
+									Select time, units, and outcome columns
 								</Text>
 								<Text className="stepDesc">
 									Select data columns representing the time periods (e.g.,
@@ -1071,9 +1069,6 @@ export const MainContent: React.FC = memo(function MainContent() {
 								<DropdownContainer>
 									<Dropdown
 										placeholder="Time"
-										className={
-											columnMapping.date === '' ? 'colInvalidSelection' : ''
-										}
 										options={columnsDropdownOptions}
 										selectedKey={columnMapping.date}
 										onChange={(e, val) =>
@@ -1084,18 +1079,12 @@ export const MainContent: React.FC = memo(function MainContent() {
 									/>
 									<Dropdown
 										placeholder="Units"
-										className={
-											columnMapping.unit === '' ? 'colInvalidSelection' : ''
-										}
 										options={columnsDropdownOptions}
 										selectedKey={columnMapping.unit}
 										onChange={(e, val) => onUnitUpdate(val)}
 									/>
 									<Dropdown
 										placeholder="Outcome"
-										className={
-											columnMapping.value === '' ? 'colInvalidSelection' : ''
-										}
 										options={columnsDropdownOptions}
 										selectedKey={columnMapping.value}
 										onChange={handleOutColumnChange}
@@ -1135,7 +1124,7 @@ export const MainContent: React.FC = memo(function MainContent() {
 
 							<Stack tokens={{ childrenGap: 5 }}>
 								<Text className="stepText">
-									3. Define treated units and time periods
+									Define treated units and time periods
 								</Text>
 								<Text className="stepDesc">
 									Select some units and time-periods to consider as treated.
@@ -1194,7 +1183,7 @@ export const MainContent: React.FC = memo(function MainContent() {
 							<Spacer axis="vertical" size={15} />
 
 							<Stack>
-								<Text className="stepText">4. Format causal question</Text>
+								<Text className="stepText">Format causal question</Text>
 								<Stack horizontal>
 									<Stack tokens={{ childrenGap: 5, padding: 10 }}>
 										<Text className="stepText">Units</Text>

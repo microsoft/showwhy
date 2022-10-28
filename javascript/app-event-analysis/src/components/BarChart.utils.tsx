@@ -19,7 +19,7 @@ export function getColor(theme: Theme) {
 						.hex()
 				case 'relative':
 				case 'control-units':
-					return scale(1).hex()
+					return scale(3).hex()
 				case 'negative':
 					return scale(2).hex()
 				case 'normal':
