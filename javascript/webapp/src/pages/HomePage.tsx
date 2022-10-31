@@ -35,7 +35,7 @@ const HomePage: React.FC = memo(function HomePage() {
 			style={documentCardStyle}
 		>
 			<DocumentCardPreview styles={documentPreviewStyle} {...d.previewProps} />
-			<DocumentCardTitle title={d.heroTitle} />
+			<DocumentCardTitle title={d.heroTitle} styles={documentCardTitleStyles} />
 			<DocumentCardTitle
 				showAsSecondaryTitle
 				title={d.title}

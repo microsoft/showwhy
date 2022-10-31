@@ -19,4 +19,6 @@ export const documentPreviewStyle = {
 	root: { height: '50%' },
 }
 
-export const documentCardTitleStyles = { root: { height: 48 } }
+export const documentCardTitleStyles = {
+	root: { padding: '8px 8px' },
+}
