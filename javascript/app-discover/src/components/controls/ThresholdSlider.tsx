@@ -10,7 +10,14 @@ import styled from 'styled-components'
 import type { ThresholdSliderProps } from './ThresholdSlider.types.js'
 
 export const ThresholdSlider: React.FC<ThresholdSliderProps> = memo(
-	function ThresholdSlider({ label, width, thresholdState, defaultStyling }) {
+	function ThresholdSlider({
+		label,
+		width,
+		thresholdState,
+		defaultStyling,
+		min = 0,
+		max = 1,
+	}) {
 		const [threshold, setThreshold] = useRecoilState(thresholdState)
 
 		return (
@@ -18,7 +25,8 @@ export const ThresholdSlider: React.FC<ThresholdSliderProps> = memo(
 				{!defaultStyling ? <Text variant="xSmall">{label}</Text> : null}
 				<Slider
 					label={defaultStyling ? label : undefined}
-					max={1.0}
+					min={min}
+					max={max}
 					value={threshold}
 					step={0.01}
 					styles={

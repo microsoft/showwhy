@@ -2,8 +2,10 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import type { ICommandBarItemProps ,
-	IContextualMenuProps} from '@fluentui/react'
+import type {
+	ICommandBarItemProps,
+	IContextualMenuProps,
+} from '@fluentui/react'
 import {
 	Checkbox,
 	ContextualMenuItemType,
@@ -15,7 +17,6 @@ import {
 import { useBoolean } from '@fluentui/react-hooks'
 import { useDatasetMenuItems as useDatasetMenuItemsCommon } from '@showwhy/app-common'
 import { useCallback, useEffect, useMemo } from 'react'
-import type { RecoilState } from 'recoil'
 import { useRecoilState, useRecoilValue } from 'recoil'
 
 import {
@@ -26,7 +27,6 @@ import {
 	useCausalDiscoveryRunner,
 	useLayoutGraph,
 } from '../state/index.js'
-import { ThresholdSlider } from './controls/ThresholdSlider.js'
 import { GraphViewStates } from './graph/GraphViews.types.js'
 import { toggleStyles, useMenuButtonStyles } from './MenuBar.styles.js'
 
@@ -138,21 +138,6 @@ export function useViewMenuItems(
 			},
 		}),
 		[view, setView, useStraightEdges, setUseStraightEdges, buttonStyles],
-	)
-}
-
-export function useSliderMenuItem(
-	label: string,
-	state: RecoilState<number>,
-): ICommandBarItemProps {
-	return useMemo(
-		() => ({
-			key: label.toLowerCase().replaceAll(' ', '-'),
-			onRender: () => (
-				<ThresholdSlider label={label} thresholdState={state} width={180} />
-			),
-		}),
-		[label, state],
 	)
 }
 
