@@ -84,7 +84,7 @@ export const EdgeItem: React.FC<EdgeItemProps> = memo(function EdgeItem({
 								</TooltipHost>
 							</Stack.Item>
 							<Stack.Item align="center">
-								<TooltipHost content="Remove relationship">
+								<TooltipHost content="No causal relationship in either direction">
 									<IconButtonDark
 										iconProps={icons.delete}
 										onClick={() => onRemove(relationship)}

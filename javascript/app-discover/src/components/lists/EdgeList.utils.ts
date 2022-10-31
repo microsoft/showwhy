@@ -18,11 +18,12 @@ import {
 } from '../../domain/Relationship.js'
 import type { VariableReference } from './../../domain/CausalVariable.js'
 
-export function removeEdge(
+export function removeBothEdges(
 	constraints: CausalDiscoveryConstraints,
 	onUpdateConstraints: (newConstraints: CausalDiscoveryConstraints) => void,
 	relationship: Relationship,
 ) {
+	const reverse = invertRelationship(relationship)
 	const newConstraints = {
 		...constraints,
 		manualRelationships: [
@@ -31,6 +32,10 @@ export function removeEdge(
 			),
 			{
 				...relationship,
+				reason: ManualRelationshipReason.Removed,
+			},
+			{
+				...reverse,
 				reason: ManualRelationshipReason.Removed,
 			},
 		],

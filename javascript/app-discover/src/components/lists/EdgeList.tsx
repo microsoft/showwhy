@@ -56,7 +56,7 @@ export const EdgeList: React.FC<EdgeListProps> = memo(function EdgeList({
 					<Container key={groupName}>
 						<LabelContainer>
 							<Label>{groupName}</Label>
-							<TooltipHost content={`Remove group of edges`}>
+							<TooltipHost content={`Disallow these causes`}>
 								<IconButtonDark
 									onClick={() => onRemoveAll(groupName)}
 									iconProps={icons.remove}
