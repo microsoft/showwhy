@@ -2,16 +2,20 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import type { DataTable } from '@datashaper/workflow'
-import { useHeaderCommandBarDefaults } from '@datashaper/react'
-import type { Workflow } from '@datashaper/workflow'
+import {
+	useWorkflowOutputListener,
+	useHeaderCommandBarDefaults,
+} from '@datashaper/react'
+import type { TableContainer } from '@datashaper/tables'
+import type { DataTable, Workflow } from '@datashaper/workflow'
 import type {
 	IColumn,
 	ICommandBarItemProps,
 	ICommandBarProps,
 } from '@fluentui/react'
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import { useDataTableOutput } from '@showwhy/app-common'
 import upperFirst from 'lodash-es/upperFirst.js'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 
 import {
 	buttonStyles,
@@ -19,9 +23,26 @@ import {
 	useTableHeaderColors,
 } from './TableEditor.styles.js'
 
+export function useSelectedTable(
+	dataTable: DataTable,
+	selectedTableId: string | undefined,
+): TableContainer | undefined {
+	const defaultValue = useDataTableOutput(dataTable)
+	const [outputs, setOutputs] = useState<TableContainer[]>([])
+	useWorkflowOutputListener(dataTable.workflow, setOutputs)
+
+	return useMemo((): TableContainer | undefined => {
+		return (
+			(defaultValue ? [defaultValue] : [])
+				.concat(outputs)
+				.find(x => x.id === selectedTableId) ?? defaultValue
+		)
+	}, [defaultValue, selectedTableId, outputs])
+}
+
 export function useColumnState(): [
 	string | undefined,
-	(ev: React.MouseEvent<HTMLElement, MouseEvent>, column?: IColumn) => void,
+	(ev?: React.MouseEvent<HTMLElement, MouseEvent>, column?: IColumn) => void,
 ] {
 	const [selectedColumn, setSelectedColumn] = useState<string | undefined>()
 	const onColumnClick = useCallback(
