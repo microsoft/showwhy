@@ -32,15 +32,11 @@ export const RelationshipItem: React.FC<RelationshipItemProps> = memo(
 			sourceVar !== undefined && targetVar !== undefined
 		return sourceAndTargetExist ? (
 			<RelationshipContainer>
-				<Stack
-					horizontal
-					horizontalAlign="space-between"
-					tokens={{ childrenGap: 5 }}
-				>
-					<Stack.Item style={{ width: '40%' }} align="center">
+				<Stack horizontal horizontalAlign="space-between">
+					<Stack.Item style={itemStyle} align="center">
 						<CausalNode variable={sourceVar} isAddable />
 					</Stack.Item>
-					<Stack.Item align="center">
+					<Stack.Item align="center" style={correlationStyle}>
 						<Stack>
 							<Stack.Item align="center">
 								{relationship.directed ? <ForwardIcon /> : <RemoteIcon />}
@@ -52,8 +48,12 @@ export const RelationshipItem: React.FC<RelationshipItemProps> = memo(
 							)}
 						</Stack>
 					</Stack.Item>
-					<Stack.Item style={{ width: '40%' }} align="center">
-						<CausalNode variable={targetVar} isAddable />
+					<Stack.Item style={itemStyle} align="center">
+						<CausalNode
+							style={causalNodeStyle}
+							variable={targetVar}
+							isAddable
+						/>
 					</Stack.Item>
 				</Stack>
 			</RelationshipContainer>
@@ -63,6 +63,9 @@ export const RelationshipItem: React.FC<RelationshipItemProps> = memo(
 	},
 )
 
+const itemStyle = { width: '45%' }
+const causalNodeStyle = { marginLeft: '5px' }
+const correlationStyle = { width: '10%' }
 const RelationshipContainer = styled.div`
 	border-bottom: 1px solid
 		${({ theme }: { theme: ITheme }) => theme.palette.neutralLighter};
