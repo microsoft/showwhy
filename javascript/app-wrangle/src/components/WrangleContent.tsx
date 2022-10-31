@@ -17,7 +17,7 @@ export const WrangleContent: React.FC<WrangleContentProps> = memo(
 			return null
 		}
 
-		const key = `${dataTable.id}-${resource}`
+		const key = `${dataTable.id}-${resource ?? 'noresource'}`
 		switch (resource) {
 			case 'datasource': // not modeled in enum
 				return <RawTableViewer key={key} dataTable={dataTable} />
