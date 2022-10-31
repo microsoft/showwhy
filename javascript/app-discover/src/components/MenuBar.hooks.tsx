@@ -208,7 +208,7 @@ export function useAutoLayoutButtonMenuItem() {
 	)
 
 	const handleClick = useCallback(() => {
-		return autoLayout ? setFalse : layoutGraph
+		return autoLayout ? setFalse() : layoutGraph()
 	}, [autoLayout, layoutGraph, setFalse])
 
 	const iconProps = useMemo<IIconProps>(
