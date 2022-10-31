@@ -41,7 +41,7 @@ export const OutcomeNameState = atom<string>({
 
 export const EventNameState = atom<string>({
 	key: 'EventNameState',
-	default: 'Treatment/Event',
+	default: 'treatment/event',
 })
 
 export const FileNameState = atom<string>({

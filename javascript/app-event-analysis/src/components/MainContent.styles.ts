@@ -121,10 +121,9 @@ export const DropdownContainer = styled.div`
 	}
 `
 
-export const Title = styled.h2`
+export const Title = styled.h3`
 	margin: 0;
 	font-weight: 500;
-	font-size: 1.2rem;
 	text-align: center;
 	color: ${({ theme }: { theme: FluentTheme }) =>
 		theme.palette.neutralSecondary};

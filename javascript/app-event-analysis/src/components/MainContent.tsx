@@ -1365,8 +1365,9 @@ export const MainContent: React.FC = memo(function MainContent() {
 				<RightPanelHeader>
 					<Stack tokens={{ childrenGap: 5 }}>
 						<Title>
-							For treated {units || 'units'}, did {eventName || 'event'} cause{' '}
-							{outcomeName || 'outcome'} to {hypothesis || 'hypothesis'}?
+							For treated {units || '<units>'}, did {eventName || '<event>'}{' '}
+							cause {outcomeName || '<outcome>'} to{' '}
+							{hypothesis?.toLowerCase() || '<hypothesis>'}?
 						</Title>
 					</Stack>
 				</RightPanelHeader>
