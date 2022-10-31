@@ -19,7 +19,7 @@ export const ALGORITHMS: IChoiceGroupOption[] = [
 	},
 	{
 		key: 'DirectLiNGAM',
-		text: 'DirectLINGAM',
+		text: 'DirectLiNGAM',
 		value: CausalDiscoveryAlgorithm.DirectLiNGAM,
 	},
 	{
