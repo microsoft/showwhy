@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { Toggle } from '@fluentui/react'
+import { Checkbox } from '@fluentui/react'
 import { memo } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
 
@@ -45,7 +45,7 @@ export const GraphFilteringControls = memo(function GraphFilteringControls() {
 						thresholdState={ConfidenceThresholdState}
 						defaultStyling
 					/>
-					<Toggle
+					<Checkbox
 						label="Fixed intervention ranges"
 						checked={fixedInterventionRangesEnabled}
 						onChange={(e, v) => setFixedInterventionRangesEnabled(Boolean(v))}
