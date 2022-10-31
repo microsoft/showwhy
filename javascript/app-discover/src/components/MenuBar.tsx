@@ -16,6 +16,7 @@ import {
 	GraphViewState,
 	InModelColumnNamesState,
 	LoadingState,
+	NodePositionsState,
 	PersistedInfoState,
 	StraightEdgesState,
 } from '../state/index.js'
@@ -36,6 +37,7 @@ export const MenuBar: React.FC = memo(function MenuBar() {
 	const resetVariables = useResetRecoilState(InModelColumnNamesState)
 	const resetConstraints = useResetRecoilState(CausalGraphConstraintsState)
 	const resetParams = useResetRecoilState(DeciParamsState)
+	const resetNodePositions = useResetRecoilState(NodePositionsState)
 	const [useStraightEdges, setUseStraightEdges] =
 		useRecoilState(StraightEdgesState)
 	const setLoadingState = useSetRecoilState(LoadingState)
@@ -50,7 +52,8 @@ export const MenuBar: React.FC = memo(function MenuBar() {
 		resetVariables()
 		resetConstraints()
 		resetParams()
-	}, [resetVariables, resetConstraints, resetParams])
+		resetNodePositions()
+	}, [resetVariables, resetConstraints, resetParams, resetNodePositions])
 
 	useEffect(() => {
 		if (causalModelFileContent[0] !== undefined) {
