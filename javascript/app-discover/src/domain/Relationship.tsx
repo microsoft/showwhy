@@ -166,8 +166,7 @@ export function isEquivalentRelationship(
 ) {
 	return (
 		hasSameSourceAndTarget(relationship, asRelationship) ||
-		(hasSameReason(ManualRelationshipReason.Flipped, asRelationship) &&
-			hasInvertedSourceAndTarget(relationship, asRelationship))
+		hasInvertedSourceAndTarget(relationship, asRelationship)
 	)
 }
 
