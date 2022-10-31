@@ -5,8 +5,12 @@
 import type { DataTable } from '@datashaper/workflow'
 import { useHeaderCommandBarDefaults } from '@datashaper/react'
 import type { Workflow } from '@datashaper/workflow'
-import type { ICommandBarItemProps, ICommandBarProps } from '@fluentui/react'
-import { useEffect, useMemo } from 'react'
+import type {
+	IColumn,
+	ICommandBarItemProps,
+	ICommandBarProps,
+} from '@fluentui/react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import upperFirst from 'lodash-es/upperFirst.js'
 
 import {
@@ -14,6 +18,20 @@ import {
 	icons,
 	useTableHeaderColors,
 } from './TableEditor.styles.js'
+
+export function useColumnState(): [
+	string | undefined,
+	(ev: React.MouseEvent<HTMLElement, MouseEvent>, column?: IColumn) => void,
+] {
+	const [selectedColumn, setSelectedColumn] = useState<string | undefined>()
+	const onColumnClick = useCallback(
+		(_?: React.MouseEvent<HTMLElement, MouseEvent>, column?: IColumn) => {
+			setSelectedColumn(column?.name)
+		},
+		[setSelectedColumn],
+	)
+	return [selectedColumn, onColumnClick]
+}
 
 export function useTableName(
 	dataTable: DataTable,

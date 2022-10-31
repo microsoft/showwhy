@@ -22,6 +22,7 @@ import { useObservableState } from 'observable-hooks'
 import { memo, useCallback, useMemo, useState } from 'react'
 
 import {
+	useColumnState,
 	useHistoryButtonCommandBar,
 	useStepListener,
 	useTableName,
@@ -45,7 +46,7 @@ export const TableEditor: React.FC<TableEditorProps> = memo(
 			table?.id,
 		)
 		const [outputs, setOutputs] = useState<TableContainer[]>([])
-		const [selectedColumn, setSelectedColumn] = useState<string | undefined>()
+		const [selectedColumn, onColumnClick] = useColumnState()
 
 		const onSave = useOnSaveStep(workflow)
 		const onCreate = useOnCreateStep(onSave, setSelectedTableId)
@@ -64,13 +65,6 @@ export const TableEditor: React.FC<TableEditorProps> = memo(
 
 		useStepListener(workflow, setSelectedTableId, inputNames)
 		useWorkflowOutputListener(workflow, setOutputs)
-
-		const onColumnClick = useCallback(
-			(_?: React.MouseEvent<HTMLElement, MouseEvent>, column?: IColumn) => {
-				setSelectedColumn(column?.name)
-			},
-			[setSelectedColumn],
-		)
 
 		const historyButtonCommandBar = useHistoryButtonCommandBar(
 			isCollapsed,
