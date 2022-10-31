@@ -28,6 +28,7 @@ export const CommonLayout: React.FC<CommonLayoutProps> = memo(
 							<Allotment.Pane
 								preferredSize={RAIL_PREFERRED_SIZE}
 								maxSize={RAIL_MAX_SIZE}
+								snap
 							>
 								<LeftRail>{configRail}</LeftRail>
 							</Allotment.Pane>
@@ -37,6 +38,7 @@ export const CommonLayout: React.FC<CommonLayoutProps> = memo(
 							<Allotment.Pane
 								preferredSize={RAIL_PREFERRED_SIZE}
 								maxSize={RAIL_MAX_SIZE}
+								snap
 							>
 								<RightRail>{detailRail}</RightRail>
 							</Allotment.Pane>

@@ -4,7 +4,6 @@
  */
 import type { BaseFile } from '@datashaper/utilities'
 import { DirectionalHint, Separator } from '@fluentui/react'
-import { useBoolean } from '@fluentui/react-hooks'
 import { ImportTable } from '@showwhy/app-common'
 import merge from 'lodash-es/merge.js'
 import { memo, useCallback, useState } from 'react'
@@ -40,19 +39,18 @@ export const FileTree: React.FC<{
 	style?: React.CSSProperties
 	className?: string
 	selectedFileId?: string
-}> = memo(function FileTree({ style, className }) {
-	const [expanded, { toggle: toggleExpanded }] = useBoolean(true)
+	expanded: boolean
+	toggleExpanded: () => void
+}> = memo(function FileTree({ style, className, expanded, toggleExpanded }) {
 	const tooltipStyles = getTooltipStyles(expanded)
 	const [file, setFile] = useState<BaseFile | undefined>()
 	const onOpenFileRequested = useOnOpenFileRequested()
 	const { commands, onOpenCommands, onSaveCommands } =
 		useFileManagementCommands(expanded, onOpenFileRequested, setFile)
 	const commandBarStyles = useCommandbarStyles()
+
 	return (
-		<Container
-			style={merge({ width: expanded ? '300px' : '60px' }, style)}
-			className={className}
-		>
+		<Container style={merge({ width: 'auto' }, style)} className={className}>
 			<MenuContainer>
 				<FileImport file={file} setFile={setFile} />
 				{expanded ? (
@@ -161,6 +159,8 @@ const TreeNode: React.FC<{
 }> = memo(function TreeNode({ node, selected, onSelectItem, expanded }) {
 	const currentPath = useCurrentPath()
 	const tooltipStyles = getTooltipStyles(expanded)
+	const treeItemStyle = { textAlign: !expanded ? 'center' : 'inherit' }
+	const itemIconStyle = { marginRight: expanded ? '10px' : '23px' }
 
 	const children = node.children?.map(child => {
 		const selected = child.route === currentPath
@@ -188,6 +188,7 @@ const TreeNode: React.FC<{
 				title={expanded ? node.title : ''}
 				onClick={handleOnClick}
 				selected={selected}
+				style={treeItemStyle}
 			>
 				<Tooltip
 					directionalHint={DirectionalHint.rightCenter}
@@ -195,7 +196,7 @@ const TreeNode: React.FC<{
 					content={node.title}
 					calloutProps={{ hidden: expanded }}
 				>
-					<ItemIcon iconName={node.icon} />
+					<ItemIcon style={itemIconStyle} iconName={node.icon} />
 					{expanded ? node.title : ''}
 				</Tooltip>
 				{expanded ? children : null}

@@ -8,6 +8,7 @@ export const Container = styled.div`
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
+	height: 100%;
 `
 
 export const documentCardStyle = {

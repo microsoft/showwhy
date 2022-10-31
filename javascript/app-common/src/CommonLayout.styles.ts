@@ -11,6 +11,7 @@ export const Container = styled.div`
 	margin: 0;
 	padding: 0;
 	overflow: hidden;
+	height: 100%;
 	max-height: 100%;
 	max-width: 100%;
 `

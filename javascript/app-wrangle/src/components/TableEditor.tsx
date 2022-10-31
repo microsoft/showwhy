@@ -73,9 +73,11 @@ export const TableEditor: React.FC<TableEditorProps> = memo(
 		useStepListener(workflow, setSelectedTableId, inputNames)
 		useWorkflowOutputListener(workflow, setOutputs)
 
-		const onColumnClick = useCallback(
+		const onColumnSelect = useCallback(
 			(_?: React.MouseEvent<HTMLElement, MouseEvent>, column?: IColumn) => {
-				setSelectedColumn(column?.name)
+				setSelectedColumn(prev =>
+					prev === column?.name ? undefined : column?.name,
+				)
 			},
 			[setSelectedColumn],
 		)
@@ -115,10 +117,10 @@ export const TableEditor: React.FC<TableEditorProps> = memo(
 						showColumnBorders
 						isHeaderFixed
 						fill
-						onColumnHeaderClick={onColumnClick}
-						clickableColumns={!!onColumnClick}
+						clickableColumns
+						onColumnHeaderClick={onColumnSelect}
 						selectedColumn={selectedColumn}
-						onColumnClick={onColumnClick}
+						onColumnClick={onColumnSelect}
 						metadata={selectedTable.metadata}
 						table={selectedTable?.table}
 					/>

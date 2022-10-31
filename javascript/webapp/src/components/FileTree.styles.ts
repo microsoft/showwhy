@@ -27,6 +27,7 @@ export const Container = styled.div`
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
+	height: 100%;
 `
 
 export const MenuContainer = styled.div`
@@ -40,9 +41,7 @@ export const CollapsedButton = styled(CommandBarButton)`
 	);
 `
 
-export const ItemIcon = styled(Icon)`
-	margin-right: 10px;
-`
+export const ItemIcon = styled(Icon)``
 
 export const TreeItem = styled(FluentTreeItem)`
 	align-items: center;
