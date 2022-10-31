@@ -101,9 +101,7 @@ export const TableEditor: React.FC<TableEditorProps> = memo(
 				<ToolPanel
 					headerText={`Workflow steps (${workflow.steps.length})`}
 					onDismiss={toggleCollapsed}
-					headerIconProps={{
-						iconName: 'History',
-					}}
+					headerIconProps={HISTORY_ICON_PROPS}
 					styles={toolPanelStyles}
 				>
 					<StepHistoryList
@@ -117,3 +115,7 @@ export const TableEditor: React.FC<TableEditorProps> = memo(
 		)
 	},
 )
+
+const HISTORY_ICON_PROPS = {
+	iconName: 'History',
+}
