@@ -16,7 +16,7 @@ export enum QuestionType {
 	/**
 	 * Explore whether variables cause one another
 	 */
-	Exploratory = 'exploratory',
+	Discovery = 'discovery',
 }
 
 /**
