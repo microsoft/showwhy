@@ -29,16 +29,8 @@ export const Layout: React.FC<LayoutProps> = memo(function Layout({
 		toggleExpanded()
 	}, [expanded, toggleExpanded])
 
-	const { run: abc } = useDebounceFn(
+	const changeWidth = useCallback(
 		(sizes: number[]) => {
-			onChangeWidth(sizes)
-		},
-		{ wait: 200 },
-	)
-
-	const onChangeWidth = useCallback(
-		(sizes: number[]) => {
-			console.log(sizes)
 			const [menuSize] = sizes
 			if ((menuSize < 150 && expanded) || (menuSize > 150 && !expanded)) {
 				toggleExpanded()
@@ -47,12 +39,23 @@ export const Layout: React.FC<LayoutProps> = memo(function Layout({
 		[expanded, toggleExpanded],
 	)
 
+	const { run: onChangeWidth } = useDebounceFn(
+		(sizes: number[]) => {
+			changeWidth(sizes)
+		},
+		{ wait: 200 },
+	)
+
 	return (
 		<Container id="layout">
 			<Header />
 			<Main>
 				<Content>
-					<Allotment onChange={abc} proportionalLayout={false} ref={ref}>
+					<Allotment
+						onChange={onChangeWidth}
+						proportionalLayout={false}
+						ref={ref}
+					>
 						<Allotment.Pane preferredSize={300} maxSize={300} minSize={60}>
 							<FileTree
 								expanded={expanded}
