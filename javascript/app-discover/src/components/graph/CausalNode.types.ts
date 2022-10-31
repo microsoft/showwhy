@@ -15,4 +15,5 @@ export interface CausalNodeProps {
 	isRemovable?: boolean
 	center?: boolean
 	wasDragged?: boolean
+	style?: React.CSSProperties
 }

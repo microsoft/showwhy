@@ -46,7 +46,9 @@ export function useColumnState(): [
 	const [selectedColumn, setSelectedColumn] = useState<string | undefined>()
 	const onColumnClick = useCallback(
 		(_?: React.MouseEvent<HTMLElement, MouseEvent>, column?: IColumn) => {
-			setSelectedColumn(column?.name)
+			setSelectedColumn(prev =>
+				prev === column?.name ? undefined : column?.name,
+			)
 		},
 		[setSelectedColumn],
 	)

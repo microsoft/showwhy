@@ -93,8 +93,8 @@ export const TableEditor: React.FC<TableEditorProps> = memo(
 						showColumnBorders
 						isHeaderFixed
 						fill
+						clickableColumns
 						onColumnHeaderClick={onColumnClick}
-						clickableColumns={!!onColumnClick}
 						selectedColumn={selectedColumn}
 						onColumnClick={onColumnClick}
 						metadata={selectedTable.metadata}
@@ -110,7 +110,7 @@ export const TableEditor: React.FC<TableEditorProps> = memo(
 					<StepHistoryList
 						onDelete={onDelete}
 						onSelect={setSelectedId}
-						selectedKey={selectedId}
+						key={selectedId}
 						workflow={workflow}
 						onSave={onSave}
 					/>
