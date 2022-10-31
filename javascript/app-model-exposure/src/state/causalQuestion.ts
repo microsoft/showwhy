@@ -3,8 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { Resetter, SetterOrUpdater } from 'recoil'
 import { Hypothesis } from '@showwhy/app-common'
+import type { Resetter, SetterOrUpdater } from 'recoil'
 import {
 	atom,
 	useRecoilValue,
