@@ -8,14 +8,14 @@ import { CausalDiscoveryAlgorithm } from '../domain/CausalDiscovery/CausalDiscov
 
 export const ALGORITHMS: IChoiceGroupOption[] = [
 	{
-		key: 'DECI',
-		text: 'DECI',
-		value: CausalDiscoveryAlgorithm.DECI,
-	},
-	{
 		key: 'NOTEARS',
 		text: 'NOTEARS',
 		value: CausalDiscoveryAlgorithm.NOTEARS,
+	},
+	{
+		key: 'DECI',
+		text: 'DECI',
+		value: CausalDiscoveryAlgorithm.DECI,
 	},
 	{
 		key: 'DirectLiNGAM',
