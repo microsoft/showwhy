@@ -24,12 +24,13 @@ export function useSelectedTable(
 	selectedTableId: string | undefined,
 ): TableContainer | undefined {
 	return useMemo((): TableContainer | undefined => {
-		const table = dataTable.workflow.read(selectedTableId)
-		const defaultInput = { table: dataTable.source, id: selectedTableId ?? '' }
-		const defaultOutput = dataTable.workflow.read()
 		if (dataTable.name === selectedTableId) {
-			return defaultInput
+			// if we select the original table name, use the workflow default input
+			return { table: dataTable.source, id: selectedTableId ?? '' }
 		} else {
+			// try to use the given table name to read the step, otherwise use the default output
+			const table = dataTable.workflow.read(selectedTableId)
+			const defaultOutput = dataTable.workflow.read()
 			return table ?? defaultOutput
 		}
 	}, [dataTable, selectedTableId])
