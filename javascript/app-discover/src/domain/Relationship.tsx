@@ -68,6 +68,17 @@ export function invertRelationship(relationship: Relationship): Relationship {
 		name: `Inverse of ${relationship.name}`,
 	}
 }
+export function invertRelationshipAndKey(
+	relationship: Relationship,
+): Relationship {
+	return {
+		...relationship,
+		source: relationship.target,
+		target: relationship.source,
+		name: `Inverse of ${relationship.name}`,
+		key: `i-${relationship.key}`,
+	}
+}
 
 export function hasSameSourceAndTarget(
 	relationship: Relationship,

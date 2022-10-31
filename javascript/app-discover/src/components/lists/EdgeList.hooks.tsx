@@ -41,6 +41,7 @@ export function useOnRemoveConstraint(
 ): (relationship: Relationship) => void {
 	return useCallback(
 		(relationship: Relationship) => {
+			debugger
 			removeConstraint(constraints, onUpdateConstraints, relationship)
 		},
 		[constraints, onUpdateConstraints],

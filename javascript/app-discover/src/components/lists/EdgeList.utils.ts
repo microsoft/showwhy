@@ -7,14 +7,15 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import type { CausalDiscoveryConstraints } from '../../domain/CausalDiscovery/CausalDiscoveryConstraints.js'
-import type { Relationship } from '../../domain/Relationship.js'
 import {
 	hasSameReason,
 	hasSameSourceAndTarget,
 	invertRelationship,
+	invertRelationshipAndKey,
 	involvesVariable,
 	isEquivalentRelationship,
 	ManualRelationshipReason,
+	Relationship,
 } from '../../domain/Relationship.js'
 import type { VariableReference } from './../../domain/CausalVariable.js'
 
@@ -23,7 +24,7 @@ export function removeBothEdges(
 	onUpdateConstraints: (newConstraints: CausalDiscoveryConstraints) => void,
 	relationship: Relationship,
 ) {
-	const reverse = invertRelationship(relationship)
+	const reverse = invertRelationshipAndKey(relationship)
 	const newConstraints = {
 		...constraints,
 		manualRelationships: [
