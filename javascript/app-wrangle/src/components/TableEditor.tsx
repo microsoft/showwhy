@@ -94,7 +94,6 @@ export const TableEditor: React.FC<TableEditorProps> = memo(
 		const tableHeaderStyles = useTableHeaderStyles()
 		const tableCommandProps = useTableCommandProps()
 		const toolPanelStyles = useToolPanelStyles()
-		console.log('selected table', dataTable, table, tableName, selectedTableId)
 		return selectedTable?.table == null ? null : (
 			<Container isCollapsed={isCollapsed}>
 				<DetailsListContainer>
