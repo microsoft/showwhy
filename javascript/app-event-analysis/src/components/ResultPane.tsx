@@ -168,14 +168,17 @@ export const ResultPane: React.FC<ResultPaneProps> = memo(function ResultPane({
 			})
 			return inputData.sort((a, b) => a.value - b.value)
 		},
-		[theme, hypothesis],
+		[theme, hypothesis, getSdidEstimate],
 	)
 
 	const getTreatedPlaceboIndex = useCallback(
 		(treatedUnit: string, placeboBarChartInputData: BarData[]): number => {
 			const len = placeboBarChartInputData.length
-			return len - placeboBarChartInputData.findIndex(
-				(placebo: BarData) => placebo.name === treatedUnit,
+			return (
+				len -
+				placeboBarChartInputData.findIndex(
+					(placebo: BarData) => placebo.name === treatedUnit,
+				)
 			)
 		},
 		[],
@@ -188,9 +191,7 @@ export const ResultPane: React.FC<ResultPaneProps> = memo(function ResultPane({
 				placeboBarChartInputData,
 			)
 			return parseFloat(
-				(treatedPlaceboIndex / placeboBarChartInputData.length).toFixed(
-					3,
-				),
+				(treatedPlaceboIndex / placeboBarChartInputData.length).toFixed(3),
 			)
 		},
 		[getTreatedPlaceboIndex],
@@ -571,13 +572,13 @@ export const ResultPane: React.FC<ResultPaneProps> = memo(function ResultPane({
 					<Stack.Item className={'no-top-margin'}>
 						{isValidUnit(treatedUnit) && placeboResult && (
 							<Text className="infoText last-item-margin" variant="medium">
-								The answer to the overall question of: {' '}
+								The answer to the overall question of:{' '}
 								<Text variant="medium">
 									For treated {units}, did {eventName} cause {outcomeName} to{' '}
 									{hypothesis}?
-								</Text> {' '}
+								</Text>{' '}
 								is therefore:
-								<Text variant="medium" block>	
+								<Text variant="medium" block>
 									{placeboResult}
 								</Text>
 								<Text variant="medium" block>
@@ -615,11 +616,20 @@ export const ResultPane: React.FC<ResultPaneProps> = memo(function ResultPane({
 	])
 
 	const graphTitle = useMemo((): string => {
-		if (showRawDataLineChart && selectedTabKey === CONFIGURATION_TABS.prepareAnalysis.key) {
+		if (
+			showRawDataLineChart &&
+			selectedTabKey === CONFIGURATION_TABS.prepareAnalysis.key
+		) {
 			return 'Input data'
-		} else if (showPlaceboGraphsLocal && selectedTabKey === CONFIGURATION_TABS.estimateEffects.key) {
+		} else if (
+			showPlaceboGraphsLocal &&
+			selectedTabKey === CONFIGURATION_TABS.estimateEffects.key
+		) {
 			return 'Placebo analysis'
-		} else if (showSynthControl && selectedTabKey === CONFIGURATION_TABS.validateEffects.key) {
+		} else if (
+			showSynthControl &&
+			selectedTabKey === CONFIGURATION_TABS.validateEffects.key
+		) {
 			return `Effect of ${eventName} on ${outcomeName}`
 		}
 		return ''

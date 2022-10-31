@@ -833,8 +833,8 @@ export const MainContent: React.FC = memo(function MainContent() {
 		(name: string) => {
 			const table = dataTables.find(d => d.name === name)?.output?.table
 			if (table) {
-				setCurrentTableName(fileName)
-				setFileName(fileName)
+				setCurrentTableName(name)
+				setFileName(name)
 				// @FIXME: ideally we should consume the wrangled data-table as is
 				//  and not convert it back to CSV before reading its content
 				const tableAsCSV = table?.select(not('index')).toCSV()
@@ -848,11 +848,7 @@ export const MainContent: React.FC = memo(function MainContent() {
 		if (fileName !== currentTableName) {
 			onDatasetClicked(fileName)
 		}
-	}, [
-		fileName,
-		currentTableName,
-		onDatasetClicked,
-	])
+	}, [fileName, currentTableName, onDatasetClicked])
 
 	useEffect(() => {
 		onDataTablesUpdate()
