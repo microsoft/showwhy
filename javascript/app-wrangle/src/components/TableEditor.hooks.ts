@@ -2,10 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import {
-	useHeaderCommandBarDefaults,
-	useWorkflowOutputListener,
-} from '@datashaper/react'
+import { useHeaderCommandBarDefaults } from '@datashaper/react'
 import type { TableContainer } from '@datashaper/tables'
 import type { DataTable, Workflow } from '@datashaper/workflow'
 import type {
@@ -26,17 +23,16 @@ export function useSelectedTable(
 	dataTable: DataTable,
 	selectedTableId: string | undefined,
 ): TableContainer | undefined {
-	const defaultValue = useDataTableOutput(dataTable)
-	const [outputs, setOutputs] = useState<TableContainer[]>([])
-	useWorkflowOutputListener(dataTable.workflow, setOutputs)
-
 	return useMemo((): TableContainer | undefined => {
-		return (
-			(defaultValue ? [defaultValue] : [])
-				.concat(outputs)
-				.find(x => x.id === selectedTableId) ?? defaultValue
-		)
-	}, [defaultValue, selectedTableId, outputs])
+		const table = dataTable.workflow.read(selectedTableId)
+		const defaultInput = { table: dataTable.source, id: selectedTableId ?? '' }
+		const defaultOutput = dataTable.workflow.read()
+		if (dataTable.name === selectedTableId) {
+			return defaultInput
+		} else {
+			return table ?? defaultOutput
+		}
+	}, [dataTable, selectedTableId])
 }
 
 export function useColumnState(): [
