@@ -20,8 +20,8 @@ import { EdgeItem } from './EdgeItem.js'
 import {
 	flipEdge,
 	isSource,
+	removeBothEdges,
 	removeConstraint,
-	removeEdge,
 } from './EdgeList.utils.js'
 
 export function useOnRemove(
@@ -30,7 +30,7 @@ export function useOnRemove(
 ): (relationship: Relationship) => void {
 	return useCallback(
 		(relationship: Relationship) => {
-			removeEdge(constraints, onUpdateConstraints, relationship)
+			removeBothEdges(constraints, onUpdateConstraints, relationship)
 		},
 		[constraints, onUpdateConstraints],
 	)

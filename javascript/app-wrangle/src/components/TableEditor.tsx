@@ -115,6 +115,7 @@ export const TableEditor: React.FC<TableEditorProps> = memo(
 						showColumnBorders
 						isHeaderFixed
 						fill
+						onColumnHeaderClick={onColumnClick}
 						clickableColumns={!!onColumnClick}
 						selectedColumn={selectedColumn}
 						onColumnClick={onColumnClick}
