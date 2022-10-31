@@ -14,7 +14,6 @@ import type {
 	ICommandBarProps,
 } from '@fluentui/react'
 import { useDataTableOutput } from '@showwhy/app-common'
-import upperFirst from 'lodash-es/upperFirst.js'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 
 import {
@@ -64,7 +63,10 @@ export function useTableName(
 		const stepIndex = workflow.steps.findIndex(x => x.id === selectedTableId)
 		// if the step index is the final step, use the default datatable name
 		if (stepIndex < workflow.steps.length - 1) {
-			name = `#${stepIndex}: ${upperFirst(workflow.steps[stepIndex]?.verb)}`
+			const verbName = workflow.steps[stepIndex]?.verb.toLocaleUpperCase()
+			if (verbName) {
+				name = `#${stepIndex}: ${verbName}`
+			}
 		}
 		return name || dataTable.name
 	}, [workflow, selectedTableId, dataTable.name])
