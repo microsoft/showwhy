@@ -83,6 +83,16 @@ class CausalDiscoveryRunner(ABC):
             self._number_of_rows - self._prepared_data.shape[0]
         )
 
+    def _transform_categorical_nominal_to_continuous(self):
+        # TODO: remove this once categorical values are properly handled by each algorithm
+        for name in self._prepared_data.columns:
+            if (
+                self._nature_by_variable[name]
+                == CausalVariableNature.CategoricalNominal
+            ):
+                logging.info(f"encoding categorical nominal column {name} to integers")
+                self._prepared_data[name] = pd.factorize(self._prepared_data[name])[0]
+
     def _prepare_data(self):
         self._prepared_data = pd.DataFrame.from_dict(self._dataset_data)
         self._remove_rows_with_missing_values()
