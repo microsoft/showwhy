@@ -244,7 +244,7 @@ export function useRunButtonMenuItem() {
 	)
 
 	const handleClick = useCallback(() => {
-		isRunning ? stop() : run()
+		void (isRunning ? stop() : run())
 	}, [run, stop, isRunning])
 
 	const menuProps = useMemo<IContextualMenuProps>(
