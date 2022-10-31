@@ -19,6 +19,6 @@ export function useVisualizationSpec(
 				field: variable.columnName,
 			},
 		},
-		mark: 'rect',
+		mark: 'bar',
 	})
 }
