@@ -3,8 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import {
-	useWorkflowOutputListener,
 	useHeaderCommandBarDefaults,
+	useWorkflowOutputListener,
 } from '@datashaper/react'
 import type { TableContainer } from '@datashaper/tables'
 import type { DataTable, Workflow } from '@datashaper/workflow'
@@ -66,7 +66,7 @@ export function useTableName(
 			const step = workflow.steps[stepIndex]
 			const stepTitle = step?.id || step?.verb
 			if (stepTitle) {
-				name = `#${stepIndex}: ${stepTitle.toLocaleUpperCase()}`
+				name = stepTitle.toLocaleUpperCase()
 			}
 		}
 		return name || dataTable.name
