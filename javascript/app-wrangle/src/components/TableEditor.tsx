@@ -57,10 +57,14 @@ export const TableEditor: React.FC<TableEditorProps> = memo(
 		)
 
 		const tableName = useMemo(() => {
+			let name: string | null = null
 			const stepIndex = workflow.steps.findIndex(x => x.id === selectedTableId)
-			const name = upperFirst(workflow.steps[stepIndex]?.verb)
-			return stepIndex >= 0 ? `#${stepIndex + 1} ${name}` : selectedTableId
-		}, [workflow, selectedTableId])
+			// if the step index is the final step, use the default datatable name
+			if (stepIndex < workflow.steps.length - 1) {
+				name = upperFirst(workflow.steps[stepIndex]?.verb)
+			}
+			return name || dataTable.name
+		}, [workflow, selectedTableId, dataTable.name])
 
 		const selectedTable = useMemo((): TableContainer | undefined => {
 			return (
@@ -90,6 +94,7 @@ export const TableEditor: React.FC<TableEditorProps> = memo(
 		const tableHeaderStyles = useTableHeaderStyles()
 		const tableCommandProps = useTableCommandProps()
 		const toolPanelStyles = useToolPanelStyles()
+		console.log('selected table', dataTable, table, tableName, selectedTableId)
 		return selectedTable?.table == null ? null : (
 			<Container isCollapsed={isCollapsed}>
 				<DetailsListContainer>
