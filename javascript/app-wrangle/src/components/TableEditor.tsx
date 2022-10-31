@@ -10,7 +10,6 @@ import {
 	useOnCreateStep,
 	useOnDeleteStep,
 	useOnSaveStep,
-	DisplayOrder,
 } from '@datashaper/react'
 import { useInputTableNames } from '@datashaper/react/dist/hooks/useTableDropdownOptions.js'
 import { ToolPanel } from '@essex/components'

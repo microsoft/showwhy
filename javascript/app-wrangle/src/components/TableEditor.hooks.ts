@@ -10,7 +10,6 @@ import type {
 	ICommandBarItemProps,
 	ICommandBarProps,
 } from '@fluentui/react'
-import { useDataTableOutput } from '@showwhy/app-common'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 
 import {
