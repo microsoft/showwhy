@@ -65,9 +65,7 @@ export function useTableName(
 		if (stepIndex < workflow.steps.length - 1) {
 			const step = workflow.steps[stepIndex]
 			const stepTitle = step?.id || step?.verb
-			if (stepTitle) {
-				name = stepTitle.toLocaleUpperCase()
-			}
+			name = stepTitle?.toLocaleUpperCase()
 		}
 		return name || dataTable.name
 	}, [workflow, selectedTableId, dataTable.name])
