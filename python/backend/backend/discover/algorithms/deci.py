@@ -57,8 +57,8 @@ class DeciModelOptions(BaseModel):
 class DeciTrainingOptions(BaseModel):
     learning_rate: float = 3e-2
     batch_size: int = 512
-    stardardize_data_mean: bool = False
-    stardardize_data_std: bool = False
+    standardize_data_mean: bool = False
+    standardize_data_std: bool = False
     rho: float = 10.0
     safety_rho: float = 1e13
     alpha: float = 0.0
@@ -170,9 +170,7 @@ class DeciRunner(CausalDiscoveryRunner):
 
         return constraint.astype(np.float32)
 
-    def _check_if_is_dag(
-        self, deci_model: DECIGaussian, adj_matrix: np.ndarray
-    ) -> bool:
+    def _check_if_is_dag(self, deci_model: DECIGaussian, adj_matrix: np.ndarray) -> bool:
         return (np.trace(scipy.linalg.expm(adj_matrix)) - deci_model.num_nodes) == 0
 
     def _get_adj_matrix(self, deci_model: DECIGaussian) -> np.ndarray:
@@ -219,9 +217,7 @@ class DeciRunner(CausalDiscoveryRunner):
 
         return ate_matrix
 
-    def _build_onnx_model(
-        self, deci_model: DECIGaussian, adj_matrix: np.ndarray
-    ) -> bytes:
+    def _build_onnx_model(self, deci_model: DECIGaussian, adj_matrix: np.ndarray) -> bytes:
         num_columns = self._prepared_data.shape[1]
         intervention_mask = torch.cat(
             (
@@ -237,11 +233,7 @@ class DeciRunner(CausalDiscoveryRunner):
             deci_model.variables.processed_cols_by_type["categorical"]
         )
         gt_zero_region = torch.LongTensor(
-            [
-                j
-                for i in deci_model.variables.processed_cols_by_type["binary"]
-                for j in i
-            ]
+            [j for i in deci_model.variables.processed_cols_by_type["binary"] for j in i]
         )
         deci_inference_inputs = (
             torch.rand([1, num_columns]),
@@ -276,9 +268,7 @@ class DeciRunner(CausalDiscoveryRunner):
 
         return onnx_output.getvalue()
 
-    def _build_labeled_graph(
-        self, adj_matrix: np.ndarray, ate_graph: np.ndarray
-    ) -> Any:
+    def _build_labeled_graph(self, adj_matrix: np.ndarray, ate_graph: np.ndarray) -> Any:
         deci_graph = networkx.convert_matrix.from_numpy_matrix(
             adj_matrix, create_using=networkx.DiGraph
         )
@@ -286,8 +276,7 @@ class DeciRunner(CausalDiscoveryRunner):
             ate_graph, create_using=networkx.DiGraph
         )
         labels = {
-            i: self._prepared_data.columns[i]
-            for i in range(len(self._prepared_data.columns))
+            i: self._prepared_data.columns[i] for i in range(len(self._prepared_data.columns))
         }
 
         for n1, n2, d in deci_graph.edges(data=True):
@@ -310,8 +299,7 @@ class DeciRunner(CausalDiscoveryRunner):
 
         causal_graph["onnx"] = base64.b64encode(onnx_model)
         causal_graph["columns"] = [
-            self._prepared_data.columns[i]
-            for i in range(len(self._prepared_data.columns))
+            self._prepared_data.columns[i] for i in range(len(self._prepared_data.columns))
         ]
         causal_graph["confidence_matrix"] = adj_matrix.tolist()
         causal_graph["ate_matrix"] = ate_matrix.tolist()
@@ -337,9 +325,7 @@ class DeciRunner(CausalDiscoveryRunner):
         deci_model.run_train(
             causica_dataset,
             self._training_options.dict(),
-            lambda model_id, step, max_steps: self._report_progress(
-                step * 100.0 / max_steps
-            ),
+            lambda model_id, step, max_steps: self._report_progress(step * 100.0 / max_steps),
         )
 
         adj_matrix = self._get_adj_matrix(deci_model)

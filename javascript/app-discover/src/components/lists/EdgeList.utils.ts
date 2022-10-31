@@ -7,6 +7,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import type { CausalDiscoveryConstraints } from '../../domain/CausalDiscovery/CausalDiscoveryConstraints.js'
+import type { Relationship } from '../../domain/Relationship.js'
 import {
 	hasSameReason,
 	hasSameSourceAndTarget,
@@ -15,7 +16,6 @@ import {
 	involvesVariable,
 	isEquivalentRelationship,
 	ManualRelationshipReason,
-	Relationship,
 } from '../../domain/Relationship.js'
 import type { VariableReference } from './../../domain/CausalVariable.js'
 
