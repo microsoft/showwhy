@@ -14,7 +14,7 @@ export const CausalQuestion: React.FC<{
 	const exposure = question.exposure?.label || '<exposure>'
 	const population = question.population?.label || '<population>'
 	const outcome = question.outcome?.label || '<outcome>'
-	const hypothesis = question.hypothesis || '<hypothesis>'
+	const hypothesis = question.hypothesis?.toLowerCase() || '<hypothesis>'
 
 	return (
 		<Title data-pw="question">
