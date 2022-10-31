@@ -15,7 +15,7 @@ import {
 import { useInputTableNames } from '@datashaper/react/dist/hooks/useTableDropdownOptions.js'
 import type { TableContainer } from '@datashaper/tables'
 import { ToolPanel } from '@essex/components'
-import { type IColumn, CommandBar } from '@fluentui/react'
+import { CommandBar, type IColumn } from '@fluentui/react'
 import { useBoolean } from '@fluentui/react-hooks'
 import { useDataTableOutput } from '@showwhy/app-common'
 import upperFirst from 'lodash-es/upperFirst.js'
@@ -59,8 +59,8 @@ export const TableEditor: React.FC<TableEditorProps> = memo(
 		const tableName = useMemo(() => {
 			const stepIndex = workflow.steps.findIndex(x => x.id === selectedTableId)
 			const name = upperFirst(workflow.steps[stepIndex]?.verb)
-			return stepIndex >= 0 ? `#${stepIndex + 1} ${name}` : selectedTableId
-		}, [workflow, selectedTableId])
+			return stepIndex >= 0 ? `#${stepIndex + 1} ${name}` : dataTable.name
+		}, [workflow, selectedTableId, dataTable])
 
 		const selectedTable = useMemo((): TableContainer | undefined => {
 			return (
@@ -115,6 +115,7 @@ export const TableEditor: React.FC<TableEditorProps> = memo(
 						showColumnBorders
 						isHeaderFixed
 						fill
+						onColumnHeaderClick={onColumnClick}
 						clickableColumns={!!onColumnClick}
 						selectedColumn={selectedColumn}
 						onColumnClick={onColumnClick}
