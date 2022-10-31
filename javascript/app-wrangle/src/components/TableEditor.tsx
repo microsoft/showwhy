@@ -18,14 +18,13 @@ import { ToolPanel } from '@essex/components'
 import { type IColumn, CommandBar } from '@fluentui/react'
 import { useBoolean } from '@fluentui/react-hooks'
 import { useDataTableOutput } from '@showwhy/app-common'
-import upperFirst from 'lodash-es/upperFirst.js'
 import { useObservableState } from 'observable-hooks'
 import { memo, useCallback, useMemo, useState } from 'react'
-import { map } from 'rxjs'
 
 import {
 	useHistoryButtonCommandBar,
 	useStepListener,
+	useTableName,
 } from './TableEditor.hooks.js'
 import {
 	Container,
@@ -52,19 +51,8 @@ export const TableEditor: React.FC<TableEditorProps> = memo(
 		const onCreate = useOnCreateStep(onSave, setSelectedTableId)
 		const onDelete = useOnDeleteStep(workflow)
 		const inputNames = useInputTableNames(workflow)
-		const numSteps = useObservableState(
-			workflow.steps$.pipe(map(steps => steps.length)),
-		)
-
-		const tableName = useMemo(() => {
-			let name: string | null = null
-			const stepIndex = workflow.steps.findIndex(x => x.id === selectedTableId)
-			// if the step index is the final step, use the default datatable name
-			if (stepIndex < workflow.steps.length - 1) {
-				name = upperFirst(workflow.steps[stepIndex]?.verb)
-			}
-			return name || dataTable.name
-		}, [workflow, selectedTableId, dataTable.name])
+		const numSteps = useObservableState(workflow.length$)
+		const tableName = useTableName(dataTable, selectedTableId)
 
 		const selectedTable = useMemo((): TableContainer | undefined => {
 			return (
