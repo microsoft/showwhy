@@ -12,7 +12,13 @@ export const Container = styled.div`
 
 export const documentCardStyle = {
 	margin: 10,
-	maxHeight: 300,
+	maxHeight: 200,
+}
+export const documentPreviewStyle = {
+	previewIcon: { fontSize: 30 },
+	root: { height: '50%' },
 }
 
-export const documentCardTitleStyles = { root: { height: 48 } }
+export const documentCardTitleStyles = {
+	root: { padding: '8px 8px' },
+}

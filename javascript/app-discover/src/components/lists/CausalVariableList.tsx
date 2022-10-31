@@ -23,10 +23,11 @@ const AddAllVariablesButton: React.FC<CausalVariableListProps> = memo(
 		const handleClick = useCallback(() => {
 			setInModelVariables(variables)
 		}, [variables, setInModelVariables])
+
 		return (
 			<ActionButton
 				onClick={handleClick}
-				text={'Add all variables'}
+				text={'Add all variables (may be slow)'}
 				iconProps={icons.add}
 				styles={addAllButtonStyles}
 			/>
@@ -43,13 +44,13 @@ export const CausalVariableList: React.FC<CausalVariableListProps> = memo(
 		)
 		return (
 			<FocusZone>
-				{!!variables.length && <AddAllVariablesButton variables={variables} />}
 				<List
 					items={variables}
 					renderedWindowsAhead={1}
 					onRenderCell={onRenderCell}
 					onShouldVirtualize={() => false} // force all items to be rendered
 				/>
+				{!!variables.length && <AddAllVariablesButton variables={variables} />}
 			</FocusZone>
 		)
 	},
