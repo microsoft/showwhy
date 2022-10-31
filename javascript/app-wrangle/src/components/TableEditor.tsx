@@ -10,22 +10,21 @@ import {
 	useOnCreateStep,
 	useOnDeleteStep,
 	useOnSaveStep,
-	useWorkflowOutputListener,
 } from '@datashaper/react'
 import { useInputTableNames } from '@datashaper/react/dist/hooks/useTableDropdownOptions.js'
-import type { TableContainer } from '@datashaper/tables'
 import { ToolPanel } from '@essex/components'
-import { type IColumn, CommandBar } from '@fluentui/react'
+import { CommandBar } from '@fluentui/react'
 import { useBoolean } from '@fluentui/react-hooks'
 import { useDataTableOutput } from '@showwhy/app-common'
-import upperFirst from 'lodash-es/upperFirst.js'
 import { useObservableState } from 'observable-hooks'
-import { memo, useCallback, useMemo, useState } from 'react'
-import { map } from 'rxjs'
+import { memo, useState } from 'react'
 
 import {
+	useColumnState,
 	useHistoryButtonCommandBar,
+	useSelectedTable,
 	useStepListener,
+	useTableName,
 } from './TableEditor.hooks.js'
 import {
 	Container,
@@ -45,40 +44,17 @@ export const TableEditor: React.FC<TableEditorProps> = memo(
 		const [selectedTableId, setSelectedTableId] = useState<string | undefined>(
 			table?.id,
 		)
-		const [outputs, setOutputs] = useState<TableContainer[]>([])
-		const [selectedColumn, setSelectedColumn] = useState<string | undefined>()
+		const [selectedColumn, onColumnClick] = useColumnState()
 
 		const onSave = useOnSaveStep(workflow)
 		const onCreate = useOnCreateStep(onSave, setSelectedTableId)
 		const onDelete = useOnDeleteStep(workflow)
 		const inputNames = useInputTableNames(workflow)
-		const numSteps = useObservableState(
-			workflow.steps$.pipe(map(steps => steps.length)),
-		)
+		const numSteps = useObservableState(workflow.length$)
+		const tableName = useTableName(dataTable, selectedTableId)
 
-		const tableName = useMemo(() => {
-			const stepIndex = workflow.steps.findIndex(x => x.id === selectedTableId)
-			const name = upperFirst(workflow.steps[stepIndex]?.verb)
-			return stepIndex >= 0 ? `#${stepIndex + 1} ${name}` : selectedTableId
-		}, [workflow, selectedTableId])
-
-		const selectedTable = useMemo((): TableContainer | undefined => {
-			return (
-				(table ? [table] : [])
-					.concat(outputs)
-					.find(x => x.id === selectedTableId) ?? table
-			)
-		}, [table, selectedTableId, outputs])
-
+		const selectedTable = useSelectedTable(dataTable, selectedTableId)
 		useStepListener(workflow, setSelectedTableId, inputNames)
-		useWorkflowOutputListener(workflow, setOutputs)
-
-		const onColumnClick = useCallback(
-			(_?: React.MouseEvent<HTMLElement, MouseEvent>, column?: IColumn) => {
-				setSelectedColumn(column?.name)
-			},
-			[setSelectedColumn],
-		)
 
 		const historyButtonCommandBar = useHistoryButtonCommandBar(
 			isCollapsed,
@@ -126,9 +102,7 @@ export const TableEditor: React.FC<TableEditorProps> = memo(
 				<ToolPanel
 					headerText={`Workflow steps (${workflow.steps.length})`}
 					onDismiss={toggleCollapsed}
-					headerIconProps={{
-						iconName: 'History',
-					}}
+					headerIconProps={HISTORY_ICON_PROPS}
 					styles={toolPanelStyles}
 				>
 					<StepHistoryList
@@ -142,3 +116,7 @@ export const TableEditor: React.FC<TableEditorProps> = memo(
 		)
 	},
 )
+
+const HISTORY_ICON_PROPS = {
+	iconName: 'History',
+}
