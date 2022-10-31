@@ -64,8 +64,7 @@ export function useTableName(
 		// if the step index is the final step, use the default datatable name
 		if (stepIndex < workflow.steps.length - 1) {
 			const step = workflow.steps[stepIndex]
-			const stepTitle = step?.id || step?.verb
-			name = stepTitle?.toLocaleUpperCase()
+			name = (step?.id || step?.verb)?.toLocaleUpperCase()
 		}
 		return name || dataTable.name
 	}, [workflow, selectedTableId, dataTable.name])
