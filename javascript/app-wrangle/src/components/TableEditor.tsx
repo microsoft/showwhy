@@ -110,6 +110,7 @@ export const TableEditor: React.FC<TableEditorProps> = memo(
 					<StepHistoryList
 						onDelete={onDelete}
 						onSelect={setSelectedId}
+						selectedKey={selectedId}
 						workflow={workflow}
 						onSave={onSave}
 					/>
