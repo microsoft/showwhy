@@ -15,7 +15,7 @@ import {
 import { useInputTableNames } from '@datashaper/react/dist/hooks/useTableDropdownOptions.js'
 import type { TableContainer } from '@datashaper/tables'
 import { ToolPanel } from '@essex/components'
-import { CommandBar, type IColumn } from '@fluentui/react'
+import { type IColumn, CommandBar } from '@fluentui/react'
 import { useBoolean } from '@fluentui/react-hooks'
 import { useDataTableOutput } from '@showwhy/app-common'
 import upperFirst from 'lodash-es/upperFirst.js'
