@@ -21,11 +21,11 @@ export const DetailsListContainer = styled.div`
 		${({ theme }: { theme: ITheme }) => theme.palette.neutralLighter};
 `
 
-export const Container = styled.div<{ isCollapsed: boolean }>`
+export const Container = styled.div<{ collapsed: boolean }>`
 	height: 100%;
 	display: grid;
-	grid-template-columns: ${({ isCollapsed }) =>
-		isCollapsed ? '100% 0' : 'calc(100% - 280px) 280px '};
+	grid-template-columns: ${({ collapsed }) =>
+		collapsed ? '100% 0' : 'calc(100% - 280px) 280px '};
 `
 
 export const buttonStyles = {

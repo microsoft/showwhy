@@ -17,17 +17,18 @@ export const WrangleContent: React.FC<WrangleContentProps> = memo(
 			return null
 		}
 
+		const key = `${dataTable.id}-${resource}`
 		switch (resource) {
 			case 'datasource': // not modeled in enum
-				return <RawTableViewer dataTable={dataTable} />
+				return <RawTableViewer key={key} dataTable={dataTable} />
 			case 'workflow':
-				return <WorkflowEditor dataTable={dataTable} />
+				return <WorkflowEditor key={key} dataTable={dataTable} />
 			case 'bundle': // not modeled in enum
-				return <TableEditor dataTable={dataTable} />
+				return <TableEditor key={key} dataTable={dataTable} />
 			case 'source':
-				return <DataSourceEditor dataTable={dataTable} />
+				return <DataSourceEditor key={key} dataTable={dataTable} />
 			case 'codebook':
-				return <CodebookEditor dataTable={dataTable} />
+				return <CodebookEditor key={key} dataTable={dataTable} />
 			default:
 				return <div>unknown resource type {resource}</div>
 		}
