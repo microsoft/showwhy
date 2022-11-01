@@ -9,6 +9,7 @@ import { useEstimateEffectResponse } from '../../state/estimateEffectResponse.js
 import { useRefutationResponse } from '../../state/refutationResponse.js'
 import { useShapResponse } from '../../state/shapResponse.js'
 import type { EstimateData } from '../../types/api/EstimateData.js'
+import { RefutationResultType } from '../../types/api/RefutationResultType.js'
 import type { Refutation } from '../../types/api/RefutationStatus.js'
 import type { ShapStatus } from '../../types/api/ShapStatus.js'
 import type { Maybe } from '../../types/primitives.js'
@@ -59,6 +60,10 @@ export function useEstimateData(): Maybe<EstimateData[]> {
 					_refutation[a.refuter] = a.result // eslint-disable-line
 				})
 				_refutation = check_refutation_result(_refutation) // eslint-disable-line
+			} else {
+				_refutation = {
+					refutation_result: -1,
+				} as RefutationResultType
 			}
 
 			const row = {
