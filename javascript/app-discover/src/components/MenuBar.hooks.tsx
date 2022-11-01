@@ -15,12 +15,12 @@ import {
 	PrimaryButton,
 	Toggle,
 } from '@fluentui/react'
-import { useBoolean } from '@fluentui/react-hooks'
 import { useDatasetMenuItems as useDatasetMenuItemsCommon } from '@showwhy/app-common'
 import { useCallback, useEffect, useMemo } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
 
 import {
+	AutoLayoutState,
 	AutoRunState,
 	DatasetNameState,
 	DatasetStatisticsState,
@@ -167,7 +167,7 @@ export function useFixedInterventionRangesToggleMenuItem() {
 }
 
 export function useAutoLayoutButtonMenuItem() {
-	const [autoLayout, { toggle: toggleAutoLayout, setFalse }] = useBoolean(false)
+	const [autoLayout, setAutoLayout] = useRecoilState(AutoLayoutState)
 	const layoutGraph = useLayoutGraph()
 
 	useEffect(() => {
@@ -183,16 +183,16 @@ export function useAutoLayoutButtonMenuItem() {
 					key: 'autoLayout',
 					text: 'Auto-layout',
 					iconProps: { iconName: 'PlaybackRate1x' },
-					onClick: toggleAutoLayout,
+					onClick: () => setAutoLayout(prev => !prev),
 				},
 			],
 		}),
-		[toggleAutoLayout],
+		[setAutoLayout],
 	)
 
 	const handleClick = useCallback(() => {
-		return void (autoLayout ? setFalse() : layoutGraph())
-	}, [autoLayout, layoutGraph, setFalse])
+		return void (autoLayout ? setAutoLayout(false) : layoutGraph())
+	}, [autoLayout, layoutGraph, setAutoLayout])
 
 	const iconProps = useMemo<IIconProps>(
 		() => ({ iconName: autoLayout ? 'Pause' : 'Play' }),
