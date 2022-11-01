@@ -16,7 +16,6 @@ import { IconButtonDark } from '../../styles/styles.js'
 import { useIsVariableInModel } from './CausalNode.hooks.js'
 import type { CausalNodeProps } from './CausalNode.types.js'
 
-const childrenGap = 5
 export const CausalNode: React.FC<CausalNodeProps> = memo(function CausalNode({
 	variable,
 	className,
@@ -25,6 +24,7 @@ export const CausalNode: React.FC<CausalNodeProps> = memo(function CausalNode({
 	isRemovable = false,
 	center = false,
 	wasDragged = false,
+	style,
 }) {
 	const [, setSelectedObject] = useRecoilState(SelectedObjectState)
 	const [inModelVariables, setInModelVariables] = useRecoilState(
@@ -59,17 +59,24 @@ export const CausalNode: React.FC<CausalNodeProps> = memo(function CausalNode({
 	return (
 		<Stack
 			className={className}
+			horizontalAlign="space-between"
 			verticalAlign="center"
 			grow
 			horizontal
-			tokens={{ childrenGap }}
+			style={style}
 		>
-			<Stack.Item align="center" grow onClick={selectVariable}>
+			<Stack.Item
+				align="center"
+				grow
+				style={stackItemStyle}
+				onClick={selectVariable}
+			>
 				<Label
+					title={variable.name}
 					disabled={!isInModel}
 					style={{
 						textAlign: center ? 'center' : undefined,
-						overflow: 'hidden',
+						...labelStyle,
 					}}
 				>
 					{variable.name}
@@ -93,3 +100,11 @@ const icons = {
 	remove: { iconName: 'StatusCircleErrorX' },
 	add: { iconName: 'circlePlus' },
 }
+
+const labelStyle = {
+	overflow: 'hidden',
+	whiteSpace: 'nowrap',
+	textOverflow: 'ellipsis',
+} as React.CSSProperties
+
+const stackItemStyle = { width: '70%' }

@@ -22,15 +22,15 @@ export const MAX_RENDERED_TREATED_UNITS = 10
 
 export const CONFIGURATION_TABS = {
 	prepareAnalysis: {
-		label: 'Prepare analysis',
+		label: '1. Prepare analysis',
 		key: 'prepare-analysis',
 	},
 	estimateEffects: {
-		label: 'Estimate effects',
+		label: '2. Estimate effects',
 		key: 'estimate-effects',
 	},
 	validateEffects: {
-		label: 'Validate effects',
+		label: '3. Validate effects',
 		key: 'validate-effects',
 	},
 }
@@ -268,4 +268,5 @@ export interface SyntheticControlUnit {
 export interface LegendData {
 	color: string
 	name: string
+	opacity?: number
 }

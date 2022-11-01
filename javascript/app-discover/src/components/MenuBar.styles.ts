@@ -19,6 +19,12 @@ export const toggleStyles = {
 	},
 }
 
+export const layoutButtonStyles = {
+	splitButtonContainer: {
+		marginRight: '3px',
+	},
+}
+
 export function useCommandBarStyles(): IStyleFunctionOrObject<
 	ICommandBarStyleProps,
 	ICommandBarStyles

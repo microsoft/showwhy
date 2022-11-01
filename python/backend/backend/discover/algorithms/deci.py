@@ -57,8 +57,8 @@ class DeciModelOptions(BaseModel):
 class DeciTrainingOptions(BaseModel):
     learning_rate: float = 3e-2
     batch_size: int = 512
-    stardardize_data_mean: bool = False
-    stardardize_data_std: bool = False
+    standardize_data_mean: bool = False
+    standardize_data_std: bool = False
     rho: float = 10.0
     safety_rho: float = 1e13
     alpha: float = 0.0

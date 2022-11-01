@@ -3,6 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import { Hypothesis } from '@showwhy/app-common'
 import type { Resetter, SetterOrUpdater } from 'recoil'
 import {
 	atom,
@@ -15,7 +16,9 @@ import type { CausalQuestion } from '../types/question/CausalQuestion.js'
 
 const causalQuestionState = atom<CausalQuestion>({
 	key: 'causal-question',
-	default: {} as CausalQuestion,
+	default: {
+		hypothesis: Hypothesis.Change,
+	} as CausalQuestion,
 })
 
 export function useCausalQuestion(): CausalQuestion {

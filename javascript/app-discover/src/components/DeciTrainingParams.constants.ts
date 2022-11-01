@@ -22,8 +22,8 @@ const TOL_DAG = 1e-3
 const PROGRESS_RATE = 0.25
 const MAX_P_TRAIN_DROUPOUT = 0.25
 const RECONSTRUCTION_LOSS_FACTOR = 1.0
-const STARDARDIZE_DATA_MEAN = false
-const STARDARDIZE_DATA_STD = false
+const STANDARDIZE_DATA_MEAN = false
+const STANDARDIZE_DATA_STD = false
 
 export const ANNEAL_ENTROPY = AnnealEntropy.Noanneal
 
@@ -97,13 +97,13 @@ export const advancedTrainingSpinningOptions = [
 
 export const advancedTrainingBooleanOptions = [
 	{
-		label: 'Stardardize data mean',
-		checked: STARDARDIZE_DATA_MEAN,
-		name: 'stardardize_data_mean',
+		label: 'Standardize data mean',
+		checked: STANDARDIZE_DATA_MEAN,
+		name: 'standardize_data_mean',
 	},
 	{
-		label: 'Stardardize data std',
-		checked: STARDARDIZE_DATA_STD,
-		name: 'stardardize_data_std',
+		label: 'Standardize data std',
+		checked: STANDARDIZE_DATA_STD,
+		name: 'standardize_data_std',
 	},
 ] as ICheckboxProps[]

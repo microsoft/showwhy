@@ -11,7 +11,7 @@ export interface PageDetails {
 export const pages: {
 	model: PageDetails
 	wrangle: PageDetails
-	explore: PageDetails
+	discover: PageDetails
 	exposure: PageDetails
 	events: PageDetails
 } = {
@@ -25,19 +25,19 @@ export const pages: {
 		icon: 'TableComputed',
 		route: 'wrangle',
 	},
-	explore: {
-		title: 'Explore',
-		icon: 'SearchAndApps',
-		route: 'explore',
+	discover: {
+		title: 'Causal Discovery',
+		icon: 'SearchData',
+		route: 'discover',
 	},
 	exposure: {
-		title: 'Model Exposure',
-		icon: 'HistoricalWeather',
+		title: 'Exposure Analysis',
+		icon: 'TestBeaker',
 		route: 'exposure',
 	},
 	events: {
 		title: 'Event Analysis',
-		icon: 'TestExploreSolid',
+		icon: 'Event',
 		route: 'events',
 	},
 }

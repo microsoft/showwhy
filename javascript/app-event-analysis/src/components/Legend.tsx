@@ -36,7 +36,7 @@ export const Legend: React.FC<LegendProps> = memo(function Legend({
 				.attr('width', legendItemSize)
 				.attr('height', legendItemSize)
 				.style('fill', d => d.color)
-				.attr('opacity', BAR_TRANSPARENT)
+				.attr('opacity', d => d.opacity || BAR_TRANSPARENT)
 				.attr('transform', (d, i) => {
 					const y = yOffset + (legendItemSize + legendSpacing) * i
 					return `translate(${xOffset}, ${y})`

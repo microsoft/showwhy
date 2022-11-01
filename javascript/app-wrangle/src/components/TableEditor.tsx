@@ -10,22 +10,21 @@ import {
 	useOnCreateStep,
 	useOnDeleteStep,
 	useOnSaveStep,
-	useWorkflowOutputListener,
 } from '@datashaper/react'
 import { useInputTableNames } from '@datashaper/react/dist/hooks/useTableDropdownOptions.js'
-import type { TableContainer } from '@datashaper/tables'
 import { ToolPanel } from '@essex/components'
-import { type IColumn, CommandBar } from '@fluentui/react'
+import { CommandBar } from '@fluentui/react'
 import { useBoolean } from '@fluentui/react-hooks'
 import { useDataTableOutput } from '@showwhy/app-common'
-import upperFirst from 'lodash-es/upperFirst.js'
 import { useObservableState } from 'observable-hooks'
-import { memo, useCallback, useMemo, useState } from 'react'
-import { map } from 'rxjs'
+import { memo, useMemo, useState } from 'react'
 
 import {
+	useColumnState,
 	useHistoryButtonCommandBar,
+	useSelectedTable,
 	useStepListener,
+	useTableName,
 } from './TableEditor.hooks.js'
 import {
 	Container,
@@ -42,56 +41,35 @@ export const TableEditor: React.FC<TableEditorProps> = memo(
 		const [isCollapsed, { toggle: toggleCollapsed }] = useBoolean(true)
 		const table = useDataTableOutput(dataTable)
 		const workflow = dataTable.workflow
-		const [selectedTableId, setSelectedTableId] = useState<string | undefined>(
-			table?.id,
-		)
-		const [outputs, setOutputs] = useState<TableContainer[]>([])
-		const [selectedColumn, setSelectedColumn] = useState<string | undefined>()
+		const [selectedId, setSelectedId] = useState<string | undefined>(table?.id)
+		const [selectedColumn, onColumnClick] = useColumnState()
 
-		const onSave = useOnSaveStep(workflow)
-		const onCreate = useOnCreateStep(onSave, setSelectedTableId)
-		const onDelete = useOnDeleteStep(workflow)
 		const inputNames = useInputTableNames(workflow)
-		const numSteps = useObservableState(
-			workflow.steps$.pipe(map(steps => steps.length)),
+		const numSteps = useObservableState(workflow.length$, workflow.length)
+		const toolPanelHeader = useMemo(
+			() => `Workflow steps (${numSteps})`,
+			[numSteps],
 		)
-
-		const tableName = useMemo(() => {
-			const stepIndex = workflow.steps.findIndex(x => x.id === selectedTableId)
-			const name = upperFirst(workflow.steps[stepIndex]?.verb)
-			return stepIndex >= 0 ? `#${stepIndex + 1} ${name}` : selectedTableId
-		}, [workflow, selectedTableId])
-
-		const selectedTable = useMemo((): TableContainer | undefined => {
-			return (
-				(table ? [table] : [])
-					.concat(outputs)
-					.find(x => x.id === selectedTableId) ?? table
-			)
-		}, [table, selectedTableId, outputs])
-
-		useStepListener(workflow, setSelectedTableId, inputNames)
-		useWorkflowOutputListener(workflow, setOutputs)
-
-		const onColumnClick = useCallback(
-			(_?: React.MouseEvent<HTMLElement, MouseEvent>, column?: IColumn) => {
-				setSelectedColumn(column?.name)
-			},
-			[setSelectedColumn],
-		)
-
+		const tableName = useTableName(dataTable, selectedId)
+		const selectedTable = useSelectedTable(dataTable, selectedId)
 		const historyButtonCommandBar = useHistoryButtonCommandBar(
 			isCollapsed,
 			numSteps,
 			toggleCollapsed,
 		)
-
 		const tableHeaderColors = useTableHeaderColors()
 		const tableHeaderStyles = useTableHeaderStyles()
 		const tableCommandProps = useTableCommandProps()
 		const toolPanelStyles = useToolPanelStyles()
+
+		const onSave = useOnSaveStep(workflow)
+		const onCreate = useOnCreateStep(onSave, setSelectedId)
+		const onDelete = useOnDeleteStep(workflow)
+
+		useStepListener(workflow, setSelectedId, inputNames)
+
 		return selectedTable?.table == null ? null : (
-			<Container isCollapsed={isCollapsed}>
+			<Container collapsed={isCollapsed}>
 				<DetailsListContainer>
 					<ArqueroTableHeader
 						background={tableHeaderColors.background}
@@ -115,7 +93,8 @@ export const TableEditor: React.FC<TableEditorProps> = memo(
 						showColumnBorders
 						isHeaderFixed
 						fill
-						clickableColumns={!!onColumnClick}
+						clickableColumns
+						onColumnHeaderClick={onColumnClick}
 						selectedColumn={selectedColumn}
 						onColumnClick={onColumnClick}
 						metadata={selectedTable.metadata}
@@ -123,16 +102,15 @@ export const TableEditor: React.FC<TableEditorProps> = memo(
 					/>
 				</DetailsListContainer>
 				<ToolPanel
-					headerText={`Workflow steps (${workflow.steps.length})`}
+					headerText={toolPanelHeader}
 					onDismiss={toggleCollapsed}
-					headerIconProps={{
-						iconName: 'History',
-					}}
+					headerIconProps={HISTORY_ICON_PROPS}
 					styles={toolPanelStyles}
 				>
 					<StepHistoryList
 						onDelete={onDelete}
-						onSelect={setSelectedTableId}
+						onSelect={setSelectedId}
+						key={selectedId}
 						workflow={workflow}
 						onSave={onSave}
 					/>
@@ -141,3 +119,7 @@ export const TableEditor: React.FC<TableEditorProps> = memo(
 		)
 	},
 )
+
+const HISTORY_ICON_PROPS = {
+	iconName: 'History',
+}

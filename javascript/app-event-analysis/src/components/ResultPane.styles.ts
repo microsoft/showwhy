@@ -31,7 +31,8 @@ export const StyledStack = styled(Stack)`
 	}
 
 	.last-item-margin {
-		padding-bottom: 1rem;
+		margin-bottom: 2rem;
+		display: inline-block;
 	}
 
 	.infoItem {
@@ -44,6 +45,7 @@ export const StyledStack = styled(Stack)`
 	}
 
 	.infoText {
+		line-height: 1.4;
 		.negative {
 			color: #991d32;
 		}
@@ -98,7 +100,7 @@ export const StyledStack = styled(Stack)`
 
 	.control-label {
 		color: ${({ theme }: { theme: Theme }) =>
-			theme.scales().nominal()(1).hex()};
+			theme.scales().nominal()(3).hex()};
 	}
 `
 

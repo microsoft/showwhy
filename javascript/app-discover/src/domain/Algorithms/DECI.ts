@@ -46,8 +46,8 @@ export interface DECITrainingOptions {
 	max_steps_auglag: number
 	max_auglag_inner_epochs: number
 	learning_rate?: number
-	stardardize_data_mean?: boolean
-	stardardize_data_std?: boolean
+	standardize_data_mean?: boolean
+	standardize_data_std?: boolean
 	rho?: number
 	safety_rho?: number
 	alpha?: number

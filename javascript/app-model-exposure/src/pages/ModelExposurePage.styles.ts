@@ -8,7 +8,6 @@ export const Container = styled.div`
 	flex: 1;
 	display: flex;
 	flex-direction: column;
-	width: calc(100% - 300px);
 	height: 100%;
 `
 export const Content = styled.main`

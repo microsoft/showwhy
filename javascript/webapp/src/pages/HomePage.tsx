@@ -7,24 +7,40 @@ import {
 	DocumentCardPreview,
 	DocumentCardTitle,
 } from '@fluentui/react/lib/DocumentCard'
-import { memo } from 'react'
+import { memo, useCallback } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import { topLevelQuestionCards } from './HomePage.constants.js'
 import {
 	Container,
 	documentCardStyle,
 	documentCardTitleStyles,
+	documentPreviewStyle,
 } from './HomePage.styles.js'
 
 const HomePage: React.FC = memo(function HomePage() {
+	const navigate = useNavigate()
+
+	const onClick = useCallback(
+		(route: string) => {
+			navigate(route)
+		},
+		[navigate],
+	)
+
 	const cards = topLevelQuestionCards.map(d => (
 		<DocumentCard
 			key={d.questionType}
-			onClickHref={d.href}
+			onClick={() => onClick(d.href)}
 			style={documentCardStyle}
 		>
-			<DocumentCardPreview {...d.previewProps} />
-			<DocumentCardTitle title={d.title} styles={documentCardTitleStyles} />
+			<DocumentCardPreview styles={documentPreviewStyle} {...d.previewProps} />
+			<DocumentCardTitle title={d.heroTitle} styles={documentCardTitleStyles} />
+			<DocumentCardTitle
+				showAsSecondaryTitle
+				title={d.title}
+				styles={documentCardTitleStyles}
+			/>
 		</DocumentCard>
 	))
 	return <Container>{cards}</Container>

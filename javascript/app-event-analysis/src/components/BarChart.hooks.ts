@@ -29,22 +29,41 @@ export function useData(
 	legendData: LegendData[]
 } {
 	const colors = useColors()
+	const treatedUnit = inputData.find(element =>
+		treatedUnits.some(unit => element.name.includes(unit)),
+	)
+
+	const treatedUnitLegend = useMemo<LegendData>(() => {
+		const isNegative = (treatedUnit?.label ?? 0) < 0
+		return {
+			name: `Treated unit with ${isNegative ? 'negative' : 'positive'} effect`,
+			color: colors.get(isNegative ? 'negative' : 'normal'),
+		}
+	}, [colors, treatedUnit])
 	return useMemo(() => {
 		const inputBars: BarData[] = []
 		let color = colors.get('control-units')
+		const opacity = {
+			treatedUnit: 1,
+			unit: 0.7,
+		}
+
 		inputData.forEach(element => {
 			if (isPlaceboSimulation) {
-				color = treatedUnits.some(unit => element.name.includes(unit))
-					? colors.get('highlight')
-					: (element.label as number) < 0
-					? colors.get('negative')
-					: colors.get('normal')
+				color =
+					(element.label as number) < 0
+						? colors.get('negative')
+						: colors.get('normal')
 			}
 			inputBars.push({
 				name: element.name,
 				value: element.value,
 				label: element.label,
-				color: color,
+				color,
+				opacity:
+					element.name === treatedUnit?.name
+						? opacity.treatedUnit
+						: opacity.unit,
 			})
 		})
 
@@ -57,17 +76,16 @@ export function useData(
 			  ]
 			: [
 					{
-						name: 'Treated unit',
-						color: colors.get('highlight'),
-					},
-					{
-						name: 'Units with negative effect',
+						name: 'Placebo unit with negative effect',
 						color: colors.get('negative'),
+						opacity: opacity.unit,
 					},
 					{
-						name: 'Units with positive effect',
-						color: colors.get('positive'),
+						name: 'Placebo unit with positive effect',
+						color: colors.get('normal'),
+						opacity: opacity.unit,
 					},
+					treatedUnitLegend,
 			  ]
 
 		const allValues = inputData.map(dataElement => dataElement.value)
@@ -83,7 +101,7 @@ export function useData(
 			maxValue,
 			legendData,
 		}
-	}, [colors, inputData, treatedUnits, isPlaceboSimulation])
+	}, [colors, treatedUnit, treatedUnitLegend, inputData, isPlaceboSimulation])
 }
 
 export function useLegends(
