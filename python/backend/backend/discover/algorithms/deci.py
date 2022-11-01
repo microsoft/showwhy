@@ -87,6 +87,7 @@ class DeciRunner(CausalDiscoveryRunner):
         # make sure every run has its own folder
         self._deci_save_dir = f"CauseDisDECIDir/{uuid()}"
         self._is_dag = None
+        self._device = get_torch_device("gpu")
 
     def _build_causica_dataset(self) -> Dataset:
         self._transform_categorical_nominal_to_continuous()
@@ -119,7 +120,7 @@ class DeciRunner(CausalDiscoveryRunner):
             "CauseDisDECI",
             causica_dataset.variables,
             self._deci_save_dir,
-            get_torch_device("gpu"),
+            self._device,
             **self._model_options.dict(),
         )
         constraint_matrix = self._build_constraint_matrix(
@@ -226,27 +227,33 @@ class DeciRunner(CausalDiscoveryRunner):
         num_columns = self._prepared_data.shape[1]
         intervention_mask = torch.cat(
             (
-                torch.zeros(math.ceil(num_columns / 2), dtype=torch.bool),
-                torch.ones(math.floor(num_columns / 2), dtype=torch.bool),
+                torch.zeros(
+                    math.ceil(num_columns / 2), dtype=torch.bool, device=self._device
+                ),
+                torch.ones(
+                    math.floor(num_columns / 2), dtype=torch.bool, device=self._device
+                ),
             ),
             0,
         )
-        intervention_values = torch.rand(math.floor(num_columns / 2))
+        intervention_values = torch.rand(
+            math.floor(num_columns / 2), device=self._device
+        )
         # TODO: looks like onnx does not support categorical features
         # we should look into it
         gumbel_max_regions = torch.LongTensor(
             deci_model.variables.processed_cols_by_type["categorical"]
-        )
+        ).to(self._device)
         gt_zero_region = torch.LongTensor(
             [
                 j
                 for i in deci_model.variables.processed_cols_by_type["binary"]
                 for j in i
             ]
-        )
+        ).to(self._device)
         deci_inference_inputs = (
-            torch.rand([1, num_columns]),
-            torch.from_numpy(adj_matrix).float(),
+            torch.rand([1, num_columns], device=self._device),
+            torch.from_numpy(adj_matrix).float().to(self._device),
             intervention_mask,
             intervention_values,
             gumbel_max_regions,
