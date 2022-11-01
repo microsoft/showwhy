@@ -8,7 +8,22 @@
             "metadata": {
                 "source": "https://www.hsph.harvard.edu/miguel-hernan/causal-inference-book/",
                 "citation": "Hernán MA, Robins JM (2020). Causal Inference: What If. Boca Raton: Chapman & Hall/CRC"
-            }
+            },
+            "sources": [
+                {
+                    "profile": "workflow",
+                    "steps": [
+                        {
+                            "verb": "rename",
+                            "args": {
+                                "columns": {
+                                    "sex": "sex (female)"
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
         },
         {
             "profile": "datatable",
@@ -34,7 +49,7 @@
                             "args": {
                                 "columns": [
                                     "index",
-                                    "sex",
+                                    "sex (female)",
                                     "age",
                                     "race",
                                     "education",
@@ -50,33 +65,28 @@
                             "verb": "select"
                         },
                         {
+                            "verb": "rename",
                             "args": {
                                 "columns": {
-                                    "sex": "sex",
-                                    "age": "age",
-                                    "race": "race",
-                                    "education": "education",
                                     "wt71": "weight_1971",
                                     "wt82_71": "weight_change",
                                     "smokeintensity": "smoke_intensity_1971",
                                     "smkintensity82_71": "smoke_intensity_change",
-                                    "active": "active",
-                                    "exercise": "exercise",
                                     "smokeyrs": "smoke_years"
                                 }
-                            },
-                            "verb": "rename"
+                            }
                         },
                         {
+                            "verb": "derive",
                             "args": {
                                 "to": "smoke_intensity_change_pct",
                                 "column1": "smoke_intensity_change",
                                 "operator": "/",
                                 "column2": "smoke_intensity_1971"
-                            },
-                            "verb": "derive"
+                            }
                         },
                         {
+                            "verb": "binarize",
                             "args": {
                                 "to": "smoke_reduction_25pct",
                                 "column": "smoke_intensity_change_pct",
@@ -87,10 +97,10 @@
                                         "value": "-0.25"
                                     }
                                 ]
-                            },
-                            "verb": "binarize"
+                            }
                         },
                         {
+                            "verb": "binarize",
                             "args": {
                                 "to": "smoke_reduction_50pct",
                                 "column": "smoke_intensity_change_pct",
@@ -101,10 +111,10 @@
                                         "value": "-0.5"
                                     }
                                 ]
-                            },
-                            "verb": "binarize"
+                            }
                         },
                         {
+                            "verb": "binarize",
                             "args": {
                                 "to": "smoke_reduction_75pct",
                                 "column": "smoke_intensity_change_pct",
@@ -115,10 +125,10 @@
                                         "value": "-0.75"
                                     }
                                 ]
-                            },
-                            "verb": "binarize"
+                            }
                         },
                         {
+                            "verb": "binarize",
                             "args": {
                                 "to": "quit_smoking",
                                 "column": "smoke_intensity_change_pct",
@@ -129,10 +139,10 @@
                                         "value": "-1"
                                     }
                                 ]
-                            },
-                            "verb": "binarize"
+                            }
                         },
                         {
+                            "verb": "binarize",
                             "args": {
                                 "to": "subject_inclusion",
                                 "column": "weight_change",
@@ -141,18 +151,17 @@
                                         "operator": "is not empty"
                                     }
                                 ]
-                            },
-                            "verb": "binarize"
+                            }
                         },
                         {
+                            "verb": "convert",
                             "args": {
                                 "type": "float",
                                 "formatPattern": "%Y-%m-%d",
                                 "columns": [
                                     "weight_change"
                                 ]
-                            },
-                            "verb": "convert"
+                            }
                         }
                     ]
                 }
@@ -232,7 +241,7 @@
                                     "qsmk",
                                     "sbp",
                                     "school",
-                                    "sex",
+                                    "sex (female)",
                                     "smkintensity82_71",
                                     "smokeintensity",
                                     "smokeyrs",
