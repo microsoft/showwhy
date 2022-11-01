@@ -233,7 +233,7 @@ export function useRunButtonMenuItem() {
 		await run()
 		if (isFirstRun) {
 			setIsFirstRun(false)
-			layoutGraph()
+			await layoutGraph()
 		}
 	}, [run, isFirstRun, setIsFirstRun, layoutGraph])
 
