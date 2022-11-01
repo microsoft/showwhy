@@ -11,13 +11,13 @@ export const defaultTrainingSpinningOptions = [
 		inputProps: { name: 'max_steps_auglag' },
 		step: 10,
 		min: 10,
-		max: 100,
+		max: 250,
 	},
 	{
 		label: 'Max auglag inner epochs',
 		inputProps: { name: 'max_auglag_inner_epochs' },
 		step: 100,
 		min: 100,
-		max: 2000,
+		max: 5000,
 	},
 ] as ISpinButtonProps[]
