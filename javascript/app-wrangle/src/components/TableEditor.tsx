@@ -38,12 +38,14 @@ import type { TableEditorProps } from './TableEditor.types.js'
 
 export const TableEditor: React.FC<TableEditorProps> = memo(
 	function TableEditor({ dataTable }) {
+		// Primary State
 		const [isCollapsed, { toggle: toggleCollapsed }] = useBoolean(true)
 		const table = useDataTableOutput(dataTable)
 		const workflow = dataTable.workflow
 		const [selectedId, setSelectedId] = useState<string | undefined>(table?.id)
 		const [selectedColumn, onColumnClick] = useColumnState()
 
+		// Derived State
 		const inputNames = useInputTableNames(workflow)
 		const numSteps = useObservableState(workflow.length$, workflow.length)
 		const toolPanelHeader = useMemo(
@@ -62,10 +64,12 @@ export const TableEditor: React.FC<TableEditorProps> = memo(
 		const tableCommandProps = useTableCommandProps()
 		const toolPanelStyles = useToolPanelStyles()
 
+		// Event Handlers
 		const onSave = useOnSaveStep(workflow)
 		const onCreate = useOnCreateStep(onSave, setSelectedId)
 		const onDelete = useOnDeleteStep(workflow)
 
+		// Side Effects
 		useStepListener(workflow, setSelectedId, inputNames)
 
 		return selectedTable?.table == null ? null : (

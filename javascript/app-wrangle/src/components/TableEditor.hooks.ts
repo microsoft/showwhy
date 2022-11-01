@@ -2,10 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import {
-	useHeaderCommandBarDefaults,
-	useWorkflowOutputListener,
-} from '@datashaper/react'
+import { useHeaderCommandBarDefaults } from '@datashaper/react'
 import type { TableContainer } from '@datashaper/tables'
 import type { DataTable, Workflow } from '@datashaper/workflow'
 import type {
@@ -13,7 +10,6 @@ import type {
 	ICommandBarItemProps,
 	ICommandBarProps,
 } from '@fluentui/react'
-import { useDataTableOutput } from '@showwhy/app-common'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 
 import {
@@ -26,17 +22,17 @@ export function useSelectedTable(
 	dataTable: DataTable,
 	selectedTableId: string | undefined,
 ): TableContainer | undefined {
-	const defaultValue = useDataTableOutput(dataTable)
-	const [outputs, setOutputs] = useState<TableContainer[]>([])
-	useWorkflowOutputListener(dataTable.workflow, setOutputs)
-
 	return useMemo((): TableContainer | undefined => {
-		return (
-			(defaultValue ? [defaultValue] : [])
-				.concat(outputs)
-				.find(x => x.id === selectedTableId) ?? defaultValue
-		)
-	}, [defaultValue, selectedTableId, outputs])
+		if (dataTable.name === selectedTableId) {
+			// if we select the original table name, use the workflow default input
+			return { table: dataTable.source, id: selectedTableId ?? '' }
+		} else {
+			// try to use the given table name to read the step, otherwise use the default output
+			const table = dataTable.workflow.read(selectedTableId)
+			const defaultOutput = dataTable.workflow.read()
+			return table ?? defaultOutput
+		}
+	}, [dataTable, selectedTableId])
 }
 
 export function useColumnState(): [
