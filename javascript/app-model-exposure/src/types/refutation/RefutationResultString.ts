@@ -4,7 +4,7 @@
  */
 
 export enum RefutationResultString {
-	NotCompleted = 'Validation in progress',
+	NotCompleted = 'Awaiting validation',
 	FailedCritical = 'Failed validation',
 	PassedAll = 'Passed validation',
 }
