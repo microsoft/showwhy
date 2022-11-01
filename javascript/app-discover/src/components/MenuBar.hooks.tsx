@@ -24,6 +24,7 @@ import {
 	AutoRunState,
 	DatasetNameState,
 	DatasetStatisticsState,
+	FirstRunState,
 	FixedInterventionRangesEnabledState,
 	useCausalDiscoveryRunner,
 	useLayoutGraph,
@@ -219,16 +220,26 @@ export function useAutoLayoutButtonMenuItem() {
 }
 
 export function useRunButtonMenuItem() {
+	const layoutGraph = useLayoutGraph()
 	const [autoRun, setAutoRun] = useRecoilState(AutoRunState)
+	const [isFirstRun, setIsFirstRun] = useRecoilState(FirstRunState)
 	const { run, isLoading, stop } = useCausalDiscoveryRunner()
 	const isRunning = useMemo<boolean>(
 		() => isLoading || autoRun,
 		[isLoading, autoRun],
 	)
 
+	const onRun = useCallback(async () => {
+		await run()
+		if (isFirstRun) {
+			setIsFirstRun(false)
+			await layoutGraph()
+		}
+	}, [run, isFirstRun, setIsFirstRun, layoutGraph])
+
 	const handleClick = useCallback(() => {
-		void (isRunning ? stop() : run())
-	}, [run, stop, isRunning])
+		void (isRunning ? stop() : onRun())
+	}, [onRun, stop, isRunning])
 
 	const menuProps = useMemo<IContextualMenuProps>(
 		() => ({

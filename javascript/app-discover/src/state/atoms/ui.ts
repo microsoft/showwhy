@@ -74,6 +74,10 @@ export const AutoLayoutState = atom<boolean>({
 	key: 'AutoLayoutState',
 	default: false,
 })
+export const FirstRunState = atom<boolean>({
+	key: 'FirstRunState',
+	default: true,
+})
 
 export const CurrentLayoutState = atom<ElkNode | undefined>({
 	key: 'CurrentLayoutState',
