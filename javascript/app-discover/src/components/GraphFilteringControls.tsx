@@ -25,14 +25,6 @@ export const GraphFilteringControls = memo(function GraphFilteringControls() {
 	const [fixedInterventionRangesEnabled, setFixedInterventionRangesEnabled] =
 		useRecoilState(FixedInterventionRangesEnabledState)
 	const causalGraph = useCausalGraph()
-
-	const minWeight = useMemo((): any => {
-		return causalGraph.relationships.reduce(
-			(min, p) =>
-				(p?.weight || 0) < min ? +(p.weight?.toFixed(2) ?? 0) ?? 0 : min,
-			0,
-		)
-	}, [causalGraph])
 	const maxWeight = useMemo((): any => {
 		return causalGraph.relationships.reduce(
 			(max, p) => ((p?.weight || 0) > max ? +(p.weight?.toFixed(2) ?? 0) : max),
@@ -46,11 +38,9 @@ export const GraphFilteringControls = memo(function GraphFilteringControls() {
 				label={'Correlation visibility threshold'}
 				thresholdState={CorrelationThresholdState}
 				defaultStyling
-				min={-1}
 			/>
 			{selectedCausalDiscoveryAlgorithm !== CausalDiscoveryAlgorithm.PC && (
 				<ThresholdSlider
-					min={minWeight}
 					max={maxWeight}
 					label={'Edge weight threshold'}
 					thresholdState={WeightThresholdState}
@@ -67,7 +57,7 @@ export const GraphFilteringControls = memo(function GraphFilteringControls() {
 					<Checkbox
 						label="Fixed intervention ranges"
 						checked={fixedInterventionRangesEnabled}
-						onChange={(e, v) => setFixedInterventionRangesEnabled(Boolean(v))}
+						onChange={(_, v) => setFixedInterventionRangesEnabled(Boolean(v))}
 					/>
 				</>
 			)}
