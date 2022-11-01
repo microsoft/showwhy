@@ -89,6 +89,7 @@ class DeciRunner(CausalDiscoveryRunner):
         self._is_dag = None
 
     def _build_causica_dataset(self) -> Dataset:
+        self._transform_categorical_nominal_to_continuous()
         numpy_data = self._prepared_data.to_numpy()
         data_mask = np.ones(numpy_data.shape)
 

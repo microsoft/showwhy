@@ -23,6 +23,8 @@ class PCRunner(CausalDiscoveryRunner):
         super().__init__(p, progress_callback)
 
     def do_causal_discovery(self) -> CausalGraph:
+        self._transform_categorical_nominal_to_continuous()
+
         n = PC(alpha=0.2)
         n.learn(self._prepared_data.to_numpy())
         graph_gc = networkx.DiGraph(n.causal_matrix)
