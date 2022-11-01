@@ -29,7 +29,7 @@ export const CorrelationEdge: React.FC<CorrelationEdgeProps> = memo(
 				key={correlation.key + '-correlation'}
 				labels={
 					<div style={{ fontSize: '8pt' }}>
-						ρ={correlation.weight.toFixed(2)}
+						corr={correlation.weight.toFixed(2)}
 					</div>
 				}
 				dashness={{ strokeLen: 10, nonStrokeLen: 10 }}

@@ -8,6 +8,7 @@ import type { SetterOrUpdater } from 'recoil'
 import type { CausalDiscoveryConstraints } from '../../domain/CausalDiscovery/CausalDiscoveryConstraints.js'
 import type { Relationship } from '../../domain/Relationship.js'
 import {
+	arrayIncludesRelationship,
 	hasSameSourceAndTarget,
 	isInverseRemoved,
 	ManualRelationshipReason,
@@ -117,7 +118,7 @@ export function useOnRemoveAll(
 			})
 
 			const clearConstraints = constraints.manualRelationships.filter(
-				x => !newList.map(a => a.key).includes(x.key),
+				x => !arrayIncludesRelationship(newList, x),
 			)
 
 			onUpdateConstraints({
