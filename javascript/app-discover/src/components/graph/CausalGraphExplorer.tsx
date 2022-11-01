@@ -5,6 +5,7 @@
 import { memo, useEffect, useRef } from 'react'
 import { useXarrow, Xwrapper } from 'react-xarrows'
 import {
+	useRecoilState,
 	useRecoilValue,
 	useRecoilValueLoadable,
 	useSetRecoilState,
@@ -14,6 +15,7 @@ import type { CausalVariable } from '../../domain/CausalVariable.jsx'
 import * as Graph from '../../domain/Graph.jsx'
 import { hasSameOrInvertedSourceAndTarget } from '../../domain/Relationship.jsx'
 import {
+	AutoLayoutState,
 	CausalDiscoveryResultsState,
 	ConfidenceThresholdState,
 	CurrentLayoutState,
@@ -44,6 +46,7 @@ export const CausalGraphExplorer = memo(function CausalGraphExplorer() {
 	).normalizedColumnsMetadata
 
 	const weightThreshold = useRecoilValue(WeightThresholdState)
+	const autoLayout = useRecoilValue(AutoLayoutState)
 	const confidenceThreshold = useRecoilValue(ConfidenceThresholdState)
 	const causalRelationships = Graph.relationshipsAboveThresholds(
 		causalGraph,
@@ -70,11 +73,17 @@ export const CausalGraphExplorer = memo(function CausalGraphExplorer() {
 				),
 		)
 	const bounds = useGraphBounds()
-	const currentLayout = useRecoilValue(CurrentLayoutState)
+	const [currentLayout, setCurrentLayout] = useRecoilState(CurrentLayoutState)
 	const updateXarrow = useXarrow()
-
 	const layoutTransitionTime = 1000
 	const animationRequest = useRef(0)
+
+	useEffect(() => {
+		if (!autoLayout && currentLayout) {
+			setCurrentLayout(undefined)
+		}
+	}, [autoLayout, currentLayout, setCurrentLayout])
+
 	useEffect(() => {
 		const animation = () => {
 			updateXarrow()
