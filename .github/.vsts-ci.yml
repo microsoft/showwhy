@@ -38,12 +38,47 @@ stages:
               ArtifactName: 'CodeAnalysisLogs'
               ArtifactType: 'Container'
 
+  - stage: DeployDevBuildFrontendImages
+    displayName: Dev Deploy - Frontend Images
+    dependsOn: []
+    condition: and(eq(variables.enableDeploy, 'true'), or(eq(variables.isMainBranch, 'true'), eq(variables.forceDevDeployment, 'true')))
+    jobs:
+    - template: jobs/cd-frontend.yml
+      parameters:
+        name: "DeployDevBuildFrontendImagesJob"
+        subscription: "$(subscription)"
+        containerRegistry: "$(dev-container-registry)"
+
+  - stage: DeployDevBuildBackendImages
+    displayName: Dev Deploy - Backend Images
+    dependsOn: []
+    condition: and(eq(variables.enableDeploy, 'true'), or(eq(variables.isMainBranch, 'true'), eq(variables.forceDevDeployment, 'true')))
+    jobs:
+    - template: jobs/cd-backend.yml
+      parameters:
+        name: "DeployDevBuildBackendImagesJob"
+        subscription: "$(subscription)"
+        containerRegistry: "$(dev-container-registry)"
+
+  - stage: DeployDevHelmCharts
+    displayName: Deploy Dev Helm Charts
+    dependsOn:
+      - DeployDevBuildFrontendImages
+      - DeployDevBuildBackendImages
+    condition: and(eq(variables.enableDeploy, 'true'), and(succeeded(), or(eq(variables.isMainBranch, 'true'), eq(variables.forceDevDeployment, 'true'))))
+    jobs:
+      - template: jobs/cd-helm.yml
+        parameters:
+          name: "DeployDevHelmChartsJob"
+          subscription: "$(subscription)"
+          aksClusterName: "$(dev-aks-cluster-name)"
+          aksResourceGroup: "$(dev-aks-resource-group)"
+          valueFile: "config/helm/causal-services/values.dev.yaml"
 
   - stage: DeployProdBuildFrontendImages
     displayName: Prod Deploy - Frontend Images
     dependsOn: []
-    # change to isProdBranch
-    condition: and(eq(variables.enableDeploy, 'true'), eq(variables.isMainBranch, 'true'))
+    condition: and(eq(variables.enableDeploy, 'true'), eq(variables.isProdBranch, 'true'))
     jobs:
     - template: jobs/cd-frontend.yml
       parameters:
@@ -54,8 +89,7 @@ stages:
   - stage: DeployProdBuildBackendImages
     displayName: Prod Deploy - Backend Images
     dependsOn: []
-    # change to isProdBranch
-    condition: and(eq(variables.enableDeploy, 'true'), eq(variables.isMainBranch, 'true'))
+    condition: and(eq(variables.enableDeploy, 'true'), eq(variables.isProdBranch, 'true'))
     jobs:
     - template: jobs/cd-backend.yml
       parameters:
@@ -68,8 +102,7 @@ stages:
     dependsOn:
       - DeployProdBuildFrontendImages
       - DeployProdBuildBackendImages
-    # change to isProdBranch
-    condition: and(eq(variables.enableDeploy, 'true'), and(succeeded(), eq(variables.isMainBranch, 'true')))
+    condition: and(eq(variables.enableDeploy, 'true'), and(succeeded(), eq(variables.isProdBranch, 'true')))
     jobs:
       - template: jobs/cd-helm.yml
         parameters:
