@@ -16,7 +16,7 @@ export const ThresholdSlider: React.FC<ThresholdSliderProps> = memo(
 		thresholdState,
 		defaultStyling,
 		min = 0,
-		max = 1,
+		max = 1.0,
 	}) {
 		const [threshold, setThreshold] = useRecoilState(thresholdState)
 
