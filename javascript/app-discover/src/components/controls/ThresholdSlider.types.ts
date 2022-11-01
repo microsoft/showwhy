@@ -9,4 +9,6 @@ export interface ThresholdSliderProps {
 	width?: number
 	thresholdState: RecoilState<number>
 	defaultStyling?: boolean
+	min?: number
+	max?: number
 }
