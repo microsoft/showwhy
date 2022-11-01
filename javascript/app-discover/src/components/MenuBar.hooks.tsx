@@ -83,6 +83,8 @@ export function useViewMenuItems(
 	setView: (s: GraphViewStates) => void,
 	useStraightEdges: boolean,
 	setUseStraightEdges: (v: boolean) => void,
+	showPanels: boolean,
+	setShowPanels: (v: boolean) => void,
 ): ICommandBarItemProps {
 	const buttonStyles = useMenuButtonStyles()
 	return useMemo(
@@ -140,10 +142,28 @@ export function useViewMenuItems(
 							/>
 						),
 					},
+					{
+						key: 'show-panels-Checkbox',
+						onRender: () => (
+							<Checkbox
+								label="Show side panels"
+								checked={showPanels}
+								onChange={(e, v) => setShowPanels(Boolean(v))}
+							/>
+						),
+					},
 				],
 			},
 		}),
-		[view, setView, useStraightEdges, setUseStraightEdges, buttonStyles],
+		[
+			view,
+			setView,
+			useStraightEdges,
+			setUseStraightEdges,
+			buttonStyles,
+			showPanels,
+			setShowPanels,
+		],
 	)
 }
 

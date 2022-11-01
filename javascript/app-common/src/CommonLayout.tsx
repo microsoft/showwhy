@@ -4,8 +4,8 @@
  */
 import 'allotment/dist/style.css'
 
-import { Allotment } from 'allotment'
-import { memo } from 'react'
+import { Allotment, AllotmentHandle } from 'allotment'
+import { memo, useCallback, useRef } from 'react'
 
 import { RAIL_MAX_SIZE, RAIL_PREFERRED_SIZE } from './CommonLayout.constants.js'
 import {
@@ -18,29 +18,47 @@ import {
 import type { CommonLayoutProps } from './CommonLayout.types.js'
 
 export const CommonLayout: React.FC<CommonLayoutProps> = memo(
-	function CommonLayout({ children, configRail, detailRail, menu }) {
+	function CommonLayout({
+		children,
+		configRail,
+		detailRail,
+		menu,
+		panelsVisibility = true,
+	}) {
+		const ref = useRef<AllotmentHandle>(null)
+		const onVisibilityChange = useCallback(
+			(_: number, visible: boolean) => {
+				debugger
+
+				if (visible) {
+					ref.current?.resize([300, 300, 300])
+				}
+			},
+			[ref],
+		)
+
 		return (
 			<Container>
 				{menu}
 				<MainArea>
-					<Allotment>
+					<Allotment onVisibleChange={onVisibilityChange}>
 						{configRail != null ? (
 							<Allotment.Pane
 								preferredSize={RAIL_PREFERRED_SIZE}
 								maxSize={RAIL_MAX_SIZE}
+								// visible={panelsVisibility}
 							>
 								<LeftRail>{configRail}</LeftRail>
 							</Allotment.Pane>
 						) : null}
 						<Content>{children}</Content>
-						{detailRail != null ? (
-							<Allotment.Pane
-								preferredSize={RAIL_PREFERRED_SIZE}
-								maxSize={RAIL_MAX_SIZE}
-							>
-								<RightRail>{detailRail}</RightRail>
-							</Allotment.Pane>
-						) : null}
+						<Allotment.Pane
+							preferredSize={RAIL_PREFERRED_SIZE}
+							maxSize={RAIL_MAX_SIZE}
+							visible={panelsVisibility}
+						>
+							<RightRail>{detailRail}</RightRail>
+						</Allotment.Pane>
 					</Allotment>
 				</MainArea>
 			</Container>
