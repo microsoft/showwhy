@@ -26,10 +26,9 @@ export const GraphFilteringControls = memo(function GraphFilteringControls() {
 		useRecoilState(FixedInterventionRangesEnabledState)
 	const causalGraph = useCausalGraph()
 	const maxWeight = useMemo((): any => {
-		return causalGraph.relationships.reduce(
-			(max, p) => ((p?.weight || 0) > max ? +(p.weight?.toFixed(2) ?? 0) : max),
-			1,
-		)
+		return causalGraph.relationships
+			.reduce((max, p) => ((p?.weight || 0) > max ? +(p.weight ?? 0) : max), 1)
+			.toFixed(2)
 	}, [causalGraph])
 
 	return (
