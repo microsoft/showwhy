@@ -6,12 +6,12 @@ import { useCallback } from 'react'
 import type { SetterOrUpdater } from 'recoil'
 
 import type { CausalDiscoveryConstraints } from '../../domain/CausalDiscovery/CausalDiscoveryConstraints.js'
+import type { Relationship } from '../../domain/Relationship.js'
 import {
 	arrayIncludesRelationship,
 	hasSameSourceAndTarget,
 	isInverseRemoved,
 	ManualRelationshipReason,
-	Relationship,
 } from '../../domain/Relationship.js'
 import type {
 	CausalVariable,
