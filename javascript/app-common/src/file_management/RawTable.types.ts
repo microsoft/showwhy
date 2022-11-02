@@ -12,6 +12,5 @@ export const RawTableDefaultFeatures = {
 
 export interface RawTableProps extends ArqueroDetailsListProps {
 	table: ColumnTable
-	label?: string
 	error?: string
 }

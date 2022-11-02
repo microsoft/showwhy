@@ -19,7 +19,6 @@ export const TablePreview: React.FC<{
 		<Container>
 			{table && (
 				<RawTable
-					label="Preview"
 					features={{
 						...RawTableDefaultFeatures,
 						statsColumnHeaders: showType,

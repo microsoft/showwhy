@@ -149,7 +149,7 @@ export function useFileManagementCommands(
 				onSaveCommands,
 				theme,
 			),
-		[hasDataPackages, expanded, onOpenCommands, onSaveCommands],
+		[theme, hasDataPackages, expanded, onOpenCommands, onSaveCommands],
 	)
 
 	return { commands, onOpenCommands, onSaveCommands }

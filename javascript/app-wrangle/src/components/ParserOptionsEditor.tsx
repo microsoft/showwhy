@@ -29,6 +29,8 @@ import {
 	FieldContainer,
 	Grid,
 	ParserOptionsContainer,
+	PreviewContainer,
+	PreviewLabel,
 	RadioBoxLabel,
 	spinButtonStyles,
 	tabeLayoutOptionsStyle,
@@ -75,115 +77,120 @@ export const ParserOptionsEditor: React.FC<{ dataTable: DataTable }> = memo(
 		)
 
 		return (
-			<ParserOptionsContainer>
-				<TableFormatContainer>
-					{dataTable?.format === DataFormat.CSV ? (
-						<Grid>
-							<Container>
-								<RadioBoxLabel>Delimiter</RadioBoxLabel>
-								<TableDelimiterOptions
-									selected={dataTable.parser?.delimiter}
-									onChange={(delim: string) =>
-										onChangeParser(delim, 'delimiter')
-									}
-								/>
-							</Container>
-							<Container>
-								<RadioBoxLabel>Line terminator</RadioBoxLabel>
-								<ChoiceGroup
-									disabled
-									title="Option temporarily disabled"
-									selectedKey={dataTable.parser.lineTerminator}
-									options={lineTerminatorOptions}
-									onChange={(_, option) =>
-										onChangeParser(option?.key, 'lineTerminator')
-									}
-									styles={choiceGroupStyles}
-								/>
-							</Container>
-							<FieldContainer>
-								<TextField
-									label="Quote char"
-									styles={textFieldStyles}
-									disabled
-									title="Option temporarily disabled"
-									onChange={(_, value) => onChangeParser(value, 'quoteChar')}
-									value={dataTable.parser.quoteChar}
-								></TextField>
-								<TextField
-									styles={textFieldStyles}
-									label="Escape char"
-									disabled
-									title="Option temporarily disabled"
-									onChange={(_, value) => onChangeParser(value, 'escapeChar')}
-									value={dataTable.parser.escapeChar}
-								></TextField>
-								<TextField
-									label="Comment"
-									styles={textFieldStyles}
-									onChange={(_, value) => {
-										onChangeParser(value || undefined, 'comment')
-									}}
-									value={dataTable.parser.comment || ''}
-								></TextField>
-								<SpinButton
-									styles={spinButtonStyles}
-									labelPosition={Position.top}
-									label="Skip rows"
-									value={dataTable.parser.skipRows.toString()}
-									min={0}
-									step={1}
-									onChange={(_, value) =>
-										onChangeParser(+(value as string), 'skipRows')
-									}
-									incrementButtonAriaLabel="Increase value by 1"
-									decrementButtonAriaLabel="Decrease value by 1"
-								/>
-								<SpinButton
-									styles={spinButtonStyles}
-									labelPosition={Position.top}
-									label="Read rows"
-									value={dataTable.parser.readRows.toString()}
-									min={0}
-									step={1}
-									onChange={(_, value) =>
-										onChangeParser(+(value as string), 'readRows')
-									}
-									incrementButtonAriaLabel="Increase value by 1"
-									decrementButtonAriaLabel="Decrease value by 1"
-								/>
-							</FieldContainer>
+			<Container>
+				<ParserOptionsContainer>
+					<TableFormatContainer>
+						{dataTable?.format === DataFormat.CSV ? (
+							<Grid>
+								<Container>
+									<RadioBoxLabel>Delimiter</RadioBoxLabel>
+									<TableDelimiterOptions
+										selected={dataTable.parser?.delimiter}
+										onChange={(delim: string) =>
+											onChangeParser(delim, 'delimiter')
+										}
+									/>
+								</Container>
+								<Container>
+									<RadioBoxLabel>Line terminator</RadioBoxLabel>
+									<ChoiceGroup
+										disabled
+										title="Option temporarily disabled"
+										selectedKey={dataTable.parser.lineTerminator}
+										options={lineTerminatorOptions}
+										onChange={(_, option) =>
+											onChangeParser(option?.key, 'lineTerminator')
+										}
+										styles={choiceGroupStyles}
+									/>
+								</Container>
+								<FieldContainer>
+									<TextField
+										label="Quote char"
+										styles={textFieldStyles}
+										disabled
+										title="Option temporarily disabled"
+										onChange={(_, value) => onChangeParser(value, 'quoteChar')}
+										value={dataTable.parser.quoteChar}
+									></TextField>
+									<TextField
+										styles={textFieldStyles}
+										label="Escape char"
+										disabled
+										title="Option temporarily disabled"
+										onChange={(_, value) => onChangeParser(value, 'escapeChar')}
+										value={dataTable.parser.escapeChar}
+									></TextField>
+									<TextField
+										label="Comment"
+										styles={textFieldStyles}
+										onChange={(_, value) => {
+											onChangeParser(value || undefined, 'comment')
+										}}
+										value={dataTable.parser.comment || ''}
+									></TextField>
+									<SpinButton
+										styles={spinButtonStyles}
+										labelPosition={Position.top}
+										label="Skip rows"
+										value={dataTable.parser.skipRows.toString()}
+										min={0}
+										step={1}
+										onChange={(_, value) =>
+											onChangeParser(+(value as string), 'skipRows')
+										}
+										incrementButtonAriaLabel="Increase value by 1"
+										decrementButtonAriaLabel="Decrease value by 1"
+									/>
+									<SpinButton
+										styles={spinButtonStyles}
+										labelPosition={Position.top}
+										label="Read rows"
+										value={dataTable.parser.readRows.toString()}
+										min={0}
+										step={1}
+										onChange={(_, value) =>
+											onChangeParser(+(value as string), 'readRows')
+										}
+										incrementButtonAriaLabel="Increase value by 1"
+										decrementButtonAriaLabel="Decrease value by 1"
+									/>
+								</FieldContainer>
 
-							<FieldContainer style={checkboxContainerStyle}>
-								<Checkbox
-									label="Skip blank lines"
-									disabled
-									title="Option temporarily disabled"
-									checked={dataTable.parser.skipBlankLines}
-									onChange={(_, value) =>
-										onChangeParser(value, 'skipBlankLines')
-									}
-								/>
-								<HeadersOption
-									headers={dataTable.parser.names}
-									headersChecked={headers}
-									toggleHeaders={toggleHeaders}
-									onChange={(value: string[] | undefined) => {
-										onChangeParser(value, 'names')
-									}}
-								/>
-							</FieldContainer>
-						</Grid>
-					) : (
-						<TableLayoutOptions
-							styles={tabeLayoutOptionsStyle}
-							selected={dataTable.shape.orientation}
-							onChange={onChangeOrientation}
-						/>
-					)}
-				</TableFormatContainer>
-				<Container>{table && <TablePreview table={table} />}</Container>
-			</ParserOptionsContainer>
+								<FieldContainer style={checkboxContainerStyle}>
+									<Checkbox
+										label="Skip blank lines"
+										disabled
+										title="Option temporarily disabled"
+										checked={dataTable.parser.skipBlankLines}
+										onChange={(_, value) =>
+											onChangeParser(value, 'skipBlankLines')
+										}
+									/>
+									<HeadersOption
+										headers={dataTable.parser.names}
+										headersChecked={headers}
+										toggleHeaders={toggleHeaders}
+										onChange={(value: string[] | undefined) => {
+											onChangeParser(value, 'names')
+										}}
+									/>
+								</FieldContainer>
+							</Grid>
+						) : (
+							<TableLayoutOptions
+								styles={tabeLayoutOptionsStyle}
+								selected={dataTable.shape.orientation}
+								onChange={onChangeOrientation}
+							/>
+						)}
+					</TableFormatContainer>
+				</ParserOptionsContainer>
+				<PreviewContainer>
+					<PreviewLabel>Preview</PreviewLabel>
+					{table && <TablePreview table={table} />}
+				</PreviewContainer>
+			</Container>
 		)
 	},
 )
