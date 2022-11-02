@@ -581,13 +581,27 @@ export const ResultPane: React.FC<ResultPaneProps> = memo(function ResultPane({
 								<Text variant="medium" block>
 									{placeboResult}
 								</Text>
+								<Spacer axis="vertical" size={10} />
 								<Text variant="medium" block>
+									Analysis approach based on Abadie, A., Diamond, A. &
+									Hainmueller, J. Synthetic Control Methods for Comparative Case
+									Studies:{' '}
+									<Link
+										href="https://doi.org/10.1198/jasa.2009.ap08746"
+										target="_blank"
+									>
+										Estimating the Effect of California’s Tobacco Control
+										Program
+									</Link>
+									. Journal of the American Statistical Association 105 (490),
+									493–505 (2010). Learn more in{' '}
 									<Link
 										href="https://mixtape.scunning.com/10-synthetic_control#californias-proposition-99"
 										target="_blank"
 									>
-										Learn more
+										Causal Inference: The Mixtape by Scott Cunningham
 									</Link>
+									.
 								</Text>
 							</Text>
 						)}
