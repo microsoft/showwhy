@@ -22,8 +22,7 @@ import {
 export const BindDataPage: FC = memo(function BindDataPage() {
 	const commandBar = useCommandBar()
 
-	const { tables, onSelectTableId, selectedTableName, selectedTable } =
-		useBindData()
+	const { onSelectTableId, selectedTableName, selectedTable } = useBindData()
 
 	const {
 		completedElements,
