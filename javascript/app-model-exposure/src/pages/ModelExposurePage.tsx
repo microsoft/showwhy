@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { MessageBarType, Pivot, PivotItem } from '@fluentui/react'
-import { memo, useMemo, useState } from 'react'
+import { memo, useEffect, useMemo, useState } from 'react'
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import { useXarrow, Xwrapper } from 'react-xarrows'
 
@@ -45,6 +45,11 @@ export const ModelExposurePage: React.FC = memo(function ModelExposurePage() {
 			navigate(`${route}/${item.props.itemKey as string}`)
 		}
 	}
+
+	useEffect(() => {
+		navigate(`${route}/${pageTab}`)
+		/* eslint-disable-next-line */
+	}, [])
 
 	return (
 		<Container>
