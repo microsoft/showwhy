@@ -9,7 +9,7 @@ import { memo } from 'react'
 import {
 	DatasetContainer,
 	DetailsContainer,
-	DetailsLabel,
+	DetailsListContainer,
 	DetailsText,
 	Message,
 } from './RawTable.styles.js'
@@ -19,7 +19,6 @@ import { RawTableDefaultFeatures } from './RawTable.types.js'
 export const RawTable: React.FC<RawTableProps> = memo(function RawTable({
 	table,
 	error,
-	label,
 	features = RawTableDefaultFeatures,
 	...props
 }) {
@@ -33,23 +32,24 @@ export const RawTable: React.FC<RawTableProps> = memo(function RawTable({
 
 			<DatasetContainer>
 				<DetailsContainer>
-					<DetailsLabel>{label}</DetailsLabel>
 					<DetailsText>
 						{table.numCols()} columns,{' '}
 						{props.limit ? `showing ${props.limit} out of ` : ''}{' '}
 						{table.numRows() ?? 0} rows
 					</DetailsText>
 				</DetailsContainer>
-				<ArqueroDetailsList
-					compact
-					sortable
-					isHeaderFixed
-					striped
-					showColumnBorders
-					table={table}
-					features={features}
-					{...props}
-				/>
+				<DetailsListContainer>
+					<ArqueroDetailsList
+						compact
+						sortable
+						isHeaderFixed
+						striped
+						showColumnBorders
+						table={table}
+						features={features}
+						{...props}
+					/>
+				</DetailsListContainer>
 			</DatasetContainer>
 		</>
 	)
