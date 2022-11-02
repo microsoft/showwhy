@@ -55,6 +55,7 @@ export const Layout: React.FC<LayoutProps> = memo(function Layout({
 						onChange={onChangeWidth}
 						proportionalLayout={false}
 						ref={ref}
+						separator={false}
 					>
 						<Allotment.Pane preferredSize={300} maxSize={300} minSize={60}>
 							<FileTree
