@@ -25,6 +25,8 @@ export const Text = styled.span`
 	margin-left: 10px;
 `
 
-export const Container = styled.article``
+export const Container = styled.article`
+	padding: 0 20px 20px;
+`
 
 export const P = styled.p``

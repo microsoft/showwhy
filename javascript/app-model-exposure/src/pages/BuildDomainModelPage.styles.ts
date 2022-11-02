@@ -10,7 +10,9 @@ export const CardsContainer = styled.div`
 	grid-template-columns: 1fr 1fr 1fr 1fr;
 	gap: 1rem;
 `
-export const Container = styled.article``
+export const Container = styled.article`
+	padding: 0px 20px 20px;
+`
 export const ListContainer = styled.div``
 
 export const PageSection = styled.section`

@@ -3,11 +3,11 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import type { ITheme } from '@fluentui/react'
 import styled from 'styled-components'
 
 export const Container = styled.div`
 	height: 99%;
-	margin-top: 5px;
 	position: relative;
 	overflow-y: auto;
 
@@ -17,12 +17,24 @@ export const Container = styled.div`
 `
 
 export const PrepareDataContainer = styled.div`
-	height: 90%;
+	height: 95%;
 `
 
 export const ActionsContainer = styled.div`
 	display: flex;
 	justify-content: space-between;
+	background: ${({ theme }: { theme: ITheme }) =>
+		theme.palette.neutralLighterAlt};
+	border-bottom: 1px solid
+		${({ theme }: { theme: ITheme }) => theme.palette.neutralQuaternaryAlt};
 `
 
-export const commandBarStyles = { root: { width: 200, paddingBottom: 13 } }
+export const ElementsContainer = styled.div`
+	padding: 6px;
+`
+export const commandBarStyles = { root: { width: 200, paddingBottom: 6 } }
+
+export const NoticeContainer = styled.div`
+	padding: 8px;
+	color: ${({ theme }: { theme: ITheme }) => theme.palette.neutralSecondary};
+`

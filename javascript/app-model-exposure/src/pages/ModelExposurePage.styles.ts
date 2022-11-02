@@ -13,5 +13,4 @@ export const Container = styled.div`
 export const Content = styled.main`
 	flex: 1;
 	overflow: auto;
-	padding: 0px 20px 20px;
 `

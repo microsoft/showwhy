@@ -16,6 +16,8 @@ import { useCommandBar } from './BindDataPage.hooks.js'
 import {
 	ActionsContainer,
 	Container,
+	ElementsContainer,
+	NoticeContainer,
 	PrepareDataContainer,
 } from './BindDataPage.styles.js'
 
@@ -43,14 +45,16 @@ export const BindDataPage: FC = memo(function BindDataPage() {
 				/>
 				<AddVariableFields />
 				{allElements.length > 0 && (
-					<CompletedElements
-						onAssignAllSubjects={onAssignAllSubjects}
-						completedElements={completedElements}
-						allElements={allElements}
-						onResetVariable={onResetVariable}
-						subjectIdentifier={subjectIdentifier}
-						onSetSubjectIdentifier={onSetSubjectIdentifier}
-					/>
+					<ElementsContainer>
+						<CompletedElements
+							onAssignAllSubjects={onAssignAllSubjects}
+							completedElements={completedElements}
+							allElements={allElements}
+							onResetVariable={onResetVariable}
+							subjectIdentifier={subjectIdentifier}
+							onSetSubjectIdentifier={onSetSubjectIdentifier}
+						/>
+					</ElementsContainer>
 				)}
 			</ActionsContainer>
 
@@ -72,7 +76,9 @@ export const BindDataPage: FC = memo(function BindDataPage() {
 						/>
 					</>
 				) : (
-					<div>Select a table to view data...</div>
+					<NoticeContainer style={{ padding: 8 }}>
+						Select a table to view data...
+					</NoticeContainer>
 				)}
 			</PrepareDataContainer>
 		</Container>
