@@ -32,7 +32,7 @@ const buttonStyles = {
 	},
 	label: {
 		width: 150,
-		lineHeight: 'unset',
+		lineHeight: '1.5',
 		whiteSpace: 'nowrap',
 		overflow: 'hidden',
 		textOverflow: 'ellipsis',
@@ -91,7 +91,10 @@ export function useRenderDropdown(
 					_?: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>,
 					option?: Maybe<IContextualMenuItem>,
 				) => handleOnClick(option, columnName),
-				buttonStyles,
+			}
+
+			const buttonProps = {
+				styles: buttonStyles,
 			}
 
 			const variable = `${
@@ -102,7 +105,11 @@ export function useRenderDropdown(
 
 			return (
 				<Container id={columnName} title={variable}>
-					<ColumnarMenu text={variable} {...menuProps} />
+					<ColumnarMenu
+						text={variable}
+						{...menuProps}
+						buttonProps={buttonProps}
+					/>
 				</Container>
 			)
 		},
