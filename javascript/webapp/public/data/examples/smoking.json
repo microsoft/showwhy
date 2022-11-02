@@ -297,7 +297,7 @@
                     {
                         "description": "Participant's gender recorded at the baseline visit in 1971.",
                         "variable": "Gender",
-                        "column": "sex",
+                        "column": "sex (female)",
                         "causes": {
                             "causeExposure": 100,
                             "causeOutcome": 100,

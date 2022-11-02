@@ -7,6 +7,7 @@ import React, { memo } from 'react'
 import { Container } from './AnalyzeTestPage.styles.js'
 import { AnalyzeTestPageEffects } from './AnalyzeTestPageEffects.js'
 import { AnalyzeTestPageEstimators } from './AnalyzeTestPageEstimators.js'
+import { AnalyzeTestPageHelpText } from './AnalyzeTestPageHelpText.js'
 import { AnalyzeTestPageHypothesis } from './AnalyzeTestPageHypothesis.js'
 
 export const AnalyzeTestPage: React.FC = memo(function AnalyzeTestPage() {
@@ -15,6 +16,7 @@ export const AnalyzeTestPage: React.FC = memo(function AnalyzeTestPage() {
 			<AnalyzeTestPageEstimators />
 			<AnalyzeTestPageEffects />
 			<AnalyzeTestPageHypothesis />
+			<AnalyzeTestPageHelpText />
 		</Container>
 	)
 })
