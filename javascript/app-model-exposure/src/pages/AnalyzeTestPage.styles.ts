@@ -26,3 +26,5 @@ export const Text = styled.span`
 `
 
 export const Container = styled.article``
+
+export const P = styled.p``
