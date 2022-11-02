@@ -41,7 +41,7 @@ export const ModelExposurePage: React.FC = memo(function ModelExposurePage() {
 
 	const handleLinkClick = (item?: PivotItem) => {
 		if (item) {
-			setPageTab(item.props.itemKey)
+			setPageTab(item.props.itemKey as PageTabs)
 			navigate(`${route}/${item.props.itemKey as string}`)
 		}
 	}
