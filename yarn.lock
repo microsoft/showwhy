@@ -2056,9 +2056,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@datashaper/react@npm:^17.0.0":
-  version: 17.0.0
-  resolution: "@datashaper/react@npm:17.0.0"
+"@datashaper/react@npm:^17.0.1":
+  version: 17.0.1
+  resolution: "@datashaper/react@npm:17.0.1"
   dependencies:
     "@datashaper/schema": ^8.1.0
     "@datashaper/tables": ^5.3.0
@@ -2090,7 +2090,7 @@ __metadata:
     arquero: ^5.1.0
     react: ^17.0.2
     styled-components: ^5.3.0
-  checksum: 64c0891b88702dd5144e59755f6728d2133ede5310b43dd238e92adb375016edae2cd0a50457a4d6a47576b0844c76f7d5ff3fd6ac458adf494de4f6f440b2d9
+  checksum: 3795d86fc26e5deba67a6fc841470efcebe99fb6e9c8968329ad4228acaa2ae854d735f509fe4c684d8fd93d8cfb5fc5b6a939dae7b71e1dd5d5a57d354e41a1
   languageName: node
   linkType: hard
 
@@ -3757,7 +3757,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/app-common@workspace:javascript/app-common"
   dependencies:
-    "@datashaper/react": ^17.0.0
+    "@datashaper/react": ^17.0.1
     "@datashaper/schema": ^8.1.0
     "@datashaper/tables": ^5.3.0
     "@datashaper/utilities": ^2.3.9
@@ -3796,7 +3796,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/discover-app@workspace:javascript/app-discover"
   dependencies:
-    "@datashaper/react": ^17.0.0
+    "@datashaper/react": ^17.0.1
     "@datashaper/schema": ^8.1.0
     "@datashaper/tables": ^5.3.0
     "@datashaper/utilities": ^2.3.9
@@ -3821,7 +3821,7 @@ __metadata:
     "@thematic/vega": ^2.0.15
     "@types/cytoscape": ^3.19.8
     "@types/file-saver": ^2.0.5
-    "@types/lodash": ^4.14.186
+    "@types/lodash": ^4.14.187
     "@types/lodash-es": ^4.17.6
     "@types/node": ^18.11.9
     "@types/react": ^18.0.24
@@ -3902,7 +3902,7 @@ __metadata:
     "@thematic/fluent": ^4.1.1
     "@thematic/react": ^2.1.1
     "@types/d3": ^7.4.0
-    "@types/lodash": ^4.14.186
+    "@types/lodash": ^4.14.187
     "@types/lodash-es": ^4.17.6
     "@types/node": ^18.11.9
     "@types/react": ^18.0.24
@@ -3936,7 +3936,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/model-exposure-app@workspace:javascript/app-model-exposure"
   dependencies:
-    "@datashaper/react": ^17.0.0
+    "@datashaper/react": ^17.0.1
     "@datashaper/schema": ^8.1.0
     "@datashaper/tables": ^5.3.0
     "@datashaper/utilities": ^2.3.9
@@ -3957,7 +3957,7 @@ __metadata:
     "@thematic/react": ^2.1.1
     "@thematic/vega": ^2.0.15
     "@types/d3-fetch": ^3.0.1
-    "@types/lodash": ^4.14.186
+    "@types/lodash": ^4.14.187
     "@types/lodash-es": ^4.17.6
     "@types/node": ^18.11.9
     "@types/react": ^18.0.24
@@ -4021,7 +4021,7 @@ __metadata:
     "@thematic/d3": ^2.0.14
     "@thematic/fluent": ^4.1.1
     "@thematic/react": ^2.1.1
-    "@types/lodash": ^4.14.186
+    "@types/lodash": ^4.14.187
     "@types/lodash-es": ^4.17.6
     "@types/node": ^18.11.9
     "@types/react": ^18.0.24
@@ -4062,7 +4062,7 @@ __metadata:
   resolution: "@showwhy/wrangle-app@workspace:javascript/app-wrangle"
   dependencies:
     "@datashaper/core": ^10.0.0
-    "@datashaper/react": ^17.0.0
+    "@datashaper/react": ^17.0.1
     "@datashaper/schema": ^8.1.0
     "@datashaper/tables": ^5.3.0
     "@datashaper/utilities": ^2.3.9
@@ -4085,7 +4085,7 @@ __metadata:
     "@thematic/react": ^2.1.1
     "@thematic/vega": ^2.0.15
     "@types/d3-fetch": ^3.0.1
-    "@types/lodash": ^4.14.186
+    "@types/lodash": ^4.14.187
     "@types/lodash-es": ^4.17.6
     "@types/node": ^18.11.9
     "@types/react": ^18.0.24
@@ -5081,10 +5081,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/lodash@npm:^4.14.186":
-  version: 4.14.186
-  resolution: "@types/lodash@npm:4.14.186"
-  checksum: ee0c1368a8100bb6efb88335107473a41928fc307ff1ef4ff1278868ccddba9c04c68c36d1ffe3a0392ef4a956e1955f7de3203ec09df4f1655dd1b88485c549
+"@types/lodash@npm:^4.14.187":
+  version: 4.14.187
+  resolution: "@types/lodash@npm:4.14.187"
+  checksum: 5f8a4fe6d8a6785b8ecbd9efdc8b7d3341b873f63c5390ad0f269a517508e92c1b1d7d43e97bdfb6bba5bba9a8501b30a54f791ef4c30b854382745c75c607d4
   languageName: node
   linkType: hard
 
