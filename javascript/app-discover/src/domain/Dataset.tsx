@@ -15,7 +15,6 @@ import {
 	useResetRecoilState,
 	useSetRecoilState,
 } from 'recoil'
-import { from } from 'rxjs'
 
 import { VariableNature } from '../domain/VariableNature.js'
 import {

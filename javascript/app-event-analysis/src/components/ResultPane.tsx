@@ -168,7 +168,7 @@ export const ResultPane: React.FC<ResultPaneProps> = memo(function ResultPane({
 			})
 			return inputData.sort((a, b) => a.value - b.value)
 		},
-		[theme, hypothesis, getSdidEstimate],
+		[theme, getSdidEstimate],
 	)
 
 	const getTreatedPlaceboIndex = useCallback(
