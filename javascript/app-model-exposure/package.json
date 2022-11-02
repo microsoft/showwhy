@@ -16,7 +16,7 @@
 		"lint": "essex lint"
 	},
 	"dependencies": {
-		"@datashaper/react": "^17.0.0",
+		"@datashaper/react": "^17.0.1",
 		"@datashaper/schema": "^8.1.0",
 		"@datashaper/tables": "^5.3.0",
 		"@datashaper/utilities": "^2.3.9",
@@ -35,7 +35,7 @@
 		"@thematic/fluent": "^4.1.1",
 		"@thematic/react": "^2.1.1",
 		"@thematic/vega": "^2.0.15",
-		"@types/lodash": "^4.14.186",
+		"@types/lodash": "^4.14.187",
 		"@uifabric/icons": "^7.9.5",
 		"ahooks": "^3.7.2",
 		"arquero": "^5.1.0",

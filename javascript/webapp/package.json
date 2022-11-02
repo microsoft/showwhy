@@ -64,7 +64,7 @@
 	"devDependencies": {
 		"@essex/scripts": "^22.1.0",
 		"@essex/webpack-config": "^21.0.8",
-		"@types/lodash": "^4.14.186",
+		"@types/lodash": "^4.14.187",
 		"@types/lodash-es": "^4.17.6",
 		"@types/node": "^18.11.9",
 		"@types/react": "^18.0.24",
