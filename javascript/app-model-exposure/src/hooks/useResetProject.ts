@@ -12,6 +12,7 @@ import { useResetDefaultDatasetResult } from '../state/defaultDatasetResult.js'
 import { useResetDefinitions } from '../state/definitions.js'
 import { useResetEstimateEffectResponse } from '../state/estimateEffectResponse.js'
 import { useResetEstimators } from '../state/estimators.js'
+import { useResetPageTab } from '../state/pageTabState.js'
 import { useResetPrimarySpecificationConfig } from '../state/primarySpecificationConfig.js'
 import { useResetRefutationResponse } from '../state/refutationResponse.js'
 import { useResetRunHistory } from '../state/runHistory.js'
@@ -44,6 +45,7 @@ export function useResetProject(): Handler {
 	const resetEstimateEffectResponse = useResetEstimateEffectResponse()
 	const resetRefutationResponse = useResetRefutationResponse()
 	const resetShapResponse = useResetShapResponse()
+	const resetPageTab = useResetPageTab()
 
 	return useCallback(() => {
 		resetCausalFactors()
@@ -63,6 +65,7 @@ export function useResetProject(): Handler {
 		resetEstimateEffectResponse()
 		resetRefutationResponse()
 		resetShapResponse()
+		resetPageTab()
 	}, [
 		resetCausalFactors,
 		resetEstimators,
@@ -81,5 +84,6 @@ export function useResetProject(): Handler {
 		resetEstimateEffectResponse,
 		resetRefutationResponse,
 		resetShapResponse,
+		resetPageTab,
 	])
 }

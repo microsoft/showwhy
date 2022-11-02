@@ -12,7 +12,9 @@ import { CausalQuestion } from '../components/CausalQuestion.js'
 import { MessageContainer } from '../components/MessageContainer.js'
 import { Header } from '../components/styles.js'
 import { useCausalQuestion } from '../state/causalQuestion.js'
+import { usePageTab } from '../state/pageTabState.js'
 import type { Maybe } from '../types/primitives.js'
+import { PageTabs } from '../types/workspace/PageTabs.js'
 import { AnalyzeTestPage } from './AnalyzeTestPage.js'
 import { BindDataPage } from './BindDataPage.js'
 import { BuildDomainModelPage } from './BuildDomainModelPage.js'
@@ -26,6 +28,7 @@ export const ModelExposurePage: React.FC = memo(function ModelExposurePage() {
 	const question = useCausalQuestion()
 	const navigate = useNavigate()
 	const updateXarrow = useXarrow()
+	const [pageTab, setPageTab] = usePageTab()
 	const [error, setError] = useState<Maybe<string>>()
 
 	const route = useMemo(() => {
@@ -38,26 +41,32 @@ export const ModelExposurePage: React.FC = memo(function ModelExposurePage() {
 
 	const handleLinkClick = (item?: PivotItem) => {
 		if (item) {
+			setPageTab(item.props.itemKey)
 			navigate(`${route}/${item.props.itemKey as string}`)
 		}
 	}
-
-	const key = useMemo(() => {
-		return location.pathname.replace(`${route}/`, '') || 'define'
-	}, [location, route])
 
 	return (
 		<Container>
 			<Header>
 				<Pivot
 					aria-label="Model Exposure Flow"
-					selectedKey={key}
+					selectedKey={pageTab}
 					onLinkClick={handleLinkClick}
 				>
-					<PivotItem headerText="1. Define question" itemKey="define" />
-					<PivotItem headerText="2. Build model" itemKey="build" />
-					<PivotItem headerText="3. Bind data" itemKey="bind" />
-					<PivotItem headerText="4. Estimate effects" itemKey="analyze" />
+					<PivotItem
+						headerText="1. Define question"
+						itemKey={PageTabs.DefineQuestion}
+					/>
+					<PivotItem
+						headerText="2. Build model"
+						itemKey={PageTabs.BuildModel}
+					/>
+					<PivotItem headerText="3. Bind data" itemKey={PageTabs.BindData} />
+					<PivotItem
+						headerText="4. Estimate effects"
+						itemKey={PageTabs.EstimateEffects}
+					/>
 				</Pivot>
 				<CausalQuestion question={question} />
 				<AppMenu setError={setError} />
