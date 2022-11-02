@@ -5,13 +5,13 @@
 import {
 	ArqueroDetailsList,
 	ArqueroTableHeader,
+	DisplayOrder,
 	StepHistoryList,
 	TableCommands,
 	useOnCreateStep,
 	useOnDeleteStep,
 	useOnSaveStep,
 	useWorkflowInputTableNames,
-	DisplayOrder,
 } from '@datashaper/react'
 import { ToolPanel } from '@essex/components'
 import { CommandBar } from '@fluentui/react'
