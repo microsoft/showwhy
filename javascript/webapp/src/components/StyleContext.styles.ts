@@ -47,5 +47,9 @@ export const GlobalStyle = createGlobalStyle`
 			theme.palette.neutralTertiaryAlt};
 		
 	}
+
+	.header-command-bar {
+		border: none;
+	}
 	
 `
