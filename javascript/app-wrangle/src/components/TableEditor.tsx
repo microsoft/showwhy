@@ -10,8 +10,9 @@ import {
 	useOnCreateStep,
 	useOnDeleteStep,
 	useOnSaveStep,
+	useWorkflowInputTableNames,
+	DisplayOrder,
 } from '@datashaper/react'
-import { useInputTableNames } from '@datashaper/react/dist/hooks/useTableDropdownOptions.js'
 import { ToolPanel } from '@essex/components'
 import { CommandBar } from '@fluentui/react'
 import { useBoolean } from '@fluentui/react-hooks'
@@ -46,7 +47,7 @@ export const TableEditor: React.FC<TableEditorProps> = memo(
 		const [selectedColumn, onColumnClick] = useColumnState()
 
 		// Derived State
-		const inputNames = useInputTableNames(workflow)
+		const inputNames = useWorkflowInputTableNames(workflow)
 		const numSteps = useObservableState(workflow.length$, workflow.length)
 		const toolPanelHeader = useMemo(
 			() => `Workflow steps (${numSteps})`,
@@ -112,6 +113,7 @@ export const TableEditor: React.FC<TableEditorProps> = memo(
 					styles={toolPanelStyles}
 				>
 					<StepHistoryList
+						order={DisplayOrder.LastOnTop}
 						onDelete={onDelete}
 						onSelect={setSelectedId}
 						selectedKey={selectedId}
