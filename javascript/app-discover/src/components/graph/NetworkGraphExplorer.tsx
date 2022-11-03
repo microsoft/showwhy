@@ -120,11 +120,11 @@ export const NetworkGraphExplorer: React.FC<NetworkGraphProps> = memo(
 						width={width}
 						height={height}
 						backgroundColor={'#FFF'}
-						linkWidth={link => 5 * Math.abs((link as NetworkGraphLink).value)}
+						linkWidth={link => 2 * Math.abs((link as NetworkGraphLink).value)}
 						linkColor={link =>
 							`rgba(0,0,0,${Math.abs((link as NetworkGraphLink).value)})`
 						}
-						linkOpacity={1}
+						linkOpacity={0.8}
 						nodeThreeObject={(node: NetworkGraphNode) => {
 							const sprite = new SpriteText(node.name)
 							const isInModel = inModelColumnNames.includes(node.id)
@@ -144,7 +144,7 @@ export const NetworkGraphExplorer: React.FC<NetworkGraphProps> = memo(
 						width={width}
 						height={height}
 						d3VelocityDecay={0.5}
-						linkWidth={link => 5 * Math.abs((link as NetworkGraphLink).value)}
+						linkWidth={link => 2 * Math.abs((link as NetworkGraphLink).value)}
 						linkColor={link =>
 							`rgba(0,0,0,${Math.abs((link as NetworkGraphLink).value)})`
 						}
