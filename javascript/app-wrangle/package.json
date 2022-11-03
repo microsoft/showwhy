@@ -17,7 +17,7 @@
 	},
 	"dependencies": {
 		"@datashaper/core": "^10.0.0",
-		"@datashaper/react": "^17.0.1",
+		"@datashaper/react": "^18.0.0",
 		"@datashaper/schema": "^8.1.0",
 		"@datashaper/tables": "^5.3.0",
 		"@datashaper/utilities": "^2.3.9",
@@ -27,7 +27,7 @@
 		"@essex/hooks": "^4.0.13",
 		"@essex/webpack-config": "^21.0.8",
 		"@fluentui/font-icons-mdl2": "^8.5.2",
-		"@fluentui/react": "^8.99.2",
+		"@fluentui/react": "^8.99.3",
 		"@fluentui/react-hooks": "^8.6.12",
 		"@fluentui/utilities": "^8.13.2",
 		"@monaco-editor/react": "^4.4.6",
