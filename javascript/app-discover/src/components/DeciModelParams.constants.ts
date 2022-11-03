@@ -10,8 +10,13 @@ import type {
 } from '@fluentui/react'
 import upperFirst from 'lodash-es/upperFirst.js'
 
-import { ModeAdjacency, VarDistAMode } from '../domain/Algorithms/DECI.js'
+import {
+	BaseDistributionType,
+	ModeAdjacency,
+	VarDistAMode,
+} from '../domain/Algorithms/DECI.js'
 
+const SPLINE_BINS = 16
 const LAMBDA_DAG = 100.0
 const LAMBDA_SPARSE = 5.0
 const TAU_GUMBEL = 1.0
@@ -23,6 +28,7 @@ const IMPUTATION = false
 const NORM_LAYERS = false
 const RES_CONNECTION = true
 
+export const BASE_DISTRIBUTION_TYPE = BaseDistributionType.Gaussian
 export const VAR_DIST_A_MODE = VarDistAMode.Three
 export const MODE_ADJACENCY = ModeAdjacency.Learn
 
@@ -51,6 +57,12 @@ export const advancedModelSpinningOptions = [
 		label: 'Cate rff n features',
 		defaultValue: CATE_RFF_N_FEATURES.toString(),
 		inputProps: { name: 'cate_rff_n_features' },
+		step: 1,
+	},
+	{
+		label: 'Spline bins',
+		defaultValue: SPLINE_BINS.toString(),
+		inputProps: { name: 'spline_bins' },
 		step: 1,
 	},
 ] as ISpinButtonProps[]
@@ -90,6 +102,17 @@ export const advancedModelNumberListOptions = [
 		name: 'decoder_layer_sizes',
 	},
 ] as ITextFieldProps[]
+
+export const baseDistributionTypeChoiceOptions: IChoiceGroupOption[] = [
+	{
+		key: BaseDistributionType.Gaussian,
+		text: upperFirst(BaseDistributionType.Gaussian),
+	},
+	{
+		key: BaseDistributionType.Spline,
+		text: upperFirst(BaseDistributionType.Spline),
+	},
+]
 
 export const advancedModelVarModeChoiceOptions: IChoiceGroupOption[] = [
 	{ key: VarDistAMode.Enco, text: upperFirst(VarDistAMode.Enco) },

@@ -19,6 +19,8 @@ import {
 	advancedModelNumberListOptions,
 	advancedModelSpinningOptions,
 	advancedModelVarModeChoiceOptions,
+	BASE_DISTRIBUTION_TYPE,
+	baseDistributionTypeChoiceOptions,
 	CATE_RFF_LENGTHSCALE,
 	MODE_ADJACENCY,
 	VAR_DIST_A_MODE,
@@ -50,29 +52,6 @@ export const DeciModelParams: React.FC<DeciModelParamsProps> = memo(
 		return (
 			<Container>
 				<ContainerAdvancedGrid>
-					{advancedModelSpinningOptions.map(x => (
-						<SpinButton
-							key={x.inputProps?.name}
-							label={x.label}
-							labelPosition={Position.top}
-							onChange={(_, val?: string) =>
-								onChangeNumber('model_options', val, x.inputProps?.name)
-							}
-							value={
-								(values.model_options &&
-									values.model_options[
-										x.inputProps?.name as keyof DECIModelOptions
-									]?.toString()) ||
-								x.defaultValue
-							}
-							min={1}
-							step={x.step}
-							incrementButtonAriaLabel="Increase value by 1"
-							decrementButtonAriaLabel="Decrease value by 1"
-						/>
-					))}
-				</ContainerAdvancedGrid>
-				<ContainerAdvancedGrid>
 					{advancedModelNumberListOptions.map(x => (
 						<TextField
 							label={x.label}
@@ -99,6 +78,31 @@ export const DeciModelParams: React.FC<DeciModelParamsProps> = memo(
 						}
 					/>
 				</ContainerAdvancedGrid>
+
+				<ContainerAdvancedGrid>
+					{advancedModelSpinningOptions.map(x => (
+						<SpinButton
+							key={x.inputProps?.name}
+							label={x.label}
+							labelPosition={Position.top}
+							onChange={(_, val?: string) =>
+								onChangeNumber('model_options', val, x.inputProps?.name)
+							}
+							value={
+								(values.model_options &&
+									values.model_options[
+										x.inputProps?.name as keyof DECIModelOptions
+									]?.toString()) ||
+								x.defaultValue
+							}
+							min={1}
+							step={x.step}
+							incrementButtonAriaLabel="Increase value by 1"
+							decrementButtonAriaLabel="Decrease value by 1"
+						/>
+					))}
+				</ContainerAdvancedGrid>
+
 				<ContainerAdvancedCheckbox>
 					{advancedModelBooleanOptions.map(x => (
 						<Checkbox
@@ -116,6 +120,21 @@ export const DeciModelParams: React.FC<DeciModelParamsProps> = memo(
 					))}
 				</ContainerAdvancedCheckbox>
 
+				<ChoiceGroup
+					selectedKey={
+						values.model_options?.base_distribution_type ||
+						BASE_DISTRIBUTION_TYPE
+					}
+					options={baseDistributionTypeChoiceOptions}
+					onChange={(_, opt?: IChoiceGroupOption) =>
+						onChangeChoiceGroup(
+							'model_options',
+							opt?.key,
+							'base_distribution_type',
+						)
+					}
+					label="Base distribution type"
+				/>
 				<ChoiceGroup
 					selectedKey={values.model_options?.mode_adjacency || MODE_ADJACENCY}
 					options={advancedModelModeAdjacencyChoiceOptions}

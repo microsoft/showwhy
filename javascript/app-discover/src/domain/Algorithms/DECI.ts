@@ -8,6 +8,11 @@ export interface DECIParams {
 	training_options?: DECITrainingOptions
 }
 
+export enum BaseDistributionType {
+	Gaussian = 'gaussian',
+	Spline = 'spline',
+}
+
 export enum VarDistAMode {
 	Simple = 'simple',
 	Enco = 'enco',
@@ -27,6 +32,8 @@ export enum AnnealEntropy {
 }
 
 export interface DECIModelOptions {
+	base_distribution_type?: BaseDistributionType
+	spline_bins?: number
 	imputation?: boolean
 	lambda_dag?: number
 	lambda_sparse?: number
