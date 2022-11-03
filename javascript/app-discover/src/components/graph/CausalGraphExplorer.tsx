@@ -2,6 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import { Icon, Label } from '@fluentui/react'
 import { memo, useEffect, useRef } from 'react'
 import { useXarrow, Xwrapper } from 'react-xarrows'
 import {
@@ -27,7 +28,12 @@ import {
 } from '../../state/index.jsx'
 import { CausalEdge } from './CausalEdge.jsx'
 import { useGraphBounds } from './CausalGraphExplorer.hooks.js'
-import { Background } from './CausalGraphExplorer.styles.js'
+import {
+	Background,
+	classNames,
+	Container,
+	FlexContainer,
+} from './CausalGraphExplorer.styles.js'
 import { CausalGraphNode } from './CausalGraphNode.jsx'
 import { CorrelationEdge } from './CorrelationEdge.jsx'
 import { CorrelationGraphNode } from './CorrelationGraphNode.jsx'
@@ -149,7 +155,34 @@ export const CausalGraphExplorer = memo(function CausalGraphExplorer() {
 	// TODO: Figure out pan/zoom
 	return (
 		<>
-			<Background onClick={deselect} style={bounds}></Background>
+			<Background onClick={deselect} style={bounds}>
+				{nodes && (
+					<FlexContainer>
+						<Label>Legends</Label>
+						<Container>
+							<Icon
+								className={classNames.positive}
+								iconName={relationshipIcon}
+							></Icon>{' '}
+							Positive relationship
+						</Container>
+						<Container>
+							<Icon
+								className={classNames.negative}
+								iconName={relationshipIcon}
+							></Icon>{' '}
+							Negative relationship
+						</Container>
+						<Container>
+							<Icon
+								className={classNames.correlation}
+								iconName={relationshipIcon}
+							></Icon>{' '}
+							Correlation
+						</Container>
+					</FlexContainer>
+				)}
+			</Background>
 			<Xwrapper>
 				{correlationEdges}
 				{causalEdges}
@@ -158,3 +191,5 @@ export const CausalGraphExplorer = memo(function CausalGraphExplorer() {
 		</>
 	)
 })
+
+const relationshipIcon = 'ChromeMinimize'
