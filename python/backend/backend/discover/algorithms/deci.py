@@ -12,7 +12,7 @@ import scipy
 import torch
 from causica.datasets.dataset import Dataset
 from causica.datasets.variables import Variables
-from causica.models.deci.deci_gaussian import DECIGaussian
+from causica.models.deci.deci import DECI
 from causica.models.deci.generation_functions import ContractiveInvertibleGNN
 from causica.utils.torch_utils import get_torch_device
 from celery import uuid
@@ -33,6 +33,8 @@ torch.set_default_dtype(torch.float32)
 
 
 class DeciModelOptions(BaseModel):
+    base_distribution_type: Literal["gaussian", "spline"] = "gaussian"
+    spline_bins: int = 16
     imputation: bool = False
     lambda_dag: float = 100.0
     lambda_sparse: float = 5.0
@@ -115,8 +117,11 @@ class DeciRunner(CausalDiscoveryRunner):
 
         return Dataset(train_data=numpy_data, train_mask=data_mask, variables=variables)
 
-    def _build_model(self, causica_dataset: Dataset) -> DECIGaussian:
-        deci_model = DECIGaussian(
+    def _build_model(self, causica_dataset: Dataset) -> DECI:
+        logging.info(
+            f"Creating DECI model with '{self._model_options.base_distribution_type}' base distribution type"
+        )
+        deci_model = DECI(
             "CauseDisDECI",
             causica_dataset.variables,
             self._deci_save_dir,
@@ -172,12 +177,10 @@ class DeciRunner(CausalDiscoveryRunner):
 
         return constraint.astype(np.float32)
 
-    def _check_if_is_dag(
-        self, deci_model: DECIGaussian, adj_matrix: np.ndarray
-    ) -> bool:
+    def _check_if_is_dag(self, deci_model: DECI, adj_matrix: np.ndarray) -> bool:
         return (np.trace(scipy.linalg.expm(adj_matrix)) - deci_model.num_nodes) == 0
 
-    def _get_adj_matrix(self, deci_model: DECIGaussian) -> np.ndarray:
+    def _get_adj_matrix(self, deci_model: DECI) -> np.ndarray:
         # The next lines of code are the same as:
         # deci_graph = deci_model.networkx_graph()
         # but omit an assertion that the graph is a DAG.  This is so the calculation doesn't just
@@ -190,7 +193,7 @@ class DeciRunner(CausalDiscoveryRunner):
         return adj_matrix
 
     def _compute_average_treatment_effect(
-        self, model: DECIGaussian, causica_dataset: Dataset
+        self, model: DECI, causica_dataset: Dataset
     ) -> np.ndarray:
         train_data = pd.DataFrame(causica_dataset.train_data_and_mask[0])
         treatment_values = train_data.mean(0) + train_data.std(0)
@@ -221,9 +224,7 @@ class DeciRunner(CausalDiscoveryRunner):
 
         return ate_matrix
 
-    def _build_onnx_model(
-        self, deci_model: DECIGaussian, adj_matrix: np.ndarray
-    ) -> bytes:
+    def _build_onnx_model(self, deci_model: DECI, adj_matrix: np.ndarray) -> bytes:
         num_columns = self._prepared_data.shape[1]
         intervention_mask = torch.cat(
             (
