@@ -115,7 +115,7 @@ confidence_intervals = [
 for spec in confidence_specs]
 
 
-confidence_intervals_df = pd.DataFrame([interval.to_dict() for interval in confidence_intervals]).rename({'estimate_id': 'id'}, axis=1)
+confidence_intervals_df = pd.DataFrame([interval.to_dict() for interval in confidence_intervals]).rename({{'estimate_id': 'id'}}, axis=1)
 confidence_intervals_df = pd.merge(refutation_df, confidence_intervals_df, on='id')
 confidence_intervals_df"""
 
