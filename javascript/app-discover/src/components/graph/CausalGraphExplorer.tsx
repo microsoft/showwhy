@@ -156,7 +156,7 @@ export const CausalGraphExplorer = memo(function CausalGraphExplorer() {
 	return (
 		<>
 			<Background onClick={deselect} style={bounds}>
-				{nodes && (
+				{!!nodes.length && (
 					<FlexContainer>
 						<Label>Legends</Label>
 						<Container>
