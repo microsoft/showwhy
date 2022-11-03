@@ -62,7 +62,7 @@ export const collapsedButtonStyles = {
 	flexContainer: { marginRight: '10px' },
 }
 
-export const buttonTooltipStyles = {
+export const tooltipStyles = {
 	root: {
 		overflow: 'hidden',
 		textOverflow: 'ellipsis',

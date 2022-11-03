@@ -265,7 +265,7 @@
         {
             "profile": "datatable",
             "name": "california-prop99",
-            "path": "https://gitcdn.link/cdn/synth-inference/synthdid/master/data/california_prop99.csv",
+            "path": "https://cdn.jsdelivr.net/gh/synth-inference/synthdid@master/data/california_prop99.csv",
             "metadata": {
                 "source": "https://www.openicpsr.org/openicpsr/project/146381/version/V1/view?path=/openicpsr/146381/fcr:versions/V1/synthdid-sdid-paper/data/california_prop99.csv",
                 "citation": " Dmitry Arkhangelsky, CEMFI; Susan Athey, Stanford University; David A. Hirshberg, Emory University; Guido W. Imbens, Stanford University; Stefan Wager, Stanford University"

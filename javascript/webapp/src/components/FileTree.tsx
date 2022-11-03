@@ -19,7 +19,6 @@ import {
 	useTreeItems,
 } from './FileTree.hooks.js'
 import {
-	buttonTooltipStyles,
 	CollapsedButton,
 	collapsedButtonStyles,
 	Commands,
@@ -28,11 +27,11 @@ import {
 	icons,
 	ItemIcon,
 	MenuContainer,
+	tooltipStyles,
 	TreeItem,
 	TreeView,
 	useCommandbarStyles,
 } from './FileTree.styles.js'
-import { getTooltipStyles } from './FileTree.utils.js'
 import { Tooltip } from './Tooltip.js'
 
 export const FileTree: React.FC<{
@@ -42,7 +41,6 @@ export const FileTree: React.FC<{
 	expanded: boolean
 	toggleExpanded: () => void
 }> = memo(function FileTree({ style, className, expanded, toggleExpanded }) {
-	const tooltipStyles = getTooltipStyles(expanded)
 	const [file, setFile] = useState<BaseFile | undefined>()
 	const onOpenFileRequested = useOnOpenFileRequested()
 	const { commands, onOpenCommands, onSaveCommands } =
@@ -90,7 +88,7 @@ export const FileTree: React.FC<{
 			</MenuContainer>
 			<Tooltip
 				directionalHint={DirectionalHint.rightCenter}
-				styles={buttonTooltipStyles}
+				styles={tooltipStyles}
 				content={expanded ? 'Show less information' : 'Show more information'}
 			>
 				<ExpandButton
@@ -158,7 +156,6 @@ const TreeNode: React.FC<{
 	onSelectItem: (item: ResourceTreeData) => void
 }> = memo(function TreeNode({ node, selected, onSelectItem, expanded }) {
 	const currentPath = useCurrentPath()
-	const tooltipStyles = getTooltipStyles(expanded)
 	const treeItemStyle = { textAlign: !expanded ? 'center' : 'inherit' }
 	const itemIconStyle = { marginRight: expanded ? '10px' : '23px' }
 
