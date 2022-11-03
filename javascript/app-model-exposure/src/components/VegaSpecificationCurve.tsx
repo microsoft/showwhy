@@ -66,24 +66,17 @@ export const VegaSpecificationCurve: React.FC<{
 		[selected, onSpecificationSelect],
 	)
 
-	const updateIds = useCallback(
-		(newList: Specification[]) => {
-			const totalEstimatesReturned = latestList.length
-			if (selected && totalSpecs !== totalEstimatesReturned) {
-				const item = latestList.find(x => x.id === selected)
-				const newItem = newList.find(x => x.taskId === item?.taskId)
-				if (newItem?.id !== item?.id) {
-					onChangeSelectedItem(newItem?.id)
-				}
-			}
-			setLatestList(newList)
-		},
-		[latestList, selected, setLatestList, onChangeSelectedItem, totalSpecs],
-	)
-
 	useEffect(() => {
-		updateIds(data)
-	}, [data, updateIds])
+		const totalEstimatesReturned = latestList.length
+		if (selected && totalSpecs !== totalEstimatesReturned) {
+			const item = latestList.find(i => i.id === selected)
+			const newItem = data.find(d => d.taskId === item?.taskId)
+			if (newItem?.id !== item?.id) {
+				onChangeSelectedItem(newItem?.id)
+			}
+		}
+		setLatestList(data)
+	}, [data])
 
 	const handleAxisClick = useCallback(
 		(datum: any, axis: string) => {
