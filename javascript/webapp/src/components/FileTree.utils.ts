@@ -8,7 +8,6 @@ import type { DataTable } from '@datashaper/workflow'
 import type {
 	ICommandBarItemProps,
 	IContextualMenuItem,
-	IStyle,
 	ITheme,
 } from '@fluentui/react'
 
@@ -193,14 +192,4 @@ export function createCommandBar(
 			},
 		},
 	] as ICommandBarItemProps[]
-}
-
-export function getTooltipStyles(expanded: boolean) {
-	return {
-		root: {
-			overflow: 'hidden',
-			textOverflow: 'ellipsis',
-			width: expanded ? 'calc(300px - 4em)' : '100%',
-		} as IStyle,
-	}
 }
