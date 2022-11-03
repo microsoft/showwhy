@@ -332,7 +332,8 @@ export const ResultPane: React.FC<ResultPaneProps> = memo(function ResultPane({
 							variant="medium"
 						>
 							{'Treatment effect in '}
-							{output.treatedUnit} {': '}
+							{output.treatedUnit}
+							{': '}
 							<b className={output.sdid_estimate < 0 ? 'negative' : 'positive'}>
 								{output.sdid_estimate}
 							</b>
