@@ -9,11 +9,12 @@ import { mean } from 'lodash'
 import { memo, useCallback, useMemo, useRef, useState } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
 import { Case, Switch } from 'react-if'
-import { useRecoilState } from 'recoil'
+import { useRecoilValue } from 'recoil'
 
 import { useShowPlaceboGraphs } from '../hooks/useShowPlaceboGraphs.js'
 import {
 	ChartOptionsState,
+	CheckedUnitsState,
 	EventNameState,
 	HypothesisState,
 	OutcomeNameState,
@@ -78,15 +79,16 @@ export const ResultPane: React.FC<ResultPaneProps> = memo(function ResultPane({
 	// so that each hover on mouse-move is guaranteed to be followed by another hover update on mouse-leave
 	const [hoverItem, setHoverItem] = useState<null | TooltipInfo>(null)
 
-	const [eventName] = useRecoilState(EventNameState)
-	const [chartOptions] = useRecoilState(ChartOptionsState)
-	const [outcomeName] = useRecoilState(OutcomeNameState)
-	const [treatedUnits] = useRecoilState(TreatedUnitsState)
-	const [treatmentStartDates] = useRecoilState(TreatmentStartDatesState)
-	const [isPlaceboSimulation] = useRecoilState(PlaceboSimulationState)
-	const [selectedTabKey] = useRecoilState(SelectedTabKeyState)
-	const [hypothesis] = useRecoilState(HypothesisState)
-	const [units] = useRecoilState(UnitsState)
+	const eventName = useRecoilValue(EventNameState)
+	const chartOptions = useRecoilValue(ChartOptionsState)
+	const outcomeName = useRecoilValue(OutcomeNameState)
+	const treatedUnits = useRecoilValue(TreatedUnitsState)
+	const treatmentStartDates = useRecoilValue(TreatmentStartDatesState)
+	const isPlaceboSimulation = useRecoilValue(PlaceboSimulationState)
+	const selectedTabKey = useRecoilValue(SelectedTabKeyState)
+	const hypothesis = useRecoilValue(HypothesisState)
+	const units = useRecoilValue(UnitsState)
+	const checkedUnits = useRecoilValue(CheckedUnitsState)
 	const showPlaceboGraphs = useShowPlaceboGraphs()
 
 	const hoverInfo = useMemo(() => {
@@ -190,11 +192,9 @@ export const ResultPane: React.FC<ResultPaneProps> = memo(function ResultPane({
 				treatedUnit,
 				placeboBarChartInputData,
 			)
-			return parseFloat(
-				(treatedPlaceboIndex / placeboBarChartInputData.length).toFixed(3),
-			)
+			return parseFloat((treatedPlaceboIndex / checkedUnits?.size).toFixed(3))
 		},
-		[getTreatedPlaceboIndex],
+		[getTreatedPlaceboIndex, checkedUnits],
 	)
 
 	// Try to remember (and add a comment) why create a derived memoized value
@@ -713,9 +713,9 @@ const DimensionedLineChart: React.FC<DimensionedLineChartProps> = memo(
 		output,
 		treatedUnitsList,
 	}) {
-		const [chartOptions] = useRecoilState(ChartOptionsState)
+		const chartOptions = useRecoilValue(ChartOptionsState)
 		const [hoverItem, setHoverItem] = useState<null | TooltipInfo>(null)
-		const [treatedUnits] = useRecoilState(TreatedUnitsState)
+		const treatedUnits = useRecoilValue(TreatedUnitsState)
 		const hoverInfo = useMemo(() => {
 			return {
 				hoverItem: hoverItem,
