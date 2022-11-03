@@ -192,7 +192,9 @@ export const ResultPane: React.FC<ResultPaneProps> = memo(function ResultPane({
 				treatedUnit,
 				placeboBarChartInputData,
 			)
-			return parseFloat((treatedPlaceboIndex / checkedUnits?.size).toFixed(3))
+			return parseFloat(
+				(treatedPlaceboIndex / (checkedUnits?.size ?? 1)).toFixed(3),
+			)
 		},
 		[getTreatedPlaceboIndex, checkedUnits],
 	)
