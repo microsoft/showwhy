@@ -73,6 +73,7 @@ export function fromCausalDiscoveryResults(
 		constraints,
 		algorithm,
 		isDag: results.is_dag,
+		hasConfidenceValues: results.has_confidence_values,
 	}
 }
 

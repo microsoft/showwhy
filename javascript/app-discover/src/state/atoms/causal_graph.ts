@@ -5,7 +5,10 @@
 import { atom } from 'recoil'
 
 import type { CausalDiscoveryConstraints } from '../../domain/CausalDiscovery/CausalDiscoveryConstraints.js'
-import type { CausalDiscoveryResult } from '../../domain/CausalDiscovery/CausalDiscoveryResult.js'
+import type {
+	CausalDiscoveryResult,
+	CausalDiscoveryResultPromise,
+} from '../../domain/CausalDiscovery/CausalDiscoveryResult.js'
 import { EMPTY_CAUSAL_DISCOVERY_RESULT } from '../../domain/CausalDiscovery/CausalDiscoveryResult.js'
 import type { CausalGraph } from '../../domain/Graph.js'
 
@@ -31,4 +34,12 @@ export const CausalGraphHistoryState = atom<CausalGraph[]>({
 export const CausalDiscoveryResultsState = atom<CausalDiscoveryResult>({
 	key: 'CausalDiscoveryResultsState',
 	default: EMPTY_CAUSAL_DISCOVERY_RESULT,
+})
+
+export const LastDiscoverPromiseState = atom<
+	CausalDiscoveryResultPromise | undefined
+>({
+	key: 'LastDiscoverPromiseState',
+	default: undefined,
+	dangerouslyAllowMutability: true,
 })

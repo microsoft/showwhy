@@ -63,7 +63,7 @@ export const VegaSpecificationCurve: React.FC<{
 				onChangeSelectedItem(item?.id)
 			}
 		},
-		[selected, onSpecificationSelect],
+		[selected, onChangeSelectedItem],
 	)
 
 	useEffect(() => {
