@@ -21,7 +21,7 @@ export function useCreateDiscoveryPromise(
 	cancelLastDiscoveryResultPromise: CancelLastDiscoveryResultPromise,
 ) {
 	return useCallback(
-		async (
+		(
 			dataset: Dataset,
 			variables: CausalVariable[],
 			constraints: CausalDiscoveryConstraints,
@@ -30,7 +30,8 @@ export function useCreateDiscoveryPromise(
 			paramOptions?: DECIParams,
 		) => {
 			// if the last task has not finished just yet, cancel it
-			const lastPromiseCancel = cancelLastDiscoveryResultPromise()
+			cancelLastDiscoveryResultPromise()
+
 			const discoveryPromise = discover(
 				dataset,
 				variables,
@@ -41,13 +42,6 @@ export function useCreateDiscoveryPromise(
 			)
 
 			setLastDiscoveryResultPromise(discoveryPromise)
-
-			// the code above
-			//     - cancelLastDiscoveryResultPromise/runCausalDiscovery/setLastDiscoveryResultPromise
-			// needs to run without awaiting
-			// so we know react wont change context and trigger a new discover promise
-			// before it being properly set
-			await lastPromiseCancel
 
 			return discoveryPromise
 		},

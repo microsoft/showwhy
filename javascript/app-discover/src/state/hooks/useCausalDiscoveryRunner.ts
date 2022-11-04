@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo } from 'react'
 import {
 	useRecoilState,
 	useRecoilValue,
@@ -19,6 +19,7 @@ import {
 	DEFAULT_DATASET_NAME,
 	ErrorMessageState,
 	InfoMessageState,
+	IsDiscoverRunning,
 	LoadingState,
 	SelectedCausalDiscoveryAlgorithmState,
 } from '../atoms/index.js'
@@ -40,7 +41,7 @@ export function useCausalDiscoveryRunner() {
 		SelectedCausalDiscoveryAlgorithmState,
 	)
 	const [autoRun, setAutoRun] = useRecoilState(AutoRunState)
-	const [isLoading, setIsLoading] = useState<boolean>(false)
+	const [isLoading, setIsLoading] = useRecoilState(IsDiscoverRunning)
 	const setCausalDiscoveryResultsState = useSetRecoilState(
 		CausalDiscoveryResultsState,
 	)
@@ -87,7 +88,7 @@ export function useCausalDiscoveryRunner() {
 		setErrorMessage(undefined)
 		setInfoMessage(undefined)
 
-		const discoveryPromise = await createDiscoveryPromise(
+		const discoveryPromise = createDiscoveryPromise(
 			dataset,
 			inModelCausalVariables,
 			causalDiscoveryConstraints,
@@ -138,10 +139,10 @@ export function useCausalDiscoveryRunner() {
 		setIsLoading,
 	])
 
-	const stopDiscoveryRun = useCallback(async () => {
+	const stopDiscoveryRun = useCallback(() => {
 		setAutoRun(false)
 		try {
-			await cancelLastDiscoveryResultPromise()
+			cancelLastDiscoveryResultPromise()
 		} catch (err) {
 			setErrorMessage((err as Error).message)
 		}
