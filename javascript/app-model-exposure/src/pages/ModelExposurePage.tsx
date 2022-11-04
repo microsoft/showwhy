@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { MessageBarType, Pivot, PivotItem } from '@fluentui/react'
-import { memo, useEffect, useMemo, useState } from 'react'
+import { memo, useEffect, useMemo, useRef, useState } from 'react'
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import { useXarrow, Xwrapper } from 'react-xarrows'
 
@@ -25,6 +25,7 @@ const EXTERNAL_ROUTE = 'exposure'
 const EXTERNAL_ROUTE_KUBERNETES = `_${EXTERNAL_ROUTE}`
 export const ModelExposurePage: React.FC = memo(function ModelExposurePage() {
 	const location = useLocation()
+	const scrollRef = useRef<HTMLElement>(null)
 	const question = useCausalQuestion()
 	const navigate = useNavigate()
 	const updateXarrow = useXarrow()
@@ -42,6 +43,7 @@ export const ModelExposurePage: React.FC = memo(function ModelExposurePage() {
 	const handleLinkClick = (item?: PivotItem) => {
 		if (item) {
 			setPageTab(item.props.itemKey as PageTabs)
+			scrollRef.current?.scroll(0, 0)
 			navigate(`${route}/${item.props.itemKey as string}`)
 		}
 	}
@@ -77,7 +79,7 @@ export const ModelExposurePage: React.FC = memo(function ModelExposurePage() {
 				<AppMenu setError={setError} />
 			</Header>
 			<Xwrapper>
-				<Content onScroll={updateXarrow}>
+				<Content ref={scrollRef} onScroll={updateXarrow}>
 					{error ? (
 						<MessageContainer
 							onDismiss={() => setError(undefined)}
