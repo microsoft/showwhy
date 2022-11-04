@@ -106,7 +106,6 @@ export const MainContent: React.FC = memo(function MainContent() {
 
 	// Column mapping
 	const [columnMapping, setColumnMapping] = useRecoilState(ColumnMappingState)
-	console.log({ columnMapping })
 	const [rawData, setRawData] = useRecoilState(RawDataState)
 	const [filter, setFilter] = useRecoilState(FilterState)
 	const [aggregateEnabled, setAggregateEnabled] = useRecoilState(
