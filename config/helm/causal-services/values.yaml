@@ -54,6 +54,11 @@ revisionHistoryLimit: 1
 enableAuthentication: false
 
 #
+# maximum number of concurrent jobs each worker can have
+#
+nParallelJobsPerBackendWorker: 2
+
+#
 # application services grouped by ingress
 #
 applicationGroups:
@@ -92,6 +97,8 @@ applicationGroups:
             value: 'true'
           - name: REDIS_URL
             value: redis://redis:6379/0
+          - name: N_PARALLEL_JOBS
+            value: '{{ .Values.nParallelJobsPerBackendWorker }}'
 
       - name: redis
         image: '{{ .Values.redisImage }}'
