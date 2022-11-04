@@ -302,9 +302,16 @@ class DeciRunner(CausalDiscoveryRunner):
         for n1, n2, d in deci_graph.edges(data=True):
             # TODO: validate what to do when there is no edge in the ate graph
             #       currently returning weight 0
+            # TODO: temporarily do not use ATE values for weight and leave
+            #       edge weight as it is
+            # ate = deci_ate_graph.get_edge_data(n1, n2, default={"weight": 0})["weight"]
+            # d["confidence"] = d.pop("weight", None)
+            # d["weight"] = ate
+
+            # TODO: temporarily using ATE and weight sign
             ate = deci_ate_graph.get_edge_data(n1, n2, default={"weight": 0})["weight"]
-            d["confidence"] = d.pop("weight", None)
-            d["weight"] = ate
+            if ate < 0 and d["weight"]:
+                d["weight"] = -d["weight"]
 
         return networkx.relabel_nodes(deci_graph, labels)
 
@@ -328,7 +335,10 @@ class DeciRunner(CausalDiscoveryRunner):
         #       in case we need to keep, reimplement it
         causal_graph["interpret_boolean_as_continuous"] = False
         causal_graph["has_weights"] = True
-        causal_graph["has_confidence_values"] = True
+        # TODO: temporarily do not use ATE values for weight and leave
+        #       edge weight as it is
+        #       set this back to True
+        causal_graph["has_confidence_values"] = False
         causal_graph["is_dag"] = bool(self._is_dag)
 
         return causal_graph

@@ -34,6 +34,7 @@ export interface CausalDiscoveryRequestReturnValue {
 		nodes: CausalDiscoveryResultNode[]
 	}
 	is_dag?: boolean
+	has_confidence_values?: boolean
 }
 
 export interface NormalizedColumnMetadata {
