@@ -106,7 +106,7 @@ export const MainContent: React.FC = memo(function MainContent() {
 
 	// Column mapping
 	const [columnMapping, setColumnMapping] = useRecoilState(ColumnMappingState)
-
+	console.log({ columnMapping })
 	const [rawData, setRawData] = useRecoilState(RawDataState)
 	const [filter, setFilter] = useRecoilState(FilterState)
 	const [aggregateEnabled, setAggregateEnabled] = useRecoilState(
@@ -175,10 +175,12 @@ export const MainContent: React.FC = memo(function MainContent() {
 	const isInitialRender = useRef(true)
 
 	// Derived values
-	const columnsDropdownOptions = getColumns(rawData).map(v => ({
-		key: v,
-		text: v,
-	}))
+	const columnsDropdownOptions = useMemo((): IDropdownOption[] => {
+		return getColumns(rawData).map(v => ({
+			key: v,
+			text: v,
+		}))
+	}, [rawData])
 
 	// hacks to speed up computation:
 	// cache treated units and selected units as maps
