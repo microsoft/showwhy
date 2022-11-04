@@ -32,7 +32,7 @@ spec:
           args:
             {{- tpl (toYaml .args) $context | nindent 12 }}
           env:
-            {{- toYaml .env | nindent 12 }}
+            {{- tpl (toYaml .env) $context | nindent 12 }}
           resources:
             {{- toYaml .resources | nindent 12 }}
           ports:
