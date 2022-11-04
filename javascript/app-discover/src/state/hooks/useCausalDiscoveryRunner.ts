@@ -104,7 +104,7 @@ export function useCausalDiscoveryRunner() {
 			if (discoveryPromise.isFinished()) {
 				if (results.graph.isDag === false) {
 					setInfoMessage(
-						'Discovered graph is not a DAG, try running with more steps/epochs',
+						'Discovered graph has cycles, try running with more steps/epochs',
 					)
 				} else {
 					setInfoMessage(undefined)
