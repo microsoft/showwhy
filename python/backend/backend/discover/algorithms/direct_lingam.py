@@ -1,9 +1,9 @@
 import logging
 
-import causalnex
 import networkx
 import numpy as np
 from castle.algorithms import DirectLiNGAM
+from causalnex.structure.structuremodel import StructureModel
 from networkx.readwrite import json_graph
 
 from backend.discover.algorithms.commons.base_runner import (
@@ -31,7 +31,7 @@ class DirectLiNGAMRunner(CausalDiscoveryRunner):
 
         n = DirectLiNGAM(prior_knowledge=prior_matrix)  # , thresh=0.1)
         n.learn(self._prepared_data.to_numpy())
-        graph_gc = causalnex.structure.StructureModel(n.causal_matrix)
+        graph_gc = StructureModel(n.causal_matrix)
 
         logging.info(graph_gc)
 
