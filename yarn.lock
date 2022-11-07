@@ -2056,9 +2056,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@datashaper/react@npm:^17.0.1":
-  version: 17.0.1
-  resolution: "@datashaper/react@npm:17.0.1"
+"@datashaper/react@npm:^18.0.0":
+  version: 18.0.0
+  resolution: "@datashaper/react@npm:18.0.0"
   dependencies:
     "@datashaper/schema": ^8.1.0
     "@datashaper/tables": ^5.3.0
@@ -2090,7 +2090,7 @@ __metadata:
     arquero: ^5.1.0
     react: ^17.0.2
     styled-components: ^5.3.0
-  checksum: 3795d86fc26e5deba67a6fc841470efcebe99fb6e9c8968329ad4228acaa2ae854d735f509fe4c684d8fd93d8cfb5fc5b6a939dae7b71e1dd5d5a57d354e41a1
+  checksum: 0cb81b4071cb52ebc3bde17fd8e96f3a7f3a0300c5ab74b75185022776ea5b4a200c5489b2560a89ad97183e52f9349c0715001c2ff84c2c9b0c81d90d8f900a
   languageName: node
   linkType: hard
 
@@ -2737,9 +2737,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fluentui/react@npm:^8.99.2":
-  version: 8.99.2
-  resolution: "@fluentui/react@npm:8.99.2"
+"@fluentui/react@npm:^8.99.3":
+  version: 8.99.3
+  resolution: "@fluentui/react@npm:8.99.3"
   dependencies:
     "@fluentui/date-time-utilities": ^8.5.2
     "@fluentui/font-icons-mdl2": ^8.5.2
@@ -2760,7 +2760,7 @@ __metadata:
     "@types/react-dom": ">=16.8.0 <19.0.0"
     react: ">=16.8.0 <19.0.0"
     react-dom: ">=16.8.0 <19.0.0"
-  checksum: e6d7e9aafd18f6c5de235baaa7a4ecf33932e45c515c6f683996b1d82c82f08f0cd64a64216a88d84f3613d5a5561dedaafab127b3191785134e712412f66c5e
+  checksum: 895ecee4cae69c217cf4705da78393531960b5d9ddcadff9b03afba99acca482fc4f9f9e7d9843be9e5859ec8f453adaf440368bf11a811089fd3ec70c9f1406
   languageName: node
   linkType: hard
 
@@ -2877,6 +2877,17 @@ __metadata:
     debug: ^4.1.1
     minimatch: ^3.0.4
   checksum: 009d64be8d5bd098ff04e10af79e34f5633245250581fca032fac12a8667b2df8e7d169e69c05bff4d83ea3dd3c7d2d0e05ea9b94d89a7d092e26530caf6f8a3
+  languageName: node
+  linkType: hard
+
+"@humanwhocodes/config-array@npm:^0.11.6":
+  version: 0.11.7
+  resolution: "@humanwhocodes/config-array@npm:0.11.7"
+  dependencies:
+    "@humanwhocodes/object-schema": ^1.2.1
+    debug: ^4.1.1
+    minimatch: ^3.0.5
+  checksum: cf506dc45d9488af7fbf108ea6ac2151ba1a25e6d2b94b9b4fc36d2c1e4099b89ff560296dbfa13947e44604d4ca4a90d97a4fb167370bf8dd01a6ca2b6d83ac
   languageName: node
   linkType: hard
 
@@ -3525,7 +3536,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nodelib/fs.walk@npm:^1.2.3":
+"@nodelib/fs.walk@npm:^1.2.3, @nodelib/fs.walk@npm:^1.2.8":
   version: 1.2.8
   resolution: "@nodelib/fs.walk@npm:1.2.8"
   dependencies:
@@ -3757,14 +3768,14 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/app-common@workspace:javascript/app-common"
   dependencies:
-    "@datashaper/react": ^17.0.1
+    "@datashaper/react": ^18.0.0
     "@datashaper/schema": ^8.1.0
     "@datashaper/tables": ^5.3.0
     "@datashaper/utilities": ^2.3.9
     "@datashaper/workflow": ^19.1.2
     "@essex/components": ^3.1.0
     "@essex/scripts": ^22.1.0
-    "@fluentui/react": ^8.99.2
+    "@fluentui/react": ^8.99.3
     "@fluentui/react-hooks": ^8.6.12
     "@thematic/core": ^3.1.1
     "@thematic/d3": ^2.0.14
@@ -3796,7 +3807,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/discover-app@workspace:javascript/app-discover"
   dependencies:
-    "@datashaper/react": ^17.0.1
+    "@datashaper/react": ^18.0.0
     "@datashaper/schema": ^8.1.0
     "@datashaper/tables": ^5.3.0
     "@datashaper/utilities": ^2.3.9
@@ -3808,7 +3819,7 @@ __metadata:
     "@essex/vite-config": ^19.0.14
     "@essex/webpack-config": ^21.0.8
     "@fluentui/font-icons-mdl2": ^8.5.2
-    "@fluentui/react": ^8.99.2
+    "@fluentui/react": ^8.99.3
     "@fluentui/react-hooks": ^8.6.12
     "@fluentui/react-icons-mdl2": ^1.3.25
     "@fluentui/utilities": ^8.13.2
@@ -3892,7 +3903,7 @@ __metadata:
     "@essex/scripts": ^22.1.0
     "@essex/webpack-config": ^21.0.8
     "@fluentui/font-icons-mdl2": ^8.5.2
-    "@fluentui/react": ^8.99.2
+    "@fluentui/react": ^8.99.3
     "@fluentui/react-hooks": ^8.6.12
     "@fluentui/utilities": ^8.13.2
     "@reduxjs/toolkit": ^1.8.6
@@ -3936,7 +3947,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/model-exposure-app@workspace:javascript/app-model-exposure"
   dependencies:
-    "@datashaper/react": ^17.0.1
+    "@datashaper/react": ^18.0.0
     "@datashaper/schema": ^8.1.0
     "@datashaper/tables": ^5.3.0
     "@datashaper/utilities": ^2.3.9
@@ -3946,7 +3957,7 @@ __metadata:
     "@essex/scripts": ^22.1.0
     "@essex/webpack-config": ^21.0.8
     "@fluentui/font-icons-mdl2": ^8.5.2
-    "@fluentui/react": ^8.99.2
+    "@fluentui/react": ^8.99.3
     "@fluentui/react-hooks": ^8.6.12
     "@fluentui/utilities": ^8.13.2
     "@reduxjs/toolkit": ^1.8.6
@@ -4005,7 +4016,7 @@ __metadata:
     "@essex/scripts": ^22.1.0
     "@essex/webpack-config": ^21.0.8
     "@fluentui/font-icons-mdl2": ^8.5.2
-    "@fluentui/react": ^8.99.2
+    "@fluentui/react": ^8.99.3
     "@fluentui/react-hooks": ^8.6.12
     "@fluentui/utilities": ^8.13.2
     "@fluentui/web-components": ^2.5.8
@@ -4062,7 +4073,7 @@ __metadata:
   resolution: "@showwhy/wrangle-app@workspace:javascript/app-wrangle"
   dependencies:
     "@datashaper/core": ^10.0.0
-    "@datashaper/react": ^17.0.1
+    "@datashaper/react": ^18.0.0
     "@datashaper/schema": ^8.1.0
     "@datashaper/tables": ^5.3.0
     "@datashaper/utilities": ^2.3.9
@@ -4073,7 +4084,7 @@ __metadata:
     "@essex/scripts": ^22.1.0
     "@essex/webpack-config": ^21.0.8
     "@fluentui/font-icons-mdl2": ^8.5.2
-    "@fluentui/react": ^8.99.2
+    "@fluentui/react": ^8.99.3
     "@fluentui/react-hooks": ^8.6.12
     "@fluentui/utilities": ^8.13.2
     "@monaco-editor/react": ^4.4.6
@@ -9067,6 +9078,55 @@ __metadata:
   languageName: node
   linkType: hard
 
+"eslint@npm:^8.26.0":
+  version: 8.26.0
+  resolution: "eslint@npm:8.26.0"
+  dependencies:
+    "@eslint/eslintrc": ^1.3.3
+    "@humanwhocodes/config-array": ^0.11.6
+    "@humanwhocodes/module-importer": ^1.0.1
+    "@nodelib/fs.walk": ^1.2.8
+    ajv: ^6.10.0
+    chalk: ^4.0.0
+    cross-spawn: ^7.0.2
+    debug: ^4.3.2
+    doctrine: ^3.0.0
+    escape-string-regexp: ^4.0.0
+    eslint-scope: ^7.1.1
+    eslint-utils: ^3.0.0
+    eslint-visitor-keys: ^3.3.0
+    espree: ^9.4.0
+    esquery: ^1.4.0
+    esutils: ^2.0.2
+    fast-deep-equal: ^3.1.3
+    file-entry-cache: ^6.0.1
+    find-up: ^5.0.0
+    glob-parent: ^6.0.2
+    globals: ^13.15.0
+    grapheme-splitter: ^1.0.4
+    ignore: ^5.2.0
+    import-fresh: ^3.0.0
+    imurmurhash: ^0.1.4
+    is-glob: ^4.0.0
+    is-path-inside: ^3.0.3
+    js-sdsl: ^4.1.4
+    js-yaml: ^4.1.0
+    json-stable-stringify-without-jsonify: ^1.0.1
+    levn: ^0.4.1
+    lodash.merge: ^4.6.2
+    minimatch: ^3.1.2
+    natural-compare: ^1.4.0
+    optionator: ^0.9.1
+    regexpp: ^3.2.0
+    strip-ansi: ^6.0.1
+    strip-json-comments: ^3.1.0
+    text-table: ^0.2.0
+  bin:
+    eslint: bin/eslint.js
+  checksum: a2aced939ea060f77d10dcfced5cfeb940f63f383fd7ab1decadea64170ab552582e1c5909db1db641d4283178c9bc569f19b0f8900e00314a5f783e4b3f759d
+  languageName: node
+  linkType: hard
+
 "espree@npm:^9.4.0":
   version: 9.4.0
   resolution: "espree@npm:9.4.0"
@@ -9877,7 +9937,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"glob-parent@npm:^6.0.1":
+"glob-parent@npm:^6.0.1, glob-parent@npm:^6.0.2":
   version: 6.0.2
   resolution: "glob-parent@npm:6.0.2"
   dependencies:
@@ -10714,6 +10774,13 @@ __metadata:
   version: 7.0.0
   resolution: "is-number@npm:7.0.0"
   checksum: 456ac6f8e0f3111ed34668a624e45315201dff921e5ac181f8ec24923b99e9f32ca1a194912dc79d539c97d33dba17dc635202ff0b2cf98326f608323276d27a
+  languageName: node
+  linkType: hard
+
+"is-path-inside@npm:^3.0.3":
+  version: 3.0.3
+  resolution: "is-path-inside@npm:3.0.3"
+  checksum: abd50f06186a052b349c15e55b182326f1936c89a78bf6c8f2b707412517c097ce04bc49a0ca221787bc44e1049f51f09a2ffb63d22899051988d3a618ba13e9
   languageName: node
   linkType: hard
 
@@ -12153,7 +12220,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"minimatch@npm:^3.0.4, minimatch@npm:^3.1.1, minimatch@npm:^3.1.2":
+"minimatch@npm:^3.0.4, minimatch@npm:^3.0.5, minimatch@npm:^3.1.1, minimatch@npm:^3.1.2":
   version: 3.1.2
   resolution: "minimatch@npm:3.1.2"
   dependencies:
@@ -14700,7 +14767,7 @@ __metadata:
     "@essex/prettier-config": ^18.0.3
     "@essex/scripts": ^22.1.0
     cross-env: ^7.0.3
-    eslint: ^8.25.0
+    eslint: ^8.26.0
     husky: ^8.0.1
     jest: ^29.2.2
     lint-staged: ^13.0.3

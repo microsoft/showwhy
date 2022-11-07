@@ -31,6 +31,7 @@ services:
     environment:
       - REDIS_URL=redis://redis:6379/0
       - WORKER=true
+      - N_PARALLEL_JOBS=2
     depends_on:
       - redis
       - backend_api

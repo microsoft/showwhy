@@ -70,7 +70,12 @@ export function useAlternativeModelsTestable(
 				causes[CausalFactorType.CauseOutcome] ?? BeliefDegree.None
 
 			if (degreeExposure >= 0 && degreeOutcome >= 0) {
-				if (shouldIncludeInDegree(degreeExposure, causalLevel)) {
+				if (
+					shouldIncludeInDegree(
+						Math.min(degreeExposure, degreeOutcome),
+						causalLevel,
+					)
+				) {
 					confoundersArray.push(variable)
 				}
 			}

@@ -190,7 +190,8 @@ function useUpdateRunHistory() {
 				return
 			}
 			setRunHistory(runHistory)
-			const defaultRun = runHistory.find(run => run.isActive) || runHistory[0]!
+			const defaultRun =
+				runHistory.find(run => run.isActive) || (runHistory[0] as RunHistory)
 			setDefaultRun(defaultRun)
 		},
 		[setRunHistory, setDefaultRun],

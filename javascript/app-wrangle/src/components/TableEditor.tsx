@@ -6,7 +6,7 @@ import {
 	ArqueroDetailsList,
 	ArqueroTableHeader,
 	DisplayOrder,
-	StepHistoryList,
+	StepList,
 	TableCommands,
 	useOnCreateStep,
 	useOnDeleteStep,
@@ -83,8 +83,8 @@ export const TableEditor: React.FC<TableEditorProps> = memo(
 							<TableCommands
 								{...tableCommandProps}
 								workflow={workflow}
-								onAddStep={onCreate}
 								selectedColumn={selectedColumn}
+								onAddStep={onCreate}
 								onRemoveStep={onDelete}
 							/>
 						}
@@ -99,11 +99,11 @@ export const TableEditor: React.FC<TableEditorProps> = memo(
 						isHeaderFixed
 						fill
 						clickableColumns
-						onColumnHeaderClick={onColumnClick}
 						selectedColumn={selectedColumn}
-						onColumnClick={onColumnClick}
 						metadata={selectedTable.metadata}
 						table={selectedTable?.table}
+						onColumnClick={onColumnClick}
+						onColumnHeaderClick={onColumnClick}
 					/>
 				</DetailsListContainer>
 				<ToolPanel
@@ -112,13 +112,13 @@ export const TableEditor: React.FC<TableEditorProps> = memo(
 					headerIconProps={HISTORY_ICON_PROPS}
 					styles={toolPanelStyles}
 				>
-					<StepHistoryList
+					<StepList
 						order={DisplayOrder.LastOnTop}
-						onDelete={onDelete}
-						onSelect={setSelectedId}
 						selectedKey={selectedId}
 						workflow={workflow}
 						onSave={onSave}
+						onDelete={onDelete}
+						onSelect={setSelectedId}
 					/>
 				</ToolPanel>
 			</Container>

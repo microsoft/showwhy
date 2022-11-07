@@ -48,16 +48,22 @@ export const GraphFilteringControls = memo(function GraphFilteringControls() {
 			)}
 			{selectedCausalDiscoveryAlgorithm === CausalDiscoveryAlgorithm.DECI && (
 				<>
-					<ThresholdSlider
-						label={'Edge confidence threshold'}
-						thresholdState={ConfidenceThresholdState}
-						defaultStyling
-					/>
-					<Checkbox
-						label="Fixed intervention ranges"
-						checked={fixedInterventionRangesEnabled}
-						onChange={(_, v) => setFixedInterventionRangesEnabled(Boolean(v))}
-					/>
+					{causalGraph.hasConfidenceValues && (
+						<>
+							<ThresholdSlider
+								label={'Edge confidence threshold'}
+								thresholdState={ConfidenceThresholdState}
+								defaultStyling
+							/>
+							<Checkbox
+								label="Fixed intervention ranges"
+								checked={fixedInterventionRangesEnabled}
+								onChange={(_, v) =>
+									setFixedInterventionRangesEnabled(Boolean(v))
+								}
+							/>
+						</>
+					)}
 				</>
 			)}
 		</GraphFilteringContainer>

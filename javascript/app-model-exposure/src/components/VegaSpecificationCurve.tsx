@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { memo, useCallback, useState } from 'react'
+import { memo, useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
 
 /* eslint-disable */
@@ -45,18 +45,38 @@ export const VegaSpecificationCurve: React.FC<{
 	// TODO: these two charts should be combinable into a single vega spec
 	// this will also greatly simplify the hover coordination
 	const [selected, setSelected] = useState<Maybe<string>>()
+	const [latestList, setLatestList] = useState<Specification[]>(data)
+
+	const onChangeSelectedItem = useCallback(
+		(id?: string) => {
+			setSelected(id)
+			onSpecificationSelect(data.find(d => d.id === id))
+		},
+		[data, setSelected, onSpecificationSelect],
+	)
+
 	const handleDatumClick = useCallback(
 		(item: Maybe<Specification>) => {
 			if (item && item.id === selected) {
-				setSelected(undefined)
-				onSpecificationSelect(undefined)
+				onChangeSelectedItem(undefined)
 			} else {
-				setSelected(item?.id)
-				onSpecificationSelect(data.find(d => d.id === item?.id))
+				onChangeSelectedItem(item?.id)
 			}
 		},
-		[data, selected, setSelected, onSpecificationSelect],
+		[selected, onChangeSelectedItem],
 	)
+
+	useEffect(() => {
+		const totalEstimatesReturned = latestList.length
+		if (selected && totalSpecs !== totalEstimatesReturned) {
+			const item = latestList.find(i => i.id === selected)
+			const newItem = data.find(d => d.taskId === item?.taskId)
+			if (newItem?.id !== item?.id) {
+				onChangeSelectedItem(newItem?.id)
+			}
+		}
+		setLatestList(data)
+	}, [data])
 
 	const handleAxisClick = useCallback(
 		(datum: any, axis: string) => {
