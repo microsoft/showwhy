@@ -4,8 +4,9 @@
  */
 import 'allotment/dist/style.css'
 
-import { Allotment, AllotmentHandle } from 'allotment'
-import { memo, useCallback, useRef } from 'react'
+import type { AllotmentHandle } from 'allotment'
+import { Allotment } from 'allotment'
+import { memo, useEffect, useRef } from 'react'
 
 import { RAIL_MAX_SIZE, RAIL_PREFERRED_SIZE } from './CommonLayout.constants.js'
 import {
@@ -26,27 +27,22 @@ export const CommonLayout: React.FC<CommonLayoutProps> = memo(
 		panelsVisibility = true,
 	}) {
 		const ref = useRef<AllotmentHandle>(null)
-		const onVisibilityChange = useCallback(
-			(_: number, visible: boolean) => {
-				debugger
-
-				if (visible) {
-					ref.current?.resize([300, 300, 300])
-				}
-			},
-			[ref],
-		)
+		useEffect(() => {
+			if (panelsVisibility) {
+				ref.current?.reset()
+			}
+		}, [panelsVisibility])
 
 		return (
 			<Container>
 				{menu}
 				<MainArea>
-					<Allotment onVisibleChange={onVisibilityChange}>
+					<Allotment ref={ref}>
 						{configRail != null ? (
 							<Allotment.Pane
 								preferredSize={RAIL_PREFERRED_SIZE}
 								maxSize={RAIL_MAX_SIZE}
-								// visible={panelsVisibility}
+								visible={panelsVisibility}
 							>
 								<LeftRail>{configRail}</LeftRail>
 							</Allotment.Pane>

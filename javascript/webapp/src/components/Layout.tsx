@@ -7,7 +7,7 @@ import 'allotment/dist/style.css'
 
 import { useBoolean } from '@fluentui/react-hooks'
 import { useDebounceFn } from 'ahooks'
-import { Allotment, type AllotmentHandle } from 'allotment'
+import { type AllotmentHandle, Allotment } from 'allotment'
 import { memo, useCallback, useRef } from 'react'
 
 import { useExampleProjects } from '../hooks/examples.js'

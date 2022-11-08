@@ -27,7 +27,6 @@ export const GraphViews: React.FC<DimensionProps> = memo(function GraphViews({
 	if (height > verticalMargin) {
 		height -= verticalMargin
 	}
-	console.log({ width, dimensions })
 
 	let activeGraphView
 	switch (selectedViewKey) {
