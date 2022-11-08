@@ -35,6 +35,7 @@ export interface CausalDiscoveryRequestReturnValue {
 	}
 	is_dag?: boolean
 	has_confidence_values?: boolean
+	intervention_model_id?: string
 }
 
 export interface NormalizedColumnMetadata {

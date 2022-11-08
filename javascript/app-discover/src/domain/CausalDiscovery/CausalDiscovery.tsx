@@ -74,6 +74,7 @@ export function fromCausalDiscoveryResults(
 		algorithm,
 		isDag: results.is_dag,
 		hasConfidenceValues: results.has_confidence_values,
+		interventionModelId: results.intervention_model_id,
 	}
 }
 
