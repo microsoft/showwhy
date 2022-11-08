@@ -65,9 +65,9 @@ export const DeciTrainingParams: React.FC<DeciTrainingParamsProps> = memo(
 							label={x.label}
 							key={x.name}
 							checked={
-								!!values?.training_options?.[
+								(values?.training_options?.[
 									x.name as keyof DECITrainingOptions
-								] || x.checked
+								] ?? x.checked) as boolean
 							}
 							onChange={(_, val?: boolean) =>
 								onChangeBoolean('training_options', val, x.name)

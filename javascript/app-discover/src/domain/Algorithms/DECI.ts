@@ -6,6 +6,7 @@
 export interface DECIParams {
 	model_options?: DECIModelOptions
 	training_options?: DECITrainingOptions
+	ate_options?: DECIAteOptions
 }
 
 export enum BaseDistributionType {
@@ -64,4 +65,10 @@ export interface DECITrainingOptions {
 	max_p_train_dropout?: number
 	reconstruction_loss_factor?: number
 	anneal_entropy?: AnnealEntropy
+}
+
+export interface DECIAteOptions {
+	Ngraphs?: number
+	Nsamples_per_graph?: number
+	most_likely_graph?: boolean
 }
