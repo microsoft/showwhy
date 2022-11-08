@@ -48,13 +48,15 @@ export const CommonLayout: React.FC<CommonLayoutProps> = memo(
 							</Allotment.Pane>
 						) : null}
 						<Content>{children}</Content>
-						<Allotment.Pane
-							preferredSize={RAIL_PREFERRED_SIZE}
-							maxSize={RAIL_MAX_SIZE}
-							visible={panelsVisibility}
-						>
-							<RightRail>{detailRail}</RightRail>
-						</Allotment.Pane>
+						{detailRail != null ? (
+							<Allotment.Pane
+								preferredSize={RAIL_PREFERRED_SIZE}
+								maxSize={RAIL_MAX_SIZE}
+								visible={panelsVisibility}
+							>
+								<RightRail>{detailRail}</RightRail>
+							</Allotment.Pane>
+						) : null}
 					</Allotment>
 				</MainArea>
 			</Container>
