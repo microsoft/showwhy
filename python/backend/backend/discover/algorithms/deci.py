@@ -10,15 +10,6 @@ import numpy as np
 import pandas as pd
 import scipy
 import torch
-from backend.discover.algorithms.commons.base_runner import (
-    CausalDiscoveryRunner,
-    CausalGraph,
-    ProgressCallback,
-)
-from backend.discover.model.causal_discovery import (
-    CausalDiscoveryPayload,
-    map_to_causica_var_type,
-)
 from causica.datasets.dataset import Dataset
 from causica.datasets.variables import Variables
 from causica.models.deci.deci import DECI
@@ -28,7 +19,21 @@ from celery import uuid
 from networkx.readwrite import json_graph
 from pydantic import BaseModel
 
+from backend.discover.algorithms.commons.base_runner import (
+    CausalDiscoveryRunner,
+    CausalGraph,
+    ProgressCallback,
+)
+from backend.discover.model.causal_discovery import (
+    CausalDiscoveryPayload,
+    map_to_causica_var_type,
+)
+
 torch.set_default_dtype(torch.float32)
+
+TRAINING_PROGRESS_PROPORTION = 0.7
+
+ATE_CALC_PROGRESS_PROPORTION = 0.3
 
 
 class DeciModelOptions(BaseModel):
@@ -205,7 +210,10 @@ class DeciRunner(CausalDiscoveryRunner):
         reference_values = train_data.mean(0) - train_data.std(0)
         ates = []
 
-        for variable in range(treatment_values.shape[0]):
+        n_variables = treatment_values.shape[0]
+        progress_step = ATE_CALC_PROGRESS_PROPORTION / n_variables
+
+        for i, variable in enumerate(range(n_variables), start=1):
             intervention_idxs = torch.tensor([variable])
             intervention_value = torch.tensor([treatment_values[variable]])
             reference_value = torch.tensor([reference_values[variable]])
@@ -229,6 +237,10 @@ class DeciRunner(CausalDiscoveryRunner):
                 most_likely_graph=self._ate_options.most_likely_graph,
             )
             ates.append(ate)
+
+            self._report_progress(
+                (TRAINING_PROGRESS_PROPORTION + (i * progress_step)) * 100.0
+            )
 
         ate_matrix = np.stack(ates)
 
@@ -355,7 +367,7 @@ class DeciRunner(CausalDiscoveryRunner):
             causica_dataset,
             self._training_options.dict(),
             lambda model_id, step, max_steps: self._report_progress(
-                step * 100.0 / max_steps
+                (step * 100.0 / max_steps) * TRAINING_PROGRESS_PROPORTION
             ),
         )
 
