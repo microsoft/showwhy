@@ -2,7 +2,6 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { Icon, Text } from '@fluentui/react'
 import { memo, useEffect, useRef } from 'react'
 import { useXarrow, Xwrapper } from 'react-xarrows'
 import {
@@ -30,9 +29,9 @@ import { CausalEdge } from './CausalEdge.jsx'
 import { useGraphBounds } from './CausalGraphExplorer.hooks.js'
 import {
 	Background,
-	classNames,
 	Container,
 	ContainerEdge,
+	edgeColors,
 	FlexContainer,
 	Grid,
 } from './CausalGraphExplorer.styles.js'
@@ -162,44 +161,24 @@ export const CausalGraphExplorer = memo(function CausalGraphExplorer() {
 					<FlexContainer>
 						<Grid>
 							<Container>
-								<Icon
-									className={classNames.positive}
-									iconName={relationshipIcon}
-								></Icon>{' '}
-								Causes increase
+								<EdgeIcon color={edgeColors.positive} /> Causes increase
 							</Container>
 							<Container>
-								<Icon
-									className={classNames.negative}
-									iconName={relationshipIcon}
-								></Icon>{' '}
+								<EdgeIcon color={edgeColors.negative} />
 								Causes decrease
 							</Container>
 							<Container>
-								<CorrelationIcon />
+								<CorrelationIcon color={edgeColors.correlation} />
 								Correlation
 							</Container>
 							<Container>
-								<Icon
-									className={classNames.pcChange}
-									iconName={relationshipIcon}
-								></Icon>{' '}
+								<EdgeIcon color={edgeColors.pcChange} />
 								Causes change
 							</Container>
-							<Container>
-								<Text variant={'xSmall'}>corr=</Text>
-								Correlation value
-							</Container>
-							<Container>
-								<Icon className={classNames.pcChange} iconName={arrow}></Icon>{' '}
-								Causation direction (caused by)
-							</Container>
 							<ContainerEdge>
-								<Text style={{ fontWeight: 'bold' }} variant={'xSmall'}>
-									1.00
-								</Text>{' '}
 								Edge weights quantify the strength of the causal relationship
-								under the selected discovery algorithm
+								under the selected discovery algorithm. corr=correlation;
+								conf=confidence
 							</ContainerEdge>
 						</Grid>
 					</FlexContainer>
@@ -214,26 +193,58 @@ export const CausalGraphExplorer = memo(function CausalGraphExplorer() {
 	)
 })
 
-const relationshipIcon = 'ChromeMinimize'
-const arrow = 'Forward'
+const CorrelationIcon: React.FC<{ color: string }> = memo(
+	function CorrelationIcon({ color }) {
+		return (
+			<svg
+				width="22"
+				height="12"
+				viewBox="0 0 22 12"
+				fill="none"
+				xmlns="http://www.w3.org/2000/svg"
+			>
+				<g clipPath="url(#clip0_13246_41467)">
+					<path
+						d="M19.8388 6.7491C20.253 6.7491 20.5888 6.41332 20.5888 5.9991C20.5888 5.58489 20.253 5.2491 19.8388 5.2491L19.1317 5.2491C18.7175 5.2491 18.3817 5.58489 18.3817 5.9991C18.3817 6.41332 18.7175 6.7491 19.1317 6.7491H19.8388ZM16.3462 5.9991C16.3462 6.41332 16.0104 6.7491 15.5962 6.7491H14.8891C14.4749 6.7491 14.1391 6.41332 14.1391 5.9991C14.1391 5.58489 14.4749 5.2491 14.8891 5.2491H15.5962C16.0104 5.2491 16.3462 5.58489 16.3462 5.9991ZM12.1036 5.9991C12.1036 6.41332 11.7678 6.7491 11.3536 6.7491H10.6464C10.2322 6.7491 9.89645 6.41332 9.89645 5.9991C9.89645 5.58489 10.2322 5.2491 10.6464 5.2491H11.3536C11.7678 5.2491 12.1036 5.58489 12.1036 5.9991ZM7.86091 5.9991C7.86091 6.41332 7.52513 6.7491 7.11091 6.7491H6.40381C5.98959 6.7491 5.65381 6.41332 5.65381 5.9991C5.65381 5.58489 5.98959 5.2491 6.40381 5.2491H7.11091C7.52513 5.2491 7.86091 5.58489 7.86091 5.9991ZM2.86827 6.7491C3.28249 6.7491 3.61827 6.41332 3.61827 5.9991C3.61827 5.58489 3.28249 5.2491 2.86827 5.2491L2.16117 5.2491C1.74695 5.2491 1.41117 5.58489 1.41117 5.9991C1.41117 6.41332 1.74695 6.7491 2.16117 6.7491H2.86827Z"
+						fill={color}
+					/>
+				</g>
+				<defs>
+					<clipPath id="clip0_13246_41467">
+						<rect width="22" height="12" fill="white" />
+					</clipPath>
+				</defs>
+			</svg>
+		)
+	},
+)
 
-const CorrelationIcon: React.FC = memo(function CausalGraphExplorer() {
+const EdgeIcon: React.FC<{ color: string }> = memo(function EdgeIcon({
+	color,
+}) {
 	return (
 		<svg
-			style={{
-				rotate: '45deg',
-				color: classNames.correlation,
-			}}
-			width="24"
-			height="24"
-			viewBox="0 0 24 24"
+			width="22"
+			height="12"
+			viewBox="0 0 22 12"
 			fill="none"
 			xmlns="http://www.w3.org/2000/svg"
 		>
-			<path
-				d="M21.785 2.2226C22.0779 2.51549 22.0779 2.99037 21.785 3.28326L20.7842 4.28407C20.4913 4.57696 20.0165 4.57696 19.7236 4.28407C19.4307 3.99118 19.4307 3.5163 19.7236 3.22341L20.7244 2.2226C21.0173 1.92971 21.4922 1.92971 21.785 2.2226ZM17.7774 6.2226C18.0703 6.51549 18.0703 6.99037 17.7774 7.28326L16.2774 8.78326C15.9845 9.07615 15.5096 9.07615 15.2167 8.78326C14.9238 8.49037 14.9238 8.01549 15.2167 7.7226L16.7167 6.2226C17.0096 5.92971 17.4845 5.92971 17.7774 6.2226ZM13.2803 10.7197C13.5732 11.0126 13.5732 11.4874 13.2803 11.7803L11.7803 13.2803C11.4874 13.5732 11.0126 13.5732 10.7197 13.2803C10.4268 12.9874 10.4268 12.5126 10.7197 12.2197L12.2197 10.7197C12.5126 10.4268 12.9874 10.4268 13.2803 10.7197ZM8.7774 16.2833C9.07029 15.9904 9.07029 15.5155 8.7774 15.2226C8.48451 14.9297 8.00963 14.9297 7.71674 15.2226L6.21674 16.7226C5.92385 17.0155 5.92385 17.4904 6.21674 17.7833C6.50963 18.0762 6.98451 18.0762 7.2774 17.7833L8.7774 16.2833ZM4.28114 20.7803C4.57403 20.4874 4.57403 20.0126 4.28114 19.7197C3.98825 19.4268 3.51337 19.4268 3.22048 19.7197L2.21967 20.7205C1.92678 21.0134 1.92678 21.4882 2.21967 21.7811C2.51256 22.074 2.98744 22.074 3.28033 21.7811L4.28114 20.7803Z"
-				fill="currentColor"
-			/>
+			<g clipPath="url(#clip0_13246_41467)">
+				<path
+					d="M19.8388 6.7491C20.253 6.7491 20.5888 6.41332 20.5888 5.9991C20.5888 5.58489 20.253 5.2491 19.8388 5.2491L19.1317 5.2491C18.7175 5.2491 18.3817 5.58489 18.3817 5.9991C18.3817 6.41332 18.7175 6.7491 19.1317 6.7491H19.8388ZM16.3462 5.9991C16.3462 6.41332 16.0104 6.7491 15.5962 6.7491H14.8891C14.4749 6.7491 14.1391 6.41332 14.1391 5.9991C14.1391 5.58489 14.4749 5.2491 14.8891 5.2491H15.5962C16.0104 5.2491 16.3462 5.58489 16.3462 5.9991ZM12.1036 5.9991C12.1036 6.41332 11.7678 6.7491 11.3536 6.7491H10.6464C10.2322 6.7491 9.89645 6.41332 9.89645 5.9991C9.89645 5.58489 10.2322 5.2491 10.6464 5.2491H11.3536C11.7678 5.2491 12.1036 5.58489 12.1036 5.9991ZM7.86091 5.9991C7.86091 6.41332 7.52513 6.7491 7.11091 6.7491H6.40381C5.98959 6.7491 5.65381 6.41332 5.65381 5.9991C5.65381 5.58489 5.98959 5.2491 6.40381 5.2491H7.11091C7.52513 5.2491 7.86091 5.58489 7.86091 5.9991ZM2.86827 6.7491C3.28249 6.7491 3.61827 6.41332 3.61827 5.9991C3.61827 5.58489 3.28249 5.2491 2.86827 5.2491L2.16117 5.2491C1.74695 5.2491 1.41117 5.58489 1.41117 5.9991C1.41117 6.41332 1.74695 6.7491 2.16117 6.7491H2.86827Z"
+					fill={color}
+				/>
+				<path
+					d="M16.2197 0.918889C16.4859 0.652622 16.9026 0.628416 17.1962 0.846271L17.2803 0.918889L21.7803 5.41889C22.0466 5.68516 22.0708 6.10182 21.8529 6.39543L21.7803 6.47955L17.2803 10.9795C16.9874 11.2724 16.5126 11.2724 16.2197 10.9795C15.9534 10.7133 15.9292 10.2966 16.1471 10.003L16.2197 9.91889L20.1893 5.94922L16.2197 1.97955C15.9268 1.68666 15.9268 1.21178 16.2197 0.918889Z"
+					fill={color}
+				/>
+			</g>
+			<defs>
+				<clipPath id="clip0_13246_41467">
+					<rect width="22" height="12" fill="white" />
+				</clipPath>
+			</defs>
 		</svg>
 	)
 })

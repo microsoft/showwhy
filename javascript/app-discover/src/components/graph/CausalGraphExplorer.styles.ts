@@ -2,7 +2,6 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { mergeStyleSets } from '@fluentui/react'
 import styled from 'styled-components'
 
 import {
@@ -29,7 +28,7 @@ export const Grid = styled.div`
 	gap: 5px 5px;
 	grid-template-areas:
 		'. . . .'
-		'. . edge edge';
+		'edge edge edge edge';
 	justify-content: space-between;
 	align-content: space-around;
 	justify-items: stretch;
@@ -48,9 +47,9 @@ export const FlexContainer = styled.div`
 	padding: 10px;
 `
 
-export const classNames = mergeStyleSets({
-	positive: [{ color: colorPositive }],
-	negative: [{ color: colorNegative }],
-	correlation: [{ color: colorCorrelation }],
-	pcChange: [{ color: colorNeutral }],
-})
+export const edgeColors = {
+	positive: colorPositive,
+	negative: colorNegative,
+	correlation: colorCorrelation,
+	pcChange: colorNeutral,
+}
