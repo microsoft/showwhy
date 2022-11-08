@@ -381,7 +381,9 @@ class DeciRunner(CausalDiscoveryRunner):
 
         deci_model.eval()
 
-        intervention_model = DeciInterventionModel(deci_model, adj_matrix, train_data)
+        intervention_model = DeciInterventionModel(
+            deci_model, adj_matrix, ate_matrix, train_data
+        )
 
         causal_graph = self._build_causal_graph(
             self._build_onnx_model(deci_model, adj_matrix),

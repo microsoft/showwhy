@@ -13,4 +13,6 @@ def deci_intervention_task(payload: InterventionPayload) -> InterventionResult:
         payload.intervention_model_id
     )
 
-    return model.perform_intervention(payload.interventions)
+    return model.perform_intervention(
+        payload.interventions, payload.confidence_threshold, payload.weight_threshold
+    )

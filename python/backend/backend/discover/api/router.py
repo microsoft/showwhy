@@ -80,4 +80,4 @@ def run_pc(p: PCPayload):
 @discover_router.post("/deci/intervention")
 def perform_intervention(p: InterventionPayload):
     async_task = deci_intervention_task.delay(p)
-    return {"result": async_task.get()}
+    return async_task.get()
