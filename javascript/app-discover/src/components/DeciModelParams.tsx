@@ -109,9 +109,8 @@ export const DeciModelParams: React.FC<DeciModelParamsProps> = memo(
 							key={x.name}
 							label={x.label}
 							checked={
-								(values?.model_options &&
-									!!values?.model_options[x.name as keyof DECIModelOptions]) ??
-								x.checked
+								(values?.model_options?.[x.name as keyof DECIModelOptions] ??
+									x.checked) as boolean
 							}
 							onChange={(_, val?: boolean) =>
 								onChangeBoolean('model_options', val, x.name)

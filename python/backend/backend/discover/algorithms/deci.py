@@ -10,15 +10,6 @@ import numpy as np
 import pandas as pd
 import scipy
 import torch
-from causica.datasets.dataset import Dataset
-from causica.datasets.variables import Variables
-from causica.models.deci.deci import DECI
-from causica.models.deci.generation_functions import ContractiveInvertibleGNN
-from causica.utils.torch_utils import get_torch_device
-from celery import uuid
-from networkx.readwrite import json_graph
-from pydantic import BaseModel
-
 from backend.discover.algorithms.commons.base_runner import (
     CausalDiscoveryRunner,
     CausalGraph,
@@ -28,6 +19,14 @@ from backend.discover.model.causal_discovery import (
     CausalDiscoveryPayload,
     map_to_causica_var_type,
 )
+from causica.datasets.dataset import Dataset
+from causica.datasets.variables import Variables
+from causica.models.deci.deci import DECI
+from causica.models.deci.generation_functions import ContractiveInvertibleGNN
+from causica.utils.torch_utils import get_torch_device
+from celery import uuid
+from networkx.readwrite import json_graph
+from pydantic import BaseModel
 
 torch.set_default_dtype(torch.float32)
 
@@ -74,9 +73,16 @@ class DeciTrainingOptions(BaseModel):
     anneal_entropy: Literal["linear", "noanneal"] = "noanneal"
 
 
+class DeciAteOptions(BaseModel):
+    Ngraphs: Optional[int] = 1
+    Nsamples_per_graph: Optional[int] = 5000
+    most_likely_graph: Optional[int] = True
+
+
 class DeciPayload(CausalDiscoveryPayload):
     model_options: DeciModelOptions = DeciModelOptions()
     training_options: DeciTrainingOptions = DeciTrainingOptions()
+    ate_options: DeciAteOptions = DeciAteOptions()
 
 
 class DeciRunner(CausalDiscoveryRunner):
@@ -86,6 +92,7 @@ class DeciRunner(CausalDiscoveryRunner):
         super().__init__(p, progress_callback)
         self._model_options = p.model_options
         self._training_options = p.training_options
+        self._ate_options = p.ate_options
         # make sure every run has its own folder
         self._deci_save_dir = f"CauseDisDECIDir/{uuid()}"
         self._is_dag = None
@@ -127,15 +134,13 @@ class DeciRunner(CausalDiscoveryRunner):
             self._deci_save_dir,
             self._device,
             **self._model_options.dict(),
+            graph_constraint_matrix=self._build_constraint_matrix(
+                self._prepared_data,
+                tabu_child_nodes=self._constraints.causes,
+                tabu_parent_nodes=self._constraints.effects,
+                tabu_edges=self._constraints.forbiddenRelationships,
+            ),
         )
-        constraint_matrix = self._build_constraint_matrix(
-            self._prepared_data,
-            tabu_child_nodes=self._constraints.causes,
-            tabu_parent_nodes=self._constraints.effects,
-            tabu_edges=self._constraints.forbiddenRelationships,
-        )
-
-        deci_model.set_graph_constraint(constraint_matrix)
 
         return deci_model
 
@@ -195,7 +200,7 @@ class DeciRunner(CausalDiscoveryRunner):
     def _compute_average_treatment_effect(
         self, model: DECI, causica_dataset: Dataset
     ) -> np.ndarray:
-        train_data = pd.DataFrame(causica_dataset.train_data_and_mask[0])
+        train_data = pd.DataFrame(causica_dataset._train_data)
         treatment_values = train_data.mean(0) + train_data.std(0)
         reference_values = train_data.mean(0) - train_data.std(0)
         ates = []
@@ -209,14 +214,19 @@ class DeciRunner(CausalDiscoveryRunner):
                 f"Computing the ATE between X{variable}={treatment_values[variable]} and X{variable}={reference_values[variable]}"
             )
 
-            # This estimate uses 200k samples for accuracy. You can get away with fewer if necessary
+            if self._ate_options.most_likely_graph and self._ate_options.Ngraphs != 1:
+                logging.warning(
+                    "Adjusting Ngraphs parameter to 1 because most_likely_graph is set to true"
+                )
+                self._ate_options.Ngraphs = 1
+
             ate, _ = model.cate(
                 intervention_idxs,
                 intervention_value,
                 reference_value,
-                Ngraphs=1,
-                Nsamples_per_graph=200,
-                most_likely_graph=True,
+                Ngraphs=self._ate_options.Ngraphs,
+                Nsamples_per_graph=self._ate_options.Nsamples_per_graph,
+                most_likely_graph=self._ate_options.most_likely_graph,
             )
             ates.append(ate)
 
@@ -300,18 +310,9 @@ class DeciRunner(CausalDiscoveryRunner):
         }
 
         for n1, n2, d in deci_graph.edges(data=True):
-            # TODO: validate what to do when there is no edge in the ate graph
-            #       currently returning weight 0
-            # TODO: temporarily do not use ATE values for weight and leave
-            #       edge weight as it is
-            # ate = deci_ate_graph.get_edge_data(n1, n2, default={"weight": 0})["weight"]
-            # d["confidence"] = d.pop("weight", None)
-            # d["weight"] = ate
-
-            # TODO: temporarily using ATE and weight sign
             ate = deci_ate_graph.get_edge_data(n1, n2, default={"weight": 0})["weight"]
-            if ate < 0 and d["weight"]:
-                d["weight"] = -d["weight"]
+            d["confidence"] = d.pop("weight", None)
+            d["weight"] = ate
 
         return networkx.relabel_nodes(deci_graph, labels)
 
@@ -335,10 +336,7 @@ class DeciRunner(CausalDiscoveryRunner):
         #       in case we need to keep, reimplement it
         causal_graph["interpret_boolean_as_continuous"] = False
         causal_graph["has_weights"] = True
-        # TODO: temporarily do not use ATE values for weight and leave
-        #       edge weight as it is
-        #       set this back to True
-        causal_graph["has_confidence_values"] = False
+        causal_graph["has_confidence_values"] = True
         causal_graph["is_dag"] = bool(self._is_dag)
 
         return causal_graph
