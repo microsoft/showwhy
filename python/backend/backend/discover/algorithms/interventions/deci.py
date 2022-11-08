@@ -1,5 +1,5 @@
 import logging
-from typing import Dict, Optional
+from typing import Optional
 
 import numpy as np
 import pandas as pd
@@ -7,6 +7,10 @@ import torch
 from causica.models.deci.deci import DECI
 from celery import uuid
 
+from backend.discover.model.interventions import (
+    InterventionResult,
+    InterventionValueByColumn,
+)
 from backend.worker_commons.io.db import get_db_client
 
 
@@ -29,8 +33,8 @@ class DeciInterventionModel:
 
     def perform_intervention(
         self,
-        interventions: Dict[str, float],
-    ) -> Dict[str, float]:
+        interventions: InterventionValueByColumn,
+    ) -> InterventionResult:
         intervention_idxs = []
         intervention_values = []
 
@@ -61,7 +65,7 @@ class DeciInterventionModel:
         ).numpy()
 
         return {
-            var.name: raw_result[:, i].mean()
+            var.name: float(raw_result[:, i].mean())
             for i, var in enumerate(self._deci_model.variables)
         }
 

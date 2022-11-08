@@ -9,7 +9,9 @@ from backend.discover.algorithms.direct_lingam import (
 )
 from backend.discover.algorithms.notears import NotearsPayload, NotearsRunner
 from backend.discover.algorithms.pc import PCPayload, PCRunner
+from backend.discover.model.interventions import InterventionPayload
 from backend.discover.worker.causal_discovery_task import causal_discovery_task
+from backend.discover.worker.deci_intervention_task import deci_intervention_task
 
 disable_eager_execution()
 
@@ -73,3 +75,9 @@ def run_direct_lingam(p: DirectLiNGAMPayload):
 def run_pc(p: PCPayload):
     async_task = causal_discovery_task.delay(PCRunner, p)
     return {"id": async_task.id}
+
+
+@discover_router.post("/deci/intervention")
+def perform_intervention(p: InterventionPayload):
+    async_task = deci_intervention_task.delay(p)
+    return {"result": async_task.get()}

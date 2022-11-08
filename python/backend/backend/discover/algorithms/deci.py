@@ -10,6 +10,15 @@ import numpy as np
 import pandas as pd
 import scipy
 import torch
+from causica.datasets.dataset import Dataset
+from causica.datasets.variables import Variables
+from causica.models.deci.deci import DECI
+from causica.models.deci.generation_functions import ContractiveInvertibleGNN
+from causica.utils.torch_utils import get_torch_device
+from celery import uuid
+from networkx.readwrite import json_graph
+from pydantic import BaseModel
+
 from backend.discover.algorithms.commons.base_runner import (
     CausalDiscoveryRunner,
     CausalGraph,
@@ -20,14 +29,6 @@ from backend.discover.model.causal_discovery import (
     CausalDiscoveryPayload,
     map_to_causica_var_type,
 )
-from causica.datasets.dataset import Dataset
-from causica.datasets.variables import Variables
-from causica.models.deci.deci import DECI
-from causica.models.deci.generation_functions import ContractiveInvertibleGNN
-from causica.utils.torch_utils import get_torch_device
-from celery import uuid
-from networkx.readwrite import json_graph
-from pydantic import BaseModel
 
 torch.set_default_dtype(torch.float32)
 
