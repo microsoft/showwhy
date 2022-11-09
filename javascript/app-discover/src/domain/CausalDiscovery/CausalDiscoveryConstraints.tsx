@@ -39,3 +39,42 @@ export const getConstraintType = (
 
 	return Constraints.None
 }
+
+export const updateConstraints = (
+	constraints: CausalDiscoveryConstraints,
+	variable: VariableReference,
+	constraintType: Constraints,
+) => {
+	let { causes, effects } = constraints
+	const currentConstraintType = getConstraintType(constraints, variable)
+	if (currentConstraintType === Constraints.Cause) {
+		causes = removeConstraint(causes, variable)
+	} else if (currentConstraintType === Constraints.Effect) {
+		effects = removeConstraint(effects, variable)
+	}
+
+	if (constraintType === Constraints.Cause) {
+		causes = addConstraint(causes, variable)
+	} else if (constraintType === Constraints.Effect) {
+		effects = addConstraint(effects, variable)
+	}
+
+	return {
+		...constraints,
+		causes,
+		effects,
+	}
+}
+
+const addConstraint = (
+	constraints: VariableReference[],
+	variable: VariableReference,
+) => [...constraints, variable]
+
+const removeConstraint = (
+	constraints: VariableReference[],
+	variable: VariableReference,
+) =>
+	constraints.filter(
+		constraint => constraint.columnName !== variable.columnName,
+	)
