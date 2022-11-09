@@ -624,14 +624,12 @@
                                 "manualRelationships": []
                             },
                             "algorithm": "NOTEARS"
-                        },
-                        "causalInferenceModel": null
+                        }
                     }
                 },
                 "causalInference": {
                     "interventions": [],
                     "baselineValues": {},
-                    "baselineOffsets": {},
                     "results": {}
                 },
                 "dataset": {

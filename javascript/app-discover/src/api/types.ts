@@ -2,6 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import type { InterventionByColumn } from '../domain/CausalInference.js'
 import type { CancelablePromise } from '../utils/CancelablePromise.js'
 
 export enum DiscoverResponseStatus {
@@ -40,3 +41,8 @@ export type FetchDiscoverResultPromise<T> = CancelablePromise<
 	FetchDiscoverMetadata,
 	FetchDiscoverResult<T>
 >
+
+export interface InterventionResponse {
+	baseline: InterventionByColumn
+	intervention: InterventionByColumn
+}

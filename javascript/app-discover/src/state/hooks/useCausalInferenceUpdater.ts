@@ -5,66 +5,64 @@
 import { useEffect } from 'react'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
 
-import { runCausalInference } from '../../domain/CausalInference.js'
+import { useInterventionModelId } from '../../components/graph/CausalGraphNode.hooks.js'
+import type { Intervention } from '../../domain/CausalInference.js'
 import {
-	CausalInferenceBaselineOffsetsState,
 	CausalInferenceBaselineValuesState,
 	CausalInferenceResultState,
 	CausalInterventionsState,
 	ConfidenceThresholdState,
 	WeightThresholdState,
 } from '../atoms/index.js'
-import { InModelCausalVariablesState } from '../selectors/index.js'
-import { useCausalInferenceModel } from './useCausalInferenceModel.js'
+import { useDebounceRunInference } from './useDebounceRunInference.js'
+
+function interventionsToMap(
+	interventions: Intervention[],
+): Map<string, number> {
+	const interventionsMap = new Map()
+
+	interventions.forEach(i => {
+		interventionsMap.set(i.columnName, i.value)
+	})
+	return interventionsMap
+}
 
 /**
  * Hook to update initial causal inference results after causal discovery is run
  */
 export function useCausalInferenceUpdater() {
-	const inModelVariables = useRecoilValue(InModelCausalVariablesState)
-	const inferenceModel = useCausalInferenceModel()
+	const interventionModelId = useInterventionModelId()
 	const weightThreshold = useRecoilValue(WeightThresholdState)
 	const confidenceThreshold = useRecoilValue(ConfidenceThresholdState)
 	const setInitialValues = useSetRecoilState(CausalInferenceBaselineValuesState)
-
-	const initialValueOffsets = useRecoilValue(
-		CausalInferenceBaselineOffsetsState,
-	)
 	const interventions = useRecoilValue(CausalInterventionsState)
 	const setCausalInferenceResults = useSetRecoilState(
 		CausalInferenceResultState,
 	)
+	const debounceRunInference = useDebounceRunInference(500)
 
 	useEffect(() => {
-		if (inferenceModel) {
-			const runInference = async () => {
-				const baselineResults = await runCausalInference(
-					inferenceModel,
-					confidenceThreshold,
-					weightThreshold,
-					inModelVariables,
-				)
-				setInitialValues(baselineResults)
-				const intervenedResults = await runCausalInference(
-					inferenceModel,
-					confidenceThreshold,
-					weightThreshold,
-					inModelVariables,
-					initialValueOffsets,
-					interventions,
-				)
-				setCausalInferenceResults(intervenedResults)
-			}
+		if (interventionModelId) {
+			// setting the initial intervention values here, so the sliders
+			// are responsive and we don't wait for the intervention
+			// logic to finish to cause the moved slider to update
+			setCausalInferenceResults(interventionsToMap(interventions))
 
-			void runInference()
+			void debounceRunInference(
+				interventionModelId,
+				confidenceThreshold,
+				weightThreshold,
+				interventions,
+				setInitialValues,
+				setCausalInferenceResults,
+			)
 		}
 	}, [
-		inferenceModel,
+		debounceRunInference,
+		interventionModelId,
 		confidenceThreshold,
 		weightThreshold,
-		inModelVariables,
 		interventions,
-		initialValueOffsets,
 		setCausalInferenceResults,
 		setInitialValues,
 	])

@@ -15,7 +15,6 @@ import type { NodePosition } from '../domain/NodePosition.js'
 import {
 	CausalDiscoveryResultsState,
 	CausalGraphConstraintsState,
-	CausalInferenceBaselineOffsetsState,
 	CausalInferenceBaselineValuesState,
 	CausalInferenceResultState,
 	CausalInterventionsState,
@@ -42,7 +41,6 @@ interface ProjectJson {
 	causalInference: {
 		interventions: Intervention[]
 		baselineValues: Map<string, number>
-		baselineOffsets: Map<string, number>
 		results: Map<string, number>
 	}
 	dataset: {
@@ -97,7 +95,6 @@ function useGetProjectJson(): () => ProjectJson {
 	)
 	const causalInterventions = useRecoilValue(CausalInterventionsState)
 	const baselineValues = useRecoilValue(CausalInferenceBaselineValuesState)
-	const baselineOffsets = useRecoilValue(CausalInferenceBaselineOffsetsState)
 	const inferenceResults = useRecoilValue(CausalInferenceResultState)
 	const datasetName = useRecoilValue(DatasetNameState)
 	const nodePositions = useRecoilValue(NodePositionsState)
@@ -124,7 +121,6 @@ function useGetProjectJson(): () => ProjectJson {
 			causalInference: {
 				interventions: causalInterventions,
 				baselineValues,
-				baselineOffsets,
 				results: inferenceResults,
 			},
 			dataset: {
@@ -148,7 +144,6 @@ function useGetProjectJson(): () => ProjectJson {
 			causalDiscoveryResultsState,
 			causalInterventions,
 			baselineValues,
-			baselineOffsets,
 			inferenceResults,
 			datasetName,
 			nodePositions,
@@ -177,9 +172,6 @@ function useLoadProjectJson(): (json: ProjectJson) => void {
 	const setBaselineValues = useSetRecoilState(
 		CausalInferenceBaselineValuesState,
 	)
-	const setBaselineOffsets = useSetRecoilState(
-		CausalInferenceBaselineOffsetsState,
-	)
 	const setInferenceResults = useSetRecoilState(CausalInferenceResultState)
 	const setDatasetName = useSetRecoilState(DatasetNameState)
 	const setNodePositions = useSetRecoilState(NodePositionsState)
@@ -206,9 +198,6 @@ function useLoadProjectJson(): (json: ProjectJson) => void {
 			setBaselineValues(
 				new Map(Object.entries(json.causalInference.baselineValues)),
 			)
-			setBaselineOffsets(
-				new Map(Object.entries(json.causalInference.baselineOffsets)),
-			)
 			setInferenceResults(new Map(Object.entries(json.causalInference.results)))
 
 			setDatasetName(json.dataset.datasetName)
@@ -231,7 +220,6 @@ function useLoadProjectJson(): (json: ProjectJson) => void {
 			setCausalDiscoveryResultsState,
 			setCausalInterventions,
 			setBaselineValues,
-			setBaselineOffsets,
 			setInferenceResults,
 			setDatasetName,
 			setNodePositions,
