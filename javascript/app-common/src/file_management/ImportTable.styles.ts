@@ -56,12 +56,15 @@ export const ModalBody = styled.div`
 	flex-direction: column;
 	gap: 20px;
 	padding: 12px;
-	height: 600px;
+	height: 100%;
 `
 export const Footer = styled.div`
 	padding: 10px;
 	float: right;
 `
 
-export const modalStyles = { main: { width: 800 } }
+export const modalStyles = {
+	main: { width: 800, maxHeight: '100%' },
+	scrollableContent: { maxHeight: '90vh' },
+}
 export const buttonChoiceGroupStyles = { alignSelf: 'flex-start' }

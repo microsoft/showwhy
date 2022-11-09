@@ -26,6 +26,7 @@ export const Message = styled(MessageBar)`
 `
 
 export const DetailsListContainer = styled.div`
+	height: 250px;
 	border-top: 1px solid
 		${({ theme }: { theme: ITheme }) => theme.palette.neutralTertiaryAlt};
 `
