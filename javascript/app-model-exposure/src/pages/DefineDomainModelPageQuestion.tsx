@@ -5,6 +5,7 @@
 
 import { HypothesisGroup } from '@showwhy/app-common'
 import { memo } from 'react'
+import styled from 'styled-components'
 
 import { FieldGroup } from '../components/FieldGroup.js'
 import { Title } from '../components/styles.js'
@@ -13,7 +14,6 @@ import {
 	useOnHypothesysChange,
 	useOnInputChange,
 } from './DefineDomainModelPage.hooks.js'
-import { Container } from './DefineDomainModelPage.styles.js'
 export const DefineDomainModelPageQuestion: React.FC = memo(
 	function DefineDomainModelPageQuestion() {
 		const question = useCausalQuestion()
@@ -49,3 +49,5 @@ export const DefineDomainModelPageQuestion: React.FC = memo(
 		)
 	},
 )
+
+const Container = styled.div``

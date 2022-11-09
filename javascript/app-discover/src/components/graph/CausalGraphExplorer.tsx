@@ -27,11 +27,19 @@ import {
 } from '../../state/index.jsx'
 import { CausalEdge } from './CausalEdge.jsx'
 import { useGraphBounds } from './CausalGraphExplorer.hooks.js'
-import { Background } from './CausalGraphExplorer.styles.js'
+import {
+	Background,
+	Container,
+	ContainerEdge,
+	edgeColors,
+	FlexContainer,
+	Grid,
+} from './CausalGraphExplorer.styles.js'
 import { CausalGraphNode } from './CausalGraphNode.jsx'
 import { CorrelationEdge } from './CorrelationEdge.jsx'
 import { CorrelationGraphNode } from './CorrelationGraphNode.jsx'
 import { DraggableGraphNode } from './DraggableNode.jsx'
+import { CorrelationIcon, EdgeIcon } from './LegendIcons.js'
 
 const MIN_EDGE_WIDTH = 2
 const MAX_EDGE_WIDTH = 10
@@ -149,7 +157,34 @@ export const CausalGraphExplorer = memo(function CausalGraphExplorer() {
 	// TODO: Figure out pan/zoom
 	return (
 		<>
-			<Background onClick={deselect} style={bounds}></Background>
+			<Background onClick={deselect} style={bounds}>
+				{!!nodes.length && (
+					<FlexContainer>
+						<Grid>
+							<Container>
+								<EdgeIcon color={edgeColors.positive} /> Causes increase
+							</Container>
+							<Container>
+								<EdgeIcon color={edgeColors.negative} />
+								Causes decrease
+							</Container>
+							<Container>
+								<CorrelationIcon color={edgeColors.correlation} />
+								Correlation
+							</Container>
+							<Container>
+								<EdgeIcon color={edgeColors.pcChange} />
+								Causes change
+							</Container>
+							<ContainerEdge>
+								Edge weights quantify the strength of the causal relationship
+								under the selected discovery algorithm. corr=correlation;
+								conf=confidence
+							</ContainerEdge>
+						</Grid>
+					</FlexContainer>
+				)}
+			</Background>
 			<Xwrapper>
 				{correlationEdges}
 				{causalEdges}
