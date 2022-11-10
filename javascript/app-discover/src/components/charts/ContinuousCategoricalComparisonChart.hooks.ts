@@ -15,12 +15,12 @@ export function useVisualizationSpec(
 	return useVegaSpec({
 		data: { values },
 		encoding: {
-			x: { aggregate: 'count' },
 			color: {
 				field: varA.columnName,
 			},
-			y: { field: varB.columnName, bin: true },
+			x: { field: varA.columnName, type: 'quantitative' },
+			y: { field: varB.columnName, type: 'quantitative' },
 		},
-		mark: 'rect',
+		mark: 'tick',
 	})
 }
