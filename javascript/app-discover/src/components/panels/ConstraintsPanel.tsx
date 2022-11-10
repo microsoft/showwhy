@@ -7,11 +7,15 @@ import { memo } from 'react'
 import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil'
 import styled from 'styled-components'
 
+import type { VariableReference } from '../../domain/CausalVariable.js'
 import type { RelationshipReference } from '../../domain/Relationship.js'
-import { ManualRelationshipReason } from '../../domain/Relationship.js'
 import { CausalGraphConstraintsState, TableState } from '../../state/index.js'
 import { Divider } from '../controls/Divider.js'
-import { Constraint } from './Constraint.js'
+import {
+	getGeneralConstraints,
+	getRemovedConstraints,
+	getSavedConstraints,
+} from './ConstraintsPanel.utils.js'
 
 export const ConstraintsPanel: React.FC = memo(function ConstraintsPanel() {
 	const [constraints, setConstraints] = useRecoilState(
@@ -20,7 +24,6 @@ export const ConstraintsPanel: React.FC = memo(function ConstraintsPanel() {
 	const dataTable = useRecoilValue(TableState)
 
 	const resetConstraints = useResetRecoilState(CausalGraphConstraintsState)
-
 	const removeFromRelationshipConstraints = (
 		relationshipToRemove: RelationshipReference,
 	) => {
@@ -33,30 +36,52 @@ export const ConstraintsPanel: React.FC = memo(function ConstraintsPanel() {
 		setConstraints(newConstraints)
 	}
 
-	const savedConstraints = constraints.manualRelationships
-		.filter(x => x.reason === ManualRelationshipReason.Flipped)
-		.map(constraint => (
-			<Constraint
-				key={constraint.key}
-				constraint={constraint}
-				onRemove={removeFromRelationshipConstraints}
-			/>
-		))
+	const savedConstraints = getSavedConstraints(
+		constraints,
+		removeFromRelationshipConstraints,
+	)
 
-	const removedConstraints = constraints.manualRelationships
-		.filter(x => x.reason === ManualRelationshipReason.Removed)
-		.map(constraint => (
-			<Constraint
-				key={constraint.key}
-				constraint={constraint}
-				onRemove={removeFromRelationshipConstraints}
-			/>
-		))
+	const removedConstraints = getRemovedConstraints(
+		constraints,
+		removeFromRelationshipConstraints,
+	)
+
+	const removeFromCauseConstraints = (variableToRemove: VariableReference) => {
+		const newConstraints = {
+			...constraints,
+			causes: constraints.causes.filter(
+				variable => variable !== variableToRemove,
+			),
+		}
+		setConstraints(newConstraints)
+	}
+
+	const removeFromEffectConstraints = (variableToRemove: VariableReference) => {
+		const newConstraints = {
+			...constraints,
+			effects: constraints.effects.filter(
+				variable => variable !== variableToRemove,
+			),
+		}
+		setConstraints(newConstraints)
+	}
+
+	const causeConstraints = getGeneralConstraints(
+		constraints.causes,
+		removeFromCauseConstraints,
+	)
+	const effectConstraints = getGeneralConstraints(
+		constraints.effects,
+		removeFromEffectConstraints,
+	)
 
 	const hasAnyConstraints =
 		dataTable !== undefined &&
 		dataTable?.numCols() !== 0 &&
-		(!!savedConstraints.length || !!removedConstraints.length)
+		(!!savedConstraints.length ||
+			!!removedConstraints.length ||
+			!!causeConstraints.length ||
+			!!effectConstraints.length)
 
 	return hasAnyConstraints ? (
 		<Container>
@@ -65,6 +90,10 @@ export const ConstraintsPanel: React.FC = memo(function ConstraintsPanel() {
 			{(!!savedConstraints.length || !!removedConstraints.length) && (
 				<Divider>Edge constraints</Divider>
 			)}
+			{!!causeConstraints.length && <Label>Causes</Label>}
+			{causeConstraints}
+			{!!effectConstraints.length && <Label>Effects</Label>}
+			{effectConstraints}
 			{!!savedConstraints.length && <Label>Saved</Label>}
 			{savedConstraints}
 			{!!removedConstraints.length && <Label>Disallowed</Label>}

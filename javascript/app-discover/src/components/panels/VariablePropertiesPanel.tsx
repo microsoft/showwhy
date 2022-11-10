@@ -2,26 +2,18 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import {
-	ChoiceGroup,
-	IChoiceGroupOption,
-	IChoiceGroupOptionProps,
-	IRenderFunction,
-	ITheme,
-	PrimaryButton,
-	Stack,
-	Text,
-	TooltipHost,
-} from '@fluentui/react'
+import { ButtonChoiceGroup } from '@essex/components'
+import type { IChoiceGroupOption, ITheme } from '@fluentui/react'
+import { Label, PrimaryButton, Stack, Text, TooltipHost } from '@fluentui/react'
 import { memo } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import styled from 'styled-components'
+
 import {
 	Constraints,
 	getConstraintType,
 	updateConstraints,
 } from '../../domain/CausalDiscovery/CausalDiscoveryConstraints.js'
-
 import { isAddable } from '../../domain/CausalVariable.js'
 import * as Graph from '../../domain/Graph.js'
 import { VariableNature } from '../../domain/VariableNature.js'
@@ -81,57 +73,16 @@ export const VariablePropertiesPanel: React.FC<VariablePropertiesPanelProps> =
 			setInModelVariables(newInModelVariables)
 		}
 
-		const createRenderOptionTooltip = (
-			tooltipText: string,
-		): IRenderFunction<IChoiceGroupOptionProps> =>
-			function ToolTipChoice(
-				option?: IChoiceGroupOptionProps,
-				defaultRenderLabel?: (
-					props: IChoiceGroupOptionProps,
-				) => JSX.Element | null,
-			): JSX.Element {
-				if (!option || !defaultRenderLabel) {
-					return <></>
-				}
-
-				const originalField = defaultRenderLabel(option)
-				if (!originalField) {
-					return <></>
-				}
-
-				return <TooltipHost content={tooltipText}>{originalField}</TooltipHost>
-			}
-
-		// Styles make the buttons grow with the width of the side panel (by default they are fixed size)
-		const constraintChooserStyles = {
-			root: { flex: 1 },
-			choiceFieldWrapper: { flex: 1 },
-			innerField: { padding: 0 },
-		}
 		const constraintChooserOptions: IChoiceGroupOption[] = [
 			{
 				key: Constraints.Cause,
 				text: 'Cause',
 				iconProps: { iconName: 'AlignHorizontalLeft' },
-				styles: constraintChooserStyles,
-				onRenderField: createRenderOptionTooltip(
-					"This variable shouldn't have any parents",
-				),
 			} as IChoiceGroupOption,
-			{
-				key: Constraints.None,
-				text: 'None',
-				iconProps: { iconName: 'AlignHorizontalCenter' },
-				styles: constraintChooserStyles,
-			},
 			{
 				key: Constraints.Effect,
 				text: 'Effect',
 				iconProps: { iconName: 'AlignHorizontalRight' },
-				styles: constraintChooserStyles,
-				onRenderField: createRenderOptionTooltip(
-					"This variable shouldn't have any children",
-				),
 			} as IChoiceGroupOption,
 		]
 
@@ -215,8 +166,9 @@ export const VariablePropertiesPanel: React.FC<VariablePropertiesPanelProps> =
 					<Divider>Edges</Divider>
 					{isInModel && (
 						<>
-							<Divider>Constraint</Divider>
-							<ChoiceGroup
+							<Label style={buttonChoiceStyle}>Constraint</Label>
+							<ButtonChoiceGroup
+								style={buttonChoiceStyle}
 								selectedKey={getConstraintType(constraints, variable)}
 								onChange={onChange}
 								options={constraintChooserOptions}
@@ -242,6 +194,8 @@ export const VariablePropertiesPanel: React.FC<VariablePropertiesPanelProps> =
 	})
 
 const Container = styled.div``
+
+const buttonChoiceStyle = { textAlign: 'center' } as React.CSSProperties
 
 export const Section = styled.div`
 	padding: 8px;

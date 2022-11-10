@@ -53,9 +53,15 @@ export const updateConstraints = (
 		effects = removeConstraint(effects, variable)
 	}
 
-	if (constraintType === Constraints.Cause) {
+	if (
+		constraintType === Constraints.Cause &&
+		currentConstraintType !== Constraints.Cause
+	) {
 		causes = addConstraint(causes, variable)
-	} else if (constraintType === Constraints.Effect) {
+	} else if (
+		constraintType === Constraints.Effect &&
+		currentConstraintType !== Constraints.Effect
+	) {
 		effects = addConstraint(effects, variable)
 	}
 
