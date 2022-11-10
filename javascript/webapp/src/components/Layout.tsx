@@ -2,18 +2,18 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { FileTree, type ResourceTreeData } from '@datashaper/app-framework'
+import { type ResourceTreeData, FileTree } from '@datashaper/app-framework'
 import { useBoolean } from '@fluentui/react-hooks'
 import { useDebounceFn } from 'ahooks'
 import type { AllotmentHandle } from 'allotment'
 import { Allotment } from 'allotment'
 import { memo, useCallback, useRef } from 'react'
 
+import { useExampleProjects } from '../hooks/examples.js'
+import { pages } from '../pages.js'
 import { Header } from './Header.js'
 import { Container, Content, Main, useFileTreeStyle } from './Layout.styles.js'
 import type { LayoutProps } from './Layout.types.js'
-import { pages } from '../pages.js'
-import { useExampleProjects } from '../hooks/examples.js'
 
 export const Layout: React.FC<LayoutProps> = memo(function Layout({
 	children,
