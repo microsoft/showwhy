@@ -7,78 +7,104 @@ import { memo } from 'react'
 import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil'
 import styled from 'styled-components'
 
+import type { VariableReference } from '../../domain/CausalVariable.js'
 import type { RelationshipReference } from '../../domain/Relationship.js'
-import { ManualRelationshipReason } from '../../domain/Relationship.js'
 import { CausalGraphConstraintsState, TableState } from '../../state/index.js'
 import { Divider } from '../controls/Divider.js'
-import { Constraint } from './Constraint.js'
-import type { ConstraintsPanelProps } from './ConstraintsPanel.types.js'
+import {
+	getGeneralConstraints,
+	getRemovedConstraints,
+	getSavedConstraints,
+} from './ConstraintsPanel.utils.js'
 
-export const ConstraintsPanel: React.FC<ConstraintsPanelProps> = memo(
-	function ConstraintsPanel({ children }) {
-		const [constraints, setConstraints] = useRecoilState(
-			CausalGraphConstraintsState,
-		)
-		const dataTable = useRecoilValue(TableState)
+export const ConstraintsPanel: React.FC = memo(function ConstraintsPanel() {
+	const [constraints, setConstraints] = useRecoilState(
+		CausalGraphConstraintsState,
+	)
+	const dataTable = useRecoilValue(TableState)
 
-		const resetConstraints = useResetRecoilState(CausalGraphConstraintsState)
-
-		const removeFromRelationshipConstraints = (
-			relationshipToRemove: RelationshipReference,
-		) => {
-			const newConstraints = {
-				...constraints,
-				manualRelationships: constraints.manualRelationships.filter(
-					relationship => relationship !== relationshipToRemove,
-				),
-			}
-			setConstraints(newConstraints)
+	const resetConstraints = useResetRecoilState(CausalGraphConstraintsState)
+	const removeFromRelationshipConstraints = (
+		relationshipToRemove: RelationshipReference,
+	) => {
+		const newConstraints = {
+			...constraints,
+			manualRelationships: constraints.manualRelationships.filter(
+				relationship => relationship !== relationshipToRemove,
+			),
 		}
+		setConstraints(newConstraints)
+	}
 
-		const savedConstraints = constraints.manualRelationships
-			.filter(x => x.reason === ManualRelationshipReason.Flipped)
-			.map(constraint => (
-				<Constraint
-					key={constraint.key}
-					constraint={constraint}
-					onRemove={removeFromRelationshipConstraints}
-				/>
-			))
+	const savedConstraints = getSavedConstraints(
+		constraints,
+		removeFromRelationshipConstraints,
+	)
 
-		const removedConstraints = constraints.manualRelationships
-			.filter(x => x.reason === ManualRelationshipReason.Removed)
-			.map(constraint => (
-				<Constraint
-					key={constraint.key}
-					constraint={constraint}
-					onRemove={removeFromRelationshipConstraints}
-				/>
-			))
+	const removedConstraints = getRemovedConstraints(
+		constraints,
+		removeFromRelationshipConstraints,
+	)
 
-		const hasAnyConstraints =
-			dataTable !== undefined &&
-			dataTable?.numCols() !== 0 &&
-			(!!savedConstraints.length || !!removedConstraints.length)
+	const removeFromCauseConstraints = (variableToRemove: VariableReference) => {
+		const newConstraints = {
+			...constraints,
+			causes: constraints.causes.filter(
+				variable => variable !== variableToRemove,
+			),
+		}
+		setConstraints(newConstraints)
+	}
 
-		return hasAnyConstraints ? (
-			<Container>
-				<Divider></Divider>
-				{children}
-				{(!!savedConstraints.length || !!removedConstraints.length) && (
-					<Divider>Edge constraints</Divider>
-				)}
-				{!!savedConstraints.length && <Label>Saved</Label>}
-				{savedConstraints}
-				{!!removedConstraints.length && <Label>Disallowed</Label>}
-				{removedConstraints}
-				<Divider></Divider>
-				<ClearConstraintsButton onClick={resetConstraints}>
-					Clear all constraints
-				</ClearConstraintsButton>
-			</Container>
-		) : null
-	},
-)
+	const removeFromEffectConstraints = (variableToRemove: VariableReference) => {
+		const newConstraints = {
+			...constraints,
+			effects: constraints.effects.filter(
+				variable => variable !== variableToRemove,
+			),
+		}
+		setConstraints(newConstraints)
+	}
+
+	const causeConstraints = getGeneralConstraints(
+		constraints.causes,
+		removeFromCauseConstraints,
+	)
+	const effectConstraints = getGeneralConstraints(
+		constraints.effects,
+		removeFromEffectConstraints,
+	)
+
+	const hasAnyConstraints =
+		dataTable !== undefined &&
+		dataTable?.numCols() !== 0 &&
+		(!!savedConstraints.length ||
+			!!removedConstraints.length ||
+			!!causeConstraints.length ||
+			!!effectConstraints.length)
+
+	return hasAnyConstraints ? (
+		<Container>
+			<Divider></Divider>
+
+			{(!!savedConstraints.length || !!removedConstraints.length) && (
+				<Divider>Edge constraints</Divider>
+			)}
+			{!!causeConstraints.length && <Label>Causes</Label>}
+			{causeConstraints}
+			{!!effectConstraints.length && <Label>Effects</Label>}
+			{effectConstraints}
+			{!!savedConstraints.length && <Label>Saved</Label>}
+			{savedConstraints}
+			{!!removedConstraints.length && <Label>Disallowed</Label>}
+			{removedConstraints}
+			<Divider></Divider>
+			<ClearConstraintsButton onClick={resetConstraints}>
+				Clear all constraints
+			</ClearConstraintsButton>
+		</Container>
+	) : null
+})
 
 const Container = styled.div`
 	padding: 8px;

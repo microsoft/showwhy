@@ -12,7 +12,7 @@ export const GraphPropertiesPanel: React.FC = memo(
 		return (
 			<>
 				<AlgorithmControls />
-				<ConstraintsPanel></ConstraintsPanel>
+				<ConstraintsPanel />
 			</>
 		)
 	},

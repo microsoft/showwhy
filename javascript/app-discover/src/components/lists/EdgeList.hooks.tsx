@@ -20,6 +20,7 @@ import type {
 import { EdgeItem } from './EdgeItem.js'
 import {
 	flipEdge,
+	hasConstraint,
 	isSource,
 	removeBothEdges,
 	removeConstraint,
@@ -65,6 +66,8 @@ export function useOnRenderItem(
 			const flipRejected = constraints?.manualRelationships?.find(x =>
 				isInverseRemoved(relationship, x),
 			)
+
+			const hasConstraints = hasConstraint(constraints, relationship)
 			return (
 				<EdgeItem
 					key={relationship.key}
@@ -73,7 +76,7 @@ export function useOnRenderItem(
 					onRemove={onRemove}
 					onRemoveConstraint={onRemoveConstraint}
 					onSelect={onSelect}
-					flipAllowed={!flipRejected}
+					flipAllowed={!flipRejected && !hasConstraints}
 					columnName={
 						isSource(relationship, variable)
 							? relationship.target.columnName

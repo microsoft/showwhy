@@ -18,6 +18,7 @@ import {
 	ManualRelationshipReason,
 } from '../../domain/Relationship.js'
 import type { VariableReference } from './../../domain/CausalVariable.js'
+import { arrayIncludesVariable } from './../../domain/CausalVariable.js'
 
 export function removeBothEdges(
 	constraints: CausalDiscoveryConstraints,
@@ -141,4 +142,15 @@ export function rejectedItems(
 		}
 		return []
 	})
+}
+
+export function hasConstraint(
+	constraints: CausalDiscoveryConstraints,
+	relationship: Relationship,
+) {
+	const allGeneralConstraints = constraints.causes.concat(constraints.effects)
+	return (
+		arrayIncludesVariable(allGeneralConstraints, relationship.target) ||
+		arrayIncludesVariable(allGeneralConstraints, relationship.source)
+	)
 }

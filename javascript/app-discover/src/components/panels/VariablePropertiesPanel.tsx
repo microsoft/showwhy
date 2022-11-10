@@ -2,18 +2,18 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import type {
-	ITheme} from '@fluentui/react';
-import {
-	PrimaryButton,
-	Stack,
-	Text,
-	TooltipHost,
-} from '@fluentui/react'
+import { ButtonChoiceGroup } from '@essex/components'
+import type { IChoiceGroupOption, ITheme } from '@fluentui/react'
+import { Label, PrimaryButton, Stack, Text, TooltipHost } from '@fluentui/react'
 import { memo } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import styled from 'styled-components'
 
+import {
+	Constraints,
+	getConstraintType,
+	updateConstraints,
+} from '../../domain/CausalDiscovery/CausalDiscoveryConstraints.js'
 import { isAddable } from '../../domain/CausalVariable.js'
 import * as Graph from '../../domain/Graph.js'
 import { VariableNature } from '../../domain/VariableNature.js'
@@ -71,6 +71,32 @@ export const VariablePropertiesPanel: React.FC<VariablePropertiesPanelProps> =
 				inModelVariable => inModelVariable !== variable,
 			)
 			setInModelVariables(newInModelVariables)
+		}
+
+		const constraintChooserOptions: IChoiceGroupOption[] = [
+			{
+				key: Constraints.Cause,
+				text: 'Cause',
+				iconProps: { iconName: 'AlignHorizontalLeft' },
+			} as IChoiceGroupOption,
+			{
+				key: Constraints.Effect,
+				text: 'Effect',
+				iconProps: { iconName: 'AlignHorizontalRight' },
+			} as IChoiceGroupOption,
+		]
+
+		const onChange = (
+			e?: React.FormEvent<HTMLElement | HTMLInputElement>,
+			option?: IChoiceGroupOption,
+		): void => {
+			setConstraints(
+				updateConstraints(
+					constraints,
+					variable,
+					Constraints[option?.key as keyof typeof Constraints],
+				),
+			)
 		}
 
 		return (
@@ -138,6 +164,17 @@ export const VariablePropertiesPanel: React.FC<VariablePropertiesPanelProps> =
 				</Section>
 				<Section>
 					<Divider>Edges</Divider>
+					{isInModel && (
+						<>
+							<Label style={buttonChoiceStyle}>Constraint</Label>
+							<ButtonChoiceGroup
+								style={buttonChoiceStyle}
+								selectedKey={getConstraintType(constraints, variable)}
+								onChange={onChange}
+								options={constraintChooserOptions}
+							/>
+						</>
+					)}
 					{relationships && (
 						<EdgeList
 							onSelect={setSelectedObject}
@@ -157,6 +194,8 @@ export const VariablePropertiesPanel: React.FC<VariablePropertiesPanelProps> =
 	})
 
 const Container = styled.div``
+
+const buttonChoiceStyle = { textAlign: 'center' } as React.CSSProperties
 
 export const Section = styled.div`
 	padding: 8px;
