@@ -19,17 +19,17 @@
 		"lint": "essex lint"
 	},
 	"dependencies": {
-		"@datashaper/app-framework": "0.0.1",
+		"@datashaper/app-framework": "0.0.2",
 		"@datashaper/schema": "^8.1.0",
 		"@datashaper/tables": "^5.3.0",
 		"@datashaper/utilities": "^2.3.9",
 		"@datashaper/workflow": "^19.1.2",
 		"@essex/components": "^3.1.0",
 		"@essex/hooks": "^4.0.13",
-		"@fluentui/font-icons-mdl2": "^8.5.2",
-		"@fluentui/react": "^8.99.3",
-		"@fluentui/react-hooks": "^8.6.12",
-		"@fluentui/utilities": "^8.13.2",
+		"@fluentui/font-icons-mdl2": "^8.5.3",
+		"@fluentui/react": "^8.101.0",
+		"@fluentui/react-hooks": "^8.6.13",
+		"@fluentui/utilities": "^8.13.3",
 		"@fluentui/web-components": "^2.5.8",
 		"@microsoft/fast-element": "^1.11.0",
 		"@microsoft/fast-foundation": "^2.47.0",
@@ -65,10 +65,10 @@
 	"devDependencies": {
 		"@essex/scripts": "^22.1.0",
 		"@essex/webpack-config": "^21.0.8",
-		"@types/lodash": "^4.14.187",
+		"@types/lodash": "^4.14.188",
 		"@types/lodash-es": "^4.17.6",
 		"@types/node": "^18.11.9",
-		"@types/react": "^18.0.24",
+		"@types/react": "^18.0.25",
 		"@types/react-dom": "^18.0.8",
 		"@types/react-is": "^17.0.3",
 		"@types/react-router-dom": "^5.3.3",
@@ -78,7 +78,7 @@
 		"raw-loader": "^4.0.2",
 		"shx": "^0.3.4",
 		"typescript": "^4.8.4",
-		"webpack": "^5.74.0",
+		"webpack": "^5.75.0",
 		"webpack-cli": "^4.10.0"
 	}
 }
