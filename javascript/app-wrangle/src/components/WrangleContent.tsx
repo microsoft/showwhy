@@ -4,11 +4,14 @@
  */
 import { memo } from 'react'
 
-import { CodebookEditor } from './CodebookEditor.js'
-import { DataSourceEditor } from './DataSourceEditor.js'
-import { RawTableViewer } from './RawTableViewer.js'
-import { TableEditor } from './TableEditor.js'
-import { WorkflowEditor } from './WorkflowEditor.js'
+import {
+	CodebookEditor,
+	DataSourceEditor,
+	RawTableViewer,
+	TableEditor,
+	WorkflowEditor,
+} from '@datashaper/app-framework'
+
 import type { WrangleContentProps } from './WrangleContent.types.js'
 
 export const WrangleContent: React.FC<WrangleContentProps> = memo(

@@ -2,7 +2,8 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { CommonLayout, useDataTable } from '@showwhy/app-common'
+import { CommonLayout } from '@showwhy/app-common'
+import { useDataTable } from '@datashaper/app-framework'
 import { memo } from 'react'
 import styled from 'styled-components'
 
