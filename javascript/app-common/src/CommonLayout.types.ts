@@ -8,5 +8,5 @@ export interface CommonLayoutProps {
 	menu?: React.ReactNode
 	configRail?: React.ReactNode
 	detailRail?: React.ReactNode
-	panelsVisibility?: boolean
+	hidePanels?: boolean
 }

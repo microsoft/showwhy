@@ -89,7 +89,7 @@ export const CurrentLayoutState = atom<ElkNode | undefined>({
 	default: undefined,
 })
 
-export const PanelsVisibilityState = atom<boolean>({
-	key: 'PanelsVisibilityState',
-	default: true,
+export const PanelsHiddenState = atom<boolean>({
+	key: 'PanelsHiddenState',
+	default: false,
 })

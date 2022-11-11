@@ -24,14 +24,14 @@ export const CommonLayout: React.FC<CommonLayoutProps> = memo(
 		configRail,
 		detailRail,
 		menu,
-		panelsVisibility = true,
+		hidePanels = false,
 	}) {
 		const ref = useRef<AllotmentHandle>(null)
 		useEffect(() => {
-			if (panelsVisibility) {
+			if (!hidePanels) {
 				ref.current?.reset()
 			}
-		}, [panelsVisibility])
+		}, [hidePanels])
 
 		return (
 			<Container>
@@ -42,7 +42,7 @@ export const CommonLayout: React.FC<CommonLayoutProps> = memo(
 							<Allotment.Pane
 								preferredSize={RAIL_PREFERRED_SIZE}
 								maxSize={RAIL_MAX_SIZE}
-								visible={panelsVisibility}
+								visible={!hidePanels}
 							>
 								<LeftRail>{configRail}</LeftRail>
 							</Allotment.Pane>
@@ -52,7 +52,7 @@ export const CommonLayout: React.FC<CommonLayoutProps> = memo(
 							<Allotment.Pane
 								preferredSize={RAIL_PREFERRED_SIZE}
 								maxSize={RAIL_MAX_SIZE}
-								visible={panelsVisibility}
+								visible={!hidePanels}
 							>
 								<RightRail>{detailRail}</RightRail>
 							</Allotment.Pane>
