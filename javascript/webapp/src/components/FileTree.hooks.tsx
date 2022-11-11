@@ -2,6 +2,12 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import {
+	DataPackageContext,
+	PersistenceContext,
+	useDataPackage,
+	useDataTables,
+} from '@datashaper/app-framework'
 import type { DataFormat, DataShape, ParserOptions } from '@datashaper/schema'
 import { createDataTableSchemaObject } from '@datashaper/schema'
 import type { TableContainer } from '@datashaper/tables'
@@ -11,12 +17,6 @@ import { DataTable } from '@datashaper/workflow'
 import type { ICommandBarItemProps, IContextualMenuItem } from '@fluentui/react'
 import { useTheme } from '@fluentui/react'
 import type { OpenTableHandler } from '@showwhy/app-common'
-import {
-	DataPackageContext,
-	PersistenceContext,
-	useDataPackage,
-	useDataTables,
-} from '@datashaper/app-framework'
 import { removeExtension } from '@showwhy/app-common'
 import { useObservableState } from 'observable-hooks'
 import { useCallback, useContext, useMemo } from 'react'

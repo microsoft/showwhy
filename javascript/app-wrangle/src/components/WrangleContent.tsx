@@ -2,8 +2,6 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { memo } from 'react'
-
 import {
 	CodebookEditor,
 	DataSourceEditor,
@@ -11,6 +9,7 @@ import {
 	TableEditor,
 	WorkflowEditor,
 } from '@datashaper/app-framework'
+import { memo } from 'react'
 
 import type { WrangleContentProps } from './WrangleContent.types.js'
 

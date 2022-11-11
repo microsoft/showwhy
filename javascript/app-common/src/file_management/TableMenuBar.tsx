@@ -2,11 +2,11 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import { useDatasetMenuItems } from '@datashaper/app-framework'
 import type { ICommandBarItemProps } from '@fluentui/react'
 import { CommandBar } from '@fluentui/react'
 import { memo, useCallback, useMemo } from 'react'
 
-import { useDatasetMenuItems } from '@datashaper/app-framework'
 import { useTableMenuBarStyles } from './TableMenuBar.styles.js'
 import type { TableMenuBarProps } from './TableMenuBar.types.js'
 

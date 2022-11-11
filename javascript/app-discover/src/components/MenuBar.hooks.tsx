@@ -2,6 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import { useDatasetMenuItems as useDatasetMenuItemsCommon } from '@datashaper/app-framework'
 import type {
 	ICommandBarItemProps,
 	IContextualMenuProps,
@@ -15,7 +16,6 @@ import {
 	PrimaryButton,
 	Toggle,
 } from '@fluentui/react'
-import { useDatasetMenuItems as useDatasetMenuItemsCommon } from '@datashaper/app-framework'
 import { useCallback, useEffect, useMemo } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
 

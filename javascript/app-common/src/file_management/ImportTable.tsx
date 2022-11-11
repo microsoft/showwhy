@@ -2,6 +2,11 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import {
+	TableDelimiterOptions,
+	TableLayoutOptions,
+	TablePreview,
+} from '@datashaper/app-framework'
 import type { ParserOptions } from '@datashaper/schema'
 import { DataFormat, DataOrientation } from '@datashaper/schema'
 import type { TableContainer } from '@datashaper/tables'
@@ -31,11 +36,6 @@ import {
 } from './ImportTable.styles.js'
 import type { OpenTableHandler } from './ImportTable.types.js'
 import { DATA_FORMAT_OPTIONS } from './ImportTable.utils.js'
-import {
-	TableDelimiterOptions,
-	TableLayoutOptions,
-	TablePreview,
-} from '@datashaper/app-framework'
 import { loadCsvTable, loadJsonTable, removeExtension } from './utils.js'
 
 const icons = {
