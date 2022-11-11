@@ -2,10 +2,10 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { FileTree, type ResourceTreeData } from '@datashaper/app-framework'
+import { type ResourceTreeData, FileTree } from '@datashaper/app-framework'
 import { useBoolean } from '@fluentui/react-hooks'
 import { useDebounceFn } from 'ahooks'
-import { Allotment, type AllotmentHandle } from 'allotment'
+import { type AllotmentHandle, Allotment } from 'allotment'
 import { memo, useCallback, useRef } from 'react'
 
 import { useExampleProjects } from '../hooks/examples.js'
