@@ -31,9 +31,11 @@ import {
 } from './ImportTable.styles.js'
 import type { OpenTableHandler } from './ImportTable.types.js'
 import { DATA_FORMAT_OPTIONS } from './ImportTable.utils.js'
-import { TableDelimiterOptions } from './TableDelimiterOptions.js'
-import { TableLayoutOptions } from './TableLayoutOptions.js'
-import { TablePreview } from './TablePreview.js'
+import {
+	TableDelimiterOptions,
+	TableLayoutOptions,
+	TablePreview,
+} from '@datashaper/app-framework'
 import { loadCsvTable, loadJsonTable, removeExtension } from './utils.js'
 
 const icons = {

@@ -6,7 +6,7 @@ import type { ICommandBarItemProps } from '@fluentui/react'
 import { CommandBar } from '@fluentui/react'
 import { memo, useCallback, useMemo } from 'react'
 
-import { useDatasetMenuItems } from '../hooks/useDatasetMenuItems.js'
+import { useDatasetMenuItems } from '@datashaper/app-framework'
 import { useTableMenuBarStyles } from './TableMenuBar.styles.js'
 import type { TableMenuBarProps } from './TableMenuBar.types.js'
 
