@@ -13,6 +13,8 @@
 		"lint": "essex lint"
 	},
 	"dependencies": {
+		"@fluentui/font-icons-mdl2": "^8.5.3",
+		"@fluentui/react": "^8.101.0",
 		"@showwhy/event-analysis-app": "workspace:^",
 		"hsluv": "^1.0.0",
 		"react": "^18.2.0",
