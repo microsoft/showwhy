@@ -24,6 +24,7 @@ from backend.discover.algorithms.commons.base_runner import (
     CausalGraph,
     ProgressCallback,
 )
+from backend.discover.algorithms.interventions.deci import DeciInterventionModel
 from backend.discover.model.causal_discovery import (
     CausalDiscoveryPayload,
     map_to_causica_var_type,
@@ -203,9 +204,8 @@ class DeciRunner(CausalDiscoveryRunner):
         return adj_matrix
 
     def _compute_average_treatment_effect(
-        self, model: DECI, causica_dataset: Dataset
+        self, model: DECI, train_data: pd.DataFrame
     ) -> np.ndarray:
-        train_data = pd.DataFrame(causica_dataset._train_data)
         treatment_values = train_data.mean(0) + train_data.std(0)
         reference_values = train_data.mean(0) - train_data.std(0)
         ates = []
@@ -334,6 +334,7 @@ class DeciRunner(CausalDiscoveryRunner):
         labeled_graph: Any,
         adj_matrix: np.ndarray,
         ate_matrix: np.ndarray,
+        intervention_model: DeciInterventionModel,
     ) -> CausalGraph:
         causal_graph = json_graph.cytoscape_data(labeled_graph)
 
@@ -350,6 +351,7 @@ class DeciRunner(CausalDiscoveryRunner):
         causal_graph["has_weights"] = True
         causal_graph["has_confidence_values"] = True
         causal_graph["is_dag"] = bool(self._is_dag)
+        causal_graph["intervention_model_id"] = intervention_model.id
 
         return causal_graph
 
@@ -360,6 +362,8 @@ class DeciRunner(CausalDiscoveryRunner):
             return self._get_empty_graph_json(self._prepared_data)
 
         causica_dataset = self._build_causica_dataset()
+
+        train_data = pd.DataFrame(causica_dataset._train_data)
 
         deci_model = self._build_model(causica_dataset)
 
@@ -373,16 +377,23 @@ class DeciRunner(CausalDiscoveryRunner):
 
         adj_matrix = self._get_adj_matrix(deci_model)
 
-        ate_matrix = self._compute_average_treatment_effect(deci_model, causica_dataset)
+        ate_matrix = self._compute_average_treatment_effect(deci_model, train_data)
 
         deci_model.eval()
+
+        intervention_model = DeciInterventionModel(
+            deci_model, adj_matrix, ate_matrix, train_data
+        )
 
         causal_graph = self._build_causal_graph(
             self._build_onnx_model(deci_model, adj_matrix),
             self._build_labeled_graph(adj_matrix, ate_matrix),
             adj_matrix,
             ate_matrix,
+            intervention_model,
         )
+
+        intervention_model.save()
 
         self._report_progress(100.0)
 

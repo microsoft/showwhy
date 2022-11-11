@@ -21,10 +21,7 @@ const configuration = configure({
 			appMountIds: ['root', 'cookie-banner'],
 			devServer: mode === 'development',
 			files: {
-				js: [
-					'https://wcpstatic.microsoft.com/mscc/lib/v2/wcp-consent.js',
-					'https://cdn.jsdelivr.net/npm/onnxruntime-web/dist/ort.min.js',
-				],
+				js: ['https://wcpstatic.microsoft.com/mscc/lib/v2/wcp-consent.js'],
 			},
 		}),
 	],

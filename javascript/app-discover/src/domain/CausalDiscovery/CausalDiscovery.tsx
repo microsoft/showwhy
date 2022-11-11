@@ -7,7 +7,6 @@ import type {
 	DiscoverProgressCallback,
 	FetchDiscoverMetadata,
 } from '../../api/types.js'
-import type { CausalInferenceModel } from '../../domain/CausalInference.js'
 import type { CausalVariable } from '../../domain/CausalVariable.js'
 import { arrayIncludesVariable } from '../../domain/CausalVariable.js'
 import type { Dataset } from '../../domain/Dataset.js'
@@ -23,14 +22,6 @@ import type {
 	CausalDiscoveryResultPromise,
 	DatasetStatistics,
 } from './CausalDiscoveryResult.js'
-
-// TODO: We are loading onnxruntime-web from a script tag at the moment to work around an issue with
-// vite not handling its WASM files correctly.
-// Relevant github issues:
-// https://github.com/microsoft/onnxruntime/issues/10140
-// https://github.com/microsoft/onnxruntime-web-demo/issues/15
-// import * as ort from 'onnxruntime-web';
-declare const ort: any
 
 export function fromCausalDiscoveryResults(
 	variables: CausalVariable[],
@@ -74,6 +65,7 @@ export function fromCausalDiscoveryResults(
 		algorithm,
 		isDag: results.is_dag,
 		hasConfidenceValues: results.has_confidence_values,
+		interventionModelId: results.intervention_model_id,
 	}
 }
 
@@ -84,7 +76,6 @@ export function empty_discover_result(
 ): CausalDiscoveryResult {
 	return {
 		graph: { variables, relationships: [], constraints, algorithm },
-		causalInferenceModel: null,
 	}
 }
 
@@ -140,7 +131,7 @@ export function discover(
 
 	causalDiscoverResultPromise.promise =
 		fetchDiscoverResultPromise.promise?.then(
-			async ({ result: causalDiscoveryResult }) => {
+			({ result: causalDiscoveryResult }) => {
 				if (!causalDiscoveryResult) {
 					throw Error('discover backend did not return any result')
 				}
@@ -151,36 +142,6 @@ export function discover(
 					constraints,
 					algorithmName,
 				)
-				let causalInferenceModel: CausalInferenceModel | null = null
-
-				if (causalDiscoveryResult.onnx) {
-					const onnx = Uint8Array.from(atob(causalDiscoveryResult.onnx), c =>
-						c.charCodeAt(0),
-					)
-					const inferenceSession = await ort.InferenceSession.create(onnx)
-					const confidenceMatrix = new ort.Tensor(
-						'float32',
-						causalDiscoveryResult.confidence_matrix.flat(),
-						[columns.length, columns.length],
-					)
-					const treatmentEffectMatrix = new ort.Tensor(
-						'float32',
-						causalDiscoveryResult.ate_matrix.flat(),
-						[columns.length, columns.length],
-					)
-
-					const columnNames = causalDiscoveryResult.columns
-					const isBooleanInterpretedAsContinuous =
-						causalDiscoveryResult.interpret_boolean_as_continuous
-
-					causalInferenceModel = {
-						inferenceSession,
-						confidenceMatrix,
-						treatmentEffectMatrix,
-						columnNames,
-						isBooleanInterpretedAsContinuous,
-					}
-				}
 
 				const datasetStatistics: DatasetStatistics | undefined =
 					causalDiscoveryResult.dataset_statistics
@@ -195,7 +156,6 @@ export function discover(
 
 				return {
 					graph,
-					causalInferenceModel,
 					normalizedColumnsMetadata:
 						causalDiscoveryResult.normalized_columns_metadata,
 					datasetStatistics,

@@ -11,8 +11,8 @@ import type {
 } from './../../domain/Algorithms/DECI.js'
 
 const training_options = {
-	max_steps_auglag: 20,
-	max_auglag_inner_epochs: 1000,
+	max_steps_auglag: 10,
+	max_auglag_inner_epochs: 100,
 } as DECITrainingOptions
 
 export const DeciParamsState = atom<DECIParams>({

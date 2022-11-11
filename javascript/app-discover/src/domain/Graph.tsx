@@ -19,6 +19,7 @@ export interface CausalGraph {
 	algorithm: CausalDiscoveryAlgorithm
 	isDag?: boolean
 	hasConfidenceValues?: boolean
+	interventionModelId?: string
 }
 
 export function nodeHasChildren(

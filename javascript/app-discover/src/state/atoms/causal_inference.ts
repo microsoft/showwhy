@@ -16,11 +16,6 @@ export const CausalInferenceBaselineValuesState = atom<Map<string, number>>({
 	default: new Map(),
 })
 
-export const CausalInferenceBaselineOffsetsState = atom<Map<string, number>>({
-	key: 'CausalInferenceBaselineOffsetsState',
-	default: new Map(),
-})
-
 export const CausalInferenceResultState = atom<Map<string, number>>({
 	key: 'CausalInferenceResultState',
 	default: new Map(),

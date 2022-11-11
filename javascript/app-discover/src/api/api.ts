@@ -2,6 +2,10 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import type {
+	Intervention,
+	InterventionByColumn,
+} from '../domain/CausalInference.js'
 import {
 	CancelablePromise,
 	CanceledPromiseError,
@@ -14,6 +18,7 @@ import type {
 	FetchDiscoverMetadata,
 	FetchDiscoverResult,
 	FetchDiscoverResultPromise,
+	InterventionResponse,
 } from './types.js'
 import { DiscoverResponseStatus } from './types.js'
 
@@ -166,4 +171,37 @@ function isRevokedStatus(nodeStatus: DiscoverResponseStatus): boolean {
 function isFailureStatus(nodeStatus: DiscoverResponseStatus): boolean {
 	const status = nodeStatus?.toLowerCase()
 	return status === DiscoverResponseStatus.Failure
+}
+
+function interventionsToObject(
+	interventions: Intervention[],
+): InterventionByColumn {
+	const interventionByColumn: InterventionByColumn = {}
+
+	interventions.forEach(i => {
+		interventionByColumn[i.columnName] = i.value
+	})
+	return interventionByColumn
+}
+
+export async function performIntervention(
+	interventionModelId: string,
+	interventions: Intervention[],
+	confidenceThreshold: number,
+	weightThreshold: number,
+): Promise<InterventionResponse> {
+	return await (
+		await fetch(`${RUN_CAUSAL_DISCOVERY_BASE_URL}deci/intervention`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				intervention_model_id: interventionModelId,
+				interventions: interventionsToObject(interventions),
+				confidence_threshold: confidenceThreshold,
+				weight_threshold: weightThreshold,
+			}),
+		})
+	).json()
 }

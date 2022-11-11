@@ -3,7 +3,6 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import type { FetchDiscoverMetadata } from '../../api/types.js'
-import type { CausalInferenceModel } from '../../domain/CausalInference.js'
 import type { CausalGraph } from '../../domain/Graph.js'
 import type { CancelablePromise } from '../../utils/CancelablePromise.js'
 import { CausalDiscoveryAlgorithm } from './CausalDiscoveryAlgorithm.js'
@@ -25,7 +24,6 @@ export const EMPTY_CAUSAL_DISCOVERY_RESULT = {
 		},
 		algorithm: CausalDiscoveryAlgorithm.None,
 	},
-	causalInferenceModel: null,
 }
 
 export interface CausalDiscoveryRequestReturnValue {
@@ -35,6 +33,7 @@ export interface CausalDiscoveryRequestReturnValue {
 	}
 	is_dag?: boolean
 	has_confidence_values?: boolean
+	intervention_model_id?: string
 }
 
 export interface NormalizedColumnMetadata {
@@ -56,7 +55,6 @@ export interface DatasetStatistics {
 
 export interface CausalDiscoveryResult {
 	graph: CausalGraph
-	causalInferenceModel: CausalInferenceModel | null
 	taskId?: string
 	// TODO: verify possibility to merge this with CausalVariable
 	// binary && continuous only

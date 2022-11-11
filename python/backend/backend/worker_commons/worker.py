@@ -22,5 +22,6 @@ backend_worker.autodiscover_tasks(
         "backend.exposure.worker.significance_test_task",
         # discover tasks
         "backend.discover.worker.causal_discovery_task",
+        "backend.discover.worker.deci_intervention_task",
     ]
 )

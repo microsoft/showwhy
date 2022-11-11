@@ -55,7 +55,6 @@
 		"file-saver": "^2.0.5",
 		"lodash": "^4.17.21",
 		"lodash-es": "^4.17.21",
-		"onnxruntime-web": "^1.11.0",
 		"prop-types": "^15.8.1",
 		"react": "^18.2.0",
 		"react-cytoscapejs": "^1.2.1",
