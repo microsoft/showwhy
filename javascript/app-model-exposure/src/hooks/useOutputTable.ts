@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { useDataTableOutput, useDataTables } from '@showwhy/app-common'
+import { useDataTableOutput, useDataTables } from '@datashaper/app-framework'
 import type ColumnTable from 'arquero/dist/types/table/column-table'
 
 import { useSelectedTableName } from '../state/selectedDataPackage.js'

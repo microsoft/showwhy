@@ -2023,7 +2023,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@datashaper/app-framework@npm:^0.0.1":
+"@datashaper/app-framework@npm:0.0.1, @datashaper/app-framework@npm:^0.0.1":
   version: 0.0.1
   resolution: "@datashaper/app-framework@npm:0.0.1"
   dependencies:
@@ -3918,6 +3918,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/app-common@workspace:javascript/app-common"
   dependencies:
+    "@datashaper/app-framework": ^0.0.1
     "@datashaper/react": ^18.0.0
     "@datashaper/schema": ^8.1.0
     "@datashaper/tables": ^5.3.0
@@ -3957,6 +3958,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/discover-app@workspace:javascript/app-discover"
   dependencies:
+    "@datashaper/app-framework": ^0.0.1
     "@datashaper/react": ^18.0.0
     "@datashaper/schema": ^8.1.0
     "@datashaper/tables": ^5.3.0
@@ -4048,6 +4050,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/event-analysis-app@workspace:javascript/app-event-analysis"
   dependencies:
+    "@datashaper/app-framework": ^0.0.1
     "@essex/components": ^3.1.0
     "@essex/hooks": ^4.0.13
     "@essex/scripts": ^22.1.0
@@ -4097,6 +4100,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/model-exposure-app@workspace:javascript/app-model-exposure"
   dependencies:
+    "@datashaper/app-framework": 0.0.1
     "@datashaper/react": ^18.0.0
     "@datashaper/schema": ^8.1.0
     "@datashaper/tables": ^5.3.0
@@ -4157,6 +4161,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/webapp@workspace:javascript/webapp"
   dependencies:
+    "@datashaper/app-framework": 0.0.1
     "@datashaper/schema": ^8.1.0
     "@datashaper/tables": ^5.3.0
     "@datashaper/utilities": ^2.3.9

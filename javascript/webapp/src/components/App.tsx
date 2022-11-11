@@ -5,7 +5,10 @@
 /* eslint-disable  @typescript-eslint/ban-ts-comment, @typescript-eslint/no-unsafe-return */
 
 import { Spinner } from '@fluentui/react'
-import { PersistenceProvider, TableStoreProvider } from '@showwhy/app-common'
+import {
+	PersistenceProvider,
+	TableStoreProvider,
+} from '@datashaper/app-framework'
 import { DiscoveryPersistenceProvider } from '@showwhy/discover-app'
 import { EventsPersistenceProvider } from '@showwhy/event-analysis-app'
 import { ModelExposurePersistenceProvider } from '@showwhy/model-exposure-app'

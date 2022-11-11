@@ -14,10 +14,10 @@ import type { OpenTableHandler } from '@showwhy/app-common'
 import {
 	DataPackageContext,
 	PersistenceContext,
-	removeExtension,
 	useDataPackage,
 	useDataTables,
-} from '@showwhy/app-common'
+} from '@datashaper/app-framework'
+import { removeExtension } from '@showwhy/app-common'
 import { useObservableState } from 'observable-hooks'
 import { useCallback, useContext, useMemo } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'

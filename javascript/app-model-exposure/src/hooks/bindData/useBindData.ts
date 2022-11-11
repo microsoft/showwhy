@@ -4,7 +4,7 @@
  */
 import type { TableContainer } from '@datashaper/tables'
 import type { DataTable, Maybe } from '@datashaper/workflow'
-import { useDataTables } from '@showwhy/app-common'
+import { useDataTables } from '@datashaper/app-framework'
 import { useMemo } from 'react'
 
 import {

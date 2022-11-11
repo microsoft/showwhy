@@ -5,7 +5,7 @@
 import { Verb } from '@datashaper/schema'
 import type { Step, StepInput } from '@datashaper/workflow'
 import { Workflow } from '@datashaper/workflow'
-import { useDataTable, useDataTableOutput } from '@showwhy/app-common'
+import { useDataTable, useDataTableOutput } from '@datashaper/app-framework'
 import { table } from 'arquero'
 import type ColumnTable from 'arquero/dist/types/table/column-table'
 import { useCallback, useEffect, useMemo, useState } from 'react'

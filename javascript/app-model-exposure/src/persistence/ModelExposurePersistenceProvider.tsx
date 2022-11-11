@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { AppResourceHandler, useDataPackage } from '@showwhy/app-common'
+import { AppResourceHandler, useDataPackage } from '@datashaper/app-framework'
 import { memo, useCallback, useEffect, useMemo } from 'react'
 
 import { useSetRunAsDefault } from '../hooks/runHistory.js'

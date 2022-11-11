@@ -15,7 +15,7 @@ import {
 	PrimaryButton,
 	Toggle,
 } from '@fluentui/react'
-import { useDatasetMenuItems as useDatasetMenuItemsCommon } from '@showwhy/app-common'
+import { useDatasetMenuItems as useDatasetMenuItemsCommon } from '@datashaper/app-framework'
 import { useCallback, useEffect, useMemo } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
 

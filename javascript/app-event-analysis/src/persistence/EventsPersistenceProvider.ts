@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import type { Hypothesis } from '@showwhy/app-common'
-import { AppResourceHandler, useDataPackage } from '@showwhy/app-common'
+import { AppResourceHandler, useDataPackage } from '@datashaper/app-framework'
 import { memo, useCallback, useEffect, useMemo } from 'react'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
 

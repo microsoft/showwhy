@@ -23,11 +23,8 @@ import {
 	TooltipHost,
 } from '@fluentui/react'
 import type { Hypothesis } from '@showwhy/app-common'
-import {
-	HypothesisGroup,
-	TableMenuBar,
-	useDataTables,
-} from '@showwhy/app-common'
+import { HypothesisGroup, TableMenuBar } from '@showwhy/app-common'
+import { useDataTables } from '@datashaper/app-framework'
 import { not } from 'arquero'
 import { clone, cloneDeep, isEmpty, isEqual, uniq } from 'lodash'
 import type { FormEvent } from 'react'
