@@ -2,13 +2,15 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import { type ResourceTreeData, FileTree } from '@datashaper/app-framework'
 import { useBoolean } from '@fluentui/react-hooks'
 import { useDebounceFn } from 'ahooks'
 import type { AllotmentHandle } from 'allotment'
 import { Allotment } from 'allotment'
 import { memo, useCallback, useRef } from 'react'
 
-import { FileTree } from './FileTree.js'
+import { useExampleProjects } from '../hooks/examples.js'
+import { pages } from '../pages.js'
 import { Header } from './Header.js'
 import { Container, Content, Main, useFileTreeStyle } from './Layout.styles.js'
 import type { LayoutProps } from './Layout.types.js'
@@ -45,6 +47,7 @@ export const Layout: React.FC<LayoutProps> = memo(function Layout({
 		},
 		{ wait: 200 },
 	)
+	const examples = useExampleProjects()
 
 	return (
 		<Container id="layout">
@@ -62,6 +65,8 @@ export const Layout: React.FC<LayoutProps> = memo(function Layout({
 								expanded={expanded}
 								toggleExpanded={onToggle}
 								style={fileTreeStyle}
+								appResources={appResources}
+								examples={examples}
 							/>
 						</Allotment.Pane>
 						<Allotment.Pane>{children}</Allotment.Pane>
@@ -71,3 +76,21 @@ export const Layout: React.FC<LayoutProps> = memo(function Layout({
 		</Container>
 	)
 })
+
+const appResources: ResourceTreeData[] = [
+	{
+		title: 'Causal Discovery',
+		icon: pages.discover.icon,
+		route: `/${pages.discover.route}`,
+	},
+	{
+		title: 'Exposure Analysis',
+		icon: pages.exposure.icon,
+		route: `/${pages.exposure.route}`,
+	},
+	{
+		title: 'Event Analysis',
+		icon: pages.events.icon,
+		route: `/${pages.events.route}`,
+	},
+]
