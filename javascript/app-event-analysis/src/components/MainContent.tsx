@@ -1063,6 +1063,7 @@ export const MainContent: React.FC = memo(function MainContent() {
 								<DropdownContainer>
 									<Dropdown
 										placeholder="Time"
+										label="Time"
 										options={columnsDropdownOptions}
 										selectedKey={columnMapping.date}
 										onChange={(e, val) =>
@@ -1073,12 +1074,14 @@ export const MainContent: React.FC = memo(function MainContent() {
 									/>
 									<Dropdown
 										placeholder="Units"
+										label="Units"
 										options={columnsDropdownOptions}
 										selectedKey={columnMapping.unit}
 										onChange={(e, val) => onUnitUpdate(val)}
 									/>
 									<Dropdown
 										placeholder="Outcome"
+										label="Outcome"
 										options={columnsDropdownOptions}
 										selectedKey={columnMapping.value}
 										onChange={handleOutColumnChange}
