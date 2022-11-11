@@ -1,0 +1,51 @@
+{
+	"name": "@showwhy/stories",
+	"private": true,
+	"version": "3.7.1",
+	"repository": "https://github.com/microsoft/showwhtt",
+	"license": "MIT",
+	"scripts": {
+		"clean": "essex clean",
+		"start": "start-storybook -s ./public",
+		"bundle": "build-storybook --quiet",
+		"start:storybook": "yarn start",
+		"bundle:storybook": "yarn bundle",
+		"lint": "essex lint"
+	},
+	"dependencies": {
+		"@showwhy/event-analysis-app": "workspace:^",
+		"hsluv": "^1.0.0",
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0",
+		"styled-components": "^5.3.5"
+	},
+	"devDependencies": {
+		"@babel/core": "^7.19.6",
+		"@babel/plugin-proposal-optional-chaining": "^7.18.9",
+		"@babel/preset-env": "^7.19.4",
+		"@babel/preset-react": "^7.18.6",
+		"@babel/preset-typescript": "^7.18.6",
+		"@essex/scripts": "^22.1.0",
+		"@essex/tsconfig-base": "^1.0.2",
+		"@mdx-js/react": "^1.6.22",
+		"@open-wc/webpack-import-meta-loader": "^0.4.7",
+		"@storybook/addon-actions": "^6.5.13",
+		"@storybook/addon-docs": "^6.5.13",
+		"@storybook/addon-essentials": "^6.5.13",
+		"@storybook/addon-interactions": "^6.5.13",
+		"@storybook/addon-links": "^6.5.12",
+		"@storybook/builder-webpack4": "^6.5.13",
+		"@storybook/manager-webpack4": "^6.5.13",
+		"@storybook/react": "^6.5.13",
+		"@storybook/testing-library": "^0.0.13",
+		"@thematic/core": "^3.0.0",
+		"@thematic/fluent": "^4.0.1",
+		"@thematic/react": "^2.0.12",
+		"@types/babel__core": "^7.1.19",
+		"@types/babel__preset-env": "^7.9.2",
+		"@types/open-wc__webpack-import-meta-loader": "^0.4.2",
+		"@types/styled-components": "^5.1.26",
+		"babel-loader": "^8.2.5",
+		"resolve-typescript-plugin": "^1.2.0"
+	}
+}
