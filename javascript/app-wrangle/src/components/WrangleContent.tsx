@@ -2,13 +2,15 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import {
+	CodebookEditor,
+	DataSourceEditor,
+	RawTableViewer,
+	TableEditor,
+	WorkflowEditor,
+} from '@datashaper/app-framework'
 import { memo } from 'react'
 
-import { CodebookEditor } from './CodebookEditor.js'
-import { DataSourceEditor } from './DataSourceEditor.js'
-import { RawTableViewer } from './RawTableViewer.js'
-import { TableEditor } from './TableEditor.js'
-import { WorkflowEditor } from './WorkflowEditor.js'
 import type { WrangleContentProps } from './WrangleContent.types.js'
 
 export const WrangleContent: React.FC<WrangleContentProps> = memo(

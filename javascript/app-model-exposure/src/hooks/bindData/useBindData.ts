@@ -2,9 +2,9 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import { useDataTables } from '@datashaper/app-framework'
 import type { TableContainer } from '@datashaper/tables'
 import type { DataTable, Maybe } from '@datashaper/workflow'
-import { useDataTables } from '@showwhy/app-common'
 import { useMemo } from 'react'
 
 import {
