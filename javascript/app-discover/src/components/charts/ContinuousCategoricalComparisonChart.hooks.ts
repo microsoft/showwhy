@@ -17,9 +17,10 @@ export function useVisualizationSpec(
 		encoding: {
 			color: {
 				field: varA.columnName,
+				legend: false,
 			},
 			x: { field: varA.columnName, type: 'quantitative' },
-			y: { field: varB.columnName, type: 'quantitative' },
+			y: { field: varB.columnName, type: 'ordinal' },
 		},
 		mark: 'tick',
 	})
