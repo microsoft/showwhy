@@ -22,9 +22,17 @@ The event analysis tool allows users to use time-series observational data conta
 
 This tool allows users to inspect variable relationships within data, and to perform causal discovery using a variety of techniques such as [Causica](https://github.com/microsoft/causica), [NOTEARS](https://github.com/xunzheng/notears) and [DirectLiNGAM](https://lingam.readthedocs.io/en/latest/reference/direct_lingam.html).
 
-# Getting Started
+## Getting Started
 
-See [DEVELOPING.md](./DEVELOPING.md) for instructions on how to get started running and developing ShowWhy.
+In order to run the application locally, you will need to ensure that you have Docker installed and running on your machine. You can find instructions for installing Docker [here](https://docs.docker.com/get-docker/).
+
+Open up a terminal application, and using the command-line interface (CLI) run the following command:
+
+```bash
+docker-compose --profile all up
+```
+
+For delevopers wishing to contribute to the project, refer to [DEVELOPING.md](./DEVELOPING.md) for instructions on getting started.
 
 # Deployment
 
