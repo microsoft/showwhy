@@ -4,25 +4,19 @@
  */
 import { useEffect, useState } from 'react'
 
-export interface ExampleIndex {
-	examples: FileDefinition[]
-}
 export interface FileDefinition {
 	name: string
 	url: string
 }
-const EMPTY_INDEX: ExampleIndex = {
-	examples: [],
-}
 
 const EXAMPLES_PATH = 'data/examples/index.json'
 
-export function useExampleProjects(): ExampleIndex {
-	const [examples, setExamples] = useState<ExampleIndex>(EMPTY_INDEX)
+export function useExampleProjects(): FileDefinition[] {
+	const [examples, setExamples] = useState<FileDefinition[]>([])
 	useEffect(() => {
 		void fetch(EXAMPLES_PATH)
 			.then(r => r.json())
-			.then((e: ExampleIndex) => setExamples(e))
+			.then((e: { examples: FileDefinition[] }) => setExamples(e.examples))
 			.catch(err => {
 				console.error('error loading examples', err)
 				throw err
