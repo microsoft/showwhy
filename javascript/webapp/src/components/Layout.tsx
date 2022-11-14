@@ -19,7 +19,7 @@ export const Layout: React.FC<LayoutProps> = memo(function Layout({
 		<Container id="layout">
 			<Header />
 			<Main>
-				<DataShaperApp examples={examples.examples} appResources={appResources}>
+				<DataShaperApp examples={examples} appResources={appResources as any}>
 					{children}
 				</DataShaperApp>
 			</Main>

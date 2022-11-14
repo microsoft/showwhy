@@ -3785,7 +3785,7 @@ __metadata:
     "@thematic/fluent": ^4.1.1
     "@thematic/react": ^2.1.1
     "@types/react": ^18.0.25
-    "@types/react-dom": ^18.0.8
+    "@types/react-dom": ^18.0.9
     "@types/react-is": ^17.0.3
     "@types/styled-components": ^5.1.26
     ahooks: ^3.7.2
@@ -3796,7 +3796,7 @@ __metadata:
     react: ^18.2.0
     react-dom: ^18.2.0
     react-is: ^18.2.0
-    react-router-dom: ^6.3.0
+    react-router-dom: ^6.4.3
     recoil: ^0.7.6
     rxjs: ^7.5.7
     styled-components: ^5.3.6
@@ -3841,7 +3841,7 @@ __metadata:
     "@types/node": ^18.11.9
     "@types/react": ^18.0.25
     "@types/react-cytoscapejs": ^1.2.2
-    "@types/react-dom": ^18.0.8
+    "@types/react-dom": ^18.0.9
     "@types/react-is": ^17.0.3
     "@types/react-router-dom": ^5.3.3
     "@types/styled-components": ^5.1.26
@@ -3873,7 +3873,7 @@ __metadata:
     react-if: ^4.1.4
     react-is: ^18.2.0
     react-redux: ^8.0.4
-    react-router-dom: ^6.3.0
+    react-router-dom: ^6.4.3
     react-use: ^17.4.0
     react-vega: ^7.4.4
     react-xarrows: ^2.0.2
@@ -3921,7 +3921,7 @@ __metadata:
     "@types/lodash-es": ^4.17.6
     "@types/node": ^18.11.9
     "@types/react": ^18.0.25
-    "@types/react-dom": ^18.0.8
+    "@types/react-dom": ^18.0.9
     "@types/react-is": ^17.0.3
     "@types/react-router-dom": ^5.3.3
     "@types/styled-components": ^5.1.26
@@ -3938,7 +3938,7 @@ __metadata:
     react-if: ^4.1.4
     react-is: ^18.2.0
     react-redux: ^8.0.4
-    react-router-dom: ^6.3.0
+    react-router-dom: ^6.4.3
     recoil: ^0.7.6
     redbox-react: ^1.6.0
     shx: ^0.3.4
@@ -3977,7 +3977,7 @@ __metadata:
     "@types/lodash-es": ^4.17.6
     "@types/node": ^18.11.9
     "@types/react": ^18.0.25
-    "@types/react-dom": ^18.0.8
+    "@types/react-dom": ^18.0.9
     "@types/react-is": ^17.0.3
     "@types/react-router-dom": ^5.3.3
     "@types/styled-components": ^5.1.26
@@ -3995,7 +3995,7 @@ __metadata:
     react-if: ^4.1.4
     react-is: ^18.2.0
     react-redux: ^8.0.4
-    react-router-dom: ^6.3.0
+    react-router-dom: ^6.4.3
     react-xarrows: ^2.0.2
     recoil: ^0.7.6
     redbox-react: ^1.6.0
@@ -4042,7 +4042,7 @@ __metadata:
     "@types/lodash-es": ^4.17.6
     "@types/node": ^18.11.9
     "@types/react": ^18.0.25
-    "@types/react-dom": ^18.0.8
+    "@types/react-dom": ^18.0.9
     "@types/react-is": ^17.0.3
     "@types/react-router-dom": ^5.3.3
     "@types/styled-components": ^5.1.26
@@ -4062,7 +4062,7 @@ __metadata:
     react-dom: ^18.2.0
     react-error-boundary: ^3.1.4
     react-is: ^18.2.0
-    react-router-dom: ^6.3.0
+    react-router-dom: ^6.4.3
     recoil: ^0.7.6
     redbox-react: ^1.6.0
     rxjs: ^7.5.7
@@ -4107,7 +4107,7 @@ __metadata:
     "@types/lodash-es": ^4.17.6
     "@types/node": ^18.11.9
     "@types/react": ^18.0.25
-    "@types/react-dom": ^18.0.8
+    "@types/react-dom": ^18.0.9
     "@types/react-is": ^17.0.3
     "@types/react-router-dom": ^5.3.3
     "@types/styled-components": ^5.1.26
@@ -4125,7 +4125,7 @@ __metadata:
     react-error-boundary: ^3.1.4
     react-is: ^18.2.0
     react-redux: ^8.0.4
-    react-router-dom: ^6.3.0
+    react-router-dom: ^6.4.3
     react-xarrows: ^2.0.2
     recoil: ^0.7.6
     redbox-react: ^1.6.0
@@ -5210,12 +5210,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:^18.0.8":
-  version: 18.0.8
-  resolution: "@types/react-dom@npm:18.0.8"
+"@types/react-dom@npm:^18.0.9":
+  version: 18.0.9
+  resolution: "@types/react-dom@npm:18.0.9"
   dependencies:
     "@types/react": "*"
-  checksum: 522e5e949d05f35c6037a2290838c9c7ff92a9d06f7d96b993c7c3f5a86d8f3a6337e059c94e6fb0920227f445e5d1ce10fbfe3d9bbd95fb82a5539249d90646
+  checksum: e744e3feba25fc43733289d4df4d9c0e59fcca7f34e8c89d75f81a339accb2bd70236d69382d47d2c0ad06a1529b2e56aa6171fe175854d60e07156ddceedfcb
   languageName: node
   linkType: hard
 
@@ -10130,7 +10130,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"history@npm:^5.2.0, history@npm:^5.3.0":
+"history@npm:^5.3.0":
   version: 5.3.0
   resolution: "history@npm:5.3.0"
   dependencies:
@@ -13697,19 +13697,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-router-dom@npm:^6.3.0":
-  version: 6.3.0
-  resolution: "react-router-dom@npm:6.3.0"
-  dependencies:
-    history: ^5.2.0
-    react-router: 6.3.0
-  peerDependencies:
-    react: ">=16.8"
-    react-dom: ">=16.8"
-  checksum: 77603a654f8a8dc7f65535a2e5917a65f8d9ffcb06546d28dd297e52adcc4b8a84377e0115f48dca330b080af2da3e78f29d590c89307094d36927d2b1751ec3
-  languageName: node
-  linkType: hard
-
 "react-router-dom@npm:^6.4.3":
   version: 6.4.3
   resolution: "react-router-dom@npm:6.4.3"
@@ -13720,17 +13707,6 @@ __metadata:
     react: ">=16.8"
     react-dom: ">=16.8"
   checksum: 67a44d8dc45761a1c88793cac73839bb657168ef61b9473eb39b186b4a3ea1472454fd96f8997dc541cb1e79a723d62f9503cbc9179b63b8f1d634ed6d2b079a
-  languageName: node
-  linkType: hard
-
-"react-router@npm:6.3.0":
-  version: 6.3.0
-  resolution: "react-router@npm:6.3.0"
-  dependencies:
-    history: ^5.2.0
-  peerDependencies:
-    react: ">=16.8"
-  checksum: 7be673f5e72104be01e6ab274516bdb932efd93305243170690f6560e3bd1035dd1df3d3c9ce1e0f452638a2529f43a1e77dcf0934fc8031c4783da657be13ca
   languageName: node
   linkType: hard
 
