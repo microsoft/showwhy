@@ -2,9 +2,9 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { useLocation, useNavigate } from 'react-router-dom'
-import { useMemo, useCallback } from 'react'
 import type { ResourceTreeData } from '@datashaper/app-framework'
+import { useCallback, useMemo } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 export function useCurrentPath(): string {
 	const location = useLocation()

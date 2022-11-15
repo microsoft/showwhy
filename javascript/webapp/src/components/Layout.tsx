@@ -8,9 +8,9 @@ import { memo } from 'react'
 import { useExampleProjects } from '../hooks/examples.js'
 import { pages } from '../pages.js'
 import { Header } from './Header.js'
+import { useCurrentPath, useOnSelectItem } from './Layout.hooks.js'
 import { Container, Main } from './Layout.styles.js'
 import type { LayoutProps } from './Layout.types.js'
-import { useCurrentPath, useOnSelectItem } from './Layout.hooks.js'
 
 export const Layout: React.FC<LayoutProps> = memo(function Layout({
 	children,
