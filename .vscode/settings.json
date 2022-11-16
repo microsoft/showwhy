@@ -8,7 +8,7 @@
     "*.tsx": "${capture}.*.ts, ${capture}.*.tsx, ${capture}.md, ${capture}.css, , ${capture}.module.scss",
     "tsconfig.json": "tsconfig.*.json",
     "package.json": "turbo.json, tsconfig.json, .npmrc, .npmignore, package.*.json",
-    "README.md": "SECURITY.md, DEVELOPING.md, SUPPORT.md, CODE_OF_CONDUCT.md, LICENSE",
+    "README.md": "*.md, LICENSE",
     ".eslintrc": ".eslintignore",
     ".prettierrc": ".prettierignore",
     ".gitattributes": ".gitignore",
