@@ -143,12 +143,12 @@ export function useViewMenuItems(
 						),
 					},
 					{
-						key: 'show-panels-Checkbox',
+						key: 'hide-panels-Checkbox',
 						onRender: () => (
 							<Checkbox
-								label="Show side panels"
-								checked={!hidePanels}
-								onChange={(e, v) => setHidePanels(!v)}
+								label="Hide side panels"
+								checked={hidePanels}
+								onChange={(e, v) => setHidePanels(Boolean(v))}
 							/>
 						),
 					},

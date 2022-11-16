@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { DataShaperApp, type ResourceTreeData } from '@datashaper/app-framework'
+import { type ResourceTreeData, DataShaperApp } from '@datashaper/app-framework'
 import { memo } from 'react'
 
 import { useExampleProjects } from '../hooks/examples.js'
