@@ -3,33 +3,82 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { type ResourceTreeData, DataShaperApp } from '@datashaper/app-framework'
-import { memo } from 'react'
+import { Spinner } from '@fluentui/react'
+import { DiscoveryPersistenceProvider } from '@showwhy/discover-app'
+import { EventsPersistenceProvider } from '@showwhy/event-analysis-app'
+import { ModelExposurePersistenceProvider } from '@showwhy/model-exposure-app'
+import { lazy, memo, Suspense, useCallback, useState } from 'react'
 
 import { useExampleProjects } from '../hooks/examples.js'
 import { pages } from '../pages.js'
 import { Header } from './Header.js'
-import { useCurrentPath, useOnSelectItem } from './Layout.hooks.js'
-import { Container, Main } from './Layout.styles.js'
-import type { LayoutProps } from './Layout.types.js'
+import { Container, Content, Main } from './Layout.styles.js'
 
-export const Layout: React.FC<LayoutProps> = memo(function Layout({
-	children,
-}) {
+const ExposureApp = lazy(
+	() =>
+		import(
+			/* webpackChunkName: "ModelExposure" */
+			'@showwhy/model-exposure-app'
+		),
+)
+
+const DiscoverApp = lazy(
+	() =>
+		import(
+			/* webpackChunkName: "Explore" */
+			'@showwhy/discover-app'
+		),
+)
+const EventsApp = lazy(
+	() =>
+		import(
+			/* webpackChunkName: "EventAnalysis" */
+			'@showwhy/event-analysis-app'
+		),
+)
+
+const HomePage = lazy(() => import('../pages/HomePage.js'))
+
+const HANDLERS = {
+	discover: DiscoverApp,
+	exposure: ExposureApp,
+	events: EventsApp,
+}
+
+export const Layout: React.FC = memo(function Layout() {
 	const examples = useExampleProjects()
-	const currentPath = useCurrentPath()
-	const onSelectItem = useOnSelectItem()
+	const [selectedKey, setSelectedKey] = useState<string | undefined>()
+	const onSelectItem = useCallback(
+		(v: ResourceTreeData) => {
+			setSelectedKey(v.key)
+		},
+		[setSelectedKey],
+	)
+
 	return (
 		<Container id="layout">
 			<Header />
 			<Main>
-				<DataShaperApp
-					examples={examples}
-					appResources={appResources}
-					selectedRoute={currentPath}
-					onSelect={onSelectItem}
-				>
-					{children}
-				</DataShaperApp>
+				<Content>
+					<>
+						{/* Application Persistence Utilities */}
+						<ModelExposurePersistenceProvider />
+						<DiscoveryPersistenceProvider />
+						<EventsPersistenceProvider />
+					</>
+					<Suspense fallback={<Spinner />}>
+						<DataShaperApp
+							handlers={HANDLERS}
+							examples={examples}
+							appResources={appResources}
+							selectedKey={selectedKey}
+							frontPage={() => <HomePage onClickCard={setSelectedKey} />}
+							onSelect={onSelectItem}
+						>
+							<HomePage onClickCard={setSelectedKey} />
+						</DataShaperApp>
+					</Suspense>
+				</Content>
 			</Main>
 		</Container>
 	)
@@ -39,16 +88,16 @@ const appResources: ResourceTreeData[] = [
 	{
 		title: 'Causal Discovery',
 		icon: pages.discover.icon,
-		route: `/${pages.discover.route}`,
+		key: `${pages.discover.route}`,
 	},
 	{
 		title: 'Exposure Analysis',
 		icon: pages.exposure.icon,
-		route: `/${pages.exposure.route}`,
+		key: `${pages.exposure.route}`,
 	},
 	{
 		title: 'Event Analysis',
 		icon: pages.events.icon,
-		route: `/${pages.events.route}`,
+		key: `${pages.events.route}`,
 	},
 ]

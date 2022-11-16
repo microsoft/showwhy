@@ -9,22 +9,10 @@ export interface PageDetails {
 }
 
 export const pages: {
-	model: PageDetails
-	wrangle: PageDetails
 	discover: PageDetails
 	exposure: PageDetails
 	events: PageDetails
 } = {
-	model: {
-		title: 'Model Domain',
-		icon: 'TableComputed',
-		route: 'model',
-	},
-	wrangle: {
-		title: 'Wrangle Data',
-		icon: 'TableComputed',
-		route: 'wrangle',
-	},
 	discover: {
 		title: 'Causal Discovery',
 		icon: 'SearchData',
