@@ -13,7 +13,6 @@ import { useExampleProjects } from '../hooks/examples.js'
 import { pages } from '../pages.js'
 import { Header } from './Header.js'
 import { Container, Content, Main } from './Layout.styles.js'
-import type { LayoutProps } from './Layout.types.js'
 
 const ExposureApp = lazy(
 	() =>
@@ -75,7 +74,9 @@ export const Layout: React.FC = memo(function Layout() {
 							selectedKey={selectedKey}
 							frontPage={() => <HomePage onClickCard={setSelectedKey} />}
 							onSelect={onSelectItem}
-						/>
+						>
+							<HomePage onClickCard={setSelectedKey} />
+						</DataShaperApp>
 					</Suspense>
 				</Content>
 			</Main>
