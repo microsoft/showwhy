@@ -58,7 +58,6 @@ export const ModelExposurePersistenceProvider: React.FC = memo(
 		)
 
 		useEffect(() => {
-			console.log('registering persistenceprovider', dp)
 			dp.addResourceHandler(persistable)
 		}, [dp, persistable])
 

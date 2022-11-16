@@ -8,8 +8,9 @@ import {
 	PersistenceProvider,
 	TableStoreProvider,
 } from '@datashaper/app-framework'
-import { RecoilRoot } from 'recoil'
 import { BrowserRouter } from 'react-router-dom'
+import { RecoilRoot } from 'recoil'
+
 import { ErrorBoundary } from './ErrorBoundary.js'
 import { Layout } from './Layout.js'
 import { StyleContext } from './StyleContext.js'

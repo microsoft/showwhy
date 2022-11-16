@@ -83,7 +83,6 @@ export const EventsPersistenceProvider: React.FC = memo(
 		)
 
 		useEffect(() => {
-			console.log('register events persistence provider')
 			dp.addResourceHandler(persistable)
 		}, [dp, persistable])
 

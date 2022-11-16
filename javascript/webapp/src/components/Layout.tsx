@@ -3,17 +3,17 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { type ResourceTreeData, DataShaperApp } from '@datashaper/app-framework'
-import { lazy, memo, useState, useCallback, Suspense } from 'react'
+import { Spinner } from '@fluentui/react'
+import { DiscoveryPersistenceProvider } from '@showwhy/discover-app'
+import { EventsPersistenceProvider } from '@showwhy/event-analysis-app'
+import { ModelExposurePersistenceProvider } from '@showwhy/model-exposure-app'
+import { lazy, memo, Suspense, useCallback, useState } from 'react'
 
 import { useExampleProjects } from '../hooks/examples.js'
 import { pages } from '../pages.js'
 import { Header } from './Header.js'
 import { Container, Content, Main } from './Layout.styles.js'
 import type { LayoutProps } from './Layout.types.js'
-import { DiscoveryPersistenceProvider } from '@showwhy/discover-app'
-import { EventsPersistenceProvider } from '@showwhy/event-analysis-app'
-import { ModelExposurePersistenceProvider } from '@showwhy/model-exposure-app'
-import { Spinner } from '@fluentui/react'
 
 const ExposureApp = lazy(
 	() =>
@@ -46,7 +46,7 @@ const HANDLERS = {
 	events: EventsApp,
 }
 
-export const Layout: React.FC<LayoutProps> = memo(function Layout({}) {
+export const Layout: React.FC = memo(function Layout() {
 	const examples = useExampleProjects()
 	const [selectedKey, setSelectedKey] = useState<string | undefined>()
 	const onSelectItem = useCallback(
@@ -58,11 +58,6 @@ export const Layout: React.FC<LayoutProps> = memo(function Layout({}) {
 
 	return (
 		<Container id="layout">
-			<style>
-				{`* {
-					box-sizing: border-box;
-				}`}
-			</style>
 			<Header />
 			<Main>
 				<Content>
