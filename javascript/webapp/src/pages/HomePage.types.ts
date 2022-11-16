@@ -11,6 +11,6 @@ export interface CardDetail {
 	questionType: QuestionType
 	heroTitle: string
 	title: string
-	href: string
+	key: string
 	previewProps: IDocumentCardPreviewProps
 }

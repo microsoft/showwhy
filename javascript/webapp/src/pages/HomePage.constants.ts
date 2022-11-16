@@ -15,7 +15,7 @@ export const topLevelQuestionCards: CardDetail[] = [
 		questionType: QuestionType.Discovery,
 		heroTitle: pages.discover.title,
 		title: 'Do dataset features cause each other?',
-		href: pages.discover.route,
+		key: 'discover',
 		previewProps: {
 			previewImages: [
 				{
@@ -30,7 +30,7 @@ export const topLevelQuestionCards: CardDetail[] = [
 		questionType: QuestionType.Exposure,
 		heroTitle: pages.exposure.title,
 		title: 'Does an exposure cause an outcome?',
-		href: pages.exposure.route,
+		key: 'exposure',
 		previewProps: {
 			previewImages: [
 				{
@@ -45,7 +45,7 @@ export const topLevelQuestionCards: CardDetail[] = [
 		questionType: QuestionType.Event,
 		heroTitle: pages.events.title,
 		title: 'Did an event cause an outcome?',
-		href: pages.events.route,
+		key: 'events',
 		previewProps: {
 			previewImages: [
 				{
