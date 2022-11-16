@@ -16,13 +16,11 @@ This tool will verify these causal claims using the [dowhy](https://py-why.githu
 
 ![Screenshot of the exposure analysis tool](https://user-images.githubusercontent.com/5982160/202048093-97b2f7a2-2df3-4979-90a1-f0c96d6c968e.png)
 
-
 ## Event Analysis
 
 The event analysis tool allows users to use time-series observational data containing treated and untreated units to detect whether treatments had a net effect on outcomes. This tool uses the [Synthetic Differences-in-Differences](https://github.com/synth-inference/synthdid) technique for analysis.
 
 ![Screenshot of the event analysis tool](https://user-images.githubusercontent.com/5982160/202048110-558d0119-d664-488f-a345-4c3b863ba600.png)
-
 
 ## Causal Discovery
 

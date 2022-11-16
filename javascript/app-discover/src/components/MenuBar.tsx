@@ -17,6 +17,7 @@ import {
 	InModelColumnNamesState,
 	LoadingState,
 	NodePositionsState,
+	PanelsHiddenState,
 	PersistedInfoState,
 	StraightEdgesState,
 } from '../state/index.js'
@@ -33,6 +34,7 @@ import { useCommandBarStyles } from './MenuBar.styles.js'
 
 export const MenuBar: React.FC = memo(function MenuBar() {
 	const [selectedViewKey, setSelectedViewKey] = useRecoilState(GraphViewState)
+	const [hidePanels, setHidePanels] = useRecoilState(PanelsHiddenState)
 	const loadColumnTable = useDatasetLoader()
 	const resetVariables = useResetRecoilState(InModelColumnNamesState)
 	const resetConstraints = useResetRecoilState(CausalGraphConstraintsState)
@@ -87,6 +89,8 @@ export const MenuBar: React.FC = memo(function MenuBar() {
 		setSelectedViewKey,
 		useStraightEdges,
 		setUseStraightEdges,
+		hidePanels,
+		setHidePanels,
 	)
 
 	const autoLayoutButtonMenuItem = useAutoLayoutButtonMenuItem()
