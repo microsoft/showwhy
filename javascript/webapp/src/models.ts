@@ -18,28 +18,3 @@ export enum QuestionType {
 	 */
 	Discovery = 'discovery',
 }
-
-/**
- * Data attached to resource-tree nodes
- */
-export interface ResourceTreeData {
-	/**
-	 * The unique node idw
-	 */
-	route: string
-
-	/**
-	 * The node text to use. Default=id
-	 */
-	title: string
-
-	/**
-	 * The icon to use in the file tree
-	 */
-	icon?: string
-
-	/**
-	 * Child node Data
-	 */
-	children?: ResourceTreeData[]
-}

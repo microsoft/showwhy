@@ -2,6 +2,7 @@
 
 ## Prerequisite Software
 
+- [Docker](https://docs.docker.com/get-docker/)
 - [Node 16.x](https://nodejs.org)
 - [Python 3.8.x](https://www.python.org/)
 - [Yarn](https://yarnpkg.com) (`npm i -g yarn`)

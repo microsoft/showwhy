@@ -15,6 +15,7 @@ import {
 	ErrorMessageState,
 	InfoMessageState,
 	LoadingState,
+	PanelsHiddenState,
 } from '../state/index.js'
 import {
 	FillContainer,
@@ -34,12 +35,14 @@ export const CauseDis = memo(function CauseDis() {
 	const loading = useRecoilValue(LoadingState)
 	const errorMessage = useRecoilValue(ErrorMessageState)
 	const infoMessage = useRecoilValue(InfoMessageState)
+	const hidePanels = useRecoilValue(PanelsHiddenState)
 	const [ref, { width, height }] = useMeasure<HTMLDivElement>()
 
 	return (
 		<CommonLayout
 			configRail={<AppLeftRail />}
 			detailRail={<AppRightRail />}
+			hidePanels={hidePanels}
 			menu={
 				<Suspense fallback={<PaddedSpinner label="Loading menubar..." />}>
 					<MenuBar />
