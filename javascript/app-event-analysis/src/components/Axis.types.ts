@@ -6,8 +6,13 @@ import type { SVGProps } from 'react'
 
 import type { D3Scale } from '../types.js'
 
+export enum AxisType {
+	Left = 'left',
+	Bottom = 'bottom',
+}
+
 export type AxisProps = SVGProps<SVGGElement> & {
-	type: 'left' | 'bottom'
+	type: AxisType
 	myscale: D3Scale
 	transform?: string
 	ticks?: number

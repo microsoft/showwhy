@@ -5,7 +5,27 @@
 
 import { useCallback, useRef, useState } from 'react'
 
-export const useTooltip = () => {
+export type ShowTooltip = (
+	contentEl: any,
+	xPos: number,
+	yPos: number,
+	options?: { force?: boolean; unit?: string },
+) => void
+
+export interface Tooltip {
+	x: number
+	y: number
+	unit: string
+	show: ShowTooltip
+	hide: (force?: boolean) => boolean
+	stick: () => boolean
+	unStick: () => boolean
+	stickyState: boolean
+	visible?: boolean
+	content: string
+}
+
+export const useTooltip = (): Tooltip => {
 	const [x, setX] = useState(0)
 	const [y, setY] = useState(0)
 	const [content, setContent] = useState('')

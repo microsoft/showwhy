@@ -2,7 +2,6 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { DefaultButton } from '@fluentui/react'
 import * as d3 from 'd3'
 import { cloneDeep, isEmpty, partition, uniq, unzip } from 'lodash'
 import React, { memo, useCallback, useEffect, useMemo, useState } from 'react'
@@ -27,6 +26,8 @@ import {
 } from '../utils/charts.js'
 import { isValidUnit } from '../utils/validation.js'
 import { Axis } from './Axis.js'
+import { AxisType } from './Axis.types.js'
+import { ChartTooltip } from './ChartTooltip.js'
 import { DrawingContainer } from './DrawingContainer.js'
 import { GridLine } from './GridLine.js'
 import { Line } from './Line.js'
@@ -36,10 +37,8 @@ import {
 	useData,
 	useLegends,
 } from './LineChart.hooks.js'
-import { TooltipContent } from './LineChart.styles.js'
 import type { LineChartProps } from './LineChart.types.js'
 import { constructLineTooltipContent } from './LineChart.utils.js'
-import { ToolTip } from './ToolTip.js'
 
 const LINE_WIDTH = 1
 const LINE_WIDTH_TREATED = 2
@@ -299,8 +298,6 @@ export const LineChart: React.FC<LineChartProps> = memo(function LineChart({
 		show: showTooltip,
 		hide: hideTooltip,
 		stick: persistTooltip,
-		unStick: unPersistTooltip,
-		stickyState: isTooltipPersisted,
 	} = tooltip
 
 	useEffect(() => {
@@ -683,18 +680,6 @@ export const LineChart: React.FC<LineChartProps> = memo(function LineChart({
 		[hideTooltip],
 	)
 
-	const handleRemoveLineClick = useCallback(
-		(unit: string) => {
-			hideTooltip(true)
-			onRemoveCheckedUnit(unit)
-		},
-		[hideTooltip, onRemoveCheckedUnit],
-	)
-
-	const handleTooltipRemoved = useCallback(() => {
-		unPersistTooltip()
-	}, [unPersistTooltip])
-
 	const handleClickOutside = useCallback(() => {
 		hideTooltip(true)
 	}, [hideTooltip])
@@ -951,9 +936,9 @@ export const LineChart: React.FC<LineChartProps> = memo(function LineChart({
 						/>
 					</>
 				)}
-				<Axis type="left" myscale={yScale} ticks={5} />
+				<Axis type={AxisType.Left} myscale={yScale} ticks={5} />
 				<Axis
-					type="bottom"
+					type={AxisType.Bottom}
 					myscale={xScale}
 					tickFormatAsWholeNumber={Number(!timePeriodsShouldBeAbstract)}
 					transform={`translate(0, ${height})`}
@@ -964,22 +949,12 @@ export const LineChart: React.FC<LineChartProps> = memo(function LineChart({
 				<g ref={controlGroupRef} />
 				<g ref={legendGroupRef} />
 			</DrawingContainer>
-			<ToolTip
-				xPos={tooltip.x}
-				yPos={tooltip.y}
-				visible={tooltip.visible}
-				onTooltipRemoved={handleTooltipRemoved}
-			>
-				<TooltipContent>
-					<div>{tooltip.content}</div>
-					{isTooltipPersisted && checkableUnits.includes(tooltip.unit) && (
-						<DefaultButton
-							text="Remove"
-							onClick={() => handleRemoveLineClick(tooltip.unit)}
-						/>
-					)}
-				</TooltipContent>
-			</ToolTip>
+			<ChartTooltip
+				tooltip={tooltip}
+				checkedUnits={checkedUnits}
+				checkableUnits={checkableUnits}
+				onRemoveCheckedUnit={onRemoveCheckedUnit}
+			/>
 		</>
 	)
 })

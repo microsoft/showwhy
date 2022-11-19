@@ -428,6 +428,9 @@ export const ResultPane: React.FC<ResultPaneProps> = memo(function ResultPane({
 										bottomAxisLabel={'Weight'}
 										checkableUnits={checkableUnits}
 										onRemoveCheckedUnit={onRemoveCheckedUnit}
+										treatedUnits={treatedUnits}
+										checkedUnits={checkedUnits}
+										isPlaceboSimulation={isPlaceboSimulation}
 									/>
 								</ErrorBoundary>
 							</div>
@@ -458,6 +461,8 @@ export const ResultPane: React.FC<ResultPaneProps> = memo(function ResultPane({
 		checkableUnits,
 		getLineChart,
 		onRemoveCheckedUnit,
+		checkedUnits,
+		isPlaceboSimulation,
 	])
 
 	const rawDataLineChart = useMemo(() => {
@@ -529,7 +534,7 @@ export const ResultPane: React.FC<ResultPaneProps> = memo(function ResultPane({
 			)
 			const lineChart = getLineChart(output, placeboLineChartRef, [treatedUnit])
 			return (
-				<>
+				<div key={treatedUnit}>
 					<Stack.Item>
 						<TreatedTitle>{treatedUnit}</TreatedTitle>
 					</Stack.Item>
@@ -567,6 +572,9 @@ export const ResultPane: React.FC<ResultPaneProps> = memo(function ResultPane({
 									checkableUnits={checkableUnits}
 									onRemoveCheckedUnit={onRemoveCheckedUnit}
 									renderLegend
+									treatedUnits={treatedUnits}
+									checkedUnits={checkedUnits}
+									isPlaceboSimulation={isPlaceboSimulation}
 								/>
 							</ErrorBoundary>
 						</div>
@@ -609,7 +617,7 @@ export const ResultPane: React.FC<ResultPaneProps> = memo(function ResultPane({
 							</Text>
 						)}
 					</Stack.Item>
-				</>
+				</div>
 			)
 		})
 	}, [
@@ -630,6 +638,8 @@ export const ResultPane: React.FC<ResultPaneProps> = memo(function ResultPane({
 		units,
 		eventName,
 		outcomeName,
+		checkedUnits,
+		isPlaceboSimulation,
 	])
 
 	const graphTitle = useMemo((): string => {
