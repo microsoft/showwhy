@@ -28,7 +28,6 @@ export const HalfHeightContainer = styled.div`
 export const FillContainer = styled.div`
 	width: 100%;
 	height: 100%;
-	overflow: auto;
 `
 export const PaddedSpinner = styled(Spinner)`
 	padding-top: 8px;

@@ -40,11 +40,12 @@ export const ContainerEdge = styled(Container)`
 `
 
 export const FlexContainer = styled.div`
-	height: 98%;
 	display: flex;
 	flex-direction: column;
 	justify-content: end;
 	padding: 10px;
+	position: absolute;
+	bottom: 5px;
 `
 
 export const edgeColors = {

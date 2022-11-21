@@ -39,16 +39,7 @@ export const GraphViews: React.FC<DimensionProps> = memo(function GraphViews({
 		default:
 			activeGraphView = (
 				<Suspense fallback={<PaddedSpinner label="Recalculating..." />}>
-					<div
-						style={{
-							width,
-							height,
-							position: 'relative',
-							top: '10px',
-						}}
-					>
-						<CausalGraphExplorer />
-					</div>
+					<CausalGraphExplorer width={width} height={height} />
 				</Suspense>
 			)
 			break
