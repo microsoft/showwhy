@@ -3,12 +3,30 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { useThematic } from '@thematic/react'
+import { useDebounceFn } from 'ahooks'
+import * as d3 from 'd3'
 import { max, min, select } from 'd3'
-import { useEffect, useMemo, useRef } from 'react'
+import { useCallback, useEffect, useMemo, useRef } from 'react'
 
-import type { BarData, LegendData } from '../types'
-import { BarChartOrientation } from '../types'
-import { getColor } from './BarChart.utils.js'
+import type { ShowTooltip } from '../hooks/useTooltip.js'
+import { useTooltip } from '../hooks/useTooltip.js'
+import type {
+	BarData,
+	D3ScaleBand,
+	D3ScaleLinear,
+	HoverInfo,
+	LegendData,
+	TooltipInfo,
+} from '../types'
+import {
+	BAR_ELEMENT_CLASS_NAME,
+	BAR_GAP,
+	BAR_NORMAL,
+	BAR_TRANSPARENT,
+	BarChartOrientation,
+} from '../types'
+import type { BarChartData } from './BarChart.types.js'
+import { constructBarTooltipContent, getColor } from './BarChart.utils.js'
 
 const axisFontSize = '14px'
 
@@ -21,13 +39,7 @@ export function useData(
 	inputData: BarData[],
 	treatedUnits: string[],
 	isPlaceboSimulation: boolean,
-): {
-	inputBars: BarData[]
-	barNames: string[]
-	minValue: number
-	maxValue: number
-	legendData: LegendData[]
-} {
+): BarChartData {
 	const colors = useColors()
 	const treatedUnit = inputData.find(element =>
 		treatedUnits.some(unit => element.name.includes(unit)),
@@ -102,6 +114,48 @@ export function useData(
 			legendData,
 		}
 	}, [colors, treatedUnit, treatedUnitLegend, inputData, isPlaceboSimulation])
+}
+
+export function useGetScales(
+	orientation: BarChartOrientation,
+	barChartData: BarChartData,
+	widthExcludingAxis: number,
+	heightExcludingAxis: number,
+): {
+	xScale: D3ScaleLinear | D3ScaleBand
+	yScale: D3ScaleLinear | D3ScaleBand
+} {
+	return useMemo(() => {
+		const { minValue, maxValue, barNames } = barChartData
+		const xScale =
+			orientation === BarChartOrientation.column
+				? d3
+						.scaleBand()
+						.domain(barNames)
+						.range([0, widthExcludingAxis])
+						.padding(BAR_GAP)
+				: d3
+						.scaleLinear()
+						.domain([minValue > 0 ? 0 : minValue, maxValue]) // ensure that axis starts at 0
+						.range([0, widthExcludingAxis])
+
+		const yScale =
+			orientation === BarChartOrientation.column
+				? d3
+						.scaleLinear()
+						.domain([minValue > 0 ? 0 : minValue, maxValue]) // ensure that axis starts at 0
+						.range([heightExcludingAxis, 0])
+				: d3
+						.scaleBand()
+						.domain(barNames)
+						.range([heightExcludingAxis, 0])
+						.padding(BAR_GAP)
+		console.log({ xScale, yScale })
+		return {
+			xScale,
+			yScale,
+		}
+	}, [barChartData, heightExcludingAxis, orientation, widthExcludingAxis])
 }
 
 export function useLegends(
@@ -193,4 +247,133 @@ export function useLegends(
 		bottomAxisLabel,
 	])
 	return legendGroupRef
+}
+
+export function useHandlers(hoverInfo: HoverInfo) {
+	const tooltip = useTooltip()
+	const {
+		show: showTooltip,
+		hide: hideTooltip,
+		stick: persistTooltip,
+	} = tooltip
+
+	const updateTooltip = useUpdateTooltip(showTooltip, hoverInfo)
+	const mouseLeaveHandler = useHandleBarMouseLeave(hideTooltip, hoverInfo)
+	const handleContainerClick = useHandleContainerClick(hideTooltip)
+	const handleBarMouseClick = useHandleBarMouseClick(
+		persistTooltip,
+		updateTooltip,
+	)
+	const { run: handleBarMouseMove } = useDebounceFn(
+		(event: React.MouseEvent) => updateTooltip(event),
+		{
+			wait: 250,
+		},
+	)
+	const { run: handleBarMouseLeave } = useDebounceFn(
+		(event: React.MouseEvent) => mouseLeaveHandler(event),
+		{
+			wait: 250,
+		},
+	)
+
+	return useMemo(() => {
+		return {
+			tooltip,
+			handleBarMouseLeave,
+			handleBarMouseClick,
+			handleContainerClick,
+			handleBarMouseMove,
+			handleClickOutside: () => hideTooltip(true),
+		}
+	}, [
+		tooltip,
+		hideTooltip,
+		handleBarMouseMove,
+		handleBarMouseLeave,
+		handleBarMouseClick,
+		handleContainerClick,
+	])
+}
+
+function useUpdateTooltip(showTooltip: ShowTooltip, hoverInfo: HoverInfo) {
+	return useCallback(
+		(event: React.MouseEvent, force = false) => {
+			const bar = d3.select<SVGElement, BarData>(event.target as SVGElement)
+			const data: BarData = bar.datum() // a single bar data
+			const xPos = event.clientX
+			const yPos = event.clientY
+			const toolTipContent: { content: JSX.Element; unit: string } =
+				constructBarTooltipContent(data)
+			showTooltip({
+				contentEl: toolTipContent.content,
+				xPos,
+				yPos,
+				options: {
+					unit: toolTipContent.unit,
+					force: force,
+				},
+			})
+			bar.attr('opacity', BAR_NORMAL)
+
+			hoverInfo.setHoverItem({
+				data,
+				xPos,
+				yPos,
+			} as TooltipInfo)
+		},
+		[showTooltip, hoverInfo],
+	)
+}
+
+function useHandleBarMouseClick(
+	persistTooltip: () => void,
+	updateTooltip: (event: React.MouseEvent, force: boolean) => void,
+) {
+	return useCallback(
+		(event: React.MouseEvent<SVGElement>) => {
+			updateTooltip(event, true)
+			persistTooltip()
+		},
+		[persistTooltip, updateTooltip],
+	)
+}
+
+function useHandleBarMouseLeave(
+	hideTooltip: (force?: boolean) => void,
+	hoverInfo: HoverInfo,
+) {
+	return useCallback(
+		(event: React.MouseEvent) => {
+			hideTooltip()
+
+			const bar = d3.select<SVGElement, BarData>(event.target as SVGElement)
+			const data: BarData = bar.datum() // a single bar data
+			bar.attr('opacity', data.opacity || BAR_TRANSPARENT)
+			d3.selectAll('.bar').attr(
+				'opacity',
+				d => (d as BarData).opacity || BAR_TRANSPARENT,
+			)
+
+			hoverInfo.setHoverItem({
+				data,
+				xPos: 0,
+				yPos: 0,
+				isPreviousHover: true,
+			} as TooltipInfo)
+		},
+		[hideTooltip, hoverInfo],
+	)
+}
+
+function useHandleContainerClick(hideTooltip: (force?: boolean) => void) {
+	return useCallback(
+		(event: React.MouseEvent) => {
+			const element = event.target as Element
+			if (!element.classList.contains(BAR_ELEMENT_CLASS_NAME)) {
+				hideTooltip(true)
+			}
+		},
+		[hideTooltip],
+	)
 }

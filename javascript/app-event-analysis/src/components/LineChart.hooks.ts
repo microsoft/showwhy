@@ -6,6 +6,7 @@ import { useThematic } from '@thematic/react'
 import { curveBasis, extent, line, max, min, select } from 'd3'
 import { cloneDeep, difference, groupBy, isEmpty, sortBy } from 'lodash'
 import { useEffect, useMemo, useRef } from 'react'
+import { ShowTooltip } from '../hooks/useTooltip.js'
 
 import type {
 	D3ScaleLinear,
@@ -339,7 +340,7 @@ export function useCounterfactual(
 	height: number,
 	hoverUnit: string,
 	hideTooltip: () => void,
-	showTooltip: (value: string, xPos: number, yPos: number) => void,
+	showTooltip: ShowTooltip,
 ) {
 	const colors = useColors()
 	const ref = useRef(null)
@@ -401,11 +402,11 @@ export function useCounterfactual(
 						.on('mousemove', function (event: MouseEvent) {
 							const xPos = event.clientX
 							const yPos = event.clientY
-							showTooltip(
-								outputDataNonPlacebo.control_pre_value.toFixed(2),
+							showTooltip({
+								contentEl: outputDataNonPlacebo.control_pre_value.toFixed(2),
 								xPos,
 								yPos,
-							)
+							})
 						})
 						.on('mouseleave', function (event: MouseEvent) {
 							hideTooltip()
@@ -422,11 +423,11 @@ export function useCounterfactual(
 					.on('mousemove', function (event: MouseEvent) {
 						const xPos = event.clientX
 						const yPos = event.clientY
-						showTooltip(
-							outputDataNonPlacebo.control_post_value.toFixed(2),
+						showTooltip({
+							contentEl: outputDataNonPlacebo.control_post_value.toFixed(2),
 							xPos,
 							yPos,
-						)
+						})
 					})
 					.on('mouseleave', function (event: MouseEvent) {
 						hideTooltip()
@@ -446,11 +447,11 @@ export function useCounterfactual(
 					.on('mousemove', function (event: MouseEvent) {
 						const xPos = event.clientX
 						const yPos = event.clientY
-						showTooltip(
-							outputDataNonPlacebo.treated_pre_value.toFixed(2),
+						showTooltip({
+							contentEl: outputDataNonPlacebo.treated_pre_value.toFixed(2),
 							xPos,
 							yPos,
-						)
+						})
 					})
 					.on('mouseleave', function (event: MouseEvent) {
 						hideTooltip()
@@ -467,11 +468,11 @@ export function useCounterfactual(
 				.on('mousemove', function (event: MouseEvent) {
 					const xPos = event.clientX
 					const yPos = event.clientY
-					showTooltip(
-						outputDataNonPlacebo.treated_post_value.toFixed(2),
+					showTooltip({
+						contentEl: outputDataNonPlacebo.treated_post_value.toFixed(2),
 						xPos,
 						yPos,
-					)
+					})
 				})
 				.on('mouseleave', function (event: MouseEvent) {
 					hideTooltip()
@@ -487,11 +488,11 @@ export function useCounterfactual(
 				.on('mousemove', function (event: MouseEvent) {
 					const xPos = event.clientX
 					const yPos = event.clientY
-					showTooltip(
-						outputDataNonPlacebo.counterfactual_value.toFixed(2),
+					showTooltip({
+						contentEl: outputDataNonPlacebo.counterfactual_value.toFixed(2),
 						xPos,
 						yPos,
-					)
+					})
 				})
 				.on('mouseleave', function (event: MouseEvent) {
 					hideTooltip()
@@ -554,14 +555,14 @@ export function useCounterfactual(
 				.on('mousemove', function (event: MouseEvent) {
 					const xPos = event.clientX
 					const yPos = event.clientY
-					showTooltip(
-						(
+					showTooltip({
+						contentEl: (
 							outputDataNonPlacebo.treated_post_value -
 							outputDataNonPlacebo.counterfactual_value
 						).toFixed(2),
 						xPos,
 						yPos,
-					)
+					})
 				})
 				.on('mouseleave', function (event: MouseEvent) {
 					hideTooltip()
