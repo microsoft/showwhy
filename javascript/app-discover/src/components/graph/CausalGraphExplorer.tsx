@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { memo, useEffect, useRef } from 'react'
+import { memo, useEffect, useMemo, useRef } from 'react'
 import { useXarrow, Xwrapper } from 'react-xarrows'
 import {
 	useRecoilState,
@@ -44,7 +44,10 @@ import { CorrelationIcon, EdgeIcon } from './LegendIcons.js'
 const MIN_EDGE_WIDTH = 2
 const MAX_EDGE_WIDTH = 10
 
-export const CausalGraphExplorer = memo(function CausalGraphExplorer() {
+export const CausalGraphExplorer: React.FC<{
+	width: number
+	height: number
+}> = memo(function CausalGraphExplorer({ width, height }) {
 	const causalGraph = useCausalGraph()
 	const useFixedInterventionRanges = useRecoilValue(
 		FixedInterventionRangesEnabledState,
@@ -85,6 +88,7 @@ export const CausalGraphExplorer = memo(function CausalGraphExplorer() {
 	const updateXarrow = useXarrow()
 	const layoutTransitionTime = 1000
 	const animationRequest = useRef(0)
+	const legendRef = useRef<HTMLDivElement>(null)
 
 	useEffect(() => {
 		if (!autoLayout && currentLayout) {
@@ -154,42 +158,52 @@ export const CausalGraphExplorer = memo(function CausalGraphExplorer() {
 
 	const deselect = () => setSelectedObject(undefined)
 
+	const legendHeight = useMemo((): any => {
+		return legendRef?.current?.clientHeight ?? 0
+	}, [legendRef?.current?.clientHeight])
+
 	// TODO: Figure out pan/zoom
 	return (
 		<>
-			<Background onClick={deselect} style={bounds}>
-				{!!nodes.length && (
-					<FlexContainer>
-						<Grid>
-							<Container>
-								<EdgeIcon color={edgeColors.positive} /> Causes increase
-							</Container>
-							<Container>
-								<EdgeIcon color={edgeColors.negative} />
-								Causes decrease
-							</Container>
-							<Container>
-								<CorrelationIcon color={edgeColors.correlation} />
-								Correlation
-							</Container>
-							<Container>
-								<EdgeIcon color={edgeColors.pcChange} />
-								Causes change
-							</Container>
-							<ContainerEdge>
-								Edge weights quantify the strength of the causal relationship
-								under the selected discovery algorithm. corr=correlation;
-								conf=confidence
-							</ContainerEdge>
-						</Grid>
-					</FlexContainer>
-				)}
-			</Background>
-			<Xwrapper>
-				{correlationEdges}
-				{causalEdges}
-				{nodes}
-			</Xwrapper>
+			<div
+				style={{
+					width,
+					height: height - legendHeight,
+					position: 'relative',
+					top: '10px',
+					overflow: 'auto',
+				}}
+			>
+				<Background onClick={deselect} style={bounds} />
+				<Xwrapper>
+					{correlationEdges}
+					{causalEdges}
+					{nodes}
+				</Xwrapper>
+			</div>
+			<FlexContainer ref={legendRef}>
+				<Grid>
+					<Container>
+						<CorrelationIcon color={edgeColors.correlation} />
+						Correlation
+					</Container>
+					<Container>
+						<EdgeIcon color={edgeColors.positive} /> Causes increase
+					</Container>
+					<Container>
+						<EdgeIcon color={edgeColors.negative} />
+						Causes decrease
+					</Container>
+					<Container>
+						<EdgeIcon color={edgeColors.pcChange} />
+						Causes change
+					</Container>
+					<ContainerEdge>
+						Edge weights quantify the strength of the causal relationship under
+						the selected discovery algorithm. corr=correlation; conf=confidence
+					</ContainerEdge>
+				</Grid>
+			</FlexContainer>
 		</>
 	)
 })
