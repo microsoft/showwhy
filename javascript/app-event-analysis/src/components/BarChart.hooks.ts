@@ -4,8 +4,7 @@
  */
 import { useThematic } from '@thematic/react'
 import { useDebounceFn } from 'ahooks'
-import * as d3 from 'd3'
-import { max, min, select } from 'd3'
+import { max, min, select, scaleBand, scaleLinear, selectAll } from 'd3'
 import { useCallback, useEffect, useMemo, useRef } from 'react'
 
 import type { ShowTooltip } from '../hooks/useTooltip.js'
@@ -129,24 +128,20 @@ export function useGetScales(
 		const { minValue, maxValue, barNames } = barChartData
 		const xScale =
 			orientation === BarChartOrientation.column
-				? d3
-						.scaleBand()
+				? scaleBand()
 						.domain(barNames)
 						.range([0, widthExcludingAxis])
 						.padding(BAR_GAP)
-				: d3
-						.scaleLinear()
+				: scaleLinear()
 						.domain([minValue > 0 ? 0 : minValue, maxValue]) // ensure that axis starts at 0
 						.range([0, widthExcludingAxis])
 
 		const yScale =
 			orientation === BarChartOrientation.column
-				? d3
-						.scaleLinear()
+				? scaleLinear()
 						.domain([minValue > 0 ? 0 : minValue, maxValue]) // ensure that axis starts at 0
 						.range([heightExcludingAxis, 0])
-				: d3
-						.scaleBand()
+				: scaleBand()
 						.domain(barNames)
 						.range([heightExcludingAxis, 0])
 						.padding(BAR_GAP)
@@ -299,7 +294,7 @@ export function useHandlers(hoverInfo: HoverInfo) {
 function useUpdateTooltip(showTooltip: ShowTooltip, hoverInfo: HoverInfo) {
 	return useCallback(
 		(event: React.MouseEvent, force = false) => {
-			const bar = d3.select<SVGElement, BarData>(event.target as SVGElement)
+			const bar = select<SVGElement, BarData>(event.target as SVGElement)
 			const data: BarData = bar.datum() // a single bar data
 			const xPos = event.clientX
 			const yPos = event.clientY
@@ -347,10 +342,10 @@ function useHandleBarMouseLeave(
 		(event: React.MouseEvent) => {
 			hideTooltip()
 
-			const bar = d3.select<SVGElement, BarData>(event.target as SVGElement)
+			const bar = select<SVGElement, BarData>(event.target as SVGElement)
 			const data: BarData = bar.datum() // a single bar data
 			bar.attr('opacity', data.opacity || BAR_TRANSPARENT)
-			d3.selectAll('.bar').attr(
+			selectAll('.bar').attr(
 				'opacity',
 				d => (d as BarData).opacity || BAR_TRANSPARENT,
 			)
