@@ -6,8 +6,8 @@ import { useThematic } from '@thematic/react'
 import { curveBasis, extent, line, max, min, select } from 'd3'
 import { cloneDeep, difference, groupBy, isEmpty, sortBy } from 'lodash'
 import { useEffect, useMemo, useRef } from 'react'
-import { ShowTooltip } from '../hooks/useTooltip.js'
 
+import type { ShowTooltip } from '../hooks/useTooltip.js'
 import type {
 	D3ScaleLinear,
 	LineData,

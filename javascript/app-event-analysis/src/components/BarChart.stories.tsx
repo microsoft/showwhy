@@ -3,8 +3,10 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import type { ComponentStory } from '@storybook/react'
-import type { BarChartProps } from './BarChart.types.js'
+
+import { BarChartOrientation } from '../types.js'
 import { BarChart } from './BarChart.js'
+import type { BarChartProps } from './BarChart.types.js'
 const args = {
 	inputData: [
 		{
@@ -197,9 +199,9 @@ const Template: ComponentStory<typeof BarChart> = (args: BarChartProps) => {
 export const Columns = Template.bind({})
 Columns.storyName = 'Column Bar Chart'
 
-export const Horizontal = Template.bind({})
-Horizontal.storyName = 'Horizontal Bar Chart'
-Horizontal.args = {
+export const Row = Template.bind({})
+Row.storyName = 'Row Bar Chart'
+Row.args = {
 	...args,
-	orientation: 'horizontal',
+	orientation: BarChartOrientation.row,
 }

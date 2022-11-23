@@ -5,7 +5,8 @@
 import React, { memo, useMemo } from 'react'
 
 import { useAxisData } from '../hooks/useAxisData.js'
-import { BarChartOrientation, D3ScaleBand, D3ScaleLinear } from '../types.js'
+import type { D3ScaleBand, D3ScaleLinear } from '../types.js'
+import { BarChartOrientation } from '../types.js'
 import { Axis } from './Axis.js'
 import { AxisType } from './Axis.types.js'
 import type { BarChartAxisProps } from './BarChartAxis.types.js'
@@ -55,7 +56,7 @@ export const BarChartAxis: React.FC<BarChartAxisProps> = memo(
 
 		const scale = useMemo<D3ScaleLinear | D3ScaleBand>(
 			() => (isBottomAxis ? xScale : yScale),
-			[type],
+			[xScale, yScale, isBottomAxis],
 		)
 
 		const ticks = useMemo<number | undefined>(() => {

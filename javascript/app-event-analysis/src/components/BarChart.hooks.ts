@@ -4,7 +4,7 @@
  */
 import { useThematic } from '@thematic/react'
 import { useDebounceFn } from 'ahooks'
-import { max, min, select, scaleBand, scaleLinear, selectAll } from 'd3'
+import { max, min, scaleBand, scaleLinear, select, selectAll } from 'd3'
 import { useCallback, useEffect, useMemo, useRef } from 'react'
 
 import type { ShowTooltip } from '../hooks/useTooltip.js'

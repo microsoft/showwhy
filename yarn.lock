@@ -5249,6 +5249,7 @@ __metadata:
     "@fluentui/utilities": ^8.13.4
     "@reduxjs/toolkit": ^1.9.0
     "@showwhy/app-common": "workspace:^"
+    "@storybook/react": ^6.5.13
     "@thematic/core": ^3.1.1
     "@thematic/d3": ^2.0.14
     "@thematic/fluent": ^4.1.1

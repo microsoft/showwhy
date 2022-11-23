@@ -9,8 +9,7 @@
 		"start": "start-storybook -s ./public",
 		"bundle": "build-storybook --quiet",
 		"start:storybook": "yarn start",
-		"bundle:storybook": "yarn bundle",
-		"lint": "essex lint"
+		"bundle:storybook": "yarn bundle"
 	},
 	"dependencies": {
 		"@fluentui/font-icons-mdl2": "^8.5.3",

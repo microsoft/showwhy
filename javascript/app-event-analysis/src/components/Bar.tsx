@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { useThematic } from '@thematic/react'
-import { select, easeLinear } from 'd3'
+import { easeLinear, select } from 'd3'
 import { memo, useCallback, useLayoutEffect, useMemo, useRef } from 'react'
 
 import type { BarData, D3ScaleBand, D3ScaleLinear } from '../types.js'
@@ -104,6 +104,8 @@ export const Bar: React.FC<BarProps> = memo(function Bar({
 	}, [
 		theme,
 		isColumn,
+		bandWidth,
+		getTransform,
 		data,
 		xScale,
 		yScale,
