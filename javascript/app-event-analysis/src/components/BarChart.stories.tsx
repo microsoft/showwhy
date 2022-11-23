@@ -200,3 +200,11 @@ const Template: ComponentStory<typeof BarChart> = (args: BarChartProps) => {
 }
 
 export const Columns = Template.bind({})
+Columns.storyName = 'Column Bar Chart'
+
+export const Horizontal = Template.bind({})
+Horizontal.storyName = 'Horizontal Bar Chart'
+Horizontal.args = {
+	...args,
+	orientation: 'horizontal',
+}
