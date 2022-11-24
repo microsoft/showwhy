@@ -6,6 +6,10 @@ const { configure } = require('@essex/webpack-config')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 const configuration = configure({
+	aliases: () => ({
+		'@datashaper/app-framework': require.resolve('@datashaper/app-framework'),
+		'@showwhy/app-common': require.resolve('@showwhy/app-common'),
+	}),
 	environment: (env, mode) => {
 		return {
 			EXPOSURE_API_URL: process.env.EXPOSURE_API_URL ?? '/api/exposure',
