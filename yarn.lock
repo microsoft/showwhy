@@ -3076,7 +3076,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@datashaper/app-framework@npm:^0.0.8":
+"@datashaper/app-framework@npm:0.0.8, @datashaper/app-framework@npm:^0.0.8":
   version: 0.0.8
   resolution: "@datashaper/app-framework@npm:0.0.8"
   dependencies:
@@ -5107,7 +5107,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/app-common@workspace:javascript/app-common"
   dependencies:
-    "@datashaper/app-framework": ^0.0.8
+    "@datashaper/app-framework": 0.0.8
     "@datashaper/react": ^19.0.3
     "@datashaper/schema": ^8.1.1
     "@datashaper/tables": ^5.3.1
@@ -5147,7 +5147,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/discover-app@workspace:javascript/app-discover"
   dependencies:
-    "@datashaper/app-framework": ^0.0.8
+    "@datashaper/app-framework": 0.0.8
     "@datashaper/react": ^19.0.3
     "@datashaper/schema": ^8.1.1
     "@datashaper/tables": ^5.3.1
@@ -5289,7 +5289,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/model-exposure-app@workspace:javascript/app-model-exposure"
   dependencies:
-    "@datashaper/app-framework": ^0.0.8
+    "@datashaper/app-framework": 0.0.8
     "@datashaper/react": ^19.0.3
     "@datashaper/schema": ^8.1.1
     "@datashaper/tables": ^5.3.1
@@ -5391,7 +5391,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/webapp@workspace:javascript/webapp"
   dependencies:
-    "@datashaper/app-framework": ^0.0.8
+    "@datashaper/app-framework": 0.0.8
     "@datashaper/schema": ^8.1.1
     "@datashaper/tables": ^5.3.1
     "@datashaper/utilities": ^2.3.10
@@ -22126,9 +22126,6 @@ __metadata:
     prettier: ^2.7.1
     turbo: ^1.6.3
     typescript: ^4.8.4
-  dependenciesMeta:
-    "@datashaper/app-framework@0.0.7":
-      unplugged: true
   languageName: unknown
   linkType: soft
 
