@@ -145,7 +145,6 @@ export function useGetScales(
 						.domain(barNames)
 						.range([heightExcludingAxis, 0])
 						.padding(BAR_GAP)
-		console.log({ xScale, yScale })
 		return {
 			xScale,
 			yScale,
