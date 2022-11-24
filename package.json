@@ -29,6 +29,7 @@
 		"deploy": "turbo run deploy",
 		"is_clean": "git checkout .npmrc && git diff-index HEAD --quiet || (git status && error_not_clean)",
 		"prettify": "essex prettify",
+		"stories": "yarn start:storybook",
 		"update_sdks": "yarn dlx @yarnpkg/sdks vscode"
 	},
 	"devDependencies": {

@@ -10,6 +10,7 @@ import type { ScaleBand, ScaleLinear } from 'd3'
 //
 export const BAR_NORMAL = 1
 export const BAR_TRANSPARENT = 1
+export const BAR_ELEMENT_CLASS_NAME = 'bar'
 export const MAX_BAR_COUNT_BEFORE_TICK_ROTATION = 5
 export const MAX_BAR_COUNT_WITH_VISIBLE_LABELS = 35 // hide labels after this count
 export const BAR_GAP = 0.4 // gap between bars
