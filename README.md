@@ -3,12 +3,12 @@
 [Introduction to ShowWhy](https://www.youtube.com/watch?v=Im1V4h4mT-0)
 
 ShowWhy is a suite of no-code interfaces for performing data analysis using causal ML techniques and libraries.
-Currently, ShowWhy consists of four primary tools:
+Currently, ShowWhy consists of four primary user-interfaces:
 
 ## Data-Wrangling
 
 The data-wrangling application allows users to clean, transform, and prepare data for analysis.
-Data tables created in the wrangling app can be used in other tools within the application.
+Data tables created in the wrangling app can be used in other views within the application.
 
 ## Exposure Analysis
 
