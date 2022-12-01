@@ -20,6 +20,5 @@ export type BarProps = SVGProps<SVGRectElement> & {
 	yScale: D3ScaleLinear | D3ScaleBand
 	orientation: BarChartOrientation
 	data: BarData
-	animation?: boolean
 	renderRotatedLabel?: boolean
 }

@@ -23,7 +23,6 @@ export const Bar: React.FC<BarProps> = memo(function Bar({
 	height,
 	color,
 	data,
-	animation,
 	renderRotatedLabel,
 	...props
 }) {
@@ -76,9 +75,6 @@ export const Bar: React.FC<BarProps> = memo(function Bar({
 				.attr('opacity', d => d.opacity || BAR_TRANSPARENT)
 				.style('fill', d => d.color)
 
-			if (animation) {
-				barElement.transition().duration(ANIMATION_DURATION).ease(EASING_FN)
-			}
 			if (renderRotatedLabel) {
 				barElement
 					.append('text')
@@ -111,7 +107,6 @@ export const Bar: React.FC<BarProps> = memo(function Bar({
 		yScale,
 		height,
 		renderRotatedLabel,
-		animation,
 		barElementClassName,
 	])
 
@@ -127,7 +122,6 @@ export const Bar: React.FC<BarProps> = memo(function Bar({
 		width,
 		height,
 		color,
-		animation,
 		renderRotatedLabel,
 	])
 
