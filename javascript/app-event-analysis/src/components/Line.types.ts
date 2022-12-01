@@ -6,10 +6,15 @@ import type { SVGProps } from 'react'
 
 import type { D3ScaleLinear, LineData } from '../types.js'
 
+export enum AnimationType {
+	Left = 'left',
+	Path = 'path',
+}
+
 export type LineProps = SVGProps<SVGPathElement> & {
 	xScale: D3ScaleLinear
 	yScale: D3ScaleLinear
 	data: LineData[]
-	animation?: string
+	animation?: AnimationType
 	color: string
 }
