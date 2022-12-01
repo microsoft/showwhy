@@ -2,53 +2,36 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import * as d3 from 'd3'
 import { cloneDeep, isEmpty, partition, uniq, unzip } from 'lodash'
-import React, { memo, useCallback, useEffect, useMemo, useState } from 'react'
-import * as ReactDOM from 'react-dom'
-import { useRecoilState } from 'recoil'
+import React, { memo, useMemo, useState } from 'react'
 
-import { useShowPlaceboGraphs } from '../hooks/useShowPlaceboGraphs.js'
-import { useTooltip } from '../hooks/useTooltip'
-import {
-	CheckedUnitsState,
-	OutcomeNameState,
-	TreatedUnitsState,
-	TreatmentStartDatesState,
-} from '../state/state.js'
+import { useTreatedUnitsMap } from '../hooks/useTreatedUnitsMap.js'
 import type { PlaceboOutputData } from '../types'
-import { MAX_RENDERED_TREATED_UNITS, SYNTHETIC_UNIT } from '../types'
-import type { LineData, OutputData, TooltipInfo } from '../types.js'
-import {
-	getHoverIdFromValue,
-	getUnitFromBarChartData,
-	isBarChartData,
-} from '../utils/charts.js'
+import type { LineData, OutputData } from '../types.js'
+import { getHoverIdFromValue } from '../utils/charts.js'
+import { useLineColors } from '../utils/useColors.js'
 import { isValidUnit } from '../utils/validation.js'
-import { Axis } from './Axis.js'
-import { AxisType } from './Axis.types.js'
 import { ChartTooltip } from './ChartTooltip.js'
+import { CounterfactualLines } from './CounterfactualLines.js'
 import { DrawingContainer } from './DrawingContainer.js'
-import { GridLine } from './GridLine.js'
+import { Grid } from './Grid.js'
 import { Line } from './Line.js'
 import {
-	useColors,
 	useCounterfactual,
 	useData,
 	useLegends,
+	useMouseHandlers,
+	useScales,
 } from './LineChart.hooks.js'
 import type { LineChartProps } from './LineChart.types.js'
-import { constructLineTooltipContent } from './LineChart.utils.js'
+import { LineChartAxis } from './LineChartAxis.js'
+import { TreatmentMarkers } from './TreatmentMarkers.js'
 
 const LINE_WIDTH = 1
 const LINE_WIDTH_TREATED = 2
-const LINE_WIDTH_HOVER = 2
 const OUTPUT_LINE_WIDTH = 3
-const TREATMENT_LINE_WIDTH = 1.5
-const CONTROL_LINE_WIDTH = 2
 const TRANSPARENT_LINE = 0.25
 const HIGHLIGHT_LINE = 1
-const OUTPUT_LINE = 0.5
 const LINE_ELEMENT_CLASS_NAME = 'line-element'
 
 export const LineChart: React.FC<LineChartProps> = memo(function LineChart({
@@ -66,16 +49,16 @@ export const LineChart: React.FC<LineChartProps> = memo(function LineChart({
 	checkableUnits,
 	onRemoveCheckedUnit,
 	treatedUnitsList,
+	treatedUnitsState,
+	isPlaceboSimulation,
+	checkedUnits,
+	outcomeName,
+	treatmentStartDates,
 }) {
-	const colors = useColors()
+	const colors = useLineColors()
 	const [hoverUnit, setHoverUnit] = useState('')
 
 	const { width, height, margin } = dimensions
-	const [checkedUnits] = useRecoilState(CheckedUnitsState)
-	const [outcomeName] = useRecoilState(OutcomeNameState)
-	const [treatedUnitsState] = useRecoilState(TreatedUnitsState)
-	const [treatmentStartDates] = useRecoilState(TreatmentStartDatesState)
-	const isPlaceboSimulation = useShowPlaceboGraphs()
 
 	const treatedUnits = useMemo(
 		() => treatedUnitsList || treatedUnitsState,
@@ -90,26 +73,9 @@ export const LineChart: React.FC<LineChartProps> = memo(function LineChart({
 		[outputData],
 	)
 
-	// hacks to speed up computation:
-	// cache treated units and selected units as maps
-	const treatedUnitsMap = useMemo(() => {
-		const updatdMap: { [unit: string]: number } = {}
-		treatedUnits.forEach(unit => {
-			updatdMap[unit] = 1
-		})
-		return updatdMap
-	}, [treatedUnits])
+	const treatedUnitsMap = useTreatedUnitsMap(treatedUnits)
 
-	const {
-		inputLines,
-		outputLinesTreated,
-		outputLinesControl,
-		minValue,
-		maxValue,
-		dateRange,
-		outputLinesIntercepted,
-		outputLinesInterceptedRelative,
-	} = useData(
+	const lineChartData = useData(
 		inputData,
 		firstOutput, // the data for all output lines can be processed from the first result
 		renderRawData,
@@ -119,6 +85,14 @@ export const LineChart: React.FC<LineChartProps> = memo(function LineChart({
 		checkedUnits,
 		treatedUnitsMap,
 	)
+
+	const {
+		inputLines,
+		outputLinesTreated,
+		outputLinesControl,
+		outputLinesIntercepted,
+		outputLinesInterceptedRelative,
+	} = lineChartData
 
 	const outLines = useMemo(() => {
 		const outLines = []
@@ -239,245 +213,31 @@ export const LineChart: React.FC<LineChartProps> = memo(function LineChart({
 		return aggregatedOutLines
 	}, [outLines, isPlaceboSimulation, showMeanTreatmentEffect])
 
-	const { xScale, yScale } = useMemo(() => {
-		const yValuePaddingPerc = 0.1
-		const yAxisMaxValue = maxValue + maxValue * yValuePaddingPerc
-		const yAxisMinValue = minValue + minValue * yValuePaddingPerc
-		const xScale = d3
-			.scaleLinear()
-			.domain(dateRange as [number, number])
-			.range([0, width])
+	const { xScale, yScale } = useScales(dimensions, lineChartData)
 
-		const yScale = d3
-			.scaleLinear()
-			.domain([yAxisMinValue, yAxisMaxValue])
-			.range([height, 0])
-
-		return {
-			xScale,
-			yScale,
-		}
-	}, [dateRange, minValue, maxValue, height, width])
-
-	const getLineHoverAttributes = useCallback(
-		(dt: LineData[]) => {
-			let width = LINE_WIDTH
-			let opacity = TRANSPARENT_LINE
-			if (treatedUnits.every(isValidUnit)) {
-				if (renderRawData) {
-					if (treatedUnitsMap[dt[dt.length - 1].unit]) {
-						// check last time stamp
-						width = LINE_WIDTH_TREATED
-						opacity = HIGHLIGHT_LINE
-					}
-				} else {
-					// showing output lines: either with placebo output or not
-					if (isPlaceboSimulation) {
-						if (treatedUnitsMap[dt[dt.length - 1].unit]) {
-							// check last time stamp
-							width = LINE_WIDTH_TREATED
-							opacity = HIGHLIGHT_LINE
-						}
-					} else {
-						// showing the synthetic control and treated lines
-						opacity = HIGHLIGHT_LINE
-						width = OUTPUT_LINE_WIDTH
-					}
-				}
-			}
-			return {
-				width,
-				opacity,
-			}
-		},
-		[renderRawData, treatedUnits, isPlaceboSimulation, treatedUnitsMap],
-	)
-
-	const tooltip = useTooltip()
-	const {
-		show: showTooltip,
-		hide: hideTooltip,
-		stick: persistTooltip,
-	} = tooltip
-
-	useEffect(() => {
-		if (hoverInfo && hoverInfo.hoverItem) {
-			const chart = d3.select('.line-chart')
-
-			// hoverInfo.hoverItem is not null but it may have data of type BarData | LineData[]
-			// re-construct the hoverItem to align with the current chart type
-			// i.e., convert BarData to LineData[] as necessary
-			if (isBarChartData(hoverInfo.hoverItem.data)) {
-				//
-				// hover interaction has originated from BarChart
-				//
-				const unit = getUnitFromBarChartData(hoverInfo.hoverItem.data)
-				// find the line data that corresponds to unit then use it to show the tooltip
-				// note that "date" will be undefined
-				let data: LineData[] | null = null
-				if (renderRawData) {
-					const inputIndex = inputLines.findIndex(
-						inputLine => inputLine[0].unit === unit,
-					)
-					if (inputIndex >= 0) {
-						data = inputLines[inputIndex]
-					}
-				} else {
-					const outIndex = outLines.findIndex(
-						outLine => outLine[0].unit === unit,
-					)
-					if (outIndex >= 0) {
-						data = outLines[outIndex]
-					}
-				}
-				if (data) {
-					const targetLine = chart.select<SVGPathElement>(
-						'.' + getHoverIdFromValue(unit),
-					)
-					if (targetLine) {
-						if (hoverInfo.hoverItem.isPreviousHover) {
-							hideTooltip()
-							const { width, opacity } = getLineHoverAttributes(
-								data as LineData[],
-							)
-							targetLine.attr('stroke-width', width).attr('opacity', opacity)
-						} else {
-							const targetLineNode = targetLine.node()
-							if (targetLineNode) {
-								const targetLineBoundingRect =
-									targetLineNode.getBoundingClientRect()
-								const xPos = targetLineBoundingRect.x
-								const yPos = targetLineBoundingRect.y
-								const toolTipContent: { content: JSX.Element; unit: string } =
-									constructLineTooltipContent(data as LineData[])
-								showTooltip({
-									contentEl: toolTipContent.content,
-									xPos,
-									yPos,
-									options: {
-										unit: toolTipContent.unit,
-										force: false,
-									},
-								})
-							}
-							targetLine
-								.attr('stroke-width', LINE_WIDTH_HOVER)
-								.attr('opacity', HIGHLIGHT_LINE)
-						}
-					}
-				}
-			} else {
-				// do nothing becasue the event has originated from the same chart
-				//  and has been handled by the mouse move/leave event(s)
-			}
-		}
-	}, [
-		hoverInfo,
-		hideTooltip,
-		showTooltip,
-		inputLines,
-		outLines,
-		renderRawData,
-		getLineHoverAttributes,
-	])
-	const treatmentDates = useMemo(() => {
-		const dates = Array.from(treatmentStartDates) // clone
-		const outputDataNonPlacebo = firstOutput as OutputData
-		const dataShiftedAndAligned =
-			!isEmpty(outputDataNonPlacebo) &&
-			outputDataNonPlacebo.time_mapping_applied
-		if (
-			!isPlaceboSimulation &&
-			dataShiftedAndAligned &&
-			!isEmpty(outputDataNonPlacebo) &&
-			outputDataNonPlacebo.consistent_time_window !== null
-		) {
-			const treatmentDate = outputDataNonPlacebo.consistent_time_window[0]
-			dates.forEach((date, indx) => {
-				dates[indx] = treatmentDate
-			})
-		}
-		return dates
-	}, [treatmentStartDates, firstOutput, isPlaceboSimulation])
-
-	const treatmentMarkers = useMemo(() => {
-		if (!showTreatmentStart || treatmentDates.length === 0) return <></>
-		// render one marker at each unique treated date
-		// for each line marker, render a list of units treated at that date marker
-		// render one background starting from the first treated date till the end
-		const uniqueTreatedDates = uniq(treatmentDates)
-		const treatedUnitsPerDate: { [key: number]: string[] } = {}
-		treatedUnits.forEach((treatedUnit, indx) => {
-			const treatmentDate = treatmentDates[indx]
-			if (treatedUnitsPerDate[treatmentDate] === undefined)
-				treatedUnitsPerDate[treatmentDate] = []
-			treatedUnitsPerDate[treatmentDate].push(treatedUnit)
-		})
-		// due to scalability concerns,
-		//  limit the number of rendered labels at any given treatment date
-		uniqueTreatedDates.forEach(treatmentDate => {
-			if (
-				treatedUnitsPerDate[treatmentDate].length > MAX_RENDERED_TREATED_UNITS
-			) {
-				treatedUnitsPerDate[treatmentDate] = [
-					'treated #: ' + treatedUnitsPerDate[treatmentDate].length.toString(),
-				]
-			}
-		})
-		return (
-			<>
-				{uniqueTreatedDates.map(treatedDate => {
-					const treatedDateXPos = xScale(treatedDate)
-					const marker = (
-						<line
-							stroke={colors.treatmentLine}
-							x1={treatedDateXPos}
-							x2={treatedDateXPos}
-							y1={0}
-							y2={height}
-							strokeWidth={TREATMENT_LINE_WIDTH}
-						/>
-					)
-					const labels = treatedUnitsPerDate[treatedDate].map(
-						(treatedUnit, indx) => (
-							<text
-								key={treatedUnit}
-								x={treatedDateXPos + 1}
-								y={15 + indx * 20}
-								opacity={0.5}
-								cursor="default"
-							>
-								<title>{treatedUnit}</title>
-								{treatedUnit}
-							</text>
-						),
-					)
-					return (
-						<g key={treatedDate}>
-							{marker}
-							{labels}
-						</g>
-					)
-				})}
-				<rect
-					width={width - xScale(treatmentDates[0])}
-					height={height}
-					x={xScale(treatmentDates[0])}
-					opacity={0.03}
-					fill={colors.treatmentLine}
-					pointerEvents="none"
-				/>
-			</>
-		)
-	}, [
-		colors,
-		treatmentDates,
-		treatedUnits,
-		showTreatmentStart,
-		height,
-		width,
+	const mouseHandlers = useMouseHandlers({
 		xScale,
-	])
+		hoverInfo,
+		hoverUnit,
+		checkableUnits,
+		treatedUnits,
+		renderRawData,
+		showMeanTreatmentEffect,
+		isPlaceboSimulation,
+		leftMargin: margin.left,
+		setHoverUnit,
+	})
+
+	const {
+		tooltip,
+		handleLineMouseMove,
+		handleLineMouseClick,
+		handleLineMouseLeave,
+		handleContainerClick,
+		handleClickOutside,
+	} = mouseHandlers
+
+	const { show: showTooltip, hide: hideTooltip } = tooltip
 
 	const legendGroupRef = useLegends(
 		width,
@@ -502,197 +262,6 @@ export const LineChart: React.FC<LineChartProps> = memo(function LineChart({
 		hideTooltip,
 		showTooltip,
 	)
-
-	const handleLineMouseClickOrMove = useCallback(
-		(event: React.MouseEvent<SVGElement>, fromClick = false) => {
-			const path = d3.select<SVGElement, LineData[]>(event.target as SVGElement)
-			const data = path.datum()
-
-			const xPos = event.clientX
-			const yPos = event.clientY
-			const relXPos = event.nativeEvent.offsetX - margin.left
-			const date = xScale.invert(relXPos)
-
-			const toolTipContent: { content: JSX.Element; unit: string } =
-				constructLineTooltipContent(data, date)
-			showTooltip({
-				contentEl: toolTipContent.content,
-				xPos,
-				yPos,
-				options: {
-					unit: toolTipContent.unit,
-					force: fromClick,
-				},
-			})
-			if (fromClick && checkableUnits.includes(toolTipContent.unit)) {
-				persistTooltip()
-			}
-
-			if (!showMeanTreatmentEffect) {
-				if (!renderRawData && !isPlaceboSimulation && data.length > 0) {
-					//
-					// hovering over an output line (either treated or synth-control line)
-					//
-					// de-emphasize all output lines
-					//  except those that belong to the current treated unit
-					const chart = d3.select('.line-chart')
-					const currentUnit = data[0].unit
-					const unit = currentUnit.startsWith(SYNTHETIC_UNIT)
-						? currentUnit.substring(SYNTHETIC_UNIT.length + 1)
-						: currentUnit
-					treatedUnits.forEach(treatedUnit => {
-						if (unit !== treatedUnit) {
-							const targetLine = chart.selectAll<SVGPathElement, LineData[]>(
-								'.' + getHoverIdFromValue(treatedUnit),
-							)
-							targetLine
-								.attr('stroke-width', LINE_WIDTH)
-								.attr('opacity', OUTPUT_LINE)
-							// synthetic control line that corresponds to treated line
-							const sunit = SYNTHETIC_UNIT + ' ' + treatedUnit
-							const targetLine2 = chart.selectAll<SVGPathElement, LineData[]>(
-								'.' + getHoverIdFromValue(sunit),
-							)
-							targetLine2
-								.attr('stroke-width', LINE_WIDTH)
-								.attr('opacity', OUTPUT_LINE)
-						}
-					})
-				} else {
-					// hover over input data lines or output lines from placebo results
-					path
-						.attr('stroke-width', LINE_WIDTH_HOVER)
-						.attr('opacity', HIGHLIGHT_LINE)
-				}
-
-				ReactDOM.flushSync(() => {
-					// this setState won't be batched
-					hoverInfo.setHoverItem({
-						data: data,
-						xPos: xPos,
-						yPos: yPos,
-						date: date,
-					} as TooltipInfo)
-				})
-			}
-		},
-		[
-			margin.left,
-			showTooltip,
-			xScale,
-			treatedUnits,
-			hoverInfo,
-			isPlaceboSimulation,
-			renderRawData,
-			showMeanTreatmentEffect,
-			checkableUnits,
-			persistTooltip,
-		],
-	)
-
-	const handleLineMouseMove = useCallback(
-		(event: React.MouseEvent<SVGElement>) => {
-			handleLineMouseClickOrMove(event)
-		},
-		[handleLineMouseClickOrMove],
-	)
-
-	const handleLineMouseClick = useCallback(
-		(event: React.MouseEvent<SVGElement>) => {
-			handleLineMouseClickOrMove(event, true)
-
-			if (!renderRawData && !isPlaceboSimulation && !showMeanTreatmentEffect) {
-				// nodeName
-				// mouse target is an output line
-				event.stopPropagation()
-				const path = d3.select<SVGElement, LineData[]>(
-					event.target as SVGElement,
-				)
-				const data = path.datum()
-				const currentUnit = data[0].unit
-				setHoverUnit(currentUnit)
-			}
-		},
-		[
-			handleLineMouseClickOrMove,
-			isPlaceboSimulation,
-			renderRawData,
-			showMeanTreatmentEffect,
-		],
-	)
-
-	const handleLineMouseLeave = useCallback(
-		(event: React.MouseEvent<SVGElement>) => {
-			const path = d3.select<SVGElement, LineData[]>(event.target as SVGElement)
-			const dt = path.datum()
-
-			hideTooltip()
-
-			if (!showMeanTreatmentEffect) {
-				const { width, opacity } = getLineHoverAttributes(dt)
-				path.attr('stroke-width', width).attr('opacity', opacity)
-
-				// if non-placebo outline lines are shown, then reset their attributes
-				if (!renderRawData && !isPlaceboSimulation) {
-					// leaving hover over a non-placebo output line (either treated or synth-control line)
-					const chart = d3.select('.line-chart')
-					treatedUnits.forEach(treatedUnit => {
-						// treated line
-						const targetLine = chart.selectAll<SVGPathElement, LineData[]>(
-							'.' + getHoverIdFromValue(treatedUnit),
-						)
-						targetLine
-							.attr('stroke-width', OUTPUT_LINE_WIDTH)
-							.attr('opacity', HIGHLIGHT_LINE)
-
-						// synthetic control line that corresponds to treated line
-						const unit = SYNTHETIC_UNIT + ' ' + treatedUnit
-						const targetLine2 = chart.selectAll<SVGPathElement, LineData[]>(
-							'.' + getHoverIdFromValue(unit),
-						)
-						targetLine2
-							.attr('stroke-width', OUTPUT_LINE_WIDTH)
-							.attr('opacity', HIGHLIGHT_LINE)
-					})
-				}
-
-				ReactDOM.flushSync(() => {
-					// this setState won't be batched
-					hoverInfo.setHoverItem({
-						data: dt,
-						xPos: 0,
-						yPos: 0,
-						isPreviousHover: true,
-					} as TooltipInfo)
-				})
-			}
-		},
-		[
-			hideTooltip,
-			isPlaceboSimulation,
-			renderRawData,
-			hoverInfo,
-			treatedUnits,
-			getLineHoverAttributes,
-			showMeanTreatmentEffect,
-		],
-	)
-
-	const handleContainerClick = useCallback(
-		(event: React.MouseEvent<SVGElement>) => {
-			const element = event.target as Element
-
-			if (!element.classList.contains(LINE_ELEMENT_CLASS_NAME)) {
-				hideTooltip(true)
-				setHoverUnit('')
-			}
-		},
-		[hideTooltip],
-	)
-
-	const handleClickOutside = useCallback(() => {
-		hideTooltip(true)
-	}, [hideTooltip])
 
 	const lines = useMemo(() => {
 		if (renderRawData) {
@@ -720,7 +289,6 @@ export const LineChart: React.FC<LineChartProps> = memo(function LineChart({
 							? LINE_WIDTH_TREATED
 							: LINE_WIDTH
 					}
-					animation="none"
 					onMouseMove={handleLineMouseMove}
 					onMouseLeave={handleLineMouseLeave}
 					onClick={handleLineMouseClick}
@@ -809,104 +377,6 @@ export const LineChart: React.FC<LineChartProps> = memo(function LineChart({
 		showMeanTreatmentEffect,
 	])
 
-	const counterfactualLines = useMemo(() => {
-		if (hoverUnit === '' || outputData.length === 0 || isEmpty(outputData[0]))
-			return <></>
-		if (relativeIntercept || renderRawData || isPlaceboSimulation) return <></>
-
-		const outputIndex = outputData.findIndex(output =>
-			hoverUnit.includes(output.treatedUnit),
-		)
-		const outputDataNonPlacebo = outputData[outputIndex] as OutputData
-
-		// REVIEW: 0 should be undefined
-		const x1 =
-			outputDataNonPlacebo &&
-			outputDataNonPlacebo.time_before_intervention !== undefined
-				? xScale(outputDataNonPlacebo.time_before_intervention)
-				: 0
-		const x2 =
-			outputDataNonPlacebo &&
-			outputDataNonPlacebo.time_after_intervention !== undefined
-				? xScale(outputDataNonPlacebo.time_after_intervention)
-				: 0
-		return (
-			<g>
-				{showSynthControl && !applyIntercept && x1 > 0 && (
-					<line
-						className="controlLine"
-						x1={x1}
-						x2={x2}
-						y1={yScale(outputDataNonPlacebo.control_pre_value)}
-						y2={yScale(outputDataNonPlacebo.control_post_value)}
-						stroke={colors.get('control')}
-						strokeWidth={CONTROL_LINE_WIDTH}
-					/>
-				)}
-				{x1 > 0 && (
-					<>
-						<line
-							className="treatedLine"
-							x1={x1}
-							x2={x2}
-							y1={yScale(outputDataNonPlacebo.treated_pre_value)}
-							y2={yScale(outputDataNonPlacebo.treated_post_value)}
-							stroke={colors.get('treated')}
-							strokeWidth={CONTROL_LINE_WIDTH}
-						/>
-						<line
-							className="counterfactualLine"
-							x1={x1}
-							x2={x2}
-							y1={yScale(outputDataNonPlacebo.treated_pre_value)}
-							y2={yScale(outputDataNonPlacebo.counterfactual_value)}
-							stroke={colors.counterfactualLine}
-							strokeWidth={CONTROL_LINE_WIDTH}
-							strokeDasharray={'6, 4'}
-						/>
-					</>
-				)}
-				{showSynthControl && !applyIntercept && (
-					<>
-						{x1 > 0 && (
-							<line
-								className="counterfactualLine"
-								x1={x1}
-								x2={x1}
-								y1={yScale(outputDataNonPlacebo.control_pre_value)}
-								y2={yScale(outputDataNonPlacebo.treated_pre_value)}
-								stroke={colors.counterfactualLine}
-								strokeWidth={CONTROL_LINE_WIDTH}
-								strokeDasharray={'6, 4'}
-							/>
-						)}
-						<line
-							className="counterfactualLine"
-							x1={x2}
-							x2={x2}
-							y1={yScale(outputDataNonPlacebo.control_post_value)}
-							y2={yScale(outputDataNonPlacebo.counterfactual_value)}
-							stroke={colors.counterfactualLine}
-							strokeWidth={CONTROL_LINE_WIDTH}
-							strokeDasharray={'6, 4'}
-						/>
-					</>
-				)}
-			</g>
-		)
-	}, [
-		colors,
-		hoverUnit,
-		outputData,
-		relativeIntercept,
-		renderRawData,
-		isPlaceboSimulation,
-		showSynthControl,
-		applyIntercept,
-		xScale,
-		yScale,
-	])
-
 	const timePeriodsShouldBeAbstract = useMemo(() => {
 		const uniqueTreatedDates = uniq(treatmentStartDates)
 		const outputDataNonPlacebo = firstOutput as OutputData
@@ -915,6 +385,11 @@ export const LineChart: React.FC<LineChartProps> = memo(function LineChart({
 			outputDataNonPlacebo.time_mapping_applied
 		return uniqueTreatedDates.length > 1 && dataShiftedAndAligned
 	}, [treatmentStartDates, firstOutput])
+
+	const tickFormatAsWholeNumber = useMemo<number>(
+		() => Number(!timePeriodsShouldBeAbstract),
+		[timePeriodsShouldBeAbstract],
+	)
 
 	return (
 		<>
@@ -927,35 +402,36 @@ export const LineChart: React.FC<LineChartProps> = memo(function LineChart({
 				handleContainerClick={handleContainerClick}
 			>
 				{showGrid && (
-					<>
-						<GridLine
-							type="vertical"
-							myscale={yScale}
-							tickSize={width}
-							ticks={10}
-							color={colors.gridLine}
-							opacity={0.33}
-						/>
-						<GridLine
-							myscale={xScale}
-							tickSize={height}
-							ticks={10}
-							transform={`translate(0, ${height})`}
-							color={colors.gridLine}
-							opacity={0.33}
-						/>
-					</>
+					<Grid height={height} width={width} xScale={xScale} yScale={yScale} />
 				)}
-				<Axis type={AxisType.Left} myscale={yScale} ticks={5} />
-				<Axis
-					type={AxisType.Bottom}
-					myscale={xScale}
-					tickFormatAsWholeNumber={Number(!timePeriodsShouldBeAbstract)}
-					transform={`translate(0, ${height})`}
+				<LineChartAxis
+					height={height}
+					xScale={xScale}
+					yScale={yScale}
+					tickFormatAsWholeNumber={tickFormatAsWholeNumber}
 				/>
-				{treatmentMarkers}
+				<TreatmentMarkers
+					height={height}
+					width={width}
+					xScale={xScale}
+					outputData={outputData}
+					treatedUnits={treatedUnits}
+					showTreatmentStart={showTreatmentStart}
+					isPlaceboSimulation={isPlaceboSimulation}
+					treatmentStartDates={treatmentStartDates}
+				/>
 				{lines}
-				{counterfactualLines}
+				<CounterfactualLines
+					xScale={xScale}
+					yScale={yScale}
+					hoverUnit={hoverUnit}
+					outputData={outputData}
+					renderRawData={renderRawData}
+					applyIntercept={applyIntercept}
+					showSynthControl={showSynthControl}
+					relativeIntercept={relativeIntercept}
+					isPlaceboSimulation={isPlaceboSimulation}
+				/>
 				<g ref={controlGroupRef} />
 				<g ref={legendGroupRef} />
 			</DrawingContainer>
