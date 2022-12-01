@@ -367,6 +367,8 @@ export const ResultPane: React.FC<ResultPaneProps> = memo(function ResultPane({
 				onRemoveCheckedUnit={onRemoveCheckedUnit}
 				output={output}
 				treatedUnitsList={treatedUnitsList}
+				isPlaceboSimulation={isPlaceboSimulation}
+				checkedUnits={checkedUnits}
 			/>
 		),
 		[inputData, checkableUnits, onRemoveCheckedUnit, treatedUnits],
@@ -724,10 +726,14 @@ const DimensionedLineChart: React.FC<DimensionedLineChartProps> = memo(
 		onRemoveCheckedUnit,
 		output,
 		treatedUnitsList,
+		checkedUnits,
+		isPlaceboSimulation,
 	}) {
 		const chartOptions = useRecoilValue(ChartOptionsState)
 		const [hoverItem, setHoverItem] = useState<null | TooltipInfo>(null)
 		const treatedUnits = useRecoilValue(TreatedUnitsState)
+		const outcomeName = useRecoilValue(OutcomeNameState)
+		const treatmentStartDates = useRecoilValue(TreatmentStartDatesState)
 		const hoverInfo = useMemo(() => {
 			return {
 				hoverItem: hoverItem,
@@ -768,6 +774,11 @@ const DimensionedLineChart: React.FC<DimensionedLineChartProps> = memo(
 						checkableUnits={checkableUnits}
 						onRemoveCheckedUnit={onRemoveCheckedUnit}
 						treatedUnitsList={treatedUnitsList || treatedUnits}
+						treatedUnitsState={treatedUnits}
+						isPlaceboSimulation={isPlaceboSimulation}
+						checkedUnits={checkedUnits}
+						outcomeName={outcomeName}
+						treatmentStartDates={treatmentStartDates}
 					/>
 				</ErrorBoundary>
 			</div>
