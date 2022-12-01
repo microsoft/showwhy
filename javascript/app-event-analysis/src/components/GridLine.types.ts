@@ -6,8 +6,13 @@ import type { SVGProps } from 'react'
 
 import type { D3Scale } from '../types.js'
 
+export enum GridLineType {
+	Horizontal = 'horizontal',
+	Vertical = 'vertical',
+}
+
 export type GridLineProps = SVGProps<SVGGElement> & {
-	type?: 'vertical' | 'horizontal'
+	type?: GridLineType
 	myscale: D3Scale
 	ticks: number
 	tickSize: number
