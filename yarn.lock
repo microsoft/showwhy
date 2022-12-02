@@ -3159,9 +3159,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@datashaper/app-framework@npm:0.0.11, @datashaper/app-framework@npm:^0.0.11":
-  version: 0.0.11
-  resolution: "@datashaper/app-framework@npm:0.0.11"
+"@datashaper/app-framework@npm:0.0.12, @datashaper/app-framework@npm:^0.0.12":
+  version: 0.0.12
+  resolution: "@datashaper/app-framework@npm:0.0.12"
   dependencies:
     "@datashaper/react": ^19.2.0
     "@datashaper/schema": ^8.3.0
@@ -3175,7 +3175,6 @@ __metadata:
     lodash-es: ^4.17.21
     observable-hooks: ^4.2.1
     react-if: ^4.1.4
-    react-router-dom: ^6.4.3
     rxjs: ^7.5.7
     tslib: ^2.4.1
     yarn: ^1.22.19
@@ -3190,9 +3189,10 @@ __metadata:
     "@thematic/react": "*"
     arquero: ">= 5.1.0"
     react: ">= 17.0.2"
+    react-router-dom: ">= 6.4.3"
     recoil: ">= 0.7.6"
     styled-components: ">= 5.3.0"
-  checksum: e67b425384687e0a0b6ca8e4183db7d808f3cb7011ff3800158cba9692642a9068a27ab6db346d79b16c840478d2aff80de0df4a62228c2ae825e621b0f60f7c
+  checksum: 5da0858e5c175d46d56084b776e2d006b4546490385896d4c118c859c583e63b6d7739a3e55b5aa023aa0c1dd2c6641de26016f7dda05af32f8c726bfc49d685
   languageName: node
   linkType: hard
 
@@ -5013,13 +5013,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@remix-run/router@npm:1.0.3":
-  version: 1.0.3
-  resolution: "@remix-run/router@npm:1.0.3"
-  checksum: 7e535f3c24bf6b0a48aff3de70ee74e5402fe93105aa9bd01f275d5d8f5a9a8a7cadec08d18cf5544d4f24bc9d7a091abc1c9d4ea8efb2893e9077f104a51459
-  languageName: node
-  linkType: hard
-
 "@remix-run/router@npm:1.0.4":
   version: 1.0.4
   resolution: "@remix-run/router@npm:1.0.4"
@@ -5108,7 +5101,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/app-common@workspace:javascript/app-common"
   dependencies:
-    "@datashaper/app-framework": 0.0.11
+    "@datashaper/app-framework": 0.0.12
     "@datashaper/react": ^19.2.0
     "@datashaper/schema": ^8.3.0
     "@datashaper/tables": ^5.3.3
@@ -5148,7 +5141,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/discover-app@workspace:javascript/app-discover"
   dependencies:
-    "@datashaper/app-framework": 0.0.11
+    "@datashaper/app-framework": 0.0.12
     "@datashaper/react": ^19.2.0
     "@datashaper/schema": ^8.3.0
     "@datashaper/tables": ^5.3.3
@@ -5239,7 +5232,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/event-analysis-app@workspace:javascript/app-event-analysis"
   dependencies:
-    "@datashaper/app-framework": ^0.0.11
+    "@datashaper/app-framework": ^0.0.12
     "@datashaper/workflow": ^21.0.0
     "@essex/components": ^3.1.0
     "@essex/hooks": ^4.0.13
@@ -5291,7 +5284,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/model-exposure-app@workspace:javascript/app-model-exposure"
   dependencies:
-    "@datashaper/app-framework": 0.0.11
+    "@datashaper/app-framework": 0.0.12
     "@datashaper/react": ^19.2.0
     "@datashaper/schema": ^8.3.0
     "@datashaper/tables": ^5.3.3
@@ -5393,7 +5386,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/webapp@workspace:javascript/webapp"
   dependencies:
-    "@datashaper/app-framework": 0.0.11
+    "@datashaper/app-framework": 0.0.12
     "@datashaper/schema": ^8.3.0
     "@datashaper/tables": ^5.3.3
     "@datashaper/utilities": ^2.3.10
@@ -20686,19 +20679,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-router-dom@npm:^6.4.3":
-  version: 6.4.3
-  resolution: "react-router-dom@npm:6.4.3"
-  dependencies:
-    "@remix-run/router": 1.0.3
-    react-router: 6.4.3
-  peerDependencies:
-    react: ">=16.8"
-    react-dom: ">=16.8"
-  checksum: 67a44d8dc45761a1c88793cac73839bb657168ef61b9473eb39b186b4a3ea1472454fd96f8997dc541cb1e79a723d62f9503cbc9179b63b8f1d634ed6d2b079a
-  languageName: node
-  linkType: hard
-
 "react-router-dom@npm:^6.4.4":
   version: 6.4.4
   resolution: "react-router-dom@npm:6.4.4"
@@ -20709,17 +20689,6 @@ __metadata:
     react: ">=16.8"
     react-dom: ">=16.8"
   checksum: 95f31ae84979b404db7483309e1063fbf724046103dc8b7be7e6df79f7b81e4e63dcdb587f11d8be38e3aaf62b71f9e0d83344ef8d8c5e962de7819c793de781
-  languageName: node
-  linkType: hard
-
-"react-router@npm:6.4.3":
-  version: 6.4.3
-  resolution: "react-router@npm:6.4.3"
-  dependencies:
-    "@remix-run/router": 1.0.3
-  peerDependencies:
-    react: ">=16.8"
-  checksum: b89c0495c6837b1457915c08c5acc4eb7a2e9e3fae0420faf9bfc6311ecdfe78627cc1034c0e975bccd9aeeb70d1dcc5021322779dd3053d94c47e37339d77eb
   languageName: node
   linkType: hard
 
