@@ -227,6 +227,29 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/core@npm:^7.20.5":
+  version: 7.20.5
+  resolution: "@babel/core@npm:7.20.5"
+  dependencies:
+    "@ampproject/remapping": ^2.1.0
+    "@babel/code-frame": ^7.18.6
+    "@babel/generator": ^7.20.5
+    "@babel/helper-compilation-targets": ^7.20.0
+    "@babel/helper-module-transforms": ^7.20.2
+    "@babel/helpers": ^7.20.5
+    "@babel/parser": ^7.20.5
+    "@babel/template": ^7.18.10
+    "@babel/traverse": ^7.20.5
+    "@babel/types": ^7.20.5
+    convert-source-map: ^1.7.0
+    debug: ^4.1.0
+    gensync: ^1.0.0-beta.2
+    json5: ^2.2.1
+    semver: ^6.3.0
+  checksum: 9547f1e6364bc58c3621e3b17ec17f0d034ff159e5a520091d9381608d40af3be4042dd27c20ad7d3e938422d75850ac56a3758d6801d65df701557af4bd244b
+  languageName: node
+  linkType: hard
+
 "@babel/eslint-parser@npm:^7.19.1":
   version: 7.19.1
   resolution: "@babel/eslint-parser@npm:7.19.1"
@@ -271,6 +294,17 @@ __metadata:
     "@jridgewell/gen-mapping": ^0.3.0
     jsesc: ^2.5.1
   checksum: d0661e95532ddd97566d41fec26355a7b28d1cbc4df95fe80cc084c413342935911b48db20910708db39714844ddd614f61c2ec4cca3fb10181418bdcaa2e7a3
+  languageName: node
+  linkType: hard
+
+"@babel/generator@npm:^7.20.5":
+  version: 7.20.5
+  resolution: "@babel/generator@npm:7.20.5"
+  dependencies:
+    "@babel/types": ^7.20.5
+    "@jridgewell/gen-mapping": ^0.3.2
+    jsesc: ^2.5.1
+  checksum: 31c10d1e122f08cf755a24bd6f5d197f47eceba03f1133759687d00ab72d210e60ba4011da42f368b6e9fa85cbfda7dc4adb9889c2c20cc5c34bb2d57c1deab7
   languageName: node
   linkType: hard
 
@@ -836,6 +870,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/helpers@npm:^7.20.5":
+  version: 7.20.6
+  resolution: "@babel/helpers@npm:7.20.6"
+  dependencies:
+    "@babel/template": ^7.18.10
+    "@babel/traverse": ^7.20.5
+    "@babel/types": ^7.20.5
+  checksum: f03ec6eb2bf8dc7cdfe2569ee421fd9ba6c7bac6c862d90b608ccdd80281ebe858bc56ca175fc92b3ac50f63126b66bbd5ec86f9f361729289a20054518f1ac5
+  languageName: node
+  linkType: hard
+
 "@babel/highlight@npm:^7.16.7":
   version: 7.17.12
   resolution: "@babel/highlight@npm:7.17.12"
@@ -882,6 +927,15 @@ __metadata:
   bin:
     parser: ./bin/babel-parser.js
   checksum: b1e0acb346b2a533c857e1e97ac0886cdcbd76aafef67835a2b23f760c10568eb53ad8a27dd5f862d8ba4e583742e6067f107281ccbd68959d61bc61e4ddaa51
+  languageName: node
+  linkType: hard
+
+"@babel/parser@npm:^7.20.5":
+  version: 7.20.5
+  resolution: "@babel/parser@npm:7.20.5"
+  bin:
+    parser: ./bin/babel-parser.js
+  checksum: e8d514ce0aa74d56725bd102919a49fa367afef9cd8208cf52f670f54b061c4672f51b4b7980058ab1f5fe73615fe4dc90720ab47bbcebae07ad08d667eda318
   languageName: node
   linkType: hard
 
@@ -2574,7 +2628,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/preset-env@npm:^7.12.11, @babel/preset-env@npm:^7.19.4":
+"@babel/preset-env@npm:^7.12.11, @babel/preset-env@npm:^7.20.2":
   version: 7.20.2
   resolution: "@babel/preset-env@npm:7.20.2"
   dependencies:
@@ -2976,6 +3030,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/traverse@npm:^7.20.5":
+  version: 7.20.5
+  resolution: "@babel/traverse@npm:7.20.5"
+  dependencies:
+    "@babel/code-frame": ^7.18.6
+    "@babel/generator": ^7.20.5
+    "@babel/helper-environment-visitor": ^7.18.9
+    "@babel/helper-function-name": ^7.19.0
+    "@babel/helper-hoist-variables": ^7.18.6
+    "@babel/helper-split-export-declaration": ^7.18.6
+    "@babel/parser": ^7.20.5
+    "@babel/types": ^7.20.5
+    debug: ^4.1.0
+    globals: ^11.1.0
+  checksum: c7fed468614aab1cf762dda5df26e2cfcd2b1b448c9d3321ac44786c4ee773fb0e10357e6593c3c6a648ae2e0be6d90462d855998dc10e3abae84de99291e008
+  languageName: node
+  linkType: hard
+
 "@babel/traverse@npm:^7.4.5":
   version: 7.18.2
   resolution: "@babel/traverse@npm:7.18.2"
@@ -3036,6 +3108,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/types@npm:^7.20.5":
+  version: 7.20.5
+  resolution: "@babel/types@npm:7.20.5"
+  dependencies:
+    "@babel/helper-string-parser": ^7.19.4
+    "@babel/helper-validator-identifier": ^7.19.1
+    to-fast-properties: ^2.0.0
+  checksum: 773f0a1ad9f6ca5c5beaf751d1d8d81b9130de87689d1321fc911d73c3b1167326d66f0ae086a27fb5bfc8b4ee3ffebf1339be50d3b4d8015719692468c31f2d
+  languageName: node
+  linkType: hard
+
 "@base2/pretty-print-object@npm:1.0.1":
   version: 1.0.1
   resolution: "@base2/pretty-print-object@npm:1.0.1"
@@ -3076,19 +3159,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@datashaper/app-framework@npm:0.0.8, @datashaper/app-framework@npm:^0.0.8":
-  version: 0.0.8
-  resolution: "@datashaper/app-framework@npm:0.0.8"
+"@datashaper/app-framework@npm:0.0.9, @datashaper/app-framework@npm:^0.0.9":
+  version: 0.0.9
+  resolution: "@datashaper/app-framework@npm:0.0.9"
   dependencies:
-    "@datashaper/react": ^19.0.3
-    "@datashaper/schema": ^8.1.1
-    "@datashaper/tables": ^5.3.1
+    "@datashaper/react": ^19.1.0
+    "@datashaper/schema": ^8.2.0
+    "@datashaper/tables": ^5.3.2
     "@datashaper/utilities": ^2.3.10
-    "@datashaper/workflow": ^19.1.4
-    "@fluentui/web-components": ^2.5.8
-    "@microsoft/fast-element": ^1.11.0
-    "@microsoft/fast-foundation": ^2.47.0
-    "@microsoft/fast-react-wrapper": ^0.3.15
+    "@datashaper/workflow": ^20.0.0
     "@monaco-editor/react": ^4.4.6
     ahooks: ^3.7.2
     allotment: ^1.17.0
@@ -3096,6 +3175,7 @@ __metadata:
     lodash-es: ^4.17.21
     observable-hooks: ^4.2.1
     react-if: ^4.1.4
+    react-router-dom: ^6.4.3
     rxjs: ^7.5.7
     tslib: ^2.4.1
     yarn: ^1.22.19
@@ -3110,20 +3190,21 @@ __metadata:
     "@thematic/react": "*"
     arquero: ">= 5.1.0"
     react: ">= 17.0.2"
+    recoil: ">= 0.7.6"
     styled-components: ">= 5.3.0"
-  checksum: 3e19ba23bdb22bd0172155b2913b1676ca7591ed2f3a6e53d253e328e636791c93e4a3e542ae143cab179895282770e8414ae0aae09bc60a049979ae33b89df9
+  checksum: d7fd84583b9be79252dc981b602fc3f5d03e6eda89564dd23048e34d1c515953cd1bd004301f2eee3d263f552496f2ef1c9fe8fb6a7103e720b2fe5fefb98925
   languageName: node
   linkType: hard
 
-"@datashaper/react@npm:^19.0.3":
-  version: 19.0.3
-  resolution: "@datashaper/react@npm:19.0.3"
+"@datashaper/react@npm:^19.1.0":
+  version: 19.1.0
+  resolution: "@datashaper/react@npm:19.1.0"
   dependencies:
-    "@datashaper/schema": ^8.1.1
-    "@datashaper/tables": ^5.3.1
+    "@datashaper/schema": ^8.2.0
+    "@datashaper/tables": ^5.3.2
     "@datashaper/utilities": ^2.3.10
     "@datashaper/verb-guidance": ^0.1.23
-    "@datashaper/workflow": ^19.1.4
+    "@datashaper/workflow": ^20.0.0
     "@essex/charts-react": ^1.1.2
     "@essex/components": ^3.1.0
     "@essex/styled-components": ^0.0.4
@@ -3149,32 +3230,32 @@ __metadata:
     arquero: ^5.1.0
     react: ^17.0.2
     styled-components: ^5.3.0
-  checksum: 0683507c88279acfd8e5b8d70ce93a591a72abb1e9895e43afaa764e3bb602d88427ace7eaa0d5897c8cbe0f41523d0f71a23c1913ac4cafe9587ba224934449
+  checksum: 9b2ba6ef3b68646fd38d62301b682266912d9ea1f4c6940e66aaa9fb8d144c3d062629a4432d7b626596c810ea11e217dbd2e1f76772f638de4953cdbeb74806
   languageName: node
   linkType: hard
 
-"@datashaper/schema@npm:^8.1.1":
-  version: 8.1.1
-  resolution: "@datashaper/schema@npm:8.1.1"
+"@datashaper/schema@npm:^8.2.0":
+  version: 8.2.0
+  resolution: "@datashaper/schema@npm:8.2.0"
   dependencies:
     ajv: ^8.11.0
     ajv-formats: ^2.1.1
     uuid: ^9.0.0
-  checksum: 5edf6c82c3af271cb4d6c46db0c1d346a7d4e033d4f353ec7f2296856eccac7ef9311e625ad2d5804714ab12dcb6709ffcf0cfa2cb825b8fcc6f891adc779ed8
+  checksum: 994212cfc130dd10e14e12238c0d9f037bff204dea905d20a226aa809f085a6ad57dab825ae3dad1d979c644f5ec6d9707246f1dbbf84482de3d33b3d615ff94
   languageName: node
   linkType: hard
 
-"@datashaper/tables@npm:^5.3.1":
-  version: 5.3.1
-  resolution: "@datashaper/tables@npm:5.3.1"
+"@datashaper/tables@npm:^5.3.2":
+  version: 5.3.2
+  resolution: "@datashaper/tables@npm:5.3.2"
   dependencies:
-    "@datashaper/schema": ^8.1.1
+    "@datashaper/schema": ^8.2.0
     lodash-es: ^4.17.21
     moment: ^2.29.4
     papaparse: ^5.3.2
   peerDependencies:
     arquero: ^5.1.0
-  checksum: 931b0579bfa4c19ecfd8c988836b990e7d66a94a77b4bd61eb4b60bd6a1da0fc67fbf3d433b7264b018b03bca2c8a810d03eaa8463c261bcb1d12a99a9559579
+  checksum: d15c07ecc0089b8972d02f1448840d3d7821ecbd6f077c613117fa85a39c962cbc8b4b7cdab22e0670a7920a8440446e62fd2abe5c5e401e71e921559ca1c16e
   languageName: node
   linkType: hard
 
@@ -3200,12 +3281,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@datashaper/workflow@npm:^19.1.4":
-  version: 19.1.4
-  resolution: "@datashaper/workflow@npm:19.1.4"
+"@datashaper/workflow@npm:^20.0.0":
+  version: 20.0.0
+  resolution: "@datashaper/workflow@npm:20.0.0"
   dependencies:
-    "@datashaper/schema": ^8.1.1
-    "@datashaper/tables": ^5.3.1
+    "@datashaper/schema": ^8.2.0
+    "@datashaper/tables": ^5.3.2
     cross-blob: ^3.0.2
     cross-fetch: ^3.1.5
     d3-time-format: ^4.1.0
@@ -3219,7 +3300,7 @@ __metadata:
   peerDependenciesMeta:
     "@types/node":
       optional: true
-  checksum: 0fe945ece36c09dc088d895adee6507780dadc970beb57b4ac6b4e96df5b5f2c5c9066dbe3ec518a9c4e7012760a43a2b561aad522ac365119b818d2e73b39ad
+  checksum: 58c7625b2c4237670bfc3f85874b3f0f2b094a1f116194aeb8359557c5bda535c68a380fea7eba19353d5c39a437b8d3d87e37f13abb1b87350409bebfbe7b85
   languageName: node
   linkType: hard
 
@@ -3537,7 +3618,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@essex/scripts@npm:^22.1.0, @essex/scripts@npm:^22.2.0":
+"@essex/scripts@npm:^22.2.0":
   version: 22.2.0
   resolution: "@essex/scripts@npm:22.2.0"
   dependencies:
@@ -3894,9 +3975,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fluentui/react@npm:^8.101.0":
-  version: 8.103.1
-  resolution: "@fluentui/react@npm:8.103.1"
+"@fluentui/react@npm:^8.103.4":
+  version: 8.103.4
+  resolution: "@fluentui/react@npm:8.103.4"
   dependencies:
     "@fluentui/date-time-utilities": ^8.5.3
     "@fluentui/font-icons-mdl2": ^8.5.4
@@ -3917,34 +3998,7 @@ __metadata:
     "@types/react-dom": ">=16.8.0 <19.0.0"
     react: ">=16.8.0 <19.0.0"
     react-dom: ">=16.8.0 <19.0.0"
-  checksum: 96c90e8cb5e1499156573a6404aa6fa2a0714bc58766a71b01cf6cbd8914752ca1aeea2035574eae20538e8451f8c1d3fa60626057daba9b7784642a1ffdadb9
-  languageName: node
-  linkType: hard
-
-"@fluentui/react@npm:^8.101.1":
-  version: 8.101.1
-  resolution: "@fluentui/react@npm:8.101.1"
-  dependencies:
-    "@fluentui/date-time-utilities": ^8.5.3
-    "@fluentui/font-icons-mdl2": ^8.5.4
-    "@fluentui/foundation-legacy": ^8.2.24
-    "@fluentui/merge-styles": ^8.5.4
-    "@fluentui/react-focus": ^8.8.10
-    "@fluentui/react-hooks": ^8.6.14
-    "@fluentui/react-portal-compat-context": ^9.0.4
-    "@fluentui/react-window-provider": ^2.2.4
-    "@fluentui/set-version": ^8.2.3
-    "@fluentui/style-utilities": ^8.8.3
-    "@fluentui/theme": ^2.6.19
-    "@fluentui/utilities": ^8.13.4
-    "@microsoft/load-themed-styles": ^1.10.26
-    tslib: ^2.1.0
-  peerDependencies:
-    "@types/react": ">=16.8.0 <19.0.0"
-    "@types/react-dom": ">=16.8.0 <19.0.0"
-    react: ">=16.8.0 <19.0.0"
-    react-dom: ">=16.8.0 <19.0.0"
-  checksum: 8c6231e9866b8ecd6ea4be4366a594967f22b858c902ab2045e9dc9b2f4bd562a746fc35b62bed92698248eaf0e0ca4c0750ed2a220a3c1d7aaff32861898d02
+  checksum: 8e2bb42848bbd60bae92ada23f3588bc535a1dd3ec1447a9888428ff22ff35e2246c3d46534d9c9f4744c6fdee6cf30f678eebaf1569db42dff0dffd7885d106
   languageName: node
   linkType: hard
 
@@ -5107,15 +5161,15 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/app-common@workspace:javascript/app-common"
   dependencies:
-    "@datashaper/app-framework": 0.0.8
-    "@datashaper/react": ^19.0.3
-    "@datashaper/schema": ^8.1.1
-    "@datashaper/tables": ^5.3.1
+    "@datashaper/app-framework": 0.0.9
+    "@datashaper/react": ^19.1.0
+    "@datashaper/schema": ^8.2.0
+    "@datashaper/tables": ^5.3.2
     "@datashaper/utilities": ^2.3.10
-    "@datashaper/workflow": ^19.1.4
+    "@datashaper/workflow": ^20.0.0
     "@essex/components": ^3.1.0
     "@essex/scripts": ^22.2.0
-    "@fluentui/react": ^8.101.1
+    "@fluentui/react": ^8.103.4
     "@fluentui/react-hooks": ^8.6.14
     "@thematic/core": ^3.1.1
     "@thematic/d3": ^2.0.14
@@ -5147,12 +5201,12 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/discover-app@workspace:javascript/app-discover"
   dependencies:
-    "@datashaper/app-framework": 0.0.8
-    "@datashaper/react": ^19.0.3
-    "@datashaper/schema": ^8.1.1
-    "@datashaper/tables": ^5.3.1
+    "@datashaper/app-framework": 0.0.9
+    "@datashaper/react": ^19.1.0
+    "@datashaper/schema": ^8.2.0
+    "@datashaper/tables": ^5.3.2
     "@datashaper/utilities": ^2.3.10
-    "@datashaper/workflow": ^19.1.4
+    "@datashaper/workflow": ^20.0.0
     "@essex-js-toolkit/hooks": ^4.0.3
     "@essex/components": ^3.1.0
     "@essex/hooks": ^4.0.13
@@ -5160,7 +5214,7 @@ __metadata:
     "@essex/vite-config": ^19.0.15
     "@essex/webpack-config": ^21.0.9
     "@fluentui/font-icons-mdl2": ^8.5.4
-    "@fluentui/react": ^8.101.1
+    "@fluentui/react": ^8.103.4
     "@fluentui/react-hooks": ^8.6.14
     "@fluentui/react-icons-mdl2": ^1.3.27
     "@fluentui/utilities": ^8.13.4
@@ -5238,13 +5292,13 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/event-analysis-app@workspace:javascript/app-event-analysis"
   dependencies:
-    "@datashaper/app-framework": ^0.0.8
+    "@datashaper/app-framework": ^0.0.9
     "@essex/components": ^3.1.0
     "@essex/hooks": ^4.0.13
     "@essex/scripts": ^22.2.0
     "@essex/webpack-config": ^21.0.9
     "@fluentui/font-icons-mdl2": ^8.5.4
-    "@fluentui/react": ^8.101.1
+    "@fluentui/react": ^8.103.4
     "@fluentui/react-hooks": ^8.6.14
     "@fluentui/utilities": ^8.13.4
     "@reduxjs/toolkit": ^1.9.0
@@ -5289,18 +5343,18 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/model-exposure-app@workspace:javascript/app-model-exposure"
   dependencies:
-    "@datashaper/app-framework": 0.0.8
-    "@datashaper/react": ^19.0.3
-    "@datashaper/schema": ^8.1.1
-    "@datashaper/tables": ^5.3.1
+    "@datashaper/app-framework": 0.0.9
+    "@datashaper/react": ^19.1.0
+    "@datashaper/schema": ^8.2.0
+    "@datashaper/tables": ^5.3.2
     "@datashaper/utilities": ^2.3.10
-    "@datashaper/workflow": ^19.1.4
+    "@datashaper/workflow": ^20.0.0
     "@essex/components": ^3.1.0
     "@essex/hooks": ^4.0.13
     "@essex/scripts": ^22.2.0
     "@essex/webpack-config": ^21.0.9
     "@fluentui/font-icons-mdl2": ^8.5.4
-    "@fluentui/react": ^8.101.1
+    "@fluentui/react": ^8.103.4
     "@fluentui/react-hooks": ^8.6.14
     "@fluentui/utilities": ^8.13.4
     "@reduxjs/toolkit": ^1.9.0
@@ -5350,15 +5404,15 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/stories@workspace:javascript/stories"
   dependencies:
-    "@babel/core": ^7.19.6
+    "@babel/core": ^7.20.5
     "@babel/plugin-proposal-optional-chaining": ^7.18.9
-    "@babel/preset-env": ^7.19.4
+    "@babel/preset-env": ^7.20.2
     "@babel/preset-react": ^7.18.6
     "@babel/preset-typescript": ^7.18.6
-    "@essex/scripts": ^22.1.0
+    "@essex/scripts": ^22.2.0
     "@essex/tsconfig-base": ^1.0.2
-    "@fluentui/font-icons-mdl2": ^8.5.3
-    "@fluentui/react": ^8.101.0
+    "@fluentui/font-icons-mdl2": ^8.5.4
+    "@fluentui/react": ^8.103.4
     "@mdx-js/react": ^1.6.22
     "@open-wc/webpack-import-meta-loader": ^0.4.7
     "@showwhy/event-analysis-app": "workspace:^"
@@ -5391,17 +5445,17 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/webapp@workspace:javascript/webapp"
   dependencies:
-    "@datashaper/app-framework": 0.0.8
-    "@datashaper/schema": ^8.1.1
-    "@datashaper/tables": ^5.3.1
+    "@datashaper/app-framework": 0.0.9
+    "@datashaper/schema": ^8.2.0
+    "@datashaper/tables": ^5.3.2
     "@datashaper/utilities": ^2.3.10
-    "@datashaper/workflow": ^19.1.4
+    "@datashaper/workflow": ^20.0.0
     "@essex/components": ^3.1.0
     "@essex/hooks": ^4.0.13
     "@essex/scripts": ^22.2.0
     "@essex/webpack-config": ^21.0.9
     "@fluentui/font-icons-mdl2": ^8.5.4
-    "@fluentui/react": ^8.101.1
+    "@fluentui/react": ^8.103.4
     "@fluentui/react-hooks": ^8.6.14
     "@fluentui/utilities": ^8.13.4
     "@fluentui/web-components": ^2.5.8
