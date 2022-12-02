@@ -15,8 +15,8 @@
 		"lint": "essex lint"
 	},
 	"dependencies": {
-		"@datashaper/app-framework": "^0.0.9",
-		"@datashaper/workflow": "^20.0.0",
+		"@datashaper/app-framework": "^0.0.11",
+		"@datashaper/workflow": "^21.0.0",
 		"@essex/components": "^3.1.0",
 		"@essex/hooks": "^4.0.13",
 		"@essex/webpack-config": "^21.0.9",
@@ -44,7 +44,7 @@
 		"react-if": "^4.1.4",
 		"react-is": "^18.2.0",
 		"react-redux": "^8.0.4",
-		"react-router-dom": "^6.4.3",
+		"react-router-dom": "^6.4.4",
 		"recoil": "^0.7.6",
 		"redbox-react": "^1.6.0",
 		"styled-components": "^5.3.6"

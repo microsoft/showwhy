@@ -118,19 +118,18 @@ class ExposureResource extends Resource {
 	}
 }
 
-const ExposureAppRoot: React.FC<{ resource: ExposureResource }> = memo(
-	function ExposureAppRoot({ resource }) {
+const ExposureAppRoot: React.FC<{ resource: ExposureResource; href: string }> =
+	memo(function ExposureAppRoot({ resource, href }) {
 		return (
 			<RecoilBasedProfileHost
 				resource={resource}
 				saveState={saveState}
 				loadState={loadState}
 			>
-				<ModelExposurePage />
+				<ModelExposurePage href={href} />
 			</RecoilBasedProfileHost>
 		)
-	},
-)
+	})
 
 function loadState(resource: ExposureResource, { set }: MutableSnapshot) {
 	set(projectNameState, resource.projectName)

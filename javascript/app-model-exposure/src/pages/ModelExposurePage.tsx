@@ -3,6 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { MessageBarType, Pivot, PivotItem } from '@fluentui/react'
+import { Resource } from '@datashaper/workflow'
 import { memo, useEffect, useMemo, useRef, useState } from 'react'
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import { useXarrow, Xwrapper } from 'react-xarrows'
@@ -20,85 +21,76 @@ import { BindDataPage } from './BindDataPage.js'
 import { BuildDomainModelPage } from './BuildDomainModelPage.js'
 import { DefineDomainModelPage } from './DefineDomainModelPage.js'
 import { Container, Content } from './ModelExposurePage.styles.js'
+import { ModelExposurePageProps } from './ModelExposurePage.types.js'
 
-const EXTERNAL_ROUTE = 'exposure'
-const EXTERNAL_ROUTE_KUBERNETES = `_${EXTERNAL_ROUTE}`
-export const ModelExposurePage: React.FC = memo(function ModelExposurePage() {
-	const location = useLocation()
-	const scrollRef = useRef<HTMLElement>(null)
-	const question = useCausalQuestion()
-	const navigate = useNavigate()
-	const updateXarrow = useXarrow()
-	const [pageTab, setPageTab] = usePageTab()
-	const [error, setError] = useState<Maybe<string>>()
+export const ModelExposurePage: React.FC<ModelExposurePageProps> = memo(
+	function ModelExposurePage({ href }) {
+		const scrollRef = useRef<HTMLElement>(null)
+		const question = useCausalQuestion()
+		const navigate = useNavigate()
+		const updateXarrow = useXarrow()
+		const [pageTab, setPageTab] = usePageTab()
+		const [error, setError] = useState<Maybe<string>>()
 
-	const route = useMemo(() => {
-		return location.pathname.includes(`${EXTERNAL_ROUTE_KUBERNETES}`)
-			? `/${EXTERNAL_ROUTE_KUBERNETES}`
-			: location.pathname.includes('exposure')
-			? `/${EXTERNAL_ROUTE}`
-			: ''
-	}, [location])
-
-	const handleLinkClick = (item?: PivotItem) => {
-		if (item) {
-			setPageTab(item.props.itemKey as PageTabs)
-			scrollRef.current?.scroll(0, 0)
-			console.log('NAV', location)
-			navigate(`${route}/${item.props.itemKey as string}`)
+		const handleLinkClick = (item?: PivotItem) => {
+			if (item) {
+				setPageTab(item.props.itemKey as PageTabs)
+				scrollRef.current?.scroll(0, 0)
+				navigate(`${href}/${item.props.itemKey as string}`)
+			}
 		}
-	}
 
-	useEffect(() => {
-		navigate(`${route}/${pageTab}`)
-		/* eslint-disable-next-line */
-	}, [])
+		useEffect(() => {
+			navigate(`${href}/${pageTab}`)
+			/* eslint-disable-next-line */
+		}, [])
 
-	return (
-		<Container>
-			<Header>
-				<Pivot
-					aria-label="Model Exposure Flow"
-					selectedKey={pageTab}
-					onLinkClick={handleLinkClick}
-				>
-					<PivotItem
-						headerText="1. Define question"
-						itemKey={PageTabs.DefineQuestion}
-					/>
-					<PivotItem
-						headerText="2. Build model"
-						itemKey={PageTabs.BuildModel}
-					/>
-					<PivotItem headerText="3. Bind data" itemKey={PageTabs.BindData} />
-					<PivotItem
-						headerText="4. Estimate effects"
-						itemKey={PageTabs.EstimateEffects}
-					/>
-				</Pivot>
-				<CausalQuestion question={question} />
-				<AppMenu setError={setError} />
-			</Header>
-			<Xwrapper>
-				<Content ref={scrollRef} onScroll={updateXarrow}>
-					{error ? (
-						<MessageContainer
-							onDismiss={() => setError(undefined)}
-							type={MessageBarType.error}
-							styles={{ margin: '1rem 0' }}
-						>
-							{error}
-						</MessageContainer>
-					) : null}
-					<Routes>
-						<Route path="/" element={<DefineDomainModelPage />} />
-						<Route path="define" element={<DefineDomainModelPage />} />
-						<Route path="build" element={<BuildDomainModelPage />} />
-						<Route path="bind" element={<BindDataPage />} />
-						<Route path="analyze" element={<AnalyzeTestPage />} />
-					</Routes>
-				</Content>
-			</Xwrapper>
-		</Container>
-	)
-})
+		return (
+			<Container>
+				<Header>
+					<Pivot
+						aria-label="Model Exposure Flow"
+						selectedKey={pageTab}
+						onLinkClick={handleLinkClick}
+					>
+						<PivotItem
+							headerText="1. Define question"
+							itemKey={PageTabs.DefineQuestion}
+						/>
+						<PivotItem
+							headerText="2. Build model"
+							itemKey={PageTabs.BuildModel}
+						/>
+						<PivotItem headerText="3. Bind data" itemKey={PageTabs.BindData} />
+						<PivotItem
+							headerText="4. Estimate effects"
+							itemKey={PageTabs.EstimateEffects}
+						/>
+					</Pivot>
+					<CausalQuestion question={question} />
+					<AppMenu setError={setError} />
+				</Header>
+				<Xwrapper>
+					<Content ref={scrollRef} onScroll={updateXarrow}>
+						{error ? (
+							<MessageContainer
+								onDismiss={() => setError(undefined)}
+								type={MessageBarType.error}
+								styles={{ margin: '1rem 0' }}
+							>
+								{error}
+							</MessageContainer>
+						) : null}
+						<Routes>
+							<Route element={<DefineDomainModelPage />} index />
+							<Route path="define" element={<DefineDomainModelPage />} />
+							<Route path="build" element={<BuildDomainModelPage />} />
+							<Route path="bind" element={<BindDataPage />} />
+							<Route path="analyze" element={<AnalyzeTestPage />} />
+						</Routes>
+					</Content>
+				</Xwrapper>
+			</Container>
+		)
+	},
+)
