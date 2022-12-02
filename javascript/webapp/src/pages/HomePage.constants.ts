@@ -3,7 +3,6 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { QuestionType } from '../models.js'
 import { pages } from '../pages.js'
 import type { CardDetail } from './HomePage.types.js'
 
@@ -12,10 +11,9 @@ import type { CardDetail } from './HomePage.types.js'
  */
 export const topLevelQuestionCards: CardDetail[] = [
 	{
-		questionType: QuestionType.Discovery,
 		heroTitle: pages.discover.title,
 		title: 'Do dataset features cause each other?',
-		key: 'discover',
+		key: 'showwhy-discover',
 		previewProps: {
 			previewImages: [
 				{
@@ -27,10 +25,9 @@ export const topLevelQuestionCards: CardDetail[] = [
 		},
 	},
 	{
-		questionType: QuestionType.Exposure,
 		heroTitle: pages.exposure.title,
 		title: 'Does an exposure cause an outcome?',
-		key: 'exposure',
+		key: 'showwhy-model-exposure',
 		previewProps: {
 			previewImages: [
 				{
@@ -42,10 +39,9 @@ export const topLevelQuestionCards: CardDetail[] = [
 		},
 	},
 	{
-		questionType: QuestionType.Event,
 		heroTitle: pages.events.title,
 		title: 'Did an event cause an outcome?',
-		key: 'events',
+		key: 'showwhy-events',
 		previewProps: {
 			previewImages: [
 				{

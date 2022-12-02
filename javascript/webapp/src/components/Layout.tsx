@@ -31,7 +31,7 @@ export const Layout: React.FC = memo(function Layout() {
 				<Content>
 					<Suspense fallback={<Spinner />}>
 						<DataShaperApp profiles={profiles} examples={examples}>
-							<HomePage onClickCard={arg => console.log('hey', arg)} />
+							<HomePage profiles={profiles} />
 						</DataShaperApp>
 					</Suspense>
 				</Content>

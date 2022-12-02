@@ -34,7 +34,7 @@ export class ExposureProfilePlugin implements ProfilePlugin<ExposureResource> {
 	public readonly title = 'Model Exposure'
 	public readonly iconName = 'TestBeaker'
 
-	public renderer = ExposureAppRoot
+	public renderer = ExposureAppRoot as any
 
 	private _dataPackage: DataPackage | undefined
 

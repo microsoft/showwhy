@@ -3,12 +3,14 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import { ProfilePlugin } from '@datashaper/app-framework'
 import type { IDocumentCardPreviewProps } from '@fluentui/react'
 
-import type { QuestionType } from '../models.js'
+export interface HomePageProps {
+	profiles: ProfilePlugin[]
+}
 
 export interface CardDetail {
-	questionType: QuestionType
 	heroTitle: string
 	title: string
 	key: string
