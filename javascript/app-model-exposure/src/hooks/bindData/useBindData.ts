@@ -4,7 +4,7 @@
  */
 import { useTableBundles } from '@datashaper/app-framework'
 import type { TableContainer } from '@datashaper/tables'
-import type { TableBundle, Maybe } from '@datashaper/workflow'
+import type { Maybe, TableBundle } from '@datashaper/workflow'
 import { useMemo } from 'react'
 
 import {

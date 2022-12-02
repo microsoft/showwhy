@@ -3,9 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { MessageBarType, Pivot, PivotItem } from '@fluentui/react'
-import { Resource } from '@datashaper/workflow'
-import { memo, useEffect, useMemo, useRef, useState } from 'react'
-import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
+import { memo, useEffect, useRef, useState } from 'react'
+import { Route, Routes, useNavigate } from 'react-router-dom'
 import { useXarrow, Xwrapper } from 'react-xarrows'
 
 import { AppMenu } from '../components/AppMenu.js'
@@ -21,7 +20,7 @@ import { BindDataPage } from './BindDataPage.js'
 import { BuildDomainModelPage } from './BuildDomainModelPage.js'
 import { DefineDomainModelPage } from './DefineDomainModelPage.js'
 import { Container, Content } from './ModelExposurePage.styles.js'
-import { ModelExposurePageProps } from './ModelExposurePage.types.js'
+import type { ModelExposurePageProps } from './ModelExposurePage.types.js'
 
 export const ModelExposurePage: React.FC<ModelExposurePageProps> = memo(
 	function ModelExposurePage({ href }) {

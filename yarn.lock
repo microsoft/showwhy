@@ -5233,6 +5233,7 @@ __metadata:
   resolution: "@showwhy/event-analysis-app@workspace:javascript/app-event-analysis"
   dependencies:
     "@datashaper/app-framework": ^0.0.12
+    "@datashaper/schema": ^8.3.0
     "@datashaper/workflow": ^21.0.0
     "@essex/components": ^3.1.0
     "@essex/hooks": ^4.0.13

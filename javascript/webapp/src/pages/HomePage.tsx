@@ -2,7 +2,8 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { ProfilePlugin, useDataPackage } from '@datashaper/app-framework'
+import { useDataPackage } from '@datashaper/app-framework'
+import type { Resource } from '@datashaper/workflow'
 import {
 	DocumentCard,
 	DocumentCardPreview,
@@ -17,7 +18,7 @@ import {
 	documentCardTitleStyles,
 	documentPreviewStyle,
 } from './HomePage.styles.js'
-import { HomePageProps } from './HomePage.types.js'
+import type { HomePageProps } from './HomePage.types.js'
 
 const HomePage: React.FC<HomePageProps> = memo(function HomePage({ profiles }) {
 	const dataPackage = useDataPackage()
@@ -30,9 +31,11 @@ const HomePage: React.FC<HomePageProps> = memo(function HomePage({ profiles }) {
 			<DocumentCard
 				key={d.key}
 				onClick={() => {
-					const resource = profile.createResource?.()
-					resource.name = dataPackage.suggestResourceName(resource.name)
-					dataPackage.addResource(resource)
+					const resource: Resource | undefined = profile.createResource?.()
+					if (resource != null) {
+						resource.name = dataPackage.suggestResourceName(resource.name)
+						dataPackage.addResource(resource)
+					}
 				}}
 				style={documentCardStyle}
 			>

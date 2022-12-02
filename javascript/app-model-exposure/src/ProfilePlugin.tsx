@@ -1,31 +1,37 @@
+/*!
+ * Copyright (c) Microsoft. All rights reserved.
+ * Licensed under the MIT license. See LICENSE file in the project.
+ */
+import type { AppServices, ProfilePlugin } from '@datashaper/app-framework'
 import {
-	AppServices,
 	CommandBarSection,
-	ProfilePlugin,
 	RecoilBasedProfileHost,
 } from '@datashaper/app-framework'
+import type { ResourceSchema } from '@datashaper/schema'
+import type { DataPackage } from '@datashaper/workflow'
+import { Resource } from '@datashaper/workflow'
+import type { IContextualMenuItem } from '@fluentui/react'
 import { Hypothesis } from '@showwhy/app-common'
 import { memo } from 'react'
-import { Resource, DataPackage } from '@datashaper/workflow'
-import { MutableSnapshot, Snapshot } from 'recoil'
-import { projectNameState } from './state/projectName.js'
-import { causalFactorsState } from './state/causalFactors.js'
-import { CausalFactor } from './types/causality/CausalFactor.js'
-import { DefaultDatasetResult } from './types/workspace/DefaultDatasetResult.js'
-import { defaultDatasetResultState } from './state/defaultDatasetResult.js'
-import { Estimator } from './types/estimators/Estimator.js'
-import { estimatorState } from './state/estimators.js'
-import { PrimarySpecificationConfig } from './types/experiments/PrimarySpecificationConfig.js'
-import { CausalModelLevel } from './types/causality/CausalModelLevel.js'
-import { EstimatorType } from './types/estimators/EstimatorType.js'
-import { primarySpecificationConfigState } from './state/primarySpecificationConfig.js'
-import { Definition } from './types/experiments/Definition.js'
-import { definitionsState } from './state/definitions.js'
-import { causalQuestionState } from './state/causalQuestion.js'
-import { CausalQuestion } from './types/question/CausalQuestion.js'
-import { selectedTableNameState } from './state/selectedDataPackage.js'
+import type { MutableSnapshot, Snapshot } from 'recoil'
+
 import { ModelExposurePage } from './pages/ModelExposurePage.js'
-import { IContextualMenuItem } from '@fluentui/react'
+import { causalFactorsState } from './state/causalFactors.js'
+import { causalQuestionState } from './state/causalQuestion.js'
+import { defaultDatasetResultState } from './state/defaultDatasetResult.js'
+import { definitionsState } from './state/definitions.js'
+import { estimatorState } from './state/estimators.js'
+import { primarySpecificationConfigState } from './state/primarySpecificationConfig.js'
+import { projectNameState } from './state/projectName.js'
+import { selectedTableNameState } from './state/selectedDataPackage.js'
+import type { CausalFactor } from './types/causality/CausalFactor.js'
+import { CausalModelLevel } from './types/causality/CausalModelLevel.js'
+import type { Estimator } from './types/estimators/Estimator.js'
+import { EstimatorType } from './types/estimators/EstimatorType.js'
+import type { Definition } from './types/experiments/Definition.js'
+import type { PrimarySpecificationConfig } from './types/experiments/PrimarySpecificationConfig.js'
+import type { CausalQuestion } from './types/question/CausalQuestion.js'
+import type { DefaultDatasetResult } from './types/workspace/DefaultDatasetResult.js'
 
 const EXPOSURE_PROFILE = 'showwhy-model-exposure'
 
@@ -69,6 +75,18 @@ export class ExposureProfilePlugin implements ProfilePlugin<ExposureResource> {
 	}
 }
 
+interface ExposureResourceSchema extends ResourceSchema {
+	profile: typeof EXPOSURE_PROFILE
+	projectName: string
+	causalFactors: CausalFactor[]
+	defaultResult: DefaultDatasetResult
+	estimators: Estimator[]
+	primarySpecification: PrimarySpecificationConfig
+	definitions: Definition[]
+	question: CausalQuestion
+	selectedTableName: string
+}
+
 class ExposureResource extends Resource {
 	public readonly $schema = ''
 	public readonly profile = EXPOSURE_PROFILE
@@ -77,7 +95,7 @@ class ExposureResource extends Resource {
 		return 'Exposure Analysis'
 	}
 
-	public projectName: string = 'Exposure Analysis'
+	public projectName = 'Exposure Analysis'
 	public causalFactors: CausalFactor[] = []
 	public defaultResult: DefaultDatasetResult = { url: '' }
 	public estimators: Estimator[] = []
@@ -89,11 +107,12 @@ class ExposureResource extends Resource {
 	public question: CausalQuestion = {
 		hypothesis: Hypothesis.Change,
 	} as CausalQuestion
-	public selectedTableName: string = ''
+	public selectedTableName = ''
 
-	public override toSchema() {
+	public override toSchema(): ExposureResourceSchema {
 		return {
 			...super.toSchema(),
+			profile: EXPOSURE_PROFILE,
 			projectName: this.projectName,
 			causalFactors: this.causalFactors,
 			defaultResult: this.defaultResult,
@@ -105,7 +124,7 @@ class ExposureResource extends Resource {
 		}
 	}
 
-	public override loadSchema(input: any) {
+	public override loadSchema(input: ExposureResourceSchema) {
 		super.loadSchema(input)
 		this.projectName = input.projectName
 		this.causalFactors = input.causalFactors

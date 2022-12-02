@@ -1,14 +1,21 @@
+/*!
+ * Copyright (c) Microsoft. All rights reserved.
+ * Licensed under the MIT license. See LICENSE file in the project.
+ */
+import type { AppServices, ProfilePlugin } from '@datashaper/app-framework'
 import {
-	AppServices,
 	CommandBarSection,
-	ProfilePlugin,
 	RecoilBasedProfileHost,
 } from '@datashaper/app-framework'
-import { Resource, DataPackage } from '@datashaper/workflow'
-import { memo } from 'react'
-import { MutableSnapshot, Snapshot } from 'recoil'
-import { App } from './components/App.js'
+import type { ResourceSchema } from '@datashaper/schema'
+import type { DataPackage } from '@datashaper/workflow'
+import { Resource } from '@datashaper/workflow'
+import type { IContextualMenuItem } from '@fluentui/react'
 import { Hypothesis } from '@showwhy/app-common'
+import { memo } from 'react'
+import type { MutableSnapshot, Snapshot } from 'recoil'
+
+import { App } from './components/App.js'
 import {
 	AggregateEnabledState,
 	AggTreatmentState,
@@ -33,17 +40,15 @@ import {
 	TreatmentStartDatesState,
 	UnitsState,
 } from './state/state.js'
-import {
+import type {
 	ChartOptions,
 	ColumnMapping,
-	CONFIGURATION_TABS,
 	DateFilter,
 	SDIDOutputResponse,
-	TimeAlignmentOptions,
 	Treatment,
 } from './types.js'
-import { Record as DataRecord } from './utils/csv.js'
-import { IContextualMenuItem } from '@fluentui/react'
+import { CONFIGURATION_TABS, TimeAlignmentOptions } from './types.js'
+import type { Record as DataRecord } from './utils/csv.js'
 
 const EVENTS_PROFILE = 'showwhy-events'
 
@@ -88,6 +93,32 @@ export class EventAnalysisProfilePlugin
 	}
 }
 
+interface EventAnalysisSchema extends ResourceSchema {
+	profile: typeof EVENTS_PROFILE
+
+	rawData: DataRecord[]
+	columnMapping: ColumnMapping
+	outcomeName: string
+	eventName: string
+	fileName: string
+	estimator: string
+	treatedUnits: string[]
+	treatmentStartDates: number[]
+	checkedUnits: string[] | null
+	chartOptions: ChartOptions
+	filter: DateFilter | null
+	outputRes: SDIDOutputResponse | null
+	placeboOutputRes: Record<string, SDIDOutputResponse | null>
+	placeboSimulation: boolean
+	selectedTabKey: string
+	timeAlignment: string
+	aggTreatment: Treatment | null
+	aggregateEnabled: boolean
+	hypothesis: Hypothesis | null
+	units: string
+	treatmentStartDatesAfterEstimate: { tStartDates: number[] } | null
+}
+
 class EventAnalysisResource extends Resource {
 	public readonly $schema = ''
 	public readonly profile = EVENTS_PROFILE
@@ -98,10 +129,10 @@ class EventAnalysisResource extends Resource {
 
 	public rawData: DataRecord[] = []
 	public columnMapping: ColumnMapping = {}
-	public outcomeName: string = ''
-	public eventName: string = ''
-	public fileName: string = ''
-	public estimator: string = ''
+	public outcomeName = ''
+	public eventName = ''
+	public fileName = ''
+	public estimator = ''
 	public treatedUnits: string[] = []
 	public treatmentStartDates: number[] = []
 	public checkedUnits: string[] | null = null
@@ -109,7 +140,7 @@ class EventAnalysisResource extends Resource {
 	public filter: DateFilter | null = null
 	public outputRes: SDIDOutputResponse | null = null
 	public placeboOutputRes: Record<string, SDIDOutputResponse | null> = {}
-	public placeboSimulation: boolean = false
+	public placeboSimulation = false
 	public selectedTabKey: string = CONFIGURATION_TABS.prepareAnalysis.key
 	public timeAlignment: string =
 		Object.keys(TimeAlignmentOptions)[
@@ -118,15 +149,16 @@ class EventAnalysisResource extends Resource {
 			)
 		]
 	public aggTreatment: Treatment | null = null
-	public aggregateEnabled: boolean = false
+	public aggregateEnabled = false
 	public hypothesis: Hypothesis | null = Hypothesis.Change
-	public units: string = ''
+	public units = ''
 	public treatmentStartDatesAfterEstimate: { tStartDates: number[] } | null =
 		null
 
-	public override toSchema() {
+	public override toSchema(): EventAnalysisSchema {
 		return {
 			...super.toSchema(),
+			profile: this.profile,
 			rawData: this.rawData,
 			columnMapping: this.columnMapping,
 			outcomeName: this.outcomeName,
@@ -151,7 +183,7 @@ class EventAnalysisResource extends Resource {
 		}
 	}
 
-	public override loadSchema(input: any) {
+	public override loadSchema(input: EventAnalysisSchema) {
 		super.loadSchema(input)
 		this.rawData = input.rawData
 		this.columnMapping = input.columnMapping

@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { ProfilePlugin } from '@datashaper/app-framework'
+import type { ProfilePlugin } from '@datashaper/app-framework'
 import type { IDocumentCardPreviewProps } from '@fluentui/react'
 
 export interface HomePageProps {

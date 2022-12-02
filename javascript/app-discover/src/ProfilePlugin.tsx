@@ -2,25 +2,29 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import type { AppServices, ProfilePlugin } from '@datashaper/app-framework'
 import {
-	AppServices,
 	CommandBarSection,
-	ProfilePlugin,
 	RecoilBasedProfileHost,
 } from '@datashaper/app-framework'
-import { Resource, DataPackage } from '@datashaper/workflow'
+import type { ResourceSchema } from '@datashaper/schema'
+import type { DataPackage } from '@datashaper/workflow'
+import { Resource } from '@datashaper/workflow'
+import type { IContextualMenuItem } from '@fluentui/react'
 import { memo, Suspense } from 'react'
-import { MutableSnapshot, Snapshot } from 'recoil'
+import type { MutableSnapshot, Snapshot } from 'recoil'
 
+import { CauseDis } from './components/CauseDis.js'
+import { CauseDisErrorBoundary } from './components/CauseDisErrorBoundary.js'
 import { GraphViewStates } from './components/graph/GraphViews.types.js'
+import type { DECIParams } from './domain/Algorithms/DECI.js'
 import { CausalDiscoveryAlgorithm } from './domain/CausalDiscovery/CausalDiscoveryAlgorithm.js'
 import type { CausalDiscoveryConstraints } from './domain/CausalDiscovery/CausalDiscoveryConstraints.js'
-import {
-	CausalDiscoveryResult,
-	EMPTY_CAUSAL_DISCOVERY_RESULT,
-} from './domain/CausalDiscovery/CausalDiscoveryResult.js'
+import type { CausalDiscoveryResult } from './domain/CausalDiscovery/CausalDiscoveryResult.js'
+import { EMPTY_CAUSAL_DISCOVERY_RESULT } from './domain/CausalDiscovery/CausalDiscoveryResult.js'
 import type { Intervention } from './domain/CausalInference.js'
 import type { NodePosition } from './domain/NodePosition.js'
+import { DeciParamsState } from './state/atoms/algorithms_params.js'
 import {
 	CausalDiscoveryResultsState,
 	CausalGraphConstraintsState,
@@ -41,11 +45,6 @@ import {
 	useRehydrateRecoil,
 	WeightThresholdState,
 } from './state/index.js'
-import type { DECIParams } from './domain/Algorithms/DECI.js'
-import { DeciParamsState } from './state/atoms/algorithms_params.js'
-import { CauseDisErrorBoundary } from './components/CauseDisErrorBoundary.js'
-import { CauseDis } from './components/CauseDis.js'
-import { IContextualMenuItem } from '@fluentui/react'
 
 const DISCOVERY_PROFILE = 'showwhy-discover'
 
@@ -90,6 +89,34 @@ export class DiscoveryProfilePlugin
 	}
 }
 
+interface DiscoveryResourceSchema extends ResourceSchema {
+	profile: typeof DISCOVERY_PROFILE
+	datasetName: string
+	causalGraph: {
+		inModelColumnNames: string[]
+		constraints: CausalDiscoveryConstraints
+		results: CausalDiscoveryResult
+	}
+	causalInference: {
+		interventions: Intervention[]
+		baselineValues: Record<string, number>
+		results: Record<string, number>
+	}
+	layout: {
+		nodePositions: Record<string, NodePosition>
+	}
+	ui: {
+		straightEdges: boolean
+		fixedInterventionRangesEnabled: boolean
+		selectedDiscoveryAlgorithm: CausalDiscoveryAlgorithm
+		weightThreshold: number
+		confidenceThreshold: number
+		correlationThreshold: number
+		view: GraphViewStates
+		deciParams: DECIParams
+	}
+}
+
 class DiscoveryResource extends Resource {
 	public readonly $schema = ''
 	public readonly profile = DISCOVERY_PROFILE
@@ -98,7 +125,7 @@ class DiscoveryResource extends Resource {
 		return 'Causal Discovery'
 	}
 
-	public datasetName: string = ''
+	public datasetName = ''
 
 	public causalGraph: {
 		inModelColumnNames: string[]
@@ -144,9 +171,10 @@ class DiscoveryResource extends Resource {
 		deciParams: { model_options: {}, ate_options: {} },
 	}
 
-	public override toSchema() {
+	public override toSchema(): DiscoveryResourceSchema {
 		return {
 			...super.toSchema(),
+			profile: this.profile,
 			datasetName: this.datasetName,
 			causalGraph: this.causalGraph,
 			causalInference: this.causalInference,
@@ -155,7 +183,7 @@ class DiscoveryResource extends Resource {
 		}
 	}
 
-	public override loadSchema(schema: any) {
+	public override loadSchema(schema: DiscoveryResourceSchema) {
 		super.loadSchema(schema)
 		this.datasetName = schema.datasetName
 		this.causalGraph = schema.causalGraph
