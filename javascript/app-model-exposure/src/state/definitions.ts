@@ -13,7 +13,7 @@ import {
 
 import type { Definition } from '../types/experiments/Definition.js'
 
-const definitionsState = atom<Definition[]>({
+export const definitionsState = atom<Definition[]>({
 	key: 'definitions',
 	default: [],
 })

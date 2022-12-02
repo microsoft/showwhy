@@ -44,6 +44,7 @@ export const ModelExposurePage: React.FC = memo(function ModelExposurePage() {
 		if (item) {
 			setPageTab(item.props.itemKey as PageTabs)
 			scrollRef.current?.scroll(0, 0)
+			console.log('NAV', location)
 			navigate(`${route}/${item.props.itemKey as string}`)
 		}
 	}

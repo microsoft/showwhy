@@ -14,7 +14,7 @@ import {
 
 import type { CausalQuestion } from '../types/question/CausalQuestion.js'
 
-const causalQuestionState = atom<CausalQuestion>({
+export const causalQuestionState = atom<CausalQuestion>({
 	key: 'causal-question',
 	default: {
 		hypothesis: Hypothesis.Change,

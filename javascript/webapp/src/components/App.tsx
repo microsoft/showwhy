@@ -4,10 +4,6 @@
  */
 /* eslint-disable  @typescript-eslint/ban-ts-comment, @typescript-eslint/no-unsafe-return */
 
-import {
-	PersistenceProvider,
-	TableStoreProvider,
-} from '@datashaper/app-framework'
 import { BrowserRouter } from 'react-router-dom'
 import { RecoilRoot } from 'recoil'
 
@@ -20,15 +16,11 @@ export const App: React.FC = function App() {
 		// <StrictMode> disabled for fluent
 		<BrowserRouter>
 			<StyleContext>
-				<TableStoreProvider>
-					<RecoilRoot>
-						<PersistenceProvider>
-							<ErrorBoundary>
-								<Layout />
-							</ErrorBoundary>
-						</PersistenceProvider>
-					</RecoilRoot>
-				</TableStoreProvider>
+				<RecoilRoot>
+					<ErrorBoundary>
+						<Layout />
+					</ErrorBoundary>
+				</RecoilRoot>
 			</StyleContext>
 		</BrowserRouter>
 		// </StrictMode>
