@@ -70,18 +70,20 @@ export const CheckedUnitsState = atom<Set<string> | null>({
 	default: null,
 })
 
+export const DEFAULT_CHART_OPTIONS: ChartOptions = {
+	renderRawData: true,
+	showTreatmentStart: true,
+	showSynthControl: false,
+	applyIntercept: false,
+	relativeIntercept: false,
+	showGrid: true,
+	showMeanTreatmentEffect: false,
+	showChartPerUnit: false,
+}
+
 export const ChartOptionsState = atom<ChartOptions>({
 	key: 'ChartOptionsState',
-	default: {
-		renderRawData: true,
-		showTreatmentStart: true,
-		showSynthControl: false,
-		applyIntercept: false,
-		relativeIntercept: false,
-		showGrid: true,
-		showMeanTreatmentEffect: false,
-		showChartPerUnit: false,
-	},
+	default: DEFAULT_CHART_OPTIONS,
 })
 
 export const FilterState = atom<DateFilter | null>({

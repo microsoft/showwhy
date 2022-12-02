@@ -13,7 +13,7 @@ import {
 
 import type { CausalFactor } from '../types/causality/CausalFactor.js'
 
-const causalFactorsState = atom<CausalFactor[]>({
+export const causalFactorsState = atom<CausalFactor[]>({
 	key: 'causal-factors',
 	default: [],
 })

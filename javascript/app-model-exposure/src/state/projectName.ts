@@ -11,7 +11,7 @@ import {
 	useSetRecoilState,
 } from 'recoil'
 
-const projectNameState = atom<string>({
+export const projectNameState = atom<string>({
 	key: 'projectName',
 	default: 'Exposure Analysis',
 })

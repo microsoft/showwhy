@@ -3,4 +3,4 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 export { App as default } from './components/App.js'
-export * from './persistence/index.js'
+export * from './ProfilePlugin.js'
