@@ -62,11 +62,11 @@ class DeciModelOptions(BaseModel):
 #  decreasing max_steps_auglag (go as low as you can and still get a DAG)
 #  decreasing max_auglag_inner_epochs
 class DeciTrainingOptions(BaseModel):
-    learning_rate: float = 3e-2
-    batch_size: int = 512
+    learning_rate: float = 1e-3
+    batch_size: int = 256
     standardize_data_mean: bool = False
     standardize_data_std: bool = False
-    rho: float = 10.0
+    rho: float = 1.0
     safety_rho: float = 1e13
     alpha: float = 0.0
     safety_alpha: float = 1e13
@@ -367,9 +367,13 @@ class DeciRunner(CausalDiscoveryRunner):
 
         deci_model = self._build_model(causica_dataset)
 
+        training_options_dict = self._training_options.dict()
+
+        logging.info(f"running training with options: {training_options_dict}")
+
         deci_model.run_train(
             causica_dataset,
-            self._training_options.dict(),
+            training_options_dict,
             lambda model_id, step, max_steps: self._report_progress(
                 (step * 100.0 / max_steps) * TRAINING_PROGRESS_PROPORTION
             ),
