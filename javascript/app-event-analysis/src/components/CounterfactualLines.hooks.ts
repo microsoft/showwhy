@@ -3,10 +3,15 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { useCallback, useMemo } from 'react'
-import { D3ScaleLinear, OutputData, PlaceboOutputData } from '../types.js'
+import { isEmpty } from 'lodash'
+import { useMemo } from 'react'
+
+import type { D3ScaleLinear, OutputData, PlaceboOutputData } from '../types.js'
 import { useLineColors } from '../utils/useColors.js'
-import { CounterFactualLineData } from './CounterfactualLines.types.js'
+import type {
+	CounterFactualLineData,
+	CounterfactualLinesProps,
+} from './CounterfactualLines.types.js'
 
 const CONTROL_LINE_WIDTH = 2
 
@@ -79,15 +84,45 @@ function useX2(
 	)
 }
 
+function useHasMissingData(props: CounterfactualLinesProps): boolean {
+	const {
+		hoverUnit,
+		outputData,
+		renderRawData,
+		relativeIntercept,
+		isPlaceboSimulation,
+	} = props
+	return useMemo<boolean>(() => {
+		return (
+			hoverUnit === '' ||
+			outputData.length === 0 ||
+			isEmpty(outputData[0]) ||
+			relativeIntercept ||
+			renderRawData ||
+			isPlaceboSimulation
+		)
+	}, [
+		hoverUnit,
+		outputData,
+		renderRawData,
+		relativeIntercept,
+		isPlaceboSimulation,
+	])
+}
+
 export function useLinesData(
-	hoverUnit: string,
-	xScale: D3ScaleLinear,
-	yScale: D3ScaleLinear,
-	outputData: (OutputData | PlaceboOutputData)[],
-	applyIntercept: boolean,
-	showSynthControl: boolean,
-): () => CounterFactualLineData[] {
+	props: CounterfactualLinesProps,
+): CounterFactualLineData[] {
+	const {
+		hoverUnit,
+		xScale,
+		yScale,
+		outputData,
+		applyIntercept,
+		showSynthControl,
+	} = props
 	const colors = useLineColors()
+	const hasMissingData = useHasMissingData(props)
 	const outputDataNonPlacebo = useOutputDataNonPlacebo(hoverUnit, outputData)
 
 	const x1 = useX1(outputDataNonPlacebo, xScale)
@@ -104,7 +139,8 @@ export function useLinesData(
 	)
 	const showTreatedAndCounterfactual = useShowTreatedAndCounterfactual(x1)
 
-	return useCallback(() => {
+	return useMemo(() => {
+		if (hasMissingData) return []
 		const lines: CounterFactualLineData[] = []
 		const base: Pick<CounterFactualLineData, 'x1' | 'x2' | 'strokeWidth'> = {
 			x1,
@@ -164,5 +200,15 @@ export function useLinesData(
 			lines.push(line)
 		}
 		return lines
-	}, [])
+	}, [
+		x1,
+		x2,
+		colors,
+		yScale,
+		hasMissingData,
+		outputDataNonPlacebo,
+		showControlOnly,
+		showCounterfactualOnly,
+		showTreatedAndCounterfactual,
+	])
 }

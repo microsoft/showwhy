@@ -2,58 +2,25 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { isEmpty } from 'lodash'
 import React, { memo, useMemo } from 'react'
+
 import { useLinesData } from './CounterfactualLines.hooks.js'
-import { CounterfactualLinesProps } from './CounterfactualLines.types.js'
+import type { CounterfactualLinesProps } from './CounterfactualLines.types.js'
 
 export const CounterfactualLines: React.FC<CounterfactualLinesProps> = memo(
-	function CounterfactualLines({
-		xScale,
-		yScale,
-		hoverUnit,
-		outputData,
-		renderRawData,
-		applyIntercept,
-		showSynthControl,
-		relativeIntercept,
-		isPlaceboSimulation,
-	}) {
-		const shouldReturnNull = useMemo<boolean>(() => {
-			return (
-				hoverUnit === '' ||
-				outputData.length === 0 ||
-				isEmpty(outputData[0]) ||
-				relativeIntercept ||
-				renderRawData ||
-				isPlaceboSimulation
-			)
-		}, [
-			hoverUnit,
-			outputData,
-			renderRawData,
-			relativeIntercept,
-			isPlaceboSimulation,
-		])
-		if (shouldReturnNull) return null
+	function CounterfactualLines(props: CounterfactualLinesProps) {
+		const linesData = useLinesData(props)
 
-		const linesData = useLinesData(
-			hoverUnit,
-			xScale,
-			yScale,
-			outputData,
-			applyIntercept,
-			showSynthControl,
-		)
-
-		const lines = useMemo(
-			() =>
-				linesData.map((lineProps, index) => (
+		const lines = useMemo(() => {
+			if (linesData.length) {
+				const counterfactualLines = linesData.map((lineProps, index) => (
 					<line key={index} {...lineProps} />
-				)),
-			[linesData],
-		)
+				))
+				return <g>{counterfactualLines}</g>
+			}
+			return null
+		}, [linesData])
 
-		return <g>{lines}</g>
+		return lines
 	},
 )

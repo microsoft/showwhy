@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { D3ScaleLinear, OutputData, PlaceboOutputData } from '../types.js'
+import type { D3ScaleLinear, OutputData, PlaceboOutputData } from '../types.js'
 
 export interface CounterfactualLinesProps {
 	xScale: D3ScaleLinear

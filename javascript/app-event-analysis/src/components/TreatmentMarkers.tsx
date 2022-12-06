@@ -4,10 +4,11 @@
  */
 import { uniq } from 'lodash'
 import React, { memo } from 'react'
+
 import { MAX_RENDERED_TREATED_UNITS } from '../types.js'
 import { useLineColors } from '../utils/useColors.js'
 import { useTreatmentDates } from './TreatmentMarkers.hooks.js'
-import { TreatmentMarkersProps } from './TreatmentMarkers.types.js'
+import type { TreatmentMarkersProps } from './TreatmentMarkers.types.js'
 
 const TREATMENT_LINE_WIDTH = 1.5
 

@@ -7,9 +7,9 @@ import type {
 	BarChartOrientation,
 	D3ScaleBand,
 	D3ScaleLinear,
+	Dimensions,
 } from '../types.js'
 import type { AxisType } from './Axis.types.js'
-import type { Dimensions } from './BarChart.types.js'
 
 export interface BarChartAxisProps {
 	type: AxisType

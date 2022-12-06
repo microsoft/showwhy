@@ -36,7 +36,6 @@ export function useTreatmentDates(
 				dates[indx] = treatmentDate
 			})
 		}
-		console.log('treatmentDates', dates)
 		return dates
-	}, [outputData, treatmentStartDates, firstOutput, isPlaceboSimulation])
+	}, [treatmentStartDates, firstOutput, isPlaceboSimulation])
 }

@@ -371,7 +371,14 @@ export const ResultPane: React.FC<ResultPaneProps> = memo(function ResultPane({
 				checkedUnits={checkedUnits}
 			/>
 		),
-		[inputData, checkableUnits, onRemoveCheckedUnit, treatedUnits],
+		[
+			inputData,
+			checkableUnits,
+			onRemoveCheckedUnit,
+			treatedUnits,
+			checkedUnits,
+			isPlaceboSimulation,
+		],
 	)
 
 	const syntheticControlComposition = useMemo(() => {

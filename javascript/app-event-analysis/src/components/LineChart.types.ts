@@ -2,11 +2,10 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { Tooltip } from '../hooks/useTooltip.js'
+import type { Tooltip } from '../hooks/useTooltip.js'
 import type {
 	ChartOptions,
 	D3ScaleLinear,
-	DataPoint,
 	Dimensions,
 	HoverInfo,
 	LineData,
@@ -48,14 +47,14 @@ export interface HandleLineMouseClickOrMoveProps extends MouseHandlersProps {
 }
 
 export interface LineChartData {
-	inputLines: DataPoint[]
+	inputLines: LineData[][]
 	outputLinesTreated: LineData[][]
 	outputLinesControl: LineData[][]
 	outputLinesIntercepted: LineData[][]
 	outputLinesInterceptedRelative: LineData[][]
 	minValue: number
 	maxValue: number
-	dateRange: [number, number]
+	dateRange: [number, number] | [undefined, undefined]
 }
 
 export interface MouseHandlers {

@@ -3,15 +3,12 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { useThematic } from '@thematic/react'
-import { easeLinear, select } from 'd3'
+import { select } from 'd3'
 import { memo, useCallback, useLayoutEffect, useMemo, useRef } from 'react'
 
 import type { BarData, D3ScaleBand, D3ScaleLinear } from '../types.js'
 import { BAR_TRANSPARENT, BarChartOrientation } from '../types.js'
 import type { BarProps } from './Bar.types.js'
-
-const ANIMATION_DURATION = 300
-const EASING_FN = easeLinear
 
 export const Bar: React.FC<BarProps> = memo(function Bar({
 	barElementClassName,
