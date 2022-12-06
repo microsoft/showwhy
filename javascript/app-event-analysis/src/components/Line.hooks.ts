@@ -8,7 +8,7 @@ import { cloneDeep } from 'lodash'
 import { useCallback, useMemo } from 'react'
 
 import type { D3ScaleLinear, LineData } from '../types.js'
-import { RenderLinesProps } from './Line.types.js'
+import type { RenderLinesProps } from './Line.types.js'
 
 function usePathDefinitionFunc(xScale: D3ScaleLinear, yScale: D3ScaleLinear) {
 	return useCallback(

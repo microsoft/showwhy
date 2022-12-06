@@ -3,9 +3,9 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { memo, useMemo, useRef, useEffect } from 'react'
-import { useRenderLines } from './Line.hooks.js'
+import { memo, useEffect, useMemo, useRef } from 'react'
 
+import { useRenderLines } from './Line.hooks.js'
 import type { LineProps } from './Line.types.js'
 
 export const Line: React.FC<LineProps> = memo(function Line({
