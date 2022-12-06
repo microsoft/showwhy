@@ -6,10 +6,10 @@ wget -O helm.tgz https://get.helm.sh/helm-v3.4.1-linux-amd64.tar.gz
 tar -zxvf helm.tgz
 mv linux-amd64/helm /usr/local/bin/helm
 # Install kubectl
-az aks install-cli
+#az aks install-cli
 echo "LOGIN..."
 # Get cluster credentials
-az aks get-credentials -g $RESOURCEGROUP -n $CLUSTER_NAME
+#az aks get-credentials -g $RESOURCEGROUP -n $CLUSTER_NAME
 echo "LOGIN SUCCESSFUL"
 
 # Install Simple Helm Chart https://github.com/bitnami/azure-marketplace-charts
