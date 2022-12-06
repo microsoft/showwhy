@@ -16,5 +16,7 @@ export type GridLineProps = SVGProps<SVGGElement> & {
 	myscale: D3Scale
 	ticks: number
 	tickSize: number
+	color?: string
+	opacity?: string
 	disableAnimation?: boolean
 }
