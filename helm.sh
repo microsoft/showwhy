@@ -7,7 +7,7 @@ wget -O helm.tgz https://get.helm.sh/helm-v3.4.1-linux-amd64.tar.gz
 #mv linux-amd64/helm /usr/local/bin/helm
 # Install kubectl
 echo "LOGIN..."
-az subscription --use $SUBSCRIPTION
+az account set --subscription $SUBSCRIPTION
 az aks install-cli
 # Get cluster credentials
 az aks get-credentials -g $RESOURCEGROUP -n $CLUSTER_NAME
