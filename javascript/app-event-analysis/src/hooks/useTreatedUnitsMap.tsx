@@ -8,7 +8,7 @@ import { useRecoilState } from 'recoil'
 
 import { TreatedUnitsState } from '../state/state.js'
 
-type Map = { [unit: string]: number }
+export type Map = { [unit: string]: number }
 
 export function useTreatedUnitsMap(tu?: string[]): Map {
 	const [treatedUnits] = useRecoilState(TreatedUnitsState)
