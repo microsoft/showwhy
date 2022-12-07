@@ -76,7 +76,7 @@ function useOutLines(props: PartialSyntheticChartLinesProps) {
 			// add reference horizontal line at zero
 			if (outputLinesControl.length > 0) {
 				const refLine = cloneDeep(outputLinesControl[0])
-				refLine.forEach(point => {
+				refLine.forEach((point: LineData) => {
 					point.value = 0
 					point.color = 'reference'
 				})

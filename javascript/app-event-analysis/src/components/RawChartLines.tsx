@@ -5,6 +5,7 @@
 import React, { memo } from 'react'
 
 import { useTreatedUnitsMap } from '../hooks/useTreatedUnitsMap.js'
+import type { LineData } from '../types.js'
 import { Line } from './Line.js'
 import { useLinePropsGetters } from './RawChartLines.hooks.js'
 import type { RawChartLinesProps } from './RawChartLines.types.js'
@@ -24,20 +25,24 @@ export const RawChartLines: React.FC<RawChartLinesProps> = memo(
 			useLinePropsGetters(treatedUnitsMap)
 		const { inputLines } = lineChartData
 
-		return inputLines.map((ld, index) => (
-			<Line
-				key={index}
-				className={getClassName(ld)}
-				color={getColor(ld)}
-				xScale={xScale}
-				yScale={yScale}
-				data={ld}
-				opacity={getOpacity(ld)}
-				strokeWidth={getStrokeWidth(ld)}
-				onMouseMove={handleLineMouseMove}
-				onMouseLeave={handleLineMouseLeave}
-				onClick={handleLineMouseClick}
-			/>
-		))
+		return (
+			<>
+				{inputLines.map((ld: LineData[], index: number) => (
+					<Line
+						key={index}
+						className={getClassName(ld)}
+						color={getColor(ld)}
+						xScale={xScale}
+						yScale={yScale}
+						data={ld}
+						opacity={getOpacity(ld)}
+						strokeWidth={getStrokeWidth(ld)}
+						onMouseMove={handleLineMouseMove}
+						onMouseLeave={handleLineMouseLeave}
+						onClick={handleLineMouseClick}
+					/>
+				))}
+			</>
+		)
 	},
 )

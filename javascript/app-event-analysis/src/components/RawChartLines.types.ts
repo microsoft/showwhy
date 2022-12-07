@@ -4,7 +4,10 @@
  */
 
 import type { D3ScaleLinear } from '../types.js'
-import type { LineChartData, MouseHandlers } from './LineChart.types.js'
+import type {
+	LineChartData,
+	MouseHandlers,
+} from './LineChart/LineChart.types.js'
 
 export interface RawChartLinesProps {
 	xScale: D3ScaleLinear

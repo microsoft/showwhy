@@ -5,9 +5,16 @@
 
 import type { Map } from '../hooks/useTreatedUnitsMap.js'
 import type { ChartOptions, D3ScaleLinear } from '../types.js'
-import type { LineChartData, MouseHandlers } from './LineChart.types.js'
+import type {
+	LineChartData,
+	MouseHandlers,
+} from './LineChart/LineChart.types.js'
 
-export interface SyntheticChartLinesProps extends ChartOptions {
+export interface SyntheticChartLinesProps
+	extends Omit<
+		ChartOptions,
+		'showChartPerUnit' | 'showGrid' | 'renderRawData' | 'showTreatmentStart'
+	> {
 	xScale: D3ScaleLinear
 	yScale: D3ScaleLinear
 	isPlaceboSimulation: boolean

@@ -32,21 +32,25 @@ export const SyntheticChartLines: React.FC<SyntheticChartLinesProps> = memo(
 			treatedUnitsMap,
 		})
 
-		return outputLinesIncludingMean.map((ld, index) => (
-			<Line
-				key={index}
-				xScale={xScale}
-				yScale={yScale}
-				data={ld}
-				className={getClassName(ld)}
-				color={getColor(ld)}
-				opacity={getOpacity(ld)}
-				strokeWidth={getStrokeWidth(ld)}
-				strokeDasharray={getStrokeDasharray(ld)}
-				onMouseMove={handleLineMouseMove}
-				onMouseLeave={handleLineMouseLeave}
-				onClick={handleLineMouseClick}
-			/>
-		))
+		return (
+			<>
+				{outputLinesIncludingMean.map((ld, index) => (
+					<Line
+						key={index}
+						xScale={xScale}
+						yScale={yScale}
+						data={ld}
+						className={getClassName(ld)}
+						color={getColor(ld)}
+						opacity={getOpacity(ld)}
+						strokeWidth={getStrokeWidth(ld)}
+						strokeDasharray={getStrokeDasharray(ld)}
+						onMouseMove={handleLineMouseMove}
+						onMouseLeave={handleLineMouseLeave}
+						onClick={handleLineMouseClick}
+					/>
+				))}
+			</>
+		)
 	},
 )
