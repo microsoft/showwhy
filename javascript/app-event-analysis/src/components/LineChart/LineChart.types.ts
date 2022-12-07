@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import type { Tooltip } from '../hooks/useTooltip.js'
+import type { Tooltip } from '../../hooks/useTooltip.js'
 import type {
 	ChartOptions,
 	D3ScaleLinear,
@@ -12,7 +12,7 @@ import type {
 	OutputData,
 	PlaceboOutputData,
 	ProcessedInputData,
-} from '../types'
+} from '../../types'
 
 export interface LineChartProps extends ChartOptions {
 	inputData: ProcessedInputData

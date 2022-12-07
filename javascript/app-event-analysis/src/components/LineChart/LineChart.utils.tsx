@@ -4,7 +4,7 @@
  */
 import { bisector } from 'd3'
 
-import type { LineData } from '../types'
+import type { LineData } from '../../types'
 
 /* eslint-disable-next-line @typescript-eslint/unbound-method */
 export const bisectRight = bisector((d: LineData) => d.date).right
