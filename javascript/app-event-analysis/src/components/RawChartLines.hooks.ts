@@ -3,10 +3,12 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { useMemo, useCallback } from 'react'
+import { useCallback, useMemo } from 'react'
+
+import type { Map } from '../hooks/useTreatedUnitsMap'
+import type { LineData } from '../types.js'
 import {
 	HIGHLIGHT_LINE,
-	LineData,
 	LINE_ELEMENT_CLASS_NAME,
 	LINE_WIDTH,
 	LINE_WIDTH_TREATED,
@@ -14,7 +16,6 @@ import {
 } from '../types.js'
 import { getHoverIdFromValue } from '../utils/charts.js'
 import { useLineColors } from '../utils/useColors.js'
-import { Map } from '../hooks/useTreatedUnitsMap'
 
 export function useLinePropsGetters(treatedUnitsMap: Map) {
 	const getColor = useGetColor(treatedUnitsMap)
@@ -27,7 +28,7 @@ export function useLinePropsGetters(treatedUnitsMap: Map) {
 			getOpacity,
 			getStrokeWidth,
 		}
-	}, [getColor, treatedUnitsMap, getOpacity])
+	}, [getColor, getOpacity, getStrokeWidth])
 }
 
 function getClassName(lineData: LineData[]) {

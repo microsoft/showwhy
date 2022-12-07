@@ -3,4 +3,4 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-export * from './LineChart'
+export * from './LineChart.js'

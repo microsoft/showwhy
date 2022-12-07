@@ -12,7 +12,6 @@ import type {
 	OutputData,
 	PlaceboOutputData,
 } from '../../../types'
-
 import { useLineColors } from '../../../utils/useColors.js'
 
 export function useCounterfactual(

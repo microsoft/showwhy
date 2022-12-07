@@ -7,10 +7,10 @@ import React, { memo } from 'react'
 import { useTreatedUnitsMap } from '../hooks/useTreatedUnitsMap.js'
 import { Line } from './Line.js'
 import {
-	useOutputLinesIncludingMean,
 	useLinePropsGetters,
+	useOutputLinesIncludingMean,
 } from './SyntheticChartLines.hooks.js'
-import { SyntheticChartLinesProps } from './SyntheticChartLines.types.js'
+import type { SyntheticChartLinesProps } from './SyntheticChartLines.types.js'
 
 export const SyntheticChartLines: React.FC<SyntheticChartLinesProps> = memo(
 	function SyntheticChartLines({ xScale, yScale, mouseHandlers, ...props }) {

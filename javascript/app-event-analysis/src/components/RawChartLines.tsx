@@ -6,8 +6,8 @@ import React, { memo } from 'react'
 
 import { useTreatedUnitsMap } from '../hooks/useTreatedUnitsMap.js'
 import { Line } from './Line.js'
-import { RawChartLinesProps } from './RawChartLines.types.js'
 import { useLinePropsGetters } from './RawChartLines.hooks.js'
+import type { RawChartLinesProps } from './RawChartLines.types.js'
 
 export const RawChartLines: React.FC<RawChartLinesProps> = memo(
 	function RawChartLines({

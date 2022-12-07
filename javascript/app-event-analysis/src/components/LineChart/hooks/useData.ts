@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { extent, line, max, min } from 'd3'
+import { extent, max, min } from 'd3'
 import { cloneDeep, difference, groupBy, isEmpty, sortBy } from 'lodash'
 import { useMemo } from 'react'
 
@@ -12,7 +12,6 @@ import type {
 	PlaceboOutputData,
 	ProcessedInputData,
 } from '../../../types'
-
 import type { LineChartData } from '../LineChart.types.js'
 
 export function useData(

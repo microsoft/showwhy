@@ -3,9 +3,9 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { ChartOptions, D3ScaleLinear } from '../types.js'
+import type { Map } from '../hooks/useTreatedUnitsMap.js'
+import type { ChartOptions, D3ScaleLinear } from '../types.js'
 import type { LineChartData, MouseHandlers } from './LineChart.types.js'
-import { Map } from '../hooks/useTreatedUnitsMap.js'
 
 export interface SyntheticChartLinesProps extends ChartOptions {
 	xScale: D3ScaleLinear
@@ -17,11 +17,10 @@ export interface SyntheticChartLinesProps extends ChartOptions {
 	checkedUnits: Set<string> | null
 }
 
-export interface PartialSyntheticChartLinesProps
-	extends Omit<
-		SyntheticChartLinesProps,
-		'xScale' | 'yScale' | 'mouseHandlers' | 'treatedUnits'
-	> {}
+export type PartialSyntheticChartLinesProps = Omit<
+	SyntheticChartLinesProps,
+	'xScale' | 'yScale' | 'mouseHandlers' | 'treatedUnits'
+>
 
 export interface LinePropsGetters
 	extends Pick<

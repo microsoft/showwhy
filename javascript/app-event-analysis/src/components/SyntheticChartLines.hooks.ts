@@ -3,11 +3,11 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { cloneDeep, partition, unzip } from 'lodash'
-import { useMemo, useCallback } from 'react'
+import { useCallback, useMemo } from 'react'
 
+import type { LineData } from '../types.js'
 import {
 	HIGHLIGHT_LINE,
-	LineData,
 	LINE_ELEMENT_CLASS_NAME,
 	LINE_WIDTH,
 	LINE_WIDTH_TREATED,
@@ -17,7 +17,7 @@ import {
 import { getHoverIdFromValue } from '../utils/charts.js'
 import { useLineColors } from '../utils/useColors.js'
 import { isValidUnit } from '../utils/validation.js'
-import {
+import type {
 	LinePropsGetters,
 	PartialSyntheticChartLinesProps,
 } from './SyntheticChartLines.types.js'
@@ -192,7 +192,7 @@ export function useLinePropsGetters(props: LinePropsGetters) {
 			getStrokeWidth,
 			getStrokeDasharray,
 		}
-	}, [getColor, getOpacity, getStrokeWidth])
+	}, [getColor, getOpacity, getStrokeWidth, getStrokeDasharray])
 }
 
 function getClassName(lineData: LineData[]) {
@@ -212,7 +212,7 @@ function useGetColor(props: LinePropsGetters) {
 				? colors.get('treated')
 				: colors.get(lineData[0].color)
 		},
-		[colors, treatedUnitsMap],
+		[colors, treatedUnitsMap, isPlaceboSimulation],
 	)
 }
 
@@ -236,7 +236,12 @@ function useGetOpacity(props: LinePropsGetters) {
 
 			return renderTransparentLine ? TRANSPARENT_LINE : HIGHLIGHT_LINE
 		},
-		[treatedUnitsMap, isPlaceboSimulation, showMeanTreatmentEffect],
+		[
+			treatedUnits,
+			treatedUnitsMap,
+			isPlaceboSimulation,
+			showMeanTreatmentEffect,
+		],
 	)
 }
 
@@ -267,7 +272,12 @@ function useGetStrokeWidth(props: LinePropsGetters) {
 			}
 			return strokeWidth
 		},
-		[treatedUnitsMap, isPlaceboSimulation, showMeanTreatmentEffect],
+		[
+			treatedUnits,
+			treatedUnitsMap,
+			isPlaceboSimulation,
+			showMeanTreatmentEffect,
+		],
 	)
 }
 
@@ -282,6 +292,6 @@ function useGetStrokeDasharray(props: LinePropsGetters) {
 				? '3, 3'
 				: ''
 		},
-		[showMeanTreatmentEffect],
+		[treatedUnits.length, showMeanTreatmentEffect],
 	)
 }
