@@ -8,7 +8,7 @@ import type { D3ScaleLinear, OutputData, PlaceboOutputData } from '../types.js'
 export interface CounterfactualLinesProps {
 	xScale: D3ScaleLinear
 	yScale: D3ScaleLinear
-	hoverUnit: string
+	hoverUnit: string | undefined
 	outputData: (OutputData | PlaceboOutputData)[]
 
 	renderRawData: boolean

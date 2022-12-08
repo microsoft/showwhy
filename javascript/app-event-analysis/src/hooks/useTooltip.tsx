@@ -30,7 +30,7 @@ export interface Tooltip {
 export const useTooltip = (): Tooltip => {
 	const [x, setX] = useState(0)
 	const [y, setY] = useState(0)
-	const [content, setContent] = useState([])
+	const [content, setContent] = useState<string[]>([])
 	const [unit, setUnit] = useState('')
 	const [visible, setVisible] = useState(false)
 	const isSticky = useRef(false)

@@ -32,7 +32,7 @@ export interface MouseHandlersProps {
 	xScale: D3ScaleLinear
 	leftMargin: number
 	hoverInfo: HoverInfo
-	hoverUnit: string
+	hoverUnit: string | undefined
 	checkableUnits: string[]
 	treatedUnits: string[]
 	renderRawData: boolean
