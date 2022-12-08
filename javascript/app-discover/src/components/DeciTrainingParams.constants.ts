@@ -12,9 +12,9 @@ import { upperFirst } from 'lodash'
 
 import { AnnealEntropy } from '../domain/Algorithms/DECI.js'
 
-const LEARNING_RATE_DEFAULT = 3e-2
-const BATCH_SIZE = 512
-const RHO = 10.0
+const LEARNING_RATE_DEFAULT = 1e-3
+const BATCH_SIZE = 256
+const RHO = 1.0
 const SAFETY_RHO = 1e13
 const ALPHA = 0.0
 const SAFETY_ALPHA = 1e13

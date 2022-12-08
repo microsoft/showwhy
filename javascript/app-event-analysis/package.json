@@ -15,12 +15,14 @@
 		"lint": "essex lint"
 	},
 	"dependencies": {
-		"@datashaper/app-framework": "^0.0.8",
+		"@datashaper/app-framework": "^0.0.12",
+		"@datashaper/schema": "^8.3.0",
+		"@datashaper/workflow": "^21.0.0",
 		"@essex/components": "^3.1.0",
 		"@essex/hooks": "^4.0.13",
 		"@essex/webpack-config": "^21.0.9",
 		"@fluentui/font-icons-mdl2": "^8.5.4",
-		"@fluentui/react": "^8.101.1",
+		"@fluentui/react": "^8.103.4",
 		"@fluentui/react-hooks": "^8.6.14",
 		"@fluentui/utilities": "^8.13.4",
 		"@reduxjs/toolkit": "^1.9.0",
@@ -43,7 +45,7 @@
 		"react-if": "^4.1.4",
 		"react-is": "^18.2.0",
 		"react-redux": "^8.0.4",
-		"react-router-dom": "^6.4.3",
+		"react-router-dom": "^6.4.4",
 		"recoil": "^0.7.6",
 		"redbox-react": "^1.6.0",
 		"styled-components": "^5.3.6"

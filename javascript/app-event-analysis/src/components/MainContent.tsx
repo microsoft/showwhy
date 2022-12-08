@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { useDataTables } from '@datashaper/app-framework'
+import { useTableBundles } from '@datashaper/app-framework'
 import type { IDropdownOption, ITooltipHostStyles } from '@fluentui/react'
 import {
 	ActionButton,
@@ -99,7 +99,7 @@ import { TreatmentSelector } from './TreatmentSelector.js'
 
 export const MainContent: React.FC = memo(function MainContent() {
 	// Dataset selection (from wrangler)
-	const dataTables = useDataTables()
+	const dataTables = useTableBundles()
 
 	// Column mapping
 	const [columnMapping, setColumnMapping] = useRecoilState(ColumnMappingState)

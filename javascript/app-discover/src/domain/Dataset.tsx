@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { useDataTable, useDataTableOutput } from '@datashaper/app-framework'
+import { useTableBundle, useTableBundleOutput } from '@datashaper/app-framework'
 import { Verb } from '@datashaper/schema'
 import type { Step, StepInput } from '@datashaper/workflow'
 import { Workflow } from '@datashaper/workflow'
@@ -66,8 +66,8 @@ export function useDatasetLoader() {
 	const setDatasetNameState = useSetRecoilState(DatasetNameState)
 	const setTable = useSetRecoilState(TableState)
 
-	const datatable = useDataTable(datasetName)
-	const datatableOutput = useDataTableOutput(datatable)
+	const datatable = useTableBundle(datasetName)
+	const datatableOutput = useTableBundleOutput(datatable)
 
 	const [inputTable, setInputTable] = useState<ColumnTable | undefined>()
 	const workflow = useWorkflow(inputTable)

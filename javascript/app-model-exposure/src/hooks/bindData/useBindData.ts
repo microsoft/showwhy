@@ -2,9 +2,9 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { useDataTables } from '@datashaper/app-framework'
+import { useTableBundles } from '@datashaper/app-framework'
 import type { TableContainer } from '@datashaper/tables'
-import type { DataTable, Maybe } from '@datashaper/workflow'
+import type { Maybe, TableBundle } from '@datashaper/workflow'
 import { useMemo } from 'react'
 
 import {
@@ -17,9 +17,9 @@ export function useBindData(): {
 	selectedTableName: Maybe<string>
 	selectedTable: Maybe<TableContainer>
 	onSelectTableId: Handler1<Maybe<string>>
-	tables: DataTable[]
+	tables: TableBundle[]
 } {
-	const tables = useDataTables()
+	const tables = useTableBundles()
 	const selectedTableName = useSelectedTableName()
 	const onSelectTableId = useSetSelectedTableName()
 	const selectedTable = useMemo(

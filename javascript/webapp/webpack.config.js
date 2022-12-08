@@ -9,12 +9,14 @@ const configuration = configure({
 	aliases: () => ({
 		'@datashaper/app-framework': require.resolve('@datashaper/app-framework'),
 		'@showwhy/app-common': require.resolve('@showwhy/app-common'),
+		'react-router-dom': require.resolve('react-router-dom'),
 	}),
 	environment: (env, mode) => {
 		return {
 			EXPOSURE_API_URL: process.env.EXPOSURE_API_URL ?? '/api/exposure',
 			EVENTS_API_URL: process.env.EVENTS_API_URL ?? '/api/events',
 			DISCOVER_API_URL: process.env.DISCOVER_API_URL ?? '/api/discover',
+			APP_MOUNT_PATH: process.env.APP_MOUNT_PATH ?? '/',
 		}
 	},
 	plugins: (env, mode) => [
