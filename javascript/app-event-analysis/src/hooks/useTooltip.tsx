@@ -24,13 +24,13 @@ export interface Tooltip {
 	unStick: () => void
 	stickyState: boolean
 	visible?: boolean
-	content: string
+	content: string[]
 }
 
 export const useTooltip = (): Tooltip => {
 	const [x, setX] = useState(0)
 	const [y, setY] = useState(0)
-	const [content, setContent] = useState('')
+	const [content, setContent] = useState([])
 	const [unit, setUnit] = useState('')
 	const [visible, setVisible] = useState(false)
 	const isSticky = useRef(false)
@@ -39,12 +39,13 @@ export const useTooltip = (): Tooltip => {
 	/* eslint-disable-next-line @typescript-eslint/no-explicit-any */
 	const show = useCallback((args: ShowTooltipArgs) => {
 		const { contentEl, xPos, yPos, options } = args
+		const content = Array.isArray(contentEl) ? contentEl : [contentEl]
 		const { force = false, unit = '' } = options || {}
 		if (!isSticky.current || force) {
 			setX(xPos)
 			setY(yPos)
 			/* eslint-disable-next-line @typescript-eslint/no-unsafe-argument */
-			setContent(contentEl)
+			setContent(content)
 			setUnit(unit)
 			setVisible(true)
 		}

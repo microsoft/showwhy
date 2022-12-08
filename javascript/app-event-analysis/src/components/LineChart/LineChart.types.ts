@@ -20,8 +20,7 @@ export interface LineChartProps extends ChartOptions {
 	dimensions: Dimensions
 	hoverInfo: HoverInfo
 	checkableUnits: string[]
-	treatedUnitsList?: string[]
-	treatedUnitsState: string[]
+	treatedUnits: string[]
 	checkedUnits: Set<string> | null
 	isPlaceboSimulation: boolean
 	outcomeName: string

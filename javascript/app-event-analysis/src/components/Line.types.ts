@@ -12,12 +12,3 @@ export type LineProps = SVGProps<SVGPathElement> & {
 	data: LineData[]
 	color: string
 }
-
-export interface RenderLinesProps {
-	color: string
-	data: LineData[]
-	refDashed: React.MutableRefObject<SVGPathElement | null>
-	refSolid: React.MutableRefObject<SVGPathElement | null>
-	xScale: D3ScaleLinear
-	yScale: D3ScaleLinear
-}

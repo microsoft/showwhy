@@ -14,7 +14,7 @@ export function constructLineTooltipContent(
 	date?: number,
 ) {
 	if (date === undefined) {
-		return { content: <>{data[0].unit}</>, unit: '' }
+		return { content: [data[0].unit], unit: '' }
 	}
 	const closestElement = bisectRight(data, date)
 	const d0 = data[closestElement - 1].date
@@ -27,15 +27,7 @@ export function constructLineTooltipContent(
 			: 'undefined'
 	const unit = finalElement ? finalElement.unit : 'unknown unit'
 	return {
-		content: (
-			<>
-				{finalDate}
-				<br />
-				{finalValue}
-				<br />
-				{unit}
-			</>
-		),
-		unit: unit,
+		content: [finalDate, finalValue, unit],
+		unit,
 	}
 }

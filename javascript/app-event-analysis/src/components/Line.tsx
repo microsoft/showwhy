@@ -3,9 +3,14 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import { select } from 'd3'
 import { memo, useEffect, useMemo, useRef } from 'react'
 
-import { useRenderLines } from './Line.hooks.js'
+import type { LineData } from '../types.js'
+import {
+	useDataForPointsAtGapBounds,
+	usePathDefinitionFunc,
+} from './Line.hooks.js'
 import type { LineProps } from './Line.types.js'
 
 export const Line: React.FC<LineProps> = memo(function Line({
@@ -17,23 +22,40 @@ export const Line: React.FC<LineProps> = memo(function Line({
 }) {
 	const refSolid = useRef<SVGPathElement | null>(null)
 	const refDashed = useRef<SVGPathElement | null>(null)
-	const renderLines = useRenderLines({
-		xScale,
-		yScale,
-		color,
-		data,
-		refDashed,
-		refSolid,
-		...props,
-	})
+	const pathDefinitionFunc = usePathDefinitionFunc(xScale, yScale)
+	const dataForPointsAtGapBounds = useDataForPointsAtGapBounds(data)
 
 	const missingDataExist = useMemo(() => {
 		return data.some(d => d.value === null)
 	}, [data])
 
+	function renderLine() {
+		if (refSolid?.current) {
+			select<SVGPathElement, LineData[]>(refSolid.current)
+				.datum(data)
+				.attr('d', pathDefinitionFunc)
+				.attr('stroke', color)
+		}
+		if (refDashed?.current) {
+			select<SVGPathElement, LineData[]>(refDashed.current)
+				.datum(dataForPointsAtGapBounds)
+				.attr('d', pathDefinitionFunc)
+				.attr('stroke', color)
+				.style('stroke-dasharray', '3, 3')
+		}
+	}
+
 	useEffect(() => {
-		renderLines()
-	}, [renderLines])
+		renderLine()
+	}, [
+		data,
+		refSolid,
+		refDashed,
+		dataForPointsAtGapBounds,
+		pathDefinitionFunc,
+		color,
+		renderLine,
+	])
 
 	if (missingDataExist) {
 		return (

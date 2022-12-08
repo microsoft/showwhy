@@ -101,7 +101,6 @@ function useHandleLineMouseLeave(props: HandleLineMouseClickOrMoveProps) {
 
 			if (!showMeanTreatmentEffect) {
 				const { width, opacity } = getLineHoverAttributes(dt)
-				console.log({ width, opacity })
 				path.attr('stroke-width', width).attr('opacity', opacity)
 
 				// if non-placebo outline lines are shown, then reset their attributes
@@ -171,7 +170,7 @@ function useHandleLineMouseClickOrMove(props: HandleLineMouseClickOrMoveProps) {
 			const relXPos = event.nativeEvent.offsetX - leftMargin
 			const date = xScale.invert(relXPos)
 
-			const toolTipContent: { content: JSX.Element; unit: string } =
+			const toolTipContent: { content: (string | number)[]; unit: string } =
 				constructLineTooltipContent(data, date)
 			showTooltip({
 				contentEl: toolTipContent.content,
@@ -224,10 +223,10 @@ function useHandleLineMouseClickOrMove(props: HandleLineMouseClickOrMoveProps) {
 				}
 
 				hoverInfo.setHoverItem({
-					data: data,
-					xPos: xPos,
-					yPos: yPos,
-					date: date,
+					data,
+					xPos,
+					yPos,
+					date,
 				} as TooltipInfo)
 			}
 		},

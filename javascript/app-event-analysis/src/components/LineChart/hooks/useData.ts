@@ -29,10 +29,10 @@ export function useData(
 
 		// hacks to speed up computation:
 		// cache treated units and selected units as maps
-		const selectedUnitsMap: { [unit: string]: number } = {}
-		selectedUnits.forEach(unit => {
-			selectedUnitsMap[unit] = 1
-		})
+		const selectedUnitsMap = selectedUnits.reduce((acc, unit) => {
+			acc[unit] = 1
+			return acc
+		}, {} as { [unit: string]: number })
 
 		// input lines represent lines for all selected units as well as the treated unit
 		const inputLines = Object.values(
