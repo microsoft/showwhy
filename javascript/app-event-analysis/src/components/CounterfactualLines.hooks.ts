@@ -46,11 +46,11 @@ function useShowControlOnly(
 }
 
 function useOutputDataNonPlacebo(
-	hoverUnit: string,
+	hoverUnit: string | undefined,
 	outputData: (OutputData | PlaceboOutputData)[],
 ): OutputData {
 	const outputIndex = outputData.findIndex(output =>
-		hoverUnit.includes(output.treatedUnit),
+		hoverUnit?.includes(output.treatedUnit),
 	)
 	const outputDataNonPlacebo = outputData[outputIndex] as OutputData
 	return useMemo(() => outputDataNonPlacebo, [outputDataNonPlacebo])
@@ -94,9 +94,9 @@ function useHasMissingData(props: CounterfactualLinesProps): boolean {
 	} = props
 	return useMemo<boolean>(() => {
 		return (
-			hoverUnit === '' ||
-			outputData.length === 0 ||
-			isEmpty(outputData[0]) ||
+			!hoverUnit ||
+			outputData?.length === 0 ||
+			isEmpty(outputData?.[0]) ||
 			relativeIntercept ||
 			renderRawData ||
 			isPlaceboSimulation
@@ -157,29 +157,9 @@ export function useLinesData(
 				stroke: colors.get('control'),
 			}
 			lines.push(line)
-		} else if (showCounterfactualOnly) {
-			let line
-			if (showTreatedAndCounterfactual) {
-				line = {
-					...base,
-					y1: yScale(outputDataNonPlacebo.control_pre_value),
-					y2: yScale(outputDataNonPlacebo.treated_pre_value),
-					className: 'counterfactualLine',
-					stroke: colors.counterfactualLine,
-					strokeDasharray: '6, 4',
-				}
-				lines.push(line)
-			}
-			line = {
-				...base,
-				y1: yScale(outputDataNonPlacebo.control_post_value),
-				y2: yScale(outputDataNonPlacebo.counterfactual_value),
-				className: 'counterfactualLine',
-				stroke: colors.counterfactualLine,
-				strokeDasharray: '6, 4',
-			}
-			lines.push(line)
-		} else if (showTreatedAndCounterfactual) {
+		}
+
+		if (showTreatedAndCounterfactual) {
 			let line: CounterFactualLineData = {
 				...base,
 				y1: yScale(outputDataNonPlacebo.treated_pre_value),
@@ -199,6 +179,33 @@ export function useLinesData(
 			}
 			lines.push(line)
 		}
+
+		if (showCounterfactualOnly) {
+			let line
+			if (showTreatedAndCounterfactual) {
+				line = {
+					...base,
+					x2: x1,
+					y1: yScale(outputDataNonPlacebo.control_pre_value),
+					y2: yScale(outputDataNonPlacebo.treated_pre_value),
+					className: 'counterfactualLine',
+					stroke: colors.counterfactualLine,
+					strokeDasharray: '6, 4',
+				}
+				lines.push(line)
+			}
+			line = {
+				...base,
+				x1: x2,
+				y1: yScale(outputDataNonPlacebo.control_post_value),
+				y2: yScale(outputDataNonPlacebo.counterfactual_value),
+				className: 'counterfactualLine',
+				stroke: colors.counterfactualLine,
+				strokeDasharray: '6, 4',
+			}
+			lines.push(line)
+		}
+
 		return lines
 	}, [
 		x1,

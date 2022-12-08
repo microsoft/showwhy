@@ -25,7 +25,7 @@ export function useCounterfactual(
 	relativeIntercept: boolean,
 	width: number,
 	height: number,
-	hoverUnit: string,
+	hoverUnit: string | undefined,
 	hideTooltip: () => void,
 	showTooltip: ShowTooltip,
 ) {
@@ -43,10 +43,9 @@ export function useCounterfactual(
 		)
 			return
 
-		const outputIndex =
-			hoverUnit !== ''
-				? outputData.findIndex(output => hoverUnit.includes(output.treatedUnit))
-				: 0
+		const outputIndex = hoverUnit
+			? outputData.findIndex(output => hoverUnit?.includes(output.treatedUnit))
+			: 0
 		const outputDataNonPlacebo = outputData[outputIndex] as OutputData
 
 		const x1 = xScale(outputDataNonPlacebo.time_before_intervention)
@@ -71,7 +70,7 @@ export function useCounterfactual(
 		//
 		// Circle points for control, treated, and counterfactual lines
 		//
-		if (!renderRawData && hoverUnit !== '') {
+		if (!renderRawData && !!hoverUnit) {
 			//
 			// draw points
 			//
