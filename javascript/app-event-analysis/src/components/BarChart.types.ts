@@ -5,15 +5,10 @@
 import type {
 	BarChartOrientation,
 	BarData,
+	Dimensions,
 	HoverInfo,
 	LegendData,
 } from '../types'
-
-export type Dimensions = {
-	width: number
-	height: number
-	margin: { top: number; bottom: number; left: number; right: number }
-}
 
 export interface BarChartProps {
 	inputData: BarData[]

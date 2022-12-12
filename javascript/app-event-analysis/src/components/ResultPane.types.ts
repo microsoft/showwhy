@@ -23,4 +23,6 @@ export interface DimensionedLineChartProps
 	lineChartRef: React.MutableRefObject<HTMLDivElement | null>
 	output: (OutputData | PlaceboOutputData)[]
 	treatedUnitsList?: string[]
+	isPlaceboSimulation: boolean
+	checkedUnits: Set<string> | null
 }

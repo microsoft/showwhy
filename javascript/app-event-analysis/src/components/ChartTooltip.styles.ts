@@ -25,4 +25,7 @@ export const TooltipContent = styled.div`
 		margin: 10px 5px 5px;
 		pointer-events: auto;
 	}
+	p {
+		margin: 0;
+	}
 `

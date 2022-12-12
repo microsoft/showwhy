@@ -3,15 +3,12 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { useThematic } from '@thematic/react'
-import { easeLinear, select } from 'd3'
+import { select } from 'd3'
 import { memo, useCallback, useLayoutEffect, useMemo, useRef } from 'react'
 
 import type { BarData, D3ScaleBand, D3ScaleLinear } from '../types.js'
 import { BAR_TRANSPARENT, BarChartOrientation } from '../types.js'
 import type { BarProps } from './Bar.types.js'
-
-const ANIMATION_DURATION = 300
-const EASING_FN = easeLinear
 
 export const Bar: React.FC<BarProps> = memo(function Bar({
 	barElementClassName,
@@ -23,7 +20,6 @@ export const Bar: React.FC<BarProps> = memo(function Bar({
 	height,
 	color,
 	data,
-	animation,
 	renderRotatedLabel,
 	...props
 }) {
@@ -76,9 +72,6 @@ export const Bar: React.FC<BarProps> = memo(function Bar({
 				.attr('opacity', d => d.opacity || BAR_TRANSPARENT)
 				.style('fill', d => d.color)
 
-			if (animation) {
-				barElement.transition().duration(ANIMATION_DURATION).ease(EASING_FN)
-			}
 			if (renderRotatedLabel) {
 				barElement
 					.append('text')
@@ -111,7 +104,6 @@ export const Bar: React.FC<BarProps> = memo(function Bar({
 		yScale,
 		height,
 		renderRotatedLabel,
-		animation,
 		barElementClassName,
 	])
 
@@ -127,7 +119,6 @@ export const Bar: React.FC<BarProps> = memo(function Bar({
 		width,
 		height,
 		color,
-		animation,
 		renderRotatedLabel,
 	])
 

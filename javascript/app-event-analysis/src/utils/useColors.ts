@@ -2,12 +2,17 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+
 import type { Theme } from '@thematic/core'
-import { bisector } from 'd3'
+import { useThematic } from '@thematic/react'
+import { useMemo } from 'react'
 
-import type { LineData } from '../types'
+export function useLineColors() {
+	const theme = useThematic()
+	return useMemo(() => getLineStroke(theme), [theme])
+}
 
-export function getLineStroke(theme: Theme) {
+function getLineStroke(theme: Theme) {
 	// use the main line props for primary line,
 	// use the scales to extract secondary or tertiary colors
 	// TODO: we need a secondary color in thematic so we don't need to use the nominal scale
@@ -40,39 +45,5 @@ export function getLineStroke(theme: Theme) {
 		treatmentLine: scale(4).hex(),
 		counterfactualLine: theme.link().stroke().hex(),
 		control: theme.link().stroke().hex(),
-	}
-}
-
-/* eslint-disable-next-line @typescript-eslint/unbound-method */
-export const bisectRight = bisector((d: LineData) => d.date).right
-
-export function constructLineTooltipContent(
-	data: LineData[] | LineData[],
-	date?: number,
-) {
-	if (date === undefined) {
-		return { content: <>{data[0].unit}</>, unit: '' }
-	}
-	const closestElement = bisectRight(data, date)
-	const d0 = data[closestElement - 1].date
-	const d1 = closestElement >= data.length ? d0 : data[closestElement].date
-	const finalDate = date - d0 > d1 - date ? d1 : d0
-	const finalElement = data.find(ele => ele.date === finalDate)
-	const finalValue =
-		finalElement && finalElement.value !== null
-			? finalElement.value.toFixed(2)
-			: 'undefined'
-	const unit = finalElement ? finalElement.unit : 'unknown unit'
-	return {
-		content: (
-			<>
-				{finalDate}
-				<br />
-				{finalValue}
-				<br />
-				{unit}
-			</>
-		),
-		unit: unit,
 	}
 }
