@@ -144,7 +144,7 @@ export function useData(
 						return {
 							...point,
 							value:
-								point.value !== null
+								point.value != null
 									? point.value + outputData.intercept_offset[lineIndex]
 									: null,
 						}
@@ -182,19 +182,19 @@ export function useData(
 						: allLinesPoints
 				maxValue =
 					max(linesForCalculatingMaxValue, d => {
-						return d.value !== null ? +d.value : null
+						return d.value != null ? +d.value : null
 					}) ?? 0
 				if (applyIntercept) {
 					const minInterceptedFlat =
 						min(outputLinesInterceptedFlat, d => {
-							return d.value !== null ? +d.value : null
+							return d.value != null ? +d.value : null
 						}) ?? 0
 					minValue = Math.min(0, minInterceptedFlat)
 				}
 				if (relativeIntercept || isPlaceboSimulation) {
 					const minInterceptedRelative =
 						min(outputLinesInterceptedRelativeFlat, d => {
-							return d.value !== null ? +d.value : null
+							return d.value != null ? +d.value : null
 						}) ?? 0
 					minValue = Math.min(minInterceptedRelative, 0)
 				}

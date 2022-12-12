@@ -25,15 +25,18 @@ export function useTreatmentDates(
 		const dataShiftedAndAligned =
 			!isEmpty(outputDataNonPlacebo) &&
 			outputDataNonPlacebo.time_mapping_applied
-		if (
+
+		const isTreatment =
 			!isPlaceboSimulation &&
 			dataShiftedAndAligned &&
 			!isEmpty(outputDataNonPlacebo) &&
-			outputDataNonPlacebo.consistent_time_window !== null
-		) {
-			const treatmentDate = outputDataNonPlacebo.consistent_time_window[0]
-			dates.forEach((_, indx) => {
-				dates[indx] = treatmentDate
+			outputDataNonPlacebo.consistent_time_window != null
+
+		if (isTreatment) {
+			const treatmentDate = outputDataNonPlacebo
+				.consistent_time_window?.[0] as number
+			dates.forEach((_, index) => {
+				dates[index] = treatmentDate
 			})
 		}
 		return dates

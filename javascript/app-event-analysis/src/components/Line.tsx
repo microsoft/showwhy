@@ -54,7 +54,6 @@ export const Line: React.FC<LineProps> = memo(function Line({
 		dataForPointsAtGapBounds,
 		pathDefinitionFunc,
 		color,
-		renderLine,
 	])
 
 	if (missingDataExist) {

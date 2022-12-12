@@ -62,8 +62,7 @@ function useX1(
 ): number {
 	return useMemo(
 		() =>
-			outputDataNonPlacebo &&
-			outputDataNonPlacebo.time_before_intervention !== undefined
+			outputDataNonPlacebo?.time_before_intervention != null
 				? xScale(outputDataNonPlacebo.time_before_intervention)
 				: 0,
 		[outputDataNonPlacebo, xScale],
@@ -76,8 +75,7 @@ function useX2(
 ): number {
 	return useMemo(
 		() =>
-			outputDataNonPlacebo &&
-			outputDataNonPlacebo.time_after_intervention !== undefined
+			outputDataNonPlacebo?.time_after_intervention != null
 				? xScale(outputDataNonPlacebo.time_after_intervention)
 				: 0,
 		[outputDataNonPlacebo, xScale],

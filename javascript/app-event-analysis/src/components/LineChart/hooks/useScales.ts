@@ -5,7 +5,7 @@
 import { scaleLinear } from 'd3'
 import { useMemo } from 'react'
 
-import type { D3ScaleLinear, Dimensions } from '../../../types'
+import type { D3ScaleLinear, Dimensions } from '../../../types.js'
 import type { LineChartData } from '../LineChart.types.js'
 
 export function useScales(

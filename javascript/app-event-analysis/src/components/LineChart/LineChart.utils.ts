@@ -22,7 +22,7 @@ export function constructLineTooltipContent(
 	const finalDate = date - d0 > d1 - date ? d1 : d0
 	const finalElement = data.find(ele => ele.date === finalDate)
 	const finalValue =
-		finalElement && finalElement.value !== null
+		finalElement && finalElement.value != null
 			? finalElement.value.toFixed(2)
 			: 'undefined'
 	const unit = finalElement ? finalElement.unit : 'unknown unit'

@@ -18,10 +18,10 @@ export function usePathDefinitionFunc(
 			const line = d3Line<[number, number | null]>().defined(function (
 				d: [number, number | null],
 			) {
-				return d[1] !== null
+				return d[1] != null
 			})
 			const points = lineData.map(d => {
-				return [xScale(d.date), d.value !== null ? yScale(d.value) : null]
+				return [xScale(d.date), d.value != null ? yScale(d.value) : null]
 			}) as Array<[number, number | null]>
 			return line(points)
 		},
@@ -33,10 +33,10 @@ export function useDataForPointsAtGapBounds(data: LineData[]) {
 	return useMemo(() => {
 		const points: LineData[] = []
 		data.forEach((point, indx) => {
-			if (point.value === null && points.length === 0) {
+			if (point.value == null && points.length === 0) {
 				points.push(cloneDeep(data[indx - 1]))
 			}
-			if (point.value !== null && points.length === 1) {
+			if (point.value != null && points.length === 1) {
 				points.push(cloneDeep(point))
 			}
 		})
