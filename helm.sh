@@ -13,11 +13,7 @@ az aks install-cli
 az aks get-credentials -g $RESOURCEGROUP -n $CLUSTER_NAME
 echo "LOGIN SUCCESSFUL"
 
-# Install Simple Helm Chart https://github.com/bitnami/azure-marketplace-charts
-
-helm install \
-    $HELM_APP_NAME \
-    $HELM_APP \
+helm upgrade --install $HELM_APP_NAME $HELM_APP \
     --set enableAuthentication=false,causalImagesPullPolicy=Always,causalImagesRegistry=$CAUSAL_REGISTRY,domain=$DOMAIN
 
 echo \{\"Status\":\"Complete\"\} > $AZ_SCRIPTS_OUTPUT_PATH
