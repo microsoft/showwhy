@@ -15,16 +15,9 @@ echo "LOGIN SUCCESSFUL"
 
 # Install Simple Helm Chart https://github.com/bitnami/azure-marketplace-charts
 
-helm repo add \
-    $HELM_REPO \
-    $HELM_REPO_URL
-
-helm search repo \
-    $HELM_REPO
-
 helm install \
     $HELM_APP_NAME \
     $HELM_APP \
-    --set global.imagePullSecrets={emptysecret}
+    --set enableAuthentication=false,causalImagesPullPolicy=Always,causalImagesRegistry=$CAUSAL_REGISTRY,domain=$DOMAIN
 
 echo \{\"Status\":\"Complete\"\} > $AZ_SCRIPTS_OUTPUT_PATH
