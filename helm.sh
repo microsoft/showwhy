@@ -2,8 +2,8 @@
 set -e
 
 # Download and install Helm
-wget -O helm.tgz https://get.helm.sh/helm-v3.4.1-linux-amd64.tar.gz
-tar -zxvf helm.tgz
+wget -O helm.tgz https://get.helm.sh/helm-v3.10.3-linux-amd64.tar.gz
+tar -zxvf helm-v3.10.3-linux-amd64.tar.gz
 mv linux-amd64/helm /usr/local/bin/helm
 # Install kubectl
 echo "LOGIN..."
@@ -13,7 +13,7 @@ az aks install-cli
 az aks get-credentials -g $RESOURCEGROUP -n $CLUSTER_NAME
 echo "LOGIN SUCCESSFUL"
 
-export HELM_EXPERIMENTAL_OCI=1
+helm pull $HELM_APP
 helm upgrade --install $HELM_APP_NAME $HELM_APP \
     --set enableAuthentication=false,causalImagesPullPolicy=Always,causalImagesRegistry=$CAUSAL_REGISTRY,domain=$DOMAIN
 
