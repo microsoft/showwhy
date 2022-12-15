@@ -13,6 +13,7 @@ az aks install-cli
 az aks get-credentials -g $RESOURCEGROUP -n $CLUSTER_NAME
 echo "LOGIN SUCCESSFUL"
 
+export HELM_EXPERIMENTAL_OCI=1
 helm upgrade --install $HELM_APP_NAME $HELM_APP \
     --set enableAuthentication=false,causalImagesPullPolicy=Always,causalImagesRegistry=$CAUSAL_REGISTRY,domain=$DOMAIN
 
