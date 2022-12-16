@@ -1,6 +1,7 @@
 # Developing ShowWhy
 
 ## Prerequisite Software
+**At the moment, it doesn't work with Apple M1 processors. We're verifying the issue and will provide an update in the future releases.**
 
 - [Docker](https://docs.docker.com/get-docker/)
 - [Node 16.x](https://nodejs.org)
