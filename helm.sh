@@ -15,7 +15,7 @@ echo "LOGIN SUCCESSFUL"
 
 helm pull $HELM_APP
 helm upgrade --install $HELM_APP_NAME $HELM_APP \
-    --set enableAuthentication=false,causalImagesPullPolicy=Always,causalImagesRegistry=$CAUSAL_REGISTRY,domain=$DOMAIN
+    --set enableAuthentication=false,causalImagesPullPolicy=Always,causalImagesRegistry=$CAUSAL_REGISTRY,domain=$DOMAIN.eastus.cloudapp.azure.com
 
 $IP = az network public-ip create --resource-group $RESOURCEGROUP --name kubernetes-ip \ 
     --dns-name $DNS_NAME --sku Standard --allocation-method static --query publicIp.ipAddress -o tsv
