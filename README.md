@@ -31,6 +31,7 @@ This interface allows users to inspect variable relationships within data, and t
 ![Screenshot of the causal discovery interface](https://user-images.githubusercontent.com/5982160/202047983-3b1c2623-5fd6-47f4-9c02-6ac0e30b5276.png)
 
 ## Getting Started
+**At the moment, it doesn't work with Apple M1 processors. We're verifying the issue and will provide an update in the future releases.**
 
 In order to run the application locally, you will need to ensure that you have Docker installed and running on your machine. You can find instructions for installing Docker [here](https://docs.docker.com/get-docker/).
 
