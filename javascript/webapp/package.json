@@ -40,7 +40,7 @@
 		"@thematic/react": "^2.1.4",
 		"@uifabric/icons": "^7.9.5",
 		"ahooks": "^3.7.2",
-		"allotment": "^1.17.1",
+		"allotment": "1.17.0",
 		"arquero": "^5.1.0",
 		"file-loader": "^6.2.0",
 		"http-server": "^14.1.1",

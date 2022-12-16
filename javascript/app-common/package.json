@@ -31,7 +31,7 @@
 		"@thematic/fluent": "^5.0.3",
 		"@thematic/react": "^2.1.4",
 		"ahooks": "^3.7.2",
-		"allotment": "^1.17.1",
+		"allotment": "1.17.0",
 		"arquero": "^5.1.0",
 		"normalize.css": "^8.0.1",
 		"observable-hooks": "^4.2.1",
