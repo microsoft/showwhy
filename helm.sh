@@ -17,11 +17,11 @@ helm pull $HELM_APP
 helm upgrade --install $HELM_APP_NAME $HELM_APP \
     --set enableAuthentication=false,causalImagesPullPolicy=Always,causalImagesRegistry=$CAUSAL_REGISTRY,domain=$DOMAIN
 
-$IP = az network public-ip create --resource-group $RESOURCEGROUP --name kubernetes_ip \ 
+$IP = az network public-ip create --resource-group $RESOURCEGROUP --name kubernetes-ip \ 
     --dns-name $DNS_NAME --sku Standard --allocation-method static --query publicIp.ipAddress -o tsv
 
 helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
 helm repo update
-helm install ingress-nginx ingress-nginx/ingress-nginx --create-namespace --namespace ingress_nginx --set controller.service.loadBalancerIP=$IP --set controller.service.externalTrafficPolicy=Local
+helm install ingress-nginx ingress-nginx/ingress-nginx --create-namespace --namespace ingressnginx1 --set controller.service.loadBalancerIP=$IP --set controller.service.externalTrafficPolicy=Local
 
 echo \{\"Status\":\"Complete\"\} > $AZ_SCRIPTS_OUTPUT_PATH
