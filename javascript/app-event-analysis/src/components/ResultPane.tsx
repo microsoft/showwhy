@@ -42,7 +42,7 @@ import { getKeyByValue, weightedMean } from '../utils/misc.js'
 import { isValidUnit } from '../utils/validation.js'
 import { BarChart } from './BarChart.js'
 import { CustomMessageBar } from './CustomMessageBar.js'
-import { LineChart } from './LineChart.js'
+import { LineChart } from './LineChart/LineChart.js'
 import { useDynamicChartDimensions } from './ResultPane.hooks.js'
 import { GraphTitle, StyledStack, TreatedTitle } from './ResultPane.styles.js'
 import type { DimensionedLineChartProps } from './ResultPane.types.js'
@@ -367,9 +367,18 @@ export const ResultPane: React.FC<ResultPaneProps> = memo(function ResultPane({
 				onRemoveCheckedUnit={onRemoveCheckedUnit}
 				output={output}
 				treatedUnitsList={treatedUnitsList}
+				isPlaceboSimulation={isPlaceboSimulation}
+				checkedUnits={checkedUnits}
 			/>
 		),
-		[inputData, checkableUnits, onRemoveCheckedUnit, treatedUnits],
+		[
+			inputData,
+			checkableUnits,
+			onRemoveCheckedUnit,
+			treatedUnits,
+			checkedUnits,
+			isPlaceboSimulation,
+		],
 	)
 
 	const syntheticControlComposition = useMemo(() => {
@@ -724,10 +733,14 @@ const DimensionedLineChart: React.FC<DimensionedLineChartProps> = memo(
 		onRemoveCheckedUnit,
 		output,
 		treatedUnitsList,
+		checkedUnits,
+		isPlaceboSimulation,
 	}) {
 		const chartOptions = useRecoilValue(ChartOptionsState)
 		const [hoverItem, setHoverItem] = useState<null | TooltipInfo>(null)
 		const treatedUnits = useRecoilValue(TreatedUnitsState)
+		const outcomeName = useRecoilValue(OutcomeNameState)
+		const treatmentStartDates = useRecoilValue(TreatmentStartDatesState)
 		const hoverInfo = useMemo(() => {
 			return {
 				hoverItem: hoverItem,
@@ -767,7 +780,11 @@ const DimensionedLineChart: React.FC<DimensionedLineChartProps> = memo(
 						showMeanTreatmentEffect={showMeanTreatmentEffect}
 						checkableUnits={checkableUnits}
 						onRemoveCheckedUnit={onRemoveCheckedUnit}
-						treatedUnitsList={treatedUnitsList || treatedUnits}
+						treatedUnits={treatedUnitsList || treatedUnits}
+						isPlaceboSimulation={isPlaceboSimulation}
+						checkedUnits={checkedUnits}
+						outcomeName={outcomeName}
+						treatmentStartDates={treatmentStartDates}
 					/>
 				</ErrorBoundary>
 			</div>

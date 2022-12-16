@@ -70,15 +70,23 @@ class DeciInterventionModel:
         intervention_idxs = []
         intervention_values = []
 
+        interventions_by_index = dict()
+
         for name, value in interventions.items():
             idx = self._deci_model.variables.name_to_idx[name]
             if idx is not None:
-                intervention_idxs.append(self._deci_model.variables.name_to_idx[name])
-                intervention_values.append(value)
+                interventions_by_index[
+                    self._deci_model.variables.name_to_idx[name]
+                ] = value
             else:
                 logging.warning(
                     f"Intervention column {name} ignored: column name not found"
                 )
+
+        # deci expects values to be sorted by index
+        for index in sorted(interventions_by_index.keys()):
+            intervention_idxs.append(index)
+            intervention_values.append(interventions_by_index[index])
 
         intervention_idxs = torch.tensor(
             intervention_idxs, device=self._deci_model.device

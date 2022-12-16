@@ -5,8 +5,8 @@
 
 import { useMemo } from 'react'
 
-import type { Dimensions } from '../components/BarChart.types.js'
 import type { AxisData } from '../components/BarChartAxis.types.js'
+import type { Dimensions } from '../types.js'
 import { MAX_BAR_COUNT_WITH_VISIBLE_LABELS } from '../types.js'
 
 export function useAxisData(

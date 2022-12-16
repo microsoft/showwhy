@@ -10,6 +10,5 @@ export type LineProps = SVGProps<SVGPathElement> & {
 	xScale: D3ScaleLinear
 	yScale: D3ScaleLinear
 	data: LineData[]
-	animation?: string
 	color: string
 }

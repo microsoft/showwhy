@@ -15,6 +15,15 @@ export const MAX_BAR_COUNT_BEFORE_TICK_ROTATION = 5
 export const MAX_BAR_COUNT_WITH_VISIBLE_LABELS = 35 // hide labels after this count
 export const BAR_GAP = 0.4 // gap between bars
 
+export const LINE_WIDTH = 1
+export const LINE_WIDTH_TREATED = 2
+export const OUTPUT_LINE_WIDTH = 3
+export const TRANSPARENT_LINE = 0.25
+export const HIGHLIGHT_LINE = 1
+export const LINE_ELEMENT_CLASS_NAME = 'line-element'
+export const LINE_WIDTH_HOVER = 2
+export const OUTPUT_LINE = 0.5
+
 //
 // Data constants
 //
@@ -93,6 +102,7 @@ export interface DataPoint {
 	unit: string
 	groupUnits?: string[]
 	treated?: 0 | 1
+	color?: string
 }
 
 export interface OutputDataPoint {
@@ -270,4 +280,10 @@ export interface LegendData {
 	color: string
 	name: string
 	opacity?: number
+}
+
+export interface Dimensions {
+	width: number
+	height: number
+	margin: { top: number; bottom: number; left: number; right: number }
 }

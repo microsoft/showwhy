@@ -82,7 +82,7 @@ Now that we have access to the cluster through `kubectl`, let's install the NGIN
 
 ```yml
 controller:
-service:
+  service:
     loadBalancerIP: {INGRESS_STATIC_IP}
     externalTrafficPolicy: Local
 ```

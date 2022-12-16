@@ -52,7 +52,7 @@ export const DeciTrainingParams: React.FC<DeciTrainingParamsProps> = memo(
 									x.inputProps?.name as keyof DECITrainingOptions
 								]?.toString() || x.defaultValue
 							}
-							min={1}
+							min={0}
 							step={x.step}
 							incrementButtonAriaLabel="Increase value by 1"
 							decrementButtonAriaLabel="Decrease value by 1"
