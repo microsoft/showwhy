@@ -18,11 +18,10 @@ jobs:
         id: image-details
         run: |
           echo "Get Details; Ref=$REF, Run Number=$RUN_NUM"
-          if [$REF == 'refs/heads/main']
-          then
-              echo "::set-output name=tag::latest"
+          if [$REF == 'refs/heads/main']; then
+              echo "tag=latest" >> $GITHUB_OUTPUT
           else
-              echo "::set-output name=tag::dev-$RUN_NUM"
+              echo "tag=dev-$RUN_NUM" >> GITHUB_OUTPUT
           fi
         env:
           REF: ${{ github.ref }}
