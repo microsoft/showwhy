@@ -13,11 +13,26 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      
-      - name: Build Backend Image
-        working-directory: ./python/backend
-        run: docker build . -t ghcr.io/microsoft/showwhy:latest
 
-      - name: 'Push to GitHub Container Registry'
-        if: github.ref == 'refs/heads/main'
-        run: docker push ghcr.io/microsoft/showwhy:latest
+      - name: Get Docker Image Details
+        id: image-details
+        run: |
+          if [$REF == 'refs/heads/main']
+          then
+              echo "::set-output name=tag::latest"
+          else
+              echo "::set-output name=tag::dev-$RUN_NUM"
+          fi
+        env:
+          REF: ${{ github.ref }}
+          RUN_NUM: ${{ github.run_number }}
+
+      - uses: pmorelli92/github-container-registry-build-push@2.0.0
+        name: Build and Publish Docker Container
+        with:
+          github-push-secret: ${{secrets.GITHUB_TOKEN}}
+          docker-image-name: showwhy-backend
+          docker-image-tag:  ${{ steps.image-details.outputs.tag }}
+          dockerfile-path: ./python/backend/Dockerfile
+          build-context: ./python/backend
+  
