@@ -7,7 +7,7 @@ on:
       - 'python/**/*'
       - '**/*.py'
       - '**/*.toml'
-      - .github/workflows/python-ci.yml
+      - .github/workflows/ci-python.yml
 jobs:
   build:
     runs-on: ubuntu-latest
