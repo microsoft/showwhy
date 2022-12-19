@@ -16,8 +16,8 @@ jobs:
       
       - name: Build Backend Image
         working-directory: ./python/backend
-        run: docker build . -t ghcr.io/microsoft9/showwhy-backend:latest
+        run: docker build . -t ghcr.io/microsoft/showwhy:latest
 
       - name: 'Push to GitHub Container Registry'
         if: github.ref == 'refs/heads/main'
-        run: docker push ghcr.io/microsoft9/showwhy-backend:latest
+        run: docker push ghcr.io/microsoft/showwhy:latest
