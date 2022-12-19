@@ -11,7 +11,7 @@ on:
       - '**/*.mjs'
       - '**/*.cjs'
       - '**/*.json'
-      - .github/workflows/javascript-ci.yml
+      - .github/workflows/ci-javascript.yml
       
 jobs:
   build:

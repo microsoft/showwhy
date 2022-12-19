@@ -1,0 +1,20 @@
+name: Python CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+    paths:
+      - 'python/**/*'
+      - '**/*.py'
+      - '**/*.toml'
+      - .github/workflows/container-backend.yml
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build Backend Image
+        working-directory: ./python/backend
+        run: |
+          docker build . -t showwhy-backend:latest
+          docker push ghcr.io/showwhy/showwhy-backend:latest
