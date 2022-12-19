@@ -13,8 +13,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      
       - name: Build Backend Image
         working-directory: ./python/backend
-        run: |
-          docker build . -t showwhy-backend:latest
-          docker push ghcr.io/showwhy/showwhy-backend:latest
+        run: docker build . -t showwhy-backend:latest
+
+      - name: 'Push to GitHub Container Registry'
+        if: github.ref == 'refs/heads/main'
+        run: docker push ghcr.io/showwhy/showwhy-backend:latest
