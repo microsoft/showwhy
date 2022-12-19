@@ -17,6 +17,7 @@ jobs:
       - name: Get Docker Image Details
         id: image-details
         run: |
+          echo "Get Details; Ref=$REF, Run Number=$RUN_NUM"
           if [$REF == 'refs/heads/main']
           then
               echo "::set-output name=tag::latest"
