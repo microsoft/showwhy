@@ -8,11 +8,11 @@ az aks get-credentials -g $RESOURCEGROUP -n $CLUSTER_NAME
 echo "LOGIN SUCCESSFUL"
 
 secretName=Default
-az extension add --upgrade -n account
+# az extension add --upgrade -n account
 
 tenantId=`az account tenant list --query [0].tenantId`
 
-# add graph api email and openid access
+# add graph api email and openid access (universally known ids)
 cat > app-manifest.json << EOF
 [
     {
