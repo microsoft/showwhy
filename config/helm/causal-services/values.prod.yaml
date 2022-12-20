@@ -6,7 +6,6 @@
 #
 domain: causal-platform-services.eastus.cloudapp.azure.com
 causalImagesPullPolicy: Always
-oauth2ProxyImage: causalplatformacr.azurecr.io/oauth2-proxy
 defaultLimitRPM: 240
 recreatePodsOnUpgrade: true
 revisionHistoryLimit: 1

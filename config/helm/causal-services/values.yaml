@@ -25,6 +25,16 @@ oauth2ProxyImage: quay.io/oauth2-proxy/oauth2-proxy
 redisImage: mcr.microsoft.com/mirror/docker/library/redis:7
 
 #
+# Where to pull the showwhy backend image from
+#
+showwhyBackendImage: ghcr.io/microsoft/showwhy-backend
+
+#
+# Where to pull the showwhy frontend image from
+#
+showwhyFrontendImage: ghcr.io/microsoft/showwhy-backend
+
+#
 # default number of requests accepted from a given IP each minute
 #   - this only applies to the ingresses defined in applicationGroups
 #     and not for the default backend
@@ -61,7 +71,7 @@ applicationGroups:
   - namespace: backend
     services:
       - name: backend-api
-        image: 'ghcr.io/microsoft/showwhy-backend'
+        image: '{{ .Values.showwhyBackendImage }}'
         imagePullPolicy: '{{ .Values.causalImagesPullPolicy }}'
         replicas: 1
         containerPort: 8081
@@ -80,7 +90,7 @@ applicationGroups:
             value: '*'
 
       - name: backend-worker
-        image: 'ghcr.io/microsoft/showwhy-backend'
+        image: '{{ .Values.showwhyBackendImage }}'
         imagePullPolicy: '{{ .Values.causalImagesPullPolicy }}'
         replicas: 2
         containerPort: 8081
@@ -126,7 +136,7 @@ applicationGroups:
   - namespace: frontend
     services:
       - name: app-shell
-        image: 'ghcr.io/microsoft/showwhy-frontend'
+        image: '{{ .Values.showwhyFrontendImage }}'
         imagePullPolicy: '{{ .Values.causalImagesPullPolicy }}'
         replicas: 1
         containerPort: 8080
