@@ -68,7 +68,7 @@ applicationGroups:
   - namespace: backend
     services:
       - name: backend-api
-        image: '{{ .Values.causalImagesRegistry }}backend'
+        image: '{{ .Values.causalImagesRegistry }}microsoft/showwhy-backend'
         imagePullPolicy: '{{ .Values.causalImagesPullPolicy }}'
         replicas: 1
         containerPort: 8081
@@ -87,7 +87,7 @@ applicationGroups:
             value: '*'
 
       - name: backend-worker
-        image: '{{ .Values.causalImagesRegistry }}backend'
+        image: '{{ .Values.causalImagesRegistry }}microsoft/showwhy-backend'
         imagePullPolicy: '{{ .Values.causalImagesPullPolicy }}'
         replicas: 2
         containerPort: 8081
@@ -133,7 +133,7 @@ applicationGroups:
   - namespace: frontend
     services:
       - name: app-shell
-        image: '{{ .Values.causalImagesRegistry }}app-shell'
+        image: '{{ .Values.causalImagesRegistry }}microsoft/showwhy-frontend'
         imagePullPolicy: '{{ .Values.causalImagesPullPolicy }}'
         replicas: 1
         containerPort: 8080

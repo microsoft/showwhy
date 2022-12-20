@@ -5,7 +5,7 @@
 # the application groups will be inferred from the default values.yaml
 #
 domain: causal-platform-services.eastus.cloudapp.azure.com
-causalImagesRegistry: causalplatformacr.azurecr.io/
+causalImagesRegistry: ghcr.io/
 causalImagesPullPolicy: Always
 oauth2ProxyImage: causalplatformacr.azurecr.io/oauth2-proxy
 defaultLimitRPM: 240
