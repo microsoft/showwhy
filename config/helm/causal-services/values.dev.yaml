@@ -6,7 +6,4 @@
 #
 domain: causal-platform-services-dev.eastus.cloudapp.azure.com
 causalImagesPullPolicy: Always
-defaultLimitRPM: 240
-recreatePodsOnUpgrade: true
-revisionHistoryLimit: 1
 enableAuthentication: true
