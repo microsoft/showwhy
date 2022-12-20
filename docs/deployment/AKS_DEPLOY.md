@@ -181,39 +181,8 @@ Once you have the file properly set, create the namespace for the oauth service 
 > kubectl apply -f oauth-secrets.yaml
 ```
 
-## 6. Build service images
 
-### 6.1. Build the frontend service
-
-#### 6.1.1 Build frontend service bundle
-
-```bash
-> yarn install
-> yarn build
-```
-
-> If you want to force the service to rebuild, run: `yarn force_build`.
-
-This will create the build directory at [`javascript/webapp`](../javascript/webapp).
-
-#### 6.1.2. Build frontend docker image
-
-```bash
-> ./scripts/build-frontend-images.sh
-```
-
-> This will build the following frontend service image: `app-shell`.
-
-### 6.2. Build the backend services
-
-```bash
-> ./scripts/build-backend-images.sh
-```
-
-> This will build the following backend service images: `exposure`, `events` and `discover`.
-
-
-## 7. Push images to ACR
+## 6. Fetch images into ACR
 
 You will need to login in order to push to the docker registry we created on Azure:
 
@@ -224,7 +193,8 @@ You will need to login in order to push to the docker registry we created on Azu
 Now we can push the images we built to the ACR:
 
 ```bash
-> ./scripts/push-images.sh {ACR_URL}
+> az acr import --name {ACR_NAME} --source ghcr.io/microsoft/showwhy-backend:latest --image microsoft/showwhy-backend:latest
+> az acr import --name {ACR_NAME} --source ghcr.io/microsoft/showwhy-frontend:latest --image microsoft/showwhy-frontend:latest
 ```
 
 > `{ACR_URL}` is the URL to your ACR, which should be something like this: `{ACR_NAME}.azurecr.io`.
