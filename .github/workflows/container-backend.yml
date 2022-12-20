@@ -19,11 +19,9 @@ jobs:
         run: |
           echo "Get Details; Ref=$REF, Run Number=$RUN_NUM"
           if [ "$REF" == "refs/heads/main" ]; then
-              echo "A"
-              echo "tag=latest" >> $GITHUB_OUTPUT
+              echo "tag=latest" >>$GITHUB_OUTPUT
           else
-              echo "B"
-              echo "tag=dev-$RUN_NUM" >> GITHUB_OUTPUT
+              echo "tag=dev-$RUN_NUM" >>GITHUB_OUTPUT
           fi
         env:
           REF: ${{ github.ref }}
