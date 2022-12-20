@@ -10,7 +10,7 @@ echo "LOGIN SUCCESSFUL"
 secretName=Default
 # az extension add --upgrade -n account
 
-tenantId=`az account tenant list --query [0].tenantId`
+# tenantId=`az account tenant list --query [0].tenantId`
 
 # add graph api email and openid access (universally known ids)
 cat > app-manifest.json << EOF
@@ -52,7 +52,7 @@ metadata:
     name: oauth-proxy-secret
     namespace: oauth-proxy
 stringData:
-    oidc-issuer-url: https://login.microsoftonline.com/${tenantId}/v2.0
+    oidc-issuer-url: https://login.microsoftonline.com/$TENANT/v2.0
     stringData.scope: openid email
     stringData.client-id: $appId
     stringData.client-secret: $appSecret
