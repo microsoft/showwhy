@@ -23,17 +23,13 @@ jobs:
         run: |
           echo "Get Details; Ref=$REF, Run Number=$RUN_NUM"
           if [ "$REF" == "refs/heads/main" ]; then
-              echo "A"
               echo "tag=latest" >>$GITHUB_OUTPUT
           else
-              echo "B"
               echo "tag=dev-$RUN_NUM" >>$GITHUB_OUTPUT
           fi
         env:
           REF: ${{ github.ref }}
           RUN_NUM: ${{ github.run_number }}
-
-      - run: echo "tag=${{ steps.image-details.outputs.tag }}"
 
       - uses: pmorelli92/github-container-registry-build-push@2.0.0
         name: Build and Publish Docker Container
