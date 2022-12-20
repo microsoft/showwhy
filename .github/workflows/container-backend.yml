@@ -22,5 +22,5 @@ jobs:
           docker-image-tag:  latest
           dockerfile-path: ./python/backend/Dockerfile
           build-context: ./python/backend
-          build-only: github.ref != 'refs/heads/main'
+          build-only: ${{ github.ref != 'refs/heads/main' }}
   

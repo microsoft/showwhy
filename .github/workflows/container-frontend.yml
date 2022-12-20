@@ -44,4 +44,4 @@ jobs:
           docker-image-tag:  latest
           dockerfile-path: ./javascript/webapp/Dockerfile
           build-context: ./javascript/webapp
-          build-only: github.ref != 'refs/heads/main'
+          build-only: ${{ github.ref != 'refs/heads/main' }}
