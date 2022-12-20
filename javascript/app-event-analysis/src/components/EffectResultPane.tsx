@@ -81,6 +81,7 @@ export const EffectResultPane: React.FC<EffectResultPaneProps> = memo(
 						/>
 					)),
 			[
+				inputData,
 				treatedUnits,
 				synthControlData,
 				outputData,
