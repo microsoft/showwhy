@@ -181,31 +181,12 @@ Once you have the file properly set, create the namespace for the oauth service 
 > kubectl apply -f oauth-secrets.yaml
 ```
 
-
-## 6. Fetch images into ACR
-
-You will need to login in order to push to the docker registry we created on Azure:
-
-```bash
-> az acr login --name {ACR_NAME}
-```
-
-Now we can push the images we built to the ACR:
-
-```bash
-> az acr import --name {ACR_NAME} --source ghcr.io/microsoft/showwhy-backend:latest --image microsoft/showwhy-backend:latest
-> az acr import --name {ACR_NAME} --source ghcr.io/microsoft/showwhy-frontend:latest --image microsoft/showwhy-frontend:latest
-```
-
-> `{ACR_URL}` is the URL to your ACR, which should be something like this: `{ACR_NAME}.azurecr.io`.
-
-## 8. Create chart configuration file
+## 6. Create chart configuration file
 
 The default configuration for the `causal-services`' chart  can be seen at [`values.yaml`](../config/helm/causal-services/values.yaml). We will need to update a few values according to what we have just created and configured. To do so, let's create a new YAML file (`values.deploy.yaml`) containing the values we need to update (replace the values with `{}` with the proper configuration):
 
 ```yaml
 domain: {DOMAIN}
-causalImagesRegistry: {ACR_URL}/
 causalImagesPullPolicy: Always
 defaultLimitRPM: 240
 recreatePodsOnUpgrade: true
@@ -213,9 +194,7 @@ revisionHistoryLimit: 1
 enableAuthentication: true
 ```
 
-> Notice that `causalImagesRegistry` should end with a `/`.
-
-## 9. Install the `causal-services` chart
+## 7. Install the `causal-services` chart
 
 Now it's time to install our chart using the configuration file we just created:
 
@@ -223,7 +202,7 @@ Now it's time to install our chart using the configuration file we just created:
 > ./scripts/install-charts.sh values.deploy.yaml
 ```
 
-## 10. Verify all services are properly running
+## 8. Verify all services are properly running
 
 ```bash
 > ./scripts/list-resources.sh
@@ -231,6 +210,6 @@ Now it's time to install our chart using the configuration file we just created:
 
 You should see the services up and running according to their namespace.
 
-## 11. Access application
+## 9. Access application
 
 The application should now be available at: `https://{DOMAIN}`.

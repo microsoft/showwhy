@@ -6,13 +6,6 @@
 domain: localhost
 
 #
-# registry to pull the causal services from
-#   - for local dev, this can be left empty to
-#     use locally built images
-#
-causalImagesRegistry: ''
-
-#
 # policy to pull the causal services images
 #   - for locally built images set this to Never, so the images
 #     should had been built locally
@@ -68,7 +61,7 @@ applicationGroups:
   - namespace: backend
     services:
       - name: backend-api
-        image: '{{ .Values.causalImagesRegistry }}microsoft/showwhy-backend'
+        image: 'ghcr.io/microsoft/showwhy-backend'
         imagePullPolicy: '{{ .Values.causalImagesPullPolicy }}'
         replicas: 1
         containerPort: 8081
@@ -87,7 +80,7 @@ applicationGroups:
             value: '*'
 
       - name: backend-worker
-        image: '{{ .Values.causalImagesRegistry }}microsoft/showwhy-backend'
+        image: 'ghcr.io/microsoft/showwhy-backend'
         imagePullPolicy: '{{ .Values.causalImagesPullPolicy }}'
         replicas: 2
         containerPort: 8081
@@ -133,7 +126,7 @@ applicationGroups:
   - namespace: frontend
     services:
       - name: app-shell
-        image: '{{ .Values.causalImagesRegistry }}microsoft/showwhy-frontend'
+        image: 'ghcr.io/microsoft/showwhy-frontend'
         imagePullPolicy: '{{ .Values.causalImagesPullPolicy }}'
         replicas: 1
         containerPort: 8080
