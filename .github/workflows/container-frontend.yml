@@ -1,4 +1,4 @@
-name: Build Backend Container
+name: Build Frontend Container
 on:
   push:
     branches: [main]
