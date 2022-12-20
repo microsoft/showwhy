@@ -187,7 +187,7 @@ The default configuration for the `causal-services`' chart  can be seen at [`val
 
 ```yaml
 domain: {DOMAIN}
-causalImagesPullPolicy: Always
+showwhyImagesPullPolicy: Always
 defaultLimitRPM: 240
 recreatePodsOnUpgrade: true
 revisionHistoryLimit: 1

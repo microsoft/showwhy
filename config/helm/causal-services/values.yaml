@@ -12,7 +12,7 @@ domain: localhost
 #   - for production environments this could be set to Always
 #     so the latest tag will always be pulled
 #
-causalImagesPullPolicy: Never
+showwhyImagesPullPolicy: Never
 
 #
 # where to pull the oauth2-proxy image from
@@ -72,7 +72,7 @@ applicationGroups:
     services:
       - name: backend-api
         image: '{{ .Values.showwhyBackendImage }}'
-        imagePullPolicy: '{{ .Values.causalImagesPullPolicy }}'
+        imagePullPolicy: '{{ .Values.showwhyImagesPullPolicy }}'
         replicas: 1
         containerPort: 8081
         servicePort: 8081
@@ -91,7 +91,7 @@ applicationGroups:
 
       - name: backend-worker
         image: '{{ .Values.showwhyBackendImage }}'
-        imagePullPolicy: '{{ .Values.causalImagesPullPolicy }}'
+        imagePullPolicy: '{{ .Values.showwhyImagesPullPolicy }}'
         replicas: 2
         containerPort: 8081
         servicePort: 8082
@@ -137,7 +137,7 @@ applicationGroups:
     services:
       - name: app-shell
         image: '{{ .Values.showwhyFrontendImage }}'
-        imagePullPolicy: '{{ .Values.causalImagesPullPolicy }}'
+        imagePullPolicy: '{{ .Values.showwhyImagesPullPolicy }}'
         replicas: 1
         containerPort: 8080
         servicePort: 3005
