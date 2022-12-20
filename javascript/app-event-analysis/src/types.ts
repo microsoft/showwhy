@@ -24,6 +24,8 @@ export const LINE_ELEMENT_CLASS_NAME = 'line-element'
 export const LINE_WIDTH_HOVER = 2
 export const OUTPUT_LINE = 0.5
 
+export const BAR_CHART_HEIGHT_PERC_OF_WIN_HEIGHT = 0.35
+
 //
 // Data constants
 //
