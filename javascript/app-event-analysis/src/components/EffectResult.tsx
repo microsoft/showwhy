@@ -32,7 +32,6 @@ import { Container, Strong } from './style/Styles.js'
 
 export const EffectResult: React.FC<EffectResultProps> = memo(
 	function EffectResult({
-		ref,
 		treatedUnit,
 		inputData,
 		outputData,
@@ -47,10 +46,11 @@ export const EffectResult: React.FC<EffectResultProps> = memo(
 		const treatedUnits = useRecoilValue(TreatedUnitsState)
 		const isPlaceboSimulation = useRecoilValue(PlaceboSimulationState)
 		const checkedUnits = useRecoilValue(CheckedUnitsState)
+		const ref = useRef<HTMLDivElement | null>(null)
+		const barChartRef = useRef<HTMLDivElement | null>(null)
 
 		const { showChartPerUnit } = chartOptions
 
-		const barChartRef = useRef<HTMLDivElement | null>(null)
 		const barChartDimensions = useDynamicChartDimensions(
 			barChartRef,
 			BAR_CHART_HEIGHT_PERC_OF_WIN_HEIGHT,
@@ -78,16 +78,18 @@ export const EffectResult: React.FC<EffectResultProps> = memo(
 				<TreatedTitle>{treatedUnit}</TreatedTitle>
 				<Spacer axis="vertical" size={10} />
 				{showChartPerUnit && (
-					<DimensionedLineChart
-						inputData={inputData}
-						lineChartRef={ref}
-						checkableUnits={checkableUnits}
-						onRemoveCheckedUnit={onRemoveCheckedUnit}
-						output={[filteredOutput]}
-						treatedUnitsList={[treatedUnit]}
-						isPlaceboSimulation={isPlaceboSimulation}
-						checkedUnits={checkedUnits}
-					/>
+					<Stack.Item>
+						<DimensionedLineChart
+							inputData={inputData}
+							lineChartRef={ref}
+							checkableUnits={checkableUnits}
+							onRemoveCheckedUnit={onRemoveCheckedUnit}
+							output={[filteredOutput]}
+							treatedUnitsList={[treatedUnit]}
+							isPlaceboSimulation={isPlaceboSimulation}
+							checkedUnits={checkedUnits}
+						/>
+					</Stack.Item>
 				)}
 
 				<Text className="infoText synth-control-text-margin" variant="medium">

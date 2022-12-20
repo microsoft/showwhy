@@ -14,7 +14,6 @@ import type {
 export interface EffectResultProps {
 	treatedUnit: string
 	inputData: ProcessedInputData
-	ref: React.RefObject<HTMLDivElement>
 	outputData: (OutputData | PlaceboOutputData)[]
 	hoverInfo: HoverInfo
 	synthControlData: SynthControlData

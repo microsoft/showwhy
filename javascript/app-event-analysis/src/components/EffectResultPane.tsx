@@ -44,6 +44,7 @@ export const EffectResultPane: React.FC<EffectResultPaneProps> = memo(
 		const isPlaceboSimulation = useRecoilValue(PlaceboSimulationState)
 		const selectedTabKey = useRecoilValue(SelectedTabKeyState)
 		const checkedUnits = useRecoilValue(CheckedUnitsState)
+		const synthLineChartRef = useRef<HTMLDivElement | null>(null)
 
 		const hoverInfo = useMemo(() => {
 			return {
@@ -63,8 +64,6 @@ export const EffectResultPane: React.FC<EffectResultPaneProps> = memo(
 			)
 		}, [isCalculatingEstimator, outputData, treatedUnits, selectedTabKey])
 
-		const synthLineChartRef = useRef<HTMLDivElement | null>(null)
-
 		const effectResult = useMemo(
 			() =>
 				treatedUnits
@@ -72,7 +71,6 @@ export const EffectResultPane: React.FC<EffectResultPaneProps> = memo(
 					.map((treatedUnit: string) => (
 						<EffectResult
 							key={treatedUnit}
-							ref={synthLineChartRef}
 							treatedUnit={treatedUnit}
 							inputData={inputData}
 							outputData={outputData}
@@ -122,8 +120,8 @@ export const EffectResultPane: React.FC<EffectResultPaneProps> = memo(
 								timeAlignment={timeAlignment}
 							/>
 						</Stack.Item>
-						<Stack.Item>
-							{!showChartPerUnit && (
+						{!showChartPerUnit && (
+							<Stack.Item>
 								<DimensionedLineChart
 									inputData={inputData}
 									lineChartRef={synthLineChartRef}
@@ -134,9 +132,10 @@ export const EffectResultPane: React.FC<EffectResultPaneProps> = memo(
 									isPlaceboSimulation={isPlaceboSimulation}
 									checkedUnits={checkedUnits}
 								/>
-							)}
-							{effectResult}
-						</Stack.Item>
+							</Stack.Item>
+						)}
+						{effectResult}
+						{/* <Stack.Item>{effectResult}</Stack.Item> */}
 					</>
 				)}
 			</StyledStack>
