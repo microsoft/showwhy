@@ -37,12 +37,18 @@ jobs:
           REF: ${{ github.ref }}
           RUN_NUM: ${{ github.run_number }}
 
-      - uses: pmorelli92/github-container-registry-build-push@2.0.0
-        name: Build and Publish Docker Container
+      - name: Build and Publish Docker Container
+        uses: pmorelli92/github-container-registry-build-push@2.0.0
+        if: github.ref == 'refs/heads/main'
         with:
           github-push-secret: ${{secrets.GITHUB_TOKEN}}
           docker-image-name: showwhy-frontend
           docker-image-tag:  ${{ steps.image-details.outputs.tag }}
           dockerfile-path: ./javascript/webapp/Dockerfile
           build-context: ./javascript/webapp
+
+      - name: Build Docker Container (dev)
+        if: github.ref != 'refs/heads/main'
+        working-directory: ./javascript/webapp
+        run: docker build .
   
