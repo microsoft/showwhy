@@ -4,4 +4,6 @@
 #
 # the application groups will be inferred from the default values.yaml
 #
-domain: causal-platform-services.eastus.cloudapp.azure.com
+domain: localhost
+showwhyImagesPullPolicy: Never
+enableAuthentication: false

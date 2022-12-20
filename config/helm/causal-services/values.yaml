@@ -3,7 +3,7 @@
 #   - used for tls hosts
 #   - used to configure auth whitelist and cookie domains
 #
-domain: localhost
+domain: ''
 
 #
 # policy to pull the causal services images
@@ -12,7 +12,7 @@ domain: localhost
 #   - for production environments this could be set to Always
 #     so the latest tag will always be pulled
 #
-showwhyImagesPullPolicy: Never
+showwhyImagesPullPolicy: Always
 
 #
 # where to pull the oauth2-proxy image from
@@ -32,7 +32,7 @@ showwhyBackendImage: ghcr.io/microsoft/showwhy-backend:latest
 #
 # Where to pull the showwhy frontend image from
 #
-showwhyFrontendImage: ghcr.io/microsoft/showwhy-backend:latest
+showwhyFrontendImage: ghcr.io/microsoft/showwhy-frontend:latest
 
 #
 # default number of requests accepted from a given IP each minute
@@ -54,7 +54,7 @@ revisionHistoryLimit: 1
 #
 # enables the oauth2-proxy service for the backend and frontend
 #
-enableAuthentication: false
+enableAuthentication: true
 
 #
 # maximum number of concurrent jobs each worker can have
