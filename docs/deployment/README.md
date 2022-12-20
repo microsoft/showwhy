@@ -1,4 +1,13 @@
 # Deploying ShowWhy
 
-1. [How to deploy to a kubernetes cluster (AKS) on Azure](./AKS_DEPLOY.md) - uses authentication
-2. [How to deploy to a kubernetes cluster running on your machine](./LOCAL_DEPLOY.md) - does not use authentication
+## Architectural Notes
+ShowWhy is split between a front-end web-based client and a containerized Python backend. The backend image may also be run in "worker" mode to provide parallel compute resources for performing long-running tasks. A typical deployment will consist of: 
+
+* A frontend web-client, deployed as a static website or as a docker container.
+* A backend API server, deployed as a docker container.
+* A worker node, deployed as a docker container with extra worker configuration.
+
+## Deployment Options
+We currently deploy the application using Azure Kubernetes Services (AKS). The instructions for deploying the application using AKS are [here](./AKS_DEPLOY.md). This method uses authentication.
+
+If you are interested in testing out a deployment configuration locally using Kubernetes, see the [local deployment](./LOCAL_DEPLOY.md) instructions. Please note that this should only be used for debugging infrastructural issues. For application development, or test-driving the application locally. The `Getting Started` instructions in README.md are much simpler and will be less demanding on your machine.
