@@ -59,3 +59,13 @@ jobs:
 
       - run: yarn is_clean
         name: Check if repo is clean
+
+      - name: Build and Publish Docker Container
+        uses: darthtrevino/github-container-registry-build-push@main
+        with:
+          github-push-secret: ${{secrets.GITHUB_TOKEN}}
+          docker-image-name: showwhy-frontend
+          docker-image-tag:  latest
+          dockerfile-path: ./javascript/webapp/Dockerfile
+          build-context: ./javascript/webapp
+          build-only: ${{ github.ref != 'refs/heads/main' }}
