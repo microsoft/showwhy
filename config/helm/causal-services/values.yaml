@@ -27,12 +27,12 @@ redisImage: mcr.microsoft.com/mirror/docker/library/redis:7
 #
 # Where to pull the showwhy backend image from
 #
-showwhyBackendImage: ghcr.io/microsoft/showwhy-backend
+showwhyBackendImage: ghcr.io/microsoft/showwhy-backend:latest
 
 #
 # Where to pull the showwhy frontend image from
 #
-showwhyFrontendImage: ghcr.io/microsoft/showwhy-backend
+showwhyFrontendImage: ghcr.io/microsoft/showwhy-backend:latest
 
 #
 # default number of requests accepted from a given IP each minute
