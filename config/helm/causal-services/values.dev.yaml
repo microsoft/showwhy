@@ -1,7 +1,5 @@
 #
-# production specific parameters
+# integ parameters
 #   (TODO: maybe turn this into pipeline variables and call helm with --set)
-#
-# the application groups will be inferred from the default values.yaml
 #
 domain: causal-platform-services-dev.eastus.cloudapp.azure.com
