@@ -31,6 +31,8 @@ jobs:
           REF: ${{ github.ref }}
           RUN_NUM: ${{ github.run_number }}
 
+      - run: echo "tag=${{ steps.image-details.outputs.tag }}"
+
       - uses: pmorelli92/github-container-registry-build-push@2.0.0
         name: Build and Publish Docker Container
         with:
