@@ -30,7 +30,7 @@ jobs:
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
+        run: echo "dir=$(yarn config get cacheFolder)" >>$GITHUB_OUTPUT
 
       - uses: actions/cache@v2
         id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
@@ -59,3 +59,13 @@ jobs:
 
       - run: yarn is_clean
         name: Check if repo is clean
+
+      - name: Build and Publish Docker Container
+        uses: darthtrevino/github-container-registry-build-push@main
+        with:
+          github-push-secret: ${{secrets.GITHUB_TOKEN}}
+          docker-image-name: showwhy-frontend
+          docker-image-tag:  latest
+          dockerfile-path: ./javascript/webapp/Dockerfile
+          build-context: ./javascript/webapp
+          build-only: ${{ github.ref != 'refs/heads/main' }}

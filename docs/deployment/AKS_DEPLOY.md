@@ -181,71 +181,15 @@ Once you have the file properly set, create the namespace for the oauth service 
 > kubectl apply -f oauth-secrets.yaml
 ```
 
-## 6. Build service images
-
-### 6.1. Build the frontend service
-
-#### 6.1.1 Build frontend service bundle
-
-```bash
-> yarn install
-> yarn build
-```
-
-> If you want to force the service to rebuild, run: `yarn force_build`.
-
-This will create the build directory at [`javascript/webapp`](../javascript/webapp).
-
-#### 6.1.2. Build frontend docker image
-
-```bash
-> ./scripts/build-frontend-images.sh
-```
-
-> This will build the following frontend service image: `app-shell`.
-
-### 6.2. Build the backend services
-
-```bash
-> ./scripts/build-backend-images.sh
-```
-
-> This will build the following backend service images: `exposure`, `events` and `discover`.
-
-
-## 7. Push images to ACR
-
-You will need to login in order to push to the docker registry we created on Azure:
-
-```bash
-> az acr login --name {ACR_NAME}
-```
-
-Now we can push the images we built to the ACR:
-
-```bash
-> ./scripts/push-images.sh {ACR_URL}
-```
-
-> `{ACR_URL}` is the URL to your ACR, which should be something like this: `{ACR_NAME}.azurecr.io`.
-
-## 8. Create chart configuration file
+## 6. Create chart configuration file
 
 The default configuration for the `causal-services`' chart  can be seen at [`values.yaml`](../config/helm/causal-services/values.yaml). We will need to update a few values according to what we have just created and configured. To do so, let's create a new YAML file (`values.deploy.yaml`) containing the values we need to update (replace the values with `{}` with the proper configuration):
 
 ```yaml
 domain: {DOMAIN}
-causalImagesRegistry: {ACR_URL}/
-causalImagesPullPolicy: Always
-defaultLimitRPM: 240
-recreatePodsOnUpgrade: true
-revisionHistoryLimit: 1
-enableAuthentication: true
 ```
 
-> Notice that `causalImagesRegistry` should end with a `/`.
-
-## 9. Install the `causal-services` chart
+## 7. Install the `causal-services` chart
 
 Now it's time to install our chart using the configuration file we just created:
 
@@ -253,7 +197,7 @@ Now it's time to install our chart using the configuration file we just created:
 > ./scripts/install-charts.sh values.deploy.yaml
 ```
 
-## 10. Verify all services are properly running
+## 8. Verify all services are properly running
 
 ```bash
 > ./scripts/list-resources.sh
@@ -261,6 +205,6 @@ Now it's time to install our chart using the configuration file we just created:
 
 You should see the services up and running according to their namespace.
 
-## 11. Access application
+## 9. Access application
 
 The application should now be available at: `https://{DOMAIN}`.
