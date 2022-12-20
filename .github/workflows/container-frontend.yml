@@ -18,31 +18,30 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "dir=$(yarn config get cacheFolder)" >>$GITHUB_OUTPUT
+
+      - uses: actions/cache@v2
+        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
       - run: yarn install
         name: Install Webapp Dependencies
 
       - run: yarn build
         name: Build Webapp
 
-      - name: Get Docker Image Details
-        id: image-details
-        run: |
-          echo "Get Details; Ref=$REF, Run Number=$RUN_NUM"
-          if [ "$REF" == "refs/heads/main" ]; then
-              echo "tag=latest" >>$GITHUB_OUTPUT
-          else
-              echo "tag=dev-$RUN_NUM" >>$GITHUB_OUTPUT
-          fi
-        env:
-          REF: ${{ github.ref }}
-          RUN_NUM: ${{ github.run_number }}
-
       - name: Build and Publish Docker Container
         uses: darthtrevino/github-container-registry-build-push@main
         with:
           github-push-secret: ${{secrets.GITHUB_TOKEN}}
           docker-image-name: showwhy-frontend
-          docker-image-tag:  ${{ steps.image-details.outputs.tag }}
+          docker-image-tag:  latest
           dockerfile-path: ./javascript/webapp/Dockerfile
           build-context: ./javascript/webapp
           build-only: github.ref != 'refs/heads/main'
