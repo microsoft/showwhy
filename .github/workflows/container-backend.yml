@@ -21,7 +21,7 @@ jobs:
           if [ "$REF" == "refs/heads/main" ]; then
               echo "tag=latest" >>$GITHUB_OUTPUT
           else
-              echo "tag=dev-$RUN_NUM" >>GITHUB_OUTPUT
+              echo "tag=dev-$RUN_NUM" >>$GITHUB_OUTPUT
           fi
         env:
           REF: ${{ github.ref }}
