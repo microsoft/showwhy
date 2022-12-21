@@ -45,7 +45,7 @@ EOF
 appId=`az ad app create --display-name $CLUSTER_NAME --required-resource-accesses @app-manifest.json --query id -o tsv`
 
 # # Get client secret
-# appSecret=`az ad app credential reset --id $appId --display-name $secretName --query password --o tsv`
+appSecret=`az ad app credential reset --id $appId --display-name $secretName --query password --o tsv`
 
 # cookieName=_auth_token
 
