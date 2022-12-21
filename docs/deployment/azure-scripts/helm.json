@@ -159,6 +159,7 @@
                         }
                     },
                     "variables": {
+                        "domain": "[concat(parameters('dnsPrefix'), '.', resourceGroup().location, '.cloudapp.azure.com')]",
                         "causalRegistry": "ghcr.io/microsoft/showwhy/",
                         "helmAppLocation": "oci://ghcr.io/microsoft/showwhy/helm/causal-services",
                         "_artifactsLocation": "https://raw.githubusercontent.com/microsoft/showwhy/azure/",
@@ -209,6 +210,10 @@
                                     {
                                         "name": "HELM_APP_LOCATION",
                                         "secureValue": "[variables('helmAppLocation')]"
+                                    },
+                                    {
+                                        "name": "DOMAIN",
+                                        "secureValue": "[variables('domain')]"
                                     }
                                 ],
                                 "primaryScriptUri": "[variables('installScriptUri')]",
@@ -220,5 +225,10 @@
                 }
             }
         }
-    ]
+    ], "outputs": {
+        "URL": {
+            "type": "string",
+            "value": "[reference(resourceId('Microsoft.Resources/deployments', 'helmScripts')).variables.domain]"
+        }
+    }
 }
