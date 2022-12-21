@@ -43,10 +43,10 @@ EOF
 
 # Create app registration
 appId=`az ad app create --display-name $CLUSTER_NAME --required-resource-accesses @app-manifest.json --query id -o tsv`
+echo $appId
 
 # # Get client secret
 appSecret=`az ad app credential reset --id $appId --display-name $secretName --query password --o tsv`
-
 # cookieName=_auth_token
 
 # randomSecretCookie=`python -c 'import os,base64; print(base64.urlsafe_b64encode(os.urandom(32)).decode())'`
