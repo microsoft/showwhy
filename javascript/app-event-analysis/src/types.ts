@@ -289,3 +289,9 @@ export interface Dimensions {
 	height: number
 	margin: { top: number; bottom: number; left: number; right: number }
 }
+
+export interface ChartDimensions {
+	width: number
+	height: number
+	margin: { top: number; bottom: number; left: number; right: number }
+}

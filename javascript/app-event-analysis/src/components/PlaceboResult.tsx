@@ -23,6 +23,7 @@ import {
 import { isValidUnit } from '../utils/validation.js'
 import { BarChart } from './BarChart.js'
 import { ChartErrorFallback } from './ChartErrorFallback.js'
+import { useDynamicChartDimensions } from './DimensionedLineChart.hooks.js'
 import { DimensionedLineChart } from './DimensionedLineChart.js'
 import {
 	useGetPlaceboBarChartInputData,
@@ -31,10 +32,8 @@ import {
 } from './PlaceboResult.hooks.js'
 import type { PlaceboResultProps } from './PlaceboResult.types.js'
 import { getSdidEstimate } from './PlaceboResult.utils.js'
-import { useDynamicChartDimensions } from './ResultPane.hooks.js'
-import { TreatedTitle } from './ResultPane.styles.js'
 import Spacer from './style/Spacer.js'
-import { Container, Section } from './style/Styles.js'
+import { Container, Section, TreatedTitle } from './style/Styles.js'
 
 export const PlaceboResult: React.FC<PlaceboResultProps> = memo(
 	function PlaceboResult({

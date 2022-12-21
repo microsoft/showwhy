@@ -96,7 +96,6 @@ import {
 import { PlaceboResultPane } from './PlaceboResultPane.js'
 import { RangeFilter } from './RangeFilter.js'
 import { RawDataPane } from './RawDataPane.js'
-import { ResultPane } from './ResultPane.js'
 import Spacer from './style/Spacer.js'
 import { TimeAlignmentSelector } from './TimeAlignmentSelector.js'
 import { TreatmentSelector } from './TreatmentSelector.js'
@@ -1417,18 +1416,6 @@ export const MainContent: React.FC = memo(function MainContent() {
 						onRemoveCheckedUnit={handleRemoveCheckedUnit}
 					/>
 				)}
-				<ResultPane
-					inputData={data}
-					outputData={outputData}
-					placeboOutputData={placeboOutputData}
-					synthControlData={synthControlData}
-					statusMessage={userMessage}
-					isCalculatingEstimator={isCalculatingEstimator}
-					placeboDataGroup={placeboDataGroup}
-					timeAlignment={timeAlignment}
-					checkableUnits={unitCheckboxListItems.map(unit => unit.name)}
-					onRemoveCheckedUnit={handleRemoveCheckedUnit}
-				/>
 			</Stack.Item>
 		</StyledStack>
 	)

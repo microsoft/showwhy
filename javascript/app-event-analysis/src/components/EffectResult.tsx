@@ -26,9 +26,8 @@ import { useDynamicChartDimensions } from './DimensionedLineChart.hooks.js'
 import { DimensionedLineChart } from './DimensionedLineChart.js'
 import type { EffectResultProps } from './EffectResult.types.js'
 import { useSynthControlBarChartData } from './EffectResultPane.hooks.js'
-import { TreatedTitle } from './ResultPane.styles.js'
 import Spacer from './style/Spacer.js'
-import { Container, Strong } from './style/Styles.js'
+import { Container, Strong, TreatedTitle } from './style/Styles.js'
 
 export const EffectResult: React.FC<EffectResultProps> = memo(
 	function EffectResult({
