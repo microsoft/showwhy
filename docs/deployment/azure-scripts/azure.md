@@ -1,9 +1,12 @@
 # AKS ARM Template
 This Azure Resource Manager (ARM) template deploys an Azure Kubernetes Service (AKS) cluster with the specified parameters. The template also includes a deployment for installing Helm, a package manager for Kubernetes.
 
-**You should have at least a `subscription owner` role to be able to run this.**
+**Please note that:**
 
-**It doesn't deploy with authentication in the chart at the moment.**
+**1.    You must have:
+Microsoft.Authorization/roleAssignments/write permissions, such as `User Access Administrator` or `Owner`.**
+
+**2.    It doesn't deploy with authentication in the chart at the moment.**
 
 ## Parameters:
 clusterName: The name of the Managed Cluster resource.
