@@ -24,6 +24,8 @@ export const LINE_ELEMENT_CLASS_NAME = 'line-element'
 export const LINE_WIDTH_HOVER = 2
 export const OUTPUT_LINE = 0.5
 
+export const BAR_CHART_HEIGHT_PERC_OF_WIN_HEIGHT = 0.35
+
 //
 // Data constants
 //
@@ -283,6 +285,12 @@ export interface LegendData {
 }
 
 export interface Dimensions {
+	width: number
+	height: number
+	margin: { top: number; bottom: number; left: number; right: number }
+}
+
+export interface ChartDimensions {
 	width: number
 	height: number
 	margin: { top: number; bottom: number; left: number; right: number }

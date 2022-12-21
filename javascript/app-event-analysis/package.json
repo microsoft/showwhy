@@ -48,7 +48,8 @@
 		"react-router-dom": "^6.5.0",
 		"recoil": "^0.7.6",
 		"redbox-react": "^1.6.0",
-		"styled-components": "^5.3.6"
+		"styled-components": "^5.3.6",
+		"use-resize-observer": "^9.1.0"
 	},
 	"devDependencies": {
 		"@essex/scripts": "^22.2.0",

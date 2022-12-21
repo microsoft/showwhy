@@ -35,6 +35,7 @@ import API from '../api.js'
 import { usePlaceboDataGroup } from '../hooks/usePlaceboDataGroup.js'
 import { usePlaceboOutputData } from '../hooks/usePlaceboOutputData.js'
 import { useProcessedInputData } from '../hooks/useProcessedInputData.js'
+import { useShowPlaceboGraphs } from '../hooks/useShowPlaceboGraphs.js'
 import { useTreatedUnitsMap } from '../hooks/useTreatedUnitsMap.js'
 import {
 	AggregateEnabledState,
@@ -78,6 +79,7 @@ import { processOutputData } from '../utils/processOutputData.js'
 import { isValidTreatmentDate, isValidUnit } from '../utils/validation.js'
 import { ChartOptionsGroup } from './ChartOptionsGroup.js'
 import { CheckboxList } from './CheckboxList.js'
+import { EffectResultPane } from './EffectResultPane.js'
 import { EstimatorSelector } from './EstimatorSelector.js'
 import {
 	DropdownContainer,
@@ -91,8 +93,9 @@ import {
 	guessColMapping,
 	processSynthControlData,
 } from './MainContent.utils.js'
+import { PlaceboResultPane } from './PlaceboResultPane.js'
 import { RangeFilter } from './RangeFilter.js'
-import { ResultPane } from './ResultPane.js'
+import { RawDataPane } from './RawDataPane.js'
 import Spacer from './style/Spacer.js'
 import { TimeAlignmentSelector } from './TimeAlignmentSelector.js'
 import { TreatmentSelector } from './TreatmentSelector.js'
@@ -167,6 +170,14 @@ export const MainContent: React.FC = memo(function MainContent() {
 	const [isPlaceboSimulation, setPlaceboSimulation] = useRecoilState(
 		PlaceboSimulationState,
 	)
+	const { renderRawData } = chartOptions
+
+	const showPlaceboGraphs = useShowPlaceboGraphs()
+	const showRawDataLineChart = useMemo<boolean>(() => {
+		return (
+			renderRawData && selectedTabKey === CONFIGURATION_TABS.prepareAnalysis.key
+		)
+	}, [selectedTabKey, renderRawData])
 
 	const isInitialRender = useRef(true)
 
@@ -1372,18 +1383,39 @@ export const MainContent: React.FC = memo(function MainContent() {
 						</Title>
 					</Stack>
 				</RightPanelHeader>
-				<ResultPane
-					inputData={data}
-					outputData={outputData}
-					placeboOutputData={placeboOutputData}
-					synthControlData={synthControlData}
-					statusMessage={userMessage}
-					isCalculatingEstimator={isCalculatingEstimator}
-					placeboDataGroup={placeboDataGroup}
-					timeAlignment={timeAlignment}
-					checkableUnits={unitCheckboxListItems.map(unit => unit.name)}
-					onRemoveCheckedUnit={handleRemoveCheckedUnit}
-				/>
+				{showRawDataLineChart && (
+					<RawDataPane
+						inputData={data}
+						outputData={outputData}
+						statusMessage={userMessage}
+						isCalculatingEstimator={isCalculatingEstimator}
+						checkableUnits={unitCheckboxListItems.map(unit => unit.name)}
+						onRemoveCheckedUnit={handleRemoveCheckedUnit}
+					/>
+				)}
+				{selectedTabKey === CONFIGURATION_TABS.estimateEffects.key && (
+					<EffectResultPane
+						inputData={data}
+						outputData={outputData}
+						synthControlData={synthControlData}
+						statusMessage={userMessage}
+						isCalculatingEstimator={isCalculatingEstimator}
+						timeAlignment={timeAlignment}
+						checkableUnits={unitCheckboxListItems.map(unit => unit.name)}
+						onRemoveCheckedUnit={handleRemoveCheckedUnit}
+					/>
+				)}
+				{showPlaceboGraphs && (
+					<PlaceboResultPane
+						inputData={data}
+						statusMessage={userMessage}
+						isCalculatingEstimator={isCalculatingEstimator}
+						placeboDataGroup={placeboDataGroup}
+						placeboOutputData={placeboOutputData}
+						checkableUnits={unitCheckboxListItems.map(unit => unit.name)}
+						onRemoveCheckedUnit={handleRemoveCheckedUnit}
+					/>
+				)}
 			</Stack.Item>
 		</StyledStack>
 	)

@@ -7,6 +7,10 @@ import { Stack } from '@fluentui/react'
 import type { Theme } from '@thematic/core'
 import styled from 'styled-components'
 
+export const Container = styled.div``
+export const Section = styled.section``
+export const Strong = styled.strong``
+
 export const StyledStack = styled(Stack)`
 	padding: 10px 20px;
 	height: calc(100vh - 87px);
@@ -75,9 +79,6 @@ export const StyledStack = styled(Stack)`
 			top: 110%;
 			padding: 5px 0;
 			min-width: 300px;
-			// use the following to enable dynalically resized hover text label
-			// padding: 5px 5px;
-			// width: max-content;
 		}
 		.help-link:hover:before {
 			opacity: 1;
