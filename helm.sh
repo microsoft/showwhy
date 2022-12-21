@@ -15,7 +15,7 @@ az aks get-credentials -g $RESOURCEGROUP -n $CLUSTER_NAME
 echo "LOGIN SUCCESSFUL"
 
 helm pull $HELM_APP
-helm upgrade --install $HELM_APP_NAME $HELM_APP \
+helm upgrade --install causal-services $HELM_APP_LOCATION \
     --set enableAuthentication=false,causalImagesPullPolicy=Always,causalImagesRegistry=$CAUSAL_REGISTRY,domain=$DOMAIN.eastus.cloudapp.azure.com
 
 resourcenetwork=`az aks show --resource-group $RESOURCEGROUP --name $CLUSTER_NAME --query nodeResourceGroup -o tsv`

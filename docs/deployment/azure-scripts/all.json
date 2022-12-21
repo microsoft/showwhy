@@ -1,0 +1,145 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "clusterName": {
+            "type": "string",
+            "defaultValue": "aksshowwhy",
+            "metadata": {
+                "description": "The name of the Managed Cluster resource."
+            }
+        },
+        "location": {
+            "type": "string",
+            "defaultValue": "[resourceGroup().location]",
+            "metadata": {
+                "description": "The location of the Managed Cluster resource."
+            }
+        },
+        "dnsPrefix": {
+            "type": "string",
+            "defaultValue": "aksshowwhy",
+            "metadata": {
+                "description": "Optional DNS prefix to use with hosted Kubernetes API server FQDN."
+            }
+        },
+        "osDiskSizeGB": {
+            "type": "int",
+            "defaultValue": 0,
+            "maxValue": 1023,
+            "minValue": 0,
+            "metadata": {
+                "description": "Disk size (in GB) to provision for each of the agent pool nodes. This value ranges from 0 to 1023. Specifying 0 will apply the default disk size for that agentVMSize."
+            }
+        },
+        "agentCount": {
+            "type": "int",
+            "defaultValue": 3,
+            "maxValue": 50,
+            "minValue": 1,
+            "metadata": {
+                "description": "The number of nodes for the cluster."
+            }
+        },
+        "agentVMSize": {
+            "type": "string",
+            "defaultValue": "Standard_D2s_v3",
+            "metadata": {
+                "description": "The size of the Virtual Machine."
+            }
+        },
+        "linuxAdminUsername": {
+            "type": "string",
+            "defaultValue": "aksshowwhy",
+            "metadata": {
+                "description": "User name for the Linux Virtual Machines."
+            }
+        },
+        "sshRSAPublicKey": {
+            "type": "string",
+            "metadata": {
+                "description": "Configure all linux machines with the SSH RSA public key string. Your key should include three parts, for example 'ssh-rsa AAAAB...snip...UcyupgH azureuser@linuxvm'"
+            }
+        }
+    },
+    "variables": {
+        "_artifactsLocation": "https://raw.githubusercontent.com/microsoft/showwhy/azure/",
+        "helmAppLocation": "oci://ghcr.io/microsoft/showwhy/helm/causal-services",
+        "causalRegistry": "ghcr.io/microsoft/showwhy/"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2021-04-01",
+            "name": "aksDeployment",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[uri('https://raw.githubusercontent.com/microsoft/showwhy/azure/docs/deployment/azure-scripts/', 'aks.json')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "clusterName": {
+                        "value": "[parameters('clusterName')]"
+                    },
+                    "location": {
+                        "value": "[parameters('location')]"
+                    },
+                    "dnsPrefix": {
+                        "value": "[parameters('dnsPrefix')]"
+                    },
+                    "osDiskSizeGB": {
+                        "value": "[parameters('osDiskSizeGB')]"
+                    },
+                    "agentCount": {
+                        "value": "[parameters('agentCount')]"
+                    },
+                    "agentVMSize": {
+                        "value": "[parameters('agentVMSize')]"
+                    },
+                    "linuxAdminUsername": {
+                        "value": "[parameters('linuxAdminUsername')]"
+                    },
+                    "sshRSAPublicKey": {
+                        "value": "[parameters('sshRSAPublicKey')]"
+                    }
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2021-04-01",
+            "name": "helmDeployment",
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/deployments', 'aksDeployment')]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[uri('https://raw.githubusercontent.com/microsoft/showwhy/azure/docs/deployment/azure-scripts/', 'aks.json')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                     "identityName": {
+                        "value": "[reference('aksDeployment').outputs.identityName.value]"
+                    },
+                    "_artifactsLocation": {
+                        "value": "[variables('_artifactsLocation')]"
+                    },
+                    "clusterName": {
+                        "value": "[parameters('clusterName')]"
+                    },
+                    "dnsPrefix": {
+                        "value": "[parameters('dnsPrefix')]"
+                    },
+                    "causalRegistry": {
+                        "value": "[variables('causalRegistry')]"
+                    },
+                    "helmAppLocation": {
+                        "value": "[variables('helmAppLocation')]"
+                    }
+                }
+            }
+        }
+    ]
+}

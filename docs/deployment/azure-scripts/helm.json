@@ -1,0 +1,192 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "metadata": {
+        "_generator": {
+            "name": "bicep",
+            "version": "0.8.9.13224",
+            "templateHash": "5490088144024630038"
+        }
+    },
+    "parameters": {
+        "causalRegistry": {
+            "type": "string",
+            "defaultValue": "ghcr.io/microsoft/showwhy/",
+            "metadata": {
+                "description": "causal Registry URL"
+            }
+        },
+        "identityName": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "causal Registry URL"
+            }
+        },
+        "clusterName": {
+            "type": "string",
+            "defaultValue": "aks201cluster",
+            "metadata": {
+                "description": "The name of the Managed Cluster resource."
+            }
+        },
+        "dnsPrefix": {
+            "type": "string",
+            "defaultValue": "dcs201",
+            "metadata": {
+                "description": "Optional DNS prefix to use with hosted Kubernetes API server FQDN."
+            }
+        },
+        "_artifactsLocation": {
+            "type": "string",
+            "defaultValue": "https://raw.githubusercontent.com/microsoft/showwhy/azure/",
+            "metadata": {
+                "description": "The base URI where artifacts required by this template are located"
+            }
+        },
+        "helmAppLocation": {
+            "type": "string",
+            "defaultValue": "oci://ghcr.io/microsoft/showwhy/helm/causal-services",
+            "metadata": {
+                "description": "Public Helm App"
+            }
+        }
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2020-10-01",
+            "name": "helmScripts",
+            "properties": {
+                "expressionEvaluationOptions": {
+                    "scope": "inner"
+                },
+                "mode": "Incremental",
+                "parameters": {
+                    "identityName": {
+                        "value": "[parameters('identityName')]"
+                    },
+                    "_artifactsLocation": {
+                        "value": "[parameters('_artifactsLocation')]"
+                    },
+                    "clusterName": {
+                        "value": "[parameters('clusterName')]"
+                    },
+                    "dnsPrefix": {
+                        "value": "[parameters('dnsPrefix')]"
+                    },
+                    "causalRegistry": {
+                        "value": "[parameters('causalRegistry')]"
+                    },
+                    "helmAppLocation": {
+                        "value": "[parameters('helmAppLocation')]"
+                    }
+                },
+                "template": {
+                    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "metadata": {
+                        "_generator": {
+                            "name": "bicep",
+                            "version": "0.8.9.13224",
+                            "templateHash": "6445570423976963169"
+                        }
+                    },
+                    "parameters": {
+                        "identityName": {
+                            "type": "string",
+                            "metadata": {
+                                "description": "Location of all resources to be deployed"
+                            }
+                        },
+                        "_artifactsLocation": {
+                            "type": "string",
+                            "metadata": {
+                                "description": "The base URI where artifacts required by this template are located"
+                            }
+                        },
+                        "causalRegistry": {
+                            "type": "string",
+                            "defaultValue": ""
+                        },
+                        "clusterName": {
+                            "type": "string",
+                            "defaultValue": ""
+                        },
+                        "dnsPrefix": {
+                            "type": "string",
+                            "defaultValue": ""
+                        },
+                        "utcValue": {
+                            "type": "string",
+                            "defaultValue": "[utcNow()]"
+                        },
+                        "helmAppLocation": {
+                            "type": "string",
+                            "defaultValue": "oci://ghcr.io/microsoft/showwhy/helm/causal-services:0.3.0",
+                            "metadata": {
+                                "description": "Public Helm App"
+                            }
+                        }
+                    },
+                    "variables": {
+                        "installScriptUri": "[uri(parameters('_artifactsLocation'), 'helm.sh')]"
+                    },
+                    "resources": [
+                        {
+                            "type": "Microsoft.Resources/deploymentScripts",
+                            "apiVersion": "2020-10-01",
+                            "name": "customScript",
+                            "location": "[resourceGroup().location]",
+                            "kind": "AzureCLI",
+                            "identity": {
+                                "type": "UserAssigned",
+                                "userAssignedIdentities": {
+                                    "[format('{0}', resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('identityName')))]": {}
+                                }
+                            },
+                            "properties": {
+                                "forceUpdateTag": "[parameters('utcValue')]",
+                                "azCliVersion": "2.10.1",
+                                "timeout": "PT30M",
+                                "environmentVariables": [
+                                    {
+                                        "name": "RESOURCEGROUP",
+                                        "secureValue": "[resourceGroup().name]"
+                                    },
+                                    {
+                                        "name": "CLUSTER_NAME",
+                                        "secureValue": "[parameters('clusterName')]"
+                                    },
+                                    {
+                                        "name": "DNS_NAME",
+                                        "secureValue": "[parameters('dnsPrefix')]"
+                                    },
+                                    {
+                                        "name": "DOMAIN",
+                                        "secureValue": "[parameters('dnsPrefix')]"
+                                    },
+                                    {
+                                        "name": "CAUSAL_REGISTRY",
+                                        "secureValue": "[parameters('causalRegistry')]"
+                                    },
+                                    {
+                                        "name": "SUBSCRIPTION",
+                                        "secureValue": "[subscription().subscriptionId]"
+                                    },
+                                    {
+                                        "name": "HELM_APP_LOCATION",
+                                        "secureValue": "[parameters('helmAppLocation')]"
+                                    }
+                                ],
+                                "primaryScriptUri": "[variables('installScriptUri')]",
+                                "cleanupPreference": "OnExpiration",
+                                "retentionInterval": "P1D"
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    ]
+}
