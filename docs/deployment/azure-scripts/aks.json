@@ -80,10 +80,7 @@
         {
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2020-10-01",
-            "name": "identities",
-            "dependsOn": [
-                "[resourceId('Microsoft.ContainerService/managedClusters', parameters('clusterName'))]"
-            ],
+            "name": "nodeResourceGroup",
             "properties": {
                 "expressionEvaluationOptions": {
                     "scope": "inner"
