@@ -40,6 +40,10 @@ Follow the prompts to enter the required parameters and select any optional
 A Managed Cluster resource using the specified clusterName, dnsPrefix, osDiskSizeGB, agentCount, agentVMSize, linuxAdminUsername, and sshRSAPublicKey parameters.
 A deployment that installs Helm on the Managed Cluster.
 
+## Output
+`url`: The url to access your deployed platform
+
+
 ### Click to deploy:
 
 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmicrosoft%2Fshowwhy%2Fazure%2Fdocs%2Fdeployment%2Fazure-scripts%2Fall.json)
