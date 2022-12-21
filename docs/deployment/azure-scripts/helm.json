@@ -50,9 +50,75 @@
             "metadata": {
                 "description": "Public Helm App"
             }
+        },
+        "nodeResourceGroup": {
+            "type": "string",
+            "metadata": {
+                "description": "Resource group of AKS node"
+            }
         }
     },
     "resources": [
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2021-04-01",
+            "name": "publicIP",
+            "resourceGroup": "[parameters('nodeResourceGroup')]",
+            "properties": {
+                "expressionEvaluationOptions": {
+                    "scope": "inner"
+                },
+                "mode": "Incremental",
+                "parameters": {
+                    "dnsPrefix": {
+                        "value": "[parameters('dnsPrefix')]"
+                    }
+                },
+                "template": {
+                    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "metadata": {
+                        "_generator": {
+                            "name": "bicep",
+                            "version": "0.8.9.13224",
+                            "templateHash": "6445570423976963169"
+                        }
+                    },
+                    "parameters": {
+                        "dnsPrefix": {
+                            "type": "string",
+                            "metadata": {
+                                "description": "Optional DNS prefix to use with hosted Kubernetes API server FQDN."
+                            }
+                        }
+                    },
+                    "resources": [
+                        {
+                            "type": "Microsoft.Network/publicIPAddresses",
+                            "apiVersion": "2020-08-01",
+                            "name": "kubernetesip",
+                            "location": "[resourceGroup().location]",
+                            "sku": {
+                                "name": "Standard"
+                            },
+                            "properties": {
+                                "publicIPAllocationMethod": "Static",
+                                "publicIPAddressVersion": "IPv4",
+                                "dnsSettings": {
+                                    "domainNameLabel": "[parameters('dnsPrefix')]"
+                                }
+                            }
+                        }
+                    ],
+                    "outputs": {
+                        "publicIP": {
+                            "type": "string",
+                            "value": "[reference(resourceId('Microsoft.Network/publicIPAddresses', 'kubernetesip')).ipAddress]"
+                        }
+                    }
+                }
+            }
+        },
         {
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2020-10-01",
@@ -138,6 +204,9 @@
                             "apiVersion": "2020-10-01",
                             "name": "customScript",
                             "location": "[resourceGroup().location]",
+                            "dependsOn": [
+                                "[resourceId('Microsoft.Resources/deployments', 'publicIP')]"
+                            ],
                             "kind": "AzureCLI",
                             "identity": {
                                 "type": "UserAssigned",
@@ -159,16 +228,16 @@
                                         "secureValue": "[parameters('clusterName')]"
                                     },
                                     {
-                                        "name": "DNS_NAME",
-                                        "secureValue": "[parameters('dnsPrefix')]"
-                                    },
-                                    {
-                                        "name": "DOMAIN",
+                                        "name": "DNS_PREFIX",
                                         "secureValue": "[parameters('dnsPrefix')]"
                                     },
                                     {
                                         "name": "CAUSAL_REGISTRY",
                                         "secureValue": "[parameters('causalRegistry')]"
+                                    },
+                                    {
+                                        "name": "PUBLICIP",
+                                        "secureValue": "[reference('publicIP').outputs.publicIP.value]"
                                     },
                                     {
                                         "name": "SUBSCRIPTION",

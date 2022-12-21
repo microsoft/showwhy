@@ -65,7 +65,8 @@
     "variables": {
         "_artifactsLocation": "https://raw.githubusercontent.com/microsoft/showwhy/azure/",
         "helmAppLocation": "oci://ghcr.io/microsoft/showwhy/helm/causal-services",
-        "causalRegistry": "ghcr.io/microsoft/showwhy/"
+        "causalRegistry": "ghcr.io/microsoft/showwhy/",
+        "nodeResourceGroup": "[concat('MC_', resourceGroup().name, '_', parameters('clusterName'), '_', parameters('location'))]"
     },
     "resources": [
         {
@@ -102,6 +103,9 @@
                     },
                     "sshRSAPublicKey": {
                         "value": "[parameters('sshRSAPublicKey')]"
+                    },
+                    "nodeResourceGroup": {
+                        "value": "[variables('nodeResourceGroup')]"
                     }
                 }
             }
@@ -137,6 +141,9 @@
                     },
                     "helmAppLocation": {
                         "value": "[variables('helmAppLocation')]"
+                    },
+                    "nodeResourceGroup": {
+                        "value": "[variables('nodeResourceGroup')]"
                     }
                 }
             }

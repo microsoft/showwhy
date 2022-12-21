@@ -23,6 +23,13 @@
                 "description": "The location of the Managed Cluster resource."
             }
         },
+        "nodeResourceGroup": {
+            "type": "string",
+            "defaultValue": "[concat('MC_', resourceGroup().name, '_', parameters('clusterName'), '_', parameters('location'))]",
+            "metadata": {
+                "description": "The location of the Managed Cluster resource."
+            }
+        },
         "dnsPrefix": {
             "type": "string",
             "defaultValue": "aksshowwhy",
@@ -71,6 +78,18 @@
     },
     "resources": [
         {
+            "type": "Microsoft.Resources/resourceGroups",
+            "apiVersion": "2021-04-01",
+            "name": "[parameters('nodeResourceGroup')]",
+            "location": "[resourceGroup().location]",
+            "tags": {
+                "tagName1": "tagValue1",
+                "tagName2": "tagValue2"
+            },
+            "managedBy": "string",
+            "properties": {}
+        },
+        {
             "type": "Microsoft.ContainerService/managedClusters",
             "apiVersion": "2020-09-01",
             "name": "[parameters('clusterName')]",
@@ -78,6 +97,9 @@
             "identity": {
                 "type": "SystemAssigned"
             },
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/resourceGroups', parameters('nodeResourceGroup'))]"
+            ],
             "properties": {
                 "dnsPrefix": "[parameters('dnsPrefix')]",
                 "agentPoolProfiles": [
@@ -99,8 +121,10 @@
                             }
                         ]
                     }
-                }
+                },
+                "nodeResourceGroup": "[parameters('nodeResourceGroup')]"
             }
+
         },
         {
             "type": "Microsoft.Resources/deployments",

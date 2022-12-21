@@ -16,14 +16,10 @@ echo "LOGIN SUCCESSFUL"
 
 helm pull $HELM_APP
 helm upgrade --install causal-services $HELM_APP_LOCATION \
-    --set enableAuthentication=false,causalImagesPullPolicy=Always,causalImagesRegistry=$CAUSAL_REGISTRY,domain=$DOMAIN.eastus.cloudapp.azure.com
-
-resourcenetwork=`az aks show --resource-group $RESOURCEGROUP --name $CLUSTER_NAME --query nodeResourceGroup -o tsv`
-
-ip=`az network public-ip create --resource-group $resourcenetwork --name kubernetesip --dns-name $DNS_NAME --sku Standard --allocation-method static --query publicIp.ipAddress -o tsv`
+    --set enableAuthentication=false,causalImagesPullPolicy=Always,causalImagesRegistry=$CAUSAL_REGISTRY,domain=$DNS_PREFIX.eastus.cloudapp.azure.com
 
 helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
 helm repo update
-helm install ingress-nginx ingress-nginx/ingress-nginx --create-namespace --namespace ingressnginx1 --set controller.service.loadBalancerIP=$ip --set controller.service.externalTrafficPolicy=Local
+helm install ingress-nginx ingress-nginx/ingress-nginx --create-namespace --namespace ingressnginx1 --set controller.service.loadBalancerIP=$PUBLICIP --set controller.service.externalTrafficPolicy=Local
 
 echo \{\"Status\":\"Complete\"\} > $AZ_SCRIPTS_OUTPUT_PATH
