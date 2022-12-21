@@ -78,17 +78,44 @@
     },
     "resources": [
         {
-            "type": "Microsoft.Resources/resourceGroups",
-            "apiVersion": "2021-04-01",
-            "name": "[parameters('nodeResourceGroup')]",
-            "location": "[resourceGroup().location]",
-            "tags": {
-                "tagName1": "tagValue1",
-                "tagName2": "tagValue2"
-            },
-            "managedBy": "string",
-            "properties": {}
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2020-10-01",
+            "name": "identities",
+            "dependsOn": [
+                "[resourceId('Microsoft.ContainerService/managedClusters', parameters('clusterName'))]"
+            ],
+            "properties": {
+                "expressionEvaluationOptions": {
+                    "scope": "inner"
+                },
+                "mode": "Incremental",
+                "nodeResourceGroup": {
+                    "location": {
+                        "value": "[parameters('nodeResourceGroup')]"
+                    }
+                },
+                "template": {
+                    "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {
+                        "nodeResourceGroup": {
+                            "type": "string",
+                            "defaultValue": ""
+                        }
+                    },
+                    "variables": {},
+                    "resources": [
+                        {
+                            "type": "Microsoft.Resources/resourceGroups",
+                            "apiVersion": "2018-05-01",
+                            "location": "[resourceGroup().location]",
+                            "name": "[parameters('nodeResourceGroup')]"
+                        }
+                    ]
+                }
+            }
         },
+
         {
             "type": "Microsoft.ContainerService/managedClusters",
             "apiVersion": "2020-09-01",
