@@ -78,42 +78,6 @@
     },
     "resources": [
         {
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2020-10-01",
-            "name": "nodeResourceGroup",
-            "properties": {
-                "expressionEvaluationOptions": {
-                    "scope": "inner"
-                },
-                "mode": "Incremental",
-                "nodeResourceGroup": {
-                    "location": {
-                        "value": "[parameters('nodeResourceGroup')]"
-                    }
-                },
-                "template": {
-                    "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
-                    "contentVersion": "1.0.0.0",
-                    "parameters": {
-                        "nodeResourceGroup": {
-                            "type": "string",
-                            "defaultValue": ""
-                        }
-                    },
-                    "variables": {},
-                    "resources": [
-                        {
-                            "type": "Microsoft.Resources/resourceGroups",
-                            "apiVersion": "2018-05-01",
-                            "location": "[resourceGroup().location]",
-                            "name": "[parameters('nodeResourceGroup')]"
-                        }
-                    ]
-                }
-            }
-        },
-
-        {
             "type": "Microsoft.ContainerService/managedClusters",
             "apiVersion": "2020-09-01",
             "name": "[parameters('clusterName')]",
@@ -121,9 +85,6 @@
             "identity": {
                 "type": "SystemAssigned"
             },
-            "dependsOn": [
-                "[resourceId('Microsoft.Resources/resourceGroups', parameters('nodeResourceGroup'))]"
-            ],
             "properties": {
                 "dnsPrefix": "[parameters('dnsPrefix')]",
                 "agentPoolProfiles": [
