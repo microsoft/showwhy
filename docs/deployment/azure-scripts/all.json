@@ -9,13 +9,6 @@
                 "description": "The name of the Managed Cluster resource."
             }
         },
-        "location": {
-            "type": "string",
-            "defaultValue": "[resourceGroup().location]",
-            "metadata": {
-                "description": "The location of the Managed Cluster resource."
-            }
-        },
         "dnsPrefix": {
             "type": "string",
             "defaultValue": "aksshowwhy",
@@ -63,10 +56,7 @@
         }
     },
     "variables": {
-        "_artifactsLocation": "https://raw.githubusercontent.com/microsoft/showwhy/azure/",
-        "helmAppLocation": "oci://ghcr.io/microsoft/showwhy/helm/causal-services",
-        "causalRegistry": "ghcr.io/microsoft/showwhy/",
-        "nodeResourceGroup": "[concat('MC_', resourceGroup().name, '_', parameters('clusterName'), '_', parameters('location'))]"
+        "nodeResourceGroup": "[concat('MC_', resourceGroup().name, '_', parameters('clusterName'), '_', resourceGroup().location)]"
     },
     "resources": [
         {
@@ -82,9 +72,6 @@
                 "parameters": {
                     "clusterName": {
                         "value": "[parameters('clusterName')]"
-                    },
-                    "location": {
-                        "value": "[parameters('location')]"
                     },
                     "dnsPrefix": {
                         "value": "[parameters('dnsPrefix')]"
@@ -120,15 +107,12 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[uri('https://raw.githubusercontent.com/microsoft/showwhy/azure/docs/deployment/azure-scripts/', 'aks.json')]",
+                    "uri": "[uri('https://raw.githubusercontent.com/microsoft/showwhy/azure/docs/deployment/azure-scripts/', 'helm.json')]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
                      "identityName": {
                         "value": "[reference('aksDeployment').outputs.identityName.value]"
-                    },
-                    "_artifactsLocation": {
-                        "value": "[variables('_artifactsLocation')]"
                     },
                     "clusterName": {
                         "value": "[parameters('clusterName')]"
@@ -136,17 +120,18 @@
                     "dnsPrefix": {
                         "value": "[parameters('dnsPrefix')]"
                     },
-                    "causalRegistry": {
-                        "value": "[variables('causalRegistry')]"
-                    },
-                    "helmAppLocation": {
-                        "value": "[variables('helmAppLocation')]"
-                    },
                     "nodeResourceGroup": {
                         "value": "[variables('nodeResourceGroup')]"
                     }
                 }
             }
         }
-    ]
+    ],
+    "outputs": {
+        "URL": {
+            "type": "string",
+            "value": "[reference(resourceId('Microsoft.Resources/deployments', 'helmDeployment')).outputs.domain.value]"
+        }
+
+    }
 }
