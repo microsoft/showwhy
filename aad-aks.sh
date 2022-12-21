@@ -42,32 +42,32 @@ cat > app-manifest.json << EOF
 EOF
 
 # Create app registration
-appId=`az ad app create --display-name $CLUSTER_NAME --required-resource-accesses @app-manifest.json --query id -o tsv`
+# appId=`az ad app create --display-name $CLUSTER_NAME --required-resource-accesses @app-manifest.json --query id -o tsv`
 
-# Get client secret
-appSecret=`az ad app credential reset --id $appId --display-name $secretName --query password --o tsv`
+# # Get client secret
+# appSecret=`az ad app credential reset --id $appId --display-name $secretName --query password --o tsv`
 
-cookieName=_auth_token
+# cookieName=_auth_token
 
-randomSecretCookie=`python -c 'import os,base64; print(base64.urlsafe_b64encode(os.urandom(32)).decode())'`
+# randomSecretCookie=`python -c 'import os,base64; print(base64.urlsafe_b64encode(os.urandom(32)).decode())'`
 
-kubectl create namespace oauth-proxy
+# kubectl create namespace oauth-proxy
 
-cat > oauth-proxy.yaml << EOF
-apiVersion: v1
-kind: Secret
-metadata:
-    name: oauth-proxy-secret
-    namespace: oauth-proxy
-stringData:
-    oidc-issuer-url: https://login.microsoftonline.com/$TENANT/v2.0
-    stringData.scope: openid email
-    stringData.client-id: $appId
-    stringData.client-secret: $appSecret
-    stringData.cookie-secret: $randomSecretCookie
-    stringData.cookie-name: $secretName
-EOF
+# cat > oauth-proxy.yaml << EOF
+# apiVersion: v1
+# kind: Secret
+# metadata:
+#     name: oauth-proxy-secret
+#     namespace: oauth-proxy
+# stringData:
+#     oidc-issuer-url: https://login.microsoftonline.com/$TENANT/v2.0
+#     stringData.scope: openid email
+#     stringData.client-id: $appId
+#     stringData.client-secret: $appSecret
+#     stringData.cookie-secret: $randomSecretCookie
+#     stringData.cookie-name: $secretName
+# EOF
 
-kubectl apply -f oauth-proxy.yaml
+# kubectl apply -f oauth-proxy.yaml
 
 echo \{\"Status\":\"Complete\"\} > $AZ_SCRIPTS_OUTPUT_PATH
