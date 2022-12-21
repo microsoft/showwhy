@@ -130,7 +130,7 @@
     "outputs": {
         "URL": {
             "type": "string",
-            "value": "[reference(resourceId('Microsoft.Resources/deployments', 'helmDeployment')).outputs.domain.value]"
+            "value": "[reference(resourceId('Microsoft.Resources/deployments', 'helmDeployment')).outputs.URL.value]"
         }
 
     }
