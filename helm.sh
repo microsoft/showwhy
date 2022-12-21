@@ -14,7 +14,7 @@ az aks install-cli
 az aks get-credentials -g $RESOURCEGROUP -n $CLUSTER_NAME
 echo "LOGIN SUCCESSFUL"
 
-helm pull $HELM_APP
+helm pull $HELM_APP_LOCATION
 helm upgrade --install causal-services $HELM_APP_LOCATION \
     --set enableAuthentication=false,causalImagesPullPolicy=Always,causalImagesRegistry=$CAUSAL_REGISTRY,domain=$DNS_PREFIX.eastus.cloudapp.azure.com
 
