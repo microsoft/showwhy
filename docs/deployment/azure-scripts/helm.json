@@ -103,7 +103,7 @@
             "apiVersion": "2020-10-01",
             "name": "helmScripts",
             "dependsOn": [
-                "[resourceId('Microsoft.Resources/deployments', 'publicIP')]"
+                "[resourceId(parameters('nodeResourceGroup'),'Microsoft.Resources/deployments', 'publicIP')]"
             ],
             "properties": {
                 "expressionEvaluationOptions": {
@@ -119,6 +119,9 @@
                     },
                     "dnsPrefix": {
                         "value": "[parameters('dnsPrefix')]"
+                    },
+                    "ip": {
+                        "value": "[reference(resourceId(parameters('nodeResourceGroup'),'Microsoft.Resources/deployments', 'publicIP')).outputs.publicIP.value]"
                     }
                 },
                 "template": {
@@ -149,11 +152,15 @@
                         "utcValue": {
                             "type": "string",
                             "defaultValue": "[utcNow()]"
+                        },
+                        "ip": {
+                            "type": "string",
+                            "defaultValue": ""
                         }
                     },
                     "variables": {
                         "causalRegistry": "ghcr.io/microsoft/showwhy/",
-                        "helmAppLocation": "oci://ghcr.io/microsoft/showwhy/helm/causal-services:0.3.0",
+                        "helmAppLocation": "oci://ghcr.io/microsoft/showwhy/helm/causal-services",
                         "_artifactsLocation": "https://raw.githubusercontent.com/microsoft/showwhy/azure/",
                         "installScriptUri": "[uri(variables('_artifactsLocation'), 'helm.sh')]"
                     },
@@ -161,7 +168,7 @@
                         {
                             "type": "Microsoft.Resources/deploymentScripts",
                             "apiVersion": "2020-10-01",
-                            "name": "customScript",
+                            "name": "deployHelm",
                             "location": "[resourceGroup().location]",
                             "kind": "AzureCLI",
                             "identity": {
@@ -193,7 +200,7 @@
                                     },
                                     {
                                         "name": "PUBLICIP",
-                                        "secureValue": "[reference('publicIP').outputs.publicIP.value]"
+                                        "secureValue": "[parameters('ip')]"
                                     },
                                     {
                                         "name": "SUBSCRIPTION",
