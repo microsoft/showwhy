@@ -53,7 +53,6 @@ export const EffectResult: React.FC<EffectResultProps> = memo(
 		const barChartDimensions = useDynamicChartDimensions(
 			barChartRef,
 			BAR_CHART_HEIGHT_PERC_OF_WIN_HEIGHT,
-			synthControlData,
 		)
 
 		const synthControlBarChartData =

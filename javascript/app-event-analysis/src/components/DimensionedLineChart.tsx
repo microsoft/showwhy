@@ -56,9 +56,7 @@ export const DimensionedLineChart: React.FC<DimensionedLineChartProps> = memo(
 		const lineChartDimensions = useDynamicChartDimensions(
 			lineChartRef,
 			lineChartHeightPercOfWinHeight,
-			null,
 		)
-		console.log('lineChartDimensions', JSON.stringify(lineChartDimensions))
 		return (
 			<Container ref={lineChartRef} className="chartContainer">
 				<ErrorBoundary FallbackComponent={ChartErrorFallback}>

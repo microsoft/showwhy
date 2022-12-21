@@ -5278,6 +5278,7 @@ __metadata:
     shx: ^0.3.4
     styled-components: ^5.3.6
     typescript: ^4.8.4
+    use-resize-observer: ^9.1.0
   languageName: unknown
   linkType: soft
 
@@ -24121,6 +24122,18 @@ __metadata:
     react: 16.8.0 - 18
     react-dom: 16.8.0 - 18
   checksum: a79f9f4027ebfc44305ba29bd479a8e72c94e5a9b4feced7ef2cd2e3ead92f89e06ade5beeb8977c30b7e20cfce31e49c99390f8baa5bd7fa331905dace0ef96
+  languageName: node
+  linkType: hard
+
+"use-resize-observer@npm:^9.1.0":
+  version: 9.1.0
+  resolution: "use-resize-observer@npm:9.1.0"
+  dependencies:
+    "@juggle/resize-observer": ^3.3.1
+  peerDependencies:
+    react: 16.8.0 - 18
+    react-dom: 16.8.0 - 18
+  checksum: 92be0ac34a3b3cf884cd55847c90792b5b44833dc258e96d650152815ad246afe45825aa223332203004d836535a927ab74f18dc0313229e2c7c69510eddf382
   languageName: node
   linkType: hard
 

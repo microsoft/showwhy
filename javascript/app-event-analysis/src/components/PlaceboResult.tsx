@@ -60,7 +60,6 @@ export const PlaceboResult: React.FC<PlaceboResultProps> = memo(
 		const placeboBarChartDimensions = useDynamicChartDimensions(
 			placeboBarChartRef,
 			BAR_CHART_HEIGHT_PERC_OF_WIN_HEIGHT,
-			placeboDataGroup,
 		)
 		const placeboLineChartRef = useRef<HTMLDivElement | null>(null)
 
