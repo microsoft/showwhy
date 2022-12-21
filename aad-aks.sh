@@ -42,7 +42,7 @@ cat > app-manifest.json << EOF
 EOF
 
 # Create app registration
-# appId=`az ad app create --display-name $CLUSTER_NAME --required-resource-accesses @app-manifest.json --query id -o tsv`
+appId=`az ad app create --display-name $CLUSTER_NAME --required-resource-accesses @app-manifest.json --query id -o tsv`
 
 # # Get client secret
 # appSecret=`az ad app credential reset --id $appId --display-name $secretName --query password --o tsv`
