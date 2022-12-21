@@ -102,6 +102,9 @@
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2020-10-01",
             "name": "helmScripts",
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/deployments', 'publicIP')]"
+            ],
             "properties": {
                 "expressionEvaluationOptions": {
                     "scope": "inner"
@@ -160,9 +163,6 @@
                             "apiVersion": "2020-10-01",
                             "name": "customScript",
                             "location": "[resourceGroup().location]",
-                            "dependsOn": [
-                                "[resourceId('Microsoft.Resources/deployments', 'publicIP')]"
-                            ],
                             "kind": "AzureCLI",
                             "identity": {
                                 "type": "UserAssigned",
