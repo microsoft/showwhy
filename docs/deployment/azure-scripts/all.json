@@ -4,14 +4,14 @@
     "parameters": {
         "clusterName": {
             "type": "string",
-            "defaultValue": "[variables('name')]",
+            "defaultValue": "showwhy",
             "metadata": {
                 "description": "The name of the Managed Cluster resource."
             }
         },
         "dnsPrefix": {
             "type": "string",
-            "defaultValue": "[variables('name')]",
+            "minLength": 1,
             "metadata": {
                 "description": "Optional DNS prefix to use with hosted Kubernetes API server FQDN."
             }
@@ -40,23 +40,9 @@
             "metadata": {
                 "description": "The size of the Virtual Machine."
             }
-        },
-        "linuxAdminUsername": {
-            "type": "string",
-            "defaultValue": "aksshowwhy",
-            "metadata": {
-                "description": "User name for the Linux Virtual Machines."
-            }
-        },
-        "sshRSAPublicKey": {
-            "type": "string",
-            "metadata": {
-                "description": "Configure all linux machines with the SSH RSA public key string. Your key should include three parts, for example 'ssh-rsa AAAAB...snip...UcyupgH azureuser@linuxvm'"
-            }
         }
     },
     "variables": {
-        "name": "[concat('showwhy', uniqueString(resourceGroup().id))]",
         "nodeResourceGroup": "[concat('MC_', resourceGroup().name, '_', parameters('clusterName'), '_', resourceGroup().location)]"
     },
     "resources": [
@@ -85,12 +71,6 @@
                     },
                     "agentVMSize": {
                         "value": "[parameters('agentVMSize')]"
-                    },
-                    "linuxAdminUsername": {
-                        "value": "[parameters('linuxAdminUsername')]"
-                    },
-                    "sshRSAPublicKey": {
-                        "value": "[parameters('sshRSAPublicKey')]"
                     },
                     "nodeResourceGroup": {
                         "value": "[variables('nodeResourceGroup')]"

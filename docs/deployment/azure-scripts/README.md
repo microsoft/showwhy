@@ -9,6 +9,7 @@ This Azure Resource Manager (ARM) template deploys an Azure Kubernetes Service (
 Microsoft.Authorization/roleAssignments/write permissions, such as `User Access Administrator` or `Owner`.**
 
 **2.    It doesn't deploy with authentication in the chart at the moment.**
+**3.    The aks cluster will be only accessible by Azure Portal, it's not generating a ssh key for external access.**
 
 ## Parameters:
 clusterName: The name of the Managed Cluster resource.

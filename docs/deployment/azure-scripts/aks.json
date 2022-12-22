@@ -11,7 +11,7 @@
     "parameters": {
         "clusterName": {
             "type": "string",
-            "defaultValue": "[concat('showwhy', uniqueString(resourceGroup().id))]",
+            "defaultValue": "showwhy",
             "metadata": {
                 "description": "The name of the Managed Cluster resource."
             }
@@ -32,7 +32,7 @@
         },
         "dnsPrefix": {
             "type": "string",
-            "defaultValue": "",
+            "minLength": 1,
             "metadata": {
                 "description": "Optional DNS prefix to use with hosted Kubernetes API server FQDN."
             }
