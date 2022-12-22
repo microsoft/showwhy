@@ -21,7 +21,7 @@ if [ -v $CLIENT_ID ];then
 
     # kubectl create namespace oauth-proxy
 
-    cat > oauth-proxy.yaml << EOF
+    `cat > oauth-proxy.yaml << EOF
     apiVersion: v1
     kind: Secret
     metadata:
@@ -34,7 +34,7 @@ if [ -v $CLIENT_ID ];then
         stringData.client-secret: $CLIENT_SECRET
         stringData.cookie-secret: $randomSecretCookie
         stringData.cookie-name: $secretName
-    EOF
+    EOF`
 
     kubectl apply -f oauth-proxy.yaml
 fi
