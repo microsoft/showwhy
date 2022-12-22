@@ -39,7 +39,6 @@ EOF
     kubectl apply -f oauth-proxy.yaml
 fi
 
-helm uninstall causal-services --wait
 # Install helm package from ghcr
 helm upgrade --install causal-services $HELM_APP_LOCATION \
     --set enableAuthentication=$auth,causalImagesPullPolicy=Always,causalImagesRegistry=$CAUSAL_REGISTRY,domain=$DOMAIN
