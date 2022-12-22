@@ -35,7 +35,7 @@ stringData:
 EOF
 
     kubectl create namespace oauth-proxy
-    kubectl apply -f oauth-proxy.yaml
+    kubectl apply --wait -f oauth-proxy.yaml
 fi
 
 # Install helm package from ghcr
