@@ -8,9 +8,9 @@ This Azure Resource Manager (ARM) template deploys an Azure Kubernetes Service (
 **1.    You must have:
 Microsoft.Authorization/roleAssignments/write permissions, such as `User Access Administrator` or `Owner`.**
 
-**2.    It doesn't deploy with authentication in the chart at the moment.**
+**2.    The aks cluster will be only accessible by Azure Portal, it's not generating a ssh key for external access.**
 
-**3.    The aks cluster will be only accessible by Azure Portal, it's not generating a ssh key for external access.**
+**3.    It has self signed certificated for now, so when you access it will say 'Your connection is not private', you'll have to click on the advanced to proceed to the deployed website**
 
 ## Parameters:
 `clusterName`: The name of the Managed Cluster resource.
@@ -25,7 +25,11 @@ Microsoft.Authorization/roleAssignments/write permissions, such as `User Access 
 
 `linuxAdminUsername`: User name for the Linux Virtual Machines.
 
-`sshRSAPublicKey`: Configure all linux machines with the SSH RSA public key string. Your key should include three parts, for example 'ssh-rsa AAAAB...snip...UcyupgH azureuser@linuxvm'.
+`enableAuth`: If you would like authentication enabled to access the platform, set this as true, follow [this steps to create an app registration](../AKS_DEPLOY.md#5-1-Authentication)
+
+`clientId`: Client ID from the app registration
+
+`clientSecret`: Client Secret from the app registration
 
 ## Resources
 The template deploys the following resources:

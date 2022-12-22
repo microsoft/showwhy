@@ -41,6 +41,13 @@
                 "description": "The size of the Virtual Machine."
             }
         },
+        "enableAuth": {
+            "type": "bool",
+            "defaultValue": false,
+            "metadata": {
+                "description": "Enable authentication"
+            }
+        },
         "clientId": {
             "type": "string",
             "defaultValue": "",
@@ -54,13 +61,6 @@
             "defaultValue": "",
             "metadata": {
                 "description": "Client secret if you wish authentication."
-            }
-        },
-        "tenantId": {
-            "type": "string",
-            "defaultValue": "[subscription().tenantId]",
-            "metadata": {
-                "description": "Tenant ID of the Azure AD for authentication."
             }
         }
     },
@@ -129,11 +129,11 @@
                     "clientId": {
                         "value": "[parameters('clientId')]"
                     },
+                    "enableAuth": {
+                        "value": "[parameters('enableAuth')]"
+                    },
                     "clientSecret": {
                         "value": "[parameters('clientSecret')]"
-                    },
-                    "tenantId": {
-                        "value": "[parameters('tenantId')]"
                     }
                 }
             }
