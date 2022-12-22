@@ -11,10 +11,10 @@ import {
 	PlaceboSimulationState,
 	TreatedUnitsState,
 } from '../state/state.js'
+import { GraphTitle, StyledStack } from '../styles/index.js'
 import { CustomMessageBar } from './CustomMessageBar.js'
 import { DimensionedLineChart } from './DimensionedLineChart.js'
 import type { RawDataPaneProps } from './RawDataPane.types.js'
-import { GraphTitle, StyledStack } from './style/Styles.js'
 
 export const RawDataPane: React.FC<RawDataPaneProps> = memo(
 	function RawDataPane({

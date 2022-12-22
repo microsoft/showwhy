@@ -15,7 +15,7 @@ import { Hypothesis } from '@showwhy/app-common'
 import { memo } from 'react'
 import type { MutableSnapshot, Snapshot } from 'recoil'
 
-import { App } from './components/App.js'
+import { App } from './App/App.js'
 import {
 	AggregateEnabledState,
 	AggTreatmentState,
