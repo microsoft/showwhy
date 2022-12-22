@@ -35,6 +35,28 @@
             "metadata": {
                 "description": "Resource group of AKS node"
             }
+        },
+        "clientId": {
+            "type": "string",
+            "defaultValue": "",
+
+            "metadata": {
+                "description": "Client id if you wish authentication."
+            }
+        },
+        "clientSecret": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "Client secret if you wish authentication."
+            }
+        },
+        "tenantId": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "Tenant ID of the Azure AD for authentication."
+            }
         }
     },
     "resources": [
@@ -122,6 +144,15 @@
                     },
                     "ip": {
                         "value": "[reference(resourceId(parameters('nodeResourceGroup'),'Microsoft.Resources/deployments', 'publicIP')).outputs.publicIP.value]"
+                    },
+                    "clientId": {
+                        "value": "[parameters('clientId')]"
+                    },
+                    "clientSecret": {
+                        "value": "[parameters('clientSecret')]"
+                    },
+                    "tenantId": {
+                        "value": "[parameters('tenantId')]"
                     }
                 },
                 "template": {
@@ -156,6 +187,27 @@
                         "ip": {
                             "type": "string",
                             "defaultValue": ""
+                        },
+                        "clientId": {
+                            "type": "string",
+                            "defaultValue": "",
+                            "metadata": {
+                                "description": "Client id if you wish authentication."
+                            }
+                        },
+                        "clientSecret": {
+                            "type": "string",
+                            "defaultValue": "",
+                            "metadata": {
+                                "description": "Client secret if you wish authentication."
+                            }
+                        },
+                        "tenantId": {
+                            "type": "string",
+                            "defaultValue": "",
+                            "metadata": {
+                                "description": "Tenant ID of the Azure AD for authentication."
+                            }
                         }
                     },
                     "variables": {
@@ -214,6 +266,18 @@
                                     {
                                         "name": "DOMAIN",
                                         "secureValue": "[variables('domain')]"
+                                    },
+                                    {
+                                        "name": "CLIENT_ID",
+                                        "secureValue": "[parameters('clientId')]"
+                                    },
+                                    {
+                                        "name": "CLIENT_SECRET",
+                                        "secureValue": "[parameters('clientSecret')]"
+                                    },
+                                    {
+                                        "name": "TENANT_ID",
+                                        "secureValue": "[parameters('tenantId')]"
                                     }
                                 ],
                                 "primaryScriptUri": "[variables('installScriptUri')]",
@@ -231,7 +295,8 @@
                 }
             }
         }
-    ], "outputs": {
+    ],
+    "outputs": {
         "URL": {
             "type": "string",
             "value": "[reference(resourceId('Microsoft.Resources/deployments', 'helmScripts')).outputs.domain.value]"
