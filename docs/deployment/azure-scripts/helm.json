@@ -13,19 +13,19 @@
             "type": "string",
             "defaultValue": "",
             "metadata": {
-                "description": "causal Registry URL"
+                "description": "Managed itendity name to access AKS cluster"
             }
         },
         "clusterName": {
             "type": "string",
-            "defaultValue": "aks201cluster",
+            "defaultValue": "",
             "metadata": {
                 "description": "The name of the Managed Cluster resource."
             }
         },
         "dnsPrefix": {
             "type": "string",
-            "defaultValue": "dcs201",
+            "defaultValue": "",
             "metadata": {
                 "description": "Optional DNS prefix to use with hosted Kubernetes API server FQDN."
             }

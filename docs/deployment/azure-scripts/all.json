@@ -4,14 +4,14 @@
     "parameters": {
         "clusterName": {
             "type": "string",
-            "defaultValue": "aksshowwhy",
+            "defaultValue": "[variables('name')]",
             "metadata": {
                 "description": "The name of the Managed Cluster resource."
             }
         },
         "dnsPrefix": {
             "type": "string",
-            "defaultValue": "aksshowwhy",
+            "defaultValue": "[variables('name')]",
             "metadata": {
                 "description": "Optional DNS prefix to use with hosted Kubernetes API server FQDN."
             }
@@ -56,6 +56,7 @@
         }
     },
     "variables": {
+        "name": "[concat('showwhy', uniqueString(resourceGroup().id))]",
         "nodeResourceGroup": "[concat('MC_', resourceGroup().name, '_', parameters('clusterName'), '_', resourceGroup().location)]"
     },
     "resources": [

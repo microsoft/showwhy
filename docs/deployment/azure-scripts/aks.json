@@ -11,7 +11,7 @@
     "parameters": {
         "clusterName": {
             "type": "string",
-            "defaultValue": "aksshowwhy",
+            "defaultValue": "[concat('showwhy', uniqueString(resourceGroup().id))]",
             "metadata": {
                 "description": "The name of the Managed Cluster resource."
             }
@@ -32,7 +32,7 @@
         },
         "dnsPrefix": {
             "type": "string",
-            "defaultValue": "aksshowwhy",
+            "defaultValue": "",
             "metadata": {
                 "description": "Optional DNS prefix to use with hosted Kubernetes API server FQDN."
             }
@@ -61,19 +61,6 @@
             "metadata": {
                 "description": "The size of the Virtual Machine."
             }
-        },
-        "linuxAdminUsername": {
-            "type": "string",
-            "defaultValue": "aksshowwhy",
-            "metadata": {
-                "description": "User name for the Linux Virtual Machines."
-            }
-        },
-        "sshRSAPublicKey": {
-            "type": "string",
-            "metadata": {
-                "description": "Configure all linux machines with the SSH RSA public key string. Your key should include three parts, for example 'ssh-rsa AAAAB...snip...UcyupgH azureuser@linuxvm'"
-            }
         }
     },
     "resources": [
@@ -97,26 +84,15 @@
                         "mode": "System"
                     }
                 ],
-                "linuxProfile": {
-                    "adminUsername": "[parameters('linuxAdminUsername')]",
-                    "ssh": {
-                        "publicKeys": [
-                            {
-                                "keyData": "[parameters('sshRSAPublicKey')]"
-                            }
-                        ]
-                    }
-                },
                 "nodeResourceGroup": "[parameters('nodeResourceGroup')]"
             }
-
         },
         {
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2020-10-01",
             "name": "identities",
             "dependsOn": [
-                "[resourceId('Microsoft.ContainerService/managedClusters', parameters('clusterName'))]"
+                "[parameters('clusterName')]"
             ],
             "properties": {
                 "expressionEvaluationOptions": {
@@ -182,6 +158,7 @@
                 }
             }
         }
+        
     ],
     "outputs": {
         "identityName": {
