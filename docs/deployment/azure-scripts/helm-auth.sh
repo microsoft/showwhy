@@ -21,20 +21,20 @@ if [ -v $CLIENT_ID ];then
 
     # kubectl create namespace oauth-proxy
 
-    cat > oauth-proxy.yaml <<EOF
-    apiVersion: v1
-    kind: Secret
-    metadata:
-        name: oauth-proxy-secret
-        namespace: oauth-proxy
-    stringData:
-        oidc-issuer-url: https://login.microsoftonline.com/$TENANT_ID/v2.0
-        stringData.scope: openid email
-        stringData.client-id: $CLIENT_ID
-        stringData.client-secret: $CLIENT_SECRET
-        stringData.cookie-secret: $randomSecretCookie
-        stringData.cookie-name: $secretName
-    EOF
+   cat > oauth-proxy.yaml <<EOF
+apiVersion:v1
+kind:Secret
+metadata:
+name:oauth-proxy-secret
+namespace:oauth-proxy
+stringData:
+oidc-issuer-url:https://login.microsoftonline.com/$TENANT_ID/v2.0
+stringData.scope:openid email
+stringData.client-id:$CLIENT_ID
+stringData.client-secret:$CLIENT_SECRET
+stringData.cookie-secret:$randomSecretCookie
+stringData.cookie-name:$secretName
+EOF
 
     kubectl apply -f oauth-proxy.yaml
 fi
