@@ -14,7 +14,8 @@ az aks get-credentials -g $RESOURCEGROUP -n $CLUSTER_NAME
 
 if [ $ENABLE_AUTH = true ];then
     cookieName=_auth_token
-    echo "Auth enabled" 
+    echo \{\"Auth\":\"On\"\} > $AZ_SCRIPTS_OUTPUT_PATH
+
 
     randomSecretCookie=`python -c 'import os,base64; print(base64.urlsafe_b64encode(os.urandom(32)).decode())'`
 
