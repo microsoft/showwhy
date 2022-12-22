@@ -13,12 +13,12 @@ import {
 	TreatedUnitsState,
 	TreatmentStartDatesState,
 } from '../state/state.js'
+import { Container } from '../styles/index.js'
 import type { HoverInfo, TooltipInfo } from '../types.js'
 import { ChartErrorFallback } from './ChartErrorFallback.js'
 import { useDynamicChartDimensions } from './DimensionedLineChart.hooks.js'
 import type { DimensionedLineChartProps } from './DimensionedLineChart.types.js'
 import { LineChart } from './LineChart/LineChart.js'
-import { Container } from '../styles/index.js'
 
 export const DimensionedLineChart: React.FC<DimensionedLineChartProps> = memo(
 	function DimensionedLineChart({

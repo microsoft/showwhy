@@ -11,8 +11,8 @@ import type {
 	PlaceboOutputData,
 	SynthControlData,
 	SyntheticControlUnit,
-} from './types'
-import { Estimators, POSSIBLE_COL_NAMES } from './types'
+} from './types.js'
+import { Estimators, POSSIBLE_COL_NAMES } from './types.js'
 
 export function guessColMapping(columns: string[]): ColumnMapping {
 	// NOTE: the use of 'unit', 'Unit', or 'State' as possible column names

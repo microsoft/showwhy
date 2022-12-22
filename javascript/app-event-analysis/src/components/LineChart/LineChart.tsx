@@ -11,8 +11,7 @@ import type { OutputData } from '../../types.js'
 import { ChartTooltip } from '../ChartTooltip.js'
 import { CounterfactualLines } from '../CounterfactualLines.js'
 import { DrawingContainer } from '../DrawingContainer.js'
-import { Grid } from '../Grid.js'
-import { LineChartAxis } from '../LineChartAxis.js'
+import { Grid } from '../Grid/Grid.js'
 import { RawChartLines } from '../RawChartLines.js'
 import { SyntheticChartLines } from '../SyntheticChartLines.js'
 import { TreatmentMarkers } from '../TreatmentMarkers.js'
@@ -24,6 +23,7 @@ import {
 	useScales,
 } from './hooks/index.js'
 import type { LineChartProps } from './LineChart.types.js'
+import { LineChartAxis } from './LineChartAxis.js'
 
 export const LineChart: React.FC<LineChartProps> = memo(function LineChart({
 	inputData,
