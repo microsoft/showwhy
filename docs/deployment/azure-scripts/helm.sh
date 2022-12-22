@@ -12,7 +12,7 @@ az aks install-cli
 # Get cluster credentials
 az aks get-credentials -g $RESOURCEGROUP -n $CLUSTER_NAME
 
-if [$ENABLE_AUTH -eq true];then
+if ["$ENABLE_AUTH" = true];then
     cookieName=_auth_token
 
     randomSecretCookie=`python -c 'import os,base64; print(base64.urlsafe_b64encode(os.urandom(32)).decode())'`
