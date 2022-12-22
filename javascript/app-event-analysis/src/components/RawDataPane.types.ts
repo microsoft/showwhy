@@ -2,24 +2,19 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+
 import type {
-	ChartOptions,
-	HoverInfo,
+	MessageBarProps,
 	OutputData,
 	PlaceboOutputData,
 	ProcessedInputData,
-} from '../types'
+} from '../types.js'
 
-export interface LineChartProps extends ChartOptions {
+export interface RawDataPaneProps {
 	inputData: ProcessedInputData
 	outputData: (OutputData | PlaceboOutputData)[]
-	dimensions: {
-		width: number
-		height: number
-		margin: { top: number; bottom: number; left: number; right: number }
-	}
-	hoverInfo: HoverInfo
+	statusMessage: MessageBarProps
+	isCalculatingEstimator: boolean
 	checkableUnits: string[]
 	onRemoveCheckedUnit: (unitToRemove: string) => void
-	treatedUnitsList?: string[]
 }

@@ -9,12 +9,6 @@ import type {
 	ResultPaneProps,
 } from '../types.js'
 
-export interface ChartDimensions {
-	width: number
-	height: number
-	margin: { top: number; bottom: number; left: number; right: number }
-}
-
 export interface DimensionedLineChartProps
 	extends Pick<
 		ResultPaneProps,
@@ -23,4 +17,6 @@ export interface DimensionedLineChartProps
 	lineChartRef: React.MutableRefObject<HTMLDivElement | null>
 	output: (OutputData | PlaceboOutputData)[]
 	treatedUnitsList?: string[]
+	isPlaceboSimulation: boolean
+	checkedUnits: Set<string> | null
 }

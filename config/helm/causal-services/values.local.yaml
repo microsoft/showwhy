@@ -1,0 +1,6 @@
+#
+# Settings for Local Development
+#
+domain: localhost
+showwhyImagesPullPolicy: Never
+enableAuthentication: false

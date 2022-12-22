@@ -12,7 +12,7 @@ export function useCreateView(spec: Spec, width: number, height: number): View {
 	const theme = useThematic()
 	return useMemo(() => {
 		// TODO: width and height should be optional with modern vega
-		const themed = decorator(theme, spec, width, height)
+		const themed = decorator(theme, spec, { width, height })
 		const parsed = parse(themed)
 		return new View(parsed).renderer('svg')
 	}, [theme, spec, width, height])

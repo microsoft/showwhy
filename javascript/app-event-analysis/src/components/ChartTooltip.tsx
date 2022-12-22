@@ -43,7 +43,11 @@ export const ChartTooltip: React.FC<ChartTooltipProps> = memo(
 				onTooltipRemoved={handleTooltipRemoved}
 			>
 				<TooltipContent>
-					<div>{tooltip.content}</div>
+					<div>
+						{tooltip.content?.map((p: string, i: number) => (
+							<p key={i}>{p}</p>
+						))}
+					</div>
 					{isTooltipPersisted &&
 						checkableUnits.includes(tooltip.unit) &&
 						checkedUnits &&
