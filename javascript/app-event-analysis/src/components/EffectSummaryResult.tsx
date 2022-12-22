@@ -15,7 +15,7 @@ import {
 	useMeanTreatmentEffect,
 } from './EffectSummaryResult.hooks.js'
 import type { EffectSummaryResultProps } from './EffectSummaryResult.types.js'
-import { Strong } from './style/Styles.js'
+import { Strong } from '../styles/index.js'
 
 export const EffectSummaryResult: React.FC<EffectSummaryResultProps> = memo(
 	function EffectSummaryResult({ inputData, outputData, timeAlignment }) {

@@ -6,7 +6,7 @@ import { Stack } from '@fluentui/react'
 import { memo } from 'react'
 
 import { Container } from './App.styles.js'
-import { MainContent } from './MainContent.js'
+import { MainContent } from '../MainContent.js'
 
 export const App: React.FC = memo(function App() {
 	return (

@@ -22,7 +22,7 @@ import { DimensionedLineChart } from './DimensionedLineChart.js'
 import { EffectResult } from './EffectResult.js'
 import type { EffectResultPaneProps } from './EffectResultPane.types.js'
 import { EffectSummaryResult } from './EffectSummaryResult.js'
-import { GraphTitle, StyledStack } from './style/Styles.js'
+import { GraphTitle, StyledStack } from '../styles/index.js'
 
 export const EffectResultPane: React.FC<EffectResultPaneProps> = memo(
 	function EffectResultPane({

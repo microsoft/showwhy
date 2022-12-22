@@ -31,12 +31,12 @@ import type { FormEvent } from 'react'
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useRecoilState } from 'recoil'
 
-import API from '../api.js'
-import { usePlaceboDataGroup } from '../hooks/usePlaceboDataGroup.js'
-import { usePlaceboOutputData } from '../hooks/usePlaceboOutputData.js'
-import { useProcessedInputData } from '../hooks/useProcessedInputData.js'
-import { useShowPlaceboGraphs } from '../hooks/useShowPlaceboGraphs.js'
-import { useTreatedUnitsMap } from '../hooks/useTreatedUnitsMap.js'
+import API from './api.js'
+import { usePlaceboDataGroup } from './hooks/usePlaceboDataGroup.js'
+import { usePlaceboOutputData } from './hooks/usePlaceboOutputData.js'
+import { useProcessedInputData } from './hooks/useProcessedInputData.js'
+import { useShowPlaceboGraphs } from './hooks/useShowPlaceboGraphs.js'
+import { useTreatedUnitsMap } from './hooks/useTreatedUnitsMap.js'
 import {
 	AggregateEnabledState,
 	AggTreatmentState,
@@ -59,12 +59,12 @@ import {
 	TreatmentStartDatesAfterEstimateState,
 	TreatmentStartDatesState,
 	UnitsState,
-} from '../state/state.js'
+} from './state/state.js'
 import {
 	CONFIGURATION_TABS,
 	MAX_RENDERED_TREATED_UNITS,
 	POSSIBLE_COL_NAMES,
-} from '../types'
+} from './types'
 import type {
 	ColumnMapping,
 	MessageBarProps,
@@ -72,15 +72,15 @@ import type {
 	PlaceboOutputData,
 	SDIDOutputResponse,
 	Treatment,
-} from '../types.js'
-import { csvToRecords, getColumns } from '../utils/csv.js'
-import { deserializeExportState } from '../utils/exportState.js'
-import { processOutputData } from '../utils/processOutputData.js'
-import { isValidTreatmentDate, isValidUnit } from '../utils/validation.js'
-import { ChartOptionsGroup } from './ChartOptionsGroup.js'
-import { CheckboxList } from './CheckboxList.js'
-import { EffectResultPane } from './EffectResultPane.js'
-import { EstimatorSelector } from './EstimatorSelector.js'
+} from './types.js'
+import { csvToRecords, getColumns } from './utils/csv.js'
+import { deserializeExportState } from './utils/exportState.js'
+import { processOutputData } from './utils/processOutputData.js'
+import { isValidTreatmentDate, isValidUnit } from './utils/validation.js'
+import { ChartOptionsGroup } from './components/ChartOptionsGroup.js'
+import { CheckboxList } from './components/CheckboxList.js'
+import { EffectResultPane } from './components/EffectResultPane.js'
+import { EstimatorSelector } from './components/EstimatorSelector.js'
 import {
 	DropdownContainer,
 	hypothesisGroupStyles,
@@ -93,12 +93,12 @@ import {
 	guessColMapping,
 	processSynthControlData,
 } from './MainContent.utils.js'
-import { PlaceboResultPane } from './PlaceboResultPane.js'
-import { RangeFilter } from './RangeFilter.js'
-import { RawDataPane } from './RawDataPane.js'
-import Spacer from './style/Spacer.js'
-import { TimeAlignmentSelector } from './TimeAlignmentSelector.js'
-import { TreatmentSelector } from './TreatmentSelector.js'
+import { PlaceboResultPane } from './components/PlaceboResultPane.js'
+import { RangeFilter } from './components/RangeFilter.js'
+import { RawDataPane } from './components/RawDataPane.js'
+import { Spacer } from './styles/index.js'
+import { TimeAlignmentSelector } from './components/TimeAlignmentSelector.js'
+import { TreatmentSelector } from './components/TreatmentSelector.js'
 
 export const MainContent: React.FC = memo(function MainContent() {
 	// Dataset selection (from wrangler)

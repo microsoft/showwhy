@@ -32,8 +32,7 @@ import {
 } from './PlaceboResult.hooks.js'
 import type { PlaceboResultProps } from './PlaceboResult.types.js'
 import { getSdidEstimate } from './PlaceboResult.utils.js'
-import Spacer from './style/Spacer.js'
-import { Container, Section, TreatedTitle } from './style/Styles.js'
+import { Spacer, Container, Section, TreatedTitle } from '../styles/index.js'
 
 export const PlaceboResult: React.FC<PlaceboResultProps> = memo(
 	function PlaceboResult({

@@ -12,8 +12,7 @@ import type { HoverInfo, TooltipInfo } from '../types.js'
 import { CustomMessageBar } from './CustomMessageBar.js'
 import { PlaceboResult } from './PlaceboResult.js'
 import type { PlaceboResultPaneProps } from './PlaceboResultPane.types.js'
-import Spacer from './style/Spacer.js'
-import { GraphTitle, StyledStack } from './style/Styles.js'
+import { GraphTitle, StyledStack, Spacer } from '../styles/index.js'
 
 export const PlaceboResultPane: React.FC<PlaceboResultPaneProps> = memo(
 	function PlaceboResultPane({
