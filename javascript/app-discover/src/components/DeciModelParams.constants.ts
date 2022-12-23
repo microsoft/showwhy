@@ -16,7 +16,7 @@ import {
 	VarDistAMode,
 } from '../domain/Algorithms/DECI.js'
 
-const SPLINE_BINS = 16
+const SPLINE_BINS = 8
 const LAMBDA_DAG = 100.0
 const LAMBDA_SPARSE = 5.0
 const TAU_GUMBEL = 1.0
@@ -25,10 +25,10 @@ const IMPUTER_LAYER_SIZES: number[] = []
 const ENCODER_LAYER_SIZES = [32, 32]
 const DECODER_LAYER_SIZES = [32, 32]
 const IMPUTATION = false
-const NORM_LAYERS = false
+const NORM_LAYERS = true
 const RES_CONNECTION = true
 
-export const BASE_DISTRIBUTION_TYPE = BaseDistributionType.Gaussian
+export const BASE_DISTRIBUTION_TYPE = BaseDistributionType.Spline
 export const VAR_DIST_A_MODE = VarDistAMode.Three
 export const MODE_ADJACENCY = ModeAdjacency.Learn
 

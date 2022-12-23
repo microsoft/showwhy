@@ -34,8 +34,8 @@ ATE_CALC_PROGRESS_PROPORTION = 0.3
 
 # TODO: UPDATE DEFAULTS
 class DeciModelOptions(BaseModel):
-    base_distribution_type: Literal["gaussian", "spline"] = "gaussian"
-    spline_bins: int = 16
+    base_distribution_type: Literal["gaussian", "spline"] = "spline"
+    spline_bins: int = 8
     imputation: bool = False
     lambda_dag: float = 100.0
     lambda_sparse: float = 5.0
@@ -43,7 +43,7 @@ class DeciModelOptions(BaseModel):
     var_dist_A_mode: Literal["simple", "enco", "true", "three"] = "three"
     imputer_layer_sizes: Optional[List[int]] = None
     mode_adjacency: Literal["upper", "lower", "learn"] = "learn"
-    norm_layers: bool = False
+    norm_layers: bool = True
     res_connection: bool = True
     encoder_layer_sizes: Optional[List[int]] = [32, 32]
     decoder_layer_sizes: Optional[List[int]] = [32, 32]
@@ -58,11 +58,11 @@ class DeciModelOptions(BaseModel):
 #  decreasing max_auglag_inner_epochs
 # TODO: UPDATE DEFAULTS
 class DeciTrainingOptions(BaseModel):
-    learning_rate: float = 1e-3
-    batch_size: int = 256
+    learning_rate: float = 3e-2
+    batch_size: int = 512
     standardize_data_mean: bool = False
     standardize_data_std: bool = False
-    rho: float = 1.0
+    rho: float = 10.0
     safety_rho: float = 1e13
     alpha: float = 0.0
     safety_alpha: float = 1e13
