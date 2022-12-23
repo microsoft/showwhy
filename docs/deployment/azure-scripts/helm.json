@@ -162,7 +162,7 @@
                         "domain": "[concat(parameters('dnsPrefix'), '.', resourceGroup().location, '.cloudapp.azure.com')]",
                         "causalRegistry": "ghcr.io/microsoft/showwhy/",
                         "helmAppLocation": "oci://ghcr.io/microsoft/showwhy/helm/causal-services",
-                        "_artifactsLocation": "https://raw.githubusercontent.com/microsoft/showwhy/azure/docs/deployment/azure-scripts/",
+                        "_artifactsLocation": "https://raw.githubusercontent.com/microsoft/showwhy/docs/deployment/azure-scripts/",
                         "installScriptUri": "[uri(variables('_artifactsLocation'), 'helm.sh')]"
                     },
                     "resources": [
