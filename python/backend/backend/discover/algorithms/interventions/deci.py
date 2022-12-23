@@ -49,14 +49,14 @@ class DeciInterventionModel:
             for j in range(n_cols):
                 if (
                     confidence_threshold is not None
-                    and abs(self._adj_matrix[i][j]) < confidence_threshold
+                    and abs(self._adj_matrix[i][j]) <= confidence_threshold
                 ) or (
                     weight_threshold is not None
-                    and abs(self._ate_matrix[i][j]) < weight_threshold
+                    and abs(self._ate_matrix[i][j]) <= weight_threshold
                 ):
                     adj_matrix[i][j] = 0
 
-        return torch.from_numpy(adj_matrix).float().to(self._deci_model.device)
+        return torch.from_numpy(adj_matrix.round()).float().to(self._deci_model.device)
 
     def _parse_raw_result(self, raw_result: np.ndarray) -> InterventionValueByColumn:
         return {
@@ -75,9 +75,7 @@ class DeciInterventionModel:
         for name, value in interventions.items():
             idx = self._deci_model.variables.name_to_idx[name]
             if idx is not None:
-                interventions_by_index[
-                    self._deci_model.variables.name_to_idx[name]
-                ] = value
+                interventions_by_index[idx] = value
             else:
                 logging.warning(
                     f"Intervention column {name} ignored: column name not found"
