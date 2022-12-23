@@ -1,7 +1,4 @@
-import base64
-import io
 import logging
-import math
 import shutil
 from typing import Any, List, Literal, Optional, Tuple, Union
 
@@ -13,7 +10,6 @@ import torch
 from causica.datasets.dataset import Dataset
 from causica.datasets.variables import Variables
 from causica.models.deci.deci import DECI
-from causica.models.deci.generation_functions import ContractiveInvertibleGNN
 from causica.utils.torch_utils import get_torch_device
 from celery import uuid
 from networkx.readwrite import json_graph
@@ -36,7 +32,7 @@ TRAINING_PROGRESS_PROPORTION = 0.7
 
 ATE_CALC_PROGRESS_PROPORTION = 0.3
 
-
+# TODO: UPDATE DEFAULTS
 class DeciModelOptions(BaseModel):
     base_distribution_type: Literal["gaussian", "spline"] = "gaussian"
     spline_bins: int = 16
@@ -47,7 +43,6 @@ class DeciModelOptions(BaseModel):
     var_dist_A_mode: Literal["simple", "enco", "true", "three"] = "three"
     imputer_layer_sizes: Optional[List[int]] = None
     mode_adjacency: Literal["upper", "lower", "learn"] = "learn"
-    # TODO: Once pytorch implements opset 17 we can use nn.LayerNorm
     norm_layers: bool = False
     res_connection: bool = True
     encoder_layer_sizes: Optional[List[int]] = [32, 32]
@@ -61,6 +56,7 @@ class DeciModelOptions(BaseModel):
 #  increasing batch_size (reduces noise when using higher learning rate)
 #  decreasing max_steps_auglag (go as low as you can and still get a DAG)
 #  decreasing max_auglag_inner_epochs
+# TODO: UPDATE DEFAULTS
 class DeciTrainingOptions(BaseModel):
     learning_rate: float = 1e-3
     batch_size: int = 256
@@ -110,8 +106,7 @@ class DeciRunner(CausalDiscoveryRunner):
         data_mask = np.ones(numpy_data.shape)
 
         # TODO: mapping non binary and non continuous to continuous
-        # columns for now, until we work around representing
-        # categorical variables with ONNX
+        # columns for now, until we work around this
         variables = Variables.create_from_data_and_dict(
             numpy_data,
             data_mask,
@@ -196,8 +191,12 @@ class DeciRunner(CausalDiscoveryRunner):
         # deci_graph = deci_model.networkx_graph()
         # but omit an assertion that the graph is a DAG.  This is so the calculation doesn't just
         # fail after 20 minutes due to a single bad edge.
+        # TODO
         adj_matrix = deci_model.get_adj_matrix(
-            do_round=False, samples=1, most_likely_graph=True, squeeze=True
+            do_round=False,
+            samples=1,
+            most_likely_graph=True,
+            squeeze=True,
         )
         self._is_dag = self._check_if_is_dag(deci_model, adj_matrix)
 
@@ -206,6 +205,7 @@ class DeciRunner(CausalDiscoveryRunner):
     def _compute_average_treatment_effect(
         self, model: DECI, train_data: pd.DataFrame
     ) -> np.ndarray:
+        # TODO: make this configurable?
         treatment_values = train_data.mean(0) + train_data.std(0)
         reference_values = train_data.mean(0) - train_data.std(0)
         ates = []
@@ -246,67 +246,6 @@ class DeciRunner(CausalDiscoveryRunner):
 
         return ate_matrix
 
-    def _build_onnx_model(self, deci_model: DECI, adj_matrix: np.ndarray) -> bytes:
-        num_columns = self._prepared_data.shape[1]
-        intervention_mask = torch.cat(
-            (
-                torch.zeros(
-                    math.ceil(num_columns / 2), dtype=torch.bool, device=self._device
-                ),
-                torch.ones(
-                    math.floor(num_columns / 2), dtype=torch.bool, device=self._device
-                ),
-            ),
-            0,
-        )
-        intervention_values = torch.rand(
-            math.floor(num_columns / 2), device=self._device
-        )
-        # TODO: looks like onnx does not support categorical features
-        # we should look into it
-        gumbel_max_regions = torch.LongTensor(
-            deci_model.variables.processed_cols_by_type["categorical"]
-        ).to(self._device)
-        gt_zero_region = torch.LongTensor(
-            [
-                j
-                for i in deci_model.variables.processed_cols_by_type["binary"]
-                for j in i
-            ]
-        ).to(self._device)
-        deci_inference_inputs = (
-            torch.rand([1, num_columns], device=self._device),
-            torch.from_numpy(adj_matrix).float().to(self._device),
-            intervention_mask,
-            intervention_values,
-            gumbel_max_regions,
-            gt_zero_region,
-        )
-        input_names = [
-            "X",
-            "W_adj",
-            "intervention_mask",
-            "intervention_values",
-            "gumbel_max_regions",
-            "gt_zero_region",
-        ]
-        output_names = ["inference_results"]
-        onnx_output = io.BytesIO()
-
-        torch.onnx.export(
-            torch.jit.script(deci_model.ICGNN),
-            deci_inference_inputs,
-            onnx_output,
-            input_names=input_names,
-            output_names=output_names,
-            # opset_version=17, # TODO: Once pytorch implements opset 17 we can use nn.LayerNorm
-            opset_version=11,
-            export_params=True,
-            dynamic_axes={"intervention_values": {0: "intervention_count"}},
-        )
-
-        return onnx_output.getvalue()
-
     def _build_labeled_graph(
         self, adj_matrix: np.ndarray, ate_graph: np.ndarray
     ) -> Any:
@@ -330,7 +269,6 @@ class DeciRunner(CausalDiscoveryRunner):
 
     def _build_causal_graph(
         self,
-        onnx_model: bytes,
         labeled_graph: Any,
         adj_matrix: np.ndarray,
         ate_matrix: np.ndarray,
@@ -338,7 +276,6 @@ class DeciRunner(CausalDiscoveryRunner):
     ) -> CausalGraph:
         causal_graph = json_graph.cytoscape_data(labeled_graph)
 
-        causal_graph["onnx"] = base64.b64encode(onnx_model)
         causal_graph["columns"] = [
             self._prepared_data.columns[i]
             for i in range(len(self._prepared_data.columns))
@@ -390,7 +327,6 @@ class DeciRunner(CausalDiscoveryRunner):
         )
 
         causal_graph = self._build_causal_graph(
-            self._build_onnx_model(deci_model, adj_matrix),
             self._build_labeled_graph(adj_matrix, ate_matrix),
             adj_matrix,
             ate_matrix,
@@ -409,55 +345,3 @@ class DeciRunner(CausalDiscoveryRunner):
         finally:
             # cleanup deci save dir
             shutil.rmtree(self._deci_save_dir, ignore_errors=True)
-
-
-#### Can be removed if https://github.com/microsoft/causica/pull/17 is approved/merged
-def forward(
-    self,
-    Z: torch.Tensor,
-    W_adj: torch.Tensor,
-    intervention_mask: torch.Tensor,
-    intervention_values: torch.Tensor,
-    gumbel_max_regions: torch.Tensor,
-    gt_zero_region: torch.Tensor,
-):
-    return self.simulate_SEM(
-        Z,
-        W_adj,
-        intervention_mask,
-        intervention_values,
-        gumbel_max_regions,
-        gt_zero_region,
-    )
-
-
-def simulate_SEM(
-    self,
-    Z: torch.Tensor,
-    W_adj: torch.Tensor,
-    intervention_mask: Optional[torch.Tensor] = None,
-    intervention_values: Optional[torch.Tensor] = None,
-    gumbel_max_regions: Optional[torch.Tensor] = None,
-    gt_zero_region: Optional[torch.Tensor] = None,
-):
-    X = torch.zeros_like(Z)
-
-    for _ in range(self.num_nodes):
-        if intervention_mask is not None and intervention_values is not None:
-            X[:, intervention_mask] = intervention_values.unsqueeze(0)
-        X = self.f.feed_forward(X, W_adj) + Z
-        if gumbel_max_regions is not None:
-            for region in gumbel_max_regions:
-                maxes = X[:, region].max(-1, keepdim=True)[0]
-                X[:, region] = (X[:, region] >= maxes).float()
-        if gt_zero_region is not None:
-            X[:, gt_zero_region] = (X[:, gt_zero_region] > 0).float()
-
-    if intervention_mask is not None and intervention_values is not None:
-        X[:, intervention_mask] = intervention_values.unsqueeze(0)
-
-    return X
-
-
-ContractiveInvertibleGNN.forward = forward
-ContractiveInvertibleGNN.simulate_SEM = simulate_SEM
