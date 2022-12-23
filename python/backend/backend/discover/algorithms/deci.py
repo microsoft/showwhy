@@ -184,14 +184,11 @@ class DeciRunner(CausalDiscoveryRunner):
         return constraint.astype(np.float32)
 
     def _check_if_is_dag(self, deci_model: DECI, adj_matrix: np.ndarray) -> bool:
-        return (np.trace(scipy.linalg.expm(adj_matrix)) - deci_model.num_nodes) == 0
+        return (
+            np.trace(scipy.linalg.expm(adj_matrix.round())) - deci_model.num_nodes
+        ) == 0
 
     def _get_adj_matrix(self, deci_model: DECI) -> np.ndarray:
-        # The next lines of code are the same as:
-        # deci_graph = deci_model.networkx_graph()
-        # but omit an assertion that the graph is a DAG.  This is so the calculation doesn't just
-        # fail after 20 minutes due to a single bad edge.
-        # TODO
         adj_matrix = deci_model.get_adj_matrix(
             do_round=False,
             samples=1,
