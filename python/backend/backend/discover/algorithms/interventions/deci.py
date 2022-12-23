@@ -60,8 +60,8 @@ class DeciInterventionModel:
 
     def _parse_raw_result(self, raw_result: np.ndarray) -> InterventionValueByColumn:
         return {
-            var.name: float(raw_result[:, i].mean())
-            for i, var in enumerate(self._deci_model.variables)
+            var_name: float(raw_result[:, idx].mean())
+            for var_name, idx in self._deci_model.variables.name_to_idx.items()
         }
 
     def _map_interventions(

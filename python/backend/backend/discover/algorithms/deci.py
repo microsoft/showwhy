@@ -136,6 +136,7 @@ class DeciRunner(CausalDiscoveryRunner):
             self._device,
             **self._model_options.dict(),
             graph_constraint_matrix=self._build_constraint_matrix(
+                causica_dataset.variables.name_to_idx,
                 self._prepared_data,
                 tabu_child_nodes=self._constraints.causes,
                 tabu_parent_nodes=self._constraints.effects,
@@ -147,6 +148,7 @@ class DeciRunner(CausalDiscoveryRunner):
 
     def _build_constraint_matrix(
         self,
+        name_to_idx: dict[str, int],
         data: pd.DataFrame,
         tabu_child_nodes: Optional[List[str]] = None,
         tabu_parent_nodes: Optional[List[str]] = None,
@@ -164,7 +166,6 @@ class DeciRunner(CausalDiscoveryRunner):
                 edges that cannot exist
         """
         constraint = np.full((len(data.columns), len(data.columns)), np.nan)
-        name_to_idx = {name: i for (i, name) in enumerate(data.columns)}
 
         if tabu_child_nodes is not None:
             for node in tabu_child_nodes:
@@ -210,6 +211,12 @@ class DeciRunner(CausalDiscoveryRunner):
         n_variables = treatment_values.shape[0]
         progress_step = ATE_CALC_PROGRESS_PROPORTION / n_variables
 
+        if self._ate_options.most_likely_graph and self._ate_options.Ngraphs != 1:
+            logging.warning(
+                "Adjusting Ngraphs parameter to 1 because most_likely_graph is set to true"
+            )
+            self._ate_options.Ngraphs = 1
+
         for i, variable in enumerate(range(n_variables), start=1):
             intervention_idxs = torch.tensor([variable])
             intervention_value = torch.tensor([treatment_values[variable]])
@@ -218,12 +225,6 @@ class DeciRunner(CausalDiscoveryRunner):
             logging.info(
                 f"Computing the ATE between X{variable}={treatment_values[variable]} and X{variable}={reference_values[variable]}"
             )
-
-            if self._ate_options.most_likely_graph and self._ate_options.Ngraphs != 1:
-                logging.warning(
-                    "Adjusting Ngraphs parameter to 1 because most_likely_graph is set to true"
-                )
-                self._ate_options.Ngraphs = 1
 
             ate, _ = model.cate(
                 intervention_idxs,
@@ -244,18 +245,18 @@ class DeciRunner(CausalDiscoveryRunner):
         return ate_matrix
 
     def _build_labeled_graph(
-        self, adj_matrix: np.ndarray, ate_graph: np.ndarray
+        self,
+        name_to_idx: dict[str, int],
+        adj_matrix: np.ndarray,
+        ate_matrix: np.ndarray,
     ) -> Any:
         deci_graph = networkx.convert_matrix.from_numpy_matrix(
             adj_matrix, create_using=networkx.DiGraph
         )
         deci_ate_graph = networkx.convert_matrix.from_numpy_matrix(
-            ate_graph, create_using=networkx.DiGraph
+            ate_matrix, create_using=networkx.DiGraph
         )
-        labels = {
-            i: self._prepared_data.columns[i]
-            for i in range(len(self._prepared_data.columns))
-        }
+        labels = {idx: name for name, idx in name_to_idx.items()}
 
         for n1, n2, d in deci_graph.edges(data=True):
             ate = deci_ate_graph.get_edge_data(n1, n2, default={"weight": 0})["weight"]
@@ -324,7 +325,9 @@ class DeciRunner(CausalDiscoveryRunner):
         )
 
         causal_graph = self._build_causal_graph(
-            self._build_labeled_graph(adj_matrix, ate_matrix),
+            self._build_labeled_graph(
+                deci_model.variables.name_to_idx, adj_matrix, ate_matrix
+            ),
             adj_matrix,
             ate_matrix,
             intervention_model,
