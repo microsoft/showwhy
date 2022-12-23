@@ -12,37 +12,9 @@ az aks install-cli
 # Get cluster credentials
 az aks get-credentials -g $RESOURCEGROUP -n $CLUSTER_NAME
 
-if [ $ENABLE_AUTH = true ];then
-    cookieName=_auth_token
-    echo \{\"Auth\":\"On\"\} > $AZ_SCRIPTS_OUTPUT_PATH
-
-
-    randomSecretCookie=`python -c 'import os,base64; print(base64.urlsafe_b64encode(os.urandom(32)).decode())'`
-
-    # kubectl create namespace oauth-proxy
-
-   cat > oauth-proxy.yaml <<EOF
-apiVersion: v1
-kind: Secret
-metadata:
-    name: oauth-proxy-secret
-    namespace: oauth-proxy
-stringData:
-    oidc-issuer-url: https://login.microsoftonline.com/$TENANT_ID/v2.0
-    scope: openid email
-    client-id: $CLIENT_ID
-    client-secret: $CLIENT_SECRET
-    cookie-secret: $randomSecretCookie
-    cookie-name: $cookieName
-EOF
-
-    kubectl create namespace oauth-proxy
-    kubectl apply --wait -f oauth-proxy.yaml
-fi
-
 # Install helm package from ghcr
 helm upgrade --install causal-services $HELM_APP_LOCATION \
-    --set enableAuthentication=$ENABLE_AUTH,causalImagesPullPolicy=Always,causalImagesRegistry=$CAUSAL_REGISTRY,domain=$DOMAIN
+    --set enableAuthentication=false,causalImagesPullPolicy=Always,causalImagesRegistry=$CAUSAL_REGISTRY,domain=$DOMAIN
 
 # Add ingress
 helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx

@@ -40,28 +40,6 @@
             "metadata": {
                 "description": "The size of the Virtual Machine."
             }
-        },
-        "enableAuth": {
-            "type": "bool",
-            "defaultValue": false,
-            "metadata": {
-                "description": "Enable authentication"
-            }
-        },
-        "clientId": {
-            "type": "string",
-            "defaultValue": "",
-
-            "metadata": {
-                "description": "Client id if you wish authentication."
-            }
-        },
-        "clientSecret": {
-            "type": "string",
-            "defaultValue": "",
-            "metadata": {
-                "description": "Client secret if you wish authentication."
-            }
         }
     },
     "variables": {
@@ -125,15 +103,6 @@
                     },
                     "nodeResourceGroup": {
                         "value": "[variables('nodeResourceGroup')]"
-                    },
-                    "clientId": {
-                        "value": "[parameters('clientId')]"
-                    },
-                    "enableAuth": {
-                        "value": "[parameters('enableAuth')]"
-                    },
-                    "clientSecret": {
-                        "value": "[parameters('clientSecret')]"
                     }
                 }
             }

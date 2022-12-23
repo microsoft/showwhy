@@ -35,28 +35,6 @@
             "metadata": {
                 "description": "Resource group of AKS node"
             }
-        },
-        "clientId": {
-            "type": "string",
-            "defaultValue": "",
-
-            "metadata": {
-                "description": "Client id if you wish authentication."
-            }
-        },
-        "enableAuth": {
-            "type": "bool",
-            "defaultValue": false,
-            "metadata": {
-                "description": "Enable authentication"
-            }
-        },
-        "clientSecret": {
-            "type": "secureString",
-            "defaultValue": "",
-            "metadata": {
-                "description": "Client secret if Enable Auth is true."
-            }
         }
     },
     "resources": [
@@ -144,15 +122,6 @@
                     },
                     "ip": {
                         "value": "[reference(resourceId(parameters('nodeResourceGroup'),'Microsoft.Resources/deployments', 'publicIP')).outputs.publicIP.value]"
-                    },
-                    "clientId": {
-                        "value": "[parameters('clientId')]"
-                    },
-                    "enableAuth": {
-                        "value": "[parameters('enableAuth')]"
-                    },
-                    "clientSecret": {
-                        "value": "[parameters('clientSecret')]"
                     }
                 },
                 "template": {
@@ -187,31 +156,9 @@
                         "ip": {
                             "type": "string",
                             "defaultValue": ""
-                        },
-                        "clientId": {
-                            "type": "string",
-                            "defaultValue": "",
-                            "metadata": {
-                                "description": "Client id if you wish authentication."
-                            }
-                        },
-                        "enableAuth": {
-                            "type": "bool",
-                            "defaultValue": false,
-                            "metadata": {
-                                "description": "Enable authentication"
-                            }
-                        },
-                        "clientSecret": {
-                            "type": "secureString",
-                            "defaultValue": "",
-                            "metadata": {
-                                "description": "Client secret if Enable Auth is true."
-                            }
                         }
                     },
                     "variables": {
-                        "tenantId": "[subscription().tenantId]",
                         "domain": "[concat(parameters('dnsPrefix'), '.', resourceGroup().location, '.cloudapp.azure.com')]",
                         "causalRegistry": "ghcr.io/microsoft/showwhy/",
                         "helmAppLocation": "oci://ghcr.io/microsoft/showwhy/helm/causal-services",
@@ -241,10 +188,6 @@
                                         "secureValue": "[resourceGroup().name]"
                                     },
                                     {
-                                        "name": "ENABLE_AUTH",
-                                        "secureValue": "[parameters('enableAuth')]"
-                                    },
-                                    {
                                         "name": "CLUSTER_NAME",
                                         "secureValue": "[parameters('clusterName')]"
                                     },
@@ -271,18 +214,6 @@
                                     {
                                         "name": "DOMAIN",
                                         "secureValue": "[variables('domain')]"
-                                    },
-                                    {
-                                        "name": "CLIENT_ID",
-                                        "secureValue": "[parameters('clientId')]"
-                                    },
-                                    {
-                                        "name": "CLIENT_SECRET",
-                                        "secureValue": "[parameters('clientSecret')]"
-                                    },
-                                    {
-                                        "name": "TENANT_ID",
-                                        "secureValue": "[variables('tenantId')]"
                                     }
                                 ],
                                 "primaryScriptUri": "[variables('installScriptUri')]",
