@@ -12,6 +12,7 @@ Microsoft.Authorization/roleAssignments/write permissions, such as `User Access 
 
 **3.    It has self signed certificated for now, so when you access it will say 'Your connection is not private', you'll have to click on the advanced to proceed to the deployed website**
 
+**4.    It's not auth enabled.**
 ## Parameters:
 `clusterName`: The name of the Managed Cluster resource.
 

@@ -8,7 +8,7 @@ ShowWhy is split between a front-end web-based client and a containerized Python
 * A worker node, deployed as a docker container with extra worker configuration.
 
 ## Deployment Options
-We currently deploy the application using Azure Kubernetes Services (AKS). You can deploy an AKS container directly to your Azure subscription with one click, the instructions are [here](./azure-scripts/README.md). You can choose to deploy it with or without auth.
+We currently deploy the application using Azure Kubernetes Services (AKS). You can deploy an AKS container directly to your Azure subscription with one click, the instructions are [here](./azure-scripts/README.md). This methos does not uses authentication.
 
 The instructions for deploying manually the application using AKS are [here](./AKS_DEPLOY.md). This method uses authentication.
 
