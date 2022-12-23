@@ -280,9 +280,6 @@ class DeciRunner(CausalDiscoveryRunner):
         ]
         causal_graph["confidence_matrix"] = adj_matrix.tolist()
         causal_graph["ate_matrix"] = ate_matrix.tolist()
-        # TODO: we should evaluate whether this is necessary to keep or not
-        #       in case we need to keep, reimplement it
-        causal_graph["interpret_boolean_as_continuous"] = False
         causal_graph["has_weights"] = True
         causal_graph["has_confidence_values"] = True
         causal_graph["is_dag"] = bool(self._is_dag)
