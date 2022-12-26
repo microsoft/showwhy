@@ -28,8 +28,14 @@ class Dataset(BaseModel):
     data: Dict[str, List[Any]]
 
 
+class NormalizationOptions(BaseModel):
+    normalize_with_mean: bool = True
+    normalize_with_std: bool = True
+
+
 class CausalDiscoveryPayload(BaseModel):
     dataset: Dataset
+    normalization: NormalizationOptions = NormalizationOptions()
     constraints: Constraints
     causal_variables: List[CausalVariable]
 

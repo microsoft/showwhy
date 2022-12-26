@@ -20,12 +20,14 @@ import { GraphViewStates } from './components/graph/GraphViews.types.js'
 import type { DECIParams } from './domain/Algorithms/DECI.js'
 import { CausalDiscoveryAlgorithm } from './domain/CausalDiscovery/CausalDiscoveryAlgorithm.js'
 import type { CausalDiscoveryConstraints } from './domain/CausalDiscovery/CausalDiscoveryConstraints.js'
+import type { CausalDiscoveryNormalization } from './domain/CausalDiscovery/CausalDiscoveryNormalization.js'
 import type { CausalDiscoveryResult } from './domain/CausalDiscovery/CausalDiscoveryResult.js'
 import { EMPTY_CAUSAL_DISCOVERY_RESULT } from './domain/CausalDiscovery/CausalDiscoveryResult.js'
 import type { Intervention } from './domain/CausalInference.js'
 import type { NodePosition } from './domain/NodePosition.js'
 import { DeciParamsState } from './state/atoms/algorithms_params.js'
 import {
+	CausalDiscoveryNormalizationState,
 	CausalDiscoveryResultsState,
 	CausalGraphConstraintsState,
 	CausalInferenceBaselineValuesState,
@@ -113,6 +115,7 @@ interface DiscoveryResourceSchema extends ResourceSchema {
 		confidenceThreshold: number
 		correlationThreshold: number
 		view: GraphViewStates
+		normalization: CausalDiscoveryNormalization
 		deciParams: DECIParams
 	}
 }
@@ -159,6 +162,7 @@ class DiscoveryResource extends Resource {
 		confidenceThreshold: number
 		correlationThreshold: number
 		view: GraphViewStates
+		normalization: CausalDiscoveryNormalization
 		deciParams: DECIParams
 	} = {
 		straightEdges: false,
@@ -168,6 +172,10 @@ class DiscoveryResource extends Resource {
 		confidenceThreshold: 0.5,
 		correlationThreshold: 0.2,
 		view: GraphViewStates.CausalView,
+		normalization: {
+			normalizeWithMeanEnabled: true,
+			normalizeWithStdEnabled: true,
+		},
 		deciParams: { model_options: {}, ate_options: {} },
 	}
 
@@ -241,6 +249,7 @@ function loadState(resource: DiscoveryResource, { set }: MutableSnapshot) {
 		FixedInterventionRangesEnabledState,
 		resource.ui.fixedInterventionRangesEnabled,
 	)
+	set(CausalDiscoveryNormalizationState, resource.ui.normalization)
 	set(
 		SelectedCausalDiscoveryAlgorithmState,
 		resource.ui.selectedDiscoveryAlgorithm,
@@ -274,6 +283,9 @@ function saveState(resource: DiscoveryResource, { getLoadable }: Snapshot) {
 	const fixedInterventionRangesEnabled = getLoadable(
 		FixedInterventionRangesEnabledState,
 	).getValue()
+	const normalization = getLoadable(
+		CausalDiscoveryNormalizationState,
+	).getValue()
 	const deciParams = getLoadable(DeciParamsState).getValue()
 	const selectedDiscoveryAlgorithm = getLoadable(
 		SelectedCausalDiscoveryAlgorithmState,
@@ -303,6 +315,7 @@ function saveState(resource: DiscoveryResource, { getLoadable }: Snapshot) {
 		confidenceThreshold,
 		correlationThreshold,
 		view,
+		normalization,
 		deciParams,
 	}
 }

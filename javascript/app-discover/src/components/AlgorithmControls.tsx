@@ -15,6 +15,7 @@ import { Container, Section } from './AlgorithmControls.styles.js'
 import { Divider } from './controls/Divider.js'
 import { DeciParams } from './DeciParams.js'
 import { GraphFilteringControls } from './GraphFilteringControls.js'
+import { NormalizationControls } from './NormalizationControls.js'
 
 export const AlgorithmControls = memo(function AlgorithmControls() {
 	const [
@@ -47,6 +48,10 @@ export const AlgorithmControls = memo(function AlgorithmControls() {
 			<Section>
 				<Divider>Graph filtering</Divider>
 				<GraphFilteringControls />
+			</Section>
+			<Section>
+				<Divider>Normalization</Divider>
+				<NormalizationControls />
 			</Section>
 			<When
 				condition={
