@@ -49,9 +49,11 @@ class DeciInterventionModel:
             for j in range(n_cols):
                 if (
                     confidence_threshold is not None
+                    and confidence_threshold > 0
                     and abs(self._adj_matrix[i][j]) <= confidence_threshold
                 ) or (
                     weight_threshold is not None
+                    and weight_threshold > 0
                     and abs(self._ate_matrix[i][j]) <= weight_threshold
                 ):
                     adj_matrix[i][j] = 0
