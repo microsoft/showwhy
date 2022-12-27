@@ -23,7 +23,7 @@ class PCRunner(CausalDiscoveryRunner):
         super().__init__(p, progress_callback)
 
     def do_causal_discovery(self) -> CausalGraph:
-        self._transform_categorical_nominal_to_continuous()
+        self._encode_categorical_as_integers()
 
         n = PC(alpha=0.2)
         n.learn(self._prepared_data.to_numpy())

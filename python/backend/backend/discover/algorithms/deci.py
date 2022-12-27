@@ -8,7 +8,7 @@ import pandas as pd
 import scipy
 import torch
 from causica.datasets.dataset import Dataset
-from causica.datasets.variables import Variables
+from causica.datasets.variables import Variable, Variables
 from causica.models.deci.deci import DECI
 from causica.utils.torch_utils import get_torch_device
 from celery import uuid
@@ -101,12 +101,10 @@ class DeciRunner(CausalDiscoveryRunner):
         self._device = get_torch_device("gpu")
 
     def _build_causica_dataset(self) -> Dataset:
-        self._transform_categorical_nominal_to_continuous()
+        self._encode_categorical_as_integers()
         numpy_data = self._prepared_data.to_numpy()
         data_mask = np.ones(numpy_data.shape)
 
-        # TODO: mapping non binary and non continuous to continuous
-        # columns for now, until we work around this
         variables = Variables.create_from_data_and_dict(
             numpy_data,
             data_mask,
@@ -114,6 +112,9 @@ class DeciRunner(CausalDiscoveryRunner):
                 "variables": [
                     {
                         "name": name,
+                        # TODO: this is currently mapping categorical to continuous
+                        #       we need to update the interventions code to properly handle
+                        #       one-hot encoded values
                         "type": map_to_causica_var_type(self._nature_by_variable[name]),
                         "lower": self._prepared_data[name].min(),
                         "upper": self._prepared_data[name].max(),
@@ -200,15 +201,32 @@ class DeciRunner(CausalDiscoveryRunner):
 
         return adj_matrix
 
+    def _infer_intervention_reference_values(
+        self, train_data: pd.DataFrame, var: Variable
+    ) -> Tuple[float, float]:
+        # TODO: perhaps allow the user to set the (intervention, reference) values per variable in the frontend
+        if var.type_ == "binary":
+            return (1, 0)
+        elif var.type_ == "categorical":
+            value_counts = train_data[var.name].value_counts()
+            return (value_counts.idxmax(), value_counts.idxmin())
+        else:
+            mean = train_data[var.name].mean()
+            std = train_data[var.name].std()
+            return (mean + std, mean - std)
+
+    def _apply_group_mask_to_ate_array(
+        self, ate_array: np.ndarray, group_mask: np.ndarray
+    ):
+        # categorical columns are one-hot encoded, so we apply the mask to
+        # go back to the same dimensionality in the original data
+        return [ate_array[mask].mean() for mask in group_mask]
+
     def _compute_average_treatment_effect(
         self, model: DECI, train_data: pd.DataFrame
     ) -> np.ndarray:
-        # TODO: make this configurable?
-        treatment_values = train_data.mean(0) + train_data.std(0)
-        reference_values = train_data.mean(0) - train_data.std(0)
-        ates = []
-
-        n_variables = treatment_values.shape[0]
+        ate_matrix = []
+        n_variables = train_data.shape[1]
         progress_step = ATE_CALC_PROGRESS_PROPORTION / n_variables
 
         if self._ate_options.most_likely_graph and self._ate_options.Ngraphs != 1:
@@ -217,32 +235,37 @@ class DeciRunner(CausalDiscoveryRunner):
             )
             self._ate_options.Ngraphs = 1
 
-        for i, variable in enumerate(range(n_variables), start=1):
-            intervention_idxs = torch.tensor([variable])
-            intervention_value = torch.tensor([treatment_values[variable]])
-            reference_value = torch.tensor([reference_values[variable]])
-
-            logging.info(
-                f"Computing the ATE between X{variable}={treatment_values[variable]} and X{variable}={reference_values[variable]}"
-            )
-
-            ate, _ = model.cate(
-                intervention_idxs,
+        for variable_index in range(n_variables):
+            variable = model.variables[variable_index]
+            (
                 intervention_value,
                 reference_value,
+            ) = self._infer_intervention_reference_values(train_data, variable)
+
+            logging.info(
+                f"Computing the ATE between {variable.name}={intervention_value} and {variable.name}={reference_value}"
+            )
+
+            ate_array, _ = model.cate(
+                intervention_idxs=torch.tensor([variable_index]),
+                intervention_values=torch.tensor([intervention_value]),
+                reference_values=torch.tensor([reference_value]),
                 Ngraphs=self._ate_options.Ngraphs,
                 Nsamples_per_graph=self._ate_options.Nsamples_per_graph,
                 most_likely_graph=self._ate_options.most_likely_graph,
             )
-            ates.append(ate)
-
-            self._report_progress(
-                (TRAINING_PROGRESS_PROPORTION + (i * progress_step)) * 100.0
+            ate_matrix.append(
+                self._apply_group_mask_to_ate_array(
+                    ate_array, model.variables.group_mask
+                )
             )
 
-        ate_matrix = np.stack(ates)
+            self._report_progress(
+                (TRAINING_PROGRESS_PROPORTION + ((variable_index + 1) * progress_step))
+                * 100.0
+            )
 
-        return ate_matrix
+        return np.stack(ate_matrix)
 
     def _build_labeled_graph(
         self,
@@ -268,8 +291,6 @@ class DeciRunner(CausalDiscoveryRunner):
     def _build_causal_graph(
         self,
         labeled_graph: Any,
-        adj_matrix: np.ndarray,
-        ate_matrix: np.ndarray,
         intervention_model: DeciInterventionModel,
     ) -> CausalGraph:
         causal_graph = json_graph.cytoscape_data(labeled_graph)
@@ -278,8 +299,6 @@ class DeciRunner(CausalDiscoveryRunner):
             self._prepared_data.columns[i]
             for i in range(len(self._prepared_data.columns))
         ]
-        causal_graph["confidence_matrix"] = adj_matrix.tolist()
-        causal_graph["ate_matrix"] = ate_matrix.tolist()
         causal_graph["has_weights"] = True
         causal_graph["has_confidence_values"] = True
         causal_graph["is_dag"] = bool(self._is_dag)
@@ -295,7 +314,9 @@ class DeciRunner(CausalDiscoveryRunner):
 
         causica_dataset = self._build_causica_dataset()
 
-        train_data = pd.DataFrame(causica_dataset._train_data)
+        train_data = pd.DataFrame(
+            causica_dataset._train_data, columns=self._prepared_data.columns
+        )
 
         deci_model = self._build_model(causica_dataset)
 
@@ -325,8 +346,6 @@ class DeciRunner(CausalDiscoveryRunner):
             self._build_labeled_graph(
                 deci_model.variables.name_to_idx, adj_matrix, ate_matrix
             ),
-            adj_matrix,
-            ate_matrix,
             intervention_model,
         )
 

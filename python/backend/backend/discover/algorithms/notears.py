@@ -20,7 +20,7 @@ class NotearsRunner(CausalDiscoveryRunner):
         super().__init__(p, progress_callback)
 
     def do_causal_discovery(self) -> CausalGraph:
-        self._transform_categorical_nominal_to_continuous()
+        self._encode_categorical_as_integers()
 
         notears_graph = from_pandas(
             self._prepared_data,
