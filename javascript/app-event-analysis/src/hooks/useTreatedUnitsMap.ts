@@ -5,7 +5,7 @@
 
 import { useMemo } from 'react'
 
-import { useTreatedUnitsValueState } from '../state/TreatedUnits.js'
+import { useTreatedUnitsValueState } from '../state/index.js'
 
 export type Map = { [unit: string]: number }
 

@@ -4,18 +4,17 @@
  */
 import { mean } from 'lodash'
 import { useMemo } from 'react'
-import { useRecoilValue } from 'recoil'
 
 import {
-	TreatedUnitsState,
-	TreatmentStartDatesState,
-} from '../../state/state.js'
+	useTreatedUnitsValueState,
+	useTreatmentStartDatesValueState,
+} from '../../state/index.js'
 import type { OutputData, ProcessedInputData } from '../../types.js'
 import { TimeAlignmentOptions } from '../../types.js'
 import { getKeyByValue, weightedMean } from '../../utils/misc.js'
 
 export function useHeaderText(timeAlignment: string, firstOutput: OutputData) {
-	const treatedUnits = useRecoilValue(TreatedUnitsState)
+	const treatedUnits = useTreatedUnitsValueState()
 	return useMemo<string>(() => {
 		if (!firstOutput) return ''
 		const { time_before_intervention, time_after_intervention } = firstOutput
@@ -34,7 +33,7 @@ export function useMeanTreatmentEffect(
 	timeAlignment: string,
 	outputDataNonPlacebo: OutputData[],
 ) {
-	const treatmentStartDates = useRecoilValue(TreatmentStartDatesState)
+	const treatmentStartDates = useTreatmentStartDatesValueState()
 	return useMemo<string>(() => {
 		if (!outputDataNonPlacebo.length) return ''
 		if (

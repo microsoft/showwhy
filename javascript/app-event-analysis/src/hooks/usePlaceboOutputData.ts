@@ -5,8 +5,10 @@
 
 import { useMemo } from 'react'
 
-import { usePlaceboOutputResValueState } from '../state/PlaceboOutputRes.js'
-import { useTreatedUnitsValueState } from '../state/TreatedUnits.js'
+import {
+	usePlaceboOutputResValueState,
+	useTreatedUnitsValueState,
+} from '../state/index.js'
 import type {
 	OutputData,
 	PlaceboOutputData,

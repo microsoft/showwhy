@@ -5,16 +5,15 @@
 import { Stack, Text } from '@fluentui/react'
 import { memo, useRef } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
-import { useRecoilValue } from 'recoil'
 
 import {
-	ChartOptionsState,
-	CheckedUnitsState,
-	EventNameState,
-	OutcomeNameState,
-	PlaceboSimulationState,
-	TreatedUnitsState,
-} from '../../state/state.js'
+	useChartOptionsValueState,
+	useCheckedUnitsValueState,
+	useEventNameValueState,
+	useOutcomeNameValueState,
+	usePlaceboSimulationValueState,
+	useTreatedUnitsValueState,
+} from '../../state/index.js'
 import { Container, Spacer, Strong, TreatedTitle } from '../../styles/index.js'
 import type { LineData, OutputData } from '../../types.js'
 import {
@@ -38,12 +37,12 @@ export const EffectResult: React.FC<EffectResultProps> = memo(
 		checkableUnits,
 		onRemoveCheckedUnit,
 	}) {
-		const eventName = useRecoilValue(EventNameState)
-		const chartOptions = useRecoilValue(ChartOptionsState)
-		const outcomeName = useRecoilValue(OutcomeNameState)
-		const treatedUnits = useRecoilValue(TreatedUnitsState)
-		const isPlaceboSimulation = useRecoilValue(PlaceboSimulationState)
-		const checkedUnits = useRecoilValue(CheckedUnitsState)
+		const eventName = useEventNameValueState()
+		const chartOptions = useChartOptionsValueState()
+		const outcomeName = useOutcomeNameValueState()
+		const treatedUnits = useTreatedUnitsValueState()
+		const isPlaceboSimulation = usePlaceboSimulationValueState()
+		const checkedUnits = useCheckedUnitsValueState()
 		const ref = useRef<HTMLDivElement | null>(null)
 		const barChartRef = useRef<HTMLDivElement | null>(null)
 

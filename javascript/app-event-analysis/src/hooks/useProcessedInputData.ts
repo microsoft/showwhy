@@ -4,12 +4,13 @@
  */
 import { isEmpty, sortBy, unzip } from 'lodash'
 import { useCallback, useEffect, useMemo, useRef } from 'react'
-import { useRecoilState } from 'recoil'
 
-import { useAggTreatmentState } from '../state/AggregateEnabled.js'
-import { useAggregateEnabledValueState } from '../state/AggTreatment.js'
-import { useFilterValueState } from '../state/Filter.js'
-import { useRawDataValueState } from '../state/RawData.js'
+import {
+	useAggregateEnabledValueState,
+	useAggTreatmentState,
+	useFilterValueState,
+	useRawDataValueState,
+} from '../state/index.js'
 import type {
 	ColumnMapping,
 	DataPoint,

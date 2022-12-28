@@ -4,9 +4,8 @@
  */
 import { Stack, Text } from '@fluentui/react'
 import { memo, useMemo } from 'react'
-import { useRecoilValue } from 'recoil'
 
-import { TreatedUnitsState } from '../../state/state.js'
+import { useTreatedUnitsValueState } from '../../state/index.js'
 import { Strong } from '../../styles/index.js'
 import type { OutputData } from '../../types.js'
 import { TimeAlignmentOptions } from '../../types.js'
@@ -19,7 +18,7 @@ import type { EffectSummaryResultProps } from './EffectSummaryResult.types.js'
 
 export const EffectSummaryResult: React.FC<EffectSummaryResultProps> = memo(
 	function EffectSummaryResult({ inputData, outputData, timeAlignment }) {
-		const treatedUnits = useRecoilValue(TreatedUnitsState)
+		const treatedUnits = useTreatedUnitsValueState()
 
 		const outputDataNonPlacebo = useMemo<OutputData[]>(
 			() =>

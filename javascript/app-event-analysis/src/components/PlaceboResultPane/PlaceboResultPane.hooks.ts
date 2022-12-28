@@ -6,9 +6,11 @@
 import { Hypothesis } from '@showwhy/app-common'
 import { useThematic } from '@thematic/react'
 import { useCallback } from 'react'
-import { useRecoilValue } from 'recoil'
 
-import { CheckedUnitsState, HypothesisState } from '../../state/state.js'
+import {
+	useCheckedUnitsValueState,
+	useHypothesisValueState,
+} from '../../state/index.js'
 import type {
 	BarData,
 	PlaceboDataGroup,
@@ -20,7 +22,7 @@ import {
 } from './PlaceboResult.utils.js'
 
 export function useGetPlaceboResults() {
-	const hypothesis = useRecoilValue(HypothesisState)
+	const hypothesis = useHypothesisValueState()
 
 	return useCallback(
 		(
@@ -66,7 +68,7 @@ export function useGetPlaceboResults() {
 }
 
 export function useGetTreatedPlaceboP() {
-	const checkedUnits = useRecoilValue(CheckedUnitsState)
+	const checkedUnits = useCheckedUnitsValueState()
 	return useCallback(
 		(treatedUnit: string, placeboBarChartInputData: BarData[]): number => {
 			const treatedPlaceboIndex = getTreatedPlaceboIndex(

@@ -6,7 +6,7 @@
 import { isEqual } from 'lodash'
 import { useCallback } from 'react'
 
-import { useColumnMappingState } from '../state/ColumnMapping.js'
+import { useColumnMappingState } from '../state/index.js'
 import type { ColumnMapping } from '../types.js'
 
 export function useUpdateColumnMapping() {

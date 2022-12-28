@@ -4,13 +4,12 @@
  */
 import { Spinner, SpinnerSize, Stack } from '@fluentui/react'
 import { memo, useRef } from 'react'
-import { useRecoilValue } from 'recoil'
 
 import {
-	CheckedUnitsState,
-	PlaceboSimulationState,
-	TreatedUnitsState,
-} from '../state/state.js'
+	useCheckedUnitsValueState,
+	usePlaceboSimulationValueState,
+	useTreatedUnitsValueState,
+} from '../state/index.js'
 import { GraphTitle, StyledStack } from '../styles/index.js'
 import { CustomMessageBar } from './CustomMessageBar.js'
 import { DimensionedLineChart } from './DimensionedLineChart.js'
@@ -25,9 +24,9 @@ export const RawDataPane: React.FC<RawDataPaneProps> = memo(
 		checkableUnits,
 		onRemoveCheckedUnit,
 	}) {
-		const treatedUnits = useRecoilValue(TreatedUnitsState)
-		const isPlaceboSimulation = useRecoilValue(PlaceboSimulationState)
-		const checkedUnits = useRecoilValue(CheckedUnitsState)
+		const treatedUnits = useTreatedUnitsValueState()
+		const isPlaceboSimulation = usePlaceboSimulationValueState()
+		const checkedUnits = useCheckedUnitsValueState()
 		const rawLineChartRef = useRef<HTMLDivElement | null>(null)
 
 		return (

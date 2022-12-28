@@ -5,7 +5,7 @@
 
 import { useMemo } from 'react'
 
-import { useOutputResValueState } from '../state/OutputRes.js'
+import { useOutputResValueState } from '../state/index.js'
 import type { OutputData, PlaceboOutputData } from '../types.js'
 import { processOutputData } from '../utils/processOutputData.js'
 import { useTreatedUnitsMap } from './useTreatedUnitsMap.js'
