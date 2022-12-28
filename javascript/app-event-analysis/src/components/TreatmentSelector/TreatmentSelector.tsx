@@ -43,7 +43,7 @@ export const TreatmentSelector: React.FC<TreatmentSelectorProps> = memo(
 		const differentTreatmentPeriods =
 			treatmentStartDates.length > 0 && uniq(treatmentStartDates).length !== 1
 
-		const treatedUnitList = useMemo<JSX.Element>(
+		const treatedUnitList = useMemo<JSX.Element[]>(
 			() =>
 				treatedUnits.map((treatedUnit, index) => (
 					<Selector
