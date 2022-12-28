@@ -2,16 +2,12 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { useTableBundles } from '@datashaper/app-framework'
-import type { IDropdownOption, ITooltipHostStyles } from '@fluentui/react'
+import type { ITooltipHostStyles } from '@fluentui/react'
 import {
 	ActionButton,
 	Checkbox,
-	DefaultButton,
-	Dropdown,
 	FontIcon,
 	Label,
-	Link,
 	MessageBarType,
 	Pivot,
 	PivotItem,
@@ -20,16 +16,10 @@ import {
 	SpinnerSize,
 	Stack,
 	Text,
-	TextField,
 	TooltipHost,
 } from '@fluentui/react'
-import type { Hypothesis } from '@showwhy/app-common'
-import { HypothesisGroup, TableMenuBar } from '@showwhy/app-common'
-import { not } from 'arquero'
 import { clone, cloneDeep, isEmpty, isEqual, uniq } from 'lodash'
-import type { FormEvent } from 'react'
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { useRecoilState } from 'recoil'
 
 import API from './api.js'
 import { ChartOptionsGroup } from './components/ChartOptionsGroup.js'
@@ -40,125 +30,94 @@ import { PlaceboResultPane } from './components/PlaceboResultPane/index.js'
 import { RangeFilter } from './components/RangeFilter.js'
 import { RawDataPane } from './components/RawDataPane.js'
 import { TimeAlignmentSelector } from './components/TimeAlignmentSelector.js'
-import { TreatmentSelector } from './components/TreatmentSelector.js'
+import { Selector } from './components/TreatmentSelector/Selector.js'
 import { usePlaceboDataGroup } from './hooks/usePlaceboDataGroup.js'
 import { usePlaceboOutputData } from './hooks/usePlaceboOutputData.js'
 import { useProcessedInputData } from './hooks/useProcessedInputData.js'
 import { useShowPlaceboGraphs } from './hooks/useShowPlaceboGraphs.js'
 import { useTreatedUnitsMap } from './hooks/useTreatedUnitsMap.js'
 import {
-	DropdownContainer,
-	hypothesisGroupStyles,
 	RightPanelHeader,
 	StyledStack,
 	Title,
 	usePivotStyles,
 } from './MainContent.styles.js'
+import { processSynthControlData } from './MainContent.utils.js'
+import { PrepareAnalysis } from './pages/PrepareAnalysis/index.js'
 import {
-	guessColMapping,
-	processSynthControlData,
-} from './MainContent.utils.js'
-import {
-	AggregateEnabledState,
-	AggTreatmentState,
-	ChartOptionsState,
-	CheckedUnitsState,
-	ColumnMappingState,
-	EstimatorState,
-	EventNameState,
-	FileNameState,
-	FilterState,
-	HypothesisState,
-	OutcomeNameState,
-	OutputResState,
-	PlaceboOutputResState,
-	PlaceboSimulationState,
-	RawDataState,
-	SelectedTabKeyState,
-	TimeAlignmentState,
-	TreatedUnitsState,
-	TreatmentStartDatesAfterEstimateState,
-	TreatmentStartDatesState,
-	UnitsState,
-} from './state/state.js'
+	useChartOptionsState,
+	useCheckedUnitsState,
+	useColumnMappingState,
+	useEstimatorState,
+	useEventNameState,
+	useFilterState,
+	useHypothesisState,
+	useOutcomeNameState,
+	useOutputResState,
+	usePlaceboSimulationState,
+	useSelectedTabKeyState,
+	useSetPlaceboOutputResState,
+	useSetTreatmentStartDatesAfterEstimateState,
+	useTimeAlignmentState,
+	useTreatedUnitsState,
+	useTreatmentStartDatesState,
+	useUnitsState,
+} from './state/index.js'
 import { Spacer } from './styles/index.js'
 import type {
-	ColumnMapping,
 	MessageBarProps,
 	OutputData,
 	PlaceboOutputData,
 	SDIDOutputResponse,
-	Treatment,
 } from './types.js'
 import {
 	CONFIGURATION_TABS,
 	MAX_RENDERED_TREATED_UNITS,
 	POSSIBLE_COL_NAMES,
 } from './types.js'
-import { csvToRecords, getColumns } from './utils/csv.js'
-import { deserializeExportState } from './utils/exportState.js'
 import { processOutputData } from './utils/processOutputData.js'
 import { isValidTreatmentDate, isValidUnit } from './utils/validation.js'
 
 export const MainContent: React.FC = memo(function MainContent() {
-	// Dataset selection (from wrangler)
-	const dataTables = useTableBundles()
-
 	// Column mapping
-	const [columnMapping, setColumnMapping] = useRecoilState(ColumnMappingState)
-	const [rawData, setRawData] = useRecoilState(RawDataState)
-	const [filter, setFilter] = useRecoilState(FilterState)
-	const [aggregateEnabled, setAggregateEnabled] = useRecoilState(
-		AggregateEnabledState,
-	)
-	const [, setAggTreatment] = useRecoilState(AggTreatmentState)
+	const [columnMapping] = useColumnMappingState()
+	const [filter, setFilter] = useFilterState()
 
 	// Processed Data
-	const {
-		data,
-		isDataLoaded,
-		globalDateRange,
-		defaultTreatment,
-		updateTreatmentsForAggregation,
-	} = useProcessedInputData(columnMapping)
+	const { data, isDataLoaded, globalDateRange, defaultTreatment } =
+		useProcessedInputData(columnMapping)
 
 	// Display Names
-	const [outcomeName, setOutcomeName] = useRecoilState(OutcomeNameState)
-	const [eventName, setEventName] = useRecoilState(EventNameState)
-
-	const [fileName, setFileName] = useRecoilState(FileNameState)
+	const [outcomeName] = useOutcomeNameState()
+	const [eventName] = useEventNameState()
 
 	// Treatment setting
-	const [treatedUnits, setTreatedUnits] = useRecoilState(TreatedUnitsState)
-	const [treatmentStartDates, setTreatmentStartDates] = useRecoilState(
-		TreatmentStartDatesState,
-	)
-	const [checkedUnits, setCheckedUnits] = useRecoilState(CheckedUnitsState)
+	const [treatedUnits, setTreatedUnits] = useTreatedUnitsState()
+	const [treatmentStartDates, setTreatmentStartDates] =
+		useTreatmentStartDatesState()
+	const [checkedUnits, setCheckedUnits] = useCheckedUnitsState()
 
 	// Chart Options
-	const [chartOptions, setChartOptions] = useRecoilState(ChartOptionsState)
+	const [chartOptions, setChartOptions] = useChartOptionsState()
 
-	const [estimator, setEstimator] = useRecoilState(EstimatorState)
+	const [estimator, setEstimator] = useEstimatorState()
 
-	const [selectedTabKey, setSelectedTabKey] =
-		useRecoilState(SelectedTabKeyState)
+	const [selectedTabKey, setSelectedTabKey] = useSelectedTabKeyState()
 
-	const [timeAlignment, setTimeAlignment] = useRecoilState(TimeAlignmentState)
+	const [timeAlignment, setTimeAlignment] = useTimeAlignmentState()
 
-	const [units, setUnits] = useRecoilState(UnitsState)
-	const [hypothesis, setHypothesis] = useRecoilState(HypothesisState)
-	const [currentTableName, setCurrentTableName] = useState('')
+	const [units] = useUnitsState()
+	const [hypothesis] = useHypothesisState()
 
 	// Raw output data
-	const [outputRes, setOutputRes] = useRecoilState(OutputResState)
+	const [outputRes, setOutputRes] = useOutputResState()
 
-	const [, setPlaceboOutputRes] = useRecoilState(PlaceboOutputResState)
+	const setPlaceboOutputRes = useSetPlaceboOutputResState()
 
 	// encapsulate the value of treatment-start-date in certain occasions only
 	//  e.g., after session data is loaded and after an estimator is executed
-	const [, setTreatmentStartDatesAfterEstimate] = useRecoilState(
-		TreatmentStartDatesAfterEstimateState,
-	)
+	const setTreatmentStartDatesAfterEstimate =
+		useSetTreatmentStartDatesAfterEstimateState()
 
 	const [userMessage, setUserMessage] = useState<MessageBarProps>({
 		isVisible: false,
@@ -167,9 +126,8 @@ export const MainContent: React.FC = memo(function MainContent() {
 
 	// Loading state
 	const [isCalculatingEstimator, setCalculatingEstimator] = useState(false)
-	const [isPlaceboSimulation, setPlaceboSimulation] = useRecoilState(
-		PlaceboSimulationState,
-	)
+	const [isPlaceboSimulation, setPlaceboSimulation] =
+		usePlaceboSimulationState()
 	const { renderRawData } = chartOptions
 
 	const showPlaceboGraphs = useShowPlaceboGraphs()
@@ -180,14 +138,6 @@ export const MainContent: React.FC = memo(function MainContent() {
 	}, [selectedTabKey, renderRawData])
 
 	const isInitialRender = useRef(true)
-
-	// Derived values
-	const columnsDropdownOptions = useMemo((): IDropdownOption[] => {
-		return getColumns(rawData).map(v => ({
-			key: v,
-			text: v,
-		}))
-	}, [rawData])
 
 	// hacks to speed up computation:
 	// cache treated units and selected units as maps
@@ -239,34 +189,6 @@ export const MainContent: React.FC = memo(function MainContent() {
 		}
 		isInitialRender.current = false
 	}, [defaultTreatment])
-
-	const clearAllState = useCallback(() => {
-		setRawData([])
-		setPlaceboOutputRes(new Map())
-		setOutputRes(null)
-		setFilter(null)
-		setTreatmentStartDates([])
-		setTreatedUnits([])
-		setCheckedUnits(null)
-		setUserMessage({ isVisible: false, content: '' })
-		setPlaceboSimulation(false)
-		setAggregateEnabled(false)
-		setAggTreatment(null)
-		setTreatmentStartDatesAfterEstimate(null)
-	}, [
-		setRawData,
-		setPlaceboOutputRes,
-		setOutputRes,
-		setFilter,
-		setTreatmentStartDates,
-		setTreatedUnits,
-		setCheckedUnits,
-		setUserMessage,
-		setPlaceboSimulation,
-		setAggregateEnabled,
-		setAggTreatment,
-		setTreatmentStartDatesAfterEstimate,
-	])
 
 	const resetDataHandler = () => {
 		if (!isDataLoaded) {
@@ -567,27 +489,6 @@ export const MainContent: React.FC = memo(function MainContent() {
 		})
 	}
 
-	const updateColumnMapping = useCallback(
-		(mapping: ColumnMapping) => {
-			const newMapping = { ...columnMapping, ...mapping }
-			if (isEqual(newMapping, columnMapping)) return
-			setColumnMapping(newMapping)
-		},
-		[columnMapping, setColumnMapping],
-	)
-
-	const handleOutColumnChange = (
-		e: FormEvent<HTMLDivElement>,
-		option?: IDropdownOption<string>,
-	) => {
-		const outCol = '' + (option?.key.toString() ?? '')
-		if (outCol !== '') {
-			const newMapping = { ...columnMapping, ...{ value: outCol } }
-			if (!isEqual(newMapping, columnMapping)) setColumnMapping(newMapping)
-			setOutcomeName(prev => (!prev ? outCol : prev))
-		}
-	}
-
 	const handleTreatmentDateChange = useCallback(
 		(treatmentDate: number, treatedUnit: string) => {
 			const treatedUnitIndex = treatedUnits.findIndex(
@@ -721,45 +622,6 @@ export const MainContent: React.FC = memo(function MainContent() {
 		setCheckedUnits,
 	])
 
-	const enableRegroupButton = useMemo(() => {
-		const nonGroupedUnits = treatedUnits.filter(
-			unit => !unit.startsWith('Group_'),
-		)
-		return aggregateEnabled && nonGroupedUnits.length > 0
-	}, [aggregateEnabled, treatedUnits])
-
-	const updateTreatmentsForAgg = useCallback(() => {
-		// Construct treatment including group info
-		const treatment: Treatment = {
-			units: treatedUnits,
-			startDates: treatmentStartDates,
-			groups: {},
-		}
-		// Extract grouped units information
-		treatedUnits.forEach(unit => {
-			const groupedUnits = defaultTreatment?.groups[unit]
-			if (groupedUnits) {
-				treatment.groups[unit] = groupedUnits
-			}
-		})
-		updateTreatmentsForAggregation(treatment)
-	}, [
-		treatedUnits,
-		treatmentStartDates,
-		defaultTreatment?.groups,
-		updateTreatmentsForAggregation,
-	])
-
-	const handleAggregateOption = useCallback(() => {
-		const enabled = !aggregateEnabled
-		updateTreatmentsForAgg()
-		setAggregateEnabled(enabled)
-	}, [aggregateEnabled, setAggregateEnabled, updateTreatmentsForAgg])
-
-	const handleReAggregate = useCallback(() => {
-		updateTreatmentsForAgg()
-	}, [updateTreatmentsForAgg])
-
 	const onHandleTabClicked = useCallback(
 		(itemClicked?: PivotItem) => {
 			const itemKey = itemClicked?.props.itemKey
@@ -769,99 +631,6 @@ export const MainContent: React.FC = memo(function MainContent() {
 		},
 		[setSelectedTabKey],
 	)
-
-	const handleFileLoad = useCallback(
-		({ fileName, content }: { fileName: string; content: string }) => {
-			// clear old state since we are loading a new data set
-			clearAllState()
-			const exportState = deserializeExportState(content)
-			// If not exportState, assume the content is csv
-			if (!exportState) {
-				const records = csvToRecords(content)
-				setRawData(records)
-				const mapping = guessColMapping(getColumns(records))
-				setColumnMapping(mapping)
-				setOutcomeName(prev => (!prev ? mapping.value : prev))
-				setFileName(fileName)
-			} else {
-				const {
-					rawData,
-					eventName,
-					outcomeName,
-					columnMapping,
-					treatmentStartDates,
-					treatedUnits,
-					checkedUnits,
-					chartOptions,
-					estimator,
-					timeAlignment,
-					filter,
-					outputData,
-				} = exportState
-				setRawData(rawData)
-				setEventName(eventName)
-				setOutcomeName(outcomeName)
-				updateColumnMapping(columnMapping)
-				setTreatedUnits(treatedUnits)
-				setTreatmentStartDates(treatmentStartDates)
-				setChartOptions(chartOptions)
-				setCheckedUnits(checkedUnits)
-				setEstimator(estimator)
-				setTimeAlignment(timeAlignment)
-				setFilter(filter)
-				setOutputRes(outputData)
-				if (outputData) setPlaceboSimulation(outputData.compute_placebos)
-				setTreatmentStartDatesAfterEstimate({
-					tStartDates: treatmentStartDates,
-				})
-				setFileName('')
-			}
-		},
-		[
-			clearAllState,
-			setRawData,
-			setOutcomeName,
-			updateColumnMapping,
-			setTreatedUnits,
-			setTreatmentStartDates,
-			setChartOptions,
-			setCheckedUnits,
-			setEstimator,
-			setTimeAlignment,
-			setFilter,
-			setOutputRes,
-			setPlaceboSimulation,
-			setTreatmentStartDatesAfterEstimate,
-			setFileName,
-			setEventName,
-			setColumnMapping,
-		],
-	)
-
-	const onDatasetClicked = useCallback(
-		(name: string) => {
-			const table = dataTables.find(d => d.name === name)?.output?.table
-			if (table) {
-				setCurrentTableName(name)
-				setFileName(name)
-				// @FIXME: ideally we should consume the wrangled data-table as is
-				//  and not convert it back to CSV before reading its content
-				const tableAsCSV = table?.select(not('index')).toCSV()
-				handleFileLoad({ fileName: name, content: tableAsCSV })
-			}
-		},
-		[dataTables, handleFileLoad, setCurrentTableName, setFileName],
-	)
-
-	const onDataTablesUpdate = useCallback(() => {
-		if (fileName !== currentTableName) {
-			onDatasetClicked(fileName)
-		}
-	}, [fileName, currentTableName, onDatasetClicked])
-
-	useEffect(() => {
-		onDataTablesUpdate()
-	}, [dataTables])
 
 	const handleRemoveCheckedUnit = useCallback(
 		(unitToRemove: string) => {
@@ -951,7 +720,7 @@ export const MainContent: React.FC = memo(function MainContent() {
 				</Stack>
 			) : (
 				treatedUnits.map((treatedUnit, index) => (
-					<TreatmentSelector
+					<Selector
 						key={treatedUnit}
 						units={data.uniqueUnits}
 						minDate={data.startDate}
@@ -1008,15 +777,6 @@ export const MainContent: React.FC = memo(function MainContent() {
 		setTreatmentStartDates,
 	])
 
-	const onUnitUpdate = useCallback(
-		(value?: IDropdownOption) => {
-			const unit = !value ? '' : String(value.key)
-			updateColumnMapping({ unit })
-			setUnits(prev => (!prev ? unit : prev))
-		},
-		[setUnits, updateColumnMapping],
-	)
-
 	useEffect(() => {
 		setChartOptions(prev => ({
 			...prev,
@@ -1039,211 +799,7 @@ export const MainContent: React.FC = memo(function MainContent() {
 							headerText={CONFIGURATION_TABS.prepareAnalysis.label}
 							itemKey={CONFIGURATION_TABS.prepareAnalysis.key}
 						>
-							<Stack tokens={{ childrenGap: 5 }}>
-								<Text className="stepText">Load your data set</Text>
-								<Text className="stepDesc">
-									Load a dataset in&nbsp;
-									<Link
-										href="https://en.wikipedia.org/wiki/Panel_data"
-										target="_blank"
-									>
-										panel data format
-									</Link>
-									&nbsp;to get started.
-								</Text>
-								<Stack horizontal tokens={{ childrenGap: 10 }}>
-									<TableMenuBar
-										selectedTable={fileName}
-										onTableSelected={onDatasetClicked}
-									/>
-								</Stack>
-							</Stack>
-
-							<Spacer axis="vertical" size={15} />
-
-							<Stack tokens={{ childrenGap: 5 }}>
-								<Text className="stepText">
-									Select time, units, and outcome columns
-								</Text>
-								<Text className="stepDesc">
-									Select data columns representing the time periods (e.g.,
-									years) in which the units of your analysis (e.g., different
-									regions or groups) were observed to have outcomes before and
-									after the treatment/event of interest.
-								</Text>
-								<DropdownContainer>
-									<Dropdown
-										placeholder="Time"
-										label="Time"
-										options={columnsDropdownOptions}
-										selectedKey={columnMapping.date}
-										onChange={(e, val) =>
-											updateColumnMapping({
-												date: !val ? '' : String(val.key),
-											})
-										}
-									/>
-									<Dropdown
-										placeholder="Units"
-										label="Units"
-										options={columnsDropdownOptions}
-										selectedKey={columnMapping.unit}
-										onChange={(e, val) => onUnitUpdate(val)}
-									/>
-									<Dropdown
-										placeholder="Outcome"
-										label="Outcome"
-										options={columnsDropdownOptions}
-										selectedKey={columnMapping.value}
-										onChange={handleOutColumnChange}
-									/>
-								</DropdownContainer>
-
-								{data.nonBalancedUnits?.length && !!columnMapping.value ? (
-									<Stack horizontal tokens={{ childrenGap: 10, padding: 10 }}>
-										<Text>
-											{data.nonBalancedUnits.length} units missing outcomes have
-											been excluded
-										</Text>
-										<TooltipHost
-											content={data.nonBalancedUnits.map((i, key) => (
-												<Text
-													key={key}
-													block
-													styles={{ root: { marginBottom: '10px' } }}
-												>
-													{i}
-												</Text>
-											))}
-											id="nonBalancedUnits"
-											styles={tooltipHostStyles}
-										>
-											<FontIcon
-												iconName="Info"
-												className="non-balanced-units-icon"
-												aria-describedby="nonBalancedUnits"
-											/>
-										</TooltipHost>
-									</Stack>
-								) : null}
-							</Stack>
-
-							<Spacer axis="vertical" size={15} />
-
-							<Stack tokens={{ childrenGap: 5 }}>
-								<Text className="stepText">
-									Define treated units and time periods
-								</Text>
-								<Text className="stepDesc">
-									Select some units and time-periods to consider as treated.
-									Alternatively, if your dataset contains a column specifying a
-									treatment, select the column to automatically create
-									treatments.
-								</Text>
-								<Spacer axis="vertical" size={5} />
-								<Stack horizontal horizontalAlign="space-between">
-									<Stack.Item align="baseline">
-										<Checkbox
-											label="Aggregate Treated Units"
-											checked={aggregateEnabled}
-											onChange={handleAggregateOption}
-										/>
-									</Stack.Item>
-									<DefaultButton
-										text="Regroup"
-										onClick={handleReAggregate}
-										disabled={!enableRegroupButton}
-									/>
-								</Stack>
-								<Spacer axis="vertical" size={5} />
-								{treatmentSelector}
-								<Stack tokens={{ padding: 5 }}>
-									<Stack.Item align="center">OR</Stack.Item>
-								</Stack>
-								<Stack horizontal tokens={{ childrenGap: 3 }}>
-									<Stack.Item>
-										<Label>Automatically create treatments from column:</Label>
-									</Stack.Item>
-									<Stack.Item grow>
-										<Dropdown
-											placeholder="Select treated column"
-											options={columnsDropdownOptions}
-											selectedKey={columnMapping.treated}
-											onChange={(e, val) =>
-												updateColumnMapping({
-													treated: !val ? '' : String(val.key),
-												})
-											}
-										/>
-									</Stack.Item>
-									<Stack.Item align="center">
-										<FontIcon
-											iconName="Cancel"
-											className="attributeClearSelection"
-											onClick={() => {
-												updateColumnMapping({ treated: '' })
-											}}
-										/>
-									</Stack.Item>
-								</Stack>
-							</Stack>
-
-							<Spacer axis="vertical" size={15} />
-
-							<Stack>
-								<Text className="stepText">Format causal question</Text>
-								<Stack horizontal>
-									<Stack tokens={{ childrenGap: 5, padding: 10 }}>
-										<Text className="stepText">Units</Text>
-										<TextField
-											placeholder="Units"
-											value={units}
-											onChange={(e, v) => setUnits(v || '')}
-										/>
-									</Stack>
-									<Stack tokens={{ childrenGap: 5, padding: 10 }}>
-										<Text className="stepText">Treatment/Event</Text>
-										<TextField
-											placeholder="Treatment/Event"
-											value={eventName}
-											onChange={(e, v) => setEventName(v || '')}
-										/>
-									</Stack>
-									<Stack tokens={{ childrenGap: 5, padding: 10 }}>
-										<Text className="stepText">Outcome</Text>
-										<TextField
-											placeholder="Outcome"
-											value={outcomeName}
-											onChange={(e, v) => setOutcomeName(v || '')}
-										/>
-									</Stack>
-								</Stack>
-
-								<Stack tokens={{ childrenGap: 5, padding: 10 }}>
-									<Text className="stepText">Hypothesis</Text>
-									<HypothesisGroup
-										onChange={(_, o) => setHypothesis(o?.key as Hypothesis)}
-										hypothesis={hypothesis as Hypothesis}
-										styles={hypothesisGroupStyles}
-									/>
-								</Stack>
-							</Stack>
-
-							<Stack>
-								<Text className="stepText">Chart options</Text>
-								<Stack tokens={{ childrenGap: 5, padding: 5 }}>
-									<Checkbox
-										label="Show treatment start indicator"
-										checked={chartOptions.showTreatmentStart}
-										onChange={(e, isChecked) =>
-											setChartOptions({
-												...chartOptions,
-												showTreatmentStart: !!isChecked,
-											})
-										}
-									/>
-								</Stack>
-							</Stack>
+							<PrepareAnalysis />
 						</PivotItem>
 						<PivotItem
 							headerText={CONFIGURATION_TABS.estimateEffects.label}
@@ -1374,6 +930,7 @@ export const MainContent: React.FC = memo(function MainContent() {
 			</Stack.Item>
 
 			<Stack.Item grow className="rightPanel">
+				{/* TODO: Move out header */}
 				<RightPanelHeader>
 					<Stack tokens={{ childrenGap: 5 }}>
 						<Title>
