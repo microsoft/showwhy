@@ -40,24 +40,11 @@ class DeciInterventionModel:
     ):
         adj_matrix = self._adj_matrix.copy()
 
-        n_lines, n_cols = adj_matrix.shape
+        if confidence_threshold is not None and confidence_threshold > 0:
+            adj_matrix[abs(self._adj_matrix) <= confidence_threshold] = 0
 
-        if confidence_threshold is None:
-            confidence_threshold = 0
-
-        if weight_threshold is None:
-            weight_threshold = 0
-
-        for i in range(n_lines):
-            for j in range(n_cols):
-                if (
-                    confidence_threshold > 0
-                    and abs(self._adj_matrix[i][j]) <= confidence_threshold
-                ) or (
-                    weight_threshold > 0
-                    and abs(self._ate_matrix[i][j]) <= weight_threshold
-                ):
-                    adj_matrix[i][j] = 0
+        if weight_threshold is not None and weight_threshold > 0:
+            adj_matrix[abs(self._ate_matrix) <= weight_threshold] = 0
 
         return adj_matrix
 
