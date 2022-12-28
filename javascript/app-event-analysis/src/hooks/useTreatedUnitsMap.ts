@@ -4,14 +4,13 @@
  */
 
 import { useMemo } from 'react'
-import { useRecoilState } from 'recoil'
 
-import { TreatedUnitsState } from '../state/state.js'
+import { useTreatedUnitsValueState } from '../state/index.js'
 
 export type Map = { [unit: string]: number }
 
 export function useTreatedUnitsMap(tu?: string[]): Map {
-	const [treatedUnits] = useRecoilState(TreatedUnitsState)
+	const treatedUnits = useTreatedUnitsValueState()
 
 	return useMemo(() => {
 		const updatedMap: Map = {}

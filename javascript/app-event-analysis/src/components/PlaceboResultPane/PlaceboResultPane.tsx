@@ -4,10 +4,9 @@
  */
 import { Link, Spinner, SpinnerSize, Stack, Text } from '@fluentui/react'
 import { memo, useMemo, useState } from 'react'
-import { useRecoilValue } from 'recoil'
 
 import { useShowPlaceboGraphs } from '../../hooks/useShowPlaceboGraphs.js'
-import { TreatedUnitsState } from '../../state/state.js'
+import { useTreatedUnitsValueState } from '../../state/index.js'
 import { GraphTitle, Spacer, StyledStack } from '../../styles/index.js'
 import type { HoverInfo, TooltipInfo } from '../../types.js'
 import { CustomMessageBar } from '../CustomMessageBar.js'
@@ -25,7 +24,7 @@ export const PlaceboResultPane: React.FC<PlaceboResultPaneProps> = memo(
 		onRemoveCheckedUnit,
 	}) {
 		const [hoverItem, setHoverItem] = useState<null | TooltipInfo>(null)
-		const treatedUnits = useRecoilValue(TreatedUnitsState)
+		const treatedUnits = useTreatedUnitsValueState()
 		const showPlaceboGraphs = useShowPlaceboGraphs()
 		const showPlaceboGraphsLocal = useMemo(
 			(): boolean => !isCalculatingEstimator && showPlaceboGraphs,

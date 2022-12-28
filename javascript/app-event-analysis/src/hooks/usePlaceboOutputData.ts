@@ -4,9 +4,11 @@
  */
 
 import { useMemo } from 'react'
-import { useRecoilState } from 'recoil'
 
-import { PlaceboOutputResState, TreatedUnitsState } from '../state/state.js'
+import {
+	usePlaceboOutputResValueState,
+	useTreatedUnitsValueState,
+} from '../state/index.js'
 import type {
 	OutputData,
 	PlaceboOutputData,
@@ -19,8 +21,8 @@ export function usePlaceboOutputData(): Map<
 	string,
 	(OutputData | PlaceboOutputData)[]
 > {
-	const [treatedUnits] = useRecoilState(TreatedUnitsState)
-	const [placeboOutputRes] = useRecoilState(PlaceboOutputResState)
+	const treatedUnits = useTreatedUnitsValueState()
+	const placeboOutputRes = usePlaceboOutputResValueState()
 	const treatedUnitsMap = useTreatedUnitsMap()
 
 	return useMemo(() => {

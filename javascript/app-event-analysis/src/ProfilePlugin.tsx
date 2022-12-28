@@ -39,7 +39,7 @@ import {
 	TreatmentStartDatesAfterEstimateState,
 	TreatmentStartDatesState,
 	UnitsState,
-} from './state/state.js'
+} from './state/index.js'
 import type {
 	ChartOptions,
 	ColumnMapping,

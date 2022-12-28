@@ -5,14 +5,13 @@
 
 import { memo, useMemo, useState } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
-import { useRecoilValue } from 'recoil'
 
 import {
-	ChartOptionsState,
-	OutcomeNameState,
-	TreatedUnitsState,
-	TreatmentStartDatesState,
-} from '../state/state.js'
+	useChartOptionsValueState,
+	useOutcomeNameValueState,
+	useTreatedUnitsValueState,
+	useTreatmentStartDatesValueState,
+} from '../state/index.js'
 import { Container } from '../styles/index.js'
 import type { HoverInfo, TooltipInfo } from '../types.js'
 import { ChartErrorFallback } from './ChartErrorFallback.js'
@@ -31,11 +30,11 @@ export const DimensionedLineChart: React.FC<DimensionedLineChartProps> = memo(
 		checkedUnits,
 		isPlaceboSimulation,
 	}) {
-		const chartOptions = useRecoilValue(ChartOptionsState)
+		const chartOptions = useChartOptionsValueState()
 		const [hoverItem, setHoverItem] = useState<null | TooltipInfo>(null)
-		const treatedUnits = useRecoilValue(TreatedUnitsState)
-		const outcomeName = useRecoilValue(OutcomeNameState)
-		const treatmentStartDates = useRecoilValue(TreatmentStartDatesState)
+		const treatedUnits = useTreatedUnitsValueState()
+		const outcomeName = useOutcomeNameValueState()
+		const treatmentStartDates = useTreatmentStartDatesValueState()
 		const hoverInfo = useMemo(() => {
 			return {
 				hoverItem: hoverItem,

@@ -4,17 +4,16 @@
  */
 import { Spinner, SpinnerSize, Stack } from '@fluentui/react'
 import { memo, useMemo, useRef, useState } from 'react'
-import { useRecoilValue } from 'recoil'
 
 import {
-	ChartOptionsState,
-	CheckedUnitsState,
-	EventNameState,
-	OutcomeNameState,
-	PlaceboSimulationState,
-	SelectedTabKeyState,
-	TreatedUnitsState,
-} from '../../state/state.js'
+	useChartOptionsValueState,
+	useCheckedUnitsValueState,
+	useEventNameValueState,
+	useOutcomeNameValueState,
+	usePlaceboSimulationValueState,
+	useSelectedTabKeyValueState,
+	useTreatedUnitsValueState,
+} from '../../state/index.js'
 import { GraphTitle, StyledStack } from '../../styles/index.js'
 import type { HoverInfo, TooltipInfo } from '../../types.js'
 import { CONFIGURATION_TABS } from '../../types.js'
@@ -37,13 +36,13 @@ export const EffectResultPane: React.FC<EffectResultPaneProps> = memo(
 	}) {
 		const [hoverItem, setHoverItem] = useState<null | TooltipInfo>(null)
 
-		const eventName = useRecoilValue(EventNameState)
-		const chartOptions = useRecoilValue(ChartOptionsState)
-		const outcomeName = useRecoilValue(OutcomeNameState)
-		const treatedUnits = useRecoilValue(TreatedUnitsState)
-		const isPlaceboSimulation = useRecoilValue(PlaceboSimulationState)
-		const selectedTabKey = useRecoilValue(SelectedTabKeyState)
-		const checkedUnits = useRecoilValue(CheckedUnitsState)
+		const eventName = useEventNameValueState()
+		const chartOptions = useChartOptionsValueState()
+		const outcomeName = useOutcomeNameValueState()
+		const treatedUnits = useTreatedUnitsValueState()
+		const isPlaceboSimulation = usePlaceboSimulationValueState()
+		const selectedTabKey = useSelectedTabKeyValueState()
+		const checkedUnits = useCheckedUnitsValueState()
 		const synthLineChartRef = useRef<HTMLDivElement | null>(null)
 
 		const hoverInfo = useMemo(() => {
