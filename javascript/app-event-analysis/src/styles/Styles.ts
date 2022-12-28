@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import type { ITheme } from '@fluentui/react'
+import type { ITheme, ITooltipHostStyles } from '@fluentui/react'
 import { Stack } from '@fluentui/react'
 import type { Theme } from '@thematic/core'
 import styled from 'styled-components'
@@ -116,3 +116,11 @@ export const TreatedTitle = styled.h4`
 	font-size: 16px;
 	color: ${({ theme }: { theme: ITheme }) => theme.palette.neutralSecondary};
 `
+
+export const tooltipHostStyles: Partial<ITooltipHostStyles> = {
+	root: {
+		display: 'inline-block',
+		verticalAlign: 'middle',
+		marginLeft: '0.5rem',
+	},
+}
