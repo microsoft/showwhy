@@ -6,12 +6,10 @@ import { isEmpty, sortBy, unzip } from 'lodash'
 import { useCallback, useEffect, useMemo, useRef } from 'react'
 import { useRecoilState } from 'recoil'
 
-import {
-	AggregateEnabledState,
-	AggTreatmentState,
-	FilterState,
-	RawDataState,
-} from '../state/state.js'
+import { useAggTreatmentState } from '../state/AggregateEnabled.js'
+import { useAggregateEnabledValueState } from '../state/AggTreatment.js'
+import { useFilterValueState } from '../state/Filter.js'
+import { useRawDataValueState } from '../state/RawData.js'
 import type {
 	ColumnMapping,
 	DataPoint,
@@ -242,11 +240,11 @@ const groupTreatedUnits = (
 }
 
 export const useProcessedInputData = (columnMapping: ColumnMapping) => {
-	const [rawData] = useRecoilState(RawDataState)
-	const [filter] = useRecoilState(FilterState)
+	const rawData = useRawDataValueState()
+	const filter = useFilterValueState()
 	// This treatments overwrite the treatments in the raw data
-	const [aggTreatment, setAggTreatment] = useRecoilState(AggTreatmentState)
-	const [aggregateEnabled] = useRecoilState(AggregateEnabledState)
+	const [aggTreatment, setAggTreatment] = useAggTreatmentState()
+	const aggregateEnabled = useAggregateEnabledValueState()
 
 	const isDataLoaded = !isEmpty(rawData)
 

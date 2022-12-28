@@ -4,27 +4,23 @@
  */
 
 import { useMemo } from 'react'
-import { useRecoilState } from 'recoil'
 
-import {
-	CheckedUnitsState,
-	ColumnMappingState,
-	PlaceboOutputResState,
-	TreatedUnitsState,
-	TreatmentStartDatesAfterEstimateState,
-} from '../state/state.js'
+import { useCheckedUnitsValueState } from '../state/CheckedUnits.js'
+import { useColumnMappingValueState } from '../state/ColumnMapping.js'
+import { usePlaceboOutputResValueState } from '../state/PlaceboOutputRes.js'
+import { useTreatedUnitsValueState } from '../state/TreatedUnits.js'
+import { useTreatmentStartDatesAfterEstimateValueState } from '../state/TreatmentStartDatesAfterEstimate.js'
 import type { PlaceboDataGroup, SDIDOutputResponse } from '../types.js'
 import { computeRMSPE } from '../utils/computeRMSPE.js'
 import { useProcessedInputData } from './useProcessedInputData.js'
 
 export function usePlaceboDataGroup(): Map<string, PlaceboDataGroup[]> {
-	const [treatedUnits] = useRecoilState(TreatedUnitsState)
-	const [checkedUnits] = useRecoilState(CheckedUnitsState)
-	const [columnMapping] = useRecoilState(ColumnMappingState)
-	const [placeboOutputRes] = useRecoilState(PlaceboOutputResState)
-	const [treatmentStartDatesAfterEstimate] = useRecoilState(
-		TreatmentStartDatesAfterEstimateState,
-	)
+	const treatedUnits = useTreatedUnitsValueState()
+	const checkedUnits = useCheckedUnitsValueState()
+	const columnMapping = useColumnMappingValueState()
+	const placeboOutputRes = usePlaceboOutputResValueState()
+	const treatmentStartDatesAfterEstimate =
+		useTreatmentStartDatesAfterEstimateValueState()
 
 	const { data } = useProcessedInputData(columnMapping)
 

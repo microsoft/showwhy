@@ -6,13 +6,14 @@
 import { useMemo } from 'react'
 import { useRecoilState } from 'recoil'
 
-import { SelectedTabKeyState, TreatedUnitsState } from '../state/state.js'
+import { SelectedTabKeyState } from '../state/state.js'
+import { useTreatedUnitsValueState } from '../state/TreatedUnits.js'
 import { CONFIGURATION_TABS } from '../types.js'
 import { usePlaceboDataGroup } from './usePlaceboDataGroup.js'
 import { usePlaceboOutputData } from './usePlaceboOutputData.js'
 
 export function useShowPlaceboGraphs() {
-	const [treatedUnits] = useRecoilState(TreatedUnitsState)
+	const treatedUnits = useTreatedUnitsValueState()
 	const [selectedTabKey] = useRecoilState(SelectedTabKeyState)
 	const placeboOutputData = usePlaceboOutputData()
 	const placeboDataGroup = usePlaceboDataGroup()
