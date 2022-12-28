@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-export interface TreatmentSelectorProps {
+export interface SelectorProps {
 	units: string[]
 	minDate: number
 	maxDate: number
