@@ -160,7 +160,7 @@ export const CausalGraphExplorer: React.FC<{
 
 	const legendHeight = useMemo((): any => {
 		return legendRef?.current?.clientHeight ?? 0
-	}, [legendRef?.current?.clientHeight])
+	}, [])
 
 	// TODO: Figure out pan/zoom
 	return (
