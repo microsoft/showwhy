@@ -7,6 +7,7 @@ import torch
 from causica.models.deci.deci import DECI
 from celery import uuid
 
+from backend.discover.config import get_intervention_model_expires_after
 from backend.discover.model.interventions import (
     InterventionResult,
     InterventionValueByColumn,
@@ -137,7 +138,11 @@ class DeciInterventionModel:
 
     def save(self):
         db_client = get_db_client()
-        db_client.set_value(f"intervention_model:{self._id}", self)
+        db_client.set_value(
+            f"intervention_model:{self._id}",
+            self,
+            expire_after=get_intervention_model_expires_after(),
+        )
 
     @staticmethod
     def load(intervention_model_id: str):
