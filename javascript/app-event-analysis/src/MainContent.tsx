@@ -2,11 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import type { ITooltipHostStyles } from '@fluentui/react'
 import {
-	ActionButton,
-	Checkbox,
-	FontIcon,
 	Label,
 	MessageBarType,
 	Pivot,
@@ -16,21 +12,14 @@ import {
 	SpinnerSize,
 	Stack,
 	Text,
-	TooltipHost,
 } from '@fluentui/react'
-import { clone, cloneDeep, isEmpty, isEqual, uniq } from 'lodash'
+import { isEmpty } from 'lodash'
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import API from './api.js'
-import { ChartOptionsGroup } from './components/ChartOptionsGroup.js'
-import { CheckboxList } from './components/CheckboxList.js'
 import { EffectResultPane } from './components/EffectResultPane/index.js'
-import { EstimatorSelector } from './components/EstimatorSelector.js'
 import { PlaceboResultPane } from './components/PlaceboResultPane/index.js'
-import { RangeFilter } from './components/RangeFilter.js'
 import { RawDataPane } from './components/RawDataPane.js'
-import { TimeAlignmentSelector } from './components/TimeAlignmentSelector.js'
-import { Selector } from './components/TreatmentSelector/Selector.js'
 import { usePlaceboDataGroup } from './hooks/usePlaceboDataGroup.js'
 import { usePlaceboOutputData } from './hooks/usePlaceboOutputData.js'
 import { useProcessedInputData } from './hooks/useProcessedInputData.js'
@@ -43,6 +32,7 @@ import {
 	usePivotStyles,
 } from './MainContent.styles.js'
 import { processSynthControlData } from './MainContent.utils.js'
+import { EstimateEffects } from './pages/EstimateEffects/index.js'
 import { PrepareAnalysis } from './pages/PrepareAnalysis/index.js'
 import {
 	useChartOptionsState,
@@ -50,7 +40,6 @@ import {
 	useColumnMappingState,
 	useEstimatorState,
 	useEventNameState,
-	useFilterState,
 	useHypothesisState,
 	useOutcomeNameState,
 	useOutputResState,
@@ -63,28 +52,22 @@ import {
 	useTreatmentStartDatesState,
 	useUnitsState,
 } from './state/index.js'
-import { Spacer } from './styles/index.js'
 import type {
 	MessageBarProps,
 	OutputData,
 	PlaceboOutputData,
 	SDIDOutputResponse,
 } from './types.js'
-import {
-	CONFIGURATION_TABS,
-	MAX_RENDERED_TREATED_UNITS,
-	POSSIBLE_COL_NAMES,
-} from './types.js'
+import { CONFIGURATION_TABS, POSSIBLE_COL_NAMES } from './types.js'
 import { processOutputData } from './utils/processOutputData.js'
 import { isValidTreatmentDate, isValidUnit } from './utils/validation.js'
 
 export const MainContent: React.FC = memo(function MainContent() {
 	// Column mapping
 	const [columnMapping] = useColumnMappingState()
-	const [filter, setFilter] = useFilterState()
 
 	// Processed Data
-	const { data, isDataLoaded, globalDateRange, defaultTreatment } =
+	const { data, isDataLoaded, defaultTreatment } =
 		useProcessedInputData(columnMapping)
 
 	// Display Names
@@ -100,11 +83,11 @@ export const MainContent: React.FC = memo(function MainContent() {
 	// Chart Options
 	const [chartOptions, setChartOptions] = useChartOptionsState()
 
-	const [estimator, setEstimator] = useEstimatorState()
+	const [estimator] = useEstimatorState()
 
 	const [selectedTabKey, setSelectedTabKey] = useSelectedTabKeyState()
 
-	const [timeAlignment, setTimeAlignment] = useTimeAlignmentState()
+	const [timeAlignment] = useTimeAlignmentState()
 
 	const [units] = useUnitsState()
 	const [hypothesis] = useHypothesisState()
@@ -189,64 +172,6 @@ export const MainContent: React.FC = memo(function MainContent() {
 		}
 		isInitialRender.current = false
 	}, [defaultTreatment])
-
-	const resetDataHandler = () => {
-		if (!isDataLoaded) {
-			setUserMessage({
-				isVisible: true,
-				content: 'No data is loaded yet. Please load a valid dataset first!',
-				type: MessageBarType.error,
-			})
-			return
-		}
-		setFilter(null)
-		// we have just invalidated the input,
-		// so the existing output should be ignored or better yet back to the input view
-		setOutputRes(null)
-	}
-
-	const filterDataHandler = (filterRange: [number, number]) => {
-		if (!isDataLoaded) {
-			setUserMessage({
-				isVisible: true,
-				content: 'No data is loaded yet. Please load a valid dataset first!',
-				type: MessageBarType.error,
-			})
-			return
-		}
-		const [startDate, endDate] = filterRange
-		// pretend a new treatment start date as the middle of the pre-treatment range
-		//  and update the data accordingly
-		const placeboTreatmentStartDate = Math.floor(
-			startDate + (endDate - startDate) / 2,
-		)
-		// if any of the treatment start dates outside the date range of the date,
-		//  move it to the middle of the data range
-		const tempDate: number[] = []
-		treatmentStartDates.forEach(date => {
-			if (date <= startDate || date >= endDate) {
-				tempDate.push(placeboTreatmentStartDate)
-			} else {
-				tempDate.push(date)
-			}
-		})
-		if (!isEqual(treatmentStartDates, tempDate)) {
-			setTreatmentStartDates(tempDate)
-		}
-
-		setFilter({ startDate, endDate })
-
-		// we have just invalidated the input,
-		// so the existing output should be ignored or better yet back to the input view
-		setOutputRes(null)
-		setTreatmentStartDatesAfterEstimate(null)
-		//  automatically un-toggle the raw input and hide the synth control and counterfactual
-		setChartOptions({
-			...chartOptions,
-			renderRawData: true,
-			showSynthControl: false,
-		})
-	}
 
 	//
 	// computed validation checks
@@ -489,139 +414,6 @@ export const MainContent: React.FC = memo(function MainContent() {
 		})
 	}
 
-	const handleTreatmentDateChange = useCallback(
-		(treatmentDate: number, treatedUnit: string) => {
-			const treatedUnitIndex = treatedUnits.findIndex(
-				unit => unit === treatedUnit,
-			)
-			const updatedPeriods = clone(treatmentStartDates)
-			updatedPeriods[treatedUnitIndex] = treatmentDate
-			setTreatmentStartDates(updatedPeriods)
-		},
-		[setTreatmentStartDates, treatedUnits, treatmentStartDates],
-	)
-
-	const handleTreatedUnitChange = useCallback(
-		(oldTreatedUnit: string, newTreatedUnit: string) => {
-			// if newly selected treated unit exist in the list of treated unit, then do not proceed
-			// otherwise, update the list of treated unit with the new selection
-			const oldTreatedUnitIndex = treatedUnits.findIndex(
-				unit => unit === oldTreatedUnit,
-			)
-			const newTreatedUnitIndex = treatedUnits.findIndex(
-				unit => unit === newTreatedUnit,
-			)
-			if (newTreatedUnitIndex < 0) {
-				const updatedUnits = clone(treatedUnits)
-				updatedUnits[oldTreatedUnitIndex] = newTreatedUnit
-				setTreatedUnits(updatedUnits)
-			}
-		},
-		[setTreatedUnits, treatedUnits],
-	)
-
-	const handleRemoveTreatmentUnit = useCallback(
-		(treatedUnit: string) => {
-			const treatedUnitIndex = treatedUnits.findIndex(
-				unit => unit === treatedUnit,
-			)
-			const updatedUnits = treatedUnits.filter(unit => unit !== treatedUnit)
-			const updatedPeriods = clone(treatmentStartDates)
-			updatedPeriods.splice(treatedUnitIndex, 1) // remove at index
-			setTreatedUnits(updatedUnits)
-			setTreatmentStartDates(updatedPeriods)
-
-			if (updatedUnits.length === 0) {
-				// clear output data
-				setOutputRes(null)
-				setPlaceboOutputRes(new Map())
-			} else {
-				// a treated unit may have been removed
-				// ensure that any cached output for such removed unit is also filtered out
-				if (outputRes !== null) {
-					const updatedOutputRes = cloneDeep(outputRes)
-					setOutputRes({
-						...updatedOutputRes,
-						outputs: updatedOutputRes.outputs.filter(output =>
-							treatedUnits.includes(output.unit),
-						),
-					})
-				}
-			}
-		},
-		[
-			treatedUnits,
-			treatmentStartDates,
-			outputRes,
-			setOutputRes,
-			setPlaceboOutputRes,
-			setTreatedUnits,
-			setTreatmentStartDates,
-		],
-	)
-
-	const addNewTreatedUnit = useCallback(() => {
-		if (data.uniqueUnits.length) {
-			let updatedUnits: string[] = []
-			let updatedPeriods: number[] = []
-			if (treatedUnits.length) {
-				// pick next untreated unit
-				const controlUnits = data.uniqueUnits.filter(unit =>
-					treatedUnits.every(tUnit => unit !== tUnit),
-				)
-				updatedUnits = [...treatedUnits, controlUnits[0]]
-				updatedPeriods = [...treatmentStartDates, treatmentStartDates[0]]
-			} else {
-				updatedUnits = [data.uniqueUnits[0]]
-				updatedPeriods = [data.startDate]
-			}
-			setTreatedUnits(updatedUnits)
-			setTreatmentStartDates(updatedPeriods)
-		}
-	}, [
-		treatedUnits,
-		treatmentStartDates,
-		data,
-		setTreatedUnits,
-		setTreatmentStartDates,
-	])
-
-	const handleEstimatorChange = useCallback(
-		(newEstimator: string) => {
-			setEstimator(newEstimator)
-		},
-		[setEstimator],
-	)
-
-	const handleTimeAlignmentChange = useCallback(
-		(newAlignment: string) => {
-			setTimeAlignment(newAlignment)
-		},
-		[setTimeAlignment],
-	)
-
-	const handleSelectAllUnits = useCallback(() => {
-		if (checkedUnits !== null && data.uniqueUnits.length) {
-			const checkedUnitCount = validTreatedUnits
-				? checkedUnits.size - treatedUnits.length
-				: checkedUnits.size
-			if (checkedUnitCount === unitCheckboxListItems.length) {
-				// all units are checked, then de-select all
-				setCheckedUnits(new Set([]))
-			} else {
-				// select all units
-				setCheckedUnits(new Set(data.uniqueUnits))
-			}
-		}
-	}, [
-		checkedUnits,
-		unitCheckboxListItems,
-		data,
-		validTreatedUnits,
-		treatedUnits,
-		setCheckedUnits,
-	])
-
 	const onHandleTabClicked = useCallback(
 		(itemClicked?: PivotItem) => {
 			const itemKey = itemClicked?.props.itemKey
@@ -640,142 +432,6 @@ export const MainContent: React.FC = memo(function MainContent() {
 		},
 		[checkedUnits, setCheckedUnits],
 	)
-
-	const tooltipHostStyles: Partial<ITooltipHostStyles> = {
-		root: {
-			display: 'inline-block',
-			verticalAlign: 'middle',
-			marginLeft: '0.5rem',
-		},
-	}
-
-	const revealErrors = useMemo(() => {
-		if (
-			isDataLoaded &&
-			cannotCalculateEstimate &&
-			cannotCalculatePlacebo &&
-			!isCalculatingEstimator
-		) {
-			return (
-				<FontIcon
-					iconName="Info"
-					className="bad-input"
-					onClick={checkCanExecuteEstimator}
-				/>
-			)
-		} else {
-			return <></>
-		}
-	}, [
-		checkCanExecuteEstimator,
-		cannotCalculateEstimate,
-		cannotCalculatePlacebo,
-		isDataLoaded,
-		isCalculatingEstimator,
-	])
-
-	const controlUnitsChecked = useMemo(() => {
-		return checkedUnits
-			? validTreatedUnits
-				? checkedUnits.size - treatedUnits.length ===
-				  unitCheckboxListItems.length
-				: checkedUnits.size === unitCheckboxListItems.length
-			: false
-	}, [checkedUnits, validTreatedUnits, unitCheckboxListItems, treatedUnits])
-
-	const controlUnitsIntermediateChecked = useMemo(() => {
-		return checkedUnits
-			? (validTreatedUnits
-					? checkedUnits.size - treatedUnits.length !==
-					  unitCheckboxListItems.length
-					: checkedUnits.size !== unitCheckboxListItems.length) &&
-					checkedUnits.size !== 0
-			: false
-	}, [checkedUnits, validTreatedUnits, unitCheckboxListItems, treatedUnits])
-
-	const treatmentSelector = useMemo(() => {
-		const clearAllTreatedUnits = () => {
-			setTreatedUnits([])
-			setTreatmentStartDates([])
-			setPlaceboOutputRes(new Map())
-			setOutputRes(null)
-		}
-		const differentTreatmentPeriods =
-			treatmentStartDates.length > 0 && uniq(treatmentStartDates).length !== 1
-		const treatmentList =
-			treatedUnits.length > MAX_RENDERED_TREATED_UNITS ? (
-				<Stack horizontal className="unit-selection-header">
-					<Stack.Item>
-						<Text>
-							Treated Units: <b>{treatedUnits.length}</b>
-						</Text>
-					</Stack.Item>
-					<Stack.Item align="end">
-						<FontIcon
-							iconName="SkypeCircleMinus"
-							className="remove-treated-unit"
-							onClick={clearAllTreatedUnits}
-						/>
-					</Stack.Item>
-				</Stack>
-			) : (
-				treatedUnits.map((treatedUnit, index) => (
-					<Selector
-						key={treatedUnit}
-						units={data.uniqueUnits}
-						minDate={data.startDate}
-						maxDate={data.endDate}
-						onTreatedUnitChange={handleTreatedUnitChange}
-						onTreatmentDateChange={handleTreatmentDateChange}
-						treatmentStartDate={treatmentStartDates[index]}
-						treatedUnit={treatedUnit}
-						onDelete={handleRemoveTreatmentUnit}
-					/>
-				))
-			)
-		return (
-			<Stack>
-				<Stack.Item className="treatment-list">{treatmentList}</Stack.Item>
-				<Stack.Item align="center">
-					<ActionButton
-						iconProps={{ iconName: 'CirclePlus' }}
-						className="add-treated-unit"
-						onClick={addNewTreatedUnit}
-						text="Add treated unit"
-					/>
-				</Stack.Item>
-				<Stack.Item>
-					{differentTreatmentPeriods && (
-						<Stack tokens={{ childrenGap: 2 }} horizontal>
-							<Stack.Item align="center" className="time-effect-label">
-								<Text>Time Effect Heterogeneity:</Text>
-							</Stack.Item>
-							<Stack.Item grow={1} className="time-effect-selector">
-								<TimeAlignmentSelector
-									alignment={timeAlignment}
-									onTimeAlignmentChange={handleTimeAlignmentChange}
-								/>
-							</Stack.Item>
-						</Stack>
-					)}
-				</Stack.Item>
-			</Stack>
-		)
-	}, [
-		data,
-		treatmentStartDates,
-		treatedUnits,
-		addNewTreatedUnit,
-		handleTreatedUnitChange,
-		handleTreatmentDateChange,
-		handleRemoveTreatmentUnit,
-		timeAlignment,
-		handleTimeAlignmentChange,
-		setOutputRes,
-		setPlaceboOutputRes,
-		setTreatedUnits,
-		setTreatmentStartDates,
-	])
 
 	useEffect(() => {
 		setChartOptions(prev => ({
@@ -805,103 +461,7 @@ export const MainContent: React.FC = memo(function MainContent() {
 							headerText={CONFIGURATION_TABS.estimateEffects.label}
 							itemKey={CONFIGURATION_TABS.estimateEffects.key}
 						>
-							<Stack tokens={{ childrenGap: 5 }}>
-								<Stack
-									horizontal
-									tokens={{ childrenGap: 5 }}
-									className="unit-selection-header"
-								>
-									<Label className="stepText">Unit selection</Label>
-									<Checkbox
-										label="Select All/None"
-										checked={controlUnitsChecked}
-										indeterminate={controlUnitsIntermediateChecked}
-										onChange={handleSelectAllUnits}
-									/>
-								</Stack>
-								<Text className="stepDesc">
-									Include or exclude units from the pool of data that can be
-									used to generate our synthetic control.
-								</Text>
-								<CheckboxList
-									selection={checkedUnits || new Set([])}
-									items={unitCheckboxListItems}
-									onSelectionChange={selection => setCheckedUnits(selection)}
-									height={175}
-								/>
-							</Stack>
-
-							<Spacer axis="vertical" size={5} />
-
-							<Label>Treated unit(s) and Treatment period(s)</Label>
-							{treatmentSelector}
-
-							<Spacer axis="vertical" size={15} />
-
-							<Stack>
-								<Label>
-									<Text className="stepText">Filter data</Text>
-									<TooltipHost
-										content="Use the Start/End dates to customize and filter the data range"
-										id="filterDataTooltipId"
-										styles={tooltipHostStyles}
-									>
-										<FontIcon
-											iconName="Info"
-											className="filter-data-icon"
-											aria-describedby="filterDataTooltipId"
-										/>
-									</TooltipHost>
-								</Label>
-								<Spacer axis="vertical" size={5} />
-								<Text>
-									Constrain the time before and after the event used to
-									calculate the causal effect
-								</Text>
-								<Spacer axis="vertical" size={5} />
-								<RangeFilter
-									defaultRange={filter && [filter.startDate, filter.endDate]}
-									labelStart="Start date"
-									labelEnd="End date"
-									min={globalDateRange.startDate}
-									max={globalDateRange.endDate}
-									step={1}
-									onApply={filterDataHandler}
-									onReset={resetDataHandler}
-								/>
-							</Stack>
-
-							<Spacer axis="vertical" size={15} />
-
-							<EstimatorSelector
-								estimator={estimator}
-								onEstimatorChange={handleEstimatorChange}
-							/>
-
-							<Spacer axis="vertical" size={5} />
-
-							<Stack tokens={{ childrenGap: 5 }}>
-								<Stack horizontal grow tokens={{ childrenGap: 5 }}>
-									<PrimaryButton
-										disabled={cannotCalculateEstimate}
-										text="Calculate causal estimate"
-										onClick={() => void calculateEstimate()}
-									/>
-									{isCalculatingEstimator && !isPlaceboSimulation && (
-										<Spinner size={SpinnerSize.medium} />
-									)}
-									{revealErrors}
-								</Stack>
-							</Stack>
-							<Spacer axis="vertical" size={20} />
-
-							<Text className="stepText">Chart options</Text>
-							<Stack tokens={{ childrenGap: 5, padding: 5 }}>
-								<ChartOptionsGroup
-									options={chartOptions}
-									onChange={setChartOptions}
-								/>
-							</Stack>
+							<EstimateEffects />
 						</PivotItem>
 						<PivotItem
 							headerText={CONFIGURATION_TABS.validateEffects.label}
@@ -945,7 +505,6 @@ export const MainContent: React.FC = memo(function MainContent() {
 						inputData={data}
 						outputData={outputData}
 						statusMessage={userMessage}
-						isCalculatingEstimator={isCalculatingEstimator}
 						checkableUnits={unitCheckboxListItems.map(unit => unit.name)}
 						onRemoveCheckedUnit={handleRemoveCheckedUnit}
 					/>
@@ -956,7 +515,7 @@ export const MainContent: React.FC = memo(function MainContent() {
 						outputData={outputData}
 						synthControlData={synthControlData}
 						statusMessage={userMessage}
-						isCalculatingEstimator={isCalculatingEstimator}
+						isLoading={isCalculatingEstimator}
 						timeAlignment={timeAlignment}
 						checkableUnits={unitCheckboxListItems.map(unit => unit.name)}
 						onRemoveCheckedUnit={handleRemoveCheckedUnit}
