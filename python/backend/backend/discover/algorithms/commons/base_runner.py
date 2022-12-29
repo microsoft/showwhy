@@ -59,16 +59,13 @@ class CausalDiscoveryRunner(ABC):
             ]
 
             if continuous_columns:
-                if (
-                    self._normalization.normalize_with_mean
-                    or self._normalization.normalize_with_std
-                ):
+                if self._normalization.with_mean or self._normalization.with_std:
                     logging.info(
-                        f"Scaling continuous columns {continuous_columns} using mean={self._normalization.normalize_with_mean} and standard deviation={self._normalization.normalize_with_std}"
+                        f"Scaling continuous columns {continuous_columns} using mean={self._normalization.with_mean} and standard deviation={self._normalization.with_std}"
                     )
                     self._prepared_data[continuous_columns] = StandardScaler(
-                        with_mean=self._normalization.normalize_with_mean,
-                        with_std=self._normalization.normalize_with_std,
+                        with_mean=self._normalization.with_mean,
+                        with_std=self._normalization.with_std,
                     ).fit_transform(self._prepared_data[continuous_columns])
 
                 self._normalized_columns_metadata = {

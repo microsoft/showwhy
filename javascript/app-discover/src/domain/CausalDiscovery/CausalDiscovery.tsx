@@ -125,8 +125,8 @@ export function discover(
 				nature: v.nature,
 			})),
 			normalization: {
-				normalize_with_mean: normalization.normalizeWithMeanEnabled,
-				normalize_with_std: normalization.normalizeWithStdEnabled,
+				with_mean: normalization.withMeanEnabled,
+				with_std: normalization.withStdEnabled,
 			},
 			...paramOptions,
 		}),

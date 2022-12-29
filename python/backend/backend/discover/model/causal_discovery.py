@@ -29,8 +29,8 @@ class Dataset(BaseModel):
 
 
 class NormalizationOptions(BaseModel):
-    normalize_with_mean: bool = True
-    normalize_with_std: bool = True
+    with_mean: bool = True
+    with_std: bool = True
 
 
 class CausalDiscoveryPayload(BaseModel):

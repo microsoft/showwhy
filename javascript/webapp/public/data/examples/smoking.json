@@ -663,8 +663,8 @@
                 "correlationThreshold": 0.2,
                 "view": 0,
                 "normalization": {
-                    "normalizeWithMeanEnabled": true,
-                    "normalizeWithStdEnabled": true
+                    "withMeanEnabled": true,
+                    "withStdEnabled": true
                 }
             }
         },

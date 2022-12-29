@@ -17,21 +17,21 @@ export const NormalizationControls = memo(function NormalizationControls() {
 		<NormalizationControlsContainer>
 			<Checkbox
 				label="Normalize with mean"
-				checked={causalDiscoveryNormalization.normalizeWithMeanEnabled}
+				checked={causalDiscoveryNormalization.withMeanEnabled}
 				onChange={(_, v) =>
 					setCausalDiscoveryNormalization(prev => ({
 						...prev,
-						normalizeWithMeanEnabled: Boolean(v),
+						withMeanEnabled: Boolean(v),
 					}))
 				}
 			/>
 			<Checkbox
 				label="Normalize with standard deviation"
-				checked={causalDiscoveryNormalization.normalizeWithStdEnabled}
+				checked={causalDiscoveryNormalization.withStdEnabled}
 				onChange={(_, v) =>
 					setCausalDiscoveryNormalization(prev => ({
 						...prev,
-						normalizeWithStdEnabled: Boolean(v),
+						withStdEnabled: Boolean(v),
 					}))
 				}
 			/>

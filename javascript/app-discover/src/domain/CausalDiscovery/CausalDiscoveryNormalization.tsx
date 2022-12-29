@@ -3,6 +3,6 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 export interface CausalDiscoveryNormalization {
-	normalizeWithMeanEnabled: boolean
-	normalizeWithStdEnabled: boolean
+	withMeanEnabled: boolean
+	withStdEnabled: boolean
 }

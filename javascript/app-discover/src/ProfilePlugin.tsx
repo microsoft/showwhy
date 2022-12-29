@@ -173,8 +173,8 @@ class DiscoveryResource extends Resource {
 		correlationThreshold: 0.2,
 		view: GraphViewStates.CausalView,
 		normalization: {
-			normalizeWithMeanEnabled: true,
-			normalizeWithStdEnabled: true,
+			withMeanEnabled: true,
+			withStdEnabled: true,
 		},
 		deciParams: { model_options: {}, ate_options: {} },
 	}

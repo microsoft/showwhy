@@ -38,7 +38,7 @@ export const FixedInterventionRangesEnabledState = atom<boolean>({
 export const CausalDiscoveryNormalizationState =
 	atom<CausalDiscoveryNormalization>({
 		key: 'CausalDiscoveryNormalizationState',
-		default: { normalizeWithMeanEnabled: true, normalizeWithStdEnabled: true },
+		default: { withMeanEnabled: true, withStdEnabled: true },
 	})
 
 export const SelectedCausalDiscoveryAlgorithmState =
