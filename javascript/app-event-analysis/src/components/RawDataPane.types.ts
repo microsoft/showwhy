@@ -14,7 +14,6 @@ export interface RawDataPaneProps {
 	inputData: ProcessedInputData
 	outputData: (OutputData | PlaceboOutputData)[]
 	statusMessage: MessageBarProps
-	isCalculatingEstimator: boolean
 	checkableUnits: string[]
 	onRemoveCheckedUnit: (unitToRemove: string) => void
 }

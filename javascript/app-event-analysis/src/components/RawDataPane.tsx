@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { Spinner, SpinnerSize, Stack } from '@fluentui/react'
+import { Stack } from '@fluentui/react'
 import { memo, useRef } from 'react'
 
 import {
@@ -20,7 +20,6 @@ export const RawDataPane: React.FC<RawDataPaneProps> = memo(
 		inputData,
 		outputData,
 		statusMessage,
-		isCalculatingEstimator,
 		checkableUnits,
 		onRemoveCheckedUnit,
 	}) {
@@ -38,10 +37,6 @@ export const RawDataPane: React.FC<RawDataPaneProps> = memo(
 							type={statusMessage.type}
 						/>
 					)}
-				</Stack.Item>
-
-				<Stack.Item className="no-top-margin">
-					{isCalculatingEstimator && <Spinner size={SpinnerSize.medium} />}
 				</Stack.Item>
 
 				<Stack.Item className="no-top-margin">
