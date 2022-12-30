@@ -24,6 +24,7 @@ class CausalDiscoveryRunner(ABC):
         self, p: CausalDiscoveryPayload, progress_callback: ProgressCallback = None
     ):
         self._dataset_data = p.dataset.data
+        self._normalization = p.normalization
         self._constraints = p.constraints
         self._progress_callback = progress_callback
         self._nature_by_variable = {v.name: v.nature for v in p.causal_variables}
@@ -58,13 +59,14 @@ class CausalDiscoveryRunner(ABC):
             ]
 
             if continuous_columns:
-                logging.info(
-                    f"Scaling continuous columns {continuous_columns} using mean and standard deviation"
-                )
-
-                self._prepared_data[continuous_columns] = StandardScaler(
-                    with_mean=True, with_std=True
-                ).fit_transform(self._prepared_data[continuous_columns])
+                if self._normalization.with_mean or self._normalization.with_std:
+                    logging.info(
+                        f"Scaling continuous columns {continuous_columns} using mean={self._normalization.with_mean} and standard deviation={self._normalization.with_std}"
+                    )
+                    self._prepared_data[continuous_columns] = StandardScaler(
+                        with_mean=self._normalization.with_mean,
+                        with_std=self._normalization.with_std,
+                    ).fit_transform(self._prepared_data[continuous_columns])
 
                 self._normalized_columns_metadata = {
                     column: NormalizedColumnMetadata(
@@ -83,8 +85,7 @@ class CausalDiscoveryRunner(ABC):
             self._number_of_rows - self._prepared_data.shape[0]
         )
 
-    def _transform_categorical_nominal_to_continuous(self):
-        # TODO: remove this once categorical values are properly handled by each algorithm
+    def _encode_categorical_as_integers(self):
         for name in self._prepared_data.columns:
             if (
                 self._nature_by_variable[name]

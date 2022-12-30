@@ -12,15 +12,15 @@ import { upperFirst } from 'lodash'
 
 import { AnnealEntropy } from '../domain/Algorithms/DECI.js'
 
-const LEARNING_RATE_DEFAULT = 1e-3
-const BATCH_SIZE = 256
-const RHO = 1.0
+const LEARNING_RATE_DEFAULT = 3e-2
+const BATCH_SIZE = 512
+const RHO = 10.0
 const SAFETY_RHO = 1e13
 const ALPHA = 0.0
 const SAFETY_ALPHA = 1e13
 const TOL_DAG = 1e-3
 const PROGRESS_RATE = 0.25
-const MAX_P_TRAIN_DROUPOUT = 0.25
+const MAX_P_TRAIN_DROPOUT = 0.25
 const RECONSTRUCTION_LOSS_FACTOR = 1.0
 const STANDARDIZE_DATA_MEAN = false
 const STANDARDIZE_DATA_STD = false
@@ -41,7 +41,7 @@ export const advancedTrainingSpinningOptions = [
 	},
 	{
 		label: 'Max p train dropout',
-		defaultValue: MAX_P_TRAIN_DROUPOUT,
+		defaultValue: MAX_P_TRAIN_DROPOUT,
 		inputProps: { name: 'max_p_train_dropout' },
 		step: 0.1,
 	},

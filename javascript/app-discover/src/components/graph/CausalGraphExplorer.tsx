@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { memo, useEffect, useMemo, useRef } from 'react'
+import { memo, useEffect, useRef } from 'react'
 import { useXarrow, Xwrapper } from 'react-xarrows'
 import {
 	useRecoilState,
@@ -158,9 +158,7 @@ export const CausalGraphExplorer: React.FC<{
 
 	const deselect = () => setSelectedObject(undefined)
 
-	const legendHeight = useMemo((): any => {
-		return legendRef?.current?.clientHeight ?? 0
-	}, [legendRef?.current?.clientHeight])
+	const legendHeight = legendRef?.current?.clientHeight ?? 0
 
 	// TODO: Figure out pan/zoom
 	return (

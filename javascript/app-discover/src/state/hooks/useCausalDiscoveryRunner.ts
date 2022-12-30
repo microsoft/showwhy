@@ -14,6 +14,7 @@ import { empty_discover_result } from '../../domain/CausalDiscovery/CausalDiscov
 import { CanceledPromiseError } from '../../utils/CancelablePromise.js'
 import {
 	AutoRunState,
+	CausalDiscoveryNormalizationState,
 	CausalDiscoveryResultsState,
 	CausalGraphConstraintsState,
 	DEFAULT_DATASET_NAME,
@@ -40,6 +41,7 @@ export function useCausalDiscoveryRunner() {
 	const causalDiscoveryAlgorithm = useRecoilValue(
 		SelectedCausalDiscoveryAlgorithmState,
 	)
+	const normalization = useRecoilValue(CausalDiscoveryNormalizationState)
 	const [autoRun, setAutoRun] = useRecoilState(AutoRunState)
 	const [isLoading, setIsLoading] = useRecoilState(IsDiscoverRunning)
 	const setCausalDiscoveryResultsState = useSetRecoilState(
@@ -93,6 +95,7 @@ export function useCausalDiscoveryRunner() {
 			inModelCausalVariables,
 			causalDiscoveryConstraints,
 			causalDiscoveryAlgorithm,
+			normalization,
 			updateProgress,
 			algorithmParams,
 		)
@@ -125,6 +128,7 @@ export function useCausalDiscoveryRunner() {
 		}
 	}, [
 		dataset,
+		normalization,
 		createDiscoveryPromise,
 		inModelCausalVariables,
 		causalDiscoveryAlgorithm,

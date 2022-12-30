@@ -7,6 +7,7 @@ import torch
 from causica.models.deci.deci import DECI
 from celery import uuid
 
+from backend.discover.config import get_intervention_model_expires_after
 from backend.discover.model.interventions import (
     InterventionResult,
     InterventionValueByColumn,
@@ -33,6 +34,21 @@ class DeciInterventionModel:
     def id(self):
         return self._id
 
+    def _adj_matrix_with_edges_above_threshold(
+        self,
+        confidence_threshold: Optional[float] = None,
+        weight_threshold: Optional[float] = None,
+    ):
+        adj_matrix = self._adj_matrix.copy()
+
+        if confidence_threshold is not None and confidence_threshold > 0:
+            adj_matrix[abs(self._adj_matrix) <= confidence_threshold] = 0
+
+        if weight_threshold is not None and weight_threshold > 0:
+            adj_matrix[abs(self._ate_matrix) <= weight_threshold] = 0
+
+        return adj_matrix
+
     def _create_filtered_adj_matrix(
         self,
         confidence_threshold: Optional[float] = None,
@@ -42,26 +58,20 @@ class DeciInterventionModel:
             f"Filtering adjacency matrix based on confidence_threshold={confidence_threshold} and weight_threshold={weight_threshold}"
         )
 
-        adj_matrix = self._adj_matrix.copy()
-        n_lines, n_cols = adj_matrix.shape
+        adj_matrix = self._adj_matrix_with_edges_above_threshold(
+            confidence_threshold, weight_threshold
+        )
 
-        for i in range(n_lines):
-            for j in range(n_cols):
-                if (
-                    confidence_threshold is not None
-                    and abs(self._adj_matrix[i][j]) < confidence_threshold
-                ) or (
-                    weight_threshold is not None
-                    and abs(self._ate_matrix[i][j]) < weight_threshold
-                ):
-                    adj_matrix[i][j] = 0
+        # if the edge weight is other than 0, then it is above the threshold
+        # so set it to 1
+        adj_matrix = np.where(adj_matrix != 0, 1, 0)
 
         return torch.from_numpy(adj_matrix).float().to(self._deci_model.device)
 
     def _parse_raw_result(self, raw_result: np.ndarray) -> InterventionValueByColumn:
         return {
-            var.name: float(raw_result[:, i].mean())
-            for i, var in enumerate(self._deci_model.variables)
+            var_name: float(raw_result[:, idx].mean())
+            for var_name, idx in self._deci_model.variables.name_to_idx.items()
         }
 
     def _map_interventions(
@@ -75,9 +85,7 @@ class DeciInterventionModel:
         for name, value in interventions.items():
             idx = self._deci_model.variables.name_to_idx[name]
             if idx is not None:
-                interventions_by_index[
-                    self._deci_model.variables.name_to_idx[name]
-                ] = value
+                interventions_by_index[idx] = value
             else:
                 logging.warning(
                     f"Intervention column {name} ignored: column name not found"
@@ -130,7 +138,11 @@ class DeciInterventionModel:
 
     def save(self):
         db_client = get_db_client()
-        db_client.set_value(f"intervention_model:{self._id}", self)
+        db_client.set_value(
+            f"intervention_model:{self._id}",
+            self,
+            expire_after=get_intervention_model_expires_after(),
+        )
 
     @staticmethod
     def load(intervention_model_id: str):

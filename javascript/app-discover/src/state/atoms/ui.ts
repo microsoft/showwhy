@@ -7,6 +7,7 @@ import { atom } from 'recoil'
 
 import { GraphViewStates } from '../../components/graph/GraphViews.types.js'
 import { CausalDiscoveryAlgorithm } from '../../domain/CausalDiscovery/CausalDiscoveryAlgorithm.js'
+import type { CausalDiscoveryNormalization } from '../../domain/CausalDiscovery/CausalDiscoveryNormalization.js'
 import type { Selectable } from '../../domain/Selection.js'
 
 export const ErrorMessageState = atom<string | undefined>({
@@ -33,6 +34,12 @@ export const FixedInterventionRangesEnabledState = atom<boolean>({
 	key: 'FixedInterventionRangesEnabledState',
 	default: true,
 })
+
+export const CausalDiscoveryNormalizationState =
+	atom<CausalDiscoveryNormalization>({
+		key: 'CausalDiscoveryNormalizationState',
+		default: { withMeanEnabled: true, withStdEnabled: true },
+	})
 
 export const SelectedCausalDiscoveryAlgorithmState =
 	atom<CausalDiscoveryAlgorithm>({
