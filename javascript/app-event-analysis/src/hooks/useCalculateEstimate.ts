@@ -4,13 +4,15 @@
  */
 
 import { MessageBarType } from '@fluentui/react'
-import { isEmpty } from 'lodash'
+import { cloneDeep, isEmpty } from 'lodash'
 import { useCallback } from 'react'
 
 import API from '../api.js'
 import {
 	useCheckedUnitsValueState,
 	useEstimatorValueState,
+	useOutputResResetState,
+	usePlaceboOutputResResetState,
 	useSetChartOptionsState,
 	useSetOutputResState,
 	useSetPlaceboOutputResState,
@@ -37,8 +39,10 @@ export function useCalculateEstimate(
 	const setPlaceboSimulation = useSetPlaceboSimulationState()
 	const treatmentStartDates = useTreatmentStartDatesValueState()
 	const setOutputRes = useSetOutputResState()
+	const resetOutputRes = useOutputResResetState()
 	const setChartOptions = useSetChartOptionsState()
 	const setPlaceboOutputRes = useSetPlaceboOutputResState()
+	const resetPlaceboOutputRes = usePlaceboOutputResResetState()
 	const setTreatmentStartDatesAfterEstimate =
 		useSetTreatmentStartDatesAfterEstimateState()
 	const treatedUnitsMap = useTreatedUnitsMap()
@@ -119,8 +123,8 @@ export function useCalculateEstimate(
 					content: errorMsg,
 					type: MessageBarType.error,
 				})
-				setOutputRes(null)
-				setPlaceboOutputRes(new Map())
+				resetOutputRes()
+				resetPlaceboOutputRes()
 				return
 			}
 			setUserMessage({
@@ -129,9 +133,9 @@ export function useCalculateEstimate(
 			})
 			if (placebo) {
 				setPlaceboOutputRes(prev => {
-					const map = new Map(prev)
-					map.set(treatedUnitsList[0], outputsResponse)
-					return map
+					const res = cloneDeep(prev)
+					res[treatedUnitsList[0]] = outputsResponse
+					return res
 				})
 			} else {
 				setOutputRes(outputsResponse)
@@ -161,6 +165,8 @@ export function useCalculateEstimate(
 			treatedUnits,
 			treatedUnitsMap,
 			treatmentStartDates,
+			resetPlaceboOutputRes,
+			resetOutputRes,
 		],
 	)
 }

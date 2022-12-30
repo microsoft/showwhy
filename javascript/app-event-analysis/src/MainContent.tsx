@@ -13,7 +13,7 @@ import {
 	Stack,
 	Text,
 } from '@fluentui/react'
-import { isEmpty } from 'lodash'
+import { cloneDeep, isEmpty } from 'lodash'
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import API from './api.js'
@@ -43,6 +43,7 @@ import {
 	useHypothesisState,
 	useOutcomeNameState,
 	useOutputResState,
+	usePlaceboOutputResResetState,
 	usePlaceboSimulationState,
 	useSelectedTabKeyState,
 	useSetPlaceboOutputResState,
@@ -96,6 +97,7 @@ export const MainContent: React.FC = memo(function MainContent() {
 	const [outputRes, setOutputRes] = useOutputResState()
 
 	const setPlaceboOutputRes = useSetPlaceboOutputResState()
+	const resetPlaceboOutputRes = usePlaceboOutputResResetState()
 
 	// encapsulate the value of treatment-start-date in certain occasions only
 	//  e.g., after session data is loaded and after an estimator is executed
@@ -299,7 +301,7 @@ export const MainContent: React.FC = memo(function MainContent() {
 	])
 
 	async function runPlaceboUnitComparison() {
-		setPlaceboOutputRes(new Map())
+		resetPlaceboOutputRes()
 		for (const treatedUnit of treatedUnits) {
 			await calculateEstimate(true, [treatedUnit])
 		}
@@ -388,7 +390,7 @@ export const MainContent: React.FC = memo(function MainContent() {
 				type: MessageBarType.error,
 			})
 			setOutputRes(null)
-			setPlaceboOutputRes(new Map())
+			resetPlaceboOutputRes()
 			return
 		}
 		setUserMessage({
@@ -397,9 +399,9 @@ export const MainContent: React.FC = memo(function MainContent() {
 		})
 		if (placebo) {
 			setPlaceboOutputRes(prev => {
-				const map = new Map(prev)
-				map.set(treatedUnitsList[0], outputsResponse)
-				return map
+				const res = cloneDeep(prev)
+				res[treatedUnitsList[0]] = outputsResponse
+				return res
 			})
 		} else {
 			setOutputRes(outputsResponse)

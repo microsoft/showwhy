@@ -3,8 +3,11 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { isEmpty } from 'lodash'
+
 import type { ColumnMapping, ProcessedInputData } from '../types.js'
 import { POSSIBLE_COL_NAMES } from '../types.js'
+
+const MIN_PRE_TREATMENT_TIME_PERIODS = 2
 
 export const isValidUnit = (unit: string) => {
 	return unit !== ''
@@ -46,7 +49,7 @@ export function isValidPreTreatmentPeriods(
 	treatmentStartDates: number[],
 ): boolean {
 	const isPreValidTreatmentDate = (treatmentDate: number) => {
-		return treatmentDate - data.startDate >= 2
+		return treatmentDate - data.startDate >= MIN_PRE_TREATMENT_TIME_PERIODS
 	}
 	return (
 		validTreatmentDates && treatmentStartDates.every(isPreValidTreatmentDate)

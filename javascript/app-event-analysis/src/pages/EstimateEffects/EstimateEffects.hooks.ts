@@ -143,7 +143,16 @@ export function useFilterDataHandler(isDataLoaded: boolean) {
 				showSynthControl: false,
 			}))
 		},
-		[isDataLoaded, setFilter, setOutputRes, setUserMessage, setChartOptions],
+		[
+			isDataLoaded,
+			setFilter,
+			setOutputRes,
+			setUserMessage,
+			setChartOptions,
+			treatmentStartDates,
+			setTreatmentStartDates,
+			setTreatmentStartDatesAfterEstimate,
+		],
 	)
 }
 

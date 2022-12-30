@@ -9,7 +9,6 @@ import {
 	useOutputResResetState,
 	useOutputResState,
 	usePlaceboOutputResResetState,
-	useSetPlaceboOutputResState,
 	useTreatedUnitsResetState,
 	useTreatedUnitsState,
 	useTreatedUnitsValueState,
@@ -63,7 +62,7 @@ export function useHandleRemoveTreatmentUnit() {
 	const [treatmentStartDates, setTreatmentStartDates] =
 		useTreatmentStartDatesState()
 	const [outputRes, setOutputRes] = useOutputResState()
-	const setPlaceboOutputRes = useSetPlaceboOutputResState()
+	const resetPlaceboOutputRes = usePlaceboOutputResResetState()
 
 	return useCallback(
 		(treatedUnit: string) => {
@@ -79,7 +78,7 @@ export function useHandleRemoveTreatmentUnit() {
 			if (updatedUnits.length === 0) {
 				// clear output data
 				setOutputRes(null)
-				setPlaceboOutputRes(new Map())
+				resetPlaceboOutputRes()
 			} else {
 				// a treated unit may have been removed
 				// ensure that any cached output for such removed unit is also filtered out
@@ -99,7 +98,7 @@ export function useHandleRemoveTreatmentUnit() {
 			treatmentStartDates,
 			outputRes,
 			setOutputRes,
-			setPlaceboOutputRes,
+			resetPlaceboOutputRes,
 			setTreatedUnits,
 			setTreatmentStartDates,
 		],
