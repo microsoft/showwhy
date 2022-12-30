@@ -26,6 +26,14 @@ import {
 import type { ProcessedInputData, SDIDOutputResponse } from '../types.js'
 import { useCheckCanExecuteEstimator } from './useCheckCanExecuteEstimator.js'
 import { useTreatedUnitsMap } from './useTreatedUnitsMap.js'
+
+//
+// To evaluate the significance of our estimates, we pose the
+//  question of whether our results could be driven entirely by chance.
+//  How often would we obtain results of this magnitude if we had
+//  chosen a unit at random for the study instead of the treated unit (e.g., California)?
+//  To answer this question, we use placebo tests
+//
 export function useCalculateEstimate(
 	data: ProcessedInputData,
 	isCalculatingEstimator: boolean,

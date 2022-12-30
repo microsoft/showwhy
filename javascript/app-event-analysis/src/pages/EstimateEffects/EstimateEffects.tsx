@@ -19,6 +19,7 @@ import React, {
 	type FormEvent,
 	memo,
 	useCallback,
+	useEffect,
 	useMemo,
 	useState,
 } from 'react'
@@ -143,6 +144,12 @@ export const EstimateEffects: React.FC = memo(function EstimateEffects() {
 		},
 		[setCheckedUnits],
 	)
+
+	useEffect(() => {
+		if (checkedUnits === null && data.uniqueUnits.length) {
+			setCheckedUnits(new Set(data.uniqueUnits))
+		}
+	}, [data, checkedUnits, setCheckedUnits])
 
 	return (
 		<Container>

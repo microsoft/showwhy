@@ -53,33 +53,30 @@ import {
 } from './PrepareAnalysis.styles.js'
 
 export const PrepareAnalysis: React.FC = memo(function PrepareAnalysis() {
-	const dataTables = useTableBundles()
 	const [currentTableName, setCurrentTableName] = useState('')
-	const userMessage = useUserMessageValueState()
-
-	const [hypothesis, setHypothesis] = useHypothesisState()
-	const [units, setUnits] = useUnitsState()
 
 	const rawData = useRawDataValueState()
-	const [fileName, setFileName] = useFileNameState()
-
+	const userMessage = useUserMessageValueState()
 	const treatedUnits = useTreatedUnitsValueState()
 
+	const [units, setUnits] = useUnitsState()
+	const [fileName, setFileName] = useFileNameState()
+	const [eventName, setEventName] = useEventNameState()
+	const [hypothesis, setHypothesis] = useHypothesisState()
+	const [outcomeName, setOutcomeName] = useOutcomeNameState()
+	const [chartOptions, setChartOptions] = useChartOptionsState()
+	const [columnMapping, setColumnMapping] = useColumnMappingState()
 	const [aggregateEnabled, setAggregateEnabled] = useAggregateEnabledState()
 
-	const [columnMapping, setColumnMapping] = useColumnMappingState()
-	const [outcomeName, setOutcomeName] = useOutcomeNameState()
-	const [eventName, setEventName] = useEventNameState()
-	const [chartOptions, setChartOptions] = useChartOptionsState()
+	const outputData = useOutputData()
+	const dataTables = useTableBundles()
+	const updateColumnMapping = useUpdateColumnMapping()
+	const handleRemoveCheckedUnit = useHandleRemoveCheckedUnit()
 
 	const { data, defaultTreatment, updateTreatmentsForAggregation } =
 		useProcessedInputData(columnMapping)
-
 	const unitCheckboxListItems = useUnitCheckboxListItems(data)
 	const checkableUnits = unitCheckboxListItems.map(unit => unit.name)
-	const handleRemoveCheckedUnit = useHandleRemoveCheckedUnit()
-	const outputData = useOutputData()
-	const updateColumnMapping = useUpdateColumnMapping()
 	const updateTreatmentsForAgg = useUpdateTreatmentsForAgg(
 		defaultTreatment,
 		updateTreatmentsForAggregation,

@@ -14,7 +14,7 @@ import type {
 export interface PlaceboResultPaneProps {
 	inputData: ProcessedInputData
 	statusMessage: MessageBarProps
-	isCalculatingEstimator: boolean
+	isLoading: boolean
 	placeboDataGroup: Map<string, PlaceboDataGroup[]>
 	placeboOutputData: Map<string, (OutputData | PlaceboOutputData)[]>
 	checkableUnits: string[]

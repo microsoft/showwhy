@@ -17,7 +17,7 @@ export const PlaceboResultPane: React.FC<PlaceboResultPaneProps> = memo(
 	function PlaceboResultPane({
 		inputData,
 		statusMessage,
-		isCalculatingEstimator,
+		isLoading,
 		placeboDataGroup,
 		placeboOutputData,
 		checkableUnits,
@@ -27,8 +27,8 @@ export const PlaceboResultPane: React.FC<PlaceboResultPaneProps> = memo(
 		const treatedUnits = useTreatedUnitsValueState()
 		const showPlaceboGraphs = useShowPlaceboGraphs()
 		const showPlaceboGraphsLocal = useMemo(
-			(): boolean => !isCalculatingEstimator && showPlaceboGraphs,
-			[isCalculatingEstimator, showPlaceboGraphs],
+			(): boolean => !isLoading && showPlaceboGraphs,
+			[isLoading, showPlaceboGraphs],
 		)
 		const hoverInfo = useMemo(
 			() => ({ hoverItem, setHoverItem } as HoverInfo),
@@ -70,7 +70,7 @@ export const PlaceboResultPane: React.FC<PlaceboResultPaneProps> = memo(
 				</Stack.Item>
 
 				<Stack.Item className="no-top-margin">
-					{isCalculatingEstimator && <Spinner size={SpinnerSize.medium} />}
+					{isLoading && <Spinner size={SpinnerSize.medium} />}
 				</Stack.Item>
 
 				<Stack.Item className="no-top-margin">
