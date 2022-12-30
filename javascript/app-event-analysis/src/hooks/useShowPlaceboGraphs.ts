@@ -15,7 +15,7 @@ import { usePlaceboOutputData } from './usePlaceboOutputData.js'
 
 export function useShowPlaceboGraphs() {
 	const treatedUnits = useTreatedUnitsValueState()
-	const [selectedTabKey] = useSelectedTabKeyValueState()
+	const selectedTabKey = useSelectedTabKeyValueState()
 	const placeboOutputData = usePlaceboOutputData()
 	const placeboDataGroup = usePlaceboDataGroup()
 

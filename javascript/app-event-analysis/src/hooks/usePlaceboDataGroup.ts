@@ -30,7 +30,7 @@ export function usePlaceboDataGroup(): Map<string, PlaceboDataGroup[]> {
 		const map = new Map<string, PlaceboDataGroup[]>()
 		treatedUnits.forEach((treatedUnit: string) => {
 			const output = computeRMSPE(
-				placeboOutputRes.get(treatedUnit) as SDIDOutputResponse,
+				placeboOutputRes[treatedUnit] as SDIDOutputResponse,
 				data.startDate,
 				data.endDate,
 				treatmentStartDatesAfterEstimate,

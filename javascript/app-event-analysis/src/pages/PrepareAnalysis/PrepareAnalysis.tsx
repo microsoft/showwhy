@@ -358,7 +358,6 @@ export const PrepareAnalysis: React.FC = memo(function PrepareAnalysis() {
 				inputData={data}
 				outputData={outputData}
 				statusMessage={userMessage}
-				isCalculatingEstimator={false}
 				checkableUnits={checkableUnits}
 				onRemoveCheckedUnit={handleRemoveCheckedUnit}
 			/>

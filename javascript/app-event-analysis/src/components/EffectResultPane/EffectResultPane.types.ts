@@ -16,7 +16,7 @@ export interface EffectResultPaneProps {
 	outputData: (OutputData | PlaceboOutputData)[]
 	synthControlData: SynthControlData
 	statusMessage: MessageBarProps
-	isCalculatingEstimator: boolean
+	isLoading: boolean
 	timeAlignment: string
 	checkableUnits: string[]
 	onRemoveCheckedUnit: (unitToRemove: string) => void

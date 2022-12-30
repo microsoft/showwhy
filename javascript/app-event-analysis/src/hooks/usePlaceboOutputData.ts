@@ -28,9 +28,7 @@ export function usePlaceboOutputData(): Map<
 	return useMemo(() => {
 		const map = new Map<string, (OutputData | PlaceboOutputData)[]>()
 		treatedUnits.forEach((treatedUnit: string) => {
-			const output = placeboOutputRes.get(
-				treatedUnit,
-			) as SDIDOutputResponse | null
+			const output = placeboOutputRes[treatedUnit] as SDIDOutputResponse | null
 			const data = processOutputData(output, treatedUnitsMap)
 			map.set(treatedUnit, data)
 		})

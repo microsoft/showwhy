@@ -29,7 +29,7 @@ export const EffectResultPane: React.FC<EffectResultPaneProps> = memo(
 		outputData,
 		synthControlData,
 		statusMessage,
-		isCalculatingEstimator,
+		isLoading,
 		timeAlignment,
 		checkableUnits,
 		onRemoveCheckedUnit,
@@ -56,12 +56,12 @@ export const EffectResultPane: React.FC<EffectResultPaneProps> = memo(
 
 		const showSyntheticComposition = useMemo((): boolean => {
 			return (
-				!isCalculatingEstimator &&
+				!isLoading &&
 				outputData.length > 0 &&
 				treatedUnits.length > 0 &&
 				selectedTabKey === CONFIGURATION_TABS.estimateEffects.key
 			)
-		}, [isCalculatingEstimator, outputData, treatedUnits, selectedTabKey])
+		}, [isLoading, outputData, treatedUnits, selectedTabKey])
 
 		const effectResult = useMemo(
 			() =>
@@ -102,7 +102,7 @@ export const EffectResultPane: React.FC<EffectResultPaneProps> = memo(
 				</Stack.Item>
 
 				<Stack.Item className="no-top-margin">
-					{isCalculatingEstimator && <Spinner size={SpinnerSize.medium} />}
+					{isLoading && <Spinner size={SpinnerSize.medium} />}
 				</Stack.Item>
 
 				<Stack.Item className="no-top-margin">

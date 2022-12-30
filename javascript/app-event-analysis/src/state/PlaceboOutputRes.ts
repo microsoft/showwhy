@@ -15,13 +15,13 @@ import {
 import type { SDIDOutputResponse } from '../types.js'
 
 export const PlaceboOutputResState = atom<
-	Map<string, SDIDOutputResponse | null>
+	Record<string, SDIDOutputResponse | null>
 >({
 	key: 'PlaceboOutputResState',
-	default: new Map(),
+	default: {},
 })
 
-export function usePlaceboOutputResValueState(): Map<
+export function usePlaceboOutputResValueState(): Record<
 	string,
 	SDIDOutputResponse | null
 > {
@@ -29,14 +29,14 @@ export function usePlaceboOutputResValueState(): Map<
 }
 
 export function useSetPlaceboOutputResState(): SetterOrUpdater<
-	Map<string, SDIDOutputResponse | null>
+	Record<string, SDIDOutputResponse | null>
 > {
 	return useSetRecoilState(PlaceboOutputResState)
 }
 
 export function usePlaceboOutputResState(): [
-	Map<string, SDIDOutputResponse | null>,
-	SetterOrUpdater<Map<string, SDIDOutputResponse | null>>,
+	Record<string, SDIDOutputResponse | null>,
+	SetterOrUpdater<Record<string, SDIDOutputResponse | null>>,
 ] {
 	return useRecoilState(PlaceboOutputResState)
 }
