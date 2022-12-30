@@ -48,7 +48,13 @@ import {
 	useTreatedUnitsValueState,
 	useUserMessageValueState,
 } from '../../state/index.js'
-import { Container, Spacer, tooltipHostStyles } from '../../styles/index.js'
+import {
+	Page,
+	Spacer,
+	StepDescription,
+	StepTitle,
+	tooltipHostStyles,
+} from '../../styles/index.js'
 import { isValidTreatedUnits } from '../../utils/validation.js'
 import {
 	useControlUnitsIntermediateChecked,
@@ -152,14 +158,14 @@ export const EstimateEffects: React.FC = memo(function EstimateEffects() {
 	}, [data, checkedUnits, setCheckedUnits])
 
 	return (
-		<Container>
+		<Page>
 			<Stack tokens={{ childrenGap: 5 }}>
 				<Stack
 					horizontal
 					tokens={{ childrenGap: 5 }}
 					className="unit-selection-header"
 				>
-					<Label className="stepText">Unit selection</Label>
+					<StepTitle>Unit selection</StepTitle>
 					<Checkbox
 						label="Select All/None"
 						checked={controlUnitsChecked}
@@ -167,10 +173,10 @@ export const EstimateEffects: React.FC = memo(function EstimateEffects() {
 						onChange={handleSelectAllUnits}
 					/>
 				</Stack>
-				<Text className="stepDesc">
+				<StepDescription>
 					Include or exclude units from the pool of data that can be used to
 					generate our synthetic control.
-				</Text>
+				</StepDescription>
 				<MultiDropdown
 					selectedKeys={Array.from(checkedUnits || [])}
 					options={multiDropdownOptions}
@@ -188,7 +194,7 @@ export const EstimateEffects: React.FC = memo(function EstimateEffects() {
 
 			<Stack>
 				<Label>
-					<Text className="stepText">Filter data</Text>
+					<StepTitle>Filter data</StepTitle>
 					<TooltipHost
 						content="Use the Start/End dates to customize and filter the data range"
 						id="filterDataTooltipId"
@@ -247,7 +253,7 @@ export const EstimateEffects: React.FC = memo(function EstimateEffects() {
 			</Stack>
 			<Spacer axis="vertical" size={20} />
 
-			<Text className="stepText">Chart options</Text>
+			<StepTitle>Chart options</StepTitle>
 			<Stack tokens={{ childrenGap: 5, padding: 5 }}>
 				<ChartOptionsGroup options={chartOptions} onChange={setChartOptions} />
 			</Stack>
@@ -262,6 +268,6 @@ export const EstimateEffects: React.FC = memo(function EstimateEffects() {
 				checkableUnits={checkableUnits}
 				onRemoveCheckedUnit={handleRemoveCheckedUnit}
 			/>
-		</Container>
+		</Page>
 	)
 })

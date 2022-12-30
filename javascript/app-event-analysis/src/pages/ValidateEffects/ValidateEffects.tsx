@@ -2,14 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import {
-	Label,
-	PrimaryButton,
-	Spinner,
-	SpinnerSize,
-	Stack,
-	Text,
-} from '@fluentui/react'
+import { PrimaryButton, Spinner, SpinnerSize, Stack } from '@fluentui/react'
 import React, { memo, useState } from 'react'
 
 import { PlaceboResultPane } from '../../components/PlaceboResultPane/index.js'
@@ -28,7 +21,7 @@ import {
 	useTreatedUnitsValueState,
 	useUserMessageValueState,
 } from '../../state/index.js'
-import { Container } from '../../styles/index.js'
+import { Container, StepDescription, StepTitle } from '../../styles/index.js'
 
 export const ValidateEffects: React.FC = memo(function ValidateEffects() {
 	const [isLoading, setIsLoading] = useState(false)
@@ -60,10 +53,10 @@ export const ValidateEffects: React.FC = memo(function ValidateEffects() {
 	return (
 		<Container>
 			<Stack tokens={{ childrenGap: 5 }}>
-				<Label className="stepText">Run placebo simulation</Label>
-				<Text className="stepDesc">
+				<StepTitle>Run placebo simulation</StepTitle>
+				<StepDescription>
 					Compare treated effects to placebo effects of untreated units.
-				</Text>
+				</StepDescription>
 
 				<Stack horizontal grow tokens={{ childrenGap: 5 }}>
 					<PrimaryButton

@@ -5,11 +5,44 @@
 import type { ITheme, ITooltipHostStyles } from '@fluentui/react'
 import { Stack } from '@fluentui/react'
 import type { Theme } from '@thematic/core'
+import type { FluentTheme } from '@thematic/fluent'
 import styled from 'styled-components'
 
 export const Container = styled.div``
 export const Section = styled.section``
 export const Strong = styled.strong``
+
+export const Page = styled.article<{ isGrid?: boolean }>`
+	padding: 8px;
+
+	${({ isGrid }) =>
+		isGrid
+			? `
+		display: grid;
+    grid-template-columns: 25% 75%;
+		`
+			: ''}
+`
+export const ConfigContainer = styled.section`
+	overflow-y: auto;
+	padding: 0 1rem 0 0;
+	border-right: 1px solid
+		${({ theme }: { theme: FluentTheme }) => theme.palette.neutralTertiaryAlt};
+`
+export const GraphContainer = styled.section``
+
+export const StepTitle = styled.h3`
+	color: ${({ theme }: { theme: FluentTheme }) =>
+		theme.palette.neutralSecondary};
+	font-weight: 600;
+	font-size: 16px;
+	margin: 0 0 0.5rem;
+`
+
+export const StepDescription = styled.p`
+	margin: 0 0 0.5rem 0;
+	// color: #5a5b5c;
+`
 
 export const StyledStack = styled(Stack)`
 	padding: 10px 20px;

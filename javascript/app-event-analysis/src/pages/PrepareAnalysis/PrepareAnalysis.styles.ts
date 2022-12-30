@@ -22,3 +22,7 @@ export const hypothesisGroupStyles = {
 		justifyContent: 'space-between',
 	},
 }
+
+export const SectionContainer = styled.section`
+	margin-bottom: 1rem;
+`
