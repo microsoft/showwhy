@@ -10,8 +10,8 @@ import { PrepareAnalysis } from '../pages/PrepareAnalysis/index.js'
 import { ValidateEffects } from '../pages/ValidateEffects/index.js'
 import { useSelectedTabKeyValueState } from '../state/index.js'
 import { CONFIGURATION_TABS } from '../types.js'
-import { useInit, useOnHandleTabClicked, usePivotStyles } from './App.hooks.js'
-import { Container } from './App.styles.js'
+import { useInit, useOnHandleTabClicked } from './App.hooks.js'
+import { Container, usePivotStyles } from './App.styles.js'
 
 export const App: React.FC = memo(function App() {
 	const pivotStyles = usePivotStyles()

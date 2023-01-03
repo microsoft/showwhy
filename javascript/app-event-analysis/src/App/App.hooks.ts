@@ -4,9 +4,8 @@
  */
 
 import type { PivotItem } from '@fluentui/react'
-import { useTheme } from '@fluentui/react'
 import { isEmpty } from 'lodash'
-import { useCallback, useEffect, useMemo, useRef } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 
 import { useProcessedInputData } from '../hooks/useProcessedInputData.js'
 import {
@@ -15,20 +14,6 @@ import {
 	useTreatedUnitsState,
 	useTreatmentStartDatesState,
 } from '../state/index.js'
-
-export function usePivotStyles() {
-	const theme = useTheme()
-	return useMemo(
-		() => ({
-			root: {
-				height: 44,
-				background: theme.palette.neutralLighter,
-				borderBottom: `1px solid ${theme.palette.neutralTertiaryAlt}`,
-			},
-		}),
-		[theme],
-	)
-}
 
 export function useOnHandleTabClicked() {
 	const setSelectedTabKey = useSetSelectedTabKeyState()
