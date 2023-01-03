@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { PrimaryButton, Spinner, SpinnerSize, Stack } from '@fluentui/react'
+import { PrimaryButton, Spinner, SpinnerSize } from '@fluentui/react'
 import React, { memo, useState } from 'react'
 
 import { PlaceboResultPane } from '../../components/PlaceboResultPane/index.js'
@@ -21,7 +21,12 @@ import {
 	useTreatedUnitsValueState,
 	useUserMessageValueState,
 } from '../../state/index.js'
-import { Container, StepDescription, StepTitle } from '../../styles/index.js'
+import {
+	Container,
+	Page,
+	StepDescription,
+	StepTitle,
+} from '../../styles/index.js'
 
 export const ValidateEffects: React.FC = memo(function ValidateEffects() {
 	const [isLoading, setIsLoading] = useState(false)
@@ -51,24 +56,24 @@ export const ValidateEffects: React.FC = memo(function ValidateEffects() {
 	}
 
 	return (
-		<Container>
-			<Stack tokens={{ childrenGap: 5 }}>
+		<Page isFlex>
+			<Container>
 				<StepTitle>Run placebo simulation</StepTitle>
 				<StepDescription>
 					Compare treated effects to placebo effects of untreated units.
 				</StepDescription>
+			</Container>
 
-				<Stack horizontal grow tokens={{ childrenGap: 5 }}>
-					<PrimaryButton
-						disabled={cannotCalculatePlacebo}
-						text="Run placebo unit comparison"
-						onClick={() => void runPlaceboUnitComparison()}
-					/>
-					{isLoading && isPlaceboSimulation && (
-						<Spinner size={SpinnerSize.medium} />
-					)}
-				</Stack>
-			</Stack>
+			<Container>
+				<PrimaryButton
+					disabled={cannotCalculatePlacebo}
+					text="Run placebo unit comparison"
+					onClick={() => void runPlaceboUnitComparison()}
+				/>
+				{isLoading && isPlaceboSimulation && (
+					<Spinner size={SpinnerSize.medium} />
+				)}
+			</Container>
 			{showPlaceboGraphs && (
 				<PlaceboResultPane
 					inputData={data}
@@ -80,6 +85,6 @@ export const ValidateEffects: React.FC = memo(function ValidateEffects() {
 					onRemoveCheckedUnit={handleRemoveCheckedUnit}
 				/>
 			)}
-		</Container>
+		</Page>
 	)
 })

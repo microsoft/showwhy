@@ -12,8 +12,11 @@ export const Container = styled.div``
 export const Section = styled.section``
 export const Strong = styled.strong``
 
-export const Page = styled.article<{ isGrid?: boolean }>`
+export const Page = styled.article<{ isGrid?: boolean; isFlex?: boolean }>`
 	padding: 8px;
+	margin-bottom: 5rem;
+	overflow-y: auto;
+	height: 90vh;
 
 	${({ isGrid }) =>
 		isGrid
@@ -22,9 +25,17 @@ export const Page = styled.article<{ isGrid?: boolean }>`
     grid-template-columns: 25% 75%;
 		`
 			: ''}
+
+	${({ isFlex }) =>
+		isFlex
+			? `
+		display: flex;
+		gap: 1rem;
+		flex-direction: column;
+	`
+			: ''}
 `
 export const ConfigContainer = styled.section<{ isFlex?: boolean }>`
-	overflow-y: auto;
 	padding: 0 0.5rem 0 0;
 	border-right: 1px solid
 		${({ theme }: { theme: FluentTheme }) => theme.palette.neutralTertiaryAlt};
