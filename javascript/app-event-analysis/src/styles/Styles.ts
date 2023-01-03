@@ -25,7 +25,7 @@ export const Page = styled.article<{ isGrid?: boolean }>`
 `
 export const ConfigContainer = styled.section`
 	overflow-y: auto;
-	padding: 0 1rem 0 0;
+	padding: 0 0.5rem 0 0;
 	border-right: 1px solid
 		${({ theme }: { theme: FluentTheme }) => theme.palette.neutralTertiaryAlt};
 `

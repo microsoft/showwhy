@@ -8,7 +8,9 @@ import {
 	DefaultButton,
 	Dropdown,
 	FontIcon,
-	Label,
+	Pivot,
+	PivotItem,
+	useTheme,
 } from '@fluentui/react'
 import React, { memo, useCallback, useMemo } from 'react'
 import styled from 'styled-components'
@@ -43,6 +45,7 @@ export const TreatedUnits: React.FC<TreatedUnitsProps> = memo(
 		const treatedUnits = useTreatedUnitsValueState()
 		const [aggregateEnabled, setAggregateEnabled] = useAggregateEnabledState()
 		const updateColumnMapping = useUpdateColumnMapping()
+		const pivotStyles = usePivotStyles()
 
 		const updateTreatmentsForAgg = useUpdateTreatmentsForAgg(
 			defaultTreatment,
@@ -70,45 +73,46 @@ export const TreatedUnits: React.FC<TreatedUnitsProps> = memo(
 					Alternatively, if your dataset contains a column specifying a
 					treatment, select the column to automatically create treatments.
 				</StepDescription>
-				{/* TODO: Insert Pivot */}
-				{/* <Spacer axis="vertical" size={5} /> */}
-				<TreatmentWrapper>
-					<TreatmentOptionsWrapper>
-						<Checkbox
-							label="Aggregate Treated Units"
-							checked={aggregateEnabled}
-							onChange={handleAggregateOption}
-						/>
-						<DefaultButton
-							text="Regroup"
-							onClick={updateTreatmentsForAgg}
-							disabled={!enableRegroupButton}
-						/>
-					</TreatmentOptionsWrapper>
-					{/* <Spacer axis="vertical" size={5} /> */}
-					<TreatmentSelector data={data} />
-				</TreatmentWrapper>
-				<p>OR</p>
-				<DropdownContainer>
-					<Label>Automatically create treatments from column:</Label>
-					<Dropdown
-						placeholder="Select treated column"
-						options={options}
-						selectedKey={columnMapping.treated}
-						onChange={(e, val) =>
-							updateColumnMapping({
-								treated: !val ? '' : String(val.key),
-							})
-						}
-					/>
-					<FontIcon
-						iconName="Cancel"
-						className="attributeClearSelection"
-						onClick={() => {
-							updateColumnMapping({ treated: '' })
-						}}
-					/>
-				</DropdownContainer>
+				<Pivot linkFormat="tabs" styles={pivotStyles}>
+					<PivotItem headerText="Add treated unit">
+						<TreatmentWrapper>
+							<TreatmentOptionsWrapper>
+								<Checkbox
+									label="Aggregate Treated Units"
+									checked={aggregateEnabled}
+									onChange={handleAggregateOption}
+								/>
+								<DefaultButton
+									text="Regroup"
+									onClick={updateTreatmentsForAgg}
+									disabled={!enableRegroupButton}
+								/>
+							</TreatmentOptionsWrapper>
+							<TreatmentSelector data={data} />
+						</TreatmentWrapper>
+					</PivotItem>
+					<PivotItem headerText="Automatically create treatments from column">
+						<DropdownContainer>
+							<Dropdown
+								placeholder="Select treated column"
+								options={options}
+								selectedKey={columnMapping.treated}
+								onChange={(e, val) =>
+									updateColumnMapping({
+										treated: !val ? '' : String(val.key),
+									})
+								}
+							/>
+							<FontIcon
+								iconName="Cancel"
+								className="attributeClearSelection"
+								onClick={() => {
+									updateColumnMapping({ treated: '' })
+								}}
+							/>
+						</DropdownContainer>
+					</PivotItem>
+				</Pivot>
 			</SectionContainer>
 		)
 	},
@@ -116,7 +120,7 @@ export const TreatedUnits: React.FC<TreatedUnitsProps> = memo(
 
 const DropdownContainer = styled.div`
 	display: grid;
-	grid-template-columns: 60% 35% 5%;
+	grid-template-columns: 95% 5%;
 	gap: 0.5rem;
 	align-items: center;
 `
@@ -129,3 +133,20 @@ const TreatmentOptionsWrapper = styled.div`
 	justify-content: space-between;
 	margin-bottom: 0.5rem;
 `
+
+function usePivotStyles() {
+	const theme = useTheme()
+
+	return useMemo(
+		() => ({
+			root: {
+				marginTop: '1rem',
+			},
+			itemContainer: {
+				padding: '0.5rem',
+				borderBottom: `1px solid ${theme.palette.neutralTertiaryAlt}`,
+			},
+		}),
+		[theme],
+	)
+}
