@@ -23,11 +23,20 @@ export const Page = styled.article<{ isGrid?: boolean }>`
 		`
 			: ''}
 `
-export const ConfigContainer = styled.section`
+export const ConfigContainer = styled.section<{ isFlex?: boolean }>`
 	overflow-y: auto;
 	padding: 0 0.5rem 0 0;
 	border-right: 1px solid
 		${({ theme }: { theme: FluentTheme }) => theme.palette.neutralTertiaryAlt};
+
+	${({ isFlex }) =>
+		isFlex
+			? `
+		display: flex;
+		gap: 1rem;
+		flex-direction: column;
+	`
+			: ''}
 `
 export const GraphContainer = styled.section``
 
@@ -41,7 +50,6 @@ export const StepTitle = styled.h3`
 
 export const StepDescription = styled.p`
 	margin: 0 0 0.5rem 0;
-	// color: #5a5b5c;
 `
 
 export const StyledStack = styled(Stack)`

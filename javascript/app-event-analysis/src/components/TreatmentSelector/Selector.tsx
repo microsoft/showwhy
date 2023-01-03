@@ -7,7 +7,6 @@ import { Dropdown, FontIcon, SpinButton, Stack } from '@fluentui/react'
 import type { FormEvent, SyntheticEvent } from 'react'
 import { memo, useCallback } from 'react'
 
-import { isValidTreatmentDate, isValidUnit } from '../../utils/validation.js'
 import type { SelectorProps } from './Selector.types.js'
 
 export const Selector: React.FC<SelectorProps> = memo(function Selector({
@@ -56,7 +55,6 @@ export const Selector: React.FC<SelectorProps> = memo(function Selector({
 		>
 			<Stack.Item grow className="treatment-element">
 				<Dropdown
-					className={!isValidUnit(treatedUnit) ? 'colInvalidSelection' : ''}
 					placeholder="Treated unit"
 					options={units.map(unit => ({ key: unit, text: unit }))}
 					selectedKey={treatedUnit}
@@ -65,11 +63,6 @@ export const Selector: React.FC<SelectorProps> = memo(function Selector({
 			</Stack.Item>
 			<Stack.Item grow className="treatment-element">
 				<SpinButton
-					className={
-						!isValidTreatmentDate(treatmentStartDate)
-							? 'colInvalidSelection'
-							: ''
-					}
 					placeholder="Start date"
 					value={treatmentStartDate.toString()}
 					min={+minDate}
