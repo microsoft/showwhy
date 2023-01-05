@@ -12,10 +12,12 @@ export const Container = styled.div``
 export const Section = styled.section``
 export const Strong = styled.strong``
 
-export const Page = styled.article<{ isGrid?: boolean; isFlex?: boolean }>`
+export const Page = styled.article<{
+	isGrid?: boolean
+	isFlex?: boolean
+}>`
 	padding: 8px;
 	margin-bottom: 5rem;
-	overflow-y: auto;
 	height: 90vh;
 
 	${({ isGrid }) =>
@@ -36,7 +38,8 @@ export const Page = styled.article<{ isGrid?: boolean; isFlex?: boolean }>`
 			: ''}
 `
 export const ConfigContainer = styled.section<{ isFlex?: boolean }>`
-	padding: 0 0.5rem 0 0;
+	overflow: hidden auto;
+	padding: 0 0.5rem 2rem 0;
 	border-right: 1px solid
 		${({ theme }: { theme: FluentTheme }) => theme.palette.neutralTertiaryAlt};
 
@@ -49,7 +52,14 @@ export const ConfigContainer = styled.section<{ isFlex?: boolean }>`
 	`
 			: ''}
 `
-export const GraphContainer = styled.section``
+export const GraphContainer = styled.section<{ overflow?: boolean }>`
+	${({ overflow }) =>
+		overflow
+			? `
+		overflow: hidden auto;
+	`
+			: ''}
+`
 
 export const StepTitle = styled.h3`
 	color: ${({ theme }: { theme: FluentTheme }) =>

@@ -7,7 +7,6 @@ import { useMemo } from 'react'
 import styled from 'styled-components'
 
 export const Container = styled.article`
-	overflow: auto;
 	.container {
 		min-height: 0;
 		min-width: 0;

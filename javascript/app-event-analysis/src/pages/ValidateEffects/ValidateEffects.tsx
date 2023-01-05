@@ -23,6 +23,7 @@ import {
 } from '../../state/index.js'
 import {
 	Container,
+	GraphContainer,
 	Page,
 	StepDescription,
 	StepTitle,
@@ -74,17 +75,19 @@ export const ValidateEffects: React.FC = memo(function ValidateEffects() {
 					<Spinner size={SpinnerSize.medium} />
 				)}
 			</Container>
-			{showPlaceboGraphs && (
-				<PlaceboResultPane
-					inputData={data}
-					statusMessage={userMessage}
-					isLoading={isLoading}
-					placeboDataGroup={placeboDataGroup}
-					placeboOutputData={placeboOutputData}
-					checkableUnits={checkableUnits}
-					onRemoveCheckedUnit={handleRemoveCheckedUnit}
-				/>
-			)}
+			<GraphContainer overflow>
+				{showPlaceboGraphs && (
+					<PlaceboResultPane
+						inputData={data}
+						statusMessage={userMessage}
+						isLoading={isLoading}
+						placeboDataGroup={placeboDataGroup}
+						placeboOutputData={placeboOutputData}
+						checkableUnits={checkableUnits}
+						onRemoveCheckedUnit={handleRemoveCheckedUnit}
+					/>
+				)}
+			</GraphContainer>
 		</Page>
 	)
 })
