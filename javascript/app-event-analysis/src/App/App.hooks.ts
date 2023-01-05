@@ -9,11 +9,15 @@ import { useCallback, useEffect, useRef } from 'react'
 
 import { useProcessedInputData } from '../hooks/useProcessedInputData.js'
 import {
-	useColumnMappingState,
+	useCheckedUnitsState,
+	useColumnMappingValueState,
+	useSelectedTabKeyValueState,
+	useSetChartOptionsState,
 	useSetSelectedTabKeyState,
 	useTreatedUnitsState,
 	useTreatmentStartDatesState,
 } from '../state/index.js'
+import { CONFIGURATION_TABS } from '../types.js'
 
 export function useOnHandleTabClicked() {
 	const setSelectedTabKey = useSetSelectedTabKeyState()
@@ -30,12 +34,30 @@ export function useOnHandleTabClicked() {
 }
 
 export function useInit() {
-	const [columnMapping] = useColumnMappingState()
-	const { defaultTreatment } = useProcessedInputData(columnMapping)
+	const columnMapping = useColumnMappingValueState()
+	const setChartOptions = useSetChartOptionsState()
+	const selectedTabKey = useSelectedTabKeyValueState()
+	const [checkedUnits, setCheckedUnits] = useCheckedUnitsState()
+	const { data, defaultTreatment } = useProcessedInputData(columnMapping)
 	const isInitialRender = useRef(true)
 	const [treatedUnits, setTreatedUnits] = useTreatedUnitsState()
 	const [treatmentStartDates, setTreatmentStartDates] =
 		useTreatmentStartDatesState()
+
+	useEffect(() => {
+		setChartOptions(prev => ({
+			...prev,
+			renderRawData: selectedTabKey === CONFIGURATION_TABS.prepareAnalysis.key,
+		}))
+	}, [selectedTabKey])
+
+	useEffect(() => {
+		// initially, all units are checked
+		if (checkedUnits === null && data.uniqueUnits.length) {
+			setCheckedUnits(new Set(data.uniqueUnits))
+		}
+	}, [data, checkedUnits, setCheckedUnits])
+
 	useEffect(() => {
 		if (
 			defaultTreatment !== null &&

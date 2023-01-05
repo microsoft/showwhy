@@ -9,7 +9,6 @@ import React, { memo, useMemo } from 'react'
 import { RawDataPane } from '../../components/RawDataPane.js'
 import { useUnitCheckboxListItems } from '../../hooks/useChekeableUnits.js'
 import { useHandleRemoveCheckedUnit } from '../../hooks/useHandleRemoveCheckedUnit.js'
-import { useOutputData } from '../../hooks/useOutputData.js'
 import { useProcessedInputData } from '../../hooks/useProcessedInputData.js'
 import {
 	useChartOptionsState,
@@ -39,7 +38,6 @@ export const PrepareAnalysis: React.FC = memo(function PrepareAnalysis() {
 	const [chartOptions, setChartOptions] = useChartOptionsState()
 	const columnMapping = useColumnMappingValueState()
 
-	const outputData = useOutputData()
 	const handleRemoveCheckedUnit = useHandleRemoveCheckedUnit()
 
 	const { data, defaultTreatment, updateTreatmentsForAggregation } =
@@ -90,7 +88,7 @@ export const PrepareAnalysis: React.FC = memo(function PrepareAnalysis() {
 			<GraphContainer>
 				<RawDataPane
 					inputData={data}
-					outputData={outputData}
+					outputData={[]}
 					statusMessage={userMessage}
 					checkableUnits={checkableUnits}
 					onRemoveCheckedUnit={handleRemoveCheckedUnit}

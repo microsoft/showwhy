@@ -135,7 +135,6 @@ export const EffectResultPane: React.FC<EffectResultPaneProps> = memo(
 							</Stack.Item>
 						)}
 						{effectResult}
-						{/* <Stack.Item>{effectResult}</Stack.Item> */}
 					</>
 				)}
 			</StyledStack>

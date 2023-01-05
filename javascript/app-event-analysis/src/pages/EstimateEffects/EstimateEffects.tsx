@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { Label, PrimaryButton, Spinner, SpinnerSize } from '@fluentui/react'
-import React, { memo, useCallback, useEffect, useMemo, useState } from 'react'
+import React, { memo, useCallback, useMemo, useState } from 'react'
 
 import { ChartOptionsGroup } from '../../components/ChartOptionsGroup.js'
 import { EffectResultPane } from '../../components/EffectResultPane/index.js'
@@ -80,12 +80,6 @@ export const EstimateEffects: React.FC = memo(function EstimateEffects() {
 			!isLoading,
 		[isDataLoaded, cannotCalculateEstimate, cannotCalculatePlacebo, isLoading],
 	)
-
-	useEffect(() => {
-		if (checkedUnits === null && data.uniqueUnits.length) {
-			setCheckedUnits(new Set(data.uniqueUnits))
-		}
-	}, [data, checkedUnits, setCheckedUnits])
 
 	return (
 		<Page isGrid>

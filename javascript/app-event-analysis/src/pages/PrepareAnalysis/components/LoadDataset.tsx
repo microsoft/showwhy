@@ -6,17 +6,20 @@ import { useTableBundles } from '@datashaper/app-framework'
 import { Link } from '@fluentui/react'
 import { TableMenuBar } from '@showwhy/app-common'
 import { not } from 'arquero'
-import React, { memo, useCallback, useEffect, useState } from 'react'
+import React, { memo, useCallback, useEffect } from 'react'
 import styled from 'styled-components'
 
-import { useFileNameState } from '../../../state/index.js'
+import {
+	useCurrentFileNameState,
+	useFileNameState,
+} from '../../../state/index.js'
 import { StepDescription, StepTitle } from '../../../styles/index.js'
 import { useHandleFileLoad } from '../PrepareAnalysis.hooks.js'
 import { SectionContainer } from '../PrepareAnalysis.styles.js'
 
 export const LoadDataset: React.FC = memo(function LoadDataset() {
 	const [fileName, setFileName] = useFileNameState()
-	const [currentTableName, setCurrentTableName] = useState('')
+	const [currentTableName, setCurrentTableName] = useCurrentFileNameState()
 	const handleFileLoad = useHandleFileLoad()
 	const dataTables = useTableBundles()
 

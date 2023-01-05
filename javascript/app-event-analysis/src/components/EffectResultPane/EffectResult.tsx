@@ -11,7 +11,6 @@ import {
 	useCheckedUnitsValueState,
 	useEventNameValueState,
 	useOutcomeNameValueState,
-	usePlaceboSimulationValueState,
 	useTreatedUnitsValueState,
 } from '../../state/index.js'
 import { Container, Spacer, Strong, TreatedTitle } from '../../styles/index.js'
@@ -41,7 +40,6 @@ export const EffectResult: React.FC<EffectResultProps> = memo(
 		const chartOptions = useChartOptionsValueState()
 		const outcomeName = useOutcomeNameValueState()
 		const treatedUnits = useTreatedUnitsValueState()
-		const isPlaceboSimulation = usePlaceboSimulationValueState()
 		const checkedUnits = useCheckedUnitsValueState()
 		const ref = useRef<HTMLDivElement | null>(null)
 		const barChartRef = useRef<HTMLDivElement | null>(null)
@@ -82,7 +80,6 @@ export const EffectResult: React.FC<EffectResultProps> = memo(
 							onRemoveCheckedUnit={onRemoveCheckedUnit}
 							output={[filteredOutput]}
 							treatedUnitsList={[treatedUnit]}
-							isPlaceboSimulation={isPlaceboSimulation}
 							checkedUnits={checkedUnits}
 						/>
 					</Stack.Item>
@@ -113,7 +110,6 @@ export const EffectResult: React.FC<EffectResultProps> = memo(
 							onRemoveCheckedUnit={onRemoveCheckedUnit}
 							treatedUnits={treatedUnits}
 							checkedUnits={checkedUnits}
-							isPlaceboSimulation={isPlaceboSimulation}
 						/>
 					</ErrorBoundary>
 				</Container>
