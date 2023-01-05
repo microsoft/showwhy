@@ -20,7 +20,7 @@ export interface BarChartProps {
 	checkableUnits: string[]
 	checkedUnits: Set<string> | null
 	treatedUnits: string[]
-	isPlaceboSimulation: boolean
+	isPlaceboSimulation?: boolean
 	renderLegend?: boolean
 	onRemoveCheckedUnit: (unitToRemove: string) => void
 }

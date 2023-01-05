@@ -28,7 +28,7 @@ export const DimensionedLineChart: React.FC<DimensionedLineChartProps> = memo(
 		output,
 		treatedUnitsList,
 		checkedUnits,
-		isPlaceboSimulation,
+		isPlaceboSimulation = false,
 	}) {
 		const chartOptions = useChartOptionsValueState()
 		const [hoverItem, setHoverItem] = useState<null | TooltipInfo>(null)

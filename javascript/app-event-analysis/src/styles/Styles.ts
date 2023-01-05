@@ -5,11 +5,73 @@
 import type { ITheme, ITooltipHostStyles } from '@fluentui/react'
 import { Stack } from '@fluentui/react'
 import type { Theme } from '@thematic/core'
+import type { FluentTheme } from '@thematic/fluent'
 import styled from 'styled-components'
 
 export const Container = styled.div``
 export const Section = styled.section``
 export const Strong = styled.strong``
+
+export const Page = styled.article<{
+	isGrid?: boolean
+	isFlex?: boolean
+}>`
+	padding: 8px;
+	margin-bottom: 5rem;
+	height: 90vh;
+
+	${({ isGrid }) =>
+		isGrid
+			? `
+		display: grid;
+    grid-template-columns: 25% 75%;
+		`
+			: ''}
+
+	${({ isFlex }) =>
+		isFlex
+			? `
+		display: flex;
+		gap: 1rem;
+		flex-direction: column;
+	`
+			: ''}
+`
+export const ConfigContainer = styled.section<{ isFlex?: boolean }>`
+	overflow: hidden auto;
+	padding: 0 0.5rem 2rem 0;
+	border-right: 1px solid
+		${({ theme }: { theme: FluentTheme }) => theme.palette.neutralTertiaryAlt};
+
+	${({ isFlex }) =>
+		isFlex
+			? `
+		display: flex;
+		gap: 1rem;
+		flex-direction: column;
+	`
+			: ''}
+`
+export const GraphContainer = styled.section<{ overflow?: boolean }>`
+	${({ overflow }) =>
+		overflow
+			? `
+		overflow: hidden auto;
+	`
+			: ''}
+`
+
+export const StepTitle = styled.h3`
+	color: ${({ theme }: { theme: FluentTheme }) =>
+		theme.palette.neutralSecondary};
+	font-weight: 600;
+	font-size: 16px;
+	margin: 0 0 0.5rem;
+`
+
+export const StepDescription = styled.p`
+	margin: 0 0 0.5rem 0;
+`
 
 export const StyledStack = styled(Stack)`
 	padding: 10px 20px;

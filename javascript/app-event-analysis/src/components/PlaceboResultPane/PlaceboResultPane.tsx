@@ -2,12 +2,13 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { Link, Spinner, SpinnerSize, Stack, Text } from '@fluentui/react'
+import { Link, Spinner, SpinnerSize, Text } from '@fluentui/react'
 import { memo, useMemo, useState } from 'react'
+import styled from 'styled-components'
 
 import { useShowPlaceboGraphs } from '../../hooks/useShowPlaceboGraphs.js'
 import { useTreatedUnitsValueState } from '../../state/index.js'
-import { GraphTitle, Spacer, StyledStack } from '../../styles/index.js'
+import { Container, GraphTitle } from '../../styles/index.js'
 import type { HoverInfo, TooltipInfo } from '../../types.js'
 import { CustomMessageBar } from '../CustomMessageBar.js'
 import { PlaceboResult } from './PlaceboResult.js'
@@ -17,7 +18,7 @@ export const PlaceboResultPane: React.FC<PlaceboResultPaneProps> = memo(
 	function PlaceboResultPane({
 		inputData,
 		statusMessage,
-		isCalculatingEstimator,
+		isLoading,
 		placeboDataGroup,
 		placeboOutputData,
 		checkableUnits,
@@ -27,8 +28,8 @@ export const PlaceboResultPane: React.FC<PlaceboResultPaneProps> = memo(
 		const treatedUnits = useTreatedUnitsValueState()
 		const showPlaceboGraphs = useShowPlaceboGraphs()
 		const showPlaceboGraphsLocal = useMemo(
-			(): boolean => !isCalculatingEstimator && showPlaceboGraphs,
-			[isCalculatingEstimator, showPlaceboGraphs],
+			(): boolean => !isLoading && showPlaceboGraphs,
+			[isLoading, showPlaceboGraphs],
 		)
 		const hoverInfo = useMemo(
 			() => ({ hoverItem, setHoverItem } as HoverInfo),
@@ -59,25 +60,25 @@ export const PlaceboResultPane: React.FC<PlaceboResultPaneProps> = memo(
 		])
 
 		return (
-			<StyledStack grow verticalFill tokens={{ childrenGap: 15 }}>
-				<Stack.Item className="statusMessage">
+			<Pane>
+				<Container>
 					{statusMessage.isVisible && (
 						<CustomMessageBar
 							content={statusMessage.content}
 							type={statusMessage.type}
 						/>
 					)}
-				</Stack.Item>
+				</Container>
 
-				<Stack.Item className="no-top-margin">
-					{isCalculatingEstimator && <Spinner size={SpinnerSize.medium} />}
-				</Stack.Item>
+				<Container>
+					{isLoading && <Spinner size={SpinnerSize.medium} />}
+				</Container>
 
-				<Stack.Item className="no-top-margin">
+				<Container>
 					<GraphTitle>Placebo analysis</GraphTitle>
-				</Stack.Item>
+				</Container>
 
-				<Stack.Item>
+				<Container>
 					<Text className="infoText" variant="medium">
 						The following visualization shows the trajectory of each unit under
 						the placebo assumption that it was treated in the specified period
@@ -85,11 +86,9 @@ export const PlaceboResultPane: React.FC<PlaceboResultPaneProps> = memo(
 						the difference in outcomes between the labelled unit and its control
 						group.
 					</Text>
-				</Stack.Item>
+				</Container>
 				{showPlaceboGraphsLocal && placeboResults}
-				<Spacer axis="vertical" size={10} />
-				<Stack.Item className={'no-top-margin'}>
-					{/* <Text className="infoText last-item-margin" variant="medium"> */}
+				<Container>
 					<Text variant="medium" block>
 						Analysis approach based on Abadie, A., Diamond, A. & Hainmueller, J.
 						Synthetic Control Methods for Comparative Case Studies:{' '}
@@ -109,9 +108,15 @@ export const PlaceboResultPane: React.FC<PlaceboResultPaneProps> = memo(
 						</Link>
 						.
 					</Text>
-					{/* </Text> */}
-				</Stack.Item>
-			</StyledStack>
+				</Container>
+			</Pane>
 		)
 	},
 )
+
+const Pane = styled.section`
+	margin-bottom: 2rem;
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+`

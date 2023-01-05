@@ -82,7 +82,7 @@ export function useHandleRemoveTreatmentUnit() {
 			} else {
 				// a treated unit may have been removed
 				// ensure that any cached output for such removed unit is also filtered out
-				if (outputRes !== null) {
+				if (outputRes != null) {
 					const updatedOutputRes = cloneDeep(outputRes)
 					setOutputRes({
 						...updatedOutputRes,

@@ -32,7 +32,7 @@ export const BarChart: React.FC<BarChartProps> = memo(function BarChart({
 	renderLegend,
 	onRemoveCheckedUnit,
 	treatedUnits,
-	isPlaceboSimulation,
+	isPlaceboSimulation = false,
 	checkedUnits,
 }) {
 	const { width, height, margin } = dimensions

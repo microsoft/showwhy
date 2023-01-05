@@ -2,9 +2,10 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { Stack, Text } from '@fluentui/react'
+import { Text } from '@fluentui/react'
 import { memo, useRef } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
+import styled from 'styled-components'
 
 import {
 	useCheckedUnitsValueState,
@@ -14,7 +15,7 @@ import {
 	useTreatedUnitsValueState,
 	useUnitsValueState,
 } from '../../state/index.js'
-import { Container, Section, Spacer, TreatedTitle } from '../../styles/index.js'
+import { Container, TreatedTitle } from '../../styles/index.js'
 import type { PlaceboOutputData } from '../../types.js'
 import {
 	BAR_CHART_HEIGHT_PERC_OF_WIN_HEIGHT,
@@ -78,13 +79,10 @@ export const PlaceboResult: React.FC<PlaceboResultProps> = memo(
 
 		return (
 			<Section key={treatedUnit}>
-				<Stack.Item>
+				<Container>
 					<TreatedTitle>{treatedUnit}</TreatedTitle>
-				</Stack.Item>
-
-				<Spacer axis="vertical" size={15} />
-
-				<Stack.Item>
+				</Container>
+				<Container>
 					<DimensionedLineChart
 						inputData={inputData}
 						lineChartRef={placeboLineChartRef}
@@ -95,11 +93,8 @@ export const PlaceboResult: React.FC<PlaceboResultProps> = memo(
 						checkedUnits={checkedUnits}
 						isPlaceboSimulation
 					/>
-				</Stack.Item>
-
-				<Spacer axis="vertical" size={15} />
-
-				<Stack.Item className={'no-top-margin'}>
+				</Container>
+				<Container className={'no-top-margin'}>
 					<Text className="infoText" variant="medium">
 						The following visualization shows how the post-treatment divergence
 						between the treated unit <b>{treatedUnit}</b> and its control group
@@ -109,32 +104,26 @@ export const PlaceboResult: React.FC<PlaceboResultProps> = memo(
 						extreme divergence scores overall (following exclusion of units with
 						poor control group fit).
 					</Text>
-				</Stack.Item>
-
-				<Spacer axis="vertical" size={10} />
-
-				<Stack.Item className={'no-top-margin'}>
-					<Container ref={placeboBarChartRef} className="chartContainer">
-						<ErrorBoundary FallbackComponent={ChartErrorFallback}>
-							<BarChart
-								inputData={placeboBarChartInputData}
-								dimensions={placeboBarChartDimensions}
-								orientation={BarChartOrientation[BarChartOrientation.column]}
-								hoverInfo={hoverInfo}
-								leftAxisLabel={'Ratio'}
-								bottomAxisLabel={''}
-								checkableUnits={checkableUnits}
-								onRemoveCheckedUnit={onRemoveCheckedUnit}
-								renderLegend
-								treatedUnits={treatedUnits}
-								checkedUnits={checkedUnits}
-								isPlaceboSimulation
-							/>
-						</ErrorBoundary>
-					</Container>
-				</Stack.Item>
-
-				<Stack.Item className={'no-top-margin'}>
+				</Container>
+				<Container ref={placeboBarChartRef} className="chartContainer">
+					<ErrorBoundary FallbackComponent={ChartErrorFallback}>
+						<BarChart
+							inputData={placeboBarChartInputData}
+							dimensions={placeboBarChartDimensions}
+							orientation={BarChartOrientation[BarChartOrientation.column]}
+							hoverInfo={hoverInfo}
+							leftAxisLabel={'Ratio'}
+							bottomAxisLabel={''}
+							checkableUnits={checkableUnits}
+							onRemoveCheckedUnit={onRemoveCheckedUnit}
+							renderLegend
+							treatedUnits={treatedUnits}
+							checkedUnits={checkedUnits}
+							isPlaceboSimulation
+						/>
+					</ErrorBoundary>
+				</Container>
+				<Container>
 					{isValidUnit(treatedUnit) && placeboResult && (
 						<Text className="infoText last-item-margin" variant="medium">
 							The answer to the overall question of:{' '}
@@ -148,8 +137,14 @@ export const PlaceboResult: React.FC<PlaceboResultProps> = memo(
 							</Text>
 						</Text>
 					)}
-				</Stack.Item>
+				</Container>
 			</Section>
 		)
 	},
 )
+
+const Section = styled.section`
+	display: flex;
+	gap: 1rem;
+	flex-direction: column;
+`
