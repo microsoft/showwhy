@@ -20,7 +20,7 @@ import { useOutputData } from '../../hooks/useOutputData.js'
 import { useProcessedInputData } from '../../hooks/useProcessedInputData.js'
 import {
 	useChartOptionsState,
-	useCheckedUnitsState,
+	useCheckedUnitsValueState,
 	useColumnMappingValueState,
 	useEstimatorState,
 	useTimeAlignmentValueState,
@@ -44,7 +44,7 @@ export const EstimateEffects: React.FC = memo(function EstimateEffects() {
 	const columnMapping = useColumnMappingValueState()
 	const userMessage = useUserMessageValueState()
 	const timeAlignment = useTimeAlignmentValueState()
-	const [checkedUnits, setCheckedUnits] = useCheckedUnitsState()
+	const checkedUnits = useCheckedUnitsValueState()
 	const [chartOptions, setChartOptions] = useChartOptionsState()
 	const [estimator, setEstimator] = useEstimatorState()
 
