@@ -162,7 +162,9 @@ def estimate_effect(specification: Specification, task_id=None):
         identify_vars=True,
     )
 
-    identified_estimand = causal_model.identify_effect(proceed_when_unidentifiable=True)
+    identified_estimand = causal_model.identify_effect(
+        proceed_when_unidentifiable=True, optimize_backdoor=True
+    )
     if identified_estimand.estimands["backdoor"] is None:
         return None
 
