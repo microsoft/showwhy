@@ -33,7 +33,9 @@ def identify_estimand(causal_graph, dataframe, treatment, outcome, controls):
             graph=gml_graph,
         )
 
-    primary_estimand = causal_model.identify_effect(proceed_when_unidentifiable=True)
+    primary_estimand = causal_model.identify_effect(
+        proceed_when_unidentifiable=True, optimize_backdoor=True
+    )
 
     return IdentifyEstimandResult(
         estimate_possibility=primary_estimand.estimands["backdoor"] is not None,
