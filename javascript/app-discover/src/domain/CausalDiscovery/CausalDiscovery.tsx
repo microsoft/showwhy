@@ -16,6 +16,7 @@ import { CancelablePromise } from '../../utils/CancelablePromise.js'
 import type { DECIParams } from '../Algorithms/DECI.js'
 import { CausalDiscoveryAlgorithm } from './CausalDiscoveryAlgorithm.js'
 import type { CausalDiscoveryConstraints } from './CausalDiscoveryConstraints.js'
+import type { CausalDiscoveryNormalization } from './CausalDiscoveryNormalization.js'
 import type {
 	CausalDiscoveryRequestReturnValue,
 	CausalDiscoveryResult,
@@ -102,6 +103,7 @@ export function discover(
 	variables: CausalVariable[],
 	constraints: CausalDiscoveryConstraints,
 	algorithmName: CausalDiscoveryAlgorithm,
+	normalization: CausalDiscoveryNormalization,
 	progressCallback?: DiscoverProgressCallback,
 	paramOptions?: DECIParams,
 ): CausalDiscoveryResultPromise {
@@ -122,6 +124,10 @@ export function discover(
 				name: v.name,
 				nature: v.nature,
 			})),
+			normalization: {
+				with_mean: normalization.withMeanEnabled,
+				with_std: normalization.withStdEnabled,
+			},
 			...paramOptions,
 		}),
 		progressCallback,

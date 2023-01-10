@@ -28,8 +28,14 @@ class Dataset(BaseModel):
     data: Dict[str, List[Any]]
 
 
+class NormalizationOptions(BaseModel):
+    with_mean: bool = True
+    with_std: bool = True
+
+
 class CausalDiscoveryPayload(BaseModel):
     dataset: Dataset
+    normalization: NormalizationOptions = NormalizationOptions()
     constraints: Constraints
     causal_variables: List[CausalVariable]
 
@@ -50,10 +56,10 @@ class DatasetStatistics(BaseModel):
 
 
 _causal_var_nature_to_causica_var_type = {
-    "Discrete": "continuous",  # TODO: make categorical (related to ONNX)
+    "Discrete": "continuous",  # TODO: make categorical
     "Continuous": "continuous",
-    "Categorical Ordinal": "continuous",  # TODO: make categorical (related to ONNX)
-    "Categorical Nominal": "continuous",  # TODO: make categorical (related to ONNX)
+    "Categorical Ordinal": "continuous",  # TODO: make categorical
+    "Categorical Nominal": "continuous",  # TODO: make categorical
     "Binary": "binary",
     "Excluded": "continuous",
 }

@@ -1,11 +1,7 @@
 from causalnex.structure.notears import from_pandas
 from networkx.readwrite import json_graph
 
-from backend.discover.algorithms.commons.base_runner import (
-    CausalDiscoveryRunner,
-    CausalGraph,
-    ProgressCallback,
-)
+from backend.discover.algorithms.commons.base_runner import CausalDiscoveryRunner, CausalGraph, ProgressCallback
 from backend.discover.model.causal_discovery import CausalDiscoveryPayload
 
 
@@ -20,7 +16,7 @@ class NotearsRunner(CausalDiscoveryRunner):
         super().__init__(p, progress_callback)
 
     def do_causal_discovery(self) -> CausalGraph:
-        self._transform_categorical_nominal_to_continuous()
+        self._encode_categorical_as_integers()
 
         notears_graph = from_pandas(
             self._prepared_data,

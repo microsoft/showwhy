@@ -6,10 +6,7 @@
 import celery
 
 from backend.exposure.inference.specification_interpreter import interpret
-from backend.exposure.model.shap_interpreter_models import (
-    ListShapInterpreterResult,
-    ShapInterpreterSpec,
-)
+from backend.exposure.model.shap_interpreter_models import ListShapInterpreterResult, ShapInterpreterSpec
 from backend.worker_commons.io.db import get_db_client
 from backend.worker_commons.worker import backend_worker
 

@@ -656,12 +656,16 @@
             },
             "ui": {
                 "straightEdges": false,
-                "fixedInterventionRangesEnabled": true,
+                "fixedInterventionRangesEnabled": false,
                 "selectedDiscoveryAlgorithm": "NOTEARS",
                 "weightThreshold": 0,
-                "confidenceThreshold": 0.11,
+                "confidenceThreshold": 0.5,
                 "correlationThreshold": 0.2,
-                "view": 0
+                "view": 0,
+                "normalization": {
+                    "withMeanEnabled": true,
+                    "withStdEnabled": true
+                }
             }
         },
         {

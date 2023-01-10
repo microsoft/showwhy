@@ -37,9 +37,7 @@ class CausalEstimator:
                 "random_state": 42,
                 "verbosity": 0,
             }
-            self.default_model_classifier = XGBClassifier(
-                max_depth=3, **self.classifier_kwargs
-            )
+            self.default_model_classifier = XGBClassifier(max_depth=3, **self.classifier_kwargs)
             self.model_classifier = GridSearchCV(
                 estimator=XGBClassifier(**self.classifier_kwargs),
                 param_grid={"max_depth": [3, 5], "colsample_bytree": [0.5, 0.8, 1.0]},
@@ -63,9 +61,7 @@ class CausalEstimator:
                 "verbosity": 0,
             }
 
-            self.default_model_regressor = XGBRegressor(
-                max_depth=3, **self.regressor_kwargs
-            )
+            self.default_model_regressor = XGBRegressor(max_depth=3, **self.regressor_kwargs)
 
             self.model_regressor = GridSearchCV(
                 estimator=XGBRegressor(**self.regressor_kwargs),
@@ -129,16 +125,12 @@ class CausalEstimator:
 
     def config_forest_double_machine_learning(self, estimator_spec: Dict) -> Dict:
         estimator_spec = self.config_double_machine_learning(estimator_spec)
-        estimator_spec["method_params"]["init_params"]["n_jobs"] = (
-            -1 if self.parallelism else None
-        )
+        estimator_spec["method_params"]["init_params"]["n_jobs"] = -1 if self.parallelism else None
         return estimator_spec
 
     def config_forest_doubly_robust(self, estimator_spec: Dict) -> Dict:
         estimator_spec = self.config_doubly_robust(estimator_spec)
-        estimator_spec["method_params"]["init_params"]["n_jobs"] = (
-            -1 if self.parallelism else None
-        )
+        estimator_spec["method_params"]["init_params"]["n_jobs"] = -1 if self.parallelism else None
         return estimator_spec
 
     def config_propensity_weighting(self, estimator_spec: Dict) -> Dict:
@@ -191,9 +183,7 @@ class CausalEstimator:
         """
         Tune hyperparameters for propensity model
         """
-        observed_common_causes = copy.deepcopy(
-            identified_estimand.get_backdoor_variables()
-        )
+        observed_common_causes = copy.deepcopy(identified_estimand.get_backdoor_variables())
         if len(observed_common_causes) > 0:
             treatment_var = identified_estimand.treatment_variable
             variables = observed_common_causes + treatment_var
@@ -210,9 +200,7 @@ class CausalEstimator:
         """
         Tune hyperparameters for first stage regressor model for Double ML model
         """
-        observed_common_causes = copy.deepcopy(
-            identified_estimand.get_backdoor_variables()
-        )
+        observed_common_causes = copy.deepcopy(identified_estimand.get_backdoor_variables())
         if len(observed_common_causes) > 0:
             outcome_var = identified_estimand.outcome_variable
             variables = observed_common_causes + outcome_var
@@ -229,18 +217,14 @@ class CausalEstimator:
         """
         Tune hyperparameters for first stage regressor model for doubly robust learner
         """
-        observed_common_causes = copy.deepcopy(
-            identified_estimand.get_backdoor_variables()
-        )
+        observed_common_causes = copy.deepcopy(identified_estimand.get_backdoor_variables())
         if len(observed_common_causes) > 0:
             treatment_var = identified_estimand.treatment_variable
             outcome_var = identified_estimand.outcome_variable
             features = observed_common_causes + treatment_var
             variables = features + outcome_var
             training_data = causal_model._data[variables].drop_duplicates()
-            best_params = self.model_regressor.fit(
-                training_data[features], training_data[outcome_var]
-            ).best_params_
+            best_params = self.model_regressor.fit(training_data[features], training_data[outcome_var]).best_params_
             best_model = XGBRegressor(**best_params, **self.regressor_kwargs)
             return best_model
         else:

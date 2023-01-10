@@ -51,9 +51,7 @@ class LocalStorageClient(StorageClient):
         data: Any,
     ) -> None:
         # generate an uuid to represent the workspace name
-        final_path = os.path.join(
-            self.storage_location, self._generate_workspace_id(workspace_name)
-        )
+        final_path = os.path.join(self.storage_location, self._generate_workspace_id(workspace_name))
         os.makedirs(final_path, exist_ok=True)
         with open(os.path.join(final_path, name), "wb") as binary_file:
             binary_file.write(data)

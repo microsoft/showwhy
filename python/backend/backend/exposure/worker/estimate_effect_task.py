@@ -17,9 +17,7 @@ def estimate_effect_for_specification(
 ) -> EstimateResult:
     db_client = get_db_client()
 
-    result = estimate_effect(
-        specification=specification, task_id=celery.current_task.request.id
-    )
+    result = estimate_effect(specification=specification, task_id=celery.current_task.request.id)
 
     db_client.set_value(celery.current_task.request.id, result)
 

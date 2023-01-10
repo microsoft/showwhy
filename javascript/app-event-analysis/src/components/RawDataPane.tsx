@@ -2,32 +2,30 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { Spinner, SpinnerSize, Stack } from '@fluentui/react'
+import { Stack } from '@fluentui/react'
 import { memo, useRef } from 'react'
-import { useRecoilValue } from 'recoil'
 
 import {
-	CheckedUnitsState,
-	PlaceboSimulationState,
-	TreatedUnitsState,
-} from '../state/state.js'
+	useCheckedUnitsValueState,
+	usePlaceboSimulationValueState,
+	useTreatedUnitsValueState,
+} from '../state/index.js'
+import { GraphTitle, StyledStack } from '../styles/index.js'
 import { CustomMessageBar } from './CustomMessageBar.js'
 import { DimensionedLineChart } from './DimensionedLineChart.js'
 import type { RawDataPaneProps } from './RawDataPane.types.js'
-import { GraphTitle, StyledStack } from './style/Styles.js'
 
 export const RawDataPane: React.FC<RawDataPaneProps> = memo(
 	function RawDataPane({
 		inputData,
 		outputData,
 		statusMessage,
-		isCalculatingEstimator,
 		checkableUnits,
 		onRemoveCheckedUnit,
 	}) {
-		const treatedUnits = useRecoilValue(TreatedUnitsState)
-		const isPlaceboSimulation = useRecoilValue(PlaceboSimulationState)
-		const checkedUnits = useRecoilValue(CheckedUnitsState)
+		const treatedUnits = useTreatedUnitsValueState()
+		const isPlaceboSimulation = usePlaceboSimulationValueState()
+		const checkedUnits = useCheckedUnitsValueState()
 		const rawLineChartRef = useRef<HTMLDivElement | null>(null)
 
 		return (
@@ -39,10 +37,6 @@ export const RawDataPane: React.FC<RawDataPaneProps> = memo(
 							type={statusMessage.type}
 						/>
 					)}
-				</Stack.Item>
-
-				<Stack.Item className="no-top-margin">
-					{isCalculatingEstimator && <Spinner size={SpinnerSize.medium} />}
 				</Stack.Item>
 
 				<Stack.Item className="no-top-margin">

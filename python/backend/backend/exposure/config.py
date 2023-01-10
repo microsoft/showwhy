@@ -11,16 +11,9 @@ SENSITIVITY_REFUTERS = ["add_unobserved_common_cause"]
 
 
 def get_refuters():
-    include_sensitivity_refuters = (
-        os.environ.get("INCLUDE_SENSITIVITY_REFUTERS", "false").strip().lower()
-        == "true"
-    )
+    include_sensitivity_refuters = os.environ.get("INCLUDE_SENSITIVITY_REFUTERS", "false").strip().lower() == "true"
 
-    return (
-        DEFAULT_REFUTATION_TESTS + SENSITIVITY_REFUTERS
-        if include_sensitivity_refuters
-        else DEFAULT_REFUTATION_TESTS
-    )
+    return DEFAULT_REFUTATION_TESTS + SENSITIVITY_REFUTERS if include_sensitivity_refuters else DEFAULT_REFUTATION_TESTS
 
 
 def get_confidence_simulations():

@@ -5,10 +5,11 @@
 
 import pickle
 from abc import ABC, abstractmethod
-from typing import Any, Iterator
+from typing import Any, Iterator, Union
 from urllib.parse import urlparse
 
 import redis
+from redis.typing import ExpiryT
 
 from backend.worker_commons import config
 
@@ -41,8 +42,10 @@ class RedisDB(Storage):
     def iter_values(self, pattern: str) -> Iterator[Any]:
         return self.client.scan_iter(f"{pattern}*")
 
-    def set_value(self, key: str, value: Any) -> None:
-        self.client.set(key, pickle.dumps(value))
+    def set_value(self, key: str, value: Any, expire_after: Union[ExpiryT, None] = None) -> None:
+        if expire_after is None:
+            expire_after = config.get_default_expires_after()
+        self.client.set(key, pickle.dumps(value), ex=expire_after)
 
 
 def get_db_client():

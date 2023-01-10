@@ -3,10 +3,7 @@ from fastapi import APIRouter
 from tensorflow.python.framework.ops import disable_eager_execution
 
 from backend.discover.algorithms.deci import DeciPayload, DeciRunner
-from backend.discover.algorithms.direct_lingam import (
-    DirectLiNGAMPayload,
-    DirectLiNGAMRunner,
-)
+from backend.discover.algorithms.direct_lingam import DirectLiNGAMPayload, DirectLiNGAMRunner
 from backend.discover.algorithms.notears import NotearsPayload, NotearsRunner
 from backend.discover.algorithms.pc import PCPayload, PCRunner
 from backend.discover.model.interventions import InterventionPayload

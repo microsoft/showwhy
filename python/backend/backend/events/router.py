@@ -8,12 +8,7 @@ from fastapi.staticfiles import StaticFiles
 from synthdid.model import SynthDID
 
 from backend.events.rpy import exec_estimator_R
-from backend.events.types import (
-    Data,
-    OutputLines,
-    OutputResult,
-    WeightedSynthdidControls,
-)
+from backend.events.types import Data, OutputLines, OutputResult, WeightedSynthdidControls
 
 events_router = APIRouter()
 
@@ -27,6 +22,7 @@ def main():
 # import pstats
 
 
+# flake8: noqa: C901
 @events_router.post("/")
 async def execute_causal_estimator(data: Data):
     # container for the estimated results (one entry for the output related to each treated unit)
@@ -114,9 +110,7 @@ async def execute_causal_estimator(data: Data):
             #
             # calculate the weights
             #
-            units_except_treated = [
-                unt for unt in unit_names if unt not in data.treated_units
-            ]
+            units_except_treated = [unt for unt in unit_names if unt not in data.treated_units]
             if model != "did":
                 if model == "sdid":
                     weights_df = estimate.estimated_params(model)[0]
@@ -132,20 +126,15 @@ async def execute_causal_estimator(data: Data):
                 )
                 # weighted control units should always exclude any treated unit(s)
                 #  and only include valid control units
-                weights_df = weights_df[
-                    weights_df["features"].isin(units_except_treated)
-                ]
-                weights_df.sort_values(
-                    by=["unit_weights"], ascending=False, inplace=True
-                )
+                weights_df = weights_df[weights_df["features"].isin(units_except_treated)]
+                weights_df.sort_values(by=["unit_weights"], ascending=False, inplace=True)
                 negative_weights_filter = weights_df["unit_weights"] > 0
                 # sort and discard negative weights, then create WeightedSynthdidControls
                 weights_df_filtered = weights_df[negative_weights_filter]
                 mass = 0.9
                 # include only weights up to a cumulative sum of "mass"
                 final_weights = weights_df_filtered.iloc[
-                    : (weights_df_filtered["unit_weights"].cumsum() == mass).idxmax()
-                    + 1,
+                    : (weights_df_filtered["unit_weights"].cumsum() == mass).idxmax() + 1,
                     :,
                 ]
 
@@ -164,9 +153,7 @@ async def execute_causal_estimator(data: Data):
                 pre_point = estimate.Y_pre_c.index @ estimate.hat_lambda
                 result[model] = estimate.sdid_trajectory()
                 pre_treat = (estimate.Y_pre_t.T @ estimate.hat_lambda).values[0]
-                pre_sdid = (
-                    result[model].head(len(estimate.hat_lambda)) @ estimate.hat_lambda
-                )
+                pre_sdid = result[model].head(len(estimate.hat_lambda)) @ estimate.hat_lambda
                 post_sdid = result.loc[estimate.post_term[0] :, model].mean()
                 counterfactual_post_treat = pre_treat + (post_sdid - pre_sdid)
 
@@ -218,10 +205,7 @@ async def execute_causal_estimator(data: Data):
                     # time values have been filtered, so consider only the subset of dates/times
                     #  that match the selected consistent window
                     for time in all_times:
-                        if (
-                            time < consistent_time_window[0]
-                            or time >= consistent_time_window[1]
-                        ):
+                        if time < consistent_time_window[0] or time >= consistent_time_window[1]:
                             times.append(time)
             # we need two lines for each output (hence the join of two lists)
             line_values = result["actual_y"].tolist() + result[model].tolist()
@@ -280,9 +264,7 @@ async def execute_causal_estimator(data: Data):
     if num_treated_units <= 1 and data.compute_placebos:
         # kick off placebo sweep
         units = {row["unit"] for row in data.input_data}
-        treatment_date = data.treatment_start_dates[
-            0
-        ]  # we should except a single treatment date
+        treatment_date = data.treatment_start_dates[0]  # we should except a single treatment date
         for unit in units:
             # let's pretend the current unit is our treated, update the input data accordingly
             clonedInputData = copy.deepcopy(data.input_data)
@@ -297,9 +279,7 @@ async def execute_causal_estimator(data: Data):
     else:
         # handle single vs. multiple treated units
         if num_treated_units == 1:
-            treatment_date = data.treatment_start_dates[
-                0
-            ]  # we should except a single treatment date
+            treatment_date = data.treatment_start_dates[0]  # we should except a single treatment date
             for row in data.input_data:
                 if row["unit"] == data.treated_units[0]:
                     row["treated"] = 0 if row["date"] < treatment_date else 1
@@ -337,15 +317,11 @@ async def execute_causal_estimator(data: Data):
                     treated_units_except_current = treated_units_set.copy()
                     treated_units_except_current.remove(unit)
                     clonedInputData = [
-                        item
-                        for item in clonedInputData
-                        if item["unit"] not in treated_units_except_current
+                        item for item in clonedInputData if item["unit"] not in treated_units_except_current
                     ]
                     for row in clonedInputData:
                         if row["unit"] == unit:
-                            row["treated"] = (
-                                0 if row["date"] < unique_treatment_dates[0] else 1
-                            )
+                            row["treated"] = 0 if row["date"] < unique_treatment_dates[0] else 1
 
                     compute_estimator(unit, clonedInputData, unique_treatment_dates[0])
             else:
@@ -386,20 +362,12 @@ async def execute_causal_estimator(data: Data):
                         treated_units_except_current = treated_units_set.copy()
                         treated_units_except_current.remove(unit)
                         clonedInputData = [
-                            item
-                            for item in clonedInputData
-                            if item["unit"] not in treated_units_except_current
+                            item for item in clonedInputData if item["unit"] not in treated_units_except_current
                         ]
                         for row in clonedInputData:
                             if row["unit"] == unit:
-                                row["treated"] = (
-                                    0
-                                    if row["date"] < data.treatment_start_dates[indx]
-                                    else 1
-                                )
-                        compute_estimator(
-                            unit, clonedInputData, data.treatment_start_dates[indx]
-                        )
+                                row["treated"] = 0 if row["date"] < data.treatment_start_dates[indx] else 1
+                        compute_estimator(unit, clonedInputData, data.treatment_start_dates[indx])
                 else:
                     #
                     # time alignment is needed (i.e., not staggered design)
@@ -408,9 +376,7 @@ async def execute_causal_estimator(data: Data):
                     # print("identify consistent window then estimate for each unit")
 
                     # for each treatment date, find its index in the list of data's time range
-                    T0 = (
-                        []
-                    )  # a list of indices of the treated date for all treated units
+                    T0 = []  # a list of indices of the treated date for all treated units
                     # e.g., if data range is [1980, 1981, ..., 2000]
                     #       and the treated dates for two units are 1990 and 1995
                     #       then T0 would be [10, 15]
@@ -428,9 +394,7 @@ async def execute_causal_estimator(data: Data):
                         unit_treatment_periods[unitIndex] = item
 
                     # find consistent window (to handle the existence of multiple treated units/periods)
-                    finite_t_idx = unit_treatment_periods[
-                        np.isfinite(unit_treatment_periods)
-                    ].astype("int")
+                    finite_t_idx = unit_treatment_periods[np.isfinite(unit_treatment_periods)].astype("int")
                     t_max_before = min(finite_t_idx[finite_t_idx >= 1])
                     t_max_after = T - max(finite_t_idx[finite_t_idx <= (T - 1)])
 
@@ -454,8 +418,7 @@ async def execute_causal_estimator(data: Data):
                         filteredInputData = [
                             item
                             for item in data.input_data
-                            if item["date"] < date_at_t_max_before
-                            or item["date"] >= date_at_t_max_after
+                            if item["date"] < date_at_t_max_before or item["date"] >= date_at_t_max_after
                         ]
 
                         # cache the consistent time window RANGE
@@ -473,20 +436,14 @@ async def execute_causal_estimator(data: Data):
                             treated_units_except_current = treated_units_set.copy()
                             treated_units_except_current.remove(unit)
                             clonedInputData = [
-                                item
-                                for item in clonedInputData
-                                if item["unit"] not in treated_units_except_current
+                                item for item in clonedInputData if item["unit"] not in treated_units_except_current
                             ]
                             for row in clonedInputData:
                                 # treatment start for all units at date_at_t_max_before
                                 if row["unit"] == unit:
-                                    row["treated"] = (
-                                        0 if row["date"] < date_at_t_max_before else 1
-                                    )
+                                    row["treated"] = 0 if row["date"] < date_at_t_max_before else 1
 
-                            compute_estimator(
-                                unit, clonedInputData, date_at_t_max_before
-                            )
+                            compute_estimator(unit, clonedInputData, date_at_t_max_before)
                     else:
                         #
                         # use a consistent time window with a fixed size
@@ -511,9 +468,7 @@ async def execute_causal_estimator(data: Data):
                             #  and by going no more than right_size time steps in the future
 
                             treatment_date_for_unit = data.treatment_start_dates[indx]
-                            treatment_index_for_unit = all_times.index(
-                                treatment_date_for_unit
-                            )
+                            treatment_index_for_unit = all_times.index(treatment_date_for_unit)
 
                             min_time_index = treatment_index_for_unit - left_size
                             max_time_index = treatment_index_for_unit + right_size - 1
@@ -535,19 +490,13 @@ async def execute_causal_estimator(data: Data):
                             treated_units_except_current = treated_units_set.copy()
                             treated_units_except_current.remove(unit)
                             clonedInputData = [
-                                item
-                                for item in clonedInputData
-                                if item["unit"] not in treated_units_except_current
+                                item for item in clonedInputData if item["unit"] not in treated_units_except_current
                             ]
 
                             # mark currnet unit as treated
                             for row in clonedInputData:
                                 if row["unit"] == unit:
-                                    row["treated"] = (
-                                        0
-                                        if row["date"] < treatment_date_for_unit
-                                        else 1
-                                    )
+                                    row["treated"] = 0 if row["date"] < treatment_date_for_unit else 1
 
                             # map actual dates/times to indices
                             time_index = 0
@@ -558,9 +507,7 @@ async def execute_causal_estimator(data: Data):
                                 row["date"] = time_to_index_map[row["date"]]
                             time_mapping_applied = True
 
-                            compute_estimator(
-                                unit, clonedInputData, treatment_date_for_unit
-                            )
+                            compute_estimator(unit, clonedInputData, treatment_date_for_unit)
 
     # print profiling output
     # stats = pstats.Stats(prof).strip_dirs().sort_stats("cumtime")

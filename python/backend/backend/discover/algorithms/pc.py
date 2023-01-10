@@ -4,11 +4,7 @@ import networkx
 from castle.algorithms import PC
 from networkx.readwrite import json_graph
 
-from backend.discover.algorithms.commons.base_runner import (
-    CausalDiscoveryRunner,
-    CausalGraph,
-    ProgressCallback,
-)
+from backend.discover.algorithms.commons.base_runner import CausalDiscoveryRunner, CausalGraph, ProgressCallback
 from backend.discover.model.causal_discovery import CausalDiscoveryPayload
 
 
@@ -23,7 +19,7 @@ class PCRunner(CausalDiscoveryRunner):
         super().__init__(p, progress_callback)
 
     def do_causal_discovery(self) -> CausalGraph:
-        self._transform_categorical_nominal_to_continuous()
+        self._encode_categorical_as_integers()
 
         n = PC(alpha=0.2)
         n.learn(self._prepared_data.to_numpy())
@@ -32,10 +28,7 @@ class PCRunner(CausalDiscoveryRunner):
 
         logging.info(graph_gc)
 
-        labels = {
-            i: self._prepared_data.columns[i]
-            for i in range(len(self._prepared_data.columns))
-        }
+        labels = {i: self._prepared_data.columns[i] for i in range(len(self._prepared_data.columns))}
         labeled_gc = networkx.relabel_nodes(graph_gc, labels)
 
         graph_json = json_graph.cytoscape_data(labeled_gc)

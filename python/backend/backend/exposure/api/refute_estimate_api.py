@@ -28,20 +28,14 @@ class RefuteEstimateRequestBody(BaseModel):
 
 @refute_estimate_router.post("/{workspace_name}")
 async def refute_estimate(workspace_name: str, body: RefuteEstimateRequestBody):
-    results = go.get_results(
-        workspace_name, body.estimate_execution_id, "estimate_effect"
-    )
+    results = go.get_results(workspace_name, body.estimate_execution_id, "estimate_effect")
 
     if results.pending > 0:
-        raise HTTPException(
-            status_code=400, detail="Estimate Execution is not completed yet."
-        )
+        raise HTTPException(status_code=400, detail="Estimate Execution is not completed yet.")
 
     refuter_specs = get_tasks(body.num_simulations_map, results.results, get_refuters())
 
-    return go.schedule_task(
-        workspace_name, "refute_estimate", refute_estimate_task, refuter_specs
-    )
+    return go.schedule_task(workspace_name, "refute_estimate", refute_estimate_task, refuter_specs)
 
 
 @refute_estimate_router.get("/{workspace_name}/{task_id}")
@@ -55,17 +49,11 @@ async def cancel_task(workspace_name: str, task_id: str):
 
 
 @refute_estimate_router.post("/execution_count/{workspace_name}")
-async def get_number_of_executions(
-    workspace_name: str, body: RefuteEstimateRequestBody
-):
-    results = go.get_results(
-        workspace_name, body.estimate_execution_id, "estimate_effect"
-    )
+async def get_number_of_executions(workspace_name: str, body: RefuteEstimateRequestBody):
+    results = go.get_results(workspace_name, body.estimate_execution_id, "estimate_effect")
 
     if results.pending > 0:
-        raise HTTPException(
-            status_code=400, detail="Estimate Execution is not completed yet."
-        )
+        raise HTTPException(status_code=400, detail="Estimate Execution is not completed yet.")
 
     refuters = get_refuters()
     return NumberOfExecutionsResult(count=len(results.results) * len(refuters))

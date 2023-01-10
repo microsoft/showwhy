@@ -75,5 +75,23 @@ ignore_fail = "return_non_zero"
 sequence = ["format_check", "_flake8"]
 ignore_fail = "return_non_zero"
 
+[tool.black]
+line-length = 120
+target-version = ['py38']
+include = '\.pyi?$'
+extend-exclude = '''
+(
+      __pycache__
+    | \.github
+)
+'''
+
+[tool.pylint]
+max-line-length = 120
+disable = ["W0511"]
+
 [tool.isort]
 profile = 'black'
+multi_line_output = 3
+line_length = 120
+py_version = 38

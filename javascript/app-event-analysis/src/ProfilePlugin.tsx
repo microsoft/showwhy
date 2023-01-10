@@ -15,7 +15,7 @@ import { Hypothesis } from '@showwhy/app-common'
 import { memo } from 'react'
 import type { MutableSnapshot, Snapshot } from 'recoil'
 
-import { App } from './components/App.js'
+import { App } from './App/App.js'
 import {
 	AggregateEnabledState,
 	AggTreatmentState,
@@ -39,7 +39,7 @@ import {
 	TreatmentStartDatesAfterEstimateState,
 	TreatmentStartDatesState,
 	UnitsState,
-} from './state/state.js'
+} from './state/index.js'
 import type {
 	ChartOptions,
 	ColumnMapping,
@@ -237,7 +237,7 @@ function loadState(resource: EventAnalysisResource, { set }: MutableSnapshot) {
 	set(ChartOptionsState, resource.chartOptions)
 	set(FilterState, resource.filter)
 	set(OutputResState, resource.outputRes)
-	set(PlaceboOutputResState, new Map(Object.entries(resource.placeboOutputRes)))
+	set(PlaceboOutputResState, resource.placeboOutputRes)
 	set(PlaceboSimulationState, resource.placeboSimulation)
 	set(SelectedTabKeyState, resource.selectedTabKey)
 	set(TimeAlignmentState, resource.timeAlignment)
@@ -268,9 +268,7 @@ function saveState(resource: EventAnalysisResource, snap: Snapshot) {
 	resource.chartOptions = snap.getLoadable(ChartOptionsState).getValue()
 	resource.filter = snap.getLoadable(FilterState).getValue()
 	resource.outputRes = snap.getLoadable(OutputResState).getValue()
-	resource.placeboOutputRes = hashMap(
-		snap.getLoadable(PlaceboOutputResState).getValue(),
-	)
+	resource.placeboOutputRes = snap.getLoadable(PlaceboOutputResState).getValue()
 
 	resource.placeboSimulation = snap
 		.getLoadable(PlaceboSimulationState)
@@ -284,10 +282,4 @@ function saveState(resource: EventAnalysisResource, snap: Snapshot) {
 	resource.treatmentStartDatesAfterEstimate = snap
 		.getLoadable(TreatmentStartDatesAfterEstimateState)
 		.getValue()
-}
-
-function hashMap<V>(m: Map<string, V>): Record<string, V> {
-	const result: Record<string, V> = {}
-	m.forEach((v, k) => (result[k] = v))
-	return result
 }

@@ -6,11 +6,7 @@ from castle.algorithms import DirectLiNGAM
 from causalnex.structure.structuremodel import StructureModel
 from networkx.readwrite import json_graph
 
-from backend.discover.algorithms.commons.base_runner import (
-    CausalDiscoveryRunner,
-    CausalGraph,
-    ProgressCallback,
-)
+from backend.discover.algorithms.commons.base_runner import CausalDiscoveryRunner, CausalGraph, ProgressCallback
 from backend.discover.model.causal_discovery import CausalDiscoveryPayload
 
 
@@ -21,9 +17,7 @@ class DirectLiNGAMPayload(CausalDiscoveryPayload):
 class DirectLiNGAMRunner(CausalDiscoveryRunner):
     name = "DirectLiNGAM"
 
-    def __init__(
-        self, p: DirectLiNGAMPayload, progress_callback: ProgressCallback = None
-    ):
+    def __init__(self, p: DirectLiNGAMPayload, progress_callback: ProgressCallback = None):
         super().__init__(p, progress_callback)
 
     def do_causal_discovery(self) -> CausalGraph:
@@ -35,10 +29,7 @@ class DirectLiNGAMRunner(CausalDiscoveryRunner):
 
         logging.info(graph_gc)
 
-        labels = {
-            i: self._prepared_data.columns[i]
-            for i in range(len(self._prepared_data.columns))
-        }
+        labels = {i: self._prepared_data.columns[i] for i in range(len(self._prepared_data.columns))}
         labeled_gc = networkx.relabel_nodes(graph_gc, labels)
 
         graph_json = json_graph.cytoscape_data(labeled_gc)
