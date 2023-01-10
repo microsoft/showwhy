@@ -14,8 +14,8 @@
         },
         "pathMappings": [
           {
-            "localRoot": "${workspaceFolder}/python/exposure",
-            "remoteRoot": "/exposure"
+            "localRoot": "${workspaceFolder}/python/backend",
+            "remoteRoot": "/backend"
           }
         ]
       },
@@ -29,8 +29,8 @@
         },
         "pathMappings": [
           {
-            "localRoot": "${workspaceFolder}/python/exposure",
-            "remoteRoot": "/exposure"
+            "localRoot": "${workspaceFolder}/python/backend",
+            "remoteRoot": "/backend"
           }
         ]
       }
