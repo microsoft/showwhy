@@ -22,6 +22,7 @@ def main():
 # import pstats
 
 
+# flake8: noqa: C901
 @events_router.post("/")
 async def execute_causal_estimator(data: Data):
     # container for the estimated results (one entry for the output related to each treated unit)
