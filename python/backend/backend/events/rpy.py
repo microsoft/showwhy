@@ -15,23 +15,14 @@ pandas2ri.activate()
 # print("synthdid", synthdid.__version__)
 
 # Loading the functions we have defined in R
-r_script_file = "{}/synthdid_simple.r".format(
-    os.path.dirname(os.path.realpath(__file__))
-)
+r_script_file = "{}/synthdid_simple.r".format(os.path.dirname(os.path.realpath(__file__)))
 robjects.r["source"](r_script_file)
 execEstimator_r = robjects.globalenv["execEstimator"]
 
 from collections import OrderedDict
 
 import numpy as np
-from rpy2.robjects.vectors import (
-    DataFrame,
-    FloatVector,
-    IntVector,
-    ListVector,
-    Matrix,
-    StrVector,
-)
+from rpy2.robjects.vectors import DataFrame, FloatVector, IntVector, ListVector, Matrix, StrVector
 
 
 def recurse_r_tree(data):

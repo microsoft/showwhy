@@ -20,9 +20,7 @@ ProgressCallback = Optional[Callable[[float], None]]
 
 
 class CausalDiscoveryRunner(ABC):
-    def __init__(
-        self, p: CausalDiscoveryPayload, progress_callback: ProgressCallback = None
-    ):
+    def __init__(self, p: CausalDiscoveryPayload, progress_callback: ProgressCallback = None):
         self._dataset_data = p.dataset.data
         self._normalization = p.normalization
         self._constraints = p.constraints
@@ -32,9 +30,7 @@ class CausalDiscoveryRunner(ABC):
         self._number_of_rows = 0
         self._number_of_dropped_rows = 0
 
-    def register_progress_callback(
-        self, progress_callback: ProgressCallback = None
-    ) -> None:
+    def register_progress_callback(self, progress_callback: ProgressCallback = None) -> None:
         self._progress_callback = progress_callback
 
     def _report_progress(self, percentage: float) -> None:
@@ -53,9 +49,7 @@ class CausalDiscoveryRunner(ABC):
     def _normalize_continuous_columns(self):
         if self._prepared_data.size != 0:
             continuous_columns = [
-                c
-                for c in self._prepared_data.columns
-                if self._has_column_nature(c, CausalVariableNature.Continuous)
+                c for c in self._prepared_data.columns if self._has_column_nature(c, CausalVariableNature.Continuous)
             ]
 
             if continuous_columns:
@@ -81,16 +75,11 @@ class CausalDiscoveryRunner(ABC):
     def _remove_rows_with_missing_values(self):
         self._number_of_rows = self._prepared_data.shape[0]
         self._prepared_data.dropna(inplace=True)
-        self._number_of_dropped_rows = (
-            self._number_of_rows - self._prepared_data.shape[0]
-        )
+        self._number_of_dropped_rows = self._number_of_rows - self._prepared_data.shape[0]
 
     def _encode_categorical_as_integers(self):
         for name in self._prepared_data.columns:
-            if (
-                self._nature_by_variable[name]
-                == CausalVariableNature.CategoricalNominal
-            ):
+            if self._nature_by_variable[name] == CausalVariableNature.CategoricalNominal:
                 logging.info(f"encoding categorical nominal column {name} to integers")
                 self._prepared_data[name] = pd.factorize(self._prepared_data[name])[0]
 

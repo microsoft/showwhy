@@ -14,15 +14,8 @@ from sklearn import preprocessing
 from backend.exposure.inference.causal_graph import create_gml_model_specs
 from backend.exposure.inference.covariate_balance import COVARIATE_BALANCE_FUNC_MAPPING
 from backend.exposure.inference.estimator import CausalEstimator
-from backend.exposure.model.estimate_effect_models import (
-    EstimateResult,
-    PopulationSpecDataFrame,
-    Specification,
-)
-from backend.worker_commons.io.exceptions import (
-    DataFrameNotLoadedError,
-    FileNotFoundError,
-)
+from backend.exposure.model.estimate_effect_models import EstimateResult, PopulationSpecDataFrame, Specification
+from backend.worker_commons.io.exceptions import DataFrameNotLoadedError, FileNotFoundError
 
 
 def get_tasks(
@@ -37,31 +30,23 @@ def get_tasks(
 
     population_df_specs = []
     for population_spec in population_specs:
-        if population_spec.dataframe is not None and isinstance(
-            population_spec.dataframe, str
-        ):
+        if population_spec.dataframe is not None and isinstance(population_spec.dataframe, str):
             try:
                 population_df_specs.append(
                     PopulationSpecDataFrame(
                         type=population_spec.type,
                         label=population_spec.label,
-                        dataframe=storage_client.read(
-                            workspace_name, population_spec.dataframe
-                        )
+                        dataframe=storage_client.read(workspace_name, population_spec.dataframe)
                         if storage_client is not None
                         else pd.DataFrame(),
                         variable=population_spec.variable,
                     )
                 )
             except FileNotFoundError:
-                logging.error(
-                    f"Failed to get dataframe: {population_spec.dataframe} for workspace: {workspace_name}"
-                )
+                logging.error(f"Failed to get dataframe: {population_spec.dataframe} for workspace: {workspace_name}")
                 raise DataFrameNotLoadedError(workspace_name, population_spec.dataframe)
 
-    model_specs_with_causal_graph = create_gml_model_specs(
-        treatment_specs, outcome_specs, model_specs
-    )
+    model_specs_with_causal_graph = create_gml_model_specs(treatment_specs, outcome_specs, model_specs)
 
     return [
         Specification(
@@ -81,9 +66,7 @@ def get_tasks(
     ]
 
 
-def __prepare_data(
-    population, treatment, outcome, confounders, effect_modifiers
-) -> pd.DataFrame:
+def __prepare_data(population, treatment, outcome, confounders, effect_modifiers) -> pd.DataFrame:
     data = population.dataframe
 
     variable = population.variable
@@ -97,9 +80,7 @@ def __prepare_data(
     population_data[treatment] = population_data[treatment].astype(bool)
     le = preprocessing.LabelEncoder()
     for var in causal_variables:
-        if population_data[var].dtype == object and isinstance(
-            population_data.iloc[0][var], str
-        ):
+        if population_data[var].dtype == object and isinstance(population_data.iloc[0][var], str):
             population_data[var] = le.fit_transform(population_data[var])
 
     return population_data, treatment, outcome
@@ -108,18 +89,12 @@ def __prepare_data(
 def __get_estimator_config(estimator, identified_estimand, causal_model):
     causal_estimator = CausalEstimator()
     if any(word in estimator.method_name for word in ["propensity", "econml"]):
-        causal_estimator.model_classifier = causal_estimator.tune_classifier_model(
-            identified_estimand, causal_model
-        )
+        causal_estimator.model_classifier = causal_estimator.tune_classifier_model(identified_estimand, causal_model)
 
     if "dml" in estimator.method_name:
-        causal_estimator.model_regressor = causal_estimator.tune_dml_regressor_model(
-            identified_estimand, causal_model
-        )
+        causal_estimator.model_regressor = causal_estimator.tune_dml_regressor_model(identified_estimand, causal_model)
     elif "dr" in estimator.method_name:
-        causal_estimator.model_regressor = causal_estimator.tune_dr_regressor_model(
-            identified_estimand, causal_model
-        )
+        causal_estimator.model_regressor = causal_estimator.tune_dr_regressor_model(identified_estimand, causal_model)
 
     return causal_estimator.config_estimator(
         {
@@ -162,15 +137,11 @@ def estimate_effect(specification: Specification, task_id=None):
         identify_vars=True,
     )
 
-    identified_estimand = causal_model.identify_effect(
-        proceed_when_unidentifiable=True, optimize_backdoor=True
-    )
+    identified_estimand = causal_model.identify_effect(proceed_when_unidentifiable=True, optimize_backdoor=True)
     if identified_estimand.estimands["backdoor"] is None:
         return None
 
-    estimator_config = __get_estimator_config(
-        specification.estimator, identified_estimand, causal_model
-    )
+    estimator_config = __get_estimator_config(specification.estimator, identified_estimand, causal_model)
     estimate = causal_model.estimate_effect(
         identified_estimand,
         method_name=estimator_config["method_name"],

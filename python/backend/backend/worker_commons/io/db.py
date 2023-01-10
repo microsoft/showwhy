@@ -10,8 +10,9 @@ from typing import Any, Iterator, Union
 from urllib.parse import urlparse
 
 import redis
-from backend.worker_commons import config
 from redis.typing import ExpiryT
+
+from backend.worker_commons import config
 
 DEFAULT_EXPIRES_AFTER = timedelta(hours=8)
 
@@ -44,9 +45,7 @@ class RedisDB(Storage):
     def iter_values(self, pattern: str) -> Iterator[Any]:
         return self.client.scan_iter(f"{pattern}*")
 
-    def set_value(
-        self, key: str, value: Any, expire_after: Union[ExpiryT, None] = DEFAULT_EXPIRES_AFTER
-    ) -> None:
+    def set_value(self, key: str, value: Any, expire_after: Union[ExpiryT, None] = DEFAULT_EXPIRES_AFTER) -> None:
         if expire_after is None:
             expire_after = config.get_default_expires_after()
         self.client.set(key, pickle.dumps(value), ex=expire_after)

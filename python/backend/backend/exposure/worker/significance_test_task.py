@@ -9,26 +9,15 @@ import celery
 from celery import group
 
 from backend.exposure import config
-from backend.exposure.inference.significance_test import (
-    compute_null_effect,
-    get_propensity_scores,
-)
-from backend.exposure.model.significance_test_models import (
-    ComputeNullEffectSpec,
-    PropensityScoreSpec,
-)
+from backend.exposure.inference.significance_test import compute_null_effect, get_propensity_scores
+from backend.exposure.model.significance_test_models import ComputeNullEffectSpec, PropensityScoreSpec
 from backend.worker_commons.io.db import get_db_client
 from backend.worker_commons.worker import backend_worker
 
 
 @backend_worker.task
 def compute_null_effects(specs: List[ComputeNullEffectSpec]):
-    group(
-        [
-            __compute_null_effect.s(specs)
-            for _ in range(config.get_significance_simulations())
-        ]
-    )()
+    group([__compute_null_effect.s(specs) for _ in range(config.get_significance_simulations())])()
 
 
 @backend_worker.task

@@ -71,11 +71,7 @@ class Specification(BaseModel):
             return False
         if self.outcome.variable != self.model.outcome:
             return False
-        if (
-            self.estimator.require_propensity_score
-            and not self.model.confounders
-            and not self.model.effect_modifiers
-        ):
+        if self.estimator.require_propensity_score and not self.model.confounders and not self.model.effect_modifiers:
             return False
         return True
 

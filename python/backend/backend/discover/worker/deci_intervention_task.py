@@ -9,10 +9,6 @@ from backend.worker_commons.worker import backend_worker
 def deci_intervention_task(payload: InterventionPayload) -> InterventionResult:
     logging.info(f"Running intervention with id {payload.intervention_model_id}.")
 
-    model: DeciInterventionModel = DeciInterventionModel.load(
-        payload.intervention_model_id
-    )
+    model: DeciInterventionModel = DeciInterventionModel.load(payload.intervention_model_id)
 
-    return model.perform_intervention(
-        payload.interventions, payload.confidence_threshold, payload.weight_threshold
-    )
+    return model.perform_intervention(payload.interventions, payload.confidence_threshold, payload.weight_threshold)
