@@ -14,7 +14,7 @@ az aks get-credentials -g $RESOURCEGROUP -n $CLUSTER_NAME
 
 # Install helm package from ghcr
 helm upgrade --install causal-services $HELM_APP_LOCATION \
-    --set enableAuthentication=false,causalImagesPullPolicy=Always,causalImagesRegistry=$CAUSAL_REGISTRY,domain=$DOMAIN
+    --set enableAuthentication=false,domain=$DOMAIN
 
 # Add ingress
 helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
