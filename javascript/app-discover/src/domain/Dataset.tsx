@@ -111,7 +111,7 @@ function useWorkflow(table: ColumnTable | undefined): Workflow {
 	const steps = useDataProcessingSteps()
 	return useMemo<Workflow>(() => {
 		const res = new Workflow()
-		res.defaultInput = { id: '', table }
+		res.input = { id: '', table }
 		steps.forEach(s => res.addStep(s))
 		return res
 	}, [steps, table])
