@@ -4,6 +4,7 @@
  */
 import { Resource } from '@datashaper/workflow'
 import { Hypothesis } from '@showwhy/app-common'
+
 import type { CausalFactor } from '../types/causality/CausalFactor.js'
 import { CausalModelLevel } from '../types/causality/CausalModelLevel.js'
 import type { Estimator } from '../types/estimators/Estimator.js'
@@ -13,7 +14,7 @@ import type { PrimarySpecificationConfig } from '../types/experiments/PrimarySpe
 import type { CausalQuestion } from '../types/question/CausalQuestion.js'
 import type { DefaultDatasetResult } from '../types/workspace/DefaultDatasetResult.js'
 import { EXPOSURE_PROFILE } from './constants.js'
-import { ExposureResourceSchema } from './ExposureResourceSchema.js'
+import type { ExposureResourceSchema } from './ExposureResourceSchema.js'
 
 export class ExposureResource extends Resource {
 	public readonly $schema = ''

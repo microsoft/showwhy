@@ -3,16 +3,17 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import type {
-	ProfilePlugin,
 	AppProfileInitializationContext,
+	ProfilePlugin,
 } from '@datashaper/app-framework'
 import { CommandBarSection } from '@datashaper/app-framework'
 import type { DataPackage } from '@datashaper/workflow'
 import type { IContextualMenuItem } from '@fluentui/react'
+
 import { EXPOSURE_PROFILE } from './constants.js'
 import { ExposureAppRoot } from './ExposureAppRoot.js'
 import { ExposureResource } from './ExposureResource.js'
-import { ExposureResourceSchema } from './ExposureResourceSchema.js'
+import type { ExposureResourceSchema } from './ExposureResourceSchema.js'
 
 export class ExposureProfile implements ProfilePlugin<ExposureResource> {
 	public readonly profile = EXPOSURE_PROFILE
@@ -27,8 +28,8 @@ export class ExposureProfile implements ProfilePlugin<ExposureResource> {
 		this._dataPackage = dataPackage
 	}
 
-	public async createInstance(schema?: ExposureResourceSchema) {
-		return new ExposureResource(schema)
+	public createInstance(schema?: ExposureResourceSchema) {
+		return Promise.resolve(new ExposureResource(schema))
 	}
 
 	public getCommandBarCommands(
@@ -44,7 +45,7 @@ export class ExposureProfile implements ProfilePlugin<ExposureResource> {
 					key: this.profile,
 					text: `New ${this.title}`,
 					onClick: () => {
-						this.createInstance?.().then(resource => {
+						void this.createInstance?.().then(resource => {
 							resource.name = dp.suggestResourceName(resource.name)
 							dp.addResource(resource)
 						})

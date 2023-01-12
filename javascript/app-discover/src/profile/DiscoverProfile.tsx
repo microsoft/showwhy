@@ -3,15 +3,16 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import type {
-	ProfilePlugin,
 	AppProfileInitializationContext,
+	ProfilePlugin,
 } from '@datashaper/app-framework'
 import { CommandBarSection } from '@datashaper/app-framework'
 import type { DataPackage } from '@datashaper/workflow'
 import type { IContextualMenuItem } from '@fluentui/react'
-import { DiscoverResource } from './DiscoverResource.js'
+
 import { DiscoverAppRoot } from './DiscoverAppRoot.js'
-import { DiscoverResourceSchema } from './DiscoverResourceSchema.js'
+import { DiscoverResource } from './DiscoverResource.js'
+import type { DiscoverResourceSchema } from './DiscoverResourceSchema.js'
 
 const DISCOVERY_PROFILE = 'showwhy-discover'
 
@@ -27,8 +28,8 @@ export class DiscoverProfile implements ProfilePlugin<DiscoverResource> {
 		this._dataPackage = dataPackage
 	}
 
-	public async createInstance(schema?: DiscoverResourceSchema) {
-		return new DiscoverResource(schema)
+	public createInstance(schema?: DiscoverResourceSchema) {
+		return Promise.resolve(new DiscoverResource(schema))
 	}
 
 	public getCommandBarCommands(
@@ -44,7 +45,7 @@ export class DiscoverProfile implements ProfilePlugin<DiscoverResource> {
 					key: this.profile,
 					text: `New ${this.title}`,
 					onClick: () => {
-						this.createInstance?.().then(resource => {
+						void this.createInstance?.().then(resource => {
 							resource.name = dp.suggestResourceName(resource.name)
 							dp.addResource(resource)
 						})

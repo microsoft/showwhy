@@ -29,12 +29,14 @@ export class EventAnalysisProfile
 		this._dataPackage = dataPackage
 	}
 
-	public async createInstance(schema?: EventAnalysisResourceSchema) {
+	public createInstance(
+		schema?: EventAnalysisResourceSchema,
+	): Promise<EventAnalysisResource> {
 		const result = new EventAnalysisResource()
 		if (schema != null) {
 			result.loadSchema(schema)
 		}
-		return result
+		return Promise.resolve(result)
 	}
 
 	public getCommandBarCommands(
@@ -50,7 +52,7 @@ export class EventAnalysisProfile
 					key: this.profile,
 					text: `New ${this.title}`,
 					onClick: () => {
-						this.createInstance?.().then(resource => {
+						void this.createInstance?.().then(resource => {
 							resource.name = dp.suggestResourceName(resource.name)
 							dp.addResource(resource)
 						})

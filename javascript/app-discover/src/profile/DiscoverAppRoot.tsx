@@ -5,6 +5,7 @@
 import { RecoilBasedProfileHost } from '@datashaper/app-framework'
 import { memo, Suspense } from 'react'
 import type { MutableSnapshot, Snapshot } from 'recoil'
+
 import { CauseDis } from '../components/CauseDis.js'
 import { CauseDisErrorBoundary } from '../components/CauseDisErrorBoundary.js'
 import { DeciParamsState } from '../state/atoms/algorithms_params.js'
@@ -29,7 +30,7 @@ import {
 	useRehydrateRecoil,
 	WeightThresholdState,
 } from '../state/index.js'
-import { DiscoverResource } from './DiscoverResource.js'
+import type { DiscoverResource } from './DiscoverResource.js'
 
 export const DiscoverAppRoot: React.FC<{ resource: DiscoverResource }> = memo(
 	function DiscoverAppRoot({ resource }) {

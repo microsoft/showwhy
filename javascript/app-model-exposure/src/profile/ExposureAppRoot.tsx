@@ -15,7 +15,7 @@ import { estimatorState } from '../state/estimators.js'
 import { primarySpecificationConfigState } from '../state/primarySpecificationConfig.js'
 import { projectNameState } from '../state/projectName.js'
 import { selectedTableNameState } from '../state/selectedDataPackage.js'
-import { ExposureResource } from './ExposureResource.js'
+import type { ExposureResource } from './ExposureResource.js'
 
 export const ExposureAppRoot: React.FC<{
 	resource: ExposureResource

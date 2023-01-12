@@ -3,6 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { Resource } from '@datashaper/workflow'
+
 import { GraphViewStates } from '../components/graph/GraphViews.types.js'
 import type { DECIParams } from '../domain/Algorithms/DECI.js'
 import { CausalDiscoveryAlgorithm } from '../domain/CausalDiscovery/CausalDiscoveryAlgorithm.js'
@@ -13,7 +14,7 @@ import { EMPTY_CAUSAL_DISCOVERY_RESULT } from '../domain/CausalDiscovery/CausalD
 import type { Intervention } from '../domain/CausalInference.js'
 import type { NodePosition } from '../domain/NodePosition.js'
 import { DISCOVERY_PROFILE } from './constants.js'
-import { DiscoverResourceSchema } from './DiscoverResourceSchema.js'
+import type { DiscoverResourceSchema } from './DiscoverResourceSchema.js'
 
 export class DiscoverResource extends Resource {
 	public readonly $schema = ''
@@ -23,7 +24,7 @@ export class DiscoverResource extends Resource {
 		super()
 		this.loadSchema(schema)
 	}
-	
+
 	public defaultTitle(): string {
 		return 'Causal Discovery'
 	}

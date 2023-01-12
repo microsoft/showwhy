@@ -46,7 +46,7 @@ export const LoadDataset: React.FC = memo(function LoadDataset() {
 
 	useEffect(() => {
 		onDataTablesUpdate()
-	}, [dataTables])
+	}, [dataTables, onDataTablesUpdate])
 
 	return (
 		<SectionContainer>
