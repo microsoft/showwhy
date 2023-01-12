@@ -31,11 +31,10 @@ const HomePage: React.FC<HomePageProps> = memo(function HomePage({ profiles }) {
 			<DocumentCard
 				key={d.key}
 				onClick={() => {
-					const resource: Resource | undefined = profile.createResource?.()
-					if (resource != null) {
+					profile.createInstance?.().then(resource => {
 						resource.name = dataPackage.suggestResourceName(resource.name)
 						dataPackage.addResource(resource)
-					}
+					})
 				}}
 				style={documentCardStyle}
 			>
