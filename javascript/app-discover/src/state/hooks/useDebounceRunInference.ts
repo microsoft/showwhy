@@ -15,6 +15,7 @@ export type DebounceRunInferenceFn = (
 	interventions: Intervention[],
 	setInitialValues: SetterOrUpdater<Map<string, number>>,
 	setCausalInferenceResults: SetterOrUpdater<Map<string, number>>,
+	setErrorMessage: SetterOrUpdater<string | undefined>,
 ) => Promise<void>
 
 export function useDebounceRunInference(wait: number): DebounceRunInferenceFn {
@@ -26,15 +27,22 @@ export function useDebounceRunInference(wait: number): DebounceRunInferenceFn {
 			interventions: Intervention[],
 			setInitialValues: SetterOrUpdater<Map<string, number>>,
 			setCausalInferenceResults: SetterOrUpdater<Map<string, number>>,
+			setErrorMessage: SetterOrUpdater<string | undefined>,
 		) => {
-			const results = await runCausalInference(
-				interventionModelId,
-				confidenceThreshold,
-				weightThreshold,
-				interventions,
-			)
-			setInitialValues(results.baseline)
-			setCausalInferenceResults(results.intervention)
+			setErrorMessage(undefined)
+
+			try {
+				const results = await runCausalInference(
+					interventionModelId,
+					confidenceThreshold,
+					weightThreshold,
+					interventions,
+				)
+				setInitialValues(results.baseline)
+				setCausalInferenceResults(results.intervention)
+			} catch {
+				setErrorMessage('Something went wrong performing intervention')
+			}
 		},
 		{ wait },
 	)
