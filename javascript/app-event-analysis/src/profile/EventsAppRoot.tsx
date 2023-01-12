@@ -30,7 +30,7 @@ import {
 	TreatmentStartDatesState,
 	UnitsState,
 } from '../state/index.js'
-import { EventAnalysisResource } from './EventAnalysisResource.js'
+import type { EventAnalysisResource } from './EventAnalysisResource.js'
 
 export const EventsAppRoot: React.FC<{ resource: EventAnalysisResource }> = memo(
 	function EventsAppRoot({ resource }) {

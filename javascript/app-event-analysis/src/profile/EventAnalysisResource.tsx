@@ -4,7 +4,7 @@
  */
 import { Resource } from '@datashaper/workflow'
 import { Hypothesis } from '@showwhy/app-common'
-import { EVENTS_PROFILE } from './constants.js'
+
 import { DEFAULT_CHART_OPTIONS } from '../state/index.js'
 import type {
 	ChartOptions,
@@ -15,7 +15,8 @@ import type {
 } from '../types.js'
 import { CONFIGURATION_TABS, TimeAlignmentOptions } from '../types.js'
 import type { Record as DataRecord } from '../utils/csv.js'
-import { EventAnalysisResourceSchema } from './EventAnalysisResourceSchema.js'
+import { EVENTS_PROFILE } from './constants.js'
+import type { EventAnalysisResourceSchema } from './EventAnalysisResourceSchema.js'
 
 export class EventAnalysisResource extends Resource {
 	public readonly $schema = ''

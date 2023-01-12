@@ -3,15 +3,16 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import type {
-	ProfilePlugin,
 	AppProfileInitializationContext,
+	ProfilePlugin,
 } from '@datashaper/app-framework'
 import { CommandBarSection } from '@datashaper/app-framework'
 import type { DataPackage } from '@datashaper/workflow'
 import type { IContextualMenuItem } from '@fluentui/react'
+
 import { EVENTS_PROFILE } from './constants.js'
 import { EventAnalysisResource } from './EventAnalysisResource.js'
-import { EventAnalysisResourceSchema } from './EventAnalysisResourceSchema.js'
+import type { EventAnalysisResourceSchema } from './EventAnalysisResourceSchema.js'
 import { EventsAppRoot } from './EventsAppRoot.js'
 
 export class EventAnalysisProfile

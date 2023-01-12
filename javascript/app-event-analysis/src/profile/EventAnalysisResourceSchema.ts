@@ -3,8 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import type { ResourceSchema } from '@datashaper/schema'
-import { Hypothesis } from '@showwhy/app-common'
-import { EVENTS_PROFILE } from './constants.js'
+import type { Hypothesis } from '@showwhy/app-common'
+
 import type {
 	ChartOptions,
 	ColumnMapping,
@@ -13,6 +13,7 @@ import type {
 	Treatment,
 } from '../types.js'
 import type { Record as DataRecord } from '../utils/csv.js'
+import type { EVENTS_PROFILE } from './constants.js'
 
 export interface EventAnalysisResourceSchema extends ResourceSchema {
 	profile: typeof EVENTS_PROFILE
