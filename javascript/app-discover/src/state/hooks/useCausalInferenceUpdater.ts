@@ -12,6 +12,7 @@ import {
 	CausalInferenceResultState,
 	CausalInterventionsState,
 	ConfidenceThresholdState,
+	ErrorMessageState,
 	WeightThresholdState,
 } from '../atoms/index.js'
 import { useDebounceRunInference } from './useDebounceRunInference.js'
@@ -40,6 +41,7 @@ export function useCausalInferenceUpdater() {
 		CausalInferenceResultState,
 	)
 	const debounceRunInference = useDebounceRunInference(500)
+	const setErrorMessage = useSetRecoilState(ErrorMessageState)
 
 	useEffect(() => {
 		if (interventionModelId) {
@@ -55,6 +57,7 @@ export function useCausalInferenceUpdater() {
 				interventions,
 				setInitialValues,
 				setCausalInferenceResults,
+				setErrorMessage,
 			)
 		}
 	}, [
@@ -65,5 +68,6 @@ export function useCausalInferenceUpdater() {
 		interventions,
 		setCausalInferenceResults,
 		setInitialValues,
+		setErrorMessage,
 	])
 }
