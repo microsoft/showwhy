@@ -1777,15 +1777,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@datashaper/app-framework@npm:0.1.0, @datashaper/app-framework@npm:^0.1.0":
-  version: 0.1.0
-  resolution: "@datashaper/app-framework@npm:0.1.0"
+"@datashaper/app-framework@npm:0.1.1, @datashaper/app-framework@npm:^0.1.1":
+  version: 0.1.1
+  resolution: "@datashaper/app-framework@npm:0.1.1"
   dependencies:
-    "@datashaper/react": ^20.0.0
+    "@datashaper/react": ^20.0.1
     "@datashaper/schema": ^9.0.0
     "@datashaper/tables": ^6.0.0
     "@datashaper/utilities": ^2.4.0
-    "@datashaper/workflow": ^22.0.0
+    "@datashaper/workflow": ^22.0.1
     "@monaco-editor/react": ^4.4.6
     ahooks: ^3.7.4
     allotment: 1.17.0
@@ -1810,19 +1810,19 @@ __metadata:
     react-router-dom: ">= 6.4.3"
     recoil: ">= 0.7.6"
     styled-components: ">= 5.3.0"
-  checksum: ef15e9a60a5634a09fd6f395253cba72b9120b90667df1d632fee7b4d232217a404bf49eb678bedeee52c83b8b232d8a87ec92b33f21f9c66da0a1b42f038698
+  checksum: 7bdb44b326a0d55c0e29a3d0c51841f4c7bc30f8d1f60552e842e0f6726344a2e5170a9153867480d37779b02affc6ad5e136ec81c8d29dc2cbc57626cf1b7a7
   languageName: node
   linkType: hard
 
-"@datashaper/react@npm:^20.0.0":
-  version: 20.0.0
-  resolution: "@datashaper/react@npm:20.0.0"
+"@datashaper/react@npm:^20.0.1":
+  version: 20.0.1
+  resolution: "@datashaper/react@npm:20.0.1"
   dependencies:
     "@datashaper/schema": ^9.0.0
     "@datashaper/tables": ^6.0.0
     "@datashaper/utilities": ^2.4.0
     "@datashaper/verb-guidance": ^0.1.24
-    "@datashaper/workflow": ^22.0.0
+    "@datashaper/workflow": ^22.0.1
     "@essex/charts-react": ^1.1.4
     "@essex/components": ^3.5.3
     "@essex/styled-components": ^0.0.6
@@ -1848,7 +1848,7 @@ __metadata:
     arquero: ^5.1.0
     react: ^17.0.2
     styled-components: ^5.3.0
-  checksum: b4c21429eb46094d26fca829ab44c4a01a3641ff071df20ba5e51dc2f1be59514c434b005e40d3fa1b535c33b636eedebd9152b9edf39784f6b0cc79f980241b
+  checksum: ce95a2f1e114e4226bae4842711f8bd0f384ccab472c98de7185661eee104f11c9371ed9e1752eef3fbfbbdbd4bf5d014ee70de91f5885afef1b94444b43caa6
   languageName: node
   linkType: hard
 
@@ -1897,9 +1897,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@datashaper/workflow@npm:^22.0.0":
-  version: 22.0.0
-  resolution: "@datashaper/workflow@npm:22.0.0"
+"@datashaper/workflow@npm:^22.0.1":
+  version: 22.0.1
+  resolution: "@datashaper/workflow@npm:22.0.1"
   dependencies:
     "@datashaper/schema": ^9.0.0
     "@datashaper/tables": ^6.0.0
@@ -1917,7 +1917,7 @@ __metadata:
   peerDependenciesMeta:
     "@types/node":
       optional: true
-  checksum: 5988cd3c90ba51cc9322fa08ce1cc878cac9db50b9e3cca7c1a8548b44c6aeb50e925c1d1efbe2dfa2630fbf8dcb6cdc9dd4256a6a218b40b3305b4f4a5c51a5
+  checksum: aa10ad554e2ef8fc170da6d82d0ccaebcb6279e2e33692c73c195440839c21f43008d97f4435c141c7e0f17856ab504e5eb2a6ef7fc687b2641a00cc6b425847
   languageName: node
   linkType: hard
 
@@ -3572,12 +3572,12 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/app-common@workspace:javascript/app-common"
   dependencies:
-    "@datashaper/app-framework": 0.1.0
-    "@datashaper/react": ^20.0.0
+    "@datashaper/app-framework": 0.1.1
+    "@datashaper/react": ^20.0.1
     "@datashaper/schema": ^9.0.0
     "@datashaper/tables": ^6.0.0
     "@datashaper/utilities": ^2.4.0
-    "@datashaper/workflow": ^22.0.0
+    "@datashaper/workflow": ^22.0.1
     "@essex/components": ^3.5.3
     "@essex/scripts": ^22.2.1
     "@fluentui/react": ^8.104.5
@@ -3612,12 +3612,12 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/discover-app@workspace:javascript/app-discover"
   dependencies:
-    "@datashaper/app-framework": 0.1.0
-    "@datashaper/react": ^20.0.0
+    "@datashaper/app-framework": 0.1.1
+    "@datashaper/react": ^20.0.1
     "@datashaper/schema": ^9.0.0
     "@datashaper/tables": ^6.0.0
     "@datashaper/utilities": ^2.4.0
-    "@datashaper/workflow": ^22.0.0
+    "@datashaper/workflow": ^22.0.1
     "@essex-js-toolkit/hooks": ^4.0.3
     "@essex/components": ^3.5.3
     "@essex/hooks": ^4.0.15
@@ -3703,9 +3703,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/event-analysis-app@workspace:javascript/app-event-analysis"
   dependencies:
-    "@datashaper/app-framework": ^0.1.0
+    "@datashaper/app-framework": ^0.1.1
     "@datashaper/schema": ^9.0.0
-    "@datashaper/workflow": ^22.0.0
+    "@datashaper/workflow": ^22.0.1
     "@essex/components": ^3.5.3
     "@essex/hooks": ^4.0.15
     "@essex/scripts": ^22.2.1
@@ -3757,12 +3757,12 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/model-exposure-app@workspace:javascript/app-model-exposure"
   dependencies:
-    "@datashaper/app-framework": 0.1.0
-    "@datashaper/react": ^20.0.0
+    "@datashaper/app-framework": 0.1.1
+    "@datashaper/react": ^20.0.1
     "@datashaper/schema": ^9.0.0
     "@datashaper/tables": ^6.0.0
     "@datashaper/utilities": ^2.4.0
-    "@datashaper/workflow": ^22.0.0
+    "@datashaper/workflow": ^22.0.1
     "@essex/components": ^3.5.3
     "@essex/hooks": ^4.0.15
     "@essex/scripts": ^22.2.1
@@ -3856,11 +3856,11 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/webapp@workspace:javascript/webapp"
   dependencies:
-    "@datashaper/app-framework": 0.1.0
+    "@datashaper/app-framework": 0.1.1
     "@datashaper/schema": ^9.0.0
     "@datashaper/tables": ^6.0.0
     "@datashaper/utilities": ^2.4.0
-    "@datashaper/workflow": ^22.0.0
+    "@datashaper/workflow": ^22.0.1
     "@essex/components": ^3.5.3
     "@essex/hooks": ^4.0.15
     "@essex/scripts": ^22.2.1

@@ -282,6 +282,7 @@
 		},
         {
             "profile": "showwhy-model-exposure",
+            "title": "Exposure Analysis",
             "selectedTableName": "nhefs-exposure",
             "primarySpecification": {
                 "causalModel": "Maximum",
@@ -608,6 +609,7 @@
         },
         {
             "profile": "showwhy-discover",
+            "title": "CausalDiscovery",
             "datasetName": "nhefs-discovery",
             "causalGraph": {
                 "inModelColumnNames": [],
@@ -653,6 +655,7 @@
         },
         {
             "profile": "showwhy-events",
+            "title": "Event Analysis",
             "rawData": [],
             "columnMapping": {
                 "unit": "State",
