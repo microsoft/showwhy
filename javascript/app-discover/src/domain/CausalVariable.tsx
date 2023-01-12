@@ -75,7 +75,7 @@ export function arrayIncludesVariable(
 }
 
 export function inferMissingMetadataForTable(
-	table: ColumnTable,
+	table: ColumnTable | undefined,
 	existingMetadata?: CausalVariable[],
 ) {
 	const metadata: CausalVariable[] = []

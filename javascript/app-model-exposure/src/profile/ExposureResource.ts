@@ -61,7 +61,6 @@ export class ExposureResource extends Resource {
 	public override loadSchema(schema: ExposureResourceSchema | undefined) {
 		super.loadSchema(schema)
 		this.title = schema?.title ?? this.defaultTitle()
-		console.log("LEODHTNS", schema, schema?.title, schema?.name, this.defaultTitle(), this.defaultName())
 		this.projectName = schema?.projectName ?? 'Exposure Analysis'
 		this.causalFactors = schema?.causalFactors ?? []
 		this.defaultResult = schema?.defaultResult ?? { url: '' }

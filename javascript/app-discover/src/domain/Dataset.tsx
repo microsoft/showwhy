@@ -77,19 +77,18 @@ export function useDatasetLoader() {
 	useEffect(
 		function populateTableAndMetadata() {
 			setInputTable(tbl)
-			if (tbl != null) {
-				const metadata = inferMissingMetadataForTable(tbl)
-				setMetadataState(metadata)
-			}
+			console.log("tbs", tbl)
+			// const metadata = inferMissingMetadataForTable(tbl)
+			// setMetadataState(metadata)
 		},
 		[setInputTable, tbl, setMetadataState],
 	)
 
 	useEffect(
 		function listenToWorkflowOutput() {
-			const sub = workflow
-				.read$()
-				?.subscribe(t => setTable(t?.table ?? table([])))
+			const sub = workflow.output$?.subscribe(t =>
+				setTable(t?.table ?? table([])),
+			)
 			return () => sub.unsubscribe()
 		},
 		[workflow, setTable],
