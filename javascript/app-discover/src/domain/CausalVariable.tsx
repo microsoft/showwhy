@@ -100,23 +100,24 @@ export function inferMissingMetadataForColumn(
 	container: TableContainer | undefined,
 	columnName: string,
 	current?: CausalVariable,
-) {
+): CausalVariable {
 	const table = container?.table
-	if (table == null) {
-		return current
-	}
 	const name = current?.name ?? columnName
-	const min = current?.min ?? columnMin(table, columnName)
-	const max = current?.max ?? columnMax(table, columnName)
-	const mean = current?.mean ?? columnMean(table, columnName)
-	const mode = current?.mode ?? columnMode(table, columnName)
-	const count = current?.count ?? columnCountValid(table, columnName)
-	const magnitude = current?.magnitude ?? Math.max(Math.abs(max), Math.abs(min))
+	const min = current?.min ?? (table && columnMin(table, columnName))
+	const max = current?.max ?? (table && columnMax(table, columnName))
+	const mean = current?.mean ?? (table && columnMean(table, columnName))
+	const mode = current?.mode ?? (table && columnMode(table, columnName))
+	const count = current?.count ?? (table && columnCountValid(table, columnName))
+	const magnitude =
+		current?.magnitude ??
+		(max != null && min != null
+			? Math.max(Math.abs(max), Math.abs(min))
+			: undefined)
 	let columnDataNature = current?.columnDataNature
 	let mapping = current?.mapping
 	let nature = current?.nature
 
-	if (nature == null) {
+	if (nature == null && table != null) {
 		columnDataNature = inferColumnNature(table, columnName)
 
 		//
