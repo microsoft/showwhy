@@ -2,6 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import { TableContainer } from '@datashaper/tables'
 import { table as createTable } from 'arquero'
 import type ColumnTable from 'arquero/dist/types/table/column-table'
 
@@ -75,11 +76,11 @@ export function arrayIncludesVariable(
 }
 
 export function inferMissingMetadataForTable(
-	table: ColumnTable | undefined,
+	table: TableContainer | undefined,
 	existingMetadata?: CausalVariable[],
 ) {
 	const metadata: CausalVariable[] = []
-	table?.columnNames().forEach(columnName => {
+	table?.table?.columnNames().forEach(columnName => {
 		const existingMetadatum = existingMetadata?.find(
 			metadatum => metadatum.columnName === columnName,
 		)
@@ -88,58 +89,45 @@ export function inferMissingMetadataForTable(
 			columnName,
 			existingMetadatum,
 		)
-		metadata.push(completedMetadatum)
+		if (completedMetadatum != null) {
+			metadata.push(completedMetadatum)
+		}
 	})
 	return metadata
 }
 
 export function inferMissingMetadataForColumn(
-	table: ColumnTable,
+	container: TableContainer | undefined,
 	columnName: string,
-	existingMetadatum?: CausalVariable,
+	current?: CausalVariable,
 ) {
-	const name =
-		existingMetadatum?.name === undefined ? columnName : existingMetadatum.name
-	const min =
-		existingMetadatum?.min === undefined
-			? columnMin(table, columnName)
-			: existingMetadatum.min
-	const max =
-		existingMetadatum?.max === undefined
-			? columnMax(table, columnName)
-			: existingMetadatum.max
-	const mean =
-		existingMetadatum?.mean === undefined
-			? columnMean(table, columnName)
-			: existingMetadatum.mean
-	const mode =
-		existingMetadatum?.mode === undefined
-			? columnMode(table, columnName)
-			: existingMetadatum.mode
-	const count =
-		existingMetadatum?.count === undefined
-			? columnCountValid(table, columnName)
-			: existingMetadatum.count
-	const magnitude =
-		existingMetadatum?.magnitude === undefined
-			? Math.max(Math.abs(max), Math.abs(min))
-			: existingMetadatum.magnitude
+	const table = container?.table
+	if (table == null) {
+		return current
+	}
+	const name = current?.name ?? columnName
+	const min = current?.min ?? columnMin(table, columnName)
+	const max = current?.max ?? columnMax(table, columnName)
+	const mean = current?.mean ?? columnMean(table, columnName)
+	const mode = current?.mode ?? columnMode(table, columnName)
+	const count = current?.count ?? columnCountValid(table, columnName)
+	const magnitude = current?.magnitude ?? Math.max(Math.abs(max), Math.abs(min))
+	let columnDataNature = current?.columnDataNature
+	let mapping = current?.mapping
+	let nature = current?.nature
 
-	let mapping = existingMetadatum?.mapping
-	let columnDataNature: ColumnNature | undefined =
-		existingMetadatum?.columnDataNature
-	if (columnDataNature === undefined) {
-		const inferredColumnDataNature: ColumnNature = inferColumnNature(
-			table,
-			columnName,
-		)
+	if (nature == null) {
+		columnDataNature = inferColumnNature(table, columnName)
+
+		//
+		// TODO: determine why setting the 'nature' field causes hanging
+		//
+		// nature = columnDataNature.mostLikelyNature
 		if (
 			mapping === undefined &&
-			inferredColumnDataNature.mostLikelyNature ===
-				VariableNature.CategoricalNominal
+			columnDataNature.mostLikelyNature === VariableNature.CategoricalNominal
 		) {
-			const uniquePresentValues =
-				inferredColumnDataNature.uniquePresentValues || []
+			const uniquePresentValues = columnDataNature.uniquePresentValues ?? []
 			mapping = new Map(
 				uniquePresentValues.map(v => [
 					v,
@@ -147,18 +135,15 @@ export function inferMissingMetadataForColumn(
 				]),
 			)
 		}
-
-		columnDataNature = inferredColumnDataNature
-		delete columnDataNature.uniqueValues
-		delete columnDataNature.uniquePresentValues
+		columnDataNature = {
+			...columnDataNature,
+			uniquePresentValues: undefined,
+			uniqueValues: undefined,
+		}
 	}
 
-	const nature =
-		existingMetadatum?.nature === undefined
-			? columnDataNature.mostLikelyNature
-			: existingMetadatum.nature
 	return {
-		...existingMetadatum,
+		...current,
 		name,
 		nature,
 		max,

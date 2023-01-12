@@ -77,9 +77,8 @@ export function useDatasetLoader() {
 	useEffect(
 		function populateTableAndMetadata() {
 			setInputTable(tbl)
-			console.log("tbs", tbl)
-			// const metadata = inferMissingMetadataForTable(tbl)
-			// setMetadataState(metadata)
+			const metadata = inferMissingMetadataForTable(datatableOutput)
+			setMetadataState(metadata)
 		},
 		[setInputTable, tbl, setMetadataState],
 	)
