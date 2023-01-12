@@ -43,11 +43,7 @@ export const CauseDis = memo(function CauseDis() {
 			configRail={<AppLeftRail />}
 			detailRail={<AppRightRail />}
 			hidePanels={hidePanels}
-			menu={
-				<Suspense fallback={<PaddedSpinner label="Loading menubar..." />}>
-					<MenuBar />
-				</Suspense>
-			}
+			menu={<MenuBar />}
 		>
 			{errorMessage && (
 				<MessageBar messageBarType={MessageBarType.error}>
