@@ -33,12 +33,14 @@ export const ExposureAppRoot: React.FC<{
 })
 
 function loadState(resource: ExposureResource, { set }: MutableSnapshot) {
+	const ensureId = (f: any, index: number) => ({ ...f, id: f.id ?? `${index}` })
+
 	set(projectNameState, resource.projectName)
-	set(causalFactorsState, resource.causalFactors)
+	set(causalFactorsState, resource.causalFactors.map(ensureId))
 	set(defaultDatasetResultState, resource.defaultResult)
 	set(estimatorState, resource.estimators)
 	set(primarySpecificationConfigState, resource.primarySpecification)
-	set(definitionsState, resource.definitions)
+	set(definitionsState, resource.definitions.map(ensureId))
 	set(causalQuestionState, resource.question)
 	set(selectedTableNameState, resource.selectedTableName)
 }
