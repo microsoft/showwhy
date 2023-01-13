@@ -3,11 +3,9 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { useTableBundle, useTableBundleOutput } from '@datashaper/app-framework'
-import { Verb } from '@datashaper/schema'
+import type { TableContainer } from '@datashaper/tables'
 import type { Step, StepInput } from '@datashaper/workflow'
 import { Workflow } from '@datashaper/workflow'
-import { table } from 'arquero'
-import type ColumnTable from 'arquero/dist/types/table/column-table'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import {
 	useRecoilValue,
@@ -36,7 +34,7 @@ import type { RelationshipWithWeight } from './Relationship.js'
 export interface Dataset {
 	key: string
 	name: string
-	table: ColumnTable
+	table: TableContainer | undefined
 	variables: Map<string, CausalVariable>
 }
 
@@ -64,35 +62,31 @@ export function useDatasetLoader() {
 	const resetDataset = useResetRecoilState(DatasetState)
 	const setMetadataState = useSetRecoilState(MetadataState)
 	const setDatasetNameState = useSetRecoilState(DatasetNameState)
-	const setTable = useSetRecoilState(TableState)
+	const setDiscoveryTable = useSetRecoilState(TableState)
 
 	const datatable = useTableBundle(datasetName)
 	const datatableOutput = useTableBundleOutput(datatable)
 
-	const [inputTable, setInputTable] = useState<ColumnTable | undefined>()
+	const [inputTable, setInputTable] = useState<TableContainer | undefined>()
 	const workflow = useWorkflow(inputTable)
 
-	const tbl = datatableOutput?.table
+	const tbl = datatableOutput
 
 	useEffect(
 		function populateTableAndMetadata() {
 			setInputTable(tbl)
-			if (tbl != null) {
-				const metadata = inferMissingMetadataForTable(tbl)
-				setMetadataState(metadata)
-			}
+			const metadata = inferMissingMetadataForTable(datatableOutput)
+			setMetadataState(metadata)
 		},
 		[setInputTable, tbl, setMetadataState],
 	)
 
 	useEffect(
 		function listenToWorkflowOutput() {
-			const sub = workflow
-				.read$()
-				?.subscribe(t => setTable(t?.table ?? table([])))
+			const sub = workflow.output$?.subscribe(t => setDiscoveryTable(t))
 			return () => sub.unsubscribe()
 		},
-		[workflow, setTable],
+		[workflow, setDiscoveryTable],
 	)
 
 	return useCallback(
@@ -107,11 +101,11 @@ export function useDatasetLoader() {
 	)
 }
 
-function useWorkflow(table: ColumnTable | undefined): Workflow {
+function useWorkflow(table: TableContainer | undefined): Workflow {
 	const steps = useDataProcessingSteps()
 	return useMemo<Workflow>(() => {
 		const res = new Workflow()
-		res.defaultInput = { id: '', table }
+		res.input = table
 		steps.forEach(s => res.addStep(s))
 		return res
 	}, [steps, table])
@@ -121,22 +115,30 @@ function useDataProcessingSteps(): StepInput[] {
 	const metadata = useRecoilValue(MetadataState)
 	return useMemo<StepInput[]>(() => {
 		const result: StepInput[] = []
-		metadata.forEach(metadatum => {
-			if (
-				metadatum.nature === VariableNature.CategoricalNominal &&
-				metadatum.min != null &&
-				metadatum.max != null
-			) {
-				result.push({
-					verb: Verb.Onehot,
-					args: {
-						column: metadatum.columnName,
-						prefix: `${metadatum.columnName}: `,
-						preserveSource: true,
-					},
-				})
-			}
-		})
+		try {
+			metadata.forEach(metadatum => {
+				if (
+					metadatum.nature === VariableNature.CategoricalNominal &&
+					metadatum.min != null &&
+					metadatum.max != null
+				) {
+					//
+					// TODO: this last-mile one-hot encoding is causing browser hangs. Not sure what's up.
+					// 
+					// result.push({
+					// 	verb: Verb.Onehot,
+					// 	args: {
+					// 		column: metadatum.columnName,
+					// 		prefix: `${metadatum.columnName}: `,
+					// 		preserveSource: true,
+					// 	},
+					// })
+				}
+			})
+		} catch (e) {
+			console.error('onehot err', e)
+			throw e
+		}
 		return result
 	}, [metadata])
 }
@@ -145,14 +147,13 @@ export function createDatasetFromTable(
 	key: string,
 	name: string,
 	metadata: CausalVariable[],
-	inputTable: ColumnTable | undefined,
+	table: TableContainer | undefined,
 ) {
-	const variables = createVariablesFromTable(key, inputTable, metadata)
 	return {
 		key,
 		name,
-		variables,
-		table: inputTable ?? table({}),
+		variables: createVariablesFromTable(key, table, metadata),
+		table,
 	}
 }
 

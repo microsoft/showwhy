@@ -77,7 +77,7 @@ export const ConstraintsPanel: React.FC = memo(function ConstraintsPanel() {
 
 	const hasAnyConstraints =
 		dataTable !== undefined &&
-		dataTable?.numCols() !== 0 &&
+		dataTable?.table?.numCols() !== 0 &&
 		(!!savedConstraints.length ||
 			!!removedConstraints.length ||
 			!!causeConstraints.length ||
@@ -85,7 +85,7 @@ export const ConstraintsPanel: React.FC = memo(function ConstraintsPanel() {
 
 	return hasAnyConstraints ? (
 		<Container>
-			<Divider></Divider>
+			<Divider />
 
 			{(!!savedConstraints.length || !!removedConstraints.length) && (
 				<Divider>Edge constraints</Divider>
@@ -98,7 +98,7 @@ export const ConstraintsPanel: React.FC = memo(function ConstraintsPanel() {
 			{savedConstraints}
 			{!!removedConstraints.length && <Label>Disallowed</Label>}
 			{removedConstraints}
-			<Divider></Divider>
+			<Divider />
 			<ClearConstraintsButton onClick={resetConstraints}>
 				Clear all constraints
 			</ClearConstraintsButton>
