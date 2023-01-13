@@ -3,12 +3,9 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { useTableBundle, useTableBundleOutput } from '@datashaper/app-framework'
-import { Verb } from '@datashaper/schema'
-import { TableContainer } from '@datashaper/tables'
+import type { TableContainer } from '@datashaper/tables'
 import type { Step, StepInput } from '@datashaper/workflow'
 import { Workflow } from '@datashaper/workflow'
-import { table } from 'arquero'
-import type ColumnTable from 'arquero/dist/types/table/column-table'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import {
 	useRecoilValue,
