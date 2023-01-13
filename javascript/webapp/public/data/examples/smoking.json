@@ -15,6 +15,335 @@
                     }
                 },
                 {
+					"$schema": "https://microsoft.github.io/datashaper/schema/codebook/v1.0.0.json",
+					"id": "afe1c7d9-0f3e-44cb-9e22-6c3c6ff24427",
+					"name": "Codebook",
+					"profile": "codebook",
+					"title": "codebook.json",
+					"fields": [
+					  {
+						"name": "seqn",
+						"type": "number",
+						"nature": "discrete"
+					  },
+					  {
+						"name": "qsmk",
+						"type": "number",
+						"nature": "binary"
+					  },
+					  {
+						"name": "death",
+						"type": "number",
+						"nature": "binary"
+					  },
+					  {
+						"name": "yrdth",
+						"type": "number",
+						"nature": "discrete"
+					  },
+					  {
+						"name": "modth",
+						"type": "number",
+						"nature": "discrete"
+					  },
+					  {
+						"name": "dadth",
+						"type": "number",
+						"nature": "discrete"
+					  },
+					  {
+						"name": "sbp",
+						"type": "number",
+						"nature": "discrete"
+					  },
+					  {
+						"name": "dbp",
+						"type": "number",
+						"nature": "discrete"
+					  },
+					  {
+						"name": "sex",
+						"type": "number",
+						"nature": "binary"
+					  },
+					  {
+						"name": "age",
+						"type": "number",
+						"nature": "discrete"
+					  },
+					  {
+						"name": "race",
+						"type": "number",
+						"nature": "binary"
+					  },
+					  {
+						"name": "income",
+						"type": "number",
+						"nature": "discrete"
+					  },
+					  {
+						"name": "marital",
+						"type": "number",
+						"nature": "discrete"
+					  },
+					  {
+						"name": "school",
+						"type": "number",
+						"nature": "discrete"
+					  },
+					  {
+						"name": "education",
+						"type": "number",
+						"nature": "discrete"
+					  },
+					  {
+						"name": "ht",
+						"type": "number",
+						"nature": "continuous"
+					  },
+					  {
+						"name": "wt71",
+						"type": "number",
+						"nature": "continuous"
+					  },
+					  {
+						"name": "wt82",
+						"type": "number",
+						"nature": "continuous"
+					  },
+					  {
+						"name": "wt82_71",
+						"type": "number",
+						"nature": "continuous"
+					  },
+					  {
+						"name": "birthplace",
+						"type": "number",
+						"nature": "discrete"
+					  },
+					  {
+						"name": "smokeintensity",
+						"type": "number",
+						"nature": "discrete"
+					  },
+					  {
+						"name": "smkintensity82_71",
+						"type": "number",
+						"nature": "discrete"
+					  },
+					  {
+						"name": "smokeyrs",
+						"type": "number",
+						"nature": "discrete"
+					  },
+					  {
+						"name": "asthma",
+						"type": "number",
+						"nature": "binary"
+					  },
+					  {
+						"name": "bronch",
+						"type": "number",
+						"nature": "binary"
+					  },
+					  {
+						"name": "tb",
+						"type": "number",
+						"nature": "binary"
+					  },
+					  {
+						"name": "hf",
+						"type": "number",
+						"nature": "binary"
+					  },
+					  {
+						"name": "hbp",
+						"type": "number",
+						"nature": "discrete"
+					  },
+					  {
+						"name": "pepticulcer",
+						"type": "number",
+						"nature": "binary"
+					  },
+					  {
+						"name": "colitis",
+						"type": "number",
+						"nature": "binary"
+					  },
+					  {
+						"name": "hepatitis",
+						"type": "number",
+						"nature": "binary"
+					  },
+					  {
+						"name": "chroniccough",
+						"type": "number",
+						"nature": "binary"
+					  },
+					  {
+						"name": "hayfever",
+						"type": "number",
+						"nature": "binary"
+					  },
+					  {
+						"name": "diabetes",
+						"type": "number",
+						"nature": "discrete"
+					  },
+					  {
+						"name": "polio",
+						"type": "number",
+						"nature": "binary"
+					  },
+					  {
+						"name": "tumor",
+						"type": "number",
+						"nature": "binary"
+					  },
+					  {
+						"name": "nervousbreak",
+						"type": "number",
+						"nature": "binary"
+					  },
+					  {
+						"name": "alcoholpy",
+						"type": "number",
+						"nature": "discrete"
+					  },
+					  {
+						"name": "alcoholfreq",
+						"type": "number",
+						"nature": "discrete"
+					  },
+					  {
+						"name": "alcoholtype",
+						"type": "number",
+						"nature": "discrete"
+					  },
+					  {
+						"name": "alcoholhowmuch",
+						"type": "number",
+						"nature": "discrete"
+					  },
+					  {
+						"name": "pica",
+						"type": "number",
+						"nature": "ordinal"
+					  },
+					  {
+						"name": "headache",
+						"type": "number",
+						"nature": "binary"
+					  },
+					  {
+						"name": "otherpain",
+						"type": "number",
+						"nature": "binary"
+					  },
+					  {
+						"name": "weakheart",
+						"type": "number",
+						"nature": "binary"
+					  },
+					  {
+						"name": "allergies",
+						"type": "number",
+						"nature": "binary"
+					  },
+					  {
+						"name": "nerves",
+						"type": "number",
+						"nature": "binary"
+					  },
+					  {
+						"name": "lackpep",
+						"type": "number",
+						"nature": "binary"
+					  },
+					  {
+						"name": "hbpmed",
+						"type": "number",
+						"nature": "discrete"
+					  },
+					  {
+						"name": "boweltrouble",
+						"type": "number",
+						"nature": "ordinal"
+					  },
+					  {
+						"name": "wtloss",
+						"type": "number",
+						"nature": "binary"
+					  },
+					  {
+						"name": "infection",
+						"type": "number",
+						"nature": "binary"
+					  },
+					  {
+						"name": "active",
+						"type": "number",
+						"nature": "ordinal"
+					  },
+					  {
+						"name": "exercise",
+						"type": "number",
+						"nature": "discrete"
+					  },
+					  {
+						"name": "birthcontrol",
+						"type": "number",
+						"nature": "discrete"
+					  },
+					  {
+						"name": "pregnancies",
+						"type": "number",
+						"nature": "discrete"
+					  },
+					  {
+						"name": "cholesterol",
+						"type": "number",
+						"nature": "discrete"
+					  },
+					  {
+						"name": "hightax82",
+						"type": "number",
+						"nature": "binary"
+					  },
+					  {
+						"name": "price71",
+						"type": "number",
+						"nature": "continuous"
+					  },
+					  {
+						"name": "price82",
+						"type": "number",
+						"nature": "continuous"
+					  },
+					  {
+						"name": "tax71",
+						"type": "number",
+						"nature": "continuous"
+					  },
+					  {
+						"name": "tax82",
+						"type": "number",
+						"nature": "continuous"
+					  },
+					  {
+						"name": "price71_82",
+						"type": "number",
+						"nature": "continuous"
+					  },
+					  {
+						"name": "tax71_82",
+						"type": "number",
+						"nature": "continuous"
+					  }
+					]
+				  },
+                {
                     "profile": "workflow",
                     "steps": [
                         {
