@@ -3,6 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { useTableBundle, useTableBundleOutput } from '@datashaper/app-framework'
+import { Verb } from '@datashaper/schema'
 import type { TableContainer } from '@datashaper/tables'
 import type { Step, StepInput } from '@datashaper/workflow'
 import { Workflow } from '@datashaper/workflow'
@@ -13,6 +14,7 @@ import {
 	useResetRecoilState,
 	useSetRecoilState,
 } from 'recoil'
+import { from } from 'rxjs'
 
 import { VariableNature } from '../domain/VariableNature.js'
 import {
@@ -104,8 +106,9 @@ export function useDatasetLoader() {
 function useWorkflow(table: TableContainer | undefined): Workflow {
 	const steps = useDataProcessingSteps()
 	return useMemo<Workflow>(() => {
+		console.log("new wf")
 		const res = new Workflow()
-		res.input = table
+		res.input$ = from([table])
 		steps.forEach(s => res.addStep(s))
 		return res
 	}, [steps, table])
@@ -115,30 +118,27 @@ function useDataProcessingSteps(): StepInput[] {
 	const metadata = useRecoilValue(MetadataState)
 	return useMemo<StepInput[]>(() => {
 		const result: StepInput[] = []
-		try {
-			metadata.forEach(metadatum => {
-				if (
-					metadatum.nature === VariableNature.CategoricalNominal &&
-					metadatum.min != null &&
-					metadatum.max != null
-				) {
-					//
-					// TODO: this last-mile one-hot encoding is causing browser hangs. Not sure what's up.
-					// 
-					// result.push({
-					// 	verb: Verb.Onehot,
-					// 	args: {
-					// 		column: metadatum.columnName,
-					// 		prefix: `${metadatum.columnName}: `,
-					// 		preserveSource: true,
-					// 	},
-					// })
+		metadata.forEach(metadatum => {
+			if (
+				metadatum.nature === VariableNature.CategoricalNominal &&
+				metadatum.min != null &&
+				metadatum.max != null
+			) {
+				const step = {
+					verb: Verb.Onehot,
+					args: {
+						column: metadatum.columnName,
+						prefix: `${metadatum.columnName}: `,
+						preserveSource: true,
+					},
 				}
-			})
-		} catch (e) {
-			console.error('onehot err', e)
-			throw e
-		}
+				console.log('not applying new step', step)
+				//
+				// TODO: this last-mile one-hot encoding is causing browser hangs. Not sure what's up.
+				//
+				// result.push(step)
+			}
+		})
 		return result
 	}, [metadata])
 }

@@ -160,9 +160,7 @@
                             "args": {
                                 "type": "float",
                                 "formatPattern": "%Y-%m-%d",
-                                "columns": [
-                                    "weight_change"
-                                ]
+                                "column": "weight_change"
                             }
                         }
                     ]
@@ -182,15 +180,33 @@
                     "steps": [
                         {
                             "verb": "erase",
-                            "description": "Maps several columns' null code of 2 to actual nulls",
+                            "description": "Maps birthcontrol null code of 2 to actual nulls",
                             "args": {
-                                "columns": [
-                                    "birthcontrol",
-                                    "boweltrouble",
-                                    "diabetes",
-                                    "hbp",
-                                    "hbpmed"
-                                ],
+                                "column": "birthcontrol",
+                                "value": 2
+                            }
+                        },
+                        {
+                            "verb": "erase",
+                            "description": "Maps diabetes null code of 2 to actual nulls",
+                            "args": {
+                                "column": "diabetes",
+                                "value": 2
+                            }
+                        },
+                        {
+                            "verb": "erase",
+                            "description": "Maps hbp null code of 2 to actual nulls",
+                            "args": {
+                                "column": "hbp",
+                                "value": 2
+                            }
+                        },
+                        {
+                            "verb": "erase",
+                            "description": "Maps hbpmed null code of 2 to actual nulls",
+                            "args": {
+                                "column": "hbpmed",
                                 "value": 2
                             }
                         },
@@ -263,23 +279,23 @@
             ]
         },
         {
-			"name": "california-prop99",
-			"profile": "tablebundle",
-			"sources": [
-				{
-					"rel": "input",
-					"profile": "datatable",
-					"path": "https://cdn.jsdelivr.net/gh/synth-inference/synthdid@master/data/california_prop99.csv",
-					"metadata": {
-						"source": "https://www.openicpsr.org/openicpsr/project/146381/version/V1/view?path=/openicpsr/146381/fcr:versions/V1/synthdid-sdid-paper/data/california_prop99.csv",
-						"citation": " Dmitry Arkhangelsky, CEMFI; Susan Athey, Stanford University; David A. Hirshberg, Emory University; Guido W. Imbens, Stanford University; Stefan Wager, Stanford University"
-					},
-					"parser": {
-						"delimiter": ";"
-					}
-				}
-			]
-		},
+            "name": "california-prop99",
+            "profile": "tablebundle",
+            "sources": [
+                {
+                    "rel": "input",
+                    "profile": "datatable",
+                    "path": "https://cdn.jsdelivr.net/gh/synth-inference/synthdid@master/data/california_prop99.csv",
+                    "metadata": {
+                        "source": "https://www.openicpsr.org/openicpsr/project/146381/version/V1/view?path=/openicpsr/146381/fcr:versions/V1/synthdid-sdid-paper/data/california_prop99.csv",
+                        "citation": " Dmitry Arkhangelsky, CEMFI; Susan Athey, Stanford University; David A. Hirshberg, Emory University; Guido W. Imbens, Stanford University; Stefan Wager, Stanford University"
+                    },
+                    "parser": {
+                        "delimiter": ";"
+                    }
+                }
+            ]
+        },
         {
             "profile": "showwhy-model-exposure",
             "name": "Exposure Analysis",
