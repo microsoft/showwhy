@@ -119,11 +119,7 @@ export function inferMissingMetadataForColumn(
 
 	if (nature == null && table != null) {
 		columnDataNature = inferColumnNature(table, columnName)
-
-		//
-		// TODO: determine why setting the 'nature' field causes hanging
-		//
-		// nature = columnDataNature.mostLikelyNature
+		nature = columnDataNature.mostLikelyNature
 		if (
 			mapping === undefined &&
 			columnDataNature.mostLikelyNature === VariableNature.CategoricalNominal
@@ -161,12 +157,12 @@ export function inferMissingMetadataForColumn(
 
 export function createVariablesFromTable(
 	datasetKey: string,
-	table: ColumnTable | undefined,
+	container: TableContainer | undefined,
 	metadata: CausalVariable[],
 ) {
-	table = table ?? createTable({})
+	const table = container?.table
 	const variables = new Map()
-	const inferredMetadata = inferMissingMetadataForTable(table, metadata)
+	const inferredMetadata = inferMissingMetadataForTable(container, metadata)
 
 	for (const colName of table?.columnNames() ?? []) {
 		const meta = metadata?.find(md => md.columnName === colName)
