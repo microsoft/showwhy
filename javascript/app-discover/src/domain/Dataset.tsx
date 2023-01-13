@@ -106,7 +106,6 @@ export function useDatasetLoader() {
 function useWorkflow(table: TableContainer | undefined): Workflow {
 	const steps = useDataProcessingSteps()
 	return useMemo<Workflow>(() => {
-		console.log("new wf")
 		const res = new Workflow()
 		res.input$ = from([table])
 		steps.forEach(s => res.addStep(s))
@@ -124,6 +123,7 @@ function useDataProcessingSteps(): StepInput[] {
 				metadatum.min != null &&
 				metadatum.max != null
 			) {
+				console.log(metadatum)
 				const step = {
 					verb: Verb.Onehot,
 					args: {
@@ -132,11 +132,7 @@ function useDataProcessingSteps(): StepInput[] {
 						preserveSource: true,
 					},
 				}
-				console.log('not applying new step', step)
-				//
-				// TODO: this last-mile one-hot encoding is causing browser hangs. Not sure what's up.
-				//
-				// result.push(step)
+				result.push(step)
 			}
 		})
 		return result
