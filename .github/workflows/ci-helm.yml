@@ -9,20 +9,23 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
 
     steps:
-      - uses: actions/checkout@v2
+    #
+    # Deploy Helm Chart
+    #
+    - task: HelmInstaller@0
+      displayName: "Install Helm 3.9.0"
+      inputs:
+        helmVersion: 3.9.0
 
-      - name: Install helm
-        uses: Azure/setup-helm@v1
-        with:
-          version: 3.10.2
-
-      - name: Package chart
-        run: |
-          helm package ./config/helm/causal-services
+    - task: HelmDeploy@0
+      displayName: "Validate helm package"
+      inputs:
+        command: package
+        chartPath: "config/helm/causal-services"
+        destination: "config/helm/dist"
+        save: false
 
       - name: Login to ghcr using helm
         run: |
@@ -30,5 +33,5 @@ jobs:
      
       - name: Push to ghcr
         run: |
-          export CHART_VERSION=$(grep 'version:' ./config/helm/causal-services | tail -n1 | awk '{ print $2}')
-          helm push causal-services-${CHART_VERSION}.tgz oci://ghcr.io/microsoft/showwhy-helm
+          export CHART_VERSION=$(grep 'version:' ./config/helm/causal-services/Chart.yaml | tail -n1 | awk '{ print $2}')
+          helm push config/helm/dist/causal-services-${CHART_VERSION}.tgz oci://ghcr.io/microsoft/showwhy-helm
