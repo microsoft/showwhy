@@ -28,8 +28,7 @@ jobs:
         destination: "config/helm/dist"
         save: false
 
-    - run: |
-        echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
+    - run: echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
       name: Login to ghcr using helm
     
     - run: |
