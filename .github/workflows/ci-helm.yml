@@ -15,8 +15,10 @@ jobs:
 
       - name: login to ghcr using helm
         shell: bash    
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          echo ${{secrets.GITHUB_TOKEN}} | helm registry login ghcr.io --username ${{ github.repository_owner }} --password-stdin
+          echo ${{input.TOKEN}} | helm registry login ghcr.io --username ${{ github.repository_owner }} --password-stdin
 
       - name: Helm Chart
         env:
