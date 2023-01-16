@@ -16,21 +16,15 @@ jobs:
       - name: login to ghcr using helm
         shell: bash    
         run: |
-          echo ${{ secrets.GITHUB_TOKEN }} | helm registry login ghcr.io --username ${{ github.repository_owner }} --password-stdin
+          echo ${{secrets.GITHUB_TOKEN}} | helm registry login ghcr.io --username ${{ github.repository_owner }} --password-stdin
 
-      - name: Install PyBump
-        run: |
-          python3 -m pip install pybump
-        shell: bash
-        
       - name: Helm Chart
         env:
           GCR_IMAGE: ghcr.io/microsoft/showwhy-helm
           CHART_PATH: config/helm/causal-services
-          HELM_EXPERIMENTAL_OCI: "1"
         run : |
-          version=$(pybump get --file ${{ env.CHART_PATH }}/Chart.yaml)
-          helm package ${{ env.CHART_PATH }} --version $version
-          echo pushing $(basename ${{ env.CHART_PATH }})-$version.tgz to oci://$GCR_IMAGE
-          helm push $(basename ${{ env.CHART_PATH }})-$version.tgz oci://$GCR_IMAGE
+          export CHART_VERSION=$(grep 'version:' ${{ env.CHART_PATH }} | tail -n1 | awk '{ print $2}')
+          helm package ${{ env.CHART_PATH }} --version ${CHART_VERSION}
+          echo pushing $(basename ${{ env.CHART_PATH }})-${CHART_VERSION}.tgz to oci://$GCR_IMAGE
+          helm push $(basename ${{ env.CHART_PATH }})-${CHART_VERSION}.tgz oci://$GCR_IMAGE
         shell: bash
