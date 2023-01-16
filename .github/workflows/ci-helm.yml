@@ -1,0 +1,34 @@
+name: Python CI
+on:
+  push:
+    branches: [azure]
+  pull_request:
+    paths:
+      - 'config/**/*'
+      - .github/workflows/ci-helm.yml
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install helm
+        uses: Azure/setup-helm@v1
+        with:
+          version: 3.10.2
+
+      - name: Package chart
+        run: |
+          helm package ./config/helm/causal-services
+
+      - name: Login to ghcr using helm
+        run: |
+          echo ${{ secrets.GITHUB_TOKEN }} | docker login login ghcr.io -u ${{ github.repository_owner }} --password-stdin
+     
+      - name: Push to ghcr
+        run: |
+          export CHART_VERSION=$(grep 'version:' ./config/helm/causal-services | tail -n1 | awk '{ print $2}')
+          helm push causal-services-${CHART_VERSION}.tgz oci://ghcr.io/microsoft/showwhy-helm
