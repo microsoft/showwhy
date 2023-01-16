@@ -15,14 +15,14 @@ export const ContinuousComparisonChart: React.FC<ComparisonChartProps> = memo(
 		sourceVariable,
 		targetVariable,
 	}) {
-		const preparedData = table
-			.select([sourceVariable.columnName, targetVariable.columnName])
+		const preparedData = table.table
+			?.select([sourceVariable.columnName, targetVariable.columnName])
 			.objects()
 
 		const spec = useVisualizationSpec(
 			sourceVariable,
 			targetVariable,
-			preparedData,
+			preparedData ?? [],
 		)
 		return <Vega mode={'vega'} spec={spec} actions={false} renderer={'svg'} />
 	},

@@ -50,8 +50,8 @@ export const DerivedMetadataState = selector<CausalVariable[]>({
 						}
 					}
 
-					const completedMetadatum = table
-						.columnNames()
+					const completedMetadatum = table?.table
+						?.columnNames()
 						.includes(variableMapping)
 						? inferMissingMetadataForColumn(
 								table,

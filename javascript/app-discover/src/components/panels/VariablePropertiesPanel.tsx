@@ -99,13 +99,14 @@ export const VariablePropertiesPanel: React.FC<VariablePropertiesPanelProps> =
 			)
 		}
 
+		const colTable = dataset.table?.table
 		return (
 			<Container>
 				<Section>
 					<Text variant={'medium'} block>
 						{variable.name}
 					</Text>
-					<Chart table={dataset.table} variable={variable} />
+					{colTable ? <Chart table={colTable} variable={variable} /> : null}
 					<Stack tokens={panel_stack_tokens}>
 						<Text variant={'small'} block>
 							{variable.description}

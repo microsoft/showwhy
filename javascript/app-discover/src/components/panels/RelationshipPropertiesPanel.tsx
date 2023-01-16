@@ -55,14 +55,14 @@ export const RelationshipPropertiesPanel: React.FC<RelationshipPropertiesPanelPr
 					<Text variant={'medium'} block>
 						{relationship.name}
 					</Text>
-					{sourceAndTargetExistInDataset && (
+					{sourceAndTargetExistInDataset && dataset.table && (
 						<ComparisonChart
 							table={dataset.table}
 							sourceVariable={sourceVariable}
 							targetVariable={targetVariable}
 						/>
 					)}
-					<Separator></Separator>
+					<Separator />
 					{relationship.weight !== undefined && (
 						<Text variant={'small'} block>
 							Normalized causal weight: {relationship.weight.toFixed(3)}

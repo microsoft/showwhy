@@ -309,7 +309,7 @@ export const useProcessedInputData = (columnMapping: ColumnMapping) => {
 			setAggTreatment(null)
 		}
 		isInitialRender.current = false
-	}, [columnMapping.treated])
+	}, [columnMapping.treated, setAggTreatment])
 
 	return useMemo(
 		() => ({

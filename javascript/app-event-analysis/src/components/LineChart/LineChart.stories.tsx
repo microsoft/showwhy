@@ -24,4 +24,4 @@ const Template: ComponentStory<typeof LineChart> = (args: LineChartProps) => {
 }
 
 export const LineChartStory = Template.bind({})
-LineChart.storyName = 'Line Chart'
+LineChartStory.storyName = 'Line Chart'

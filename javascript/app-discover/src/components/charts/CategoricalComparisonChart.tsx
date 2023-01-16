@@ -15,15 +15,16 @@ export const CategoricalComparisonChart: React.FC<ComparisonChartProps> = memo(
 		sourceVariable,
 		targetVariable,
 	}: ComparisonChartProps) {
-		const preparedData = applyMappingsFromRelationshipToTable(
+		const columnTable = table.table
+		const preparedData = columnTable && applyMappingsFromRelationshipToTable(
 			sourceVariable,
 			targetVariable,
-			table,
+			columnTable,
 		).objects()
 		const spec = useVisualizationSpec(
 			sourceVariable,
 			targetVariable,
-			preparedData,
+			preparedData ?? [],
 		)
 		return <Vega mode={'vega'} spec={spec} actions={false} renderer={'svg'} />
 	},

@@ -83,10 +83,13 @@ export function getVariablePairs(table: ColumnTable) {
 }
 
 export function correlationsInTable(
-	table: ColumnTable,
+	table: ColumnTable | undefined,
 	maxSampleSize?: number,
 	useWorker = false,
 ): Promise<RelationshipWithWeight[]> {
+	if (!table) {
+		return Promise.resolve([])
+	}
 	if (useWorker) {
 		const allVariablePairs = getVariablePairs(table)
 		const sampledTable = maxSampleSize ? table.sample(maxSampleSize) : table

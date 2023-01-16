@@ -112,9 +112,11 @@ const AllCausalVariablesListInternal: React.FC = memo(
 				const [sourceName2, variableName2] = getNames(cv2)
 				if (sourceName1 === sourceName2) {
 					return variableName1.localeCompare(variableName2)
+				} else if (sourceName1 != null) {
+					return sourceName1.localeCompare(sourceName2)
+				} else {
+					return -1
 				}
-
-				return sourceName1.localeCompare(sourceName2)
 			})
 			setSortedVariables(sortedVars)
 		}, [allVariables])
