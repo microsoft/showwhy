@@ -11,27 +11,26 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
-    #
-    # Deploy Helm Chart
-    #
-    - task: HelmInstaller@0
-      displayName: "Install Helm 3.9.0"
-      inputs:
-        helmVersion: 3.9.0
+      - uses: azure/setup-helm@v3
 
-    - task: HelmDeploy@0
-      displayName: "Validate helm package"
-      inputs:
-        command: package
-        chartPath: "config/helm/causal-services"
-        destination: "config/helm/dist"
-        save: false
+      - name: login to ghcr using helm
+        shell: bash    
+        run: |
+          echo ${{ secrets.GITHUB_TOKEN }} | helm registry login ghcr.io --username ${{ github.repository_owner }} --password-stdin
 
-    - run: echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
-      name: Login to ghcr using helm
-    
-    - run: |
-        export CHART_VERSION=$(grep 'version:' ./config/helm/causal-services/Chart.yaml | tail -n1 | awk '{ print $2}')
-        helm push config/helm/dist/causal-services-${CHART_VERSION}.tgz oci://ghcr.io/microsoft/showwhy-helm
-      name: Push to ghcr
+      - name: Install PyBump
+        run: |
+          python3 -m pip install pybump
+        shell: bash
+        
+      - name: Helm Chart
+        env:
+          GCR_IMAGE: ghcr.io/microsoft/showwhy-helm
+          CHART_PATH: config/helm/causal-services
+          HELM_EXPERIMENTAL_OCI: "1"
+        run : |
+          version=$(pybump get --file ${{ CHART_PATH }}/Chart.yaml)
+          helm package ${{ CHART_PATH }} --version $version
+          echo pushing $(basename ${{ CHART_PATH }})-$version.tgz to oci://$GCR_IMAGE
+          helm push $(basename ${{ CHART_PATH }})-$version.tgz oci://$GCR_IMAGE
+        shell: bash
