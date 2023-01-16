@@ -11,16 +11,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: azure/setup-helm@v3
-        with: 
-          token: ${{ secrets.GITHUB_TOKEN }} # only needed if version is 'latest'
-
-      # - name: login to ghcr using helm
-      #   shell: bash    
-      #   env:
-      #   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-      #   run: |
-      #     echo ${{env.GITHUB_TOKEN}} | helm registry login ghcr.io --username ${{ github.repository_owner }} --password-stdin
+      - uses: HelmInstaller@0
+        displayName: "Install Helm 3.9.0"
+        inputs:
+          helmVersion: 3.9.0
+          
+      - name: login to ghcr using helm
+        shell: bash    
+        env:
+        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        run: |
+          echo ${{env.GITHUB_TOKEN}} | helm registry login ghcr.io --username ${{ github.repository_owner }} --password-stdin
 
       - name: Helm Chart
         env:
