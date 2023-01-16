@@ -29,8 +29,8 @@ jobs:
           CHART_PATH: config/helm/causal-services
           HELM_EXPERIMENTAL_OCI: "1"
         run : |
-          version=$(pybump get --file ${{ CHART_PATH }}/Chart.yaml)
-          helm package ${{ CHART_PATH }} --version $version
-          echo pushing $(basename ${{ CHART_PATH }})-$version.tgz to oci://$GCR_IMAGE
-          helm push $(basename ${{ CHART_PATH }})-$version.tgz oci://$GCR_IMAGE
+          version=$(pybump get --file ${{ env.CHART_PATH }}/Chart.yaml)
+          helm package ${{ env.CHART_PATH }} --version $version
+          echo pushing $(basename ${{ env.CHART_PATH }})-$version.tgz to oci://$GCR_IMAGE
+          helm push $(basename ${{ env.CHART_PATH }})-$version.tgz oci://$GCR_IMAGE
         shell: bash
