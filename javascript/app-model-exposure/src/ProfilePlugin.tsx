@@ -152,11 +152,17 @@ const ExposureAppRoot: React.FC<{ resource: ExposureResource; href: string }> =
 
 function loadState(resource: ExposureResource, { set }: MutableSnapshot) {
 	set(projectNameState, resource.projectName)
-	set(causalFactorsState, resource.causalFactors)
+	set(
+		causalFactorsState,
+		resource.causalFactors?.map((f, index) => ({ ...f, id: `${index}` })),
+	)
 	set(defaultDatasetResultState, resource.defaultResult)
 	set(estimatorState, resource.estimators)
 	set(primarySpecificationConfigState, resource.primarySpecification)
-	set(definitionsState, resource.definitions)
+	set(
+		definitionsState,
+		resource.definitions?.map((f, index) => ({ ...f, id: `${index}` })),
+	)
 	set(causalQuestionState, resource.question)
 	set(selectedTableNameState, resource.selectedTableName)
 }
