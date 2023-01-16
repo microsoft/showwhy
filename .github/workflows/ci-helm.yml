@@ -1,4 +1,4 @@
-name: Python CI
+name: Helm CI
 on:
   push:
     branches: [azure]
@@ -13,18 +13,19 @@ jobs:
     steps:
       - uses: azure/setup-helm@v3
 
-      - name: login to ghcr using helm
-        shell: bash    
-        env:
-          TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          echo ${{env.TOKEN}} | helm registry login ghcr.io --username ${{ github.repository_owner }} --password-stdin
+      # - name: login to ghcr using helm
+      #   shell: bash    
+      #   env:
+      #   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      #   run: |
+      #     echo ${{env.GITHUB_TOKEN}} | helm registry login ghcr.io --username ${{ github.repository_owner }} --password-stdin
 
       - name: Helm Chart
         env:
           GCR_IMAGE: ghcr.io/microsoft/showwhy-helm
           CHART_PATH: config/helm/causal-services
         run : |
+          echo ${{env.GITHUB_TOKEN}} | helm registry login ghcr.io --username ${{ github.repository_owner }} --password-stdin
           export CHART_VERSION=$(grep 'version:' ${{ env.CHART_PATH }} | tail -n1 | awk '{ print $2}')
           helm package ${{ env.CHART_PATH }} --version ${CHART_VERSION}
           echo pushing $(basename ${{ env.CHART_PATH }})-${CHART_VERSION}.tgz to oci://$GCR_IMAGE
