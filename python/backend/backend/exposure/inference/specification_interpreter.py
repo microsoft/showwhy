@@ -53,9 +53,7 @@ def interpret(
         "min_data_per_group": 1,
         "cat_smooth": 1,
     }
-    spec_regressor = lgb.train(
-        params=params, train_set=train_data, categorical_feature=encoded_features
-    )
+    spec_regressor = lgb.train(params=params, train_set=train_data, categorical_feature=encoded_features)
     # train performance
     y_hat = spec_regressor.predict(X)
     logging.info("Train MAE: {:.3f}".format(mean_absolute_error(y, y_hat)))
@@ -66,9 +64,7 @@ def interpret(
     for i, feature in enumerate(spec_features):
         spec_results[f"shap_{feature}"] = shap_values[:, i]
     # remove encoded feature columns from the final results
-    cleaned_columns = [
-        col for col in spec_results.columns if col not in encoded_features
-    ]
+    cleaned_columns = [col for col in spec_results.columns if col not in encoded_features]
 
     return ListShapInterpreterResult(
         results=[

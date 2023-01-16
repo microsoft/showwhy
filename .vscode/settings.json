@@ -25,15 +25,19 @@
   "typescript.enablePromptUseWorkspaceTsdk": true,
   "python.formatting.provider": "black",
   "python.formatting.blackArgs": [
-    "--line-length=99"
+    "--line-length=120"
   ],
-  "python.sortImports.args": [
+  "python.linting.flake8Args": [
+    "--max-line-length=127"
+  ],
+  "isort.args": [
     "--profile",
-    "black"
-  ],
-  "[python]": {
-    "editor.codeActionsOnSave": {
-      "source.organizeImports": true
-    }
-  }
+    "black",
+    "--multi_line_output",
+    "3",
+    "--line_length",
+    "120",
+    "--py_version",
+    "38"
+  ]
 }

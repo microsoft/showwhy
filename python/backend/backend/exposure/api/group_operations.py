@@ -15,9 +15,7 @@ from backend.worker_commons.io.db import get_db_client
 
 def schedule_task(workspace_name: str, task_name: str, task: Any, params: List):
     db_client = get_db_client()
-    async_group = group(
-        [task.s(specification=specification) for specification in params]
-    )
+    async_group = group([task.s(specification=specification) for specification in params])
 
     results = async_group()
 
@@ -49,18 +47,12 @@ def get_results(workspace_name: str, group_id: str, task_name: str):
 
     results = get_async_result(workspace_name, group_id, task_name)
 
-    completed_results = [
-        db_client.get_value(result.id)
-        for result in results[states.SUCCESS] + results[states.PENDING]
-    ]
+    completed_results = [db_client.get_value(result.id) for result in results[states.SUCCESS] + results[states.PENDING]]
 
     completed_results = [result for result in completed_results if result is not None]
 
     total_tasks = len(
-        results[states.SUCCESS]
-        + results[states.PENDING]
-        + results[states.FAILURE]
-        + results[states.REVOKED]
+        results[states.SUCCESS] + results[states.PENDING] + results[states.FAILURE] + results[states.REVOKED]
     )
 
     status = states.PENDING

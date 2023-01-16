@@ -11,9 +11,7 @@ from backend.exposure.api import group_operations as go
 from backend.exposure.inference.estimate_effect import get_tasks
 from backend.exposure.model.estimate_effect_models import EstimateEffectRequestBody
 from backend.exposure.model.response import NumberOfExecutionsResult
-from backend.exposure.worker.estimate_effect_task import (
-    estimate_effect_for_specification,
-)
+from backend.exposure.worker.estimate_effect_task import estimate_effect_for_specification
 from backend.worker_commons.io.exceptions import DataFrameNotLoadedError
 from backend.worker_commons.io.storage import get_storage_client
 
@@ -63,18 +61,10 @@ async def cancel_task(workspace_name: str, task_id: str):
 
 
 @estimate_effect_router.post("/execution_count/{workspace_name}")
-async def get_number_of_executions(
-    workspace_name: str, body: EstimateEffectRequestBody
-):
+async def get_number_of_executions(workspace_name: str, body: EstimateEffectRequestBody):
 
-    outcome_models = [
-        model for model in body.estimator_specs if model.type == "Outcome Model"
-    ]
-    treatment_models = [
-        model
-        for model in body.estimator_specs
-        if model.type == "Treatment Assignment Model"
-    ]
+    outcome_models = [model for model in body.estimator_specs if model.type == "Outcome Model"]
+    treatment_models = [model for model in body.estimator_specs if model.type == "Treatment Assignment Model"]
     outcomeSpecifications = get_tasks(
         None,
         workspace_name,
@@ -95,12 +85,8 @@ async def get_number_of_executions(
         treatment_models,
     )
 
-    outcome = NumberOfExecutionsResult(
-        count=len([spec for spec in outcomeSpecifications if spec.is_valid()])
-    )
-    treatment = NumberOfExecutionsResult(
-        count=len([spec for spec in treatmentSpecifications if spec.is_valid()])
-    )
+    outcome = NumberOfExecutionsResult(count=len([spec for spec in outcomeSpecifications if spec.is_valid()]))
+    treatment = NumberOfExecutionsResult(count=len([spec for spec in treatmentSpecifications if spec.is_valid()]))
 
     return {
         "outcome": outcome,

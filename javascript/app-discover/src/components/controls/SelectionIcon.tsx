@@ -14,7 +14,7 @@ export const SelectionIcon: React.FC<SelectionIconProps> = memo(
 			<Icon
 				iconName={selected ? 'CircleFill' : 'CircleRing'}
 				style={iconStyle}
-			></Icon>
+			/>
 		)
 	},
 )

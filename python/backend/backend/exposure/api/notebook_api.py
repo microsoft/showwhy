@@ -200,26 +200,18 @@ async def generate_notebook(body: NotebookRequestBody):
 
     notebook["cells"] = [
         nbf.v4.new_markdown_cell("# Estimate Effect"),
-        nbf.v4.new_code_cell(
-            __get_estimate_effect_params_cell(body.estimate_effect_params)
-        ),
+        nbf.v4.new_code_cell(__get_estimate_effect_params_cell(body.estimate_effect_params)),
         nbf.v4.new_code_cell(__get_estimate_effect_execution_cell()),
         nbf.v4.new_markdown_cell("# Refute Estimate"),
-        nbf.v4.new_code_cell(
-            __get_refutation_execution_cell(body.refuter_params.num_simulations_map)
-        ),
+        nbf.v4.new_code_cell(__get_refutation_execution_cell(body.refuter_params.num_simulations_map)),
         nbf.v4.new_markdown_cell("# Confidence Intervals"),
         nbf.v4.new_code_cell(
-            __get_confidence_intervals_execution_cell(
-                body.confidence_interval_params.estimate_execution_ids
-            )
+            __get_confidence_intervals_execution_cell(body.confidence_interval_params.estimate_execution_ids)
         ),
         nbf.v4.new_markdown_cell("# SHAP Interpreter"),
         nbf.v4.new_code_cell(__get_shap_interpreter_execution_cell()),
         nbf.v4.new_markdown_cell("# Significance Test"),
-        nbf.v4.new_code_cell(
-            __get_significance_test_execution_cell(body.significance_test_params)
-        ),
+        nbf.v4.new_code_cell(__get_significance_test_execution_cell(body.significance_test_params)),
     ]
     nb_name = os.path.join("/tmp", f"{str(uuid4())}.ipynb")
     nbf.write(notebook, nb_name)

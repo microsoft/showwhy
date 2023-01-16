@@ -3,7 +3,6 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { useDataPackage } from '@datashaper/app-framework'
-import type { Resource } from '@datashaper/workflow'
 import {
 	DocumentCard,
 	DocumentCardPreview,
@@ -31,11 +30,7 @@ const HomePage: React.FC<HomePageProps> = memo(function HomePage({ profiles }) {
 			<DocumentCard
 				key={d.key}
 				onClick={() => {
-					const resource: Resource | undefined = profile.createResource?.()
-					if (resource != null) {
-						resource.name = dataPackage.suggestResourceName(resource.name)
-						dataPackage.addResource(resource)
-					}
+					void profile.createInstance?.().then(r => dataPackage.addResource(r))
 				}}
 				style={documentCardStyle}
 			>

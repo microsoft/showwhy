@@ -39,17 +39,13 @@ class PandasDatasetLoader(CSVDatasetLoader):
         Returns:
             dataset: Dataset object, holding the data and variable metadata.
         """
-        logger.info(
-            f"Splitting data to load the dataset: test fraction: {test_frac}, validation fraction: {val_frac}."
-        )
+        logger.info(f"Splitting data to load the dataset: test fraction: {test_frac}, validation fraction: {val_frac}.")
 
         if max_num_rows is not None:
             pandas_data = pandas_data.iloc[:max_num_rows]
 
         data, mask = self.process_data(pandas_data.to_numpy())
-        return self._make_dataset(
-            data, mask, negative_sample, test_frac, val_frac, random_state
-        )
+        return self._make_dataset(data, mask, negative_sample, test_frac, val_frac, random_state)
 
     def load_predefined_dataset(
         self,

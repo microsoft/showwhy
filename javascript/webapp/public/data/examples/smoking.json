@@ -7,31 +7,354 @@
             "sources": [
                 {
                     "rel": "input",
-                    "source": {
-                        "profile": "datatable",
-                        "name": "nhefs",
-                        "path": "https://cdn1.sph.harvard.edu/wp-content/uploads/sites/1268/1268/20/nhefs.csv",
-                        "metadata": {
-                            "source": "https://www.hsph.harvard.edu/miguel-hernan/causal-inference-book/",
-                            "citation": "Hernán MA, Robins JM (2020). Causal Inference: What If. Boca Raton: Chapman & Hall/CRC"
-                        }
+                    "profile": "datatable",
+                    "path": "https://cdn1.sph.harvard.edu/wp-content/uploads/sites/1268/1268/20/nhefs.csv",
+                    "metadata": {
+                        "source": "https://www.hsph.harvard.edu/miguel-hernan/causal-inference-book/",
+                        "citation": "Hernán MA, Robins JM (2020). Causal Inference: What If. Boca Raton: Chapman & Hall/CRC"
                     }
                 },
                 {
-                    "rel": "workflow",
-                    "source": {
-                        "profile": "workflow",
-                        "steps": [
-                            {
-                                "verb": "rename",
-                                "args": {
-                                    "columns": {
-                                        "sex": "sex (female)"
-                                    }
+					"$schema": "https://microsoft.github.io/datashaper/schema/codebook/v1.0.0.json",
+					"id": "afe1c7d9-0f3e-44cb-9e22-6c3c6ff24427",
+					"name": "Codebook",
+					"profile": "codebook",
+					"title": "codebook.json",
+					"fields": [
+					  {
+						"name": "seqn",
+						"type": "number",
+						"nature": "discrete"
+					  },
+					  {
+						"name": "qsmk",
+						"type": "number",
+						"nature": "binary"
+					  },
+					  {
+						"name": "death",
+						"type": "number",
+						"nature": "binary"
+					  },
+					  {
+						"name": "yrdth",
+						"type": "number",
+						"nature": "discrete"
+					  },
+					  {
+						"name": "modth",
+						"type": "number",
+						"nature": "discrete"
+					  },
+					  {
+						"name": "dadth",
+						"type": "number",
+						"nature": "discrete"
+					  },
+					  {
+						"name": "sbp",
+						"type": "number",
+						"nature": "discrete"
+					  },
+					  {
+						"name": "dbp",
+						"type": "number",
+						"nature": "discrete"
+					  },
+					  {
+						"name": "sex",
+						"type": "number",
+						"nature": "binary"
+					  },
+					  {
+						"name": "age",
+						"type": "number",
+						"nature": "discrete"
+					  },
+					  {
+						"name": "race",
+						"type": "number",
+						"nature": "binary"
+					  },
+					  {
+						"name": "income",
+						"type": "number",
+						"nature": "discrete"
+					  },
+					  {
+						"name": "marital",
+						"type": "number",
+						"nature": "discrete"
+					  },
+					  {
+						"name": "school",
+						"type": "number",
+						"nature": "discrete"
+					  },
+					  {
+						"name": "education",
+						"type": "number",
+						"nature": "discrete"
+					  },
+					  {
+						"name": "ht",
+						"type": "number",
+						"nature": "continuous"
+					  },
+					  {
+						"name": "wt71",
+						"type": "number",
+						"nature": "continuous"
+					  },
+					  {
+						"name": "wt82",
+						"type": "number",
+						"nature": "continuous"
+					  },
+					  {
+						"name": "wt82_71",
+						"type": "number",
+						"nature": "continuous"
+					  },
+					  {
+						"name": "birthplace",
+						"type": "number",
+						"nature": "discrete"
+					  },
+					  {
+						"name": "smokeintensity",
+						"type": "number",
+						"nature": "discrete"
+					  },
+					  {
+						"name": "smkintensity82_71",
+						"type": "number",
+						"nature": "discrete"
+					  },
+					  {
+						"name": "smokeyrs",
+						"type": "number",
+						"nature": "discrete"
+					  },
+					  {
+						"name": "asthma",
+						"type": "number",
+						"nature": "binary"
+					  },
+					  {
+						"name": "bronch",
+						"type": "number",
+						"nature": "binary"
+					  },
+					  {
+						"name": "tb",
+						"type": "number",
+						"nature": "binary"
+					  },
+					  {
+						"name": "hf",
+						"type": "number",
+						"nature": "binary"
+					  },
+					  {
+						"name": "hbp",
+						"type": "number",
+						"nature": "discrete"
+					  },
+					  {
+						"name": "pepticulcer",
+						"type": "number",
+						"nature": "binary"
+					  },
+					  {
+						"name": "colitis",
+						"type": "number",
+						"nature": "binary"
+					  },
+					  {
+						"name": "hepatitis",
+						"type": "number",
+						"nature": "binary"
+					  },
+					  {
+						"name": "chroniccough",
+						"type": "number",
+						"nature": "binary"
+					  },
+					  {
+						"name": "hayfever",
+						"type": "number",
+						"nature": "binary"
+					  },
+					  {
+						"name": "diabetes",
+						"type": "number",
+						"nature": "discrete"
+					  },
+					  {
+						"name": "polio",
+						"type": "number",
+						"nature": "binary"
+					  },
+					  {
+						"name": "tumor",
+						"type": "number",
+						"nature": "binary"
+					  },
+					  {
+						"name": "nervousbreak",
+						"type": "number",
+						"nature": "binary"
+					  },
+					  {
+						"name": "alcoholpy",
+						"type": "number",
+						"nature": "discrete"
+					  },
+					  {
+						"name": "alcoholfreq",
+						"type": "number",
+						"nature": "discrete"
+					  },
+					  {
+						"name": "alcoholtype",
+						"type": "number",
+						"nature": "discrete"
+					  },
+					  {
+						"name": "alcoholhowmuch",
+						"type": "number",
+						"nature": "discrete"
+					  },
+					  {
+						"name": "pica",
+						"type": "number",
+						"nature": "ordinal"
+					  },
+					  {
+						"name": "headache",
+						"type": "number",
+						"nature": "binary"
+					  },
+					  {
+						"name": "otherpain",
+						"type": "number",
+						"nature": "binary"
+					  },
+					  {
+						"name": "weakheart",
+						"type": "number",
+						"nature": "binary"
+					  },
+					  {
+						"name": "allergies",
+						"type": "number",
+						"nature": "binary"
+					  },
+					  {
+						"name": "nerves",
+						"type": "number",
+						"nature": "binary"
+					  },
+					  {
+						"name": "lackpep",
+						"type": "number",
+						"nature": "binary"
+					  },
+					  {
+						"name": "hbpmed",
+						"type": "number",
+						"nature": "discrete"
+					  },
+					  {
+						"name": "boweltrouble",
+						"type": "number",
+						"nature": "ordinal"
+					  },
+					  {
+						"name": "wtloss",
+						"type": "number",
+						"nature": "binary"
+					  },
+					  {
+						"name": "infection",
+						"type": "number",
+						"nature": "binary"
+					  },
+					  {
+						"name": "active",
+						"type": "number",
+						"nature": "ordinal"
+					  },
+					  {
+						"name": "exercise",
+						"type": "number",
+						"nature": "discrete"
+					  },
+					  {
+						"name": "birthcontrol",
+						"type": "number",
+						"nature": "discrete"
+					  },
+					  {
+						"name": "pregnancies",
+						"type": "number",
+						"nature": "discrete"
+					  },
+					  {
+						"name": "cholesterol",
+						"type": "number",
+						"nature": "discrete"
+					  },
+					  {
+						"name": "hightax82",
+						"type": "number",
+						"nature": "binary"
+					  },
+					  {
+						"name": "price71",
+						"type": "number",
+						"nature": "continuous"
+					  },
+					  {
+						"name": "price82",
+						"type": "number",
+						"nature": "continuous"
+					  },
+					  {
+						"name": "tax71",
+						"type": "number",
+						"nature": "continuous"
+					  },
+					  {
+						"name": "tax82",
+						"type": "number",
+						"nature": "continuous"
+					  },
+					  {
+						"name": "price71_82",
+						"type": "number",
+						"nature": "continuous"
+					  },
+					  {
+						"name": "tax71_82",
+						"type": "number",
+						"nature": "continuous"
+					  }
+					]
+				  },
+                {
+                    "profile": "workflow",
+                    "steps": [
+                        {
+                            "verb": "rename",
+                            "args": {
+                                "columns": {
+                                    "sex": "sex (female)"
                                 }
                             }
-                        ]
-                    }
+                        }
+                    ]
                 }
             ]
         },
@@ -40,143 +363,136 @@
             "name": "nhefs-exposure",
             "sources": [
                 {
-                    "rel": "workflow",
-                    "source": {
-                        "profile": "workflow",
-                        "input": [
-                            "nhefs"
-                        ],
-                        "steps": [
-                            {
-                                "verb": "window",
-                                "args": {
-                                    "operation": "row_number",
-                                    "to": "index"
-                                },
-                                "input": {
-                                    "source": "nhefs"
-                                }
+                    "rel": "input",
+                    "path": "nhefs"
+                },
+                {
+                    "profile": "workflow",
+                    "steps": [
+                        {
+                            "verb": "window",
+                            "args": {
+                                "operation": "row_number",
+                                "to": "index"
+                            }
+                        },
+                        {
+                            "args": {
+                                "columns": [
+                                    "index",
+                                    "sex (female)",
+                                    "age",
+                                    "race",
+                                    "education",
+                                    "wt71",
+                                    "wt82_71",
+                                    "smokeintensity",
+                                    "smkintensity82_71",
+                                    "active",
+                                    "exercise",
+                                    "smokeyrs"
+                                ]
                             },
-                            {
-                                "args": {
-                                    "columns": [
-                                        "index",
-                                        "sex (female)",
-                                        "age",
-                                        "race",
-                                        "education",
-                                        "wt71",
-                                        "wt82_71",
-                                        "smokeintensity",
-                                        "smkintensity82_71",
-                                        "active",
-                                        "exercise",
-                                        "smokeyrs"
-                                    ]
-                                },
-                                "verb": "select"
-                            },
-                            {
-                                "verb": "rename",
-                                "args": {
-                                    "columns": {
-                                        "wt71": "weight_1971",
-                                        "wt82_71": "weight_change",
-                                        "smokeintensity": "smoke_intensity_1971",
-                                        "smkintensity82_71": "smoke_intensity_change",
-                                        "smokeyrs": "smoke_years"
-                                    }
-                                }
-                            },
-                            {
-                                "verb": "derive",
-                                "args": {
-                                    "to": "smoke_intensity_change_pct",
-                                    "column1": "smoke_intensity_change",
-                                    "operator": "/",
-                                    "column2": "smoke_intensity_1971"
-                                }
-                            },
-                            {
-                                "verb": "binarize",
-                                "args": {
-                                    "to": "smoke_reduction_25pct",
-                                    "column": "smoke_intensity_change_pct",
-                                    "criteria": [
-                                        {
-                                            "operator": "<=",
-                                            "type": "value",
-                                            "value": "-0.25"
-                                        }
-                                    ]
-                                }
-                            },
-                            {
-                                "verb": "binarize",
-                                "args": {
-                                    "to": "smoke_reduction_50pct",
-                                    "column": "smoke_intensity_change_pct",
-                                    "criteria": [
-                                        {
-                                            "operator": "<=",
-                                            "type": "value",
-                                            "value": "-0.5"
-                                        }
-                                    ]
-                                }
-                            },
-                            {
-                                "verb": "binarize",
-                                "args": {
-                                    "to": "smoke_reduction_75pct",
-                                    "column": "smoke_intensity_change_pct",
-                                    "criteria": [
-                                        {
-                                            "operator": "<=",
-                                            "type": "value",
-                                            "value": "-0.75"
-                                        }
-                                    ]
-                                }
-                            },
-                            {
-                                "verb": "binarize",
-                                "args": {
-                                    "to": "quit_smoking",
-                                    "column": "smoke_intensity_change_pct",
-                                    "criteria": [
-                                        {
-                                            "operator": "=",
-                                            "type": "value",
-                                            "value": "-1"
-                                        }
-                                    ]
-                                }
-                            },
-                            {
-                                "verb": "binarize",
-                                "args": {
-                                    "to": "subject_inclusion",
-                                    "column": "weight_change",
-                                    "criteria": [
-                                        {
-                                            "operator": "is not empty"
-                                        }
-                                    ]
-                                }
-                            },
-                            {
-                                "verb": "convert",
-                                "args": {
-                                    "type": "float",
-                                    "formatPattern": "%Y-%m-%d",
-                                    "columns": [
-                                        "weight_change"
-                                    ]
+                            "verb": "select"
+                        },
+                        {
+                            "verb": "rename",
+                            "args": {
+                                "columns": {
+                                    "wt71": "weight_1971",
+                                    "wt82_71": "weight_change",
+                                    "smokeintensity": "smoke_intensity_1971",
+                                    "smkintensity82_71": "smoke_intensity_change",
+                                    "smokeyrs": "smoke_years"
                                 }
                             }
-                        ]
-                    }
+                        },
+                        {
+                            "verb": "derive",
+                            "args": {
+                                "to": "smoke_intensity_change_pct",
+                                "column1": "smoke_intensity_change",
+                                "operator": "/",
+                                "column2": "smoke_intensity_1971"
+                            }
+                        },
+                        {
+                            "verb": "binarize",
+                            "args": {
+                                "to": "smoke_reduction_25pct",
+                                "column": "smoke_intensity_change_pct",
+                                "criteria": [
+                                    {
+                                        "operator": "<=",
+                                        "type": "value",
+                                        "value": "-0.25"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "verb": "binarize",
+                            "args": {
+                                "to": "smoke_reduction_50pct",
+                                "column": "smoke_intensity_change_pct",
+                                "criteria": [
+                                    {
+                                        "operator": "<=",
+                                        "type": "value",
+                                        "value": "-0.5"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "verb": "binarize",
+                            "args": {
+                                "to": "smoke_reduction_75pct",
+                                "column": "smoke_intensity_change_pct",
+                                "criteria": [
+                                    {
+                                        "operator": "<=",
+                                        "type": "value",
+                                        "value": "-0.75"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "verb": "binarize",
+                            "args": {
+                                "to": "quit_smoking",
+                                "column": "smoke_intensity_change_pct",
+                                "criteria": [
+                                    {
+                                        "operator": "=",
+                                        "type": "value",
+                                        "value": "-1"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "verb": "binarize",
+                            "args": {
+                                "to": "subject_inclusion",
+                                "column": "weight_change",
+                                "criteria": [
+                                    {
+                                        "operator": "is not empty"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "verb": "convert",
+                            "args": {
+                                "type": "float",
+                                "formatPattern": "%Y-%m-%d",
+                                "column": "weight_change"
+                            }
+                        }
+                    ]
                 }
             ]
         },
@@ -185,120 +501,133 @@
             "name": "nhefs-discovery",
             "sources": [
                 {
-                    "rel": "workflow",
-                    "source": {
-                        "profile": "workflow",
-                        "input": [
-                            "nhefs"
-                        ],
-                        "steps": [
-                            {
-                                "verb": "erase",
-                                "description": "Maps several columns' null code of 2 to actual nulls",
-                                "args": {
-                                    "columns": [
-                                        "birthcontrol",
-                                        "boweltrouble",
-                                        "diabetes",
-                                        "hbp",
-                                        "hbpmed"
-                                    ],
-                                    "value": 2
-                                },
-                                "input": {
-                                    "source": "nhefs"
-                                }
-                            },
-                            {
-                                "verb": "select",
-                                "args": {
-                                    "columns": [
-                                        "active",
-                                        "age",
-                                        "alcoholfreq",
-                                        "alcoholhowmuch",
-                                        "alcoholtype",
-                                        "allergies",
-                                        "asthma",
-                                        "birthcontrol",
-                                        "boweltrouble",
-                                        "bronch",
-                                        "cholesterol",
-                                        "chroniccough",
-                                        "colitis",
-                                        "dbp",
-                                        "death",
-                                        "diabetes",
-                                        "education",
-                                        "exercise",
-                                        "hayfever",
-                                        "hbp",
-                                        "hbpmed",
-                                        "headache",
-                                        "hepatitis",
-                                        "hf",
-                                        "hightax82",
-                                        "ht",
-                                        "income",
-                                        "infection",
-                                        "lackpep",
-                                        "marital",
-                                        "nerves",
-                                        "nervousbreak",
-                                        "otherpain",
-                                        "pepticulcer",
-                                        "pica",
-                                        "polio",
-                                        "pregnancies",
-                                        "price71",
-                                        "price71_82",
-                                        "price82",
-                                        "qsmk",
-                                        "sbp",
-                                        "school",
-                                        "sex (female)",
-                                        "smkintensity82_71",
-                                        "smokeintensity",
-                                        "smokeyrs",
-                                        "tax71",
-                                        "tax71_82",
-                                        "tax82",
-                                        "tb",
-                                        "tumor",
-                                        "weakheart",
-                                        "wt71",
-                                        "wt82",
-                                        "wt82_71",
-                                        "wtloss"
-                                    ]
-                                }
+                    "rel": "input",
+                    "path": "nhefs"
+                },
+                {
+                    "profile": "workflow",
+                    "steps": [
+                        {
+                            "verb": "erase",
+                            "description": "Maps birthcontrol null code of 2 to actual nulls",
+                            "args": {
+                                "column": "birthcontrol",
+                                "value": 2
                             }
-                        ]
-                    }
+                        },
+                        {
+                            "verb": "erase",
+                            "description": "Maps diabetes null code of 2 to actual nulls",
+                            "args": {
+                                "column": "diabetes",
+                                "value": 2
+                            }
+                        },
+                        {
+                            "verb": "erase",
+                            "description": "Maps hbp null code of 2 to actual nulls",
+                            "args": {
+                                "column": "hbp",
+                                "value": 2
+                            }
+                        },
+                        {
+                            "verb": "erase",
+                            "description": "Maps hbpmed null code of 2 to actual nulls",
+                            "args": {
+                                "column": "hbpmed",
+                                "value": 2
+                            }
+                        },
+                        {
+                            "verb": "select",
+                            "args": {
+                                "columns": [
+                                    "active",
+                                    "age",
+                                    "alcoholfreq",
+                                    "alcoholhowmuch",
+                                    "alcoholtype",
+                                    "allergies",
+                                    "asthma",
+                                    "birthcontrol",
+                                    "boweltrouble",
+                                    "bronch",
+                                    "cholesterol",
+                                    "chroniccough",
+                                    "colitis",
+                                    "dbp",
+                                    "death",
+                                    "diabetes",
+                                    "education",
+                                    "exercise",
+                                    "hayfever",
+                                    "hbp",
+                                    "hbpmed",
+                                    "headache",
+                                    "hepatitis",
+                                    "hf",
+                                    "hightax82",
+                                    "ht",
+                                    "income",
+                                    "infection",
+                                    "lackpep",
+                                    "marital",
+                                    "nerves",
+                                    "nervousbreak",
+                                    "otherpain",
+                                    "pepticulcer",
+                                    "pica",
+                                    "polio",
+                                    "pregnancies",
+                                    "price71",
+                                    "price71_82",
+                                    "price82",
+                                    "qsmk",
+                                    "sbp",
+                                    "school",
+                                    "sex (female)",
+                                    "smkintensity82_71",
+                                    "smokeintensity",
+                                    "smokeyrs",
+                                    "tax71",
+                                    "tax71_82",
+                                    "tax82",
+                                    "tb",
+                                    "tumor",
+                                    "weakheart",
+                                    "wt71",
+                                    "wt82",
+                                    "wt82_71",
+                                    "wtloss"
+                                ]
+                            }
+                        }
+                    ]
                 }
             ]
         },
         {
-            "profile": "tablebundle",
             "name": "california-prop99",
+            "profile": "tablebundle",
             "sources": [
                 {
                     "rel": "input",
-                    "source": {
-                        "path": "https://cdn.jsdelivr.net/gh/synth-inference/synthdid@master/data/california_prop99.csv",
-                        "metadata": {
-                            "source": "https://www.openicpsr.org/openicpsr/project/146381/version/V1/view?path=/openicpsr/146381/fcr:versions/V1/synthdid-sdid-paper/data/california_prop99.csv",
-                            "citation": " Dmitry Arkhangelsky, CEMFI; Susan Athey, Stanford University; David A. Hirshberg, Emory University; Guido W. Imbens, Stanford University; Stefan Wager, Stanford University"
-                        },
-                        "parser": {
-                            "delimiter": ";"
-                        }
+                    "profile": "datatable",
+                    "path": "https://cdn.jsdelivr.net/gh/synth-inference/synthdid@master/data/california_prop99.csv",
+                    "metadata": {
+                        "source": "https://www.openicpsr.org/openicpsr/project/146381/version/V1/view?path=/openicpsr/146381/fcr:versions/V1/synthdid-sdid-paper/data/california_prop99.csv",
+                        "citation": " Dmitry Arkhangelsky, CEMFI; Susan Athey, Stanford University; David A. Hirshberg, Emory University; Guido W. Imbens, Stanford University; Stefan Wager, Stanford University"
+                    },
+                    "parser": {
+                        "delimiter": ";"
                     }
                 }
             ]
         },
         {
             "profile": "showwhy-model-exposure",
+            "name": "Exposure Analysis",
             "selectedTableName": "nhefs-exposure",
             "primarySpecification": {
                 "causalModel": "Maximum",
@@ -625,6 +954,7 @@
         },
         {
             "profile": "showwhy-discover",
+            "name": "Causal Discovery",
             "datasetName": "nhefs-discovery",
             "causalGraph": {
                 "inModelColumnNames": [],
@@ -670,6 +1000,7 @@
         },
         {
             "profile": "showwhy-events",
+            "name": "Event Analysis",
             "rawData": [],
             "columnMapping": {
                 "unit": "State",

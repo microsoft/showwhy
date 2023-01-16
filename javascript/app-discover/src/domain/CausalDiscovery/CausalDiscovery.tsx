@@ -113,12 +113,12 @@ export function discover(
 
 	/* eslint-disable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-argument */
 	const columns = variables.map(v => v.columnName)
-	const jsonData = dataset.table.toJSON({ columns })
+	const jsonData = dataset.table?.table?.toJSON({ columns })
 	const constraintsJson = createConstraintsJson(variables, constraints)
 	const fetchDiscoverResultPromise = fetchDiscoverResult<any>(
 		algorithmName.toLowerCase(),
 		JSON.stringify({
-			dataset: JSON.parse(jsonData),
+			dataset: jsonData == null ? null : JSON.parse(jsonData),
 			constraints: constraintsJson,
 			causal_variables: variables.map(v => ({
 				name: v.name,

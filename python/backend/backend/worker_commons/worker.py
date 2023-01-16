@@ -2,9 +2,7 @@ from celery import Celery
 
 from backend.worker_commons import config
 
-backend_worker = Celery(
-    "app", backend=config.get_redis_url(), broker=config.get_redis_url()
-)
+backend_worker = Celery("app", backend=config.get_redis_url(), broker=config.get_redis_url())
 backend_worker.conf.task_serializer = "pickle"
 backend_worker.conf.result_serializer = "pickle"
 backend_worker.conf.accept_content = [

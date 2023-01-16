@@ -1,4 +1,6 @@
+import logging
 import os
+from datetime import timedelta
 
 
 def get_redis_url():
@@ -15,3 +17,12 @@ def get_storage_url():
         return storage_location
     else:
         raise Exception("STORAGE configuration missing in environment")
+
+
+def get_default_expires_after():
+    expires_after = os.environ.get("DEFAULT_EXPIRES_AFTER_HOURS")
+    if expires_after:
+        return timedelta(hours=int(expires_after))
+    else:
+        logging.info("Using default of 8 hours for DEFAULT_EXPIRES_AFTER_HOURS")
+        return timedelta(hours=8)

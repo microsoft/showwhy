@@ -2,6 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import type { TableContainer } from '@datashaper/tables'
 import { table as createTable } from 'arquero'
 import type ColumnTable from 'arquero/dist/types/table/column-table'
 
@@ -75,11 +76,11 @@ export function arrayIncludesVariable(
 }
 
 export function inferMissingMetadataForTable(
-	table: ColumnTable,
+	table: TableContainer | undefined,
 	existingMetadata?: CausalVariable[],
 ) {
 	const metadata: CausalVariable[] = []
-	table?.columnNames().forEach(columnName => {
+	table?.table?.columnNames().forEach(columnName => {
 		const existingMetadatum = existingMetadata?.find(
 			metadatum => metadatum.columnName === columnName,
 		)
@@ -88,58 +89,42 @@ export function inferMissingMetadataForTable(
 			columnName,
 			existingMetadatum,
 		)
-		metadata.push(completedMetadatum)
+		if (completedMetadatum != null) {
+			metadata.push(completedMetadatum)
+		}
 	})
 	return metadata
 }
 
 export function inferMissingMetadataForColumn(
-	table: ColumnTable,
+	container: TableContainer | undefined,
 	columnName: string,
-	existingMetadatum?: CausalVariable,
-) {
-	const name =
-		existingMetadatum?.name === undefined ? columnName : existingMetadatum.name
-	const min =
-		existingMetadatum?.min === undefined
-			? columnMin(table, columnName)
-			: existingMetadatum.min
-	const max =
-		existingMetadatum?.max === undefined
-			? columnMax(table, columnName)
-			: existingMetadatum.max
-	const mean =
-		existingMetadatum?.mean === undefined
-			? columnMean(table, columnName)
-			: existingMetadatum.mean
-	const mode =
-		existingMetadatum?.mode === undefined
-			? columnMode(table, columnName)
-			: existingMetadatum.mode
-	const count =
-		existingMetadatum?.count === undefined
-			? columnCountValid(table, columnName)
-			: existingMetadatum.count
+	current?: CausalVariable,
+): CausalVariable {
+	const table = container?.table
+	const name = current?.name ?? columnName
+	const min = current?.min ?? (table && columnMin(table, columnName))
+	const max = current?.max ?? (table && columnMax(table, columnName))
+	const mean = current?.mean ?? (table && columnMean(table, columnName))
+	const mode = current?.mode ?? (table && columnMode(table, columnName))
+	const count = current?.count ?? (table && columnCountValid(table, columnName))
 	const magnitude =
-		existingMetadatum?.magnitude === undefined
+		current?.magnitude ??
+		(max != null && min != null
 			? Math.max(Math.abs(max), Math.abs(min))
-			: existingMetadatum.magnitude
+			: undefined)
+	let columnDataNature = current?.columnDataNature
+	let mapping = current?.mapping
+	let nature = current?.nature
 
-	let mapping = existingMetadatum?.mapping
-	let columnDataNature: ColumnNature | undefined =
-		existingMetadatum?.columnDataNature
-	if (columnDataNature === undefined) {
-		const inferredColumnDataNature: ColumnNature = inferColumnNature(
-			table,
-			columnName,
-		)
+	if (nature == null && table != null) {
+		columnDataNature = inferColumnNature(table, columnName)
+		nature = columnDataNature.mostLikelyNature
 		if (
 			mapping === undefined &&
-			inferredColumnDataNature.mostLikelyNature ===
-				VariableNature.CategoricalNominal
+			columnDataNature.mostLikelyNature === VariableNature.CategoricalNominal
 		) {
-			const uniquePresentValues =
-				inferredColumnDataNature.uniquePresentValues || []
+			const uniquePresentValues = columnDataNature.uniquePresentValues ?? []
 			mapping = new Map(
 				uniquePresentValues.map(v => [
 					v,
@@ -147,18 +132,15 @@ export function inferMissingMetadataForColumn(
 				]),
 			)
 		}
-
-		columnDataNature = inferredColumnDataNature
-		delete columnDataNature.uniqueValues
-		delete columnDataNature.uniquePresentValues
+		columnDataNature = {
+			...columnDataNature,
+			uniquePresentValues: undefined,
+			uniqueValues: undefined,
+		}
 	}
 
-	const nature =
-		existingMetadatum?.nature === undefined
-			? columnDataNature.mostLikelyNature
-			: existingMetadatum.nature
 	return {
-		...existingMetadatum,
+		...current,
 		name,
 		nature,
 		max,
@@ -175,12 +157,12 @@ export function inferMissingMetadataForColumn(
 
 export function createVariablesFromTable(
 	datasetKey: string,
-	table: ColumnTable | undefined,
+	container: TableContainer | undefined,
 	metadata: CausalVariable[],
 ) {
-	table = table ?? createTable({})
+	const table = container?.table
 	const variables = new Map()
-	const inferredMetadata = inferMissingMetadataForTable(table, metadata)
+	const inferredMetadata = inferMissingMetadataForTable(container, metadata)
 
 	for (const colName of table?.columnNames() ?? []) {
 		const meta = metadata?.find(md => md.columnName === colName)

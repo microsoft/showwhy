@@ -25,20 +25,14 @@ class ShapInterpreterRequestBody(BaseModel):
 
 @shap_interpreter_router.post("/{workspace_name}")
 async def interpret(workspace_name: str, body: ShapInterpreterRequestBody):
-    results = go.get_results(
-        workspace_name, body.estimate_execution_id, "estimate_effect"
-    )
+    results = go.get_results(workspace_name, body.estimate_execution_id, "estimate_effect")
 
     if results.pending > 0:
-        raise HTTPException(
-            status_code=400, detail="Estimate Execution is not completed yet."
-        )
+        raise HTTPException(status_code=400, detail="Estimate Execution is not completed yet.")
 
     interpreter_specs = get_tasks(results.results)
 
-    return go.schedule_task(
-        workspace_name, "shap_interpreter", shap_interpreter_task, interpreter_specs
-    )
+    return go.schedule_task(workspace_name, "shap_interpreter", shap_interpreter_task, interpreter_specs)
 
 
 @shap_interpreter_router.get("/{workspace_name}/{task_id}")
@@ -52,17 +46,11 @@ async def cancel_task(workspace_name: str, task_id: str):
 
 
 @shap_interpreter_router.post("/execution_count/{workspace_name}")
-async def get_number_of_executions(
-    workspace_name: str, body: ShapInterpreterRequestBody
-):
-    results = go.get_results(
-        workspace_name, body.estimate_execution_id, "estimate_effect"
-    )
+async def get_number_of_executions(workspace_name: str, body: ShapInterpreterRequestBody):
+    results = go.get_results(workspace_name, body.estimate_execution_id, "estimate_effect")
 
     if results.pending > 0:
-        raise HTTPException(
-            status_code=400, detail="Estimate Execution is not completed yet."
-        )
+        raise HTTPException(status_code=400, detail="Estimate Execution is not completed yet.")
 
     results_df = pd.DataFrame([result.to_dict() for result in results.results])
 
