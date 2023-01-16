@@ -3,8 +3,6 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import type { ITheme, ITooltipHostStyles } from '@fluentui/react'
-import { Stack } from '@fluentui/react'
-import type { Theme } from '@thematic/core'
 import type { FluentTheme } from '@thematic/fluent'
 import styled from 'styled-components'
 
@@ -69,102 +67,17 @@ export const StepTitle = styled.h3`
 	margin: 0 0 0.5rem;
 `
 
-export const StepDescription = styled.p`
-	margin: 0 0 0.5rem 0;
-`
-
-export const StyledStack = styled(Stack)`
+export const PaneContainer = styled.div`
 	padding: 10px 20px;
 	height: calc(100vh - 87px);
 	overflow: hidden auto;
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+`
 
-	.italic {
-		font-style: italic;
-	}
-
-	.light {
-		color: dimgray;
-		font-weight: 600;
-	}
-
-	.bottom-gap {
-		margin-bottom: 6px;
-		display: block;
-	}
-
-	.no-top-margin {
-		margin-top: 0;
-	}
-
-	.last-item-margin {
-		margin-bottom: 2rem;
-		display: inline-block;
-	}
-
-	.infoItem {
-		background-color: lightgoldenrodyellow;
-		margin: 4px;
-	}
-
-	.synth-control-text-margin {
-		padding-bottom: 0.5rem;
-	}
-
-	.infoText {
-		line-height: 1.4;
-		.negative {
-			color: #991d32;
-		}
-		.positive {
-			color: #008000;
-		}
-		.help-link {
-			cursor: help;
-			position: relative;
-			border-bottom: 1px dotted
-				${({ theme }: { theme: ITheme }) => theme.palette.neutralPrimary};
-		}
-		.help-link:before {
-			content: attr(data-hover);
-			visibility: hidden;
-			opacity: 0;
-			width: 140px;
-			background-color: dimgray;
-			color: #fff;
-			text-align: center;
-			border-radius: 5px;
-			transition: opacity 1s ease-in-out;
-			font-weight: normal;
-			position: absolute;
-			z-index: 1;
-			left: 0;
-			top: 110%;
-			padding: 5px 0;
-			min-width: 300px;
-		}
-		.help-link:hover:before {
-			opacity: 1;
-			visibility: visible;
-		}
-	}
-
-	.statusMessage {
-	}
-
-	.chartContainer {
-		min-height: 0;
-	}
-
-	.summary-list {
-		max-height: 200px;
-		overflow-y: auto;
-		line-height: normal;
-	}
-
-	.control-label {
-		color: ${({ theme }: { theme: Theme }) =>
-			theme.scales().nominal()(3).hex()};
-	}
+export const StepDescription = styled.p`
+	margin: 0 0 0.5rem 0;
 `
 
 export const GraphTitle = styled.h3`
@@ -174,7 +87,7 @@ export const GraphTitle = styled.h3`
 `
 
 export const TreatedTitle = styled.h4`
-	margin: 0;
+	margin: 0 0 1rem;
 	font-size: 16px;
 	color: ${({ theme }: { theme: ITheme }) => theme.palette.neutralSecondary};
 `

@@ -14,7 +14,6 @@ import {
 	useChartOptionsState,
 	useColumnMappingValueState,
 	useRawDataValueState,
-	useUserMessageValueState,
 } from '../../state/index.js'
 import {
 	ConfigContainer,
@@ -33,7 +32,6 @@ import { TreatedUnits } from './components/TreatedUnits.js'
 
 export const PrepareAnalysis: React.FC = memo(function PrepareAnalysis() {
 	const rawData = useRawDataValueState()
-	const userMessage = useUserMessageValueState()
 
 	const [chartOptions, setChartOptions] = useChartOptionsState()
 	const columnMapping = useColumnMappingValueState()
@@ -89,7 +87,6 @@ export const PrepareAnalysis: React.FC = memo(function PrepareAnalysis() {
 				<RawDataPane
 					inputData={data}
 					outputData={[]}
-					statusMessage={userMessage}
 					checkableUnits={checkableUnits}
 					onRemoveCheckedUnit={handleRemoveCheckedUnit}
 				/>

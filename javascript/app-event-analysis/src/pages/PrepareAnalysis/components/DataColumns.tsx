@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import type { IDropdownOption } from '@fluentui/react'
-import { Dropdown, FontIcon, Stack, Text, TooltipHost } from '@fluentui/react'
+import { Dropdown, FontIcon, Text, TooltipHost } from '@fluentui/react'
 import { isEqual } from 'lodash'
 import type { FormEvent } from 'react'
 import React, { memo, useCallback } from 'react'
@@ -54,6 +54,7 @@ export const DataColumns: React.FC<DataColumnsProps> = memo(
 			},
 			[setUnits, updateColumnMapping],
 		)
+
 		return (
 			<SectionContainer>
 				<StepTitle>Select time, units, and outcome columns</StepTitle>
@@ -92,7 +93,7 @@ export const DataColumns: React.FC<DataColumnsProps> = memo(
 				</DropdownContainer>
 
 				{data.nonBalancedUnits?.length && !!columnMapping.value ? (
-					<Stack horizontal tokens={{ childrenGap: 10, padding: 10 }}>
+					<NonBalancedUnitsContainer>
 						<Text>
 							{data.nonBalancedUnits.length} units missing outcomes have been
 							excluded
@@ -116,7 +117,7 @@ export const DataColumns: React.FC<DataColumnsProps> = memo(
 								aria-describedby="nonBalancedUnits"
 							/>
 						</TooltipHost>
-					</Stack>
+					</NonBalancedUnitsContainer>
 				) : null}
 			</SectionContainer>
 		)
@@ -129,5 +130,19 @@ export const DropdownContainer = styled.div`
 	gap: 0.5rem;
 	> * {
 		min-width: 0;
+	}
+`
+
+export const NonBalancedUnitsContainer = styled.div`
+	display: flex;
+	align-items: flex-start;
+	justify-content: flex-start;
+	gap: 10px;
+	margin: 0.5rem 0;
+
+	.non-balanced-units-icon {
+		&:hover {
+			cursor: pointer;
+		}
 	}
 `

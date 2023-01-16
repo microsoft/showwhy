@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { ActionButton, FontIcon, Stack, Text } from '@fluentui/react'
+import { ActionButton, FontIcon, Text } from '@fluentui/react'
 import { uniq } from 'lodash'
 import React, { memo, useCallback, useMemo } from 'react'
 
@@ -11,7 +11,7 @@ import {
 	useTreatedUnitsValueState,
 	useTreatmentStartDatesValueState,
 } from '../../state/index.js'
-import { Strong } from '../../styles/Styles.js'
+import { Container, Strong } from '../../styles/index.js'
 import { MAX_RENDERED_TREATED_UNITS } from '../../types.js'
 import { TimeAlignmentSelector } from '../TimeAlignmentSelector.js'
 import { Selector } from './Selector.js'
@@ -22,6 +22,10 @@ import {
 	useHandleTreatedUnitChange,
 	useHandleTreatmentDateChange,
 } from './TreatmentSelector.hooks.js'
+import {
+	ButtonWrapper,
+	TreatedUnitWrapper,
+} from './TreatmentSelector.styles.js'
 import type { TreatmentSelectorProps } from './TreatmentSelector.types.js'
 
 export const TreatmentSelector: React.FC<TreatmentSelectorProps> = memo(
@@ -68,50 +72,36 @@ export const TreatmentSelector: React.FC<TreatmentSelectorProps> = memo(
 			],
 		)
 		return (
-			<Stack>
+			<Container>
 				{treatedUnits.length > MAX_RENDERED_TREATED_UNITS ? (
-					<Stack horizontal className="unit-selection-header">
-						<Stack.Item>
-							<Text>
-								Treated Units: <Strong>{treatedUnits.length}</Strong>
-							</Text>
-						</Stack.Item>
-						<Stack.Item align="end">
-							<FontIcon
-								iconName="SkypeCircleMinus"
-								className="remove-treated-unit"
-								onClick={clearAllTreatedUnits}
-							/>
-						</Stack.Item>
-					</Stack>
+					<TreatedUnitWrapper>
+						<Text>
+							Treated Units: <Strong>{treatedUnits.length}</Strong>
+						</Text>
+						<FontIcon
+							iconName="SkypeCircleMinus"
+							className="remove-treated-unit"
+							onClick={clearAllTreatedUnits}
+						/>
+					</TreatedUnitWrapper>
 				) : (
 					treatedUnitList
 				)}
-				<Stack.Item className="treatment-list"></Stack.Item>
-				<Stack.Item align="center">
+				<ButtonWrapper>
 					<ActionButton
 						iconProps={{ iconName: 'CirclePlus' }}
 						className="add-treated-unit"
 						onClick={addNewTreatedUnit}
 						text="Add treated unit"
 					/>
-				</Stack.Item>
-				<Stack.Item>
-					{differentTreatmentPeriods && (
-						<Stack tokens={{ childrenGap: 2 }} horizontal>
-							<Stack.Item align="center" className="time-effect-label">
-								<Text>Time Effect Heterogeneity:</Text>
-							</Stack.Item>
-							<Stack.Item grow={1} className="time-effect-selector">
-								<TimeAlignmentSelector
-									alignment={timeAlignment}
-									onTimeAlignmentChange={handleTimeAlignmentChange}
-								/>
-							</Stack.Item>
-						</Stack>
-					)}
-				</Stack.Item>
-			</Stack>
+				</ButtonWrapper>
+				{differentTreatmentPeriods && (
+					<TimeAlignmentSelector
+						alignment={timeAlignment}
+						onTimeAlignmentChange={handleTimeAlignmentChange}
+					/>
+				)}
+			</Container>
 		)
 	},
 )
