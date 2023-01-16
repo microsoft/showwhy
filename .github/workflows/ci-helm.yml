@@ -19,6 +19,8 @@ jobs:
       inputs:
         helmVersion: 3.9.0
 
+    - uses: actions/checkout@v3
+
     - task: HelmDeploy@0
       displayName: "Validate helm package"
       inputs:
