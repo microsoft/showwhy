@@ -12,6 +12,8 @@ jobs:
 
     steps:
       - uses: azure/setup-helm@v3
+        with: 
+          token: ${{ secrets.GITHUB_TOKEN }} # only needed if version is 'latest'
 
       # - name: login to ghcr using helm
       #   shell: bash    
