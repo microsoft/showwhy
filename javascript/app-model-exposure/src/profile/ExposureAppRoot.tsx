@@ -5,6 +5,7 @@
 import { RecoilBasedProfileHost } from '@datashaper/app-framework'
 import { memo } from 'react'
 import type { MutableSnapshot, Snapshot } from 'recoil'
+import { v4 } from 'uuid'
 
 import { ModelExposurePage } from '../pages/ModelExposurePage.js'
 import { causalFactorsState } from '../state/causalFactors.js'
@@ -33,7 +34,7 @@ export const ExposureAppRoot: React.FC<{
 })
 
 function loadState(resource: ExposureResource, { set }: MutableSnapshot) {
-	const ensureId = (f: any, index: number) => ({ ...f, id: f.id ?? `${index}` })
+	const ensureId = (f: any, index: number) => ({ ...f, id: f.id ?? v4() })
 
 	set(projectNameState, resource.projectName)
 	set(causalFactorsState, resource.causalFactors.map(ensureId))

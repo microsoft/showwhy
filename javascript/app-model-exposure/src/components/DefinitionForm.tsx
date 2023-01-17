@@ -11,7 +11,6 @@ import { useSetDefinitions } from '../state/definitions.js'
 import type { Definition } from '../types/experiments/Definition.js'
 import type { DefinitionType } from '../types/experiments/DefinitionType.js'
 import type { Maybe } from '../types/primitives.js'
-import type { CausalQuestionElement } from '../types/question/CausalQuestionElement.js'
 import { getDefinitionsByType } from '../utils/definition.js'
 import { AlternativeDefinitionsForm } from './AlternativeDefinitionsForm.js'
 import {
@@ -19,16 +18,14 @@ import {
 	useDefinitionItems,
 	useEditDefinition,
 	useHeaders,
-	useRemoveDefinition,
+	useRemoveDefinition
 } from './DefinitionForm.hooks.js'
 import { DetailsList } from './DetailsList.js'
 
 export const DefinitionForm: FC<{
-	questionElement: CausalQuestionElement
 	definitions: Definition[]
 	definitionType: DefinitionType
 }> = memo(function DefinitionForm({
-	questionElement,
 	definitions,
 	definitionType,
 }) {
