@@ -36,10 +36,7 @@ EOF
 
 kubectl create namespace oauth-proxy
 kubectl apply --wait -f oauth-proxy.yaml
-pid=$!
-echo "Process with PID $pid is running"
-wait $pid
-echo "Process with PID $pid has finished with Exit status: $?"
+wait -f
 
 # Install helm package from ghcr
 helm upgrade --install causal-services $HELM_APP_LOCATION \
