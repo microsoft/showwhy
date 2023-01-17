@@ -42,7 +42,7 @@ Open up a terminal application, and using the command-line interface (CLI) run t
 docker-compose --profile all up
 ```
 
-For delevopers wishing to contribute to the project, refer to [DEVELOPING.md](./DEVELOPING.md) for instructions on getting started.
+For developers wishing to contribute to the project, refer to [DEVELOPING.md](./DEVELOPING.md) for instructions on getting started.
 
 # Deployment
 

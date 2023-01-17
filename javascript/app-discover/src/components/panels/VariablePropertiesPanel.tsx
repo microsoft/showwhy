@@ -71,6 +71,13 @@ export const VariablePropertiesPanel: React.FC<VariablePropertiesPanelProps> =
 				inModelVariable => inModelVariable !== variable,
 			)
 			setInModelVariables(newInModelVariables)
+			setConstraints(
+				updateConstraints(
+					constraints,
+					variable,
+					Constraints.None,
+				),
+			)
 		}
 
 		const constraintChooserOptions: IChoiceGroupOption[] = [
