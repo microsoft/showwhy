@@ -35,6 +35,12 @@
             "metadata": {
                 "description": "Resource group of AKS node"
             }
+        },
+        "helmAppLocation": {
+            "type": "string",
+            "metadata": {
+                "description": ""
+            }
         }
     },
     "resources": [
@@ -120,6 +126,9 @@
                     "dnsPrefix": {
                         "value": "[parameters('dnsPrefix')]"
                     },
+                    "helmAppLocation": {
+                        "value": "[parameters('helmAppLocation')]"
+                    },
                     "ip": {
                         "value": "[reference(resourceId(parameters('nodeResourceGroup'),'Microsoft.Resources/deployments', 'publicIP')).outputs.publicIP.value]"
                     }
@@ -153,6 +162,10 @@
                             "type": "string",
                             "defaultValue": "[utcNow()]"
                         },
+                        "helmAppLocation": {
+                            "type": "string",
+                            "defaultValue": ""
+                        },
                         "ip": {
                             "type": "string",
                             "defaultValue": ""
@@ -160,7 +173,6 @@
                     },
                     "variables": {
                         "domain": "[concat(parameters('dnsPrefix'), '.', resourceGroup().location, '.cloudapp.azure.com')]",
-                        "helmAppLocation": "oci://ghcr.io/microsoft/showwhy/helm/causal-services",
                         "installScriptUri": "[uri('https://raw.githubusercontent.com/microsoft/showwhy/azure/docs/deployment/azure-scripts/', 'helm.sh')]"
                     },
                     "resources": [
@@ -203,7 +215,7 @@
                                     },
                                     {
                                         "name": "HELM_APP_LOCATION",
-                                        "secureValue": "[variables('helmAppLocation')]"
+                                        "secureValue": "[parameters('helmAppLocation')]"
                                     },
                                     {
                                         "name": "DOMAIN",
