@@ -40,9 +40,24 @@
             "metadata": {
                 "description": "The size of the Virtual Machine."
             }
+        },
+        "clientId": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "The size of the Virtual Machine."
+            }
+        },
+        "clientSecret": {
+            "type": "securestring",
+            "defaultValue": "",
+            "metadata": {
+                "description": "The size of the Virtual Machine."
+            }
         }
     },
     "variables": {
+                        "helmAppLocation": "oci://ghcr.io/microsoft/showwhy/helm/causal-services",
         "nodeResourceGroup": "[concat('MC_', resourceGroup().name, '_', parameters('clusterName'), '_', resourceGroup().location)]"
     },
     "resources": [
@@ -98,8 +113,50 @@
                     "clusterName": {
                         "value": "[parameters('clusterName')]"
                     },
+                    "helmAppLocation": {
+                        "value": "[variables('helmAppLocation')]"
+                    },
                     "dnsPrefix": {
                         "value": "[parameters('dnsPrefix')]"
+                    },
+                    "nodeResourceGroup": {
+                        "value": "[variables('nodeResourceGroup')]"
+                    }
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2021-04-01",
+            "name": "authDeployment",
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/deployments', 'helmDeployment')]"
+            ],
+            "condition": "[not(empty(parameters('clientId')))]",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[uri('https://raw.githubusercontent.com/microsoft/showwhy/azure/docs/deployment/azure-scripts/', 'auth.json')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                     "identityName": {
+                        "value": "[reference('aksDeployment').outputs.identityName.value]"
+                    },
+                    "clusterName": {
+                        "value": "[parameters('clusterName')]"
+                    },
+                    "dnsPrefix": {
+                        "value": "[parameters('dnsPrefix')]"
+                    },
+                    "helmAppLocation": {
+                        "value": "[variables('helmAppLocation')]"
+                    },
+                    "clientId": {
+                        "value": "[parameters('clientId')]"
+                    },
+                    "clientSecret": {
+                        "value": "[parameters('clientSecret')]"
                     },
                     "nodeResourceGroup": {
                         "value": "[variables('nodeResourceGroup')]"
