@@ -1,5 +1,5 @@
 # AKS ARM Template
-This Azure Resource Manager (ARM) template deploys an Azure Kubernetes Service (AKS) cluster with the specified parameters. The template also includes a deployment for installing Helm, a package manager for Kubernetes.
+This Azure Resource Manager (ARM) template deploys an Azure Kubernetes Service (AKS) cluster with the specified parameters. The template also includes Helm, a package manager for Kubernetes.
 
 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmicrosoft%2Fshowwhy%2Fazure%2Fdocs%2Fdeployment%2Fazure-scripts%2Fall.json)
 
@@ -10,9 +10,8 @@ Microsoft.Authorization/roleAssignments/write permissions, such as `User Access 
 
 **2.    The aks cluster will be only accessible by Azure Portal, it's not generating a ssh key for external access.**
 
-**3.    It has self signed certificated for now, so when you access it will say 'Your connection is not private', you'll have to click on the advanced to proceed to the deployed website**
+**3.    The application will have a self-signed certificate, when you access it you will se an error stating "Your connection is not private".**
 
-**4.    It's not auth enabled.**
 ## Parameters:
 `clusterName`: The name of the Managed Cluster resource.
 
@@ -24,9 +23,7 @@ Microsoft.Authorization/roleAssignments/write permissions, such as `User Access 
 
 `agentVMSize`: The size of the Virtual Machine.
 
-`linuxAdminUsername`: User name for the Linux Virtual Machines.
-
-`enableAuth`: If you would like authentication enabled to access the platform, set this as true, follow [this steps to create an app registration](../AKS_DEPLOY.md#5-1-Authentication)
+If you would like authentication enabled to access the platform, follow [this steps to create an app registration](../AKS_DEPLOY.md#5-1-Authentication) and pass the following:
 
 `clientId`: Client ID from the app registration
 
@@ -37,14 +34,13 @@ The template deploys the following resources:
 
 A Managed Cluster resource using the specified clusterName, dnsPrefix, osDiskSizeGB, agentCount, and agentVMSize parameters.
 
-A deployment for installing Helm using the nodeResourceGroup variable and the clusterName and linuxAdminUsername parameters.
+A deployment for installing Helm using the nodeResourceGroup variable and the clusterName parameters.
 
 ## Deployment
 To deploy the template, you can use the Azure portal, Azure PowerShell, or the Azure CLI.
 
 In the Azure portal, select Create a resource, search for "AKS ARM Template", and select it from the results.
-Follow the prompts to enter the required parameters and select any optional
-
+Follow the prompts to enter the required parameters and confirm it.
 
 A Managed Cluster resource using the specified clusterName, dnsPrefix, osDiskSizeGB, agentCount, agentVMSize, linuxAdminUsername, and sshRSAPublicKey parameters.
 A deployment that installs Helm on the Managed Cluster.
