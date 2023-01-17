@@ -38,7 +38,7 @@ kubectl create namespace oauth-proxy
 kubectl apply --wait -f oauth-proxy.yaml
 
 # Install helm package from ghcr
-# helm upgrade --install causal-services $HELM_APP_LOCATION \
-#     --set enableAuthentication=true,causalImagesPullPolicy=Always,domain=$DOMAIN --wait
+helm upgrade --install causal-services $HELM_APP_LOCATION \
+    --set enableAuthentication=true,causalImagesPullPolicy=Always,domain=$DOMAIN
 
 echo \{\"Status\":\"Complete\"\} > $AZ_SCRIPTS_OUTPUT_PATH
