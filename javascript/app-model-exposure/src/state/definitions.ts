@@ -6,6 +6,7 @@
 import type { Resetter, SetterOrUpdater } from 'recoil'
 import {
 	atom,
+	useRecoilState,
 	useRecoilValue,
 	useResetRecoilState,
 	useSetRecoilState,
@@ -28,4 +29,11 @@ export function useSetDefinitions(): SetterOrUpdater<Definition[]> {
 
 export function useResetDefinitions(): Resetter {
 	return useResetRecoilState(definitionsState)
+}
+
+export function useDefinitionsState(): [
+	Definition[],
+	SetterOrUpdater<Definition[]>,
+] {
+	return useRecoilState(definitionsState)
 }
