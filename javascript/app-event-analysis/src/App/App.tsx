@@ -3,8 +3,9 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { Pivot, PivotItem } from '@fluentui/react'
-import React, { memo } from 'react'
+import React, { memo, useMemo, useRef } from 'react'
 
+import { CausalQuestion } from '../components/CausalQuestion.js'
 import { EstimateEffects } from '../pages/EstimateEffects/index.js'
 import { PrepareAnalysis } from '../pages/PrepareAnalysis/index.js'
 import { ValidateEffects } from '../pages/ValidateEffects/index.js'
@@ -17,13 +18,18 @@ export const App: React.FC = memo(function App() {
 	const pivotStyles = usePivotStyles()
 	const selectedTabKey = useSelectedTabKeyValueState()
 	const onHandleTabClicked = useOnHandleTabClicked()
+	const ref = useRef<HTMLDivElement>(null)
 	useInit()
+
+	const width = useMemo((): string => {
+		return ref?.current?.offsetWidth ? `${ref.current.offsetWidth}px` : `100%}`
+	}, [ref])
 
 	return (
 		<Container>
 			<Pivot
+				ref={ref}
 				aria-label="SynthDiD Navigation Tabs"
-				className="tabControl"
 				onLinkClick={onHandleTabClicked}
 				selectedKey={selectedTabKey}
 				styles={pivotStyles}
@@ -47,6 +53,7 @@ export const App: React.FC = memo(function App() {
 					<ValidateEffects />
 				</PivotItem>
 			</Pivot>
+			<CausalQuestion width={width} />
 		</Container>
 	)
 })

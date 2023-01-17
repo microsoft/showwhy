@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { Spinner, SpinnerSize, Stack } from '@fluentui/react'
+import { Spinner, SpinnerSize } from '@fluentui/react'
 import { memo, useMemo, useRef, useState } from 'react'
 
 import {
@@ -14,7 +14,7 @@ import {
 	useSelectedTabKeyValueState,
 	useTreatedUnitsValueState,
 } from '../../state/index.js'
-import { GraphTitle, StyledStack } from '../../styles/index.js'
+import { GraphTitle, PaneContainer } from '../../styles/index.js'
 import type { HoverInfo, TooltipInfo } from '../../types.js'
 import { CONFIGURATION_TABS } from '../../types.js'
 import { CustomMessageBar } from '../CustomMessageBar.js'
@@ -91,53 +91,43 @@ export const EffectResultPane: React.FC<EffectResultPaneProps> = memo(
 		)
 
 		return (
-			<StyledStack grow verticalFill tokens={{ childrenGap: 15 }}>
-				<Stack.Item className="statusMessage">
-					{statusMessage.isVisible && (
-						<CustomMessageBar
-							content={statusMessage.content}
-							type={statusMessage.type}
-						/>
-					)}
-				</Stack.Item>
+			<PaneContainer>
+				{statusMessage.isVisible && (
+					<CustomMessageBar
+						content={statusMessage.content}
+						type={statusMessage.type}
+					/>
+				)}
 
-				<Stack.Item className="no-top-margin">
-					{isLoading && <Spinner size={SpinnerSize.medium} />}
-				</Stack.Item>
+				{isLoading && <Spinner size={SpinnerSize.medium} />}
 
-				<Stack.Item className="no-top-margin">
-					<GraphTitle>
-						Effect of {eventName} on {outcomeName}
-					</GraphTitle>
-				</Stack.Item>
+				<GraphTitle>
+					Effect of {eventName} on {outcomeName}
+				</GraphTitle>
 
 				{showSyntheticComposition && (
 					<>
-						<Stack.Item>
-							<EffectSummaryResult
-								inputData={inputData}
-								outputData={outputData}
-								timeAlignment={timeAlignment}
-							/>
-						</Stack.Item>
+						<EffectSummaryResult
+							inputData={inputData}
+							outputData={outputData}
+							timeAlignment={timeAlignment}
+						/>
 						{!showChartPerUnit && (
-							<Stack.Item>
-								<DimensionedLineChart
-									inputData={inputData}
-									lineChartRef={synthLineChartRef}
-									checkableUnits={checkableUnits}
-									onRemoveCheckedUnit={onRemoveCheckedUnit}
-									output={outputData}
-									treatedUnitsList={treatedUnits}
-									isPlaceboSimulation={isPlaceboSimulation}
-									checkedUnits={checkedUnits}
-								/>
-							</Stack.Item>
+							<DimensionedLineChart
+								inputData={inputData}
+								lineChartRef={synthLineChartRef}
+								checkableUnits={checkableUnits}
+								onRemoveCheckedUnit={onRemoveCheckedUnit}
+								output={outputData}
+								treatedUnitsList={treatedUnits}
+								isPlaceboSimulation={isPlaceboSimulation}
+								checkedUnits={checkedUnits}
+							/>
 						)}
 						{effectResult}
 					</>
 				)}
-			</StyledStack>
+			</PaneContainer>
 		)
 	},
 )

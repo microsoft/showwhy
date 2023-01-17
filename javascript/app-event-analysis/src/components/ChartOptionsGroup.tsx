@@ -2,9 +2,10 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { Checkbox, Stack } from '@fluentui/react'
+import { Checkbox } from '@fluentui/react'
 import { memo, useCallback } from 'react'
 
+import { ChartOptionsGroupWrapper } from './ChartOptionsGroup.styles.js'
 import type { ChartOptionsGroupProps } from './ChartOptionsGroup.types.js'
 
 export const ChartOptionsGroup: React.FC<ChartOptionsGroupProps> = memo(
@@ -25,7 +26,7 @@ export const ChartOptionsGroup: React.FC<ChartOptionsGroupProps> = memo(
 		)
 
 		return (
-			<Stack tokens={{ childrenGap: 5 }}>
+			<ChartOptionsGroupWrapper>
 				<Checkbox
 					label="Show synthetic control"
 					checked={showSynthControl}
@@ -61,7 +62,7 @@ export const ChartOptionsGroup: React.FC<ChartOptionsGroupProps> = memo(
 						handleOnChange({ showChartPerUnit: !!isChecked })
 					}
 				/>
-			</Stack>
+			</ChartOptionsGroupWrapper>
 		)
 	},
 )
