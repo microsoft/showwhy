@@ -4,7 +4,6 @@
  */
 
 import type {
-	MessageBarProps,
 	OutputData,
 	PlaceboOutputData,
 	ProcessedInputData,
@@ -13,7 +12,6 @@ import type {
 export interface RawDataPaneProps {
 	inputData: ProcessedInputData
 	outputData: (OutputData | PlaceboOutputData)[]
-	statusMessage: MessageBarProps
 	checkableUnits: string[]
 	onRemoveCheckedUnit: (unitToRemove: string) => void
 }

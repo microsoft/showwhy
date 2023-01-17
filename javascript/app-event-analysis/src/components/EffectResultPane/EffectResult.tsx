@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { Stack, Text } from '@fluentui/react'
+import { Text } from '@fluentui/react'
 import { memo, useRef } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
 
@@ -13,7 +13,7 @@ import {
 	useOutcomeNameValueState,
 	useTreatedUnitsValueState,
 } from '../../state/index.js'
-import { Container, Spacer, Strong, TreatedTitle } from '../../styles/index.js'
+import { Container, Strong, TreatedTitle } from '../../styles/index.js'
 import type { LineData, OutputData } from '../../types.js'
 import {
 	BAR_CHART_HEIGHT_PERC_OF_WIN_HEIGHT,
@@ -68,21 +68,18 @@ export const EffectResult: React.FC<EffectResultProps> = memo(
 		}
 
 		return (
-			<Stack key={treatedUnit} tokens={{ padding: 10 }}>
+			<Container key={treatedUnit}>
 				<TreatedTitle>{treatedUnit}</TreatedTitle>
-				<Spacer axis="vertical" size={10} />
 				{showChartPerUnit && (
-					<Stack.Item>
-						<DimensionedLineChart
-							inputData={inputData}
-							lineChartRef={ref}
-							checkableUnits={checkableUnits}
-							onRemoveCheckedUnit={onRemoveCheckedUnit}
-							output={[filteredOutput]}
-							treatedUnitsList={[treatedUnit]}
-							checkedUnits={checkedUnits}
-						/>
-					</Stack.Item>
+					<DimensionedLineChart
+						inputData={inputData}
+						lineChartRef={ref}
+						checkableUnits={checkableUnits}
+						onRemoveCheckedUnit={onRemoveCheckedUnit}
+						output={[filteredOutput]}
+						treatedUnitsList={[treatedUnit]}
+						checkedUnits={checkedUnits}
+					/>
 				)}
 
 				<Text className="infoText synth-control-text-margin" variant="medium">
@@ -113,7 +110,7 @@ export const EffectResult: React.FC<EffectResultProps> = memo(
 						/>
 					</ErrorBoundary>
 				</Container>
-			</Stack>
+			</Container>
 		)
 	},
 )

@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import type { IDropdownOption } from '@fluentui/react'
-import { Dropdown, Stack } from '@fluentui/react'
+import { Dropdown } from '@fluentui/react'
 import type { FormEvent } from 'react'
 import { memo, useCallback, useMemo } from 'react'
 
@@ -34,15 +34,11 @@ export const EstimatorSelector: React.FC<EstimatorSelectorProps> = memo(
 		)
 
 		return (
-			<Stack horizontal tokens={{ childrenGap: 3 }}>
-				<Stack.Item grow>
-					<Dropdown
-						options={estimatorDropdownOptions}
-						selectedKey={estimator}
-						onChange={handleEstimatorChange}
-					/>
-				</Stack.Item>
-			</Stack>
+			<Dropdown
+				options={estimatorDropdownOptions}
+				selectedKey={estimator}
+				onChange={handleEstimatorChange}
+			/>
 		)
 	},
 )

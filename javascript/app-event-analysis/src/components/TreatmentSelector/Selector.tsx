@@ -3,10 +3,11 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import type { IDropdownOption } from '@fluentui/react'
-import { Dropdown, FontIcon, SpinButton, Stack } from '@fluentui/react'
+import { Dropdown, FontIcon, SpinButton } from '@fluentui/react'
 import type { FormEvent, SyntheticEvent } from 'react'
 import { memo, useCallback } from 'react'
 
+import { SelectorContainer } from './Selector.styles.js'
 import type { SelectorProps } from './Selector.types.js'
 
 export const Selector: React.FC<SelectorProps> = memo(function Selector({
@@ -48,40 +49,26 @@ export const Selector: React.FC<SelectorProps> = memo(function Selector({
 	)
 
 	return (
-		<Stack
-			horizontal
-			tokens={{ childrenGap: 3 }}
-			className="treatment-elements-container"
-		>
-			<Stack.Item grow className="treatment-element">
-				<Dropdown
-					placeholder="Treated unit"
-					options={units.map(unit => ({ key: unit, text: unit }))}
-					selectedKey={treatedUnit}
-					onChange={onUnitChange}
-				/>
-			</Stack.Item>
-			<Stack.Item grow className="treatment-element">
-				<SpinButton
-					placeholder="Start date"
-					value={treatmentStartDate.toString()}
-					min={+minDate}
-					max={+maxDate}
-					step={1}
-					onChange={onStartDateChange}
-				/>
-			</Stack.Item>
-			<Stack.Item
-				align="center"
-				className="treatment-element"
-				styles={{ root: { justifySelf: 'center' } }}
-			>
-				<FontIcon
-					iconName="SkypeCircleMinus"
-					className="remove-treated-unit"
-					onClick={onDeleteUnit}
-				/>
-			</Stack.Item>
-		</Stack>
+		<SelectorContainer>
+			<Dropdown
+				placeholder="Treated unit"
+				options={units.map(unit => ({ key: unit, text: unit }))}
+				selectedKey={treatedUnit}
+				onChange={onUnitChange}
+			/>
+			<SpinButton
+				placeholder="Start date"
+				value={treatmentStartDate.toString()}
+				min={+minDate}
+				max={+maxDate}
+				step={1}
+				onChange={onStartDateChange}
+			/>
+			<FontIcon
+				iconName="SkypeCircleMinus"
+				className="remove-treated-unit"
+				onClick={onDeleteUnit}
+			/>
+		</SelectorContainer>
 	)
 })
