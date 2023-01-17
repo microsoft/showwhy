@@ -23,15 +23,15 @@ cat > oauth-proxy.yaml <<EOF
 apiVersion: v1
 kind: Secret
 metadata:
-name: oauth-proxy-secret
-namespace: oauth-proxy
+    name: oauth-proxy-secret
+    namespace: oauth-proxy
 stringData:
-oidc-issuer-url: https://login.microsoftonline.com/$TENANT_ID/v2.0
-scope: openid email
-client-id: $CLIENT_ID
-client-secret: $CLIENT_SECRET
-cookie-secret: $randomSecretCookie
-cookie-name: $cookieName
+    oidc-issuer-url: https://login.microsoftonline.com/$TENANT_ID/v2.0
+    scope: openid email
+    client-id: $CLIENT_ID
+    client-secret: $CLIENT_SECRET
+    cookie-secret: $randomSecretCookie
+    cookie-name: $cookieName
 EOF
 
 kubectl create namespace oauth-proxy
