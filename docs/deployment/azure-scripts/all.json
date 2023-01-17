@@ -157,9 +157,6 @@
                     },
                     "clientSecret": {
                         "value": "[parameters('clientSecret')]"
-                    },
-                    "nodeResourceGroup": {
-                        "value": "[variables('nodeResourceGroup')]"
                     }
                 }
             }
