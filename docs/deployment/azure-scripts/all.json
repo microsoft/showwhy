@@ -5,15 +5,16 @@
         "clusterName": {
             "type": "string",
             "defaultValue": "showwhy",
+            "minLength": 1,
             "metadata": {
-                "description": "The name of the Managed Cluster resource."
+                "description": "The name of the Managed Cluster resource"
             }
         },
         "dnsPrefix": {
             "type": "string",
             "minLength": 1,
             "metadata": {
-                "description": "Optional DNS prefix to use with hosted Kubernetes API server FQDN."
+                "description": "DNS prefix to use with hosted Kubernetes API server FQDN"
             }
         },
         "osDiskSizeGB": {
@@ -22,7 +23,7 @@
             "maxValue": 1023,
             "minValue": 0,
             "metadata": {
-                "description": "Disk size (in GB) to provision for each of the agent pool nodes. This value ranges from 0 to 1023. Specifying 0 will apply the default disk size for that agentVMSize."
+                "description": "Disk size (in GB) to provision for each of the agent pool nodes. This value ranges from 0 to 1023. Specifying 0 will apply the default disk size for that agentVMSize"
             }
         },
         "agentCount": {
@@ -31,28 +32,28 @@
             "maxValue": 50,
             "minValue": 1,
             "metadata": {
-                "description": "The number of nodes for the cluster."
+                "description": "The number of nodes for the cluster"
             }
         },
         "agentVMSize": {
             "type": "string",
             "defaultValue": "Standard_D2s_v3",
             "metadata": {
-                "description": "The size of the Virtual Machine."
+                "description": "The size of the Virtual Machine"
             }
         },
         "clientId": {
             "type": "string",
             "defaultValue": "",
             "metadata": {
-                "description": "The size of the Virtual Machine."
+                "description": "App registration's client ID if authentication should be enabled"
             }
         },
         "clientSecret": {
             "type": "securestring",
             "defaultValue": "",
             "metadata": {
-                "description": "The size of the Virtual Machine."
+                "description": "App registration's client secret if authentication should be enabled"
             }
         }
     },

@@ -20,14 +20,14 @@
             "type": "string",
             "defaultValue": "",
             "metadata": {
-                "description": "The name of the Managed Cluster resource."
+                "description": "The name of the Managed Cluster resource"
             }
         },
         "dnsPrefix": {
             "type": "string",
             "defaultValue": "",
             "metadata": {
-                "description": "Optional DNS prefix to use with hosted Kubernetes API server FQDN."
+                "description": "Optional DNS prefix to use with hosted Kubernetes API server FQDN"
             }
         },
         "nodeResourceGroup": {
