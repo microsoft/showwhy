@@ -14,7 +14,7 @@ import { BeliefDegree } from '../types/causality/BeliefDegree.js'
 import { CausalFactorType } from '../types/causality/CausalFactorType.js'
 import { DefinitionType } from '../types/experiments/DefinitionType.js'
 import { isCausalFactorType } from '../utils/definition.js'
-import { returnValidHTMLId } from '../utils/html.js'
+import { makeHtmlId } from '../utils/html.js'
 import { BaseCallout } from './Callout.js'
 import { DegreeDropdown } from './DegreeDropdown.js'
 
@@ -24,7 +24,7 @@ export const AddVariableFields: FC = memo(function AddVariableFields() {
 
 	return (
 		<BaseCallout
-			id={returnValidHTMLId(selectedColumn)}
+			id={makeHtmlId(selectedColumn)}
 			show={showCallout}
 			toggleShow={toggleShowCallout}
 			title="Assign new variable"

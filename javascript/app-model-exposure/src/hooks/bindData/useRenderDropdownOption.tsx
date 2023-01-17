@@ -20,7 +20,7 @@ import type { CausalFactor } from '../../types/causality/CausalFactor.js'
 import type { Definition } from '../../types/experiments/Definition.js'
 import type { Maybe } from '../../types/primitives.js'
 import { CommandActionType } from '../../types/workflow/CommandActionType.js'
-import { returnValidHTMLId } from '../../utils/html.js'
+import { makeHtmlId } from '../../utils/html.js'
 import {
 	useSelectedOptionByColumn,
 	useSelectedOptionByColumnAndVariable,
@@ -105,7 +105,7 @@ export function useRenderDropdown(
 			}`
 
 			return (
-				<Container id={returnValidHTMLId(columnName)} title={variable}>
+				<Container id={makeHtmlId(columnName)} title={variable}>
 					<ColumnarMenu
 						text={variable}
 						{...menuProps}
