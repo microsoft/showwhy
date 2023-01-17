@@ -173,7 +173,7 @@
                     },
                     "variables": {
                         "domain": "[concat(parameters('dnsPrefix'), '.', resourceGroup().location, '.cloudapp.azure.com')]",
-                        "installScriptUri": "[uri('https://raw.githubusercontent.com/microsoft/showwhy/azure/docs/deployment/azure-scripts/', 'helm.sh')]"
+                        "installScriptUri": "[uri('https://raw.githubusercontent.com/microsoft/showwhy/docs/deployment/azure-scripts/', 'helm.sh')]"
                     },
                     "resources": [
                         {
