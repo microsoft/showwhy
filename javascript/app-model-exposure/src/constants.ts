@@ -11,3 +11,5 @@ export const DEFAULT_REFUTATION_TESTS = [
 	'random_common_cause',
 	'placebo_treatment',
 ]
+
+export const MIN_DATASET_SIZE = 100
