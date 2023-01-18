@@ -7,14 +7,14 @@ import { ColumnarMenu, ColumnarMenuList } from '@essex/components'
 import type {
 	IContextualMenuItem,
 	IContextualMenuListProps,
-	IRawStyle
+	IRawStyle,
 } from '@fluentui/react'
 import { useCallback } from 'react'
 import styled from 'styled-components'
 
 import {
 	useCallout,
-	useSelectedColumn
+	useSelectedColumn,
 } from '../../state/deriveDataVariablesPage.js'
 import type { CausalFactor } from '../../types/causality/CausalFactor.js'
 import type { Definition } from '../../types/experiments/Definition.js'
@@ -24,7 +24,7 @@ import { makeHtmlId } from '../../utils/html.js'
 import {
 	useSelectedOptionByColumn,
 	useSelectedOptionByColumnAndVariable,
-	useSelectedOptions
+	useSelectedOptions,
 } from './useSelectedOption.js'
 
 const buttonStyles = {
