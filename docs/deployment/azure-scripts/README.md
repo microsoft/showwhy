@@ -31,7 +31,7 @@ Microsoft.Authorization/roleAssignments/write permissions, such as `User Access 
 
 If you wounld't like any form of authentication you can proceed to Review + create.
 
-<details><summary>Deploy with authentication</summary>
+<details id="section-1"><summary>Deploy with authentication</summary>
 
 To authenticate requests made to the services in the cluster we will use the [OAuth2 Proxy](https://oauth2-proxy.github.io/oauth2-proxy/) service.
 
@@ -60,7 +60,7 @@ We need to create our APP registration on Azure Active Directory:
 <details><summary>Add authentication after deployment</summary>
 
 You can add authentication later if you want.
-1. Follow these steps to create a new APP registration
+1. Follow the above example on `Deploy with authentication` to create a new APP registration
 2. Click the button to deploy the authentication script:
 
 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https%3A%2F%2Fraw.githubusercontent.com%2Fmicrosoft%2Fshowwhy%2Fmain%2Fdocs%2Fdeployment%2Fazure-scripts%2Fauth.json)
@@ -84,8 +84,6 @@ Managed Identity`
 `clientSecret`: Client Secret from the app registration
 
 `domain`: Full URL of the application
-
-
 
 </details>
 
