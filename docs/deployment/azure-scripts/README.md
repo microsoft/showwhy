@@ -1,7 +1,7 @@
 # AKS ARM Template
 This Azure Resource Manager (ARM) template deploys an Azure Kubernetes Service (AKS) cluster with the specified parameters. The template also includes Helm, a package manager for Kubernetes.
 
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmicrosoft%2Fshowwhy%2Fazure%2Fdocs%2Fdeployment%2Fazure-scripts%2Fall.json)
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmicrosoft%2Fshowwhy%2Fmain%2Fdocs%2Fdeployment%2Fazure-scripts%2Fall.json)
 
 **Please note that:**
 
