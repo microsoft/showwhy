@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import type { IDropdownOption, IDropdownStyles } from '@fluentui/react'
-import { Dropdown, Stack } from '@fluentui/react'
+import { Dropdown } from '@fluentui/react'
 import type { FormEvent } from 'react'
 import { memo, useCallback, useMemo } from 'react'
 
@@ -39,16 +39,13 @@ export const TimeAlignmentSelector: React.FC<TimeAlignmentSelectorProps> = memo(
 		}
 
 		return (
-			<Stack>
-				<Stack.Item>
-					<Dropdown
-						options={timeAlignmentDropdownOptions}
-						selectedKey={alignment}
-						onChange={handleTimeAlignmentChange}
-						styles={dropdownStyles}
-					/>
-				</Stack.Item>
-			</Stack>
+			<Dropdown
+				options={timeAlignmentDropdownOptions}
+				selectedKey={alignment}
+				onChange={handleTimeAlignmentChange}
+				styles={dropdownStyles}
+				label="Time Effect Heterogeneity:"
+			/>
 		)
 	},
 )

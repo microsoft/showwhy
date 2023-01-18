@@ -2,10 +2,12 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { DefaultButton, SpinButton, Stack } from '@fluentui/react'
+import { DefaultButton, SpinButton } from '@fluentui/react'
 import isEqual from 'lodash-es/isEqual.js'
 import { type SyntheticEvent, memo, useEffect, useMemo, useState } from 'react'
 
+import { Container } from '../styles/index.js'
+import { ButtonWrapper, FilterContainer } from './RangeFilter.styles.js'
 import type { RangeFilterProps } from './RangeFilter.types.js'
 
 export const RangeFilter: React.FC<RangeFilterProps> = memo(
@@ -50,13 +52,13 @@ export const RangeFilter: React.FC<RangeFilterProps> = memo(
 		}, [range, defaults])
 
 		return (
-			<Stack tokens={{ childrenGap: 10 }}>
-				<Stack horizontal tokens={{ childrenGap: 5 }}>
+			<Container>
+				<FilterContainer>
 					<SpinButton
 						label={labelStart}
 						value={range[0].toString()}
-						min={+min}
 						max={+range[1] - 1}
+						min={+min}
 						step={step}
 						onChange={handleStartValueChange}
 					/>
@@ -68,16 +70,12 @@ export const RangeFilter: React.FC<RangeFilterProps> = memo(
 						step={step}
 						onChange={handleEndValueChange}
 					/>
-				</Stack>
-				<Stack horizontal reversed tokens={{ childrenGap: 5 }}>
-					<Stack.Item align="end">
-						<DefaultButton text="Apply" onClick={handleApply} />
-					</Stack.Item>
-					<Stack.Item align="end">
-						<DefaultButton text="Reset" onClick={handleReset} />
-					</Stack.Item>
-				</Stack>
-			</Stack>
+				</FilterContainer>
+				<ButtonWrapper>
+					<DefaultButton text="Apply" onClick={handleApply} />
+					<DefaultButton text="Reset" onClick={handleReset} />
+				</ButtonWrapper>
+			</Container>
 		)
 	},
 )

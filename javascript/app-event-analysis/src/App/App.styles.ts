@@ -22,6 +22,9 @@ export function usePivotStyles() {
 				background: theme.palette.neutralLighter,
 				borderBottom: `1px solid ${theme.palette.neutralTertiaryAlt}`,
 			},
+			link: {
+				width: '9rem',
+			},
 		}),
 		[theme],
 	)

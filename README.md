@@ -46,7 +46,9 @@ For developers wishing to contribute to the project, refer to [DEVELOPING.md](./
 
 # Deployment
 
-Check the [deployment documentation](./docs/deployment/README.md) for instructions on how to deploy to a local kubernetes instance or to AKS on Azure.
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmicrosoft%2Fshowwhy%2Fazure%2Fdocs%2Fdeployment%2Fazure-scripts%2Fall.json)
+
+Check the [deployment documentation](./docs/deployment/README.md) for instructions on how to deploy to a local kubernetes instance, with one-click or manually to AKS on Azure.
 
 # Contribute
 
