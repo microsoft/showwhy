@@ -7,7 +7,8 @@ import { download } from '@datashaper/utilities'
 import * as aq from 'arquero'
 import { useCallback } from 'react'
 import { useRecoilState, useRecoilValue, useRecoilValueLoadable } from 'recoil'
-import { Relationship } from '../../domain/Relationship.js'
+
+import type { Relationship } from '../../domain/Relationship.js'
 import { row2report } from '../../utils/CausalEdgeReport.js'
 import { CausalGraphConstraintsState } from '../atoms/causal_graph.js'
 import { SelectedCausalDiscoveryAlgorithmState } from '../atoms/ui.js'
@@ -34,5 +35,10 @@ export function useDownloadEdges(
 		const table = aq.from(formattedRows)
 		const blob = new Blob([table.toCSV()])
 		download(`edges-${new Date().toLocaleString()}.csv`, 'text/csv', blob)
-	}, [correlations, constraints, causalRelationships])
+	}, [
+		correlations,
+		selectedCausalDiscoveryAlgorithm,
+		constraints,
+		causalRelationships,
+	])
 }

@@ -12,7 +12,7 @@ import {
 	columnMin,
 	columnMode,
 } from '../utils/Math.js'
-import { Relationship } from './Relationship.js'
+import type { Relationship } from './Relationship.js'
 import type { ColumnNature } from './VariableNature.js'
 import { inferColumnNature, VariableNature } from './VariableNature.js'
 

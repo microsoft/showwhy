@@ -7,6 +7,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import type { CausalDiscoveryConstraints } from '../../domain/CausalDiscovery/CausalDiscoveryConstraints.js'
+import type {
+	Relationship} from '../../domain/Relationship.js';
 import {
 	arrayIncludesRelationship,
 	hasSameReason,
@@ -15,12 +17,12 @@ import {
 	invertRelationshipAndKey,
 	involvesVariable,
 	isEquivalentRelationship,
-	ManualRelationshipReason,
-	Relationship,
+	ManualRelationshipReason
 } from '../../domain/Relationship.js'
+import type {
+	VariableReference} from './../../domain/CausalVariable.js';
 import {
-	arrayIncludesVariable,
-	VariableReference,
+	arrayIncludesVariable
 } from './../../domain/CausalVariable.js'
 
 export function removeBothEdges(

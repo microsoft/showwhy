@@ -5,9 +5,12 @@
 
 import { hasAnyConstraint } from '../components/lists/EdgeList.utils.js'
 import { CausalDiscoveryAlgorithm } from '../domain/CausalDiscovery/CausalDiscoveryAlgorithm.js'
-import { CausalDiscoveryConstraints } from '../domain/CausalDiscovery/CausalDiscoveryConstraints.js'
-import { CausalEdgesReport } from '../domain/CausalEdgesReport.js'
-import { Relationship, RelationshipWithWeight } from './../domain/Relationship'
+import type { CausalDiscoveryConstraints } from '../domain/CausalDiscovery/CausalDiscoveryConstraints.js'
+import type { CausalEdgesReport } from '../domain/CausalEdgesReport.js'
+import type {
+	Relationship,
+	RelationshipWithWeight,
+} from './../domain/Relationship.js'
 import { correlationForVariables } from './Correlation.js'
 
 export function row2report(
@@ -44,7 +47,7 @@ export function row2report(
 
 function getCausalRelationship(
 	selectedCausalDiscoveryAlgorithm: CausalDiscoveryAlgorithm,
-	weight: number = 0,
+	weight = 0,
 ) {
 	return selectedCausalDiscoveryAlgorithm === CausalDiscoveryAlgorithm.PC
 		? 'Causes change'
