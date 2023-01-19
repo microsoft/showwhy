@@ -33,7 +33,6 @@ class CausalEstimator:
                 "n_estimators": 100,
                 "objective": "binary:logistic",
                 "nthread": -1 if parallelism else 1,
-                "use_label_encoder": False,
                 "random_state": 42,
                 "verbosity": 0,
             }

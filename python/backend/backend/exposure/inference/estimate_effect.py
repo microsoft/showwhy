@@ -137,7 +137,7 @@ def estimate_effect(specification: Specification, task_id=None):
         identify_vars=True,
     )
 
-    identified_estimand = causal_model.identify_effect(proceed_when_unidentifiable=True, optimize_backdoor=True)
+    identified_estimand = causal_model.identify_effect(proceed_when_unidentifiable=True, optimize_backdoor=False)
     if identified_estimand.estimands["backdoor"] is None:
         return None
 
@@ -147,6 +147,9 @@ def estimate_effect(specification: Specification, task_id=None):
         method_name=estimator_config["method_name"],
         method_params=estimator_config["method_params"],
     )
+    # TODO: temporary fix until we update to the new dowhy API
+    estimate.__method_name = estimator_config["method_name"]
+    estimate.__method_params = estimator_config["method_params"]
 
     covariate_balance = __get_covariate_balance(specification.estimator, estimate)
 

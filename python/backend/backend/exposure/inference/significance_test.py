@@ -33,23 +33,6 @@ def __generate_bootstrap_sample(treatment_var, causal_model):
         return causal_model._data[treatment_var].transform(np.random.permutation)
 
 
-def __get_estimator_name(estimate):
-    """
-    Helper function to get estimator name for a given estimate
-    """
-    if "econml" in (str(estimate.params["estimator_class"])):
-        estimator_name = "backdoor.econml." + estimate.params["method_params"]["econml_methodname"].replace(
-            "econml.", ""
-        )
-    else:
-        estimator_name = (str(estimate.params["estimator_class"])).split(".")
-        estimator_name = [name for name in estimator_name if name.endswith("_estimator")][0]
-        estimator_name = estimator_name.replace("_estimator", "")
-        if "propensity" in estimator_name or "linear_regression" in estimator_name:
-            estimator_name = "backdoor." + estimator_name
-    return estimator_name
-
-
 def get_propensity_scores(identified_estimand, causal_model, estimate):
     common_causes = identified_estimand.get_backdoor_variables()
 
@@ -78,11 +61,11 @@ def compute_null_effect(specifications):
         treatment_var = specification.identified_estimand.treatment_variable
         causal_model._data[treatment_var] = __generate_bootstrap_sample(treatment_var, specification.causal_model)
 
-        estimator_name = __get_estimator_name(specification.estimate)
         estimate = causal_model.estimate_effect(
             specification.identified_estimand,
-            method_name=estimator_name,
-            method_params=specification.estimate.params["method_params"],
+            # TODO: temporary fix until we update to the new dowhy API
+            method_name=specification.estimate.__method_name,
+            method_params=specification.estimate.__method_params,
         )
         original.append(specification.original_effect)
         values.append(estimate.value)
