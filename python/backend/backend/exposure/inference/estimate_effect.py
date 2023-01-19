@@ -147,6 +147,9 @@ def estimate_effect(specification: Specification, task_id=None):
         method_name=estimator_config["method_name"],
         method_params=estimator_config["method_params"],
     )
+    # TODO: temporary fix until we update to the new dowhy API
+    estimate.__method_name = estimator_config["method_name"]
+    estimate.__method_params = estimator_config["method_params"]
 
     covariate_balance = __get_covariate_balance(specification.estimator, estimate)
 
