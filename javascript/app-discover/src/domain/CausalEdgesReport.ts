@@ -13,7 +13,7 @@ export interface CausalEdgesReport {
 	discoveredCausalRelationship: Number
 	causalMethod: CausalDiscoveryAlgorithm
 	causalRelationship: string
-	weight?: Number
+	weight?: string
 	weightMeaning: string
 	sourceReferenceValue: string
 	sourceTreatedValue: string
