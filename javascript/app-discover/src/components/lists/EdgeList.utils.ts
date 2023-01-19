@@ -7,8 +7,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import type { CausalDiscoveryConstraints } from '../../domain/CausalDiscovery/CausalDiscoveryConstraints.js'
-import type { Relationship } from '../../domain/Relationship.js'
 import {
+	arrayIncludesRelationship,
 	hasSameReason,
 	hasSameSourceAndTarget,
 	invertRelationship,
@@ -16,9 +16,12 @@ import {
 	involvesVariable,
 	isEquivalentRelationship,
 	ManualRelationshipReason,
+	Relationship,
 } from '../../domain/Relationship.js'
-import type { VariableReference } from './../../domain/CausalVariable.js'
-import { arrayIncludesVariable } from './../../domain/CausalVariable.js'
+import {
+	arrayIncludesVariable,
+	VariableReference,
+} from './../../domain/CausalVariable.js'
 
 export function removeBothEdges(
 	constraints: CausalDiscoveryConstraints,
@@ -152,5 +155,18 @@ export function hasConstraint(
 	return (
 		arrayIncludesVariable(allGeneralConstraints, relationship.target) ||
 		arrayIncludesVariable(allGeneralConstraints, relationship.source)
+	)
+}
+
+export function hasAnyConstraint(
+	constraints: CausalDiscoveryConstraints,
+	relationship: Relationship,
+) {
+	const generalOrManualConstraints = Object.values(
+		constraints.manualRelationships,
+	)
+	return (
+		arrayIncludesRelationship(generalOrManualConstraints, relationship) ||
+		hasConstraint(constraints, relationship)
 	)
 }

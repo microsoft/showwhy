@@ -8,7 +8,7 @@ import {
 	useRecoilState,
 	useRecoilValue,
 	useRecoilValueLoadable,
-	useSetRecoilState,
+	useSetRecoilState
 } from 'recoil'
 
 import type { CausalVariable } from '../../domain/CausalVariable.jsx'
@@ -23,7 +23,7 @@ import {
 	FixedInterventionRangesEnabledState,
 	SelectedObjectState,
 	useCausalGraph,
-	WeightThresholdState,
+	WeightThresholdState
 } from '../../state/index.jsx'
 import { CausalEdge } from './CausalEdge.jsx'
 import { useGraphBounds } from './CausalGraphExplorer.hooks.js'
@@ -33,7 +33,7 @@ import {
 	ContainerEdge,
 	edgeColors,
 	FlexContainer,
-	Grid,
+	Grid
 } from './CausalGraphExplorer.styles.js'
 import { CausalGraphNode } from './CausalGraphNode.jsx'
 import { CorrelationEdge } from './CorrelationEdge.jsx'

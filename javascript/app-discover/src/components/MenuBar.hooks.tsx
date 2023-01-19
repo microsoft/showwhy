@@ -18,7 +18,6 @@ import {
 } from '@fluentui/react'
 import { useCallback, useEffect, useMemo } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
-
 import {
 	AutoLayoutState,
 	AutoRunState,
@@ -47,6 +46,8 @@ export function useModelMenuItems(
 	saveModel: () => void,
 	openCausalModelFileSelector: () => void,
 	clearModel: () => void,
+	exportEdges: () => void,
+	hasCausalRelationships: boolean,
 ): ICommandBarItemProps {
 	const buttonStyles = useMenuButtonStyles()
 	return useMemo(
@@ -71,10 +72,23 @@ export function useModelMenuItems(
 						text: 'Clear model',
 						onClick: clearModel,
 					},
+					{
+						key: 'export-model',
+						text: 'Export edges',
+						disabled: !hasCausalRelationships,
+						onClick: exportEdges,
+					},
 				],
 			},
 		}),
-		[saveModel, openCausalModelFileSelector, clearModel, buttonStyles],
+		[
+			saveModel,
+			openCausalModelFileSelector,
+			clearModel,
+			exportEdges,
+			buttonStyles,
+			hasCausalRelationships,
+		],
 	)
 }
 
