@@ -25,17 +25,17 @@ ENV PATH="${PATH}:/root/.local/bin"
 
 WORKDIR /backend
 
-# Copy backend assets
-#   This is done separately so the base layers won't change that often
-#   to speed up image pushing
-COPY ./poetry.toml .
-COPY ./poetry.lock .
-COPY ./pyproject.toml .
+# Copy R dependencies
 COPY ./requirements.r .
-COPY ./scripts ./scripts
 
 # Install R dependencies
 RUN Rscript requirements.r
+
+# Copy python dependencies
+COPY ./scripts ./scripts
+COPY ./poetry.toml .
+COPY ./poetry.lock .
+COPY ./pyproject.toml .
 
 # Install python denpendencies
 RUN poetry config virtualenvs.create false \
