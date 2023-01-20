@@ -49,6 +49,11 @@ jobs:
         run: |
           poetry run poe test
 
+      - name: Clean build cache
+        working-directory: ./python/backend
+        run: |
+          rm -rf .venv && rm -rf .cache
+
       - name: Build and Publish Docker Container
         uses: darthtrevino/github-container-registry-build-push@main
         with:
@@ -58,4 +63,3 @@ jobs:
           dockerfile-path: ./python/backend/Dockerfile
           build-context: ./python/backend
           build-only: ${{ github.ref != 'refs/heads/main' }}
-  
