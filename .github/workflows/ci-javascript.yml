@@ -12,7 +12,7 @@ on:
       - '**/*.cjs'
       - '**/*.json'
       - .github/workflows/ci-javascript.yml
-      
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -53,7 +53,7 @@ jobs:
         name: Test
 
       - run: |
-          git add -A 
+          git add -A
           git status
         name: Git status
 
