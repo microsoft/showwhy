@@ -75,6 +75,10 @@ ignore_fail = "return_non_zero"
 sequence = ["format_check", "_flake8"]
 ignore_fail = "return_non_zero"
 
+[tool.poe.tasks.verify]
+sequence = ["format_check", "lint", "test"]
+ignore_fail = "return_non_zero"
+
 [tool.black]
 line-length = 120
 target-version = ['py38']
