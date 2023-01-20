@@ -45,9 +45,7 @@ RUN poetry config virtualenvs.create false \
 COPY . .
 
 # Check formatting, lint and tests
-RUN poetry run poe format_check \
-    && poetry run poe lint \
-    && poetry run poe test
+RUN poetry run poe verify
 
 # Start backend either in API or worker mode, depending on the WORKER env var
 ENTRYPOINT [ "./scripts/start.sh" ]
