@@ -16,3 +16,6 @@ poetry install --no-interaction --no-ansi --only events
 
 echo "Installing exposure dependencies..."
 poetry install --no-interaction --no-ansi --only exposure
+
+echo "Removing cache..."
+rm -rf .cache
