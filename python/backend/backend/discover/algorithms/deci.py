@@ -12,7 +12,6 @@ from causica.datasets.variables import Variable, Variables
 from causica.models.deci.deci import DECI
 from causica.utils.torch_utils import get_torch_device
 from celery import uuid
-from networkx.readwrite import json_graph
 from pydantic import BaseModel
 
 from backend.discover.algorithms.commons.base_runner import CausalDiscoveryRunner, CausalGraph, ProgressCallback
@@ -81,7 +80,7 @@ class DeciPayload(CausalDiscoveryPayload):
 
 
 class DeciRunner(CausalDiscoveryRunner):
-    name = "DeciRunner"
+    name = "DECI"
 
     def __init__(self, p: DeciPayload, progress_callback: ProgressCallback = None):
         super().__init__(p, progress_callback)
@@ -258,21 +257,6 @@ class DeciRunner(CausalDiscoveryRunner):
 
         return networkx.relabel_nodes(deci_graph, labels)
 
-    def _build_causal_graph(
-        self,
-        labeled_graph: Any,
-        intervention_model: DeciInterventionModel,
-    ) -> CausalGraph:
-        causal_graph = json_graph.cytoscape_data(labeled_graph)
-
-        causal_graph["columns"] = [self._prepared_data.columns[i] for i in range(len(self._prepared_data.columns))]
-        causal_graph["has_weights"] = True
-        causal_graph["has_confidence_values"] = True
-        causal_graph["is_dag"] = bool(self._is_dag)
-        causal_graph["intervention_model_id"] = intervention_model.id
-
-        return causal_graph
-
     def _do_causal_discovery(self) -> CausalGraph:
         # if the data contains only a single column,
         # let's return an empty graph
@@ -306,8 +290,12 @@ class DeciRunner(CausalDiscoveryRunner):
         intervention_model = DeciInterventionModel(deci_model, adj_matrix, ate_matrix, train_data)
 
         causal_graph = self._build_causal_graph(
-            self._build_labeled_graph(deci_model.variables.name_to_idx, adj_matrix, ate_matrix),
-            intervention_model,
+            labeled_graph=self._build_labeled_graph(deci_model.variables.name_to_idx, adj_matrix, ate_matrix),
+            has_weights=True,
+            has_confidence_values=True,
+            columns=self._get_column_names(),
+            is_dag=bool(self._is_dag),
+            intervention_model_id=intervention_model.id,
         )
 
         intervention_model.save()
