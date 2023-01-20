@@ -16,7 +16,7 @@ from pydantic import BaseModel
 
 from backend.discover.algorithms.commons.base_runner import CausalDiscoveryRunner, CausalGraph, ProgressCallback
 from backend.discover.algorithms.interventions.deci import DeciInterventionModel
-from backend.discover.model.causal_discovery import CausalDiscoveryPayload, map_to_causica_var_type
+from backend.discover.model.causal_discovery import ATEDetails, CausalDiscoveryPayload, map_to_causica_var_type
 
 torch.set_default_dtype(torch.float32)
 
@@ -206,10 +206,14 @@ class DeciRunner(CausalDiscoveryRunner):
         # go back to the same dimensionality in the original data
         return [ate_array[mask].mean() for mask in group_mask]
 
-    def _compute_average_treatment_effect(self, model: DECI, train_data: pd.DataFrame) -> np.ndarray:
+    def _compute_average_treatment_effect(
+        self, model: DECI, train_data: pd.DataFrame
+    ) -> Tuple[np.ndarray, dict[str, ATEDetails]]:
         ate_matrix = []
         n_variables = train_data.shape[1]
         progress_step = ATE_CALC_PROGRESS_PROPORTION / n_variables
+
+        ate_details_by_name = dict()
 
         if self._ate_options.most_likely_graph and self._ate_options.Ngraphs != 1:
             logging.warning("Adjusting Ngraphs parameter to 1 because most_likely_graph is set to true")
@@ -221,6 +225,12 @@ class DeciRunner(CausalDiscoveryRunner):
                 intervention_value,
                 reference_value,
             ) = self._infer_intervention_reference_values(train_data, variable)
+
+            ate_details_by_name[variable.name] = ATEDetails(
+                reference=reference_value,
+                intervention=intervention_value,
+                nature=self._nature_by_variable[variable.name],
+            )
 
             logging.info(
                 f"Computing the ATE between {variable.name}={intervention_value} and {variable.name}={reference_value}"
@@ -238,7 +248,7 @@ class DeciRunner(CausalDiscoveryRunner):
 
             self._report_progress((TRAINING_PROGRESS_PROPORTION + ((variable_index + 1) * progress_step)) * 100.0)
 
-        return np.stack(ate_matrix)
+        return np.stack(ate_matrix), ate_details_by_name
 
     def _build_labeled_graph(
         self,
@@ -283,7 +293,7 @@ class DeciRunner(CausalDiscoveryRunner):
 
         adj_matrix = self._get_adj_matrix(deci_model)
 
-        ate_matrix = self._compute_average_treatment_effect(deci_model, train_data)
+        ate_matrix, ate_details_by_name = self._compute_average_treatment_effect(deci_model, train_data)
 
         deci_model.eval()
 
@@ -296,6 +306,7 @@ class DeciRunner(CausalDiscoveryRunner):
             columns=self._get_column_names(),
             is_dag=bool(self._is_dag),
             intervention_model_id=intervention_model.id,
+            ate_details_by_name=ate_details_by_name,
         )
 
         intervention_model.save()

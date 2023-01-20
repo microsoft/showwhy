@@ -5,6 +5,7 @@
 import type { FetchDiscoverMetadata } from '../../api/types.js'
 import type { CausalGraph } from '../../domain/Graph.js'
 import type { CancelablePromise } from '../../utils/CancelablePromise.js'
+import type { VariableNature } from '../VariableNature.js'
 import { CausalDiscoveryAlgorithm } from './CausalDiscoveryAlgorithm.js'
 import type { CausalDiscoveryResultEdge } from './CausalDiscoveryResultEdge.js'
 import type { CausalDiscoveryResultNode } from './CausalDiscoveryResultNode.js'
@@ -34,7 +35,16 @@ export interface CausalDiscoveryRequestReturnValue {
 	is_dag?: boolean
 	has_confidence_values?: boolean
 	intervention_model_id?: string
+	ate_details_by_name?: ATEDetailsByName
 }
+
+export interface ATEDetails {
+	reference: number | string
+	intervention: number | string
+	nature: VariableNature
+}
+
+export type ATEDetailsByName = Record<string, ATEDetails>
 
 export interface NormalizedColumnMetadata {
 	upper: number

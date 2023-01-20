@@ -106,23 +106,15 @@ class CausalDiscoveryRunner(ABC):
         labeled_graph: Any,
         has_weights: bool,
         has_confidence_values: bool,
-        columns: Optional[list[str]] = None,
-        is_dag: Optional[bool] = None,
-        intervention_model_id: Optional[str] = None,
+        **kwargs,
     ) -> CausalGraph:
         causal_graph = json_graph.cytoscape_data(labeled_graph)
 
         causal_graph["has_weights"] = has_weights
         causal_graph["has_confidence_values"] = has_confidence_values
 
-        if columns is not None:
-            causal_graph["columns"] = columns
-
-        if is_dag is not None:
-            causal_graph["is_dag"] = is_dag
-
-        if intervention_model_id is not None:
-            causal_graph["intervention_model_id"] = intervention_model_id
+        for key, value in kwargs.items():
+            causal_graph[key] = value
 
         return causal_graph
 

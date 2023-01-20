@@ -67,6 +67,7 @@ export function fromCausalDiscoveryResults(
 		isDag: results.is_dag,
 		hasConfidenceValues: results.has_confidence_values,
 		interventionModelId: results.intervention_model_id,
+		ateDetailsByName: results.ate_details_by_name,
 	}
 }
 
