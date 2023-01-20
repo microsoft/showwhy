@@ -20,22 +20,22 @@ RUN apt-get update -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Poetry
-RUN curl -sSL https://install.python-poetry.org | python - --version 1.2.1
+RUN curl -sSL https://install.python-poetry.org | python - --version 1.3.2
 ENV PATH="${PATH}:/root/.local/bin"
 
 WORKDIR /backend
 
-# Copy backend assets
-#   This is done separately so the base layers won't change that often
-#   to speed up image pushing
-COPY ./poetry.toml .
-COPY ./poetry.lock .
-COPY ./pyproject.toml .
+# Copy R dependencies
 COPY ./requirements.r .
-COPY ./scripts ./scripts
 
 # Install R dependencies
 RUN Rscript requirements.r
+
+# Copy python dependencies
+COPY ./scripts ./scripts
+COPY ./poetry.toml .
+COPY ./poetry.lock .
+COPY ./pyproject.toml .
 
 # Install python denpendencies
 RUN poetry config virtualenvs.create false \
@@ -43,6 +43,9 @@ RUN poetry config virtualenvs.create false \
 
 # Copy remaining files
 COPY . .
+
+# Check formatting, lint and tests
+RUN poetry run poe verify
 
 # Start backend either in API or worker mode, depending on the WORKER env var
 ENTRYPOINT [ "./scripts/start.sh" ]

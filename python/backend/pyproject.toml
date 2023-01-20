@@ -33,7 +33,7 @@ seaborn = "^0.11.2"
 
 [tool.poetry.group.exposure.dependencies]
 econml = "^0.12.0"
-xgboost = "^1.7.3"
+xgboost = "=1.6.1"
 causallib = "^0.8.2"
 scikit-learn = "^1.0.2"
 lightgbm = "^3.3.4"
@@ -73,6 +73,10 @@ ignore_fail = "return_non_zero"
 
 [tool.poe.tasks.lint]
 sequence = ["format_check", "_flake8"]
+ignore_fail = "return_non_zero"
+
+[tool.poe.tasks.verify]
+sequence = ["format_check", "lint", "test"]
 ignore_fail = "return_non_zero"
 
 [tool.black]

@@ -1,6 +1,6 @@
 import logging
 from abc import ABC, abstractmethod
-from typing import Callable, Dict, Optional
+from typing import Any, Callable, Dict, Optional
 
 import networkx
 import pandas as pd
@@ -94,6 +94,29 @@ class CausalDiscoveryRunner(ABC):
             number_of_dropped_rows=self._number_of_dropped_rows,
             number_of_rows=self._number_of_rows,
         )
+
+    def _get_column_names(self) -> list[str]:
+        return [self._prepared_data.columns[i] for i in range(len(self._prepared_data.columns))]
+
+    def _get_labels_map(self) -> dict[int, str]:
+        return {i: self._prepared_data.columns[i] for i in range(len(self._prepared_data.columns))}
+
+    def _build_causal_graph(
+        self,
+        labeled_graph: Any,
+        has_weights: bool,
+        has_confidence_values: bool,
+        **kwargs,
+    ) -> CausalGraph:
+        causal_graph = json_graph.cytoscape_data(labeled_graph)
+
+        causal_graph["has_weights"] = has_weights
+        causal_graph["has_confidence_values"] = has_confidence_values
+
+        for key, value in kwargs.items():
+            causal_graph[key] = value
+
+        return causal_graph
 
     @abstractmethod
     def do_causal_discovery(self) -> CausalGraph:

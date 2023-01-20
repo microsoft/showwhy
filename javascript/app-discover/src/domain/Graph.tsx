@@ -4,6 +4,7 @@
  */
 import type { CausalDiscoveryAlgorithm } from './CausalDiscovery/CausalDiscoveryAlgorithm.js'
 import type { CausalDiscoveryConstraints } from './CausalDiscovery/CausalDiscoveryConstraints.js'
+import type { ATEDetailsByName } from './CausalDiscovery/CausalDiscoveryResult.js'
 import type { CausalVariable, VariableReference } from './CausalVariable.js'
 import { arrayIncludesVariable, isSame } from './CausalVariable.js'
 import {
@@ -20,6 +21,7 @@ export interface CausalGraph {
 	isDag?: boolean
 	hasConfidenceValues?: boolean
 	interventionModelId?: string
+	ateDetailsByName?: ATEDetailsByName
 }
 
 export function nodeHasChildren(
