@@ -97,7 +97,7 @@ export const MenuBar: React.FC = memo(function MenuBar() {
 		},
 		[loadColumnTable, setLoadingState],
 	)
-	console.log(causalRelationships)
+
 	const exportEdges = useDownloadEdges(causalRelationships)
 	const datasetMenuItems = useDatasetMenuItems(loadTable)
 	const modelMenuItems = useModelMenuItems(

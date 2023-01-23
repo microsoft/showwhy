@@ -8,7 +8,7 @@ import { CausalDiscoveryAlgorithm } from '../domain/CausalDiscovery/CausalDiscov
 import type { CausalDiscoveryConstraints } from '../domain/CausalDiscovery/CausalDiscoveryConstraints.js'
 import type { CausalEdgesReport } from '../domain/CausalEdgesReport.js'
 import { VariableNature } from '../domain/VariableNature.js'
-import { ATEDetailsByName } from './../domain/CausalDiscovery/CausalDiscoveryResult.js'
+import type { ATEDetailsByName } from './../domain/CausalDiscovery/CausalDiscoveryResult.js'
 import type {
 	Relationship,
 	RelationshipWithWeight,
