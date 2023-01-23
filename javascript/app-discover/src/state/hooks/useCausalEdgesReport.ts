@@ -9,7 +9,6 @@ import { useCallback } from 'react'
 import { useRecoilValue, useRecoilValueLoadable } from 'recoil'
 
 import type { Relationship } from '../../domain/Relationship.js'
-import { row2report } from '../../utils/edgeReport/CausalEdgeReport.js'
 import { reportFactory } from '../../utils/edgeReport/ReportFactory.js'
 import {
 	CausalDiscoveryResultsState,
@@ -29,24 +28,17 @@ export function useDownloadEdges(
 	const constraints = useRecoilValue(CausalGraphConstraintsState)
 	const ate = useRecoilValue(CausalDiscoveryResultsState).graph.ateDetailsByName
 	return useCallback(() => {
-		reportFactory(selectedCausalDiscoveryAlgorithm).generateReport(
+		const report = reportFactory(
+			selectedCausalDiscoveryAlgorithm,
+		).generateReport(
 			causalRelationships,
 			selectedCausalDiscoveryAlgorithm,
 			correlations,
 			constraints,
 			ate,
 		)
-		const formattedRows = causalRelationships.flatMap(relationship => {
-			return row2report(
-				relationship,
-				selectedCausalDiscoveryAlgorithm,
-				constraints,
-				correlations,
-				ate,
-			)
-		})
 
-		const table = aq.from(formattedRows)
+		const table = aq.from(report)
 		const blob = new Blob([table.toCSV()])
 		download(`edges-${new Date().toLocaleString()}.csv`, 'text/csv', blob)
 	}, [

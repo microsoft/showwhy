@@ -4,23 +4,19 @@
  */
 
 import { hasAnyConstraint } from '../../components/lists/EdgeList.utils.js'
-import { CausalDiscoveryAlgorithm } from '../../domain/CausalDiscovery/CausalDiscoveryAlgorithm.js'
-import { CausalDiscoveryConstraints } from '../../domain/CausalDiscovery/CausalDiscoveryConstraints.js'
+import type { CausalDiscoveryAlgorithm } from '../../domain/CausalDiscovery/CausalDiscoveryAlgorithm.js'
+import type { CausalDiscoveryConstraints } from '../../domain/CausalDiscovery/CausalDiscoveryConstraints.js'
 import type { ATEDetailsByName } from '../../domain/CausalDiscovery/CausalDiscoveryResult.js'
-import { EdgeReportRow } from '../../domain/EdgeReportRow'
-import {
+import type { EdgeReportRow } from '../../domain/EdgeReportRow'
+import type {
 	Relationship,
 	RelationshipWithWeight,
 } from '../../domain/Relationship.js'
 import { correlationForVariables } from '../Correlation.js'
-import { ReportGenerator } from '../ReportGenerator.js'
-import { getCausalRelationship, isCategorical } from './CausalEdgeReport.js'
+import { ReportGenerator } from './ReportGenerator.js'
+import { getCausalRelationship, isCategorical } from './reportUtils.js'
 
 export class DECIReportGenerator extends ReportGenerator {
-	constructor() {
-		super()
-	}
-
 	generateRow(
 		relationship: Relationship,
 		selectedCausalDiscoveryAlgorithm: CausalDiscoveryAlgorithm,

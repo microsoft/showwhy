@@ -9,9 +9,9 @@ export interface EdgeReportRow {
 	source: string
 	target: string
 	correlation?: string
-	is_constrained: Number
-	method: CausalDiscoveryAlgorithm
-	relationship: string
+	is_constrained?: Number
+	method?: CausalDiscoveryAlgorithm
+	relationship?: string
 	weight?: string
 	weight_formula: string
 	source_reference?: number | string

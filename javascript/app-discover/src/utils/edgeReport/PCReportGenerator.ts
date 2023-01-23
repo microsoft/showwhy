@@ -3,9 +3,9 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import { CausalDiscoveryAlgorithm } from '../../domain/CausalDiscovery/CausalDiscoveryAlgorithm.js'
-import { EdgeReportRow } from '../../domain/EdgeReportRow'
-import {
+import type { CausalDiscoveryAlgorithm } from '../../domain/CausalDiscovery/CausalDiscoveryAlgorithm.js'
+import type { EdgeReportRow } from '../../domain/EdgeReportRow'
+import type {
 	Relationship,
 	RelationshipWithWeight,
 } from '../../domain/Relationship.js'
@@ -13,10 +13,6 @@ import { correlationForVariables } from '../Correlation.js'
 import { ReportGenerator } from './ReportGenerator.js'
 
 export class PCReportGenerator extends ReportGenerator {
-	constructor() {
-		super()
-	}
-
 	generateRow(
 		relationship: Relationship,
 		selectedCausalDiscoveryAlgorithm: CausalDiscoveryAlgorithm,
@@ -40,8 +36,5 @@ export class PCReportGenerator extends ReportGenerator {
 			source_treated: undefined,
 			target_ate: undefined,
 		}
-	}
-	public getReport() {
-		return this.reportRow
 	}
 }

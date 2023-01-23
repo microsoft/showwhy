@@ -4,22 +4,22 @@
  */
 
 import { hasAnyConstraint } from '../../components/lists/EdgeList.utils.js'
-import { CausalDiscoveryAlgorithm } from '../../domain/CausalDiscovery/CausalDiscoveryAlgorithm.js'
-import { CausalDiscoveryConstraints } from '../../domain/CausalDiscovery/CausalDiscoveryConstraints.js'
+import type { CausalDiscoveryAlgorithm } from '../../domain/CausalDiscovery/CausalDiscoveryAlgorithm.js'
+import type { CausalDiscoveryConstraints } from '../../domain/CausalDiscovery/CausalDiscoveryConstraints.js'
 import {
 	Relationship,
 	RelationshipWithWeight,
 } from '../../domain/Relationship.js'
 import { correlationForVariables } from '../Correlation.js'
 import type { ATEDetailsByName } from './../../domain/CausalDiscovery/CausalDiscoveryResult.js'
-import { EdgeReportRow } from './../../domain/EdgeReportRow'
-import { getCausalRelationship } from './CausalEdgeReport.js'
+import type { EdgeReportRow } from './../../domain/EdgeReportRow.js'
+import { getCausalRelationship } from './reportUtils.js'
 
 export class ReportGenerator {
-	protected reportRow: EdgeReportRow[]
+	protected reportRows: EdgeReportRow[]
 
 	constructor() {
-		this.reportRow = []
+		this.reportRows = []
 	}
 
 	generateReport(
@@ -28,17 +28,52 @@ export class ReportGenerator {
 		correlations: RelationshipWithWeight[],
 		constraints?: CausalDiscoveryConstraints,
 		ATEDetailsByName?: ATEDetailsByName,
-	) {
-		causalRelationships.flatMap(relationship => {
-			this.reportRow.push(
+	): EdgeReportRow[] {
+		causalRelationships.forEach(relationship => {
+			this.reportRows.push(
 				this.generateRow(
 					relationship,
 					selectedCausalDiscoveryAlgorithm,
 					correlations,
 					constraints,
+					ATEDetailsByName,
 				),
 			)
 		})
+		const allCorrelations = this.generateCorrelations(
+			causalRelationships,
+			correlations,
+		).sort((a, b) => a.source.localeCompare(b.source))
+		this.reportRows.push(...allCorrelations)
+
+		return this.reportRows
+	}
+
+	generateCorrelations(
+		causalRelationships: Relationship[],
+		correlations: RelationshipWithWeight[],
+	): EdgeReportRow[] {
+		const allSources = new Set(
+			causalRelationships.map(({ source }) => source.columnName),
+		)
+		const allTargets = new Set(
+			causalRelationships.map(({ target }) => target.columnName),
+		)
+		const allColumns = new Set([...allSources, ...allTargets])
+		return correlations
+			.filter(
+				({ source, target }) =>
+					allColumns.has(source.columnName) ||
+					allColumns.has(target.columnName),
+			)
+			.map(
+				({ source, target, weight = 0 }) =>
+					({
+						source: source.columnName,
+						target: target.columnName,
+						correlation: weight.toFixed(3),
+					} as EdgeReportRow),
+			)
 	}
 
 	generateRow(
@@ -46,6 +81,7 @@ export class ReportGenerator {
 		selectedCausalDiscoveryAlgorithm: CausalDiscoveryAlgorithm,
 		correlations: RelationshipWithWeight[],
 		constraints?: CausalDiscoveryConstraints,
+		ATEDetailsByName?: ATEDetailsByName,
 	): EdgeReportRow {
 		const hasConstraints = hasAnyConstraint(relationship, constraints)
 		const correlation = correlationForVariables(
