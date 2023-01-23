@@ -95,13 +95,14 @@ class EstimateResult(BaseModel):
     outcome: str
     causal_model: str
     estimator: str
-    causal_model_graph: CausalModel
-    identified_estimand: IdentifiedEstimand
-    estimate: CausalEstimate
+    causal_model_graph: CausalModel = None
+    identified_estimand: IdentifiedEstimand = None
+    estimate: CausalEstimate = None
     covariate_balance: Optional[Dict[str, Any]] = None
+    exc_info: Optional[str] = None
 
     def to_dict(self):
-        return {
+        default_info = {
             "id": self.id,
             "population_type": self.population_type,
             "population_name": self.population_name,
@@ -112,6 +113,14 @@ class EstimateResult(BaseModel):
             "outcome": self.outcome,
             "causal_model": self.causal_model,
             "estimator": self.estimator,
+        }
+        if self.exc_info is not None:
+            return {
+                **default_info,
+                "exc_info": self.exc_info,
+            }
+        return {
+            **default_info,
             "estimated_effect": self.estimate.value,
             "covariate_balance": self.covariate_balance,
         }
