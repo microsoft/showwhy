@@ -13,7 +13,7 @@ import { correlationForVariables } from '../Correlation.js'
 import { ReportGenerator } from './ReportGenerator.js'
 
 export class PCReportGenerator extends ReportGenerator {
-	generateRow(
+	generateRelationshipRow(
 		relationship: Relationship,
 		selectedCausalDiscoveryAlgorithm: CausalDiscoveryAlgorithm,
 		correlations: RelationshipWithWeight[],

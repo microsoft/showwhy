@@ -6,34 +6,32 @@
 import { hasAnyConstraint } from '../../components/lists/EdgeList.utils.js'
 import type { CausalDiscoveryAlgorithm } from '../../domain/CausalDiscovery/CausalDiscoveryAlgorithm.js'
 import type { CausalDiscoveryConstraints } from '../../domain/CausalDiscovery/CausalDiscoveryConstraints.js'
+import type { CausalVariable } from '../../domain/CausalVariable.js'
 import type {
 	Relationship,
-	RelationshipWithWeight} from '../../domain/Relationship.js';
-import {
-	ManualRelationshipReason
+	RelationshipWithWeight,
 } from '../../domain/Relationship.js'
+import { ManualRelationshipReason } from '../../domain/Relationship.js'
 import { correlationForVariables } from '../Correlation.js'
 import type { ATEDetailsByName } from './../../domain/CausalDiscovery/CausalDiscoveryResult.js'
 import type { EdgeReportRow } from './../../domain/EdgeReportRow.js'
 import { getCausalRelationship } from './reportUtils.js'
 
 export class ReportGenerator {
-	protected reportRows: EdgeReportRow[]
-	protected allVariables: Set<string>
+	protected reportRows: EdgeReportRow[] = []
+	protected allVariables: string[] = []
 
-	constructor() {
-		this.reportRows = []
-		this.allVariables = new Set()
-	}
+	constructor() {}
 
-	generateReport(
+	getReportRows(
 		relationships: Relationship[],
 		selectedCausalDiscoveryAlgorithm: CausalDiscoveryAlgorithm,
 		correlations: RelationshipWithWeight[],
 		constraints?: CausalDiscoveryConstraints,
+		variables?: CausalVariable[],
 		ATEDetailsByName?: ATEDetailsByName,
 	): EdgeReportRow[] {
-		this.getAllVariables(relationships)
+		this.allVariables = variables?.map(v => v.columnName) || []
 		this.addRelationshipRows(
 			relationships,
 			selectedCausalDiscoveryAlgorithm,
@@ -56,7 +54,7 @@ export class ReportGenerator {
 	) {
 		causalRelationships.forEach(relationship => {
 			this.reportRows.push(
-				this.generateRow(
+				this.getRelationshipRow(
 					relationship,
 					selectedCausalDiscoveryAlgorithm,
 					correlations,
@@ -71,7 +69,7 @@ export class ReportGenerator {
 		causalDiscoveryAlgorithm: CausalDiscoveryAlgorithm,
 		constraints?: CausalDiscoveryConstraints,
 	) {
-		const removedRelationships = this.generateRemovedRelationships(
+		const removedRelationships = this.getRemovedRelationshipsRows(
 			causalDiscoveryAlgorithm,
 			constraints,
 		).sort((a, b) => a.source.localeCompare(b.source))
@@ -79,23 +77,13 @@ export class ReportGenerator {
 	}
 
 	addCorrelations(correlations: RelationshipWithWeight[]) {
-		const allCorrelations = this.generateCorrelations(correlations).sort(
-			(a, b) => a.source.localeCompare(b.source),
+		const allCorrelations = this.getCorrelationRows(correlations).sort((a, b) =>
+			a.source.localeCompare(b.source),
 		)
 		this.reportRows.push(...allCorrelations)
 	}
 
-	getAllVariables(causalRelationships: Relationship[]) {
-		const allSources = new Set(
-			causalRelationships.map(({ source }) => source.columnName),
-		)
-		const allTargets = new Set(
-			causalRelationships.map(({ target }) => target.columnName),
-		)
-		this.allVariables = new Set([...allSources, ...allTargets])
-	}
-
-	generateRemovedRelationships(
+	getRemovedRelationshipsRows(
 		causalDiscoveryAlgorithm: CausalDiscoveryAlgorithm,
 		constraints?: CausalDiscoveryConstraints,
 	): EdgeReportRow[] {
@@ -104,8 +92,8 @@ export class ReportGenerator {
 		constraints.manualRelationships.forEach(constraint => {
 			if (
 				constraint.reason === ManualRelationshipReason.Removed &&
-				(this.allVariables.has(constraint.source.columnName) ||
-					this.allVariables.has(constraint.target.columnName))
+				(this.allVariables.includes(constraint.source.columnName) ||
+					this.allVariables.includes(constraint.target.columnName))
 			) {
 				removedRelationships.push({
 					source: constraint.source.columnName,
@@ -119,14 +107,12 @@ export class ReportGenerator {
 		return removedRelationships
 	}
 
-	generateCorrelations(
-		correlations: RelationshipWithWeight[],
-	): EdgeReportRow[] {
+	getCorrelationRows(correlations: RelationshipWithWeight[]): EdgeReportRow[] {
 		return correlations
 			.filter(
 				({ source, target }) =>
-					this.allVariables.has(source.columnName) ||
-					this.allVariables.has(target.columnName),
+					this.allVariables.includes(source.columnName) ||
+					this.allVariables.includes(target.columnName),
 			)
 			.map(
 				({ source, target, weight = 0 }) =>
@@ -138,7 +124,7 @@ export class ReportGenerator {
 			)
 	}
 
-	generateRow(
+	getRelationshipRow(
 		relationship: Relationship,
 		selectedCausalDiscoveryAlgorithm: CausalDiscoveryAlgorithm,
 		correlations: RelationshipWithWeight[],

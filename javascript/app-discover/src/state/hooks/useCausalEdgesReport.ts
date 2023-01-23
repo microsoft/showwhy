@@ -8,18 +8,28 @@ import * as aq from 'arquero'
 import { useCallback } from 'react'
 import { useRecoilValue, useRecoilValueLoadable } from 'recoil'
 
-import type { Relationship } from '../../domain/Relationship.js'
+import type { CausalGraph } from '../../domain/Graph.js'
+import * as Graph from '../../domain/Graph.js'
 import { reportFactory } from '../../utils/edgeReport/ReportFactory.js'
 import {
 	CausalDiscoveryResultsState,
 	CausalGraphConstraintsState,
 } from '../atoms/causal_graph.js'
-import { SelectedCausalDiscoveryAlgorithmState } from '../atoms/ui.js'
+import {
+	ConfidenceThresholdState,
+	SelectedCausalDiscoveryAlgorithmState,
+	WeightThresholdState,
+} from '../atoms/ui.js'
 import { FilteredCorrelationsState } from '../selectors/correlations.js'
 
-export function useDownloadEdges(
-	causalRelationships: Relationship[],
-): () => void {
+export function useDownloadEdges(causalGraph: CausalGraph): () => void {
+	const weightThreshold = useRecoilValue(WeightThresholdState)
+	const confidenceThreshold = useRecoilValue(ConfidenceThresholdState)
+	const relationships = Graph.relationshipsAboveThresholds(
+		causalGraph,
+		weightThreshold,
+		confidenceThreshold,
+	)
 	const correlations =
 		useRecoilValueLoadable(FilteredCorrelationsState).valueMaybe() || []
 	const selectedCausalDiscoveryAlgorithm = useRecoilValue(
@@ -30,11 +40,12 @@ export function useDownloadEdges(
 	return useCallback(() => {
 		const report = reportFactory(
 			selectedCausalDiscoveryAlgorithm,
-		).generateReport(
-			causalRelationships,
+		).getReportRows(
+			relationships,
 			selectedCausalDiscoveryAlgorithm,
 			correlations,
 			constraints,
+			causalGraph.variables,
 			ate,
 		)
 
@@ -46,6 +57,7 @@ export function useDownloadEdges(
 		selectedCausalDiscoveryAlgorithm,
 		constraints,
 		ate,
-		causalRelationships,
+		causalGraph,
+		relationships,
 	])
 }

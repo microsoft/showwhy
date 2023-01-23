@@ -5,22 +5,15 @@
 import type { ICommandBarItemProps } from '@fluentui/react'
 import { CommandBar } from '@fluentui/react'
 import { memo, useCallback, useEffect, useMemo } from 'react'
-import {
-	useRecoilState,
-	useRecoilValue,
-	useResetRecoilState,
-	useSetRecoilState,
-} from 'recoil'
+import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil'
 import { useFilePicker } from 'use-file-picker'
 
 import type { DatasetDatapackage } from '../domain/Dataset.js'
 import { useDatasetLoader } from '../domain/Dataset.js'
-import * as Graph from '../domain/Graph.js'
 import { DeciParamsState } from '../state/atoms/algorithms_params.js'
 import { useDownloadEdges } from '../state/hooks/useCausalEdgesReport.js'
 import {
 	CausalGraphConstraintsState,
-	ConfidenceThresholdState,
 	GraphViewState,
 	InModelColumnNamesState,
 	LoadingState,
@@ -29,7 +22,6 @@ import {
 	PersistedInfoState,
 	StraightEdgesState,
 	useCausalGraph,
-	WeightThresholdState,
 } from '../state/index.js'
 import { saveObjectJSON } from '../utils/Save.js'
 import {
@@ -53,14 +45,6 @@ export const MenuBar: React.FC = memo(function MenuBar() {
 	const [useStraightEdges, setUseStraightEdges] =
 		useRecoilState(StraightEdgesState)
 	const causalGraph = useCausalGraph()
-
-	const weightThreshold = useRecoilValue(WeightThresholdState)
-	const confidenceThreshold = useRecoilValue(ConfidenceThresholdState)
-	const causalRelationships = Graph.relationshipsAboveThresholds(
-		causalGraph,
-		weightThreshold,
-		confidenceThreshold,
-	)
 
 	const setLoadingState = useSetRecoilState(LoadingState)
 	const [persistedInfo, setPersistedInfo] = useRecoilState(PersistedInfoState)
@@ -98,14 +82,14 @@ export const MenuBar: React.FC = memo(function MenuBar() {
 		[loadColumnTable, setLoadingState],
 	)
 
-	const exportEdges = useDownloadEdges(causalRelationships)
+	const exportEdges = useDownloadEdges(causalGraph)
 	const datasetMenuItems = useDatasetMenuItems(loadTable)
 	const modelMenuItems = useModelMenuItems(
 		saveModel,
 		openCausalModelFileSelector,
 		clearModel,
 		exportEdges,
-		!!causalRelationships.length,
+		!causalGraph.variables.length,
 	)
 	const viewMenuItems = useViewMenuItems(
 		selectedViewKey,
