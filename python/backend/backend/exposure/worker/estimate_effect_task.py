@@ -17,7 +17,22 @@ def estimate_effect_for_specification(
 ) -> EstimateResult:
     db_client = get_db_client()
 
-    result = estimate_effect(specification=specification, task_id=celery.current_task.request.id)
+    try:
+        result = estimate_effect(specification=specification, task_id=celery.current_task.request.id)
+    except Exception as exc:
+        result = EstimateResult(
+            id=celery.current_task.request.id,
+            population_type=specification.population.type,
+            population_name=specification.population.label,
+            population_size=len(specification.population.dataframe),
+            treatment_type=specification.treatment.type,
+            treatment=specification.treatment.label,
+            outcome_type=specification.outcome.type,
+            outcome=specification.outcome.label,
+            causal_model=specification.model.label,
+            estimator=specification.estimator.label,
+            exc_info=str(exc),
+        )
 
     db_client.set_value(celery.current_task.request.id, result)
 
