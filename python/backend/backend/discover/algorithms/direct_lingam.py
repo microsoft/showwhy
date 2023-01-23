@@ -1,10 +1,10 @@
 import logging
+from typing import Any
 
-import networkx
+import networkx as nx
 import numpy as np
 from castle.algorithms import DirectLiNGAM
 from causalnex.structure.structuremodel import StructureModel
-from networkx.readwrite import json_graph
 
 from backend.discover.algorithms.commons.base_runner import CausalDiscoveryRunner, CausalGraph, ProgressCallback
 from backend.discover.model.causal_discovery import CausalDiscoveryPayload
@@ -21,25 +21,31 @@ class DirectLiNGAMRunner(CausalDiscoveryRunner):
         super().__init__(p, progress_callback)
 
     def do_causal_discovery(self) -> CausalGraph:
-        prior_matrix = self._build_gcastle_constraint_matrix()
+        self._encode_categorical_as_integers()
 
-        n = DirectLiNGAM(prior_knowledge=prior_matrix)  # , thresh=0.1)
-        n.learn(self._prepared_data.to_numpy())
-        graph_gc = StructureModel(n.causal_matrix)
-
-        logging.info(graph_gc)
-
-        labels = {i: self._prepared_data.columns[i] for i in range(len(self._prepared_data.columns))}
-        labeled_gc = networkx.relabel_nodes(graph_gc, labels)
-
-        graph_json = json_graph.cytoscape_data(labeled_gc)
-
-        graph_json["has_weights"] = True
-        graph_json["has_confidence_values"] = False
+        causal_graph = self._build_causal_graph(
+            labeled_graph=self._build_labeled_graph(prior_knowledge=self._build_gcastle_constraint_matrix()),
+            has_weights=True,
+            has_confidence_values=False,
+        )
 
         self._report_progress(100.0)
 
-        return graph_json
+        return causal_graph
+
+    def _build_labeled_graph(self, prior_knowledge: np.ndarray) -> Any:
+        direct_lingam = DirectLiNGAM(
+            prior_knowledge=prior_knowledge,
+        )
+
+        # we can use thres=0, since the weight filtering will be applied in the frontend
+        direct_lingam.learn(self._prepared_data.to_numpy(), thres=0.0)
+
+        return nx.relabel_nodes(
+            # transpose the DirectLiNGAM adjacency matrix so we end up with the causal graph
+            StructureModel(direct_lingam.adjacency_matrix_.T),
+            self._get_labels_map(),
+        )
 
     def _build_gcastle_constraint_matrix(self):
         columns = self._prepared_data.columns

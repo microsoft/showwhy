@@ -99,7 +99,7 @@ const emptyUi = () => ({
 	straightEdges: false,
 	fixedInterventionRangesEnabled: false,
 	selectedDiscoveryAlgorithm: CausalDiscoveryAlgorithm.NOTEARS,
-	weightThreshold: 0.005,
+	weightThreshold: 0.01,
 	confidenceThreshold: 0.5,
 	correlationThreshold: 0.2,
 	view: GraphViewStates.CausalView,
