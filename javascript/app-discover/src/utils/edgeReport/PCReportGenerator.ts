@@ -37,4 +37,9 @@ export class PCReportGenerator extends ReportGenerator {
 			target_ate: undefined,
 		}
 	}
+
+	//PC algorithm doesn't support prior knowledge at this time
+	addRemovedRelationships() {
+		return []
+	}
 }

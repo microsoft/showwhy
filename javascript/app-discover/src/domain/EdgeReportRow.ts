@@ -13,7 +13,7 @@ export interface EdgeReportRow {
 	method?: CausalDiscoveryAlgorithm
 	relationship?: string
 	weight?: string
-	weight_formula: string
+	weight_formula?: string
 	source_reference?: number | string
 	source_treated?: number | string
 	target_ate?: number
