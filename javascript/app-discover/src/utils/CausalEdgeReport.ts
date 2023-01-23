@@ -75,7 +75,7 @@ function getWeightMeaning(algorithm: CausalDiscoveryAlgorithm): string {
 	switch (algorithm) {
 		case CausalDiscoveryAlgorithm.NOTEARS:
 		case CausalDiscoveryAlgorithm.DirectLiNGAM:
-			meaning = 'weight - causal effect (float) [-inf, inf])'
+			meaning = 'causal effect weight (float)'
 			break
 		case CausalDiscoveryAlgorithm.PC:
 			meaning = 'whether the edge exist or not (0 or 1)'
