@@ -8,7 +8,11 @@ import type { MutableSnapshot, Snapshot } from 'recoil'
 
 import { CauseDis } from '../components/CauseDis.js'
 import { CauseDisErrorBoundary } from '../components/CauseDisErrorBoundary.js'
-import { DeciParamsState } from '../state/atoms/algorithms_params.js'
+import {
+	DeciParamsState,
+	NotearsParamsState,
+	PCParamsState,
+} from '../state/atoms/algorithms_params.js'
 import {
 	CausalDiscoveryNormalizationState,
 	CausalDiscoveryResultsState,
@@ -90,8 +94,16 @@ function loadState(resource: DiscoverResource, { set }: MutableSnapshot) {
 	set(CorrelationThresholdState, resource.ui.correlationThreshold)
 	set(GraphViewState, resource.ui.view)
 
+	if (resource.ui.notearsParams) {
+		set(NotearsParamsState, resource.ui.notearsParams)
+	}
+
 	if (resource.ui.deciParams) {
 		set(DeciParamsState, resource.ui.deciParams)
+	}
+
+	if (resource.ui.pcParams) {
+		set(PCParamsState, resource.ui.pcParams)
 	}
 }
 
@@ -117,7 +129,9 @@ function saveState(resource: DiscoverResource, { getLoadable }: Snapshot) {
 	const normalization = getLoadable(
 		CausalDiscoveryNormalizationState,
 	).getValue()
+	const notearsParams = getLoadable(NotearsParamsState).getValue()
 	const deciParams = getLoadable(DeciParamsState).getValue()
+	const pcParams = getLoadable(PCParamsState).getValue()
 	const selectedDiscoveryAlgorithm = getLoadable(
 		SelectedCausalDiscoveryAlgorithmState,
 	).getValue()
@@ -147,7 +161,9 @@ function saveState(resource: DiscoverResource, { getLoadable }: Snapshot) {
 		correlationThreshold,
 		view,
 		normalization,
+		notearsParams,
 		deciParams,
+		pcParams,
 	}
 }
 

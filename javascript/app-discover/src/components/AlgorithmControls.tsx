@@ -16,6 +16,8 @@ import { Divider } from './controls/Divider.js'
 import { DeciParams } from './DeciParams.js'
 import { GraphFilteringControls } from './GraphFilteringControls.js'
 import { NormalizationControls } from './NormalizationControls.js'
+import { NotearsParams } from './NotearsParams.js'
+import { PCParams } from './PCParams.js'
 
 export const AlgorithmControls = memo(function AlgorithmControls() {
 	const [
@@ -61,6 +63,26 @@ export const AlgorithmControls = memo(function AlgorithmControls() {
 				<Section>
 					<Divider>DECI options</Divider>
 					<DeciParams />
+				</Section>
+			</When>
+			<When
+				condition={
+					selectedCausalDiscoveryAlgorithm === CausalDiscoveryAlgorithm.NOTEARS
+				}
+			>
+				<Section>
+					<Divider>NOTEARS options</Divider>
+					<NotearsParams />
+				</Section>
+			</When>
+			<When
+				condition={
+					selectedCausalDiscoveryAlgorithm === CausalDiscoveryAlgorithm.PC
+				}
+			>
+				<Section>
+					<Divider>PC options</Divider>
+					<PCParams />
 				</Section>
 			</When>
 		</Container>

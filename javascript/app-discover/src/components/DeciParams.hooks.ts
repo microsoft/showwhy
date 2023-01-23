@@ -7,14 +7,14 @@ import isArray from 'lodash-es/isArray.js'
 import { useCallback } from 'react'
 import type { SetterOrUpdater } from 'recoil'
 
-import type { DECIParams } from '../domain/Algorithms/DECI.js'
+import type { DECIAlgorithmParams } from '../domain/Algorithms/DECI.js'
 import type { onChangeBooleanFn, onChangeStringFn } from './DeciParams.types.js'
 
 export function useOnChangeNumberOption(
-	onSetDeciParams: SetterOrUpdater<DECIParams>,
+	onSetDeciParams: SetterOrUpdater<DECIAlgorithmParams>,
 ): onChangeStringFn {
 	return useCallback(
-		(key: keyof DECIParams, val?: string, name?: string) => {
+		(key: keyof DECIAlgorithmParams, val?: string, name?: string) => {
 			if (!val || !name) return
 			onSetDeciParams(curr => ({
 				...curr,
@@ -29,10 +29,10 @@ export function useOnChangeNumberOption(
 }
 
 export function useOnChangeBooleanOption(
-	onSetDeciParams: SetterOrUpdater<DECIParams>,
+	onSetDeciParams: SetterOrUpdater<DECIAlgorithmParams>,
 ): onChangeBooleanFn {
 	return useCallback(
-		(key: keyof DECIParams, val?: boolean, name?: string) => {
+		(key: keyof DECIAlgorithmParams, val?: boolean, name?: string) => {
 			if (!name) return
 			onSetDeciParams(curr => ({
 				...curr,
@@ -47,10 +47,10 @@ export function useOnChangeBooleanOption(
 }
 
 export function useOnChangeChoiceGroupOption(
-	onSetDeciParams: SetterOrUpdater<DECIParams>,
+	onSetDeciParams: SetterOrUpdater<DECIAlgorithmParams>,
 ): onChangeStringFn {
 	return useCallback(
-		(key: keyof DECIParams, val?: string, name?: string) => {
+		(key: keyof DECIAlgorithmParams, val?: string, name?: string) => {
 			if (!name || !val) return
 			onSetDeciParams(curr => ({
 				...curr,
@@ -65,10 +65,10 @@ export function useOnChangeChoiceGroupOption(
 }
 
 export function useOnChangeNumberListOption(
-	onSetDeciParams: SetterOrUpdater<DECIParams>,
+	onSetDeciParams: SetterOrUpdater<DECIAlgorithmParams>,
 ): onChangeStringFn {
 	return useCallback(
-		(key: keyof DECIParams, val?: string, name?: string) => {
+		(key: keyof DECIAlgorithmParams, val?: string, name?: string) => {
 			if (!name || !val) return
 			onSetDeciParams(curr => ({
 				...curr,
@@ -83,7 +83,7 @@ export function useOnChangeNumberListOption(
 }
 
 export function useOnChangeCateOption(
-	onSetDeciParams: SetterOrUpdater<DECIParams>,
+	onSetDeciParams: SetterOrUpdater<DECIAlgorithmParams>,
 ): (val?: string) => void {
 	return useCallback(
 		(val?: string) => {

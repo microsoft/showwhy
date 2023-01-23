@@ -5,7 +5,7 @@
 import { useCallback } from 'react'
 
 import type { DiscoverProgressCallback } from '../../api/types.js'
-import type { DECIParams } from '../../domain/Algorithms/DECI.js'
+import type { AlgorithmParams } from '../../domain/Algorithms/AlgorithmParams.js'
 import { discover } from '../../domain/CausalDiscovery/CausalDiscovery.js'
 import type { CausalDiscoveryAlgorithm } from '../../domain/CausalDiscovery/CausalDiscoveryAlgorithm.js'
 import type { CausalDiscoveryConstraints } from '../../domain/CausalDiscovery/CausalDiscoveryConstraints.js'
@@ -29,7 +29,7 @@ export function useCreateDiscoveryPromise(
 			algorithmName: CausalDiscoveryAlgorithm,
 			normalization: CausalDiscoveryNormalization,
 			progressCallback?: DiscoverProgressCallback,
-			paramOptions?: DECIParams,
+			algorithmParams?: AlgorithmParams,
 		) => {
 			// if the last task has not finished just yet, cancel it
 			cancelLastDiscoveryResultPromise()
@@ -41,7 +41,7 @@ export function useCreateDiscoveryPromise(
 				algorithmName,
 				normalization,
 				progressCallback,
-				paramOptions,
+				algorithmParams,
 			)
 
 			setLastDiscoveryResultPromise(discoveryPromise)
