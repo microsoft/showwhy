@@ -17,7 +17,7 @@
 	"dependencies": {
 		"@datashaper/app-framework": "0.1.3",
 		"@datashaper/schema": "^9.0.0",
-		"@datashaper/workflow": "^22.0.1",
+		"@datashaper/workflow": "^22.0.2",
 		"@essex/components": "^3.5.3",
 		"@essex/hooks": "^4.0.15",
 		"@essex/webpack-config": "^21.0.10",

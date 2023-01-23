@@ -21,7 +21,7 @@
 		"@datashaper/schema": "^9.0.0",
 		"@datashaper/tables": "^6.0.0",
 		"@datashaper/utilities": "^2.4.0",
-		"@datashaper/workflow": "^22.0.1",
+		"@datashaper/workflow": "^22.0.2",
 		"@essex-js-toolkit/hooks": "^4.0.3",
 		"@essex/components": "^3.5.3",
 		"@essex/hooks": "^4.0.15",
