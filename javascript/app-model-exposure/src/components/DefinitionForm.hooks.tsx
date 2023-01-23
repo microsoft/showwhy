@@ -61,7 +61,15 @@ export function useDefinitionItems(
 		onDismissEdit,
 	)
 	const items = useMemo(() => {
-		return definitions.map(item => {
+		const primaryIndex = definitions.findIndex(
+			d => d.level === CausalityLevel.Primary,
+		)
+		let sortedDefinitions = [...definitions]
+		if (primaryIndex > 0) {
+			sortedDefinitions.splice(primaryIndex, 1)
+			sortedDefinitions = [definitions[primaryIndex], ...sortedDefinitions]
+		}
+		return sortedDefinitions.map(item => {
 			if (item.id === definitionToEdit?.id) {
 				return getEditableRow(edited)
 			}

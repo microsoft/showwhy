@@ -3,11 +3,12 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import type { FC } from 'react'
-import { memo, useState } from 'react'
+import { memo, useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
 
 import { useDimensions } from '../hooks/useDimensions.js'
 import { useSetDefinitions } from '../state/definitions.js'
+import { CausalityLevel } from '../types/causality/CausalityLevel.js'
 import type { Definition } from '../types/experiments/Definition.js'
 import type { DefinitionType } from '../types/experiments/DefinitionType.js'
 import type { Maybe } from '../types/primitives.js'
@@ -18,17 +19,14 @@ import {
 	useDefinitionItems,
 	useEditDefinition,
 	useHeaders,
-	useRemoveDefinition
+	useRemoveDefinition,
 } from './DefinitionForm.hooks.js'
 import { DetailsList } from './DetailsList.js'
 
 export const DefinitionForm: FC<{
 	definitions: Definition[]
 	definitionType: DefinitionType
-}> = memo(function DefinitionForm({
-	definitions,
-	definitionType,
-}) {
+}> = memo(function DefinitionForm({ definitions, definitionType }) {
 	const [definitionToEdit, setDefinitionToEdit] = useState<Maybe<Definition>>()
 	const shouldHavePrimary = !getDefinitionsByType(definitionType, definitions)
 		.length
@@ -48,6 +46,30 @@ export const DefinitionForm: FC<{
 	)
 	const { ref, width } = useDimensions()
 	const headers = useHeaders(width)
+
+	const handlePrimary = useCallback(() => {
+		const primaryDefinition = definitions.find(
+			d => d.level === CausalityLevel.Primary && d.type === definitionType,
+		)
+		let definitionsCopy = [...definitions]
+
+		if (!primaryDefinition) {
+			definitionsCopy = definitions.map(d => {
+				if (d.default && d.type === definitionType) {
+					return {
+						...d,
+						level: CausalityLevel.Primary,
+					}
+				}
+				return d
+			})
+			setDefinitions(definitionsCopy)
+		}
+	}, [definitions, setDefinitions, definitionType])
+
+	useEffect(() => {
+		handlePrimary()
+	}, [definitions])
 
 	return (
 		<Container ref={ref}>

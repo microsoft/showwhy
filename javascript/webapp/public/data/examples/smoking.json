@@ -732,7 +732,8 @@
                     "variable": "Quit smoking",
                     "description": "A binary variable indicating whether the participant quit smoking prior to the follow-up visit in 1982.",
                     "column": "quit_smoking",
-                    "type": "exposure"
+                    "type": "exposure",
+                    "default": true
                 },
                 {
                     "level": "Secondary",
@@ -760,14 +761,16 @@
                     "variable": "Cigarette smokers",
                     "description": "Participants who reported smoking in 1971. Participants must have their body weight recorded at both baseline and follow-up visits.",
                     "column": "subject_inclusion",
-                    "type": "population"
+                    "type": "population",
+                    "default": true
                 },
                 {
                     "level": "Primary",
                     "variable": "Body Weight Change (kg)",
                     "description": "Change in participant's body weight between 1971 and 1982, measured in kilograms.",
                     "column": "weight_change",
-                    "type": "outcome"
+                    "type": "outcome",
+                    "default": true
                 }
             ],
             "question": {
