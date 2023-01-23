@@ -9,10 +9,9 @@ export interface CausalEdgesReport {
 	source: string
 	target: string
 	correlation?: string
-	priorCausalKnowledge: Number
-	discoveredCausalRelationship: Number
-	causalMethod: CausalDiscoveryAlgorithm
-	causalRelationship: string
+	isConstrained: Number
+	method: CausalDiscoveryAlgorithm
+	relationship: string
 	weight?: string
 	weightMeaning: string
 	sourceReferenceValue?: number | string

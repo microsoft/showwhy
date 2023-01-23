@@ -37,10 +37,9 @@ export function row2report(
 		source: relationship.source.columnName,
 		target: relationship.target.columnName,
 		correlation: correlation?.weight?.toFixed(3),
-		priorCausalKnowledge: !isPC && hasConstraints ? 1 : 0,
-		discoveredCausalRelationship: !isPC && hasConstraints ? 0 : 1,
-		causalMethod: selectedCausalDiscoveryAlgorithm,
-		causalRelationship: getCausalRelationship(
+		isConstrained: !isPC && hasConstraints ? 1 : 0,
+		method: selectedCausalDiscoveryAlgorithm,
+		relationship: getCausalRelationship(
 			selectedCausalDiscoveryAlgorithm,
 			relationship?.weight,
 		),
@@ -76,13 +75,13 @@ function getWeightMeaning(algorithm: CausalDiscoveryAlgorithm): string {
 	switch (algorithm) {
 		case CausalDiscoveryAlgorithm.NOTEARS:
 		case CausalDiscoveryAlgorithm.DirectLiNGAM:
-			meaning = 'weight - causal effect (float - [-inf, inf])'
+			meaning = 'weight - causal effect (float) [-inf, inf])'
 			break
 		case CausalDiscoveryAlgorithm.PC:
-			meaning = 'whether the edge exist or not (int - 0 or 1)'
+			meaning = 'whether the edge exist or not (0 or 1)'
 			break
 		case CausalDiscoveryAlgorithm.DECI:
-			meaning = 'edge confidence (float - [0, 1])'
+			meaning = 'edge confidence (between 0 and 1)'
 			break
 	}
 	return meaning
