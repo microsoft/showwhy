@@ -3,16 +3,16 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { DECIParams } from '../domain/Algorithms/DECI.js'
+import type { DECIAlgorithmParams } from '../domain/Algorithms/DECI.js'
 
 export type onChangeStringFn = (
-	key: keyof DECIParams,
+	key: keyof DECIAlgorithmParams,
 	val?: string | undefined,
 	name?: string | undefined,
 ) => void | undefined
 
 export type onChangeBooleanFn = (
-	key: keyof DECIParams,
+	key: keyof DECIAlgorithmParams,
 	val?: boolean | undefined,
 	name?: string | undefined,
 ) => void | undefined

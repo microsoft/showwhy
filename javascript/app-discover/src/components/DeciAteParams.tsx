@@ -5,7 +5,10 @@
 import { Checkbox, Position, SpinButton } from '@fluentui/react'
 import { memo } from 'react'
 
-import type { DECIAteOptions, DECIParams } from '../domain/Algorithms/DECI.js'
+import type {
+	DECIAlgorithmParams,
+	DECIAteOptions,
+} from '../domain/Algorithms/DECI.js'
 import {
 	advancedAteBooleanOptions,
 	advancedAteSpinningOptions,
@@ -18,7 +21,7 @@ import {
 import type { onChangeBooleanFn, onChangeStringFn } from './DeciParams.types.js'
 
 interface DeciAteParamsProps {
-	values: DECIParams
+	values: DECIAlgorithmParams
 	onChangeNumber: onChangeStringFn
 	onChangeBoolean: onChangeBooleanFn
 }
