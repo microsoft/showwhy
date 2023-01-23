@@ -6,10 +6,11 @@
 import { download } from '@datashaper/utilities'
 import * as aq from 'arquero'
 import { useCallback } from 'react'
-import { useRecoilState, useRecoilValue, useRecoilValueLoadable } from 'recoil'
+import { useRecoilValue, useRecoilValueLoadable } from 'recoil'
 
 import type { Relationship } from '../../domain/Relationship.js'
-import { row2report } from '../../utils/CausalEdgeReport.js'
+import { row2report } from '../../utils/edgeReport/CausalEdgeReport.js'
+import { reportFactory } from '../../utils/edgeReport/ReportFactory.js'
 import {
 	CausalDiscoveryResultsState,
 	CausalGraphConstraintsState,
@@ -22,12 +23,19 @@ export function useDownloadEdges(
 ): () => void {
 	const correlations =
 		useRecoilValueLoadable(FilteredCorrelationsState).valueMaybe() || []
-	const [selectedCausalDiscoveryAlgorithm] = useRecoilState(
+	const selectedCausalDiscoveryAlgorithm = useRecoilValue(
 		SelectedCausalDiscoveryAlgorithmState,
 	)
 	const constraints = useRecoilValue(CausalGraphConstraintsState)
 	const ate = useRecoilValue(CausalDiscoveryResultsState).graph.ateDetailsByName
 	return useCallback(() => {
+		reportFactory(selectedCausalDiscoveryAlgorithm).generateReport(
+			causalRelationships,
+			selectedCausalDiscoveryAlgorithm,
+			correlations,
+			constraints,
+			ate,
+		)
 		const formattedRows = causalRelationships.flatMap(relationship => {
 			return row2report(
 				relationship,

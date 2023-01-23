@@ -152,12 +152,13 @@ export function hasConstraint(
 }
 
 export function hasAnyConstraint(
-	constraints: CausalDiscoveryConstraints,
 	relationship: Relationship,
+	constraints?: CausalDiscoveryConstraints,
 ) {
+	if (!constraints) return false
 	const manualConstraints = Object.values(constraints.manualRelationships)
 	const hasManualConstraint = manualConstraints.some(x =>
 		isEquivalentRelationship(x, relationship),
 	)
-	return hasManualConstraint || hasConstraint(constraints, relationship)
+	return hasManualConstraint && hasConstraint(constraints, relationship)
 }
