@@ -1777,40 +1777,58 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@datashaper/app-framework@npm:0.1.1, @datashaper/app-framework@npm:^0.1.1":
-  version: 0.1.1
-  resolution: "@datashaper/app-framework@npm:0.1.1"
+"@datashaper/app-framework@npm:0.1.3":
+  version: 0.1.3
+  resolution: "@datashaper/app-framework@npm:0.1.3"
   dependencies:
-    "@datashaper/react": ^20.0.1
-    "@datashaper/schema": ^9.0.0
-    "@datashaper/tables": ^6.0.0
-    "@datashaper/utilities": ^2.4.0
-    "@datashaper/workflow": ^22.0.1
+    "@datashaper/react": ^20.0.3
+    "@datashaper/schema": ^9.0.1
+    "@datashaper/tables": ^6.1.0
+    "@datashaper/utilities": ^2.4.1
+    "@datashaper/workflow": ^22.0.2
+    "@essex/components": ^3.6.8
     "@monaco-editor/react": ^4.4.6
     ahooks: ^3.7.4
     allotment: 1.17.0
-    debug: ^4.3.4
-    lodash-es: ^4.17.21
+    monaco-editor: ^0.34.1
     observable-hooks: ^4.2.1
     react-if: ^4.1.4
     rxjs: ^7.8.0
     tslib: ^2.4.1
     yarn: ^1.22.19
   peerDependencies:
-    "@essex/components": "*"
-    "@fluentui/react": "*"
-    "@fluentui/react-hooks": "*"
-    "@fluentui/utilities": "*"
-    "@thematic/core": "*"
-    "@thematic/d3": "*"
-    "@thematic/fluent": "*"
-    "@thematic/react": "*"
-    arquero: ">= 5.1.0"
-    react: ">= 17.0.2"
-    react-router-dom: ">= 6.4.3"
-    recoil: ">= 0.7.6"
-    styled-components: ">= 5.3.0"
-  checksum: 7bdb44b326a0d55c0e29a3d0c51841f4c7bc30f8d1f60552e842e0f6726344a2e5170a9153867480d37779b02affc6ad5e136ec81c8d29dc2cbc57626cf1b7a7
+    "@fluentui/react": ">= 8"
+    "@fluentui/react-hooks": ">= 8"
+    "@thematic/core": ">= 4"
+    "@thematic/d3": ">= 2"
+    "@thematic/react": ">= 2"
+    arquero: ">= 5"
+    react: ">= 18"
+    react-router-dom: ">= 6"
+    recoil: ">= 0.7"
+    styled-components: ">= 5"
+  peerDependenciesMeta:
+    "@fluentui/react":
+      optional: false
+    "@fluentui/react-hooks":
+      optional: false
+    "@thematic/core":
+      optional: false
+    "@thematic/d3":
+      optional: false
+    "@thematic/react":
+      optional: false
+    arquero:
+      optional: false
+    react:
+      optional: false
+    react-router-dom:
+      optional: false
+    recoil:
+      optional: false
+    styled-components:
+      optional: false
+  checksum: 6466d78bb3169a8008b84adf33240e600bad767c708629add11199ac896b7211c2d8716937936223d6ee5962da214d9308f887b5b3fbe1e25f4600cdb61caf92
   languageName: node
   linkType: hard
 
@@ -1852,6 +1870,58 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@datashaper/react@npm:^20.0.3":
+  version: 20.0.3
+  resolution: "@datashaper/react@npm:20.0.3"
+  dependencies:
+    "@datashaper/schema": ^9.0.1
+    "@datashaper/tables": ^6.1.0
+    "@datashaper/utilities": ^2.4.1
+    "@datashaper/verb-guidance": ^0.1.26
+    "@datashaper/workflow": ^22.0.2
+    "@essex/charts-react": ^1.1.7
+    "@essex/components": ^3.6.8
+    "@essex/styled-components": ^0.0.8
+    ahooks: ^3.7.4
+    d3-format: ^3.1.0
+    immer: ^9.0.18
+    lodash-es: ^4.17.21
+    observable-hooks: ^4.2.1
+    react-if: ^4.1.4
+    rxjs: ^7.8.0
+    tslib: ^2.4.1
+  peerDependencies:
+    "@fluentui/react": ">= 8"
+    "@fluentui/react-hooks": ">= 8"
+    "@fluentui/utilities": ">= 8"
+    "@thematic/core": ">= 4"
+    "@thematic/d3": ">= 2"
+    "@thematic/fluent": ">= 5"
+    "@thematic/react": ">= 2"
+    arquero: ">= 5"
+    react: ">= 18"
+    styled-components: ">= 5"
+  peerDependenciesMeta:
+    "@fluentui/react":
+      optional: false
+    "@fluentui/react-hooks":
+      optional: false
+    "@fluentui/utilities":
+      optional: true
+    "@thematic/core":
+      optional: false
+    "@thematic/fluent":
+      optional: false
+    "@thematic/react":
+      optional: false
+    arquero:
+      optional: false
+    react:
+      optional: false
+  checksum: 059d17e813a84e23cfd206e5eca9767521e0f4854bc6d25c1765a8fe3600de142b7252eb3a203fd23b78d57bde15bc746efd5981a37ed3063cb8997461c0329c
+  languageName: node
+  linkType: hard
+
 "@datashaper/schema@npm:^9.0.0":
   version: 9.0.0
   resolution: "@datashaper/schema@npm:9.0.0"
@@ -1860,6 +1930,17 @@ __metadata:
     ajv-formats: ^2.1.1
     uuid: ^9.0.0
   checksum: 1b015b40a8ac7d5b1b93e54a8b1d2793a7dd163d1e1fc45ddd3cb4de00bb7d063049a6182f56330806ca94983dec7c1cdd6d66b6ca57953d2406b49e25e9e230
+  languageName: node
+  linkType: hard
+
+"@datashaper/schema@npm:^9.0.1":
+  version: 9.0.1
+  resolution: "@datashaper/schema@npm:9.0.1"
+  dependencies:
+    ajv: ^8.12.0
+    ajv-formats: ^2.1.1
+    uuid: ^9.0.0
+  checksum: e5c9ca224f64b59bb377b8261a2436ec04396b46d1ad2f9ed3d1a52e01b4ed4b95f8fc3c31c2d151fce3a9c63c4e9f372deec09f624f9241158d7002154d62b7
   languageName: node
   linkType: hard
 
@@ -1877,6 +1958,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@datashaper/tables@npm:^6.1.0":
+  version: 6.1.0
+  resolution: "@datashaper/tables@npm:6.1.0"
+  dependencies:
+    "@datashaper/schema": ^9.0.1
+    lodash-es: ^4.17.21
+    moment: ^2.29.4
+    papaparse: ^5.3.2
+  peerDependencies:
+    arquero: ^5.1.0
+  peerDependenciesMeta:
+    arquero:
+      optional: false
+  checksum: 017120f3e474a1c6bbe56efe838f0b88b1fb6099b02cdfce4a697efbe4c40f6bc441f05fb67de86c5e8edae14d826701a347b6ae8cc1667eba970240b49602e3
+  languageName: node
+  linkType: hard
+
 "@datashaper/utilities@npm:^2.4.0":
   version: 2.4.0
   resolution: "@datashaper/utilities@npm:2.4.0"
@@ -1890,10 +1988,33 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@datashaper/utilities@npm:^2.4.1":
+  version: 2.4.1
+  resolution: "@datashaper/utilities@npm:2.4.1"
+  dependencies:
+    "@zip.js/zip.js": 2.6.62
+    debug: ^4.3.4
+    tslib: ^2.4.1
+  peerDependencies:
+    arquero: ^5.1.0
+  peerDependenciesMeta:
+    arquero:
+      optional: false
+  checksum: fbe5b81c8cf118225153117c99709c228b1c3f1040e4e8952e3456f89d7f0d902cd30b83b128f6e3fdb139258036841854d0ad074299116de5dd682944fac0b9
+  languageName: node
+  linkType: hard
+
 "@datashaper/verb-guidance@npm:^0.1.24":
   version: 0.1.24
   resolution: "@datashaper/verb-guidance@npm:0.1.24"
   checksum: 9cb9b342f6071499cab35b48cbe698537b4b1a0ac7f9bea3ba7c37d0200d3f35bb5ec4f3757045edbac435dc41ed1cef9a2303ba24b425bd7aa28c69d3b7a9eb
+  languageName: node
+  linkType: hard
+
+"@datashaper/verb-guidance@npm:^0.1.26":
+  version: 0.1.26
+  resolution: "@datashaper/verb-guidance@npm:0.1.26"
+  checksum: 298864378c2e898523c91ea8a58f1b50fbe5beef630fbc730999284ab0f9d872833ac7db00319ed32bbe20376ce15a56db4bbcd39c28245660bcf45da7716595
   languageName: node
   linkType: hard
 
@@ -1918,6 +2039,30 @@ __metadata:
     "@types/node":
       optional: true
   checksum: aa10ad554e2ef8fc170da6d82d0ccaebcb6279e2e33692c73c195440839c21f43008d97f4435c141c7e0f17856ab504e5eb2a6ef7fc687b2641a00cc6b425847
+  languageName: node
+  linkType: hard
+
+"@datashaper/workflow@npm:^22.0.2":
+  version: 22.0.2
+  resolution: "@datashaper/workflow@npm:22.0.2"
+  dependencies:
+    "@datashaper/schema": ^9.0.1
+    "@datashaper/tables": ^6.1.0
+    "@datashaper/utilities": ^2.4.1
+    d3-time-format: ^4.1.0
+    debug: ^4.3.4
+    exact-linspace: ^1.0.14
+    lodash-es: ^4.17.21
+    percentile: ^1.6.0
+    rxjs: ^7.8.0
+    uuid: ^9.0.0
+  peerDependencies:
+    "@types/node": "*"
+    arquero: ^5.1.0
+  peerDependenciesMeta:
+    "@types/node":
+      optional: true
+  checksum: 17961aeee1cb3300b9138e68d58654171a0a4e1ca62d5e163c0d0fe611357acc0b7d9a67d67681fbb61de262973a3c0c1528a472d5908042c908d3890907d248
   languageName: node
   linkType: hard
 
@@ -2095,6 +2240,29 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@essex/charts-react@npm:^1.1.7":
+  version: 1.1.7
+  resolution: "@essex/charts-react@npm:1.1.7"
+  dependencies:
+    d3-scale: ^4.0.2
+    d3-selection: ^3.0.0
+    d3-shape: ^3.1.0
+    lodash-es: ^4.17.21
+  peerDependencies:
+    "@thematic/d3": ">= 2"
+    "@thematic/react": ">= 2"
+    react: ">= 18"
+  peerDependenciesMeta:
+    "@thematic/d3":
+      optional: false
+    "@thematic/react":
+      optional: false
+    react:
+      optional: false
+  checksum: 2197b2f7063d80f04a69cac534f2077e07d09952889f5fa3a64590b6b0ce0d567a62fdd626e7532698ce5d4d4a001c0afd2f0d411f7b3154095ca52c5f2214f6
+  languageName: node
+  linkType: hard
+
 "@essex/components@npm:^3.5.2, @essex/components@npm:^3.5.3":
   version: 3.5.3
   resolution: "@essex/components@npm:3.5.3"
@@ -2129,6 +2297,72 @@ __metadata:
     react: ">= 18"
     react-dom: ">= 18"
   checksum: 0a16bbb4508fda283d91d886f2d01748a17d81a60380c66d8b596bc2d702d8d3e10df3a75a70892f0dded11bfbc9175414b6b6860e59eb532688ba701b687aef
+  languageName: node
+  linkType: hard
+
+"@essex/components@npm:^3.6.8":
+  version: 3.6.8
+  resolution: "@essex/components@npm:3.6.8"
+  dependencies:
+    "@essex/styled-components": ^0.0.8
+    "@essex/toolbox": ^3.0.13
+    "@fluentui/utilities": ^8.13.5
+    "@types/d3-array": ^3.0.3
+    "@types/d3-axis": ^3.0.1
+    "@types/d3-brush": ^3.0.1
+    "@types/d3-scale": ^4.0.2
+    "@types/d3-selection": ^3.0.3
+    d3-array: ^3.2.1
+    d3-axis: ^3.0.0
+    d3-brush: ^3.0.0
+    d3-scale: ^4.0.2
+    d3-selection: ^3.0.0
+    lodash-es: ^4.17.21
+    markdown-to-jsx: ^7.1.8
+    react-animate-height: ^3.1.0
+    react-if: ^4.1.4
+  peerDependencies:
+    "@fluentui/react": ">= 8"
+    "@thematic/core": ">= 4"
+    "@thematic/d3": ">= 2"
+    "@thematic/react": ">= 2"
+    "@types/d3-array": ">= 3"
+    "@types/d3-axis": ">= 3"
+    "@types/d3-scale": ">= 4"
+    "@types/d3-selection": ">= 3"
+    "@types/node": "*"
+    "@types/react": ">= 18"
+    react: ">= 18"
+    react-dom: ">= 18"
+    styled-components: ">= 5"
+  peerDependenciesMeta:
+    "@fluentui/react":
+      optional: false
+    "@thematic/core":
+      optional: false
+    "@thematic/d3":
+      optional: false
+    "@thematic/react":
+      optional: false
+    "@types/d3-array":
+      optional: true
+    "@types/d3-axis":
+      optional: true
+    "@types/d3-scale":
+      optional: true
+    "@types/d3-selection":
+      optional: true
+    "@types/node":
+      optional: true
+    "@types/react":
+      optional: true
+    react:
+      optional: false
+    react-dom:
+      optional: true
+    styled-components:
+      optional: true
+  checksum: 4c3bfad20dd4d00b34e78a4594accf5f52b863cf0285d7a7fa3b24b50c3b05f096c2bbf85d5d2c5ffd2e152f0a176d333ecad03ea68920d1b3cdff962def36ff
   languageName: node
   linkType: hard
 
@@ -2334,6 +2568,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@essex/styled-components@npm:^0.0.8":
+  version: 0.0.8
+  resolution: "@essex/styled-components@npm:0.0.8"
+  peerDependencies:
+    styled-components: ">= 5"
+  peerDependenciesMeta:
+    styled-components:
+      optional: false
+  checksum: 167bc86605f18fbd53fa8a2c4c6cef78433e688989c4b1bac50676ebad48ab7e80a67500eaf679a81fe914976e95f374c984808f45329b3009bffd880a0654b1
+  languageName: node
+  linkType: hard
+
 "@essex/swc-opts@npm:^20.0.20":
   version: 20.0.20
   resolution: "@essex/swc-opts@npm:20.0.20"
@@ -2349,6 +2595,13 @@ __metadata:
   version: 3.0.11
   resolution: "@essex/toolbox@npm:3.0.11"
   checksum: 929e09849f34d5e65c19044879c509c01c46ca6935f36efc57cfa542080425b5ef275bd4e9eec5b3846b34d2958060627b7ee824e7f2c69db0fc2bcb58823b58
+  languageName: node
+  linkType: hard
+
+"@essex/toolbox@npm:^3.0.13":
+  version: 3.0.13
+  resolution: "@essex/toolbox@npm:3.0.13"
+  checksum: a9e3c4ca79c98f5f1b3177a37a54504a7e27b22275a17458227bc89debb1768bbc5fb1cca102c1da0496106d826b54e96336481407fcf1009c024a61e052e68c
   languageName: node
   linkType: hard
 
@@ -3572,7 +3825,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/app-common@workspace:javascript/app-common"
   dependencies:
-    "@datashaper/app-framework": 0.1.1
+    "@datashaper/app-framework": 0.1.3
     "@datashaper/react": ^20.0.1
     "@datashaper/schema": ^9.0.0
     "@datashaper/tables": ^6.0.0
@@ -3612,7 +3865,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/discover-app@workspace:javascript/app-discover"
   dependencies:
-    "@datashaper/app-framework": 0.1.1
+    "@datashaper/app-framework": 0.1.3
     "@datashaper/react": ^20.0.1
     "@datashaper/schema": ^9.0.0
     "@datashaper/tables": ^6.0.0
@@ -3703,7 +3956,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/event-analysis-app@workspace:javascript/app-event-analysis"
   dependencies:
-    "@datashaper/app-framework": ^0.1.1
+    "@datashaper/app-framework": 0.1.3
     "@datashaper/schema": ^9.0.0
     "@datashaper/workflow": ^22.0.1
     "@essex/components": ^3.5.3
@@ -3757,7 +4010,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/model-exposure-app@workspace:javascript/app-model-exposure"
   dependencies:
-    "@datashaper/app-framework": 0.1.1
+    "@datashaper/app-framework": 0.1.3
     "@datashaper/react": ^20.0.1
     "@datashaper/schema": ^9.0.0
     "@datashaper/tables": ^6.0.0
@@ -3856,7 +4109,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/webapp@workspace:javascript/webapp"
   dependencies:
-    "@datashaper/app-framework": 0.1.1
+    "@datashaper/app-framework": 0.1.3
     "@datashaper/schema": ^9.0.0
     "@datashaper/tables": ^6.0.0
     "@datashaper/utilities": ^2.4.0
@@ -7116,6 +7369,13 @@ __metadata:
   version: 2.6.61
   resolution: "@zip.js/zip.js@npm:2.6.61"
   checksum: 9bc95b49f1f48369d28b3a77e17376e9dab81880b0ad6fe27466ddc25e4aabbe8f176b404b59e6b888d4f2a96d64d41ee6212cae65b05c71712cd9c923eabcb1
+  languageName: node
+  linkType: hard
+
+"@zip.js/zip.js@npm:2.6.62":
+  version: 2.6.62
+  resolution: "@zip.js/zip.js@npm:2.6.62"
+  checksum: 75e34752a3d06b103d2125c1c32e706047fc68464d85984be1060d4c4b801976c8d61f29d48e7271e191d39d6fb4b4a0c78512d17197011f520155c4719bf59b
   languageName: node
   linkType: hard
 
@@ -13951,6 +14211,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"immer@npm:^9.0.18":
+  version: 9.0.18
+  resolution: "immer@npm:9.0.18"
+  checksum: 85b3153dd01fce73c40591d0d6d7cd95878dab49f8ec4744c044adac05e0dab847b30c26259c478a5f87f974897be6df2780ff5bf86c8a0a27578fdeb300eb10
+  languageName: node
+  linkType: hard
+
 "import-fresh@npm:^3.0.0, import-fresh@npm:^3.1.0, import-fresh@npm:^3.2.1":
   version: 3.3.0
   resolution: "import-fresh@npm:3.3.0"
@@ -16607,6 +16874,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"monaco-editor@npm:^0.34.1":
+  version: 0.34.1
+  resolution: "monaco-editor@npm:0.34.1"
+  checksum: 4c6b35d7c566ec414b758cdd45dfb08d6fe46e2e8fdeed88b619a52c47592ce6df476d9490a58e5d450339c4a93f09d500adc9c017a348179277b98aa6009fa4
+  languageName: node
+  linkType: hard
+
 "move-concurrently@npm:^1.0.1":
   version: 1.0.1
   resolution: "move-concurrently@npm:1.0.1"
@@ -18525,6 +18799,16 @@ __metadata:
   peerDependencies:
     webpack: ^4.0.0 || ^5.0.0
   checksum: 51cc1b0d0e8c37c4336b5318f3b2c9c51d6998ad6f56ea09612afcfefc9c1f596341309e934a744ae907177f28efc9f1654eacd62151e82853fcc6d37450e795
+  languageName: node
+  linkType: hard
+
+"react-animate-height@npm:^3.1.0":
+  version: 3.1.0
+  resolution: "react-animate-height@npm:3.1.0"
+  peerDependencies:
+    react: ">=16.8.0"
+    react-dom: ">=16.8.0"
+  checksum: 46f802fe1e70d5d451d74fabece0dc8e2060543ea106dd56fc0ff544391e8939f8876af480323854dc39cbefd286d8cece29e509de3fb2d231fa9f77097532af
   languageName: node
   linkType: hard
 
