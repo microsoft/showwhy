@@ -5,16 +5,16 @@
 
 import type { CausalDiscoveryAlgorithm } from './CausalDiscovery/CausalDiscoveryAlgorithm.js'
 
-export interface CausalEdgesReport {
+export interface EdgeReportRow {
 	source: string
 	target: string
 	correlation?: string
-	isConstrained: Number
+	is_constrained: Number
 	method: CausalDiscoveryAlgorithm
 	relationship: string
 	weight?: string
-	weightMeaning: string
-	sourceReferenceValue?: number | string
-	sourceTreatedValue?: number | string
-	targetAverageTreatmentEffect?: number
+	weight_formula: string
+	source_reference?: number | string
+	source_treated?: number | string
+	target_ate?: number
 }

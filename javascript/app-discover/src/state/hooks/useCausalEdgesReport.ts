@@ -16,6 +16,7 @@ import {
 } from '../atoms/causal_graph.js'
 import { SelectedCausalDiscoveryAlgorithmState } from '../atoms/ui.js'
 import { FilteredCorrelationsState } from '../selectors/correlations.js'
+
 export function useDownloadEdges(
 	causalRelationships: Relationship[],
 ): () => void {
