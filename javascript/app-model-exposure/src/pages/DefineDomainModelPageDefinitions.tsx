@@ -19,6 +19,9 @@ export const DefineDomainModelPageDefinitions: React.FC = memo(
 				<Title style={{ fontSize: '18px' }} noMarginBottom>
 					Alternative definitions
 				</Title>
+				<Title style={{ fontSize: '16px' }} noMarginBottom>
+					Domain definitions
+				</Title>
 				<Title>Population</Title>
 				<DefinitionForm
 					definitionType={DefinitionType.Population}

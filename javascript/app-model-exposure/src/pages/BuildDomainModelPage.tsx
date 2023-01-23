@@ -62,12 +62,12 @@ export const BuildDomainModelPage: React.FC = memo(
 					))}
 				</CardsContainer>
 				<ListContainer ref={ref}>
-					<Title data-pw="title">Relevant variables</Title>
+					<Title data-pw="title">Relevant domain variables</Title>
 					{/* eslint-disable-next-line */}
 					<DetailsList items={items} headers={formHeaders} />
 				</ListContainer>
 				<RelevantVariablesForm onAdd={addFactor}></RelevantVariablesForm>
-				<Title data-pw="title">Variable relationships</Title>
+				<Title data-pw="title">Domain variable relationships</Title>
 				<ListContainer ref={ref}>
 					<DetailsList headers={headers} items={itemList} />
 				</ListContainer>
