@@ -15,7 +15,7 @@ export interface CausalEdgesReport {
 	causalRelationship: string
 	weight?: string
 	weightMeaning: string
-	sourceReferenceValue: string
-	sourceTreatedValue: string
-	targetAverageTreatmentEffect: string
+	sourceReferenceValue?: number | string
+	sourceTreatedValue?: number | string
+	targetAverageTreatmentEffect?: number
 }

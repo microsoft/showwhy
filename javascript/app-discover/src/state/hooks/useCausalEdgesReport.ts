@@ -10,7 +10,10 @@ import { useRecoilState, useRecoilValue, useRecoilValueLoadable } from 'recoil'
 
 import type { Relationship } from '../../domain/Relationship.js'
 import { row2report } from '../../utils/CausalEdgeReport.js'
-import { CausalGraphConstraintsState } from '../atoms/causal_graph.js'
+import {
+	CausalDiscoveryResultsState,
+	CausalGraphConstraintsState,
+} from '../atoms/causal_graph.js'
 import { SelectedCausalDiscoveryAlgorithmState } from '../atoms/ui.js'
 import { FilteredCorrelationsState } from '../selectors/correlations.js'
 export function useDownloadEdges(
@@ -22,6 +25,7 @@ export function useDownloadEdges(
 		SelectedCausalDiscoveryAlgorithmState,
 	)
 	const constraints = useRecoilValue(CausalGraphConstraintsState)
+	const ate = useRecoilValue(CausalDiscoveryResultsState).graph.ateDetailsByName
 	return useCallback(() => {
 		const formattedRows = causalRelationships.flatMap(relationship => {
 			return row2report(
@@ -29,6 +33,7 @@ export function useDownloadEdges(
 				selectedCausalDiscoveryAlgorithm,
 				constraints,
 				correlations,
+				ate,
 			)
 		})
 
@@ -39,6 +44,7 @@ export function useDownloadEdges(
 		correlations,
 		selectedCausalDiscoveryAlgorithm,
 		constraints,
+		ate,
 		causalRelationships,
 	])
 }

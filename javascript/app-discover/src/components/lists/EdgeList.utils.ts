@@ -7,23 +7,18 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import type { CausalDiscoveryConstraints } from '../../domain/CausalDiscovery/CausalDiscoveryConstraints.js'
-import type {
-	Relationship} from '../../domain/Relationship.js';
+import type { Relationship } from '../../domain/Relationship.js'
 import {
-	arrayIncludesRelationship,
 	hasSameReason,
 	hasSameSourceAndTarget,
 	invertRelationship,
 	invertRelationshipAndKey,
 	involvesVariable,
 	isEquivalentRelationship,
-	ManualRelationshipReason
+	ManualRelationshipReason,
 } from '../../domain/Relationship.js'
-import type {
-	VariableReference} from './../../domain/CausalVariable.js';
-import {
-	arrayIncludesVariable
-} from './../../domain/CausalVariable.js'
+import type { VariableReference } from './../../domain/CausalVariable.js'
+import { arrayIncludesVariable } from './../../domain/CausalVariable.js'
 
 export function removeBothEdges(
 	constraints: CausalDiscoveryConstraints,
@@ -164,11 +159,9 @@ export function hasAnyConstraint(
 	constraints: CausalDiscoveryConstraints,
 	relationship: Relationship,
 ) {
-	const generalOrManualConstraints = Object.values(
-		constraints.manualRelationships,
+	const manualConstraints = Object.values(constraints.manualRelationships)
+	const hasManualConstraint = manualConstraints.some(x =>
+		isEquivalentRelationship(x, relationship),
 	)
-	return (
-		arrayIncludesRelationship(generalOrManualConstraints, relationship) ||
-		hasConstraint(constraints, relationship)
-	)
+	return hasManualConstraint || hasConstraint(constraints, relationship)
 }

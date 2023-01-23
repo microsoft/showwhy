@@ -7,6 +7,8 @@ import { hasAnyConstraint } from '../components/lists/EdgeList.utils.js'
 import { CausalDiscoveryAlgorithm } from '../domain/CausalDiscovery/CausalDiscoveryAlgorithm.js'
 import type { CausalDiscoveryConstraints } from '../domain/CausalDiscovery/CausalDiscoveryConstraints.js'
 import type { CausalEdgesReport } from '../domain/CausalEdgesReport.js'
+import { VariableNature } from '../domain/VariableNature.js'
+import { ATEDetailsByName } from './../domain/CausalDiscovery/CausalDiscoveryResult.js'
 import type {
 	Relationship,
 	RelationshipWithWeight,
@@ -18,20 +20,25 @@ export function row2report(
 	selectedCausalDiscoveryAlgorithm: CausalDiscoveryAlgorithm,
 	constraints: CausalDiscoveryConstraints,
 	correlations: RelationshipWithWeight[],
+	ATEDetailsByName?: ATEDetailsByName,
 ): CausalEdgesReport {
 	const hasConstraints = hasAnyConstraint(constraints, relationship)
+	const isPC = selectedCausalDiscoveryAlgorithm === CausalDiscoveryAlgorithm.PC
 	const correlation = correlationForVariables(
 		correlations,
 		relationship.source,
 		relationship.target,
 	)
+	const ate =
+		ATEDetailsByName && ATEDetailsByName[relationship?.source.columnName]
+	const isNatureCategorical = isCategorical(ate?.nature)
 
 	return {
 		source: relationship.source.columnName,
 		target: relationship.target.columnName,
 		correlation: correlation?.weight?.toFixed(3),
-		priorCausalKnowledge: hasConstraints ? 1 : 0,
-		discoveredCausalRelationship: hasConstraints ? 0 : 1,
+		priorCausalKnowledge: !isPC && hasConstraints ? 1 : 0,
+		discoveredCausalRelationship: !isPC && hasConstraints ? 0 : 1,
 		causalMethod: selectedCausalDiscoveryAlgorithm,
 		causalRelationship: getCausalRelationship(
 			selectedCausalDiscoveryAlgorithm,
@@ -39,9 +46,10 @@ export function row2report(
 		),
 		weight: relationship.weight?.toFixed(3),
 		weightMeaning: getWeightMeaning(selectedCausalDiscoveryAlgorithm),
-		sourceReferenceValue: '',
-		sourceTreatedValue: '',
-		targetAverageTreatmentEffect: '',
+		sourceReferenceValue: !isNatureCategorical ? ate?.reference : undefined,
+		sourceTreatedValue: !isNatureCategorical ? ate?.intervention : undefined,
+		targetAverageTreatmentEffect:
+			ate && !isNatureCategorical ? relationship?.weight : undefined,
 	}
 }
 
@@ -54,6 +62,13 @@ function getCausalRelationship(
 		: weight > 0
 		? 'Causes increase'
 		: 'Causes decrease'
+}
+
+function isCategorical(nature?: VariableNature): boolean {
+	return (
+		nature === VariableNature.CategoricalNominal ||
+		nature === VariableNature.CategoricalOrdinal
+	)
 }
 
 function getWeightMeaning(algorithm: CausalDiscoveryAlgorithm): string {
