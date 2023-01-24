@@ -1,0 +1,1 @@
+This is a collection of guidance and documentation for using ShowWhy. This documentation is also embedded directly within the ShowWhy app: as you use the running application, open the guidance panel to view help content for the currently focused resource.

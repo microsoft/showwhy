@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { RadioButtonCard } from '@showwhy/app-common'
-import React, { memo } from 'react'
+import React, { memo, useEffect } from 'react'
 
 import { CausalEffectsArrows } from '../components/CausalEffectsArrows.js'
 import { DetailsList } from '../components/DetailsList.js'
@@ -28,9 +28,11 @@ import {
 	buildFormHeaders,
 	buildHeaders,
 } from './BuildDomainModelPage.utils.js'
+import { ExposurePageProps } from './types.js'
 
-export const BuildDomainModelPage: React.FC = memo(
-	function BuildDomainModelPage() {
+export const BuildDomainModelPage: React.FC<ExposurePageProps> = memo(
+	function BuildDomainModelPage({ api }) {
+		useEffect(() => api.requestHelp('model'), [api])
 		const primarySpecificationConfig = usePrimarySpecificationConfig()
 		const causalEffects = useCausalEffects(
 			primarySpecificationConfig.causalModel,

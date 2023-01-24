@@ -2,6 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import content from '@showwhy/guidance'
 import type {
 	AppProfileInitializationContext,
 	ProfilePlugin,
@@ -53,5 +54,17 @@ export class ExposureProfile implements ProfilePlugin<ExposureResource> {
 				},
 			]
 		}
+	}
+
+	public getHelp() {
+		return Object.entries(content as Record<string, string>).reduce(
+			(acc, [key, value]) => {
+				if (key.startsWith('exposure')) {
+					acc[key.replace('exposure.', '')] = value
+				}
+				return acc
+			},
+			{} as Record<string, string>,
+		)
 	}
 }

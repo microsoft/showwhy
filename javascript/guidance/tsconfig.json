@@ -1,0 +1,13 @@
+{
+	"compilerOptions": {
+		"module": "ES2020",
+		"outDir": "lib",
+		"allowSyntheticDefaultImports": true,
+		"target": "ESNext",
+		"skipLibCheck": true,
+		"esModuleInterop": true,
+		"isolatedModules": true
+	},
+	"include": ["src/**/*"],
+	"exclude": ["**/__tests__/**", "src/scripts/**"]
+}
