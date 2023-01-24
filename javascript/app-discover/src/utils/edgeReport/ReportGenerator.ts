@@ -21,8 +21,6 @@ export class ReportGenerator {
 	protected reportRows: EdgeReportRow[] = []
 	protected allVariables: string[] = []
 
-	constructor() {}
-
 	getReportRows(
 		relationships: Relationship[],
 		selectedCausalDiscoveryAlgorithm: CausalDiscoveryAlgorithm,
