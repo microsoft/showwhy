@@ -1777,16 +1777,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@datashaper/app-framework@npm:0.1.3":
-  version: 0.1.3
-  resolution: "@datashaper/app-framework@npm:0.1.3"
+"@datashaper/app-framework@npm:0.2.0":
+  version: 0.2.0
+  resolution: "@datashaper/app-framework@npm:0.2.0"
   dependencies:
-    "@datashaper/react": ^20.0.3
+    "@datashaper/guidance": ^0.2.2
+    "@datashaper/react": ^20.0.4
     "@datashaper/schema": ^9.0.1
     "@datashaper/tables": ^6.1.0
     "@datashaper/utilities": ^2.4.1
     "@datashaper/workflow": ^22.0.2
-    "@essex/components": ^3.6.8
+    "@essex/components": ^3.6.9
     "@monaco-editor/react": ^4.4.6
     ahooks: ^3.7.4
     allotment: 1.17.0
@@ -1828,59 +1829,28 @@ __metadata:
       optional: false
     styled-components:
       optional: false
-  checksum: 6466d78bb3169a8008b84adf33240e600bad767c708629add11199ac896b7211c2d8716937936223d6ee5962da214d9308f887b5b3fbe1e25f4600cdb61caf92
+  checksum: b5cdd81ec3d5bc5d57103ebf4f4a4de27d6798140cde2dd9de065d04fac2542fa001d03e1c3a2e0231935a339eea7b1990aea87cc45c08caecd282dea7e48f5f
   languageName: node
   linkType: hard
 
-"@datashaper/react@npm:^20.0.1":
-  version: 20.0.1
-  resolution: "@datashaper/react@npm:20.0.1"
-  dependencies:
-    "@datashaper/schema": ^9.0.0
-    "@datashaper/tables": ^6.0.0
-    "@datashaper/utilities": ^2.4.0
-    "@datashaper/verb-guidance": ^0.1.24
-    "@datashaper/workflow": ^22.0.1
-    "@essex/charts-react": ^1.1.4
-    "@essex/components": ^3.5.3
-    "@essex/styled-components": ^0.0.6
-    "@fluentui/font-icons-mdl2": ^8.5.5
-    ahooks: ^3.7.4
-    d3-format: ^3.1.0
-    debug: ^4.3.4
-    immer: ^9.0.17
-    lodash-es: ^4.17.21
-    markdown-to-jsx: ^7.1.8
-    observable-hooks: ^4.2.1
-    react-if: ^4.1.4
-    rxjs: ^7.8.0
-    tslib: ^2.4.1
-  peerDependencies:
-    "@fluentui/react": ^8.24.0
-    "@fluentui/react-hooks": ^8.2.4
-    "@fluentui/utilities": ^8.2.1
-    "@thematic/core": ^1.3.0
-    "@thematic/d3": ^1.3.0
-    "@thematic/fluent": ^3.0.7
-    "@thematic/react": ^1.3.0
-    arquero: ^5.1.0
-    react: ^17.0.2
-    styled-components: ^5.3.0
-  checksum: ce95a2f1e114e4226bae4842711f8bd0f384ccab472c98de7185661eee104f11c9371ed9e1752eef3fbfbbdbd4bf5d014ee70de91f5885afef1b94444b43caa6
+"@datashaper/guidance@npm:^0.2.2":
+  version: 0.2.2
+  resolution: "@datashaper/guidance@npm:0.2.2"
+  checksum: 809793a2dbbca42bf0ebac92bde119aa9ab10b01e1f0ac4af7151dd7720487e4bdd587f5a5182644cea9f3d46f7eadf2456b4a01b19e3d0640bbff1730966597
   languageName: node
   linkType: hard
 
-"@datashaper/react@npm:^20.0.3":
-  version: 20.0.3
-  resolution: "@datashaper/react@npm:20.0.3"
+"@datashaper/react@npm:^20.0.4":
+  version: 20.0.4
+  resolution: "@datashaper/react@npm:20.0.4"
   dependencies:
+    "@datashaper/guidance": ^0.2.2
     "@datashaper/schema": ^9.0.1
     "@datashaper/tables": ^6.1.0
     "@datashaper/utilities": ^2.4.1
-    "@datashaper/verb-guidance": ^0.1.26
     "@datashaper/workflow": ^22.0.2
     "@essex/charts-react": ^1.1.7
-    "@essex/components": ^3.6.8
+    "@essex/components": ^3.6.9
     "@essex/styled-components": ^0.0.8
     ahooks: ^3.7.4
     d3-format: ^3.1.0
@@ -1918,18 +1888,7 @@ __metadata:
       optional: false
     react:
       optional: false
-  checksum: 059d17e813a84e23cfd206e5eca9767521e0f4854bc6d25c1765a8fe3600de142b7252eb3a203fd23b78d57bde15bc746efd5981a37ed3063cb8997461c0329c
-  languageName: node
-  linkType: hard
-
-"@datashaper/schema@npm:^9.0.0":
-  version: 9.0.0
-  resolution: "@datashaper/schema@npm:9.0.0"
-  dependencies:
-    ajv: ^8.12.0
-    ajv-formats: ^2.1.1
-    uuid: ^9.0.0
-  checksum: 1b015b40a8ac7d5b1b93e54a8b1d2793a7dd163d1e1fc45ddd3cb4de00bb7d063049a6182f56330806ca94983dec7c1cdd6d66b6ca57953d2406b49e25e9e230
+  checksum: 68534e5c4139e6554ff1e0517cef1c0e087c987ba71caab8ecdc8923bab54cd44ebcf2bb231ea7e9b7a355fe4733f156adfab4cdcd562ece5f6c4de390a31d73
   languageName: node
   linkType: hard
 
@@ -1941,20 +1900,6 @@ __metadata:
     ajv-formats: ^2.1.1
     uuid: ^9.0.0
   checksum: e5c9ca224f64b59bb377b8261a2436ec04396b46d1ad2f9ed3d1a52e01b4ed4b95f8fc3c31c2d151fce3a9c63c4e9f372deec09f624f9241158d7002154d62b7
-  languageName: node
-  linkType: hard
-
-"@datashaper/tables@npm:^6.0.0":
-  version: 6.0.0
-  resolution: "@datashaper/tables@npm:6.0.0"
-  dependencies:
-    "@datashaper/schema": ^9.0.0
-    lodash-es: ^4.17.21
-    moment: ^2.29.4
-    papaparse: ^5.3.2
-  peerDependencies:
-    arquero: ^5.1.0
-  checksum: 7d8f7c4f855ff999405f989c9fd5bbde3663c4b9a5577b4cecb33e3403983003d0ab618093ac37ac918749f971853209357292d147f35c845afff4e245a62a4e
   languageName: node
   linkType: hard
 
@@ -1975,19 +1920,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@datashaper/utilities@npm:^2.4.0":
-  version: 2.4.0
-  resolution: "@datashaper/utilities@npm:2.4.0"
-  dependencies:
-    "@zip.js/zip.js": 2.6.61
-    debug: ^4.3.4
-    tslib: ^2.4.1
-  peerDependencies:
-    arquero: ^5.1.0
-  checksum: 8dd2e329ca21810100650b7c1e1d6631eda264370801a46810fb08f7fa2500db50d6d6ea8cf1f0010577f976ba680c2355f2fd3f08f7dbbda9dc1c39fa05e70f
-  languageName: node
-  linkType: hard
-
 "@datashaper/utilities@npm:^2.4.1":
   version: 2.4.1
   resolution: "@datashaper/utilities@npm:2.4.1"
@@ -2001,44 +1933,6 @@ __metadata:
     arquero:
       optional: false
   checksum: fbe5b81c8cf118225153117c99709c228b1c3f1040e4e8952e3456f89d7f0d902cd30b83b128f6e3fdb139258036841854d0ad074299116de5dd682944fac0b9
-  languageName: node
-  linkType: hard
-
-"@datashaper/verb-guidance@npm:^0.1.24":
-  version: 0.1.24
-  resolution: "@datashaper/verb-guidance@npm:0.1.24"
-  checksum: 9cb9b342f6071499cab35b48cbe698537b4b1a0ac7f9bea3ba7c37d0200d3f35bb5ec4f3757045edbac435dc41ed1cef9a2303ba24b425bd7aa28c69d3b7a9eb
-  languageName: node
-  linkType: hard
-
-"@datashaper/verb-guidance@npm:^0.1.26":
-  version: 0.1.26
-  resolution: "@datashaper/verb-guidance@npm:0.1.26"
-  checksum: 298864378c2e898523c91ea8a58f1b50fbe5beef630fbc730999284ab0f9d872833ac7db00319ed32bbe20376ce15a56db4bbcd39c28245660bcf45da7716595
-  languageName: node
-  linkType: hard
-
-"@datashaper/workflow@npm:^22.0.1":
-  version: 22.0.1
-  resolution: "@datashaper/workflow@npm:22.0.1"
-  dependencies:
-    "@datashaper/schema": ^9.0.0
-    "@datashaper/tables": ^6.0.0
-    "@datashaper/utilities": ^2.4.0
-    d3-time-format: ^4.1.0
-    debug: ^4.3.4
-    exact-linspace: ^1.0.14
-    lodash-es: ^4.17.21
-    percentile: ^1.6.0
-    rxjs: ^7.8.0
-    uuid: ^9.0.0
-  peerDependencies:
-    "@types/node": "*"
-    arquero: ^5.1.0
-  peerDependenciesMeta:
-    "@types/node":
-      optional: true
-  checksum: aa10ad554e2ef8fc170da6d82d0ccaebcb6279e2e33692c73c195440839c21f43008d97f4435c141c7e0f17856ab504e5eb2a6ef7fc687b2641a00cc6b425847
   languageName: node
   linkType: hard
 
@@ -2222,24 +2116,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@essex/charts-react@npm:^1.1.4":
-  version: 1.1.4
-  resolution: "@essex/charts-react@npm:1.1.4"
-  dependencies:
-    d3-format: ^3.1.0
-    d3-scale: ^4.0.2
-    d3-selection: ^3.0.0
-    d3-shape: ^3.1.0
-    lodash-es: ^4.17.21
-  peerDependencies:
-    "@thematic/core": ^1.3.0
-    "@thematic/d3": ^1.3.0
-    "@thematic/react": ^1.3.0
-    react: ">= 18"
-  checksum: b7768485e5e52ae1f19d9c928fe7605132016f545253265f2645c117853f139635762c90f6e9966615af60f1a07d295eb5bcb1fbcb755759e74a61851eb8ce70
-  languageName: node
-  linkType: hard
-
 "@essex/charts-react@npm:^1.1.7":
   version: 1.1.7
   resolution: "@essex/charts-react@npm:1.1.7"
@@ -2263,46 +2139,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@essex/components@npm:^3.5.2, @essex/components@npm:^3.5.3":
-  version: 3.5.3
-  resolution: "@essex/components@npm:3.5.3"
-  dependencies:
-    "@essex/hooks": ^4.0.15
-    "@essex/react-animate-height": ^2.1.4
-    "@essex/toolbox": ^3.0.11
-    "@fluentui/utilities": ^8.13.4
-    "@types/d3-array": ^3.0.3
-    "@types/d3-axis": ^3.0.1
-    "@types/d3-brush": ^3.0.1
-    "@types/d3-scale": ^4.0.2
-    "@types/d3-selection": ^3.0.3
-    d3-array: ^3.2.1
-    d3-axis: ^3.0.0
-    d3-brush: ^3.0.0
-    d3-scale: ^4.0.2
-    d3-selection: ^3.0.0
-    lodash-es: ^4.17.21
-    react-if: ^4.1.4
-  peerDependencies:
-    "@fluentui/react": ">= 7.114.2"
-    "@thematic/color": ">= 0.8.0"
-    "@thematic/core": ">= 0.8.0"
-    "@thematic/d3": ">= 0.8.0"
-    "@thematic/fluent": ">= 0.8.0"
-    "@thematic/react": ">= 0.8.0"
-    "@types/d3": "*"
-    "@types/d3-axis": ^2.0.0
-    "@types/node": "*"
-    "@types/react": ">= 18"
-    react: ">= 18"
-    react-dom: ">= 18"
-  checksum: 0a16bbb4508fda283d91d886f2d01748a17d81a60380c66d8b596bc2d702d8d3e10df3a75a70892f0dded11bfbc9175414b6b6860e59eb532688ba701b687aef
-  languageName: node
-  linkType: hard
-
-"@essex/components@npm:^3.6.8":
-  version: 3.6.8
-  resolution: "@essex/components@npm:3.6.8"
+"@essex/components@npm:^3.6.2, @essex/components@npm:^3.6.9":
+  version: 3.6.9
+  resolution: "@essex/components@npm:3.6.9"
   dependencies:
     "@essex/styled-components": ^0.0.8
     "@essex/toolbox": ^3.0.13
@@ -2362,7 +2201,7 @@ __metadata:
       optional: true
     styled-components:
       optional: true
-  checksum: 4c3bfad20dd4d00b34e78a4594accf5f52b863cf0285d7a7fa3b24b50c3b05f096c2bbf85d5d2c5ffd2e152f0a176d333ecad03ea68920d1b3cdff962def36ff
+  checksum: 07c6266cbc05bb7aa81dde5e10fdbb1611ed6fa4700526ac98b1c656e66461d47fb5d761bf7fb00d60405cff80fcbf3a9c2c9fff4b29897cf507e9fe647ae1d6
   languageName: node
   linkType: hard
 
@@ -2413,18 +2252,30 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@essex/hooks@npm:^4.0.15":
-  version: 4.0.15
-  resolution: "@essex/hooks@npm:4.0.15"
+"@essex/hooks@npm:^4.0.17":
+  version: 4.0.17
+  resolution: "@essex/hooks@npm:4.0.17"
   dependencies:
-    "@essex/toolbox": ^3.0.11
+    "@essex/toolbox": ^3.0.13
     lodash-es: ^4.17.21
   peerDependencies:
     "@types/node": "*"
     "@types/react": "*"
     "@types/react-dom": "*"
     react: ">= 18"
-  checksum: 75801a64a982e7287d3f2a9e7133c82a1584da31ea8bdc21d1f848f092dc37d757f93f81cf85cd4db2b44b7de937338378068d4a785cb5a9a32e30646fa46121
+    react-dom: ^18.2.0
+  peerDependenciesMeta:
+    "@type/node":
+      optional: true
+    "@types/react":
+      optional: true
+    "@types/react-dom":
+      optional: true
+    react:
+      optional: false
+    react-dom:
+      optional: true
+  checksum: 2e1fa2bcef35259f9df1c8f2bc961df004eca154f3bd9bbbffbd40732d695f1189c77f1314833119e4e61a674a01b63a238b7dfab078ce5408f58973eafdba60
   languageName: node
   linkType: hard
 
@@ -2451,27 +2302,6 @@ __metadata:
   version: 18.0.5
   resolution: "@essex/prettier-config@npm:18.0.5"
   checksum: 80c92335b9ce6451243d495bb6aecf8af7e98e74feda5afd621212a57513d7eb68f7af9f071bf15d0c69c6901677e20c9588544cc6ab496e6aadb0f00e0d9034
-  languageName: node
-  linkType: hard
-
-"@essex/react-animate-height@npm:^2.1.4":
-  version: 2.1.4
-  resolution: "@essex/react-animate-height@npm:2.1.4"
-  dependencies:
-    classnames: ^2.3.1
-    prop-types: ^15.8.1
-  peerDependencies:
-    "@types/prop-types": ">15"
-    "@types/react": ">16"
-    react: ">=15.6.2"
-  peerDependenciesMeta:
-    "@types/prop-types":
-      optional: true
-    "@types/react":
-      optional: true
-    react:
-      optional: false
-  checksum: 6730118efd57185f3c48fd1da45a4bd73b88d784ccd7cac12625f7dd2f4374613d9976e3bd6e2293f1a609861d69fc9fd870bb788bd817580e5dd5014d1f887c
   languageName: node
   linkType: hard
 
@@ -2559,15 +2389,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@essex/styled-components@npm:^0.0.6":
-  version: 0.0.6
-  resolution: "@essex/styled-components@npm:0.0.6"
-  peerDependencies:
-    styled-components: ">= 5"
-  checksum: e79f2e0ec421c03f63d426dfba8dbdf908d1c57e04c83906e8233bf63331afee507ce137caaf73c1680bb82ae882a2c8a0692d08370b9c08da82e3b283067e9f
-  languageName: node
-  linkType: hard
-
 "@essex/styled-components@npm:^0.0.8":
   version: 0.0.8
   resolution: "@essex/styled-components@npm:0.0.8"
@@ -2588,13 +2409,6 @@ __metadata:
     lodash: ^4.17.21
     tslib: ^2.4.1
   checksum: 2a792afff04595fc000013d2bf07854327da10cc5ac5e956e5f68d8523041f19c828bc431c4f748f256f59a4c3042e08deabc59a6d44b327a275bf1bb1493886
-  languageName: node
-  linkType: hard
-
-"@essex/toolbox@npm:^3.0.11":
-  version: 3.0.11
-  resolution: "@essex/toolbox@npm:3.0.11"
-  checksum: 929e09849f34d5e65c19044879c509c01c46ca6935f36efc57cfa542080425b5ef275bd4e9eec5b3846b34d2958060627b7ee824e7f2c69db0fc2bcb58823b58
   languageName: node
   linkType: hard
 
@@ -2683,7 +2497,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fluentui/font-icons-mdl2@npm:^8.5.5, @fluentui/font-icons-mdl2@npm:^8.5.6":
+"@fluentui/font-icons-mdl2@npm:^8.5.6":
   version: 8.5.6
   resolution: "@fluentui/font-icons-mdl2@npm:8.5.6"
   dependencies:
@@ -2818,9 +2632,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fluentui/react@npm:^8.104.5":
-  version: 8.104.5
-  resolution: "@fluentui/react@npm:8.104.5"
+"@fluentui/react@npm:^8.104.6":
+  version: 8.104.6
+  resolution: "@fluentui/react@npm:8.104.6"
   dependencies:
     "@fluentui/date-time-utilities": ^8.5.4
     "@fluentui/font-icons-mdl2": ^8.5.6
@@ -2841,7 +2655,7 @@ __metadata:
     "@types/react-dom": ">=16.8.0 <19.0.0"
     react: ">=16.8.0 <19.0.0"
     react-dom: ">=16.8.0 <19.0.0"
-  checksum: 897581d2d73c86bd1296df96fe41fbc4d3f19804c758727079aad8ed5d701b07431aae3ec5c59af52a882ec7ff36aa1adee228096cc656d344c1d181a134e86f
+  checksum: fcb78a930b2cc4caf3853681102ac945935644f35260035c713ab88bb5df02ae80b60515c8dabcfd138e7c5c7bc8a8342e2e837113bb693550e489dde0da5471
   languageName: node
   linkType: hard
 
@@ -2900,7 +2714,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fluentui/utilities@npm:^8.13.4, @fluentui/utilities@npm:^8.13.5":
+"@fluentui/utilities@npm:^8.13.5":
   version: 8.13.5
   resolution: "@fluentui/utilities@npm:8.13.5"
   dependencies:
@@ -3825,26 +3639,26 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/app-common@workspace:javascript/app-common"
   dependencies:
-    "@datashaper/app-framework": 0.1.3
-    "@datashaper/react": ^20.0.1
-    "@datashaper/schema": ^9.0.0
-    "@datashaper/tables": ^6.0.0
-    "@datashaper/utilities": ^2.4.0
+    "@datashaper/app-framework": 0.2.0
+    "@datashaper/react": ^20.0.4
+    "@datashaper/schema": ^9.0.1
+    "@datashaper/tables": ^6.1.0
+    "@datashaper/utilities": ^2.4.1
     "@datashaper/workflow": ^22.0.2
-    "@essex/components": ^3.5.3
+    "@essex/components": ^3.6.9
     "@essex/scripts": ^22.2.1
-    "@fluentui/react": ^8.104.5
+    "@fluentui/react": ^8.104.6
     "@fluentui/react-hooks": ^8.6.15
-    "@thematic/core": ^4.0.3
-    "@thematic/d3": ^2.0.18
-    "@thematic/fluent": ^5.0.4
-    "@thematic/react": ^2.1.5
+    "@thematic/core": ^4.0.4
+    "@thematic/d3": ^2.0.19
+    "@thematic/fluent": ^5.0.5
+    "@thematic/react": ^2.1.6
     "@types/react": ^18.0.26
     "@types/react-dom": ^18.0.10
     "@types/react-is": ^17.0.3
     "@types/styled-components": ^5.1.26
     ahooks: ^3.7.4
-    allotment: 1.17.0
+    allotment: 1.17.1
     arquero: ^5.1.0
     normalize.css: ^8.0.1
     observable-hooks: ^4.2.1
@@ -3865,30 +3679,30 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/discover-app@workspace:javascript/app-discover"
   dependencies:
-    "@datashaper/app-framework": 0.1.3
-    "@datashaper/react": ^20.0.1
-    "@datashaper/schema": ^9.0.0
-    "@datashaper/tables": ^6.0.0
-    "@datashaper/utilities": ^2.4.0
+    "@datashaper/app-framework": 0.2.0
+    "@datashaper/react": ^20.0.4
+    "@datashaper/schema": ^9.0.1
+    "@datashaper/tables": ^6.1.0
+    "@datashaper/utilities": ^2.4.1
     "@datashaper/workflow": ^22.0.2
     "@essex-js-toolkit/hooks": ^4.0.3
-    "@essex/components": ^3.5.3
-    "@essex/hooks": ^4.0.15
+    "@essex/components": ^3.6.9
+    "@essex/hooks": ^4.0.17
     "@essex/scripts": ^22.2.1
     "@essex/vite-config": ^19.0.16
     "@essex/webpack-config": ^21.0.10
     "@fluentui/font-icons-mdl2": ^8.5.6
-    "@fluentui/react": ^8.104.5
+    "@fluentui/react": ^8.104.6
     "@fluentui/react-hooks": ^8.6.15
     "@fluentui/react-icons-mdl2": ^1.3.29
     "@fluentui/utilities": ^8.13.5
     "@reduxjs/toolkit": ^1.9.1
     "@showwhy/app-common": "workspace:^"
-    "@thematic/core": ^4.0.3
-    "@thematic/d3": ^2.0.18
-    "@thematic/fluent": ^5.0.4
-    "@thematic/react": ^2.1.5
-    "@thematic/vega": ^3.0.3
+    "@thematic/core": ^4.0.4
+    "@thematic/d3": ^2.0.19
+    "@thematic/fluent": ^5.0.5
+    "@thematic/react": ^2.1.6
+    "@thematic/vega": ^3.0.4
     "@types/cytoscape": ^3.19.9
     "@types/file-saver": ^2.0.5
     "@types/lodash": ^4.14.191
@@ -3903,7 +3717,7 @@ __metadata:
     "@types/uuid": ^9.0.0
     "@uifabric/icons": ^7.9.5
     ahooks: ^3.7.4
-    allotment: 1.17.0
+    allotment: 1.17.1
     arquero: ^5.1.0
     babel-plugin-transform-import-meta: ^2.2.0
     cytoscape: ^3.23.0
@@ -3956,24 +3770,24 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/event-analysis-app@workspace:javascript/app-event-analysis"
   dependencies:
-    "@datashaper/app-framework": 0.1.3
-    "@datashaper/schema": ^9.0.0
+    "@datashaper/app-framework": 0.2.0
+    "@datashaper/schema": ^9.0.1
     "@datashaper/workflow": ^22.0.2
-    "@essex/components": ^3.5.3
-    "@essex/hooks": ^4.0.15
+    "@essex/components": ^3.6.9
+    "@essex/hooks": ^4.0.17
     "@essex/scripts": ^22.2.1
     "@essex/webpack-config": ^21.0.10
     "@fluentui/font-icons-mdl2": ^8.5.6
-    "@fluentui/react": ^8.104.5
+    "@fluentui/react": ^8.104.6
     "@fluentui/react-hooks": ^8.6.15
     "@fluentui/utilities": ^8.13.5
     "@reduxjs/toolkit": ^1.9.1
     "@showwhy/app-common": "workspace:^"
     "@storybook/react": ^6.5.15
-    "@thematic/core": ^4.0.3
-    "@thematic/d3": ^2.0.18
-    "@thematic/fluent": ^5.0.4
-    "@thematic/react": ^2.1.5
+    "@thematic/core": ^4.0.4
+    "@thematic/d3": ^2.0.19
+    "@thematic/fluent": ^5.0.5
+    "@thematic/react": ^2.1.6
     "@types/d3": ^7.4.0
     "@types/lodash": ^4.14.191
     "@types/lodash-es": ^4.17.6
@@ -4010,27 +3824,27 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/model-exposure-app@workspace:javascript/app-model-exposure"
   dependencies:
-    "@datashaper/app-framework": 0.1.3
-    "@datashaper/react": ^20.0.1
-    "@datashaper/schema": ^9.0.0
-    "@datashaper/tables": ^6.0.0
-    "@datashaper/utilities": ^2.4.0
+    "@datashaper/app-framework": 0.2.0
+    "@datashaper/react": ^20.0.4
+    "@datashaper/schema": ^9.0.1
+    "@datashaper/tables": ^6.1.0
+    "@datashaper/utilities": ^2.4.1
     "@datashaper/workflow": ^22.0.2
-    "@essex/components": ^3.5.3
-    "@essex/hooks": ^4.0.15
+    "@essex/components": ^3.6.9
+    "@essex/hooks": ^4.0.17
     "@essex/scripts": ^22.2.1
     "@essex/webpack-config": ^21.0.10
     "@fluentui/font-icons-mdl2": ^8.5.6
-    "@fluentui/react": ^8.104.5
+    "@fluentui/react": ^8.104.6
     "@fluentui/react-hooks": ^8.6.15
     "@fluentui/utilities": ^8.13.5
     "@reduxjs/toolkit": ^1.9.1
     "@showwhy/app-common": "workspace:^"
-    "@thematic/core": ^4.0.3
-    "@thematic/d3": ^2.0.18
-    "@thematic/fluent": ^5.0.4
-    "@thematic/react": ^2.1.5
-    "@thematic/vega": ^3.0.3
+    "@thematic/core": ^4.0.4
+    "@thematic/d3": ^2.0.19
+    "@thematic/fluent": ^5.0.5
+    "@thematic/react": ^2.1.6
+    "@thematic/vega": ^3.0.4
     "@types/d3-fetch": ^3.0.2
     "@types/lodash": ^4.14.191
     "@types/lodash-es": ^4.17.6
@@ -4079,7 +3893,7 @@ __metadata:
     "@essex/scripts": ^22.2.1
     "@essex/tsconfig-base": ^1.0.2
     "@fluentui/font-icons-mdl2": ^8.5.6
-    "@fluentui/react": ^8.104.5
+    "@fluentui/react": ^8.104.6
     "@mdx-js/react": ^1.6.22
     "@open-wc/webpack-import-meta-loader": ^0.4.7
     "@showwhy/event-analysis-app": "workspace:^"
@@ -4092,9 +3906,9 @@ __metadata:
     "@storybook/manager-webpack4": ^6.5.15
     "@storybook/react": ^6.5.15
     "@storybook/testing-library": ^0.0.13
-    "@thematic/core": ^4.0.3
-    "@thematic/fluent": ^5.0.4
-    "@thematic/react": ^2.1.5
+    "@thematic/core": ^4.0.4
+    "@thematic/fluent": ^5.0.5
+    "@thematic/react": ^2.1.6
     "@types/styled-components": ^5.1.26
     babel-loader: ^9.1.2
     hsluv: ^1.0.0
@@ -4109,27 +3923,27 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/webapp@workspace:javascript/webapp"
   dependencies:
-    "@datashaper/app-framework": 0.1.3
-    "@datashaper/schema": ^9.0.0
-    "@datashaper/tables": ^6.0.0
-    "@datashaper/utilities": ^2.4.0
+    "@datashaper/app-framework": 0.2.0
+    "@datashaper/schema": ^9.0.1
+    "@datashaper/tables": ^6.1.0
+    "@datashaper/utilities": ^2.4.1
     "@datashaper/workflow": ^22.0.2
-    "@essex/components": ^3.5.3
-    "@essex/hooks": ^4.0.15
+    "@essex/components": ^3.6.9
+    "@essex/hooks": ^4.0.17
     "@essex/scripts": ^22.2.1
     "@essex/webpack-config": ^21.0.10
     "@fluentui/font-icons-mdl2": ^8.5.6
-    "@fluentui/react": ^8.104.5
+    "@fluentui/react": ^8.104.6
     "@fluentui/react-hooks": ^8.6.15
     "@fluentui/utilities": ^8.13.5
     "@showwhy/app-common": "workspace:^"
     "@showwhy/discover-app": "workspace:^"
     "@showwhy/event-analysis-app": "workspace:^"
     "@showwhy/model-exposure-app": "workspace:^"
-    "@thematic/core": ^4.0.3
-    "@thematic/d3": ^2.0.18
-    "@thematic/fluent": ^5.0.4
-    "@thematic/react": ^2.1.5
+    "@thematic/core": ^4.0.4
+    "@thematic/d3": ^2.0.19
+    "@thematic/fluent": ^5.0.5
+    "@thematic/react": ^2.1.6
     "@types/lodash": ^4.14.191
     "@types/lodash-es": ^4.17.6
     "@types/node": ^18.11.18
@@ -4140,7 +3954,7 @@ __metadata:
     "@types/styled-components": ^5.1.26
     "@uifabric/icons": ^7.9.5
     ahooks: ^3.7.4
-    allotment: 1.17.0
+    allotment: 1.17.1
     arquero: ^5.1.0
     file-loader: ^6.2.0
     html-webpack-plugin: ^5.5.0
@@ -5544,9 +5358,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@thematic/color@npm:^4.0.3":
-  version: 4.0.3
-  resolution: "@thematic/color@npm:4.0.3"
+"@thematic/color@npm:^4.0.4":
+  version: 4.0.4
+  resolution: "@thematic/color@npm:4.0.4"
   dependencies:
     chroma-js: ^2.4.2
     color-blind: ^0.1.3
@@ -5559,15 +5373,15 @@ __metadata:
       optional: true
     "@types/node":
       optional: true
-  checksum: ad845261d9a0b5b1493fe82674a207c4d40958dadda92b8cfc58a0600406faaeb600f895ca7dbe729ef37692d294c161771e9c692e5d4b66e845815c97b69a3c
+  checksum: 0a35bc88906b53784028e335d18faec2dee63ed176a68d37616d3e70a254728ff5cb22dcb8b763c35f9d1f310e4f8b69cb66492b48e7a32a7901fb0edc22cc67
   languageName: node
   linkType: hard
 
-"@thematic/core@npm:^4.0.3":
-  version: 4.0.3
-  resolution: "@thematic/core@npm:4.0.3"
+"@thematic/core@npm:^4.0.4":
+  version: 4.0.4
+  resolution: "@thematic/core@npm:4.0.4"
   dependencies:
-    "@thematic/color": ^4.0.3
+    "@thematic/color": ^4.0.4
     d3-scale: ^4.0.2
     lodash-es: ^4.17.21
     murmurhash-js: ^1.0.0
@@ -5579,17 +5393,15 @@ __metadata:
       optional: true
     "@types/node":
       optional: true
-  checksum: f9047c1bf7bdc0a60a5b3a38f5f527918833182181e110cdd6315066b7b7b5fd6f9c14853aef0ec96cf71d619cd6494fb10253db9136722f316ddcfed8d1141f
+  checksum: 1c37c667a24a5d214027c0f1dad7b6969a0508d4fbaf3c9dfbfd90ae6bcf04af6a26e4f92791eb917c0688b20ceecf24b92cfbe844dbdf6f9753599c29fd0703
   languageName: node
   linkType: hard
 
-"@thematic/d3@npm:^2.0.18":
-  version: 2.0.18
-  resolution: "@thematic/d3@npm:2.0.18"
+"@thematic/d3@npm:^2.0.19":
+  version: 2.0.19
+  resolution: "@thematic/d3@npm:2.0.19"
   dependencies:
-    "@thematic/core": ^4.0.3
-    d3-axis: ^3.0.0
-    d3-selection: ^3.0.0
+    "@thematic/core": ^4.0.4
   peerDependencies:
     "@types/d3-axis": ">= 1"
     "@types/d3-selection": ">= 1"
@@ -5601,24 +5413,24 @@ __metadata:
       optional: true
     "@types/node":
       optional: true
-  checksum: 203eaa17169e4409857b8dedac6c25fde1cef1c80e2265feeb59ded492993ba0b14534437916a59749bc834072fdb6b09a07ecd3021527ceb96cd96935c8f865
+  checksum: 98cd564fdc6e2563e6034b4f6aaf6f3fb6c07bbc115bf3efa7c78b3b41f72a429e9c15a96a6b7795b68c8af63e72c8fcc7a21e95dc766fd30356e99a090c0752
   languageName: node
   linkType: hard
 
-"@thematic/fluent@npm:^5.0.4":
-  version: 5.0.4
-  resolution: "@thematic/fluent@npm:5.0.4"
+"@thematic/fluent@npm:^5.0.5":
+  version: 5.0.5
+  resolution: "@thematic/fluent@npm:5.0.5"
   dependencies:
-    "@essex/components": ^3.5.2
-    "@thematic/color": ^4.0.3
-    "@thematic/core": ^4.0.3
-    "@thematic/d3": ^2.0.18
+    "@essex/components": ^3.6.2
+    "@thematic/color": ^4.0.4
+    "@thematic/core": ^4.0.4
+    "@thematic/d3": ^2.0.19
     ahooks: ^3.7.4
     d3-scale: ^4.0.2
     lodash-es: ^4.17.21
   peerDependencies:
     "@fluentui/react": ">= 8"
-    "@thematic/react": ^2.1.5
+    "@thematic/react": ^2.1.6
     "@types/node": "*"
     "@types/react": ">= 17"
     react: ">= 17"
@@ -5631,16 +5443,16 @@ __metadata:
       optional: true
     react:
       optional: false
-  checksum: 25ff3b333aa58d84ae034936ca268a7c02544b4b3a6b2da723ca24203b9e37a649631d185e69b81d9d9d86be000cd16807d65a6439a40c8934166e0969ea4ce4
+  checksum: b8384b11538c4042a276a3ef778221232d4e88a2316942944a9c645db6a14963ec92181deac8f4f6a07ffa23312a668014e6111aae598e2158583b2002f9d528
   languageName: node
   linkType: hard
 
-"@thematic/react@npm:^2.1.5":
-  version: 2.1.5
-  resolution: "@thematic/react@npm:2.1.5"
+"@thematic/react@npm:^2.1.6":
+  version: 2.1.6
+  resolution: "@thematic/react@npm:2.1.6"
   dependencies:
-    "@thematic/color": ^4.0.3
-    "@thematic/core": ^4.0.3
+    "@thematic/color": ^4.0.4
+    "@thematic/core": ^4.0.4
   peerDependencies:
     "@types/node": "*"
     "@types/react": ">= 17"
@@ -5652,22 +5464,22 @@ __metadata:
       optional: true
     react:
       optional: false
-  checksum: 641d5e32c53f5ffcf0b84a3ae6766fe7f68dae7cc849a9bb3dd7f4b0ed8aeee6884d2c99e8ffdaf4800a22db59a68155f7371436f9757043d4ad658c05e5dbc8
+  checksum: ea5fc96fce624c85da2b3a842d9db2043b205cc4a170e0ab8f039a73dfda82e85c26f611758c6e5bb9a8f18e04a87981f98a77972a91e49b03ac9d0913705836
   languageName: node
   linkType: hard
 
-"@thematic/vega@npm:^3.0.3":
-  version: 3.0.3
-  resolution: "@thematic/vega@npm:3.0.3"
+"@thematic/vega@npm:^3.0.4":
+  version: 3.0.4
+  resolution: "@thematic/vega@npm:3.0.4"
   dependencies:
-    "@thematic/core": ^4.0.3
+    "@thematic/core": ^4.0.4
     lodash-es: ^4.17.21
   peerDependencies:
     vega: 5
   peerDependenciesMeta:
     vega:
       optional: false
-  checksum: 4967d8f477a8f565156176208f68705f947ca9a50fa7c6a96eba6f40110a109c00a5565016a28c73a73ab98849d4f6b3d273470368b7775eef35922b40db5357
+  checksum: 2597fa3b7ddbefdf8361aff0fe2de8bb078d0d98141b6ed898cda3592b967f420493275c6bd7257db864cba42a9be55ff0fa0ccbde8576168cea1d35447bd489
   languageName: node
   linkType: hard
 
@@ -7365,13 +7177,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@zip.js/zip.js@npm:2.6.61":
-  version: 2.6.61
-  resolution: "@zip.js/zip.js@npm:2.6.61"
-  checksum: 9bc95b49f1f48369d28b3a77e17376e9dab81880b0ad6fe27466ddc25e4aabbe8f176b404b59e6b888d4f2a96d64d41ee6212cae65b05c71712cd9c923eabcb1
-  languageName: node
-  linkType: hard
-
 "@zip.js/zip.js@npm:2.6.62":
   version: 2.6.62
   resolution: "@zip.js/zip.js@npm:2.6.62"
@@ -7624,6 +7429,23 @@ __metadata:
     react: ^17.0.0 || ^18.0.0
     react-dom: ^17.0.0 || ^18.0.0
   checksum: 0ad579a514ca98099b3630aad540df14042610a6da8439f6a7ea7815f87c4f5a9c4ecce3a10779d67c8adaf5b2245880242b92e2f1570691e0c5b20d2c68959b
+  languageName: node
+  linkType: hard
+
+"allotment@npm:1.17.1":
+  version: 1.17.1
+  resolution: "allotment@npm:1.17.1"
+  dependencies:
+    classnames: ^2.3.0
+    eventemitter3: ^4.0.0
+    lodash.clamp: ^4.0.0
+    lodash.debounce: ^4.0.0
+    lodash.isequal: ^4.5.0
+    use-resize-observer: ^9.0.0
+  peerDependencies:
+    react: ^17.0.0 || ^18.0.0
+    react-dom: ^17.0.0 || ^18.0.0
+  checksum: 2e63a86875c98737befc4d82252f43f279874c91fd039cf2dc62fbaf8522cfb9687c2d2db8c802242131c630ce8a55de2ad04886c277434505d9b8cdeb0d2cd0
   languageName: node
   linkType: hard
 
@@ -14204,7 +14026,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"immer@npm:^9.0.16, immer@npm:^9.0.17":
+"immer@npm:^9.0.16":
   version: 9.0.17
   resolution: "immer@npm:9.0.17"
   checksum: 046d562b74f050632d2861042dbcad49a5e86ffe5bb9b8bff6e699b1c7d8478019d9a3be61e72117cecc29826d2caa4fa927a7e10262381144dd33c735b9531c
