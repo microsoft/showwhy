@@ -17,7 +17,7 @@ import { ReportGenerator } from './ReportGenerator.js'
 import { getCausalRelationship, isCategorical } from './reportUtils.js'
 
 export class DECIReportGenerator extends ReportGenerator {
-	generateRelationshipRow(
+	getRelationshipRow(
 		relationship: Relationship,
 		selectedCausalDiscoveryAlgorithm: CausalDiscoveryAlgorithm,
 		correlations: RelationshipWithWeight[],

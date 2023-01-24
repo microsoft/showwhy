@@ -7,13 +7,13 @@ import type { CausalDiscoveryAlgorithm } from '../../domain/CausalDiscovery/Caus
 import type { EdgeReportRow } from '../../domain/EdgeReportRow'
 import type {
 	Relationship,
-	RelationshipWithWeight,
+	RelationshipWithWeight
 } from '../../domain/Relationship.js'
 import { correlationForVariables } from '../Correlation.js'
 import { ReportGenerator } from './ReportGenerator.js'
 
 export class PCReportGenerator extends ReportGenerator {
-	generateRelationshipRow(
+	getRelationshipRow(
 		relationship: Relationship,
 		selectedCausalDiscoveryAlgorithm: CausalDiscoveryAlgorithm,
 		correlations: RelationshipWithWeight[],
