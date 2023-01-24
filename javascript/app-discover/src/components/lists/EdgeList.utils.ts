@@ -2,10 +2,6 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-/*!
- * Copyright (c) Microsoft. All rights reserved.
- * Licensed under the MIT license. See LICENSE file in the project.
- */
 import type { CausalDiscoveryConstraints } from '../../domain/CausalDiscovery/CausalDiscoveryConstraints.js'
 import type { Relationship } from '../../domain/Relationship.js'
 import {
@@ -153,4 +149,16 @@ export function hasConstraint(
 		arrayIncludesVariable(allGeneralConstraints, relationship.target) ||
 		arrayIncludesVariable(allGeneralConstraints, relationship.source)
 	)
+}
+
+export function hasAnyConstraint(
+	relationship: Relationship,
+	constraints?: CausalDiscoveryConstraints,
+) {
+	if (!constraints) return false
+	const manualConstraints = Object.values(constraints.manualRelationships)
+	const hasManualConstraint = manualConstraints.some(x =>
+		isEquivalentRelationship(x, relationship),
+	)
+	return hasManualConstraint && hasConstraint(constraints, relationship)
 }

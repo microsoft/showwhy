@@ -12,6 +12,7 @@ import {
 	columnMin,
 	columnMode,
 } from '../utils/Math.js'
+import type { Relationship } from './Relationship.js'
 import type { ColumnNature } from './VariableNature.js'
 import { inferColumnNature, VariableNature } from './VariableNature.js'
 
@@ -72,6 +73,16 @@ export function arrayIncludesVariable(
 	variable: VariableReference,
 ) {
 	return array.some(inModelVariable => isSame(variable, inModelVariable))
+}
+export function arrayIncludesRelationship(
+	array: Array<Relationship>,
+	variable: VariableReference,
+) {
+	return array.some(
+		inModelVariable =>
+			isSame(variable, inModelVariable.source) ||
+			isSame(variable, inModelVariable.target),
+	)
 }
 
 export function inferMissingMetadataForTable(

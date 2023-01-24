@@ -15,6 +15,7 @@ import {
 	NotearsParamsState,
 	PCParamsState,
 } from '../state/atoms/algorithms_params.js'
+import { useDownloadEdges } from '../state/hooks/useCausalEdgesReport.js'
 import {
 	CausalGraphConstraintsState,
 	GraphViewState,
@@ -24,6 +25,7 @@ import {
 	PanelsHiddenState,
 	PersistedInfoState,
 	StraightEdgesState,
+	useCausalGraph,
 } from '../state/index.js'
 import { saveObjectJSON } from '../utils/Save.js'
 import {
@@ -48,6 +50,8 @@ export const MenuBar: React.FC = memo(function MenuBar() {
 	const resetNodePositions = useResetRecoilState(NodePositionsState)
 	const [useStraightEdges, setUseStraightEdges] =
 		useRecoilState(StraightEdgesState)
+	const causalGraph = useCausalGraph()
+
 	const setLoadingState = useSetRecoilState(LoadingState)
 	const [persistedInfo, setPersistedInfo] = useRecoilState(PersistedInfoState)
 	const [
@@ -93,11 +97,14 @@ export const MenuBar: React.FC = memo(function MenuBar() {
 		[loadColumnTable, setLoadingState],
 	)
 
+	const exportEdges = useDownloadEdges(causalGraph)
 	const datasetMenuItems = useDatasetMenuItems(loadTable)
 	const modelMenuItems = useModelMenuItems(
 		saveModel,
 		openCausalModelFileSelector,
 		clearModel,
+		exportEdges,
+		!causalGraph.variables.length,
 	)
 	const viewMenuItems = useViewMenuItems(
 		selectedViewKey,
