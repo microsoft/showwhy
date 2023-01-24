@@ -1,7 +1,7 @@
 {
 	"name": "showwhy",
 	"private": true,
-	"version": "0.0.0",
+	"version": "2.0",
 	"description": "MSR Resilience Causal Platform",
 	"main": "index.js",
 	"repository": "git@ssh.dev.azure.com:v3/msresearch/Resilience/causal-platform",
