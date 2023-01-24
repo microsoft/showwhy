@@ -16,6 +16,8 @@ import { estimatorState } from '../state/estimators.js'
 import { primarySpecificationConfigState } from '../state/primarySpecificationConfig.js'
 import { projectNameState } from '../state/projectName.js'
 import { selectedTableNameState } from '../state/selectedDataPackage.js'
+import type { Definition } from '../types/experiments/Definition.js'
+import { DefinitionType } from '../types/experiments/DefinitionType.js'
 import type { ExposureResource } from './ExposureResource.js'
 
 export const ExposureAppRoot: React.FC<{
@@ -34,14 +36,15 @@ export const ExposureAppRoot: React.FC<{
 })
 
 function loadState(resource: ExposureResource, { set }: MutableSnapshot) {
-	const ensureId = (f: any, index: number) => ({ ...f, id: f.id ?? v4() })
+	const ensureId = (f: any) => ({ ...f, id: f.id ?? v4() })
+	const setDefault = setDefaultDefinitions(resource.definitions)
 
 	set(projectNameState, resource.projectName)
 	set(causalFactorsState, resource.causalFactors.map(ensureId))
 	set(defaultDatasetResultState, resource.defaultResult)
 	set(estimatorState, resource.estimators)
 	set(primarySpecificationConfigState, resource.primarySpecification)
-	set(definitionsState, resource.definitions.map(ensureId))
+	set(definitionsState, resource.definitions.map(ensureId).map(setDefault))
 	set(causalQuestionState, resource.question)
 	set(selectedTableNameState, resource.selectedTableName)
 }
@@ -60,4 +63,36 @@ function saveState(resource: ExposureResource, snap: Snapshot) {
 	resource.question = snap.getLoadable(causalQuestionState).getValue()
 	resource.selectedTableName =
 		snap.getLoadable(selectedTableNameState).getValue() ?? ''
+}
+
+function setDefaultDefinitions(definitions: Definition[]) {
+	const populationDefault = definitions.find(
+		d => d.default && d.type === DefinitionType.Population,
+	)
+	const outcomeDefault = definitions.find(
+		d => d.default && d.type === DefinitionType.Outcome,
+	)
+	const exposureDefault = definitions.find(
+		d => d.default && d.type === DefinitionType.Exposure,
+	)
+	const populationIndex = definitions.findIndex(
+		d => d.type === DefinitionType.Population,
+	)
+	const outcomeIndex = definitions.findIndex(
+		d => d.type === DefinitionType.Outcome,
+	)
+	const exposureIndex = definitions.findIndex(
+		d => d.type === DefinitionType.Exposure,
+	)
+
+	return (d: Definition, index: number) => {
+		return {
+			...d,
+			default:
+				d.default ||
+				(!populationDefault && index === populationIndex) ||
+				(!outcomeDefault && index === outcomeIndex) ||
+				(!exposureDefault && index === exposureIndex),
+		}
+	}
 }
