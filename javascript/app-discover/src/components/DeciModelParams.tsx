@@ -12,7 +12,10 @@ import {
 } from '@fluentui/react'
 import { memo } from 'react'
 
-import type { DECIModelOptions, DECIParams } from '../domain/Algorithms/DECI.js'
+import type {
+	DECIAlgorithmParams,
+	DECIModelOptions,
+} from '../domain/Algorithms/DECI.js'
 import {
 	advancedModelBooleanOptions,
 	advancedModelModeAdjacencyChoiceOptions,
@@ -33,7 +36,7 @@ import {
 import type { onChangeBooleanFn, onChangeStringFn } from './DeciParams.types.js'
 
 interface DeciModelParamsProps {
-	values: DECIParams
+	values: DECIAlgorithmParams
 	onChangeNumber: onChangeStringFn
 	onChangeBoolean: onChangeBooleanFn
 	onChangeChoiceGroup: onChangeStringFn

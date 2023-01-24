@@ -7,7 +7,7 @@ import { Checkbox, ChoiceGroup, Position, SpinButton } from '@fluentui/react'
 import { memo } from 'react'
 
 import type {
-	DECIParams,
+	DECIAlgorithmParams,
 	DECITrainingOptions,
 } from '../domain/Algorithms/DECI.js'
 import {
@@ -24,7 +24,7 @@ import {
 } from './DeciTrainingParams.constants.js'
 
 interface DeciTrainingParamsProps {
-	values: DECIParams
+	values: DECIAlgorithmParams
 	onChangeNumber: onChangeStringFn
 	onChangeBoolean: onChangeBooleanFn
 	onChangeChoiceGroup: onChangeStringFn

@@ -34,9 +34,10 @@ class DirectLiNGAMRunner(CausalDiscoveryRunner):
         return causal_graph
 
     def _build_labeled_graph(self, prior_knowledge: np.ndarray) -> Any:
-        direct_lingam = DirectLiNGAM(
-            prior_knowledge=prior_knowledge,
-        )
+        logging.info("Running DirectLiNGAM with measure=pwling and thres=0.0")
+
+        # measure parameter is not exposed to the frontend, using measure=pwling
+        direct_lingam = DirectLiNGAM(prior_knowledge=prior_knowledge, measure="pwling")
 
         # we can use thres=0, since the weight filtering will be applied in the frontend
         direct_lingam.learn(self._prepared_data.to_numpy(), thres=0.0)

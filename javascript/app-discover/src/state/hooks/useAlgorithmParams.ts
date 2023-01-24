@@ -5,18 +5,29 @@
 import { useMemo } from 'react'
 import { useRecoilValue } from 'recoil'
 
-import type { DECIParams } from '../../domain/Algorithms/DECI.js'
+import type { AlgorithmParams } from '../../domain/Algorithms/AlgorithmParams.js'
 import { CausalDiscoveryAlgorithm } from '../../domain/CausalDiscovery/CausalDiscoveryAlgorithm.js'
-import { DeciParamsState } from '../atoms/algorithms_params.js'
+import {
+	DeciParamsState,
+	NotearsParamsState,
+	PCParamsState,
+} from '../atoms/algorithms_params.js'
 
 export function useAlgorithmParams(
 	causalDiscoveryAlgorithm: CausalDiscoveryAlgorithm,
-): DECIParams | undefined {
+): AlgorithmParams | undefined {
+	const notearsParams = useRecoilValue(NotearsParamsState)
 	const deciParams = useRecoilValue(DeciParamsState)
+	const pcParams = useRecoilValue(PCParamsState)
 
-	return useMemo((): DECIParams | undefined => {
-		return causalDiscoveryAlgorithm === CausalDiscoveryAlgorithm.DECI
-			? deciParams
-			: undefined
-	}, [deciParams, causalDiscoveryAlgorithm])
+	return useMemo((): AlgorithmParams | undefined => {
+		if (causalDiscoveryAlgorithm === CausalDiscoveryAlgorithm.NOTEARS) {
+			return notearsParams
+		} else if (causalDiscoveryAlgorithm === CausalDiscoveryAlgorithm.DECI) {
+			return deciParams
+		} else if (causalDiscoveryAlgorithm === CausalDiscoveryAlgorithm.PC) {
+			return pcParams
+		}
+		return undefined
+	}, [notearsParams, deciParams, pcParams, causalDiscoveryAlgorithm])
 }

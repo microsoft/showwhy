@@ -24,6 +24,7 @@ export const ContainerAdvancedGrid = styled.div`
 		align-self: flex-end;
 	}
 `
+
 export const ContainerAdvancedCheckbox = styled.div`
 	margin: 10px 0px;
 	display: flex;

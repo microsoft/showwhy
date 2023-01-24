@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-export interface DECIParams {
+export interface DECIAlgorithmParams {
 	model_options?: DECIModelOptions
 	training_options?: DECITrainingOptions
 	ate_options?: DECIAteOptions
@@ -51,8 +51,8 @@ export interface DECIModelOptions {
 }
 
 export interface DECITrainingOptions {
-	max_steps_auglag: number
-	max_auglag_inner_epochs: number
+	max_steps_auglag?: number
+	max_auglag_inner_epochs?: number
 	learning_rate?: number
 	standardize_data_mean?: boolean
 	standardize_data_std?: boolean

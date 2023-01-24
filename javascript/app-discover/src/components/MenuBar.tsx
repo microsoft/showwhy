@@ -10,7 +10,11 @@ import { useFilePicker } from 'use-file-picker'
 
 import type { DatasetDatapackage } from '../domain/Dataset.js'
 import { useDatasetLoader } from '../domain/Dataset.js'
-import { DeciParamsState } from '../state/atoms/algorithms_params.js'
+import {
+	DeciParamsState,
+	NotearsParamsState,
+	PCParamsState,
+} from '../state/atoms/algorithms_params.js'
 import { useDownloadEdges } from '../state/hooks/useCausalEdgesReport.js'
 import {
 	CausalGraphConstraintsState,
@@ -40,7 +44,9 @@ export const MenuBar: React.FC = memo(function MenuBar() {
 	const loadColumnTable = useDatasetLoader()
 	const resetVariables = useResetRecoilState(InModelColumnNamesState)
 	const resetConstraints = useResetRecoilState(CausalGraphConstraintsState)
-	const resetParams = useResetRecoilState(DeciParamsState)
+	const resetNotearsParams = useResetRecoilState(NotearsParamsState)
+	const resetDeciParams = useResetRecoilState(DeciParamsState)
+	const resetPCParams = useResetRecoilState(PCParamsState)
 	const resetNodePositions = useResetRecoilState(NodePositionsState)
 	const [useStraightEdges, setUseStraightEdges] =
 		useRecoilState(StraightEdgesState)
@@ -57,9 +63,18 @@ export const MenuBar: React.FC = memo(function MenuBar() {
 	const clearModel = useCallback(() => {
 		resetVariables()
 		resetConstraints()
-		resetParams()
+		resetNotearsParams()
+		resetDeciParams()
+		resetPCParams()
 		resetNodePositions()
-	}, [resetVariables, resetConstraints, resetParams, resetNodePositions])
+	}, [
+		resetVariables,
+		resetConstraints,
+		resetNotearsParams,
+		resetDeciParams,
+		resetPCParams,
+		resetNodePositions,
+	])
 
 	useEffect(() => {
 		if (causalModelFileContent[0] !== undefined) {
