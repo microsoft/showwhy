@@ -3,6 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import type { ATEDetailsByName } from '../CausalDiscovery/CausalDiscoveryResult.js'
+
 export interface DECIAlgorithmParams {
 	model_options?: DECIModelOptions
 	training_options?: DECITrainingOptions
@@ -71,4 +73,5 @@ export interface DECIAteOptions {
 	Ngraphs?: number
 	Nsamples_per_graph?: number
 	most_likely_graph?: boolean
+	ate_details_by_name?: ATEDetailsByName
 }

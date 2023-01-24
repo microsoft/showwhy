@@ -9,6 +9,8 @@ import type {
 	DECIAlgorithmParams,
 	DECIAteOptions,
 } from '../domain/Algorithms/DECI.js'
+import { DeciATEDetailsParams } from './DeciATEDetailsParams.js'
+import type { onChangeATEDetailsFn } from './DeciATEDetailsParams.types.js'
 import {
 	advancedAteBooleanOptions,
 	advancedAteSpinningOptions,
@@ -24,9 +26,16 @@ interface DeciAteParamsProps {
 	values: DECIAlgorithmParams
 	onChangeNumber: onChangeStringFn
 	onChangeBoolean: onChangeBooleanFn
+	onChangeATEDetails: onChangeATEDetailsFn
 }
+
 export const DeciAteParams: React.FC<DeciAteParamsProps> = memo(
-	function DeciAteParams({ values, onChangeNumber, onChangeBoolean }) {
+	function DeciAteParams({
+		values,
+		onChangeNumber,
+		onChangeBoolean,
+		onChangeATEDetails,
+	}) {
 		return (
 			<Container>
 				<ContainerAdvancedGrid>
@@ -65,6 +74,10 @@ export const DeciAteParams: React.FC<DeciAteParamsProps> = memo(
 						/>
 					))}
 				</ContainerAdvancedCheckbox>
+				<DeciATEDetailsParams
+					ateDetailsByName={values.ate_options?.ate_details_by_name}
+					onChangeATEDetails={onChangeATEDetails}
+				/>
 			</Container>
 		)
 	},

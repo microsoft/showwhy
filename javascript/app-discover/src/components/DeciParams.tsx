@@ -17,6 +17,7 @@ import { DeciAteParams } from './DeciAteParams.js'
 import { DeciModelParams } from './DeciModelParams.js'
 import { defaultTrainingSpinningOptions } from './DeciParams.constants.js'
 import {
+	useOnChangeATEDetails,
 	useOnChangeBooleanOption,
 	useOnChangeCateOption,
 	useOnChangeChoiceGroupOption,
@@ -46,6 +47,7 @@ export const DeciParams: React.FC = memo(function DeciParams() {
 	const onChangeChoiceGroupOption = useOnChangeChoiceGroupOption(setDeciParams)
 	const onChangeNumberListOptions = useOnChangeNumberListOption(setDeciParams)
 	const onChangeCate = useOnChangeCateOption(setDeciParams)
+	const onChangeATEDetails = useOnChangeATEDetails(setDeciParams)
 
 	return (
 		<Container>
@@ -96,6 +98,7 @@ export const DeciParams: React.FC = memo(function DeciParams() {
 						<DeciAteParams
 							onChangeNumber={onChangeNumberOption}
 							onChangeBoolean={onChangeBooleanOption}
+							onChangeATEDetails={onChangeATEDetails}
 							values={deciParams}
 						/>
 					</PivotItem>

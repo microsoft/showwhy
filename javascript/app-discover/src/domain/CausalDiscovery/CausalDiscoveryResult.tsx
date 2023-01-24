@@ -39,9 +39,9 @@ export interface CausalDiscoveryRequestReturnValue {
 }
 
 export interface ATEDetails {
-	reference: number | string
-	intervention: number | string
-	nature: VariableNature
+	reference?: number | string
+	intervention?: number | string
+	nature?: VariableNature
 }
 
 export type ATEDetailsByName = Record<string, ATEDetails>

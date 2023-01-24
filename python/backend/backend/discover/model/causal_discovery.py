@@ -56,9 +56,9 @@ class DatasetStatistics(BaseModel):
 
 
 class ATEDetails(BaseModel):
-    reference: Union[float, str]
-    intervention: Union[float, str]
-    nature: CausalVariableNature
+    reference: Optional[Union[float, str]] = None
+    intervention: Optional[Union[float, str]] = None
+    nature: Optional[CausalVariableNature] = None
 
 
 _causal_var_nature_to_causica_var_type = {
