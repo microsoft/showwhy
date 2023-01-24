@@ -39,3 +39,26 @@ export function useOnChangeStringInObject<T>(
 		[onSetParams],
 	)
 }
+
+export function useAllowEmptyValidation(): (value: string) => string | void {
+	return useCallback((value: string) => {
+		if (value.trim() === '') {
+			return ''
+		}
+		const n = +value
+
+		if (isNaN(n)) {
+			return
+		}
+		return value
+	}, [])
+}
+
+export function spinValueToNumber(
+	newValue: string | undefined,
+): number | undefined {
+	if (newValue !== undefined && newValue !== '') {
+		return +newValue
+	}
+	return
+}

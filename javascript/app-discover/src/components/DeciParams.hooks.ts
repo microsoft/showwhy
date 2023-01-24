@@ -8,6 +8,8 @@ import { useCallback } from 'react'
 import type { SetterOrUpdater } from 'recoil'
 
 import type { DECIAlgorithmParams } from '../domain/Algorithms/DECI.js'
+import type { ATEDetails } from '../domain/CausalDiscovery/CausalDiscoveryResult.js'
+import type { onChangeATEDetailsFn } from './DeciATEDetailsParams.types.js'
 import type { onChangeBooleanFn, onChangeStringFn } from './DeciParams.types.js'
 
 export function useOnChangeNumberOption(
@@ -99,6 +101,26 @@ export function useOnChangeCateOption(
 				model_options: {
 					...curr.model_options,
 					cate_rff_lengthscale: value,
+				},
+			}))
+		},
+		[onSetDeciParams],
+	)
+}
+
+export function useOnChangeATEDetails(
+	onSetDeciParams: SetterOrUpdater<DECIAlgorithmParams>,
+): onChangeATEDetailsFn {
+	return useCallback(
+		(variableName: string, details: ATEDetails) => {
+			onSetDeciParams(curr => ({
+				...curr,
+				ate_options: {
+					...curr.ate_options,
+					ate_details_by_name: {
+						...curr.ate_options?.ate_details_by_name,
+						[variableName]: details,
+					},
 				},
 			}))
 		},
