@@ -71,6 +71,7 @@ class DeciAteOptions(BaseModel):
     Ngraphs: Optional[int] = 1
     Nsamples_per_graph: Optional[int] = 5000
     most_likely_graph: Optional[int] = True
+    ate_details_by_name: dict[str, ATEDetails] = dict()
 
 
 class DeciPayload(CausalDiscoveryPayload):
@@ -201,6 +202,20 @@ class DeciRunner(CausalDiscoveryRunner):
             std = train_data[var.name].std()
             return (mean + std, mean - std)
 
+    def _get_or_infer_intervention_reference_values(
+        self, train_data: pd.DataFrame, var: Variable
+    ) -> Tuple[float, float]:
+        intervention, reference = self._infer_intervention_reference_values(train_data, var)
+        provided_ate_details = self._ate_options.ate_details_by_name.get(var.name, None)
+
+        if provided_ate_details is not None:
+            if isinstance(provided_ate_details.intervention, (int, float)):
+                intervention = provided_ate_details.intervention
+            if isinstance(provided_ate_details.reference, (int, float)):
+                reference = provided_ate_details.reference
+
+        return (intervention, reference)
+
     def _apply_group_mask_to_ate_array(self, ate_array: np.ndarray, group_mask: np.ndarray):
         # categorical columns are one-hot encoded, so we apply the mask to
         # go back to the same dimensionality in the original data
@@ -213,7 +228,7 @@ class DeciRunner(CausalDiscoveryRunner):
         n_variables = train_data.shape[1]
         progress_step = ATE_CALC_PROGRESS_PROPORTION / n_variables
 
-        ate_details_by_name = dict()
+        used_ate_details_by_name = dict()
 
         if self._ate_options.most_likely_graph and self._ate_options.Ngraphs != 1:
             logging.warning("Adjusting Ngraphs parameter to 1 because most_likely_graph is set to true")
@@ -224,9 +239,9 @@ class DeciRunner(CausalDiscoveryRunner):
             (
                 intervention_value,
                 reference_value,
-            ) = self._infer_intervention_reference_values(train_data, variable)
+            ) = self._get_or_infer_intervention_reference_values(train_data, variable)
 
-            ate_details_by_name[variable.name] = ATEDetails(
+            used_ate_details_by_name[variable.name] = ATEDetails(
                 reference=reference_value,
                 intervention=intervention_value,
                 nature=self._nature_by_variable[variable.name],
@@ -248,7 +263,7 @@ class DeciRunner(CausalDiscoveryRunner):
 
             self._report_progress((TRAINING_PROGRESS_PROPORTION + ((variable_index + 1) * progress_step)) * 100.0)
 
-        return np.stack(ate_matrix), ate_details_by_name
+        return np.stack(ate_matrix), used_ate_details_by_name
 
     def _build_labeled_graph(
         self,
@@ -293,7 +308,7 @@ class DeciRunner(CausalDiscoveryRunner):
 
         adj_matrix = self._get_adj_matrix(deci_model)
 
-        ate_matrix, ate_details_by_name = self._compute_average_treatment_effect(deci_model, train_data)
+        ate_matrix, used_ate_details_by_name = self._compute_average_treatment_effect(deci_model, train_data)
 
         deci_model.eval()
 
@@ -306,7 +321,7 @@ class DeciRunner(CausalDiscoveryRunner):
             columns=self._get_column_names(),
             is_dag=bool(self._is_dag),
             intervention_model_id=intervention_model.id,
-            ate_details_by_name=ate_details_by_name,
+            ate_details_by_name=used_ate_details_by_name,
         )
 
         intervention_model.save()
