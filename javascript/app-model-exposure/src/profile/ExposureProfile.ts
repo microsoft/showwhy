@@ -2,7 +2,6 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import content from '@showwhy/guidance'
 import type {
 	AppProfileInitializationContext,
 	ProfilePlugin,
@@ -10,6 +9,7 @@ import type {
 import { CommandBarSection } from '@datashaper/app-framework'
 import type { DataPackage } from '@datashaper/workflow'
 import type { IContextualMenuItem } from '@fluentui/react'
+import content from '@showwhy/guidance'
 
 import { EXPOSURE_PROFILE } from './constants.js'
 import { ExposureAppRoot } from './ExposureAppRoot.js'

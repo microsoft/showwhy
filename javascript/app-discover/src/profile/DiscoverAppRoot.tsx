@@ -2,8 +2,9 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import type { AppServices } from '@datashaper/app-framework'
 import { RecoilBasedProfileHost } from '@datashaper/app-framework'
-import { memo, Suspense } from 'react'
+import { memo, Suspense, useEffect } from 'react'
 import type { MutableSnapshot, Snapshot } from 'recoil'
 
 import { CauseDis } from '../components/CauseDis.js'
@@ -36,24 +37,26 @@ import {
 } from '../state/index.js'
 import type { DiscoverResource } from './DiscoverResource.js'
 
-export const DiscoverAppRoot: React.FC<{ resource: DiscoverResource }> = memo(
-	function DiscoverAppRoot({ resource }) {
-		return (
-			<RecoilBasedProfileHost
-				resource={resource}
-				loadState={loadState}
-				saveState={saveState}
-			>
-				<CauseDisErrorBoundary>
-					<Suspense fallback={null}>
-						<CauseDisHooks />
-					</Suspense>
-					<CauseDis />
-				</CauseDisErrorBoundary>
-			</RecoilBasedProfileHost>
-		)
-	},
-)
+export const DiscoverAppRoot: React.FC<{
+	resource: DiscoverResource
+	api: AppServices
+}> = memo(function DiscoverAppRoot({ resource, api }) {
+	useEffect(() => api.requestHelp('discover'), [api])
+	return (
+		<RecoilBasedProfileHost
+			resource={resource}
+			loadState={loadState}
+			saveState={saveState}
+		>
+			<CauseDisErrorBoundary>
+				<Suspense fallback={null}>
+					<CauseDisHooks />
+				</Suspense>
+				<CauseDis />
+			</CauseDisErrorBoundary>
+		</RecoilBasedProfileHost>
+	)
+})
 
 const CauseDisHooks: React.FC = memo(function CauseDisHooks() {
 	useRehydrateRecoil()

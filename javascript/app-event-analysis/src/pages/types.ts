@@ -3,7 +3,6 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import type { AppServices } from '@datashaper/app-framework'
-
-export interface ExposurePageProps {
-    api: AppServices
+export interface EventPageProps {
+	api: AppServices
 }

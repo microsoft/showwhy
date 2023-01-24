@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { Label, PrimaryButton, Spinner, SpinnerSize } from '@fluentui/react'
-import React, { memo, useCallback, useMemo, useState } from 'react'
+import React, { memo, useCallback, useEffect, useMemo, useState } from 'react'
 
 import { ChartOptionsGroup } from '../../components/ChartOptionsGroup.js'
 import { EffectResultPane } from '../../components/EffectResultPane/index.js'
@@ -33,104 +33,119 @@ import {
 	Page,
 	StepTitle,
 } from '../../styles/index.js'
+import type { EventPageProps } from '../types.js'
 import { FilterData } from './components/FilterData.js'
 import { UnitSelector } from './components/UnitSelector.js'
 import { ErrorIcon } from './EstimateEffects.styles.js'
 import { processSynthControlData } from './EstimateEffects.utils.js'
 
-export const EstimateEffects: React.FC = memo(function EstimateEffects() {
-	const [isLoading, setIsLoading] = useState(false)
+export const EstimateEffects: React.FC<EventPageProps> = memo(
+	function EstimateEffects({ api }) {
+		useEffect(() => api.requestHelp('estimate'), [api])
+		const [isLoading, setIsLoading] = useState(false)
 
-	const columnMapping = useColumnMappingValueState()
-	const userMessage = useUserMessageValueState()
-	const timeAlignment = useTimeAlignmentValueState()
-	const checkedUnits = useCheckedUnitsValueState()
-	const [chartOptions, setChartOptions] = useChartOptionsState()
-	const [estimator, setEstimator] = useEstimatorState()
+		const columnMapping = useColumnMappingValueState()
+		const userMessage = useUserMessageValueState()
+		const timeAlignment = useTimeAlignmentValueState()
+		const checkedUnits = useCheckedUnitsValueState()
+		const [chartOptions, setChartOptions] = useChartOptionsState()
+		const [estimator, setEstimator] = useEstimatorState()
 
-	const outputData = useOutputData()
-	const { data, isDataLoaded, globalDateRange } =
-		useProcessedInputData(columnMapping)
-	const unitCheckboxListItems = useUnitCheckboxListItems(data)
-	const checkableUnits = unitCheckboxListItems.map(unit => unit.name)
+		const outputData = useOutputData()
+		const { data, isDataLoaded, globalDateRange } =
+			useProcessedInputData(columnMapping)
+		const unitCheckboxListItems = useUnitCheckboxListItems(data)
+		const checkableUnits = unitCheckboxListItems.map(unit => unit.name)
 
-	const handleRemoveCheckedUnit = useHandleRemoveCheckedUnit()
-	const cannotCalculateEstimate = useCannotCalculateEstimate(isLoading)
-	const cannotCalculatePlacebo = useCannotCalculatePlacebo(isLoading)
-	const generateErrorMessage = useGenerateErrorMessage()
-	const checkCanExecuteEstimator = useCheckCanExecuteEstimator(isLoading)
-	const calculateEstimate = useCalculateEstimate(data, isLoading, setIsLoading)
+		const handleRemoveCheckedUnit = useHandleRemoveCheckedUnit()
+		const cannotCalculateEstimate = useCannotCalculateEstimate(isLoading)
+		const cannotCalculatePlacebo = useCannotCalculatePlacebo(isLoading)
+		const generateErrorMessage = useGenerateErrorMessage()
+		const checkCanExecuteEstimator = useCheckCanExecuteEstimator(isLoading)
+		const calculateEstimate = useCalculateEstimate(
+			data,
+			isLoading,
+			setIsLoading,
+		)
 
-	const synthControlData = useMemo(
-		() => processSynthControlData(outputData, checkedUnits),
-		[outputData, checkedUnits],
-	)
+		const synthControlData = useMemo(
+			() => processSynthControlData(outputData, checkedUnits),
+			[outputData, checkedUnits],
+		)
 
-	const handleShowError = useCallback(() => {
-		if (checkCanExecuteEstimator()) {
-			generateErrorMessage()
-		}
-	}, [checkCanExecuteEstimator, generateErrorMessage])
+		const handleShowError = useCallback(() => {
+			if (checkCanExecuteEstimator()) {
+				generateErrorMessage()
+			}
+		}, [checkCanExecuteEstimator, generateErrorMessage])
 
-	const showError = useMemo<boolean>(
-		() =>
-			isDataLoaded &&
-			cannotCalculateEstimate &&
-			cannotCalculatePlacebo &&
-			!isLoading,
-		[isDataLoaded, cannotCalculateEstimate, cannotCalculatePlacebo, isLoading],
-	)
+		const showError = useMemo<boolean>(
+			() =>
+				isDataLoaded &&
+				cannotCalculateEstimate &&
+				cannotCalculatePlacebo &&
+				!isLoading,
+			[
+				isDataLoaded,
+				cannotCalculateEstimate,
+				cannotCalculatePlacebo,
+				isLoading,
+			],
+		)
 
-	return (
-		<Page isGrid>
-			<ConfigContainer isFlex>
-				<UnitSelector data={data} />
+		return (
+			<Page isGrid>
+				<ConfigContainer isFlex>
+					<UnitSelector data={data} />
 
-				<Container>
-					<Label>Treated unit(s) and Treatment period(s)</Label>
-					<TreatmentSelector data={data} />
-				</Container>
+					<Container>
+						<Label>Treated unit(s) and Treatment period(s)</Label>
+						<TreatmentSelector data={data} />
+					</Container>
 
-				<FilterData
-					isDataLoaded={isDataLoaded}
-					globalDateRange={globalDateRange}
-				/>
-
-				<EstimatorSelector
-					estimator={estimator}
-					onEstimatorChange={setEstimator}
-				/>
-
-				<Container>
-					<PrimaryButton
-						disabled={cannotCalculateEstimate}
-						text="Calculate causal estimate"
-						onClick={() => void calculateEstimate()}
+					<FilterData
+						isDataLoaded={isDataLoaded}
+						globalDateRange={globalDateRange}
 					/>
-					{isLoading && <Spinner size={SpinnerSize.medium} />}
-					{showError && <ErrorIcon iconName="Info" onClick={handleShowError} />}
-				</Container>
 
-				<Container>
-					<StepTitle>Chart options</StepTitle>
-					<ChartOptionsGroup
-						options={chartOptions}
-						onChange={setChartOptions}
+					<EstimatorSelector
+						estimator={estimator}
+						onEstimatorChange={setEstimator}
 					/>
-				</Container>
-			</ConfigContainer>
-			<GraphContainer>
-				<EffectResultPane
-					inputData={data}
-					outputData={outputData}
-					synthControlData={synthControlData}
-					statusMessage={userMessage}
-					isLoading={isLoading}
-					timeAlignment={timeAlignment}
-					checkableUnits={checkableUnits}
-					onRemoveCheckedUnit={handleRemoveCheckedUnit}
-				/>
-			</GraphContainer>
-		</Page>
-	)
-})
+
+					<Container>
+						<PrimaryButton
+							disabled={cannotCalculateEstimate}
+							text="Calculate causal estimate"
+							onClick={() => void calculateEstimate()}
+						/>
+						{isLoading && <Spinner size={SpinnerSize.medium} />}
+						{showError && (
+							<ErrorIcon iconName="Info" onClick={handleShowError} />
+						)}
+					</Container>
+
+					<Container>
+						<StepTitle>Chart options</StepTitle>
+						<ChartOptionsGroup
+							options={chartOptions}
+							onChange={setChartOptions}
+						/>
+					</Container>
+				</ConfigContainer>
+				<GraphContainer>
+					<EffectResultPane
+						inputData={data}
+						outputData={outputData}
+						synthControlData={synthControlData}
+						statusMessage={userMessage}
+						isLoading={isLoading}
+						timeAlignment={timeAlignment}
+						checkableUnits={checkableUnits}
+						onRemoveCheckedUnit={handleRemoveCheckedUnit}
+					/>
+				</GraphContainer>
+			</Page>
+		)
+	},
+)

@@ -2,6 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import type { AppServices } from '@datashaper/app-framework'
 import { Pivot, PivotItem } from '@fluentui/react'
 import React, { memo, useMemo, useRef } from 'react'
 
@@ -14,7 +15,7 @@ import { CONFIGURATION_TABS } from '../types.js'
 import { useInit, useOnHandleTabClicked } from './App.hooks.js'
 import { Container, usePivotStyles } from './App.styles.js'
 
-export const App: React.FC = memo(function App() {
+export const App: React.FC<{ api: AppServices }> = memo(function App({ api }) {
 	const pivotStyles = usePivotStyles()
 	const selectedTabKey = useSelectedTabKeyValueState()
 	const onHandleTabClicked = useOnHandleTabClicked()
@@ -38,19 +39,19 @@ export const App: React.FC = memo(function App() {
 					headerText={CONFIGURATION_TABS.prepareAnalysis.label}
 					itemKey={CONFIGURATION_TABS.prepareAnalysis.key}
 				>
-					<PrepareAnalysis />
+					<PrepareAnalysis api={api} />
 				</PivotItem>
 				<PivotItem
 					headerText={CONFIGURATION_TABS.estimateEffects.label}
 					itemKey={CONFIGURATION_TABS.estimateEffects.key}
 				>
-					<EstimateEffects />
+					<EstimateEffects api={api} />
 				</PivotItem>
 				<PivotItem
 					headerText={CONFIGURATION_TABS.validateEffects.label}
 					itemKey={CONFIGURATION_TABS.validateEffects.key}
 				>
-					<ValidateEffects />
+					<ValidateEffects api={api} />
 				</PivotItem>
 			</Pivot>
 			<CausalQuestion width={width} />

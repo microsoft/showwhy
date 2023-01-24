@@ -20,7 +20,7 @@ import {
 	NoticeContainer,
 	PrepareDataContainer,
 } from './BindDataPage.styles.js'
-import { ExposurePageProps } from './types.js'
+import type { ExposurePageProps } from './types.js'
 
 export const BindDataPage: FC<ExposurePageProps> = memo(function BindDataPage({ api }) {
 	useEffect(() => api.requestHelp('bind'), [api])

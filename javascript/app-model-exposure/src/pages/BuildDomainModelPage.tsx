@@ -28,7 +28,7 @@ import {
 	buildFormHeaders,
 	buildHeaders,
 } from './BuildDomainModelPage.utils.js'
-import { ExposurePageProps } from './types.js'
+import type { ExposurePageProps } from './types.js'
 
 export const BuildDomainModelPage: React.FC<ExposurePageProps> = memo(
 	function BuildDomainModelPage({ api }) {

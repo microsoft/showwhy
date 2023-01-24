@@ -8,7 +8,7 @@ import { memo, useEffect } from 'react'
 import { Container } from './DefineDomainModelPage.styles.js'
 import { DefineDomainModelPageDefinitions } from './DefineDomainModelPageDefinitions.js'
 import { DefineDomainModelPageQuestion } from './DefineDomainModelPageQuestion.js'
-import { ExposurePageProps } from './types.js'
+import type { ExposurePageProps } from './types.js'
 
 export const DefineDomainModelPage: React.FC<ExposurePageProps> = memo(
 	function DefineDomainModelPage({ api }) {

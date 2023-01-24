@@ -3914,6 +3914,7 @@ __metadata:
     "@fluentui/utilities": ^8.13.5
     "@reduxjs/toolkit": ^1.9.1
     "@showwhy/app-common": "workspace:^"
+    "@showwhy/guidance": "workspace:^"
     "@thematic/core": ^4.0.4
     "@thematic/d3": ^2.0.19
     "@thematic/fluent": ^5.0.5
@@ -3999,6 +4000,7 @@ __metadata:
     "@fluentui/utilities": ^8.13.5
     "@reduxjs/toolkit": ^1.9.1
     "@showwhy/app-common": "workspace:^"
+    "@showwhy/guidance": "workspace:^"
     "@storybook/react": ^6.5.15
     "@thematic/core": ^4.0.4
     "@thematic/d3": ^2.0.19

@@ -9,7 +9,7 @@ import { AnalyzeTestPageEffects } from './AnalyzeTestPageEffects.js'
 import { AnalyzeTestPageEstimators } from './AnalyzeTestPageEstimators.js'
 import { AnalyzeTestPageHelpText } from './AnalyzeTestPageHelpText.js'
 import { AnalyzeTestPageHypothesis } from './AnalyzeTestPageHypothesis.js'
-import { ExposurePageProps } from './types.js'
+import type { ExposurePageProps } from './types.js'
 
 export const AnalyzeTestPage: React.FC<ExposurePageProps> = memo(function AnalyzeTestPage({ api }) {
 	useEffect(() => api.requestHelp('estimate'), [api])
