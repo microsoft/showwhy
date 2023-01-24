@@ -16,7 +16,11 @@ import type { Handler, Handler1, Maybe } from '../types/primitives.js'
 import { withRandomId } from '../utils/ids.js'
 import { getDefault } from '../utils/tables.js'
 import { ActionButtons } from './ActionButtons.js'
-import { saveDefinitions, updateListTypes } from './DefinitionForm.utils.js'
+import {
+	handlePrimaryDefinition,
+	saveDefinitions,
+	updateListTypes,
+} from './DefinitionForm.utils.js'
 
 export function useHeaders(width: number): Header[] {
 	return useMemo(() => {
@@ -140,6 +144,8 @@ export function useAddDefinition(
 				return
 			}
 			definition = withRandomId(definition)
+			definition.default = !definitions.filter(d => d.type === definition.type)
+				.length
 			let list = []
 			if (definition.level === CausalityLevel.Primary) {
 				list = [...updateListTypes(definitions, definition.type), definition]
@@ -167,6 +173,7 @@ export function useEditDefinition(
 				}
 				return d
 			})
+			newDefinitions = handlePrimaryDefinition(definition, newDefinitions)
 			await saveDefinitions(newDefinitions, definitions, setDefinitions)
 			return newDefinitions
 		},

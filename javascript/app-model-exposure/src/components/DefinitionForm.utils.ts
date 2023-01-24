@@ -54,3 +54,25 @@ export async function saveDefinitions(
 	setDefinitions(list)
 	await wait(500)
 }
+
+export function handlePrimaryDefinition(
+	definition: Definition,
+	definitions: Definition[],
+) {
+	const primaryDefinition = definitions.find(
+		d => d.level === CausalityLevel.Primary && d.type === definition.type,
+	)
+
+	if (!primaryDefinition) {
+		return definitions.map(d => {
+			if (d.default && d.type === definition.type) {
+				return {
+					...d,
+					level: CausalityLevel.Primary,
+				}
+			}
+			return d
+		})
+	}
+	return definitions
+}

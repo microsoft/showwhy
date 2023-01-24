@@ -17,7 +17,7 @@ import type { Maybe } from '../types/primitives.js'
 import type { CausalQuestion } from '../types/question/CausalQuestion.js'
 import type { CausalQuestionElement } from '../types/question/CausalQuestionElement.js'
 
-function useAddDefaultVariable() {
+function useAddDefaultDefinition() {
 	const [definitions, setDefinitions] = useDefinitionsState()
 	return useDebounceFn(
 		(type: DefinitionType, value: string) => {
@@ -45,7 +45,7 @@ export function useOnInputChange(
 	causalQuestion: CausalQuestion,
 ): (value: Maybe<string>, type: string, field: string) => void {
 	const setCausalQuestion = useSetCausalQuestion()
-	const addDefaultVariable = useAddDefaultVariable()
+	const addDefaultDefinition = useAddDefaultDefinition()
 
 	return useCallback(
 		(value, type, field) => {
@@ -60,9 +60,9 @@ export function useOnInputChange(
 			//eslint-disable-next-line
 			;(newElements as any)[type] = newValues
 			setCausalQuestion(newElements)
-			addDefaultVariable.run(type as DefinitionType, value)
+			addDefaultDefinition.run(type as DefinitionType, value)
 		},
-		[causalQuestion, setCausalQuestion, addDefaultVariable],
+		[causalQuestion, setCausalQuestion, addDefaultDefinition],
 	)
 }
 
