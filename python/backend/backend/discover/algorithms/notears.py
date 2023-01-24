@@ -30,7 +30,11 @@ class NotearsRunner(CausalDiscoveryRunner):
                 # we can use w_threshold=0, since the weight
                 # filtering will be applied in the frontend
                 w_threshold=0.0,
+                # nodes that are not allowed to be child of anyone do
+                # not have incoming edges, so they are causes
                 tabu_child_nodes=self._constraints.causes,
+                # nodes that are not allowed to be parent of anyone do
+                # not have outgoing edges, so they are effects
                 tabu_parent_nodes=self._constraints.effects,
                 tabu_edges=self._constraints.forbiddenRelationships,
             ),
