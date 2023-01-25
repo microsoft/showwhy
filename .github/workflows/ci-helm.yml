@@ -31,8 +31,8 @@ jobs:
 
       - name: save helm chart to local registry
         run: |
-          helm chart save ${{ github.workspace }}/config/helm/causal-services/ ${{ env.GCR_IMAGE }}:${{ github.sha }}
+          helm package ${{ github.workspace }}/config/helm/causal-services/ ${{ env.GCR_IMAGE }}:${{ github.sha }}
 
       - name: publish chart to acr
         run: |
-          helm chart push ${{ env.GCR_IMAGE }}:${{ github.sha }}
+          helm push oci://${{ env.GCR_IMAGE }}:${{ github.sha }}
