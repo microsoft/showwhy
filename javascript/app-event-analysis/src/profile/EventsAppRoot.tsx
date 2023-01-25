@@ -2,6 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import type { AppServices } from '@datashaper/app-framework'
 import { RecoilBasedProfileHost } from '@datashaper/app-framework'
 import { memo } from 'react'
 import type { MutableSnapshot, Snapshot } from 'recoil'
@@ -32,19 +33,19 @@ import {
 } from '../state/index.js'
 import type { EventAnalysisResource } from './EventAnalysisResource.js'
 
-export const EventsAppRoot: React.FC<{ resource: EventAnalysisResource }> = memo(
-	function EventsAppRoot({ resource }) {
-		return (
-			<RecoilBasedProfileHost
-				resource={resource}
-				loadState={loadState}
-				saveState={saveState}
-			>
-				<App />
-			</RecoilBasedProfileHost>
-		)
-	},
-)
+export const EventsAppRoot: React.FC<{
+	resource: EventAnalysisResource
+}> = memo(function EventsAppRoot({ resource }) {
+	return (
+		<RecoilBasedProfileHost
+			resource={resource}
+			loadState={loadState}
+			saveState={saveState}
+		>
+			<App />
+		</RecoilBasedProfileHost>
+	)
+})
 
 function loadState(resource: EventAnalysisResource, { set }: MutableSnapshot) {
 	set(RawDataState, resource.rawData)

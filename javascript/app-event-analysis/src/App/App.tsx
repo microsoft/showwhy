@@ -22,7 +22,7 @@ export const App: React.FC = memo(function App() {
 	useInit()
 
 	const width = useMemo((): string => {
-		return ref?.current?.offsetWidth ? `${ref.current.offsetWidth}px` : `100%}`
+		return ref?.current?.offsetWidth ? `${ref.current.offsetWidth}px` : '100%'
 	}, [ref])
 
 	return (

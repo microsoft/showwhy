@@ -9,6 +9,7 @@ import type {
 import { CommandBarSection } from '@datashaper/app-framework'
 import type { DataPackage } from '@datashaper/workflow'
 import type { IContextualMenuItem } from '@fluentui/react'
+import content from '@showwhy/guidance'
 
 import { EXPOSURE_PROFILE } from './constants.js'
 import { ExposureAppRoot } from './ExposureAppRoot.js'
@@ -53,5 +54,17 @@ export class ExposureProfile implements ProfilePlugin<ExposureResource> {
 				},
 			]
 		}
+	}
+
+	public getHelp() {
+		return Object.entries(content as Record<string, string>).reduce(
+			(acc, [key, value]) => {
+				if (key.startsWith('exposure')) {
+					acc[key.replace('exposure.', '')] = value
+				}
+				return acc
+			},
+			{} as Record<string, string>,
+		)
 	}
 }
