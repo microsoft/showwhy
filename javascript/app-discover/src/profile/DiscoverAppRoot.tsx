@@ -39,7 +39,7 @@ import type { DiscoverResource } from './DiscoverResource.js'
 export const DiscoverAppRoot: React.FC<{
 	resource: DiscoverResource
 }> = memo(function DiscoverAppRoot({ resource }) {
-	useHelpOnMount('discover')
+	useHelpOnMount('discover.index')
 	return (
 		<RecoilBasedProfileHost
 			resource={resource}

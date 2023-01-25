@@ -46,9 +46,9 @@ For developers wishing to contribute to the project, refer to [DEVELOPING.md](./
 
 # Deployment
 
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmicrosoft%2Fshowwhy%2Fazure%2Fdocs%2Fdeployment%2Fazure-scripts%2Fall.json)
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmicrosoft%2Fshowwhy%2Fmain%2Fdocs%2Fdeployment%2Fazure-scripts%2Fall.json)
 
-Check the [deployment documentation](./docs/deployment/README.md) for instructions on how to deploy to a local kubernetes instance, with one-click or manually to AKS on Azure.
+Check the [deployment documentation](./docs/deployment/README.md) for instructions on how to deploy to deploy SHowWhy to Azure AKS (either via one-click or manually), and how to deploy ShowWhy into a local Kubernetes instance.
 
 # Contribute
 

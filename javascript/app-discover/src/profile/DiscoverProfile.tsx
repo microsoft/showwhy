@@ -58,14 +58,6 @@ export class DiscoverProfile implements ProfilePlugin<DiscoverResource> {
 
 	public getHelp() {
 		console.log(content)
-		return Object.entries(content as Record<string, string>).reduce(
-			(acc, [key, value]) => {
-				if (key.startsWith('discover')) {
-					acc[key.replace('discover.', '')] = value
-				}
-				return acc
-			},
-			{} as Record<string, string>,
-		)
+		return content
 	}
 }
