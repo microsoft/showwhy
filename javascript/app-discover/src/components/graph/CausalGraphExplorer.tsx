@@ -8,7 +8,7 @@ import {
 	useRecoilState,
 	useRecoilValue,
 	useRecoilValueLoadable,
-	useSetRecoilState
+	useSetRecoilState,
 } from 'recoil'
 
 import type { CausalVariable } from '../../domain/CausalVariable.jsx'
@@ -21,25 +21,19 @@ import {
 	CurrentLayoutState,
 	FilteredCorrelationsState,
 	FixedInterventionRangesEnabledState,
+	SelectedCausalDiscoveryAlgorithmState,
 	SelectedObjectState,
 	useCausalGraph,
-	WeightThresholdState
+	WeightThresholdState,
 } from '../../state/index.jsx'
 import { CausalEdge } from './CausalEdge.jsx'
 import { useGraphBounds } from './CausalGraphExplorer.hooks.js'
-import {
-	Background,
-	Container,
-	ContainerEdge,
-	edgeColors,
-	FlexContainer,
-	Grid
-} from './CausalGraphExplorer.styles.js'
+import { Background, FlexContainer } from './CausalGraphExplorer.styles.js'
+import { CausalGraphLegend } from './CausalGraphLegend.js'
 import { CausalGraphNode } from './CausalGraphNode.jsx'
 import { CorrelationEdge } from './CorrelationEdge.jsx'
 import { CorrelationGraphNode } from './CorrelationGraphNode.jsx'
 import { DraggableGraphNode } from './DraggableNode.jsx'
-import { CorrelationIcon, EdgeIcon } from './LegendIcons.js'
 
 const MIN_EDGE_WIDTH = 2
 const MAX_EDGE_WIDTH = 10
@@ -67,6 +61,9 @@ export const CausalGraphExplorer: React.FC<{
 	const setSelectedObject = useSetRecoilState(SelectedObjectState)
 	const correlations =
 		useRecoilValueLoadable(FilteredCorrelationsState).valueMaybe() || []
+	const selectedAlgorithm = useRecoilValue(
+		SelectedCausalDiscoveryAlgorithmState,
+	)
 
 	const correlationsWithoutCausesInModel = correlations
 		.filter(correlation =>
@@ -180,27 +177,7 @@ export const CausalGraphExplorer: React.FC<{
 				</Xwrapper>
 			</div>
 			<FlexContainer ref={legendRef}>
-				<Grid>
-					<Container>
-						<CorrelationIcon color={edgeColors.correlation} />
-						Correlation
-					</Container>
-					<Container>
-						<EdgeIcon color={edgeColors.positive} /> Causes increase
-					</Container>
-					<Container>
-						<EdgeIcon color={edgeColors.negative} />
-						Causes decrease
-					</Container>
-					<Container>
-						<EdgeIcon color={edgeColors.pcChange} />
-						Causes change
-					</Container>
-					<ContainerEdge>
-						Edge weights quantify the strength of the causal relationship under
-						the selected discovery algorithm. corr=correlation; conf=confidence
-					</ContainerEdge>
-				</Grid>
+				<CausalGraphLegend selectedAlgorithm={selectedAlgorithm} />
 			</FlexContainer>
 		</>
 	)
