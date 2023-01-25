@@ -24,7 +24,7 @@ import {
 import type { ExposurePageProps } from './types.js'
 
 export const BindDataPage: FC<ExposurePageProps> = memo(function BindDataPage() {
-	useHelpOnMount('bind')
+	useHelpOnMount('exposure.bind')
 	const commandBar = useCommandBar()
 
 	const { onSelectTableId, selectedTableName, selectedTable } = useBindData()

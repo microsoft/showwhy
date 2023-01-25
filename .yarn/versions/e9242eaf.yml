@@ -1,0 +1,10 @@
+releases:
+  "@showwhy/discover-app": patch
+  "@showwhy/event-analysis-app": patch
+  "@showwhy/model-exposure-app": patch
+  "@showwhy/webapp": patch
+  showwhy: patch
+
+declined:
+  - "@showwhy/guidance"
+  - "@showwhy/stories"

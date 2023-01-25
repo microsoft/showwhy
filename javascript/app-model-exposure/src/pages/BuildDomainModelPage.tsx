@@ -33,7 +33,7 @@ import type { ExposurePageProps } from './types.js'
 
 export const BuildDomainModelPage: React.FC<ExposurePageProps> = memo(
 	function BuildDomainModelPage() {
-		useHelpOnMount('model')
+		useHelpOnMount('exposure.model')
 		const primarySpecificationConfig = usePrimarySpecificationConfig()
 		const causalEffects = useCausalEffects(
 			primarySpecificationConfig.causalModel,
