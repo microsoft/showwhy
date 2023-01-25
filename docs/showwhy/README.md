@@ -1,1 +1,3 @@
-This is a collection of guidance and documentation for using ShowWhy. This documentation is also embedded directly within the ShowWhy app: as you use the running application, open the guidance panel to view help content for the currently focused resource.
+# ShowWhy
+
+This application provides an interactive user experience for constructing causal experiments. As you navigate the app, there are facilities to load and prepare data, build domain models using [causal discovery](./discover/index.md), execute [causal inference](./exposure/index.md) algorithms to understand the effects of exposure, and analyze the impact of interventions [over time](./events/index.md).

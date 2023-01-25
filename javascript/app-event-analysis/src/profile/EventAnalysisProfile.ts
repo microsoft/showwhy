@@ -64,14 +64,6 @@ export class EventAnalysisProfile
 	}
 
 	public getHelp() {
-		return Object.entries(content as Record<string, string>).reduce(
-			(acc, [key, value]) => {
-				if (key.startsWith('events')) {
-					acc[key.replace('events.', '')] = value
-				}
-				return acc
-			},
-			{} as Record<string, string>,
-		)
+		return content
 	}
 }

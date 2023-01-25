@@ -13,7 +13,7 @@ import { AnalyzeTestPageHypothesis } from './AnalyzeTestPageHypothesis.js'
 import type { ExposurePageProps } from './types.js'
 
 export const AnalyzeTestPage: React.FC<ExposurePageProps> = memo(function AnalyzeTestPage({ api }) {
-	useHelpOnMount('estimate')
+	useHelpOnMount('exposure.estimate')
 	return (
 		<Container>
 			<AnalyzeTestPageEstimators />

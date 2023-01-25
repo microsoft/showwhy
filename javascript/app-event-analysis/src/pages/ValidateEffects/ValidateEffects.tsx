@@ -4,7 +4,7 @@
  */
 import { useHelpOnMount } from '@datashaper/app-framework'
 import { PrimaryButton, Spinner, SpinnerSize } from '@fluentui/react'
-import { memo, useEffect, useState } from 'react'
+import { memo, useState } from 'react'
 
 import { PlaceboResultPane } from '../../components/PlaceboResultPane/index.js'
 import { useCalculateEstimate } from '../../hooks/useCalculateEstimate.js'
@@ -31,7 +31,7 @@ import {
 } from '../../styles/index.js'
 
 export const ValidateEffects: React.FC = memo(function ValidateEffects() {
-	useHelpOnMount('validate')
+	useHelpOnMount('events.validate')
 	const [isLoading, setIsLoading] = useState(false)
 
 	const userMessage = useUserMessageValueState()
