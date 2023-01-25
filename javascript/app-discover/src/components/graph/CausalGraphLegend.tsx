@@ -5,6 +5,7 @@
 import { memo } from 'react'
 import { Else, If, Then } from 'react-if'
 import styled from 'styled-components'
+
 import { CausalDiscoveryAlgorithm } from '../../domain/CausalDiscovery/CausalDiscoveryAlgorithm.js'
 import { ContainerEdge, edgeColors, Grid } from './CausalGraphLegend.styles.js'
 import { CorrelationIcon, EdgeIcon } from './LegendIcons.js'
