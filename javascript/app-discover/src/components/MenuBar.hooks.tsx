@@ -31,6 +31,7 @@ import {
 } from '../state/index.js'
 import { GraphViewStates } from './graph/GraphViews.types.js'
 import {
+	checkboxStyles,
 	layoutButtonStyles,
 	toggleStyles,
 	useMenuButtonStyles,
@@ -151,6 +152,7 @@ export function useViewMenuItems(
 						key: 'straight-edge-Checkbox',
 						onRender: () => (
 							<Checkbox
+								styles={checkboxStyles}
 								label="Use straight edges"
 								checked={useStraightEdges}
 								onChange={(e, v) => setUseStraightEdges(Boolean(v))}
@@ -161,6 +163,7 @@ export function useViewMenuItems(
 						key: 'hide-panels-Checkbox',
 						onRender: () => (
 							<Checkbox
+								styles={checkboxStyles}
 								label="Hide side panels"
 								checked={hidePanels}
 								onChange={(e, v) => setHidePanels(Boolean(v))}

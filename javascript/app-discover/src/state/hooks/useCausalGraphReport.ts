@@ -52,7 +52,7 @@ export function useDownloadGraph(causalGraph: CausalGraph): () => void {
 		const table = aq.from(report)
 		const blob = new Blob([table.toCSV()])
 		download(
-			`causal-graph-${new Date().toLocaleString()}.csv`,
+			`causal-graph-${new Date().toISOString().slice(0, 10)}.csv`,
 			'text/csv',
 			blob,
 		)
