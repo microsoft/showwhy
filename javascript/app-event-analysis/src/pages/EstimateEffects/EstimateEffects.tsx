@@ -40,7 +40,7 @@ import { ErrorIcon } from './EstimateEffects.styles.js'
 import { processSynthControlData } from './EstimateEffects.utils.js'
 
 export const EstimateEffects: React.FC = memo(function EstimateEffects() {
-	useHelpOnMount('estimate')
+	useHelpOnMount('events.estimate')
 	const [isLoading, setIsLoading] = useState(false)
 
 	const columnMapping = useColumnMappingValueState()

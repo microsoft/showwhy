@@ -12,7 +12,7 @@ import type { ExposurePageProps } from './types.js'
 
 export const DefineDomainModelPage: React.FC<ExposurePageProps> = memo(
 	function DefineDomainModelPage() {
-		useHelpOnMount('define')
+		useHelpOnMount('exposure.define')
 		return (
 			<Container>
 				<DefineDomainModelPageQuestion />

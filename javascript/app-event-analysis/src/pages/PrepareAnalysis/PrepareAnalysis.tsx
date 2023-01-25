@@ -32,7 +32,7 @@ import { LoadDataset } from './components/LoadDataset.js'
 import { TreatedUnits } from './components/TreatedUnits.js'
 
 export const PrepareAnalysis: React.FC = memo(function PrepareAnalysis() {
-	useHelpOnMount('prepare')
+	useHelpOnMount('events.prepare')
 	const rawData = useRawDataValueState()
 
 	const [chartOptions, setChartOptions] = useChartOptionsState()
