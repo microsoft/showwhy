@@ -43,14 +43,17 @@ jobs:
       - run: yarn install
         name: Install Dependencies
 
-      - run: yarn build
-        name: Build
+      - name: TurboRepo local server
+        uses: felixmosh/turborepo-gh-artifacts@v2
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          server-token: ${{ secrets.GITHUB_TOKEN }}
 
-      - run: yarn lint
-        name: Lint
-
-      - run: yarn test
-        name: Test
+      - run: yarn ci
+        env:
+          TURBO_API: 'http://127.0.0.1:9080'
+          TURBO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TURBO_TEAM: 'essex'
 
       - run: |
           git add -A
