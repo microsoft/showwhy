@@ -1,5 +1,6 @@
+releases:
+  "@showwhy/discover-app": patch
+  "@showwhy/webapp": patch
+
 declined:
   - showwhy
-
-undecided:
-  - "@showwhy/discover-app"
