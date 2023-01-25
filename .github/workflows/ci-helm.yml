@@ -10,7 +10,7 @@ on:
 env:
   HELM_EXPERIMENTAL_OCI: 1 #enable OCI support
   HELM_VERSION_TO_INSTALL: 3.10.2 # version of HEL to install
-  GCR_IMAGE: ghcr.io/microsoft/showwhy/causal-services
+  GCR_IMAGE: ghcr.io/microsoft/showwhy/
 
 jobs:
   build:
