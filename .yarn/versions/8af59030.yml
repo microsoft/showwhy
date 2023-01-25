@@ -1,0 +1,5 @@
+declined:
+  - showwhy
+
+undecided:
+  - "@showwhy/discover-app"
