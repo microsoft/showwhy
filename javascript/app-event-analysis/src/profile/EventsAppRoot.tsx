@@ -35,15 +35,14 @@ import type { EventAnalysisResource } from './EventAnalysisResource.js'
 
 export const EventsAppRoot: React.FC<{
 	resource: EventAnalysisResource
-	api: AppServices
-}> = memo(function EventsAppRoot({ resource, api }) {
+}> = memo(function EventsAppRoot({ resource }) {
 	return (
 		<RecoilBasedProfileHost
 			resource={resource}
 			loadState={loadState}
 			saveState={saveState}
 		>
-			<App api={api} />
+			<App />
 		</RecoilBasedProfileHost>
 	)
 })
