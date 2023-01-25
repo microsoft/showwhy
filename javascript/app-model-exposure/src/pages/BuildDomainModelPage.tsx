@@ -3,7 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { RadioButtonCard } from '@showwhy/app-common'
-import React, { memo, useEffect } from 'react'
+import { memo } from 'react'
+import { useHelpOnMount } from '@datashaper/app-framework'
 
 import { CausalEffectsArrows } from '../components/CausalEffectsArrows.js'
 import { DetailsList } from '../components/DetailsList.js'
@@ -31,8 +32,8 @@ import {
 import type { ExposurePageProps } from './types.js'
 
 export const BuildDomainModelPage: React.FC<ExposurePageProps> = memo(
-	function BuildDomainModelPage({ api }) {
-		useEffect(() => api.requestHelp('model'), [api])
+	function BuildDomainModelPage() {
+		useHelpOnMount('model')
 		const primarySpecificationConfig = usePrimarySpecificationConfig()
 		const causalEffects = useCausalEffects(
 			primarySpecificationConfig.causalModel,
@@ -68,7 +69,7 @@ export const BuildDomainModelPage: React.FC<ExposurePageProps> = memo(
 					{/* eslint-disable-next-line */}
 					<DetailsList items={items} headers={formHeaders} />
 				</ListContainer>
-				<RelevantVariablesForm onAdd={addFactor}></RelevantVariablesForm>
+				<RelevantVariablesForm onAdd={addFactor} />
 				<Title data-pw="title">Variable relationships</Title>
 				<ListContainer ref={ref}>
 					<DetailsList headers={headers} items={itemList} />

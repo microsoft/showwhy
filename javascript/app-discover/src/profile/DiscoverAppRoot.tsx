@@ -2,9 +2,8 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import type { AppServices } from '@datashaper/app-framework'
-import { RecoilBasedProfileHost } from '@datashaper/app-framework'
-import { memo, Suspense, useEffect } from 'react'
+import { type AppServices, RecoilBasedProfileHost , useHelpOnMount} from '@datashaper/app-framework'
+import { memo, Suspense } from 'react'
 import type { MutableSnapshot, Snapshot } from 'recoil'
 
 import { CauseDis } from '../components/CauseDis.js'
@@ -39,9 +38,8 @@ import type { DiscoverResource } from './DiscoverResource.js'
 
 export const DiscoverAppRoot: React.FC<{
 	resource: DiscoverResource
-	api: AppServices
-}> = memo(function DiscoverAppRoot({ resource, api }) {
-	useEffect(() => api.requestHelp('discover'), [api])
+}> = memo(function DiscoverAppRoot({ resource }) {
+	useHelpOnMount('discover')
 	return (
 		<RecoilBasedProfileHost
 			resource={resource}

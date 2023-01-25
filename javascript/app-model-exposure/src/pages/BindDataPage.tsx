@@ -4,8 +4,9 @@
  */
 import { ArqueroDetailsList, ArqueroTableHeader } from '@datashaper/react'
 import { TableMenuBar } from '@showwhy/app-common'
+import { useHelpOnMount } from '@datashaper/app-framework'
 import type { FC } from 'react'
-import { memo, useEffect } from 'react'
+import { memo } from 'react'
 
 import { AddVariableFields } from '../components/AddVariableFields.js'
 import { CompletedElements } from '../components/CompletedElements.js'
@@ -22,8 +23,8 @@ import {
 } from './BindDataPage.styles.js'
 import type { ExposurePageProps } from './types.js'
 
-export const BindDataPage: FC<ExposurePageProps> = memo(function BindDataPage({ api }) {
-	useEffect(() => api.requestHelp('bind'), [api])
+export const BindDataPage: FC<ExposurePageProps> = memo(function BindDataPage() {
+	useHelpOnMount('bind')
 	const commandBar = useCommandBar()
 
 	const { onSelectTableId, selectedTableName, selectedTable } = useBindData()

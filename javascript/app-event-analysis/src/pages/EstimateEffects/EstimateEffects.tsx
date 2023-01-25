@@ -3,7 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { Label, PrimaryButton, Spinner, SpinnerSize } from '@fluentui/react'
-import React, { memo, useCallback, useEffect, useMemo, useState } from 'react'
+import { memo, useCallback, useMemo, useState } from 'react'
+import { useHelpOnMount } from '@datashaper/app-framework'
 
 import { ChartOptionsGroup } from '../../components/ChartOptionsGroup.js'
 import { EffectResultPane } from '../../components/EffectResultPane/index.js'
@@ -33,15 +34,14 @@ import {
 	Page,
 	StepTitle,
 } from '../../styles/index.js'
-import type { EventPageProps } from '../types.js'
 import { FilterData } from './components/FilterData.js'
 import { UnitSelector } from './components/UnitSelector.js'
 import { ErrorIcon } from './EstimateEffects.styles.js'
 import { processSynthControlData } from './EstimateEffects.utils.js'
 
-export const EstimateEffects: React.FC<EventPageProps> = memo(
-	function EstimateEffects({ api }) {
-		useEffect(() => api.requestHelp('estimate'), [api])
+export const EstimateEffects: React.FC = memo(
+	function EstimateEffects() {
+		useHelpOnMount('estimate')
 		const [isLoading, setIsLoading] = useState(false)
 
 		const columnMapping = useColumnMappingValueState()

@@ -3,7 +3,8 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { PrimaryButton, Spinner, SpinnerSize } from '@fluentui/react'
-import React, { memo, useEffect, useState } from 'react'
+import { memo, useEffect, useState } from 'react'
+import { useHelpOnMount } from '@datashaper/app-framework'
 
 import { PlaceboResultPane } from '../../components/PlaceboResultPane/index.js'
 import { useCalculateEstimate } from '../../hooks/useCalculateEstimate.js'
@@ -28,11 +29,10 @@ import {
 	StepDescription,
 	StepTitle,
 } from '../../styles/index.js'
-import type { EventPageProps } from '../types.js'
 
-export const ValidateEffects: React.FC<EventPageProps> = memo(
-	function ValidateEffects({ api }) {
-		useEffect(() => api.requestHelp('validate'), [api])
+export const ValidateEffects: React.FC = memo(
+	function ValidateEffects() {
+		useHelpOnMount('validate')
 		const [isLoading, setIsLoading] = useState(false)
 
 		const userMessage = useUserMessageValueState()

@@ -4,7 +4,8 @@
  */
 import type { IDropdownOption } from '@fluentui/react'
 import { Checkbox } from '@fluentui/react'
-import React, { memo, useEffect, useMemo } from 'react'
+import { useHelpOnMount } from '@datashaper/app-framework'
+import { memo, useMemo } from 'react'
 
 import { RawDataPane } from '../../components/RawDataPane.js'
 import { useUnitCheckboxListItems } from '../../hooks/useChekeableUnits.js'
@@ -24,16 +25,15 @@ import {
 	StepTitle,
 } from '../../styles/index.js'
 import { getColumns } from '../../utils/csv.js'
-import type { EventPageProps } from '../types.js'
 import { CausalQuestion } from './components/CausalQuestion.js'
 import { DataColumns } from './components/DataColumns.js'
 import { Hypothesis } from './components/Hypothesis.js'
 import { LoadDataset } from './components/LoadDataset.js'
 import { TreatedUnits } from './components/TreatedUnits.js'
 
-export const PrepareAnalysis: React.FC<EventPageProps> = memo(
-	function PrepareAnalysis({ api }) {
-		useEffect(() => api.requestHelp('prepare'), [api])
+export const PrepareAnalysis: React.FC = memo(
+	function PrepareAnalysis() {
+		useHelpOnMount('prepare')
 		const rawData = useRawDataValueState()
 
 		const [chartOptions, setChartOptions] = useChartOptionsState()
