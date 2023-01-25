@@ -1,7 +1,7 @@
 name: Helm CI
 on:
   push:
-    branches: [release-helm]
+    branches: [main]
   pull_request:
     paths:
       - 'docs/deployment/azure-scripts'
@@ -10,7 +10,7 @@ on:
 env:
   HELM_EXPERIMENTAL_OCI: 1 #enable OCI support
   HELM_VERSION_TO_INSTALL: 3.10.2 # version of HEL to install
-  GCR_IMAGE: ghcr.io/microsoft/
+  GCR_IMAGE: ghcr.io/microsoft/showwhy/
 
 jobs:
   build:
@@ -25,15 +25,16 @@ jobs:
         with:
           # Version of helm
           version: ${{ env.HELM_VERSION_TO_INSTALL }} # default is latest
+      
       - name: login to acr using helm
         run: |
           echo ${{ secrets.GITHUB_TOKEN }} | helm registry login ${{ env.GCR_IMAGE }} --username ${{ github.repository_owner }} --password-stdin
 
-      - name: save helm chart to local registry
+      - name: save helm chart
         run: |
           helm package ${{ github.workspace }}/config/helm/causal-services/ 
 
-      - name: publish chart to acr
+      - name: publish chart to ghcr
         run: |
           export CHART_VERSION=$(grep 'version:' ./config/helm/causal-services/Chart.yaml | tail -n1 | awk '{ print $2}')
           helm push causal-services-${CHART_VERSION}.tgz oci://${{ env.GCR_IMAGE }}
