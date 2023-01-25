@@ -58,6 +58,7 @@
         }
     },
     "variables": {
+        "domain": "[concat(parameters('dnsPrefix'), '.', resourceGroup().location, '.cloudapp.azure.com')]",
         "helmAppLocation": "oci://ghcr.io/microsoft/showwhy/causal-services",
         "nodeResourceGroup": "[concat('MC_', resourceGroup().name, '_', parameters('clusterName'), '_', resourceGroup().location)]"
     },
