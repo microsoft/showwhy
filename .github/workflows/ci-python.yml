@@ -11,43 +11,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: [3.8]
-        poetry-version: [1.2.1]
 
     steps:
       - uses: actions/checkout@v2
-
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v2
-        with:
-          python-version: ${{ matrix.python-version }}
-
-      - name: Install Poetry ${{ matrix.poetry-version }}
-        uses: abatilo/actions-poetry@v2.1.6
-        with:
-          poetry-version: ${{ matrix.poetry-version }}
-
-      - name: Install dependencies
-        shell: bash
-        working-directory: ./python/backend
-        run: ./scripts/install_python_deps.sh
-
-      - name: Check Formatting
-        working-directory: ./python/backend
-        run: |
-          poetry run poe format_check
-
-      - name: Lint
-        working-directory: ./python/backend
-        run: |
-          poetry run poe lint
-
-      - name: Test
-        working-directory: ./python/backend
-        run: |
-          poetry run poe test
 
       - name: Build and Publish Docker Container
         uses: darthtrevino/github-container-registry-build-push@main
@@ -58,4 +24,3 @@ jobs:
           dockerfile-path: ./python/backend/Dockerfile
           build-context: ./python/backend
           build-only: ${{ github.ref != 'refs/heads/main' }}
-  

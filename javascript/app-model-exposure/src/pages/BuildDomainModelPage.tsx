@@ -2,8 +2,9 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import { useHelpOnMount } from '@datashaper/app-framework'
 import { RadioButtonCard } from '@showwhy/app-common'
-import React, { memo } from 'react'
+import { memo } from 'react'
 
 import { CausalEffectsArrows } from '../components/CausalEffectsArrows.js'
 import { DetailsList } from '../components/DetailsList.js'
@@ -28,9 +29,11 @@ import {
 	buildFormHeaders,
 	buildHeaders,
 } from './BuildDomainModelPage.utils.js'
+import type { ExposurePageProps } from './types.js'
 
-export const BuildDomainModelPage: React.FC = memo(
+export const BuildDomainModelPage: React.FC<ExposurePageProps> = memo(
 	function BuildDomainModelPage() {
+		useHelpOnMount('exposure.model')
 		const primarySpecificationConfig = usePrimarySpecificationConfig()
 		const causalEffects = useCausalEffects(
 			primarySpecificationConfig.causalModel,
@@ -66,7 +69,7 @@ export const BuildDomainModelPage: React.FC = memo(
 					{/* eslint-disable-next-line */}
 					<DetailsList items={items} headers={formHeaders} />
 				</ListContainer>
-				<RelevantVariablesForm onAdd={addFactor}></RelevantVariablesForm>
+				<RelevantVariablesForm onAdd={addFactor} />
 				<Title data-pw="title">Domain variable relationships</Title>
 				<ListContainer ref={ref}>
 					<DetailsList headers={headers} items={itemList} />

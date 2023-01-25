@@ -5,17 +5,21 @@
 
 import { atom } from 'recoil'
 
-import type {
-	DECIParams,
-	DECITrainingOptions,
-} from './../../domain/Algorithms/DECI.js'
+import type { NotearsAlgorithmParams } from '../../domain/Algorithms/Notears.js'
+import type { PCAlgorithmParams } from '../../domain/Algorithms/PC.js'
+import type { DECIAlgorithmParams } from './../../domain/Algorithms/DECI.js'
 
-const training_options = {
-	max_steps_auglag: 20,
-	max_auglag_inner_epochs: 1000,
-} as DECITrainingOptions
-
-export const DeciParamsState = atom<DECIParams>({
+export const DeciParamsState = atom<DECIAlgorithmParams>({
 	key: 'DeciParamsState',
-	default: { model_options: {}, ate_options: {}, training_options },
+	default: { model_options: {}, ate_options: {}, training_options: {} },
+})
+
+export const NotearsParamsState = atom<NotearsAlgorithmParams>({
+	key: 'NotearsParamsState',
+	default: {},
+})
+
+export const PCParamsState = atom<PCAlgorithmParams>({
+	key: 'PCParamsState',
+	default: {},
 })

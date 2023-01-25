@@ -10,7 +10,12 @@ import { useFilePicker } from 'use-file-picker'
 
 import type { DatasetDatapackage } from '../domain/Dataset.js'
 import { useDatasetLoader } from '../domain/Dataset.js'
-import { DeciParamsState } from '../state/atoms/algorithms_params.js'
+import {
+	DeciParamsState,
+	NotearsParamsState,
+	PCParamsState,
+} from '../state/atoms/algorithms_params.js'
+import { useDownloadEdges } from '../state/hooks/useCausalEdgesReport.js'
 import {
 	CausalGraphConstraintsState,
 	GraphViewState,
@@ -20,6 +25,7 @@ import {
 	PanelsHiddenState,
 	PersistedInfoState,
 	StraightEdgesState,
+	useCausalGraph,
 } from '../state/index.js'
 import { saveObjectJSON } from '../utils/Save.js'
 import {
@@ -38,10 +44,14 @@ export const MenuBar: React.FC = memo(function MenuBar() {
 	const loadColumnTable = useDatasetLoader()
 	const resetVariables = useResetRecoilState(InModelColumnNamesState)
 	const resetConstraints = useResetRecoilState(CausalGraphConstraintsState)
-	const resetParams = useResetRecoilState(DeciParamsState)
+	const resetNotearsParams = useResetRecoilState(NotearsParamsState)
+	const resetDeciParams = useResetRecoilState(DeciParamsState)
+	const resetPCParams = useResetRecoilState(PCParamsState)
 	const resetNodePositions = useResetRecoilState(NodePositionsState)
 	const [useStraightEdges, setUseStraightEdges] =
 		useRecoilState(StraightEdgesState)
+	const causalGraph = useCausalGraph()
+
 	const setLoadingState = useSetRecoilState(LoadingState)
 	const [persistedInfo, setPersistedInfo] = useRecoilState(PersistedInfoState)
 	const [
@@ -53,9 +63,18 @@ export const MenuBar: React.FC = memo(function MenuBar() {
 	const clearModel = useCallback(() => {
 		resetVariables()
 		resetConstraints()
-		resetParams()
+		resetNotearsParams()
+		resetDeciParams()
+		resetPCParams()
 		resetNodePositions()
-	}, [resetVariables, resetConstraints, resetParams, resetNodePositions])
+	}, [
+		resetVariables,
+		resetConstraints,
+		resetNotearsParams,
+		resetDeciParams,
+		resetPCParams,
+		resetNodePositions,
+	])
 
 	useEffect(() => {
 		if (causalModelFileContent[0] !== undefined) {
@@ -78,11 +97,14 @@ export const MenuBar: React.FC = memo(function MenuBar() {
 		[loadColumnTable, setLoadingState],
 	)
 
+	const exportEdges = useDownloadEdges(causalGraph)
 	const datasetMenuItems = useDatasetMenuItems(loadTable)
 	const modelMenuItems = useModelMenuItems(
 		saveModel,
 		openCausalModelFileSelector,
 		clearModel,
+		exportEdges,
+		!causalGraph.variables.length,
 	)
 	const viewMenuItems = useViewMenuItems(
 		selectedViewKey,

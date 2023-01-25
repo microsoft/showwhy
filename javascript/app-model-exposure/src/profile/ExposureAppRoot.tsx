@@ -2,6 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import type { AppServices } from '@datashaper/app-framework'
 import { RecoilBasedProfileHost } from '@datashaper/app-framework'
 import { memo } from 'react'
 import type { MutableSnapshot, Snapshot } from 'recoil'
@@ -23,14 +24,15 @@ import type { ExposureResource } from './ExposureResource.js'
 export const ExposureAppRoot: React.FC<{
 	resource: ExposureResource
 	href: string
-}> = memo(function ExposureAppRoot({ resource, href }) {
+	api: AppServices
+}> = memo(function ExposureAppRoot({ resource, href, api }) {
 	return (
 		<RecoilBasedProfileHost
 			resource={resource}
 			saveState={saveState}
 			loadState={loadState}
 		>
-			<ModelExposurePage href={href} />
+			<ModelExposurePage href={href} api={api}/>
 		</RecoilBasedProfileHost>
 	)
 })

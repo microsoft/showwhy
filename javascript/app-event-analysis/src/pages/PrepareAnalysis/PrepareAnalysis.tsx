@@ -2,9 +2,10 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import { useHelpOnMount } from '@datashaper/app-framework'
 import type { IDropdownOption } from '@fluentui/react'
 import { Checkbox } from '@fluentui/react'
-import React, { memo, useMemo } from 'react'
+import { memo, useMemo } from 'react'
 
 import { RawDataPane } from '../../components/RawDataPane.js'
 import { useUnitCheckboxListItems } from '../../hooks/useChekeableUnits.js'
@@ -31,6 +32,7 @@ import { LoadDataset } from './components/LoadDataset.js'
 import { TreatedUnits } from './components/TreatedUnits.js'
 
 export const PrepareAnalysis: React.FC = memo(function PrepareAnalysis() {
+	useHelpOnMount('events.prepare')
 	const rawData = useRawDataValueState()
 
 	const [chartOptions, setChartOptions] = useChartOptionsState()

@@ -47,6 +47,8 @@ export function useModelMenuItems(
 	saveModel: () => void,
 	openCausalModelFileSelector: () => void,
 	clearModel: () => void,
+	exportEdges: () => void,
+	isExportDisabled: boolean,
 ): ICommandBarItemProps {
 	const buttonStyles = useMenuButtonStyles()
 	return useMemo(
@@ -71,10 +73,23 @@ export function useModelMenuItems(
 						text: 'Clear model',
 						onClick: clearModel,
 					},
+					{
+						key: 'export-model',
+						text: 'Export edges',
+						disabled: isExportDisabled,
+						onClick: exportEdges,
+					},
 				],
 			},
 		}),
-		[saveModel, openCausalModelFileSelector, clearModel, buttonStyles],
+		[
+			saveModel,
+			openCausalModelFileSelector,
+			clearModel,
+			exportEdges,
+			buttonStyles,
+			isExportDisabled,
+		],
 	)
 }
 

@@ -9,7 +9,7 @@ import { memo, useEffect, useState } from 'react'
 import { useRecoilState } from 'recoil'
 
 import type {
-	DECIParams,
+	DECIAlgorithmParams,
 	DECITrainingOptions,
 } from '../domain/Algorithms/DECI.js'
 import { DeciParamsState } from '../state/atoms/algorithms_params.js'
@@ -17,6 +17,7 @@ import { DeciAteParams } from './DeciAteParams.js'
 import { DeciModelParams } from './DeciModelParams.js'
 import { defaultTrainingSpinningOptions } from './DeciParams.constants.js'
 import {
+	useOnChangeATEDetails,
 	useOnChangeBooleanOption,
 	useOnChangeCateOption,
 	useOnChangeChoiceGroupOption,
@@ -31,7 +32,7 @@ export const DeciParams: React.FC = memo(function DeciParams() {
 	const [deciParams, setDeciParams] = useState(stateDeciParams)
 
 	const updateState = useDebounceFn(
-		(value: DECIParams) => {
+		(value: DECIAlgorithmParams) => {
 			setStateDeciParams(value)
 		},
 		{ wait: 500 },
@@ -46,6 +47,7 @@ export const DeciParams: React.FC = memo(function DeciParams() {
 	const onChangeChoiceGroupOption = useOnChangeChoiceGroupOption(setDeciParams)
 	const onChangeNumberListOptions = useOnChangeNumberListOption(setDeciParams)
 	const onChangeCate = useOnChangeCateOption(setDeciParams)
+	const onChangeATEDetails = useOnChangeATEDetails(setDeciParams)
 
 	return (
 		<Container>
@@ -55,9 +57,11 @@ export const DeciParams: React.FC = memo(function DeciParams() {
 						label={x.label}
 						key={x.inputProps?.name}
 						labelPosition={Position.top}
-						value={deciParams?.training_options?.[
-							x.inputProps?.name as keyof DECITrainingOptions
-						]?.toString()}
+						value={
+							deciParams?.training_options?.[
+								x.inputProps?.name as keyof DECITrainingOptions
+							]?.toString() || x.defaultValue
+						}
 						onChange={(_, val?: string) =>
 							onChangeNumberOption('training_options', val, x.inputProps?.name)
 						}
@@ -94,6 +98,7 @@ export const DeciParams: React.FC = memo(function DeciParams() {
 						<DeciAteParams
 							onChangeNumber={onChangeNumberOption}
 							onChangeBoolean={onChangeBooleanOption}
+							onChangeATEDetails={onChangeATEDetails}
 							values={deciParams}
 						/>
 					</PivotItem>

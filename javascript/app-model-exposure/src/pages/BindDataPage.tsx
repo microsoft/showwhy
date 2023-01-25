@@ -2,6 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import { useHelpOnMount } from '@datashaper/app-framework'
 import { ArqueroDetailsList, ArqueroTableHeader } from '@datashaper/react'
 import { TableMenuBar } from '@showwhy/app-common'
 import type { FC } from 'react'
@@ -21,13 +22,16 @@ import {
 	NoticeContainer,
 	PrepareDataContainer,
 } from './BindDataPage.styles.js'
+import type { ExposurePageProps } from './types.js'
 
-interface BindDataPageProps {
+interface BindDataPageProps extends ExposurePageProps {
 	setError?: (message?: string) => void
 }
+
 export const BindDataPage: FC<BindDataPageProps> = memo(function BindDataPage({
 	setError,
 }) {
+	useHelpOnMount('exposure.bind')
 	const commandBar = useCommandBar()
 
 	const { onSelectTableId, selectedTableName, selectedTable } = useBindData()

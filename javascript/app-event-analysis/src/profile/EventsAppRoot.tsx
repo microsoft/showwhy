@@ -32,19 +32,19 @@ import {
 } from '../state/index.js'
 import type { EventAnalysisResource } from './EventAnalysisResource.js'
 
-export const EventsAppRoot: React.FC<{ resource: EventAnalysisResource }> = memo(
-	function EventsAppRoot({ resource }) {
-		return (
-			<RecoilBasedProfileHost
-				resource={resource}
-				loadState={loadState}
-				saveState={saveState}
-			>
-				<App />
-			</RecoilBasedProfileHost>
-		)
-	},
-)
+export const EventsAppRoot: React.FC<{
+	resource: EventAnalysisResource
+}> = memo(function EventsAppRoot({ resource }) {
+	return (
+		<RecoilBasedProfileHost
+			resource={resource}
+			loadState={loadState}
+			saveState={saveState}
+		>
+			<App />
+		</RecoilBasedProfileHost>
+	)
+})
 
 function loadState(resource: EventAnalysisResource, { set }: MutableSnapshot) {
 	set(RawDataState, resource.rawData)

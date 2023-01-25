@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Optional, Tuple, Union
 
 from pydantic import BaseModel
 
@@ -53,6 +53,12 @@ class NormalizedColumnMetadata(BaseModel):
 class DatasetStatistics(BaseModel):
     number_of_dropped_rows: int
     number_of_rows: int
+
+
+class ATEDetails(BaseModel):
+    reference: Optional[Union[float, str]] = None
+    intervention: Optional[Union[float, str]] = None
+    nature: Optional[CausalVariableNature] = None
 
 
 _causal_var_nature_to_causica_var_type = {

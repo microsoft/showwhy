@@ -1,0 +1,3 @@
+# ShowWhy
+
+This application provides an interactive user experience for constructing causal experiments. As you navigate the app, there are facilities to load and prepare data, build domain models using [causal discovery](./discover/index.md), execute [causal inference](./exposure/index.md) algorithms to understand the effects of exposure, and analyze the impact of interventions [over time](./events/index.md).

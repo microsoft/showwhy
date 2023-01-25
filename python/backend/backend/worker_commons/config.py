@@ -1,4 +1,3 @@
-import logging
 import os
 from datetime import timedelta
 
@@ -24,5 +23,4 @@ def get_default_expires_after():
     if expires_after:
         return timedelta(hours=int(expires_after))
     else:
-        logging.info("Using default of 8 hours for DEFAULT_EXPIRES_AFTER_HOURS")
         return timedelta(hours=8)

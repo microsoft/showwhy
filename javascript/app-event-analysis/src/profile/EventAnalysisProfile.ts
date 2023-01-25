@@ -9,6 +9,7 @@ import type {
 import { CommandBarSection } from '@datashaper/app-framework'
 import type { DataPackage } from '@datashaper/workflow'
 import type { IContextualMenuItem } from '@fluentui/react'
+import content from '@showwhy/guidance'
 
 import { EVENTS_PROFILE } from './constants.js'
 import { EventAnalysisResource } from './EventAnalysisResource.js'
@@ -60,5 +61,9 @@ export class EventAnalysisProfile
 				},
 			]
 		}
+	}
+
+	public getHelp() {
+		return content
 	}
 }

@@ -23,7 +23,8 @@ import { Container, Content } from './ModelExposurePage.styles.js'
 import type { ModelExposurePageProps } from './ModelExposurePage.types.js'
 
 export const ModelExposurePage: React.FC<ModelExposurePageProps> = memo(
-	function ModelExposurePage({ href }) {
+	function ModelExposurePage({ href, api }) {
+		
 		const scrollRef = useRef<HTMLElement>(null)
 		const question = useCausalQuestion()
 		const navigate = useNavigate()
@@ -81,14 +82,11 @@ export const ModelExposurePage: React.FC<ModelExposurePageProps> = memo(
 							</MessageContainer>
 						) : null}
 						<Routes>
-							<Route element={<DefineDomainModelPage />} index />
-							<Route path="define" element={<DefineDomainModelPage />} />
-							<Route path="build" element={<BuildDomainModelPage />} />
-							<Route
-								path="bind"
-								element={<BindDataPage setError={setError} />}
-							/>
-							<Route path="analyze" element={<AnalyzeTestPage />} />
+							<Route element={<DefineDomainModelPage api={api} />} index />
+							<Route path="define" element={<DefineDomainModelPage api={api} />} />
+							<Route path="build" element={<BuildDomainModelPage api={api} />} />
+							<Route path="bind" element={<BindDataPage api={api} setError={setError} />} />
+							<Route path="analyze" element={<AnalyzeTestPage api={api} />} />
 						</Routes>
 					</Content>
 				</Xwrapper>

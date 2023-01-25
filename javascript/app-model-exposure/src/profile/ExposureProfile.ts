@@ -9,6 +9,7 @@ import type {
 import { CommandBarSection } from '@datashaper/app-framework'
 import type { DataPackage } from '@datashaper/workflow'
 import type { IContextualMenuItem } from '@fluentui/react'
+import content from '@showwhy/guidance'
 
 import { EXPOSURE_PROFILE } from './constants.js'
 import { ExposureAppRoot } from './ExposureAppRoot.js'
@@ -53,5 +54,9 @@ export class ExposureProfile implements ProfilePlugin<ExposureResource> {
 				},
 			]
 		}
+	}
+
+	public getHelp() {
+		return content
 	}
 }

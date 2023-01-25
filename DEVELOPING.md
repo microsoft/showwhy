@@ -1,8 +1,12 @@
 # Developing ShowWhy
 
+ShowWhy is a multi-language monorepo consisting of Python backend services in the `python/` folder and JavaScript packages in the `javascript/` directory. Our JavaScript packages use [`yarn`](https://yarnpkg.com/) for dependency management and monorepo orchestration. Our backend uses `poetry` for dependency management scripting. 
+
+Because there are a few moving parts in this system, especially in the backend, we use `docker-compose` day-to-day to start up the system. Some developers run the frontend and backend with docker `docker-compose up` and some just run the backend in docker-compose and use yarn directly for running the frontend.
+
 ## Prerequisite Software
 
-**At the moment, it doesn't work with Apple M1 processors. We're verifying the issue and will provide an update in the future releases.**
+**ShowWhy does not currently work with Apple silicon. This is because of issues in transitive dependencies, primarily TensorFlow.**
 
 - [Docker](https://docs.docker.com/get-docker/)
 - [Node 16.x](https://nodejs.org)
@@ -13,6 +17,8 @@
 - Python dev headers (`apt-get install libpython3.8-dev libpython3.9-dev`)
 
 # Getting Started
+
+## Overview
 
 Before anything you will need to install the proper dependencies and build the frontend code:
 
@@ -53,3 +59,13 @@ yarn test # run tests
 yarn typecheck # perform typechecking
 yarn ci # perform the full verification suite
 ```
+
+# Architecture
+
+The large pieces of ShowWhy are the React-based frontend, which is built using our [`datashaper app-framework`](https://github.com/microsoft/datashaper). This is a resource-centric app framework that allows us to build a single-page application that can be used to explore and analyze data. The framework emphasizes using in-memory datasets via `arquero`.
+
+The frontend is built using React and Typescript, and is bundled using Webpack. Each application is a separate package, and the packages are managed using yarn workspaces. These applications export a `Resource Profile`, which a reactive JSON object that represents that application's state and associated configuration. Each `Resource Profile` can be serialized and deserialized to JSON and read from an archive. This allows us to save and load the state of the application, and we can create multiple instances of applications for comparative purposes.
+
+The backend is built using Python and provides RESTful services for the frontend via FastAPI. The backend can also be run in 'worker' mode to support worker-based execution of long-running tasks, such as expensive Causal Discovery executions. State for these long-running tasks is stored in a Redis database.
+
+Our application can be deployed in a variety of ways, but we deploy it using Kubernetes. See the [deployment documentation](./docs/deployment/README.md) for more information.

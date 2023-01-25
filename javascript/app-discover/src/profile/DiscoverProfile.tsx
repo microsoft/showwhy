@@ -9,6 +9,7 @@ import type {
 import { CommandBarSection } from '@datashaper/app-framework'
 import type { DataPackage } from '@datashaper/workflow'
 import type { IContextualMenuItem } from '@fluentui/react'
+import content from '@showwhy/guidance'
 
 import { DiscoverAppRoot } from './DiscoverAppRoot.js'
 import { DiscoverResource } from './DiscoverResource.js'
@@ -53,5 +54,10 @@ export class DiscoverProfile implements ProfilePlugin<DiscoverResource> {
 				},
 			]
 		}
+	}
+
+	public getHelp() {
+		console.log(content)
+		return content
 	}
 }

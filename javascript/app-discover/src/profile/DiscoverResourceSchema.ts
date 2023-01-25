@@ -5,7 +5,9 @@
 import type { ResourceSchema } from '@datashaper/schema'
 
 import type { GraphViewStates } from '../components/graph/GraphViews.types.js'
-import type { DECIParams } from '../domain/Algorithms/DECI.js'
+import type { DECIAlgorithmParams } from '../domain/Algorithms/DECI.js'
+import type { NotearsAlgorithmParams } from '../domain/Algorithms/Notears.js'
+import type { PCAlgorithmParams } from '../domain/Algorithms/PC.js'
 import type { CausalDiscoveryAlgorithm } from '../domain/CausalDiscovery/CausalDiscoveryAlgorithm.js'
 import type { CausalDiscoveryConstraints } from '../domain/CausalDiscovery/CausalDiscoveryConstraints.js'
 import type { CausalDiscoveryNormalization } from '../domain/CausalDiscovery/CausalDiscoveryNormalization.js'
@@ -39,6 +41,8 @@ export interface DiscoverResourceSchema extends ResourceSchema {
 		correlationThreshold: number
 		view: GraphViewStates
 		normalization: CausalDiscoveryNormalization
-		deciParams: DECIParams
+		notearsParams: NotearsAlgorithmParams
+		deciParams: DECIAlgorithmParams
+		pcParams: PCAlgorithmParams
 	}
 }

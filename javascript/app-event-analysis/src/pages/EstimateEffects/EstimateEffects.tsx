@@ -2,8 +2,9 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import { useHelpOnMount } from '@datashaper/app-framework'
 import { Label, PrimaryButton, Spinner, SpinnerSize } from '@fluentui/react'
-import React, { memo, useCallback, useMemo, useState } from 'react'
+import { memo, useCallback, useMemo, useState } from 'react'
 
 import { ChartOptionsGroup } from '../../components/ChartOptionsGroup.js'
 import { EffectResultPane } from '../../components/EffectResultPane/index.js'
@@ -39,6 +40,7 @@ import { ErrorIcon } from './EstimateEffects.styles.js'
 import { processSynthControlData } from './EstimateEffects.utils.js'
 
 export const EstimateEffects: React.FC = memo(function EstimateEffects() {
+	useHelpOnMount('events.estimate')
 	const [isLoading, setIsLoading] = useState(false)
 
 	const columnMapping = useColumnMappingValueState()

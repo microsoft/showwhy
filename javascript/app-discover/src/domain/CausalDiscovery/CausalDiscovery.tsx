@@ -13,7 +13,7 @@ import type { Dataset } from '../../domain/Dataset.js'
 import type { CausalGraph } from '../../domain/Graph.js'
 import type { Relationship } from '../../domain/Relationship.js'
 import { CancelablePromise } from '../../utils/CancelablePromise.js'
-import type { DECIParams } from '../Algorithms/DECI.js'
+import type { AlgorithmParams } from '../Algorithms/AlgorithmParams.js'
 import { CausalDiscoveryAlgorithm } from './CausalDiscoveryAlgorithm.js'
 import type { CausalDiscoveryConstraints } from './CausalDiscoveryConstraints.js'
 import type { CausalDiscoveryNormalization } from './CausalDiscoveryNormalization.js'
@@ -67,6 +67,7 @@ export function fromCausalDiscoveryResults(
 		isDag: results.is_dag,
 		hasConfidenceValues: results.has_confidence_values,
 		interventionModelId: results.intervention_model_id,
+		ateDetailsByName: results.ate_details_by_name,
 	}
 }
 
@@ -105,7 +106,7 @@ export function discover(
 	algorithmName: CausalDiscoveryAlgorithm,
 	normalization: CausalDiscoveryNormalization,
 	progressCallback?: DiscoverProgressCallback,
-	paramOptions?: DECIParams,
+	algorithmParams?: AlgorithmParams,
 ): CausalDiscoveryResultPromise {
 	if (algorithmName === CausalDiscoveryAlgorithm.None) {
 		return empty_discover_result_promise(variables, constraints, algorithmName)
@@ -128,7 +129,7 @@ export function discover(
 				with_mean: normalization.withMeanEnabled,
 				with_std: normalization.withStdEnabled,
 			},
-			...paramOptions,
+			...algorithmParams,
 		}),
 		progressCallback,
 	)
