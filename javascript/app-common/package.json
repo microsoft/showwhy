@@ -13,8 +13,8 @@
 		"clean": "essex clean",
 		"build": "tsc --noEmit",
 		"typecheck": "yarn build",
-		"lint_fix": "essex lint --fix",
-		"lint": "essex lint"
+		"fix": "essex fix",
+		"check": "essex check"
 	},
 	"dependencies": {
 		"@datashaper/app-framework": "0.4.0",

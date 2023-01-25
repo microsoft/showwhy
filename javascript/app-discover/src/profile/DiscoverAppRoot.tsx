@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { type AppServices, RecoilBasedProfileHost , useHelpOnMount} from '@datashaper/app-framework'
+import { RecoilBasedProfileHost , useHelpOnMount} from '@datashaper/app-framework'
 import { memo, Suspense } from 'react'
 import type { MutableSnapshot, Snapshot } from 'recoil'
 

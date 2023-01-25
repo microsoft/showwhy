@@ -2,8 +2,8 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { memo, useEffect } from 'react'
 import { useHelpOnMount } from '@datashaper/app-framework'
+import { memo, useEffect } from 'react'
 
 import { Container } from './AnalyzeTestPage.styles.js'
 import { AnalyzeTestPageEffects } from './AnalyzeTestPageEffects.js'

@@ -23,16 +23,16 @@
 			"dependsOn": [],
 			"outputs": []
 		},
-		"lint": {
+		"check": {
 			"dependsOn": [],
 			"outputs": []
 		},
-		"lint_fix": {
+		"fix": {
 			"dependsOn": [],
 			"outputs": []
 		},
 		"ci": {
-			"dependsOn": ["assets", "typecheck", "build", "lint", "test"],
+			"dependsOn": ["assets", "typecheck", "build", "check", "test"],
 			"outputs": [
 				"dist/**",
 				"docs/**",

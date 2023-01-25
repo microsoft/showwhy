@@ -2,9 +2,9 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import { useHelpOnMount } from '@datashaper/app-framework'
 import { ArqueroDetailsList, ArqueroTableHeader } from '@datashaper/react'
 import { TableMenuBar } from '@showwhy/app-common'
-import { useHelpOnMount } from '@datashaper/app-framework'
 import type { FC } from 'react'
 import { memo } from 'react'
 

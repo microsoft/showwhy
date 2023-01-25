@@ -2,9 +2,9 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+import { useHelpOnMount } from '@datashaper/app-framework'
 import { RadioButtonCard } from '@showwhy/app-common'
 import { memo } from 'react'
-import { useHelpOnMount } from '@datashaper/app-framework'
 
 import { CausalEffectsArrows } from '../components/CausalEffectsArrows.js'
 import { DetailsList } from '../components/DetailsList.js'
