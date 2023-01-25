@@ -1,0 +1,9 @@
+releases:
+  "@showwhy/app-common": patch
+  "@showwhy/discover-app": patch
+  "@showwhy/event-analysis-app": patch
+  "@showwhy/guidance": patch
+  "@showwhy/model-exposure-app": patch
+  "@showwhy/stories": patch
+  "@showwhy/webapp": patch
+  showwhy: patch
