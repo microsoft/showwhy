@@ -22,7 +22,7 @@ import {
 } from '../atoms/ui.js'
 import { FilteredCorrelationsState } from '../selectors/correlations.js'
 
-export function useDownloadEdges(causalGraph: CausalGraph): () => void {
+export function useDownloadGraph(causalGraph: CausalGraph): () => void {
 	const weightThreshold = useRecoilValue(WeightThresholdState)
 	const confidenceThreshold = useRecoilValue(ConfidenceThresholdState)
 	const relationships = Graph.relationshipsAboveThresholds(
@@ -51,7 +51,11 @@ export function useDownloadEdges(causalGraph: CausalGraph): () => void {
 
 		const table = aq.from(report)
 		const blob = new Blob([table.toCSV()])
-		download(`edges-${new Date().toLocaleString()}.csv`, 'text/csv', blob)
+		download(
+			`causal-graph-${new Date().toLocaleString()}.csv`,
+			'text/csv',
+			blob,
+		)
 	}, [
 		correlations,
 		selectedCausalDiscoveryAlgorithm,
