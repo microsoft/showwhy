@@ -35,5 +35,5 @@ jobs:
 
       - name: publish chart to acr
         run: |
-          export CHART_VERSION=$(grep 'version:' ./example-chart/Chart.yaml | tail -n1 | awk '{ print $2}')
+          export CHART_VERSION=$(grep 'version:' ./config/helm/causal-services/Chart.yaml | tail -n1 | awk '{ print $2}')
           helm push causal-services-${CHART_VERSION}.tgz oci://${{ env.GCR_IMAGE }}
