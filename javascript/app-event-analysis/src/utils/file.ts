@@ -9,10 +9,10 @@
 type FileType = 'application/json' | 'text/plain'
 
 export const readFileAsText = async (file: File) => {
-	const promise: Promise<string> = new Promise(resolve => {
+	const promise: Promise<string> = new Promise((resolve) => {
 		const r = new FileReader()
 		r.readAsText(file)
-		r.onload = e => {
+		r.onload = (e) => {
 			const contents = e?.target?.result || ''
 			resolve(contents as string)
 		}

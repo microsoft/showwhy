@@ -41,10 +41,10 @@ export function useEstimatorOptions(
 
 	const onEstimatorsCheckboxChange = useCallback(
 		(estimator: Estimator, refutations: string) => {
-			const confidenceInterval = estimators.some(x => x.confidenceInterval)
-			setEstimators(prev =>
-				prev.map(e => e.type).includes(estimator.type)
-					? prev.filter(e => e.type !== estimator.type)
+			const confidenceInterval = estimators.some((x) => x.confidenceInterval)
+			setEstimators((prev) =>
+				prev.map((e) => e.type).includes(estimator.type)
+					? prev.filter((e) => e.type !== estimator.type)
 					: [
 							...prev,
 							{ ...estimator, refutations: +refutations, confidenceInterval },
@@ -62,10 +62,10 @@ export function useEstimatorOptions(
 
 	const verifyDefault = useCallback(() => {
 		if (!estimators.length) return
-		const isChecked = estimators.some(e => e.type === defaultEstimator)
+		const isChecked = estimators.some((e) => e.type === defaultEstimator)
 		if (!isChecked) {
 			const newDefaultEstimator = getEstimatorByRanking(
-				estimators.map(e => e.type),
+				estimators.map((e) => e.type),
 			)
 			changeDefaultEstimator(
 				setDefaultEstimator,
@@ -111,16 +111,16 @@ export function useEstimatorCardList(
 	setPrimarySpecificationConfig: SetterOrUpdater<PrimarySpecificationConfig>,
 ): EstimatorCardOption[] {
 	return useMemo(() => {
-		const list = estimatorGroups.map(type => {
+		const list = estimatorGroups.map((type) => {
 			const { key } = type
 			return {
 				key,
 				title: `${key} models`,
 				description: getShortDescriptionByType(key),
 				list: estimatorsList
-					.filter(e => e.group === key)
-					.map(e => {
-						const estimator = estimators.find(x => x.type === e.type)
+					.filter((e) => e.group === key)
+					.map((e) => {
+						const estimator = estimators.find((x) => x.type === e.type)
 						const checked = !!estimator
 						return {
 							...e,
@@ -162,16 +162,16 @@ export function useVerifyEstimatorGroups(
 	setSelectedEstimatorGroups: Setter<EstimatorGroup[]>,
 ): Handler {
 	return useCallback(() => {
-		estimatorGroups.forEach(item => {
+		estimatorGroups.forEach((item) => {
 			const group: EstimatorGroup = item.key as EstimatorGroup
 			const groupEstimators = estimatorsList
-				.filter(e => e.group === group)
-				.map(e => e.type)
-			const hasEstimators = estimators.some(estimator =>
+				.filter((e) => e.group === group)
+				.map((e) => e.type)
+			const hasEstimators = estimators.some((estimator) =>
 				groupEstimators.includes(estimator.type),
 			)
-			setSelectedEstimatorGroups(prev =>
-				hasEstimators ? [...prev, group] : prev.filter(g => g !== group),
+			setSelectedEstimatorGroups((prev) =>
+				hasEstimators ? [...prev, group] : prev.filter((g) => g !== group),
 			)
 		})
 	}, [estimators, estimatorsList, setSelectedEstimatorGroups])

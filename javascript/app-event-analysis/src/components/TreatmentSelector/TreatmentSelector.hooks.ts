@@ -24,10 +24,10 @@ export function useHandleTreatedUnitChange() {
 			// if newly selected treated unit exist in the list of treated unit, then do not proceed
 			// otherwise, update the list of treated unit with the new selection
 			const oldTreatedUnitIndex = treatedUnits.findIndex(
-				unit => unit === oldTreatedUnit,
+				(unit) => unit === oldTreatedUnit,
 			)
 			const newTreatedUnitIndex = treatedUnits.findIndex(
-				unit => unit === newTreatedUnit,
+				(unit) => unit === newTreatedUnit,
 			)
 			if (newTreatedUnitIndex < 0) {
 				const updatedUnits = clone(treatedUnits)
@@ -47,7 +47,7 @@ export function useHandleTreatmentDateChange() {
 	return useCallback(
 		(treatmentDate: number, treatedUnit: string) => {
 			const treatedUnitIndex = treatedUnits.findIndex(
-				unit => unit === treatedUnit,
+				(unit) => unit === treatedUnit,
 			)
 			const updatedPeriods = clone(treatmentStartDates)
 			updatedPeriods[treatedUnitIndex] = treatmentDate
@@ -67,9 +67,9 @@ export function useHandleRemoveTreatmentUnit() {
 	return useCallback(
 		(treatedUnit: string) => {
 			const treatedUnitIndex = treatedUnits.findIndex(
-				unit => unit === treatedUnit,
+				(unit) => unit === treatedUnit,
 			)
-			const updatedUnits = treatedUnits.filter(unit => unit !== treatedUnit)
+			const updatedUnits = treatedUnits.filter((unit) => unit !== treatedUnit)
 			const updatedPeriods = clone(treatmentStartDates)
 			updatedPeriods.splice(treatedUnitIndex, 1) // remove at index
 			setTreatedUnits(updatedUnits)
@@ -86,7 +86,7 @@ export function useHandleRemoveTreatmentUnit() {
 					const updatedOutputRes = cloneDeep(outputRes)
 					setOutputRes({
 						...updatedOutputRes,
-						outputs: updatedOutputRes.outputs.filter(output =>
+						outputs: updatedOutputRes.outputs.filter((output) =>
 							treatedUnits.includes(output.unit),
 						),
 					})
@@ -115,8 +115,8 @@ export function useAddNewTreatedUnit(data: ProcessedInputData) {
 			let updatedPeriods: number[] = []
 			if (treatedUnits.length) {
 				// pick next untreated unit
-				const controlUnits = data.uniqueUnits.filter(unit =>
-					treatedUnits.every(tUnit => unit !== tUnit),
+				const controlUnits = data.uniqueUnits.filter((unit) =>
+					treatedUnits.every((tUnit) => unit !== tUnit),
 				)
 				updatedUnits = [...treatedUnits, controlUnits[0]]
 				updatedPeriods = [...treatmentStartDates, treatmentStartDates[0]]

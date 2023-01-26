@@ -34,11 +34,11 @@ export function useGetNotebookData(): () => Promise<Maybe<Blob>> {
 		if (!estimateProps) return
 
 		const taskIdsSignificance = significanceTest.find(
-			x => x.taskId === defaultRun?.id,
+			(x) => x.taskId === defaultRun?.id,
 		)?.taskIds
 
 		let results =
-			defaultEstimateResponse?.results?.filter(x =>
+			defaultEstimateResponse?.results?.filter((x) =>
 				taskIdsSignificance?.includes(x.id),
 			) || ([] as EstimateIdentifier[])
 		if (!defaultEstimateResponse && defaultDatasetResult) {
@@ -66,7 +66,7 @@ export function useGetNotebookData(): () => Promise<Maybe<Blob>> {
 		} as NotebookRequest
 		// eslint-disable-next-line
 		const response = await api.generateNotebook(requestData)
-		const type = { type: `application/json` }
+		const type = { type: 'application/json' }
 		return new Blob([JSON.stringify(response)], type)
 	}, [
 		estimateProps,

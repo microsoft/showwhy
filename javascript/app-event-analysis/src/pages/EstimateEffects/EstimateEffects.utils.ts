@@ -17,7 +17,7 @@ export function processSynthControlData(
 	// extract synth controls for the output from each treated unit
 	const synthControlData: SynthControlData = {}
 
-	allOutputData.forEach(oData => {
+	allOutputData.forEach((oData) => {
 		const outputData = oData as OutputData
 		const treatedUnit = outputData.treatedUnit
 		const scWeightedUnits: SyntheticControlUnit[] = []
@@ -30,7 +30,7 @@ export function processSynthControlData(
 				scUnits = [scUnits]
 			}
 			scUnits.forEach((unit, indx) => {
-				if (checkedUnits !== null && checkedUnits.has(unit)) {
+				if (checkedUnits?.has(unit)) {
 					const weight = scWeights[indx]
 					scWeightedUnits.push({ unit, weight })
 				}

@@ -38,10 +38,12 @@ export function useUploadFile(
 
 		if (allColumns) {
 			const existingColumns = output.columnNames()
-			const unusedColumns = existingColumns.filter(c => !allColumns.includes(c))
+			const unusedColumns = existingColumns.filter(
+				(c) => !allColumns.includes(c),
+			)
 			output = output?.select(not(unusedColumns))
 		}
-		const files = await uploadOutputFile(output).catch(err => {
+		const files = await uploadOutputFile(output).catch((err) => {
 			setErrors(
 				//eslint-disable-next-line
 				(err.message as string) ||

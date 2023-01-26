@@ -30,8 +30,7 @@ export class DECIReportGenerator extends ReportGenerator {
 			relationship.source,
 			relationship.target,
 		)
-		const ate =
-			ATEDetailsByName && ATEDetailsByName[relationship?.source.columnName]
+		const ate = ATEDetailsByName?.[relationship?.source.columnName]
 		const isNatureCategorical = isCategorical(ate?.nature)
 
 		return {

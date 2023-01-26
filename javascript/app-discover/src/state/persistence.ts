@@ -21,12 +21,12 @@ export const PersistedInfoState = selector<object>({
 	},
 	set({ set, reset }, newValue) {
 		if (newValue instanceof DefaultValue) {
-			persistedInfoKeys.forEach(key => reset(key))
+			persistedInfoKeys.forEach((key) => reset(key))
 			return
 		}
 
 		for (const [key, value] of Object.entries(newValue)) {
-			const currentKey = persistedInfoKeys.find(k => k.key === key)
+			const currentKey = persistedInfoKeys.find((k) => k.key === key)
 			if (currentKey) {
 				set(currentKey, value)
 			}

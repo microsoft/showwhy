@@ -46,7 +46,7 @@ interface FieldProps {
 const Fields: FC<FieldProps> = memo(function Fields({ columnName, onAdd }) {
 	const definitions = Object.entries(DefinitionType)
 	const factors = Object.entries(CausalFactorType)
-	const options: IDropdownOption[] = [...definitions, ...factors].map(op => {
+	const options: IDropdownOption[] = [...definitions, ...factors].map((op) => {
 		return { key: op[1], text: upperFirst(op[1]) }
 	})
 	const [variable, setVariable] = useState(columnName)
@@ -84,7 +84,7 @@ const Fields: FC<FieldProps> = memo(function Fields({ columnName, onAdd }) {
 			)}
 			<ButtonContainer>
 				<DefaultButton
-					disabled={!variable || !type}
+					disabled={!(variable && type)}
 					onClick={() => onAdd(variable, type as DefinitionType, degree)}
 				>
 					Add

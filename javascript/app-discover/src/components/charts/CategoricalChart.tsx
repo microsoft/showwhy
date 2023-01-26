@@ -27,7 +27,9 @@ export const CategoricalChart: React.FC<ChartProps> = memo(
 			variable.nature === VariableNature.CategoricalNominal
 				? column
 				: // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-				  column.params({ map: variable.mapping }).derive(remapping)
+				  column
+						.params({ map: variable.mapping })
+						.derive(remapping)
 		const preparedData: RowObject[] = mappedData.objects()
 		const spec: VisualizationSpec = useVisualizationSpec(variable, preparedData)
 		return <Vega mode={'vega'} spec={spec} actions={false} renderer={'svg'} />

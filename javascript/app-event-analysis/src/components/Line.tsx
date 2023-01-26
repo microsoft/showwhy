@@ -26,7 +26,7 @@ export const Line: React.FC<LineProps> = memo(function Line({
 	const dataForPointsAtGapBounds = useDataForPointsAtGapBounds(data)
 
 	const missingDataExist = useMemo(() => {
-		return data.some(d => d.value === null)
+		return data.some((d) => d.value === null)
 	}, [data])
 
 	function renderLine() {

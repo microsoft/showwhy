@@ -22,7 +22,7 @@ export function getDefinitionsByType(
 	type: DefinitionType,
 	definitions: Definition[] = [],
 ): Definition[] {
-	return definitions.filter(x => x.type === type)
+	return definitions.filter((x) => x.type === type)
 }
 
 export function isFullDatasetPopulation(definition: Definition): boolean {

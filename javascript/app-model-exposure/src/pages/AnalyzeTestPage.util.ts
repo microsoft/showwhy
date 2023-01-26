@@ -28,7 +28,7 @@ export function getEstimatorByRanking(
 	estimators: EstimatorType[],
 ): EstimatorType {
 	const ranking = estimators.map(
-		estimator => defaultEstimatorRanking[estimator],
+		(estimator) => defaultEstimatorRanking[estimator],
 	) as number[]
 	const min = Math.min(...ranking)
 	const index = ranking.indexOf(min)
@@ -70,7 +70,7 @@ export const getShortDescriptionByType = (type: string): string => {
 		case EstimatorGroup.Outcome:
 			return ESTIMATORS_SHORT_DESCRIPTION.outcome
 		default:
-			return ``
+			return ''
 	}
 }
 
@@ -84,7 +84,7 @@ export function batchUpdate(
 			setEstimators((prev: Estimator[]) => [
 				...prev,
 				...estimators.filter(
-					estimator => !prev.map(e => e.type).includes(estimator.type),
+					(estimator) => !prev.map((e) => e.type).includes(estimator.type),
 				),
 			])
 			break
@@ -92,7 +92,7 @@ export function batchUpdate(
 			setEstimators((prev: any) =>
 				prev.filter(
 					(estimator: Estimator) =>
-						!estimators.map(e => e.type).includes(estimator.type),
+						!estimators.map((e) => e.type).includes(estimator.type),
 				),
 			)
 			break
@@ -102,7 +102,7 @@ export function batchUpdate(
 }
 
 export async function getOutputTable(): Promise<TableContainer> {
-	const result = await fetch('/data/output_table.csv').then(r => r.text())
+	const result = await fetch('/data/output_table.csv').then((r) => r.text())
 	const table = fromCSV(result)
 	return {
 		id: 'output_table.csv',

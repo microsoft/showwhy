@@ -14,12 +14,12 @@ export function updateListTypes(
 	type: Maybe<DefinitionType>,
 ): Definition[] {
 	const isPrimary = definitions?.find(
-		d => d.type === type && d.level === CausalityLevel.Primary,
+		(d) => d.type === type && d.level === CausalityLevel.Primary,
 	)
 
 	let result = definitions ? [...definitions] : []
 	if (isPrimary) {
-		result = result.map(d => {
+		result = result.map((d) => {
 			if (d.id === isPrimary.id) {
 				return { ...d, level: CausalityLevel.Secondary }
 			}
@@ -30,7 +30,7 @@ export function updateListTypes(
 }
 
 export function wait(ms: number): Promise<boolean> {
-	return new Promise(resolve => {
+	return new Promise((resolve) => {
 		setTimeout(() => {
 			resolve(true)
 		}, ms)

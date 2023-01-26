@@ -35,8 +35,8 @@ export const Legend: React.FC<LegendProps> = memo(function Legend({
 				.attr('class', 'legendItem')
 				.attr('width', legendItemSize)
 				.attr('height', legendItemSize)
-				.style('fill', d => d.color)
-				.attr('opacity', d => d.opacity || BAR_TRANSPARENT)
+				.style('fill', (d) => d.color)
+				.attr('opacity', (d) => d.opacity || BAR_TRANSPARENT)
 				.attr('transform', (d, i) => {
 					const y = yOffset + (legendItemSize + legendSpacing) * i
 					return `translate(${xOffset}, ${y})`
@@ -50,7 +50,7 @@ export const Legend: React.FC<LegendProps> = memo(function Legend({
 					(d, i) =>
 						yOffset + (legendItemSize + legendSpacing) * i + legendItemSize,
 				)
-				.text(d => d.name)
+				.text((d) => d.name)
 		}
 	}, [ref, data])
 

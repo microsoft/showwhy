@@ -57,7 +57,7 @@ export const CausalInferenceSlider: React.FC<CausalInferenceSliderProps> = memo(
 			: metadata?.upper || 10
 		const result = +(inferenceResult || 0).toFixed(2)
 		const isIntervened = interventions.some(
-			intervention => intervention.columnName === variable.columnName,
+			(intervention) => intervention.columnName === variable.columnName,
 		)
 		const onUpdateInterventions = useOnUpdateInterventions(
 			variable.columnName,

@@ -22,7 +22,7 @@ export function getSdidEstimate(
 	output: PlaceboOutputData,
 ): number {
 	const index =
-		output.output_lines_treated.findIndex(l =>
+		output.output_lines_treated.findIndex((l) =>
 			l[0].unit.includes(treatedUnit),
 		) ?? -1
 	return index >= 0 ? output.sdid_estimates[index] : 0

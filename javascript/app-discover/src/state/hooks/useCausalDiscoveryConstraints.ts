@@ -23,7 +23,7 @@ export function useCausalDiscoveryConstraints(
 		() => ({
 			...userConstraints,
 			manualRelationships: [
-				...userConstraints.manualRelationships.map(x => {
+				...userConstraints.manualRelationships.map((x) => {
 					if (hasSameReason(ManualRelationshipReason.Flipped, x)) {
 						return invertRelationship(x)
 					}

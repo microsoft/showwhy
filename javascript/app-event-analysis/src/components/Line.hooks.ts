@@ -20,7 +20,7 @@ export function usePathDefinitionFunc(
 			) {
 				return d[1] != null
 			})
-			const points = lineData.map(d => {
+			const points = lineData.map((d) => {
 				return [xScale(d.date), d.value != null ? yScale(d.value) : null]
 			}) as Array<[number, number | null]>
 			return line(points)

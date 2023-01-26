@@ -66,7 +66,7 @@ export const CausalGraphExplorer: React.FC<{
 	)
 
 	const correlationsWithoutCausesInModel = correlations
-		.filter(correlation =>
+		.filter((correlation) =>
 			Graph.includesVariables(causalGraph, [
 				correlation.source,
 				correlation.target,
@@ -75,8 +75,8 @@ export const CausalGraphExplorer: React.FC<{
 		// (causalGraph.variables.includes(correlation.source)
 		// && causalGraph.variables.includes(correlation.target)))
 		.filter(
-			correlation =>
-				!causalRelationships.some(relationship =>
+			(correlation) =>
+				!causalRelationships.some((relationship) =>
 					hasSameOrInvertedSourceAndTarget(correlation, relationship),
 				),
 		)
@@ -133,16 +133,18 @@ export const CausalGraphExplorer: React.FC<{
 		</DraggableGraphNode>
 	))
 
-	const correlationEdges = correlationsWithoutCausesInModel.map(correlation => (
-		<CorrelationEdge
-			correlation={correlation}
-			maxEdgeWidth={MAX_EDGE_WIDTH / 2}
-			minEdgeWidth={1}
-			key={correlation.key}
-		/>
-	))
+	const correlationEdges = correlationsWithoutCausesInModel.map(
+		(correlation) => (
+			<CorrelationEdge
+				correlation={correlation}
+				maxEdgeWidth={MAX_EDGE_WIDTH / 2}
+				minEdgeWidth={1}
+				key={correlation.key}
+			/>
+		),
+	)
 
-	const causalEdges = causalRelationships.map(relationship => {
+	const causalEdges = causalRelationships.map((relationship) => {
 		return (
 			<CausalEdge
 				relationship={relationship}

@@ -16,7 +16,7 @@ export function useSetTargetDefinition(
 			const all: Definition[] = [...definitions]
 
 			const newDefinition = {
-				...all?.find(x => x.id === selectedDefinitionId),
+				...all?.find((x) => x.id === selectedDefinitionId),
 			} as Definition
 
 			if (newDefinition) {

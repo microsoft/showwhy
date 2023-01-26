@@ -15,8 +15,8 @@ export function useOnChangeNumberInObject<T>(
 ): onChangeStringInObjectFn {
 	return useCallback(
 		(val?: string, name?: string) => {
-			if (!val || !name) return
-			onSetParams(curr => ({
+			if (!(val && name)) return
+			onSetParams((curr) => ({
 				...curr,
 				[name]: +val,
 			}))
@@ -30,8 +30,8 @@ export function useOnChangeStringInObject<T>(
 ): onChangeStringInObjectFn {
 	return useCallback(
 		(val?: string, name?: string) => {
-			if (!val || !name) return
-			onSetParams(curr => ({
+			if (!(val && name)) return
+			onSetParams((curr) => ({
 				...curr,
 				[name]: val,
 			}))

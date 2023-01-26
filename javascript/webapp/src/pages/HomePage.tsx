@@ -21,8 +21,8 @@ import type { HomePageProps } from './HomePage.types.js'
 
 const HomePage: React.FC<HomePageProps> = memo(function HomePage({ profiles }) {
 	const dataPackage = useDataPackage()
-	const cards = topLevelQuestionCards.map(d => {
-		const profile = profiles.find(p => p.profile === d.key)
+	const cards = topLevelQuestionCards.map((d) => {
+		const profile = profiles.find((p) => p.profile === d.key)
 		if (!profile) {
 			return null
 		}
@@ -30,7 +30,9 @@ const HomePage: React.FC<HomePageProps> = memo(function HomePage({ profiles }) {
 			<DocumentCard
 				key={d.key}
 				onClick={() => {
-					void profile.createInstance?.().then(r => dataPackage.addResource(r))
+					void profile
+						.createInstance?.()
+						.then((r) => dataPackage.addResource(r))
 				}}
 				style={documentCardStyle}
 			>

@@ -45,7 +45,7 @@ export const CausalNode: React.FC<CausalNodeProps> = memo(function CausalNode({
 			return
 		}
 		const newInModelVariables = inModelVariables.filter(
-			inModelVariable => !isEqual(inModelVariable, variable),
+			(inModelVariable) => !isEqual(inModelVariable, variable),
 		)
 		setInModelVariables(newInModelVariables)
 	}, [wasDragged, inModelVariables, variable, setInModelVariables])

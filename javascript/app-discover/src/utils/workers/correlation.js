@@ -5,7 +5,7 @@
 /* eslint-disable no-restricted-globals */
 import { agg, fromArrow, op } from 'arquero'
 
-addEventListener('message', e => {
+addEventListener('message', (e) => {
 	const [arrowTable, variablePairs] = e.data
 
 	const table = fromArrow(arrowTable)

@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import type { Theme } from '@fluentui/react';
+import type { Theme } from '@fluentui/react'
 import { Label } from '@fluentui/react'
 import styled from 'styled-components'
 

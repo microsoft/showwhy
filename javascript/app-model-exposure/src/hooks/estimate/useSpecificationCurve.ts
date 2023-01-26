@@ -87,7 +87,7 @@ function useIsConfidenceIntervalDisabled(data: Specification[]): boolean {
 	const defaultRun = useDefaultRun()
 	return useMemo((): boolean => {
 		if (!defaultRun && data) return false
-		return !defaultRun?.estimators.some(r => r.confidenceInterval)
+		return !defaultRun?.estimators.some((r) => r.confidenceInterval)
 	}, [defaultRun, data])
 }
 
@@ -97,7 +97,7 @@ function useHandleShapTicksChange(
 	const config = useSpecificationCurveConfig()
 	const setConfig = useSetSpecificationCurveConfig()
 	return useCallback(
-		checked => {
+		(checked) => {
 			setConfig({
 				...config,
 				shapTicks: isShapDisabled ? false : checked,
@@ -113,7 +113,7 @@ function useHandleConfidenceIntervalTicksChange(
 	const config = useSpecificationCurveConfig()
 	const setConfig = useSetSpecificationCurveConfig()
 	return useCallback(
-		checked => {
+		(checked) => {
 			setConfig({
 				...config,
 				confidenceIntervalTicks: isConfidenceIntervalDisabled ? false : checked,
@@ -145,13 +145,13 @@ function useRefutationKeys(
 ): string[] {
 	return useMemo(() => {
 		if (selectedSpecification) {
-			const keys = Object.keys(selectedSpecification).filter(x =>
+			const keys = Object.keys(selectedSpecification).filter((x) =>
 				x.startsWith('refuter'),
 			)
 
 			const refutationRun = keys.filter(
 				/* eslint-disable-next-line */
-				ref => !isNaN((selectedSpecification as any)[ref]),
+				(ref) => !isNaN((selectedSpecification as any)[ref]),
 			)
 
 			return refutationRun
@@ -169,7 +169,7 @@ function useFailedRefutations(
 			return (
 				refutationKeys.filter(
 					/* eslint-disable-next-line */
-					actualKey => (selectedSpecification as any)[actualKey] === 0,
+					(actualKey) => (selectedSpecification as any)[actualKey] === 0,
 				) || []
 			)
 		}
@@ -198,10 +198,10 @@ function useIsSpecificationOn(
 	const { inactiveSpecifications } = useSpecificationCurveConfig()
 
 	return useMemo(() => {
-		if (!selectedSpecification || !inactiveSpecifications) {
+		if (!(selectedSpecification && inactiveSpecifications)) {
 			return false
 		}
-		return !inactiveSpecifications.find(x => x === selectedSpecification?.id)
+		return !inactiveSpecifications.find((x) => x === selectedSpecification?.id)
 	}, [inactiveSpecifications, selectedSpecification])
 }
 
@@ -216,7 +216,7 @@ function useOnToggleRejectEstimateHandler(
 		const { inactiveSpecifications = [] } = config
 		if (selectedSpecification) {
 			const newInactive = inactiveSpecifications.filter(
-				s => s !== selectedSpecification?.id,
+				(s) => s !== selectedSpecification?.id,
 			)
 
 			if (isSpecificationOn) {

@@ -68,7 +68,7 @@ export function useFilterDataHandler(isDataLoaded: boolean) {
 			// if any of the treatment start dates outside the date range of the date,
 			//  move it to the middle of the data range
 			const tempDate: number[] = []
-			treatmentStartDates.forEach(date => {
+			treatmentStartDates.forEach((date) => {
 				if (date <= startDate || date >= endDate) {
 					tempDate.push(placeboTreatmentStartDate)
 				} else {
@@ -86,7 +86,7 @@ export function useFilterDataHandler(isDataLoaded: boolean) {
 			setOutputRes(null)
 			setTreatmentStartDatesAfterEstimate(null)
 			//  automatically un-toggle the raw input and hide the synth control and counterfactual
-			setChartOptions(prev => ({
+			setChartOptions((prev) => ({
 				...prev,
 				renderRawData: true,
 				showSynthControl: false,

@@ -51,15 +51,15 @@ export const EstimatorCard: React.FC<{
 	onUpdateEstimatorParams,
 }) {
 	const [refutations, setRefutations] = useState(
-		list.find(v => v.checked)?.refutations?.toString() || '10',
+		list.find((v) => v.checked)?.refutations?.toString() || '10',
 	)
 
 	const debouncedChange = useDebounceFn(
 		(val: string) => {
 			onUpdateEstimatorParams(
 				list
-					.filter(v => v.checked)
-					.map(a => {
+					.filter((v) => v.checked)
+					.map((a) => {
 						return {
 							type: a.type,
 							group: a.group,
@@ -80,7 +80,7 @@ export const EstimatorCard: React.FC<{
 					<Title noMarginTop>{title}</Title>
 					<Description>{description}</Description>
 					<Stack style={{ paddingTop: '10px' }}>
-						{list.map(item => {
+						{list.map((item) => {
 							return (
 								<CheckBoxWrapper
 									key={item.type}
@@ -113,7 +113,7 @@ export const EstimatorCard: React.FC<{
 				<Div>
 					<ContainerFlexRow style={{ alignItems: 'end' }}>
 						<Title noMarginTop>Refutation simulations</Title>
-						<InfoCallout id={'refutation' + uniqueId().toString()}>
+						<InfoCallout id={`refutation${uniqueId().toString()}`}>
 							<Text>{REFUTATION_HELP_TEXT}</Text>
 						</InfoCallout>
 					</ContainerFlexRow>
@@ -121,7 +121,7 @@ export const EstimatorCard: React.FC<{
 						<SpinnerContainer>
 							<SpinButton
 								value={refutations}
-								disabled={!list.some(e => e.checked)}
+								disabled={!list.some((e) => e.checked)}
 								min={1}
 								step={1}
 								onChange={(_, val) => {
@@ -135,21 +135,21 @@ export const EstimatorCard: React.FC<{
 					</ConfigContainer>
 					<ContainerFlexRow style={{ alignItems: 'end' }}>
 						<Title>Confidence intervals</Title>
-						<InfoCallout id={'confidence' + uniqueId().toString()}>
+						<InfoCallout id={`confidence${uniqueId().toString()}`}>
 							<Text>{CONFIDENCE_INTERVAL_HELP_TEXT}</Text>
 						</InfoCallout>
 					</ContainerFlexRow>
 
 					<ConfigContainer>
 						<Checkbox
-							disabled={!list.some(e => e.checked)}
+							disabled={!list.some((e) => e.checked)}
 							label="Compute confidence intervals"
-							checked={list.some(e => e.confidenceInterval)}
+							checked={list.some((e) => e.confidenceInterval)}
 							onChange={(e, val) => {
 								onUpdateEstimatorParams(
 									list
-										.filter(v => v.checked)
-										.map(a => {
+										.filter((v) => v.checked)
+										.map((a) => {
 											return {
 												type: a.type,
 												confidenceInterval: val,
@@ -164,12 +164,12 @@ export const EstimatorCard: React.FC<{
 					<Div>
 						<ContainerFlexRow style={{ alignItems: 'end' }}>
 							<Title noMarginTop>Covariate imbalance threshold</Title>
-							<InfoCallout id={'confidence' + uniqueId().toString()}>
+							<InfoCallout id={`confidence${uniqueId().toString()}`}>
 								<Text>{COVARIATE_HELP_TEXT}</Text>
 							</InfoCallout>
 						</ContainerFlexRow>
 						<ChoiceGroup
-							disabled={!list.some(e => e.checked)}
+							disabled={!list.some((e) => e.checked)}
 							selectedKey={confounderThreshold?.toString()}
 							onChange={onConfounderThresholdChange}
 							options={[
@@ -177,7 +177,7 @@ export const EstimatorCard: React.FC<{
 								{ key: '10', text: 'Medium (10%)' },
 								{ key: '5', text: 'Highly Sensitive (5%)' },
 							]}
-						></ChoiceGroup>
+						/>
 					</Div>
 				)}
 			</Container>

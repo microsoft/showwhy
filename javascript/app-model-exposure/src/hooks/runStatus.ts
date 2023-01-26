@@ -65,7 +65,7 @@ export function useGetRunStatus(defaultRun: Maybe<RunHistory>): RunStatus {
 		} else if (!isStatus(shap?.status, NodeResponseStatus.Success)) {
 			status.percentage = 99
 		} else if (
-			defaultRun?.estimators.some(e => e.confidenceInterval) &&
+			defaultRun?.estimators.some((e) => e.confidenceInterval) &&
 			!isStatus(confidenceInterval?.status, NodeResponseStatus.Success)
 		) {
 			status.percentage = calcPercent(

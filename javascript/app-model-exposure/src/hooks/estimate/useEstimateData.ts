@@ -44,16 +44,16 @@ export function useEstimateData(): Maybe<EstimateData[]> {
 		defaultRun?.id,
 	)
 	return useMemo(() => {
-		return defaultEstimateResponse?.results?.map(effect => {
+		return defaultEstimateResponse?.results?.map((effect) => {
 			const _confidence = confidenceInterval?.results?.find(
-				a => a.estimate_id === effect.id,
+				(a) => a.estimate_id === effect.id,
 			)
 			const _refutations = refutation?.results?.filter(
-				a => a.estimate_id === effect.id,
+				(a) => a.estimate_id === effect.id,
 			)
 			const _shap =
 				shap?.results?.length &&
-				shap?.results[0]?.find(a => a.estimate_id === effect.id)
+				shap?.results[0]?.find((a) => a.estimate_id === effect.id)
 			let _refutation: any = {} // eslint-disable-line
 			if (_refutations) {
 				_refutations.forEach((a: Refutation) => {

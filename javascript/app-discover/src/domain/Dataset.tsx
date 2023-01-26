@@ -85,7 +85,7 @@ export function useDatasetLoader() {
 
 	useEffect(
 		function listenToWorkflowOutput() {
-			const sub = workflow.output$?.subscribe(t => setDiscoveryTable(t))
+			const sub = workflow.output$?.subscribe((t) => setDiscoveryTable(t))
 			return () => sub.unsubscribe()
 		},
 		[workflow, setDiscoveryTable],
@@ -108,7 +108,7 @@ function useWorkflow(table: TableContainer | undefined): Workflow {
 	return useMemo<Workflow>(() => {
 		const res = new Workflow()
 		res.input$ = from([table])
-		steps.forEach(s => res.addStep(s))
+		steps.forEach((s) => res.addStep(s))
 		return res
 	}, [steps, table])
 }
@@ -117,7 +117,7 @@ function useDataProcessingSteps(): StepInput[] {
 	const metadata = useRecoilValue(MetadataState)
 	return useMemo<StepInput[]>(() => {
 		const result: StepInput[] = []
-		metadata.forEach(metadatum => {
+		metadata.forEach((metadatum) => {
 			if (
 				metadatum.nature === VariableNature.CategoricalNominal &&
 				metadatum.min != null &&
@@ -162,7 +162,7 @@ export function variablesForColumnNames(
 	columnNames: string[],
 ) {
 	return columnNames
-		.map(columnName => variableForColumnName(dataset, columnName))
+		.map((columnName) => variableForColumnName(dataset, columnName))
 		.filter((variable): variable is CausalVariable => variable !== undefined)
 }
 
@@ -174,7 +174,7 @@ export function useDataPackageExport() {
 	const metadata = [...baseMetadata, ...derivedMetadata]
 	const datasetName = useRecoilValue(DatasetNameState)
 	const createExport = () => {
-		const outputMetadata = metadata.map(metadatum => ({
+		const outputMetadata = metadata.map((metadatum) => ({
 			...metadatum,
 			mapping:
 				metadatum.mapping === undefined

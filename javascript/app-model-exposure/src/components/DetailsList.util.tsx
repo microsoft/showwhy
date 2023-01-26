@@ -25,7 +25,7 @@ export function onRenderField(props?: IDetailsColumnFieldProps): JSX.Element {
 	)
 }
 
-export const onRenderRow: IDetailsListProps['onRenderRow'] = props => {
+export const onRenderRow: IDetailsListProps['onRenderRow'] = (props) => {
 	const styles: Partial<IDetailsRowStyles> = {
 		cell: {
 			border: '1px solid #fff',
@@ -49,7 +49,7 @@ export const onRenderRow: IDetailsListProps['onRenderRow'] = props => {
 }
 
 export function getColumns(headers: Header[]): IColumn[] {
-	return headers.map(h => ({
+	return headers.map((h) => ({
 		key: h.fieldName,
 		fieldName: h.fieldName,
 		name: h.name,

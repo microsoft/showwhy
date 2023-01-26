@@ -48,12 +48,12 @@ function currentSignificanceTest(
 ): Maybe<SignificanceTestStatus> {
 	if (!defaultRun) return undefined
 	return significanceTest.find(
-		x => x.taskId === defaultRun.id && x.outcome === selectedOutcome,
+		(x) => x.taskId === defaultRun.id && x.outcome === selectedOutcome,
 	)
 }
 
 function isProcessingAny(significanceTest: SignificanceTestStatus[]): boolean {
-	return !!significanceTest.find(x =>
+	return !!significanceTest.find((x) =>
 		isProcessingStatus(x.status as NodeResponseStatus),
 	)
 }

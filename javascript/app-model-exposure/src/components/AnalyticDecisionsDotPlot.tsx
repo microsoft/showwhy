@@ -59,7 +59,7 @@ export const AnalyticDecisionsDotPlot: React.FC<{
 	}, [totalSpecs, width])
 
 	const spec = useMemo(() => {
-		const shapValues = shap.map(s => s.value)
+		const shapValues = shap.map((s) => s.value)
 		const greater = max(shapValues) || 0.1
 		const lowest = min(shapValues) || 0.1
 		const maxDomainValue = Math.max(Math.abs(lowest), Math.abs(greater))
@@ -67,7 +67,7 @@ export const AnalyticDecisionsDotPlot: React.FC<{
 
 		const rawSpec = JSON.parse(templateString)
 		const primarySpecificationId = data.find(
-			d =>
+			(d) =>
 				d.populationType === CausalityLevel.Primary &&
 				d.treatmentType === CausalityLevel.Primary &&
 				d.outcomeType === CausalityLevel.Primary &&
@@ -144,9 +144,9 @@ function useTransformShap(data: Specification[]) {
 			key: string
 			value: number
 		}[] = []
-		shapColumns.forEach(column => {
+		shapColumns.forEach((column) => {
 			const nonSHAP = column.replace('SHAP', '')
-			data.forEach(row => {
+			data.forEach((row) => {
 				const key = (row as any)[nonSHAP]
 				const value = (row as any)[column]
 				output.push({

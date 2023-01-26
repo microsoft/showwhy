@@ -10,8 +10,8 @@ export function returnConfidenceIntervalMapping(
 	estimatedEffect: EstimatedEffect[] | undefined,
 	estimators: Estimator[] | undefined,
 ): string[] | undefined {
-	return estimatedEffect?.flatMap(x =>
-		estimators?.find(e => e.type.toLowerCase() === x.estimator.toLowerCase())
+	return estimatedEffect?.flatMap((x) =>
+		estimators?.find((e) => e.type.toLowerCase() === x.estimator.toLowerCase())
 			?.confidenceInterval
 			? x.id
 			: [],

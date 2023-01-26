@@ -118,9 +118,9 @@ export function useAddOrEditFactorTestable(
 ): (factor: OptionalId<CausalFactor>) => void {
 	return useCallback(
 		(factor: OptionalId<CausalFactor>, factors = causalFactors) => {
-			const exists = factors.find(f => f.id === factor?.id) || {}
+			const exists = factors.find((f) => f.id === factor?.id) || {}
 
-			const existsIndex = factors.findIndex(f => f.id === factor?.id)
+			const existsIndex = factors.findIndex((f) => f.id === factor?.id)
 			const newFactor = {
 				...exists,
 				...factor,

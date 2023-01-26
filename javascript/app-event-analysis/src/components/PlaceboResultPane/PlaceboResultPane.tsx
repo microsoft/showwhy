@@ -32,7 +32,7 @@ export const PlaceboResultPane: React.FC<PlaceboResultPaneProps> = memo(
 			[isLoading, showPlaceboGraphs],
 		)
 		const hoverInfo = useMemo(
-			() => ({ hoverItem, setHoverItem } as HoverInfo),
+			() => ({ hoverItem, setHoverItem }) as HoverInfo,
 			[hoverItem, setHoverItem],
 		)
 

@@ -32,11 +32,12 @@ export function useCannotCalculateEstimate(isCalculatingEstimator: boolean) {
 	//  (note that unit-based placebo does not require a valid treatment date)
 	// also, check that the input data is valid
 	return useMemo(() => {
-		const isInvalid =
-			!validInput ||
-			!validTreatmentDates ||
-			!validTreatedUnits ||
-			!validColumnsMapping
+		const isInvalid = !(
+			validInput &&
+			validTreatmentDates &&
+			validTreatedUnits &&
+			validColumnsMapping
+		)
 		return isInvalid || isCalculatingEstimator
 	}, [
 		isCalculatingEstimator,

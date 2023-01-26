@@ -16,7 +16,7 @@ export const CounterfactualLines: React.FC<CounterfactualLinesProps> = memo(
 		return (
 			<g>
 				{linesData.map((lineProps, index) => (
-					<line key={index} {...lineProps} />
+					<line key={`${lineProps.className}@${index}`} {...lineProps} />
 				))}
 			</g>
 		)

@@ -32,7 +32,7 @@ export function getAcceptedDataType(
 }
 
 function nonNull(data: any[]): any[] {
-	return data.filter(d => d !== null && d !== undefined)
+	return data.filter((d) => d !== null && d !== undefined)
 }
 
 function parseBoolean(value: any): boolean {
@@ -57,12 +57,12 @@ function isBinary(data: any[]): boolean {
 	const filtered = nonNull(data)
 	return (
 		!!filtered.length &&
-		filtered.every(d => parseBoolean(d) === true || parseBoolean(d) === false)
+		filtered.every((d) => parseBoolean(d) === true || parseBoolean(d) === false)
 	)
 }
 function isNumerical(data: any[]): boolean {
 	const filtered = nonNull(data)
-	return !!filtered.length && filtered.every(d => typeof d === 'number')
+	return !!filtered.length && filtered.every((d) => typeof d === 'number')
 }
 function isCategorical(): boolean {
 	// TODO: Find out how to handle categorical data
@@ -70,7 +70,7 @@ function isCategorical(): boolean {
 }
 function isString(data: any[]): boolean {
 	const filtered = nonNull(data)
-	return !!filtered.length && filtered.every(d => typeof d === 'string')
+	return !!filtered.length && filtered.every((d) => typeof d === 'string')
 }
 export function assert(data: any[], type: DataTypes): boolean {
 	switch (type) {

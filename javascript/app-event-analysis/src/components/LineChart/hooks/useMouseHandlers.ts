@@ -104,22 +104,22 @@ function useHandleLineMouseLeave(props: HandleLineMouseClickOrMoveProps) {
 				path.attr('stroke-width', width).attr('opacity', opacity)
 
 				// if non-placebo outline lines are shown, then reset their attributes
-				if (!renderRawData && !isPlaceboSimulation) {
+				if (!(renderRawData || isPlaceboSimulation)) {
 					// leaving hover over a non-placebo output line (either treated or synth-control line)
 					const chart = select('.line-chart')
 					treatedUnits.forEach((treatedUnit: string) => {
 						// treated line
 						const targetLine = chart.selectAll<SVGPathElement, LineData[]>(
-							'.' + getHoverIdFromValue(treatedUnit),
+							`.${getHoverIdFromValue(treatedUnit)}`,
 						)
 						targetLine
 							.attr('stroke-width', OUTPUT_LINE_WIDTH)
 							.attr('opacity', HIGHLIGHT_LINE)
 
 						// synthetic control line that corresponds to treated line
-						const unit = SYNTHETIC_UNIT + ' ' + treatedUnit
+						const unit = `${SYNTHETIC_UNIT} ${treatedUnit}`
 						const targetLine2 = chart.selectAll<SVGPathElement, LineData[]>(
-							'.' + getHoverIdFromValue(unit),
+							`.${getHoverIdFromValue(unit)}`,
 						)
 						targetLine2
 							.attr('stroke-width', OUTPUT_LINE_WIDTH)
@@ -186,7 +186,7 @@ function useHandleLineMouseClickOrMove(props: HandleLineMouseClickOrMoveProps) {
 			}
 
 			if (!showMeanTreatmentEffect) {
-				if (!renderRawData && !isPlaceboSimulation && data.length > 0) {
+				if (!(renderRawData || isPlaceboSimulation) && data.length > 0) {
 					//
 					// hovering over an output line (either treated or synth-control line)
 					//
@@ -200,15 +200,15 @@ function useHandleLineMouseClickOrMove(props: HandleLineMouseClickOrMoveProps) {
 					treatedUnits.forEach((treatedUnit: string) => {
 						if (unit !== treatedUnit) {
 							const targetLine = chart.selectAll<SVGPathElement, LineData[]>(
-								'.' + getHoverIdFromValue(treatedUnit),
+								`.${getHoverIdFromValue(treatedUnit)}`,
 							)
 							targetLine
 								.attr('stroke-width', LINE_WIDTH)
 								.attr('opacity', OUTPUT_LINE)
 							// synthetic control line that corresponds to treated line
-							const sunit = SYNTHETIC_UNIT + ' ' + treatedUnit
+							const sunit = `${SYNTHETIC_UNIT} ${treatedUnit}`
 							const targetLine2 = chart.selectAll<SVGPathElement, LineData[]>(
-								'.' + getHoverIdFromValue(sunit),
+								`.${getHoverIdFromValue(sunit)}`,
 							)
 							targetLine2
 								.attr('stroke-width', LINE_WIDTH)
@@ -268,7 +268,7 @@ function useHandleLineMouseClick(props: HandleLineMouseClickOrMoveProps) {
 		(event: React.MouseEvent) => {
 			handleLineMouseClickOrMove(event, true)
 
-			if (!renderRawData && !isPlaceboSimulation && !showMeanTreatmentEffect) {
+			if (!(renderRawData || isPlaceboSimulation || showMeanTreatmentEffect)) {
 				event.stopPropagation()
 				const path = select<SVGElement, LineData[]>(event.target as SVGElement)
 				const data = path.datum()

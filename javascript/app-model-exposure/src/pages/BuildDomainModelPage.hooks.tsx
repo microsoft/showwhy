@@ -33,8 +33,8 @@ function useSaveFactors(
 ): (id: string, value: Cause) => void {
 	return useCallback(
 		(id: string, newValue: Cause) => {
-			const index = causalFactors.findIndex(v => v.id === id)
-			const oldFactor = causalFactors.find(x => x.id === id)
+			const index = causalFactors.findIndex((v) => v.id === id)
+			const oldFactor = causalFactors.find((x) => x.id === id)
 			const oldCauses = oldFactor?.causes
 
 			const causes = {
@@ -69,7 +69,7 @@ function useOnChangeCauses(
 	return useCallback(
 		(selected: IDropdownOption, type: CausalFactorType, id?: string) => {
 			const newValue = {
-				...flatFactorsList.find(x => x.id === id),
+				...flatFactorsList.find((x) => x.id === id),
 				[type as keyof Cause]: selected.key as BeliefDegree,
 			} as Cause
 			saveNewFactors(id as string, newValue)
@@ -86,7 +86,7 @@ function useOnChangeReasoning(
 ): (id: string, newText: string) => void {
 	return useCallback(
 		(id: string, newText: string): void => {
-			const newValue = flatFactorsList.find(x => x.id === id) as Cause
+			const newValue = flatFactorsList.find((x) => x.id === id) as Cause
 			newValue.reasoning = newText
 
 			const newMultiline = (newText?.length || 0) > 50
@@ -186,7 +186,7 @@ export function useOnCausalModelChange(): (option?: RadioButtonChoice) => void {
 	return useCallback(
 		(option?: RadioButtonChoice) => {
 			updateXarrow()
-			setPrimarySpecificationConfig(prev => ({
+			setPrimarySpecificationConfig((prev) => ({
 				...prev,
 				causalModel:
 					(option && (option?.key as CausalModelLevel)) ||

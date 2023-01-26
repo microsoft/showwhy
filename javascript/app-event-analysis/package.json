@@ -10,9 +10,9 @@
 	"license": "MIT",
 	"scripts": {
 		"clean": "essex clean build",
-		"typecheck": "tsc --noEmit",
-		"fix": "essex fix",
-		"check": "essex check"
+		"build": "tsc --noEmit",
+		"fix": "essex fix --formatter none",
+		"check": "essex check --formatter none"
 	},
 	"dependencies": {
 		"@datashaper/app-framework": "0.4.0",

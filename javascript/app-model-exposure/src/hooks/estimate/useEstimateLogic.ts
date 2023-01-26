@@ -53,7 +53,7 @@ export function useEstimateLogic(isProcessing: boolean): {
 		trueLoadingFile()
 
 		const files = await uploadFile()
-		if (!files || !estimateProps) return
+		if (!(files && estimateProps)) return
 		await run(estimateProps)
 	}, [setIsCanceled, trueLoadingFile, run, estimateProps, uploadFile])
 

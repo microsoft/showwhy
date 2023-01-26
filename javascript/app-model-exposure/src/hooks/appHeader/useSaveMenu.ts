@@ -20,8 +20,9 @@ export function useSaveMenu(): IContextualMenuProps {
 	const downloadCSV = useDownloadEstimateData()
 	const notebookData = useGetNotebookData()
 	return useMemo<IContextualMenuProps>(() => {
-		const disabled =
-			!defaultRun || !isStatus(defaultRun?.status, NodeResponseStatus.Success)
+		const disabled = !(
+			defaultRun && isStatus(defaultRun?.status, NodeResponseStatus.Success)
+		)
 
 		return {
 			items: [

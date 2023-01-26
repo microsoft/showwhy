@@ -138,7 +138,7 @@ export const CausalEdge: React.FC<CausalEdgeProps> = memo(function CausalEdge({
 					showTail={false}
 					path={path}
 					passProps={{ onClick: onSelectEdge }}
-					key={relationship.key + '-correlation'}
+					key={`${relationship.key}-correlation`}
 					dashness={DASHNESS_CORRELATION}
 					// SVGcanvasStyle={{filter: 'blur(2px)'}}
 				/>

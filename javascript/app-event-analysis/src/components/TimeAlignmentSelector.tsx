@@ -16,7 +16,7 @@ export const TimeAlignmentSelector: React.FC<TimeAlignmentSelectorProps> = memo(
 	function TimeAlignmentSelector({ alignment, onTimeAlignmentChange }) {
 		const timeAlignmentDropdownOptions = useMemo(
 			() =>
-				Object.keys(TimeAlignmentOptions).map(item => ({
+				Object.keys(TimeAlignmentOptions).map((item) => ({
 					key: item,
 					text: getTimeAlignmentLabel(item as TimeAlignment),
 				})),
@@ -26,7 +26,7 @@ export const TimeAlignmentSelector: React.FC<TimeAlignmentSelectorProps> = memo(
 		const handleTimeAlignmentChange = useCallback(
 			(e: FormEvent, option?: IDropdownOption<string>) => {
 				const optionKey = option ? (option.key as string) : ''
-				const key = '' + optionKey
+				const key = `${optionKey}`
 				if (alignment === key) return
 				onTimeAlignmentChange(key)
 			},

@@ -24,7 +24,7 @@ export const DataTypeWarningMessage: FC = memo(
 		useEffect(() => {
 			let message = ''
 			for (const column in validColumns) {
-				const variable = allVariables.find(v => v.column === column)
+				const variable = allVariables.find((v) => v.column === column)
 				if (!validColumns[column] && variable?.type) {
 					message += `
             ${getColumnDataTypeWarning(column, variable.type)}\n

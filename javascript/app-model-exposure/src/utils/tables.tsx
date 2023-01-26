@@ -15,10 +15,10 @@ export function getDefault(
 	onEdit?: Maybe<Handler1<Definition>>,
 	onDelete?: Maybe<Handler1<Definition>>,
 ): Record<string, any> {
-	const props = Object.keys(item).filter(p => p !== 'id')
+	const props = Object.keys(item).filter((p) => p !== 'id')
 	const obj: Record<string, any> = {}
 
-	props.forEach(prop => {
+	props.forEach((prop) => {
 		obj[prop] =
 			typeof (item as any)[prop] === 'boolean' ? (
 				<Checkbox checked={(item as any)[prop]} />

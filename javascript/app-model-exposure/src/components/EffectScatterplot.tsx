@@ -101,7 +101,7 @@ function useOverlay(
 ) {
 	const theme = useThematic()
 	const refutationLegend = Object.keys(RefutationResultString).map(
-		key => (RefutationResultString as any)[key],
+		(key) => (RefutationResultString as any)[key],
 	)
 
 	const padding = useMemo((): any => {

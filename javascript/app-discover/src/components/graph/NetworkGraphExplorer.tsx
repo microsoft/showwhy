@@ -38,13 +38,13 @@ export const NetworkGraphExplorer: React.FC<NetworkGraphProps> = memo(
 					return acc
 				}, new Set<string>()),
 			)
-			const unchangedNodes = nodes.filter(oldNode =>
+			const unchangedNodes = nodes.filter((oldNode) =>
 				newVarIds.includes(oldNode.id),
 			)
 			const addedVars = newVarIds.filter(
-				newVarId => !nodes.some(oldNode => newVarId === oldNode.id),
+				(newVarId) => !nodes.some((oldNode) => newVarId === oldNode.id),
 			)
-			const addedNodes = addedVars.map(variableId => ({
+			const addedNodes = addedVars.map((variableId) => ({
 				id: variableId,
 				name: variableForColumnName(dataset, variableId)?.name ?? variableId,
 			}))
@@ -55,7 +55,7 @@ export const NetworkGraphExplorer: React.FC<NetworkGraphProps> = memo(
 		}, [correlations, dataset, nodes])
 
 		useEffect(() => {
-			const newLinks = correlations.map(correlation => ({
+			const newLinks = correlations.map((correlation) => ({
 				source: correlation.source.columnName,
 				target: correlation.target.columnName,
 				value: correlation.weight || 0,
@@ -100,7 +100,7 @@ export const NetworkGraphExplorer: React.FC<NetworkGraphProps> = memo(
 		)
 
 		const stopForces = useCallback(() => {
-			nodes.forEach(node => {
+			nodes.forEach((node) => {
 				node.fx = node.x
 				node.fy = node.y
 				node.fz = node.z
@@ -120,8 +120,8 @@ export const NetworkGraphExplorer: React.FC<NetworkGraphProps> = memo(
 						width={width}
 						height={height}
 						backgroundColor={'#FFF'}
-						linkWidth={link => 2 * Math.abs((link as NetworkGraphLink).value)}
-						linkColor={link =>
+						linkWidth={(link) => 2 * Math.abs((link as NetworkGraphLink).value)}
+						linkColor={(link) =>
 							`rgba(0,0,0,${Math.abs((link as NetworkGraphLink).value)})`
 						}
 						linkOpacity={0.8}
@@ -144,8 +144,8 @@ export const NetworkGraphExplorer: React.FC<NetworkGraphProps> = memo(
 						width={width}
 						height={height}
 						d3VelocityDecay={0.5}
-						linkWidth={link => 2 * Math.abs((link as NetworkGraphLink).value)}
-						linkColor={link =>
+						linkWidth={(link) => 2 * Math.abs((link as NetworkGraphLink).value)}
+						linkColor={(link) =>
 							`rgba(0,0,0,${Math.abs((link as NetworkGraphLink).value)})`
 						}
 						onNodeClick={handleNodeClick}
@@ -160,7 +160,7 @@ export const NetworkGraphExplorer: React.FC<NetworkGraphProps> = memo(
 							} ${fontSize}px Sans-Serif`
 							const textWidth = ctx.measureText(label).width
 							const bckgDimensions = [textWidth, fontSize].map(
-								n => (n + fontSize) * 1.2,
+								(n) => (n + fontSize) * 1.2,
 							) // some padding
 							ctx.fillStyle = 'rgba(255, 255, 255, 0.0)'
 							const x = node?.x ?? 0

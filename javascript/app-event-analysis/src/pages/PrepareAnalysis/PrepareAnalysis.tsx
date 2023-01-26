@@ -43,10 +43,10 @@ export const PrepareAnalysis: React.FC = memo(function PrepareAnalysis() {
 	const { data, defaultTreatment, updateTreatmentsForAggregation } =
 		useProcessedInputData(columnMapping)
 	const unitCheckboxListItems = useUnitCheckboxListItems(data)
-	const checkableUnits = unitCheckboxListItems.map(unit => unit.name)
+	const checkableUnits = unitCheckboxListItems.map((unit) => unit.name)
 
 	const columnsDropdownOptions = useMemo((): IDropdownOption[] => {
-		return getColumns(rawData).map(v => ({
+		return getColumns(rawData).map((v) => ({
 			key: v,
 			text: v,
 		}))

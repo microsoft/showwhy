@@ -52,7 +52,7 @@ export const DeciParams: React.FC = memo(function DeciParams() {
 	return (
 		<Container>
 			<SpinContainer>
-				{defaultTrainingSpinningOptions.map(x => (
+				{defaultTrainingSpinningOptions.map((x) => (
 					<SpinButton
 						label={x.label}
 						key={x.inputProps?.name}

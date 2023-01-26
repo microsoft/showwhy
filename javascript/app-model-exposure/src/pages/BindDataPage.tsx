@@ -23,67 +23,69 @@ import {
 } from './BindDataPage.styles.js'
 import type { ExposurePageProps } from './types.js'
 
-export const BindDataPage: FC<ExposurePageProps> = memo(function BindDataPage() {
-	useHelpOnMount('exposure.bind')
-	const commandBar = useCommandBar()
+export const BindDataPage: FC<ExposurePageProps> = memo(
+	function BindDataPage() {
+		useHelpOnMount('exposure.bind')
+		const commandBar = useCommandBar()
 
-	const { onSelectTableId, selectedTableName, selectedTable } = useBindData()
+		const { onSelectTableId, selectedTableName, selectedTable } = useBindData()
 
-	const {
-		completedElements,
-		allElements,
-		onResetVariable,
-		subjectIdentifier,
-		onSetSubjectIdentifier,
-		onAssignAllSubjects,
-	} = useGetElements()
+		const {
+			completedElements,
+			allElements,
+			onResetVariable,
+			subjectIdentifier,
+			onSetSubjectIdentifier,
+			onAssignAllSubjects,
+		} = useGetElements()
 
-	return (
-		<Container>
-			<DataTypeWarningMessage />
-			<ActionsContainer>
-				<TableMenuBar
-					selectedTable={selectedTableName}
-					onTableSelected={onSelectTableId}
-				/>
-				<AddVariableFields />
-				{allElements.length > 0 && (
-					<ElementsContainer>
-						<CompletedElements
-							onAssignAllSubjects={onAssignAllSubjects}
-							completedElements={completedElements}
-							allElements={allElements}
-							onResetVariable={onResetVariable}
-							subjectIdentifier={subjectIdentifier}
-							onSetSubjectIdentifier={onSetSubjectIdentifier}
-						/>
-					</ElementsContainer>
-				)}
-			</ActionsContainer>
+		return (
+			<Container>
+				<DataTypeWarningMessage />
+				<ActionsContainer>
+					<TableMenuBar
+						selectedTable={selectedTableName}
+						onTableSelected={onSelectTableId}
+					/>
+					<AddVariableFields />
+					{allElements.length > 0 && (
+						<ElementsContainer>
+							<CompletedElements
+								onAssignAllSubjects={onAssignAllSubjects}
+								completedElements={completedElements}
+								allElements={allElements}
+								onResetVariable={onResetVariable}
+								subjectIdentifier={subjectIdentifier}
+								onSetSubjectIdentifier={onSetSubjectIdentifier}
+							/>
+						</ElementsContainer>
+					)}
+				</ActionsContainer>
 
-			<PrepareDataContainer>
-				{selectedTable?.table ? (
-					<>
-						<ArqueroTableHeader
-							name={selectedTableName}
-							table={selectedTable?.table}
-						/>
-						<ArqueroDetailsList
-							sortable
-							compact
-							features={{ commandBar: [commandBar] }}
-							showColumnBorders
-							isHeaderFixed
-							metadata={selectedTable?.metadata}
-							table={selectedTable?.table}
-						/>
-					</>
-				) : (
-					<NoticeContainer style={{ padding: 8 }}>
-						Select a table to view data...
-					</NoticeContainer>
-				)}
-			</PrepareDataContainer>
-		</Container>
-	)
-})
+				<PrepareDataContainer>
+					{selectedTable?.table ? (
+						<>
+							<ArqueroTableHeader
+								name={selectedTableName}
+								table={selectedTable?.table}
+							/>
+							<ArqueroDetailsList
+								sortable
+								compact
+								features={{ commandBar: [commandBar] }}
+								showColumnBorders
+								isHeaderFixed
+								metadata={selectedTable?.metadata}
+								table={selectedTable?.table}
+							/>
+						</>
+					) : (
+						<NoticeContainer style={{ padding: 8 }}>
+							Select a table to view data...
+						</NoticeContainer>
+					)}
+				</PrepareDataContainer>
+			</Container>
+		)
+	},
+)

@@ -12,7 +12,7 @@ module.exports = {
 		'@storybook/addon-links',
 		'@storybook/addon-interactions',
 	],
-  framework: '@storybook/react',
+	framework: '@storybook/react',
 	webpackFinal: async (config) => {
 		if (!config.resolve) {
 			config.resolve = {}
@@ -25,12 +25,11 @@ module.exports = {
 		if (!config.resolve.alias) {
 			config.resolve.alias = {}
 		}
-		config.resolve.alias[`styled-components`] =
+		config.resolve.alias['styled-components'] =
 			require.resolve('styled-components')
-    config.resolve.alias[`hsluv`] =
-			require.resolve('hsluv')
+		config.resolve.alias['hsluv'] = require.resolve('hsluv')
 
-    // run transpiler over monorepo linked projects
+		// run transpiler over monorepo linked projects
 		const xformDwc = {
 			...config.module.rules[0],
 			include: /@datashaper/,

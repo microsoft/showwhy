@@ -51,11 +51,11 @@ export function buildOutcomeGroups(
 	specifications: Specification[],
 ): Specification[] {
 	const primaryOutcome = sortByEstimatedEffect(
-		specifications.filter(x => x.outcomeType === 'Primary'),
+		specifications.filter((x) => x.outcomeType === 'Primary'),
 	)
 
 	const secondaryOutcomes = specifications
-		.filter(x => x.outcomeType !== 'Primary')
+		.filter((x) => x.outcomeType !== 'Primary')
 		.sort((a, b) => a?.outcome.localeCompare(b?.outcome))
 
 	const { grouped, groups, outcomes } = groupBySpecification(primaryOutcome)
@@ -114,7 +114,7 @@ function validateCovariateConfounders(
 	confounderThreshold: number,
 ): string[] {
 	return confounders?.filter(
-		x =>
+		(x) =>
 			confounderThreshold - (covariateBalance?.adjusted[x] as number) * 100 < 0,
 	)
 }

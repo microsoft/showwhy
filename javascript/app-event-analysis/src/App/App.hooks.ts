@@ -45,7 +45,7 @@ export function useInit() {
 		useTreatmentStartDatesState()
 
 	useEffect(() => {
-		setChartOptions(prev => ({
+		setChartOptions((prev) => ({
 			...prev,
 			renderRawData: selectedTabKey === CONFIGURATION_TABS.prepareAnalysis.key,
 		}))

@@ -165,7 +165,7 @@ function useRenderMenuList(
 			)
 			const hasVariable = !selectedVariableByColumn(columnName)?.variable
 			const isIdentifier = subjectIdentifier === columnName
-			items = items.filter(x => !x.data?.button) //eslint-disable-line
+			items = items.filter((x) => !x.data?.button) //eslint-disable-line
 
 			if (identifierButton) {
 				identifierButton.disabled = !hasVariable
@@ -199,7 +199,7 @@ function useRenderMenuList(
 }
 
 function findByType(options: IContextualMenuItem[], type: string) {
-	return options.find(x => x.data?.type === type) //eslint-disable-line
+	return options.find((x) => x.data?.type === type) //eslint-disable-line
 }
 
 function getFilteredItems(
@@ -212,10 +212,10 @@ function getFilteredItems(
 	) => Maybe<Definition | CausalFactor>,
 ): IContextualMenuItem[] {
 	const filtered: IContextualMenuItem[] = []
-	dropdownOptions.forEach(item => {
+	dropdownOptions.forEach((item) => {
 		const subitems =
 			item.sectionProps?.items.filter(
-				subitem =>
+				(subitem) =>
 					isSelected(subitem?.text || '', columnName) ||
 					!selectedOptions.includes(subitem?.text || ''),
 			) || []

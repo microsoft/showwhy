@@ -1,0 +1,43 @@
+{
+  "files": {
+    "ignore": [
+      "dist",
+      "lib",
+      "build",
+      "python",
+      "public",
+      "storybook-static",
+      "playwright-report",
+      ".turbo",
+      ".pnp.cjs",
+      ".pnp.loader.mjs"
+    ]
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true,
+      "suspicious": {
+        "noExplicitAny": "off",
+        "noShadowRestrictedNames": "off"
+      },
+      "a11y": {
+        "useKeyWithClickEvents": "off"
+      },
+      "performance": {
+        "noDelete": "off"
+      }
+    }
+  },
+  "javascript": {
+    "formatter": {
+      "semicolons": "asNeeded",
+      "quoteStyle": "single",
+      "trailingComma": "all",
+      "quoteProperties": "asNeeded"
+    }
+  },
+  "formatter": {
+    "indentStyle": "tab"
+  }
+}

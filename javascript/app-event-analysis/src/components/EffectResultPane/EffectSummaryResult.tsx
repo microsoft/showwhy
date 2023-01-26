@@ -22,7 +22,7 @@ export const EffectSummaryResult: React.FC<EffectSummaryResultProps> = memo(
 
 		const outputDataNonPlacebo = useMemo<OutputData[]>(
 			() =>
-				outputData.filter(output =>
+				outputData.filter((output) =>
 					treatedUnits.includes(output.treatedUnit),
 				) as OutputData[],
 			[outputData, treatedUnits],
@@ -79,7 +79,7 @@ export const EffectSummaryResult: React.FC<EffectSummaryResultProps> = memo(
 					</Text>
 				)}
 
-				{outputDataNonPlacebo.map(output => (
+				{outputDataNonPlacebo.map((output) => (
 					<Text
 						key={output.treatedUnit}
 						className="infoText"

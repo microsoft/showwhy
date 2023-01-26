@@ -222,7 +222,7 @@ export function useAutoLayoutButtonMenuItem() {
 					key: 'autoLayout',
 					text: 'Auto-layout',
 					iconProps: { iconName: 'PlaybackRate1x' },
-					onClick: () => setAutoLayout(prev => !prev),
+					onClick: () => setAutoLayout((prev) => !prev),
 				},
 			],
 		}),

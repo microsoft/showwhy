@@ -16,9 +16,9 @@ export function useAddClickHandler(
 			const { datum, mark } = item
 			if (mark.role.includes('axis')) {
 				const axis = item.align === 'left' || item.align === 'right' ? 'y' : 'x'
-				onAxisClick && onAxisClick(datum, axis)
+				onAxisClick?.(datum, axis)
 			} else {
-				onDatumClick && onDatumClick(datum)
+				onDatumClick?.(datum)
 			}
 		},
 		[onDatumClick, onAxisClick],
@@ -38,7 +38,7 @@ export function useAddMouseOverHandler(
 	const handleMouseOver = useCallback(
 		(_e: any, item: any) => {
 			const { datum } = item
-			onDatumMouseOver && onDatumMouseOver(datum)
+			onDatumMouseOver?.(datum)
 		},
 		[onDatumMouseOver],
 	)

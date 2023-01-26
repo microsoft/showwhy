@@ -46,7 +46,7 @@ export const UnitSelector: React.FC<UnitSelectorProps> = memo(
 
 		const onChange = useCallback(
 			(_: FormEvent<HTMLDivElement>, option?: IDropdownOption) => {
-				setCheckedUnits(prev => {
+				setCheckedUnits((prev) => {
 					const set = new Set(prev || [])
 					if (!option) return set
 					if (set.has(option.key as string)) {
@@ -63,7 +63,7 @@ export const UnitSelector: React.FC<UnitSelectorProps> = memo(
 		const onChangeAll = useCallback(
 			(_: React.MouseEvent, options?: IDropdownOption[]) => {
 				setCheckedUnits(
-					options?.length ? new Set(options.map(o => o.key as string)) : null,
+					options?.length ? new Set(options.map((o) => o.key as string)) : null,
 				)
 			},
 			[setCheckedUnits],

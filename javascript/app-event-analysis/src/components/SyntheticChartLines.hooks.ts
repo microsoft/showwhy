@@ -30,7 +30,7 @@ export function useOutputLinesIncludingMean(
 	const { isPlaceboSimulation, showSynthControl } = props
 	return useMemo(() => {
 		const filteredLines = outLines.filter(
-			ld =>
+			(ld) =>
 				ld[0].color === 'treated' ||
 				ld[0].color === 'relative' ||
 				ld[0].color === 'reference' ||
@@ -64,7 +64,7 @@ function useOutLines(props: PartialSyntheticChartLinesProps) {
 		//  then add the updated control line (i.e., outputLineIntercepted)
 		if (applyIntercept && !isPlaceboSimulation) {
 			// && outputLinesControl.length && outputLineIntercepted.length
-			outputLinesIntercepted.forEach(outputLineIntercepted => {
+			outputLinesIntercepted.forEach((outputLineIntercepted) => {
 				outLines.push(outputLineIntercepted)
 				outLines.push(...outputLinesTreated)
 			})
@@ -85,16 +85,15 @@ function useOutLines(props: PartialSyntheticChartLinesProps) {
 
 			// only render the outputLineInterceptedRelative reflecting the treated line relative to the reference control line
 			// NOTE: consider also rendering the reference line as horizontal zero for better clarity
-			outputLinesInterceptedRelative.forEach(outputLineInterceptedRelative => {
-				const outputLineInterceptedRelativeUnit =
-					outputLineInterceptedRelative[0].unit
-				if (
-					checkedUnits !== null &&
-					checkedUnits.has(outputLineInterceptedRelativeUnit)
-				) {
-					outLines.push(outputLineInterceptedRelative)
-				}
-			})
+			outputLinesInterceptedRelative.forEach(
+				(outputLineInterceptedRelative) => {
+					const outputLineInterceptedRelativeUnit =
+						outputLineInterceptedRelative[0].unit
+					if (checkedUnits?.has(outputLineInterceptedRelativeUnit)) {
+						outLines.push(outputLineInterceptedRelative)
+					}
+				},
+			)
 		}
 
 		if (outLines.length === 0) {
@@ -127,28 +126,28 @@ function useAggregatedOutputLines(props: PartialSyntheticChartLinesProps) {
 		) {
 			// outLines.length > 2 means we have more than one treatd unit
 			// group all treated and synthetic lines into two groups of output lines
-			const groupedOutLines = partition(outLines, lineData =>
+			const groupedOutLines = partition(outLines, (lineData) =>
 				lineData[0].unit.startsWith('Synthetic'),
 			)
 
 			// NOTE: the size of "groupedOutLines" should be 2 because we only have two groups:
 			//        treated lines group AND synthetic lines group
 
-			groupedOutLines.forEach(group => {
+			groupedOutLines.forEach((group) => {
 				// 'group' represents all the actual or synthetic lines for all treated units
 				// the goal is to aggregate the lines in this "group" into a single line
 				const baselinePoints = group[0]
 				const isSynth = baselinePoints[0].unit.startsWith('Synthetic')
 
-				const treatedGroupName = 'Mean ' + (isSynth ? 'Synthetic' : 'Treated')
+				const treatedGroupName = `Mean ${isSynth ? 'Synthetic' : 'Treated'}`
 				const meanColor = treatedGroupName.toLowerCase()
 				const allRecordsAtDate: number[][] = []
-				group.forEach(lineData => {
-					const valuesForLine = lineData.map(d => (d.value ? d.value : 0))
+				group.forEach((lineData) => {
+					const valuesForLine = lineData.map((d) => (d.value ? d.value : 0))
 					allRecordsAtDate.push(valuesForLine)
 				})
 				const valuesPerDate = unzip(allRecordsAtDate)
-				const values = valuesPerDate.map(item => {
+				const values = valuesPerDate.map((item) => {
 					return item.reduce((a, b) => a + b)
 				})
 				const groupedLine = values.map((value, idx) => {
@@ -164,7 +163,7 @@ function useAggregatedOutputLines(props: PartialSyntheticChartLinesProps) {
 				// if the output has missing values (which is the case when time alignment is applied)
 				const indicesMissingValues = baselinePoints
 					.map((point, indx) => (point.value === null ? indx : -1))
-					.filter(indx => indx !== -1)
+					.filter((indx) => indx !== -1)
 				if (indicesMissingValues.length > 0) {
 					for (let indx = 0; indx < indicesMissingValues.length; indx++) {
 						const i = indicesMissingValues[indx]

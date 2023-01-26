@@ -70,7 +70,8 @@ export class ExposureResource extends Resource {
 			type: EstimatorType.PropensityScoreStratification,
 		}
 		this.definitions = schema?.definitions ?? []
-		this.question = schema?.question ?? { hypothesis: Hypothesis.Change } as CausalQuestion
+		this.question =
+			schema?.question ?? ({ hypothesis: Hypothesis.Change } as CausalQuestion)
 		this.selectedTableName = schema?.selectedTableName ?? ''
 	}
 }

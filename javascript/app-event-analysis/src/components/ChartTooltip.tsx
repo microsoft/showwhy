@@ -45,7 +45,7 @@ export const ChartTooltip: React.FC<ChartTooltipProps> = memo(
 				<TooltipContent>
 					<div>
 						{tooltip.content?.map((p: string, i: number) => (
-							<p key={i}>{p}</p>
+							<p key={`${p}@${i}`}>{p}</p>
 						))}
 					</div>
 					{isTooltipPersisted &&

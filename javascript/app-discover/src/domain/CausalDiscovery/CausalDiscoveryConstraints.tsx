@@ -23,7 +23,7 @@ export const getConstraintType = (
 ) => {
 	if (
 		constraints.causes.some(
-			constraint => constraint.columnName === variable.columnName,
+			(constraint) => constraint.columnName === variable.columnName,
 		)
 	) {
 		return Constraints.Cause
@@ -31,7 +31,7 @@ export const getConstraintType = (
 
 	if (
 		constraints.effects.some(
-			constraint => constraint.columnName === variable.columnName,
+			(constraint) => constraint.columnName === variable.columnName,
 		)
 	) {
 		return Constraints.Effect
@@ -82,5 +82,5 @@ const removeConstraint = (
 	variable: VariableReference,
 ) =>
 	constraints.filter(
-		constraint => constraint.columnName !== variable.columnName,
+		(constraint) => constraint.columnName !== variable.columnName,
 	)

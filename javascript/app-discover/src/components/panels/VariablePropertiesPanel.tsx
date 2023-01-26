@@ -68,16 +68,10 @@ export const VariablePropertiesPanel: React.FC<VariablePropertiesPanelProps> =
 
 		const removeFromModel = () => {
 			const newInModelVariables = inModelVariables.filter(
-				inModelVariable => inModelVariable !== variable,
+				(inModelVariable) => inModelVariable !== variable,
 			)
 			setInModelVariables(newInModelVariables)
-			setConstraints(
-				updateConstraints(
-					constraints,
-					variable,
-					Constraints.None,
-				),
-			)
+			setConstraints(updateConstraints(constraints, variable, Constraints.None))
 		}
 
 		const constraintChooserOptions: IChoiceGroupOption[] = [

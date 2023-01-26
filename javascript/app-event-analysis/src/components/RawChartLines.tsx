@@ -29,7 +29,7 @@ export const RawChartLines: React.FC<RawChartLinesProps> = memo(
 			<>
 				{inputLines.map((ld: LineData[], index: number) => (
 					<Line
-						key={index}
+						key={`${ld[0]?.unit}@${index}`}
 						className={getClassName(ld)}
 						color={getColor(ld)}
 						xScale={xScale}

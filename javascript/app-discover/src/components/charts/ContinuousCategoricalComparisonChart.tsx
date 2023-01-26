@@ -29,11 +29,10 @@ export const ContinuousCategoricalComparisonChart: React.FC<ComparisonChartProps
 		}
 
 		const selectedData = table.table?.select([varA.columnName, varB.columnName])
-		const preparedData = selectedData == null ? null : applyMappingFromVariableToTable(
-			varA,
-			selectedData,
-			false,
-		).objects()
+		const preparedData =
+			selectedData == null
+				? null
+				: applyMappingFromVariableToTable(varA, selectedData, false).objects()
 
 		const spec = useVisualizationSpec(varA, varB, preparedData ?? [])
 

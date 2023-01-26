@@ -126,7 +126,7 @@ export function useRunEstimate(
 			)
 			runSuccessful(response.status)
 				? void shapRun(
-						runHistory.estimators.some(x => x.confidenceInterval),
+						runHistory.estimators.some((x) => x.confidenceInterval),
 						execution.id,
 						response,
 				  )

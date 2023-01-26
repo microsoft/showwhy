@@ -39,14 +39,14 @@ export function processOutputData(
 	//
 	if (isPlacebos) {
 		let treatedUnits = ''
-		outputs.forEach(outputResult => {
+		outputs.forEach((outputResult) => {
 			const { controlPoints, treatedPoints } = getOutputPoints(outputResult)
 			const output = outputResult.output
 			outputTreated.push(treatedPoints)
 			outputControl.push(controlPoints)
 			interceptOffsets.push(output.intercept_offset)
 			sdidEstimates.push(Number(output.sdid_estimate.toFixed(2)))
-			treatedUnits += outputResult.unit + ' '
+			treatedUnits += `${outputResult.unit} `
 		})
 		output_data.push({
 			output_lines_treated: outputTreated,
@@ -63,8 +63,8 @@ export function processOutputData(
 		// For now: we combine the output from all treated units into one array/chart
 
 		outputs
-			.filter(output => treatedUnitsMap[output.unit])
-			.forEach(outputResult => {
+			.filter((output) => treatedUnitsMap[output.unit])
+			.forEach((outputResult) => {
 				const { controlPoints, treatedPoints } = getOutputPoints(outputResult)
 				const output = outputResult.output
 

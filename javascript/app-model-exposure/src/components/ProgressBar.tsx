@@ -38,7 +38,7 @@ export const ProgressBar: React.FC<{
 							{description ||
 								`${
 									startTime && percentage !== 100
-										? 'Taking ' + timeElapsed
+										? `Taking ${timeElapsed}`
 										: 'Finishing...'
 								}`}
 						</Text>

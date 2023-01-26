@@ -159,7 +159,7 @@ export function arrayIncludesRelationship(
 	relationships: Relationship[],
 	relationship: Relationship,
 ) {
-	return relationships.some(otherRelationship =>
+	return relationships.some((otherRelationship) =>
 		hasSameSourceAndTarget(relationship, otherRelationship),
 	)
 }

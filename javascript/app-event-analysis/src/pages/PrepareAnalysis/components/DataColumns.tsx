@@ -38,11 +38,11 @@ export const DataColumns: React.FC<DataColumnsProps> = memo(
 			e: FormEvent<HTMLDivElement>,
 			option?: IDropdownOption<string>,
 		) => {
-			const outCol = '' + (option?.key.toString() ?? '')
+			const outCol = `${option?.key.toString() ?? ''}`
 			if (outCol !== '') {
 				const newMapping = { ...columnMapping, ...{ value: outCol } }
 				if (!isEqual(newMapping, columnMapping)) setColumnMapping(newMapping)
-				setOutcomeName(prev => (!prev ? outCol : prev))
+				setOutcomeName((prev) => (!prev ? outCol : prev))
 			}
 		}
 
@@ -50,7 +50,7 @@ export const DataColumns: React.FC<DataColumnsProps> = memo(
 			(value?: IDropdownOption) => {
 				const unit = !value ? '' : String(value.key)
 				updateColumnMapping({ unit })
-				setUnits(prev => (!prev ? unit : prev))
+				setUnits((prev) => (!prev ? unit : prev))
 			},
 			[setUnits, updateColumnMapping],
 		)
@@ -101,7 +101,7 @@ export const DataColumns: React.FC<DataColumnsProps> = memo(
 						<TooltipHost
 							content={data.nonBalancedUnits.map((i, key) => (
 								<Text
-									key={key}
+									key={`${i}@${key}`}
 									block
 									styles={{ root: { marginBottom: '10px' } }}
 								>

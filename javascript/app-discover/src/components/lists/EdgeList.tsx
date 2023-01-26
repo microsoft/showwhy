@@ -50,25 +50,25 @@ export const EdgeList: React.FC<EdgeListProps> = memo(function EdgeList({
 
 	return (
 		<FocusZone>
-			{Object.keys(groupedList).flatMap(groupName => {
+			{Object.keys(groupedList).flatMap((groupName) => {
 				if (!groupedList[groupName].length) return []
 				return (
 					<Container key={groupName}>
 						<LabelContainer>
 							<Label>{groupName}</Label>
-							<TooltipHost content={`Disallow these causes`}>
+							<TooltipHost content={'Disallow these causes'}>
 								<IconButtonDark
 									onClick={() => onRemoveAll(groupName)}
 									iconProps={icons.remove}
 								/>
 							</TooltipHost>
 						</LabelContainer>
-						{groupedList[groupName].map(r => renderItem(r))}
+						{groupedList[groupName].map((r) => renderItem(r))}
 					</Container>
 				)
 			})}
 			{!!removedItems.length && <Label>Disallowed edges</Label>}
-			{removedItems.map(relationship => {
+			{removedItems.map((relationship) => {
 				return (
 					<Container key={relationship.key}>
 						{renderItem(relationship)}

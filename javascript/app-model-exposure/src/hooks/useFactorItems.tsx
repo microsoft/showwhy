@@ -36,7 +36,7 @@ export function useFactorItems(
 		onCancel,
 	)
 	return useMemo(() => {
-		return rows.map(item => {
+		return rows.map((item) => {
 			if (factorToEdit?.id === item.id) {
 				return getEditableRow(edited)
 			}

@@ -28,7 +28,7 @@ export class FetchApiInteractor {
 	): Promise<UpdateStatus> {
 		const url = `${this.baseUrl}/${type}/${this.project}/${taskId}`
 		return fetch(url).then(
-			response => response?.json() as Promise<UpdateStatus>,
+			(response) => response?.json() as Promise<UpdateStatus>,
 		)
 	}
 
@@ -44,7 +44,7 @@ export class FetchApiInteractor {
 				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify({ estimate_execution_id: taskId, ...body }),
-		}).then(response => response?.json() as Promise<ExecutionResponse>)
+		}).then((response) => response?.json() as Promise<ExecutionResponse>)
 	}
 
 	public async executeEstimate(
@@ -57,7 +57,7 @@ export class FetchApiInteractor {
 				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify(data),
-		}).then(response => response?.json() as Promise<ExecutionResponse>)
+		}).then((response) => response?.json() as Promise<ExecutionResponse>)
 	}
 
 	public async estimateExecutionCount(
@@ -73,7 +73,7 @@ export class FetchApiInteractor {
 			maxRetries: 1,
 		}
 		return this.fetchHandler(url, options).then(
-			response => response?.json() as Promise<SpecificationCount>,
+			(response) => response?.json() as Promise<SpecificationCount>,
 		)
 	}
 
@@ -88,7 +88,7 @@ export class FetchApiInteractor {
 			body: JSON.stringify(data),
 			maxRetries: 1,
 		}
-		return this.fetchHandler(url, options).then(response => response?.json())
+		return this.fetchHandler(url, options).then((response) => response?.json())
 	}
 
 	public async uploadFile(formData: FormData): Promise<UploadFileResponse> {
@@ -96,7 +96,7 @@ export class FetchApiInteractor {
 		return fetch(url, {
 			method: 'POST',
 			body: formData,
-		}).then(response => response?.json() as Promise<UploadFileResponse>)
+		}).then((response) => response?.json() as Promise<UploadFileResponse>)
 	}
 
 	public async cancel(taskId: string, type: string): Promise<void> {

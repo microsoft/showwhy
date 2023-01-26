@@ -18,5 +18,3 @@ export const FlexContainer = styled.div`
 	position: absolute;
 	bottom: 5px;
 `
-
-

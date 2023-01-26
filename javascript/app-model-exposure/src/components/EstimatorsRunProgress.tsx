@@ -38,7 +38,7 @@ export const EstimatorsRunProgress: React.FC<{
 	cancelRun,
 	theme,
 }) {
-	const hasConfidenceInterval = run.estimators.some(r => r.confidenceInterval)
+	const hasConfidenceInterval = run.estimators.some((r) => r.confidenceInterval)
 	const estimatorLabel: LabelProps = useMemo(() => {
 		return {
 			id: 'estimators',

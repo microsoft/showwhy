@@ -34,7 +34,7 @@ export function nodeHasChildren(
 		graph,
 		weightThreshold,
 		confidenceThreshold,
-	).some(relationship => isSame(relationship.source, variable))
+	).some((relationship) => isSame(relationship.source, variable))
 }
 
 export function nodeHasParents(
@@ -47,14 +47,14 @@ export function nodeHasParents(
 		graph,
 		weightThreshold,
 		confidenceThreshold,
-	).some(relationship => isSame(relationship.target, variable))
+	).some((relationship) => isSame(relationship.target, variable))
 }
 
 export function relationshipsAboveWeightThreshold(
 	graph: CausalGraph,
 	threshold: number,
 ): Relationship[] {
-	return graph.relationships.filter(relationship =>
+	return graph.relationships.filter((relationship) =>
 		isRelationshipAboveWeightThreshold(relationship, threshold),
 	)
 }
@@ -73,7 +73,7 @@ export function relationshipsAboveConfidenceThreshold(
 	graph: CausalGraph,
 	threshold: number,
 ): Relationship[] {
-	return graph.relationships.filter(relationship =>
+	return graph.relationships.filter((relationship) =>
 		isRelationshipAboveConfidenceThreshold(relationship, threshold),
 	)
 }
@@ -93,7 +93,7 @@ export function relationshipsAboveThresholds(
 	weightThreshold: number,
 	confidenceThreshold: number,
 ): Relationship[] {
-	return graph.relationships.filter(relationship =>
+	return graph.relationships.filter((relationship) =>
 		isRelationshipAboveThresholds(
 			relationship,
 			weightThreshold,
@@ -118,7 +118,7 @@ export function relationshipsForColumnNames(
 	source: string,
 	target: string,
 ): Relationship | undefined {
-	return graph.relationships.find(relationship =>
+	return graph.relationships.find((relationship) =>
 		hasSameSourceAndTargetColumns(relationship, source, target),
 	)
 }
@@ -130,7 +130,7 @@ export function validRelationshipsForColumnName(
 	confidenceThreshold: number,
 ): Relationship[] | undefined {
 	return graph.relationships
-		?.flatMap(relationship =>
+		?.flatMap((relationship) =>
 			involvesVariable(relationship, variable) &&
 			isRelationshipAboveThresholds(
 				relationship,
@@ -155,6 +155,6 @@ export function includesVariables(
 	variables: VariableReference[],
 ): boolean {
 	return variables
-		.map(variable => includesVariable(graph, variable))
-		.every(included => included)
+		.map((variable) => includesVariable(graph, variable))
+		.every((included) => included)
 }

@@ -6,7 +6,7 @@
 import type { SetterOrUpdater } from 'recoil'
 import { atom, useRecoilValue, useSetRecoilState } from 'recoil'
 
-import type { ToggleCallback} from '../hooks/recoil.js';
+import type { ToggleCallback } from '../hooks/recoil.js'
 import { useRecoilBasedToggle } from '../hooks/recoil.js'
 
 const calloutState = atom<boolean>({

@@ -11,7 +11,7 @@ export function useFilteredCausalVariables(causalVariables: CausalVariable[]) {
 	return useMemo(
 		() =>
 			causalVariables.filter(
-				v =>
+				(v) =>
 					v.nature === VariableNature.Continuous ||
 					v.nature === VariableNature.Binary,
 			),
