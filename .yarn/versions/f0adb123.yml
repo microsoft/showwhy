@@ -3,10 +3,9 @@ releases:
   "@showwhy/discover-app": patch
   "@showwhy/event-analysis-app": patch
   "@showwhy/webapp": patch
+  "@showwhy/model-exposure-app": "patch"
 
 declined:
   - showwhy
   - "@showwhy/stories"
-
-undecided:
-  - "@showwhy/model-exposure-app"
+  
