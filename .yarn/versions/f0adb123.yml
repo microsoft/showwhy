@@ -1,0 +1,12 @@
+releases:
+  "@showwhy/app-common": patch
+  "@showwhy/discover-app": patch
+  "@showwhy/event-analysis-app": patch
+  "@showwhy/webapp": patch
+
+declined:
+  - "@showwhy/stories"
+
+undecided:
+  - showwhy
+  - "@showwhy/model-exposure-app"
