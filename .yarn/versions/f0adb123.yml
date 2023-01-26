@@ -5,8 +5,8 @@ releases:
   "@showwhy/webapp": patch
 
 declined:
+  - showwhy
   - "@showwhy/stories"
 
 undecided:
-  - showwhy
   - "@showwhy/model-exposure-app"
