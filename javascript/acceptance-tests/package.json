@@ -1,0 +1,8 @@
+{
+	"name": "@showwhy/acceptance-tests",
+	"version": "0.0.1",
+	"private": true,
+	"devDependencies": {
+		"playwright": "^1.29.2"
+	}
+}
