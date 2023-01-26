@@ -10,7 +10,7 @@
 	"license": "MIT",
 	"scripts": {
 		"clean": "essex clean build",
-		"typecheck": "tsc --noEmit",
+		"build": "tsc --noEmit",
 		"fix": "essex fix --formatter none",
 		"check": "essex check --formatter none"
 	},

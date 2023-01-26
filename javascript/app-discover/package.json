@@ -11,7 +11,7 @@
 	"scripts": {
 		"clean": "essex clean build",
 		"assets": "webpack -c webpack.workers.js && echo 'explore workers bundled!'",
-		"typecheck": "tsc --noEmit",
+		"build": "tsc --noEmit",
 		"fix": "essex fix --formatter none",
 		"check": "essex check --formatter none"
 	},

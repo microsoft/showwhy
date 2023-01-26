@@ -12,7 +12,6 @@
 	"scripts": {
 		"clean": "essex clean",
 		"build": "tsc --noEmit",
-		"typecheck": "yarn build",
 		"fix": "essex fix --formatter none",
 		"check": "essex check --formatter none"
 	},

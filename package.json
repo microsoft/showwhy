@@ -19,7 +19,6 @@
 		"build": "turbo run build",
 		"force_build": "turbo run build --force",
 		"archive": "turbo run archive",
-		"typecheck": "turbo run typecheck",
 		"poetry_install": "turbo run poetry_install --parallel",
 		"check": "run-s _check_packages rome_ci",
 		"fix": "run-s _fix_packages rome_fix format",
