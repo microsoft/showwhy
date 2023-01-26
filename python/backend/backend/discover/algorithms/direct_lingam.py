@@ -3,8 +3,8 @@ from typing import Any
 
 import networkx as nx
 import numpy as np
-from castle.algorithms import DirectLiNGAM
 from causalnex.structure.structuremodel import StructureModel
+from lingam import DirectLiNGAM
 
 from backend.discover.algorithms.commons.base_runner import CausalDiscoveryRunner, CausalGraph, ProgressCallback
 from backend.discover.model.causal_discovery import CausalDiscoveryPayload
@@ -24,7 +24,16 @@ class DirectLiNGAMRunner(CausalDiscoveryRunner):
         self._encode_categorical_as_integers()
 
         causal_graph = self._build_causal_graph(
-            labeled_graph=self._build_labeled_graph(prior_knowledge=self._build_gcastle_constraint_matrix()),
+            labeled_graph=self._build_labeled_graph(
+                # direct lingam works with the indexes flipped
+                # so we transpose the constraint matrix
+                prior_knowledge=self._build_constraint_matrix(
+                    name_to_idx=self._get_name_to_index(),
+                    tabu_child_nodes=self._constraints.causes,
+                    tabu_parent_nodes=self._constraints.effects,
+                    tabu_edges=self._constraints.forbiddenRelationships,
+                ).T
+            ),
             has_weights=True,
             has_confidence_values=False,
         )
@@ -39,31 +48,10 @@ class DirectLiNGAMRunner(CausalDiscoveryRunner):
         # measure parameter is not exposed to the frontend, using measure=pwling
         direct_lingam = DirectLiNGAM(prior_knowledge=prior_knowledge, measure="pwling")
 
-        # we can use thres=0, since the weight filtering will be applied in the frontend
-        direct_lingam.learn(self._prepared_data.to_numpy(), thres=0.0)
+        direct_lingam.fit(self._prepared_data.to_numpy())
 
         return nx.relabel_nodes(
             # transpose the DirectLiNGAM adjacency matrix so we end up with the causal graph
             StructureModel(direct_lingam.adjacency_matrix_.T),
             self._get_labels_map(),
         )
-
-    def _build_gcastle_constraint_matrix(self):
-        columns = self._prepared_data.columns
-        col_to_index = {columns[i]: i for i in range(len(columns))}
-        prior_matrix = np.full((len(columns), len(columns)), -1)
-
-        for cause in self._constraints.causes:
-            prior_matrix[col_to_index[cause], :] = 0
-        for effect in self._constraints.effects:
-            prior_matrix[:, col_to_index[effect]] = 0
-        for forbidden_relationship in self._constraints.forbiddenRelationships:
-            prior_matrix[
-                col_to_index[forbidden_relationship[0]],
-                col_to_index[forbidden_relationship[1]],
-            ] = 0
-
-        logging.info(columns)
-        logging.info(prior_matrix)
-
-        return prior_matrix

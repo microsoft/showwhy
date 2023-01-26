@@ -121,60 +121,27 @@ class DeciRunner(CausalDiscoveryRunner):
 
     def _build_model(self, causica_dataset: Dataset) -> DECI:
         logging.info(f"Creating DECI model with '{self._model_options.base_distribution_type}' base distribution type")
+
+        constraints = self._build_constraint_matrix(
+            causica_dataset.variables.name_to_idx,
+            tabu_child_nodes=self._constraints.causes,
+            tabu_parent_nodes=self._constraints.effects,
+            tabu_edges=self._constraints.forbiddenRelationships,
+        ).astype(np.float32)
+
+        # causica expects NaN for edges that need to be discovered
+        constraints[constraints == -1] = np.nan
+
         deci_model = DECI(
             "CauseDisDECI",
             causica_dataset.variables,
             self._deci_save_dir,
             self._device,
             **self._model_options.dict(),
-            graph_constraint_matrix=self._build_constraint_matrix(
-                causica_dataset.variables.name_to_idx,
-                self._prepared_data,
-                tabu_child_nodes=self._constraints.causes,
-                tabu_parent_nodes=self._constraints.effects,
-                tabu_edges=self._constraints.forbiddenRelationships,
-            ),
+            graph_constraint_matrix=constraints,
         )
 
         return deci_model
-
-    def _build_constraint_matrix(
-        self,
-        name_to_idx: dict[str, int],
-        data: pd.DataFrame,
-        tabu_child_nodes: Optional[List[str]] = None,
-        tabu_parent_nodes: Optional[List[str]] = None,
-        tabu_edges: Optional[List[Tuple[str, str]]] = None,
-    ) -> np.ndarray:
-        """
-        Makes a DECI constraint matrix from GCastle constraint format.
-
-        Arguments:
-            tabu_child_nodes: Optional[List[str]]
-                nodes that cannot be children of any other nodes (root nodes)
-            tabu_parent_nodes: Optional[List[str]]
-                edges that cannot be the parent of any other node (leaf nodes)
-            tabu_edge: Optional[List[Tuple[str, str]]]
-                edges that cannot exist
-        """
-        constraint = np.full((len(data.columns), len(data.columns)), np.nan)
-
-        if tabu_child_nodes is not None:
-            for node in tabu_child_nodes:
-                idx = name_to_idx[node]
-                constraint[:, idx] = 0.0
-
-        if tabu_parent_nodes is not None:
-            for node in tabu_parent_nodes:
-                idx = name_to_idx[node]
-                constraint[idx, :] = 0.0
-
-        if tabu_edges is not None:
-            for source, sink in tabu_edges:
-                source_idx, sink_idx = name_to_idx[source], name_to_idx[sink]
-                constraint[source_idx, sink_idx] = 0.0
-
-        return constraint.astype(np.float32)
 
     def _check_if_is_dag(self, deci_model: DECI, adj_matrix: np.ndarray) -> bool:
         return (np.trace(scipy.linalg.expm(adj_matrix.round())) - deci_model.num_nodes) == 0
