@@ -1,3 +1,14 @@
 {
-	"test_url": "http://localhost:3000"
+	"target_url": "http://localhost:3000",
+	"test": {
+		"reporter": "html",
+		"parallel": true,
+		"timeout": 30000,
+		"expect": {
+			"timeout": 5000
+		},
+		"action": {
+			"timeout": 0
+		}
+	}
 }

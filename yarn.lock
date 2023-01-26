@@ -3747,8 +3747,11 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/acceptance-tests@workspace:javascript/acceptance-tests"
   dependencies:
+    "@essex/scripts": ^24.0.2
+    "@essex/tsconfig-base": ^1.0.2
     "@playwright/test": ^1.30.0
     "@types/config": ^3
+    "@types/node": ^18.11.18
     config: ^3.3.9
   languageName: unknown
   linkType: soft
