@@ -10,6 +10,7 @@ import type {
 import { useTheme } from '@fluentui/react'
 import { useMemo } from 'react'
 
+export const checkboxStyles = { root: { margin: '5px 5px' } }
 export const toggleStyles = {
 	root: {
 		margin: 0,

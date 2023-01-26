@@ -31,6 +31,7 @@ import {
 } from '../state/index.js'
 import { GraphViewStates } from './graph/GraphViews.types.js'
 import {
+	checkboxStyles,
 	layoutButtonStyles,
 	toggleStyles,
 	useMenuButtonStyles,
@@ -47,7 +48,7 @@ export function useModelMenuItems(
 	saveModel: () => void,
 	openCausalModelFileSelector: () => void,
 	clearModel: () => void,
-	exportEdges: () => void,
+	exportGraph: () => void,
 	isExportDisabled: boolean,
 ): ICommandBarItemProps {
 	const buttonStyles = useMenuButtonStyles()
@@ -75,9 +76,9 @@ export function useModelMenuItems(
 					},
 					{
 						key: 'export-model',
-						text: 'Export edges',
+						text: 'Export graph/relationship details',
 						disabled: isExportDisabled,
-						onClick: exportEdges,
+						onClick: exportGraph,
 					},
 				],
 			},
@@ -86,7 +87,7 @@ export function useModelMenuItems(
 			saveModel,
 			openCausalModelFileSelector,
 			clearModel,
-			exportEdges,
+			exportGraph,
 			buttonStyles,
 			isExportDisabled,
 		],
@@ -151,6 +152,7 @@ export function useViewMenuItems(
 						key: 'straight-edge-Checkbox',
 						onRender: () => (
 							<Checkbox
+								styles={checkboxStyles}
 								label="Use straight edges"
 								checked={useStraightEdges}
 								onChange={(e, v) => setUseStraightEdges(Boolean(v))}
@@ -161,6 +163,7 @@ export function useViewMenuItems(
 						key: 'hide-panels-Checkbox',
 						onRender: () => (
 							<Checkbox
+								styles={checkboxStyles}
 								label="Hide side panels"
 								checked={hidePanels}
 								onChange={(e, v) => setHidePanels(Boolean(v))}
