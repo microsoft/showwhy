@@ -9,6 +9,10 @@
     "acceptance_test": "playwright test"
   },
   "devDependencies": {
-    "@playwright/test": "^1.30.0"
+    "@playwright/test": "^1.30.0",
+    "@types/config": "^3"
+  },
+  "dependencies": {
+    "config": "^3.3.9"
   }
 }
