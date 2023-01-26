@@ -103,8 +103,11 @@ const icons = {
 
 const labelStyle = {
 	overflow: 'hidden',
-	whiteSpace: 'nowrap',
 	textOverflow: 'ellipsis',
+	display: '-webkit-box',
+	WebkitLineClamp: 3,
+	WebkitBoxOrient: 'vertical',
+	fontSize: '13px',
 } as React.CSSProperties
 
-const stackItemStyle = { width: '70%' }
+const stackItemStyle = { width: '70%', overflow: 'hidden' }
