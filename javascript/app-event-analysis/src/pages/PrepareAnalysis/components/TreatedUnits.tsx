@@ -60,7 +60,7 @@ export const TreatedUnits: React.FC<TreatedUnitsProps> = memo(
 
 		const enableRegroupButton = useMemo(() => {
 			const nonGroupedUnits = treatedUnits.filter(
-				unit => !unit.startsWith('Group_'),
+				(unit) => !unit.startsWith('Group_'),
 			)
 			return aggregateEnabled && nonGroupedUnits.length > 0
 		}, [aggregateEnabled, treatedUnits])

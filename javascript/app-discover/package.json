@@ -12,8 +12,8 @@
 		"clean": "essex clean build",
 		"assets": "webpack -c webpack.workers.js && echo 'explore workers bundled!'",
 		"typecheck": "tsc --noEmit",
-		"fix": "essex fix",
-		"check": "essex check"
+		"fix": "essex fix --formatter none",
+		"check": "essex check --formatter none"
 	},
 	"dependencies": {
 		"@datashaper/app-framework": "0.4.0",

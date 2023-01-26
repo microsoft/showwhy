@@ -34,7 +34,7 @@ export const DeciATEDetailsParams: React.FC<DeciATEDetailsParamsProps> = memo(
 		return (
 			<Container>
 				<StyledLabel>Intervention/Reference values</StyledLabel>
-				{causalVariables.map(v => (
+				{causalVariables.map((v) => (
 					<Expando key={v.name} label={v.name}>
 						<ATEDetailsContainer>
 							<SpinButton

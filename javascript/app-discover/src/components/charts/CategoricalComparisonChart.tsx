@@ -16,11 +16,13 @@ export const CategoricalComparisonChart: React.FC<ComparisonChartProps> = memo(
 		targetVariable,
 	}: ComparisonChartProps) {
 		const columnTable = table.table
-		const preparedData = columnTable && applyMappingsFromRelationshipToTable(
-			sourceVariable,
-			targetVariable,
-			columnTable,
-		).objects()
+		const preparedData =
+			columnTable &&
+			applyMappingsFromRelationshipToTable(
+				sourceVariable,
+				targetVariable,
+				columnTable,
+			).objects()
 		const spec = useVisualizationSpec(
 			sourceVariable,
 			targetVariable,

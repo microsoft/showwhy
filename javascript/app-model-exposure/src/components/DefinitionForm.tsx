@@ -18,17 +18,14 @@ import {
 	useDefinitionItems,
 	useEditDefinition,
 	useHeaders,
-	useRemoveDefinition
+	useRemoveDefinition,
 } from './DefinitionForm.hooks.js'
 import { DetailsList } from './DetailsList.js'
 
 export const DefinitionForm: FC<{
 	definitions: Definition[]
 	definitionType: DefinitionType
-}> = memo(function DefinitionForm({
-	definitions,
-	definitionType,
-}) {
+}> = memo(function DefinitionForm({ definitions, definitionType }) {
 	const [definitionToEdit, setDefinitionToEdit] = useState<Maybe<Definition>>()
 	const shouldHavePrimary = !getDefinitionsByType(definitionType, definitions)
 		.length
@@ -38,7 +35,7 @@ export const DefinitionForm: FC<{
 	const editDefinition = useEditDefinition(definitions, setDefinitions)
 
 	const { items } = useDefinitionItems(
-		definitions.filter(d => d.type === definitionType),
+		definitions.filter((d) => d.type === definitionType),
 		definitionToEdit,
 		definitionType,
 		removeDefinition,

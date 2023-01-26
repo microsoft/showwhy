@@ -26,9 +26,9 @@ export const DerivedMetadataState = selector<CausalVariable[]>({
 		}
 
 		const derivedMetadata: CausalVariable[] = []
-		metadata.forEach(metadatum => {
+		metadata.forEach((metadatum) => {
 			if (metadatum.nature === VariableNature.CategoricalNominal) {
-				metadatum.mapping?.forEach(variableMapping => {
+				metadatum.mapping?.forEach((variableMapping) => {
 					let existingMetadatum = metadata.find(
 						(md: CausalVariable) => md.columnName === variableMapping,
 					)
@@ -72,26 +72,22 @@ export const variableMetadataState = selectorFamily<
 	string
 >({
 	key: 'variableMetadataState',
-	get:
-		(columnName: string) =>
-		({ get }) => {
-			const metadata = get(MetadataState)
-			return metadata.find(metadatum => metadatum.columnName === columnName)
-		},
-	set:
-		(columnName: string) =>
-		({ get, set }, newValue) => {
-			const metadata = get(MetadataState)
-			// Remove existing metadata for column
-			const newMetadata = metadata.filter(
-				metadatum => metadatum.columnName !== columnName,
-			)
-			if (newValue && !(newValue instanceof DefaultValue)) {
-				newMetadata.push(newValue)
-			}
+	get: (columnName: string) => ({ get }) => {
+		const metadata = get(MetadataState)
+		return metadata.find((metadatum) => metadatum.columnName === columnName)
+	},
+	set: (columnName: string) => ({ get, set }, newValue) => {
+		const metadata = get(MetadataState)
+		// Remove existing metadata for column
+		const newMetadata = metadata.filter(
+			(metadatum) => metadatum.columnName !== columnName,
+		)
+		if (newValue && !(newValue instanceof DefaultValue)) {
+			newMetadata.push(newValue)
+		}
 
-			set(MetadataState, newMetadata)
-		},
+		set(MetadataState, newMetadata)
+	},
 })
 
 export const DatasetState = selector<Dataset>({

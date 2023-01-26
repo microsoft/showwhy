@@ -34,7 +34,7 @@ export const NotearsParams: React.FC = memo(function NotearsParams() {
 	return (
 		<Container>
 			<ContainerItem>
-				{defaultNotearsSpinningOptions.map(x => (
+				{defaultNotearsSpinningOptions.map((x) => (
 					<SpinButton
 						label={x.label}
 						key={x.inputProps?.name}

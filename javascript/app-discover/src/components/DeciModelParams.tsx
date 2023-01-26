@@ -55,7 +55,7 @@ export const DeciModelParams: React.FC<DeciModelParamsProps> = memo(
 		return (
 			<Container>
 				<ContainerAdvancedGrid>
-					{advancedModelNumberListOptions.map(x => (
+					{advancedModelNumberListOptions.map((x) => (
 						<TextField
 							label={x.label}
 							key={x.name}
@@ -83,7 +83,7 @@ export const DeciModelParams: React.FC<DeciModelParamsProps> = memo(
 				</ContainerAdvancedGrid>
 
 				<ContainerAdvancedGrid>
-					{advancedModelSpinningOptions.map(x => (
+					{advancedModelSpinningOptions.map((x) => (
 						<SpinButton
 							key={x.inputProps?.name}
 							label={x.label}
@@ -92,11 +92,9 @@ export const DeciModelParams: React.FC<DeciModelParamsProps> = memo(
 								onChangeNumber('model_options', val, x.inputProps?.name)
 							}
 							value={
-								(values.model_options &&
-									values.model_options[
-										x.inputProps?.name as keyof DECIModelOptions
-									]?.toString()) ||
-								x.defaultValue
+								values.model_options?.[
+									x.inputProps?.name as keyof DECIModelOptions
+								]?.toString() || x.defaultValue
 							}
 							min={0}
 							step={x.step}
@@ -107,7 +105,7 @@ export const DeciModelParams: React.FC<DeciModelParamsProps> = memo(
 				</ContainerAdvancedGrid>
 
 				<ContainerAdvancedCheckbox>
-					{advancedModelBooleanOptions.map(x => (
+					{advancedModelBooleanOptions.map((x) => (
 						<Checkbox
 							key={x.name}
 							label={x.label}

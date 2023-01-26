@@ -11,13 +11,13 @@ export function check_refutation_result(
 	const refutationExistingKeys = Object.keys(refutationResult)
 	let result = 2
 	if (
-		!DEFAULT_REFUTATION_TESTS.every(t => refutationExistingKeys.includes(t))
+		!DEFAULT_REFUTATION_TESTS.every((t) => refutationExistingKeys.includes(t))
 	) {
 		result = -1
 	} else {
 		if (
 			refutationExistingKeys.some(
-				g => refutationResult[g as keyof RefutationResultType] !== 1,
+				(g) => refutationResult[g as keyof RefutationResultType] !== 1,
 			)
 		) {
 			result = 0

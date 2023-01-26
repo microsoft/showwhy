@@ -14,9 +14,9 @@ export function useAllColumns(
 ): string[] {
 	return useMemo((): string[] => {
 		if (!definitions?.length) return []
-		const definitionCols = definitions?.map(x => x.column) || []
-		const causalColumns = causalFactors?.map(x => x.column) || []
+		const definitionCols = definitions?.map((x) => x.column) || []
+		const causalColumns = causalFactors?.map((x) => x.column) || []
 		const allColumns = causalColumns.concat(definitionCols)
-		return allColumns.filter(c => c !== undefined) as string[]
+		return allColumns.filter((c) => c !== undefined) as string[]
 	}, [causalFactors, definitions])
 }

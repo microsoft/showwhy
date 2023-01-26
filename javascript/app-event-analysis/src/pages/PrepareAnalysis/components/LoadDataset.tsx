@@ -25,7 +25,7 @@ export const LoadDataset: React.FC = memo(function LoadDataset() {
 
 	const onDatasetClicked = useCallback(
 		(name: string) => {
-			const table = dataTables.find(d => d.name === name)?.output?.table
+			const table = dataTables.find((d) => d.name === name)?.output?.table
 			if (table) {
 				setCurrentTableName(name)
 				setFileName(name)

@@ -15,8 +15,8 @@
 		"start": "essex serve",
 		"typecheck": "tsc --noEmit",
 		"build": "essex bundle --mode production --env production && shx cp -r public/* build/ && shx cp build/index.html build/404.html",
-		"fix": "essex fix",
-		"check": "essex check"
+		"fix": "essex fix --formatter none",
+		"check": "essex check --formatter none"
 	},
 	"dependencies": {
 		"@datashaper/app-framework": "0.4.0",

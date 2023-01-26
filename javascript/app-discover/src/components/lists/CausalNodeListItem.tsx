@@ -41,12 +41,7 @@ export const CausalNodeListItem: React.FC<CausalNodeProps> = memo(
 					)}
 					{variable.nature === VariableNature.Binary && <CircleHalfFullIcon />}
 				</Stack.Item>
-				<CausalNode
-					variable={variable}
-					isSelectable
-					isAddable
-					isRemovable
-				/>
+				<CausalNode variable={variable} isSelectable isAddable isRemovable />
 			</Stack>
 		)
 	},

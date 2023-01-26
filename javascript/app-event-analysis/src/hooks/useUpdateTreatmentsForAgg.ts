@@ -25,7 +25,7 @@ export function useUpdateTreatmentsForAgg(
 			groups: {},
 		}
 		// Extract grouped units information
-		treatedUnits.forEach(unit => {
+		treatedUnits.forEach((unit) => {
 			const groupedUnits = defaultTreatment?.groups[unit]
 			if (groupedUnits) {
 				treatment.groups[unit] = groupedUnits

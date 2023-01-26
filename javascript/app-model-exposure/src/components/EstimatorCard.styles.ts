@@ -13,9 +13,9 @@ export const BoxGroup = styled.div<{
 	alignItems?: string
 }>`
 	display: flex;
-	align-items: ${props => props.alignItems || 'center'};
+	align-items: ${(props) => props.alignItems || 'center'};
 	gap: 2rem;
-	justify-content: ${props => props.justifyContent || 'flex-start'};
+	justify-content: ${(props) => props.justifyContent || 'flex-start'};
 `
 
 export const Container = styled.section`

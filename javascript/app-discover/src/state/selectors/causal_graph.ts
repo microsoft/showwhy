@@ -26,7 +26,7 @@ export const InModelCausalVariablesState = selector<CausalVariable[]>({
 		const columnNames =
 			newValue instanceof DefaultValue
 				? newValue
-				: newValue.map(variable => variable.columnName)
+				: newValue.map((variable) => variable.columnName)
 		reset(CausalDiscoveryResultsState)
 		reset(CausalInferenceResultState)
 		set(InModelColumnNamesState, columnNames)

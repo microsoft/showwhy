@@ -23,14 +23,14 @@ export function toElkt(
 	confidenceThreshold: number,
 ): string {
 	let elkData = '\n'
-	graph.variables.forEach(v => {
+	graph.variables.forEach((v) => {
 		elkData += `node ${v.columnName} {label "${v.name}"}\n`
 	})
 	relationshipsAboveThresholds(
 		graph,
 		weightThreshold,
 		confidenceThreshold,
-	).forEach(e => {
+	).forEach((e) => {
 		const keyA = e.source.columnName
 		const keyB = e.target.columnName
 		elkData += `edge ${keyA} -> ${keyB}\n`
@@ -51,7 +51,7 @@ export function toElkNode(
 ): ElkNode {
 	return {
 		id: 'root',
-		children: graph.variables.map(variable => ({
+		children: graph.variables.map((variable) => ({
 			id: variable.columnName,
 			width: 200,
 			height: 100,

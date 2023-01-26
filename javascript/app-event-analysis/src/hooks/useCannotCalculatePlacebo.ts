@@ -28,8 +28,11 @@ export function useCannotCalculatePlacebo(isCalculatingEstimator: boolean) {
 	//  (note that varying-unit placebo does not require a valid treated unit)
 	// also, check that the input data is valid
 	return useMemo(() => {
-		const isInvalid =
-			!validInput || !validTreatmentDates || !validColumnsMapping
+		const isInvalid = !(
+			validInput &&
+			validTreatmentDates &&
+			validColumnsMapping
+		)
 		return isInvalid || isCalculatingEstimator
 	}, [
 		isCalculatingEstimator,

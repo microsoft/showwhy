@@ -106,7 +106,7 @@ const BoxCausalModel: React.FC<{
 				{children
 					? children
 					: list?.length
-					? list?.map(item => <Text key={item}>{item}</Text>)
+					? list?.map((item) => <Text key={item}>{item}</Text>)
 					: null}
 			</Content>
 		</CausalBox>

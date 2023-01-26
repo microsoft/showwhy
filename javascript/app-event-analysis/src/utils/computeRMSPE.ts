@@ -22,14 +22,14 @@ export function computeRMSPE(
 	treatedUnits: string[],
 	checkedUnits: Set<string> | null,
 ) {
-	if (!outputRes || !outputRes.compute_placebos || dates === null) return []
+	if (!outputRes?.compute_placebos || dates === null) return []
 
 	const outputTreatedMap: { [key: string]: OutputDataPoint[] } = {}
 	const outputControlMap: { [key: string]: OutputDataPoint[] } = {}
 	const outputControlInterceptsMap: { [key: string]: number } = {}
 
 	const { outputs } = outputRes
-	outputs.forEach(outputResult => {
+	outputs.forEach((outputResult) => {
 		const { controlPoints, treatedPoints } = getOutputPoints(outputResult)
 		outputTreatedMap[outputResult.unit] = treatedPoints
 		outputControlMap[outputResult.unit] = controlPoints
@@ -86,15 +86,15 @@ export function computeRMSPE(
 	//
 	// initial pass calculating MSPE
 	//
-	outputs.forEach(outputResult => {
+	outputs.forEach((outputResult) => {
 		const treatedOutputForUnit = outputTreatedMap[outputResult.unit]
 		const controlOutputForUnit = outputControlMap[outputResult.unit]
 
 		let sumPre = 0
 		// @ts-ignore
 		for (let t = T0; t < T; t++) {
-			const tOutput = treatedOutputForUnit.find(o => o.date === t)
-			const cOutput = controlOutputForUnit.find(o => o.date === t)
+			const tOutput = treatedOutputForUnit.find((o) => o.date === t)
+			const cOutput = controlOutputForUnit.find((o) => o.date === t)
 			const cOutputIntercepted =
 				(cOutput?.value || 0) + outputControlInterceptsMap[outputResult.unit]
 			sumPre += Math.pow(
@@ -108,8 +108,8 @@ export function computeRMSPE(
 		let sumPost = 0
 		// @ts-ignore
 		for (let t = T; t <= T1; t++) {
-			const tOutput = treatedOutputForUnit.find(o => o.date === t)
-			const cOutput = controlOutputForUnit.find(o => o.date === t)
+			const tOutput = treatedOutputForUnit.find((o) => o.date === t)
+			const cOutput = controlOutputForUnit.find((o) => o.date === t)
 			const cOutputIntercepted =
 				(cOutput?.value || 0) + outputControlInterceptsMap[outputResult.unit]
 
@@ -134,13 +134,13 @@ export function computeRMSPE(
 	//  Abadie, Diamond, and Hainmueller (2010) recommends doing this by removing those
 	//  ratios which are more (or less?) than two times that of treated
 	const treatedPredictions = predictionErrors.find(
-		prediction => prediction.unit === treatedUnits[0], // FIXME: in placebo: a single treated unit is supported
+		(prediction) => prediction.unit === treatedUnits[0], // FIXME: in placebo: a single treated unit is supported
 	)
 	const treatedPreRatio = treatedPredictions?.pErrorPre ?? 0
 	// FIXME: refactor as a user-controlled state along with manual removal of outlier placebos
 	const filterExtremePlacebos = true
 	const extremePlaceboRatioFactor = 2
-	predictionErrors.forEach(pe => {
+	predictionErrors.forEach((pe) => {
 		const skipPlacebo =
 			filterExtremePlacebos &&
 			(pe.pErrorPre > treatedPreRatio * extremePlaceboRatioFactor ||
@@ -170,7 +170,7 @@ export function computeRMSPE(
 	// FIXME: the following is incorrect or misleading
 	const renderRatiosAsHistogram = false
 	const numBins = 10
-	const allValues = distributions.map(prediction => prediction.ratio)
+	const allValues = distributions.map((prediction) => prediction.ratio)
 	const minValue = min(allValues) ?? 0
 	if (minValue > 0) {
 		// ensure that 0 if necessary
@@ -182,16 +182,16 @@ export function computeRMSPE(
 		// use a custom threshold generator to ensure
 		//  bucket count that matches the required number of bins
 		.thresholds((data, min, max) =>
-			range(numBins).map(t => min + (t / numBins) * (max - min)),
+			range(numBins).map((t) => min + (t / numBins) * (max - min)),
 		)
 		.value(function (d) {
 			return d.ratio
 		}) // use the value stored in ratio to bin the input data
 	const predictionBins = binGenerator(sortedPlaceboResults)
 	const histogramBars: PlaceboDataGroup[] = []
-	predictionBins.forEach(bin => {
+	predictionBins.forEach((bin) => {
 		if (bin.length > 0) {
-			const allUnits = bin.map(itemInBin => itemInBin.unit).join(' ')
+			const allUnits = bin.map((itemInBin) => itemInBin.unit).join(' ')
 			const ratioLabel =
 				bin.x0 !== undefined && bin.x1 !== undefined
 					? bin.x0 + (bin.x1 - bin.x0) / 2

@@ -83,7 +83,7 @@ function buildDropdownOption(
 		itemType: ContextualMenuItemType.Section,
 		sectionProps: {
 			title: upperFirst(type.toString()),
-			items: all.map(x => {
+			items: all.map((x) => {
 				return {
 					key: x.id,
 					text: x.variable,
@@ -103,7 +103,7 @@ function getCausalFactorsByType(
 	causalFactors: CausalFactor[],
 	list: string[],
 ): CausalFactor[] {
-	return causalFactors.filter(x => list.includes(x.variable))
+	return causalFactors.filter((x) => list.includes(x.variable))
 }
 
 const baseMenuItems: IContextualMenuItem[] = [

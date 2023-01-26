@@ -10,7 +10,7 @@ export type Record = {
 
 // Convert csv to record objects
 export const csvToRecords = (csv: string) => {
-	const lines = csv.split('\n').filter(line => line.trim() !== '')
+	const lines = csv.split('\n').filter((line) => line.trim() !== '')
 	const result: Record[] = []
 	const headerRow = lines[0]
 	// the app uses data as json structure, and when needed it is written into csv with ; separator
@@ -36,7 +36,7 @@ export const recordsToCsv = (records: Record[]) => {
 	let result = columns.join(DELIMITER) + '\n'
 
 	for (const record of records) {
-		const row = columns.map(c => record[c])
+		const row = columns.map((c) => record[c])
 		result += row.join(DELIMITER) + '\n'
 	}
 	return result

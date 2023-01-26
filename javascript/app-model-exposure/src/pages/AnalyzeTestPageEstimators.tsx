@@ -23,9 +23,9 @@ export const AnalyzeTestPageEstimators: React.FC = memo(
 
 		const onUpdateEstimatorParams = useCallback(
 			(estimators: Estimator[]) => {
-				setEstimators(prev => {
-					return prev.map(e => {
-						const changed = estimators.find(a => e.type === a.type)
+				setEstimators((prev) => {
+					return prev.map((e) => {
+						const changed = estimators.find((a) => e.type === a.type)
 						return changed
 							? {
 									...e,
@@ -42,7 +42,7 @@ export const AnalyzeTestPageEstimators: React.FC = memo(
 			<PageSection>
 				<Box>
 					<Title style={{ fontSize: '18px' }}>Estimator definitions</Title>
-					{estimatorOptions.map(card => (
+					{estimatorOptions.map((card) => (
 						<EstimatorCard
 							key={card.key}
 							title={card.title}

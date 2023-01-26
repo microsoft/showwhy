@@ -38,12 +38,12 @@ export function useData(
 		const inputLines = Object.values(
 			groupBy(
 				inputData.dataPoints
-					.map(point => ({
+					.map((point) => ({
 						...point,
 						color: point.treated ? 'treated' : 'control',
 					}))
 					.filter(
-						line => treatedUnitsMap[line.unit] || selectedUnitsMap[line.unit],
+						(line) => treatedUnitsMap[line.unit] || selectedUnitsMap[line.unit],
 					),
 				'unit',
 			),
@@ -59,11 +59,11 @@ export function useData(
 
 		if (!isEmpty(outputData)) {
 			if (renderRawData) {
-				maxValue = max(inputLines.flat(), d => +d.value) ?? 0
-				minValue = Math.min(0, min(inputLines.flat(), d => +d.value) ?? 0)
+				maxValue = max(inputLines.flat(), (d) => +d.value) ?? 0
+				minValue = Math.min(0, min(inputLines.flat(), (d) => +d.value) ?? 0)
 				// NOTE that inputLines is guaranteed to include many lines
 				// because the "output" is valid in this block so the "input" must be valid too
-				dateRange = extent(inputLines[0], d => d.date)
+				dateRange = extent(inputLines[0], (d) => d.date)
 			} else {
 				// if a consistent time window alignment is applied,
 				//  then a subset of the data may have been used to generate the output
@@ -71,7 +71,7 @@ export function useData(
 				//
 				// use the first output to pull the list of dates available in the treatment results
 				const allDatesInOutputLines = outputData.output_lines_treated[0].map(
-					point => point.date,
+					(point) => point.date,
 				)
 
 				const outputDataNonPlacebo = outputData as OutputData
@@ -86,13 +86,13 @@ export function useData(
 				//  so that the line renderer may render them differently
 				//
 
-				outputData.output_lines_treated.forEach(treatedLine => {
+				outputData.output_lines_treated.forEach((treatedLine) => {
 					// must clone or otherwise applying the y intercept will be permenant
 					const treatedLineClone = cloneDeep(treatedLine)
 					if (missingDates.length > 0) {
 						const dateBeforeTreatment = missingDates[0] - 1
 						const pointBeforeTreatment = treatedLineClone.find(
-							point => point.date === dateBeforeTreatment,
+							(point) => point.date === dateBeforeTreatment,
 						)
 						const valueAtTreatmentDate = pointBeforeTreatment
 							? pointBeforeTreatment.value
@@ -111,13 +111,13 @@ export function useData(
 					outputLinesTreated.push(treatedLineCloneSorted)
 				})
 
-				outputData.output_lines_control.forEach(controlLine => {
+				outputData.output_lines_control.forEach((controlLine) => {
 					// must clone or otherwise applying the y intercept will be permenant
 					const controlLineClone = cloneDeep(controlLine)
 					if (missingDates.length > 0) {
 						const dateBeforeTreatment = missingDates[0] - 1
 						const pointBeforeTreatment = controlLineClone.find(
-							point => point.date === dateBeforeTreatment,
+							(point) => point.date === dateBeforeTreatment,
 						)
 						const valueAtTreatmentDate = pointBeforeTreatment
 							? pointBeforeTreatment.value
@@ -140,7 +140,7 @@ export function useData(
 				//  since it can change the output range
 
 				outputLinesControl.forEach((controlLine, lineIndex) => {
-					const outputLineIntercepted = controlLine.map(point => {
+					const outputLineIntercepted = controlLine.map((point) => {
 						return {
 							...point,
 							value:
@@ -181,19 +181,19 @@ export function useData(
 						? outputLinesInterceptedRelativeFlat
 						: allLinesPoints
 				maxValue =
-					max(linesForCalculatingMaxValue, d => {
+					max(linesForCalculatingMaxValue, (d) => {
 						return d.value != null ? +d.value : null
 					}) ?? 0
 				if (applyIntercept) {
 					const minInterceptedFlat =
-						min(outputLinesInterceptedFlat, d => {
+						min(outputLinesInterceptedFlat, (d) => {
 							return d.value != null ? +d.value : null
 						}) ?? 0
 					minValue = Math.min(0, minInterceptedFlat)
 				}
 				if (relativeIntercept || isPlaceboSimulation) {
 					const minInterceptedRelative =
-						min(outputLinesInterceptedRelativeFlat, d => {
+						min(outputLinesInterceptedRelativeFlat, (d) => {
 							return d.value != null ? +d.value : null
 						}) ?? 0
 					minValue = Math.min(minInterceptedRelative, 0)
@@ -204,10 +204,10 @@ export function useData(
 			}
 		} else {
 			// since no output data are available, then we must calculate the max value from the input data
-			maxValue = max(inputLines.flat(), d => +d.value) ?? 0
+			maxValue = max(inputLines.flat(), (d) => +d.value) ?? 0
 
 			// FIXME: should consider the global date range instead of pulling it from the first line
-			dateRange = !inputLines[0] ? [0, 0] : extent(inputLines[0], d => d.date)
+			dateRange = !inputLines[0] ? [0, 0] : extent(inputLines[0], (d) => d.date)
 		}
 		return {
 			inputLines,

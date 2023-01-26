@@ -44,7 +44,7 @@ export function useGenerateErrorMessage() {
 		if (!data.isBalancedPanelData)
 			content =
 				'Data is not in a balanced panel format. Please ensure that each unit has observations for ALL time periods!'
-		if (!validColumnsMapping || !validInput)
+		if (!(validColumnsMapping && validInput))
 			content =
 				'Please ensure that Unit, Date, and Outcome have valid selections!'
 		if (!validTreatedUnits)

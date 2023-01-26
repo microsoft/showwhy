@@ -29,7 +29,7 @@ export class ReportGenerator {
 		variables?: CausalVariable[],
 		ATEDetailsByName?: ATEDetailsByName,
 	): EdgeReportRow[] {
-		this.allVariables = variables?.map(v => v.columnName) || []
+		this.allVariables = variables?.map((v) => v.columnName) || []
 		this.addRelationshipRows(
 			relationships,
 			selectedCausalDiscoveryAlgorithm,
@@ -50,7 +50,7 @@ export class ReportGenerator {
 		constraints?: CausalDiscoveryConstraints,
 		ATEDetailsByName?: ATEDetailsByName,
 	) {
-		causalRelationships.forEach(relationship => {
+		causalRelationships.forEach((relationship) => {
 			this.reportRows.push(
 				this.getRelationshipRow(
 					relationship,
@@ -75,8 +75,8 @@ export class ReportGenerator {
 	}
 
 	addCorrelations(correlations: RelationshipWithWeight[]) {
-		const allCorrelations = this.getCorrelationRows(correlations).sort((a, b) =>
-			a.source.localeCompare(b.source),
+		const allCorrelations = this.getCorrelationRows(correlations).sort(
+			(a, b) => a.source.localeCompare(b.source),
 		)
 		this.reportRows.push(...allCorrelations)
 	}
@@ -87,7 +87,7 @@ export class ReportGenerator {
 	): EdgeReportRow[] {
 		if (!constraints) return []
 		const removedRelationships: EdgeReportRow[] = []
-		constraints.manualRelationships.forEach(constraint => {
+		constraints.manualRelationships.forEach((constraint) => {
 			if (
 				constraint.reason === ManualRelationshipReason.Removed &&
 				(this.allVariables.includes(constraint.source.columnName) ||
@@ -118,7 +118,7 @@ export class ReportGenerator {
 						source: source.columnName,
 						target: target.columnName,
 						correlation: weight.toFixed(3),
-					} as EdgeReportRow),
+					}) as EdgeReportRow,
 			)
 	}
 

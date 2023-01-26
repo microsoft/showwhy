@@ -13,14 +13,14 @@ export function updateSignificanceTests(
 	outcome?: string,
 	significanceTest?: Partial<SignificanceTestStatus>,
 ): void {
-	setSignificanceTest(prev => {
+	setSignificanceTest((prev) => {
 		const oldOnes = prev.filter(
-			p => p.taskId !== runId || p.outcome !== outcome,
+			(p) => p.taskId !== runId || p.outcome !== outcome,
 		)
 		if (!significanceTest) return oldOnes
 
 		const existing = prev.find(
-			p => p.taskId === significanceTest.taskId && p.outcome === outcome,
+			(p) => p.taskId === significanceTest.taskId && p.outcome === outcome,
 		) as SignificanceTestStatus
 
 		const newOne = {

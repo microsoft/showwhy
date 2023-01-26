@@ -12,8 +12,7 @@ export const Title = styled.h3<{
 	noMarginBottom?: Maybe<boolean>
 	noMarginTop?: Maybe<boolean>
 }>`
-	margin-bottom: ${({ noMarginBottom }) =>
-		noMarginBottom ? 'unset' : '0.5em'};
+	margin-bottom: ${({ noMarginBottom }) => (noMarginBottom ? 'unset' : '0.5em')};
 	margin-top: ${({ noMarginTop }) => (noMarginTop ? 'unset' : '1em')};
 `
 

@@ -56,7 +56,7 @@ export function buildFlatFactorsList(
 ): FlatCausalFactor[] {
 	return causalFactors.map((factor: CausalFactor) => {
 		const equal =
-			values?.find(existing => existing.id === factor.id)?.causes ||
+			values?.find((existing) => existing.id === factor.id)?.causes ||
 			factor.causes ||
 			({} as FlatCausalFactor)
 

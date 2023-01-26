@@ -38,13 +38,13 @@ export function inferColumnNature(
 
 	const uniqueValues = [...new Set(column)] as any[]
 	const uniqueNonNullValues = uniqueValues.filter(
-		val => val !== undefined && val !== null,
+		(val) => val !== undefined && val !== null,
 	) // && !isNaN(val));
 	const hasMissingData = uniqueValues.length !== uniqueNonNullValues.length // uniqueValues.includes(undefined) || uniqueValues.includes(null) || uniqueValues.includes(NaN);
 
-	const isBoolean = uniqueNonNullValues.every(val => typeof val === 'boolean')
-	const isString = uniqueNonNullValues.every(val => typeof val === 'string')
-	const isNumber = uniqueNonNullValues.every(val => typeof val === 'number')
+	const isBoolean = uniqueNonNullValues.every((val) => typeof val === 'boolean')
+	const isString = uniqueNonNullValues.every((val) => typeof val === 'string')
+	const isNumber = uniqueNonNullValues.every((val) => typeof val === 'number')
 	const isInteger = uniqueNonNullValues.every(Number.isInteger)
 
 	const inferredNature = {

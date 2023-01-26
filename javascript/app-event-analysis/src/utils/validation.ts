@@ -19,18 +19,18 @@ export const isValidTreatmentDate = (treatmentDate: number) => {
 
 export function isValidColumnsMapping(columnMapping: ColumnMapping): boolean {
 	const notValid = Object.keys(POSSIBLE_COL_NAMES).some(
-		colName => colName !== 'treated' && columnMapping[colName] === '',
+		(colName) => colName !== 'treated' && columnMapping[colName] === '',
 	)
 	return !notValid
 }
 
 export function isValidInput(data: ProcessedInputData): boolean {
-	return !isEmpty(data.dataPoints) || !data.isBalancedPanelData
+	return !(isEmpty(data.dataPoints) && data.isBalancedPanelData)
 }
 
 export function isValidTreatedUnits(treatedUnits: string[]): boolean {
 	return (
-		treatedUnits.length > 0 && treatedUnits.every(unit => isValidUnit(unit))
+		treatedUnits.length > 0 && treatedUnits.every((unit) => isValidUnit(unit))
 	)
 }
 

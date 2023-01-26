@@ -42,7 +42,7 @@ export async function groupFilesByType(
 	const tableFiles: BaseFile[] = fileCollection.list(FileType.table)
 
 	const jsonFiles = fileCollection.list(FileType.json)
-	const configFile = jsonFiles.find(f => configRegExp.test(f.name))
+	const configFile = jsonFiles.find((f) => configRegExp.test(f.name))
 
 	let defaultResult
 	if (configFile) {
@@ -55,7 +55,7 @@ export async function groupFilesByType(
 		let file: Maybe<BaseFile>
 		let { url }: { url: string } = defaultResult //eslint-disable-line
 		if (isZipUrl(url)) {
-			file = tableFiles.find(f => url.includes(f.name))
+			file = tableFiles.find((f) => url.includes(f.name))
 			if (file) {
 				file = createBaseFile(file, { name: file.name })
 				url = await file.toDataURL()
@@ -70,7 +70,7 @@ export async function groupFilesByType(
 		}
 	} else {
 		//TODO: It gets the first coincidence, should it be an array instead?
-		const file = tableFiles.find(file => isResult(file.name))
+		const file = tableFiles.find((file) => isResult(file.name))
 		if (file) {
 			filesByType['results'] = {
 				file,
@@ -85,18 +85,18 @@ export async function groupFilesByType(
 		filesByType['notebooks'] = notebooks
 	}
 
-	const tables: BaseFile[] = tableFiles.filter(file => !isResult(file.name))
+	const tables: BaseFile[] = tableFiles.filter((file) => !isResult(file.name))
 	if (tables.length > 0) {
 		filesByType['tables'] = tables
 	}
 
-	const runHistoryFile = jsonFiles.find(f => runHistoryRegExp.test(f.name))
+	const runHistoryFile = jsonFiles.find((f) => runHistoryRegExp.test(f.name))
 	if (runHistoryFile) {
 		const json = await runHistoryFile.toJson()
 		filesByType['runHistory'] = json as RunHistory[]
 		defaultResult = json['defaultResult'] //eslint-disable-line
 	}
-	const significanceTestsFile = jsonFiles.find(f =>
+	const significanceTestsFile = jsonFiles.find((f) =>
 		significanceTestRegExp.test(f.name),
 	)
 	if (significanceTestsFile) {
@@ -124,10 +124,10 @@ export async function getDataURL(blob: Blob): Promise<string> {
 export function createFormData(file: ColumnTable, name: string): FormData {
 	const formData = new FormData()
 	const content = file.toCSV()
-	const type = { type: `text/csv` }
+	const type = { type: 'text/csv' }
 	const blob = new Blob([content], type)
 	const fileContent = createFile(blob, { name: name })
-	formData.append(`file`, fileContent)
+	formData.append('file', fileContent)
 	return formData
 }
 
@@ -211,7 +211,7 @@ export function readFile(
 		reader.readAsBinaryString(file)
 	}
 
-	return new Promise(resolve => {
+	return new Promise((resolve) => {
 		reader.onloadend = () => {
 			if (error) {
 				console.log('file reading has failed')

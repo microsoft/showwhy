@@ -65,9 +65,9 @@ function useAddOrEditFactor(
 ): (factor: OptionalId<CausalFactor>) => void {
 	return useCallback(
 		(factor: OptionalId<CausalFactor>, factors = causalFactors) => {
-			const exists = factors.find(f => f.id === factor?.id) || {}
+			const exists = factors.find((f) => f.id === factor?.id) || {}
 
-			const existsIndex = factors.findIndex(f => f.id === factor?.id)
+			const existsIndex = factors.findIndex((f) => f.id === factor?.id)
 			const newFactor = {
 				...exists,
 				...factor,
@@ -115,8 +115,8 @@ function useDeleteFactor(): (factor: CausalFactor) => void {
 	const causalFactors = useCausalFactors()
 	const setCausalFactors = useSetCausalFactors()
 	return useCallback(
-		deletedFactor => {
-			setCausalFactors(causalFactors.filter(v => v.id !== deletedFactor.id))
+		(deletedFactor) => {
+			setCausalFactors(causalFactors.filter((v) => v.id !== deletedFactor.id))
 		},
 		[causalFactors, setCausalFactors],
 	)
@@ -127,7 +127,7 @@ function useEditFactor(
 	setIsEditing: (isEditing: boolean) => void,
 ): (factor: CausalFactor) => void {
 	return useCallback(
-		factorToEdit => {
+		(factorToEdit) => {
 			setFactor(factorToEdit)
 			setIsEditing(true)
 		},

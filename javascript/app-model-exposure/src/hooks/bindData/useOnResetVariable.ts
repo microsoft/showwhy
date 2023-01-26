@@ -26,9 +26,9 @@ export function useOnResetVariable(
 			if (!id) return
 			const option = definitionDropdown
 				.flatMap((x: IContextualMenuItem) =>
-					x.sectionProps?.items.find(a => a.key === id),
+					x.sectionProps?.items.find((a) => a.key === id),
 				)
-				.find(o => o)
+				.find((o) => o)
 			onSelectVariable(option, columnName)
 		},
 		[onSelectVariable, definitionDropdown, allElements],

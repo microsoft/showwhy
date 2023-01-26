@@ -15,7 +15,7 @@ export function useSelectedOptions(
 	return useMemo((): string[] => {
 		return allElements
 			.filter((x: Definition | CausalFactor) => x.column)
-			.map(x => x.variable)
+			.map((x) => x.variable)
 	}, [allElements])
 }
 

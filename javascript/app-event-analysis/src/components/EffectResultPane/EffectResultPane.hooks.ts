@@ -16,7 +16,7 @@ export function useSynthControlBarChartData(
 		const barChartData = Object.keys(synthControlData).reduce(
 			(acc, treatedUnitKey) => {
 				acc[treatedUnitKey] = synthControlData[treatedUnitKey]
-					.map(weightedUnit => ({
+					.map((weightedUnit) => ({
 						name: weightedUnit.unit,
 						value: weightedUnit.weight,
 						color: theme.process().fill().hex(),

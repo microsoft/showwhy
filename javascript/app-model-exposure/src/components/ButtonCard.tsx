@@ -20,7 +20,7 @@ export const ButtonCard: React.FC<{
 			onClick={handleOnClick}
 			data-pw={isChecked ? 'selected-card' : 'card'}
 		>
-			{icon && <ButtonIcon iconName={icon}></ButtonIcon>}
+			{icon && <ButtonIcon iconName={icon} />}
 			{title || null}
 		</Button>
 	)

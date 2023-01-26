@@ -3,13 +3,13 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import styled from "styled-components"
+import styled from 'styled-components'
 
 import {
 	colorCorrelation,
 	colorNegative,
 	colorNeutral,
-	colorPositive
+	colorPositive,
 } from '../../styles/styles.js'
 
 export const Grid = styled.div`

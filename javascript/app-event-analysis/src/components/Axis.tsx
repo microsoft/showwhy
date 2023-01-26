@@ -63,7 +63,7 @@ export const Axis: React.FC<AxisProps> = memo(function Axis({
 				renderedAxis
 					.selectAll('text')
 					.text(
-						text =>
+						(text) =>
 							(rotateBars
 								? truncate(text as string, { length: 20 })
 								: text) as string,

@@ -58,7 +58,7 @@ export const FilteredCorrelationsState = selector<RelationshipWithWeight[]>({
 			) as RelationshipWithWeight[]
 		)
 			.filter(
-				correlation => Math.abs(correlation.weight) > correlationThreshold,
+				(correlation) => Math.abs(correlation.weight) > correlationThreshold,
 			)
 			.sort((a, b) => Math.abs(b.weight) - Math.abs(a.weight))
 	},

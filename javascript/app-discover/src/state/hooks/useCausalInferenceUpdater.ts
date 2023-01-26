@@ -22,7 +22,7 @@ function interventionsToMap(
 ): Map<string, number> {
 	const interventionsMap = new Map()
 
-	interventions.forEach(i => {
+	interventions.forEach((i) => {
 		interventionsMap.set(i.columnName, i.value)
 	})
 	return interventionsMap

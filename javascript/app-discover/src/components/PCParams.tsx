@@ -44,7 +44,7 @@ export const PCParams: React.FC = memo(function PCParams() {
 	return (
 		<Container>
 			<ContainerItem>
-				{defaultPCSpinningOptions.map(x => (
+				{defaultPCSpinningOptions.map((x) => (
 					<SpinButton
 						label={x.label}
 						key={x.inputProps?.name}

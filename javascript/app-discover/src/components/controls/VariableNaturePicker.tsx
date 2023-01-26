@@ -37,7 +37,7 @@ export const VariableNaturePicker: React.FC<VariableNaturePickerProps> = memo(
 			useState(options)
 		useEffect(() => {
 			setVariableNatureDropdownOptions(
-				options.map(option => {
+				options.map((option) => {
 					const isPossibleNature =
 						variable.columnDataNature?.possibleNatures.includes(
 							option.key as VariableNature,

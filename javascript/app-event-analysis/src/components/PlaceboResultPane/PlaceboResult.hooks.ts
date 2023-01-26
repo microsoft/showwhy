@@ -91,7 +91,7 @@ export function useGetPlaceboBarChartInputData() {
 			placeboDataGroup: PlaceboDataGroup[],
 			output?: PlaceboOutputData,
 		): BarData[] => {
-			const inputData = placeboDataGroup.map(placebo => {
+			const inputData = placeboDataGroup.map((placebo) => {
 				const sdidEstimate = output ? getSdidEstimate(placebo.unit, output) : 0
 				const direction = sdidEstimate < 0 ? -1 : 1
 				const scale = theme.scales().nominal()

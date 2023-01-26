@@ -45,18 +45,18 @@ export const TreatmentMarkers: React.FC<TreatmentMarkersProps> = memo(
 		})
 		// due to scalability concerns,
 		//  limit the number of rendered labels at any given treatment date
-		uniqueTreatedDates.forEach(treatmentDate => {
+		uniqueTreatedDates.forEach((treatmentDate) => {
 			if (
 				treatedUnitsPerDate[treatmentDate].length > MAX_RENDERED_TREATED_UNITS
 			) {
 				treatedUnitsPerDate[treatmentDate] = [
-					'treated #: ' + treatedUnitsPerDate[treatmentDate].length.toString(),
+					`treated #: ${treatedUnitsPerDate[treatmentDate].length.toString()}`,
 				]
 			}
 		})
 		return (
 			<>
-				{uniqueTreatedDates.map(treatedDate => {
+				{uniqueTreatedDates.map((treatedDate) => {
 					const treatedDateXPos = xScale(treatedDate)
 					const marker = (
 						<line

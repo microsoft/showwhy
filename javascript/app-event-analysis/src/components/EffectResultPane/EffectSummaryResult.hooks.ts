@@ -54,7 +54,7 @@ export function useMeanTreatmentEffect(
 				(a, b) => a + b,
 				0,
 			)
-			treatmentDateOffsets.forEach(treatmentDateOffset => {
+			treatmentDateOffsets.forEach((treatmentDateOffset) => {
 				weights.push(treatmentDateOffset / totalTreatmentDatesForAllUnits)
 			})
 			return weightedMean(

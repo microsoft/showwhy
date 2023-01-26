@@ -15,7 +15,7 @@ export function useHandleOnBlur(
 		(event: React.FocusEvent<HTMLInputElement>) => {
 			const { relatedTarget } = event
 			const pw = relatedTarget?.getAttribute('data-pw') || ''
-			if (!comparePW?.length || !comparePW.includes(pw)) {
+			if (!(comparePW?.length && comparePW.includes(pw))) {
 				fn()
 			}
 		},

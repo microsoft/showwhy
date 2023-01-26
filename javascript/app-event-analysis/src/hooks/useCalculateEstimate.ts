@@ -78,11 +78,7 @@ export function useCalculateEstimate(
 
 			// filter input data according to unit selection, and include the treated units
 			let filteredInputData = data.dataPoints
-				.filter(
-					dp =>
-						(checkedUnits && checkedUnits.has(dp.unit)) ||
-						treatedUnitsMap[dp.unit],
-				)
+				.filter((dp) => checkedUnits?.has(dp.unit) || treatedUnitsMap[dp.unit])
 				.map(({ unit, date, value, treated }) => {
 					// Make sure data point only includes value, date, unit, treated field
 					return { unit, date, value, treated }
@@ -90,7 +86,8 @@ export function useCalculateEstimate(
 
 			if (placebo) {
 				filteredInputData = filteredInputData.filter(
-					i => i.unit === treatedUnitsList[0] || !treatedUnits.includes(i.unit),
+					(i) =>
+						i.unit === treatedUnitsList[0] || !treatedUnits.includes(i.unit),
 				)
 			}
 
@@ -121,8 +118,9 @@ export function useCalculateEstimate(
 			const outputsResponse: SDIDOutputResponse | null =
 				calculationError === null && res ? res.data : null
 			const outputs =
-				outputsResponse?.outputs.map(outputResult => outputResult.output) ?? []
-			if (outputs.every(output => isEmpty(output))) {
+				outputsResponse?.outputs.map((outputResult) => outputResult.output) ??
+				[]
+			if (outputs.every((output) => isEmpty(output))) {
 				let errorMsg = 'Error calculating output for the provided input!'
 				if (calculationError !== null)
 					errorMsg += '\n' + (calculationError as Error).message
@@ -140,7 +138,7 @@ export function useCalculateEstimate(
 				content: '',
 			})
 			if (placebo) {
-				setPlaceboOutputRes(prev => {
+				setPlaceboOutputRes((prev) => {
 					const res = cloneDeep(prev)
 					res[treatedUnitsList[0]] = outputsResponse
 					return res
@@ -151,7 +149,7 @@ export function useCalculateEstimate(
 			setTreatmentStartDatesAfterEstimate({ tStartDates: treatmentStartDates })
 			// after the method calculated the results,
 			//  automatically un-toggle the raw input and show the synth control
-			setChartOptions(prev => ({
+			setChartOptions((prev) => ({
 				...prev,
 				renderRawData: false,
 				showSynthControl: true,

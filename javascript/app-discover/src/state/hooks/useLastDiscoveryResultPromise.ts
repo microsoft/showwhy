@@ -23,7 +23,7 @@ export function useLastDiscoveryResultPromise(): [
 	)
 
 	const cancelLastDiscoveryResultPromise = useCallback(() => {
-		setLastDiscoveryResultPromise(prev => {
+		setLastDiscoveryResultPromise((prev) => {
 			void prev?.cancel?.()
 			return undefined
 		})

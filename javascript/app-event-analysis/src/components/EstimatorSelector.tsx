@@ -16,7 +16,7 @@ export const EstimatorSelector: React.FC<EstimatorSelectorProps> = memo(
 	function TreatmentSelector({ estimator, onEstimatorChange }) {
 		const estimatorDropdownOptions = useMemo(
 			() =>
-				Object.keys(Estimators).map(item => ({
+				Object.keys(Estimators).map((item) => ({
 					key: item,
 					text: getEstimatorLabel(item as EstimatorsString),
 				})),
@@ -26,7 +26,7 @@ export const EstimatorSelector: React.FC<EstimatorSelectorProps> = memo(
 		const handleEstimatorChange = useCallback(
 			(e: FormEvent, option?: IDropdownOption<string>) => {
 				const optionKey = option ? (option.key as string) : ''
-				const key = '' + optionKey
+				const key = `${optionKey}`
 				if (estimator === key) return
 				onEstimatorChange(key)
 			},

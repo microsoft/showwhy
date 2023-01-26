@@ -60,7 +60,7 @@ export const BuildDomainModelPage: React.FC<ExposurePageProps> = memo(
 
 				<Title>Select the primary causal model</Title>
 				<CardsContainer>
-					{options.map(option => (
+					{options.map((option) => (
 						<RadioButtonCard key={option.key} option={option} />
 					))}
 				</CardsContainer>

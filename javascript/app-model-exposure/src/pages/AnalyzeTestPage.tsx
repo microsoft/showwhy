@@ -12,14 +12,16 @@ import { AnalyzeTestPageHelpText } from './AnalyzeTestPageHelpText.js'
 import { AnalyzeTestPageHypothesis } from './AnalyzeTestPageHypothesis.js'
 import type { ExposurePageProps } from './types.js'
 
-export const AnalyzeTestPage: React.FC<ExposurePageProps> = memo(function AnalyzeTestPage({ api }) {
-	useHelpOnMount('exposure.estimate')
-	return (
-		<Container>
-			<AnalyzeTestPageEstimators />
-			<AnalyzeTestPageEffects />
-			<AnalyzeTestPageHypothesis />
-			<AnalyzeTestPageHelpText />
-		</Container>
-	)
-})
+export const AnalyzeTestPage: React.FC<ExposurePageProps> = memo(
+	function AnalyzeTestPage({ api }) {
+		useHelpOnMount('exposure.estimate')
+		return (
+			<Container>
+				<AnalyzeTestPageEstimators />
+				<AnalyzeTestPageEffects />
+				<AnalyzeTestPageHypothesis />
+				<AnalyzeTestPageHelpText />
+			</Container>
+		)
+	},
+)

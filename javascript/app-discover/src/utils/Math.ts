@@ -68,7 +68,7 @@ export function allColumnStats(table: ColumnTable): Map<string, ColumnStats> {
 	const columnQueries = table
 		.columnNames()
 		.map(
-			column =>
+			(column) =>
 				`[op.min('${column}'), op.max('${column}'), op.mean('${column}'), op.mode('${column}'), op.valid('${column}')],`,
 		)
 	const allColumnQueryStrings = ''.concat(...columnQueries)

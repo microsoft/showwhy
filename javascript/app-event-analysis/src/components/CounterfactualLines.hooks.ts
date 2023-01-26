@@ -49,7 +49,7 @@ function useOutputDataNonPlacebo(
 	hoverUnit: string | undefined,
 	outputData: (OutputData | PlaceboOutputData)[],
 ): OutputData {
-	const outputIndex = outputData.findIndex(output =>
+	const outputIndex = outputData.findIndex((output) =>
 		hoverUnit?.includes(output.treatedUnit),
 	)
 	const outputDataNonPlacebo = outputData[outputIndex] as OutputData

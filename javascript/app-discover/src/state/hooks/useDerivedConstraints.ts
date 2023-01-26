@@ -12,9 +12,9 @@ export function useDerivedConstraints(
 ): RelationshipReference[] {
 	return useMemo<RelationshipReference[]>(() => {
 		const result: RelationshipReference[] = []
-		inModelCausalVariables.forEach(sourceVar => {
-			sourceVar.derivedFrom?.forEach(sourceColumn => {
-				inModelCausalVariables.forEach(targetVar => {
+		inModelCausalVariables.forEach((sourceVar) => {
+			sourceVar.derivedFrom?.forEach((sourceColumn) => {
+				inModelCausalVariables.forEach((targetVar) => {
 					if (
 						sourceVar !== targetVar &&
 						(targetVar.derivedFrom?.includes(sourceColumn) ||

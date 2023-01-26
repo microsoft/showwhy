@@ -178,7 +178,7 @@ function interventionsToObject(
 ): InterventionByColumn {
 	const interventionByColumn: InterventionByColumn = {}
 
-	interventions.forEach(i => {
+	interventions.forEach((i) => {
 		interventionByColumn[i.columnName] = i.value
 	})
 	return interventionByColumn

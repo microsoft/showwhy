@@ -28,10 +28,8 @@ export const CausalGraphNode: React.FC<CausalNodeProps> = memo(
 						width: '150px',
 					}}
 				>
-					<CausalNode className="handle" {...props}></CausalNode>
-					{isInferenceSupported && (
-						<CausalInferenceSlider {...props}></CausalInferenceSlider>
-					)}
+					<CausalNode className="handle" {...props} />
+					{isInferenceSupported && <CausalInferenceSlider {...props} />}
 				</NodeContainer>
 			</>
 		)

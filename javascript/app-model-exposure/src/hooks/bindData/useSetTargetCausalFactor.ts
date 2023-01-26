@@ -14,7 +14,7 @@ export function useSetTargetCausalFactor(
 	return useCallback(
 		(selectedDefinitionId: string, column: string) => {
 			const selectedCausal = {
-				...causalFactors.find(x => x.id === selectedDefinitionId),
+				...causalFactors.find((x) => x.id === selectedDefinitionId),
 			} as CausalFactor
 
 			if (selectedCausal) {

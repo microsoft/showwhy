@@ -72,14 +72,14 @@ export function arrayIncludesVariable(
 	array: Array<VariableReference>,
 	variable: VariableReference,
 ) {
-	return array.some(inModelVariable => isSame(variable, inModelVariable))
+	return array.some((inModelVariable) => isSame(variable, inModelVariable))
 }
 export function arrayIncludesRelationship(
 	array: Array<Relationship>,
 	variable: VariableReference,
 ) {
 	return array.some(
-		inModelVariable =>
+		(inModelVariable) =>
 			isSame(variable, inModelVariable.source) ||
 			isSame(variable, inModelVariable.target),
 	)
@@ -90,9 +90,9 @@ export function inferMissingMetadataForTable(
 	existingMetadata?: CausalVariable[],
 ) {
 	const metadata: CausalVariable[] = []
-	table?.table?.columnNames().forEach(columnName => {
+	table?.table?.columnNames().forEach((columnName) => {
 		const existingMetadatum = existingMetadata?.find(
-			metadatum => metadatum.columnName === columnName,
+			(metadatum) => metadatum.columnName === columnName,
 		)
 		const completedMetadatum = inferMissingMetadataForColumn(
 			table,
@@ -136,7 +136,7 @@ export function inferMissingMetadataForColumn(
 		) {
 			const uniquePresentValues = columnDataNature.uniquePresentValues ?? []
 			mapping = new Map(
-				uniquePresentValues.map(v => [
+				uniquePresentValues.map((v) => [
 					v,
 					`${columnName} : ${v.toString().replaceAll("'", '')}`,
 				]),
@@ -175,8 +175,10 @@ export function createVariablesFromTable(
 	const inferredMetadata = inferMissingMetadataForTable(container, metadata)
 
 	for (const colName of table?.columnNames() ?? []) {
-		const meta = metadata?.find(md => md.columnName === colName)
-		const inferredMeta = inferredMetadata.find(md => md.columnName === colName)
+		const meta = metadata?.find((md) => md.columnName === colName)
+		const inferredMeta = inferredMetadata.find(
+			(md) => md.columnName === colName,
+		)
 
 		variables.set(colName, {
 			...inferredMeta,

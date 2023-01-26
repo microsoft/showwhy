@@ -57,11 +57,16 @@ export const estimatorRanking = [
 ]
 
 export const ESTIMATORS_SHORT_DESCRIPTION = {
-	exposure: `Create comparable groups based on propensity of being assigned to the exposed group. Fast to execute.`,
-	outcome: `Directly predict outcome for each subject based on exposure and control variables. May take a while to execute.`,
-	inversePropensityWeighting: `Reweigh each sample in the dataset using its inverse propensity score to obtain similar distributions of confounders across the exposed and unexposed groups.`,
-	propensityScoreMatching: `For each subject in the exposed group, find the closest subject in the unexposed group (and vice versa) based on their propensity scores to create exposed-unexposed matched pairs.`,
-	propensityScoreStratification: `Divide the dataset into a number of strata corresponding to ranges of propensity score values, and estimate the exposure effect for each of these strata.`,
+	exposure:
+		'Create comparable groups based on propensity of being assigned to the exposed group. Fast to execute.',
+	outcome:
+		'Directly predict outcome for each subject based on exposure and control variables. May take a while to execute.',
+	inversePropensityWeighting:
+		'Reweigh each sample in the dataset using its inverse propensity score to obtain similar distributions of confounders across the exposed and unexposed groups.',
+	propensityScoreMatching:
+		'For each subject in the exposed group, find the closest subject in the unexposed group (and vice versa) based on their propensity scores to create exposed-unexposed matched pairs.',
+	propensityScoreStratification:
+		'Divide the dataset into a number of strata corresponding to ranges of propensity score values, and estimate the exposure effect for each of these strata.',
 	forestDoublyRobustLearner: `Estimate heterogenous effects of binary or categorical exposures by combining two predictive models: 1) predicting the outcome from the exposure and control variables;
 		 2) predicting the exposure from control variables.
 		 Unlike the Double Machine Learning, the first model predicts the outcome from both the exposure and the control variables, as opposed to just the control variables. 

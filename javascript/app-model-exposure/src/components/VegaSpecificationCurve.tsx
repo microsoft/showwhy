@@ -50,7 +50,7 @@ export const VegaSpecificationCurve: React.FC<{
 	const onChangeSelectedItem = useCallback(
 		(id?: string) => {
 			setSelected(id)
-			onSpecificationSelect(data.find(d => d.id === id))
+			onSpecificationSelect(data.find((d) => d.id === id))
 		},
 		[data, setSelected, onSpecificationSelect],
 	)
@@ -69,8 +69,8 @@ export const VegaSpecificationCurve: React.FC<{
 	useEffect(() => {
 		const totalEstimatesReturned = latestList.length
 		if (selected && totalSpecs !== totalEstimatesReturned) {
-			const item = latestList.find(i => i.id === selected)
-			const newItem = data.find(d => d.taskId === item?.taskId)
+			const item = latestList.find((i) => i.id === selected)
+			const newItem = data.find((d) => d.taskId === item?.taskId)
 			if (newItem?.id !== item?.id) {
 				onChangeSelectedItem(newItem?.id)
 			}
@@ -85,12 +85,12 @@ export const VegaSpecificationCurve: React.FC<{
 				// HACK: do in vega
 				const [column, value] = datum.value.split(':')
 				const inactiveObjects = data.filter((d: any) => d[column] === value)
-				const inactiveIds = inactiveObjects.map(x => x.id)
+				const inactiveIds = inactiveObjects.map((x) => x.id)
 				const missing = inactiveFeatures.indexOf(value) < 0
 
 				const inactiveList = missing
 					? [...inactiveSpecifications, ...inactiveIds]
-					: inactiveSpecifications?.filter(s => !inactiveIds.includes(s))
+					: inactiveSpecifications?.filter((s) => !inactiveIds.includes(s))
 
 				onConfigChange({
 					...config,

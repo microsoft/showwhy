@@ -15,9 +15,9 @@ export function useExampleProjects(): FileDefinition[] {
 	const [examples, setExamples] = useState<FileDefinition[]>([])
 	useEffect(() => {
 		void fetch(EXAMPLES_PATH)
-			.then(r => r.json())
+			.then((r) => r.json())
 			.then((e: { examples: FileDefinition[] }) => setExamples(e.examples))
-			.catch(err => {
+			.catch((err) => {
 				console.error('error loading examples', err)
 				throw err
 			})

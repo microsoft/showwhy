@@ -31,7 +31,7 @@ export const DraggableGraphNode: React.FC<DraggableGraphNodeProps> = memo(
 		const updateXarrow = useXarrow()
 		const [position, setPosition] = useRecoilState(nodePositionsFamily(id))
 
-		const layoutNode = layout?.children?.find(node => node.id === id)
+		const layoutNode = layout?.children?.find((node) => node.id === id)
 		const layoutPosition = {
 			x: layoutNode?.x ?? position.x,
 			y: layoutNode?.y ?? position.y,
@@ -52,7 +52,7 @@ export const DraggableGraphNode: React.FC<DraggableGraphNodeProps> = memo(
 			setTimeout(updateXarrow, layoutTransitionTime)
 		}, [position, layoutTransitionTime, updateXarrow])
 
-		const childrenWithProps = Children.map(children, child => {
+		const childrenWithProps = Children.map(children, (child) => {
 			if (!isValidElement(child)) return child
 			/* eslint-disable-next-line @typescript-eslint/no-unsafe-argument */
 			return cloneElement(child, { wasDragged } as any)

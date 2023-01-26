@@ -23,7 +23,7 @@ export const CorrelationGraphNode = function (props: CausalNodeProps) {
 			}}
 		>
 			<Stack horizontal tokens={{ childrenGap: 5 }}>
-				<CausalNode {...props} center></CausalNode>
+				<CausalNode {...props} center />
 			</Stack>
 		</NodeContainer>
 	)
