@@ -50,6 +50,9 @@
 			"dependsOn": ["assets", "prestart"],
 			"outputs": []
 		},
+		"acceptance_test": {
+			"outputs": ["playwright-report"]
+		},
 		"clean": {
 			"cache": false
 		},

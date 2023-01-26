@@ -8,6 +8,7 @@
 	"author": "Chris Trevino <chtrevin@microsoft.com>",
 	"license": "UNLICENSED",
 	"scripts": {
+		"_acceptance_test_packages": "turbo run acceptance_test",
 		"clean": "turbo run clean --parallel",
 		"assets": "turbo run assets",
 		"build": "turbo run build",
@@ -19,6 +20,7 @@
 		"fix": "turbo run fix",
 		"test": "turbo run test",
 		"ci": "turbo run ci",
+		"acceptance_test": "start-server-and-test start http://localhost:3000 _acceptance_test_packages",
 		"start_webapps": "cross-env EXPOSURE_API_URL=http://localhost:8081/api/exposure DISCOVER_API_URL=http://localhost:8081/api/discover EVENTS_API_URL=http://localhost:8081/api/events turbo run start --parallel",
 		"start_webapps_raw": "turbo run start --parallel",
 		"start": "docker-compose --profile all up",
@@ -42,6 +44,7 @@
 		"jest": "^29.4.0",
 		"npm-run-all": "^4.1.5",
 		"prettier": "^2.8.3",
+		"start-server-and-test": "^1.15.3",
 		"turbo": "1.6.3",
 		"typescript": "^4.9.4"
 	},

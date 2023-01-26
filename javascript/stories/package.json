@@ -6,9 +6,8 @@
 	"license": "MIT",
 	"scripts": {
 		"clean": "essex clean",
-		"start": "start-storybook -s ./public",
 		"bundle": "build-storybook --quiet",
-		"start:storybook": "yarn start",
+		"start:storybook": "start-storybook -s ./public",
 		"bundle:storybook": "yarn bundle"
 	},
 	"dependencies": {
