@@ -1,8 +1,14 @@
 {
-	"name": "@showwhy/acceptance-tests",
-	"version": "0.0.1",
-	"private": true,
-	"devDependencies": {
-		"playwright": "^1.29.2"
-	}
+  "name": "@showwhy/acceptance-tests",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "install_playwright_os_deps:": "playwright install-deps",
+    "playwright_report:": "playwright show-report",
+    "playwright_test:": "yarn acceptance_test",
+    "acceptance_test": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.30.0"
+  }
 }
