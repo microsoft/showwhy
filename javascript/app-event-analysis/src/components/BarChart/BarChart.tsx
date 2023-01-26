@@ -74,7 +74,7 @@ export const BarChart: React.FC<BarChartProps> = memo(function BarChart({
 	const bars = useMemo(() => {
 		return inputBars.map((ld, index) => (
 			<Bar
-				key={index}
+				key={`${ld.name}@${index}`}
 				className={getHoverIdFromValue(ld.name)}
 				barElementClassName={BAR_ELEMENT_CLASS_NAME}
 				xScale={xScale}

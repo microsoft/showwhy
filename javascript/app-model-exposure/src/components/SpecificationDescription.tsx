@@ -71,7 +71,7 @@ export const SpecificationDescription: React.FC<{
 								{failedRefutations.map((refutation, index) => {
 									return (
 										<RefutationOptionsCallout
-											key={index}
+											key={refutation}
 											calloutKey={index}
 											title={(RefutationTestMethodString as any)[refutation]}
 											refutationOptions={refutationOptions}

@@ -101,7 +101,7 @@ export const DataColumns: React.FC<DataColumnsProps> = memo(
 						<TooltipHost
 							content={data.nonBalancedUnits.map((i, key) => (
 								<Text
-									key={key}
+									key={`${i}@${key}`}
 									block
 									styles={{ root: { marginBottom: '10px' } }}
 								>
