@@ -121,9 +121,10 @@ function useOverlay(
 		const refutationColors = [
 			effect,
 			inactiveColor,
-			colors(1).hex(),
-			colors(1).hex(),
+			colors(0).hex(),
+			colors(0).hex(),
 		]
+
 		const spec = JSON.parse(templateString)
 		const pathspec = {
 			"$.data[?(@.name == 'specifications')].values": data,

@@ -1806,17 +1806,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@datashaper/app-framework@npm:0.4.0":
-  version: 0.4.0
-  resolution: "@datashaper/app-framework@npm:0.4.0"
+"@datashaper/app-framework@npm:0.4.1":
+  version: 0.4.1
+  resolution: "@datashaper/app-framework@npm:0.4.1"
   dependencies:
     "@datashaper/guidance": ^0.3.0
-    "@datashaper/react": ^20.0.6
+    "@datashaper/react": ^20.0.7
     "@datashaper/schema": ^9.0.2
     "@datashaper/tables": ^6.1.1
     "@datashaper/utilities": ^2.4.2
     "@datashaper/workflow": ^22.0.4
-    "@essex/components": ^3.6.10
+    "@essex/components": ^3.6.11
     "@monaco-editor/react": ^4.4.6
     ahooks: ^3.7.4
     allotment: 1.17.0
@@ -1858,7 +1858,7 @@ __metadata:
       optional: false
     styled-components:
       optional: false
-  checksum: c3f7d532580bdaecb5b8c5ef498b3f9844102b72b4af57db8d828103c3caf31ce42a0d42da4a1afe12cb5a7d158b6659df16a22f7f4be0e40f70db3f8c10f481
+  checksum: afdfdfb2147581f4e5d5422837ef2e970b2ae575826d94ec812f8b475b2a34d48b57dadf1dac38a33465d39fe298e07a540fc18b119c6bdf7a18abfc0f00553d
   languageName: node
   linkType: hard
 
@@ -1869,9 +1869,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@datashaper/react@npm:^20.0.6":
-  version: 20.0.6
-  resolution: "@datashaper/react@npm:20.0.6"
+"@datashaper/react@npm:^20.0.7":
+  version: 20.0.7
+  resolution: "@datashaper/react@npm:20.0.7"
   dependencies:
     "@datashaper/guidance": ^0.3.0
     "@datashaper/schema": ^9.0.2
@@ -1879,7 +1879,7 @@ __metadata:
     "@datashaper/utilities": ^2.4.2
     "@datashaper/workflow": ^22.0.4
     "@essex/charts-react": ^1.1.8
-    "@essex/components": ^3.6.10
+    "@essex/components": ^3.6.11
     "@essex/styled-components": ^0.0.9
     ahooks: ^3.7.4
     d3-format: ^3.1.0
@@ -1917,7 +1917,7 @@ __metadata:
       optional: false
     react:
       optional: false
-  checksum: c92b9b4795bfa9d563c1e04c71ce4666fd34967169ab98421d64587143659428ccae27e4efb5d066d162210907ed6678ed36f139786ffc7039cdc72b1e7e2ba3
+  checksum: 86ec6c79ed37d9e0997297dd610e64f009d5a22d4988a916267cda8b6291df6efb693428a118da8b2768eb904c6ab5a2d870ba3553161ef0d7a55c9bcf54a3be
   languageName: node
   linkType: hard
 
@@ -2224,6 +2224,72 @@ __metadata:
     styled-components:
       optional: true
   checksum: 063dc51e6e7e176c91f835964fa06d2ac26c51c40ca955c9de6c645550c262a33186afca2f4bb93683067a72ea508c4955cc3edf1be898018402158fcb2f3b7f
+  languageName: node
+  linkType: hard
+
+"@essex/components@npm:^3.6.11":
+  version: 3.6.11
+  resolution: "@essex/components@npm:3.6.11"
+  dependencies:
+    "@essex/styled-components": ^0.0.9
+    "@essex/toolbox": ^3.0.14
+    "@fluentui/utilities": ^8.13.5
+    "@types/d3-array": ^3.0.3
+    "@types/d3-axis": ^3.0.1
+    "@types/d3-brush": ^3.0.1
+    "@types/d3-scale": ^4.0.2
+    "@types/d3-selection": ^3.0.3
+    d3-array: ^3.2.1
+    d3-axis: ^3.0.0
+    d3-brush: ^3.0.0
+    d3-scale: ^4.0.2
+    d3-selection: ^3.0.0
+    lodash-es: ^4.17.21
+    markdown-to-jsx: ^7.1.8
+    react-animate-height: ^3.1.0
+    react-if: ^4.1.4
+  peerDependencies:
+    "@fluentui/react": ">= 8"
+    "@thematic/core": ">= 4"
+    "@thematic/d3": ">= 2"
+    "@thematic/react": ">= 2"
+    "@types/d3-array": ">= 3"
+    "@types/d3-axis": ">= 3"
+    "@types/d3-scale": ">= 4"
+    "@types/d3-selection": ">= 3"
+    "@types/node": "*"
+    "@types/react": ">= 18"
+    react: ">= 18"
+    react-dom: ">= 18"
+    styled-components: ">= 5"
+  peerDependenciesMeta:
+    "@fluentui/react":
+      optional: false
+    "@thematic/core":
+      optional: false
+    "@thematic/d3":
+      optional: false
+    "@thematic/react":
+      optional: false
+    "@types/d3-array":
+      optional: true
+    "@types/d3-axis":
+      optional: true
+    "@types/d3-scale":
+      optional: true
+    "@types/d3-selection":
+      optional: true
+    "@types/node":
+      optional: true
+    "@types/react":
+      optional: true
+    react:
+      optional: false
+    react-dom:
+      optional: true
+    styled-components:
+      optional: true
+  checksum: f6703db9a82ef6395fd840f8b1aaf60e5553884e27caeb58239865446bc4fec8491dac5e27d28057ed7b921a2f51eed95e73bfe0fb2def59e9f03b883a529598
   languageName: node
   linkType: hard
 
@@ -3719,8 +3785,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/app-common@workspace:javascript/app-common"
   dependencies:
-    "@datashaper/app-framework": 0.4.0
-    "@datashaper/react": ^20.0.6
+    "@datashaper/app-framework": 0.4.1
+    "@datashaper/react": ^20.0.7
     "@datashaper/schema": ^9.0.2
     "@datashaper/tables": ^6.1.1
     "@datashaper/utilities": ^2.4.2
@@ -3759,8 +3825,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/discover-app@workspace:javascript/app-discover"
   dependencies:
-    "@datashaper/app-framework": 0.4.0
-    "@datashaper/react": ^20.0.6
+    "@datashaper/app-framework": 0.4.1
+    "@datashaper/react": ^20.0.7
     "@datashaper/schema": ^9.0.2
     "@datashaper/tables": ^6.1.1
     "@datashaper/utilities": ^2.4.2
@@ -3851,7 +3917,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/event-analysis-app@workspace:javascript/app-event-analysis"
   dependencies:
-    "@datashaper/app-framework": 0.4.0
+    "@datashaper/app-framework": 0.4.1
     "@datashaper/schema": ^9.0.2
     "@datashaper/workflow": ^22.0.4
     "@essex/components": ^3.6.10
@@ -3919,8 +3985,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/model-exposure-app@workspace:javascript/app-model-exposure"
   dependencies:
-    "@datashaper/app-framework": 0.4.0
-    "@datashaper/react": ^20.0.6
+    "@datashaper/app-framework": 0.4.1
+    "@datashaper/react": ^20.0.7
     "@datashaper/schema": ^9.0.2
     "@datashaper/tables": ^6.1.1
     "@datashaper/utilities": ^2.4.2
@@ -4019,7 +4085,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@showwhy/webapp@workspace:javascript/webapp"
   dependencies:
-    "@datashaper/app-framework": 0.4.0
+    "@datashaper/app-framework": 0.4.1
     "@datashaper/schema": ^9.0.2
     "@datashaper/tables": ^6.1.1
     "@datashaper/utilities": ^2.4.2
