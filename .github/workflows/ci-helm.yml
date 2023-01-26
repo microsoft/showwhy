@@ -9,7 +9,7 @@ on:
 
 env:
   HELM_EXPERIMENTAL_OCI: 1 #enable OCI support
-  HELM_VERSION_TO_INSTALL: 3.10.2 # version of HEL to install
+  HELM_VERSION_TO_INSTALL: 3.10.2 # version of HELM to install
   GCR_IMAGE: ghcr.io/microsoft/showwhy/
 
 jobs:
@@ -27,6 +27,7 @@ jobs:
           version: ${{ env.HELM_VERSION_TO_INSTALL }} # default is latest
       
       - name: login to acr using helm
+        contition: ${{ github.ref == 'refs/heads/main' }}
         run: |
           echo ${{ secrets.GITHUB_TOKEN }} | helm registry login ${{ env.GCR_IMAGE }} --username ${{ github.repository_owner }} --password-stdin
 
@@ -35,6 +36,7 @@ jobs:
           helm package ${{ github.workspace }}/config/helm/causal-services/ 
 
       - name: publish chart to ghcr
+        contition: ${{ github.ref == 'refs/heads/main' }}
         run: |
           export CHART_VERSION=$(grep 'version:' ./config/helm/causal-services/Chart.yaml | tail -n1 | awk '{ print $2}')
           helm push causal-services-${CHART_VERSION}.tgz oci://${{ env.GCR_IMAGE }}
