@@ -31,8 +31,20 @@ class StatusModel(BaseModel):
             ],
             SignificanceTestResult,
         ]
-    ]
-    failures: Optional[List[EstimateResult]] = None
+    ] = None
+    failures: Optional[
+        Union[
+            List[
+                Union[
+                    RefuterResult,
+                    EstimateResult,
+                    ConfidenceIntervalResult,
+                    ListShapInterpreterResult,
+                ]
+            ],
+            SignificanceTestResult,
+        ]
+    ] = None
 
     def to_dict(self):
         return {

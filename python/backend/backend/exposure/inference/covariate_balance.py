@@ -37,18 +37,14 @@ def stratification_covariate_balance(df, common_causes, treatments):
     mean_diff_overall = mean_diff_overall[["covariate", "std_mean_diff"]]
     mean_diff_strata["abs_smd"] = "adjusted"
     mean_diff_overall["abs_smd"] = "unadjusted"
-    return (
-        pd.concat([mean_diff_overall, mean_diff_strata])
-        .pivot_table(values="std_mean_diff", index=["covariate"], columns=["abs_smd"])
-        .to_dict()
+    return pd.concat([mean_diff_overall, mean_diff_strata]).pivot_table(
+        values="std_mean_diff", index=["covariate"], columns=["abs_smd"]
     )
 
 
 def weighting_covariate_balance(df, common_causes, treatments):
-    return (
-        calculate_covariate_balance(df[common_causes], df[treatments[0]], df["ips_weight"])
-        .rename(columns={"weighted": "adjusted", "unweighted": "unadjusted"})
-        .to_dict()
+    return calculate_covariate_balance(df[common_causes], df[treatments[0]], df["ips_weight"]).rename(
+        columns={"weighted": "adjusted", "unweighted": "unadjusted"}
     )
 
 

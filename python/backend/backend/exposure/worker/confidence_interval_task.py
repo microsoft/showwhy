@@ -3,6 +3,8 @@
 # Licensed under the MIT license. See LICENSE file in the project.
 #
 
+import logging
+
 import celery
 
 from backend.exposure.inference.confidence_interval import estimate_confidence_intervals
@@ -18,7 +20,20 @@ def confidence_interval_task(
     db_client = get_db_client()
     estimated_effect = specification.estimate
 
-    result = estimate_confidence_intervals(estimated_effect)
+    if specification.estimate.exc_info is not None:
+        return ConfidenceIntervalResult(
+            estimate_id=estimated_effect.id,
+            exc_info=specification.estimate.exc_info,
+        )
+
+    try:
+        result = estimate_confidence_intervals(estimated_effect)
+    except Exception as exc:
+        logging.error("Failed to estimate confidence intervals", exc_info=True)
+        return ConfidenceIntervalResult(
+            estimate_id=estimated_effect.id,
+            exc_info=str(exc),
+        )
 
     db_client.set_value(celery.current_task.request.id, result)
 

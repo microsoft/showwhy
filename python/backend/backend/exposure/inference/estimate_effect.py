@@ -111,10 +111,14 @@ def __get_covariate_balance(estimator, estimate):
     covariate_balance_fn = COVARIATE_BALANCE_FUNC_MAPPING[estimator.method_name]
 
     if covariate_balance_fn:
-        return covariate_balance_fn(
-            estimate.estimator._data,
-            estimate.estimator._observed_common_causes_names,
-            estimate.estimator._treatment_name,
+        return (
+            covariate_balance_fn(
+                estimate.estimator._data,
+                estimate.estimator._observed_common_causes_names,
+                estimate.estimator._treatment_name,
+            )
+            .fillna("nan")  # We need to fill nan values with string "nan" to avoid json serialization error
+            .to_dict()
         )
     else:
         return None

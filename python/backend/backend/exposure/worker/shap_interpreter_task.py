@@ -17,16 +17,23 @@ def shap_interpreter_task(
 ) -> ListShapInterpreterResult:
     db_client = get_db_client()
 
-    result = interpret(
-        spec_results=specification.outcome_result,
-        spec_features=[
-            "population_name",
-            "treatment",
-            "outcome",
-            "causal_model",
-            "estimator",
-        ],
-    )
+    try:
+        result = interpret(
+            spec_results=specification.outcome_result,
+            spec_features=[
+                "population_name",
+                "treatment",
+                "outcome",
+                "causal_model",
+                "estimator",
+            ],
+        )
+    except Exception as exc:
+        print("Failed to interpret specification", exc_info=True)
+        return ListShapInterpreterResult(
+            estimate_id=specification.outcome_result.id,
+            exc_info=str(exc),
+        )
 
     db_client.set_value(celery.current_task.request.id, result)
 

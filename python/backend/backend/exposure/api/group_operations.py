@@ -70,7 +70,7 @@ def get_results(workspace_name: str, group_id: str, task_name: str):
         status=status,
         completed=len(succeeded_results),
         pending=total_tasks - len(succeeded_results) - len(results[states.FAILURE]) - len(failed_results),
-        failed=len(results[states.FAILURE]),
+        failed=len(results[states.FAILURE]) + len(failed_results),
         results=succeeded_results,
         failures=failed_results,
     )
