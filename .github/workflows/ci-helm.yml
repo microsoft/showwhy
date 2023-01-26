@@ -1,0 +1,42 @@
+name: Helm CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+    paths:
+      - 'docs/deployment/azure-scripts'
+      - .github/workflows/ci-helm.yml
+
+env:
+  HELM_EXPERIMENTAL_OCI: 1 #enable OCI support
+  HELM_VERSION_TO_INSTALL: 3.10.2 # version of HELM to install
+  GCR_IMAGE: ghcr.io/microsoft/showwhy/
+
+jobs:
+  build:
+    name: publish gcr
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        name: checkout repo
+      
+      - name: install helm
+        uses: Azure/setup-helm@v1
+        with:
+          # Version of helm
+          version: ${{ env.HELM_VERSION_TO_INSTALL }} # default is latest
+      
+      - name: login to acr using helm
+        if: ${{ github.ref == 'refs/heads/main' }}
+        run: |
+          echo ${{ secrets.GITHUB_TOKEN }} | helm registry login ${{ env.GCR_IMAGE }} --username ${{ github.repository_owner }} --password-stdin
+
+      - name: save helm chart
+        run: |
+          helm package ${{ github.workspace }}/config/helm/causal-services/ 
+
+      - name: publish chart to ghcr
+        if: ${{ github.ref == 'refs/heads/main' }}
+        run: |
+          export CHART_VERSION=$(grep 'version:' ./config/helm/causal-services/Chart.yaml | tail -n1 | awk '{ print $2}')
+          helm push causal-services-${CHART_VERSION}.tgz oci://${{ env.GCR_IMAGE }}
