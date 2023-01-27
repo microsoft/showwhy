@@ -15,7 +15,7 @@
 	"devDependencies": {
 		"@essex/scripts": "^24.0.2",
 		"@essex/tsconfig-base": "^1.0.2",
-		"@playwright/test": "^1.30.0",		
+		"@playwright/test": "^1.30.0",
 		"@types/node": "^18.11.18"
 	}
 }
