@@ -9,14 +9,13 @@
 		"install_playwright_os_deps:": "playwright install-deps",
 		"playwright_report:": "playwright show-report",
 		"playwright_test:": "yarn acceptance_test",
-		"acceptance_test": "playwright test"
+		"acceptance_test": "playwright test",
+		"debug": "playwright test --debug"
 	},
 	"devDependencies": {
 		"@essex/scripts": "^24.0.2",
 		"@essex/tsconfig-base": "^1.0.2",
-		"@playwright/test": "^1.30.0",
-		"@types/config": "^3",
-		"@types/node": "^18.11.18",
-		"config": "^3.3.9"
+		"@playwright/test": "^1.30.0",		
+		"@types/node": "^18.11.18"
 	}
 }

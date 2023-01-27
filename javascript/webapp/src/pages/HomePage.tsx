@@ -29,6 +29,7 @@ const HomePage: React.FC<HomePageProps> = memo(function HomePage({ profiles }) {
 		return (
 			<DocumentCard
 				key={d.key}
+				id={`homepage-card-${d.key}`}
 				onClick={() => {
 					void profile
 						.createInstance?.()
