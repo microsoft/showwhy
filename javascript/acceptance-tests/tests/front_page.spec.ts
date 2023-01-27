@@ -15,18 +15,18 @@ test.describe('The front page', () => {
 	test('can create a new Discovery app by clicking the discovery box', async ({
 		page,
 	}) => {
-		await page.click("#homepage-card-showwhy-discover")
+		await page.click('#homepage-card-showwhy-discover')
 	})
 
 	test('can create a new Events app by clicking the events box', async ({
 		page,
-	}) => {		
-		await page.click("#homepage-card-showwhy-events")
+	}) => {
+		await page.click('#homepage-card-showwhy-events')
 	})
 
 	test('can create a new Exposure app by clicking the exposure box', async ({
 		page,
 	}) => {
-		await page.click("#homepage-card-showwhy-model-exposure")
+		await page.click('#homepage-card-showwhy-model-exposure')
 	})
 })
