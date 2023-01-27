@@ -48,6 +48,7 @@ export const VariablePropertiesPanel: React.FC<VariablePropertiesPanelProps> =
 		const [inModelVariables, setInModelVariables] = useRecoilState(
 			InModelCausalVariablesState,
 		)
+		const varrr = inModelVariables?.map(v => v.columnName)
 
 		const isInModel = Graph.includesVariable(causalGraph, variable)
 		const relationships = Graph.validRelationshipsForColumnName(
@@ -68,7 +69,7 @@ export const VariablePropertiesPanel: React.FC<VariablePropertiesPanelProps> =
 
 		const removeFromModel = () => {
 			const newInModelVariables = inModelVariables.filter(
-				(inModelVariable) => inModelVariable !== variable,
+				inModelVariable => inModelVariable !== variable,
 			)
 			setInModelVariables(newInModelVariables)
 			setConstraints(updateConstraints(constraints, variable, Constraints.None))
@@ -184,6 +185,7 @@ export const VariablePropertiesPanel: React.FC<VariablePropertiesPanelProps> =
 							relationships={relationships}
 							constraints={constraints}
 							onUpdateConstraints={setConstraints}
+							graphVariables={varrr}
 						/>
 					)}
 				</Section>

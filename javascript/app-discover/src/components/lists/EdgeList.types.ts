@@ -15,4 +15,5 @@ export interface EdgeListProps {
 	onSelect: SetterOrUpdater<Selectable>
 	constraints: CausalDiscoveryConstraints
 	onUpdateConstraints: SetterOrUpdater<CausalDiscoveryConstraints>
+	graphVariables: string[]
 }

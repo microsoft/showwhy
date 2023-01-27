@@ -26,7 +26,7 @@ export function removeBothEdges(
 		...constraints,
 		manualRelationships: [
 			...constraints.manualRelationships.filter(
-				(r) => !isEquivalentRelationship(r, relationship),
+				r => !isEquivalentRelationship(r, relationship),
 			),
 			{
 				...relationship,
@@ -49,7 +49,7 @@ export function removeConstraint(
 	const newConstraints = {
 		...constraints,
 		manualRelationships: constraints.manualRelationships.filter(
-			(r) => r !== relationship,
+			r => r !== relationship,
 		),
 	}
 	onUpdateConstraints(newConstraints)
@@ -68,20 +68,20 @@ export function flipEdge(
 	const reverse = invertRelationship(relationship)
 	const existingRelationships = [...constraints.manualRelationships]
 	const shouldUndo = constraints.manualRelationships.find(
-		(r) =>
+		r =>
 			hasSameSourceAndTarget(r, relationship) &&
 			hasSameReason(ManualRelationshipReason.Flipped, r),
 	)
 	const filtered = existingRelationships.filter(
-		(r) =>
+		r =>
 			!(
 				hasSameSourceAndTarget(r, relationship) &&
 				hasSameReason(ManualRelationshipReason.Flipped, r)
 			),
 	)
 	const newConstraints = {
-		causes: constraints.causes.filter((r) => !columns.includes(r.columnName)),
-		effects: constraints.effects.filter((r) => !columns.includes(r.columnName)),
+		causes: constraints.causes.filter(r => !columns.includes(r.columnName)),
+		effects: constraints.effects.filter(r => !columns.includes(r.columnName)),
 		manualRelationships: shouldUndo
 			? filtered
 			: [
@@ -99,12 +99,14 @@ export function flipEdge(
 export function groupByEffectType(
 	relationships: Relationship[],
 	variableName: string,
+	constraints?: CausalDiscoveryConstraints,
 ): Record<string, Relationship[]> {
 	const records: Record<string, Relationship[]> = {
 		[`Causes ${variableName}`]: [],
 		[`Caused by ${variableName}`]: [],
 	}
-	return relationships.reduce(
+	const man = relationships.concat(constraints?.potentialRelationships || [])
+	return man.reduce(
 		(acc: Record<string, Relationship[]>, obj: Relationship) => {
 			let key = `Causes ${variableName}`
 			if (obj.source.columnName === variableName) {
@@ -118,6 +120,21 @@ export function groupByEffectType(
 	)
 }
 
+export function addHint(
+	constraints: CausalDiscoveryConstraints,
+	onUpdateConstraints: (newConstraints: CausalDiscoveryConstraints) => void,
+	relationship: Relationship,
+) {
+	const newConstraints = {
+		...constraints,
+		potentialRelationships: [
+			...(constraints.potentialRelationships || []),
+			relationship,
+		],
+	}
+	onUpdateConstraints(newConstraints)
+}
+
 export function isSource(
 	relationship: Relationship,
 	variableReference: VariableReference,
@@ -129,7 +146,7 @@ export function rejectedItems(
 	constraints: CausalDiscoveryConstraints,
 	variable: VariableReference,
 ) {
-	return constraints.manualRelationships.flatMap((x) => {
+	return constraints.manualRelationships.flatMap(x => {
 		if (
 			x.reason === ManualRelationshipReason.Removed &&
 			involvesVariable(x, variable)
@@ -156,8 +173,10 @@ export function hasAnyConstraint(
 	constraints?: CausalDiscoveryConstraints,
 ) {
 	if (!constraints) return false
-	const manualConstraints = Object.values(constraints.manualRelationships)
-	const hasManualConstraint = manualConstraints.some((x) =>
+	const manualConstraints = Object.values(
+		constraints.manualRelationships,
+	).concat(constraints.potentialRelationships || [])
+	const hasManualConstraint = manualConstraints.some(x =>
 		isEquivalentRelationship(x, relationship),
 	)
 	return hasManualConstraint && hasConstraint(constraints, relationship)
