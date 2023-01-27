@@ -46,7 +46,7 @@
 		"@types/uuid": "^9.0.0",
 		"@uifabric/icons": "^7.9.5",
 		"ahooks": "^3.7.4",
-		"allotment": "1.17.1",
+		"allotment": "1.16.0",
 		"arquero": "^5.1.0",
 		"babel-plugin-transform-import-meta": "^2.2.0",
 		"cytoscape": "^3.23.0",

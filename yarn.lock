@@ -3887,7 +3887,7 @@ __metadata:
     "@types/react-is": ^17.0.3
     "@types/styled-components": ^5.1.26
     ahooks: ^3.7.4
-    allotment: 1.17.1
+    allotment: ^1.16.0
     arquero: ^5.1.0
     normalize.css: ^8.0.1
     observable-hooks: ^4.2.1
@@ -3947,7 +3947,7 @@ __metadata:
     "@types/uuid": ^9.0.0
     "@uifabric/icons": ^7.9.5
     ahooks: ^3.7.4
-    allotment: 1.17.1
+    allotment: 1.16.0
     arquero: ^5.1.0
     babel-plugin-transform-import-meta: ^2.2.0
     cytoscape: ^3.23.0
@@ -4199,7 +4199,7 @@ __metadata:
     "@types/styled-components": ^5.1.26
     "@uifabric/icons": ^7.9.5
     ahooks: ^3.7.4
-    allotment: 1.17.1
+    allotment: 1.16.0
     arquero: ^5.1.0
     file-loader: ^6.2.0
     html-webpack-plugin: ^5.5.0
@@ -7856,6 +7856,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"allotment@npm:1.16.0":
+  version: 1.16.0
+  resolution: "allotment@npm:1.16.0"
+  dependencies:
+    classnames: ^2.3.0
+    eventemitter3: ^4.0.0
+    lodash.clamp: ^4.0.0
+    lodash.debounce: ^4.0.0
+    lodash.isequal: ^4.5.0
+    use-resize-observer: ^9.0.0
+  peerDependencies:
+    react: ^17.0.0 || ^18.0.0
+    react-dom: ^17.0.0 || ^18.0.0
+  checksum: d110e50c35be2a5e1b7a3c25b6a1db9c23d1476e44dff9a96724a6514433ab09a9e6c29c64df068ac348fbe8d0ff13a286d452e634fb735d54284bd6dfcc20dc
+  languageName: node
+  linkType: hard
+
 "allotment@npm:1.17.0":
   version: 1.17.0
   resolution: "allotment@npm:1.17.0"
@@ -7873,7 +7890,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"allotment@npm:1.17.1":
+"allotment@npm:^1.16.0":
   version: 1.17.1
   resolution: "allotment@npm:1.17.1"
   dependencies:
