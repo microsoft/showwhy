@@ -6,12 +6,11 @@ import { useHelpOnMount } from '@datashaper/app-framework'
 import { ArqueroDetailsList, ArqueroTableHeader } from '@datashaper/react'
 import { TableMenuBar } from '@showwhy/app-common'
 import type { FC } from 'react'
-import { memo, useEffect } from 'react'
+import { memo } from 'react'
 
 import { AddVariableFields } from '../components/AddVariableFields.js'
 import { CompletedElements } from '../components/CompletedElements.js'
 import { DataTypeWarningMessage } from '../components/DataTypeWarningMessage.js'
-import { MIN_DATASET_SIZE } from '../constants.js'
 import { useBindData } from '../hooks/bindData/useBindData.js'
 import { useGetElements } from '../hooks/bindData/useGetElements.js'
 import { useCommandBar } from './BindDataPage.hooks.js'
@@ -24,23 +23,11 @@ import {
 } from './BindDataPage.styles.js'
 import type { ExposurePageProps } from './types.js'
 
-interface BindDataPageProps extends ExposurePageProps {
-	setError?: (message?: string) => void
-}
-
-export const BindDataPage: FC<BindDataPageProps> = memo(function BindDataPage({
-	setError,
-}) {
+export const BindDataPage: FC<ExposurePageProps> = memo(function BindDataPage() {
 	useHelpOnMount('exposure.bind')
 	const commandBar = useCommandBar()
 
 	const { onSelectTableId, selectedTableName, selectedTable } = useBindData()
-
-	useEffect(() => {
-		if (selectedTable?.table && selectedTable?.table?.size < MIN_DATASET_SIZE) {
-			setError?.(`Dataset is too small. Please use a dataset with at least ${MIN_DATASET_SIZE} rows.`)
-		}
-	}, [selectedTable])
 
 	const {
 		completedElements,

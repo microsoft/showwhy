@@ -85,7 +85,7 @@ export const ModelExposurePage: React.FC<ModelExposurePageProps> = memo(
 							<Route element={<DefineDomainModelPage api={api} />} index />
 							<Route path="define" element={<DefineDomainModelPage api={api} />} />
 							<Route path="build" element={<BuildDomainModelPage api={api} />} />
-							<Route path="bind" element={<BindDataPage api={api} setError={setError} />} />
+							<Route path="bind" element={<BindDataPage api={api} />} />
 							<Route path="analyze" element={<AnalyzeTestPage api={api} />} />
 						</Routes>
 					</Content>
