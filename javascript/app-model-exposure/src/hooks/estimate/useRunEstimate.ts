@@ -65,7 +65,7 @@ export function useRunEstimate(
 				newRefutationResponse,
 				taskId,
 			)
-			completeRun(response.status, taskId)
+			completeRun(response.status, taskId, response.pending)
 		},
 		[estimators, completeRun, newRefutationResponse],
 	)
@@ -87,7 +87,7 @@ export function useRunEstimate(
 			)
 			runSuccessful(response.status)
 				? void refutationRun(taskId, estimatedEffect)
-				: completeRun(response.status, execution.id)
+				: completeRun(response.status, execution.id, response.pending)
 		},
 		[newConfidenceResponse, refutationRun, completeRun, estimators],
 	)
@@ -108,7 +108,7 @@ export function useRunEstimate(
 					? void confidenceRun(taskId, estimateResponse.results)
 					: void refutationRun(taskId, estimateResponse.results)
 			} else {
-				completeRun(response.status, execution.id)
+				completeRun(response.status, execution.id, response.pending)
 			}
 		},
 		[completeRun, newShapResponse, confidenceRun, refutationRun],
@@ -130,7 +130,7 @@ export function useRunEstimate(
 						execution.id,
 						response,
 				  )
-				: completeRun(response.status, execution.id)
+				: completeRun(response.status, execution.id, response.pending)
 		},
 		[newEstimateResponse, createRun, finishLoading, shapRun, completeRun],
 	)

@@ -33,7 +33,6 @@ export function useSetRunAsDefault(): (run: RunHistory) => void {
 			runs.push(newRun)
 			setRunHistory(runs)
 			resetSpecificationConfig()
-			// setStorageItem(SESSION_ID_KEY, newRun.sessionId as string)
 		},
 		[runHistory, setRunHistory, resetSpecificationConfig],
 	)
@@ -109,11 +108,12 @@ export function useUpdateExecutionId(): (response?: ExecutionResponse) => void {
 export function useCompleteRun(): (
 	status: NodeResponseStatus,
 	taskId: string,
+	pending?: number,
 ) => void {
 	const setRunHistory = useSetRunHistory()
 
 	return useCallback(
-		(status, taskId) => {
+		(status, taskId, pending) => {
 			setRunHistory(prev => {
 				const existing = prev.find(p => p.id === taskId)
 
@@ -128,7 +128,7 @@ export function useCompleteRun(): (
 					status,
 				} as RunHistory
 
-				if (isStatus(status, NodeResponseStatus.Failure)) {
+				if (!pending && isStatus(status, NodeResponseStatus.Failure)) {
 					newOne.error = 'Undefined error. Please try again.'
 				}
 

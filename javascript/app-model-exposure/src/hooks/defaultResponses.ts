@@ -7,12 +7,16 @@ import { useCallback, useMemo } from 'react'
 
 import type { StatusResponse } from '../types/api/StatusResponse.js'
 import type { Maybe } from '../types/primitives.js'
+import { nanToNull } from '../utils/results.js'
 
 export function useSaveNewResponse<T extends StatusResponse>(
 	recoilFn: (valOrUpdater: T[] | ((currVal: T[]) => T[])) => void,
 ): (id: string, result: T) => void {
 	return useCallback(
 		(id: string, result: T) => {
+			if (result.hasOwnProperty('results')) {
+				(result as any).results = (result as any).results.map(nanToNull)
+			}
 			recoilFn((prev: T[]) => {
 				const existing = prev.find(p => p.taskId === id)
 				const newOne = {
