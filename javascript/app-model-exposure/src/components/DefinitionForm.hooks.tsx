@@ -13,6 +13,7 @@ import type { Definition } from '../types/experiments/Definition.js'
 import type { DefinitionType } from '../types/experiments/DefinitionType.js'
 import type { Header } from '../types/Header.js'
 import type { Handler, Handler1, Maybe } from '../types/primitives.js'
+import { moveElement } from '../utils/arrays.js'
 import { withRandomId } from '../utils/ids.js'
 import { getDefault } from '../utils/tables.js'
 import { ActionButtons } from './ActionButtons.js'
@@ -70,8 +71,7 @@ export function useDefinitionItems(
 		)
 		let sortedDefinitions = [...definitions]
 		if (primaryIndex > 0) {
-			sortedDefinitions.splice(primaryIndex, 1)
-			sortedDefinitions = [definitions[primaryIndex], ...sortedDefinitions]
+			sortedDefinitions = moveElement(sortedDefinitions, primaryIndex, 0)
 		}
 		return sortedDefinitions.map(item => {
 			if (item.id === definitionToEdit?.id) {

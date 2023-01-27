@@ -16,10 +16,10 @@ export const DefineDomainModelPageDefinitions: React.FC = memo(
 
 		return (
 			<>
-				<Title style={{ fontSize: '18px' }} noMarginBottom>
+				<Title style={altDefStyle} noMarginBottom>
 					Alternative definitions
 				</Title>
-				<Title style={{ fontSize: '16px' }} noMarginBottom>
+				<Title style={domDefStyle} noMarginBottom>
 					Domain definitions
 				</Title>
 				<Title>Population</Title>
@@ -41,3 +41,6 @@ export const DefineDomainModelPageDefinitions: React.FC = memo(
 		)
 	},
 )
+
+const altDefStyle = { fontSize: '18px' }
+const domDefStyle = { fontSize: '16px'}
