@@ -117,13 +117,10 @@ function useOverlay(
 			.rect({ selectionState: SelectionState.NoData })
 			.fill()
 			.hex()
+		const green = theme.nearest('green').hex()
 
-		const refutationColors = [
-			effect,
-			inactiveColor,
-			colors(1).hex(),
-			colors(1).hex(),
-		]
+		const refutationColors = [effect, inactiveColor, green, green]
+
 		const spec = JSON.parse(templateString)
 		const pathspec = {
 			"$.data[?(@.name == 'specifications')].values": data,
