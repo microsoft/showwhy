@@ -78,24 +78,6 @@ export const EffectSummaryResult: React.FC<EffectSummaryResultProps> = memo(
 						</Strong>
 					</Text>
 				)}
-
-				{outputDataNonPlacebo.map(output => (
-					<Text
-						key={output.treatedUnit}
-						className="infoText"
-						variant="medium"
-						block
-					>
-						{'Treatment effect in '}
-						{output.treatedUnit}
-						{': '}
-						<Strong
-							className={output.sdid_estimate < 0 ? 'negative' : 'positive'}
-						>
-							{output.sdid_estimate}
-						</Strong>
-					</Text>
-				))}
 			</Container>
 		)
 	},

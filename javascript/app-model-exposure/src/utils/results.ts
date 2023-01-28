@@ -14,7 +14,7 @@ export function nanToNull(result) {
 		let updated_cov = {}
 
 		for (const key in covariateBalance) {
-			const obj = covariateBalance[key]
+			const obj = {...covariateBalance[key]}
 			for (const k in obj) {
 				if (isStringNan(obj[k])) {
 					obj[k] = null
