@@ -22,7 +22,7 @@ def estimate_effect_for_specification(
     try:
         result = estimate_effect(specification=specification, task_id=celery.current_task.request.id)
     except Exception as exc:
-        logging.error("Failed to estimate effect", exc_info=True)
+        logging.error("Failed to estimate effect")
         result = EstimateResult(
             id=celery.current_task.request.id,
             population_type=specification.population.type,

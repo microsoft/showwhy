@@ -29,7 +29,7 @@ def confidence_interval_task(
     try:
         result = estimate_confidence_intervals(estimated_effect)
     except Exception as exc:
-        logging.error("Failed to estimate confidence intervals", exc_info=True)
+        logging.error("Failed to estimate confidence intervals")
         return ConfidenceIntervalResult(
             estimate_id=estimated_effect.id,
             exc_info=str(exc),

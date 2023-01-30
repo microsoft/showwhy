@@ -3,6 +3,8 @@
 # Licensed under the MIT license. See LICENSE file in the project.
 #
 
+import logging
+
 import celery
 
 from backend.exposure.inference.refutation import refute_estimate
@@ -26,7 +28,7 @@ def refute_estimate_task(
     try:
         result = refute_estimate(specification)
     except Exception as exc:
-        print("Failed to refute estimate", exc_info=True)
+        logging.error("Failed to refute estimate")
         return RefuterResult(
             estimate_id=specification.estimate_id,
             exc_info=str(exc),
