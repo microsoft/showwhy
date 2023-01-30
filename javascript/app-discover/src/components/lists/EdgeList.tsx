@@ -14,8 +14,8 @@ import { Relationship } from '../../domain/Relationship.js'
 
 import { IconButtonDark } from '../../styles/styles.js'
 import {
-	useOnAddHint,
 	useOnFlip,
+	useOnPin,
 	useOnRemove,
 	useOnRemoveAll,
 	useOnRemoveConstraint,
@@ -40,7 +40,7 @@ export const EdgeList: React.FC<EdgeListProps> = memo(function EdgeList({
 	)
 	const removedItems = rejectedItems(constraints, variable)
 	const onRemove = useOnRemove(constraints, onUpdateConstraints)
-	const onAddHint = useOnAddHint(constraints, onUpdateConstraints)
+	const onPin = useOnPin(constraints, onUpdateConstraints)
 	const onFlip = useOnFlip(constraints, onUpdateConstraints)
 	const onRemoveAll = useOnRemoveAll(
 		constraints,
@@ -56,6 +56,7 @@ export const EdgeList: React.FC<EdgeListProps> = memo(function EdgeList({
 	const renderItem = useOnRenderItem(
 		onSelect,
 		onFlip,
+		onPin,
 		onRemove,
 		onRemoveConstraint,
 		variable,
@@ -75,9 +76,9 @@ export const EdgeList: React.FC<EdgeListProps> = memo(function EdgeList({
 				} as Relationship
 			}
 
-			onAddHint(relationship)
+			onPin(relationship)
 		},
-		[onAddHint, variable],
+		[onPin, variable],
 	)
 
 	//variaveis que nao estao sendo target de uma relacao source=variavel

@@ -9,7 +9,6 @@ export interface CausalDiscoveryConstraints {
 	causes: VariableReference[]
 	effects: VariableReference[]
 	manualRelationships: Relationship[]
-	potentialRelationships: Relationship[]
 }
 
 export enum Constraints {

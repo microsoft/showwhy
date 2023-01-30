@@ -16,8 +16,8 @@ export const getSavedConstraints = (
 	) => void,
 ) =>
 	constraints.manualRelationships
-		.filter((x) => x.reason === ManualRelationshipReason.Flipped)
-		.map((constraint) => (
+		.filter(x => x.reason !== ManualRelationshipReason.Removed)
+		.map(constraint => (
 			<Constraint
 				key={constraint.key}
 				constraint={constraint}
@@ -32,8 +32,8 @@ export const getRemovedConstraints = (
 	) => void,
 ) =>
 	constraints.manualRelationships
-		.filter((x) => x.reason === ManualRelationshipReason.Removed)
-		.map((constraint) => (
+		.filter(x => x.reason === ManualRelationshipReason.Removed)
+		.map(constraint => (
 			<Constraint
 				key={constraint.key}
 				constraint={constraint}
@@ -45,7 +45,7 @@ export const getGeneralConstraints = (
 	constraints: VariableReference[],
 	removeFromConstraints: (relationship: VariableReference) => void,
 ) =>
-	constraints.map((constraint) => (
+	constraints.map(constraint => (
 		<GeneralConstraint
 			key={constraint.columnName}
 			constraint={constraint}

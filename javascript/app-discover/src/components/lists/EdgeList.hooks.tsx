@@ -19,10 +19,10 @@ import type {
 } from './../../domain/CausalVariable.js'
 import { EdgeItem } from './EdgeItem.js'
 import {
-	addHint,
 	flipEdge,
 	hasConstraint,
 	isSource,
+	pinEdge,
 	removeBothEdges,
 	removeConstraint,
 } from './EdgeList.utils.js'
@@ -50,13 +50,13 @@ export function useOnRemoveConstraint(
 	)
 }
 
-export function useOnAddHint(
+export function useOnPin(
 	constraints: CausalDiscoveryConstraints,
 	onUpdateConstraints: SetterOrUpdater<CausalDiscoveryConstraints>,
 ): (relationship: Relationship) => void {
 	return useCallback(
 		(relationship: Relationship) => {
-			addHint(constraints, onUpdateConstraints, relationship)
+			pinEdge(constraints, onUpdateConstraints, relationship)
 		},
 		[constraints, onUpdateConstraints],
 	)
@@ -65,6 +65,7 @@ export function useOnAddHint(
 export function useOnRenderItem(
 	onSelect: (relationship: Relationship) => void,
 	onFlip: (relationship: Relationship) => void,
+	onPin: (relationship: Relationship) => void,
 	onRemove: (relationship: Relationship) => void,
 	onRemoveConstraint: (relationship: Relationship) => void,
 	variable: CausalVariable,
@@ -86,6 +87,7 @@ export function useOnRenderItem(
 					key={relationship.key}
 					relationship={relationship}
 					onFlip={onFlip}
+					onPin={onPin}
 					onRemove={onRemove}
 					onRemoveConstraint={onRemoveConstraint}
 					onSelect={onSelect}

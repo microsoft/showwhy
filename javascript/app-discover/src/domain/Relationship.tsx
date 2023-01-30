@@ -10,6 +10,7 @@ import { applyMappingFromVariableToTable, isSame } from './CausalVariable.js'
 export enum ManualRelationshipReason {
 	Removed = 'Removed',
 	Flipped = 'Flipped',
+	Pinned = 'Pinned',
 }
 
 export interface RelationshipReference {
@@ -159,7 +160,7 @@ export function arrayIncludesRelationship(
 	relationships: Relationship[],
 	relationship: Relationship,
 ) {
-	return relationships.some((otherRelationship) =>
+	return relationships.some(otherRelationship =>
 		hasSameSourceAndTarget(relationship, otherRelationship),
 	)
 }

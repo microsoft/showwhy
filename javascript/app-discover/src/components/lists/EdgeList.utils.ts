@@ -96,6 +96,47 @@ export function flipEdge(
 	onUpdateConstraints(newConstraints)
 }
 
+export function pinEdge(
+	constraints: CausalDiscoveryConstraints,
+	onUpdateConstraints: (newConstraints: CausalDiscoveryConstraints) => void,
+	relationship?: Relationship,
+) {
+	if (!relationship) return
+	const columns = [
+		relationship.source.columnName,
+		relationship.target.columnName,
+	]
+
+	const existingRelationships = [...constraints.manualRelationships]
+	const shouldUndo = constraints.manualRelationships.find(
+		r =>
+			hasSameSourceAndTarget(r, relationship) &&
+			hasSameReason(ManualRelationshipReason.Pinned, r),
+	)
+	const filtered = existingRelationships.filter(
+		r =>
+			!(
+				hasSameSourceAndTarget(r, relationship) &&
+				hasSameReason(ManualRelationshipReason.Pinned, r)
+			),
+	)
+	const newConstraints = {
+		causes: constraints.causes.filter(r => !columns.includes(r.columnName)),
+		effects: constraints.effects.filter(r => !columns.includes(r.columnName)),
+		manualRelationships: shouldUndo
+			? filtered
+			: [
+					...filtered,
+					{
+						...relationship,
+						reason: ManualRelationshipReason.Pinned,
+					},
+			  ],
+	} as CausalDiscoveryConstraints
+
+	onUpdateConstraints(newConstraints)
+}
+
 export function groupByEffectType(
 	relationships: Relationship[],
 	variableName: string,
@@ -105,8 +146,15 @@ export function groupByEffectType(
 		[`Causes ${variableName}`]: [],
 		[`Caused by ${variableName}`]: [],
 	}
-	const man = relationships.concat(constraints?.potentialRelationships || [])
-	return man.reduce(
+	let rel = relationships
+	if (!relationships.length) {
+		rel =
+			constraints?.manualRelationships.filter(
+				x => x.reason === ManualRelationshipReason.Pinned,
+			) || []
+	}
+
+	return rel.reduce(
 		(acc: Record<string, Relationship[]>, obj: Relationship) => {
 			let key = `Causes ${variableName}`
 			if (obj.source.columnName === variableName) {
@@ -118,21 +166,6 @@ export function groupByEffectType(
 		},
 		records,
 	)
-}
-
-export function addHint(
-	constraints: CausalDiscoveryConstraints,
-	onUpdateConstraints: (newConstraints: CausalDiscoveryConstraints) => void,
-	relationship: Relationship,
-) {
-	const newConstraints = {
-		...constraints,
-		potentialRelationships: [
-			...(constraints.potentialRelationships || []),
-			relationship,
-		],
-	}
-	onUpdateConstraints(newConstraints)
 }
 
 export function isSource(
@@ -173,9 +206,7 @@ export function hasAnyConstraint(
 	constraints?: CausalDiscoveryConstraints,
 ) {
 	if (!constraints) return false
-	const manualConstraints = Object.values(
-		constraints.manualRelationships,
-	).concat(constraints.potentialRelationships || [])
+	const manualConstraints = Object.values(constraints.manualRelationships)
 	const hasManualConstraint = manualConstraints.some(x =>
 		isEquivalentRelationship(x, relationship),
 	)
