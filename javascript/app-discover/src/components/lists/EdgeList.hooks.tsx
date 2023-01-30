@@ -74,10 +74,10 @@ export function useOnRenderItem(
 	return useCallback(
 		(relationship: Relationship) => {
 			if (!relationship) return undefined
-			const constraint = constraints?.manualRelationships?.find(x =>
+			const constraint = constraints?.manualRelationships?.find((x) =>
 				hasSameSourceAndTarget(x, relationship),
 			)
-			const flipRejected = constraints?.manualRelationships?.find(x =>
+			const flipRejected = constraints?.manualRelationships?.find((x) =>
 				isInverseRemoved(relationship, x),
 			)
 
@@ -126,9 +126,9 @@ export function useOnRemoveAll(
 	return useCallback(
 		(groupName: string) => {
 			const columnCauses = groupName.toLowerCase().includes('causes')
-			const causes = relationships.filter(x => !isSource(x, variable))
-			const causedBy = relationships.filter(x => isSource(x, variable))
-			const newList = (columnCauses ? causes : causedBy).map(x => {
+			const causes = relationships.filter((x) => !isSource(x, variable))
+			const causedBy = relationships.filter((x) => isSource(x, variable))
+			const newList = (columnCauses ? causes : causedBy).map((x) => {
 				return {
 					...x,
 					reason: ManualRelationshipReason.Removed,
@@ -136,7 +136,7 @@ export function useOnRemoveAll(
 			})
 
 			const clearConstraints = constraints.manualRelationships.filter(
-				x => !arrayIncludesRelationship(newList, x),
+				(x) => !arrayIncludesRelationship(newList, x),
 			)
 
 			onUpdateConstraints({

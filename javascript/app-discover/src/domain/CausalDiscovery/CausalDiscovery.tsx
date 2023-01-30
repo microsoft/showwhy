@@ -11,10 +11,8 @@ import type { CausalVariable } from '../../domain/CausalVariable.js'
 import { arrayIncludesVariable } from '../../domain/CausalVariable.js'
 import type { Dataset } from '../../domain/Dataset.js'
 import type { CausalGraph } from '../../domain/Graph.js'
-import {
-	ManualRelationshipReason,
-	Relationship,
-} from '../../domain/Relationship.js'
+import type { Relationship } from '../../domain/Relationship.js'
+import { ManualRelationshipReason } from '../../domain/Relationship.js'
 import { CancelablePromise } from '../../utils/CancelablePromise.js'
 import type { AlgorithmParams } from '../Algorithms/AlgorithmParams.js'
 import { CausalDiscoveryAlgorithm } from './CausalDiscoveryAlgorithm.js'
@@ -33,12 +31,12 @@ export function fromCausalDiscoveryResults(
 	constraints: CausalDiscoveryConstraints,
 	algorithm: CausalDiscoveryAlgorithm,
 ): CausalGraph {
-	const relationships = results.elements.edges.map(edge => {
+	const relationships = results.elements.edges.map((edge) => {
 		const sourceVar = variables.find(
-			variable => variable.columnName === edge.data.source,
+			(variable) => variable.columnName === edge.data.source,
 		)
 		const targetVar = variables.find(
-			variable => variable.columnName === edge.data.target,
+			(variable) => variable.columnName === edge.data.target,
 		)
 		if (sourceVar === undefined || targetVar === undefined) {
 			throw new Error(
@@ -116,7 +114,7 @@ export function discover(
 	}
 
 	/* eslint-disable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-argument */
-	const columns = variables.map(v => v.columnName)
+	const columns = variables.map((v) => v.columnName)
 	const jsonData = dataset.table?.table?.toJSON({ columns })
 	const constraintsJson = createConstraintsJson(variables, constraints)
 	const fetchDiscoverResultPromise = fetchDiscoverResult<any>(
@@ -124,7 +122,7 @@ export function discover(
 		JSON.stringify({
 			dataset: jsonData == null ? null : JSON.parse(jsonData),
 			constraints: constraintsJson,
-			causal_variables: variables.map(v => ({
+			causal_variables: variables.map((v) => ({
 				name: v.name,
 				nature: v.nature,
 			})),
@@ -183,11 +181,11 @@ function createConstraintsJson(
 ) {
 	const constraintsJson = {
 		causes: constraints.causes
-			.filter(variable => arrayIncludesVariable(variables, variable))
-			.map(variable => variable.columnName),
+			.filter((variable) => arrayIncludesVariable(variables, variable))
+			.map((variable) => variable.columnName),
 		effects: constraints.effects
-			.filter(variable => arrayIncludesVariable(variables, variable))
-			.map(variable => variable.columnName),
+			.filter((variable) => arrayIncludesVariable(variables, variable))
+			.map((variable) => variable.columnName),
 		forbiddenRelationships: constraints.manualRelationships
 			.filter(
 				(relationship: Relationship) =>
@@ -195,7 +193,7 @@ function createConstraintsJson(
 					relationship.reason !== ManualRelationshipReason.Pinned &&
 					arrayIncludesVariable(variables, relationship.target),
 			)
-			.map(relationship => [
+			.map((relationship) => [
 				relationship.source.columnName,
 				relationship.target.columnName,
 			]),
@@ -203,10 +201,10 @@ function createConstraintsJson(
 			?.filter(
 				(relationship: Relationship) =>
 					arrayIncludesVariable(variables, relationship.source) &&
-					relationship.reason == ManualRelationshipReason.Pinned &&
+					relationship.reason === ManualRelationshipReason.Pinned &&
 					arrayIncludesVariable(variables, relationship.target),
 			)
-			.map(relationship => [
+			.map((relationship) => [
 				relationship.source.columnName,
 				relationship.target.columnName,
 			]),

@@ -2,16 +2,14 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import {
-	Dropdown,
-	FocusZone,
-	IDropdownOption,
-	Label,
-	TooltipHost,
-} from '@fluentui/react'
+import type { IDropdownOption } from '@fluentui/react'
+import { Dropdown, FocusZone, Label, TooltipHost } from '@fluentui/react'
 import { memo, useCallback, useMemo } from 'react'
-import { Relationship } from '../../domain/Relationship.js'
+import { useRecoilValue } from 'recoil'
 
+import { CausalDiscoveryAlgorithm } from '../../domain/CausalDiscovery/CausalDiscoveryAlgorithm.js'
+import type { Relationship } from '../../domain/Relationship.js'
+import { SelectedCausalDiscoveryAlgorithmState } from '../../state/index.js'
 import { IconButtonDark } from '../../styles/styles.js'
 import {
 	useOnFlip,
@@ -42,6 +40,9 @@ export const EdgeList: React.FC<EdgeListProps> = memo(function EdgeList({
 	const onRemove = useOnRemove(constraints, onUpdateConstraints)
 	const onPin = useOnPin(constraints, onUpdateConstraints)
 	const onFlip = useOnFlip(constraints, onUpdateConstraints)
+	const selectedCausalDiscoveryAlgorithm = useRecoilValue(
+		SelectedCausalDiscoveryAlgorithmState,
+	)
 	const onRemoveAll = useOnRemoveAll(
 		constraints,
 		onUpdateConstraints,
@@ -63,7 +64,7 @@ export const EdgeList: React.FC<EdgeListProps> = memo(function EdgeList({
 		constraints,
 	)
 
-	const addHint = useCallback(
+	const addPin = useCallback(
 		(groupName: string, option?: IDropdownOption) => {
 			let relationship = {
 				source: { columnName: variable.columnName },
@@ -85,9 +86,9 @@ export const EdgeList: React.FC<EdgeListProps> = memo(function EdgeList({
 	// variavel causa tal coisa. variavel = source
 	const relatedVariables = useMemo((): IDropdownOption[] => {
 		return graphVariables
-			.map(columnName => {
+			.map((columnName) => {
 				if (columnName !== variable.columnName) {
-					const allConstraints = Object.values(constraints).flatMap(x => x)
+					const allConstraints = Object.values(constraints).flatMap((x) => x)
 					const isRelated = allConstraints.some(({ source, target }) => {
 						return (
 							(source.columnName === columnName &&
@@ -104,12 +105,12 @@ export const EdgeList: React.FC<EdgeListProps> = memo(function EdgeList({
 					}
 				}
 			})
-			.filter(x => x) as IDropdownOption[]
+			.filter((x) => x) as IDropdownOption[]
 	}, [graphVariables, constraints])
 
 	return (
 		<FocusZone>
-			{Object.keys(groupedList).flatMap(groupName => {
+			{Object.keys(groupedList).flatMap((groupName) => {
 				return (
 					<Container key={groupName}>
 						<LabelContainer>
@@ -123,17 +124,20 @@ export const EdgeList: React.FC<EdgeListProps> = memo(function EdgeList({
 								</TooltipHost>
 							)}
 						</LabelContainer>
-						{groupedList[groupName].map(r => renderItem(r))}
+						{groupedList[groupName].map((r) => renderItem(r))}
 
-						<Dropdown
-							onChange={(a, o) => addHint(groupName, o)}
-							options={relatedVariables}
-						></Dropdown>
+						{selectedCausalDiscoveryAlgorithm !==
+							CausalDiscoveryAlgorithm.NOTEARS && (
+							<Dropdown
+								onChange={(_, o) => addPin(groupName, o)}
+								options={relatedVariables}
+							/>
+						)}
 					</Container>
 				)
 			})}
 			{!!removedItems.length && <Label>Disallowed edges</Label>}
-			{removedItems.map(relationship => {
+			{removedItems.map((relationship) => {
 				return (
 					<Container key={relationship.key}>
 						{renderItem(relationship)}

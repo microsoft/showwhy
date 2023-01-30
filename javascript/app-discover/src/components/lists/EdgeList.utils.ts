@@ -26,7 +26,7 @@ export function removeBothEdges(
 		...constraints,
 		manualRelationships: [
 			...constraints.manualRelationships.filter(
-				r => !isEquivalentRelationship(r, relationship),
+				(r) => !isEquivalentRelationship(r, relationship),
 			),
 			{
 				...relationship,
@@ -49,7 +49,7 @@ export function removeConstraint(
 	const newConstraints = {
 		...constraints,
 		manualRelationships: constraints.manualRelationships.filter(
-			r => r !== relationship,
+			(r) => r !== relationship,
 		),
 	}
 	onUpdateConstraints(newConstraints)
@@ -68,20 +68,20 @@ export function flipEdge(
 	const reverse = invertRelationship(relationship)
 	const existingRelationships = [...constraints.manualRelationships]
 	const shouldUndo = constraints.manualRelationships.find(
-		r =>
+		(r) =>
 			hasSameSourceAndTarget(r, relationship) &&
 			hasSameReason(ManualRelationshipReason.Flipped, r),
 	)
 	const filtered = existingRelationships.filter(
-		r =>
+		(r) =>
 			!(
 				hasSameSourceAndTarget(r, relationship) &&
 				hasSameReason(ManualRelationshipReason.Flipped, r)
 			),
 	)
 	const newConstraints = {
-		causes: constraints.causes.filter(r => !columns.includes(r.columnName)),
-		effects: constraints.effects.filter(r => !columns.includes(r.columnName)),
+		causes: constraints.causes.filter((r) => !columns.includes(r.columnName)),
+		effects: constraints.effects.filter((r) => !columns.includes(r.columnName)),
 		manualRelationships: shouldUndo
 			? filtered
 			: [
@@ -109,20 +109,20 @@ export function pinEdge(
 
 	const existingRelationships = [...constraints.manualRelationships]
 	const shouldUndo = constraints.manualRelationships.find(
-		r =>
+		(r) =>
 			hasSameSourceAndTarget(r, relationship) &&
 			hasSameReason(ManualRelationshipReason.Pinned, r),
 	)
 	const filtered = existingRelationships.filter(
-		r =>
+		(r) =>
 			!(
 				hasSameSourceAndTarget(r, relationship) &&
 				hasSameReason(ManualRelationshipReason.Pinned, r)
 			),
 	)
 	const newConstraints = {
-		causes: constraints.causes.filter(r => !columns.includes(r.columnName)),
-		effects: constraints.effects.filter(r => !columns.includes(r.columnName)),
+		causes: constraints.causes.filter((r) => !columns.includes(r.columnName)),
+		effects: constraints.effects.filter((r) => !columns.includes(r.columnName)),
 		manualRelationships: shouldUndo
 			? filtered
 			: [
@@ -150,7 +150,7 @@ export function groupByEffectType(
 	if (!relationships.length) {
 		rel =
 			constraints?.manualRelationships.filter(
-				x => x.reason === ManualRelationshipReason.Pinned,
+				(x) => x.reason === ManualRelationshipReason.Pinned,
 			) || []
 	}
 
@@ -179,7 +179,7 @@ export function rejectedItems(
 	constraints: CausalDiscoveryConstraints,
 	variable: VariableReference,
 ) {
-	return constraints.manualRelationships.flatMap(x => {
+	return constraints.manualRelationships.flatMap((x) => {
 		if (
 			x.reason === ManualRelationshipReason.Removed &&
 			involvesVariable(x, variable)
@@ -207,7 +207,7 @@ export function hasAnyConstraint(
 ) {
 	if (!constraints) return false
 	const manualConstraints = Object.values(constraints.manualRelationships)
-	const hasManualConstraint = manualConstraints.some(x =>
+	const hasManualConstraint = manualConstraints.some((x) =>
 		isEquivalentRelationship(x, relationship),
 	)
 	return hasManualConstraint && hasConstraint(constraints, relationship)
