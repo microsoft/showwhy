@@ -34,7 +34,7 @@ This interface allows users to inspect variable relationships within data, and t
 
 **Note: At the moment, ShowWhy does not work with Apple Mxx processors in local mode.**
 
-To run the application locally,ensure that you have Docker installed and running on your machine. You can find instructions for installing Docker [here](https://docs.docker.com/get-docker/).
+To run the application locally, ensure that you have Docker installed and running on your machine. You can find instructions for installing Docker [here](https://docs.docker.com/get-docker/).
 
 Open up a terminal application, and using the command-line interface (CLI) run the following command:
 
@@ -48,7 +48,9 @@ For developers wishing to contribute to the project, refer to [DEVELOPING.md](./
 
 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmicrosoft%2Fshowwhy%2Fmain%2Fdocs%2Fdeployment%2Fazure-scripts%2Fall.json)
 
-Check the [deployment documentation](./docs/deployment/README.md) for instructions on how to deploy to deploy SHowWhy to Azure AKS (either via one-click or manually), and how to deploy ShowWhy into a local Kubernetes instance.
+This deploy button will take you directly to Azure to create a resource deployment of ShowWhy.
+
+Check the [deployment documentation](./docs/deployment/README.md) for more details and instructions on how to deploy to deploy ShowWhy to Azure AKS (either via one-click or manually), and how to deploy ShowWhy into a local Kubernetes instance.
 
 # Contribute
 

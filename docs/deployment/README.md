@@ -10,4 +10,4 @@ ShowWhy is split between a front-end web-based client and a containerized Python
 ## Deployment Options
 Our team deploys ShowWhy using Azure AKS. See the [Azure Deployment documentation](./azure-scripts/README.md) for details.
 
-If you are interested in testing out a deployment configuration locally using Kubernetes, see the [local deployment](./LOCAL_DEPLOY.md) instructions. Please note that this should only be used for debugging infrastructural issues. For application development or for test-driving the application locally the `Getting Started` instructions in README.md are much simpler and will be less demanding on your machine.
+If you are interested in testing out a deployment configuration locally using Kubernetes, see the [local deployment](./LOCAL_DEPLOY.md) instructions. Please note that this should only be used for debugging infrastructural issues. For application development or for test-driving the application locally the [getting started](../../README.md#getting-started) instructions are much simpler and will be less demanding on your machine.

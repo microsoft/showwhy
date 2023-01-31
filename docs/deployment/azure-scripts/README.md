@@ -1,43 +1,43 @@
 # AKS ARM Template
-This Azure Resource Manager (ARM) template deploys an Azure Kubernetes Service (AKS) cluster with the specified parameters. The template also includes Helm, a package manager for Kubernetes.
+The Azure Resource Manager (ARM) template deploys an Azure Kubernetes Service (AKS) cluster with the specified parameters. The template also includes Helm, a package manager for Kubernetes.
 
 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmicrosoft%2Fshowwhy%2Fmain%2Fdocs%2Fdeployment%2Fazure-scripts%2Fall.json)
 
+The button will run the ARM template in Azure with a set of reasonable defaults, and should execute with no problems if you have the permissions to create the resources. If you think you need authentication, please read [those instructions](#create-authentication) below first.
+
 **Please note that:**
 
-**1.    You must have:
-Microsoft.Authorization/roleAssignments/write permissions, such as `User Access Administrator` or `Owner`.**
+**1.    You must have: Microsoft.Authorization/roleAssignments/write permissions, such as `User Access Administrator` or `Owner`.**
 
 **2.    The aks cluster will be only accessible by Azure Portal, it's not generating a ssh key for external access.**
 
-**3.    The application will have a self-signed certificate, when you access it you will se an error stating "Your connection is not private".**
+**3.    The application will run with SSL using a self-signed certificate: when you access it your browser will se an error stating "Your connection is not private".**
 
 ## Parameters:
-`Subscription`: The subscription to be billed for the resources.
 
-`ResourceGroup`: The collection of resources for this to be deployed to.
+- `Subscription`: The subscription to be billed for the resources.
+- `ResourceGroup`: The collection of resources for this to be deployed to.
+- `Region`: The region for the resources. If you chose an existing resource group, it will default to it the region for that group.
+- `clusterName`: The name of the Managed Cluster resource to create.
+- `dnsPrefix`: Optional DNS prefix to use with hosted Kubernetes API server FQDN ({dnsPrefix}.{location}.cloudapp.azure.com).
+- `osDiskSizeGB`: Disk size (in GB) to provision for each of the agent pool nodes. This value ranges from 0 to 1023. Specifying 0 will apply the default disk size for that agentVMSize.
+- `agentCount`: The number of nodes for the cluster.
+- `agentVMSize`: The size of the Virtual Machine (SKU). Note that this VM option must be available in the region you select. We can't get a list dynamically in the script, so if you're unsure please use the [product finder](https://azure.microsoft.com/en-us/explore/global-infrastructure/products-by-region/). Our script default VM (Standard_D2s_v3) is available in the default region (East US 2).
 
-`Region`: The region for the resources. If you chose an existing resource group, it will default to it.
+If you don't need authentication securing the application, you can proceed to **Review + create** now. Otherwise, create or open your auth app to get the values for the last two parameters:
 
-`clusterName`: The name of the Managed Cluster resource.
+- `clientId`: Client ID from the app registration
+- `clientSecret`: Client Secret from the app registration
 
-`dnsPrefix`: Optional DNS prefix to use with hosted Kubernetes API server FQDN ({dnsPrefix}.{location}.cloudapp.azure.com).
+## Create authentication
 
-`osDiskSizeGB`: Disk size (in GB) to provision for each of the agent pool nodes. This value ranges from 0 to 1023. Specifying 0 will apply the default disk size for that agentVMSize.
+It's up to you whether you add authentication to protect your instance. ShowWhy does not store user data or "accounts", and only retains uploaded input data on the server for a few hours in a cache to reduce network traffic while you use the application. However, if you want to be sure your data is fully protected, you can create an authentication app and connect it to the instance.
 
-`agentCount`: The number of nodes for the cluster.
-
-`agentVMSize`: The size of the Virtual Machine.
-
-If you wounld't like any form of authentication you can proceed to Review + create.
-
-<details id="section-1"><summary>Deploy with authentication</summary>
-
-To authenticate requests made to the services in the cluster we will use the [OAuth2 Proxy](https://oauth2-proxy.github.io/oauth2-proxy/) service.
+To authenticate requests made to the services in the cluster we use the [OAuth2 Proxy](https://oauth2-proxy.github.io/oauth2-proxy/) service.
 
 We need to create our APP registration on Azure Active Directory:
 
-- concatename the parameters to create the DOMAIN value: {dnsPrefix}.{location}.cloudapp.azure.com
+> NOTE: construct the `DOMAIN` value used below like so: `{dnsPrefix}.{region}.cloudapp.azure.com`
 
 1. Create the new APP registration (Single tenant).
 2. In the `Overview` left menu, the Application (client) ID will be the `{clientId}`  used below.
@@ -49,50 +49,32 @@ We need to create our APP registration on Azure Active Directory:
 6. In the `Expose an API` left menu, click on `set` near to `Application ID URI`, use the suggested value and click `Save`.
 7. In the `Manifest` left menu, add or update the `accessTokenAcceptedVersion` in the JSON config to `2` (integer, not string - `"accessTokenAcceptedVersion": 2`).
 
-## Parameters:
+## Add authentication after deployment
 
-`clientId`: Client ID from the app registration
+If you've already created a deployment and want to update it later with authentication you can do so with this modified script.
 
-`clientSecret`: Client Secret from the app registration
-
-</details>
-
-<details><summary>Add authentication after deployment</summary>
-
-You can add authentication later if you want.
-1. Follow the above example on `Deploy with authentication` to create a new APP registration
-2. Click the button to deploy the authentication script:
+1. Follow the above instructions under "Create authentication" to create a new APP registration
+2. Click the button to deploy the authentication-adding script:
 
 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https%3A%2F%2Fraw.githubusercontent.com%2Fmicrosoft%2Fshowwhy%2Fmain%2Fdocs%2Fdeployment%2Fazure-scripts%2Fauth.json)
 
-## Parameters:
-`Subscription`: The subscription of the existing cluster.
+### Parameters:
 
-`Resource group`: The resource group of the existing cluster
+Most of the parameters are the same as for creating the new deployment. Otherwise:
 
-`Region`: Will default to the resource group's region.
+- `clusterName`: The name of the *existing* cluster.
+- `identityName`: In the existing Resource group, copy the name of the resource with type "Managed Identity"
+- `helmAppLocation`: The helm script to install the dependencies (leave the default)
+- `domain`: Full URL of the application
 
-`Cluster Name`: The name of the existing cluster.
+## Alternate deployment
+To deploy the template manually you can use the Azure Portal, Azure PowerShell, or the Azure CLI instead of the buttons on this page.
 
-`Identity Name`: In the existing resource group, copy the name of the resource of Type: `
-Managed Identity`
-
-`Helm App Location`: The helm script to install the dependencies (leave the default)
-
-`clientId`: Client ID from the app registration
-
-`clientSecret`: Client Secret from the app registration
-
-`domain`: Full URL of the application
-
-</details>
-
-## Deployment
-To deploy the template, you can use the Azure portal, Azure PowerShell, or the Azure CLI.
-
-In the Azure portal, select Create a resource, search for "AKS ARM Template", and select it from the results.
+In the Azure Portal, select "Create a resource", search for "AKS ARM Template", and select it from the results.
 Follow the prompts to enter the required parameters and confirm it.
-This will create two resource groups, one with the resource group name that yopu passed and a second one starting with MC_{RESOURCE_GROUP}_{CLUSTER_NAME}_{REGION}.
 
 ## Output
-`url`: The url to access your deployed platform
+
+This script will create two resource groups, one with the resource group name that you specified and a second one starting named like `MC_{RESOURCE_GROUP}_{CLUSTER_NAME}_{REGION}` (this is created to contain managed cluster infrastructure resources for Kubernetes).
+
+The URL to access your application will be composed of the DNS prefix you chose and the region, like `https://{dnsPrefix}.{region}.cloudapp.azure.com`. You can find it by looking in the MC resource group and finding the Kubernetes public IP.
