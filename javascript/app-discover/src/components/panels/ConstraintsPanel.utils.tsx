@@ -16,7 +16,7 @@ export const getSavedConstraints = (
 	) => void,
 ) =>
 	constraints.manualRelationships
-		.filter((x) => x.reason === ManualRelationshipReason.Flipped)
+		.filter((x) => x.reason !== ManualRelationshipReason.Removed)
 		.map((constraint) => (
 			<Constraint
 				key={constraint.key}

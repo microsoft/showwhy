@@ -22,6 +22,7 @@ import {
 	flipEdge,
 	hasConstraint,
 	isSource,
+	pinEdge,
 	removeBothEdges,
 	removeConstraint,
 } from './EdgeList.utils.js'
@@ -49,9 +50,22 @@ export function useOnRemoveConstraint(
 	)
 }
 
+export function useOnPin(
+	constraints: CausalDiscoveryConstraints,
+	onUpdateConstraints: SetterOrUpdater<CausalDiscoveryConstraints>,
+): (relationship: Relationship) => void {
+	return useCallback(
+		(relationship: Relationship) => {
+			pinEdge(constraints, onUpdateConstraints, relationship)
+		},
+		[constraints, onUpdateConstraints],
+	)
+}
+
 export function useOnRenderItem(
 	onSelect: (relationship: Relationship) => void,
 	onFlip: (relationship: Relationship) => void,
+	onPin: (relationship: Relationship) => void,
 	onRemove: (relationship: Relationship) => void,
 	onRemoveConstraint: (relationship: Relationship) => void,
 	variable: CausalVariable,
@@ -73,6 +87,7 @@ export function useOnRenderItem(
 					key={relationship.key}
 					relationship={relationship}
 					onFlip={onFlip}
+					onPin={onPin}
 					onRemove={onRemove}
 					onRemoveConstraint={onRemoveConstraint}
 					onSelect={onSelect}

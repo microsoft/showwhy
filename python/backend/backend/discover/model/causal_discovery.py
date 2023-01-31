@@ -8,6 +8,7 @@ class Constraints(BaseModel):
     causes: List[str]
     effects: List[str]
     forbiddenRelationships: List[Tuple[str, str]]
+    potentialRelationships: Optional[List[Tuple[str, str]]] = None
 
 
 class CausalVariableNature(str, Enum):

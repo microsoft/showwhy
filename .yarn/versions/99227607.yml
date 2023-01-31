@@ -1,0 +1,6 @@
+releases:
+  "@showwhy/discover-app": minor
+
+declined:
+  - showwhy
+  - "@showwhy/webapp"

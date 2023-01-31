@@ -10,6 +10,7 @@ import { applyMappingFromVariableToTable, isSame } from './CausalVariable.js'
 export enum ManualRelationshipReason {
 	Removed = 'Removed',
 	Flipped = 'Flipped',
+	Pinned = 'Pinned',
 }
 
 export interface RelationshipReference {
