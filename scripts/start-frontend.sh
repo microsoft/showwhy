@@ -2,4 +2,4 @@
 
 yarn install
 yarn assets
-yarn start_webapps
+yarn start_frontend
