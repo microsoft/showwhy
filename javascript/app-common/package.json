@@ -30,7 +30,7 @@
 		"@thematic/fluent": "^5.0.5",
 		"@thematic/react": "^2.1.6",
 		"ahooks": "^3.7.4",
-		"allotment": "^1.16.0",
+		"allotment": "^1.17.1",
 		"arquero": "^5.1.0",
 		"normalize.css": "^8.0.1",
 		"observable-hooks": "^4.2.1",
