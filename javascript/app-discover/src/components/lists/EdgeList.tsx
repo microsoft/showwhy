@@ -2,22 +2,19 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import type { IDropdownOption } from '@fluentui/react'
-import { Dropdown, FocusZone, Label, TooltipHost } from '@fluentui/react'
+import type { IContextualMenuItem, IContextualMenuProps } from '@fluentui/react'
+import { CommandButton, FocusZone, Label, TooltipHost } from '@fluentui/react'
 import { memo, useCallback, useMemo } from 'react'
-import { useRecoilValue } from 'recoil'
 
-import { CausalDiscoveryAlgorithm } from '../../domain/CausalDiscovery/CausalDiscoveryAlgorithm.js'
 import type { Relationship } from '../../domain/Relationship.js'
-import { SelectedCausalDiscoveryAlgorithmState } from '../../state/index.js'
 import { IconButtonDark } from '../../styles/styles.js'
 import {
 	useOnFlip,
-	useOnPin,
 	useOnRemove,
 	useOnRemoveAll,
 	useOnRemoveConstraint,
 	useOnRenderItem,
+	useOnSave,
 } from './EdgeList.hooks.js'
 import { Container, icons, LabelContainer } from './EdgeList.styles.js'
 import type { EdgeListProps } from './EdgeList.types.js'
@@ -38,11 +35,8 @@ export const EdgeList: React.FC<EdgeListProps> = memo(function EdgeList({
 	)
 	const removedItems = rejectedItems(constraints, variable)
 	const onRemove = useOnRemove(constraints, onUpdateConstraints)
-	const onPin = useOnPin(constraints, onUpdateConstraints)
+	const onSave = useOnSave(constraints, onUpdateConstraints)
 	const onFlip = useOnFlip(constraints, onUpdateConstraints)
-	const selectedCausalDiscoveryAlgorithm = useRecoilValue(
-		SelectedCausalDiscoveryAlgorithmState,
-	)
 	const onRemoveAll = useOnRemoveAll(
 		constraints,
 		onUpdateConstraints,
@@ -57,15 +51,15 @@ export const EdgeList: React.FC<EdgeListProps> = memo(function EdgeList({
 	const renderItem = useOnRenderItem(
 		onSelect,
 		onFlip,
-		onPin,
+		onSave,
 		onRemove,
 		onRemoveConstraint,
 		variable,
 		constraints,
 	)
 
-	const addPin = useCallback(
-		(groupName: string, option?: IDropdownOption) => {
+	const addSaved = useCallback(
+		(groupName: string, option?: IContextualMenuItem) => {
 			let relationship = {
 				source: { columnName: variable.columnName },
 				target: { columnName: option?.key as string },
@@ -77,14 +71,14 @@ export const EdgeList: React.FC<EdgeListProps> = memo(function EdgeList({
 				} as Relationship
 			}
 
-			onPin(relationship)
+			onSave(relationship)
 		},
-		[onPin, variable],
+		[onSave, variable],
 	)
 
 	//variaveis que nao estao sendo target de uma relacao source=variavel
 	// variavel causa tal coisa. variavel = source
-	const relatedVariables = useMemo((): IDropdownOption[] => {
+	const relatedVariables = useMemo((): IContextualMenuItem[] => {
 		return graphVariables
 			.map((columnName) => {
 				if (columnName !== variable.columnName) {
@@ -105,8 +99,19 @@ export const EdgeList: React.FC<EdgeListProps> = memo(function EdgeList({
 					}
 				}
 			})
-			.filter((x) => x) as IDropdownOption[]
+			.filter((x) => x) as IContextualMenuItem[]
 	}, [graphVariables, constraints])
+
+	const menuItems = useCallback(
+		(groupName: string): IContextualMenuProps => {
+			return {
+				shouldFocusOnMount: true,
+				items: relatedVariables,
+				onItemClick: (_, item) => addSaved(groupName, item),
+			} as IContextualMenuProps
+		},
+		[relatedVariables],
+	)
 
 	return (
 		<FocusZone>
@@ -125,14 +130,10 @@ export const EdgeList: React.FC<EdgeListProps> = memo(function EdgeList({
 							)}
 						</LabelContainer>
 						{groupedList[groupName].map((r) => renderItem(r))}
-
-						{selectedCausalDiscoveryAlgorithm !==
-							CausalDiscoveryAlgorithm.NOTEARS && (
-							<Dropdown
-								onChange={(_, o) => addPin(groupName, o)}
-								options={relatedVariables}
-							/>
-						)}
+						<CommandButton
+							text="+ add new variable"
+							menuProps={menuItems(groupName)}
+						/>
 					</Container>
 				)
 			})}

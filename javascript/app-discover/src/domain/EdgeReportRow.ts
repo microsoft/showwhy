@@ -10,6 +10,7 @@ export interface EdgeReportRow {
 	target: string
 	correlation?: string
 	is_constrained?: Number
+	is_discovered?: Number
 	method?: CausalDiscoveryAlgorithm
 	relationship?: string
 	weight?: string

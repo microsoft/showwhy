@@ -9,7 +9,7 @@ export const Container = styled.div``
 
 export const icons = {
 	delete: { iconName: 'Delete' },
-	pin: { iconName: 'Pin' },
+	save: { iconName: 'Pin' },
 	switch: { iconName: 'Switch' },
 	remove: { iconName: 'StatusCircleErrorX' },
 }

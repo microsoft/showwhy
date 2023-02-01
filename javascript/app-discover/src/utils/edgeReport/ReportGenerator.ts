@@ -11,7 +11,10 @@ import type {
 	Relationship,
 	RelationshipWithWeight,
 } from '../../domain/Relationship.js'
-import { ManualRelationshipReason } from '../../domain/Relationship.js'
+import {
+	arrayIncludesRelationship,
+	ManualRelationshipReason,
+} from '../../domain/Relationship.js'
 import { correlationForVariables } from '../Correlation.js'
 import type { ATEDetailsByName } from './../../domain/CausalDiscovery/CausalDiscoveryResult.js'
 import type { EdgeReportRow } from './../../domain/EdgeReportRow.js'
@@ -39,6 +42,11 @@ export class ReportGenerator {
 		)
 
 		this.addRemovedRelationships(selectedCausalDiscoveryAlgorithm, constraints)
+		this.addSavedNotFoundRelationships(
+			selectedCausalDiscoveryAlgorithm,
+			relationships,
+			constraints,
+		)
 		this.addCorrelations(correlations)
 		return this.reportRows
 	}
@@ -74,6 +82,19 @@ export class ReportGenerator {
 		this.reportRows.push(...removedRelationships)
 	}
 
+	addSavedNotFoundRelationships(
+		causalDiscoveryAlgorithm: CausalDiscoveryAlgorithm,
+		relationships: Relationship[],
+		constraints?: CausalDiscoveryConstraints,
+	) {
+		const removedRelationships = this.getSavedNotFoundRelationshipsRows(
+			causalDiscoveryAlgorithm,
+			relationships,
+			constraints,
+		).sort((a, b) => a.source.localeCompare(b.source))
+		this.reportRows.push(...removedRelationships)
+	}
+
 	addCorrelations(correlations: RelationshipWithWeight[]) {
 		const allCorrelations = this.getCorrelationRows(correlations).sort(
 			(a, b) => a.source.localeCompare(b.source),
@@ -98,7 +119,35 @@ export class ReportGenerator {
 					target: constraint.target.columnName,
 					method: causalDiscoveryAlgorithm,
 					is_constrained: 1,
+					is_discovered: 0,
 					relationship: 'removed',
+				} as EdgeReportRow)
+			}
+		})
+		return removedRelationships
+	}
+
+	getSavedNotFoundRelationshipsRows(
+		causalDiscoveryAlgorithm: CausalDiscoveryAlgorithm,
+		relationships: Relationship[],
+		constraints?: CausalDiscoveryConstraints,
+	): EdgeReportRow[] {
+		if (!constraints) return []
+		const removedRelationships: EdgeReportRow[] = []
+		constraints.manualRelationships.forEach((constraint) => {
+			if (
+				constraint.reason === ManualRelationshipReason.Saved &&
+				!arrayIncludesRelationship(relationships, constraint) &&
+				(this.allVariables.includes(constraint.source.columnName) ||
+					this.allVariables.includes(constraint.target.columnName))
+			) {
+				removedRelationships.push({
+					source: constraint.source.columnName,
+					target: constraint.target.columnName,
+					method: causalDiscoveryAlgorithm,
+					is_constrained: 1,
+					is_discovered: 0,
+					relationship: 'saved',
 				} as EdgeReportRow)
 			}
 		})
@@ -118,6 +167,8 @@ export class ReportGenerator {
 						source: source.columnName,
 						target: target.columnName,
 						correlation: weight.toFixed(3),
+						is_constrained: 0,
+						is_discovered: 0,
 					}) as EdgeReportRow,
 			)
 	}
@@ -141,6 +192,7 @@ export class ReportGenerator {
 			target: relationship.target.columnName,
 			correlation: correlation?.weight?.toFixed(3),
 			is_constrained: hasConstraints ? 1 : 0,
+			is_discovered: 1,
 			method: selectedCausalDiscoveryAlgorithm,
 			relationship: getCausalRelationship(relationship?.weight),
 			weight: relationship.weight?.toFixed(3),

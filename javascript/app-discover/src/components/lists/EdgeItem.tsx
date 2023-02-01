@@ -22,7 +22,7 @@ export const EdgeItem: React.FC<EdgeItemProps> = memo(function EdgeItem({
 	relationship,
 	columnName,
 	onFlip,
-	onPin,
+	onSave,
 	onRemove,
 	onRemoveConstraint,
 	onSelect,
@@ -33,8 +33,6 @@ export const EdgeItem: React.FC<EdgeItemProps> = memo(function EdgeItem({
 	const selectedCausalDiscoveryAlgorithm = useRecoilValue(
 		SelectedCausalDiscoveryAlgorithmState,
 	)
-	const isPinAllowed =
-		selectedCausalDiscoveryAlgorithm !== CausalDiscoveryAlgorithm.NOTEARS
 	const flipTooltip = useMemo((): string => {
 		if (hasSameReason(ManualRelationshipReason.Flipped, constraint)) {
 			return 'Direction manually reversed. Click to undo it'
@@ -44,8 +42,8 @@ export const EdgeItem: React.FC<EdgeItemProps> = memo(function EdgeItem({
 		return 'Disallow cause in this direction'
 	}, [constraint, flipAllowed])
 
-	const pinTooltip = useMemo((): string => {
-		if (hasSameReason(ManualRelationshipReason.Pinned, constraint)) {
+	const saveTooltip = useMemo((): string => {
+		if (hasSameReason(ManualRelationshipReason.Saved, constraint)) {
 			return 'Relationship marked as important. Click to undo it'
 		}
 		return 'Mark relationship as important'
@@ -85,16 +83,15 @@ export const EdgeItem: React.FC<EdgeItemProps> = memo(function EdgeItem({
 								<Text variant={'tiny'}>{relationship?.weight?.toFixed(2)}</Text>
 							</Stack.Item>
 							<Stack.Item align="center">
-								<TooltipHost content={pinTooltip}>
+								<TooltipHost content={saveTooltip}>
 									<IconButtonDark
 										toggle
 										checked={hasSameReason(
-											ManualRelationshipReason.Pinned,
+											ManualRelationshipReason.Saved,
 											constraint,
 										)}
-										disabled={!isPinAllowed}
-										iconProps={icons.pin}
-										onClick={() => onPin(relationship)}
+										iconProps={icons.save}
+										onClick={() => onSave(relationship)}
 									/>
 								</TooltipHost>
 							</Stack.Item>

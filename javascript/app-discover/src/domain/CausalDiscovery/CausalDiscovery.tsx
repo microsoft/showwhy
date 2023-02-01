@@ -190,7 +190,7 @@ function createConstraintsJson(
 			.filter(
 				(relationship: Relationship) =>
 					arrayIncludesVariable(variables, relationship.source) &&
-					relationship.reason !== ManualRelationshipReason.Pinned &&
+					relationship.reason !== ManualRelationshipReason.Saved &&
 					arrayIncludesVariable(variables, relationship.target),
 			)
 			.map((relationship) => [
@@ -201,7 +201,7 @@ function createConstraintsJson(
 			?.filter(
 				(relationship: Relationship) =>
 					arrayIncludesVariable(variables, relationship.source) &&
-					relationship.reason === ManualRelationshipReason.Pinned &&
+					relationship.reason === ManualRelationshipReason.Saved &&
 					arrayIncludesVariable(variables, relationship.target),
 			)
 			.map((relationship) => [
