@@ -1,0 +1,8 @@
+releases:
+  "@showwhy/event-analysis-app": minor
+  "@showwhy/model-exposure-app": minor
+
+declined:
+  - showwhy
+  - "@showwhy/stories"
+  - "@showwhy/webapp"
