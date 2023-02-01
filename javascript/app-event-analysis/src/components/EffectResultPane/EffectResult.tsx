@@ -55,7 +55,7 @@ export const EffectResult: React.FC<EffectResultProps> = memo(
 			useSynthControlBarChartData(synthControlData)
 
 		const output =
-			(outputData.find(o => o.treatedUnit === treatedUnit) as OutputData) ||
+			(outputData.find((o) => o.treatedUnit === treatedUnit) as OutputData) ||
 			({} as OutputData)
 
 		const filteredOutput = {
@@ -71,11 +71,7 @@ export const EffectResult: React.FC<EffectResultProps> = memo(
 		return (
 			<Container key={treatedUnit}>
 				<TreatedTitle>{treatedUnit}</TreatedTitle>
-				<Text
-					variant="medium"
-					block
-					styles={treatmentStyles}
-				>
+				<Text variant="medium" block styles={treatmentStyles}>
 					{'Treatment effect in '}
 					{treatedUnit}
 					{': '}
@@ -130,4 +126,4 @@ export const EffectResult: React.FC<EffectResultProps> = memo(
 	},
 )
 
-const treatmentStyles = {root: {marginBottom: '1rem'}}
+const treatmentStyles = { root: { marginBottom: '1rem' } }

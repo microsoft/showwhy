@@ -37,7 +37,7 @@ export const CollapsibleJson: React.FC<{ json: string }> = memo(
 			<CollapsibleContainer isCollapsed={isCollapsed}>
 				<IconButton onClick={toggle} iconProps={iconProps} />
 				{isCollapsed ? (
-					<code>{json.slice(0, 50) + '...'}</code>
+					<code>{`${json.slice(0, 50)}...`}</code>
 				) : (
 					<pre>
 						<code>{json}</code>

@@ -43,4 +43,4 @@ export const DefineDomainModelPageDefinitions: React.FC = memo(
 )
 
 const altDefStyle = { fontSize: '18px' }
-const domDefStyle = { fontSize: '16px'}
+const domDefStyle = { fontSize: '16px' }

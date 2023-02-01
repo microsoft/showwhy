@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { ActionButton, Icon, type IModalStyles, Modal } from '@fluentui/react'
+import { type IModalStyles, ActionButton, Icon, Modal } from '@fluentui/react'
 import { useBoolean } from '@fluentui/react-hooks'
 import type { Theme } from '@thematic/core'
 import { memo, useMemo } from 'react'

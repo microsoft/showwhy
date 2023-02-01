@@ -91,7 +91,7 @@ function buildDropdownOption(
 		itemType: ContextualMenuItemType.Section,
 		sectionProps: {
 			title: typeLabel[type],
-			items: all.map(x => {
+			items: all.map((x) => {
 				return {
 					key: x.id,
 					text: x.variable,

@@ -60,11 +60,11 @@ export function handlePrimaryDefinition(
 	definitions: Definition[],
 ) {
 	const primaryDefinition = definitions.find(
-		d => d.level === CausalityLevel.Primary && d.type === definition.type,
+		(d) => d.level === CausalityLevel.Primary && d.type === definition.type,
 	)
 
 	if (!primaryDefinition) {
-		return definitions.map(d => {
+		return definitions.map((d) => {
 			if (d.default && d.type === definition.type) {
 				return {
 					...d,

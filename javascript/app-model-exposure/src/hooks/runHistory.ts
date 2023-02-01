@@ -122,8 +122,8 @@ export function useCompleteRun(): (
 
 	return useCallback(
 		(taskId, { status, pending, failures }) => {
-			setRunHistory(prev => {
-				const existing = prev.find(p => p.id === taskId)
+			setRunHistory((prev) => {
+				const existing = prev.find((p) => p.id === taskId)
 
 				const newOne = {
 					...existing,

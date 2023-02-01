@@ -67,13 +67,13 @@ export function useDefinitionItems(
 	)
 	const items = useMemo(() => {
 		const primaryIndex = definitions.findIndex(
-			d => d.level === CausalityLevel.Primary,
+			(d) => d.level === CausalityLevel.Primary,
 		)
 		let sortedDefinitions = [...definitions]
 		if (primaryIndex > 0) {
 			sortedDefinitions = moveElement(sortedDefinitions, primaryIndex, 0)
 		}
-		return sortedDefinitions.map(item => {
+		return sortedDefinitions.map((item) => {
 			if (item.id === definitionToEdit?.id) {
 				return getEditableRow(edited)
 			}
@@ -144,8 +144,9 @@ export function useAddDefinition(
 				return
 			}
 			definition = withRandomId(definition)
-			definition.default = !definitions.filter(d => d.type === definition.type)
-				.length
+			definition.default = !definitions.filter(
+				(d) => d.type === definition.type,
+			).length
 			let list = []
 			if (definition.level === CausalityLevel.Primary) {
 				list = [...updateListTypes(definitions, definition.type), definition]

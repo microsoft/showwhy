@@ -21,10 +21,10 @@ function useAddDefaultDefinition() {
 	const [definitions, setDefinitions] = useDefinitionsState()
 	return useDebounceFn(
 		(type: DefinitionType, value: string) => {
-			const hasDefinition = !!definitions.find(d => d.type === type)
+			const hasDefinition = !!definitions.find((d) => d.type === type)
 			if (!hasDefinition) {
 				const variable = value.toLowerCase().replaceAll(' ', '_')
-				setDefinitions(prev => [
+				setDefinitions((prev) => [
 					...prev,
 					{
 						type,

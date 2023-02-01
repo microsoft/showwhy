@@ -69,22 +69,22 @@ function saveState(resource: ExposureResource, snap: Snapshot) {
 
 function setDefaultDefinitions(definitions: Definition[]) {
 	const populationDefault = definitions.find(
-		d => d.default && d.type === DefinitionType.Population,
+		(d) => d.default && d.type === DefinitionType.Population,
 	)
 	const outcomeDefault = definitions.find(
-		d => d.default && d.type === DefinitionType.Outcome,
+		(d) => d.default && d.type === DefinitionType.Outcome,
 	)
 	const exposureDefault = definitions.find(
-		d => d.default && d.type === DefinitionType.Exposure,
+		(d) => d.default && d.type === DefinitionType.Exposure,
 	)
 	const populationIndex = definitions.findIndex(
-		d => d.type === DefinitionType.Population,
+		(d) => d.type === DefinitionType.Population,
 	)
 	const outcomeIndex = definitions.findIndex(
-		d => d.type === DefinitionType.Outcome,
+		(d) => d.type === DefinitionType.Outcome,
 	)
 	const exposureIndex = definitions.findIndex(
-		d => d.type === DefinitionType.Exposure,
+		(d) => d.type === DefinitionType.Exposure,
 	)
 
 	return (d: Definition, index: number) => {
