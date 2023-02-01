@@ -13,7 +13,7 @@ import {
 } from '../../domain/Relationship.js'
 import { SelectedCausalDiscoveryAlgorithmState } from '../../state/index.js'
 import { IconButtonDark } from '../../styles/styles.js'
-import { Container, icons } from './EdgeItem.styles.js'
+import { Container, icons, iconStyle } from './EdgeItem.styles.js'
 import type { EdgeItemProps } from './EdgeItem.types.js'
 
 const childrenGap = 5
@@ -90,12 +90,7 @@ export const EdgeItem: React.FC<EdgeItemProps> = memo(function EdgeItem({
 							onClick={() => (!isRejected ? onSelect(relationship) : undefined)}
 						>
 							{notFound ? (
-								<Icon
-									style={{
-										verticalAlign: 'top',
-									}}
-									iconName={icons.warning.iconName}
-								/>
+								<Icon style={iconStyle} iconName={icons.warning.iconName} />
 							) : null}
 							{` ${edgeTitle}`}
 						</Text>

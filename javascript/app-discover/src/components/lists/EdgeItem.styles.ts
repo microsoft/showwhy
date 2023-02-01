@@ -7,6 +7,7 @@ import styled from 'styled-components'
 
 export const Container = styled.div``
 
+export const iconStyle = { verticalAlign: 'top' }
 export const icons = {
 	delete: { iconName: 'Delete' },
 	save: { iconName: 'Pin' },
