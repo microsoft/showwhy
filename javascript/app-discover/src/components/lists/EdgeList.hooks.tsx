@@ -70,9 +70,9 @@ export function useOnRenderItem(
 	onRemoveConstraint: (relationship: Relationship) => void,
 	variable: CausalVariable,
 	constraints: CausalDiscoveryConstraints,
-): (relationship: Relationship) => JSX.Element | undefined {
+): (relationship: Relationship, notFound?: boolean) => JSX.Element | undefined {
 	return useCallback(
-		(relationship: Relationship) => {
+		(relationship: Relationship, notFound?: boolean) => {
 			if (!relationship) return undefined
 			const constraint = constraints?.manualRelationships?.find((x) =>
 				hasSameSourceAndTarget(x, relationship),
@@ -98,6 +98,7 @@ export function useOnRenderItem(
 							: relationship.source.columnName
 					}
 					constraint={constraint}
+					notFound={notFound}
 				/>
 			)
 		},

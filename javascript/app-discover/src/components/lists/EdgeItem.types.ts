@@ -14,4 +14,5 @@ export interface EdgeItemProps {
 	onSelect: (relationship: Relationship) => void
 	constraint?: Relationship
 	flipAllowed?: boolean
+	notFound?: boolean
 }

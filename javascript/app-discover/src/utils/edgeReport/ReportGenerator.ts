@@ -11,10 +11,7 @@ import type {
 	Relationship,
 	RelationshipWithWeight,
 } from '../../domain/Relationship.js'
-import {
-	arrayIncludesRelationship,
-	ManualRelationshipReason,
-} from '../../domain/Relationship.js'
+import { isRemovedConstraint, savedNotFound } from '../Constraints.js'
 import { correlationForVariables } from '../Correlation.js'
 import type { ATEDetailsByName } from './../../domain/CausalDiscovery/CausalDiscoveryResult.js'
 import type { EdgeReportRow } from './../../domain/EdgeReportRow.js'
@@ -109,11 +106,7 @@ export class ReportGenerator {
 		if (!constraints) return []
 		const removedRelationships: EdgeReportRow[] = []
 		constraints.manualRelationships.forEach((constraint) => {
-			if (
-				constraint.reason === ManualRelationshipReason.Removed &&
-				(this.allVariables.includes(constraint.source.columnName) ||
-					this.allVariables.includes(constraint.target.columnName))
-			) {
+			if (isRemovedConstraint(constraint, this.allVariables)) {
 				removedRelationships.push({
 					source: constraint.source.columnName,
 					target: constraint.target.columnName,
@@ -135,12 +128,7 @@ export class ReportGenerator {
 		if (!constraints) return []
 		const removedRelationships: EdgeReportRow[] = []
 		constraints.manualRelationships.forEach((constraint) => {
-			if (
-				constraint.reason === ManualRelationshipReason.Saved &&
-				!arrayIncludesRelationship(relationships, constraint) &&
-				(this.allVariables.includes(constraint.source.columnName) ||
-					this.allVariables.includes(constraint.target.columnName))
-			) {
+			if (savedNotFound(relationships, constraint, this.allVariables)) {
 				removedRelationships.push({
 					source: constraint.source.columnName,
 					target: constraint.target.columnName,

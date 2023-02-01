@@ -7,7 +7,10 @@ import { CommandButton, FocusZone, Label, TooltipHost } from '@fluentui/react'
 import { memo, useCallback, useMemo } from 'react'
 
 import type { Relationship } from '../../domain/Relationship.js'
+import { involvesVariable } from '../../domain/Relationship.js'
+import { useCausalGraph } from '../../state/index.js'
 import { IconButtonDark } from '../../styles/styles.js'
+import { savedNotFound } from '../../utils/Constraints.js'
 import {
 	useOnFlip,
 	useOnRemove,
@@ -18,7 +21,11 @@ import {
 } from './EdgeList.hooks.js'
 import { Container, icons, LabelContainer } from './EdgeList.styles.js'
 import type { EdgeListProps } from './EdgeList.types.js'
-import { groupByEffectType, rejectedItems } from './EdgeList.utils.js'
+import {
+	groupByEffectType,
+	isColumnRelated,
+	rejectedItems,
+} from './EdgeList.utils.js'
 
 export const EdgeList: React.FC<EdgeListProps> = memo(function EdgeList({
 	relationships,
@@ -28,11 +35,9 @@ export const EdgeList: React.FC<EdgeListProps> = memo(function EdgeList({
 	onUpdateConstraints,
 	graphVariables,
 }) {
-	const groupedList = groupByEffectType(
-		relationships,
-		variable.columnName,
-		constraints,
-	)
+	const variables = useCausalGraph().variables
+
+	const groupedList = groupByEffectType(relationships, variable, constraints)
 	const removedItems = rejectedItems(constraints, variable)
 	const onRemove = useOnRemove(constraints, onUpdateConstraints)
 	const onSave = useOnSave(constraints, onUpdateConstraints)
@@ -76,21 +81,16 @@ export const EdgeList: React.FC<EdgeListProps> = memo(function EdgeList({
 		[onSave, variable],
 	)
 
-	//variaveis que nao estao sendo target de uma relacao source=variavel
-	// variavel causa tal coisa. variavel = source
-	const relatedVariables = useMemo((): IContextualMenuItem[] => {
+	const availableVariables = useMemo((): IContextualMenuItem[] => {
 		return graphVariables
 			.map((columnName) => {
 				if (columnName !== variable.columnName) {
-					const allConstraints = Object.values(constraints).flatMap((x) => x)
-					const isRelated = allConstraints.some(({ source, target }) => {
-						return (
-							(source.columnName === columnName &&
-								target.columnName === variable.columnName) ||
-							(target.columnName === columnName &&
-								source.columnName === variable.columnName)
-						)
-					})
+					const isRelated = isColumnRelated(
+						columnName,
+						variable.columnName,
+						constraints,
+					)
+
 					if (!isRelated) {
 						return {
 							key: columnName,
@@ -106,11 +106,27 @@ export const EdgeList: React.FC<EdgeListProps> = memo(function EdgeList({
 		(groupName: string): IContextualMenuProps => {
 			return {
 				shouldFocusOnMount: true,
-				items: relatedVariables,
+				items: availableVariables,
 				onItemClick: (_, item) => addSaved(groupName, item),
 			} as IContextualMenuProps
 		},
-		[relatedVariables],
+		[availableVariables],
+	)
+
+	const savedNotReturned = useMemo(() => {
+		const allVariables = variables?.map((v) => v.columnName)
+
+		return constraints.manualRelationships.filter(
+			(constraint) =>
+				savedNotFound(relationships, constraint, allVariables) &&
+				involvesVariable(constraint, variable),
+		)
+	}, [relationships, constraints, variable, variables])
+
+	const groupedNotFound = groupByEffectType(
+		savedNotReturned,
+		variable,
+		constraints,
 	)
 
 	return (
@@ -130,6 +146,9 @@ export const EdgeList: React.FC<EdgeListProps> = memo(function EdgeList({
 							)}
 						</LabelContainer>
 						{groupedList[groupName].map((r) => renderItem(r))}
+						{groupedNotFound[groupName]
+							.filter((r) => !groupedList[groupName].includes(r))
+							.map((r) => renderItem(r, true))}
 						<CommandButton
 							text="+ add new variable"
 							menuProps={menuItems(groupName)}

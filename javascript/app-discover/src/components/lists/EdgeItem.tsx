@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { Stack, Text, TooltipHost } from '@fluentui/react'
+import { Icon, Stack, Text, TooltipHost } from '@fluentui/react'
 import { memo, useMemo } from 'react'
 import { useRecoilValue } from 'recoil'
 
@@ -28,11 +28,25 @@ export const EdgeItem: React.FC<EdgeItemProps> = memo(function EdgeItem({
 	onSelect,
 	constraint,
 	flipAllowed,
+	notFound,
 }) {
 	const isRejected = hasSameReason(ManualRelationshipReason.Removed, constraint)
 	const selectedCausalDiscoveryAlgorithm = useRecoilValue(
 		SelectedCausalDiscoveryAlgorithmState,
 	)
+
+	const reason = useMemo((): any => {
+		if (notFound) {
+			if (
+				selectedCausalDiscoveryAlgorithm === CausalDiscoveryAlgorithm.NOTEARS
+			) {
+				return "algorithm doesn't accept this kind of previous knowledge"
+			}
+			return "algorithm couldn't find this relationship"
+		}
+		return ''
+	}, [selectedCausalDiscoveryAlgorithm])
+
 	const flipTooltip = useMemo((): string => {
 		if (hasSameReason(ManualRelationshipReason.Flipped, constraint)) {
 			return 'Direction manually reversed. Click to undo it'
@@ -64,12 +78,21 @@ export const EdgeItem: React.FC<EdgeItemProps> = memo(function EdgeItem({
 				verticalAlign="center"
 			>
 				<Stack.Item>
-					<Text
-						style={{ cursor }}
-						onClick={() => (!isRejected ? onSelect(relationship) : undefined)}
+					<TooltipHost
+						style={{ display: notFound ? 'block' : 'none' }}
+						content={reason}
 					>
-						{edgeTitle}
-					</Text>
+						<Text
+							style={{
+								cursor,
+								textDecoration: notFound ? 'line-through' : 'none',
+							}}
+							onClick={() => (!isRejected ? onSelect(relationship) : undefined)}
+						>
+							{notFound ? <Icon iconName="warning" /> : null}
+							{edgeTitle}
+						</Text>
+					</TooltipHost>
 				</Stack.Item>
 				{!isRejected && (
 					<Stack.Item>

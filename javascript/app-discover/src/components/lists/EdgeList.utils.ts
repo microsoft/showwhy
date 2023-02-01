@@ -13,7 +13,10 @@ import {
 	isEquivalentRelationship,
 	ManualRelationshipReason,
 } from '../../domain/Relationship.js'
-import type { VariableReference } from './../../domain/CausalVariable.js'
+import type {
+	CausalVariable,
+	VariableReference,
+} from './../../domain/CausalVariable.js'
 import { arrayIncludesVariable } from './../../domain/CausalVariable.js'
 
 export function removeBothEdges(
@@ -139,9 +142,10 @@ export function saveEdge(
 
 export function groupByEffectType(
 	relationships: Relationship[],
-	variableName: string,
+	variable: CausalVariable,
 	constraints?: CausalDiscoveryConstraints,
 ): Record<string, Relationship[]> {
+	const variableName = variable.name
 	const records: Record<string, Relationship[]> = {
 		[`Causes ${variableName}`]: [],
 		[`Caused by ${variableName}`]: [],
@@ -150,7 +154,9 @@ export function groupByEffectType(
 	if (!relationships.length) {
 		rel =
 			constraints?.manualRelationships.filter(
-				(x) => x.reason === ManualRelationshipReason.Saved,
+				(constraint) =>
+					constraint.reason === ManualRelationshipReason.Saved &&
+					involvesVariable(constraint, variable),
 			) || []
 	}
 
@@ -211,4 +217,21 @@ export function hasAnyConstraint(
 		isEquivalentRelationship(x, relationship),
 	)
 	return hasManualConstraint || hasConstraint(constraints, relationship)
+}
+
+export function isColumnRelated(
+	columnName: string,
+	variableName: string,
+	constraints: CausalDiscoveryConstraints,
+) {
+	if (columnName === variableName) return false
+	// return
+	const allConstraints = Object.values(constraints).flatMap((x) => x)
+	return allConstraints.some(({ source, target }) => {
+		return (
+			(source.columnName === columnName &&
+				target.columnName === variableName) ||
+			(target.columnName === columnName && source.columnName === variableName)
+		)
+	})
 }
