@@ -19,7 +19,7 @@ The button will run the ARM template in Azure with a set of reasonable defaults,
 - `ResourceGroup`: The collection of resources for this to be deployed to.
 - `Region`: The region for the resources. If you chose an existing resource group, it will default to it the region for that group.
 - `clusterName`: The name of the Managed Cluster resource to create.
-- `dnsPrefix`: Optional DNS prefix to use with hosted Kubernetes API server FQDN ({dnsPrefix}.{location}.cloudapp.azure.com).
+- `dnsPrefix`: DNS prefix to use with hosted Kubernetes API server FQDN ({dnsPrefix}.{location}.cloudapp.azure.com). This will create a unique URL for your application.
 - `osDiskSizeGB`: Disk size (in GB) to provision for each of the agent pool nodes. This value ranges from 0 to 1023. Specifying 0 will apply the default disk size for that agentVMSize.
 - `agentCount`: The number of nodes for the cluster.
 - `agentVMSize`: The size of the Virtual Machine (SKU). Note that this VM option must be available in the region you select. We can't get a list dynamically in the script, so if you're unsure please use the [product finder](https://azure.microsoft.com/en-us/explore/global-infrastructure/products-by-region/). Our script default VM (Standard_D2s_v3) is available in the default region (East US 2).
