@@ -16,8 +16,8 @@ export const JsonPreview: React.FC<{ json: string }> = memo(
 		return isArray ? (
 			<Container>
 				[
-				{obj.map((item, key) => (
-					<CollapsibleJson key={key} json={JSON.stringify(item, null, 4)} />
+				{obj.map((item) => (
+					<CollapsibleJson key={item.id} json={JSON.stringify(item, null, 4)} />
 				))}
 				]
 			</Container>
