@@ -55,7 +55,8 @@ export const EffectResult: React.FC<EffectResultProps> = memo(
 			useSynthControlBarChartData(synthControlData)
 
 		const output =
-			outputData.find(o => o.treatedUnit === treatedUnit) || ({} as OutputData)
+			(outputData.find(o => o.treatedUnit === treatedUnit) as OutputData) ||
+			({} as OutputData)
 
 		const filteredOutput = {
 			...output,
