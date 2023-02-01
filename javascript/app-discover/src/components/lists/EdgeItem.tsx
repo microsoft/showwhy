@@ -89,8 +89,15 @@ export const EdgeItem: React.FC<EdgeItemProps> = memo(function EdgeItem({
 							}}
 							onClick={() => (!isRejected ? onSelect(relationship) : undefined)}
 						>
-							{notFound ? <Icon iconName="warning" /> : null}
-							{edgeTitle}
+							{notFound ? (
+								<Icon
+									style={{
+										verticalAlign: 'top',
+									}}
+									iconName={icons.warning.iconName}
+								/>
+							) : null}
+							{` ${edgeTitle}`}
 						</Text>
 					</TooltipHost>
 				</Stack.Item>
