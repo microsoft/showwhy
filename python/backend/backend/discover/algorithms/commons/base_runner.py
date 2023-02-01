@@ -1,8 +1,9 @@
 import logging
 from abc import ABC, abstractmethod
-from typing import Any, Callable, Dict, Optional
+from typing import Any, Callable, Dict, List, Optional, Tuple
 
 import networkx
+import numpy as np
 import pandas as pd
 from networkx.readwrite import json_graph
 from sklearn.preprocessing import StandardScaler
@@ -101,6 +102,9 @@ class CausalDiscoveryRunner(ABC):
     def _get_labels_map(self) -> dict[int, str]:
         return {i: self._prepared_data.columns[i] for i in range(len(self._prepared_data.columns))}
 
+    def _get_name_to_index(self) -> dict[int, str]:
+        return {self._prepared_data.columns[i]: i for i in range(len(self._prepared_data.columns))}
+
     def _build_causal_graph(
         self,
         labeled_graph: Any,
@@ -117,6 +121,52 @@ class CausalDiscoveryRunner(ABC):
             causal_graph[key] = value
 
         return causal_graph
+
+    def _build_constraint_matrix(
+        self,
+        name_to_idx: dict[str, int],
+        tabu_child_nodes: Optional[List[str]] = None,
+        tabu_parent_nodes: Optional[List[str]] = None,
+        tabu_edges: Optional[List[Tuple[str, str]]] = None,
+    ) -> np.ndarray:
+        """
+        Makes constraint matrix.
+
+        Arguments:
+            tabu_child_nodes: Optional[List[str]]
+                nodes that cannot be children of any other nodes (root nodes)
+            tabu_parent_nodes: Optional[List[str]]
+                edges that cannot be the parent of any other node (leaf nodes)
+            tabu_edge: Optional[List[Tuple[str, str]]]
+                edges that cannot exist
+
+        Returns:
+            np.ndarray:
+                A matrix where, 0 means the edge should not exist, 1 means the edge should exist and
+                -1 means the edge must be discovered.
+        """
+        constraint = np.full((len(self._prepared_data.columns), len(self._prepared_data.columns)), -1)
+
+        if tabu_child_nodes is not None:
+            for node in tabu_child_nodes:
+                idx = name_to_idx[node]
+                # these are the causes, so they are not allowed to have
+                # incoming edges
+                constraint[:, idx] = 0.0
+
+        if tabu_parent_nodes is not None:
+            for node in tabu_parent_nodes:
+                idx = name_to_idx[node]
+                # these are the effects, so they are not allowed to have
+                # outgoing edges
+                constraint[idx, :] = 0.0
+
+        if tabu_edges is not None:
+            for source, target in tabu_edges:
+                source_idx, target_idx = name_to_idx[source], name_to_idx[target]
+                constraint[source_idx, target_idx] = 0.0
+
+        return constraint
 
     @abstractmethod
     def do_causal_discovery(self) -> CausalGraph:

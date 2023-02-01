@@ -47,16 +47,16 @@ export const AnalysisSummary: FC<{
 				exposure and outcome ({alternativeModels.confounders.join(', ')}).
 				Causal estimates were computed using {populationDefinitions.length}{' '}
 				population definition{pluralize(populationDefinitions.length)} (
-				{populationDefinitions.map(x => x.variable).join(', ')}) and{' '}
+				{populationDefinitions.map((x) => x.variable).join(', ')}) and{' '}
 				{exposureDefinitions.length} exposure definition
 				{pluralize(exposureDefinitions.length)} (
-				{exposureDefinitions.map(x => x.variable).join(', ')}).{' '}
+				{exposureDefinitions.map((x) => x.variable).join(', ')}).{' '}
 				{estimators.length} estimator{pluralize(estimators.length)}
 				{estimators.length > 1 ? ' were ' : ' was '}
-				used ({estimators.map(x => x.type).join(', ')}), with each estimate
+				used ({estimators.map((x) => x.type).join(', ')}), with each estimate
 				subject to {refutationOptions.length} refutation test
 				{pluralize(refutationOptions.length)} (
-				{refutationOptions.map(o => o.label).join(', ')}
+				{refutationOptions.map((o) => o.label).join(', ')}
 				). {activeEstimatedEffects.length} estimate
 				{pluralize(activeEstimatedEffects.length)}
 				{activeEstimatedEffects.length > 1 ? ' were ' : ' was '}

@@ -32,7 +32,7 @@ export const ExposureAppRoot: React.FC<{
 			saveState={saveState}
 			loadState={loadState}
 		>
-			<ModelExposurePage href={href} api={api}/>
+			<ModelExposurePage href={href} api={api} />
 		</RecoilBasedProfileHost>
 	)
 })

@@ -7,7 +7,7 @@ import { NodeResponseStatus } from '../types/api/NodeResponseStatus.js'
 import type { Maybe } from '../types/primitives.js'
 
 export function wait(ms: number): Promise<boolean> {
-	return new Promise(resolve => {
+	return new Promise((resolve) => {
 		setTimeout(() => {
 			resolve(true)
 		}, ms)

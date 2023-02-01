@@ -30,7 +30,7 @@ export function useDataErrors(): {
 	const isMicrodata = useIsMicrodata(outputTable, subjectIdentifier)
 	const [isValidDataType = true] = useIsDataTypeValid() || []
 	const variablesColumns = useMemo(
-		() => [subjectIdentifier, ...allVariables.map(v => v.column)],
+		() => [subjectIdentifier, ...allVariables.map((v) => v.column)],
 		[subjectIdentifier, allVariables],
 	)
 	const outputTableColumns = useMemo(
@@ -38,19 +38,19 @@ export function useDataErrors(): {
 		[outputTable],
 	)
 	const isMissingVariable = useMemo(
-		() => allVariables.some(i => !i.column),
+		() => allVariables.some((i) => !i.column),
 		[allVariables],
 	)
 	const isNotInOutputTable = useMemo(
 		() =>
 			variablesColumns
-				.filter(v => !!v)
-				.some(i => {
+				.filter((v) => !!v)
+				.some((i) => {
 					const missing = !outputTableColumns.includes(i || '')
 					if (
 						missing &&
 						!!definitions.find(
-							x => x.column === i && isFullDatasetPopulation(x),
+							(x) => x.column === i && isFullDatasetPopulation(x),
 						)
 					) {
 						return false

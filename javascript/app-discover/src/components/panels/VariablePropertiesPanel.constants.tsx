@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
-import type { IButtonStyles,IStackTokens  } from '@fluentui/react'
+import type { IButtonStyles, IStackTokens } from '@fluentui/react'
 
 export const panel_stack_tokens: IStackTokens = {
 	childrenGap: '0.5rem',

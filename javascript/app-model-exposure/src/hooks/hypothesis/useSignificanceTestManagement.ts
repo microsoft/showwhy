@@ -39,11 +39,13 @@ export function useSignificanceTestManagement(
 	const activeSpecifications = useMemo((): Specification[] => {
 		return specificationData
 			.filter(
-				x =>
-					!specificationCurveConfig?.inactiveSpecifications?.includes(x.id) &&
-					!failedRefutationTaskIds.includes(x.taskId),
+				(x) =>
+					!(
+						specificationCurveConfig?.inactiveSpecifications?.includes(x.id) ||
+						failedRefutationTaskIds.includes(x.taskId)
+					),
 			)
-			.filter(s => s.outcome === selectedOutcome)
+			.filter((s) => s.outcome === selectedOutcome)
 	}, [
 		specificationData,
 		specificationCurveConfig,
@@ -52,11 +54,11 @@ export function useSignificanceTestManagement(
 	])
 
 	const activeTaskIds = useMemo((): string[] => {
-		return activeSpecifications.map(x => x.taskId)
+		return activeSpecifications.map((x) => x.taskId)
 	}, [activeSpecifications])
 
 	const activeEstimatedEffects = useMemo(() => {
-		return activeSpecifications.map(x => x.estimatedEffect)
+		return activeSpecifications.map((x) => x.estimatedEffect)
 	}, [activeSpecifications])
 
 	const taskIdsChanged = useMemo((): boolean => {

@@ -9,27 +9,23 @@ import { NodePositionsState } from '../atoms/index.js'
 
 export const nodePositionsFamily = selectorFamily<NodePosition, string>({
 	key: 'nodePositionsFamily',
-	get:
-		id =>
-		({ get }) => {
-			const nodePositions = get(NodePositionsState)
-			return nodePositions[id] ?? { x: 0, y: 0 }
-		},
-	set:
-		id =>
-		({ set, get, reset }, nodePosition) => {
-			if (!nodePosition) {
-				return
-			}
+	get: (id) => ({ get }) => {
+		const nodePositions = get(NodePositionsState)
+		return nodePositions[id] ?? { x: 0, y: 0 }
+	},
+	set: (id) => ({ set, get, reset }, nodePosition) => {
+		if (!nodePosition) {
+			return
+		}
 
-			if (nodePosition instanceof DefaultValue) {
-				reset(NodePositionsState)
-				return
-			}
+		if (nodePosition instanceof DefaultValue) {
+			reset(NodePositionsState)
+			return
+		}
 
-			const nodePositions = get(NodePositionsState)
-			const newNodePositions = { ...nodePositions }
-			newNodePositions[id] = nodePosition
-			set(NodePositionsState, newNodePositions)
-		},
+		const nodePositions = get(NodePositionsState)
+		const newNodePositions = { ...nodePositions }
+		newNodePositions[id] = nodePosition
+		set(NodePositionsState, newNodePositions)
+	},
 })

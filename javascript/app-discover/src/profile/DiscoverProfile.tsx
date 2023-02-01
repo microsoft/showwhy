@@ -46,7 +46,7 @@ export class DiscoverProfile implements ProfilePlugin<DiscoverResource> {
 					key: this.profile,
 					text: `New ${this.title}`,
 					onClick: () => {
-						void this.createInstance?.().then(resource => {
+						void this.createInstance?.().then((resource) => {
 							resource.name = dp.suggestResourceName(resource.name)
 							dp.addResource(resource)
 						})

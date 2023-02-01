@@ -44,7 +44,9 @@ export function useCounterfactual(
 			return
 
 		const outputIndex = hoverUnit
-			? outputData.findIndex(output => hoverUnit?.includes(output.treatedUnit))
+			? outputData.findIndex((output) =>
+					hoverUnit?.includes(output.treatedUnit),
+			  )
 			: 0
 		const outputDataNonPlacebo = outputData[outputIndex] as OutputData
 

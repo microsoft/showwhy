@@ -12,13 +12,12 @@
 	"scripts": {
 		"clean": "essex clean",
 		"build": "tsc --noEmit",
-		"typecheck": "yarn build",
-		"fix": "essex fix",
-		"check": "essex check"
+		"fix": "essex fix --formatter none",
+		"check": "essex check --formatter none"
 	},
 	"dependencies": {
-		"@datashaper/app-framework": "0.4.0",
-		"@datashaper/react": "^20.0.6",
+		"@datashaper/app-framework": "0.4.1",
+		"@datashaper/react": "^20.0.7",
 		"@datashaper/schema": "^9.0.2",
 		"@datashaper/tables": "^6.1.1",
 		"@datashaper/utilities": "^2.4.2",
@@ -31,7 +30,7 @@
 		"@thematic/fluent": "^5.0.5",
 		"@thematic/react": "^2.1.6",
 		"ahooks": "^3.7.4",
-		"allotment": "1.17.1",
+		"allotment": "^1.17.1",
 		"arquero": "^5.1.0",
 		"normalize.css": "^8.0.1",
 		"observable-hooks": "^4.2.1",

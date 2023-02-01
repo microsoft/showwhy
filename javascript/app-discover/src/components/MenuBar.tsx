@@ -15,7 +15,7 @@ import {
 	NotearsParamsState,
 	PCParamsState,
 } from '../state/atoms/algorithms_params.js'
-import { useDownloadEdges } from '../state/hooks/useCausalEdgesReport.js'
+import { useDownloadGraph } from '../state/hooks/useCausalGraphReport.js'
 import {
 	CausalGraphConstraintsState,
 	GraphViewState,
@@ -97,13 +97,13 @@ export const MenuBar: React.FC = memo(function MenuBar() {
 		[loadColumnTable, setLoadingState],
 	)
 
-	const exportEdges = useDownloadEdges(causalGraph)
+	const exportGraph = useDownloadGraph(causalGraph)
 	const datasetMenuItems = useDatasetMenuItems(loadTable)
 	const modelMenuItems = useModelMenuItems(
 		saveModel,
 		openCausalModelFileSelector,
 		clearModel,
-		exportEdges,
+		exportGraph,
 		!causalGraph.variables.length,
 	)
 	const viewMenuItems = useViewMenuItems(

@@ -113,7 +113,7 @@ function useGetEditableRow(
 											...definitionToEdit,
 											...edited,
 										} as Definition)
-										onDismissEdit && onDismissEdit()
+										onDismissEdit?.()
 								  }
 								: undefined
 						}
@@ -152,7 +152,7 @@ export function useAddDefinition(
 			} else {
 				list = [...definitions, definition]
 			}
-			saveDefinitions(list, definitions, setDefinitions).catch(e =>
+			saveDefinitions(list, definitions, setDefinitions).catch((e) =>
 				console.error('error saving definition change', e),
 			)
 		},
@@ -167,7 +167,7 @@ export function useEditDefinition(
 	return useCallback(
 		async (definition: Definition) => {
 			let newDefinitions = updateListTypes(definitions, definition.type)
-			newDefinitions = newDefinitions.map(d => {
+			newDefinitions = newDefinitions.map((d) => {
 				if (d.id === definition.id) {
 					return { ...d, ...definition }
 				}
@@ -188,7 +188,7 @@ export function useRemoveDefinition(
 	return useCallback(
 		async (definition: Definition) => {
 			const newDefinitions =
-				definitions?.filter(def => def.id !== definition.id) || []
+				definitions?.filter((def) => def.id !== definition.id) || []
 			await saveDefinitions(newDefinitions, definitions, setDefinitions)
 			return newDefinitions
 		},

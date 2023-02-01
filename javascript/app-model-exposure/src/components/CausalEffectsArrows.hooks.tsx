@@ -27,7 +27,7 @@ export function useGetArrows(
 		/* eslint-disable-next-line react-hooks/exhaustive-deps */
 	}, [width])
 	return useCallback(() => {
-		return arrows.map(arrow => {
+		return arrows.map((arrow) => {
 			const { color = thematic.application().border().hex(), ...props } = arrow
 			return (
 				<Xarrow

@@ -39,7 +39,7 @@ export const DeciAteParams: React.FC<DeciAteParamsProps> = memo(
 		return (
 			<Container>
 				<ContainerAdvancedGrid>
-					{advancedAteSpinningOptions.map(x => (
+					{advancedAteSpinningOptions.map((x) => (
 						<SpinButton
 							key={x.inputProps?.name}
 							label={x.label}
@@ -60,7 +60,7 @@ export const DeciAteParams: React.FC<DeciAteParamsProps> = memo(
 					))}
 				</ContainerAdvancedGrid>
 				<ContainerAdvancedCheckbox>
-					{advancedAteBooleanOptions.map(x => (
+					{advancedAteBooleanOptions.map((x) => (
 						<Checkbox
 							label={x.label}
 							key={x.name}

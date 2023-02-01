@@ -54,7 +54,7 @@ export const EstimateEffects: React.FC = memo(function EstimateEffects() {
 	const { data, isDataLoaded, globalDateRange } =
 		useProcessedInputData(columnMapping)
 	const unitCheckboxListItems = useUnitCheckboxListItems(data)
-	const checkableUnits = unitCheckboxListItems.map(unit => unit.name)
+	const checkableUnits = unitCheckboxListItems.map((unit) => unit.name)
 
 	const handleRemoveCheckedUnit = useHandleRemoveCheckedUnit()
 	const cannotCalculateEstimate = useCannotCalculateEstimate(isLoading)

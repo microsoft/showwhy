@@ -31,7 +31,7 @@ function customizer(objValue: unknown, srcValue: unknown) {
 export function useMergeChildSpecs(spec: Spec, children: any): Spec {
 	return useMemo(() => {
 		let merged = merge({}, spec)
-		Children.forEach(children, child => {
+		Children.forEach(children, (child) => {
 			merged = mergeWith(merged, child.props.spec, customizer)
 		})
 		return merged

@@ -48,8 +48,8 @@ export function useIsDataTypeValid():
 		const columnNames = table.columnNames()
 		const validColumns: Record<string, boolean> = {}
 
-		columnNames.forEach(column => {
-			const variable = allVariables.find(v => v.column === column)
+		columnNames.forEach((column) => {
+			const variable = allVariables.find((v) => v.column === column)
 			if (variable?.type) {
 				validColumns[column] = isColumnValid(
 					table.array(column) as any[], //eslint-disable-line
@@ -57,7 +57,7 @@ export function useIsDataTypeValid():
 				)
 			}
 		})
-		const isValid = Object.values(validColumns).every(v => v)
+		const isValid = Object.values(validColumns).every((v) => v)
 		return [isValid, validColumns]
 	}, [table, allVariables])
 }

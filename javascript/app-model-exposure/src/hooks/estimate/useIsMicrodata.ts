@@ -9,7 +9,7 @@ import { useMemo } from 'react'
 
 export function useIsMicrodata(table?: ColumnTable, column?: string): boolean {
 	return useMemo(() => {
-		if (!table || !column) return true
+		if (!(table && column)) return true
 		const rows = table.numRows()
 		const unique = agg(table, op.distinct(column))
 		return rows === unique

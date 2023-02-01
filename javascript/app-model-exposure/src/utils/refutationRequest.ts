@@ -11,11 +11,12 @@ export function returnRefutationMapping(
 	estimators: Estimator[] | undefined,
 ) {
 	const mapping = new Map<string, number>()
-	estimatedEffect?.forEach(x => {
+	estimatedEffect?.forEach((x) => {
 		mapping.set(
 			x.id,
-			estimators?.find(e => e.type.toLowerCase() === x.estimator.toLowerCase())
-				?.refutations as number,
+			estimators?.find(
+				(e) => e.type.toLowerCase() === x.estimator.toLowerCase(),
+			)?.refutations as number,
 		)
 	})
 

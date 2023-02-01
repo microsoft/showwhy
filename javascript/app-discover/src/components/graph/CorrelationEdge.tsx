@@ -26,7 +26,7 @@ export const CorrelationEdge: React.FC<CorrelationEdgeProps> = memo(
 				)}
 				showHead={false}
 				showTail={false}
-				key={correlation.key + '-correlation'}
+				key={`${correlation.key}-correlation`}
 				labels={
 					<div style={{ fontSize: '8pt' }}>
 						corr={correlation.weight.toFixed(2)}

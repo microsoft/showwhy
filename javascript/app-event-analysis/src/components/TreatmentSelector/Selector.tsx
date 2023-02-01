@@ -23,7 +23,7 @@ export const Selector: React.FC<SelectorProps> = memo(function Selector({
 	const onUnitChange = useCallback(
 		(e: FormEvent, option?: IDropdownOption<string>) => {
 			const optionKey = option ? (option.key as string) : ''
-			const unit = '' + optionKey
+			const unit = `${optionKey}`
 			if (treatedUnit === unit) return
 			onTreatedUnitChange(treatedUnit, unit)
 		},
@@ -52,7 +52,7 @@ export const Selector: React.FC<SelectorProps> = memo(function Selector({
 		<SelectorContainer>
 			<Dropdown
 				placeholder="Treated unit"
-				options={units.map(unit => ({ key: unit, text: unit }))}
+				options={units.map((unit) => ({ key: unit, text: unit }))}
 				selectedKey={treatedUnit}
 				onChange={onUnitChange}
 			/>

@@ -36,9 +36,9 @@ const checkTreated = (value: string) => {
 }
 
 const buildData = (rawData: Record[], columnMapping: ColumnMapping) => {
-	if (!columnMapping.unit || !columnMapping.date) return []
+	if (!(columnMapping.unit && columnMapping.date)) return []
 
-	const dataPoints = rawData.map(d => {
+	const dataPoints = rawData.map((d) => {
 		// TODO: do smarter type conversion or cleanup for unit, date, value and treated column values
 		const unitName = d[columnMapping.unit]
 		const dp: DataPoint = {
@@ -63,7 +63,7 @@ const updateTreatedPoints = (
 	if (treatment === null) return data
 	const unitDateMap = buildTreatedUnitMap(treatment)
 	const result: DataPoint[] = []
-	data.forEach(d => {
+	data.forEach((d) => {
 		const dp = { ...d }
 		dp.treated = 0
 		if (unitDateMap[d.unit]) {
@@ -79,7 +79,7 @@ const processDataPoints = (
 	filter: DateFilter | null,
 ): ProcessedInputData => {
 	const dp = filter
-		? dataPoints.filter(d => {
+		? dataPoints.filter((d) => {
 				return d.date >= filter.startDate && d.date <= filter.endDate
 		  })
 		: dataPoints
@@ -90,7 +90,7 @@ const processDataPoints = (
 	let endDate = Number.MIN_VALUE
 	const unitsSet = new Set<string>()
 	const datesSet = new Set<number>()
-	dp.forEach(d => {
+	dp.forEach((d) => {
 		unitsSet.add(d.unit)
 		datesSet.add(d.date)
 		if (d.date < startDate) startDate = d.date
@@ -107,10 +107,10 @@ const processDataPoints = (
 	const numTimePeriods = endDate - startDate + 1
 	const nonBalancedUnits = getNonBalancedUnits(dp, numTimePeriods)
 	const balancedNumRecords = dp.filter(
-		d => !nonBalancedUnits.includes(d.unit),
+		(d) => !nonBalancedUnits.includes(d.unit),
 	).length
 	const uniqueUnits = Array.from(unitsSet).filter(
-		u => !nonBalancedUnits.includes(u),
+		(u) => !nonBalancedUnits.includes(u),
 	)
 	const numUnits = uniqueUnits.length
 	// data is balanced panel format if we have NxT records
@@ -132,7 +132,7 @@ const processDataPoints = (
 }
 
 const getDefaultTreatment = (dp: DataPoint[]): Treatment | null => {
-	const treatedUnitDataPoints = dp.filter(d => d.treated)
+	const treatedUnitDataPoints = dp.filter((d) => d.treated)
 	if (treatedUnitDataPoints.length === 0) return null
 
 	// data point records may not be sorted and thus processing the first record of a treated unit
@@ -143,7 +143,7 @@ const getDefaultTreatment = (dp: DataPoint[]): Treatment | null => {
 	const units: string[] = []
 	const startDates: number[] = []
 	const groups: { [name: string]: string[] } = {}
-	treatedUnitDataPointsSorted.forEach(dataPoint => {
+	treatedUnitDataPointsSorted.forEach((dataPoint) => {
 		if (!unitsSet.has(dataPoint.unit)) {
 			units.push(dataPoint.unit)
 			startDates.push(dataPoint.date)
@@ -185,7 +185,7 @@ const groupTreatedUnits = (
 	})
 
 	// Find default treatment from data points and update treatedUnitSet and start date map accordingly
-	dataPoints.forEach(d => {
+	dataPoints.forEach((d) => {
 		if (d.treated && !treatedUnitSet.has(d.unit)) {
 			// Update treated unit set
 			treatedUnitSet.add(d.unit)
@@ -199,7 +199,7 @@ const groupTreatedUnits = (
 	// Extract treated data points and non treated data points
 	const treatedUnitDpMap: { [unit: string]: DataPoint[] } = {}
 	const newDataPoints: DataPoint[] = []
-	dataPoints.forEach(d => {
+	dataPoints.forEach((d) => {
 		if (treatedUnitSet.has(d.unit)) {
 			if (treatedUnitDpMap[d.unit] === undefined) treatedUnitDpMap[d.unit] = []
 			treatedUnitDpMap[d.unit].push({ ...d, treated: 0 })
@@ -210,16 +210,15 @@ const groupTreatedUnits = (
 
 	// Group all treated datapoints by treatment start date
 	Object.entries(treatedUnitsByTreatmentDate).forEach(([tDate, units]) => {
-		const treatedGroupName =
-			'Group_' + tDate.toString() + '_' + units.length.toString()
+		const treatedGroupName = `Group_${tDate.toString()}_${units.length.toString()}`
 		const allRecordsAtDate: number[][] = []
 		const baselineUnitDataPoints = treatedUnitDpMap[units[0]]
-		units.forEach(unit => {
-			const valuesForUnit = treatedUnitDpMap[unit].map(d => d.value)
+		units.forEach((unit) => {
+			const valuesForUnit = treatedUnitDpMap[unit].map((d) => d.value)
 			allRecordsAtDate.push(valuesForUnit)
 		})
 		const valuesPerDate = unzip(allRecordsAtDate)
-		const values = valuesPerDate.map(item => {
+		const values = valuesPerDate.map((item) => {
 			return item.reduce((a, b) => a + b)
 		})
 
@@ -258,7 +257,7 @@ export const useProcessedInputData = (columnMapping: ColumnMapping) => {
 				// If grouped units, flatten it
 				const groupUnits = treatment.groups[unit]
 				if (groupUnits) {
-					groupUnits.forEach(u => {
+					groupUnits.forEach((u) => {
 						result.units.push(u)
 						result.startDates.push(date)
 					})

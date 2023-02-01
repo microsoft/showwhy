@@ -82,5 +82,5 @@ const DropdownContainer = styled.div`
 `
 
 function returnOutcomeSpecifications(outcome: string, data: Specification[]) {
-	return data.filter(s => s.outcome === outcome)
+	return data.filter((s) => s.outcome === outcome)
 }

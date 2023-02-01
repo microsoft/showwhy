@@ -36,7 +36,7 @@ export const SyntheticChartLines: React.FC<SyntheticChartLinesProps> = memo(
 			<>
 				{outputLinesIncludingMean.map((ld, index) => (
 					<Line
-						key={index}
+						key={`${ld[0]?.unit}@${index}`}
 						xScale={xScale}
 						yScale={yScale}
 						data={ld}

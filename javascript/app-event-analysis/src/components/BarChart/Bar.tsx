@@ -69,13 +69,13 @@ export const Bar: React.FC<BarProps> = memo(function Bar({
 				.attr('transform', getTransform)
 				.attr('class', barElementClassName)
 				.attr('stroke', 'none')
-				.attr('opacity', d => d.opacity || BAR_TRANSPARENT)
-				.style('fill', d => d.color)
+				.attr('opacity', (d) => d.opacity || BAR_TRANSPARENT)
+				.style('fill', (d) => d.color)
 
 			if (renderRotatedLabel) {
 				barElement
 					.append('text')
-					.text(d => d.name ?? '')
+					.text((d) => d.name ?? '')
 					.attr('transform', function (d) {
 						const xText = bandWidth * 0.25
 						return `translate(${xText}, 0) rotate(90)`
@@ -84,13 +84,13 @@ export const Bar: React.FC<BarProps> = memo(function Bar({
 					.attr('font-size', 'x-small')
 			}
 			if (isColumn) {
-				barElement.attr('width', bandWidth).attr('height', d => {
+				barElement.attr('width', bandWidth).attr('height', (d) => {
 					const value = (yScale as D3ScaleLinear)(Math.abs(d.value))
 					return height - value
 				})
 			} else {
 				barElement
-					.attr('width', d => (xScale as D3ScaleLinear)(d.value))
+					.attr('width', (d) => (xScale as D3ScaleLinear)(d.value))
 					.attr('height', bandWidth)
 			}
 		}

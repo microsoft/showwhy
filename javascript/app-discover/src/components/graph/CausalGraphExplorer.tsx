@@ -8,7 +8,7 @@ import {
 	useRecoilState,
 	useRecoilValue,
 	useRecoilValueLoadable,
-	useSetRecoilState
+	useSetRecoilState,
 } from 'recoil'
 
 import type { CausalVariable } from '../../domain/CausalVariable.jsx'
@@ -21,25 +21,19 @@ import {
 	CurrentLayoutState,
 	FilteredCorrelationsState,
 	FixedInterventionRangesEnabledState,
+	SelectedCausalDiscoveryAlgorithmState,
 	SelectedObjectState,
 	useCausalGraph,
-	WeightThresholdState
+	WeightThresholdState,
 } from '../../state/index.jsx'
 import { CausalEdge } from './CausalEdge.jsx'
 import { useGraphBounds } from './CausalGraphExplorer.hooks.js'
-import {
-	Background,
-	Container,
-	ContainerEdge,
-	edgeColors,
-	FlexContainer,
-	Grid
-} from './CausalGraphExplorer.styles.js'
+import { Background, FlexContainer } from './CausalGraphExplorer.styles.js'
+import { CausalGraphLegend } from './CausalGraphLegend.js'
 import { CausalGraphNode } from './CausalGraphNode.jsx'
 import { CorrelationEdge } from './CorrelationEdge.jsx'
 import { CorrelationGraphNode } from './CorrelationGraphNode.jsx'
 import { DraggableGraphNode } from './DraggableNode.jsx'
-import { CorrelationIcon, EdgeIcon } from './LegendIcons.js'
 
 const MIN_EDGE_WIDTH = 2
 const MAX_EDGE_WIDTH = 10
@@ -67,9 +61,12 @@ export const CausalGraphExplorer: React.FC<{
 	const setSelectedObject = useSetRecoilState(SelectedObjectState)
 	const correlations =
 		useRecoilValueLoadable(FilteredCorrelationsState).valueMaybe() || []
+	const selectedAlgorithm = useRecoilValue(
+		SelectedCausalDiscoveryAlgorithmState,
+	)
 
 	const correlationsWithoutCausesInModel = correlations
-		.filter(correlation =>
+		.filter((correlation) =>
 			Graph.includesVariables(causalGraph, [
 				correlation.source,
 				correlation.target,
@@ -78,8 +75,8 @@ export const CausalGraphExplorer: React.FC<{
 		// (causalGraph.variables.includes(correlation.source)
 		// && causalGraph.variables.includes(correlation.target)))
 		.filter(
-			correlation =>
-				!causalRelationships.some(relationship =>
+			(correlation) =>
+				!causalRelationships.some((relationship) =>
 					hasSameOrInvertedSourceAndTarget(correlation, relationship),
 				),
 		)
@@ -136,16 +133,18 @@ export const CausalGraphExplorer: React.FC<{
 		</DraggableGraphNode>
 	))
 
-	const correlationEdges = correlationsWithoutCausesInModel.map(correlation => (
-		<CorrelationEdge
-			correlation={correlation}
-			maxEdgeWidth={MAX_EDGE_WIDTH / 2}
-			minEdgeWidth={1}
-			key={correlation.key}
-		/>
-	))
+	const correlationEdges = correlationsWithoutCausesInModel.map(
+		(correlation) => (
+			<CorrelationEdge
+				correlation={correlation}
+				maxEdgeWidth={MAX_EDGE_WIDTH / 2}
+				minEdgeWidth={1}
+				key={correlation.key}
+			/>
+		),
+	)
 
-	const causalEdges = causalRelationships.map(relationship => {
+	const causalEdges = causalRelationships.map((relationship) => {
 		return (
 			<CausalEdge
 				relationship={relationship}
@@ -180,27 +179,7 @@ export const CausalGraphExplorer: React.FC<{
 				</Xwrapper>
 			</div>
 			<FlexContainer ref={legendRef}>
-				<Grid>
-					<Container>
-						<CorrelationIcon color={edgeColors.correlation} />
-						Correlation
-					</Container>
-					<Container>
-						<EdgeIcon color={edgeColors.positive} /> Causes increase
-					</Container>
-					<Container>
-						<EdgeIcon color={edgeColors.negative} />
-						Causes decrease
-					</Container>
-					<Container>
-						<EdgeIcon color={edgeColors.pcChange} />
-						Causes change
-					</Container>
-					<ContainerEdge>
-						Edge weights quantify the strength of the causal relationship under
-						the selected discovery algorithm. corr=correlation; conf=confidence
-					</ContainerEdge>
-				</Grid>
+				<CausalGraphLegend selectedAlgorithm={selectedAlgorithm} />
 			</FlexContainer>
 		</>
 	)

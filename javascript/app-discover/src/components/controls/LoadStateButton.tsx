@@ -20,7 +20,7 @@ export const LoadStateButton: React.FC<LoadStateButtonProps> = memo(
 
 		const handleChangeFile = (file: Blob) => {
 			const fileData = new FileReader()
-			fileData.onloadend = e => {
+			fileData.onloadend = (e) => {
 				const content = JSON.parse(e?.target?.result as string)
 				setPersistedInfo(content)
 			}
@@ -38,7 +38,7 @@ export const LoadStateButton: React.FC<LoadStateButtonProps> = memo(
 					ref={fileInputRef}
 					type="file"
 					accept=".json"
-					onChange={e => {
+					onChange={(e) => {
 						if (e.target.files === null) {
 							return
 						}

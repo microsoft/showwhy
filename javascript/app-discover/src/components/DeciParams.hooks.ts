@@ -17,8 +17,8 @@ export function useOnChangeNumberOption(
 ): onChangeStringFn {
 	return useCallback(
 		(key: keyof DECIAlgorithmParams, val?: string, name?: string) => {
-			if (!val || !name) return
-			onSetDeciParams(curr => ({
+			if (!(val && name)) return
+			onSetDeciParams((curr) => ({
 				...curr,
 				[key]: {
 					...curr[key],
@@ -36,7 +36,7 @@ export function useOnChangeBooleanOption(
 	return useCallback(
 		(key: keyof DECIAlgorithmParams, val?: boolean, name?: string) => {
 			if (!name) return
-			onSetDeciParams(curr => ({
+			onSetDeciParams((curr) => ({
 				...curr,
 				[key]: {
 					...curr[key],
@@ -53,8 +53,8 @@ export function useOnChangeChoiceGroupOption(
 ): onChangeStringFn {
 	return useCallback(
 		(key: keyof DECIAlgorithmParams, val?: string, name?: string) => {
-			if (!name || !val) return
-			onSetDeciParams(curr => ({
+			if (!(name && val)) return
+			onSetDeciParams((curr) => ({
 				...curr,
 				[key]: {
 					...curr[key],
@@ -71,8 +71,8 @@ export function useOnChangeNumberListOption(
 ): onChangeStringFn {
 	return useCallback(
 		(key: keyof DECIAlgorithmParams, val?: string, name?: string) => {
-			if (!name || !val) return
-			onSetDeciParams(curr => ({
+			if (!(name && val)) return
+			onSetDeciParams((curr) => ({
 				...curr,
 				[key]: {
 					...curr[key],
@@ -91,12 +91,12 @@ export function useOnChangeCateOption(
 		(val?: string) => {
 			const value =
 				val && isArray(val)
-					? val?.split(',').map(v => +v)
+					? val?.split(',').map((v) => +v)
 					: val
 					? +val
 					: undefined
 
-			onSetDeciParams(curr => ({
+			onSetDeciParams((curr) => ({
 				...curr,
 				model_options: {
 					...curr.model_options,
@@ -113,7 +113,7 @@ export function useOnChangeATEDetails(
 ): onChangeATEDetailsFn {
 	return useCallback(
 		(variableName: string, details: ATEDetails) => {
-			onSetDeciParams(curr => ({
+			onSetDeciParams((curr) => ({
 				...curr,
 				ate_options: {
 					...curr.ate_options,

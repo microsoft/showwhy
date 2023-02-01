@@ -15,7 +15,7 @@ export function addOrRemoveArrayElement(
 	item: string,
 	add: boolean,
 ): string[] {
-	return add ? [...array, item] : array.filter(d => d !== item)
+	return add ? [...array, item] : array.filter((d) => d !== item)
 }
 
 export function moveElement<T>(arr: T[], sourceIndex: number, targetIndex = 0): T[] {

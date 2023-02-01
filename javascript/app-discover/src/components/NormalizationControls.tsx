@@ -19,7 +19,7 @@ export const NormalizationControls = memo(function NormalizationControls() {
 				label="Normalize with mean"
 				checked={causalDiscoveryNormalization.withMeanEnabled}
 				onChange={(_, v) =>
-					setCausalDiscoveryNormalization(prev => ({
+					setCausalDiscoveryNormalization((prev) => ({
 						...prev,
 						withMeanEnabled: Boolean(v),
 					}))
@@ -29,7 +29,7 @@ export const NormalizationControls = memo(function NormalizationControls() {
 				label="Normalize with standard deviation"
 				checked={causalDiscoveryNormalization.withStdEnabled}
 				onChange={(_, v) =>
-					setCausalDiscoveryNormalization(prev => ({
+					setCausalDiscoveryNormalization((prev) => ({
 						...prev,
 						withStdEnabled: Boolean(v),
 					}))

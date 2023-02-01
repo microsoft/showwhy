@@ -38,10 +38,10 @@ export function useLoadSpecCount(
 		}
 		api
 			.estimateExecutionCount(estimateNode)
-			.then(res => {
+			.then((res) => {
 				setSpecCount(res)
 			})
-			.catch(err => {
+			.catch((err) => {
 				setErrors(
 					(err.message as string) || //eslint-disable-line
 						'Unknown error, please contact the system admin.',

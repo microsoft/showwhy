@@ -2,7 +2,11 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
-import { type IChoiceGroupOption, type IChoiceGroupStyles, ChoiceGroup } from '@fluentui/react'
+import {
+	type IChoiceGroupOption,
+	type IChoiceGroupStyles,
+	ChoiceGroup,
+} from '@fluentui/react'
 import type { FC, FormEvent } from 'react'
 import { memo } from 'react'
 

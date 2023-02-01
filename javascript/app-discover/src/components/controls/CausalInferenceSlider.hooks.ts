@@ -16,7 +16,7 @@ export function useCausalInferenceDifferenceFromBaselineValues() {
 	const baselines = useRecoilValue(CausalInferenceBaselineValuesState)
 	const inferredValues = useRecoilValue(CausalInferenceResultState)
 	const differences = new Map<string, number>()
-	Array.from(baselines.keys()).forEach(columnName => {
+	Array.from(baselines.keys()).forEach((columnName) => {
 		const baseline = baselines.get(columnName)
 		const inferredValue = inferredValues.get(columnName)
 		if (baseline !== undefined && inferredValue !== undefined) {
@@ -49,7 +49,7 @@ export function useOnUpdateInterventions(
 	return useCallback(
 		(value: number) => {
 			const revisedInterventions = interventions.filter(
-				intervention => intervention.columnName !== columnName,
+				(intervention) => intervention.columnName !== columnName,
 			)
 			revisedInterventions.push({
 				columnName,
@@ -73,7 +73,7 @@ export function useOnRemoveInterventions(
 		}
 		setInterventions(
 			interventions.filter(
-				intervention => intervention.columnName !== columnName,
+				(intervention) => intervention.columnName !== columnName,
 			),
 		)
 	}, [interventions, setInterventions, wasDragged, columnName])

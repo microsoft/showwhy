@@ -23,8 +23,8 @@ export async function checkStatus(
 		await wait(10000)
 		// eslint-disable-next-line @essex/adjacent-await
 		status = await api.fetchStatus<StatusResponse>(taskId, type)
-		updateFn && updateFn(_updateId ?? taskId, status)
+		updateFn?.(_updateId ?? taskId, status)
 	}
-	updateFn && updateFn(_updateId ?? taskId, status)
+	updateFn?.(_updateId ?? taskId, status)
 	return status
 }

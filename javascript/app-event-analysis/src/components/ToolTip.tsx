@@ -41,8 +41,8 @@ export const ToolTip: React.FC<React.PropsWithChildren<TooltipProps>> = memo(
 			const tooltip = d3.select(ref.current)
 			const tooltipOffset = 25
 			tooltip
-				.style('left', (xPos + tooltipOffset).toString() + 'px')
-				.style('top', (yPos - tooltipOffset).toString() + 'px')
+				.style('left', `${(xPos + tooltipOffset).toString()}px`)
+				.style('top', `${(yPos - tooltipOffset).toString()}px`)
 		}, [xPos, yPos])
 
 		return (

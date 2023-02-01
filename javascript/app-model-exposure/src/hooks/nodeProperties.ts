@@ -41,13 +41,13 @@ export function useNodeProperties(): {
 		(model: AlternativeModels) => {
 			const outputTableColumns = outputTable?.columnNames() || []
 			const filtered = {
-				confounders: model.confounders.filter(i =>
+				confounders: model.confounders.filter((i) =>
 					outputTableColumns.includes(i),
 				),
-				exposureDeterminants: model.exposureDeterminants.filter(i =>
+				exposureDeterminants: model.exposureDeterminants.filter((i) =>
 					outputTableColumns.includes(i),
 				),
-				outcomeDeterminants: model.outcomeDeterminants.filter(i =>
+				outcomeDeterminants: model.outcomeDeterminants.filter((i) =>
 					outputTableColumns.includes(i),
 				),
 			}

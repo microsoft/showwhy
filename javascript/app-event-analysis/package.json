@@ -10,12 +10,12 @@
 	"license": "MIT",
 	"scripts": {
 		"clean": "essex clean build",
-		"typecheck": "tsc --noEmit",
-		"fix": "essex fix",
-		"check": "essex check"
+		"build": "tsc --noEmit",
+		"fix": "essex fix --formatter none",
+		"check": "essex check --formatter none"
 	},
 	"dependencies": {
-		"@datashaper/app-framework": "0.4.0",
+		"@datashaper/app-framework": "0.4.1",
 		"@datashaper/schema": "^9.0.2",
 		"@datashaper/workflow": "^22.0.4",
 		"@essex/components": "^3.6.10",

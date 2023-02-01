@@ -19,10 +19,6 @@
 			"dependsOn": [],
 			"outputs": []
 		},
-		"typecheck": {
-			"dependsOn": [],
-			"outputs": []
-		},
 		"check": {
 			"dependsOn": [],
 			"outputs": []
@@ -32,7 +28,7 @@
 			"outputs": []
 		},
 		"ci": {
-			"dependsOn": ["assets", "typecheck", "build", "check", "test"],
+			"dependsOn": ["assets", "build", "check", "test"],
 			"outputs": [
 				"dist/**",
 				"docs/**",
@@ -49,6 +45,9 @@
 			"cache": false,
 			"dependsOn": ["assets", "prestart"],
 			"outputs": []
+		},
+		"acceptance_test": {
+			"outputs": ["playwright-report"]
 		},
 		"clean": {
 			"cache": false

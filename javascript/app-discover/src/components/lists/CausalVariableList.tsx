@@ -38,8 +38,7 @@ const AddAllVariablesButton: React.FC<CausalVariableListProps> = memo(
 export const CausalVariableList: React.FC<CausalVariableListProps> = memo(
 	function CausalVariableList({ variables }) {
 		const onRenderCell = useCallback(
-			(item?: CausalVariable) =>
-				item && <CausalNodeListItem variable={item}></CausalNodeListItem>,
+			(item?: CausalVariable) => item && <CausalNodeListItem variable={item} />,
 			[],
 		)
 		return (
@@ -64,7 +63,7 @@ const FilteredCausalVariablesListInternal: React.FC<CausalVariableListProps> =
 			filterValue: string,
 		) => {
 			setFilteredList(
-				list.filter(variable =>
+				list.filter((variable) =>
 					variable.name
 						.toLocaleLowerCase()
 						.includes(filterValue.toLocaleLowerCase()),
@@ -82,7 +81,7 @@ const FilteredCausalVariablesListInternal: React.FC<CausalVariableListProps> =
 				filterHandler={filterHandler}
 				placeholder="Search"
 			>
-				<CausalVariableList variables={filteredList}></CausalVariableList>
+				<CausalVariableList variables={filteredList} />
 			</ListFilter>
 		)
 	})
@@ -96,7 +95,7 @@ const AllCausalVariablesListInternal: React.FC = memo(
 				if (variable?.derivedFrom !== undefined) {
 					for (const sourceVarName of variable.derivedFrom) {
 						const sourceVar = allVariables.find(
-							v => v.columnName === sourceVarName,
+							(v) => v.columnName === sourceVarName,
 						)
 						if (sourceVar) {
 							return [sourceVar.name, variable.name]

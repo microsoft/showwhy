@@ -18,14 +18,14 @@ export function useSaveNewResponse<T extends StatusResponse>(
 				(result as any).results = (result as any).results.map(nanToNull)
 			}
 			recoilFn((prev: T[]) => {
-				const existing = prev.find(p => p.taskId === id)
+				const existing = prev.find((p) => p.taskId === id)
 				const newOne = {
 					taskId: id,
 					...result,
 				}
 
 				return [
-					...prev.filter(p => p.taskId !== existing?.taskId),
+					...prev.filter((p) => p.taskId !== existing?.taskId),
 					newOne,
 				] as T[]
 			})
@@ -40,6 +40,6 @@ export function useReturnDefaultResponse<T extends StatusResponse>(
 ): Maybe<T> {
 	return useMemo(() => {
 		if (!responseList.length) return undefined
-		return responseList.find(e => e.taskId === id)
+		return responseList.find((e) => e.taskId === id)
 	}, [responseList, id])
 }

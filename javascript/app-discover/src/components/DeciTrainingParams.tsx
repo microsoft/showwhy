@@ -39,7 +39,7 @@ export const DeciTrainingParams: React.FC<DeciTrainingParamsProps> = memo(
 		return (
 			<Container>
 				<ContainerAdvancedGrid>
-					{advancedTrainingSpinningOptions.map(x => (
+					{advancedTrainingSpinningOptions.map((x) => (
 						<SpinButton
 							key={x.inputProps?.name}
 							label={x.label}
@@ -60,7 +60,7 @@ export const DeciTrainingParams: React.FC<DeciTrainingParamsProps> = memo(
 					))}
 				</ContainerAdvancedGrid>
 				<ContainerAdvancedCheckbox>
-					{advancedTrainingBooleanOptions.map(x => (
+					{advancedTrainingBooleanOptions.map((x) => (
 						<Checkbox
 							label={x.label}
 							key={x.name}

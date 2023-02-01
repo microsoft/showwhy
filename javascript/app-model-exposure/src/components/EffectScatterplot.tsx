@@ -101,7 +101,7 @@ function useOverlay(
 ) {
 	const theme = useThematic()
 	const refutationLegend = Object.keys(RefutationResultString).map(
-		key => (RefutationResultString as any)[key],
+		(key) => (RefutationResultString as any)[key],
 	)
 
 	const padding = useMemo((): any => {
@@ -117,13 +117,10 @@ function useOverlay(
 			.rect({ selectionState: SelectionState.NoData })
 			.fill()
 			.hex()
+		const green = theme.nearest('green').hex()
 
-		const refutationColors = [
-			effect,
-			inactiveColor,
-			colors(1).hex(),
-			colors(1).hex(),
-		]
+		const refutationColors = [effect, inactiveColor, green, green]
+
 		const spec = JSON.parse(templateString)
 		const pathspec = {
 			"$.data[?(@.name == 'specifications')].values": data,

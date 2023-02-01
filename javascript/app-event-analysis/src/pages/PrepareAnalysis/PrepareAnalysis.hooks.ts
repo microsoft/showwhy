@@ -113,7 +113,7 @@ export function useHandleFileLoad() {
 				setRawData(records)
 				const mapping = guessColMapping(getColumns(records))
 				setColumnMapping(mapping)
-				setOutcomeName(prev => (!prev ? mapping.value : prev))
+				setOutcomeName((prev) => (!prev ? mapping.value : prev))
 				setFileName(fileName)
 			} else {
 				const {

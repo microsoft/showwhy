@@ -25,7 +25,7 @@ export const GhostGraphNode: React.FC<CausalNodeProps> = memo(
 				}}
 			>
 				<Stack horizontal tokens={{ childrenGap: 5 }}>
-					<CausalNode {...props} center></CausalNode>
+					<CausalNode {...props} center />
 				</Stack>
 			</NodeContainer>
 		)

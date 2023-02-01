@@ -74,7 +74,7 @@ export const CompletedElements: FC<Props> = memo(function CompletedElements({
 		onAssignAllSubjects,
 	)
 
-	const showWarning = useMemo(() => list.some(i => i.missing), [list])
+	const showWarning = useMemo(() => list.some((i) => i.missing), [list])
 
 	return (
 		<Container>
@@ -103,7 +103,7 @@ export const CompletedElements: FC<Props> = memo(function CompletedElements({
 const List: FC<{ list: ListElement[] }> = memo(function ListItem({ list }) {
 	return list.length ? (
 		<Ul>
-			{list.map(item => {
+			{list.map((item) => {
 				const {
 					icon,
 					variable,
@@ -159,7 +159,7 @@ function useList(
 			},
 		]
 
-		allElements.forEach(element => {
+		allElements.forEach((element) => {
 			const complete = isElementComplete(element, allElements)
 			const isInOutput = isElementInOutputTable(element, outputTableColumns)
 			const missing = complete && !isInOutput

@@ -22,7 +22,7 @@ import {
 import { VariableNature } from '../domain/VariableNature.js'
 
 export function correlationMatrix(table: ColumnTable, maxSampleSize?: number) {
-	const variables = table.columnNames().map(columnName => ({ columnName }))
+	const variables = table.columnNames().map((columnName) => ({ columnName }))
 	const correlations: RelationshipWithWeight[] = []
 	for (let i = 0; i < variables.length; i++) {
 		const variableA = variables[i]
@@ -43,7 +43,7 @@ export function filterBoringRelationships(
 	variables: Map<string, CausalVariable>,
 	relationships: Relationship[],
 ) {
-	return relationships.filter(relationship => {
+	return relationships.filter((relationship) => {
 		const { source: variableRefA, target: variableRefB } = relationship
 		const variableA = variables.get(variableRefA.columnName)
 		const variableB = variables.get(variableRefB.columnName)
@@ -53,11 +53,11 @@ export function filterBoringRelationships(
 			!(
 				variableA.derivedFrom?.includes(variableB.columnName) ||
 				variableB.derivedFrom?.includes(variableA.columnName) ||
-				variableA.derivedFrom?.some(valA =>
-					variableB.derivedFrom?.some(valB => valA === valB),
+				variableA.derivedFrom?.some((valA) =>
+					variableB.derivedFrom?.some((valB) => valA === valB),
 				) ||
-				variableB.derivedFrom?.some(valB =>
-					variableA.derivedFrom?.some(valA => valA === valB),
+				variableB.derivedFrom?.some((valB) =>
+					variableA.derivedFrom?.some((valA) => valA === valB),
 				) ||
 				variableA.disallowedRelationships?.includes(variableB.columnName) ||
 				variableB.disallowedRelationships?.includes(variableA.columnName) ||
@@ -98,8 +98,8 @@ export function correlationsInTable(
 		const workerPath = 'workers/correlation.js'
 		const correlationWorker = new Worker(workerPath, { type: 'module' })
 		const correlationResultsPromise = new Promise<RelationshipWithWeight[]>(
-			resolve => {
-				correlationWorker.onmessage = e => {
+			(resolve) => {
+				correlationWorker.onmessage = (e) => {
 					resolve(e.data as RelationshipWithWeight[])
 				}
 			},
@@ -151,7 +151,7 @@ export function correlationsForVariable(
 	correlations: RelationshipWithWeight[],
 	variable: CausalVariable,
 ) {
-	return correlations.filter(correlation =>
+	return correlations.filter((correlation) =>
 		involvesVariable(correlation, variable),
 	)
 }
@@ -162,7 +162,7 @@ export function correlationForVariables(
 	variableB: VariableReference,
 ) {
 	return correlations.find(
-		correlation =>
+		(correlation) =>
 			involvesVariable(correlation, variableA) &&
 			involvesVariable(correlation, variableB),
 	)
@@ -173,14 +173,14 @@ export function correlationForColumnNames(
 	source: string,
 	target: string,
 ) {
-	const forwardCorrelation = correlations.find(correlation =>
+	const forwardCorrelation = correlations.find((correlation) =>
 		hasSameSourceAndTargetColumns(correlation, source, target),
 	)
 	if (forwardCorrelation !== undefined) {
 		return forwardCorrelation
 	}
 
-	const inverseCorrelation = correlations.find(correlation =>
+	const inverseCorrelation = correlations.find((correlation) =>
 		hasInvertedSourceAndTargetColumns(correlation, source, target),
 	)
 	if (inverseCorrelation !== undefined) {

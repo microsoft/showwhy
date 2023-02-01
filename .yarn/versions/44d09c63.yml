@@ -1,0 +1,4 @@
+declined:
+  - showwhy
+  - "@showwhy/acceptance-tests"
+  - "@showwhy/stories"

@@ -111,7 +111,7 @@ function getCausalFactorsByType(
 	causalFactors: CausalFactor[],
 	list: string[],
 ): CausalFactor[] {
-	return causalFactors.filter(x => list.includes(x.variable))
+	return causalFactors.filter((x) => list.includes(x.variable))
 }
 
 const baseMenuItems: IContextualMenuItem[] = [

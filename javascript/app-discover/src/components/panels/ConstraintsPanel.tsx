@@ -30,7 +30,7 @@ export const ConstraintsPanel: React.FC = memo(function ConstraintsPanel() {
 		const newConstraints = {
 			...constraints,
 			manualRelationships: constraints.manualRelationships.filter(
-				relationship => relationship !== relationshipToRemove,
+				(relationship) => relationship !== relationshipToRemove,
 			),
 		}
 		setConstraints(newConstraints)
@@ -50,7 +50,7 @@ export const ConstraintsPanel: React.FC = memo(function ConstraintsPanel() {
 		const newConstraints = {
 			...constraints,
 			causes: constraints.causes.filter(
-				variable => variable !== variableToRemove,
+				(variable) => variable !== variableToRemove,
 			),
 		}
 		setConstraints(newConstraints)
@@ -60,7 +60,7 @@ export const ConstraintsPanel: React.FC = memo(function ConstraintsPanel() {
 		const newConstraints = {
 			...constraints,
 			effects: constraints.effects.filter(
-				variable => variable !== variableToRemove,
+				(variable) => variable !== variableToRemove,
 			),
 		}
 		setConstraints(newConstraints)

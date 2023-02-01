@@ -35,7 +35,7 @@ export const DefinitionForm: FC<{
 	const editDefinition = useEditDefinition(definitions, setDefinitions)
 
 	const { items } = useDefinitionItems(
-		definitions.filter(d => d.type === definitionType),
+		definitions.filter((d) => d.type === definitionType),
 		definitionToEdit,
 		definitionType,
 		removeDefinition,

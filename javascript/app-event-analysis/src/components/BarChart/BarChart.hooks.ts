@@ -40,8 +40,8 @@ export function useData(
 	isPlaceboSimulation: boolean,
 ): BarChartData {
 	const colors = useColors()
-	const treatedUnit = inputData.find(element =>
-		treatedUnits.some(unit => element.name.includes(unit)),
+	const treatedUnit = inputData.find((element) =>
+		treatedUnits.some((unit) => element.name.includes(unit)),
 	)
 
 	const treatedUnitLegend = useMemo<LegendData>(() => {
@@ -59,7 +59,7 @@ export function useData(
 			unit: 0.7,
 		}
 
-		inputData.forEach(element => {
+		inputData.forEach((element) => {
 			if (isPlaceboSimulation) {
 				color =
 					(element.label as number) < 0
@@ -99,11 +99,11 @@ export function useData(
 					treatedUnitLegend,
 			  ]
 
-		const allValues = inputData.map(dataElement => dataElement.value)
+		const allValues = inputData.map((dataElement) => dataElement.value)
 		const minValue = min(allValues) ?? 0
 		const maxValue = max(allValues) ?? 1
 
-		const barNames = inputData.map(dataElement => dataElement.name)
+		const barNames = inputData.map((dataElement) => dataElement.name)
 
 		return {
 			inputBars,
@@ -346,7 +346,7 @@ function useHandleBarMouseLeave(
 			bar.attr('opacity', data.opacity || BAR_TRANSPARENT)
 			selectAll('.bar').attr(
 				'opacity',
-				d => (d as BarData).opacity || BAR_TRANSPARENT,
+				(d) => (d as BarData).opacity || BAR_TRANSPARENT,
 			)
 
 			hoverInfo.setHoverItem({

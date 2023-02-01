@@ -36,7 +36,7 @@ export function getOutputPoints({ output, unit }: SDIDOutput) {
 			date: x[i],
 			value: +y[i],
 			color: c[i],
-			unit: SYNTHETIC_UNIT + ' ' + unit,
+			unit: `${SYNTHETIC_UNIT} ${unit}`,
 			type: 'output',
 		})
 	}

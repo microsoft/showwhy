@@ -23,7 +23,7 @@ export function useInitializeView(
 	view: View,
 ): void {
 	useEffect(() => {
-		if (ref && ref.current !== null) {
+		if (ref?.current !== null) {
 			// eslint-disable-next-line
 			view.initialize(ref.current as any).run()
 		}
@@ -35,6 +35,6 @@ export function useOnCreateView(
 	onCreateView?: (view: View) => void,
 ): void {
 	useEffect(() => {
-		onCreateView && onCreateView(view)
+		onCreateView?.(view)
 	}, [view, onCreateView])
 }
