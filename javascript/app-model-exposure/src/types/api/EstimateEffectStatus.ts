@@ -8,6 +8,7 @@ import type { StatusResponse } from './StatusResponse.js'
 
 export interface EstimateEffectStatus extends StatusResponse {
 	results?: EstimatedEffect[]
+	failures?: EstimatedEffect[]
 }
 
 export interface EstimatedEffect extends EstimateIdentifier {
@@ -18,6 +19,7 @@ export interface EstimatedEffect extends EstimateIdentifier {
 	outcome: string
 	estimated_effect: number
 	covariate_balance: CovariateBalance | null
+	exc_info?: string
 }
 
 export interface EstimateIdentifier {
