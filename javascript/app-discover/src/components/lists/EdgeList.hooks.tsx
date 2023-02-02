@@ -24,6 +24,7 @@ import {
 	isSource,
 	removeBothEdges,
 	removeConstraint,
+	saveEdge,
 } from './EdgeList.utils.js'
 
 export function useOnRemove(
@@ -49,16 +50,29 @@ export function useOnRemoveConstraint(
 	)
 }
 
+export function useOnSave(
+	constraints: CausalDiscoveryConstraints,
+	onUpdateConstraints: SetterOrUpdater<CausalDiscoveryConstraints>,
+): (relationship: Relationship) => void {
+	return useCallback(
+		(relationship: Relationship) => {
+			saveEdge(constraints, onUpdateConstraints, relationship)
+		},
+		[constraints, onUpdateConstraints],
+	)
+}
+
 export function useOnRenderItem(
 	onSelect: (relationship: Relationship) => void,
 	onFlip: (relationship: Relationship) => void,
+	onSave: (relationship: Relationship) => void,
 	onRemove: (relationship: Relationship) => void,
 	onRemoveConstraint: (relationship: Relationship) => void,
 	variable: CausalVariable,
 	constraints: CausalDiscoveryConstraints,
-): (relationship: Relationship) => JSX.Element | undefined {
+): (relationship: Relationship, notFound?: boolean) => JSX.Element | undefined {
 	return useCallback(
-		(relationship: Relationship) => {
+		(relationship: Relationship, notFound?: boolean) => {
 			if (!relationship) return undefined
 			const constraint = constraints?.manualRelationships?.find((x) =>
 				hasSameSourceAndTarget(x, relationship),
@@ -73,6 +87,7 @@ export function useOnRenderItem(
 					key={relationship.key}
 					relationship={relationship}
 					onFlip={onFlip}
+					onSave={onSave}
 					onRemove={onRemove}
 					onRemoveConstraint={onRemoveConstraint}
 					onSelect={onSelect}
@@ -83,6 +98,7 @@ export function useOnRenderItem(
 							: relationship.source.columnName
 					}
 					constraint={constraint}
+					notFound={notFound}
 				/>
 			)
 		},

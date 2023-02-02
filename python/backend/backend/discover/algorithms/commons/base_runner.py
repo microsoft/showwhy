@@ -128,6 +128,7 @@ class CausalDiscoveryRunner(ABC):
         tabu_child_nodes: Optional[List[str]] = None,
         tabu_parent_nodes: Optional[List[str]] = None,
         tabu_edges: Optional[List[Tuple[str, str]]] = None,
+        edge_hints: Optional[List[Tuple[str, str]]] = None,
     ) -> np.ndarray:
         """
         Makes constraint matrix.
@@ -139,6 +140,8 @@ class CausalDiscoveryRunner(ABC):
                 edges that cannot be the parent of any other node (leaf nodes)
             tabu_edge: Optional[List[Tuple[str, str]]]
                 edges that cannot exist
+            edge_hints: Optional[List[Tuple[str, str]]]
+                edges we want to exist (not mandatory thought)
 
         Returns:
             np.ndarray:
@@ -152,19 +155,28 @@ class CausalDiscoveryRunner(ABC):
                 idx = name_to_idx[node]
                 # these are the causes, so they are not allowed to have
                 # incoming edges
-                constraint[:, idx] = 0.0
+                constraint[:, idx] = 0
 
         if tabu_parent_nodes is not None:
             for node in tabu_parent_nodes:
                 idx = name_to_idx[node]
                 # these are the effects, so they are not allowed to have
                 # outgoing edges
-                constraint[idx, :] = 0.0
+                constraint[idx, :] = 0
 
         if tabu_edges is not None:
             for source, target in tabu_edges:
                 source_idx, target_idx = name_to_idx[source], name_to_idx[target]
-                constraint[source_idx, target_idx] = 0.0
+                constraint[source_idx, target_idx] = 0
+
+        if edge_hints is not None:
+            for source, target in edge_hints:
+                source_idx, target_idx = name_to_idx[source], name_to_idx[target]
+                constraint[source_idx, target_idx] = 1
+
+        # self edges should not be allowed
+        for i in range(len(self._prepared_data.columns)):
+            constraint[i][i] = -1
 
         return constraint
 

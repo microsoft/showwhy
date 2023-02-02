@@ -127,6 +127,7 @@ class DeciRunner(CausalDiscoveryRunner):
             tabu_child_nodes=self._constraints.causes,
             tabu_parent_nodes=self._constraints.effects,
             tabu_edges=self._constraints.forbiddenRelationships,
+            edge_hints=self._constraints.potentialRelationships,
         ).astype(np.float32)
 
         # causica expects NaN for edges that need to be discovered

@@ -2,6 +2,7 @@ import logging
 from typing import Any, Literal
 
 import networkx as nx
+import numpy as np
 from castle.algorithms import PC
 
 from backend.discover.algorithms.commons.base_runner import CausalDiscoveryRunner, CausalGraph, ProgressCallback
@@ -36,6 +37,14 @@ class PCRunner(CausalDiscoveryRunner):
 
         return causal_graph
 
+    def _apply_constraints_to_causal_matrix(self, causal_matrix: np.ndarray, constraints: np.ndarray) -> np.ndarray:
+        constrained_matrix = causal_matrix.copy()
+
+        constrained_matrix[constraints == 0] = 0
+        constrained_matrix[constraints == 1] = 1
+
+        return constrained_matrix
+
     def _build_labeled_graph(self) -> Any:
         logging.info(f"Running PC with variant={self._variant}, alpha={self._alpha} and ci_test={self._ci_test}")
 
@@ -43,7 +52,18 @@ class PCRunner(CausalDiscoveryRunner):
 
         pc.learn(self._prepared_data.to_numpy())
 
-        pc_graph = nx.DiGraph(pc.causal_matrix)
+        constrained_matrix = self._apply_constraints_to_causal_matrix(
+            causal_matrix=pc.causal_matrix,
+            constraints=self._build_constraint_matrix(
+                name_to_idx=self._get_name_to_index(),
+                tabu_child_nodes=self._constraints.causes,
+                tabu_parent_nodes=self._constraints.effects,
+                tabu_edges=self._constraints.forbiddenRelationships,
+                edge_hints=self._constraints.potentialRelationships,
+            ),
+        )
+
+        pc_graph = nx.DiGraph(constrained_matrix)
 
         # remove weights automatically created by
         # networkx since PC returns the causal graph

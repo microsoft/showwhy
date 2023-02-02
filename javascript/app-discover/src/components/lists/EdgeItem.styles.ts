@@ -7,9 +7,11 @@ import styled from 'styled-components'
 
 export const Container = styled.div``
 
+export const iconStyle = { verticalAlign: 'top' }
 export const icons = {
 	delete: { iconName: 'Delete' },
-	pin: { iconName: 'Pin' },
+	save: { iconName: 'Pin' },
+	warning: { iconName: 'Warning' },
 	switch: { iconName: 'Switch' },
 	remove: { iconName: 'StatusCircleErrorX' },
 }

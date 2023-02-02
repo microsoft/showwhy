@@ -78,7 +78,7 @@ export class DiscoverResource extends Resource {
 	public override loadSchema(schema: DiscoverResourceSchema | undefined) {
 		super.loadSchema(schema)
 		this.name = schema?.name ?? this.defaultName()
-		this.datasetName = schema?.datasetName ?? this.defaultName()
+		this.datasetName = schema?.datasetName ?? 'Dataset'
 		this.causalGraph = schema?.causalGraph ?? emptyCausalGraph()
 		this.causalInference = schema?.causalInference ?? emptyCausalInference()
 		this.layout = schema?.layout ?? emptyLayout()

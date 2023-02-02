@@ -12,6 +12,7 @@ import { arrayIncludesVariable } from '../../domain/CausalVariable.js'
 import type { Dataset } from '../../domain/Dataset.js'
 import type { CausalGraph } from '../../domain/Graph.js'
 import type { Relationship } from '../../domain/Relationship.js'
+import { ManualRelationshipReason } from '../../domain/Relationship.js'
 import { CancelablePromise } from '../../utils/CancelablePromise.js'
 import type { AlgorithmParams } from '../Algorithms/AlgorithmParams.js'
 import { CausalDiscoveryAlgorithm } from './CausalDiscoveryAlgorithm.js'
@@ -187,8 +188,20 @@ function createConstraintsJson(
 			.map((variable) => variable.columnName),
 		forbiddenRelationships: constraints.manualRelationships
 			.filter(
-				(relationship) =>
+				(relationship: Relationship) =>
 					arrayIncludesVariable(variables, relationship.source) &&
+					relationship.reason !== ManualRelationshipReason.Saved &&
+					arrayIncludesVariable(variables, relationship.target),
+			)
+			.map((relationship) => [
+				relationship.source.columnName,
+				relationship.target.columnName,
+			]),
+		potentialRelationships: constraints.manualRelationships
+			?.filter(
+				(relationship: Relationship) =>
+					arrayIncludesVariable(variables, relationship.source) &&
+					relationship.reason === ManualRelationshipReason.Saved &&
 					arrayIncludesVariable(variables, relationship.target),
 			)
 			.map((relationship) => [

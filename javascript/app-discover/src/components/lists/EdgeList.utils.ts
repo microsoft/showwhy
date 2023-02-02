@@ -13,7 +13,10 @@ import {
 	isEquivalentRelationship,
 	ManualRelationshipReason,
 } from '../../domain/Relationship.js'
-import type { VariableReference } from './../../domain/CausalVariable.js'
+import type {
+	CausalVariable,
+	VariableReference,
+} from './../../domain/CausalVariable.js'
 import { arrayIncludesVariable } from './../../domain/CausalVariable.js'
 
 export function removeBothEdges(
@@ -96,15 +99,68 @@ export function flipEdge(
 	onUpdateConstraints(newConstraints)
 }
 
+export function saveEdge(
+	constraints: CausalDiscoveryConstraints,
+	onUpdateConstraints: (newConstraints: CausalDiscoveryConstraints) => void,
+	relationship?: Relationship,
+) {
+	if (!relationship) return
+	const columns = [
+		relationship.source.columnName,
+		relationship.target.columnName,
+	]
+
+	const existingRelationships = [...constraints.manualRelationships]
+	const shouldUndo = constraints.manualRelationships.find(
+		(r) =>
+			hasSameSourceAndTarget(r, relationship) &&
+			hasSameReason(ManualRelationshipReason.Saved, r),
+	)
+	const filtered = existingRelationships.filter(
+		(r) =>
+			!(
+				hasSameSourceAndTarget(r, relationship) &&
+				hasSameReason(ManualRelationshipReason.Saved, r)
+			),
+	)
+	const newConstraints = {
+		causes: constraints.causes.filter((r) => !columns.includes(r.columnName)),
+		effects: constraints.effects.filter((r) => !columns.includes(r.columnName)),
+		manualRelationships: shouldUndo
+			? filtered
+			: [
+					...filtered,
+					{
+						...relationship,
+						reason: ManualRelationshipReason.Saved,
+					},
+			  ],
+	} as CausalDiscoveryConstraints
+
+	onUpdateConstraints(newConstraints)
+}
+
 export function groupByEffectType(
 	relationships: Relationship[],
-	variableName: string,
+	variable: CausalVariable,
+	constraints?: CausalDiscoveryConstraints,
 ): Record<string, Relationship[]> {
+	const variableName = variable.name
 	const records: Record<string, Relationship[]> = {
 		[`Causes ${variableName}`]: [],
 		[`Caused by ${variableName}`]: [],
 	}
-	return relationships.reduce(
+	let rel = relationships
+	if (!relationships.length) {
+		rel =
+			constraints?.manualRelationships.filter(
+				(constraint) =>
+					constraint.reason === ManualRelationshipReason.Saved &&
+					involvesVariable(constraint, variable),
+			) || []
+	}
+
+	return rel.reduce(
 		(acc: Record<string, Relationship[]>, obj: Relationship) => {
 			let key = `Causes ${variableName}`
 			if (obj.source.columnName === variableName) {
@@ -160,5 +216,22 @@ export function hasAnyConstraint(
 	const hasManualConstraint = manualConstraints.some((x) =>
 		isEquivalentRelationship(x, relationship),
 	)
-	return hasManualConstraint && hasConstraint(constraints, relationship)
+	return hasManualConstraint || hasConstraint(constraints, relationship)
+}
+
+export function isColumnRelated(
+	columnName: string,
+	variableName: string,
+	constraints: CausalDiscoveryConstraints,
+) {
+	if (columnName === variableName) return false
+	// return
+	const allConstraints = Object.values(constraints).flatMap((x) => x)
+	return allConstraints.some(({ source, target }) => {
+		return (
+			(source.columnName === columnName &&
+				target.columnName === variableName) ||
+			(target.columnName === columnName && source.columnName === variableName)
+		)
+	})
 }
