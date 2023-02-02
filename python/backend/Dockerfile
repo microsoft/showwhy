@@ -1,10 +1,7 @@
-# The registry to pull the base image from
-ARG PY_REGISTRY
+# The base image to use
+ARG BASE_IMAGE=python:3.9-slim
 
-# The tag to use for the base image
-ARG PY_TAG=-slim
-
-FROM ${PY_REGISTRY}python:3.9${PY_TAG} AS builder
+FROM ${BASE_IMAGE} AS builder
 
 # If set to anything other than empty will start the backend in worker mode
 # Otherwise, will start in API mode
@@ -44,7 +41,7 @@ COPY . .
 RUN poetry run poe verify
 
 
-FROM ${PY_REGISTRY}python:3.9${PY_TAG}
+FROM ${BASE_IMAGE}
 
 # If set to anything other than empty will start the backend in worker mode
 # Otherwise, will start in API mode
