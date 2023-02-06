@@ -16,6 +16,20 @@
                 "description": "Managed itendity name to access AKS cluster"
             }
         },
+        "ipName": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "IP name"
+            }
+        },
+        "location": {
+            "type": "string",
+            "defaultValue": "[resourceGroup().location]",
+            "metadata": {
+                "description": "Location for the resources"
+            }
+        },
         "clusterName": {
             "type": "string",
             "defaultValue": "",
@@ -39,7 +53,7 @@
         "helmAppLocation": {
             "type": "string",
             "metadata": {
-                "description": ""
+                "description": "Location of helm app script"
             }
         }
     },
@@ -57,6 +71,12 @@
                 "parameters": {
                     "dnsPrefix": {
                         "value": "[parameters('dnsPrefix')]"
+                    },
+                    "ipName": {
+                        "value": "[parameters('ipName')]"
+                    },
+                    "location": {
+                        "value": "[parameters('location')]"
                     }
                 },
                 "template": {
@@ -75,14 +95,26 @@
                             "metadata": {
                                 "description": "Optional DNS prefix to use with hosted Kubernetes API server FQDN."
                             }
+                        },
+                        "ipName": {
+                            "type": "string",
+                            "metadata": {
+                                "description": "IP name."
+                            }
+                        },
+                        "location": {
+                            "type": "string",
+                            "metadata": {
+                                "description": "Location for the resources"
+                            }
                         }
                     },
                     "resources": [
                         {
                             "type": "Microsoft.Network/publicIPAddresses",
-                            "apiVersion": "2020-08-01",
-                            "name": "kubernetesip",
-                            "location": "[resourceGroup().location]",
+                            "apiVersion": "2022-07-01",
+                            "name": "[parameters('ipName')]",
+                            "location": "[parameters('location')]",
                             "sku": {
                                 "name": "Standard"
                             },
@@ -98,7 +130,7 @@
                     "outputs": {
                         "publicIP": {
                             "type": "string",
-                            "value": "[reference(resourceId('Microsoft.Network/publicIPAddresses', 'kubernetesip')).ipAddress]"
+                            "value": "[reference(resourceId('Microsoft.Network/publicIPAddresses', parameters('ipName'))).ipAddress]"
                         }
                     }
                 }
@@ -106,7 +138,7 @@
         },
         {
             "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2020-10-01",
+            "apiVersion": "2021-04-01",
             "name": "helmScripts",
             "dependsOn": [
                 "[resourceId(parameters('nodeResourceGroup'),'Microsoft.Resources/deployments', 'publicIP')]"
@@ -119,6 +151,9 @@
                 "parameters": {
                     "identityName": {
                         "value": "[parameters('identityName')]"
+                    },
+                    "location": {
+                        "value": "[parameters('location')]"
                     },
                     "clusterName": {
                         "value": "[parameters('clusterName')]"
@@ -147,6 +182,12 @@
                         "identityName": {
                             "type": "string",
                             "metadata": {
+                                "description": "Identity name with access to the cluster"
+                            }
+                        },
+                        "location": {
+                            "type": "string",
+                            "metadata": {
                                 "description": "Location of all resources to be deployed"
                             }
                         },
@@ -172,15 +213,15 @@
                         }
                     },
                     "variables": {
-                        "domain": "[concat(parameters('dnsPrefix'), '.', resourceGroup().location, '.cloudapp.azure.com')]",
-                        "installScriptUri": "[uri('https://raw.githubusercontent.com/microsoft/showwhy/main/docs/deployment/azure-scripts/', 'helm.sh')]"
+                        "domain": "[concat(parameters('dnsPrefix'), '.', parameters('location'), '.cloudapp.azure.com')]",
+                        "installScriptUri": "[uri('https://raw.githubusercontent.com/microsoft/showwhy/deploy-azure/docs/deployment/azure/scripts/', 'helm.sh')]"
                     },
                     "resources": [
                         {
                             "type": "Microsoft.Resources/deploymentScripts",
                             "apiVersion": "2020-10-01",
                             "name": "deployHelm",
-                            "location": "[resourceGroup().location]",
+                            "location": "[parameters('location')]",
                             "kind": "AzureCLI",
                             "identity": {
                                 "type": "UserAssigned",
