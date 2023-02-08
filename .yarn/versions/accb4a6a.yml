@@ -1,0 +1,3 @@
+releases:
+  "@showwhy/discover-app": patch
+  "@showwhy/webapp": patch
