@@ -12,12 +12,14 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useConfounderThreshold } from '../../state/confounderThreshold.js'
 import { useDefaultDatasetResult } from '../../state/defaultDatasetResult.js'
 import { useDefinitions } from '../../state/definitions.js'
+import { useEstimateEffectResponse } from '../../state/estimateEffectResponse.js'
 import { useRunHistory } from '../../state/runHistory.js'
 import {
 	useHoverState,
 	useSetHoverState,
 	useSpecificationCurveConfig,
 } from '../../state/specificationCurveConfig.js'
+import type { EstimateEffectStatus } from '../../types/api/EstimateEffectStatus.js'
 import { NodeResponseStatus } from '../../types/api/NodeResponseStatus.js'
 import { CausalityLevel } from '../../types/causality/CausalityLevel.js'
 import type { Definition } from '../../types/experiments/Definition.js'
@@ -58,7 +60,11 @@ export function useSpecificationCurveData(): {
 	const outcomeOptions = returnOutcomeOptions(definitions)
 	const vegaWindowDimensions = useVegaWindowDimensions()
 	const runHistory = useRunHistory()
-	const activeProcessing = useActiveProcessing(runHistory)
+	const estimateEffectResponse = useEstimateEffectResponse()
+	const activeProcessing = useActiveProcessing(
+		runHistory,
+		estimateEffectResponse,
+	)
 
 	useEffect(() => {
 		if (!selectedOutcome.length && outcomeOptions.length >= 2) {
@@ -91,7 +97,7 @@ export function useLoadSpecificationData(): Specification[] {
 			if (!specificationList?.length) {
 				setData([])
 			} else {
-				const result = specificationList.map((row) => {
+				const result = specificationList.map(row => {
 					const spec = row2spec(row)
 					return returnValidatedSpecification(
 						spec,
@@ -105,7 +111,7 @@ export function useLoadSpecificationData(): Specification[] {
 				try {
 					const result = await csv(defaultDatasetResult?.url, row2spec)
 					let specResult = buildOutcomeGroups(result)
-					specResult = specResult.map((x) => {
+					specResult = specResult.map(x => {
 						return returnValidatedSpecification(x, confounderThreshold)
 					}) as Specification[]
 
@@ -128,9 +134,9 @@ export function useLoadSpecificationData(): Specification[] {
 }
 
 function returnOutcomeOptions(definitions: Definition[]): IDropdownOption[] {
-	const outcomes = definitions.filter((d) => d.type === DefinitionType.Outcome)
-	const primary = outcomes.filter((d) => d.level === CausalityLevel.Primary)
-	const secondary = outcomes.filter((d) => d.level === CausalityLevel.Secondary)
+	const outcomes = definitions.filter(d => d.type === DefinitionType.Outcome)
+	const primary = outcomes.filter(d => d.level === CausalityLevel.Primary)
+	const secondary = outcomes.filter(d => d.level === CausalityLevel.Secondary)
 	const options: IDropdownOption[] = [
 		{
 			key: 'primaryHeader',
@@ -139,7 +145,7 @@ function returnOutcomeOptions(definitions: Definition[]): IDropdownOption[] {
 		},
 	]
 
-	primary.forEach((d) => {
+	primary.forEach(d => {
 		options.push({ key: d.variable, text: d.variable })
 	})
 
@@ -150,7 +156,7 @@ function returnOutcomeOptions(definitions: Definition[]): IDropdownOption[] {
 			itemType: DropdownMenuItemType.Header,
 		})
 
-		secondary.forEach((d) => {
+		secondary.forEach(d => {
 			options.push({ key: d.variable, text: d.variable })
 		})
 	}
@@ -158,22 +164,30 @@ function returnOutcomeOptions(definitions: Definition[]): IDropdownOption[] {
 	return options
 }
 
-function useActiveProcessing(runHistory: RunHistory[]): Maybe<RunHistory> {
+function useActiveProcessing(
+	runHistory: RunHistory[],
+	estimateEffectResponse: EstimateEffectStatus[],
+): Maybe<RunHistory> {
 	return useMemo(() => {
-		return runHistory.find(
-			(x) =>
+		return runHistory.find(x => {
+			const estimateEffect = estimateEffectResponse.find(e => e.taskId === x.id)
+
+			return (
 				x.status?.toLowerCase() === NodeResponseStatus.Pending ||
-				x.status?.toLowerCase() === NodeResponseStatus.Started,
-		)
-	}, [runHistory])
+				x.status?.toLowerCase() === NodeResponseStatus.Started ||
+				(x.status?.toLowerCase() === NodeResponseStatus.Failure &&
+					(estimateEffect?.pending ?? 0) > 0)
+			)
+		})
+	}, [runHistory, estimateEffectResponse])
 }
 
 export function useFailedRefutationTaskIds(data: Specification[]): string[] {
 	return useMemo((): string[] => {
 		return (
 			data
-				.filter((x) => +x.refutationResult === RefutationResult.FailedCritical)
-				.map((a) => a.taskId) || []
+				.filter(x => +x.refutationResult === RefutationResult.FailedCritical)
+				.map(a => a.taskId) || []
 		)
 	}, [data])
 }

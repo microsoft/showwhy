@@ -2,10 +2,12 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+
 import { PrimaryButton } from '@fluentui/react'
 import { useThematicFluent } from '@thematic/fluent'
-import React, { memo } from 'react'
+import React, { memo, useEffect, useCallback } from 'react'
 import styled from 'styled-components'
+import { ApiType } from '../api-client/FetchApiInteractor.types.js'
 
 import { ErrorInfo } from '../components/ErrorInfo.js'
 import {
@@ -20,9 +22,11 @@ import { EstimatorsRunProgress } from '../components/EstimatorsRunProgress.js'
 import { SpecificationDescription } from '../components/SpecificationDescription.js'
 import { SpecificationGraphs } from '../components/SpecificationGraphs.js'
 import { Title } from '../components/styles.js'
+import { useSaveNewResponse } from '../hooks/defaultResponses.js'
 import { useSpecificationCurveData } from '../hooks/estimate/specificationCurveManagement.js'
 import { useDataErrors } from '../hooks/estimate/useDataErrors.js'
 import { useEstimateLogic } from '../hooks/estimate/useEstimateLogic.js'
+import { useRestartEstimate } from '../hooks/estimate/useRestartEstimate.js'
 import { useSpecificationCurve } from '../hooks/estimate/useSpecificationCurve.js'
 import { useRefutationOptions } from '../hooks/refutation.js'
 import {
@@ -30,6 +34,11 @@ import {
 	useIsDefaultRunProcessing,
 } from '../hooks/runHistory.js'
 import { useGetRunStatus } from '../hooks/runStatus.js'
+import { useSetConfidenceIntervalResponse } from '../state/confidenceIntervalResponse.js'
+import { useSetEstimateEffectResponse } from '../state/estimateEffectResponse.js'
+import { useSetRefutationResponse } from '../state/refutationResponse.js'
+import { clearStorage, getStorageItem } from '../state/sessionStorage.js'
+import { useSetShapResponse } from '../state/shapResponse.js'
 import { Box, BoxGroup, PageSection, Text } from './AnalyzeTestPage.styles.js'
 
 export const AnalyzeTestPageEffects: React.FC = memo(
@@ -39,6 +48,9 @@ export const AnalyzeTestPageEffects: React.FC = memo(
 		const runStatus = useGetRunStatus(defaultRun)
 		const isProcessing = useIsDefaultRunProcessing()
 		const refutationOptions = useRefutationOptions()
+		const lastRun = getStorageItem('lastRun')
+		const restartEstimate = useRestartEstimate()
+		const updateResponseStates = useUpdateResponseStates()
 
 		const {
 			runEstimate,
@@ -49,6 +61,14 @@ export const AnalyzeTestPageEffects: React.FC = memo(
 			specCount,
 			loadingFile,
 		} = useEstimateLogic(isProcessing)
+
+		useEffect(() => {
+			if (lastRun) {
+				updateResponseStates()
+				void restartEstimate(lastRun)
+			}
+
+		}, [])
 
 		const {
 			isMicrodata,
@@ -186,3 +206,31 @@ export const AnalyzeTestPageEffects: React.FC = memo(
 )
 
 const Container = styled.div``
+
+function useUpdateResponseStates() {
+	const setEstimateEffectResponse = useSetEstimateEffectResponse()
+	const setShapResponse = useSetShapResponse()
+	const setConfidenceResponse = useSetConfidenceIntervalResponse()
+	const setRefutationResponse = useSetRefutationResponse()
+
+	const setResponse = {
+		[ApiType.EstimateEffect]: useSaveNewResponse(setEstimateEffectResponse),
+		[ApiType.ShapInterpreter]: useSaveNewResponse(setShapResponse),
+		[ApiType.ConfidenceInterval]: useSaveNewResponse(setConfidenceResponse),
+		[ApiType.RefuteEstimate]: useSaveNewResponse(setRefutationResponse),
+	}
+
+	const types = Object.values(ApiType)
+
+	return useCallback(() => {
+		for (const type in types) {
+			const item = getStorageItem(type)
+			if (item) {
+				const { taskId, response, _updateId } = item
+				const setter = (setResponse as any)[type]
+				setter(_updateId ?? taskId, response)
+			}
+		}
+		clearStorage()
+	}, [setResponse])
+}

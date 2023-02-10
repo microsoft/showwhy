@@ -11,9 +11,11 @@ import {
 	useSetRecoilState,
 } from 'recoil'
 
+export const defaultConfounderThreshold = 10
+
 export const confounderThresholdState = atom<number>({
 	key: 'confounder-threshold',
-	default: 10,
+	default: defaultConfounderThreshold,
 })
 
 export function useConfounderThreshold(): number {

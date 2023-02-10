@@ -14,7 +14,7 @@ import {
 import type { Maybe } from '../types/primitives.js'
 import type { SpecificationCurveConfig } from '../types/visualization/SpecificationCurveConfig.js'
 
-export const defaultConfig = {
+export const defaultSpecCurveConfig = {
 	medianLine: true,
 	meanLine: true,
 	shapTicks: false,
@@ -23,21 +23,21 @@ export const defaultConfig = {
 	inactiveSpecifications: [],
 }
 
-export const specificationCurveConfig = atom<SpecificationCurveConfig>({
+export const specificationCurveConfigState = atom<SpecificationCurveConfig>({
 	key: 'specification-curve-config-state',
-	default: defaultConfig,
+	default: defaultSpecCurveConfig,
 })
 
 export function useSpecificationCurveConfig(): SpecificationCurveConfig {
-	return useRecoilValue(specificationCurveConfig)
+	return useRecoilValue(specificationCurveConfigState)
 }
 
 export function useSetSpecificationCurveConfig(): SetterOrUpdater<SpecificationCurveConfig> {
-	return useSetRecoilState(specificationCurveConfig)
+	return useSetRecoilState(specificationCurveConfigState)
 }
 
 export function useResetSpecificationCurveConfig(): Resetter {
-	return useResetRecoilState(specificationCurveConfig)
+	return useResetRecoilState(specificationCurveConfigState)
 }
 
 export const hoverState = atom<Maybe<string>>({

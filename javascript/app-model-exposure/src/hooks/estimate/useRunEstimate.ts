@@ -12,15 +12,18 @@ import { useSetConfidenceIntervalResponse } from '../../state/confidenceInterval
 import { useSetEstimateEffectResponse } from '../../state/estimateEffectResponse.js'
 import { useEstimators } from '../../state/estimators.js'
 import { useSetRefutationResponse } from '../../state/refutationResponse.js'
+import { useSetRunHistory } from '../../state/runHistory.js'
 import { useSetShapResponse } from '../../state/shapResponse.js'
 import type { ConfidenceIntervalRequest } from '../../types/api/ConfidenceIntervalRequest.js'
 import type { EstimateEffectRequest } from '../../types/api/EstimateEffectRequest.js'
 import { NodeResponseStatus } from '../../types/api/NodeResponseStatus.js'
 import type { ShapStatus } from '../../types/api/ShapStatus.js'
+import type { StatusResponse } from '../../types/api/StatusResponse.js'
+import type { RunHistory } from '../../types/runs/RunHistory.js'
 import { returnConfidenceIntervalMapping } from '../../utils/confidenceIntervalRequest.js'
 import { returnRefutationMapping } from '../../utils/refutationRequest.js'
 import { useSaveNewResponse } from '../defaultResponses.js'
-import { useCompleteRun, useSaveNewRun } from '../runHistory.js'
+import { useCompleteRun, useDefaultRun, useSaveNewRun } from '../runHistory.js'
 import type { ConfidenceIntervalStatus } from './../../types/api/ConfidenceIntervalStatus.js'
 import type {
 	EstimatedEffect,
@@ -32,76 +35,71 @@ import type { RefutationStatus } from './../../types/api/RefutationStatus.js'
 export function useRunEstimate(
 	finishLoading: () => void,
 ): (estimateProps: EstimateEffectRequest) => Promise<void> {
+	return useRun(finishLoading)
+}
+
+function runSuccessful(status: NodeResponseStatus) {
+	if (!isStatus(status, NodeResponseStatus.Success)) {
+		return false
+	}
+	return true
+}
+
+export function useRun(finishLoading?: () => void, run?: RunHistory) {
 	const completeRun = useCompleteRun()
+	const createRun = useSaveNewRun()
 	const setEstimateEffectResponse = useSetEstimateEffectResponse()
-	const newEstimateResponse = useSaveNewResponse<EstimateEffectStatus>(
+	const newResponse = useSaveNewResponse<EstimateEffectStatus>(
 		setEstimateEffectResponse,
 	)
-	const setConfidenceResponse = useSetConfidenceIntervalResponse()
-	const newConfidenceResponse = useSaveNewResponse<ConfidenceIntervalStatus>(
-		setConfidenceResponse,
-	)
-	const setRefutationResponse = useSetRefutationResponse()
-	const newRefutationResponse = useSaveNewResponse<RefutationStatus>(
-		setRefutationResponse,
-	)
-	const setShapResponse = useSetShapResponse()
-	const newShapResponse = useSaveNewResponse<ShapStatus>(setShapResponse)
-	const estimators = useEstimators()
-	const createRun = useSaveNewRun()
+	const shapRun = useShapRun()
+	const updateStatus = useUpdateStatus(newResponse)
+	return useCallback(
+		async (estimateProps: EstimateEffectRequest, taskId?: string) => {
+			const execution = taskId
+				? { id: taskId }
+				: await api.executeEstimate(estimateProps)
+			const runHistory = run ?? createRun(execution.id, api.project)
 
-	const refutationRun = useCallback(
-		async (taskId: string, estimatedEffect?: EstimatedEffect[]) => {
-			const mapping = returnRefutationMapping(estimatedEffect, estimators)
-
-			const body = {
-				num_simulations_map: Object.fromEntries(mapping),
-			} as RefutationRequest
-			const urlType = ApiType.RefuteEstimate
-			const execution = await api.executeValidation(taskId, urlType, body)
+			finishLoading?.()
 			const response = await checkStatus(
 				execution.id,
-				urlType,
-				newRefutationResponse,
-				taskId,
-			)
-			completeRun(response.status, taskId)
-		},
-		[estimators, completeRun, newRefutationResponse],
-	)
-
-	const confidenceRun = useCallback(
-		async (taskId: string, estimatedEffect?: EstimatedEffect[]) => {
-			const ids = returnConfidenceIntervalMapping(estimatedEffect, estimators)
-
-			const body = {
-				estimate_execution_ids: ids,
-			} as ConfidenceIntervalRequest
-			const urlType = ApiType.ConfidenceInterval
-			const execution = await api.executeValidation(taskId, urlType, body)
-			const response = await checkStatus(
-				execution.id,
-				urlType,
-				newConfidenceResponse,
-				taskId,
+				ApiType.EstimateEffect,
+				updateStatus,
 			)
 			runSuccessful(response.status)
-				? void refutationRun(taskId, estimatedEffect)
-				: completeRun(response.status, execution.id)
+				? void shapRun(
+						runHistory?.estimators.some(x => x.confidenceInterval),
+						execution.id,
+						response,
+				  )
+				: completeRun(response.status, execution.id, response)
 		},
-		[newConfidenceResponse, refutationRun, completeRun, estimators],
+		[run, createRun, finishLoading, shapRun, completeRun, updateStatus],
 	)
+}
 
-	const shapRun = useCallback(
+export function useShapRun() {
+	const completeRun = useCompleteRun()
+	const setShapResponse = useSetShapResponse()
+	const newResponse = useSaveNewResponse<ShapStatus>(setShapResponse)
+	const confidenceRun = useConfidenceRun()
+	const refutationRun = useRefutationRun()
+	const updateStatus = useUpdateStatus(newResponse)
+
+	return useCallback(
 		async (
 			hasConfidenceInterval: boolean,
 			taskId: string,
 			estimateResponse: EstimateEffectStatus,
+			prevTaskId?: string,
 		) => {
 			const urlType = ApiType.ShapInterpreter
-			const execution = await api.executeValidation(taskId, urlType)
+			const execution = prevTaskId
+				? { id: prevTaskId }
+				: await api.executeValidation(taskId, urlType)
 			const response = await checkStatus(execution.id, urlType)
-			newShapResponse(taskId, response)
+			updateStatus(taskId, response)
 
 			if (runSuccessful(response.status)) {
 				hasConfidenceInterval
@@ -111,36 +109,111 @@ export function useRunEstimate(
 				completeRun(response.status, execution.id)
 			}
 		},
-		[completeRun, newShapResponse, confidenceRun, refutationRun],
+		[completeRun, updateStatus, confidenceRun, refutationRun],
 	)
-
-	const run = useCallback(
-		async (estimateProps: EstimateEffectRequest) => {
-			const execution = await api.executeEstimate(estimateProps)
-			const runHistory = createRun(execution.id, api.project)
-			finishLoading()
-			const response = await checkStatus(
-				execution.id,
-				ApiType.EstimateEffect,
-				newEstimateResponse,
-			)
-			runSuccessful(response.status)
-				? void shapRun(
-						runHistory.estimators.some((x) => x.confidenceInterval),
-						execution.id,
-						response,
-				  )
-				: completeRun(response.status, execution.id)
-		},
-		[newEstimateResponse, createRun, finishLoading, shapRun, completeRun],
-	)
-
-	return run
 }
 
-function runSuccessful(status: NodeResponseStatus) {
-	if (!isStatus(status, NodeResponseStatus.Success)) {
-		return false
-	}
-	return true
+export function useConfidenceRun() {
+	const estimators = useEstimators()
+	const completeRun = useCompleteRun()
+	const setConfidenceResponse = useSetConfidenceIntervalResponse()
+	const newResponse = useSaveNewResponse<ConfidenceIntervalStatus>(
+		setConfidenceResponse,
+	)
+	const refutationRun = useRefutationRun()
+	const updateStatus = useUpdateStatus(newResponse)
+
+	return useCallback(
+		async (
+			taskId: string,
+			estimatedEffect?: EstimatedEffect[],
+			prevTaskId?: string,
+		) => {
+			const ids = returnConfidenceIntervalMapping(estimatedEffect, estimators)
+
+			const body = {
+				estimate_execution_ids: ids,
+			} as ConfidenceIntervalRequest
+			const urlType = ApiType.ConfidenceInterval
+			const execution = prevTaskId
+				? { id: prevTaskId }
+				: await api.executeValidation(taskId, urlType, body)
+			const response = await checkStatus(
+				execution.id,
+				urlType,
+				updateStatus,
+				taskId,
+			)
+			runSuccessful(response.status)
+				? void refutationRun(taskId, estimatedEffect)
+				: completeRun(response.status, execution.id)
+		},
+		[updateStatus, refutationRun, completeRun, estimators],
+	)
+}
+
+export function useRefutationRun() {
+	const estimators = useEstimators()
+	const completeRun = useCompleteRun()
+	const setRefutationResponse = useSetRefutationResponse()
+	const newResponse = useSaveNewResponse<RefutationStatus>(
+		setRefutationResponse,
+	)
+	const updateStatus = useUpdateStatus(newResponse)
+
+	return useCallback(
+		async (
+			taskId: string,
+			estimatedEffect?: EstimatedEffect[],
+			prevTaskId?: string,
+		) => {
+			const mapping = returnRefutationMapping(estimatedEffect, estimators)
+
+			const body = {
+				num_simulations_map: Object.fromEntries(mapping),
+			} as RefutationRequest
+			const urlType = ApiType.RefuteEstimate
+			const execution = prevTaskId
+				? { id: prevTaskId }
+				: await api.executeValidation(taskId, urlType, body)
+			const response = await checkStatus(
+				execution.id,
+				urlType,
+				updateStatus,
+				taskId,
+			)
+			completeRun(response.status, taskId)
+		},
+		[estimators, completeRun, updateStatus],
+	)
+}
+
+function useUpdateStatus(
+	cb: (taskId: string, response: StatusResponse) => void,
+) {
+	const setRunHistory = useSetRunHistory()
+	return useCallback(
+		(taskId: string, response: StatusResponse) => {
+			setRunHistory(prev => {
+				const existing = prev.find(p => p.id === taskId)
+
+				const newRun = {
+					...existing,
+					error: undefined,
+					taskId,
+					time: {
+						start: existing?.time.start,
+						end: new Date(),
+					},
+					status: response.status,
+				} as RunHistory
+				return [
+					...prev.filter(p => p.id !== existing?.id),
+					newRun,
+				] as RunHistory[]
+			})
+			cb(taskId, response)
+		},
+		[setRunHistory, cb],
+	)
 }
