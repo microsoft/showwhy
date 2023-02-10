@@ -77,6 +77,10 @@ def get_results(workspace_name: str, group_id: str, task_name: str):
 def cancel_task(workspace_name: str, group_id: str, task_name: str):
     db_client = get_db_client()
     ids = db_client.get_value(f"{workspace_name}:{task_name}:{group_id}")
+
+    if ids is None:
+        raise ValueError(f"Task {group_id} not found for workspace {workspace_name} and task {task_name}")
+
     for id in ids:
         AsyncResult(id).revoke(terminate=True)
 
