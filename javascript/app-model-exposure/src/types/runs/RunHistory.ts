@@ -23,4 +23,5 @@ export interface RunHistory {
 	confidenceIntervalCount: number
 	error?: string
 	confounderThreshold?: number
+	completed?: boolean
 }

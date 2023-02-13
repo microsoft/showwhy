@@ -11,9 +11,11 @@ import {
 	useSetRecoilState,
 } from 'recoil'
 
-const subjectIdentifierState = atom<string | undefined>({
+export const defaultSubjectIdentifier = 'index'
+
+export const subjectIdentifierState = atom<string | undefined>({
 	key: 'subject-identifier',
-	default: 'index',
+	default: defaultSubjectIdentifier,
 })
 
 export function useSubjectIdentifier(): string | undefined {

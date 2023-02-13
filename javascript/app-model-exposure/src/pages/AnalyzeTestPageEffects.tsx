@@ -2,11 +2,13 @@
  * Copyright (c) Microsoft. All rights reserved.
  * Licensed under the MIT license. See LICENSE file in the project.
  */
+
 import { PrimaryButton } from '@fluentui/react'
 import { useThematicFluent } from '@thematic/fluent'
-import React, { memo } from 'react'
+import React, { memo, useEffect } from 'react'
 import styled from 'styled-components'
 
+import type { ApiType } from '../api-client/FetchApiInteractor.types.js'
 import { ErrorInfo } from '../components/ErrorInfo.js'
 import {
 	ColumnDataTypeMessage,
@@ -23,6 +25,7 @@ import { Title } from '../components/styles.js'
 import { useSpecificationCurveData } from '../hooks/estimate/specificationCurveManagement.js'
 import { useDataErrors } from '../hooks/estimate/useDataErrors.js'
 import { useEstimateLogic } from '../hooks/estimate/useEstimateLogic.js'
+import { useRestartEstimate } from '../hooks/estimate/useRestartEstimate.js'
 import { useSpecificationCurve } from '../hooks/estimate/useSpecificationCurve.js'
 import { useRefutationOptions } from '../hooks/refutation.js'
 import {
@@ -30,15 +33,19 @@ import {
 	useIsDefaultRunProcessing,
 } from '../hooks/runHistory.js'
 import { useGetRunStatus } from '../hooks/runStatus.js'
+import { clearStorage, getStorageItem } from '../state/sessionStorage.js'
 import { Box, BoxGroup, PageSection, Text } from './AnalyzeTestPage.styles.js'
 
 export const AnalyzeTestPageEffects: React.FC = memo(
 	function AnalyzeTestPageEffects() {
+		const controller = new AbortController()
+		const signal = controller.signal
 		const theme = useThematicFluent()
 		const defaultRun = useDefaultRun()
 		const runStatus = useGetRunStatus(defaultRun)
 		const isProcessing = useIsDefaultRunProcessing()
 		const refutationOptions = useRefutationOptions()
+		const restartEstimate = useRestartEstimate(signal)
 
 		const {
 			runEstimate,
@@ -48,7 +55,27 @@ export const AnalyzeTestPageEffects: React.FC = memo(
 			loadingSpecCount,
 			specCount,
 			loadingFile,
-		} = useEstimateLogic(isProcessing)
+		} = useEstimateLogic(isProcessing, signal)
+
+		useEffect(() => {
+			if (!defaultRun) {
+				clearStorage()
+			}
+			const lastRun = getStorageItem('lastRun') as {
+				taskId: string
+				type: ApiType
+				_updateId?: string
+			}
+			if (lastRun) {
+				void restartEstimate(lastRun)
+			}
+
+			return () => {
+				clearStorage()
+				controller.abort()
+			}
+			// eslint-disable-next-line react-hooks/exhaustive-deps
+		}, [])
 
 		const {
 			isMicrodata,

@@ -19,7 +19,10 @@ import { useLoadSpecCount } from './useLoadSpecCount.js'
 import { useRunEstimate } from './useRunEstimate.js'
 import { useUploadFile } from './useUploadFile.js'
 
-export function useEstimateLogic(isProcessing: boolean): {
+export function useEstimateLogic(
+	isProcessing: boolean,
+	signal: AbortSignal,
+): {
 	specCount: Maybe<number>
 	errors: Maybe<string>
 	cancelRun: AsyncHandler
@@ -37,7 +40,7 @@ export function useEstimateLogic(isProcessing: boolean): {
 	const specCount = useSpecCount()
 	const defaultRun = useDefaultRun()
 	const runStatus = useGetRunStatus(defaultRun)
-	const run = useRunEstimate(falseLoadingFile)
+	const run = useRunEstimate(falseLoadingFile, signal)
 	const uploadFile = useUploadFile(setErrors)
 	const estimateProps = useEstimateProps(OUTPUT_FILE_NAME)
 

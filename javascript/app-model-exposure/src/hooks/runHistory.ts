@@ -12,6 +12,7 @@ import { useSpecCount } from '../state/specCount.js'
 import { useResetSpecificationCurveConfig } from '../state/specificationCurveConfig.js'
 import type { ExecutionResponse } from '../types/api/ExecutionResponse.js'
 import { NodeResponseStatus } from '../types/api/NodeResponseStatus.js'
+import type { StatusResponse } from '../types/api/StatusResponse.js'
 import type { Estimator } from '../types/estimators/Estimator.js'
 import type { Maybe } from '../types/primitives.js'
 import type { RunHistory } from '../types/runs/RunHistory.js'
@@ -52,7 +53,10 @@ export function useIsDefaultRunProcessing(): boolean {
 	const defaultRun = useDefaultRun()
 
 	return useMemo(() => {
-		return isProcessingStatus(defaultRun?.status as NodeResponseStatus)
+		return (
+			isProcessingStatus(defaultRun?.status as NodeResponseStatus) ||
+			defaultRun?.completed === false
+		)
 	}, [defaultRun])
 }
 
@@ -109,11 +113,12 @@ export function useUpdateExecutionId(): (response?: ExecutionResponse) => void {
 export function useCompleteRun(): (
 	status: NodeResponseStatus,
 	taskId: string,
+	{ error }?: StatusResponse,
 ) => void {
 	const setRunHistory = useSetRunHistory()
 
 	return useCallback(
-		(status, taskId) => {
+		(status, taskId, { error } = {} as StatusResponse) => {
 			setRunHistory((prev) => {
 				const existing = prev.find((p) => p.id === taskId)
 
@@ -126,10 +131,14 @@ export function useCompleteRun(): (
 						end: new Date(),
 					},
 					status,
+					completed: true,
 				} as RunHistory
 
-				if (isStatus(status, NodeResponseStatus.Failure)) {
-					newOne.error = 'Undefined error. Please try again.'
+				if (
+					isStatus(status, NodeResponseStatus.Failure) ||
+					isStatus(status, NodeResponseStatus.Error)
+				) {
+					newOne.error = error ?? 'Undefined error. Please try again.'
 				}
 
 				return [
@@ -202,5 +211,6 @@ function initialRunHistory(
 		project,
 		estimators,
 		confounderThreshold,
+		completed: false,
 	} as RunHistory
 }

@@ -9,11 +9,11 @@ import type { StatusResponse } from '../types/api/StatusResponse.js'
 import type { Maybe } from '../types/primitives.js'
 
 export function useSaveNewResponse<T extends StatusResponse>(
-	recoilFn: (valOrUpdater: T[] | ((currVal: T[]) => T[])) => void,
+	recoilFn?: (valOrUpdater: T[] | ((currVal: T[]) => T[])) => void,
 ): (id: string, result: T) => void {
 	return useCallback(
 		(id: string, result: T) => {
-			recoilFn((prev: T[]) => {
+			recoilFn?.((prev: T[]) => {
 				const existing = prev.find((p) => p.taskId === id)
 				const newOne = {
 					taskId: id,

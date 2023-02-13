@@ -11,4 +11,5 @@ export enum NodeResponseStatus {
 	Failure = 'failure',
 	Retry = 'retry',
 	Revoked = 'revoked',
+	Error = 'error',
 }

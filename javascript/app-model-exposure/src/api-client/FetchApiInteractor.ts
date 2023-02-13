@@ -25,9 +25,10 @@ export class FetchApiInteractor {
 	public async fetchStatus<UpdateStatus>(
 		taskId: string,
 		type: string,
+		signal?: AbortSignal,
 	): Promise<UpdateStatus> {
 		const url = `${this.baseUrl}/${type}/${this.project}/${taskId}`
-		return fetch(url).then(
+		return fetch(url, { signal }).then(
 			(response) => response?.json() as Promise<UpdateStatus>,
 		)
 	}
