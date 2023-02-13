@@ -1,0 +1,5 @@
+releases:
+  "@showwhy/model-exposure-app": minor
+
+declined:
+  - "@showwhy/webapp"
