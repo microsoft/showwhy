@@ -45,7 +45,10 @@ async def fetch_results(workspace_name: str, task_id: str):
 
 @refute_estimate_router.delete("/{workspace_name}/{task_id}")
 async def cancel_task(workspace_name: str, task_id: str):
-    return go.cancel_task(workspace_name, task_id, "refute_estimate")
+    try:
+        return go.cancel_task(workspace_name, task_id, "refute_estimate")
+    except Exception as e:
+        raise HTTPException(status_code=404, detail=str(e))
 
 
 @refute_estimate_router.post("/execution_count/{workspace_name}")
