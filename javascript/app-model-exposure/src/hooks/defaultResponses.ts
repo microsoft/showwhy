@@ -15,7 +15,9 @@ export function useSaveNewResponse<T extends StatusResponse>(
 	return useCallback(
 		(id: string, result: T) => {
 			if (result.hasOwnProperty('results')) {
-				;(result as any).results = (result as any).results.map(nanToNull)
+				;(result as any).results = (result as any).results.map(
+					(r: Record<string, any>) => nanToNull(r, 'covariate_balance'),
+				)
 			}
 			recoilFn((prev: T[]) => {
 				const existing = prev.find((p) => p.taskId === id)

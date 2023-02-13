@@ -7,8 +7,8 @@ function isStringNan(n: string | number | null): boolean {
 	return typeof n === 'string' && n === 'nan'
 }
 
-export function nanToNull(result: Record<string, any>) {
-	if (result.hasOwnProperty('covariate_balance')) {
+export function nanToNull(result: Record<string, any>, property: string) {
+	if (result.hasOwnProperty(property)) {
 		const { covariate_balance: covariateBalance } = result
 		let updated_cov = {}
 

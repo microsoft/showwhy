@@ -17,8 +17,8 @@ import { getDefinitionsByType } from '../../utils/definition.js'
 import { useCausalEffects } from '../causalEffects.js'
 
 export const typeLabel = {
-	[CausalFactorType.CauseExposure]: 'Causes Exposure',
-	[CausalFactorType.CauseOutcome]: 'Causes Outcome',
+	[CausalFactorType.CauseExposure]: 'Causes exposure',
+	[CausalFactorType.CauseOutcome]: 'Causes outcome',
 	[CausalFactorType.Confounders]: 'Confounder',
 	[DefinitionType.Population]: 'Population',
 	[DefinitionType.Exposure]: 'Exposure',
