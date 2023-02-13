@@ -35,7 +35,6 @@ export interface ExposureResourceSchema extends ResourceSchema {
 	pageTabState: PageTabs
 	confidenceIntervalResponse: ConfidenceIntervalStatus[]
 	confounderThreshold: number
-	deriveDataVariablesPage: string
 	estimateEffectResponse: EstimateEffectStatus[]
 	refutationResponse: RefutationStatus[]
 	runHistory: RunHistory[]

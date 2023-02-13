@@ -67,7 +67,7 @@ export const AnalyzeTestPageEffects: React.FC = memo(
 				_updateId?: string
 			}
 			if (lastRun) {
-				void restartEstimate(lastRun, signal)
+				void restartEstimate(lastRun)
 			}
 
 			return () => {

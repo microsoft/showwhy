@@ -97,7 +97,7 @@ export function useShapRun(signal?: AbortSignal) {
 		async (
 			hasConfidenceInterval: boolean,
 			taskId: string,
-			estimateResponse: EstimateEffectStatus,
+			estimateResponse?: EstimateEffectStatus,
 			prevTaskId?: string,
 		) => {
 			const urlType = ApiType.ShapInterpreter
@@ -113,8 +113,8 @@ export function useShapRun(signal?: AbortSignal) {
 
 			if (runSuccessful(response.status)) {
 				hasConfidenceInterval
-					? void confidenceRun(taskId, estimateResponse.results)
-					: void refutationRun(taskId, estimateResponse.results)
+					? void confidenceRun(taskId, estimateResponse?.results)
+					: void refutationRun(taskId, estimateResponse?.results)
 			} else {
 				completeRun(response.status, execution.id)
 			}

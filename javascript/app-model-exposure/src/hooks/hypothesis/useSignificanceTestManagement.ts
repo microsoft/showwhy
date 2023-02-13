@@ -118,12 +118,12 @@ export function useSignificanceTestManagement(
 				selectedOutcome,
 				initialRun,
 			)
-			void checkStatus(
-				execution.id,
-				ApiType.SignificanceTest,
-				onUpdate,
-				defaultRun?.id,
-			)
+			void checkStatus({
+				taskId: execution.id,
+				type: ApiType.SignificanceTest,
+				updateFn: onUpdate,
+				_updateId: defaultRun?.id,
+			})
 		}
 		void f()
 	}, [

@@ -40,17 +40,21 @@ export function useRestartEstimate(signal: AbortSignal) {
 			const response = estimatedEffectResponse.find((x) => x.taskId === taskId)
 			switch (type) {
 				case ApiType.EstimateEffect:
+					if (!estimateProps) return
 					return run(estimateProps, taskId)
 				case ApiType.ShapInterpreter:
+					if (!_updateId) return
 					return shapRun(
-						defaultRun?.estimators.some((x) => x.confidenceInterval),
+						!!defaultRun?.estimators.some((x) => x.confidenceInterval),
 						_updateId,
 						response,
 						taskId,
 					)
 				case ApiType.ConfidenceInterval:
+					if (!_updateId) return
 					return confidenceRun(_updateId, response?.results, taskId)
 				case ApiType.RefuteEstimate:
+					if (!_updateId) return
 					return refutationRun(_updateId, response?.results, taskId)
 			}
 			clearStorage()
