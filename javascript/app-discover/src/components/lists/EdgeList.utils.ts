@@ -227,7 +227,11 @@ export function isColumnRelated(
 	if (columnName === variableName) return false
 	// return
 	const allConstraints = Object.values(constraints).flatMap((x) => x)
-	return allConstraints.some(({ source, target }) => {
+	return allConstraints.some((constraint) => {
+		if (!constraint.hasOwnProperty('source')) {
+			return constraint.columnName === columnName
+		}
+		const { source, target } = constraint
 		return (
 			(source.columnName === columnName &&
 				target.columnName === variableName) ||
