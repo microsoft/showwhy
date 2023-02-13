@@ -68,7 +68,6 @@ function loadState(resource: ExposureResource, { set }: MutableSnapshot) {
 	set(specCountState, resource.specCount)
 	set(specificationCurveConfigState, resource.specificationCurveConfig)
 	set(subjectIdentifierState, resource.subjectIdentifier)
-
 }
 
 function saveState(resource: ExposureResource, snap: Snapshot) {
@@ -84,16 +83,28 @@ function saveState(resource: ExposureResource, snap: Snapshot) {
 	resource.definitions = snap.getLoadable(definitionsState).getValue()
 	resource.question = snap.getLoadable(causalQuestionState).getValue()
 	resource.selectedTableName =
-	snap.getLoadable(selectedTableNameState).getValue() ?? ''
+		snap.getLoadable(selectedTableNameState).getValue() ?? ''
 	resource.pageTabState = snap.getLoadable(PageTabState).getValue()
-	resource.confidenceIntervalResponse = snap.getLoadable(confidenceIntervalResponseState).getValue()
-	resource.confounderThreshold = snap.getLoadable(confounderThresholdState).getValue()
-	resource.estimateEffectResponse = snap.getLoadable(estimateEffectResponseState).getValue()
-	resource.refutationResponse = snap.getLoadable(refutationResponseState).getValue()
+	resource.confidenceIntervalResponse = snap
+		.getLoadable(confidenceIntervalResponseState)
+		.getValue()
+	resource.confounderThreshold = snap
+		.getLoadable(confounderThresholdState)
+		.getValue()
+	resource.estimateEffectResponse = snap
+		.getLoadable(estimateEffectResponseState)
+		.getValue()
+	resource.refutationResponse = snap
+		.getLoadable(refutationResponseState)
+		.getValue()
 	resource.runHistory = snap.getLoadable(runHistoryState).getValue()
 	resource.shapResponse = snap.getLoadable(shapResponseState).getValue()
 	resource.significanceTest = snap.getLoadable(significanceTestState).getValue()
 	resource.specCount = snap.getLoadable(specCountState).getValue()
-	resource.specificationCurveConfig = snap.getLoadable(specificationCurveConfigState).getValue()
-	resource.subjectIdentifier = snap.getLoadable(subjectIdentifierState).getValue()
+	resource.specificationCurveConfig = snap
+		.getLoadable(specificationCurveConfigState)
+		.getValue()
+	resource.subjectIdentifier = snap
+		.getLoadable(subjectIdentifierState)
+		.getValue()
 }

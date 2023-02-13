@@ -10,38 +10,57 @@ import type { StatusResponse } from '../types/api/StatusResponse.js'
 import type { ApiType } from './FetchApiInteractor.types.js'
 import { isProcessingStatus, wait } from './utils.js'
 
-export async function checkStatus(
-	taskId: string,
-	type: ApiType,
-	updateFn?: (taskId: string, status: StatusResponse) => void,
-	_updateId?: string,
-): Promise<StatusResponse> {
-	let status = await getStatusDelay(taskId, type, _updateId)
+export async function checkStatus({
+	taskId,
+	type,
+	updateFn,
+	_updateId,
+	signal,
+}: {
+	taskId: string
+	type: ApiType
+	updateFn?: (taskId: string, status: StatusResponse) => void
+	_updateId?: string
+	signal?: AbortSignal
+}): Promise<StatusResponse> {
+	let status = await getStatusDelay(taskId, type, signal, _updateId)
 
 	while (
 		isProcessingStatus(status.status as NodeResponseStatus) &&
 		window.location.pathname.includes('analyze')
 	) {
-		status = await getStatusDelay(taskId, type, _updateId, updateFn, 10000)
+		status = await getStatusDelay(
+			taskId,
+			type,
+			signal,
+			_updateId,
+			updateFn,
+			10000,
+		)
 	}
 	updateFn?.(_updateId ?? taskId, status)
-	saveToSessionStorage(taskId, _updateId, type, status)
+	saveToSessionStorage(taskId, type, _updateId, status)
 	return status
 }
 
-function saveToSessionStorage(taskId, _updateId, type, response) {
-	if (true || !window.location.pathname.includes('analyze')) {
+function saveToSessionStorage(
+	taskId: string,
+	type: ApiType,
+	_updateId?: string,
+	response?: StatusResponse,
+) {
+	if (!window.location.pathname.includes('analyze')) {
 		setStorageItem(
 			'lastRun',
 			JSON.stringify({ taskId, _updateId, type, response }),
 		)
-		setStorageItem(type, JSON.stringify({ taskId, _updateId, response }))
 	}
 }
 
 async function getStatusDelay(
 	taskId: string,
 	type: ApiType,
+	signal?: AbortSignal,
 	_updateId?: string,
 	updateFn?: (taskId: string, status: StatusResponse) => void,
 	ms = 0,
@@ -51,8 +70,8 @@ async function getStatusDelay(
 		// eslint-disable-next-line @essex/adjacent-await
 		await wait(ms)
 		// eslint-disable-next-line @essex/adjacent-await
-		status = await api.fetchStatus<StatusResponse>(taskId, type)
-		saveToSessionStorage(taskId, _updateId, type, status)
+		status = await api.fetchStatus<StatusResponse>(taskId, type, signal)
+		saveToSessionStorage(taskId, type, _updateId, status)
 		updateFn?.(_updateId ?? taskId, status)
 		return status
 	} catch {

@@ -12,7 +12,7 @@ import { useSpecCount } from '../state/specCount.js'
 import { useResetSpecificationCurveConfig } from '../state/specificationCurveConfig.js'
 import type { ExecutionResponse } from '../types/api/ExecutionResponse.js'
 import { NodeResponseStatus } from '../types/api/NodeResponseStatus.js'
-import { StatusResponse } from '../types/api/StatusResponse.js'
+import type { StatusResponse } from '../types/api/StatusResponse.js'
 import type { Estimator } from '../types/estimators/Estimator.js'
 import type { Maybe } from '../types/primitives.js'
 import type { RunHistory } from '../types/runs/RunHistory.js'
@@ -29,7 +29,7 @@ export function useSetRunAsDefault(): (run: RunHistory) => void {
 			if (!runHistory.length) {
 				return
 			}
-			const runs = disableAllRuns(runHistory).filter(r => r.id !== run.id)
+			const runs = disableAllRuns(runHistory).filter((r) => r.id !== run.id)
 			const newRun = { ...run, isActive: true }
 			runs.push(newRun)
 			setRunHistory(runs)
@@ -45,7 +45,7 @@ export function useDefaultRun(): Maybe<RunHistory> {
 
 	return useMemo(() => {
 		if (!runHistory.length) return undefined
-		return runHistory.find(x => x.isActive)
+		return runHistory.find((x) => x.isActive)
 	}, [runHistory])
 }
 
@@ -53,7 +53,10 @@ export function useIsDefaultRunProcessing(): boolean {
 	const defaultRun = useDefaultRun()
 
 	return useMemo(() => {
-		return isProcessingStatus(defaultRun?.status as NodeResponseStatus)
+		return (
+			isProcessingStatus(defaultRun?.status as NodeResponseStatus) ||
+			defaultRun?.completed === false
+		)
 	}, [defaultRun])
 }
 
@@ -90,15 +93,15 @@ export function useSaveNewRun(): (id: string, project: string) => RunHistory {
 export function useUpdateExecutionId(): (response?: ExecutionResponse) => void {
 	const setRunHistory = useSetRunHistory()
 	return useCallback(
-		response => {
-			setRunHistory(prev => {
-				const existing = prev.find(p => p.isActive) as RunHistory
+		(response) => {
+			setRunHistory((prev) => {
+				const existing = prev.find((p) => p.isActive) as RunHistory
 				const newOne = {
 					...existing,
 					response: response?.id,
 				}
 				return [
-					...prev.filter(p => p.id !== existing.id),
+					...prev.filter((p) => p.id !== existing.id),
 					newOne,
 				] as RunHistory[]
 			})
@@ -116,8 +119,8 @@ export function useCompleteRun(): (
 
 	return useCallback(
 		(status, taskId, { error } = {} as StatusResponse) => {
-			setRunHistory(prev => {
-				const existing = prev.find(p => p.id === taskId)
+			setRunHistory((prev) => {
+				const existing = prev.find((p) => p.id === taskId)
 
 				const newOne = {
 					...existing,
@@ -128,6 +131,7 @@ export function useCompleteRun(): (
 						end: new Date(),
 					},
 					status,
+					completed: true,
 				} as RunHistory
 
 				if (
@@ -138,7 +142,7 @@ export function useCompleteRun(): (
 				}
 
 				return [
-					...prev.filter(p => p.id !== existing?.id),
+					...prev.filter((p) => p.id !== existing?.id),
 					newOne,
 				] as RunHistory[]
 			})
@@ -153,10 +157,10 @@ export function useUpdateAndDisableRunHistory(): (
 	const setRunHistory = useSetRunHistory()
 	return useCallback(
 		(runHistory: RunHistory) => {
-			setRunHistory(prev => [
+			setRunHistory((prev) => [
 				...prev
-					.filter(p => p.id !== runHistory.id)
-					.map(x => {
+					.filter((p) => p.id !== runHistory.id)
+					.map((x) => {
 						return { ...x, isActive: false }
 					}),
 				runHistory,
@@ -167,7 +171,7 @@ export function useUpdateAndDisableRunHistory(): (
 }
 
 export function disableAllRuns(runHistory: RunHistory[]): RunHistory[] {
-	return runHistory.map(run => {
+	return runHistory.map((run) => {
 		return { ...run, isActive: false }
 	})
 }
@@ -181,12 +185,12 @@ function initialRunHistory(
 	specCount: Maybe<SpecificationCount>,
 ): RunHistory {
 	const exposure = estimators.some(
-		e => e.group === EstimatorGroup.Exposure && e.confidenceInterval,
+		(e) => e.group === EstimatorGroup.Exposure && e.confidenceInterval,
 	)
 		? 1
 		: 0
 	const outcome = estimators.some(
-		e => e.group === EstimatorGroup.Outcome && e.confidenceInterval,
+		(e) => e.group === EstimatorGroup.Outcome && e.confidenceInterval,
 	)
 		? 1
 		: 0
@@ -207,5 +211,6 @@ function initialRunHistory(
 		project,
 		estimators,
 		confounderThreshold,
+		completed: false,
 	} as RunHistory
 }

@@ -3,7 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 import { useHelpOnMount } from '@datashaper/app-framework'
-import { memo, useEffect } from 'react'
+import { memo } from 'react'
 
 import { Container } from './AnalyzeTestPage.styles.js'
 import { AnalyzeTestPageEffects } from './AnalyzeTestPageEffects.js'

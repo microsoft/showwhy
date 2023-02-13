@@ -23,7 +23,7 @@ import type { RunHistory } from '../../types/runs/RunHistory.js'
 import { returnConfidenceIntervalMapping } from '../../utils/confidenceIntervalRequest.js'
 import { returnRefutationMapping } from '../../utils/refutationRequest.js'
 import { useSaveNewResponse } from '../defaultResponses.js'
-import { useCompleteRun, useDefaultRun, useSaveNewRun } from '../runHistory.js'
+import { useCompleteRun, useSaveNewRun } from '../runHistory.js'
 import type { ConfidenceIntervalStatus } from './../../types/api/ConfidenceIntervalStatus.js'
 import type {
 	EstimatedEffect,
@@ -34,8 +34,9 @@ import type { RefutationStatus } from './../../types/api/RefutationStatus.js'
 
 export function useRunEstimate(
 	finishLoading: () => void,
+	signal?: AbortSignal,
 ): (estimateProps: EstimateEffectRequest) => Promise<void> {
-	return useRun(finishLoading)
+	return useRun(finishLoading, undefined, signal)
 }
 
 function runSuccessful(status: NodeResponseStatus) {
@@ -45,14 +46,18 @@ function runSuccessful(status: NodeResponseStatus) {
 	return true
 }
 
-export function useRun(finishLoading?: () => void, run?: RunHistory) {
+export function useRun(
+	finishLoading?: () => void,
+	run?: RunHistory,
+	signal?: AbortSignal,
+) {
 	const completeRun = useCompleteRun()
 	const createRun = useSaveNewRun()
 	const setEstimateEffectResponse = useSetEstimateEffectResponse()
 	const newResponse = useSaveNewResponse<EstimateEffectStatus>(
 		setEstimateEffectResponse,
 	)
-	const shapRun = useShapRun()
+	const shapRun = useShapRun(signal)
 	const updateStatus = useUpdateStatus(newResponse)
 	return useCallback(
 		async (estimateProps: EstimateEffectRequest, taskId?: string) => {
@@ -62,29 +67,30 @@ export function useRun(finishLoading?: () => void, run?: RunHistory) {
 			const runHistory = run ?? createRun(execution.id, api.project)
 
 			finishLoading?.()
-			const response = await checkStatus(
-				execution.id,
-				ApiType.EstimateEffect,
-				updateStatus,
-			)
+			const response = await checkStatus({
+				taskId: execution.id,
+				type: ApiType.EstimateEffect,
+				updateFn: updateStatus,
+				signal,
+			})
 			runSuccessful(response.status)
 				? void shapRun(
-						runHistory?.estimators.some(x => x.confidenceInterval),
+						runHistory?.estimators.some((x) => x.confidenceInterval),
 						execution.id,
 						response,
 				  )
 				: completeRun(response.status, execution.id, response)
 		},
-		[run, createRun, finishLoading, shapRun, completeRun, updateStatus],
+		[run, createRun, finishLoading, shapRun, completeRun, updateStatus, signal],
 	)
 }
 
-export function useShapRun() {
+export function useShapRun(signal?: AbortSignal) {
 	const completeRun = useCompleteRun()
 	const setShapResponse = useSetShapResponse()
 	const newResponse = useSaveNewResponse<ShapStatus>(setShapResponse)
-	const confidenceRun = useConfidenceRun()
-	const refutationRun = useRefutationRun()
+	const confidenceRun = useConfidenceRun(signal)
+	const refutationRun = useRefutationRun(signal)
 	const updateStatus = useUpdateStatus(newResponse)
 
 	return useCallback(
@@ -98,7 +104,11 @@ export function useShapRun() {
 			const execution = prevTaskId
 				? { id: prevTaskId }
 				: await api.executeValidation(taskId, urlType)
-			const response = await checkStatus(execution.id, urlType)
+			const response = await checkStatus({
+				taskId: execution.id,
+				type: urlType,
+				signal,
+			})
 			updateStatus(taskId, response)
 
 			if (runSuccessful(response.status)) {
@@ -109,18 +119,18 @@ export function useShapRun() {
 				completeRun(response.status, execution.id)
 			}
 		},
-		[completeRun, updateStatus, confidenceRun, refutationRun],
+		[completeRun, updateStatus, confidenceRun, refutationRun, signal],
 	)
 }
 
-export function useConfidenceRun() {
+export function useConfidenceRun(signal?: AbortSignal) {
 	const estimators = useEstimators()
 	const completeRun = useCompleteRun()
 	const setConfidenceResponse = useSetConfidenceIntervalResponse()
 	const newResponse = useSaveNewResponse<ConfidenceIntervalStatus>(
 		setConfidenceResponse,
 	)
-	const refutationRun = useRefutationRun()
+	const refutationRun = useRefutationRun(signal)
 	const updateStatus = useUpdateStatus(newResponse)
 
 	return useCallback(
@@ -138,21 +148,22 @@ export function useConfidenceRun() {
 			const execution = prevTaskId
 				? { id: prevTaskId }
 				: await api.executeValidation(taskId, urlType, body)
-			const response = await checkStatus(
-				execution.id,
-				urlType,
-				updateStatus,
-				taskId,
-			)
+			const response = await checkStatus({
+				taskId: execution.id,
+				type: urlType,
+				updateFn: updateStatus,
+				_updateId: taskId,
+				signal,
+			})
 			runSuccessful(response.status)
 				? void refutationRun(taskId, estimatedEffect)
 				: completeRun(response.status, execution.id)
 		},
-		[updateStatus, refutationRun, completeRun, estimators],
+		[updateStatus, refutationRun, completeRun, estimators, signal],
 	)
 }
 
-export function useRefutationRun() {
+export function useRefutationRun(signal?: AbortSignal) {
 	const estimators = useEstimators()
 	const completeRun = useCompleteRun()
 	const setRefutationResponse = useSetRefutationResponse()
@@ -176,15 +187,16 @@ export function useRefutationRun() {
 			const execution = prevTaskId
 				? { id: prevTaskId }
 				: await api.executeValidation(taskId, urlType, body)
-			const response = await checkStatus(
-				execution.id,
-				urlType,
-				updateStatus,
-				taskId,
-			)
+			const response = await checkStatus({
+				taskId: execution.id,
+				type: urlType,
+				updateFn: updateStatus,
+				_updateId: taskId,
+				signal,
+			})
 			completeRun(response.status, taskId)
 		},
-		[estimators, completeRun, updateStatus],
+		[estimators, completeRun, updateStatus, signal],
 	)
 }
 
@@ -194,8 +206,8 @@ function useUpdateStatus(
 	const setRunHistory = useSetRunHistory()
 	return useCallback(
 		(taskId: string, response: StatusResponse) => {
-			setRunHistory(prev => {
-				const existing = prev.find(p => p.id === taskId)
+			setRunHistory((prev) => {
+				const existing = prev.find((p) => p.id === taskId)
 
 				const newRun = {
 					...existing,
@@ -208,7 +220,7 @@ function useUpdateStatus(
 					status: response.status,
 				} as RunHistory
 				return [
-					...prev.filter(p => p.id !== existing?.id),
+					...prev.filter((p) => p.id !== existing?.id),
 					newRun,
 				] as RunHistory[]
 			})

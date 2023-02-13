@@ -8,6 +8,7 @@ import { useCallback } from 'react'
 import { ApiType } from '../../api-client/FetchApiInteractor.types.js'
 import { OUTPUT_FILE_NAME } from '../../pages/AnalyzeTestPage.constants.js'
 import { useEstimateEffectResponse } from '../../state/estimateEffectResponse.js'
+import { clearStorage } from '../../state/sessionStorage.js'
 import { useDefaultRun } from '../runHistory.js'
 import { useEstimateProps } from '../useEstimateProps.js'
 import {
@@ -17,12 +18,12 @@ import {
 	useShapRun,
 } from './useRunEstimate.js'
 
-export function useRestartEstimate() {
+export function useRestartEstimate(signal: AbortSignal) {
 	const defaultRun = useDefaultRun()
-	const run = useRun(undefined, defaultRun)
-	const shapRun = useShapRun()
-	const confidenceRun = useConfidenceRun()
-	const refutationRun = useRefutationRun()
+	const run = useRun(undefined, defaultRun, signal)
+	const shapRun = useShapRun(signal)
+	const confidenceRun = useConfidenceRun(signal)
+	const refutationRun = useRefutationRun(signal)
 	const estimateProps = useEstimateProps(OUTPUT_FILE_NAME)
 	const estimatedEffectResponse = useEstimateEffectResponse()
 
@@ -36,13 +37,13 @@ export function useRestartEstimate() {
 			type: ApiType
 			_updateId?: string
 		}) => {
-			const response = estimatedEffectResponse.find(x => x.taskId === taskId)
+			const response = estimatedEffectResponse.find((x) => x.taskId === taskId)
 			switch (type) {
 				case ApiType.EstimateEffect:
 					return run(estimateProps, taskId)
 				case ApiType.ShapInterpreter:
 					return shapRun(
-						defaultRun?.estimators.some(x => x.confidenceInterval),
+						defaultRun?.estimators.some((x) => x.confidenceInterval),
 						_updateId,
 						response,
 						taskId,
@@ -52,6 +53,7 @@ export function useRestartEstimate() {
 				case ApiType.RefuteEstimate:
 					return refutationRun(_updateId, response?.results, taskId)
 			}
+			clearStorage()
 		},
 		[
 			defaultRun,
