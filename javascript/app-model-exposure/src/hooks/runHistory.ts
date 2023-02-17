@@ -10,6 +10,7 @@ import { useEstimators } from '../state/estimators.js'
 import { useRunHistory, useSetRunHistory } from '../state/runHistory.js'
 import { useSpecCount } from '../state/specCount.js'
 import { useResetSpecificationCurveConfig } from '../state/specificationCurveConfig.js'
+import type { EstimatedEffect } from '../types/api/EstimateEffectStatus.js'
 import type { ExecutionResponse } from '../types/api/ExecutionResponse.js'
 import { NodeResponseStatus } from '../types/api/NodeResponseStatus.js'
 import type { Estimator } from '../types/estimators/Estimator.js'
@@ -33,7 +34,6 @@ export function useSetRunAsDefault(): (run: RunHistory) => void {
 			runs.push(newRun)
 			setRunHistory(runs)
 			resetSpecificationConfig()
-			// setStorageItem(SESSION_ID_KEY, newRun.sessionId as string)
 		},
 		[runHistory, setRunHistory, resetSpecificationConfig],
 	)
@@ -107,13 +107,21 @@ export function useUpdateExecutionId(): (response?: ExecutionResponse) => void {
 }
 
 export function useCompleteRun(): (
-	status: NodeResponseStatus,
 	taskId: string,
+	{
+		status,
+		pending,
+		failures,
+	}: {
+		status: NodeResponseStatus
+		pending?: number
+		failures?: EstimatedEffect[]
+	},
 ) => void {
 	const setRunHistory = useSetRunHistory()
 
 	return useCallback(
-		(status, taskId) => {
+		(taskId, { status, pending, failures }) => {
 			setRunHistory((prev) => {
 				const existing = prev.find((p) => p.id === taskId)
 
@@ -126,9 +134,10 @@ export function useCompleteRun(): (
 						end: new Date(),
 					},
 					status,
+					errors: failures,
 				} as RunHistory
 
-				if (isStatus(status, NodeResponseStatus.Failure)) {
+				if (!pending && isStatus(status, NodeResponseStatus.Failure)) {
 					newOne.error = 'Undefined error. Please try again.'
 				}
 

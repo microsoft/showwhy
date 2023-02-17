@@ -13,4 +13,5 @@ export interface Definition {
 	column?: string
 	level: CausalityLevel
 	type?: DefinitionType
+	default?: boolean
 }

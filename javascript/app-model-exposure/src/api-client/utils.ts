@@ -14,11 +14,15 @@ export function wait(ms: number): Promise<boolean> {
 	})
 }
 
-export function isProcessingStatus(nodeStatus: NodeResponseStatus): boolean {
+export function isProcessingStatus(
+	nodeStatus: NodeResponseStatus,
+	pending = 0,
+): boolean {
 	const status = nodeStatus?.toLowerCase()
 	return (
 		status === NodeResponseStatus.Pending ||
-		status === NodeResponseStatus.Started
+		status === NodeResponseStatus.Started ||
+		(status === NodeResponseStatus.Failure && pending > 0)
 	)
 }
 

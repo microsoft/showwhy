@@ -16,10 +16,11 @@ export async function checkStatus(
 	_updateId?: string,
 ): Promise<StatusResponse> {
 	let status = await api.fetchStatus<StatusResponse>(taskId, type)
-
-	while (isProcessingStatus(status.status as NodeResponseStatus)) {
+	while (
+		isProcessingStatus(status.status as NodeResponseStatus, status.pending)
+	) {
 		// eslint-disable-next-line @essex/adjacent-await
-		await wait(3000)
+		await wait(10000)
 		// eslint-disable-next-line @essex/adjacent-await
 		status = await api.fetchStatus<StatusResponse>(taskId, type)
 		updateFn?.(_updateId ?? taskId, status)

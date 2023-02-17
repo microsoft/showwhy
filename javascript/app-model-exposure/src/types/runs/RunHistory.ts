@@ -3,6 +3,7 @@
  * Licensed under the MIT license. See LICENSE file in the project.
  */
 
+import type { EstimatedEffect } from '../api/EstimateEffectStatus.js'
 import type { NodeResponseStatus } from '../api/NodeResponseStatus.js'
 import type { Estimator } from '../estimators/Estimator.js'
 
@@ -23,4 +24,5 @@ export interface RunHistory {
 	confidenceIntervalCount: number
 	error?: string
 	confounderThreshold?: number
+	errors?: EstimatedEffect[]
 }

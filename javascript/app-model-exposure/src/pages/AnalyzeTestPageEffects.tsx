@@ -120,8 +120,13 @@ export const AnalyzeTestPageEffects: React.FC = memo(
 						)}
 						{!activeProcessing && defaultRun && defaultRun.error && (
 							<ErrorInfo
-								text={'Undefined error. Please, execute the run again.'}
+								text={
+									defaultRun.errors
+										? 'Some estimators failed. Please review the log for more information.'
+										: 'Undefined error. Please, execute the run again.'
+								}
 								log={defaultRun.error}
+								errors={defaultRun.errors}
 							/>
 						)}
 					</Box>

@@ -17,3 +17,14 @@ export function addOrRemoveArrayElement(
 ): string[] {
 	return add ? [...array, item] : array.filter((d) => d !== item)
 }
+
+export function moveElement<T>(
+	arr: T[],
+	sourceIndex: number,
+	targetIndex = 0,
+): T[] {
+	if (sourceIndex < 0) return arr
+	const [element] = arr.splice(sourceIndex, 1)
+	arr.splice(targetIndex, 0, element)
+	return arr
+}

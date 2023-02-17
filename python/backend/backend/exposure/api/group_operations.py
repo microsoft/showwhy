@@ -49,7 +49,8 @@ def get_results(workspace_name: str, group_id: str, task_name: str):
 
     completed_results = [db_client.get_value(result.id) for result in results[states.SUCCESS] + results[states.PENDING]]
 
-    completed_results = [result for result in completed_results if result is not None]
+    succeeded_results = [result for result in completed_results if result is not None and result.exc_info is None]
+    failed_results = [result for result in completed_results if result is not None and result.exc_info is not None]
 
     total_tasks = len(
         results[states.SUCCESS] + results[states.PENDING] + results[states.FAILURE] + results[states.REVOKED]
@@ -58,19 +59,20 @@ def get_results(workspace_name: str, group_id: str, task_name: str):
     status = states.PENDING
     if len(results[states.PENDING]) < total_tasks:
         status = states.STARTED
-    if len(results[states.FAILURE]) > 0:
+    if len(results[states.FAILURE]) + len(failed_results) > 0:
         status = states.FAILURE
-    if len(completed_results) == total_tasks:
+    if len(succeeded_results) == total_tasks:
         status = states.SUCCESS
     if len(results[states.REVOKED]) > 0:
         status = states.REVOKED
 
     return StatusModel(
         status=status,
-        completed=len(completed_results),
-        pending=total_tasks - len(completed_results) - len(results[states.FAILURE]),
-        failed=len(results[states.FAILURE]),
-        results=completed_results,
+        completed=len(succeeded_results),
+        pending=total_tasks - len(succeeded_results) - len(results[states.FAILURE]) - len(failed_results),
+        failed=len(results[states.FAILURE]) + len(failed_results),
+        results=succeeded_results,
+        failures=failed_results,
     )
 
 

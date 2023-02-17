@@ -126,10 +126,10 @@ export const PlaceboResult: React.FC<PlaceboResultProps> = memo(
 				<Container>
 					{isValidUnit(treatedUnit) && placeboResult && (
 						<Text className="infoText last-item-margin" variant="medium">
-							The answer to the overall question of:{' '}
+							The answer to the question of:{' '}
 							<Text variant="medium">
-								For treated {units}, did {eventName} cause {outcomeName} to{' '}
-								{hypothesis}?
+								For the treated {units} of {treatedUnit}, did {eventName} cause{' '}
+								{outcomeName} to {hypothesis}?
 							</Text>{' '}
 							is therefore:
 							<Text variant="medium" block>

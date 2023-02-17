@@ -3,7 +3,7 @@
 # Licensed under the MIT license. See LICENSE file in the project.
 #
 
-from typing import List
+from typing import List, Optional
 
 import pandas as pd
 from pydantic import BaseModel
@@ -36,7 +36,12 @@ class ShapInterpreterResult(BaseModel):
 
 
 class ListShapInterpreterResult(BaseModel):
-    results: List[ShapInterpreterResult]
+    results: Optional[List[ShapInterpreterResult]] = None
+    exc_info: Optional[str] = None
 
     def to_dict(self):
+        if self.exc_info is not None:
+            return {
+                "exc_info": self.exc_info,
+            }
         return [result.to_dict() for result in self.results]

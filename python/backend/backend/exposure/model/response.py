@@ -31,7 +31,20 @@ class StatusModel(BaseModel):
             ],
             SignificanceTestResult,
         ]
-    ]
+    ] = None
+    failures: Optional[
+        Union[
+            List[
+                Union[
+                    RefuterResult,
+                    EstimateResult,
+                    ConfidenceIntervalResult,
+                    ListShapInterpreterResult,
+                ]
+            ],
+            SignificanceTestResult,
+        ]
+    ] = None
 
     def to_dict(self):
         return {
@@ -42,6 +55,7 @@ class StatusModel(BaseModel):
             "results": [result.to_dict() for result in self.results]
             if isinstance(self.results, list)
             else self.results.to_dict(),
+            "failures": [failure.to_dict() for failure in self.failures],
         }
 
 

@@ -107,11 +107,9 @@ const DetailsContainer = styled.div``
 const Field = styled(TextField)`
 	width: 100%;
 	margin: 0;
-	padding: 0 0.5rem;
 `
 const VariableField = styled(TextField)`
 	margin: 0;
-	padding: 0 0.5rem;
 `
 
 const AddButton = styled(DefaultButton)``

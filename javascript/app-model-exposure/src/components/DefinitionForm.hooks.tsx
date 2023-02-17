@@ -13,10 +13,15 @@ import type { Definition } from '../types/experiments/Definition.js'
 import type { DefinitionType } from '../types/experiments/DefinitionType.js'
 import type { Header } from '../types/Header.js'
 import type { Handler, Handler1, Maybe } from '../types/primitives.js'
+import { moveElement } from '../utils/arrays.js'
 import { withRandomId } from '../utils/ids.js'
 import { getDefault } from '../utils/tables.js'
 import { ActionButtons } from './ActionButtons.js'
-import { saveDefinitions, updateListTypes } from './DefinitionForm.utils.js'
+import {
+	handlePrimaryDefinition,
+	saveDefinitions,
+	updateListTypes,
+} from './DefinitionForm.utils.js'
 
 export function useHeaders(width: number): Header[] {
 	return useMemo(() => {
@@ -61,7 +66,14 @@ export function useDefinitionItems(
 		onDismissEdit,
 	)
 	const items = useMemo(() => {
-		return definitions.map((item) => {
+		const primaryIndex = definitions.findIndex(
+			(d) => d.level === CausalityLevel.Primary,
+		)
+		let sortedDefinitions = [...definitions]
+		if (primaryIndex > 0) {
+			sortedDefinitions = moveElement(sortedDefinitions, primaryIndex, 0)
+		}
+		return sortedDefinitions.map((item) => {
 			if (item.id === definitionToEdit?.id) {
 				return getEditableRow(edited)
 			}
@@ -132,6 +144,9 @@ export function useAddDefinition(
 				return
 			}
 			definition = withRandomId(definition)
+			definition.default = !definitions.filter(
+				(d) => d.type === definition.type,
+			).length
 			let list = []
 			if (definition.level === CausalityLevel.Primary) {
 				list = [...updateListTypes(definitions, definition.type), definition]
@@ -159,6 +174,7 @@ export function useEditDefinition(
 				}
 				return d
 			})
+			newDefinitions = handlePrimaryDefinition(definition, newDefinitions)
 			await saveDefinitions(newDefinitions, definitions, setDefinitions)
 			return newDefinitions
 		},

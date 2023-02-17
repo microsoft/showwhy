@@ -11,14 +11,14 @@ import { FieldGroup } from '../components/FieldGroup.js'
 import { Title } from '../components/styles.js'
 import { useCausalQuestion } from '../state/causalQuestion.js'
 import {
-	useOnHypothesysChange,
+	useOnHypothesisChange,
 	useOnInputChange,
 } from './DefineDomainModelPage.hooks.js'
 export const DefineDomainModelPageQuestion: React.FC = memo(
 	function DefineDomainModelPageQuestion() {
 		const question = useCausalQuestion()
 		const onInputChange = useOnInputChange(question)
-		const onHypothesisChange = useOnHypothesysChange(question)
+		const onHypothesisChange = useOnHypothesisChange(question)
 
 		return (
 			<>

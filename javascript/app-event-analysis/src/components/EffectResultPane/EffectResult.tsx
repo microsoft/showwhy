@@ -55,7 +55,7 @@ export const EffectResult: React.FC<EffectResultProps> = memo(
 			useSynthControlBarChartData(synthControlData)
 
 		const output =
-			outputData.find((o) => o.treatedUnit === treatedUnit) ||
+			(outputData.find((o) => o.treatedUnit === treatedUnit) as OutputData) ||
 			({} as OutputData)
 
 		const filteredOutput = {
@@ -71,6 +71,16 @@ export const EffectResult: React.FC<EffectResultProps> = memo(
 		return (
 			<Container key={treatedUnit}>
 				<TreatedTitle>{treatedUnit}</TreatedTitle>
+				<Text variant="medium" block styles={treatmentStyles}>
+					{'Treatment effect in '}
+					{treatedUnit}
+					{': '}
+					<Strong
+						className={output.sdid_estimate < 0 ? 'negative' : 'positive'}
+					>
+						{output.sdid_estimate}
+					</Strong>
+				</Text>
 				{showChartPerUnit && (
 					<DimensionedLineChart
 						inputData={inputData}
@@ -83,7 +93,7 @@ export const EffectResult: React.FC<EffectResultProps> = memo(
 					/>
 				)}
 
-				<Text className="infoText synth-control-text-margin" variant="medium">
+				<Text variant="medium">
 					This outcome was calculated by comparing the actual{' '}
 					<Strong>{outcomeName}</Strong> data from{' '}
 					<Strong>{treatedUnit}</Strong> with a{' '}
@@ -115,3 +125,5 @@ export const EffectResult: React.FC<EffectResultProps> = memo(
 		)
 	},
 )
+
+const treatmentStyles = { root: { marginBottom: '1rem' } }

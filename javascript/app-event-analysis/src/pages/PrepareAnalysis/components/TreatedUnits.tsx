@@ -91,7 +91,7 @@ export const TreatedUnits: React.FC<TreatedUnitsProps> = memo(
 							<TreatmentSelector data={data} />
 						</TreatmentWrapper>
 					</PivotItem>
-					<PivotItem headerText="Automatically create treatments from column">
+					<PivotItem headerText="Create treatments from column">
 						<DropdownContainer>
 							<Dropdown
 								placeholder="Select treated column"
@@ -141,6 +141,8 @@ function usePivotStyles() {
 		() => ({
 			root: {
 				marginTop: '1rem',
+				gap: '2px',
+				display: 'flex',
 			},
 			itemContainer: {
 				padding: '0.5rem',

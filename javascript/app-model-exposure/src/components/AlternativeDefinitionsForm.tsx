@@ -4,7 +4,7 @@
  */
 import { Checkbox, DefaultButton } from '@fluentui/react'
 import type { FC } from 'react'
-import { memo, useCallback, useState } from 'react'
+import { memo, useCallback, useEffect, useState } from 'react'
 
 import { useHandleKeyPress } from '../hooks/useHandleKeyPress.js'
 import { useHandleOnBlur } from '../hooks/useHandleOnBlur.js'
@@ -31,6 +31,10 @@ export const AlternativeDefinitionsForm: FC<{
 	const [isPrimary, setIsPrimary] = useState(shouldHavePrimary)
 	const [label, setLabel] = useState('')
 	const [description, setDescription] = useState('')
+
+	useEffect(() => {
+		setIsPrimary(shouldHavePrimary)
+	}, [shouldHavePrimary])
 
 	const add = useCallback(() => {
 		onAdd({

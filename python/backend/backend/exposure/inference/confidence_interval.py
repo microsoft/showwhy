@@ -3,7 +3,6 @@
 # Licensed under the MIT license. See LICENSE file in the project.
 #
 
-import logging
 from typing import Dict, Tuple
 
 from dowhy.causal_estimator import CausalEstimate
@@ -23,28 +22,20 @@ def estimate_confidence_intervals(
     confidence_level: float = 0.95,
     sample_size_fraction: float = 1.0,
 ) -> Dict:
-    try:
-        if "econml" in str(estimated_effect.estimate.params["estimator_class"]):
-            confidence_intervals = estimate_econml_confidence_intervals(estimated_effect.estimate)
-        else:
-            confidence_intervals = estimated_effect.estimate.get_confidence_intervals(
-                confidence_level=confidence_level,
-                method="bootstrap",
-                num_simulations=get_confidence_simulations(),
-                sample_size_fraction=sample_size_fraction,
-            )
-        return ConfidenceIntervalResult(
-            lower_bound=confidence_intervals[0],
-            upper_bound=confidence_intervals[1],
-            estimate_id=estimated_effect.id,
+    if "econml" in str(estimated_effect.estimate.params["estimator_class"]):
+        confidence_intervals = estimate_econml_confidence_intervals(estimated_effect.estimate)
+    else:
+        confidence_intervals = estimated_effect.estimate.get_confidence_intervals(
+            confidence_level=confidence_level,
+            method="bootstrap",
+            num_simulations=get_confidence_simulations(),
+            sample_size_fraction=sample_size_fraction,
         )
-    except Exception as e:
-        logging.info(f"Cannot compute confidence interval: {e}." "Returning None values for confidence intervals")
-        return ConfidenceIntervalResult(
-            lower_bound=None,
-            upper_bound=None,
-            estimate_id=estimated_effect.id,
-        )
+    return ConfidenceIntervalResult(
+        lower_bound=confidence_intervals[0],
+        upper_bound=confidence_intervals[1],
+        estimate_id=estimated_effect.id,
+    )
 
 
 def estimate_econml_confidence_intervals(

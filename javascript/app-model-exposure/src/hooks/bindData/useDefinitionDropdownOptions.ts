@@ -5,7 +5,6 @@
 
 import type { IContextualMenuItem } from '@fluentui/react'
 import { ContextualMenuItemType } from '@fluentui/react'
-import upperFirst from 'lodash/upperFirst'
 import { useMemo } from 'react'
 
 import type { CausalFactor } from '../../types/causality/CausalFactor.js'
@@ -16,6 +15,15 @@ import { DefinitionType } from '../../types/experiments/DefinitionType.js'
 import { CommandActionType } from '../../types/workflow/CommandActionType.js'
 import { getDefinitionsByType } from '../../utils/definition.js'
 import { useCausalEffects } from '../causalEffects.js'
+
+export const typeLabel = {
+	[CausalFactorType.CauseExposure]: 'Causes exposure',
+	[CausalFactorType.CauseOutcome]: 'Causes outcome',
+	[CausalFactorType.Confounders]: 'Confounder',
+	[DefinitionType.Population]: 'Population',
+	[DefinitionType.Exposure]: 'Exposure',
+	[DefinitionType.Outcome]: 'Outcome',
+}
 
 export function useDefinitionDropdownOptions(
 	definitions: Definition[],
@@ -82,14 +90,14 @@ function buildDropdownOption(
 		key: type,
 		itemType: ContextualMenuItemType.Section,
 		sectionProps: {
-			title: upperFirst(type.toString()),
+			title: typeLabel[type],
 			items: all.map((x) => {
 				return {
 					key: x.id,
 					text: x.variable,
 					title: x.variable,
 					data: {
-						type: type,
+						type,
 					},
 					disabled: !!x.column,
 				}
@@ -128,7 +136,7 @@ const baseMenuItems: IContextualMenuItem[] = [
 	},
 	{
 		key: 'variable-action',
-		text: 'Add variable',
+		text: 'Add as domain variable',
 		title: 'Add variable',
 		data: {
 			button: true,
