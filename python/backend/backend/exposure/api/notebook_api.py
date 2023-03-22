@@ -57,10 +57,10 @@ estimate_effect_spec = json.loads(\"\"\"{body.json(indent=2)}\"\"\")"""
 def __get_estimate_effect_execution_cell():
     return """import pandas as pd
 
-import exposure.inference.estimate_effect as estimator
+import backend.exposure.inference.estimate_effect as estimator
 
-from exposure.model.estimate_effect_models import EstimateEffectRequestBody
-from exposure.io.storage import LocalStorageClient
+from backend.exposure.model.estimate_effect_models import EstimateEffectRequestBody
+from backend.worker_commons.io.storage import LocalStorageClient
 
 estimate_effect_input = EstimateEffectRequestBody(**estimate_effect_spec)
 
@@ -87,7 +87,7 @@ estimated_effects_df"""
 
 
 def __get_refutation_execution_cell(num_simulations_map: Dict[str, int]):
-    return f"""import exposure.inference.refutation as refutation
+    return f"""import backend.exposure.inference.refutation as refutation
 
 num_simulations_map = {num_simulations_map}
 refuters = ["random_common_cause", "placebo_treatment_refuter"]
@@ -101,7 +101,7 @@ refutation_df"""
 
 
 def __get_confidence_intervals_execution_cell(estimate_execution_ids: List[str]):
-    return f"""import exposure.inference.confidence_interval as ci
+    return f"""import backend.exposure.inference.confidence_interval as ci
 
 estimate_execution_ids = {estimate_execution_ids}
 confidence_specs = ci.get_tasks(estimated_effects, estimate_execution_ids)
@@ -121,7 +121,7 @@ confidence_intervals_df"""
 
 
 def __get_shap_interpreter_execution_cell():
-    return """import exposure.inference.specification_interpreter as si
+    return """import backend.exposure.inference.specification_interpreter as si
 
 shap_interpreter_specs = si.get_tasks(estimated_effects)
 
@@ -147,8 +147,8 @@ shap_interpreter_df"""
 
 
 def __get_significance_test_execution_cell(params: SignificanceTestParams):
-    return f"""import exposure.inference.significance_test as st
-from exposure.model.significance_test_models import PropensityScoreSpec
+    return f"""import backend.exposure.inference.significance_test as st
+from backend.exposure.model.significance_test_models import PropensityScoreSpec
 
 num_simulations = 100
 
@@ -199,6 +199,9 @@ async def generate_notebook(body: NotebookRequestBody):
     notebook = nbf.v4.new_notebook()
 
     notebook["cells"] = [
+        #
+        nbf.v4.new_markdown_cell("# Install deps"),
+        nbf.v4.new_code_cell("%pip install git+https://github.com/microsoft/showwhy/#subdirectory=python/backend"),
         nbf.v4.new_markdown_cell("# Estimate Effect"),
         nbf.v4.new_code_cell(__get_estimate_effect_params_cell(body.estimate_effect_params)),
         nbf.v4.new_code_cell(__get_estimate_effect_execution_cell()),

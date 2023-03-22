@@ -3,6 +3,7 @@
 # Licensed under the MIT license. See LICENSE file in the project.
 #
 
+import logging
 import pickle
 from abc import ABC, abstractmethod
 from typing import Any, Iterator, Union
@@ -12,6 +13,8 @@ import redis
 from redis.typing import ExpiryT
 
 from backend.worker_commons import config
+
+logger = logging.getLogger(__name__)
 
 
 class Storage(ABC):
@@ -26,6 +29,22 @@ class Storage(ABC):
     @abstractmethod
     def set_value(self, key: str, value: Any) -> None:
         """Sets a value in the storage"""
+
+
+class LocalDB(Storage):
+    def __init__(self):
+        self.db = {}
+
+    def get_value(self, key: str) -> Any:
+        return self.db.get(key)
+
+    def iter_values(self, pattern: str) -> Iterator[Any]:
+        for key, value in self.db.items():
+            if key.startswith(pattern):
+                yield value
+
+    def set_value(self, key: str, value: Any) -> None:
+        self.db[key] = value
 
 
 class RedisDB(Storage):
@@ -49,7 +68,11 @@ class RedisDB(Storage):
 
 
 def get_db_client():
-    db_connection = config.get_redis_url()
-    scheme = urlparse(db_connection).scheme
-    if scheme == "redis":
-        return RedisDB(db_connection)
+    try:
+        db_connection = config.get_redis_url()
+        scheme = urlparse(db_connection).scheme
+        if scheme == "redis":
+            return RedisDB(db_connection)
+    except Exception:
+        logger.warning("Could not connect to Redis, using local storage")
+        return LocalDB()
