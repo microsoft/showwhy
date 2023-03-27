@@ -11,7 +11,7 @@ numpy = "^1.23.5"
 pandas = "^1.5.2"
 uvicorn = "^0.20.0"
 celery = "^5.2.7"
-redis = { extras = ["hiredis"], version = "^4.4.2" }
+redis = { extras = ["hiredis"], version = "^4.5.3" }
 
 [tool.poetry.group.discover.dependencies]
 torch = "^1.13.1"
