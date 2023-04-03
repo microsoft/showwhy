@@ -31,6 +31,25 @@ class StorageClient(ABC):
         pass
 
 
+class NotebookLocalStorageClient(StorageClient):
+    def __init__(self, storage_location):
+        self.storage_location = storage_location
+
+    def save(self, workspace_name: str, name: str, data: Any):
+        final_path = os.path.join(self.storage_location, workspace_name)
+        os.makedirs(final_path, exist_ok=True)
+        with open(os.path.join(final_path, name), "wb") as binary_file:
+            binary_file.write(data)
+
+    def read(self, workspace_name: str, name: str) -> pd.DataFrame:
+        try:
+            # gets the uuid that represents the workspace name
+            return pd.read_csv(os.path.join(self.storage_location, workspace_name, name))
+        except:  # noqa: E722
+            logging.error(f"File: {name} not found for workspace: {workspace_name}")
+            raise FileNotFoundError(workspace_name, name)
+
+
 class LocalStorageClient(StorageClient):
     def __init__(self, storage_location) -> None:
         self.storage_location = storage_location

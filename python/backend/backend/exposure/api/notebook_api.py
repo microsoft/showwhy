@@ -4,6 +4,7 @@
 #
 
 import json
+import logging
 import os
 from typing import Dict, List
 from uuid import uuid4
@@ -14,6 +15,8 @@ from fastapi.responses import FileResponse
 from pydantic import BaseModel
 
 from backend.exposure.model.estimate_effect_models import EstimateEffectRequestBody
+
+logger = logging.getLogger(__name__)
 
 notebook_router = APIRouter(
     prefix="/notebook",
@@ -43,6 +46,7 @@ class SignificanceTestParams(BaseModel):
 
 
 class NotebookRequestBody(BaseModel):
+    workspace_name: str
     estimate_effect_params: EstimateEffectRequestBody
     refuter_params: RefuteEstimateParams
     significance_test_params: SignificanceTestParams
@@ -60,12 +64,12 @@ def __get_estimate_effect_execution_cell():
 import backend.exposure.inference.estimate_effect as estimator
 
 from backend.exposure.model.estimate_effect_models import EstimateEffectRequestBody
-from backend.worker_commons.io.storage import LocalStorageClient
+from backend.worker_commons.io.storage import NotebookLocalStorageClient
 
 estimate_effect_input = EstimateEffectRequestBody(**estimate_effect_spec)
 
 specifications = estimator.get_tasks(
-    LocalStorageClient("./data/"),
+    NotebookLocalStorageClient("./data/"),
     "local_notebook",
     estimate_effect_input.population_specs,
     estimate_effect_input.treatment_specs,
@@ -199,7 +203,6 @@ async def generate_notebook(body: NotebookRequestBody):
     notebook = nbf.v4.new_notebook()
 
     notebook["cells"] = [
-        #
         nbf.v4.new_markdown_cell("# Install deps"),
         nbf.v4.new_code_cell("%pip install git+https://github.com/microsoft/showwhy/#subdirectory=python/backend"),
         nbf.v4.new_markdown_cell("# Estimate Effect"),
