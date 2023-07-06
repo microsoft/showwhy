@@ -30,6 +30,7 @@ jobs:
       azureSubscription: "${{ parameters.subscription }}"
       azureResourceGroup: "${{ parameters.aksResourceGroup }}"
       kubernetesCluster: "${{ parameters.aksClusterName }}"
+      useClusterAdmin: true
       command: upgrade
       chartType: FilePath
       chartPath: "config/helm/causal-services"
