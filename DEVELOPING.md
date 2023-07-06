@@ -2,7 +2,7 @@
 
 ShowWhy is a multi-language monorepo consisting of Python backend services in the `python/` folder and JavaScript packages in the `javascript/` directory. Our JavaScript packages use [`yarn`](https://yarnpkg.com/) for dependency management and monorepo orchestration. Our backend uses `poetry` for dependency management scripting. 
 
-Because there are a few moving parts in this system, especially in the backend, we use `docker-compose` day-to-day to start up the system. Some developers run the frontend and backend with docker `docker-compose up` and some just run the backend in docker-compose and use yarn directly for running the frontend.
+Because there are a few moving parts in this system, especially in the backend, we use `docker compose` day-to-day to start up the system. Some developers run the frontend and backend with docker `docker compose up` and some just run the backend in docker compose and use yarn directly for running the frontend.
 
 ## Prerequisite Software
 
@@ -27,17 +27,17 @@ yarn install
 yarn build # or yarn force_build
 ```
 
-The application is designed to start up using [Docker](https://www.docker.com/products/docker-desktop/). You should have the `docker` tools available in your shell, particulary [`docker-compose`](https://docs.docker.com/compose/).
+The application is designed to start up using [Docker](https://www.docker.com/products/docker-desktop/). You should have the `docker` tools available in your shell, particulary [`docker compose`](https://docs.docker.com/compose/).
 To start the application, run the following command:
 
 ```bash
-yarn start # or docker-compose --profile all up
+yarn start # or docker compose --profile all up
 ```
 
 To start the services and webapps separately, you will need [yarn](https://yarnpkg.com/en/docs/install) available:
 
 ```bash
-yarn start_backend # or docker-compose --profile backend up
+yarn start_backend # or docker compose --profile backend up
 yarn start_webapps
 ```
 
