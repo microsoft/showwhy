@@ -39,7 +39,7 @@ To run the application locally,ensure that you have Docker installed and running
 Open up a terminal application, and using the command-line interface (CLI) run the following command:
 
 ```bash
-docker-compose --profile all up
+docker compose --profile all up
 ```
 
 For developers wishing to contribute to the project, refer to [DEVELOPING.md](./DEVELOPING.md) for instructions on getting started.
