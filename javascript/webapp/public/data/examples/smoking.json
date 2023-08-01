@@ -8,7 +8,7 @@
                 {
                     "rel": "input",
                     "profile": "datatable",
-                    "path": "https://raw.githubusercontent.com/BiomedSciAI/causallib/a4942215cb2e277d8b441615750c9fcee21e7600/causallib/datasets/data/nhefs/NHEFS.csv",
+                    "path": "https://raw.githubusercontent.com/BiomedSciAI/causallib/master/causallib/datasets/data/nhefs/NHEFS.csv",
                     "metadata": {
                         "source": "https://www.hsph.harvard.edu/miguel-hernan/causal-inference-book/",
                         "citation": "Hernán MA, Robins JM (2020). Causal Inference: What If. Boca Raton: Chapman & Hall/CRC"
