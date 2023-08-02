@@ -19,6 +19,12 @@ RUN apt-get update -y \
     && apt-get install -y --no-install-recommends curl \
     && rm -rf /var/lib/apt/lists/*
 
+RUN apt-get update -qq
+RUN apt-get install -y --no-install-recommends software-properties-common dirmngr
+RUN wget -qO- https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc | tee -a /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc
+RUN add-apt-repository -y "deb https://cloud.r-project.org/bin/linux/ubuntu $(lsb_release -cs)-cran40/"
+RUN apt install -y --no-install-recommends r-base
+
 # Install Poetry
 RUN curl -sSL https://install.python-poetry.org | python - --version 1.3.2
 ENV PATH="${PATH}:/root/.local/bin"
