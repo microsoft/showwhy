@@ -12,6 +12,7 @@ pandas = "^1.5.2"
 uvicorn = "^0.20.0"
 celery = "^5.2.7"
 redis = { extras = ["hiredis"], version = "^4.4.2" }
+pysynthdid = {git = "https://github.com/andresmor-ms/pysynthdid", branch = "main"}
 
 [tool.poetry.group.discover.dependencies]
 torch = "^1.13.1"
@@ -28,7 +29,6 @@ causica = { git = "https://github.com/microsoft/causica.git", branch = "main" }
 gunicorn = "^20.1.0"
 pydantic = "^1.10.4"
 rpy2 = "^3.5.7"
-pysynthdid = { git = "https://github.com/MasaAsami/pysynthdid.git", branch = "main" }
 seaborn = "^0.11.2"
 
 [tool.poetry.group.exposure.dependencies]

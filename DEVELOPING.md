@@ -1,12 +1,14 @@
 # Developing ShowWhy
 
-ShowWhy is a multi-language monorepo consisting of Python backend services in the `python/` folder and JavaScript packages in the `javascript/` directory. Our JavaScript packages use [`yarn`](https://yarnpkg.com/) for dependency management and monorepo orchestration. Our backend uses `poetry` for dependency management scripting. 
+ShowWhy is a multi-language monorepo consisting of Python backend services in the `python/` folder and JavaScript packages in the `javascript/` directory. Our JavaScript packages use [`yarn`](https://yarnpkg.com/) for dependency management and monorepo orchestration. Our backend uses `poetry` for dependency management scripting.
 
 Because there are a few moving parts in this system, especially in the backend, we use `docker compose` day-to-day to start up the system. Some developers run the frontend and backend with docker `docker compose up` and some just run the backend in docker compose and use yarn directly for running the frontend.
 
 ## Prerequisite Software
 
 **ShowWhy does not currently work with Apple silicon. This is because of issues in transitive dependencies, primarily TensorFlow.**
+
+**For windows, WSL is required**
 
 - [Docker](https://docs.docker.com/get-docker/)
 - [Node 16.x](https://nodejs.org)
