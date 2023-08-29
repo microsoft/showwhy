@@ -85,7 +85,8 @@
                         "osDiskSizeGB": "[parameters('osDiskSizeGB')]",
                         "count": "[parameters('agentCount')]",
                         "vmSize": "[parameters('agentVMSize')]",
-                        "osType": "AzureLinux",
+                        "osType": "Linux",
+                        "osSKU": "AzureLinux",
                         "mode": "System"
                     }
                 ],

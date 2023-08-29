@@ -98,7 +98,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "[uri('https://raw.githubusercontent.com/microsoft/showwhy/deploy-azure/docs/deployment/azure/nestedtemplates/', 'aks.json')]",
+          "uri": "[uri('https://raw.githubusercontent.com/microsoft/showwhy/deploy-azure1/docs/deployment/azure-template/nestedtemplates/', 'aks.json')]",
           "templateLinkType": "Linked",
           "contentVersion": "1.0.0.0"
         },
@@ -138,16 +138,13 @@
         "mode": "Incremental",
         "templateLink": {
           "mode": "Incremental",
-          "uri": "[uri('https://raw.githubusercontent.com/microsoft/showwhy/deploy-azure/docs/deployment/azure/nestedtemplates/', 'helm.json')]",
+          "uri": "[uri('https://raw.githubusercontent.com/microsoft/showwhy/deploy-azure1/docs/deployment/azure-template/nestedtemplates/', 'helm.json')]",
           "templateLinkType": "Linked",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
           "identityName": {
             "value": "[reference('aksDeployment').outputs.identityName.value]"
-          },
-          "location": {
-            "value": "[parameters('location')]"
           },
           "clusterName": {
             "value": "[parameters('clusterName')]"
@@ -157,9 +154,6 @@
           },
           "dnsPrefix": {
             "value": "[parameters('dnsPrefix')]"
-          },
-          "ipName": {
-            "value": "[parameters('ipName')]"
           },
           "nodeResourceGroup": {
             "value": "[variables('nodeResourceGroup')]"
@@ -178,7 +172,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "[uri('https://raw.githubusercontent.com/microsoft/showwhy/deploy-azure/docs/deployment/azure/nestedtemplates/', 'auth.json')]",
+          "uri": "[uri('https://raw.githubusercontent.com/microsoft/showwhy/deploy-azure1/docs/deployment/azure-template/nestedtemplates/', 'auth.json')]",
           "templateLinkType": "Linked",
           "contentVersion": "1.0.0.0"
         },
