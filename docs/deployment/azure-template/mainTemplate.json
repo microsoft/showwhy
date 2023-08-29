@@ -183,9 +183,6 @@
           "clusterName": {
             "value": "[parameters('clusterName')]"
           },
-          "location": {
-            "value": "[parameters('location')]"
-          },
           "domain": {
             "value": "[variables('domain')]"
           },
