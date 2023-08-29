@@ -98,7 +98,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "[uri('https://raw.githubusercontent.com/microsoft/showwhy/deploy-azure1/docs/deployment/azure-template/nestedtemplates/', 'aks.json')]",
+          "uri": "[uri('https://raw.githubusercontent.com/microsoft/showwhy/main/docs/deployment/azure-template/nestedtemplates/', 'aks.json')]",
           "templateLinkType": "Linked",
           "contentVersion": "1.0.0.0"
         },
@@ -138,7 +138,7 @@
         "mode": "Incremental",
         "templateLink": {
           "mode": "Incremental",
-          "uri": "[uri('https://raw.githubusercontent.com/microsoft/showwhy/deploy-azure1/docs/deployment/azure-template/nestedtemplates/', 'helm.json')]",
+          "uri": "[uri('https://raw.githubusercontent.com/microsoft/showwhy/main/docs/deployment/azure-template/nestedtemplates/', 'helm.json')]",
           "templateLinkType": "Linked",
           "contentVersion": "1.0.0.0"
         },
@@ -172,7 +172,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "[uri('https://raw.githubusercontent.com/microsoft/showwhy/deploy-azure1/docs/deployment/azure-template/nestedtemplates/', 'auth.json')]",
+          "uri": "[uri('https://raw.githubusercontent.com/microsoft/showwhy/main/docs/deployment/azure-template/nestedtemplates/', 'auth.json')]",
           "templateLinkType": "Linked",
           "contentVersion": "1.0.0.0"
         },
