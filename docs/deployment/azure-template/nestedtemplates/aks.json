@@ -75,9 +75,9 @@
             },
             "properties": {
                 "autoUpgradeProfile": {
-                "upgradeChannel": "rapid",
-                "upgradeAutomatically": true
-            },
+                    "upgradeChannel": "rapid",
+                    "upgradeAutomatically": true
+                },
                 "dnsPrefix": "[parameters('dnsPrefix')]",
                 "agentPoolProfiles": [
                     {
@@ -85,7 +85,7 @@
                         "osDiskSizeGB": "[parameters('osDiskSizeGB')]",
                         "count": "[parameters('agentCount')]",
                         "vmSize": "[parameters('agentVMSize')]",
-                        "osType": "Linux",
+                        "osType": "AzureLinux",
                         "mode": "System"
                     }
                 ],
@@ -163,7 +163,6 @@
                 }
             }
         }
-        
     ],
     "outputs": {
         "identityName": {
