@@ -67,7 +67,7 @@
     "resources": [
         {
             "type": "Microsoft.ContainerService/managedClusters",
-            "apiVersion": "2022-09-01",
+            "apiVersion": "2023-02-01",
             "name": "[parameters('clusterName')]",
             "location": "[parameters('location')]",
             "identity": {
@@ -86,6 +86,7 @@
                         "count": "[parameters('agentCount')]",
                         "vmSize": "[parameters('agentVMSize')]",
                         "osType": "Linux",
+                        "osSKU": "AzureLinux",
                         "mode": "System"
                     }
                 ],
@@ -94,7 +95,7 @@
         },
         {
             "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2021-04-01",
+            "apiVersion": "2022-09-01",
             "name": "identities",
             "dependsOn": [
                 "[parameters('clusterName')]"

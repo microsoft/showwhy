@@ -33,7 +33,7 @@ We can then create our resource group that will store our cluster.
 > In this example the cluster will be created with 2 nodes.
 
 ```bash
-> az aks create -g {RESOURCE_GROUP_NAME} -n {AKS_CLUSTER_NAME} --enable-managed-identity --node-count 2 --enable-addons monitoring --enable-msi-auth-for-monitoring --generate-ssh-keys --location {LOCATION}
+> az aks create -g {RESOURCE_GROUP_NAME} -n {AKS_CLUSTER_NAME} --enable-managed-identity --node-count 2 --enable-addons monitoring --enable-msi-auth-for-monitoring --generate-ssh-keys --location {LOCATION} --os-sku AzureLinux
 ```
 
 ### 2.2. AKS Cluster's resource group name
