@@ -193,7 +193,7 @@
             "value": "[parameters('clientId')]"
           },
           "clientSecret": {
-            "secureValue": "[parameters('clientSecret')]"
+            "value": "[parameters('clientSecret')]"
           }
         }
       }
