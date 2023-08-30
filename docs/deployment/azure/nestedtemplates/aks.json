@@ -67,11 +67,7 @@
     "resources": [
         {
             "type": "Microsoft.ContainerService/managedClusters",
-<<<<<<< HEAD:docs/deployment/azure-template/nestedtemplates/aks.json
-            "apiVersion": "2023-02-01",
-=======
             "apiVersion": "2022-09-01",
->>>>>>> fix scripts:docs/deployment/azure/nestedtemplates/aks.json
             "name": "[parameters('clusterName')]",
             "location": "[parameters('location')]",
             "identity": {
@@ -79,9 +75,9 @@
             },
             "properties": {
                 "autoUpgradeProfile": {
-                "upgradeChannel": "rapid",
-                "upgradeAutomatically": true
-            },
+                    "upgradeChannel": "rapid",
+                    "upgradeAutomatically": true
+                },
                 "dnsPrefix": "[parameters('dnsPrefix')]",
                 "agentPoolProfiles": [
                     {
@@ -98,11 +94,7 @@
         },
         {
             "type": "Microsoft.Resources/deployments",
-<<<<<<< HEAD:docs/deployment/azure-template/nestedtemplates/aks.json
-            "apiVersion": "2022-09-01",
-=======
             "apiVersion": "2021-04-01",
->>>>>>> fix scripts:docs/deployment/azure/nestedtemplates/aks.json
             "name": "identities",
             "dependsOn": [
                 "[parameters('clusterName')]"
@@ -171,7 +163,6 @@
                 }
             }
         }
-        
     ],
     "outputs": {
         "identityName": {

@@ -112,15 +112,9 @@
                     "resources": [
                         {
                             "type": "Microsoft.Network/publicIPAddresses",
-<<<<<<< HEAD:docs/deployment/azure-template/nestedtemplates/helm.json
-                            "apiVersion": "2022-09-01",
-                            "name": "kubernetesip",
-                            "location": "[resourceGroup().location]",
-=======
                             "apiVersion": "2022-07-01",
                             "name": "[parameters('ipName')]",
                             "location": "[parameters('location')]",
->>>>>>> fix scripts:docs/deployment/azure/nestedtemplates/helm.json
                             "sku": {
                                 "name": "Standard"
                             },
@@ -144,11 +138,7 @@
         },
         {
             "type": "Microsoft.Resources/deployments",
-<<<<<<< HEAD:docs/deployment/azure-template/nestedtemplates/helm.json
-            "apiVersion": "2022-09-01",
-=======
             "apiVersion": "2021-04-01",
->>>>>>> fix scripts:docs/deployment/azure/nestedtemplates/helm.json
             "name": "helmScripts",
             "dependsOn": [
                 "[resourceId(parameters('nodeResourceGroup'),'Microsoft.Resources/deployments', 'publicIP')]"
@@ -223,13 +213,8 @@
                         }
                     },
                     "variables": {
-<<<<<<< HEAD:docs/deployment/azure-template/nestedtemplates/helm.json
-                        "domain": "[concat(parameters('dnsPrefix'), '.', resourceGroup().location, '.cloudapp.azure.com')]",
-                        "installScriptUri": "[uri('https://raw.githubusercontent.com/microsoft/showwhy/main/docs/deployment/azure-template/scripts/', 'helm.sh')]"
-=======
                         "domain": "[concat(parameters('dnsPrefix'), '.', parameters('location'), '.cloudapp.azure.com')]",
-                        "installScriptUri": "[uri('https://raw.githubusercontent.com/microsoft/showwhy/deploy-azure/docs/deployment/azure/scripts/', 'helm.sh')]"
->>>>>>> fix scripts:docs/deployment/azure/nestedtemplates/helm.json
+                        "installScriptUri": "[uri('https://raw.githubusercontent.com/microsoft/showwhy/main/docs/deployment/azure/scripts/', 'helm.sh')]"
                     },
                     "resources": [
                         {
