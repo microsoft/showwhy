@@ -8,7 +8,7 @@
                 {
                     "rel": "input",
                     "profile": "datatable",
-                    "path": "https://raw.githubusercontent.com/BiomedSciAI/causallib/master/causallib/datasets/data/nhefs/NHEFS.csv",
+                    "path": "https://microsoft.github.io/datashaper/data/NHEFS.csv",
                     "metadata": {
                         "source": "https://www.hsph.harvard.edu/miguel-hernan/causal-inference-book/",
                         "citation": "Hernán MA, Robins JM (2020). Causal Inference: What If. Boca Raton: Chapman & Hall/CRC"
@@ -614,7 +614,7 @@
                 {
                     "rel": "input",
                     "profile": "datatable",
-                    "path": "https://cdn.jsdelivr.net/gh/synth-inference/synthdid@master/data/california_prop99.csv",
+                    "path": "https://microsoft.github.io/datashaper/data/california_prop99.csv",
                     "metadata": {
                         "source": "https://www.openicpsr.org/openicpsr/project/146381/version/V1/view?path=/openicpsr/146381/fcr:versions/V1/synthdid-sdid-paper/data/california_prop99.csv",
                         "citation": " Dmitry Arkhangelsky, CEMFI; Susan Athey, Stanford University; David A. Hirshberg, Emory University; Guido W. Imbens, Stanford University; Stefan Wager, Stanford University"

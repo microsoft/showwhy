@@ -34,7 +34,7 @@ This interface allows users to inspect variable relationships within data, and t
 
 **Note: At the moment, ShowWhy does not work with Apple Mxx processors in local mode.**
 
-To run the application locally,ensure that you have Docker installed and running on your machine. You can find instructions for installing Docker [here](https://docs.docker.com/get-docker/).
+To run the application locally, ensure that you have Docker installed and running on your machine. You can find instructions for installing Docker [here](https://docs.docker.com/get-docker/).
 
 Open up a terminal application, and using the command-line interface (CLI) run the following command:
 
