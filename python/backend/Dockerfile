@@ -20,7 +20,7 @@ RUN apt-get update -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Poetry
-RUN curl -sSL https://install.python-poetry.org | python - --version 1.3.2
+RUN curl -sSL https://install.python-poetry.org | python3 - --version 1.3.2
 ENV PATH="${PATH}:/root/.local/bin"
 
 WORKDIR /backend
