@@ -13,6 +13,8 @@ uvicorn = "^0.20.0"
 celery = "^5.2.7"
 redis = { extras = ["hiredis"], version = "^4.4.2" }
 pysynthdid = {git = "https://github.com/andresmor-ms/pysynthdid", branch = "main"}
+causica = {git = "https://github.com/dayesouza/causica.git", rev = "release"}
+tensorflow = "2.9.1"
 
 [tool.poetry.group.discover.dependencies]
 torch = "^1.13.1"
@@ -23,7 +25,6 @@ sentence_transformers = "^2.2.2"
 GitPython = "^3.1.30"
 psutil = "^5.9.4"
 protobuf = "^3.19.6"
-causica = { git = "https://github.com/microsoft/causica.git", branch = "main" }
 
 [tool.poetry.group.events.dependencies]
 gunicorn = "^20.1.0"
