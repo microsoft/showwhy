@@ -1,5 +1,7 @@
 # ShowWhy
 
+:warning: Currently we have an ongoing problem with one of our dependencies when building Showwhy from scratch. <b>Feel free to use the Deploy to Azure button.</b>
+
 [Introduction to ShowWhy](https://www.youtube.com/watch?v=Im1V4h4mT-0)
 
 ShowWhy is a suite of no-code interfaces for performing data analysis using causal ML techniques and libraries.
@@ -48,7 +50,7 @@ For developers wishing to contribute to the project, refer to [DEVELOPING.md](./
 
 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmicrosoft%2Fshowwhy%2Fmain%2Fdocs%2Fdeployment%2Fazure-template%2FmainTemplate.json)
 
-Check the [deployment documentation](./docs/deployment/README.md) for instructions on how to deploy to deploy SHowWhy to Azure AKS (either via one-click or manually), and how to deploy ShowWhy into a local Kubernetes instance.
+Check the [deployment documentation](./docs/deployment/README.md) for instructions on how to deploy to deploy ShowWhy to Azure AKS (either via one-click or manually), and how to deploy ShowWhy into a local Kubernetes instance.
 
 # Contribute
 
