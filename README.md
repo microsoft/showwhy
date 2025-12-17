@@ -1,3 +1,6 @@
+**This repository is the result of research efforts that are no longer active. It has been marked read-only on GitHub to preserve the public code, but is no longer maintained or accepting contributions.**
+
+
 # ShowWhy
 
 :warning: Currently we have an ongoing problem with one of our dependencies when building Showwhy from scratch. <b>Feel free to use the Deploy to Azure button.</b>
